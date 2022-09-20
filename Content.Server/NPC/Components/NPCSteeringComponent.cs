@@ -10,13 +10,17 @@ namespace Content.Server.NPC.Components;
 [RegisterComponent]
 public sealed class NPCSteeringComponent : Component
 {
-    [ViewVariables] public Job<Queue<TileRef>>? Pathfind = null;
+    /// <summary>
+    /// Have we currently requested a path.
+    /// </summary>
+    [ViewVariables]
+    public bool Pathfind => PathfindToken != null;
     [ViewVariables] public CancellationTokenSource? PathfindToken = null;
 
     /// <summary>
     /// Current path we're following to our coordinates.
     /// </summary>
-    [ViewVariables] public Queue<TileRef> CurrentPath = new();
+    [ViewVariables] public Queue<EntityCoordinates> CurrentPath = new();
 
     /// <summary>
     /// End target that we're trying to move to.

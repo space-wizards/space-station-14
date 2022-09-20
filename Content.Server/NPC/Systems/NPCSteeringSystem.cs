@@ -99,7 +99,6 @@ namespace Content.Server.NPC.Systems
 
             component.PathfindToken?.Cancel();
             component.PathfindToken = null;
-            component.Pathfind = null;
             RemComp<NPCRVOComponent>(uid);
             RemComp<NPCSteeringComponent>(uid);
         }
@@ -118,7 +117,8 @@ namespace Content.Server.NPC.Systems
             var npcs = EntityQuery<NPCSteeringComponent, ActiveNPCComponent, InputMoverComponent, TransformComponent>()
                 .ToArray();
 
-            // TODO: Do this in parallel. This will require pathfinder refactor to not use jobqueue.
+            // TODO: Do this in parallel.
+            // Main obstacle is requesting a new path needs to be done synchronously
             foreach (var (steering, _, mover, xform) in npcs)
             {
                 Steer(steering, mover, xform, modifierQuery, bodyQuery, frameTime);
@@ -161,37 +161,6 @@ namespace Content.Server.NPC.Systems
                 SetDirection(mover, Vector2.Zero);
                 steering.Status = SteeringStatus.Moving;
                 return;
-            }
-
-            // If we were pathfinding then try to update our path.
-            if (steering.Pathfind != null)
-            {
-                switch (steering.Pathfind.Status)
-                {
-                    case JobStatus.Waiting:
-                    case JobStatus.Running:
-                    case JobStatus.Pending:
-                    case JobStatus.Paused:
-                        break;
-                    case JobStatus.Finished:
-                        steering.CurrentPath.Clear();
-
-                        if (steering.Pathfind.Result != null)
-                        {
-                            PrunePath(ourCoordinates, steering.Pathfind.Result);
-
-                            foreach (var node in steering.Pathfind.Result)
-                            {
-                                steering.CurrentPath.Enqueue(node);
-                            }
-                        }
-
-                        steering.Pathfind = null;
-                        steering.PathfindToken = null;
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
             }
 
             // Grab the target position, either the path or our end goal.
@@ -265,9 +234,8 @@ namespace Content.Server.NPC.Systems
                 var lastNode = steering.CurrentPath.Last();
                 // I know this is bad and doesn't account for tile size
                 // However with the path I'm going to change it to return pathfinding nodes which include coordinates instead.
-                var lastCoordinate = new EntityCoordinates(lastNode.GridUid, (Vector2) lastNode.GridIndices + 0.5f);
 
-                if (lastCoordinate.TryDistance(EntityManager, steering.Coordinates, out var lastDistance) &&
+                if (lastNode.TryDistance(EntityManager, steering.Coordinates, out var lastDistance) &&
                     lastDistance > steering.RepathRange)
                 {
                     needsPath = true;
@@ -358,7 +326,7 @@ namespace Content.Server.NPC.Systems
             // Even if we're at the last node may not be able to head to target in case we get stuck on a corner or the likes.
             if (steering.CurrentPath.Count >= 1 && steering.CurrentPath.TryPeek(out var nextTarget))
             {
-                return new EntityCoordinates(nextTarget.GridUid, (Vector2) nextTarget.GridIndices + 0.5f);
+                return nextTarget;
             }
 
             return steering.Coordinates;
@@ -370,7 +338,7 @@ namespace Content.Server.NPC.Systems
         private void RequestPath(NPCSteeringComponent steering, TransformComponent xform, PhysicsComponent? body)
         {
             // If we already have a pathfinding request then don't grab another.
-            if (steering.Pathfind != null)
+            if (steering.Pathfind)
                 return;
 
             if (!_mapManager.TryGetGrid(xform.GridUid, out var grid))
@@ -387,9 +355,7 @@ namespace Content.Server.NPC.Systems
             }
 
             var access = _accessReader.FindAccessTags(steering.Owner);
-
-            // TODO:
-            /*
+            
             steering.Pathfind = _pathfindingSystem.RequestPath(new PathfindingArgs(
                 steering.Owner,
                 access,
@@ -398,7 +364,7 @@ namespace Content.Server.NPC.Systems
                 endTile,
                 steering.Range
             ), steering.PathfindToken.Token);
-            */
+
         }
 
         // TODO: Move these to movercontroller
