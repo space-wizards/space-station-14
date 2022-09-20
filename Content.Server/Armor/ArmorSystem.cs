@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Damage;
 using Content.Server.Examine;
+using Content.Shared.Examine;
 using Content.Shared.Verbs;
 using Robust.Shared.Utility;
 
@@ -16,8 +17,13 @@ namespace Content.Server.Armor
 
             SubscribeLocalEvent<ArmorComponent, DamageModifyEvent>(OnDamageModify);
             SubscribeLocalEvent<ArmorComponent, GetVerbsEvent<ExamineVerb>>(OnArmorVerbExamine);
+            SubscribeLocalEvent<ArmorComponent, ExamineStatsEvent>(OnExamineStats);
         }
 
+        private void OnExamineStats(EntityUid uid, ArmorComponent component, ExamineStatsEvent args)
+        {
+            args.Message.AddMessage(GetArmorExamine(component.Modifiers));
+        }
         private void OnDamageModify(EntityUid uid, ArmorComponent component, DamageModifyEvent args)
         {
             args.Damage = DamageSpecifier.ApplyModifierSet(args.Damage, component.Modifiers);
@@ -28,16 +34,19 @@ namespace Content.Server.Armor
             if (!args.CanInteract || !args.CanAccess)
                 return;
 
-            var armorModifiers = component.Modifiers;
+            if (component.Modifiers == null)
+                return;
 
-            if (armorModifiers == null)
+            if (HasComp<CondensedExamineComponent>(uid))
                 return;
 
             var verb = new ExamineVerb()
             {
                 Act = () =>
                 {
-                    var markup = GetArmorExamine(armorModifiers);
+                    var markup = new FormattedMessage();
+                    markup.AddMarkup(Loc.GetString("armor-examine"));
+                    markup.AddMessage(GetArmorExamine(component.Modifiers));
                     _examine.SendExamineTooltip(args.User, uid, markup, false, false);
                 },
                 Text = Loc.GetString("armor-examinable-verb-text"),
@@ -53,14 +62,12 @@ namespace Content.Server.Armor
         {
             var msg = new FormattedMessage();
 
-            msg.AddMarkup(Loc.GetString("armor-examine"));
-
             foreach (var coefficientArmor in armorModifiers.Coefficients)
             {
                 msg.PushNewline();
                 msg.AddMarkup(Loc.GetString("armor-coefficient-value",
                     ("type", coefficientArmor.Key),
-                    ("value", MathF.Round((1f - coefficientArmor.Value) * 100,1))
+                    ("value", MathF.Round((1f - coefficientArmor.Value) * 100, 1))
                     ));
             }
 

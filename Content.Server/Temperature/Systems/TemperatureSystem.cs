@@ -39,7 +39,6 @@ namespace Content.Server.Temperature.Systems
             SubscribeLocalEvent<TemperatureComponent, OnTemperatureChangeEvent>(EnqueueDamage);
             SubscribeLocalEvent<TemperatureComponent, AtmosExposedUpdateEvent>(OnAtmosExposedUpdate);
             SubscribeLocalEvent<AlertsComponent, OnTemperatureChangeEvent>(ServerAlert);
-            SubscribeLocalEvent<TemperatureProtectionComponent, ModifyChangedTemperatureEvent>(OnTemperatureChangeAttempt);
         }
 
         public override void Update(float frameTime)
@@ -202,11 +201,6 @@ namespace Content.Server.Temperature.Systems
                 _adminLogger.Add(LogType.Temperature, $"{ToPrettyString(temperature.Owner):entity} stopped taking temperature damage");
                 temperature.TakingDamage = false;
             }
-        }
-
-        private void OnTemperatureChangeAttempt(EntityUid uid, TemperatureProtectionComponent component, ModifyChangedTemperatureEvent args)
-        {
-            args.TemperatureDelta *= component.Coefficient;
         }
     }
 

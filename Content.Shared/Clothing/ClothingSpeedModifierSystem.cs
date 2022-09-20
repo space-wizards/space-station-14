@@ -21,6 +21,17 @@ public sealed class ClothingSpeedModifierSystem : EntitySystem
         SubscribeLocalEvent<ClothingSpeedModifierComponent, ComponentHandleState>(OnHandleState);
         SubscribeLocalEvent<ClothingSpeedModifierComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMoveSpeed);
         SubscribeLocalEvent<ClothingSpeedModifierComponent, GetVerbsEvent<ExamineVerb>>(OnClothingVerbExamine);
+        SubscribeLocalEvent<ClothingSpeedModifierComponent, ExamineStatsEvent>(OnExamineStats);
+    }
+
+    private void OnExamineStats(EntityUid uid, ClothingSpeedModifierComponent component, ExamineStatsEvent args)
+    {
+        var msg = ExamineClothingSpeedModifier(component);
+        if (msg != null)
+        {
+            args.Message.PushNewline();
+            args.Message.AddMessage(msg);
+        }
     }
 
     // Public API
@@ -73,16 +84,13 @@ public sealed class ClothingSpeedModifierSystem : EntitySystem
         args.ModifySpeed(component.WalkModifier, component.SprintModifier);
     }
 
-    private void OnClothingVerbExamine(EntityUid uid, ClothingSpeedModifierComponent component, GetVerbsEvent<ExamineVerb> args)
+    private FormattedMessage? ExamineClothingSpeedModifier(ClothingSpeedModifierComponent component)
     {
-        if (!args.CanInteract || !args.CanAccess)
-            return;
-
         var walkModifierPercentage = MathF.Round((1.0f - component.WalkModifier) * 100f, 1);
         var sprintModifierPercentage = MathF.Round((1.0f - component.SprintModifier) * 100f, 1);
 
         if (walkModifierPercentage == 0.0f && sprintModifierPercentage == 0.0f)
-            return;
+            return null;
 
         var msg = new FormattedMessage();
 
@@ -116,6 +124,21 @@ public sealed class ClothingSpeedModifierSystem : EntitySystem
                 msg.AddMarkup(Loc.GetString("clothing-speed-decrease-walk-examine", ("walkSpeed", walkModifierPercentage)));
             }
         }
+        return msg;
+    }
+
+    private void OnClothingVerbExamine(EntityUid uid, ClothingSpeedModifierComponent component, GetVerbsEvent<ExamineVerb> args)
+    {
+        if (!args.CanInteract || !args.CanAccess)
+            return;
+
+        if (HasComp<CondensedExamineComponent>(uid))
+            return;
+
+        var msg = ExamineClothingSpeedModifier(component);
+
+        if (msg == null)
+            return;
 
         var verb = new ExamineVerb()
         {

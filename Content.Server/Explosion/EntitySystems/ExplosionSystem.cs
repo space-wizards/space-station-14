@@ -62,7 +62,6 @@ public sealed partial class ExplosionSystem : EntitySystem
         // handled in ExplosionSystem.GridMap.cs
         SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoved);
         SubscribeLocalEvent<GridStartupEvent>(OnGridStartup);
-        SubscribeLocalEvent<ExplosionResistanceComponent, GetExplosionResistanceEvent>(OnGetResistance);
         SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
 
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnReset);
@@ -88,13 +87,6 @@ public sealed partial class ExplosionSystem : EntitySystem
         base.Shutdown();
         UnsubscribeCvars();
         _nodeGroupSystem.Snoozing = false;
-    }
-
-    private void OnGetResistance(EntityUid uid, ExplosionResistanceComponent component, GetExplosionResistanceEvent args)
-    {
-        args.DamageCoefficient *= component.DamageCoefficient;
-        if (component.Resistances.TryGetValue(args.ExplotionPrototype, out var resistance))
-            args.DamageCoefficient *= resistance;
     }
 
     /// <summary>
