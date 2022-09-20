@@ -1,3 +1,4 @@
+using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Fluids.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.FixedPoint;
@@ -15,6 +16,7 @@ namespace Content.Server.Fluids.EntitySystems
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
+            var managerQuery = GetEntityQuery<SolutionContainerManagerComponent>();
             var xformQuery = GetEntityQuery<TransformComponent>();
             var puddleQuery = GetEntityQuery<PuddleComponent>();
             var puddles = new ValueList<(EntityUid Entity, string Solution)>();
@@ -28,8 +30,11 @@ namespace Content.Server.Fluids.EntitySystems
                 }
                 drain.Accumulator -= drain.DrainFrequency;
 
+                if (!managerQuery.TryGetComponent(drain.Owner, out var manager))
+                    continue;
+
                 // Best to do this one every second rather than once every tick...
-                _solutionSystem.TryGetSolution(drain.Owner, DrainComponent.SolutionName, out var drainSolution);
+                _solutionSystem.TryGetSolution(drain.Owner, DrainComponent.SolutionName, out var drainSolution, manager);
 
                 if (drainSolution is null)
                     continue;
