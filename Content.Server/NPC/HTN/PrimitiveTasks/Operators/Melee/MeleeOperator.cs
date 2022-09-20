@@ -62,7 +62,6 @@ public sealed class MeleeOperator : HTNOperator
     public override HTNOperatorStatus Update(NPCBlackboard blackboard, float frameTime)
     {
         base.Update(blackboard, frameTime);
-        // TODO:
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
         var status = HTNOperatorStatus.Continuing;
 
@@ -79,6 +78,7 @@ public sealed class MeleeOperator : HTNOperator
             {
                 switch (combat.Status)
                 {
+                    case CombatStatus.TargetOutOfRange:
                     case CombatStatus.Normal:
                         status = HTNOperatorStatus.Continuing;
                         break;

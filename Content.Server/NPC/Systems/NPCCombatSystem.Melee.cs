@@ -3,11 +3,14 @@ using Content.Server.NPC.Components;
 using Content.Server.Weapon.Melee.Components;
 using Content.Shared.MobState;
 using Content.Shared.MobState.Components;
+using Robust.Shared.Map;
 
 namespace Content.Server.NPC.Systems;
 
 public sealed partial class NPCCombatSystem
 {
+    private const float TargetMeleeLostRange = 14f;
+
     private void InitializeMelee()
     {
         SubscribeLocalEvent<NPCMeleeCombatComponent, ComponentStartup>(OnMeleeStartup);
@@ -54,8 +57,7 @@ public sealed partial class NPCCombatSystem
     {
         component.Status = CombatStatus.Normal;
 
-        // TODO: Also need to co-ordinate with steering to keep in range.
-        // For now I've just moved the utlity version over.
+        // TODO:
         // Also need some blackboard data for stuff like juke frequency, assigning target slots (to surround targets), etc.
         // miss %
         if (!TryComp<MeleeWeaponComponent>(component.Weapon, out var weapon))
@@ -76,11 +78,24 @@ public sealed partial class NPCCombatSystem
             return;
         }
 
-        if (!xform.Coordinates.TryDistance(EntityManager, targetXform.Coordinates, out var distance) ||
-            distance > weapon.Range)
+        if (!xform.Coordinates.TryDistance(EntityManager, targetXform.Coordinates, out var distance))
         {
-            // TODO: Steering in combat.
             component.Status = CombatStatus.TargetUnreachable;
+            return;
+        }
+
+        if (distance > TargetMeleeLostRange)
+        {
+            component.Status = CombatStatus.TargetUnreachable;
+            return;
+        }
+
+        if (distance > weapon.Range)
+        {
+            if (!HasComp<NPCSteeringComponent>(component.Owner))
+                _steering.Register(component.Owner, new EntityCoordinates(component.Target, Vector2.Zero));
+
+            component.Status = CombatStatus.TargetOutOfRange;
             return;
         }
 
