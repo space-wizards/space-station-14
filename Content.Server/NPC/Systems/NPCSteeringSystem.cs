@@ -66,22 +66,36 @@ namespace Content.Server.NPC.Systems
         /// <summary>
         /// Adds the AI to the steering system to move towards a specific target
         /// </summary>
-        public NPCSteeringComponent Register(EntityUid uid, EntityCoordinates coordinates)
+        public NPCSteeringComponent Register(EntityUid uid, EntityCoordinates coordinates, NPCSteeringComponent? component = null)
         {
-            if (TryComp<NPCSteeringComponent>(uid, out var comp))
+            if (Resolve(uid, ref component, false))
             {
-                comp.PathfindToken?.Cancel();
-                comp.PathfindToken = null;
-                comp.CurrentPath.Clear();
+                component.PathfindToken?.Cancel();
+                component.PathfindToken = null;
+                component.CurrentPath.Clear();
             }
             else
             {
-                comp = AddComp<NPCSteeringComponent>(uid);
+                component = AddComp<NPCSteeringComponent>(uid);
             }
 
             EnsureComp<NPCRVOComponent>(uid);
-            comp.Coordinates = coordinates;
-            return comp;
+            component.Coordinates = coordinates;
+            return component;
+        }
+
+        /// <summary>
+        /// Attempts to register the entity. Does nothing if the coordinates already registered.
+        /// </summary>
+        public bool TryRegister(EntityUid uid, EntityCoordinates coordinates, NPCSteeringComponent? component = null)
+        {
+            if (Resolve(uid, ref component, false) && component.Coordinates.Equals(coordinates))
+            {
+                return false;
+            }
+
+            Register(uid, coordinates, component);
+            return true;
         }
 
         /// <summary>
