@@ -9,6 +9,7 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
     size: 10
+  - type: CondensedExamine
   - type: TemperatureProtection
     coefficient: 0.1
   - type: Armor

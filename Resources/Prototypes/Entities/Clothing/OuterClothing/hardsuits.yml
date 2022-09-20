@@ -465,6 +465,7 @@
     sprite: Clothing/OuterClothing/Hardsuits/paramed.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/paramed.rsi
+  - type: CondensedExamine
   - type: PressureProtection
     highPressureMultiplier: 0.5
     lowPressureMultiplier: 1000

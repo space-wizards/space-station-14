@@ -9,6 +9,7 @@
   - type: Clothing
     sprite: Clothing/Head/Helmets/bombsuit.rsi
   - type: IngestionBlocker
+  - type: CondensedExamine
   - type: ExplosionResistance
     resistance: 0.25 # +0.65 from body -> 90%
   - type: Armor
@@ -210,6 +211,7 @@
   - type: PowerCellSlot
     cellSlot:
       startingItem: PowerCellMedium
+  - type: CondensedExamine
   - type: TemperatureProtection
     coefficient: 0.01
   - type: Armor
@@ -238,6 +240,7 @@
     sprite: Clothing/Head/Helmets/atmos_firehelmet.rsi
     quickEquip: true
   - type: IngestionBlocker
+  - type: CondensedExamine
   - type: TemperatureProtection
     coefficient: 0.005
   - type: Armor
@@ -297,3 +300,4 @@
         Slash: 0.95
         Heat: 0.90
         Radiation: 0.75
+  - type: CondensedExamine

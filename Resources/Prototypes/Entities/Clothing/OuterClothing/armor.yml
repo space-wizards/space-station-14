@@ -46,6 +46,7 @@
     sprite: Clothing/OuterClothing/Armor/cult_armour.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Armor/cult_armour.rsi
+  - type: CondensedExamine
   - type: Armor
     modifiers:
       coefficients:
@@ -127,6 +128,7 @@
     sprite: Clothing/OuterClothing/Armor/riot.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Armor/riot.rsi
+  - type: CondensedExamine
   - type: Armor
     modifiers:
       coefficients:

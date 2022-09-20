@@ -8,6 +8,7 @@
     sprite: Clothing/OuterClothing/Vests/mercwebvest.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Vests/mercwebvest.rsi
+  - type: CondensedExamine
   - type: Armor
     modifiers:
       coefficients:
@@ -28,6 +29,7 @@
     sprite: Clothing/OuterClothing/Vests/webvest.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Vests/webvest.rsi
+  - type: CondensedExamine
   - type: Armor
     modifiers:
       coefficients:
@@ -48,6 +50,7 @@
     sprite: Clothing/OuterClothing/Vests/kevlar.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Vests/kevlar.rsi
+  - type: CondensedExamine
   - type: Armor
     modifiers:
       coefficients:
@@ -68,6 +71,7 @@
     sprite: Clothing/OuterClothing/Vests/detvest.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Vests/detvest.rsi
+  - type: CondensedExamine
   - type: Armor
     modifiers:
       coefficients:
