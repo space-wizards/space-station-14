@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
@@ -35,7 +36,7 @@ namespace Content.Server.NPC.Pathfinding
 
         private readonly Dictionary<ICommonSession, PathfindingDebugMode> _subscribedSessions = new();
 
-        private List<PathRequest> _pathRequests = new(PathTickLimit);
+        private readonly List<PathRequest> _pathRequests = new(PathTickLimit);
 
         private static readonly TimeSpan PathTime = TimeSpan.FromMilliseconds(3);
 
@@ -64,12 +65,14 @@ namespace Content.Server.NPC.Pathfinding
             UpdateGrid();
             _stopwatch.Restart();
 
+            var graphs = EntityQuery<GridPathfindingComponent>(true).ToDictionary(o => o.Owner);
+
             Parallel.For(0, _pathRequests.Count, i =>
             {
                 if (i >= PathTickLimit || _stopwatch.Elapsed >= PathTime)
                     return;
 
-                UpdatePath(_pathRequests[i]);
+                UpdatePath(graphs, _pathRequests[i]);
             });
 
             // then, single-threaded cleanup.
@@ -92,7 +95,7 @@ namespace Content.Server.NPC.Pathfinding
         /// <summary>
         /// Asynchronously gets a path.
         /// </summary>
-        public async Task<PathfindingJob> GetPath(
+        public async Task<PathfindingResultEvent> GetPath(
             EntityCoordinates start,
             EntityCoordinates end,
             PathFlags flags,
@@ -123,7 +126,7 @@ namespace Content.Server.NPC.Pathfinding
                     throw new InvalidOperationException();
             }
 
-            var result = new PathfindingJob(start, end, request.Polys, outcome);
+            var result = new PathfindingResultEvent();
             return result;
         }
 

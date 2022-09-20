@@ -18,7 +18,7 @@ public sealed partial class PathfindingSystem
 
     private static readonly PathComparer AstarComparer = new();
 
-    private void UpdatePath(PathRequest request)
+    private void UpdatePath(Dictionary<EntityUid, GridPathfindingComponent> graphs, PathRequest request)
     {
         // TODO: Need start / resuming.
         // First run
@@ -53,7 +53,7 @@ public sealed partial class PathfindingSystem
             return;
         }
 
-        var graph = Comp<GridPathfindingComponent>(startGridUid.Value);
+        var graph = graphs[startGridUid.Value];
 
         var startNode = GetPoly(request.Start);
         var endNode = GetPoly(request.End);
@@ -66,7 +66,6 @@ public sealed partial class PathfindingSystem
 
         frontier.Add((0.0f, startNode.Value));
         costSoFar[startNode.Value] = 0.0f;
-        var routeFound = false;
         var count = 0;
 
         while (frontier.Count > 0)
@@ -85,7 +84,6 @@ public sealed partial class PathfindingSystem
 
             if (currentNode.Equals(endNode))
             {
-                routeFound = true;
                 break;
             }
 
@@ -124,26 +122,22 @@ public sealed partial class PathfindingSystem
             }
         }
 
-        if (!routeFound)
+        if (!endNode.Equals(currentNode))
         {
             request.Tcs.TrySetResult(PathResult.NoPath);
             return;
         }
 
-        DebugTools.AssertNotNull(currentNode);
-
-        var route = ReconstructPath(cameFrom, currentNode!);
-
-        if (route.Count == 1)
-        {
-            request.Tcs.TrySetResult(PathResult.Path);
-            return;
-        }
-
-        var simplifiedRoute = Simplify(route, 0f);
-        var actualRoute = new Queue<EntityCoordinates>(simplifiedRoute);
-        request.Polys = actualRoute;
+        var route = ReconstructPath(cameFrom, currentNode.Value);
+        request.Polys = route;
+        // var simplifiedRoute = Simplify(route, 0f);
+        // var actualRoute = new Queue<EntityCoordinates>(simplifiedRoute);
         request.Tcs.TrySetResult(PathResult.Path);
+    }
+
+    private Queue<PathPoly> ReconstructPath(Dictionary<PathPoly, PathPoly> path, PathPoly currentNode)
+    {
+        throw new NotImplementedException();
     }
 
     private float GetTileCost(PathRequest request, PathPoly start, PathPoly end)
