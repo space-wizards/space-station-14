@@ -17,6 +17,7 @@ namespace Content.Server.Fluids.EntitySystems
             base.Update(frameTime);
             var xformQuery = GetEntityQuery<TransformComponent>();
             var puddleQuery = GetEntityQuery<PuddleComponent>();
+            var puddles = new ValueList<(EntityUid Entity, string Solution)>();
 
             foreach (var drain in EntityQuery<DrainComponent>())
             {
@@ -42,7 +43,7 @@ namespace Content.Server.Fluids.EntitySystems
                 if (!xformQuery.TryGetComponent(drain.Owner, out var xform))
                     continue;
 
-                var puddles = new ValueList<(EntityUid Entity, string Solution)>();
+                puddles.Clear();
 
                 foreach (var entity in _lookup.GetEntitiesInRange(xform.MapPosition, drain.Range))
                 {
