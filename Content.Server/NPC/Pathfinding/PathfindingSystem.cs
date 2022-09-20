@@ -1,7 +1,10 @@
+using System.Threading;
+using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
 using Content.Shared.NPC;
 using Robust.Server.Player;
+using Robust.Shared.Map;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Players;
 using Robust.Shared.Timing;
@@ -32,6 +35,15 @@ namespace Content.Server.NPC.Pathfinding
 
         private readonly Dictionary<ICommonSession, PathfindingDebugMode> _subscribedSessions = new();
 
+        private List<PathRequest> _pathRequests = new(PathTickLimit);
+
+        private static readonly TimeSpan PathTime = TimeSpan.FromMilliseconds(3);
+
+        /// <summary>
+        /// How many paths we can process in a single tick.
+        /// </summary>
+        private const int PathTickLimit = 64;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -50,7 +62,96 @@ namespace Content.Server.NPC.Pathfinding
         {
             base.Update(frameTime);
             UpdateGrid();
+            _stopwatch.Restart();
+
+            Parallel.For(0, _pathRequests.Count, i =>
+            {
+                if (i >= PathTickLimit || _stopwatch.Elapsed >= PathTime)
+                    return;
+
+                UpdatePath(_pathRequests[i]);
+            });
+
+            // then, single-threaded cleanup.
+            for (var i = 0; i < Math.Min(_pathRequests.Count, PathTickLimit); i++)
+            {
+                var path = _pathRequests[i];
+
+                switch (path.Task.Status)
+                {
+                    case TaskStatus.Canceled:
+                    case TaskStatus.Faulted:
+                    case TaskStatus.RanToCompletion:
+                        // Don't use RemoveSwap because we still want to try and process them in order.
+                        _pathRequests.RemoveAt(i);
+                        break;
+                }
+            }
         }
+
+        /// <summary>
+        /// Asynchronously gets a path.
+        /// </summary>
+        public async Task<PathfindingJob> GetPath(
+            EntityCoordinates start,
+            EntityCoordinates end,
+            PathFlags flags,
+            CancellationToken cancelToken)
+        {
+            // Don't allow the caller to pass in the request in case they try to do something with its data.
+            var request = new PathRequest(start, end, flags, cancelToken);
+            _pathRequests.Add(request);
+
+            await request.Task;
+
+            if (request.Task.Exception != null)
+            {
+                throw request.Task.Exception;
+            }
+
+            PathResult outcome;
+
+            switch (request.Task.Status)
+            {
+                case TaskStatus.Canceled:
+                    outcome = PathResult.NoPath;
+                    break;
+                case TaskStatus.RanToCompletion:
+                    outcome = request.Polys.Count > 0 ? PathResult.Path : PathResult.NoPath;
+                    break;
+                default:
+                    throw new InvalidOperationException();
+            }
+
+            var result = new PathfindingJob(start, end, request.Polys, outcome);
+            return result;
+        }
+
+        /// <summary>
+        /// Raises the pathfinding result event on the entity when finished.
+        /// </summary>
+        public async void GetPathEvent(
+            EntityUid uid,
+            EntityCoordinates start,
+            EntityCoordinates end,
+            PathFlags flags,
+            CancellationToken cancelToken)
+        {
+            var path = await GetPath(start, end, flags, cancelToken);
+            RaiseLocalEvent(uid, path);
+        }
+
+        public PathPoly? GetPoly(EntityCoordinates coordinates)
+        {
+            var gridUid = coordinates.GetGridUid(EntityManager);
+
+            if (!TryComp<GridPathfindingComponent>(gridUid, out var comp))
+                return null;
+
+            throw new NotImplementedException();
+        }
+
+        #region Debug handlers
 
         private void OnBreadcrumbs(RequestPathfindingDebugMessage msg, EntitySessionEventArgs args)
         {
@@ -213,5 +314,7 @@ namespace Content.Server.NPC.Pathfinding
 
             return polys;
         }
+
+        #endregion
     }
 }
