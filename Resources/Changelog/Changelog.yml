@@ -2924,8 +2924,3 @@ Entries:
   - {message: Fixed the Security Techfab not being able to print anything., type: Fix}
   id: 2342
   time: '2022-09-19T00:44:25.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Camera rotation controls have been added. Numpad 7-8-9 now control your rotation. When moving from one grid to another your rotation will snap to the nearest cardinal direction., type: Add}
-  id: 2343
-  time: '2022-09-20T00:00:00.0000000+00:00'
