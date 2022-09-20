@@ -151,8 +151,8 @@ namespace Content.Client.Audio
             Timer.Spawn(1500, () =>
             {
                 // If we traverse a few times then don't interrupt an existing song.
-                // If we are in the Lobby, don't start Ambience because of a player movement
-                if (_playingCollection == _currentCollection || _stateManager.CurrentState is LobbyState)
+                // If we are not in gameplay, don't call StartAmbience because of player movement
+                if (_playingCollection == _currentCollection || _stateManager.CurrentState is not GameplayState)
                     return;
                 StartAmbience();
             }, _timerCancelTokenSource.Token);
