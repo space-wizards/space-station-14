@@ -10,7 +10,6 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.EntitySystems
@@ -28,7 +27,6 @@ namespace Content.Server.Chemistry.EntitySystems
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly EntityManager _entities = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -47,17 +45,13 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void UpdateUiState(ReagentDispenserComponent reagentDispenser)
         {
-            if (!HasComp<ItemSlotsComponent>(reagentDispenser.Owner))
-                return;
-
             var outputContainer = _itemSlotsSystem.GetItem(reagentDispenser.Owner, SharedReagentDispenser.OutputSlotName);
             var outputContainerInfo = BuildOutputContainerInfo(outputContainer);
 
             var dispenserName = Name(reagentDispenser.Owner);
             var inventory = GetInventory(reagentDispenser);
 
-            var state = new ReagentDispenserBoundUserInterfaceState(Name(reagentDispenser.Owner), outputContainerInfo, inventory, reagentDispenser.DispenseAmount);
-
+            var state = new ReagentDispenserBoundUserInterfaceState(dispenserName, outputContainerInfo, inventory, reagentDispenser.DispenseAmount);
             _userInterfaceSystem.TrySetUiState(reagentDispenser.Owner, ReagentDispenserUiKey.Key, state);
         }
 
@@ -126,7 +120,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 && message.Session.AttachedEntity is not null)
             {
                 _adminLogger.Add(LogType.ChemicalReaction, LogImpact.Medium,
-                    $"{_entities.ToPrettyString(message.Session.AttachedEntity.Value):player} dispensed {dispensedAmount}u of {message.ReagentId} into {_entities.ToPrettyString(outputContainer.Value):entity}");
+                    $"{ToPrettyString(message.Session.AttachedEntity.Value):player} dispensed {dispensedAmount}u of {message.ReagentId} into {ToPrettyString(outputContainer.Value):entity}");
             }
 
             UpdateUiState(reagentDispenser);
@@ -146,7 +140,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void ClickSound(ReagentDispenserComponent reagentDispenser)
         {
-            _audioSystem.Play(reagentDispenser.ClickSound, Filter.Pvs(reagentDispenser.Owner), reagentDispenser.Owner, AudioParams.Default.WithVolume(-2f));
+            _audioSystem.PlayPvs(reagentDispenser.ClickSound, reagentDispenser.Owner, AudioParams.Default.WithVolume(-2f));
         }
     }
 }
