@@ -87,7 +87,7 @@ public sealed class EyeLerpingSystem : EntitySystem
             foundEyes.Add(entity);
             moverQuery.TryGetComponent(entity, out var mover);
             xformQuery.TryGetComponent(entity, out var xform);
-            lerpInfo.LastRotation = eye.Rotation;
+            lerpInfo.LastRotation = lerpInfo.TargetRotation;
             lerpInfo.TargetRotation = GetRotation(xformQuery, mover, xform);
 
             if (xform != null)
@@ -107,6 +107,20 @@ public sealed class EyeLerpingSystem : EntitySystem
                 _activeEyes.Remove(eye);
             }
         }
+    }
+
+    /// <summary>
+    /// Does the eye need to lerp or is its rotation matched.
+    /// </summary>
+    private bool NeedsLerp(EntityUid uid, InputMoverComponent? mover = null)
+    {
+        if (mover == null)
+            return true;
+
+        if (mover.RelativeRotation.Equals(mover.TargetRelativeRotation))
+            return false;
+
+        return true;
     }
 
     private Angle GetRotation(EntityQuery<TransformComponent> xformQuery, InputMoverComponent? mover = null, TransformComponent? xform = null)
@@ -160,11 +174,18 @@ public sealed class EyeLerpingSystem : EntitySystem
     {
         var tickFraction = (float) _gameTiming.TickFraction / ushort.MaxValue;
         const double lerpMinimum = 0.00001;
+        var xformQuery = GetEntityQuery<TransformComponent>();
 
         foreach (var (eye, entity) in GetEyes())
         {
             if (!_activeEyes.TryGetValue(entity, out var lerpInfo))
                 continue;
+
+            if (TryComp<InputMoverComponent>(entity, out var mover) && !NeedsLerp(entity, mover))
+            {
+                eye.Rotation = GetRotation(xformQuery, mover);
+                continue;
+            }
 
             var shortest = Angle.ShortestDistance(lerpInfo.LastRotation, lerpInfo.TargetRotation);
 
