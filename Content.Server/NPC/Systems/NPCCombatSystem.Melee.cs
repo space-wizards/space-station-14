@@ -62,42 +62,41 @@ public sealed partial class NPCCombatSystem
         // miss %
         if (!TryComp<MeleeWeaponComponent>(component.Weapon, out var weapon))
         {
+            _steering.Unregister(component.Owner);
             component.Status = CombatStatus.NoWeapon;
-            return;
-        }
-
-        if (weapon.CooldownEnd > _timing.CurTime)
-        {
             return;
         }
 
         if (!xformQuery.TryGetComponent(component.Owner, out var xform) ||
             !xformQuery.TryGetComponent(component.Target, out var targetXform))
         {
+            _steering.Unregister(component.Owner);
             component.Status = CombatStatus.TargetUnreachable;
             return;
         }
 
         if (!xform.Coordinates.TryDistance(EntityManager, targetXform.Coordinates, out var distance))
         {
+            _steering.Unregister(component.Owner);
             component.Status = CombatStatus.TargetUnreachable;
             return;
         }
 
         if (distance > TargetMeleeLostRange)
         {
+            _steering.Unregister(component.Owner);
             component.Status = CombatStatus.TargetUnreachable;
             return;
         }
 
         if (distance > weapon.Range)
         {
-            if (!HasComp<NPCSteeringComponent>(component.Owner))
-                _steering.Register(component.Owner, new EntityCoordinates(component.Target, Vector2.Zero));
-
             component.Status = CombatStatus.TargetOutOfRange;
             return;
         }
+
+        if (!HasComp<NPCSteeringComponent>(component.Owner))
+            _steering.Register(component.Owner, new EntityCoordinates(component.Target, Vector2.Zero));
 
         _interaction.DoAttack(component.Owner, targetXform.Coordinates, false, component.Target);
     }
