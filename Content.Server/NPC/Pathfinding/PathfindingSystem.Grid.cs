@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -225,6 +226,16 @@ public sealed partial class PathfindingSystem
 
         component.Chunks[origin] = chunk;
         return chunk;
+    }
+
+    private bool TryGetChunk(Vector2i origin, GridPathfindingComponent component, [NotNullWhen(true)] out GridPathfindingChunk? chunk)
+    {
+        return component.Chunks.TryGetValue(origin, out chunk);
+    }
+
+    private Vector2i GetOrigin(Vector2 localPos)
+    {
+        return new Vector2i((int) Math.Floor(localPos.X / ChunkSize), (int) Math.Floor(localPos.Y / ChunkSize));
     }
 
     private Vector2i GetOrigin(EntityCoordinates coordinates, EntityUid gridUid)

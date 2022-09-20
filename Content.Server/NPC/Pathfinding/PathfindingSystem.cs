@@ -63,9 +63,8 @@ namespace Content.Server.NPC.Pathfinding
         {
             base.Update(frameTime);
             UpdateGrid();
-            _stopwatch.Restart();
-
             var graphs = EntityQuery<GridPathfindingComponent>(true).ToDictionary(o => o.Owner);
+            _stopwatch.Restart();
 
             Parallel.For(0, _pathRequests.Count, i =>
             {
@@ -148,10 +147,30 @@ namespace Content.Server.NPC.Pathfinding
         {
             var gridUid = coordinates.GetGridUid(EntityManager);
 
-            if (!TryComp<GridPathfindingComponent>(gridUid, out var comp))
+            if (!TryComp<GridPathfindingComponent>(gridUid, out var comp) ||
+                !TryComp<TransformComponent>(gridUid, out var xform))
+            {
+                return null;
+            }
+
+            var localPos = xform.InvWorldMatrix.Transform(coordinates.ToMapPos(EntityManager));
+            var origin = GetOrigin(localPos);
+
+            if (!TryGetChunk(origin, comp, out var chunk))
                 return null;
 
-            throw new NotImplementedException();
+            var chunkPos = new Vector2(MathHelper.Mod(localPos.X, ChunkSize), MathHelper.Mod(localPos.Y, ChunkSize));
+            var polys = chunk.Polygons[(int) chunkPos.X, (int) chunkPos.Y];
+
+            foreach (var poly in polys)
+            {
+                if (!poly.Box.Contains(localPos))
+                    continue;
+
+                return poly;
+            }
+
+            return null;
         }
 
         #region Debug handlers
