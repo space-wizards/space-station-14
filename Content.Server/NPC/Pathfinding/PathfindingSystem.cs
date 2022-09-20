@@ -43,7 +43,7 @@ namespace Content.Server.NPC.Pathfinding
         /// <summary>
         /// How many paths we can process in a single tick.
         /// </summary>
-        private const int PathTickLimit = 64;
+        private const int PathTickLimit = 256;
 
         public override void Initialize()
         {
@@ -69,6 +69,7 @@ namespace Content.Server.NPC.Pathfinding
 
             Parallel.For(0, _pathRequests.Count, i =>
             {
+                // If we're over the limit (either time-sliced or hard cap).
                 if (i >= PathTickLimit || _stopwatch.Elapsed >= PathTime)
                     return;
 
@@ -110,20 +111,6 @@ namespace Content.Server.NPC.Pathfinding
             if (request.Task.Exception != null)
             {
                 throw request.Task.Exception;
-            }
-
-            PathResult outcome;
-
-            switch (request.Task.Status)
-            {
-                case TaskStatus.Canceled:
-                    outcome = PathResult.NoPath;
-                    break;
-                case TaskStatus.RanToCompletion:
-                    outcome = request.Polys.Count > 0 ? PathResult.Path : PathResult.NoPath;
-                    break;
-                default:
-                    throw new InvalidOperationException();
             }
 
             var result = new PathfindingResultEvent();

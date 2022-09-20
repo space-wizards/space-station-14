@@ -47,10 +47,10 @@ public sealed class GridPathfindingChunk
     {
         Array.Clear(Points);
 
-        // Considering polys can't go across a single tile don't need to worry about internal nodes.
-        for (byte x = 0; x < SharedPathfindingSystem.ChunkSize; x+= SharedPathfindingSystem.ChunkSize - 1)
+        // Still clear internals for now as we don't gracefully handle anything mid-path
+        for (byte x = 0; x < SharedPathfindingSystem.ChunkSize; x++)
         {
-            for (byte y = 0; y < SharedPathfindingSystem.ChunkSize; y+= SharedPathfindingSystem.ChunkSize - 1)
+            for (byte y = 0; y < SharedPathfindingSystem.ChunkSize; y++)
             {
                 var tilePolys = Polygons[x, y];
 
@@ -71,6 +71,8 @@ public sealed class GridPathfindingChunk
                         var neighbor = component.GetNeighbor(neighborRef);
                         neighbor.Neighbors.Remove(nodeRef);
                     }
+
+                    poly.Neighbors.Clear();
                 }
             }
         }

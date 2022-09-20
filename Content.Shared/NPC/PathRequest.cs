@@ -2,6 +2,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.NPC;
 
@@ -20,9 +21,23 @@ public sealed class PathRequest
 
     public Queue<PathPoly> Polys = default!;
 
-    public Stopwatch Stopwatch = new();
-
     public bool Started = false;
+
+    #region Pathfinding state
+
+    public readonly Stopwatch Stopwatch = new();
+    public PriorityQueue<ValueTuple<float, PathPoly>> Frontier = default!;
+    public readonly Dictionary<PathPoly, float> CostSoFar = new();
+    public readonly Dictionary<PathPoly, PathPoly> CameFrom = new();
+
+    #endregion
+
+    #region Data
+
+    public int CollisionLayer;
+    public int CollisionMask;
+
+    #endregion
 
     public PathRequest(EntityCoordinates start, EntityCoordinates end, PathFlags flags, CancellationToken cancelToken)
     {
