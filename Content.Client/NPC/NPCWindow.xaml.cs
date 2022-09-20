@@ -13,14 +13,7 @@ public sealed partial class NPCWindow : FancyWindow
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
         var sysManager = IoCManager.Resolve<IEntitySystemManager>();
-        var debugSys = sysManager.GetEntitySystem<ClientAiDebugSystem>();
         var path = sysManager.GetEntitySystem<PathfindingSystem>();
-
-        NPCPath.Pressed = (debugSys.Tooltips & AiDebugMode.Paths) != 0x0;
-        NPCThonk.Pressed = (debugSys.Tooltips & AiDebugMode.Thonk) != 0x0;
-
-        NPCPath.OnToggled += args => debugSys.ToggleTooltip(AiDebugMode.Paths);
-        NPCThonk.OnToggled += args => debugSys.ToggleTooltip(AiDebugMode.Thonk);
 
         PathCrumbs.Pressed = (path.Modes & PathfindingDebugMode.Breadcrumbs) != 0x0;
         PathPolys.Pressed = (path.Modes & PathfindingDebugMode.Polys) != 0x0;
