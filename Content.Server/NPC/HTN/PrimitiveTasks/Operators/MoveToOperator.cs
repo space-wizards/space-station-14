@@ -104,8 +104,7 @@ public sealed class MoveToOperator : HTNOperator
             blackboard.GetValue<EntityUid>(NPCBlackboard.Owner),
             xform.Coordinates,
                 targetCoordinates,
-             PathFlags.Access,
-                range,
+            range,
             cancelToken.Token);
 
         await job;
@@ -142,14 +141,14 @@ public sealed class MoveToOperator : HTNOperator
             comp.Range = range;
         }
 
-        if (blackboard.TryGetValue<Queue<TileRef>>(PathfindKey, out var path))
+        if (blackboard.TryGetValue<PathfindingResultEvent>(PathfindKey, out var result))
         {
             if (blackboard.TryGetValue<EntityCoordinates>(NPCBlackboard.OwnerCoordinates, out var coordinates))
             {
-                _steering.PrunePath(coordinates, path);
+                _steering.PrunePath(coordinates, result.Path);
             }
 
-            comp.CurrentPath = path;
+            comp.CurrentPath = result.Path;
         }
     }
 
@@ -165,7 +164,7 @@ public sealed class MoveToOperator : HTNOperator
         }
 
         // OwnerCoordinates is only used in planning so dump it.
-        blackboard.Remove<Queue<TileRef>>(PathfindKey);
+        blackboard.Remove<PathfindingResultEvent>(PathfindKey);
 
         if (RemoveKeyOnFinish)
         {

@@ -288,21 +288,19 @@ namespace Content.Server.NPC.Systems
         /// </summary>
         /// <param name="coordinates">Our coordinates we are pruning from</param>
         /// <param name="nodes">Path we're pruning</param>
-        public void PrunePath(EntityCoordinates coordinates, Queue<TileRef> nodes)
+        public void PrunePath(EntityCoordinates coordinates, Queue<EntityCoordinates> nodes)
         {
             if (nodes.Count == 0)
                 return;
 
             // Right now the pathfinder gives EVERY TILE back but ideally it won't someday, it'll just give straightline ones.
             // For now, we just prune up until the closest node + 1 extra.
-            var closest = ((Vector2) nodes.Peek().GridIndices + 0.5f - coordinates.Position).Length;
+            var closest = (nodes.Peek().Position - coordinates.Position).Length;
             // TODO: Need to handle multi-grid and stuff.
 
             while (nodes.TryPeek(out var node))
             {
-                // TODO: Tile size
-                var nodePosition = (Vector2) node.GridIndices + 0.5f;
-                var length = (coordinates.Position - nodePosition).Length;
+                var length = (coordinates.Position - node.Position).Length;
 
                 if (length < closest)
                 {
@@ -335,36 +333,22 @@ namespace Content.Server.NPC.Systems
         /// <summary>
         /// Get a new job from the pathfindingsystem
         /// </summary>
-        private void RequestPath(NPCSteeringComponent steering, TransformComponent xform, PhysicsComponent? body)
+        private async void RequestPath(NPCSteeringComponent steering, TransformComponent xform, PhysicsComponent? body)
         {
             // If we already have a pathfinding request then don't grab another.
             if (steering.Pathfind)
                 return;
 
-            if (!_mapManager.TryGetGrid(xform.GridUid, out var grid))
-                return;
-
             steering.PathfindToken = new CancellationTokenSource();
-            var startTile = grid.GetTileRef(xform.Coordinates);
-            var endTile = grid.GetTileRef(steering.Coordinates);
-            var collisionMask = 0;
 
-            if (body != null)
-            {
-                collisionMask = body.CollisionMask;
-            }
-
-            var access = _accessReader.FindAccessTags(steering.Owner);
-            
-            steering.Pathfind = _pathfindingSystem.RequestPath(new PathfindingArgs(
+            var result = await _pathfindingSystem.GetPath(
                 steering.Owner,
-                access,
-                collisionMask,
-                startTile,
-                endTile,
-                steering.Range
-            ), steering.PathfindToken.Token);
+                xform.Coordinates,
+                steering.Coordinates,
+                steering.Range,
+                steering.PathfindToken.Token);
 
+            steering.CurrentPath = result.Path;
         }
 
         // TODO: Move these to movercontroller

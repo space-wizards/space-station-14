@@ -15,18 +15,16 @@ public sealed partial class PathfindingSystem
 
     private static readonly PathComparer AstarComparer = new();
 
-    private void UpdatePath(Dictionary<EntityUid, GridPathfindingComponent> graphs, PathRequest request)
+    private PathResult UpdatePath(Dictionary<EntityUid, GridPathfindingComponent> graphs, PathRequest request)
     {
         if (request.Start.Equals(request.End))
         {
-            request.Tcs.TrySetResult(PathResult.Path);
-            return;
+            return PathResult.Path;
         }
 
         if (request.Task.IsCanceled)
         {
-            request.Tcs.TrySetCanceled();
-            return;
+            return PathResult.NoPath;
         }
 
         // First run
@@ -48,14 +46,12 @@ public sealed partial class PathfindingSystem
 
         if (startGridUid == null || startGridUid != endGridUid)
         {
-            request.Tcs.TrySetResult(PathResult.NoPath);
-            return;
+            return PathResult.NoPath;
         }
 
         if (!graphs.TryGetValue(startGridUid.Value, out var graph))
         {
-            request.Tcs.TrySetResult(PathResult.NoPath);
-            return;
+            return PathResult.NoPath;
         }
 
         var startNode = GetPoly(request.Start);
@@ -63,8 +59,7 @@ public sealed partial class PathfindingSystem
 
         if (startNode == null || endNode == null)
         {
-            request.Tcs.TrySetResult(PathResult.NoPath);
-            return;
+            return PathResult.NoPath;
         }
 
         request.Frontier.Add((0.0f, startNode.Value));
@@ -79,7 +74,7 @@ public sealed partial class PathfindingSystem
             // Suspend
             if (count % 20 == 0 && count > 0 && request.Stopwatch.Elapsed > PathTime)
             {
-                return;
+                return PathResult.Continuing;
             }
 
             // Actual pathfinding here
@@ -127,15 +122,14 @@ public sealed partial class PathfindingSystem
 
         if (!endNode.Equals(currentNode))
         {
-            request.Tcs.TrySetResult(PathResult.NoPath);
-            return;
+            return PathResult.NoPath;
         }
 
         var route = ReconstructPath(request.CameFrom, currentNode.Value);
         request.Polys = route;
         // var simplifiedRoute = Simplify(route, 0f);
         // var actualRoute = new Queue<EntityCoordinates>(simplifiedRoute);
-        request.Tcs.TrySetResult(PathResult.Path);
+        return PathResult.Path;
     }
 
     private Queue<PathPoly> ReconstructPath(Dictionary<PathPoly, PathPoly> path, PathPoly currentNode)

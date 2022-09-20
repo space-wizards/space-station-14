@@ -65,6 +65,7 @@ namespace Content.Server.NPC.Pathfinding
             UpdateGrid();
             var graphs = EntityQuery<GridPathfindingComponent>(true).ToDictionary(o => o.Owner);
             _stopwatch.Restart();
+            var results = new PathResult[_pathRequests.Count];
 
             Parallel.For(0, _pathRequests.Count, i =>
             {
@@ -72,21 +73,29 @@ namespace Content.Server.NPC.Pathfinding
                 if (i >= PathTickLimit || _stopwatch.Elapsed >= PathTime)
                     return;
 
-                UpdatePath(graphs, _pathRequests[i]);
+                results[i] = UpdatePath(graphs, _pathRequests[i]);
             });
 
             // then, single-threaded cleanup.
             for (var i = 0; i < Math.Min(_pathRequests.Count, PathTickLimit); i++)
             {
                 var path = _pathRequests[i];
+                var result = results[i];
 
-                switch (path.Task.Status)
+                if (path.Task.Exception != null)
                 {
-                    case TaskStatus.Canceled:
-                    case TaskStatus.Faulted:
-                    case TaskStatus.RanToCompletion:
+                    _pathRequests.RemoveAt(i);
+                    throw path.Task.Exception;
+                }
+
+                switch (result)
+                {
+                    case PathResult.PartialPath:
+                    case PathResult.Path:
+                    case PathResult.NoPath:
                         // Don't use RemoveSwap because we still want to try and process them in order.
                         _pathRequests.RemoveAt(i);
+                        path.Tcs.SetResult(result);
                         break;
                 }
             }
@@ -96,11 +105,10 @@ namespace Content.Server.NPC.Pathfinding
             EntityUid entity,
             EntityCoordinates start,
             EntityCoordinates end,
-            PathFlags flags,
             float range,
             CancellationToken cancelToken)
         {
-            return await GetPath(start, end, flags, range, cancelToken);
+            return await GetPath(start, end, range, cancelToken);
         }
 
         /// <summary>
@@ -109,12 +117,11 @@ namespace Content.Server.NPC.Pathfinding
         public async Task<PathfindingResultEvent> GetPath(
             EntityCoordinates start,
             EntityCoordinates end,
-            PathFlags flags,
             float range,
             CancellationToken cancelToken)
         {
             // Don't allow the caller to pass in the request in case they try to do something with its data.
-            var request = new PathRequest(start, end, flags, cancelToken);
+            var request = new PathRequest(start, end, PathFlags.None, cancelToken);
             _pathRequests.Add(request);
 
             await request.Task;
@@ -135,11 +142,10 @@ namespace Content.Server.NPC.Pathfinding
             EntityUid uid,
             EntityCoordinates start,
             EntityCoordinates end,
-            PathFlags flags,
             float range,
             CancellationToken cancelToken)
         {
-            var path = await GetPath(start, end, flags, range, cancelToken);
+            var path = await GetPath(start, end, range, cancelToken);
             RaiseLocalEvent(uid, path);
         }
 

@@ -5,4 +5,5 @@ public enum PathResult : byte
     NoPath,
     PartialPath,
     Path,
+    Continuing,
 }
