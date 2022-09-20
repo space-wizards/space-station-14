@@ -206,3 +206,50 @@
   - type: Slippery
     launchForwardsMultiplier: 2.0
   - type: StepTrigger
+
+- type: entity
+  name: poop
+  id: PuddlePoop
+  description: Disgusting!
+  components:
+  - type: Transform
+    anchored: true
+  - type: Clickable
+  - type: Puddle
+    slipThreshold: 5
+    evaporateTime: 90
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.4,-0.4,0.4,0.4"
+      mask:
+      - ItemMask
+      layer:
+      - SlipLayer
+      hard: false
+  - type: Sprite
+    sprite: Fluids/splatter.rsi
+    state: splatter-0
+    color: "#8d6f16"
+  - type: SolutionContainerManager
+    solutions:
+      puddle:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Water
+          Quantity: 5
+  - type: Slippery
+    launchForwardsMultiplier: 2.0
+  - type: StepTrigger
+  - type: Appearance
+    visuals:
+    - type: PuddleVisualizer
+      customPuddleSprite: true
+  - type: DiseaseCarrier
+    carrierDiseases:
+    - ExplosiveDiarrhea
+  - type: Evaporation
+    evaporateTime: 400 # very slow

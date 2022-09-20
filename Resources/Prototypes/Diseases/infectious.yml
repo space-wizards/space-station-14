@@ -321,3 +321,26 @@
       maxLength: 30
     - !type:DiseaseJustWaitCure
       maxLength: 400
+
+- type: disease
+  id: ExplosiveDiarrhea
+  name: explosive diarrhea
+  cureResist: 0.1
+  effects:
+    - !type:DiseaseVomit
+      probability: 0.002
+    - !type:DiseasePoop
+      probability: 0.035
+      snoughMessage: disease-cough
+      snoughSound:
+        collection: Coughs
+    - !type:DiseaseHealthChange
+      probability: 0.1
+      damage:
+        types:
+          Poison: 4
+  cures:
+    - !type:DiseaseBedrestCure
+      maxLength: 120
+    - !type:DiseaseJustWaitCure
+      maxLength: 400

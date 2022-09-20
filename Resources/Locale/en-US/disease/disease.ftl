@@ -13,3 +13,4 @@ disease-beat-chest-compulsion = {CAPITALIZE(THE($person))} beats {POSS-ADJ($pers
 disease-vomit = {CAPITALIZE(THE($person))} vomits.
 disease-think = You feel like you can't think straight.
 disease-polymorph = You feel your body twist and change form!
+disease-poop = {CAPITALIZE(THE($person))} poops.

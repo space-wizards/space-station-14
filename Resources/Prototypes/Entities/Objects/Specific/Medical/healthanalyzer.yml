@@ -48,3 +48,13 @@
   - type: HealthAnalyzer
     fake: true
     disease: ActiveZombieVirus
+
+- type: entity
+  parent: HandheldHealthAnalyzer
+  id: HandheldHealthAnalyzerDiarrhea
+  name: Poop Inducer
+  suffix: admin abuse
+  components:
+  - type: HealthAnalyzer
+    fake: true
+    disease: ExplosiveDiarrhea
