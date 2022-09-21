@@ -68,6 +68,13 @@ namespace Content.Shared.Research.Prototypes
         public List<string> UnlockedRecipes { get; } = new();
 
         /// <summary>
+        ///     A list of recipe IDs this technology excludes.
+        /// </summary>
+        [ViewVariables]
+        [DataField("excludedRecipes", customTypeSerializer: typeof(PrototypeIdListSerializer<LatheRecipePrototype>))]
+        public List<string> ExcludedRecipes { get; } = new();
+
+        /// <summary>
         ///     Whether or not the technology should be listed.
         /// </summary>
         [DataField("hidden")]

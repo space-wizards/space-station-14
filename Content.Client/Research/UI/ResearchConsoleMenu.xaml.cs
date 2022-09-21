@@ -96,7 +96,7 @@ namespace Content.Client.Research.UI
         }
 
         /// <summary>
-        ///     Populate all technologies in the ItemLists.
+        ///     Populate all technologies that are not hidden, excluded, are unlockable, or have all requirements unlocked/unlockable in the ItemLists.
         /// </summary>
         public void PopulateItemLists()
         {
@@ -109,27 +109,47 @@ namespace Content.Client.Research.UI
             _futureTechnologyPrototypes.Clear();
 
             var prototypeMan = IoCManager.Resolve<IPrototypeManager>();
+            List<string> dependencyTech = new List<string>();
 
-            // For now, we retrieve all technologies. In the future, this should be changed.
             foreach (var tech in prototypeMan.EnumeratePrototypes<TechnologyPrototype>())
             {
-                if (!tech.Hidden) {
+                if (!tech.Hidden)
+                {
                     if (Owner.IsTechnologyUnlocked(tech))
                     {
                         UnlockedTechnologies.AddItem(tech.Name, tech.Icon.Frame0());
                         _unlockedTechnologyPrototypes.Add(tech);
+                        dependencyTech.Add(tech.ID);
                     }
                     else if (Owner.CanUnlockTechnology(tech))
                     {
                         UnlockableTechnologies.AddItem(tech.Name, tech.Icon.Frame0());
                         _unlockableTechnologyPrototypes.Add(tech);
+                        dependencyTech.Add(tech.ID);
                     }
-                    else
-                    {
+                }
+                else if (Owner.IsTechnologyUnlocked(tech) || Owner.CanUnlockTechnology(tech))
+                {
+                    dependencyTech.Add(tech.ID);
+                }
+            }
 
+            foreach (var tech in prototypeMan.EnumeratePrototypes<TechnologyPrototype>())
+            {
+                if (!tech.Hidden && !dependencyTech.Contains(tech.ID))
+                {
+                    var requirementsUnlocked = true;
+                    foreach (var requiredTech in tech.RequiredTechnologies)
+                    {
+                        if (!dependencyTech.Contains(requiredTech))
+                        {
+                            requirementsUnlocked = false;
+                        }
+                    }
+                    if (requirementsUnlocked)
+                    {
                         FutureTechnologies.AddItem(tech.Name, tech.Icon.Frame0());
                         _futureTechnologyPrototypes.Add(tech);
-                    
                     }
                 }
             }
