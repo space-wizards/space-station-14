@@ -113,20 +113,24 @@ namespace Content.Client.Research.UI
             // For now, we retrieve all technologies. In the future, this should be changed.
             foreach (var tech in prototypeMan.EnumeratePrototypes<TechnologyPrototype>())
             {
-                if (Owner.IsTechnologyUnlocked(tech))
-                {
-                    UnlockedTechnologies.AddItem(tech.Name, tech.Icon.Frame0());
-                    _unlockedTechnologyPrototypes.Add(tech);
-                }
-                else if (Owner.CanUnlockTechnology(tech))
-                {
-                    UnlockableTechnologies.AddItem(tech.Name, tech.Icon.Frame0());
-                    _unlockableTechnologyPrototypes.Add(tech);
-                }
-                else
-                {
-                    FutureTechnologies.AddItem(tech.Name, tech.Icon.Frame0());
-                    _futureTechnologyPrototypes.Add(tech);
+                if (!tech.Hidden) {
+                    if (Owner.IsTechnologyUnlocked(tech))
+                    {
+                        UnlockedTechnologies.AddItem(tech.Name, tech.Icon.Frame0());
+                        _unlockedTechnologyPrototypes.Add(tech);
+                    }
+                    else if (Owner.CanUnlockTechnology(tech))
+                    {
+                        UnlockableTechnologies.AddItem(tech.Name, tech.Icon.Frame0());
+                        _unlockableTechnologyPrototypes.Add(tech);
+                    }
+                    else
+                    {
+
+                        FutureTechnologies.AddItem(tech.Name, tech.Icon.Frame0());
+                        _futureTechnologyPrototypes.Add(tech);
+                    
+                    }
                 }
             }
         }

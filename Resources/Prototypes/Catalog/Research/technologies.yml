@@ -10,7 +10,27 @@
   icon:
     sprite: Structures/Machines/server.rsi
     state: server-on
-  requiredPoints: 2500
+
+- type: technology
+  name: technologies-test-hidden-technology
+  id: TestHiddenTechnology
+  description: test
+  hidden: true
+
+- type: technology
+  name: technologies-test-hidden-unlock-technology
+  id: TestHiddenUnlock
+  description: test
+  icon:
+    sprite: Structures/Machines/server.rsi
+    state: server-on
+  requiredTechnologies:
+    - TestHiddenTechnology
+  unlockedRecipes:
+    - Bucket
+    - MopItem
+    - SprayBottle
+    - BodyBag
 
 # Cleaning Technology Tree
 
