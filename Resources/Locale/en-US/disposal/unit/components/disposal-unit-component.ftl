@@ -19,4 +19,4 @@ disposal-eject-verb-get-data-text = Eject contents
 disposal-unit-no-hands = You don't have hands!
 
 ## missed
-disposal-unit-thrown-missed = Didn't go in!
+disposal-unit-thrown-missed = Missed!
