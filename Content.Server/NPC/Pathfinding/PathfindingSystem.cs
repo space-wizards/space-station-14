@@ -154,15 +154,6 @@ namespace Content.Server.NPC.Pathfinding
             RaiseLocalEvent(uid, path);
         }
 
-        public PathPoly? GetPoly(PathPolyRef polyRef, GridPathfindingComponent? component = null)
-        {
-            if (!Resolve(polyRef.GraphUid, ref component, false))
-                return null;
-
-            // TODO Validate
-            return component.GetNeighbor(polyRef);
-        }
-
         /// <summary>
         /// Gets the relevant poly for the specified coordinates if it exists.
         /// </summary>
@@ -183,7 +174,7 @@ namespace Content.Server.NPC.Pathfinding
                 return null;
 
             var chunkPos = new Vector2(MathHelper.Mod(localPos.X, ChunkSize), MathHelper.Mod(localPos.Y, ChunkSize));
-            var polys = chunk.Polygons[(int) chunkPos.X, (int) chunkPos.Y];
+            var polys = chunk.Polygons[(int) chunkPos.X * ChunkSize + (int) chunkPos.Y];
 
             foreach (var poly in polys)
             {
@@ -191,38 +182,6 @@ namespace Content.Server.NPC.Pathfinding
                     continue;
 
                 return poly;
-            }
-
-            return null;
-        }
-
-        public PathPolyRef? GetPolyRef(EntityCoordinates coordinates)
-        {
-            var gridUid = coordinates.GetGridUid(EntityManager);
-
-            if (!TryComp<GridPathfindingComponent>(gridUid, out var comp) ||
-                !TryComp<TransformComponent>(gridUid, out var xform))
-            {
-                return null;
-            }
-
-            var localPos = xform.InvWorldMatrix.Transform(coordinates.ToMapPos(EntityManager));
-            var origin = GetOrigin(localPos);
-
-            if (!TryGetChunk(origin, comp, out var chunk))
-                return null;
-
-            var chunkPos = new Vector2i((int) MathHelper.Mod(localPos.X, ChunkSize), (int) MathHelper.Mod(localPos.Y, ChunkSize));
-            var polys = chunk.Polygons[chunkPos.X, chunkPos.Y];
-
-            for (var i = 0; i < polys.Count; i++)
-            {
-                var poly = polys[i];
-
-                if (!poly.Box.Contains(localPos))
-                    continue;
-
-                return new PathPolyRef(gridUid.Value, origin, GetIndex(chunkPos.X, chunkPos.Y), (byte) i);
             }
 
             return null;
@@ -240,14 +199,7 @@ namespace Content.Server.NPC.Pathfinding
                 if ((session.Value & PathfindingDebugMode.Routes) == 0x0)
                     continue;
 
-                var polys = new List<PathPoly>(request.Polys.Count);
-
-                foreach (var polyRef in polys)
-                {
-
-                }
-
-                RaiseNetworkEvent(new PathRouteMessage(request.Polys.Select(o => GetPoly(o)).ToList(), new Dictionary<PathPolyRef, float>()), session.Key.ConnectedClient);
+                RaiseNetworkEvent(new PathRouteMessage(request.Polys.ToList(), new Dictionary<PathPoly, float>()), session.Key.ConnectedClient);
             }
         }
 
@@ -350,7 +302,7 @@ namespace Content.Server.NPC.Pathfinding
         }
 
         private void SendPolys(GridPathfindingChunk chunk, EntityUid gridUid,
-            List<PathPoly>[,] tilePolys)
+            List<PathPoly>[] tilePolys)
         {
             if (_subscribedSessions.Count == 0)
                 return;
@@ -362,7 +314,8 @@ namespace Content.Server.NPC.Pathfinding
             {
                 for (var y = 0; y < extent; y++)
                 {
-                    data[new Vector2i(x, y)] = tilePolys[x, y];
+                    var index = GetIndex(x, y);
+                    data[new Vector2i(x, y)] = tilePolys[index];
                 }
             }
 
@@ -406,7 +359,8 @@ namespace Content.Server.NPC.Pathfinding
             {
                 for (var y = 0; y < ChunkSize; y++)
                 {
-                    polys[new Vector2i(x, y)] = chunk.Polygons[x, y];
+                    var index = GetIndex(x, y);
+                    polys[new Vector2i(x, y)] = chunk.Polygons[index];
                 }
             }
 

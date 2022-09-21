@@ -20,7 +20,7 @@ public sealed class PathRequest
     public Task<PathResult> Task => Tcs.Task;
     public readonly TaskCompletionSource<PathResult> Tcs;
 
-    public Queue<PathPolyRef> Polys = default!;
+    public Queue<PathPoly> Polys = default!;
     public Queue<EntityCoordinates> Path = default!;
 
     public bool Started = false;
@@ -28,9 +28,9 @@ public sealed class PathRequest
     #region Pathfinding state
 
     public readonly Stopwatch Stopwatch = new();
-    public PriorityQueue<ValueTuple<float, PathPolyRef>> Frontier = default!;
-    public readonly Dictionary<PathPolyRef, float> CostSoFar = new();
-    public readonly Dictionary<PathPolyRef, PathPolyRef> CameFrom = new();
+    public PriorityQueue<ValueTuple<float, PathPoly>> Frontier = default!;
+    public readonly Dictionary<PathPoly, float> CostSoFar = new();
+    public readonly Dictionary<PathPoly, PathPoly> CameFrom = new();
 
     #endregion
 

@@ -90,11 +90,12 @@ public struct PathfindingData : IEquatable<PathfindingData>
 public enum PathfindingBreadcrumbFlag : ushort
 {
     None = 0,
-    Space = 1 << 0,
-    Interior = 1 << 1,
+    Invalid = 1 << 1,
+    Space = 1 << 2,
+    Interior = 1 << 3,
 
     /// <summary>
     /// Are we outside the bounds of our chunk. This is separate to Interior.
     /// </summary>
-    External = 1 << 2,
+    External = 1 << 4,
 }

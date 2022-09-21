@@ -6,9 +6,9 @@ namespace Content.Server.NPC.Pathfinding;
 
 public sealed partial class PathfindingSystem
 {
-    private sealed class PathComparer : IComparer<ValueTuple<float, PathPolyRef>>
+    private sealed class PathComparer : IComparer<ValueTuple<float, PathPoly>>
     {
-        public int Compare((float, PathPolyRef) x, (float, PathPolyRef) y)
+        public int Compare((float, PathPoly) x, (float, PathPoly) y)
         {
             return y.Item1.CompareTo(x.Item1);
         }
@@ -28,33 +28,37 @@ public sealed partial class PathfindingSystem
             return PathResult.NoPath;
         }
 
-        // TODO: Cleanup the poly / ref situation
         // TODO: Need partial planning that uses best node.
+        PathPoly? currentNode = null;
 
         // First run
         if (!request.Started)
         {
-            request.Frontier = new PriorityQueue<(float, PathPolyRef)>(AstarComparer);
+            request.Frontier = new PriorityQueue<(float, PathPoly)>(AstarComparer);
             request.Started = true;
         }
-        // TODO: Re-validate state... or something
+        // Re-validate nodes
+        else
+        {
+            (_, currentNode) = request.Frontier.Peek();
+
+            if (!currentNode.IsValid())
+            {
+                return PathResult.NoPath;
+            }
+
+            // Re-validate parents too.
+            if (request.CameFrom.TryGetValue(currentNode, out var parentNode) && !parentNode.IsValid())
+            {
+                return PathResult.NoPath;
+            }
+        }
 
         DebugTools.Assert(!request.Task.IsCompleted);
         request.Stopwatch.Restart();
 
-        PathPolyRef? currentNode = null;
-
-        // TODO: Portals + portal flags + storing portals on the comp
-        var startNodeRef = GetPolyRef(request.Start);
-        var endNodeRef = GetPolyRef(request.End);
-
-        if (startNodeRef == null || endNodeRef == null)
-        {
-            return PathResult.NoPath;
-        }
-
-        var startNode = GetPoly(startNodeRef.Value);
-        var endNode = GetPoly(endNodeRef.Value);
+        var startNode = GetPoly(request.Start);
+        var endNode = GetPoly(request.End);
 
         if (startNode == null || endNode == null)
         {
@@ -62,16 +66,16 @@ public sealed partial class PathfindingSystem
         }
 
         // TODO: Mixing path nodes and refs has made this spaghet.
-        var currentGraph = startNodeRef.Value.GraphUid;
+        var currentGraph = startNode.GraphUid;
 
         if (!graphs.TryGetValue(currentGraph, out var comp))
         {
             return PathResult.NoPath;
         }
 
-        currentNode = startNodeRef;
-        request.Frontier.Add((0.0f, startNodeRef.Value));
-        request.CostSoFar[startNodeRef.Value] = 0.0f;
+        currentNode = startNode;
+        request.Frontier.Add((0.0f, startNode));
+        request.CostSoFar[startNode] = 0.0f;
         var count = 0;
 
         while (request.Frontier.Count > 0)
@@ -88,37 +92,14 @@ public sealed partial class PathfindingSystem
             // Actual pathfinding here
             (_, currentNode) = request.Frontier.Take();
 
-            if (currentNode.Equals(endNodeRef))
+            if (currentNode.Equals(endNode))
             {
                 break;
             }
 
-            var node = GetPoly(currentNode.Value);
-
-            if (node == null)
-                continue;
-
-            foreach (var neighborRef in node.Value.Neighbors)
+            foreach (var neighbor in currentNode.Neighbors)
             {
-                // TODO: Can short-circuit if they're on the same chunk
-                PathPoly neighbor;
-
-                if (currentGraph == neighborRef.GraphUid)
-                {
-                    neighbor = comp.GetNeighbor(neighborRef);
-                }
-                else if (graphs.TryGetValue(neighborRef.GraphUid, out var neighborComp))
-                {
-                    neighbor = neighborComp.GetNeighbor(neighborRef);
-                    currentGraph = neighborRef.GraphUid;
-                    comp = neighborComp;
-                }
-                else
-                {
-                    continue;
-                }
-
-                var tileCost = GetTileCost(request, node.Value, neighbor);
+                var tileCost = GetTileCost(request, currentNode, neighbor);
 
                 if (tileCost.Equals(0f))
                 {
@@ -128,44 +109,44 @@ public sealed partial class PathfindingSystem
                 // f = g + h
                 // gScore is distance to the start node
                 // hScore is distance to the end node
-                var gScore = request.CostSoFar[currentNode.Value] + tileCost;
-                if (request.CostSoFar.TryGetValue(neighborRef, out var nextValue) && gScore >= nextValue)
+                var gScore = request.CostSoFar[currentNode] + tileCost;
+                if (request.CostSoFar.TryGetValue(neighbor, out var nextValue) && gScore >= nextValue)
                 {
                     continue;
                 }
 
-                request.CameFrom[neighborRef] = currentNode.Value;
-                request.CostSoFar[neighborRef] = gScore;
+                request.CameFrom[neighbor] = currentNode;
+                request.CostSoFar[neighbor] = gScore;
                 // pFactor is tie-breaker where the fscore is otherwise equal.
                 // See http://theory.stanford.edu/~amitp/GameProgramming/Heuristics.html#breaking-ties
                 // There's other ways to do it but future consideration
                 // The closer the fScore is to the actual distance then the better the pathfinder will be
                 // (i.e. somewhere between 1 and infinite)
                 // Can use hierarchical pathfinder or whatever to improve the heuristic but this is fine for now.
-                var hScore = OctileDistance(endNode.Value, neighbor) * (1.0f + 1.0f / 1000.0f);
+                var hScore = OctileDistance(endNode, neighbor) * (1.0f + 1.0f / 1000.0f);
                 var fScore = gScore + hScore;
-                request.Frontier.Add((fScore, neighborRef));
+                request.Frontier.Add((fScore, neighbor));
             }
         }
 
-        if (!endNodeRef.Equals(currentNode))
+        if (!endNode.Equals(currentNode))
         {
             return PathResult.NoPath;
         }
 
-        var route = ReconstructPath(request.CameFrom, currentNode.Value);
+        var route = ReconstructPath(request.CameFrom, currentNode);
         request.Polys = route;
         var path = new Queue<EntityCoordinates>(route.Count);
 
-        foreach (var polyRef in route)
+        foreach (var node in route)
         {
-            var node = GetPoly(polyRef);
-            if (node == null)
+            // Due to partial planning some nodes may have been invalidated.
+            if (!node.IsValid())
             {
                 return PathResult.NoPath;
             }
 
-            path.Enqueue(ToCoordinates(polyRef.GraphUid, node.Value));
+            path.Enqueue(ToCoordinates(node.GraphUid, node));
         }
 
         request.Path = path;
@@ -175,9 +156,9 @@ public sealed partial class PathfindingSystem
         return PathResult.Path;
     }
 
-    private Queue<PathPolyRef> ReconstructPath(Dictionary<PathPolyRef, PathPolyRef> path, PathPolyRef currentNodeRef)
+    private Queue<PathPoly> ReconstructPath(Dictionary<PathPoly, PathPoly> path, PathPoly currentNodeRef)
     {
-        var running = new Stack<PathPolyRef>();
+        var running = new Stack<PathPoly>();
         running.Push(currentNodeRef);
         while (path.ContainsKey(currentNodeRef))
         {
@@ -187,7 +168,7 @@ public sealed partial class PathfindingSystem
             running.Push(currentNodeRef);
         }
 
-        var result = new Queue<PathPolyRef>(running);
+        var result = new Queue<PathPoly>(running);
         return result;
     }
 

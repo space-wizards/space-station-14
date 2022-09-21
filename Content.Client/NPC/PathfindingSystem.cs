@@ -421,16 +421,8 @@ namespace Content.Client.NPC
                         {
                             foreach (var poly in tile.Value)
                             {
-                                foreach (var neighbor in poly.Neighbors)
+                                foreach (var neighborPoly in poly.Neighbors)
                                 {
-                                    var neighborX = neighbor.Index / SharedPathfindingSystem.ChunkSize;
-                                    var neighborY = neighbor.Index % SharedPathfindingSystem.ChunkSize;
-
-                                    if (!data.TryGetValue(neighbor.ChunkOrigin, out var neighborChunk) ||
-                                        !neighborChunk.TryGetValue(new Vector2i(neighborX, neighborY), out var neighborTile))
-                                        continue;
-
-                                    var neighborPoly = neighborTile[neighbor.TileIndex];
                                     worldHandle.DrawLine(poly.Box.Center, neighborPoly.Box.Center, Color.Blue);
                                 }
                             }

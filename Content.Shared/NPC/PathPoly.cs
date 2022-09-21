@@ -1,3 +1,4 @@
+using Content.Server.NPC.Pathfinding;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.NPC;
@@ -5,74 +6,55 @@ namespace Content.Shared.NPC;
 /*
  * I bikeshedded a lot on how to do this and I'm still not entirely happy.
  * The main thing is you need a weak ref to the poly because it may be invalidated due to graph updates.
+ * I had a struct version but you still need to store the neighbors somewhere, maybe on the chunk itself?
+ * Future dev work required.
  */
 
 [Serializable, NetSerializable]
-public struct PathPoly : IEquatable<PathPoly>
+public sealed class PathPoly : IEquatable<PathPoly>
 {
-    public Box2 Box;
-    public PathfindingData Data;
-    public HashSet<PathPolyRef> Neighbors;
+    public readonly EntityUid GraphUid;
+    [NonSerialized]
+    public readonly GridPathfindingChunk Chunk;
+    public readonly byte TileIndex;
 
-    public PathPoly(Box2 vertices, PathfindingData data)
+    public readonly Box2 Box;
+    public PathfindingData Data;
+    public readonly HashSet<PathPoly> Neighbors;
+
+    public PathPoly(EntityUid graphUid, GridPathfindingChunk chunk, byte tileIndex, Box2 vertices, PathfindingData data, HashSet<PathPoly> neighbors)
     {
+        GraphUid = graphUid;
+        Chunk = chunk;
+        TileIndex = tileIndex;
         Box = vertices;
         Data = data;
-        Neighbors = new HashSet<PathPolyRef>();
+        Neighbors = neighbors;
     }
 
-    // Neighbors deliberately ignored.
-
-    public bool Equals(PathPoly other)
+    public bool IsValid()
     {
-        return Data.Equals(other.Data) &&
+        return (Data.Flags & PathfindingBreadcrumbFlag.Invalid) == 0x0;
+    }
+
+    public bool Equals(PathPoly? other)
+    {
+        return other != null &&
+               GraphUid.Equals(other.GraphUid) &&
+               Chunk.Equals(other.Chunk) &&
+               TileIndex == other.TileIndex &&
+               Data.Equals(other.Data) &&
                Box.Equals(other.Box) &&
                Neighbors.SetEquals(other.Neighbors);
     }
 
-    public override int GetHashCode()
+    public override bool Equals(object? obj)
     {
-        return HashCode.Combine(Data, Box, Neighbors);
-    }
-}
-
-[Serializable, NetSerializable]
-public struct PathPolyRef : IEquatable<PathPolyRef>
-{
-    /// <summary>
-    /// Graph that this is the reference for.
-    /// </summary>
-    public EntityUid GraphUid;
-
-    public Vector2i ChunkOrigin;
-
-    /// <summary>
-    /// X / Y index of the tile in the chunk.
-    /// </summary>
-    public byte Index;
-
-    /// <summary>
-    /// Hash of the target poly.
-    /// </summary>
-    public int Hash;
-
-    public PathPolyRef(EntityUid graphUid, Vector2i chunkOrigin, byte index, int hash)
-    {
-        GraphUid = graphUid;
-        ChunkOrigin = chunkOrigin;
-        Index = index;
-    }
-
-    public bool Equals(PathPolyRef other)
-    {
-        return Hash.Equals(other.Hash) &&
-               GraphUid.Equals(other.GraphUid) &&
-               ChunkOrigin.Equals(other.ChunkOrigin) &&
-               Index == other.Index;
+        return ReferenceEquals(this, obj) || obj is PathPoly other && Equals(other);
     }
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(GraphUid, ChunkOrigin, Index, Hash);
+        return HashCode.Combine(GraphUid, Chunk, TileIndex, Box);
     }
 }
