@@ -25,7 +25,7 @@ public sealed class EyeLerpingSystem : EntitySystem
 
         SubscribeLocalEvent<EyeComponent, ComponentStartup>(OnEyeStartup);
         SubscribeLocalEvent<EyeComponent, ComponentShutdown>(OnEyeShutdown);
-        SubscribeLocalEvent<LerpingEyeComponent, MapChangedEvent>(OnMapChanged);
+        SubscribeLocalEvent<LerpingEyeComponent, EntParentChangedMessage>(HandleMapChange);
         SubscribeLocalEvent<EyeComponent, PlayerAttachedEvent>(OnAttached);
         SubscribeLocalEvent<LerpingEyeComponent, PlayerDetachedEvent>(OnDetached);
 
@@ -72,10 +72,11 @@ public sealed class EyeLerpingSystem : EntitySystem
             RemComp(uid, lerp);
     }
 
-    private void OnMapChanged(EntityUid uid, LerpingEyeComponent component, MapChangedEvent args)
+    private void HandleMapChange(EntityUid uid, LerpingEyeComponent component, ref EntParentChangedMessage args)
     {
-        // Stop any lerps
-        component.LastRotation = GetRotation(uid);
+        // Is this actually a map change? If yes, stop any lerps
+        if (args.OldMapId != args.Transform.MapID)
+            component.LastRotation = GetRotation(uid, args.Transform);
     }
 
     private void OnAttached(EntityUid uid, EyeComponent component, PlayerAttachedEvent args)
