@@ -10,13 +10,13 @@
         path:
           "/Audio/Effects/glass_hit.ogg"
   - type: WallMount
+  - type: InteractionOutline
   - type: Sprite
     drawdepth: Objects
     sprite: Structures/Wallmounts/barsign.rsi
-    state: empty
+  - type: Appearance
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
-  - type: BarSign
   - type: Destructible
     thresholds:
     - trigger:
@@ -25,29 +25,12 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
-        
-- type: entity
-  parent: BaseBarSign
-  id: BarSign
-  name: bar sign
-  suffix: Random
-  components:
-  - type: BarSign
-
-- type: entity
-  id: LargeBarSign
-  name: large bar sign
-  noSpawn: true
-  components:
-  - type: Clickable
-  - type: InteractionOutline
-  - type: Sprite
-    drawdepth: WallTops
-    sprite: Structures/Wallmounts/sylphs.rsi
-    state: sylph
-  - type: ApcPowerReceiver
-  - type: ExtensionCableReceiver
-  - type: BarSign
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }  
    
 - type: entity
   parent: BaseBarSign
@@ -55,17 +38,25 @@
   name: Combo Cafe
   description: Renowned system-wide for their utterly uncreative drink combinations.
   components:
-  - type: BarSign
-    current: ComboCafe
-   
+  - type: Sprite
+    layers:
+    - state: empty
+    - state: combocafe
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+  
 - type: entity
   parent: BaseBarSign
   id: BarSignEmergencyRumParty
   name: Emergency Rum Party
   description: Recently relicensed after a long closure.
   components:
-  - type: BarSign
-    current: EmergencyRumParty
+  - type: Sprite
+    layers:
+    - state: empty
+    - state: emergencyrumparty
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
 
 - type: entity
   parent: BaseBarSign
@@ -73,8 +64,12 @@
   name: LV426
   description: Drinking with fancy facemasks is clearly more important than going to medbay.
   components:
-  - type: BarSign
-    current: LV426
+  - type: Sprite
+    layers:
+    - state: empty
+    - state: lv426
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
 
 - type: entity
   parent: BaseBarSign
@@ -82,8 +77,12 @@
   name: Maid Cafe
   description: Welcome back, master!
   components:
-  - type: BarSign
-    current: MaidCafe
+  - type: Sprite
+    layers:
+    - state: empty
+    - state: maidcafe
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
     
 - type: entity
   parent: BaseBarSign
@@ -91,8 +90,12 @@
   name: Maltese Falcon
   description: Play it again, sam.
   components:
-  - type: BarSign
-    current: MalteseFalcon
+  - type: Sprite
+    layers:
+    - state: empty
+    - state: maltesefalcon
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
 
 - type: entity
   parent: BaseBarSign
@@ -100,8 +103,12 @@
   name: Officer Beersky
   description: Man eat a dong, these drinks are great.
   components:
-  - type: BarSign
-    current: OfficerBeersky
+  - type: Sprite
+    layers:
+    - state: empty
+    - state: officerbeersky
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
 
 - type: entity
   parent: BaseBarSign
@@ -109,8 +116,12 @@
   name: Robusta Cafe
   description: Holder of the 'Most Lethal Barfights' record 5 years uncontested.
   components:
-  - type: BarSign
-    current: RobustaCafe
+  - type: Sprite
+    layers:
+    - state: empty
+    - state: robustacafe
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
 
 - type: entity
   parent: BaseBarSign
@@ -118,8 +129,12 @@
   name: The Ale Nath
   description: All right, buddy. I think you've had EI NATH. Time to get a cab.
   components:
-  - type: BarSign
-    current: TheAleNath
+  - type: Sprite
+    layers:
+    - state: empty
+    - state: thealenath
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
 
 - type: entity
   parent: BaseBarSign
@@ -127,8 +142,12 @@
   name: The Bird Cage
   description: Caw caw!
   components:
-  - type: BarSign
-    current: TheBirdCage
+  - type: Sprite
+    layers:
+    - state: empty
+    - state: birdcage
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
 
 - type: entity
   parent: BaseBarSign
@@ -136,8 +155,12 @@
   name: The Coderbus
   description: A very controversial bar known for its wide variety of constantly-changing drinks.
   components:
-  - type: BarSign
-    current: TheCoderbus
+  - type: Sprite
+    layers:
+    - state: empty
+    - state: thecoderbus
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
     
 - type: entity
   parent: BaseBarSign
@@ -145,8 +168,12 @@
   name: The Drunk Carp
   description: Don't drink and swim.
   components:
-  - type: BarSign
-    current: TheDrunkCarp
+  - type: Sprite
+    layers:
+    - state: empty
+    - state: thedrunkcarp
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
     
 - type: entity
   parent: BaseBarSign
@@ -154,8 +181,12 @@
   name: The Engine Change
   description: Still waiting.
   components:
-  - type: BarSign
-    current: EngineChange
+  - type: Sprite
+    layers:
+    - state: empty
+    - state: enginechange
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
     
 - type: entity
   parent: BaseBarSign
@@ -163,8 +194,12 @@
   name: The Harmbaton
   description: A great dining experience for both security members and passengers.
   components:
-  - type: BarSign
-    current: Harmbaton
+  - type: Sprite
+    layers:
+    - state: empty
+    - state: theharmbaton
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
     
 - type: entity
   parent: BaseBarSign
@@ -172,8 +207,12 @@
   name: The Lightbulb
   description: A cafe popular among moths and moffs. Once shut down for a week after the bartender used mothballs to protect her spare uniforms.
   components:
-  - type: BarSign
-    current: TheLightbulb
+  - type: Sprite
+    layers:
+    - state: empty
+    - state: the_lightbulb
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
     
 - type: entity
   parent: BaseBarSign
@@ -181,8 +220,12 @@
   name: The Loose Goose
   description: Drink till you puke and/or break the laws of reality!
   components:
-  - type: BarSign
-    current: Goose
+  - type: Sprite
+    layers:
+    - state: empty
+    - state: goose
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
 
 - type: entity
   parent: BaseBarSign
@@ -190,8 +233,12 @@
   name: The Net
   description: You just seem to get caught up in it for hours.
   components:
-  - type: BarSign
-    current: TheNet
+  - type: Sprite
+    layers:
+    - state: empty
+    - state: thenet
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
  
 - type: entity
   parent: BaseBarSign
@@ -199,8 +246,12 @@
   name: The Outer Spess
   description: This bar isn't actually located in outer space.
   components:
-  - type: BarSign
-    current: TheOuterSpess
+  - type: Sprite
+    layers:
+    - state: empty
+    - state: theouterspess
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
     
 - type: entity
   parent: BaseBarSign
@@ -208,8 +259,12 @@
   name: The Singulo
   description: Where people go that'd rather not be called by their name.
   components:
-  - type: BarSign
-    current: TheSingulo
+  - type: Sprite
+    layers:
+    - state: empty
+    - state: thesingulo
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
     
 - type: entity
   parent: BaseBarSign
@@ -217,8 +272,12 @@
   name: The Sun
   description: Ironically bright for such a shady bar.
   components:
-  - type: BarSign
-    current: TheSun
+  - type: Sprite
+    layers:
+    - state: empty
+    - state: thesun
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
    
 - type: entity
   parent: BaseBarSign
@@ -226,8 +285,12 @@
   name: Wiggle Room
   description: MoMMIs got moves.
   components:
-  - type: BarSign
-    current: WiggleRoom
+  - type: Sprite
+    layers:
+    - state: empty
+    - state: thewiggleroom
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
    
 - type: entity
   parent: BaseBarSign
@@ -235,8 +298,12 @@
   name: Zocalo
   description: Anteriormente ubicado en Spessmerica.
   components:
-  - type: BarSign
-    current: Zocalo
+  - type: Sprite
+    layers:
+    - state: empty
+    - state: zocalo
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
     
 - type: entity
   parent: BaseBarSign
@@ -244,5 +311,9 @@
   name: 4 The Emprah
   description: Enjoyed by fanatics, heretics, and brain-damaged patrons alike.
   components:
-  - type: BarSign
-    current: Emprah
+  - type: Sprite
+    layers:
+    - state: empty
+    - state: emprah
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]

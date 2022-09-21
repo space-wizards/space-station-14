@@ -1,0 +1,34 @@
+- type: entity
+  name: Bar Sign Spawner
+  id: BarSign #yes this is not a good ID i just cbfa to deal with prototype migrations in maps.
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - texture: Structures/Wallmounts/barsign.rsi/empty.png
+    - type: RandomSpawner
+      prototypes:
+        - BarSignComboCafe
+        - BarSignEmergencyRumParty
+        - BarSignLV426
+        - BarSignMaidCafe
+        - BarSignMalteseFalcon
+        - BarSignOfficerBeersky
+        - BarSignRobustaCafe
+        - BarSignTheAleNath
+        - BarSignTheBirdCage
+        - BarSignTheCoderbus
+        - BarSignTheDrunkCarp
+        - BarSignEngineChange
+        - BarSignTheHarmbaton
+        - BarSignTheLightbulb
+        - BarSignTheLooseGoose
+        - BarSignTheNet
+        - BarSignTheOuterSpess
+        - BarSignTheSingulo
+        - BarSignTheSun
+        - BarSignWiggleRoom
+        - BarSignZocalo
+        - BarSignEmprah
+      chance: 1
