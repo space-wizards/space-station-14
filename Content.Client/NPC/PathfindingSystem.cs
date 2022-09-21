@@ -49,7 +49,7 @@ namespace Content.Client.NPC
 
         // It's debug data IDC if it doesn't support snapshots I just want something fast.
         public Dictionary<EntityUid, Dictionary<Vector2i, List<PathfindingBreadcrumb>>> Breadcrumbs = new();
-        public Dictionary<EntityUid, Dictionary<Vector2i, Dictionary<Vector2i, List<PathPoly>>>> Polys = new();
+        public Dictionary<EntityUid, Dictionary<Vector2i, Dictionary<Vector2i, List<DebugPathPoly>>>> Polys = new();
         public readonly List<(TimeSpan Time, PathRouteMessage Message)> Routes = new();
 
         public override void Initialize()
@@ -257,7 +257,7 @@ namespace Content.Client.NPC
                 }
 
                 var invGridMatrix = grid.InvWorldMatrix;
-                PathPoly? nearest = null;
+                DebugPathPoly? nearest = null;
                 var nearestDistance = float.MaxValue;
 
                 foreach (var poly in tile)
@@ -423,7 +423,7 @@ namespace Content.Client.NPC
                             {
                                 foreach (var neighborPoly in poly.Neighbors)
                                 {
-                                    worldHandle.DrawLine(poly.Box.Center, neighborPoly.Box.Center, Color.Blue);
+                                    worldHandle.DrawLine(poly.Box.Center, neighborPoly.Position, Color.Blue);
                                 }
                             }
                         }

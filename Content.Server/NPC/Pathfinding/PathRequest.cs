@@ -15,8 +15,6 @@ public sealed class PathRequest
     public EntityCoordinates Start;
     public EntityCoordinates End;
 
-    public PathFlags Flags;
-
     public Task<PathResult> Task => Tcs.Task;
     public readonly TaskCompletionSource<PathResult> Tcs;
 
@@ -41,11 +39,12 @@ public sealed class PathRequest
 
     #endregion
 
-    public PathRequest(EntityCoordinates start, EntityCoordinates end, PathFlags flags, CancellationToken cancelToken)
+    public PathRequest(EntityCoordinates start, EntityCoordinates end, int layer, int mask, CancellationToken cancelToken)
     {
         Start = start;
         End = end;
-        Flags = flags;
+        CollisionLayer = layer;
+        CollisionMask = mask;
         Tcs = new TaskCompletionSource<PathResult>(cancelToken);
     }
 }

@@ -1,4 +1,4 @@
-using Content.Server.NPC.Pathfinding;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.NPC;
@@ -10,51 +10,23 @@ namespace Content.Shared.NPC;
  * Future dev work required.
  */
 
+/// <summary>
+/// A path poly to be used for networked debug purposes.
+/// </summary>
 [Serializable, NetSerializable]
-public sealed class PathPoly : IEquatable<PathPoly>
+public sealed class DebugPathPoly
 {
-    public readonly EntityUid GraphUid;
-    [NonSerialized]
-    public readonly GridPathfindingChunk Chunk;
-    public readonly byte TileIndex;
+    public EntityUid GraphUid;
+    public Vector2i ChunkOrigin;
+    public byte TileIndex;
 
-    public readonly Box2 Box;
+    public Box2 Box;
     public PathfindingData Data;
-    public readonly HashSet<PathPoly> Neighbors;
+    public List<EntityCoordinates> Neighbors = default!;
+}
 
-    public PathPoly(EntityUid graphUid, GridPathfindingChunk chunk, byte tileIndex, Box2 vertices, PathfindingData data, HashSet<PathPoly> neighbors)
-    {
-        GraphUid = graphUid;
-        Chunk = chunk;
-        TileIndex = tileIndex;
-        Box = vertices;
-        Data = data;
-        Neighbors = neighbors;
-    }
-
-    public bool IsValid()
-    {
-        return (Data.Flags & PathfindingBreadcrumbFlag.Invalid) == 0x0;
-    }
-
-    public bool Equals(PathPoly? other)
-    {
-        return other != null &&
-               GraphUid.Equals(other.GraphUid) &&
-               Chunk.Equals(other.Chunk) &&
-               TileIndex == other.TileIndex &&
-               Data.Equals(other.Data) &&
-               Box.Equals(other.Box) &&
-               Neighbors.SetEquals(other.Neighbors);
-    }
-
-    public override bool Equals(object? obj)
-    {
-        return ReferenceEquals(this, obj) || obj is PathPoly other && Equals(other);
-    }
-
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(GraphUid, Chunk, TileIndex, Box);
-    }
+[Serializable, NetSerializable]
+public sealed class DebugPathPolyNeighbor
+{
+    public EntityCoordinates Coordinates;
 }

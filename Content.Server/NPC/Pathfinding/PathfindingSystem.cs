@@ -6,6 +6,7 @@ using Content.Shared.Administration;
 using Content.Shared.NPC;
 using Robust.Server.Player;
 using Robust.Shared.Map;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Players;
 using Robust.Shared.Timing;
@@ -109,7 +110,16 @@ namespace Content.Server.NPC.Pathfinding
             float range,
             CancellationToken cancelToken)
         {
-            return await GetPath(start, end, range, cancelToken);
+            var mask = 0;
+            var layer = 0;
+
+            if (TryComp<PhysicsComponent>(entity, out var body))
+            {
+                layer = body.CollisionLayer;
+                mask = body.CollisionMask;
+            }
+
+            return await GetPath(start, end, range, layer, mask, cancelToken);
         }
 
         /// <summary>
@@ -119,10 +129,12 @@ namespace Content.Server.NPC.Pathfinding
             EntityCoordinates start,
             EntityCoordinates end,
             float range,
+            int layer,
+            int mask,
             CancellationToken cancelToken)
         {
             // Don't allow the caller to pass in the request in case they try to do something with its data.
-            var request = new PathRequest(start, end, PathFlags.None, cancelToken);
+            var request = new PathRequest(start, end, layer, mask, cancelToken);
             _pathRequests.Add(request);
 
             await request.Task;
@@ -130,6 +142,11 @@ namespace Content.Server.NPC.Pathfinding
             if (request.Task.Exception != null)
             {
                 throw request.Task.Exception;
+            }
+
+            if (!request.Task.IsCompletedSuccessfully)
+            {
+                return new PathResultEvent(PathResult.NoPath, new Queue<EntityCoordinates>());
             }
 
             // Same context as do_after and not synchronously blocking soooo
@@ -150,7 +167,7 @@ namespace Content.Server.NPC.Pathfinding
             float range,
             CancellationToken cancelToken)
         {
-            var path = await GetPath(start, end, range, cancelToken);
+            var path = await GetPath(uid, start, end, range, cancelToken);
             RaiseLocalEvent(uid, path);
         }
 
@@ -189,6 +206,27 @@ namespace Content.Server.NPC.Pathfinding
 
         #region Debug handlers
 
+        private DebugPathPoly GetDebugPoly(PathPoly poly)
+        {
+            // Create fake neighbors for it
+            var neighbors = new List<EntityCoordinates>(poly.Neighbors.Count);
+
+            foreach (var neighbor in poly.Neighbors)
+            {
+                neighbors.Add(ToCoordinates(neighbor.GraphUid, neighbor));
+            }
+
+            return new DebugPathPoly()
+            {
+                GraphUid = poly.GraphUid,
+                ChunkOrigin = poly.ChunkOrigin,
+                TileIndex = poly.TileIndex,
+                Box = poly.Box,
+                Data = poly.Data,
+                Neighbors = neighbors,
+            };
+        }
+
         private void SendDebug(PathRequest request)
         {
             if (_subscribedSessions.Count == 0)
@@ -199,7 +237,7 @@ namespace Content.Server.NPC.Pathfinding
                 if ((session.Value & PathfindingDebugMode.Routes) == 0x0)
                     continue;
 
-                RaiseNetworkEvent(new PathRouteMessage(request.Polys.ToList(), new Dictionary<PathPoly, float>()), session.Key.ConnectedClient);
+                RaiseNetworkEvent(new PathRouteMessage(request.Polys.Select(GetDebugPoly).ToList(), new Dictionary<DebugPathPoly, float>()), session.Key.ConnectedClient);
             }
         }
 
@@ -268,7 +306,7 @@ namespace Content.Server.NPC.Pathfinding
 
             foreach (var comp in EntityQuery<GridPathfindingComponent>(true))
             {
-                msg.Polys.Add(comp.Owner, new Dictionary<Vector2i, Dictionary<Vector2i, List<PathPoly>>>(comp.Chunks.Count));
+                msg.Polys.Add(comp.Owner, new Dictionary<Vector2i, Dictionary<Vector2i, List<DebugPathPoly>>>(comp.Chunks.Count));
 
                 foreach (var chunk in comp.Chunks)
                 {
@@ -307,7 +345,7 @@ namespace Content.Server.NPC.Pathfinding
             if (_subscribedSessions.Count == 0)
                 return;
 
-            var data = new Dictionary<Vector2i, List<PathPoly>>(tilePolys.Length);
+            var data = new Dictionary<Vector2i, List<DebugPathPoly>>(tilePolys.Length);
             var extent = Math.Sqrt(tilePolys.Length);
 
             for (var x = 0; x < extent; x++)
@@ -315,7 +353,7 @@ namespace Content.Server.NPC.Pathfinding
                 for (var y = 0; y < extent; y++)
                 {
                     var index = GetIndex(x, y);
-                    data[new Vector2i(x, y)] = tilePolys[index];
+                    data[new Vector2i(x, y)] = tilePolys[index].Select(GetDebugPoly).ToList();
                 }
             }
 
@@ -351,16 +389,16 @@ namespace Content.Server.NPC.Pathfinding
             return crumbs;
         }
 
-        private Dictionary<Vector2i, List<PathPoly>> GetPolys(GridPathfindingChunk chunk)
+        private Dictionary<Vector2i, List<DebugPathPoly>> GetPolys(GridPathfindingChunk chunk)
         {
-            var polys = new Dictionary<Vector2i, List<PathPoly>>(chunk.Polygons.Length);
+            var polys = new Dictionary<Vector2i, List<DebugPathPoly>>(chunk.Polygons.Length);
 
             for (var x = 0; x < ChunkSize; x++)
             {
                 for (var y = 0; y < ChunkSize; y++)
                 {
                     var index = GetIndex(x, y);
-                    polys[new Vector2i(x, y)] = chunk.Polygons[index];
+                    polys[new Vector2i(x, y)] = chunk.Polygons[index].Select(GetDebugPoly).ToList();
                 }
             }
 

@@ -28,8 +28,12 @@ public sealed partial class PathfindingSystem
 
     private readonly Stopwatch _stopwatch = new();
 
+    // Probably can't pool polys as there might be old pathfinding refs to them.
+
     private readonly ObjectPool<HashSet<PathPoly>> _neighborPolyPool =
-        new DefaultObjectPool<HashSet<PathPoly>>(new DefaultPooledObjectPolicy<HashSet<PathPoly>>(), Environment.ProcessorCount * 2 * ChunkSize * ChunkSize);
+        new DefaultObjectPool<HashSet<PathPoly>>(new DefaultPooledObjectPolicy<HashSet<PathPoly>>(), MaxPoolSize);
+
+    private static int MaxPoolSize = Environment.ProcessorCount * 2 * ChunkSize * ChunkSize;
 
     private void InitializeGrid()
     {
@@ -58,8 +62,6 @@ public sealed partial class PathfindingSystem
             {
                 continue;
             }
-
-            comp.LastUpdate = curTime;
 
             var dirt = new GridPathfindingChunk[comp.DirtyChunks.Count];
             var i = 0;
@@ -456,7 +458,7 @@ public sealed partial class PathfindingSystem
                     var polyData = points[x * SubStep + poly.Left, y * SubStep + poly.Bottom].Data;
 
                     var neighbors = _neighborPolyPool.Get();
-                    tilePoly.Add(new PathPoly(grid.GridEntityId, chunk, GetIndex(x, y), box, polyData, neighbors));
+                    tilePoly.Add(new PathPoly(grid.GridEntityId, chunk.Origin, GetIndex(x, y), box, polyData, neighbors));
                 }
             }
         }

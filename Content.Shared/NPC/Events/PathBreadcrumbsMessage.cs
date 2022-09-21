@@ -19,5 +19,5 @@ public sealed class PathBreadcrumbsRefreshMessage : EntityEventArgs
 [Serializable, NetSerializable]
 public sealed class PathPolysMessage : EntityEventArgs
 {
-    public Dictionary<EntityUid, Dictionary<Vector2i, Dictionary<Vector2i, List<PathPoly>>>> Polys = new();
+    public Dictionary<EntityUid, Dictionary<Vector2i, Dictionary<Vector2i, List<DebugPathPoly>>>> Polys = new();
 }

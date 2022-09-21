@@ -151,6 +151,8 @@ public sealed partial class PathfindingSystem
 
         request.Path = path;
 
+        Logger.DebugS("nav", $"Found path in {request.Stopwatch.Elapsed.TotalMilliseconds:0.000}ms");
+
         // var simplifiedRoute = Simplify(route, 0f);
         // var actualRoute = new Queue<EntityCoordinates>(simplifiedRoute);
         return PathResult.Path;
@@ -176,7 +178,8 @@ public sealed partial class PathfindingSystem
     {
         var modifier = 0f;
 
-        if ((request.CollisionLayer & end.Data.CollisionMask) != 0x0)
+        if ((request.CollisionLayer & end.Data.CollisionMask) != 0x0 ||
+            (request.CollisionMask & end.Data.CollisionLayer) != 0x0)
         {
             return modifier;
         }

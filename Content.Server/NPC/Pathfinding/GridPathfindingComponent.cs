@@ -1,5 +1,3 @@
-using Content.Shared.NPC;
-
 namespace Content.Server.NPC.Pathfinding;
 
 /// <summary>
@@ -9,12 +7,6 @@ namespace Content.Server.NPC.Pathfinding;
 public sealed class GridPathfindingComponent : Component
 {
     public readonly HashSet<Vector2i> DirtyChunks = new();
-
-    /// <summary>
-    /// Last time the graph updated.
-    /// If this is greater than when a path request started then nodes may be out of date.
-    /// </summary>
-    public TimeSpan LastUpdate;
 
     /// <summary>
     /// Next time the graph is allowed to update.

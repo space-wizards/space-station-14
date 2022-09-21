@@ -8,10 +8,10 @@ namespace Content.Shared.NPC;
 [Serializable, NetSerializable]
 public sealed class PathRouteMessage : EntityEventArgs
 {
-    public List<PathPoly> Path;
-    public Dictionary<PathPoly, float> Costs;
+    public List<DebugPathPoly> Path;
+    public Dictionary<DebugPathPoly, float> Costs;
 
-    public PathRouteMessage(List<PathPoly> path, Dictionary<PathPoly, float> costs)
+    public PathRouteMessage(List<DebugPathPoly> path, Dictionary<DebugPathPoly, float> costs)
     {
         Path = path;
         Costs = costs;
