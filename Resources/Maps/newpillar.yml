@@ -57415,14 +57415,9 @@ entities:
 - uid: 4745
   type: BarSign
   components:
-  - desc: Where people go that'd rather not be called by their name.
-    name: The Singulo
-    type: MetaData
   - pos: 15.5,5.5
     parent: 8
     type: Transform
-  - current: TheSingulo
-    type: BarSign
 - uid: 4746
   type: SignBar
   components:

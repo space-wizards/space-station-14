@@ -14581,14 +14581,9 @@ entities:
 - uid: 326
   type: BarSign
   components:
-  - desc: Drink till you puke and/or break the laws of reality!
-    name: The Loose Goose
-    type: MetaData
   - pos: 2.5,10.5
     parent: 0
     type: Transform
-  - current: Goose
-    type: BarSign
 - uid: 327
   type: AirlockGlass
   components:
@@ -83995,14 +83990,9 @@ entities:
 - uid: 10522
   type: BarSign
   components:
-  - desc: All right, buddy. I think you've had EI NATH. Time to get a cab.
-    name: The Ale' Nath
-    type: MetaData
   - pos: -32.5,-26.5
     parent: 0
     type: Transform
-  - current: TheAleNath
-    type: BarSign
 - uid: 10523
   type: Windoor
   components:

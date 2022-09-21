@@ -68751,14 +68751,9 @@ entities:
 - uid: 6338
   type: BarSign
   components:
-  - desc: A great dining experience for both security members and assistants.
-    name: The Harmbaton
-    type: MetaData
   - pos: -24.5,-37.5
     parent: 69
     type: Transform
-  - current: Harmbaton
-    type: BarSign
 - uid: 6339
   type: StoolBar
   components:

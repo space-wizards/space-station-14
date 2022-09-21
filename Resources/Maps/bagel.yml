@@ -37855,16 +37855,11 @@ entities:
     parent: 60
     type: Transform
 - uid: 1806
-  type: BarSign
+  type: BarSignTheOuterSpess
   components:
-  - desc: This bar isn't actually located in outer space.
-    name: The Outer Spess
-    type: MetaData
   - pos: 11.5,-25.5
     parent: 60
     type: Transform
-  - current: TheOuterSpess
-    type: BarSign
 - uid: 1807
   type: CableApcExtension
   components:

@@ -21486,14 +21486,9 @@ entities:
 - uid: 1532
   type: BarSign
   components:
-  - desc: Drink till you puke and/or break the laws of reality!
-    name: The Loose Goose
-    type: MetaData
   - pos: 31.897861,-1.5027537
     parent: 2
     type: Transform
-  - current: Goose
-    type: BarSign
 - uid: 1533
   type: StoolBar
   components:
@@ -30313,14 +30308,9 @@ entities:
 - uid: 2891
   type: BarSign
   components:
-  - desc: Where people go that'd rather not be called by their name.
-    name: The Singulo
-    type: MetaData
   - pos: 67.998146,-18.498177
     parent: 2
     type: Transform
-  - current: TheSingulo
-    type: BarSign
 - uid: 2892
   type: Window
   components:

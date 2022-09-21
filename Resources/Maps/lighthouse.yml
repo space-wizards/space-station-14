@@ -34714,14 +34714,9 @@ entities:
 - uid: 1577
   type: BarSign
   components:
-  - desc: Anteriormente ubicado en Spessmerica.
-    name: Zocalo
-    type: MetaData
   - pos: -25.5,63.5
     parent: 100
     type: Transform
-  - current: Zocalo
-    type: BarSign
 - uid: 1578
   type: chem_master
   components:

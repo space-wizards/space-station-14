@@ -26518,14 +26518,9 @@ entities:
 - uid: 576
   type: BarSign
   components:
-  - desc: Don't drink and swim.
-    name: The Drunk Carp
-    type: MetaData
   - pos: -7.9932284,5.5326624
     parent: 30
     type: Transform
-  - current: TheDrunkCarp
-    type: BarSign
 - uid: 577
   type: AirlockGlass
   components:
@@ -125515,14 +125510,9 @@ entities:
 - uid: 14984
   type: BarSign
   components:
-  - desc: Caw caw!
-    name: The Birdcage
-    type: MetaData
   - pos: 16.5,63.5
     parent: 30
     type: Transform
-  - current: TheBirdCage
-    type: BarSign
 - uid: 14985
   type: WoodDoor
   components:
