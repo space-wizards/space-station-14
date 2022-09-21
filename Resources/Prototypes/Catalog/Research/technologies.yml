@@ -10,6 +10,8 @@
   icon:
     sprite: Structures/Machines/server.rsi
     state: server-on
+  incompatibleTechnologies:
+    - TestExclusion
 
 - type: technology
   name: technologies-test-hidden-technology
@@ -39,7 +41,7 @@
   icon:
     sprite: Structures/Machines/server.rsi
     state: server-on
-  unlockedRecipes:
+  incompatibleTechnologies:
     - BasicResearch
 
 # Cleaning Technology Tree

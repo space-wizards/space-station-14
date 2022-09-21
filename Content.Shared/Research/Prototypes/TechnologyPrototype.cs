@@ -71,8 +71,8 @@ namespace Content.Shared.Research.Prototypes
         ///     A list of recipe IDs this technology excludes.
         /// </summary>
         [ViewVariables]
-        [DataField("excludedRecipes", customTypeSerializer: typeof(PrototypeIdListSerializer<LatheRecipePrototype>))]
-        public List<string> ExcludedRecipes { get; } = new();
+        [DataField("incompatibleTechnologies", customTypeSerializer: typeof(PrototypeIdListSerializer<LatheRecipePrototype>))]
+        public List<string> IncompatibleTechnologies { get; } = new();
 
         /// <summary>
         ///     Whether or not the technology should be listed.

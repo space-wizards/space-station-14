@@ -110,6 +110,7 @@ namespace Content.Client.Research.UI
 
             var prototypeMan = IoCManager.Resolve<IPrototypeManager>();
             List<string> dependencyTech = new List<string>();
+            List<string> excludedTech = new List<string>();
 
             foreach (var tech in prototypeMan.EnumeratePrototypes<TechnologyPrototype>())
             {
@@ -120,6 +121,11 @@ namespace Content.Client.Research.UI
                         UnlockedTechnologies.AddItem(tech.Name, tech.Icon.Frame0());
                         _unlockedTechnologyPrototypes.Add(tech);
                         dependencyTech.Add(tech.ID);
+                        foreach (var incompatibleTech in tech.IncompatibleTechnologies)
+                        {
+                            if (!excludedTech.Contains(incompatibleTech))
+                                excludedTech.Add(incompatibleTech);
+                        }
                     }
                     else if (Owner.CanUnlockTechnology(tech))
                     {
@@ -136,7 +142,7 @@ namespace Content.Client.Research.UI
 
             foreach (var tech in prototypeMan.EnumeratePrototypes<TechnologyPrototype>())
             {
-                if (!tech.Hidden && !dependencyTech.Contains(tech.ID))
+                if (!tech.Hidden && !dependencyTech.Contains(tech.ID) && !excludedTech.Contains(tech.ID))
                 {
                     var requirementsUnlocked = true;
                     foreach (var requiredTech in tech.RequiredTechnologies)
