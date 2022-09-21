@@ -66,5 +66,11 @@ namespace Content.Shared.Research.Prototypes
         [ViewVariables]
         [DataField("unlockedRecipes", customTypeSerializer:typeof(PrototypeIdListSerializer<LatheRecipePrototype>))]
         public List<string> UnlockedRecipes { get; } = new();
+
+        /// <summary>
+        ///     Whether or not the technology should be listed.
+        /// </summary>
+        [DataField("hidden")]
+        public bool Hidden { get; }
     }
 }
