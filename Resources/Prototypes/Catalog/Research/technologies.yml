@@ -32,6 +32,16 @@
     - SprayBottle
     - BodyBag
 
+- type: technology
+  name: technologies-test-exclusion-technology
+  id: TestExclusion
+  description: test
+  icon:
+    sprite: Structures/Machines/server.rsi
+    state: server-on
+  unlockedRecipes:
+    - BasicResearch
+
 # Cleaning Technology Tree
 
 - type: technology
