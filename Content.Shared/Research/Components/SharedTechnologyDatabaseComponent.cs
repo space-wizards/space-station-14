@@ -76,7 +76,7 @@ namespace Content.Shared.Research.Components
 
         /// <summary>
         ///     Returns whether a technology can be unlocked on this database,
-        ///     taking parent technologies into account.
+        ///     taking parent technologies and incompatible technologies into account.
         /// </summary>
         /// <param name="technology">The technology to be checked</param>
         /// <returns>Whether it could be unlocked or not</returns>
@@ -93,6 +93,15 @@ namespace Content.Shared.Research.Components
                 if (!IsTechnologyUnlocked(requiredTechnology))
                     return false;
             }
+
+            foreach (var technologyId in technology.IncompatibleTechnologies)
+            {
+                protoMan.TryIndex(technologyId, out TechnologyPrototype? incompatibleTechnology);
+
+                if (incompatibleTechnology != null && IsTechnologyUnlocked(incompatibleTechnology))
+                    return false;
+            }
+
             return true;
         }
     }
