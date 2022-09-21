@@ -38,6 +38,7 @@ namespace Content.Server.Strip
             base.Initialize();
 
             SubscribeLocalEvent<StrippableComponent, GetVerbsEvent<Verb>>(AddStripVerb);
+            SubscribeLocalEvent<StrippableComponent, GetVerbsEvent<ExamineVerb>>(AddExamineVerb);
             SubscribeLocalEvent<StrippableComponent, DidEquipEvent>(OnDidEquip);
             SubscribeLocalEvent<StrippableComponent, DidUnequipEvent>(OnDidUnequip);
             SubscribeLocalEvent<StrippableComponent, ComponentInit>(OnCompInit);
@@ -237,6 +238,24 @@ namespace Content.Server.Strip
             }
 
             bui.SetState(new StrippingBoundUserInterfaceState(inventory, hands, cuffs, ensnare));
+        }
+
+        private void AddExamineVerb(EntityUid uid, StrippableComponent component, GetVerbsEvent<ExamineVerb> args)
+        {
+            if (args.Hands == null || !args.CanAccess || !args.CanInteract || args.Target == args.User)
+                return;
+
+            if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
+                return;
+
+            ExamineVerb verb = new()
+            {
+                Text = Loc.GetString("strip-verb-get-data-text"),
+                IconTexture = "/Textures/Interface/VerbIcons/outfit.svg.192dpi.png",
+                Act = () => StartOpeningStripper(args.User, component, true),
+                Category = VerbCategory.Examine,
+            };
+            args.Verbs.Add(verb);
         }
 
         private void AddStripVerb(EntityUid uid, StrippableComponent component, GetVerbsEvent<Verb> args)

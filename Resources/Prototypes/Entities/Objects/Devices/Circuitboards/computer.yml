@@ -58,9 +58,9 @@
 
 - type: entity
   parent: BaseComputerCircuitboard
-  id: SupplyComputerCircuitboard
-  name: supply ordering computer board
-  description: A computer printed circuit board for a supply ordering console.
+  id: CargoRequestComputerCircuitboard
+  name: cargo request computer board
+  description: A computer printed circuit board for a cargo request computer.
   components:
     - type: Sprite
       state: cpu_supply
@@ -71,14 +71,23 @@
 
 - type: entity
   parent: BaseComputerCircuitboard
-  id: SupplyRequestComputerCircuitboard
-  name: supply request computer board
-  description: A computer printed circuit board for a supply request console.
+  id: CargoShuttleComputerCircuitboard
+  name: cargo shuttle computer board
+  description: A computer printed circuit board for a cargo shuttle computer.
   components:
     - type: Sprite
       state: cpu_supply
     - type: ComputerBoard
-      prototype: ComputerCargoOrders
+      prototype: ComputerCargoShuttle
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: CargoShuttleConsoleCircuitboard
+  name: supply shuttle console board
+  description: A computer printed circuit board for a cargo shuttle console.
+  components:
+    - type: ComputerBoard
+      prototype: ComputerShuttleCargo
 
 - type: entity
   parent: BaseComputerCircuitboard

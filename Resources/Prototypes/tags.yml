@@ -445,6 +445,9 @@
   id: Shovel
 
 - type: Tag
+  id: Smokable
+  
+- type: Tag
   id: Soap
 
 - type: Tag

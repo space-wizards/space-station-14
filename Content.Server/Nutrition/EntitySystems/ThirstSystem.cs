@@ -72,7 +72,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
         public void UpdateThirst(ThirstComponent component, float amount)
         {
-            component.CurrentThirst = Math.Min(component.CurrentThirst + amount, component.ThirstThresholds[ThirstThreshold.OverHydrated]);
+            component.CurrentThirst = Math.Clamp(component.CurrentThirst + amount, component.ThirstThresholds[ThirstThreshold.Dead], component.ThirstThresholds[ThirstThreshold.OverHydrated]);
         }
 
         public void ResetThirst(ThirstComponent component)
@@ -153,7 +153,7 @@ namespace Content.Server.Nutrition.EntitySystems
             {
                 foreach (var component in EntityManager.EntityQuery<ThirstComponent>())
                 {
-                    component.CurrentThirst -= component.ActualDecayRate;
+                    UpdateThirst(component, - component.ActualDecayRate);
                     var calculatedThirstThreshold = GetThirstThreshold(component, component.CurrentThirst);
                     if (calculatedThirstThreshold != component.CurrentThirstThreshold)
                     {
