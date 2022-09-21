@@ -119,3 +119,11 @@
       - id: BoxForensicPad
       - id: HandLabeler
 
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackDuffelSalvage
+  id: ClothingBackpackDuffelSalvageFilled
+  components:
+    - type: StorageFill
+      contents:
+        - id: BoxSurvival
