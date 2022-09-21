@@ -34,15 +34,19 @@ public sealed class PathRequest
 
     #region Data
 
-    public int CollisionLayer;
-    public int CollisionMask;
+    public readonly PathFlags Flags;
+    public readonly float Range;
+    public readonly int CollisionLayer;
+    public readonly int CollisionMask;
 
     #endregion
 
-    public PathRequest(EntityCoordinates start, EntityCoordinates end, int layer, int mask, CancellationToken cancelToken)
+    public PathRequest(EntityCoordinates start, EntityCoordinates end, PathFlags flags, float range, int layer, int mask, CancellationToken cancelToken)
     {
         Start = start;
         End = end;
+        Flags = flags;
+        Range = range;
         CollisionLayer = layer;
         CollisionMask = mask;
         Tcs = new TaskCompletionSource<PathResult>(cancelToken);
@@ -55,9 +59,9 @@ public sealed class PathRequest
 public sealed class PathResultEvent
 {
     public PathResult Result;
-    public readonly Queue<EntityCoordinates> Path;
+    public readonly Queue<PathPoly> Path;
 
-    public PathResultEvent(PathResult result, Queue<EntityCoordinates> path)
+    public PathResultEvent(PathResult result, Queue<PathPoly> path)
     {
         Path = path;
     }

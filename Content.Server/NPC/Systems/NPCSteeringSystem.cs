@@ -22,7 +22,7 @@ namespace Content.Server.NPC.Systems
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly AccessReaderSystem _accessReader = default!;
         [Dependency] private readonly PathfindingSystem _pathfindingSystem = default!;
-        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+        [Dependency] private readonly NPCCombatSystem _combat = default!;
 
         // This will likely get moved onto an abstract pathfinding node that specifies the max distance allowed from the coordinate.
         private const float TileTolerance = 0.4f;
@@ -139,8 +139,13 @@ namespace Content.Server.NPC.Systems
             }
         }
 
-        private void SetDirection(InputMoverComponent component, Vector2 value)
+        private void SetDirection(InputMoverComponent component, NPCSteeringComponent steering, Vector2 value)
         {
+            if (value.Equals(Vector2.Zero))
+            {
+                steering.CurrentPath.Clear();
+            }
+
             component.CurTickSprintMovement = value;
             component.LastInputTick = _timing.CurTick;
             component.LastInputSubTick = ushort.MaxValue;
@@ -164,7 +169,7 @@ namespace Content.Server.NPC.Systems
             if (xform.Coordinates.TryDistance(EntityManager, destinationCoordinates, out var distance) &&
                 distance <= steering.Range)
             {
-                SetDirection(mover, Vector2.Zero);
+                SetDirection(mover, steering, Vector2.Zero);
                 steering.Status = SteeringStatus.InRange;
                 return;
             }
@@ -172,7 +177,7 @@ namespace Content.Server.NPC.Systems
             // Can't move at all, just noop input.
             if (!mover.CanMove)
             {
-                SetDirection(mover, Vector2.Zero);
+                SetDirection(mover, steering, Vector2.Zero);
                 steering.Status = SteeringStatus.Moving;
                 return;
             }
@@ -195,9 +200,8 @@ namespace Content.Server.NPC.Systems
 
             if (targetMap.MapId != ourMap.MapId)
             {
-                SetDirection(mover, Vector2.Zero);
+                SetDirection(mover, steering, Vector2.Zero);
                 steering.Status = SteeringStatus.NoPath;
-                steering.CurrentTarget = targetCoordinates;
                 return;
             }
 
@@ -206,6 +210,12 @@ namespace Content.Server.NPC.Systems
             // Are we in range
             if (direction.Length <= arrivalDistance)
             {
+                // Node needs some kind of special handling like access or smashing.
+                if (steering.CurrentPath.TryPeek(out var node) && TryHandleFlags(steering, node))
+                {
+                    return;
+                }
+
                 // It was just a node, not the target, so grab the next destination (either the target or next node).
                 if (steering.CurrentPath.Count > 0)
                 {
@@ -219,9 +229,8 @@ namespace Content.Server.NPC.Systems
                     // Can't make it again.
                     if (ourMap.MapId != targetMap.MapId)
                     {
-                        SetDirection(mover, Vector2.Zero);
+                        SetDirection(mover, steering, Vector2.Zero);
                         steering.Status = SteeringStatus.NoPath;
-                        steering.CurrentTarget = targetCoordinates;
                         return;
                     }
 
@@ -231,9 +240,8 @@ namespace Content.Server.NPC.Systems
                 else
                 {
                     // This probably shouldn't happen as we check above but eh.
-                    SetDirection(mover, Vector2.Zero);
+                    SetDirection(mover, steering, Vector2.Zero);
                     steering.Status = SteeringStatus.InRange;
-                    steering.CurrentTarget = targetCoordinates;
                     return;
                 }
             }
@@ -245,7 +253,7 @@ namespace Content.Server.NPC.Systems
 
             if (!needsPath)
             {
-                var lastNode = steering.CurrentPath.Last();
+                var lastNode = GetCoordinates(steering.CurrentPath.Peek());
                 // I know this is bad and doesn't account for tile size
                 // However with the path I'm going to change it to return pathfinding nodes which include coordinates instead.
 
@@ -273,9 +281,8 @@ namespace Content.Server.NPC.Systems
 
             if (tickMovement.Equals(0f))
             {
-                SetDirection(mover, Vector2.Zero);
+                SetDirection(mover, steering, Vector2.Zero);
                 steering.Status = SteeringStatus.NoPath;
-                steering.CurrentTarget = targetCoordinates;
                 return;
             }
 
@@ -293,8 +300,7 @@ namespace Content.Server.NPC.Systems
                 input = (-grid.WorldRotation).RotateVec(input);
             }
 
-            SetDirection(mover, input);
-            steering.CurrentTarget = targetCoordinates;
+            SetDirection(mover, steering, input);
         }
 
         /// <summary>
@@ -302,19 +308,19 @@ namespace Content.Server.NPC.Systems
         /// </summary>
         /// <param name="coordinates">Our coordinates we are pruning from</param>
         /// <param name="nodes">Path we're pruning</param>
-        public void PrunePath(EntityCoordinates coordinates, Queue<EntityCoordinates> nodes)
+        public void PrunePath(EntityCoordinates coordinates, Queue<PathPoly> nodes)
         {
             if (nodes.Count == 0)
                 return;
 
             // Right now the pathfinder gives EVERY TILE back but ideally it won't someday, it'll just give straightline ones.
             // For now, we just prune up until the closest node + 1 extra.
-            var closest = (nodes.Peek().Position - coordinates.Position).Length;
+            var closest = (GetCoordinates(nodes.Peek()).Position - coordinates.Position).Length;
             // TODO: Need to handle multi-grid and stuff.
 
             while (nodes.TryPeek(out var node))
             {
-                var length = (coordinates.Position - node.Position).Length;
+                var length = (coordinates.Position - GetCoordinates(node).Position).Length;
 
                 if (length < closest)
                 {
@@ -338,10 +344,18 @@ namespace Content.Server.NPC.Systems
             // Even if we're at the last node may not be able to head to target in case we get stuck on a corner or the likes.
             if (steering.CurrentPath.Count >= 1 && steering.CurrentPath.TryPeek(out var nextTarget))
             {
-                return nextTarget;
+                return GetCoordinates(nextTarget);
             }
 
             return steering.Coordinates;
+        }
+
+        private EntityCoordinates GetCoordinates(PathPoly poly)
+        {
+            if (!poly.IsValid())
+                return EntityCoordinates.Invalid;
+
+            return new EntityCoordinates(poly.GraphUid, poly.Box.Center);
         }
 
         /// <summary>

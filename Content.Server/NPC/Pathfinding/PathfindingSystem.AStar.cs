@@ -176,15 +176,20 @@ public sealed partial class PathfindingSystem
 
     private float GetTileCost(PathRequest request, PathPoly start, PathPoly end)
     {
-        var modifier = 0f;
+        var modifier = 1f;
 
         if ((request.CollisionLayer & end.Data.CollisionMask) != 0x0 ||
             (request.CollisionMask & end.Data.CollisionLayer) != 0x0)
         {
-            return modifier;
+            if ((request.Flags & PathFlags.Smashing) != 0x0)
+            {
+                modifier = 10f;
+            }
+            else
+            {
+                return 0f;
+            }
         }
-
-        modifier = 1f;
 
         return modifier * OctileDistance(end, start);
     }

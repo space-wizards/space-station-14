@@ -119,7 +119,10 @@ namespace Content.Server.NPC.Pathfinding
                 mask = body.CollisionMask;
             }
 
-            return await GetPath(start, end, range, layer, mask, cancelToken);
+            // TODO:
+            var flags = PathFlags.Smashing;
+
+            return await GetPath(start, end, flags, range, layer, mask, cancelToken);
         }
 
         /// <summary>
@@ -128,13 +131,14 @@ namespace Content.Server.NPC.Pathfinding
         public async Task<PathResultEvent> GetPath(
             EntityCoordinates start,
             EntityCoordinates end,
+            PathFlags flags,
             float range,
             int layer,
             int mask,
             CancellationToken cancelToken)
         {
             // Don't allow the caller to pass in the request in case they try to do something with its data.
-            var request = new PathRequest(start, end, layer, mask, cancelToken);
+            var request = new PathRequest(start, end, flags, range, layer, mask, cancelToken);
             _pathRequests.Add(request);
 
             await request.Task;
@@ -146,12 +150,12 @@ namespace Content.Server.NPC.Pathfinding
 
             if (!request.Task.IsCompletedSuccessfully)
             {
-                return new PathResultEvent(PathResult.NoPath, new Queue<EntityCoordinates>());
+                return new PathResultEvent(PathResult.NoPath, new Queue<PathPoly>());
             }
 
             // Same context as do_after and not synchronously blocking soooo
 #pragma warning disable RA0004
-            var ev = new PathResultEvent(request.Task.Result, request.Path);
+            var ev = new PathResultEvent(request.Task.Result, request.Polys);
 #pragma warning restore RA0004
 
             return ev;
