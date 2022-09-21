@@ -1,9 +1,4 @@
 Entries:
-- author: AJCM-git
-  changes:
-  - {message: Disarms now deselect after a usage., type: Tweak}
-  id: 1848
-  time: '2022-07-03T02:26:49.0000000+00:00'
 - author: Aerocrux
   changes:
   - {message: 'You can now pet Space Dragons, if you''re brave enough!', type: Add}
@@ -2922,3 +2917,9 @@ Entries:
   - {message: Cargo computer board names now match their corresponding computer, type: Fix}
   id: 2347
   time: '2022-09-20T09:09:59.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Eye lerping when traversing grids and also when on a rotating grid is
+      much smoother., type: Fix}
+  id: 2348
+  time: '2022-09-21T00:12:45.0000000+00:00'
