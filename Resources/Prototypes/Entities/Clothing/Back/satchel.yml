@@ -94,7 +94,7 @@
   description: A robust satchel for stashing your loot.
   components:
     - type: Sprite
-      sprite: Corvax/Clothing/Back/Satchels/salvage.rsi
+      sprite: Clothing/Back/Satchels/salvage.rsi
 
 - type: entity
   parent: ClothingBackpackSatchel
