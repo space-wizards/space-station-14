@@ -1,9 +1,4 @@
 Entries:
-- author: Aerocrux
-  changes:
-  - {message: 'You can now pet Space Dragons, if you''re brave enough!', type: Add}
-  id: 1849
-  time: '2022-07-03T02:32:09.0000000+00:00'
 - author: ODJ
   changes:
   - {message: Detective Support, type: Add}
@@ -2923,3 +2918,9 @@ Entries:
       much smoother., type: Fix}
   id: 2348
   time: '2022-09-21T00:12:45.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added a burger made from the beloved pet of the Head of Personnel.,
+    type: Add}
+  id: 2349
+  time: '2022-09-21T02:16:59.0000000+00:00'
