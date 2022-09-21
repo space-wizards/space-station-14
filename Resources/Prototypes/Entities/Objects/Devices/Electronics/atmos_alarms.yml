@@ -4,9 +4,6 @@
   name: air alarm electronics
   description: An electronics board used in air alarms
   components:
-  - type: Tag
-    tags:
-    - AirAlarmElectronics
   - type: Sprite
     sprite: Objects/Misc/module.rsi
     state: airalarm_electronics
@@ -17,9 +14,6 @@
   name: fire alarm electronics
   description: An electronics board used in fire alarms
   components:
-  - type: Tag
-    tags:
-    - FireAlarmElectronics
   - type: Sprite
     sprite: Objects/Misc/module.rsi
     state: airalarm_electronics
