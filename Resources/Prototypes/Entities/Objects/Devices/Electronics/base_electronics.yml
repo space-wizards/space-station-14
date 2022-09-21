@@ -8,6 +8,7 @@
     - type: Sprite
       sprite: Objects/Misc/module.rsi
       state: generic
+      netsync: false
     - type: Tag
       tags:
         - DroneUsable
