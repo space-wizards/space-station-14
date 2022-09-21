@@ -17,19 +17,20 @@ public sealed class PathRequest
 
     public PathFlags Flags;
 
-    public Task Task => Tcs.Task;
+    public Task<PathResult> Task => Tcs.Task;
     public readonly TaskCompletionSource<PathResult> Tcs;
 
-    public Queue<PathPoly> Polys = default!;
+    public Queue<PathPolyRef> Polys = default!;
+    public Queue<EntityCoordinates> Path = default!;
 
     public bool Started = false;
 
     #region Pathfinding state
 
     public readonly Stopwatch Stopwatch = new();
-    public PriorityQueue<ValueTuple<float, PathPoly>> Frontier = default!;
-    public readonly Dictionary<PathPoly, float> CostSoFar = new();
-    public readonly Dictionary<PathPoly, PathPoly> CameFrom = new();
+    public PriorityQueue<ValueTuple<float, PathPolyRef>> Frontier = default!;
+    public readonly Dictionary<PathPolyRef, float> CostSoFar = new();
+    public readonly Dictionary<PathPolyRef, PathPolyRef> CameFrom = new();
 
     #endregion
 
@@ -46,5 +47,19 @@ public sealed class PathRequest
         End = end;
         Flags = flags;
         Tcs = new TaskCompletionSource<PathResult>(cancelToken);
+    }
+}
+
+/// <summary>
+/// Stores the final result of a pathfinding request
+/// </summary>
+public sealed class PathResultEvent
+{
+    public PathResult Result;
+    public readonly Queue<EntityCoordinates> Path;
+
+    public PathResultEvent(PathResult result, Queue<EntityCoordinates> path)
+    {
+        Path = path;
     }
 }

@@ -2,6 +2,11 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.NPC;
 
+/*
+ * I bikeshedded a lot on how to do this and I'm still not entirely happy.
+ * The main thing is you need a weak ref to the poly because it may be invalidated due to graph updates.
+ */
+
 [Serializable, NetSerializable]
 public struct PathPoly : IEquatable<PathPoly>
 {
@@ -16,11 +21,13 @@ public struct PathPoly : IEquatable<PathPoly>
         Neighbors = new HashSet<PathPolyRef>();
     }
 
+    // Neighbors deliberately ignored.
+
     public bool Equals(PathPoly other)
     {
         return Data.Equals(other.Data) &&
                Box.Equals(other.Box) &&
-               Neighbors.Equals(other.Neighbors);
+               Neighbors.SetEquals(other.Neighbors);
     }
 
     public override int GetHashCode()
@@ -32,6 +39,11 @@ public struct PathPoly : IEquatable<PathPoly>
 [Serializable, NetSerializable]
 public struct PathPolyRef : IEquatable<PathPolyRef>
 {
+    /// <summary>
+    /// Graph that this is the reference for.
+    /// </summary>
+    public EntityUid GraphUid;
+
     public Vector2i ChunkOrigin;
 
     /// <summary>
@@ -40,19 +52,27 @@ public struct PathPolyRef : IEquatable<PathPolyRef>
     public byte Index;
 
     /// <summary>
-    /// Index of the poly on the tile's polys.
+    /// Hash of the target poly.
     /// </summary>
-    public byte TileIndex;
+    public int Hash;
+
+    public PathPolyRef(EntityUid graphUid, Vector2i chunkOrigin, byte index, int hash)
+    {
+        GraphUid = graphUid;
+        ChunkOrigin = chunkOrigin;
+        Index = index;
+    }
 
     public bool Equals(PathPolyRef other)
     {
-        return ChunkOrigin.Equals(other.ChunkOrigin) &&
-               Index == other.Index &&
-               TileIndex == other.TileIndex;
+        return Hash.Equals(other.Hash) &&
+               GraphUid.Equals(other.GraphUid) &&
+               ChunkOrigin.Equals(other.ChunkOrigin) &&
+               Index == other.Index;
     }
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(ChunkOrigin, Index, TileIndex);
+        return HashCode.Combine(GraphUid, ChunkOrigin, Index, Hash);
     }
 }

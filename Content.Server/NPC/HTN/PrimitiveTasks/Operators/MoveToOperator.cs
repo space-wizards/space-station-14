@@ -141,7 +141,7 @@ public sealed class MoveToOperator : HTNOperator
             comp.Range = range;
         }
 
-        if (blackboard.TryGetValue<PathfindingResultEvent>(PathfindKey, out var result))
+        if (blackboard.TryGetValue<PathResultEvent>(PathfindKey, out var result))
         {
             if (blackboard.TryGetValue<EntityCoordinates>(NPCBlackboard.OwnerCoordinates, out var coordinates))
             {
@@ -164,7 +164,7 @@ public sealed class MoveToOperator : HTNOperator
         }
 
         // OwnerCoordinates is only used in planning so dump it.
-        blackboard.Remove<PathfindingResultEvent>(PathfindKey);
+        blackboard.Remove<PathResultEvent>(PathfindKey);
 
         if (RemoveKeyOnFinish)
         {

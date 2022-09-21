@@ -93,6 +93,7 @@ namespace Content.Server.NPC.Pathfinding
                     case PathResult.PartialPath:
                     case PathResult.Path:
                     case PathResult.NoPath:
+                        SendDebug(path);
                         // Don't use RemoveSwap because we still want to try and process them in order.
                         _pathRequests.RemoveAt(i);
                         path.Tcs.SetResult(result);
@@ -101,7 +102,7 @@ namespace Content.Server.NPC.Pathfinding
             }
         }
 
-        public async Task<PathfindingResultEvent> GetPath(
+        public async Task<PathResultEvent> GetPath(
             EntityUid entity,
             EntityCoordinates start,
             EntityCoordinates end,
@@ -114,7 +115,7 @@ namespace Content.Server.NPC.Pathfinding
         /// <summary>
         /// Asynchronously gets a path.
         /// </summary>
-        public async Task<PathfindingResultEvent> GetPath(
+        public async Task<PathResultEvent> GetPath(
             EntityCoordinates start,
             EntityCoordinates end,
             float range,
@@ -131,8 +132,12 @@ namespace Content.Server.NPC.Pathfinding
                 throw request.Task.Exception;
             }
 
-            var result = new PathfindingResultEvent();
-            return result;
+            // Same context as do_after and not synchronously blocking soooo
+#pragma warning disable RA0004
+            var ev = new PathResultEvent(request.Task.Result, request.Path);
+#pragma warning restore RA0004
+
+            return ev;
         }
 
         /// <summary>
@@ -149,6 +154,18 @@ namespace Content.Server.NPC.Pathfinding
             RaiseLocalEvent(uid, path);
         }
 
+        public PathPoly? GetPoly(PathPolyRef polyRef, GridPathfindingComponent? component = null)
+        {
+            if (!Resolve(polyRef.GraphUid, ref component, false))
+                return null;
+
+            // TODO Validate
+            return component.GetNeighbor(polyRef);
+        }
+
+        /// <summary>
+        /// Gets the relevant poly for the specified coordinates if it exists.
+        /// </summary>
         public PathPoly? GetPoly(EntityCoordinates coordinates)
         {
             var gridUid = coordinates.GetGridUid(EntityManager);
@@ -179,7 +196,60 @@ namespace Content.Server.NPC.Pathfinding
             return null;
         }
 
+        public PathPolyRef? GetPolyRef(EntityCoordinates coordinates)
+        {
+            var gridUid = coordinates.GetGridUid(EntityManager);
+
+            if (!TryComp<GridPathfindingComponent>(gridUid, out var comp) ||
+                !TryComp<TransformComponent>(gridUid, out var xform))
+            {
+                return null;
+            }
+
+            var localPos = xform.InvWorldMatrix.Transform(coordinates.ToMapPos(EntityManager));
+            var origin = GetOrigin(localPos);
+
+            if (!TryGetChunk(origin, comp, out var chunk))
+                return null;
+
+            var chunkPos = new Vector2i((int) MathHelper.Mod(localPos.X, ChunkSize), (int) MathHelper.Mod(localPos.Y, ChunkSize));
+            var polys = chunk.Polygons[chunkPos.X, chunkPos.Y];
+
+            for (var i = 0; i < polys.Count; i++)
+            {
+                var poly = polys[i];
+
+                if (!poly.Box.Contains(localPos))
+                    continue;
+
+                return new PathPolyRef(gridUid.Value, origin, GetIndex(chunkPos.X, chunkPos.Y), (byte) i);
+            }
+
+            return null;
+        }
+
         #region Debug handlers
+
+        private void SendDebug(PathRequest request)
+        {
+            if (_subscribedSessions.Count == 0)
+                return;
+
+            foreach (var session in _subscribedSessions)
+            {
+                if ((session.Value & PathfindingDebugMode.Routes) == 0x0)
+                    continue;
+
+                var polys = new List<PathPoly>(request.Polys.Count);
+
+                foreach (var polyRef in polys)
+                {
+
+                }
+
+                RaiseNetworkEvent(new PathRouteMessage(request.Polys.Select(o => GetPoly(o)).ToList(), new Dictionary<PathPolyRef, float>()), session.Key.ConnectedClient);
+            }
+        }
 
         private void OnBreadcrumbs(RequestPathfindingDebugMessage msg, EntitySessionEventArgs args)
         {

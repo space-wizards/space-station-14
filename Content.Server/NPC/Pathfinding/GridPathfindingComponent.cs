@@ -9,6 +9,16 @@ namespace Content.Server.NPC.Pathfinding;
 public sealed class GridPathfindingComponent : Component
 {
     public readonly HashSet<Vector2i> DirtyChunks = new();
+
+    /// <summary>
+    /// Last time the graph updated.
+    /// If this is greater than when a path request started then nodes may be out of date.
+    /// </summary>
+    public TimeSpan LastUpdate;
+
+    /// <summary>
+    /// Next time the graph is allowed to update.
+    /// </summary>
     public TimeSpan NextUpdate;
 
     public readonly Dictionary<Vector2i, GridPathfindingChunk> Chunks = new();
@@ -17,6 +27,14 @@ public sealed class GridPathfindingComponent : Component
     {
         var tileX = neighbor.Index / SharedPathfindingSystem.ChunkSize;
         var tileY = neighbor.Index % SharedPathfindingSystem.ChunkSize;
+
+        var tilePolys = Chunks[neighbor.ChunkOrigin].Polygons[tileX, tileY];
+
+        foreach (var poly in tilePolys)
+        {
+            if (!poly.GetHashCode().Equals(neighbor.Hash))
+                continue;
+        }
 
         return Chunks[neighbor.ChunkOrigin].Polygons[tileX, tileY][neighbor.TileIndex];
     }
@@ -59,12 +77,7 @@ public sealed class GridPathfindingChunk
                     var poly = tilePolys[i];
                     var index = (byte) (x * SharedPathfindingSystem.ChunkSize + y);
 
-                    var nodeRef = new PathPolyRef()
-                    {
-                        ChunkOrigin = Origin,
-                        Index = index,
-                        TileIndex = i,
-                    };
+                    var nodeRef = new PathPolyRef(component.Owner, Origin, index, i);
 
                     foreach (var neighborRef in poly.Neighbors)
                     {

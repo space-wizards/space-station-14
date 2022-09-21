@@ -54,6 +54,8 @@ public sealed partial class PathfindingSystem
                 continue;
             }
 
+            comp.LastUpdate = curTime;
+
             var dirt = new GridPathfindingChunk[comp.DirtyChunks.Count];
             var i = 0;
 
@@ -231,6 +233,11 @@ public sealed partial class PathfindingSystem
     private bool TryGetChunk(Vector2i origin, GridPathfindingComponent component, [NotNullWhen(true)] out GridPathfindingChunk? chunk)
     {
         return component.Chunks.TryGetValue(origin, out chunk);
+    }
+
+    private byte GetIndex(int x, int y)
+    {
+        return (byte) (x * ChunkSize + y);
     }
 
     private Vector2i GetOrigin(Vector2 localPos)
@@ -463,19 +470,12 @@ public sealed partial class PathfindingSystem
             for (var y = 0; y < ChunkSize; y++)
             {
                 var tile = chunkPolys[x, y];
-                var index = (byte) (x * ChunkSize + y);
+                var index = GetIndex(x, y);
 
                 for (byte i = 0; i < tile.Count; i++)
                 {
                     var poly = tile[i];
-
-                    var polyRef = new PathPolyRef()
-                    {
-                        ChunkOrigin = chunk.Origin,
-                        Index = index,
-                        TileIndex = i,
-                    };
-
+                    var polyRef = new PathPolyRef(component.Owner, chunk.Origin, index, i);
                     var enlarged = poly.Box.Enlarged(StepOffset);
 
                     // Shouldn't need to wraparound as previous neighbors would've handled us.
@@ -489,13 +489,7 @@ public sealed partial class PathfindingSystem
                         if (overlap <= 0.5f / SubStep)
                             continue;
 
-                        var neighborRef = new PathPolyRef()
-                        {
-                            ChunkOrigin = chunk.Origin,
-                            Index = index,
-                            TileIndex = j,
-                        };
-
+                        var neighborRef = new PathPolyRef(component.Owner, chunk.Origin, index, j);
                         poly.Neighbors.Add(neighborRef);
                         neighbor.Neighbors.Add(polyRef);
                     }
@@ -567,13 +561,7 @@ public sealed partial class PathfindingSystem
                                 if (overlap <= 0.5f / SubStep)
                                     continue;
 
-                                var neighborRef = new PathPolyRef()
-                                {
-                                    ChunkOrigin = neighborChunk.Origin,
-                                    Index = neighborIndex,
-                                    TileIndex = j,
-                                };
-
+                                var neighborRef = new PathPolyRef(component.Owner, neighborChunk.Origin, neighborIndex, j);
                                 poly.Neighbors.Add(neighborRef);
                                 neighbor.Neighbors.Add(polyRef);
                             }

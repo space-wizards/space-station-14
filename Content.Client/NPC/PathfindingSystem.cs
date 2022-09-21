@@ -5,6 +5,7 @@ using Robust.Client.Input;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Client.NPC
@@ -12,6 +13,7 @@ namespace Content.Client.NPC
     public sealed class PathfindingSystem : SharedPathfindingSystem
     {
         [Dependency] private readonly IEyeManager _eyeManager = default!;
+        [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IResourceCache _cache = default!;
@@ -48,6 +50,7 @@ namespace Content.Client.NPC
         // It's debug data IDC if it doesn't support snapshots I just want something fast.
         public Dictionary<EntityUid, Dictionary<Vector2i, List<PathfindingBreadcrumb>>> Breadcrumbs = new();
         public Dictionary<EntityUid, Dictionary<Vector2i, Dictionary<Vector2i, List<PathPoly>>>> Polys = new();
+        public readonly List<(TimeSpan Time, PathRouteMessage Message)> Routes = new();
 
         public override void Initialize()
         {
@@ -56,6 +59,30 @@ namespace Content.Client.NPC
             SubscribeNetworkEvent<PathBreadcrumbsRefreshMessage>(OnBreadcrumbsRefresh);
             SubscribeNetworkEvent<PathPolysMessage>(OnPolys);
             SubscribeNetworkEvent<PathPolysRefreshMessage>(OnPolysRefresh);
+            SubscribeNetworkEvent<PathRouteMessage>(OnRoute);
+        }
+
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+
+            if (!_timing.IsFirstTimePredicted)
+                return;
+
+            for (var i = 0; i < Routes.Count; i++)
+            {
+                var route = Routes[i];
+
+                if (_timing.CurTime < route.Time)
+                    break;
+
+                Routes.RemoveAt(i);
+            }
+        }
+
+        private void OnRoute(PathRouteMessage ev)
+        {
+            Routes.Add((_timing.CurTime, ev));
         }
 
         private void OnPolys(PathPolysMessage ev)
@@ -432,6 +459,19 @@ namespace Content.Client.NPC
                             continue;
 
                         worldHandle.DrawRect(chunkAABB, Color.Red, false);
+                    }
+                }
+            }
+
+            if ((_system.Modes & PathfindingDebugMode.Routes) != 0x0)
+            {
+                foreach (var route in _system.Routes)
+                {
+                    foreach (var node in route.Message.Path)
+                    {
+                        // if (!node)
+
+                        // worldHandle.DrawRect(node.Box, Color.Red, false);
                     }
                 }
             }
