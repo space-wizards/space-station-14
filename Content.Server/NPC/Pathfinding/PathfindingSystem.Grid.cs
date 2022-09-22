@@ -138,10 +138,7 @@ public sealed partial class PathfindingSystem
         if (xform.GridUid == null)
             return;
 
-        // Don't re-build the navmesh on airlock changes.
-        if (ev.Body.LifeStage >= ComponentLifeStage.Initialized && HasComp<AirlockComponent>(ev.Body.Owner))
-            return;
-
+        // This will also rebuild on door open / closes which I think is good?
         DirtyChunk(xform.GridUid.Value, xform.Coordinates);
     }
 

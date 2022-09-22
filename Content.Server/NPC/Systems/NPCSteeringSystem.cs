@@ -21,7 +21,6 @@ namespace Content.Server.NPC.Systems
         [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly AccessReaderSystem _accessReader = default!;
         [Dependency] private readonly DoorSystem _doors = default!;
         [Dependency] private readonly PathfindingSystem _pathfindingSystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interaction = default!;

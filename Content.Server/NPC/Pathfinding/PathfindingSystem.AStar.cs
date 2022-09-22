@@ -151,7 +151,7 @@ public sealed partial class PathfindingSystem
 
         request.Path = path;
 
-        Logger.DebugS("nav", $"Found path in {request.Stopwatch.Elapsed.TotalMilliseconds:0.000}ms");
+        // Logger.DebugS("nav", $"Found path in {request.Stopwatch.Elapsed.TotalMilliseconds:0.000}ms");
 
         // var simplifiedRoute = Simplify(route, 0f);
         // var actualRoute = new Queue<EntityCoordinates>(simplifiedRoute);
@@ -185,6 +185,7 @@ public sealed partial class PathfindingSystem
             {
                 modifier = 10f;
             }
+            // TODO: Airlocks and airlock access
             else
             {
                 return 0f;
