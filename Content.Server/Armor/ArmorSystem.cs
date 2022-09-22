@@ -22,7 +22,21 @@ namespace Content.Server.Armor
 
         private void OnExamineStats(EntityUid uid, ArmorComponent component, ExamineStatsEvent args)
         {
-            args.Message.AddMessage(GetArmorExamine(component.Modifiers));
+            foreach (var coefficientArmor in component.Modifiers.Coefficients)
+            {
+                args.Markup.Add(Loc.GetString("armor-coefficient-value",
+                    ("type", coefficientArmor.Key),
+                    ("value", MathF.Round((1f - coefficientArmor.Value) * 100, 1))
+                    ));
+            }
+
+            foreach (var flatArmor in component.Modifiers.FlatReduction)
+            {
+                args.Markup.Add(Loc.GetString("armor-reduction-value",
+                    ("type", flatArmor.Key),
+                    ("value", flatArmor.Value)
+                    ));
+            }
         }
         private void OnDamageModify(EntityUid uid, ArmorComponent component, DamageModifyEvent args)
         {
@@ -37,50 +51,8 @@ namespace Content.Server.Armor
             if (component.Modifiers == null)
                 return;
 
-            if (HasComp<CondensedExamineComponent>(uid))
-                return;
+            _examine.CreateExamineDetailsVerb("worn-stats", args, "/Textures/Interface/VerbIcons/dot.svg.192dpi.png");
 
-            var verb = new ExamineVerb()
-            {
-                Act = () =>
-                {
-                    var markup = new FormattedMessage();
-                    markup.AddMarkup(Loc.GetString("armor-examine"));
-                    markup.AddMessage(GetArmorExamine(component.Modifiers));
-                    _examine.SendExamineTooltip(args.User, uid, markup, false, false);
-                },
-                Text = Loc.GetString("armor-examinable-verb-text"),
-                Message = Loc.GetString("armor-examinable-verb-message"),
-                Category = VerbCategory.Examine,
-                IconTexture = "/Textures/Interface/VerbIcons/dot.svg.192dpi.png"
-            };
-
-            args.Verbs.Add(verb);
-        }
-
-        private static FormattedMessage GetArmorExamine(DamageModifierSet armorModifiers)
-        {
-            var msg = new FormattedMessage();
-
-            foreach (var coefficientArmor in armorModifiers.Coefficients)
-            {
-                msg.PushNewline();
-                msg.AddMarkup(Loc.GetString("armor-coefficient-value",
-                    ("type", coefficientArmor.Key),
-                    ("value", MathF.Round((1f - coefficientArmor.Value) * 100, 1))
-                    ));
-            }
-
-            foreach (var flatArmor in armorModifiers.FlatReduction)
-            {
-                msg.PushNewline();
-                msg.AddMarkup(Loc.GetString("armor-reduction-value",
-                    ("type", flatArmor.Key),
-                    ("value", flatArmor.Value)
-                    ));
-            }
-
-            return msg;
         }
     }
 }

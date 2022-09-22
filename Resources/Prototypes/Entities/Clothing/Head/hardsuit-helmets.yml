@@ -43,7 +43,6 @@
         Radiation: 0.5
   - type: TemperatureProtection
     coefficient: 0.005
-  - type: CondensedExamine
 
 - type: entity
   parent: ClothingHeadHardsuitBase

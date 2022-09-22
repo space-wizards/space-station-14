@@ -1,4 +1,4 @@
-﻿using Content.Shared.Examine;
+using Content.Shared.Examine;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
@@ -26,11 +26,43 @@ public sealed class ClothingSpeedModifierSystem : EntitySystem
 
     private void OnExamineStats(EntityUid uid, ClothingSpeedModifierComponent component, ExamineStatsEvent args)
     {
-        var msg = ExamineClothingSpeedModifier(component);
-        if (msg != null)
+        var walkModifierPercentage = MathF.Round((1.0f - component.WalkModifier) * 100f, 1);
+        var sprintModifierPercentage = MathF.Round((1.0f - component.SprintModifier) * 100f, 1);
+
+        if (walkModifierPercentage == 0.0f && sprintModifierPercentage == 0.0f)
+            return;
+
+        var msg = new FormattedMessage();
+
+        if (walkModifierPercentage == sprintModifierPercentage)
         {
-            args.Message.PushNewline();
-            args.Message.AddMessage(msg);
+            if (walkModifierPercentage < 0.0f)
+                args.Markup.Add(Loc.GetString("clothing-speed-increase-equal-examine", ("walkSpeed", MathF.Abs(walkModifierPercentage)), ("runSpeed", MathF.Abs(sprintModifierPercentage))));
+            else
+                args.Markup.Add(Loc.GetString("clothing-speed-decrease-equal-examine", ("walkSpeed", walkModifierPercentage), ("runSpeed", sprintModifierPercentage)));
+        }
+        else
+        {
+            if (sprintModifierPercentage < 0.0f)
+            {
+                args.Markup.Add(Loc.GetString("clothing-speed-increase-run-examine", ("runSpeed", MathF.Abs(sprintModifierPercentage))));
+            }
+            else if (sprintModifierPercentage > 0.0f)
+            {
+                args.Markup.Add(Loc.GetString("clothing-speed-decrease-run-examine", ("runSpeed", sprintModifierPercentage)));
+            }
+            if (walkModifierPercentage != 0.0f && sprintModifierPercentage != 0.0f)
+            {
+                msg.PushNewline();
+            }
+            if (walkModifierPercentage < 0.0f)
+            {
+                args.Markup.Add(Loc.GetString("clothing-speed-increase-walk-examine", ("walkSpeed", MathF.Abs(walkModifierPercentage))));
+            }
+            else if (walkModifierPercentage > 0.0f)
+            {
+                args.Markup.Add(Loc.GetString("clothing-speed-decrease-walk-examine", ("walkSpeed", walkModifierPercentage)));
+            }
         }
     }
 
@@ -84,74 +116,11 @@ public sealed class ClothingSpeedModifierSystem : EntitySystem
         args.ModifySpeed(component.WalkModifier, component.SprintModifier);
     }
 
-    private FormattedMessage? ExamineClothingSpeedModifier(ClothingSpeedModifierComponent component)
-    {
-        var walkModifierPercentage = MathF.Round((1.0f - component.WalkModifier) * 100f, 1);
-        var sprintModifierPercentage = MathF.Round((1.0f - component.SprintModifier) * 100f, 1);
-
-        if (walkModifierPercentage == 0.0f && sprintModifierPercentage == 0.0f)
-            return null;
-
-        var msg = new FormattedMessage();
-
-        if (walkModifierPercentage == sprintModifierPercentage)
-        {
-            if (walkModifierPercentage < 0.0f)
-                msg.AddMarkup(Loc.GetString("clothing-speed-increase-equal-examine", ("walkSpeed", MathF.Abs(walkModifierPercentage)), ("runSpeed", MathF.Abs(sprintModifierPercentage))));
-            else
-                msg.AddMarkup(Loc.GetString("clothing-speed-decrease-equal-examine", ("walkSpeed", walkModifierPercentage), ("runSpeed", sprintModifierPercentage)));
-        }
-        else
-        {
-            if (sprintModifierPercentage < 0.0f)
-            {
-                msg.AddMarkup(Loc.GetString("clothing-speed-increase-run-examine", ("runSpeed", MathF.Abs(sprintModifierPercentage))));
-            }
-            else if (sprintModifierPercentage > 0.0f)
-            {
-                msg.AddMarkup(Loc.GetString("clothing-speed-decrease-run-examine", ("runSpeed", sprintModifierPercentage)));
-            }
-            if (walkModifierPercentage != 0.0f && sprintModifierPercentage != 0.0f)
-            {
-                msg.PushNewline();
-            }
-            if (walkModifierPercentage < 0.0f)
-            {
-                msg.AddMarkup(Loc.GetString("clothing-speed-increase-walk-examine", ("walkSpeed", MathF.Abs(walkModifierPercentage))));
-            }
-            else if (walkModifierPercentage > 0.0f)
-            {
-                msg.AddMarkup(Loc.GetString("clothing-speed-decrease-walk-examine", ("walkSpeed", walkModifierPercentage)));
-            }
-        }
-        return msg;
-    }
-
     private void OnClothingVerbExamine(EntityUid uid, ClothingSpeedModifierComponent component, GetVerbsEvent<ExamineVerb> args)
     {
         if (!args.CanInteract || !args.CanAccess)
             return;
 
-        if (HasComp<CondensedExamineComponent>(uid))
-            return;
-
-        var msg = ExamineClothingSpeedModifier(component);
-
-        if (msg == null)
-            return;
-
-        var verb = new ExamineVerb()
-        {
-            Act = () =>
-            {
-                _examine.SendExamineTooltip(args.User, uid, msg, false, false);
-            },
-            Text = Loc.GetString("clothing-speed-examinable-verb-text"),
-            Message = Loc.GetString("clothing-speed-examinable-verb-message"),
-            Category = VerbCategory.Examine,
-            IconTexture = "/Textures/Interface/VerbIcons/outfit.svg.192dpi.png"
-        };
-
-        args.Verbs.Add(verb);
+        _examine.CreateExamineDetailsVerb("worn-stats", args, "/Textures/Interface/VerbIcons/dot.svg.192dpi.png");
     }
 }

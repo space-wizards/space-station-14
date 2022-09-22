@@ -9,3 +9,11 @@ examine-verb-name = Basic
 examinable-anchored = It is anchored to the floor
 
 examinable-unanchored = It is unanchored from the floor
+
+## Different Examine Types
+
+examine-system-worn-stats-title = Stats when worn:
+examine-system-worn-stats-text = Stats when worn
+examine-system-worn-stats-message = Examine detailed stats
+
+

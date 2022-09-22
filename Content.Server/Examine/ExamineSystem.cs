@@ -51,6 +51,49 @@ namespace Content.Server.Examine
             RaiseNetworkEvent(ev, session.ConnectedClient);
         }
 
+        public static FormattedMessage GetExamineMessage(ExamineStatsEvent ev)
+        {
+            var formattedMessage = new FormattedMessage();
+
+            ev.Markup.Sort();
+
+            formattedMessage.AddMarkup(ev.FirstLine);
+
+            foreach (var str in ev.Markup)
+            {
+                formattedMessage.PushNewline();
+                formattedMessage.AddMarkup(str);
+            }
+
+            return formattedMessage;
+        }
+
+        public override void CreateExamineDetailsVerb(string key, GetVerbsEvent<ExamineVerb> examineVerbsEvent, string iconTexture)
+        {
+
+            foreach (var verb in examineVerbsEvent.Verbs)
+            {
+                if (verb.Text == Loc.GetString("examine-system-" + key + "-text"))
+                    return;
+            }
+
+            var examineVerb = new ExamineVerb()
+            {
+                Act = () =>
+                {
+                    var ev = new ExamineStatsEvent { FirstLine = Loc.GetString("examine-system-" + key + "-title") };
+                    RaiseLocalEvent(examineVerbsEvent.Target, ev);
+                    SendExamineTooltip(examineVerbsEvent.User, examineVerbsEvent.Target, GetExamineMessage(ev), false, false);
+                },
+                Text = Loc.GetString("examine-system-" + key + "-text"),
+                Message = Loc.GetString("examine-system-" + key + "-message"),
+                Category = VerbCategory.Examine,
+                IconTexture = iconTexture
+            };
+
+            examineVerbsEvent.Verbs.Add(examineVerb);
+        }
+
         private void ExamineInfoRequest(ExamineSystemMessages.RequestExamineInfoMessage request, EntitySessionEventArgs eventArgs)
         {
             var player = (IPlayerSession) eventArgs.SenderSession;

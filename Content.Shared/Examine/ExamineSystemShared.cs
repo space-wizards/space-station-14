@@ -10,9 +10,18 @@ using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Utility;
 using static Content.Shared.Interaction.SharedInteractionSystem;
+using Content.Shared.Verbs;
 
 namespace Content.Shared.Examine
 {
+    public sealed class ExamineStatsEvent : EntityEventArgs
+    {
+        public List<string> Markup = new List<string>();
+        public string FirstLine = "";
+        public string Key = "";
+        public string Message = "";
+        public string IconTexture = "";
+    }
     public abstract class ExamineSystemShared : EntitySystem
     {
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
@@ -43,6 +52,8 @@ namespace Content.Shared.Examine
         ///     Creates a new examine tooltip with arbitrary info.
         /// </summary>
         public abstract void SendExamineTooltip(EntityUid player, EntityUid target, FormattedMessage message, bool getVerbs, bool centerAtCursor);
+
+        public abstract void CreateExamineDetailsVerb(string key, GetVerbsEvent<ExamineVerb> examineVerbsEvent, string iconTexture);
 
         public bool IsInDetailsRange(EntityUid examiner, EntityUid entity)
         {

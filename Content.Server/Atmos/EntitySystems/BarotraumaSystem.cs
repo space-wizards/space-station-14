@@ -1,11 +1,14 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
+using Content.Server.Examine;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Damage;
 using Content.Shared.Database;
+using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
+using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 
 namespace Content.Server.Atmos.EntitySystems
@@ -17,6 +20,7 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger= default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
+        [Dependency] private readonly ExamineSystem _examineSystem = default!;
 
         private const float UpdateTimer = 1f;
         private float _timer;
@@ -26,11 +30,45 @@ namespace Content.Server.Atmos.EntitySystems
             SubscribeLocalEvent<PressureProtectionComponent, HighPressureEvent>(OnHighPressureEvent);
             SubscribeLocalEvent<PressureProtectionComponent, LowPressureEvent>(OnLowPressureEvent);
 
+            SubscribeLocalEvent<PressureProtectionComponent, GetVerbsEvent<ExamineVerb>>(OnExamineVerb);
+            SubscribeLocalEvent<PressureProtectionComponent, ExamineStatsEvent>(OnExamineEvent);
+
             SubscribeLocalEvent<PressureImmunityComponent, HighPressureEvent>(OnHighPressureImmuneEvent);
             SubscribeLocalEvent<PressureImmunityComponent, LowPressureEvent>(OnLowPressureImmuneEvent);
 
         }
+        private void OnExamineEvent(EntityUid uid, PressureProtectionComponent component, ExamineStatsEvent args)
+        {
+            var level = "";
 
+            switch (component.LowPressureMultiplier)
+            {
+                case 1f:
+                    level = Loc.GetString("pressure-protection-level-0");
+                    break;
+                case > 1f and < 800f:
+                    level = Loc.GetString("pressure-protection-level-1");
+                    break;
+                case >= 800f and < 3000f:
+                    level = Loc.GetString("pressure-protection-level-2");
+                    break;
+                case >= 3000f and < 8000f:
+                    level = Loc.GetString("pressure-protection-level-3");
+                    break;
+                case >= 8000f:
+                    level = Loc.GetString("pressure-protection-level-4");
+                    break;
+            }
+
+            args.Markup.Add(Loc.GetString("pressure-protection-examine", ("level", level)));
+        }
+        private void OnExamineVerb(EntityUid uid, PressureProtectionComponent component, GetVerbsEvent<ExamineVerb> args)
+        {
+            if (!args.CanAccess || !args.CanInteract)
+                return;
+
+            _examineSystem.CreateExamineDetailsVerb("worn-stats", args, "/Textures/Interface/VerbIcons/dot.svg.192dpi.png");
+        }
         private void OnHighPressureEvent(EntityUid uid, PressureProtectionComponent component, HighPressureEvent args)
         {
             args.Modifier += component.HighPressureModifier;

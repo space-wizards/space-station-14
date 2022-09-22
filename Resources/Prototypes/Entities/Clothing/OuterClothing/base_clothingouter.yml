@@ -49,7 +49,6 @@
   id: ClothingOuterHardsuitBase
   name: base hardsuit
   components:
-  - type: CondensedExamine
   - type: PressureProtection
     highPressureMultiplier: 0.3
     lowPressureMultiplier: 1000
@@ -89,7 +88,6 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.8
     sprintModifier: 0.8
-  - type: CondensedExamine
   - type: Item
     size: 80
   - type: DiseaseProtection

@@ -23,14 +23,6 @@ namespace Content.Server.Temperature.Systems
             if (component.Coefficient == 0)
                 return;
 
-            args.Message.PushNewline();
-            args.Message.AddMessage(GetExamine(component));
-        }
-
-        public FormattedMessage GetExamine(TemperatureProtectionComponent component)
-        {
-            var msg = new FormattedMessage();
-
             var level = "";
 
             switch (component.Coefficient)
@@ -61,8 +53,7 @@ namespace Content.Server.Temperature.Systems
                     break;
             }
 
-            msg.AddMarkup(Loc.GetString("temperature-protection-examine", ("level", level)));
-            return msg;
+            args.Markup.Add(Loc.GetString("temperature-protection-examine", ("level", level)));
         }
 
         public void OnExamineVerb(EntityUid uid, TemperatureProtectionComponent component, GetVerbsEvent<ExamineVerb> args)
@@ -73,22 +64,7 @@ namespace Content.Server.Temperature.Systems
             if (component.Coefficient == 1)
                 return;
 
-            if (HasComp<TemperatureProtectionComponent>(uid))
-                return;
-
-            var verb = new ExamineVerb()
-            {
-                Act = () =>
-                {
-                    _examineSystem.SendExamineTooltip(args.User, uid, GetExamine(component), false, false);
-                },
-                Text = Loc.GetString("temperature-protection-verb-text"),
-                Message = Loc.GetString("temperature-protection-verb-message"),
-                Category = VerbCategory.Examine,
-                IconTexture = "/Textures/Interface/VerbIcons/dot.svg.192dpi.png"
-            };
-
-            args.Verbs.Add(verb);
+            _examineSystem.CreateExamineDetailsVerb("worn-stats", args, "/Textures/Interface/VerbIcons/dot.svg.192dpi.png");
         }
 
         private void OnTemperatureChangeAttempt(EntityUid uid, TemperatureProtectionComponent component, ModifyChangedTemperatureEvent args)
