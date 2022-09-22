@@ -418,7 +418,8 @@ public sealed class AirAlarmSystem : EntitySystem
 
                 return;
             case AirAlarmSetMode:
-                if (!args.Data.TryGetValue(AirAlarmSetMode, out AirAlarmMode alarmMode)) break;
+                if (!args.Data.TryGetValue(AirAlarmSetMode, out AirAlarmMode alarmMode))
+                    break;
 
                 SetMode(uid, args.SenderAddress, alarmMode, uiOnly: false);
 
