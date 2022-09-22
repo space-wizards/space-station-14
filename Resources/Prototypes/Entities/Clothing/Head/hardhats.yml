@@ -37,6 +37,8 @@
   - type: PowerCellSlot
     cellSlot:
       startingItem: PowerCellMedium
+  - type: Item
+    heldPrefix: off
   - type: ContainerContainer
     containers:
       cell_slot: !type:ContainerSlot

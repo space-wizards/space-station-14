@@ -85,19 +85,6 @@
     Epinephrine: 6
 
 - type: reaction
-  id: Clonexadone
-  reactants:
-    Cryoxadone:
-      amount: 1
-    Sodium:
-      amount: 1
-    Plasma:
-      amount: 5
-      catalyst: true
-  products:
-    Clonexadone: 2
-
-- type: reaction
   id: Dermaline
   reactants:
     Kelotane:

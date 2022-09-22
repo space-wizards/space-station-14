@@ -170,6 +170,14 @@
     startingCharge: 4000000
 
 - type: entity
+  parent: SubstationBasic
+  id: SubstationBasicEmpty
+  suffix: Empty
+  components:
+  - type: Battery
+    startingCharge: 0
+
+- type: entity
   parent: BaseSubstationWall
   id: SubstationWallBasic
   suffix: Basic, 2MW

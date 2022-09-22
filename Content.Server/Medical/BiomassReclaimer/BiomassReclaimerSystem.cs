@@ -23,6 +23,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Configuration;
 using Robust.Server.Player;
+using Robust.Shared.Physics.Components;
 
 namespace Content.Server.Medical.BiomassReclaimer
 {

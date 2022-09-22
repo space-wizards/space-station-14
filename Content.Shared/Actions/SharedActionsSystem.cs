@@ -37,7 +37,6 @@ public abstract class SharedActionsSystem : EntitySystem
         SubscribeLocalEvent<ActionsComponent, DidUnequipHandEvent>(OnHandUnequipped);
 
         SubscribeLocalEvent<ActionsComponent, ComponentGetState>(GetState);
-        SubscribeLocalEvent<ActionsComponent, ComponentGetStateAttemptEvent>(OnCanGetState);
 
         SubscribeAllEvent<RequestPerformActionEvent>(OnActionRequest);
     }
@@ -89,12 +88,6 @@ public abstract class SharedActionsSystem : EntitySystem
         args.State = new ActionsComponentState(component.Actions.ToList());
     }
 
-    private void OnCanGetState(EntityUid uid, ActionsComponent component, ref ComponentGetStateAttemptEvent args)
-    {
-        // Only send action state data to the relevant player.
-        if (args.Player.AttachedEntity != uid)
-            args.Cancelled = true;
-    }
     #endregion
 
     #region Execution

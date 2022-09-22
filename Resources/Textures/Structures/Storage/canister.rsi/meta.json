@@ -23,6 +23,12 @@
       "name": "can-connector"
     },
     {
+      "name": "can-locked"
+    },
+    {
+      "name": "can-unlocked"
+    },
+    {
       "name": "can-o0",
       "delays": [
         [

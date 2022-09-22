@@ -5,21 +5,19 @@ using Robust.Client.Graphics;
 using Robust.Client.Physics;
 using Robust.Client.Player;
 using Robust.Shared.Collections;
-using Robust.Shared.Map;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 
 namespace Content.Client.Eye;
 
 public sealed class EyeLerpingSystem : EntitySystem
 {
-    [Dependency] private readonly IEyeManager _eyeManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly SharedMoverController _mover = default!;
 
-    // Eyes other than the primary eye that are currently active.
-    private readonly Dictionary<EntityUid, EyeLerpInformation> _activeEyes = new();
+    // Convenience variable for for VV.
+    [ViewVariables]
+    private IEnumerable<LerpingEyeComponent> ActiveEyes => EntityQuery<LerpingEyeComponent>();
 
     public override void Initialize()
     {
@@ -27,6 +25,9 @@ public sealed class EyeLerpingSystem : EntitySystem
 
         SubscribeLocalEvent<EyeComponent, ComponentStartup>(OnEyeStartup);
         SubscribeLocalEvent<EyeComponent, ComponentShutdown>(OnEyeShutdown);
+        SubscribeLocalEvent<LerpingEyeComponent, EntParentChangedMessage>(HandleMapChange);
+        SubscribeLocalEvent<EyeComponent, PlayerAttachedEvent>(OnAttached);
+        SubscribeLocalEvent<LerpingEyeComponent, PlayerDetachedEvent>(OnDetached);
 
         UpdatesAfter.Add(typeof(TransformSystem));
         UpdatesAfter.Add(typeof(PhysicsSystem));
@@ -35,38 +36,58 @@ public sealed class EyeLerpingSystem : EntitySystem
 
     private void OnEyeStartup(EntityUid uid, EyeComponent component, ComponentStartup args)
     {
-        if (component.Eye == null)
-            return;
-
-        // If the eye starts up then don't lerp at all.
-        var xformQuery = GetEntityQuery<TransformComponent>();
-        TryComp<InputMoverComponent>(uid, out var mover);
-        xformQuery.TryGetComponent(uid, out var xform);
-        var lerpInfo = _activeEyes.GetOrNew(uid);
-        lerpInfo.TargetRotation = GetRotation(xformQuery, mover, xform);
-        lerpInfo.LastRotation = lerpInfo.TargetRotation;
-
-        if (xform != null)
-        {
-            lerpInfo.MapId = xform.MapID;
-        }
-
-        component.Eye.Rotation = lerpInfo.TargetRotation;
+        if (_playerManager.LocalPlayer?.ControlledEntity == uid)
+            AddEye(uid, component, true);
     }
 
     private void OnEyeShutdown(EntityUid uid, EyeComponent component, ComponentShutdown args)
     {
-        RemoveEye(uid);
+        RemCompDeferred<LerpingEyeComponent>(uid);
     }
 
-    public void AddEye(EntityUid uid)
+    // TODO replace this with some way of automatically getting and including any eyes that are associated with a viewport / render able thingy.
+    public void AddEye(EntityUid uid, EyeComponent? component = null, bool automatic = false)
     {
-        _activeEyes.TryAdd(uid, new EyeLerpInformation());
+        if (!Resolve(uid, ref component))
+            return;
+
+        var lerpInfo = EnsureComp<LerpingEyeComponent>(uid);
+        lerpInfo.TargetRotation = GetRotation(uid);
+        lerpInfo.LastRotation = lerpInfo.TargetRotation;
+        lerpInfo.ManuallyAdded |= !automatic;
+
+        if (component.Eye != null)
+            component.Eye.Rotation = lerpInfo.TargetRotation;
     }
 
     public void RemoveEye(EntityUid uid)
     {
-        _activeEyes.Remove(uid);
+        if (!TryComp(uid, out LerpingEyeComponent? lerp))
+            return;
+
+        // If this is the currently controlled entity, we keep the component.
+        if (_playerManager.LocalPlayer?.ControlledEntity == uid)
+            lerp.ManuallyAdded = false;
+        else
+            RemComp(uid, lerp);
+    }
+
+    private void HandleMapChange(EntityUid uid, LerpingEyeComponent component, ref EntParentChangedMessage args)
+    {
+        // Is this actually a map change? If yes, stop any lerps
+        if (args.OldMapId != args.Transform.MapID)
+            component.LastRotation = GetRotation(uid, args.Transform);
+    }
+
+    private void OnAttached(EntityUid uid, EyeComponent component, PlayerAttachedEvent args)
+    {
+        AddEye(uid, component, true);
+    }
+
+    private void OnDetached(EntityUid uid, LerpingEyeComponent component, PlayerDetachedEvent args)
+    {
+        if (!component.ManuallyAdded)
+            RemCompDeferred(uid, component);
     }
 
     public override void Update(float frameTime)
@@ -76,84 +97,45 @@ public sealed class EyeLerpingSystem : EntitySystem
         if (!_gameTiming.IsFirstTimePredicted)
             return;
 
-        var moverQuery = GetEntityQuery<InputMoverComponent>();
-        var xformQuery = GetEntityQuery<TransformComponent>();
-        var foundEyes = new ValueList<EntityUid>(1);
-
         // Set all of our eye rotations to the relevant values.
-        foreach (var (eye, entity) in GetEyes())
+        foreach (var (lerpInfo, xform) in EntityQuery<LerpingEyeComponent, TransformComponent>())
         {
-            var lerpInfo = _activeEyes.GetOrNew(entity);
-            foundEyes.Add(entity);
-            moverQuery.TryGetComponent(entity, out var mover);
-            xformQuery.TryGetComponent(entity, out var xform);
-            lerpInfo.LastRotation = eye.Rotation;
-            lerpInfo.TargetRotation = GetRotation(xformQuery, mover, xform);
-
-            if (xform != null)
-            {
-                // If we traverse maps then don't lerp.
-                if (xform.MapID != lerpInfo.MapId)
-                {
-                    lerpInfo.LastRotation = lerpInfo.TargetRotation;
-                }
-            }
-        }
-
-        foreach (var eye in foundEyes)
-        {
-            if (!_activeEyes.ContainsKey(eye))
-            {
-                _activeEyes.Remove(eye);
-            }
+            lerpInfo.LastRotation = lerpInfo.TargetRotation;
+            lerpInfo.TargetRotation = GetRotation(lerpInfo.Owner, xform);
         }
     }
 
-    private Angle GetRotation(EntityQuery<TransformComponent> xformQuery, InputMoverComponent? mover = null, TransformComponent? xform = null)
+    /// <summary>
+    /// Does the eye need to lerp or is its rotation matched.
+    /// </summary>
+    private bool NeedsLerp(InputMoverComponent? mover)
     {
+        if (mover == null)
+            return false;
+
+        if (mover.RelativeRotation.Equals(mover.TargetRelativeRotation))
+            return false;
+
+        return true;
+    }
+
+    private Angle GetRotation(EntityUid uid, TransformComponent? xform = null, InputMoverComponent? mover = null)
+    {
+        if (!Resolve(uid, ref xform))
+            return Angle.Zero;
+
         // If we can move then tie our eye to our inputs (these also get lerped so it should be fine).
-        if (mover != null)
+        if (Resolve(uid, ref mover, false))
         {
             return -_mover.GetParentGridAngle(mover);
         }
 
         // if not tied to a mover then lock it to map / grid
-        if (xform != null)
-        {
-            var relative = xform.GridUid;
-            relative ??= xform.MapUid;
-
-            if (xformQuery.TryGetComponent(relative, out var relativeXform))
-            {
-                return -relativeXform.WorldRotation;
-            }
-        }
+        var relative = xform.GridUid ?? xform.MapUid;
+        if (relative != null)
+            return -Transform(relative.Value).WorldRotation;
 
         return Angle.Zero;
-    }
-
-    private IEnumerable<(IEye Eye, EntityUid Entity)> GetEyes()
-    {
-        if (_playerManager.LocalPlayer?.ControlledEntity is { } player && !Deleted(player))
-        {
-            yield return (_eyeManager.CurrentEye, player);
-        }
-
-        if (_activeEyes.Count == 0)
-            yield break;
-
-        var eyeQuery = GetEntityQuery<EyeComponent>();
-
-        foreach (var (ent, info) in _activeEyes)
-        {
-            if (!eyeQuery.TryGetComponent(ent, out var eyeComp) ||
-                eyeComp.Eye == null)
-            {
-                continue;
-            }
-
-            yield return (eyeComp.Eye, ent);
-        }
     }
 
     public override void FrameUpdate(float frameTime)
@@ -161,10 +143,20 @@ public sealed class EyeLerpingSystem : EntitySystem
         var tickFraction = (float) _gameTiming.TickFraction / ushort.MaxValue;
         const double lerpMinimum = 0.00001;
 
-        foreach (var (eye, entity) in GetEyes())
+        foreach (var (lerpInfo, eye, xform) in EntityQuery<LerpingEyeComponent, EyeComponent, TransformComponent>())
         {
-            if (!_activeEyes.TryGetValue(entity, out var lerpInfo))
+            var entity = eye.Owner;
+
+            TryComp<InputMoverComponent>(entity, out var mover);
+
+            // This needs to be recomputed every frame, as if this is simply the grid rotation, then we need to account for grid angle lerping.
+            lerpInfo.TargetRotation = GetRotation(entity, xform, mover);
+
+            if (!NeedsLerp(mover))
+            {
+                eye.Rotation = lerpInfo.TargetRotation;
                 continue;
+            }
 
             var shortest = Angle.ShortestDistance(lerpInfo.LastRotation, lerpInfo.TargetRotation);
 
@@ -176,16 +168,5 @@ public sealed class EyeLerpingSystem : EntitySystem
 
             eye.Rotation = shortest * tickFraction + lerpInfo.LastRotation;
         }
-    }
-
-    private sealed class EyeLerpInformation
-    {
-        public Angle LastRotation;
-        public Angle TargetRotation;
-
-        /// <summary>
-        /// If we go to a new map then don't lerp and snap instantly.
-        /// </summary>
-        public MapId MapId;
     }
 }

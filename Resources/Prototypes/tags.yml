@@ -97,6 +97,9 @@
   id: CartridgeRocket
 
 - type: Tag
+  id: Cigarette
+
+- type: Tag
   id: CigFilter
 
 - type: Tag
@@ -194,6 +197,9 @@
 
 - type: Tag
   id: FireAxe
+
+- type: Tag
+  id: WhitelistChameleon
 
 - type: Tag
   id: FirelockElectronics
@@ -438,6 +444,9 @@
 - type: Tag
   id: Shovel
 
+- type: Tag
+  id: Smokable
+  
 - type: Tag
   id: Soap
 

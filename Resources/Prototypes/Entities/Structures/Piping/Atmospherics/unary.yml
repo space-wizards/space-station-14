@@ -16,6 +16,8 @@
           nodeGroupID: Pipe
           pipeDirection: South
     - type: CollideOnAnchor
+    - type: StaticPrice
+      price: 200
 
 - type: entity
   parent: GasUnaryBase
@@ -34,6 +36,7 @@
       prefix: device-address-prefix-vent
       sendBroadcastAttemptEvent: true
     - type: WiredNetworkConnection
+    - type: DeviceNetworkRequiresPower
     - type: AtmosDevice
     - type: AtmosMonitor
       temperatureThreshold: stationTemperature
@@ -124,6 +127,7 @@
       receiveFrequencyId: AtmosMonitor
       transmitFrequencyId: AtmosMonitor
       prefix: device-address-prefix-scrubber
+    - type: DeviceNetworkRequiresPower
     - type: AtmosMonitor
       temperatureThreshold: stationTemperature
       pressureThreshold: stationPressure
@@ -246,6 +250,8 @@
           !type:PipeNode
           nodeGroupID: Pipe
           pipeDirection: South
+    - type: StaticPrice
+      price: 500
 
 - type: entity
   parent: BaseGasThermoMachine

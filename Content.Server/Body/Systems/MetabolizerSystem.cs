@@ -115,7 +115,7 @@ namespace Content.Server.Body.Systems
                 solutionEntityUid = uid;
             }
 
-            if (solutionEntityUid == null || solution == null)
+            if (solutionEntityUid == null || solution == null || solution.Contents.Count == 0)
                 return;
 
             // randomize the reagent list so we don't have any weird quirks

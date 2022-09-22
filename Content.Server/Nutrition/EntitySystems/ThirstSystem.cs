@@ -4,6 +4,7 @@ using Robust.Shared.Random;
 using Content.Shared.Movement.Components;
 using Content.Shared.Alert;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Rejuvenate;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
@@ -25,6 +26,7 @@ namespace Content.Server.Nutrition.EntitySystems
             _sawmill = Logger.GetSawmill("thirst");
             SubscribeLocalEvent<ThirstComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
             SubscribeLocalEvent<ThirstComponent, ComponentStartup>(OnComponentStartup);
+            SubscribeLocalEvent<ThirstComponent, RejuvenateEvent>(OnRejuvenate);
         }
         private void OnComponentStartup(EntityUid uid, ThirstComponent component, ComponentStartup args)
         {
@@ -47,6 +49,11 @@ namespace Content.Server.Nutrition.EntitySystems
             args.ModifySpeed(mod, mod);
         }
 
+        private void OnRejuvenate(EntityUid uid, ThirstComponent component, RejuvenateEvent args)
+        {
+            ResetThirst(component);
+        }
+
         private ThirstThreshold GetThirstThreshold(ThirstComponent component, float amount)
         {
             ThirstThreshold result = ThirstThreshold.Dead;
@@ -65,7 +72,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
         public void UpdateThirst(ThirstComponent component, float amount)
         {
-            component.CurrentThirst = Math.Min(component.CurrentThirst + amount, component.ThirstThresholds[ThirstThreshold.OverHydrated]);
+            component.CurrentThirst = Math.Clamp(component.CurrentThirst + amount, component.ThirstThresholds[ThirstThreshold.Dead], component.ThirstThresholds[ThirstThreshold.OverHydrated]);
         }
 
         public void ResetThirst(ThirstComponent component)
@@ -146,7 +153,7 @@ namespace Content.Server.Nutrition.EntitySystems
             {
                 foreach (var component in EntityManager.EntityQuery<ThirstComponent>())
                 {
-                    component.CurrentThirst -= component.ActualDecayRate;
+                    UpdateThirst(component, - component.ActualDecayRate);
                     var calculatedThirstThreshold = GetThirstThreshold(component, component.CurrentThirst);
                     if (calculatedThirstThreshold != component.CurrentThirstThreshold)
                     {

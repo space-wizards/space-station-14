@@ -25,7 +25,6 @@ public sealed partial class StoreMenu : DefaultWindow
     public event Action<BaseButton.ButtonEventArgs, string>? OnCategoryButtonPressed;
     public event Action<BaseButton.ButtonEventArgs, string, int>? OnWithdrawAttempt;
 
-    public EntityUid? CurrentBuyer;
     public Dictionary<string, FixedPoint2> Balance = new();
     public string CurrentCategory = string.Empty;
 
@@ -212,7 +211,6 @@ public sealed partial class StoreMenu : DefaultWindow
     public override void Close()
     {
         base.Close();
-        CurrentBuyer = null;
         _withdrawWindow?.Close();
     }
 

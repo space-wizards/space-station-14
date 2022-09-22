@@ -1,7 +1,3 @@
-using Content.Server.Atmos.EntitySystems;
-using Content.Server.Chat.Systems;
-using Content.Server.Cloning.Components;
-using Content.Server.Construction.Components;
 using Content.Shared.GameTicking;
 using Content.Shared.Damage;
 using Content.Shared.Stacks;
@@ -14,27 +10,15 @@ using Content.Server.Mind.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.EUI;
-using Content.Server.Fluids.EntitySystems;
 using Content.Server.Humanoid;
-using Content.Server.Lathe.Components;
 using Content.Server.MachineLinking.System;
 using Content.Server.MachineLinking.Events;
-using Content.Server.Mind.Components;
 using Content.Server.MobState;
-using Content.Server.Power.EntitySystems;
-using Content.Server.Stack;
-using Content.Shared.Atmos;
-using Content.Shared.Examine;
-using Content.Shared.Humanoid.Prototypes;
-using Content.Shared.Stacks;
-using Robust.Server.GameObjects;
-using Robust.Shared.Configuration;
-using Robust.Shared.Random;
-using Content.Server.Lathe.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Chat.Systems;
 using Content.Server.Construction.Components;
+using Content.Server.Materials;
 using Content.Server.Stack;
 using Content.Server.Jobs;
 using Robust.Server.GameObjects;
@@ -44,6 +28,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
+using Robust.Shared.Physics.Components;
 
 
 namespace Content.Server.Cloning.Systems
@@ -67,6 +52,7 @@ namespace Content.Server.Cloning.Systems
         [Dependency] private readonly SpillableSystem _spillableSystem = default!;
         [Dependency] private readonly ChatSystem _chatSystem = default!;
         [Dependency] private readonly IConfigurationManager _configManager = default!;
+        [Dependency] private readonly MaterialStorageSystem _material = default!;
 
         public readonly Dictionary<Mind.Mind, EntityUid> ClonesWaitingForMind = new();
         public const float EasyModeCloningCost = 0.7f;
@@ -92,10 +78,7 @@ namespace Content.Server.Cloning.Systems
 
         private void OnDeconstruct(EntityUid uid, CloningPodComponent component, MachineDeconstructedEvent args)
         {
-            if (!TryComp<MaterialStorageComponent>(uid, out var storage))
-                return;
-
-            _serverStackSystem.SpawnMultiple(storage.GetMaterialAmount("Biomass"), 100, "Biomass", Transform(uid).Coordinates);
+            _serverStackSystem.SpawnMultiple(_material.GetMaterialAmount(uid, "Biomass"), 100, "Biomass", Transform(uid).Coordinates);
         }
 
         private void UpdateAppearance(CloningPodComponent clonePod)
@@ -153,8 +136,7 @@ namespace Content.Server.Cloning.Systems
             if (!args.IsInDetailsRange || !_powerReceiverSystem.IsPowered(uid))
                 return;
 
-            if (TryComp<MaterialStorageComponent>(uid, out var storage))
-                args.PushMarkup(Loc.GetString("cloning-pod-biomass", ("number", storage.GetMaterialAmount("Biomass"))));
+            args.PushMarkup(Loc.GetString("cloning-pod-biomass", ("number", _material.GetMaterialAmount(uid, "Biomass"))));
         }
 
         public bool TryCloning(EntityUid uid, EntityUid bodyToClone, Mind.Mind mind, CloningPodComponent? clonePod)
@@ -183,9 +165,6 @@ namespace Content.Server.Cloning.Systems
             if (mind.UserId == null || !_playerManager.TryGetSessionById(mind.UserId.Value, out var client))
                 return false; // If we can't track down the client, we can't offer transfer. That'd be quite bad.
 
-            if (!TryComp<MaterialStorageComponent>(clonePod.Owner, out var podStorage))
-                return false;
-
             if (!TryComp<HumanoidComponent>(bodyToClone, out var humanoid))
                 return false; // whatever body was to be cloned, was not a humanoid
 
@@ -201,7 +180,7 @@ namespace Content.Server.Cloning.Systems
                 cloningCost = (int) Math.Round(cloningCost * EasyModeCloningCost);
 
             // biomass checks
-            var biomassAmount = podStorage.GetMaterialAmount("Biomass");
+            var biomassAmount = _material.GetMaterialAmount(uid, "Biomass");
 
             if (biomassAmount < cloningCost)
             {
@@ -210,7 +189,7 @@ namespace Content.Server.Cloning.Systems
                 return false;
             }
 
-            podStorage.RemoveMaterial("Biomass", cloningCost);
+            _material.TryChangeMaterialAmount(uid, "Biomass", -cloningCost);
             clonePod.UsedBiomass = cloningCost;
             // end of biomass checks
 
