@@ -3,6 +3,8 @@ using Content.Server.Examine;
 using Content.Shared.Verbs;
 using Robust.Shared.Utility;
 using Content.Server.Cargo.Systems;
+using Robust.Shared.Prototypes;
+using Content.Shared.Damage.Prototypes;
 
 namespace Content.Server.Armor
 {
@@ -28,53 +30,17 @@ namespace Content.Server.Armor
             double price = 0;
 
             double coefDefaultPrice = 2; // default price of 1% protection against any type of damage
-            var coefPriceList = new Dictionary<string, double>() // List of damage type and cost per 1% of protection
-            {
-                {"Brute", 6 }, //Group: Blunt, Slash, Piercing
-                {"Blunt", 2 },
-                {"Slash", 2 },
-                {"Piercing", 2 },
-                {"Burn", 7.5 }, //Group: Heat, Cold, Shock
-                {"Heat", 2.5 },
-                {"Cold", 2.5 },
-                {"Shock", 2.5 },
-                {"Toxin", 12.5 }, //Group: Radiation, Poison
-                {"Radiation", 2.5 }, 
-                {"Poison", 10 }, 
-                {"Genetic", 5 }, //Group: Cellular
-                {"Cellular", 5 }, 
-                {"Airloss", 10 }, //Group: Bloodloss, Asphyxiation
-                {"Bloodloss", 5 }, 
-                {"Asphyxiation", 5 },
-                {"Caustic", 12.5 } //Group: Heat, Poison
-            };
             double flatDefaultPrice = 10; //default price of 1 damage protection against a certain type of damage
-            var flatPriceList = new Dictionary<string, double>() // List of damage type and cost per 1 damage reduction
-            {
-                {"Brute", 30 }, //Group: Blunt, Slash, Piercing
-                {"Blunt", 10 },
-                {"Slash", 10 },
-                {"Piercing", 10 },
-                {"Burn", 60 }, //Group: Heat, Cold, Shock
-                {"Heat", 20 },
-                {"Cold", 20 },
-                {"Shock", 20 },
-                {"Toxin", 76 }, //Group: Radiation, Poison
-                {"Radiation", 16 },
-                {"Poison", 60 },
-                {"Genetic", 30 }, //Group: Cellular
-                {"Cellular", 30 },
-                {"Airloss", 100 }, //Group: Bloodloss, Asphyxiation
-                {"Bloodloss", 50 },
-                {"Asphyxiation", 50 },
-                {"Caustic", 80 } //Group: Heat, Poison
-            };
+
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
 
             foreach (var modifier in component.Modifiers.Coefficients)
             {
-                if (coefPriceList.ContainsKey(modifier.Key))
+                prototypeManager.TryIndex(modifier.Key, out DamageTypePrototype? damageType);
+
+                if (damageType != null)
                 {
-                    price += coefPriceList[modifier.Key] * 100 * (1-modifier.Value);
+                    price += damageType.ArmorPriceCoefficient * 100 * (1 - modifier.Value);
                 }
                 else
                 {
@@ -83,9 +49,11 @@ namespace Content.Server.Armor
             }
             foreach (var modifier in component.Modifiers.FlatReduction)
             {
-                if (flatPriceList.ContainsKey(modifier.Key))
+                prototypeManager.TryIndex(modifier.Key, out DamageTypePrototype? damageType);
+
+                if (damageType != null)
                 {
-                    price += flatPriceList[modifier.Key] * modifier.Value;
+                    price += damageType.ArmorPriceFlat * modifier.Value;
                 }
                 else
                 {
