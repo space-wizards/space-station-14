@@ -1,5 +1,6 @@
 using Content.Server.Chat.Systems;
 using Content.Server.Popups;
+using Content.Shared.Actions;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Preferences;
 using Content.Shared.Verbs;
@@ -17,46 +18,33 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<VoiceMaskComponent, TransformSpeakerNameEvent>(OnSpeakerNameTransform);
+        SubscribeLocalEvent<VoiceMaskComponent, VoiceMaskChangeNameMessage>(OnChangeName);
         SubscribeLocalEvent<VoiceMaskerComponent, GotEquippedEvent>(OnEquip);
         SubscribeLocalEvent<VoiceMaskerComponent, GotUnequippedEvent>(OnUnequip);
-        SubscribeLocalEvent<VoiceMaskerComponent, VoiceMaskChangeNameMessage>(OnChangeName);
-        SubscribeLocalEvent<VoiceMaskerComponent, GetVerbsEvent<AlternativeVerb>>(GetVerbs);
+        SubscribeLocalEvent<VoiceMaskSetNameEvent>(OnSetName);
+        // SubscribeLocalEvent<VoiceMaskerComponent, GetVerbsEvent<AlternativeVerb>>(GetVerbs);
     }
 
-    private void OnChangeName(EntityUid uid, VoiceMaskerComponent component, VoiceMaskChangeNameMessage msg)
+    private void OnSetName(VoiceMaskSetNameEvent ev)
     {
-        if (msg.Name.Length > HumanoidCharacterProfile.MaxNameLength || msg.Name.Length <= 0)
-        {
-            _popupSystem.PopupCursor(Loc.GetString("voice-mask-popup-failure"), Filter.SinglePlayer(msg.Session));
-            return;
-        }
-
-        // probably not the best identifier
-        var owner = Transform(uid).ParentUid;
-        if (!TryComp(owner, out VoiceMaskComponent? mask))
-        {
-            return;
-        }
-
-        component.LastSetName = msg.Name;
-        mask.VoiceName = msg.Name;
-
-        _popupSystem.PopupCursor(Loc.GetString("voice-mask-popup-success"), Filter.SinglePlayer(msg.Session));
-
-        UpdateUI(uid, owner, mask);
+        OpenUI(ev.Performer);
     }
 
-    private void GetVerbs(EntityUid uid, VoiceMaskerComponent component, GetVerbsEvent<AlternativeVerb> args)
+    private void OnChangeName(EntityUid uid, VoiceMaskComponent component, VoiceMaskChangeNameMessage message)
     {
-        if (!HasComp<VoiceMaskComponent>(args.User) || !args.CanInteract)
+        if (message.Name.Length > HumanoidCharacterProfile.MaxNameLength || message.Name.Length <= 0)
         {
+            _popupSystem.PopupCursor(Loc.GetString("voice-mask-popup-failure"), Filter.SinglePlayer(message.Session));
             return;
         }
 
-        var verb = new AlternativeVerb();
-        verb.Text = Loc.GetString("voice-mask-name-change-set");
-        verb.Act = () => OpenUI(uid, args.User);
-        args.Verbs.Add(verb);
+        component.VoiceName = message.Name;
+
+        _popupSystem.PopupCursor(Loc.GetString("voice-mask-popup-success"), Filter.SinglePlayer(message.Session));
+
+        TrySetLastKnownName(uid, message.Name);
+
+        UpdateUI(uid, component);
     }
 
     private void OnSpeakerNameTransform(EntityUid uid, VoiceMaskComponent component, TransformSpeakerNameEvent args)
@@ -73,24 +61,28 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         }
     }
 
-    private void OpenUI(EntityUid mask, EntityUid player, ActorComponent? actor = null)
+    private void OpenUI(EntityUid player, ActorComponent? actor = null)
     {
         if (!Resolve(player, ref actor))
         {
             return;
         }
 
-        UpdateUI(mask, player);
-        _uiSystem.GetUiOrNull(mask, VoiceMaskUIKey.Key)?.Open(actor.PlayerSession);
+        _uiSystem.GetUiOrNull(player, VoiceMaskUIKey.Key)?.Open(actor.PlayerSession);
+        UpdateUI(player);
     }
 
-    private void UpdateUI(EntityUid mask, EntityUid owner, VoiceMaskComponent? component = null)
+    private void UpdateUI(EntityUid owner, VoiceMaskComponent? component = null)
     {
         if (!Resolve(owner, ref component))
         {
             return;
         }
 
-        _uiSystem.GetUiOrNull(mask, VoiceMaskUIKey.Key)?.SetState(new VoiceMaskBuiState(component.VoiceName));
+        _uiSystem.GetUiOrNull(owner, VoiceMaskUIKey.Key)?.SetState(new VoiceMaskBuiState(component.VoiceName));
     }
+}
+
+public sealed class VoiceMaskSetNameEvent : InstantActionEvent
+{
 }

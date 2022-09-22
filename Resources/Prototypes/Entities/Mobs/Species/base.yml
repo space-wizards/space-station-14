@@ -301,6 +301,8 @@
   - type: Strippable
   - type: UserInterface
     interfaces:
+      - key: enum.VoiceMaskUIKey.Key
+        type: VoiceMaskBoundUserInterface
       - key: enum.StrippingUiKey.Key
         type: StrippableBoundUserInterface
   - type: Puller
