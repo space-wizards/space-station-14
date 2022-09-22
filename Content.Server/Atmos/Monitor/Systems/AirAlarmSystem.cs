@@ -168,9 +168,10 @@ public sealed class AirAlarmSystem : EntitySystem
 
     private void OnDeviceListUpdate(EntityUid uid, AirAlarmComponent component, DeviceListUpdateEvent args)
     {
+        var query = GetEntityQuery<DeviceNetworkComponent>();
         foreach (var device in args.OldDevices)
         {
-            if (!TryComp<DeviceNetworkComponent>(device, out var deviceNet))
+            if (!query.TryGetComponent(device, out var deviceNet))
             {
                 continue;
             }

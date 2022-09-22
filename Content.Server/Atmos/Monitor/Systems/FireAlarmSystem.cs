@@ -33,9 +33,10 @@ public sealed class FireAlarmSystem : EntitySystem
 
     private void OnDeviceListSync(EntityUid uid, FireAlarmComponent component, DeviceListUpdateEvent args)
     {
+        var query = GetEntityQuery<DeviceNetworkComponent>();
         foreach (var device in args.OldDevices)
         {
-            if (!TryComp<DeviceNetworkComponent>(device, out var deviceNet))
+            if (!query.TryGetComponent(device, out var deviceNet))
             {
                 continue;
             }
