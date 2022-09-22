@@ -1,7 +1,5 @@
 using Content.Shared.Damage;
 using Content.Shared.Hands.EntitySystems;
-using Content.Shared.CharacterAppearance.Components;
-using Content.Shared.CharacterAppearance.Systems;
 using Content.Server.Disease.Components;
 using Content.Server.Body.Components;
 using Content.Server.Atmos.Components;
@@ -27,7 +25,9 @@ using Content.Server.Traitor;
 using Content.Shared.Zombies;
 using Content.Shared.Popups;
 using Content.Server.Atmos.Miasma;
+using Content.Server.Humanoid;
 using Content.Server.IdentityManagement;
+using Content.Shared.Humanoid;
 using Content.Shared.Movement.Systems;
 using Robust.Shared.Audio;
 
@@ -46,7 +46,7 @@ namespace Content.Server.Zombies
         [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
         [Dependency] private readonly ServerInventorySystem _serverInventory = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
-        [Dependency] private readonly SharedHumanoidAppearanceSystem _sharedHuApp = default!;
+        [Dependency] private readonly HumanoidSystem _sharedHuApp = default!;
         [Dependency] private readonly IdentitySystem _identity = default!;
         [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
         [Dependency] private readonly IChatManager _chatMan = default!;
@@ -123,13 +123,16 @@ namespace Content.Server.Zombies
             melee.Range = 0.75f;
 
             //We have specific stuff for humanoid zombies because they matter more
-            if (TryComp<HumanoidAppearanceComponent>(target, out var huApComp)) //huapcomp
+            if (TryComp<HumanoidComponent>(target, out var huApComp)) //huapcomp
             {
-                //this bs is done because you can't directly update humanoid appearances
-                var appearance = huApComp.Appearance;
-                appearance = appearance.WithSkinColor(zombiecomp.SkinColor).WithEyeColor(zombiecomp.EyeColor);
-                _sharedHuApp.UpdateAppearance(target, appearance, huApComp);
-                _sharedHuApp.ForceAppearanceUpdate(target, huApComp);
+                _sharedHuApp.SetSkinColor(target, zombiecomp.SkinColor, humanoid: huApComp);
+                _sharedHuApp.SetBaseLayerColor(target, HumanoidVisualLayers.Eyes, zombiecomp.EyeColor, humanoid: huApComp);
+
+                // this might not resync on clone?
+                _sharedHuApp.SetBaseLayerId(target, HumanoidVisualLayers.Tail, zombiecomp.BaseLayerExternal, humanoid: huApComp);
+                _sharedHuApp.SetBaseLayerId(target, HumanoidVisualLayers.HeadSide, zombiecomp.BaseLayerExternal, humanoid: huApComp);
+                _sharedHuApp.SetBaseLayerId(target, HumanoidVisualLayers.HeadTop, zombiecomp.BaseLayerExternal, humanoid: huApComp);
+                _sharedHuApp.SetBaseLayerId(target, HumanoidVisualLayers.Snout, zombiecomp.BaseLayerExternal, humanoid: huApComp);
 
                 //This is done here because non-humanoids shouldn't get baller damage
                 //lord forgive me for the hardcoded damage

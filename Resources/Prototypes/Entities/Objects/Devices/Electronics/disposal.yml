@@ -1,13 +1,9 @@
 ﻿- type: entity
   id: MailingUnitElectronics
-  parent: BaseItem
+  parent: BaseElectronics
   name: mailing unit electronics
   description: An electronics board used in mailing units
   components:
-    - type: Tag
-      tags:
-        - MailingUnitElectronics
-        - DroneUsable
     - type: Sprite
       sprite: Objects/Misc/module.rsi
       state: net_wired

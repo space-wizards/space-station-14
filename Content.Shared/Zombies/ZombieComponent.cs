@@ -44,6 +44,12 @@ namespace Content.Shared.Zombies
         public Color EyeColor = new(0.96f, 0.13f, 0.24f);
 
         /// <summary>
+        /// The base layer to apply to any 'external' humanoid layers upon zombification.
+        /// </summary>
+        [DataField("baseLayerExternal")]
+        public string BaseLayerExternal = "MobHumanoidMarkingMatchSkin";
+
+        /// <summary>
         /// The attack arc of the zombie
         /// </summary>
         [DataField("attackArc", customTypeSerializer: typeof(PrototypeIdSerializer<MeleeWeaponAnimationPrototype>))]

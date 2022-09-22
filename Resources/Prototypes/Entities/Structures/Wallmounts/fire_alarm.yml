@@ -13,7 +13,9 @@
     deviceNetId: AtmosDevices
     receiveFrequencyId: AtmosMonitor
     transmitFrequencyId: AtmosMonitor
+    prefix: device-address-prefix-fire-alarm
     sendBroadcastAttemptEvent: true
+    examinableAddress: true
   - type: DeviceList
   - type: WiredNetworkConnection
   - type: DeviceNetworkRequiresPower
