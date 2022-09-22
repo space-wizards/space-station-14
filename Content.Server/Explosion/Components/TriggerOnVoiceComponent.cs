@@ -67,7 +67,7 @@ namespace Content.Server.Explosion.Components
                 KeyPhrase = message;
                 _triggerSystem.ToggleRecord(this, Activator, true);
             }
-            else if (KeyPhrase != null && message.ToLower().Contains(KeyPhrase.ToLower()))
+            else if (KeyPhrase != null && message.Contains(KeyPhrase, StringComparison.InvariantCultureIgnoreCase))
             {
                 _triggerSystem.Trigger(Owner, speaker);
             }
