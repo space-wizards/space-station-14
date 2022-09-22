@@ -1,10 +1,4 @@
 Entries:
-- author: Sammy Boy
-  changes:
-  - {message: Wire snipping takes .75 seconds longer to help prevent missclick consequences!,
-    type: Tweak}
-  id: 1851
-  time: '2022-07-03T02:37:44.0000000+00:00'
 - author: Elijahrane
   changes:
   - {message: Morgues and body bags should behave much more reliably for stopping
@@ -2921,3 +2915,9 @@ Entries:
       cabinets and folders., type: Fix}
   id: 2350
   time: '2022-09-22T15:46:11.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: We have added a little sticker to some of your devices that should make
+      it easier for you to figure out what that device's local address is., type: Add}
+  id: 2351
+  time: '2022-09-22T19:00:54.0000000+00:00'
