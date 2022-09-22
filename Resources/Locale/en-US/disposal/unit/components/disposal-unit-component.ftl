@@ -10,6 +10,10 @@ ui-disposal-unit-button-flush = Flush
 ui-disposal-unit-button-eject = Eject Contents
 ui-disposal-unit-button-power = Power
 
-## No hands
+## Verbs
+disposal-flush-verb-get-data-text = Flush
+disposal-self-insert-verb-get-data-text = Jump inside
+disposal-eject-verb-get-data-text = Eject contents
 
+## No hands
 disposal-unit-no-hands = You don't have hands!

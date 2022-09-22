@@ -10,7 +10,7 @@
     heldPrefix: carpet-red
   - type: FloorTile
     outputs:
-      - plating
+      - Plating
   - type: Stack
     stackType: FloorCarpetRed
 
@@ -25,7 +25,7 @@
     heldPrefix: carpet-black
   - type: FloorTile
     outputs:
-      - plating
+      - Plating
   - type: Stack
     stackType: FloorCarpetBlack
 
@@ -40,7 +40,7 @@
     heldPrefix: carpet-blue
   - type: FloorTile
     outputs:
-      - plating
+      - Plating
   - type: Stack
     stackType: FloorCarpetBlue
 
@@ -55,7 +55,7 @@
     heldPrefix: carpet-green
   - type: FloorTile
     outputs:
-      - plating
+      - Plating
   - type: Stack
     stackType: FloorCarpetGreen
 
@@ -70,7 +70,7 @@
     heldPrefix: carpet-orange
   - type: FloorTile
     outputs:
-      - plating
+      - Plating
   - type: Stack
     stackType: FloorCarpetOrange
 
@@ -85,7 +85,7 @@
     heldPrefix: carpet-skyblue
   - type: FloorTile
     outputs:
-      - plating
+      - Plating
   - type: Stack
     stackType: FloorCarpetSkyBlue
 
@@ -100,7 +100,7 @@
     heldPrefix: carpet-purple
   - type: FloorTile
     outputs:
-      - plating
+      - Plating
   - type: Stack
     stackType: FloorCarpetPurple
 
@@ -115,6 +115,6 @@
     heldPrefix: carpet-pink
   - type: FloorTile
     outputs:
-      - plating
+      - Plating
   - type: Stack
     stackType: FloorCarpetPink

@@ -11,7 +11,6 @@ namespace Content.Server.Weapon.Ranged.Systems;
 
 public sealed class RechargeBasicEntityAmmoSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedGunSystem _gun = default!;
 

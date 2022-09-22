@@ -19,7 +19,7 @@ namespace Content.MapRenderer.Painters
 {
     public sealed class MapPainter
     {
-        public async IAsyncEnumerable<Image> Paint(string map)
+        public async IAsyncEnumerable<RenderedGridImage<Rgba32>> Paint(string map)
         {
             var stopwatch = new Stopwatch();
             stopwatch.Start();
@@ -80,7 +80,7 @@ namespace Content.MapRenderer.Painters
                 // Skip empty grids
                 if (grid.LocalAABB.IsEmpty())
                 {
-                    Console.WriteLine($"Warning: Grid {grid.Index} was empty. Skipping image rendering.");
+                    Console.WriteLine($"Warning: Grid {grid.GridEntityId} was empty. Skipping image rendering.");
                     continue;
                 }
 
@@ -107,7 +107,11 @@ namespace Content.MapRenderer.Painters
                     gridCanvas.Mutate(e => e.Flip(FlipMode.Vertical));
                 });
 
-                yield return gridCanvas;
+                var renderedImage = new RenderedGridImage<Rgba32>(gridCanvas);
+                renderedImage.GridUid = grid.GridEntityId;
+                renderedImage.Offset = grid.WorldPosition;
+
+                yield return renderedImage;
             }
 
             // We don't care if it fails as we have already saved the images.

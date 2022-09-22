@@ -11,7 +11,7 @@ public sealed class CargoShuttleConsoleBoundUserInterface : BoundUserInterface
 {
     private CargoShuttleMenu? _menu;
 
-    public CargoShuttleConsoleBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey) {}
+    public CargoShuttleConsoleBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey) {}
 
     protected override void Open()
     {

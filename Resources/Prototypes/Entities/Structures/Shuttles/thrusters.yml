@@ -36,6 +36,8 @@
         behaviors:
           - !type:DoActsBehavior
             acts: ["Destruction"]
+    - type: StaticPrice
+      price: 1000
   placement:
     mode: SnapgridCenter
 
@@ -91,6 +93,7 @@
   - type: Sprite
     # Listen I'm not the biggest fan of the sprite but it was the most appropriate thing I could find.
     sprite: Structures/Shuttles/gyroscope.rsi
+    snapCardinals: true
     layers:
     - state: base
       map: ["enum.ThrusterVisualLayers.Base"]
@@ -110,6 +113,8 @@
     autoRot: true
     offset: "0, 0.1" # shine from the top, not bottom of the computer
     color: "#4246b3"
+  - type: StaticPrice
+    price: 2000
 
 - type: entity
   id: DebugGyroscope
@@ -122,7 +127,7 @@
       needsPower: false
       powerLoad: 0
     - type: Sprite
-      sprite: Structures/Shuttles/thruster.rsi
+      sprite: Structures/Shuttles/gyroscope.rsi
       layers:
         - state: base
           map: ["enum.ThrusterVisualLayers.Base"]

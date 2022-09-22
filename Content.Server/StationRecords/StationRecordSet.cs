@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Shared.StationRecords;
 
 namespace Content.Server.StationRecords;
@@ -123,7 +124,7 @@ public sealed class StationRecordSet
     /// <returns>All recently accessed keys from this record set.</returns>
     public IEnumerable<StationRecordKey> GetRecentlyAccessed()
     {
-        return _recentlyAccessed;
+        return _recentlyAccessed.ToArray();
     }
 
     /// <summary>

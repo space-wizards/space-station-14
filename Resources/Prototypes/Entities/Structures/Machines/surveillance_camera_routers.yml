@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: BaseMachinePowered
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
   id: SurveillanceCameraRouterBase
   name: camera router
   description: A surveillance camera router. It routes. Perhaps.
@@ -10,17 +10,16 @@
       receiveFrequencyId: SurveillanceCamera
       transmitFrequencyId: SurveillanceCamera
     - type: WiredNetworkConnection
+    - type: DeviceNetworkRequiresPower
     - type: UserInterface
       interfaces:
         - key: enum.SurveillanceCameraSetupUiKey.Router
           type: SurveillanceCameraSetupBoundUi
-    - type: Construction
-      graph: Machine
-      node: machine
     - type: Machine
       board: SurveillanceCameraRouterCircuitboard
     - type: Sprite
       sprite: Structures/Machines/server.rsi
+      snapCardinals: true
       layers:
         - state: server
 
@@ -105,7 +104,7 @@
       subnetFrequency: SurveillanceCameraGeneral
 
 - type: entity
-  parent: BaseMachinePowered
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
   id: SurveillanceCameraWirelessRouterBase
   name: wireless camera router
   description: A wireless surveillance camera router. It routes. Perhaps.
@@ -116,13 +115,11 @@
       transmitFrequencyId: SurveillanceCamera
     - type: WirelessNetworkConnection
       range: 200
+    - type: DeviceNetworkRequiresPower
     - type: UserInterface
       interfaces:
         - key: enum.SurveillanceCameraSetupUiKey.Router
           type: SurveillanceCameraSetupBoundUi
-    - type: Construction
-      graph: Machine
-      node: machine
     - type: Machine
       board: SurveillanceCameraWirelessRouterCircuitboard
     - type: Sprite

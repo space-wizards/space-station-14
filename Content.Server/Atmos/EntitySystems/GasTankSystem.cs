@@ -1,16 +1,15 @@
 using Content.Server.Atmos.Components;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
+using Content.Server.Cargo.Systems;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.UserInterface;
 using Content.Shared.Actions;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Audio;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Toggleable;
 using Content.Shared.Examine;
-using Content.Shared.Inventory;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -44,6 +43,8 @@ namespace Content.Server.Atmos.EntitySystems
             SubscribeLocalEvent<GasTankComponent, EntParentChangedMessage>(OnParentChange);
             SubscribeLocalEvent<GasTankComponent, GasTankSetPressureMessage>(OnGasTankSetPressure);
             SubscribeLocalEvent<GasTankComponent, GasTankToggleInternalsMessage>(OnGasTankToggleInternals);
+            SubscribeLocalEvent<GasTankComponent, GasAnalyzerScanEvent>(OnAnalyzed);
+            SubscribeLocalEvent<GasTankComponent, PriceCalculationEvent>(OnGasTankPrice);
         }
 
         private void OnGasShutdown(EntityUid uid, GasTankComponent component, ComponentShutdown args)
@@ -87,7 +88,7 @@ namespace Content.Server.Atmos.EntitySystems
         {
             // When an item is moved from hands -> pockets, the container removal briefly dumps the item on the floor.
             // So this is a shitty fix, where the parent check is just delayed. But this really needs to get fixed
-            // properly at some point. 
+            // properly at some point.
             component.CheckUser = true;
         }
 
@@ -322,6 +323,19 @@ namespace Content.Server.Atmos.EntitySystems
         private bool IsFunctional(GasTankComponent component)
         {
             return GetInternalsComponent(component) != null;
+        }
+
+        /// <summary>
+        /// Returns the gas mixture for the gas analyzer
+        /// </summary>
+        private void OnAnalyzed(EntityUid uid, GasTankComponent component, GasAnalyzerScanEvent args)
+        {
+            args.GasMixtures = new Dictionary<string, GasMixture?> { {Name(uid), component.Air} };
+        }
+
+        private void OnGasTankPrice(EntityUid uid, GasTankComponent component, ref PriceCalculationEvent args)
+        {
+            args.Price += _atmosphereSystem.GetPrice(component.Air);
         }
     }
 }

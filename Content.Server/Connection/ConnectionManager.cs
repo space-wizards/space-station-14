@@ -4,6 +4,7 @@ using Content.Server.Database;
 using Content.Server.GameTicking;
 using Content.Server.Preferences.Managers;
 using Content.Shared.CCVar;
+using Content.Shared.GameTicking;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
@@ -41,16 +42,14 @@ namespace Content.Server.Connection
             var ban = await _db.GetServerBanByIpAsync(eventArgs.Connection.RemoteEndPoint.Address);
             if (ban != null)
             {
-                var expires = "This is a permanent ban.";
+                var expires = Loc.GetString("ban-banned-permanent");
                 if (ban.ExpirationTime is { } expireTime)
                 {
                     var duration = expireTime - ban.BanTime;
                     var utc = expireTime.ToUniversalTime();
-                    expires = $"This ban is for {duration.TotalMinutes} minutes and will expire at {utc:f} UTC.";
+                    expires = Loc.GetString("ban-expires", ("duration", duration.TotalMinutes.ToString("N0")), ("time", utc.ToString("f")));
                 }
-                var reason = $@"You, or another user of this computer or connection is banned from playing here.
-The ban reason is: ""{ban.Reason}""
-{expires}";
+                var reason = Loc.GetString("ban-banned-1") + "\n" + Loc.GetString("ban-banned-2", ("reason", this.Reason)) + "\n" + expires;;
                 return NetApproval.Deny(reason);
             }
 
@@ -114,7 +113,9 @@ The ban reason is: ""{ban.Reason}""
                 }
             }
 
-            var wasInGame = EntitySystem.TryGet<GameTicker>(out var ticker) && ticker.PlayersInGame.Contains(userId);
+            var wasInGame = EntitySystem.TryGet<GameTicker>(out var ticker) &&
+                            ticker.PlayerGameStatuses.TryGetValue(userId, out var status) &&
+                            status == PlayerGameStatus.JoinedGame;
             if ((_plyMgr.PlayerCount >= _cfg.GetCVar(CCVars.SoftMaxPlayers) && adminData is null) && !wasInGame)
             {
                 return (ConnectionDenyReason.Full, Loc.GetString("soft-player-cap-full"), null);

@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -213,6 +214,26 @@ namespace Content.Server.Preferences.Managers
         public bool HavePreferencesLoaded(IPlayerSession session)
         {
             return _cachedPlayerPrefs.ContainsKey(session.UserId);
+        }
+
+
+        /// <summary>
+        /// Tries to get the preferences from the cache
+        /// </summary>
+        /// <param name="userId">User Id to get preferences for</param>
+        /// <param name="playerPreferences">The user preferences if true, otherwise null</param>
+        /// <returns>If preferences are not null</returns>
+        public bool TryGetCachedPreferences(NetUserId userId,
+            [NotNullWhen(true)] out PlayerPreferences? playerPreferences)
+        {
+            if (_cachedPlayerPrefs.TryGetValue(userId, out var prefs))
+            {
+                playerPreferences = prefs.Prefs;
+                return prefs.Prefs != null;
+            }
+
+            playerPreferences = null;
+            return false;
         }
 
         /// <summary>

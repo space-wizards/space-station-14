@@ -1,7 +1,5 @@
 ﻿- type: vendingMachineInventory
   id: AmmoVendInventory
-  name: Ammovend
-  spriteName: ammo
   startingInventory:
     MagazineBoxCaselessRifle: 3
     MagazineBoxCaselessRifleHighVelocity: 3

@@ -5,9 +5,11 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Temperature.Systems;
 using Content.Server.Body.Components;
 using Content.Shared.Examine;
+using Content.Shared.Rejuvenate;
+using Content.Shared.MobState.EntitySystems;
 using Robust.Server.GameObjects;
-using Content.Shared.Tag;
 using Robust.Shared.Containers;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;
 
 namespace Content.Server.Atmos.Miasma
@@ -17,6 +19,7 @@ namespace Content.Server.Atmos.Miasma
         [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+        [Dependency] private readonly SharedMobStateSystem _mobState = default!;
 
         [Dependency] private readonly IRobustRandom _random = default!;
 
@@ -65,7 +68,7 @@ namespace Content.Server.Atmos.Miasma
         /// </summary>
         private float _poolAccumulator = 0f;
 
-        /// <summmary>
+        /// <summary>
         /// How long without an infection before we pick a new disease.
         /// </summary>
         private TimeSpan _poolRepickTime = TimeSpan.FromMinutes(5);
@@ -132,6 +135,7 @@ namespace Content.Server.Atmos.Miasma
             SubscribeLocalEvent<PerishableComponent, MobStateChangedEvent>(OnMobStateChanged);
             SubscribeLocalEvent<PerishableComponent, BeingGibbedEvent>(OnGibbed);
             SubscribeLocalEvent<PerishableComponent, ExaminedEvent>(OnExamined);
+            SubscribeLocalEvent<RottingComponent, RejuvenateEvent>(OnRejuvenate);
             // Containers
             SubscribeLocalEvent<AntiRottingContainerComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
             SubscribeLocalEvent<AntiRottingContainerComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
@@ -163,7 +167,7 @@ namespace Content.Server.Atmos.Miasma
 
         private void OnMobStateChanged(EntityUid uid, PerishableComponent component, MobStateChangedEvent args)
         {
-            if (args.Component.IsDead())
+            if (_mobState.IsDead(uid))
                 EnsureComp<RottingComponent>(uid);
         }
 
@@ -188,8 +192,19 @@ namespace Content.Server.Atmos.Miasma
 
         private void OnExamined(EntityUid uid, PerishableComponent component, ExaminedEvent args)
         {
-            if (component.Rotting)
-                args.PushMarkup(Loc.GetString("miasma-rotting"));
+            if (!component.Rotting)
+                return;
+            var stage = component.DeathAccumulator / component.RotAfter.TotalSeconds;
+            var description = stage switch {
+                >= 3 => "miasma-extremely-bloated",
+                >= 2 => "miasma-bloated",
+                   _ => "miasma-rotting"};
+            args.PushMarkup(Loc.GetString(description));
+        }
+
+        private void OnRejuvenate(EntityUid uid, RottingComponent component, RejuvenateEvent args)
+        {
+            EntityManager.RemoveComponentDeferred<RottingComponent>(uid);
         }
 
         /// Containers
@@ -202,34 +217,36 @@ namespace Content.Server.Atmos.Miasma
                 ToggleDecomposition(args.Entity, false, perishable);
             }
         }
+
         private void OnEntRemoved(EntityUid uid, AntiRottingContainerComponent component, EntRemovedFromContainerMessage args)
         {
-            if (TryComp<PerishableComponent>(args.Entity, out var perishable) && !Terminating(uid))
+            // If we get de-parented due to entity shutdown don't add more flies.
+            if (TryComp<PerishableComponent>(args.Entity, out var perishable) &&
+                TryComp<MetaDataComponent>(uid, out var metadata) && metadata.EntityLifeStage < EntityLifeStage.Terminating)
             {
                 ModifyPreservationSource(args.Entity, false);
                 ToggleDecomposition(args.Entity, true, perishable);
             }
         }
 
-
         /// Fly stuff
 
         private void OnFliesInit(EntityUid uid, FliesComponent component, ComponentInit args)
         {
             component.VirtFlies = EntityManager.SpawnEntity("AmbientSoundSourceFlies", Transform(uid).Coordinates);
-            Transform(component.VirtFlies).AttachParent(uid);
         }
 
         private void OnFliesShutdown(EntityUid uid, FliesComponent component, ComponentShutdown args)
         {
-            EntityManager.DeleteEntity(component.VirtFlies);
+            if (!Terminating(uid))
+                Del(component.VirtFlies);
         }
 
         /// Public functions
 
         public void ToggleDecomposition(EntityUid uid, bool decompose, PerishableComponent? perishable = null)
         {
-            if (!Resolve(uid, ref perishable))
+            if (Terminating(uid) || !Resolve(uid, ref perishable))
                 return;
 
             if (decompose == perishable.Progressing) // Saved a few cycles

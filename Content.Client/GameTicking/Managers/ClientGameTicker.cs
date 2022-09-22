@@ -1,7 +1,7 @@
 using Content.Client.Audio;
+using Content.Client.Gameplay;
 using Content.Client.Lobby;
 using Content.Client.RoundEnd;
-using Content.Client.Viewport;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.GameWindow;
@@ -10,7 +10,6 @@ using Robust.Client.Graphics;
 using Robust.Client.State;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
-using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
@@ -37,7 +36,7 @@ namespace Content.Client.GameTicking.Managers
         [ViewVariables] public TimeSpan StartTime { get; private set; }
         [ViewVariables] public TimeSpan RoundStartTimeSpan { get; private set; }
         [ViewVariables] public new bool Paused { get; private set; }
-        [ViewVariables] public Dictionary<NetUserId, LobbyPlayerStatus> Status { get; private set; } = new();
+
         [ViewVariables] public IReadOnlyDictionary<EntityUid, Dictionary<string, uint?>> JobsAvailable => _jobsAvailable;
         [ViewVariables] public IReadOnlyDictionary<EntityUid, string> StationNames => _stationNames;
 
@@ -66,7 +65,6 @@ namespace Content.Client.GameTicking.Managers
             SubscribeNetworkEvent<TickerJobsAvailableEvent>(UpdateJobsAvailable);
             SubscribeNetworkEvent<RoundRestartCleanupEvent>(RoundRestartCleanup);
 
-            Status = new Dictionary<NetUserId, LobbyPlayerStatus>();
             _initialized = true;
         }
 
@@ -97,8 +95,6 @@ namespace Content.Client.GameTicking.Managers
             LobbySong = message.LobbySong;
             LobbyBackground = message.LobbyBackground;
             Paused = message.Paused;
-            if (IsGameStarted)
-                Status.Clear();
 
             LobbyStatusUpdated?.Invoke();
         }
@@ -112,7 +108,7 @@ namespace Content.Client.GameTicking.Managers
 
         private void JoinGame(TickerJoinGameEvent message)
         {
-            _stateManager.RequestStateChange<GameScreen>();
+            _stateManager.RequestStateChange<GameplayState>();
         }
 
         private void LobbyCountdown(TickerLobbyCountdownEvent message)
@@ -123,11 +119,6 @@ namespace Content.Client.GameTicking.Managers
 
         private void LobbyReady(TickerLobbyReadyEvent message)
         {
-            // Merge the Dictionaries
-            foreach (var p in message.Status)
-            {
-                Status[p.Key] = p.Value;
-            }
             LobbyReadyUpdated?.Invoke();
         }
 

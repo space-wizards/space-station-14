@@ -6,12 +6,18 @@ namespace Content.Shared.Disposal.Components
     [NetworkedComponent]
     public abstract class SharedDisposalUnitComponent : Component
     {
+        public const string ContainerId = "DisposalUnit";
+
         // TODO: Could maybe turn the contact off instead far more cheaply as farseer (though not box2d) had support for it?
         // Need to suss it out.
         /// <summary>
         /// We'll track whatever just left disposals so we know what collision we need to ignore until they stop intersecting our BB.
         /// </summary>
         public List<EntityUid> RecentlyEjected = new();
+
+
+        [DataField("mobsCanEnter")]
+        public bool MobsCanEnter = true;
 
         [Serializable, NetSerializable]
         public enum Visuals : byte

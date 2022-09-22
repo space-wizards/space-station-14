@@ -58,6 +58,7 @@ public sealed class PlayTimeAddOverallCommand : IConsoleCommand
     }
 }
 
+[AdminCommand(AdminFlags.Admin)]
 public sealed class PlayTimeAddRoleCommand : IConsoleCommand
 {
     [Dependency] private readonly IPlayerManager _playerManager = default!;

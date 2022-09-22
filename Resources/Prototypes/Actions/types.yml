@@ -36,6 +36,7 @@
   description: action-description-disarm
   icon: Interface/Actions/disarmOff.png
   iconOn: Interface/Actions/disarm.png
+  repeat: true
   useDelay: 1.5
   interactOnMiss: true
   event: !type:DisarmActionEvent
@@ -52,7 +53,7 @@
   icon: Interface/Actions/harmOff.png
   iconOn: Interface/Actions/harm.png
   userPopup: action-popup-combat
-  popupToggleSuffix: -disabling
+  popupToggleSuffix: -enabled
   event: !type:ToggleCombatActionEvent
 
 - type: instantAction
@@ -76,6 +77,13 @@
   icon: Objects/Weapons/Melee/shields.rsi/teleriot-icon.png
   iconOn: Objects/Weapons/Melee/shields.rsi/teleriot-on.png
   event: !type:ToggleActionEvent
+
+- type: instantAction
+  id: ClearNetworkLinkOverlays
+  name: network-configurator-clear-network-link-overlays
+  description: network-configurator-clear-network-link-overlays-desc
+  icon: Objects/Tools/multitool.rsi/icon.png
+  event: !type:ClearAllOverlaysEvent
 
 - type: instantAction
   id: AnimalLayEgg

@@ -13,7 +13,7 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
     private SurveillanceCameraMonitorWindow? _window;
     private EntityUid? _currentCamera;
 
-    public SurveillanceCameraMonitorBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+    public SurveillanceCameraMonitorBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
     {
         IoCManager.InjectDependencies(this);
         _eyeLerpingSystem = _entityManager.EntitySysManager.GetEntitySystem<EyeLerpingSystem>();
@@ -114,6 +114,12 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
     protected override void Dispose(bool disposing)
     {
         base.Dispose(disposing);
+
+        if (_currentCamera != null)
+        {
+            _eyeLerpingSystem.RemoveEye(_currentCamera.Value);
+            _currentCamera = null;
+        }
 
         if (disposing)
         {

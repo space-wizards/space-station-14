@@ -19,6 +19,8 @@ using Content.Shared.Payload.Components;
 using Content.Shared.StepTrigger.Systems;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
+using Robust.Shared.Physics.Events;
+using Robust.Shared.Physics.Systems;
 
 namespace Content.Server.Explosion.EntitySystems
 {
@@ -86,7 +88,7 @@ namespace Content.Server.Explosion.EntitySystems
             args.Handled = true;
         }
 
-        private void OnTriggerCollide(EntityUid uid, TriggerOnCollideComponent component, StartCollideEvent args)
+        private void OnTriggerCollide(EntityUid uid, TriggerOnCollideComponent component, ref StartCollideEvent args)
         {
 			if(args.OurFixture.ID == component.FixtureID)
 				Trigger(component.Owner);
@@ -126,7 +128,8 @@ namespace Content.Server.Explosion.EntitySystems
             {
                 // Check if entity is bomb/mod. grenade/etc
                 if (_container.TryGetContainer(uid, "payload", out IContainer? container) &&
-                    TryComp(container.ContainedEntities.First(), out ChemicalPayloadComponent? chemicalPayloadComponent))
+                    container.ContainedEntities.Count > 0 &&
+                    TryComp(container.ContainedEntities[0], out ChemicalPayloadComponent? chemicalPayloadComponent))
                 {
                     // If a beaker is missing, the entity won't explode, so no reason to log it
                     if (!TryComp(chemicalPayloadComponent?.BeakerSlotA.Item, out SolutionContainerManagerComponent? beakerA) ||

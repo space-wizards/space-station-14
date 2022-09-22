@@ -55,12 +55,15 @@
         - ReagentId: THC
           Quantity: 10
   - type: Sprite
-    sprite: Objects/Misc/reageant_fillings.rsi
+    sprite: Objects/Misc/reagent_fillings.rsi
     state: powderpile
     color: darkgreen
   - type: Construction
     graph: smokeableGroundCannabis
     node: ground
+  - type: Tag
+    tags:
+      - Smokable
 
 - type: entity
   name: tobacco leaves
@@ -110,9 +113,12 @@
         - ReagentId: Nicotine
           Quantity: 10
   - type: Sprite
-    sprite: Objects/Misc/reageant_fillings.rsi
+    sprite: Objects/Misc/reagent_fillings.rsi
     state: powderpile
     color: brown
   - type: Construction
     graph: smokeableGroundTobacco
     node: ground
+  - type: Tag
+    tags:
+      - Smokable

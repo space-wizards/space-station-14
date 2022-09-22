@@ -13,12 +13,12 @@ public sealed class FlyBySoundComponent : Component
     /// Probability that the sound plays
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("prob")]
-    public float Prob = 0.75f;
+    public float Prob = 0.10f;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("sound")]
     public SoundSpecifier Sound = new SoundCollectionSpecifier("BulletMiss")
     {
-        Params = AudioParams.Default.WithVolume(5f),
+        Params = AudioParams.Default,
     };
 
     [ViewVariables, DataField("range")] public float Range = 1.5f;

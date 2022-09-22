@@ -7,6 +7,7 @@
   - type: HandheldLight
     addPrefix: true
   - type: PowerCellSlot
+  - type: ItemSlots
   - type: ContainerContainer
     containers:
       cell_slot: !type:ContainerSlot
@@ -16,6 +17,7 @@
   - type: Item
     sprite: Objects/Misc/Lights/lights.rsi
     size: 20
+    heldPrefix: off
   - type: PointLight
     netsync: false
     enabled: false

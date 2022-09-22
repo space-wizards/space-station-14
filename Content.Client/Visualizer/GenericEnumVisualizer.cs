@@ -51,6 +51,7 @@ namespace Content.Client.Visualizer
             States = _statesRaw.ToDictionary(kvp => ResolveRef(kvp.Key), kvp => kvp.Value);
         }
 
+        [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);

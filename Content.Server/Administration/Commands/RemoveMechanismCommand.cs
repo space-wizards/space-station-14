@@ -5,7 +5,7 @@ using Robust.Shared.Console;
 
 namespace Content.Server.Administration.Commands
 {
-    [AdminCommand(AdminFlags.Fun)]
+    [AdminCommand(AdminFlags.Admin)]
     public sealed class RemoveMechanismCommand : IConsoleCommand
     {
         public string Command => "rmmechanism";

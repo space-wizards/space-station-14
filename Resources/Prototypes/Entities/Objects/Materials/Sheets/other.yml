@@ -64,7 +64,7 @@
   components:
   - type: Material
     materials:
-      Plasma: 500
+      Plasma: 100
   - type: Stack
     stackType: Plasma
   - type: Sprite

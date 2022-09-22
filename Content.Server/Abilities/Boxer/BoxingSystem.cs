@@ -14,15 +14,13 @@ namespace Content.Server.Abilities.Boxer
 {
     public sealed class BoxingSystem : EntitySystem
     {
-        [Dependency] private readonly StunSystem _stunSystem = default!;
-        [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
 
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<BoxerComponent, ComponentInit>(OnInit);
-            SubscribeLocalEvent<BoxerComponent, MeleeHitEvent>(ApplyBoxerModifiers);
+            SubscribeLocalEvent<BoxerComponent, ItemMeleeDamageEvent>(GetDamageModifiers);
             SubscribeLocalEvent<BoxingGlovesComponent, StaminaMeleeHitEvent>(OnStamHit);
         }
 
@@ -31,7 +29,7 @@ namespace Content.Server.Abilities.Boxer
             if (TryComp<MeleeWeaponComponent>(uid, out var meleeComp))
                 meleeComp.Range *= boxer.RangeBonus;
         }
-        private void ApplyBoxerModifiers(EntityUid uid, BoxerComponent component, MeleeHitEvent args)
+        private void GetDamageModifiers(EntityUid uid, BoxerComponent component, ItemMeleeDamageEvent args)
         {
             if (component.UnarmedModifiers == default!)
             {

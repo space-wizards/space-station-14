@@ -12,3 +12,5 @@
       sprite: Objects/Misc/module.rsi
       state: mainboard
       netsync: false
+    - type: StaticPrice
+      price: 100

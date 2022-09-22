@@ -10,17 +10,17 @@ namespace Content.Shared.Storage;
 /// </summary>
 [Serializable]
 [DataDefinition]
-public struct EntitySpawnEntry : IPopulateDefaultValues
+public struct EntitySpawnEntry
 {
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("id", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string? PrototypeId;
+    public string? PrototypeId = null;
 
     /// <summary>
     ///     The probability that an item will spawn. Takes decimal form so 0.05 is 5%, 0.50 is 50% etc.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("prob")] public float SpawnProbability;
+    [DataField("prob")] public float SpawnProbability = 1;
 
     /// <summary>
     ///     orGroup signifies to pick between entities designated with an ID.
@@ -44,10 +44,10 @@ public struct EntitySpawnEntry : IPopulateDefaultValues
     ///     </example>
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("orGroup")] public string? GroupId;
+    [DataField("orGroup")] public string? GroupId = null;
 
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("amount")] public int Amount;
+    [DataField("amount")] public int Amount = 1;
 
     /// <summary>
     ///     How many of this can be spawned, in total.
@@ -55,14 +55,9 @@ public struct EntitySpawnEntry : IPopulateDefaultValues
     ///     Otherwise, it chooses a random value between <see cref="Amount"/> and <see cref="MaxAmount"/> on spawn.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("maxAmount")] public int MaxAmount;
+    [DataField("maxAmount")] public int MaxAmount = 1;
 
-    public void PopulateDefaultValues()
-    {
-        Amount = 1;
-        MaxAmount = 1;
-        SpawnProbability = 1;
-    }
+    public EntitySpawnEntry() { }
 }
 
 public static class EntitySpawnCollection

@@ -105,6 +105,7 @@
     - Syringe
     - ReagentGrinderMachineCircuitboard
     - PillCanister
+    - ChemistryEmptyBottle01
     - TimerTrigger
     - ChemicalPayload
 
@@ -126,7 +127,7 @@
     - VaccinatorMachineCircuitboard
     - DiagnoserMachineCircuitboard
     - HandheldCrewMonitor
-    - CloningConsoleComputerCircuitboard
+    - BiomassReclaimerMachineCircuitboard
 
 - type: technology
   name: technologies-advanced-life-support
@@ -143,6 +144,7 @@
     - CloningPodMachineCircuitboard
     - MedicalScannerMachineCircuitboard
     - StasisBedMachineCircuitboard
+    - CloningConsoleComputerCircuitboard
 
 # Security Technology Tree
 
@@ -219,6 +221,7 @@
   requiredTechnologies:
     - BasicResearch
   unlockedRecipes:
+    - AppraisalTool
     - ConveyorBeltAssembly
     - RCD
     - RCDAmmo
@@ -239,6 +242,7 @@
     - ComputerTelevisionCircuitboard
     - AirAlarmElectronics
     - FireAlarmElectronics
+    - MailingUnitElectronics
     - HolofanProjector
 
 - type: technology
@@ -268,6 +272,7 @@
   unlockedRecipes:
   - ThermomachineFreezerMachineCircuitBoard
   - PortableScrubberMachineCircuitBoard
+  - GasRecyclerMachineCircuitboard
 
 # Avionics Circuitry Technology Tree
 
@@ -309,13 +314,9 @@
     - APCElectronics
     - SMESMachineCircuitboard
     - SubstationMachineCircuitboard
-    - WallmountSubstationElectronics
-    - WallmountGeneratorElectronics
-    - WallmountGeneratorAPUElectronics
     - HydroponicsTrayMachineCircuitboard
     - SolarControlComputerCircuitboard
     - GeneratorPlasmaMachineCircuitboard
-    - GeneratorUraniumMachineCircuitboard
     - Signaller
     - SignalTrigger
 
@@ -333,7 +334,6 @@
     - WallmountSubstationElectronics
     - WallmountGeneratorElectronics
     - WallmountGeneratorAPUElectronics
-    - GeneratorPlasmaMachineCircuitboard
     - GeneratorUraniumMachineCircuitboard
 
 - type: technology

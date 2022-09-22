@@ -40,49 +40,6 @@ namespace Content.Shared.Pulling.Components
         [ViewVariables]
         public bool PrevFixedRotation;
 
-        public override ComponentState GetComponentState()
-        {
-            return new PullableComponentState(Puller);
-        }
-
-        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
-        {
-            base.HandleComponentState(curState, nextState);
-
-            if (curState is not PullableComponentState state)
-            {
-                return;
-            }
-
-            if (!state.Puller.HasValue)
-            {
-                EntitySystem.Get<SharedPullingStateManagementSystem>().ForceDisconnectPullable(this);
-                return;
-            }
-
-            if (!state.Puller.Value.IsValid())
-            {
-                Logger.Error($"Invalid entity {state.Puller.Value} for pulling");
-                return;
-            }
-
-            if (Puller == state.Puller)
-            {
-                // don't disconnect and reconnect a puller for no reason
-                return;
-            }
-
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedPullerComponent?>(state.Puller.Value, out var comp))
-            {
-                Logger.Error($"Entity {state.Puller.Value} for pulling had no Puller component");
-                // ensure it disconnects from any different puller, still
-                EntitySystem.Get<SharedPullingStateManagementSystem>().ForceDisconnectPullable(this);
-                return;
-            }
-
-            EntitySystem.Get<SharedPullingStateManagementSystem>().ForceRelationship(comp, this);
-        }
-
         protected override void OnRemove()
         {
             if (Puller != null)

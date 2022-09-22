@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Chat;
 using Content.Server.Chat.Systems;
 using Content.Server.Radio.EntitySystems;
@@ -20,6 +21,7 @@ namespace Content.Server.Radio.Components
     {
         private ChatSystem _chatSystem = default!;
         private RadioSystem _radioSystem = default!;
+        private IPrototypeManager _prototypeManager = default!;
 
         private bool _radioOn;
         [DataField("channels", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<RadioChannelPrototype>))]
@@ -52,6 +54,7 @@ namespace Content.Server.Radio.Components
 
             _radioSystem = EntitySystem.Get<RadioSystem>();
             _chatSystem = EntitySystem.Get<ChatSystem>();
+            IoCManager.Resolve(ref _prototypeManager);
 
             RadioOn = false;
         }
@@ -72,12 +75,16 @@ namespace Content.Server.Radio.Components
             return true;
         }
 
-        public bool CanListen(string message, EntityUid source, RadioChannelPrototype prototype)
+        public bool CanListen(string message, EntityUid source, RadioChannelPrototype? prototype)
         {
-            if (!_channels.Contains(prototype.ID)) return false;
+            if (prototype != null && !_channels.Contains(prototype.ID)
+                || !_prototypeManager.HasIndex<RadioChannelPrototype>(BroadcastChannel))
+            {
+                return false;
+            }
 
-            return RadioOn &&
-                   EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(Owner, source, range: ListenRange);
+            return RadioOn
+                   && EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(Owner, source, range: ListenRange);
         }
 
         public void Receive(string message, RadioChannelPrototype channel, EntityUid speaker)
@@ -88,9 +95,16 @@ namespace Content.Server.Radio.Components
             }
         }
 
-        public void Listen(string message, EntityUid speaker, RadioChannelPrototype channel)
+        public void Listen(string message, EntityUid speaker, RadioChannelPrototype? prototype)
         {
-            Broadcast(message, speaker, channel);
+            // if we can't get the channel, we need to just use the broadcast frequency
+            if (prototype == null
+                && !_prototypeManager.TryIndex(BroadcastChannel, out prototype))
+            {
+                return;
+            }
+
+            Broadcast(message, speaker, prototype);
         }
 
         public void Broadcast(string message, EntityUid speaker, RadioChannelPrototype channel)

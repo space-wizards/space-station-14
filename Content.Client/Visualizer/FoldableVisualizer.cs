@@ -12,6 +12,7 @@ public sealed class FoldableVisualizer : AppearanceVisualizer
     [DataField("key")]
     private string _key = default!;
 
+    [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
     public override void OnChangeData(AppearanceComponent appearance)
     {
         base.OnChangeData(appearance);

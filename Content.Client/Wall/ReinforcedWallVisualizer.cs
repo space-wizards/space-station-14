@@ -9,6 +9,7 @@ namespace Content.Client.Wall
     [UsedImplicitly]
     public sealed class ReinforcedWallVisualizer : AppearanceVisualizer
     {
+        [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);

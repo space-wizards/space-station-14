@@ -8,6 +8,13 @@
   components:
   - type: Damageable
     damageContainer: Biological
+  - type: BodyPart
+  - type: ContainerContainer
+    containers:
+      bodypart: !type:Container
+        ents: []
+  - type: StaticPrice
+    price: 100
 
 - type: entity
   id: TorsoHuman

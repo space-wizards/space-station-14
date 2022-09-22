@@ -55,7 +55,7 @@ public sealed class DirectionIcon : TextureRect
         }
 
         var rotation = direction.ToWorldAngle() - relativeAngle;
-        Rotation = snap ? rotation.GetDir().ToAngle()  : rotation; 
+        Rotation = snap ? rotation.GetDir().ToAngle()  : rotation;
     }
 
     protected override void Draw(DrawingHandleScreen handle)
@@ -65,6 +65,7 @@ public sealed class DirectionIcon : TextureRect
             var offset = (-_rotation.Value).RotateVec(Size * UIScale / 2) - Size * UIScale / 2;
             handle.SetTransform(Matrix3.CreateTransform(GlobalPixelPosition - offset, -_rotation.Value));
         }
+
         base.Draw(handle);
     }
 }

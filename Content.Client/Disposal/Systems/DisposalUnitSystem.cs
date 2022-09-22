@@ -47,9 +47,9 @@ namespace Content.Client.Disposal.Systems
 
             foreach (var inter in userInterface.Interfaces)
             {
-                if (inter is DisposalUnitBoundUserInterface disposals)
+                if (inter is DisposalUnitBoundUserInterface boundInterface)
                 {
-                    return disposals.Window?.UpdateState(state) != false;
+                    return boundInterface.UpdateWindowState(state) != false;
                 }
             }
 

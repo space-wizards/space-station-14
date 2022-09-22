@@ -17,6 +17,11 @@
     state: pda
   - type: Item
     size: 10
+  - type: ContainerContainer
+    containers:
+      PDA-id: !type:ContainerSlot {}
+      PDA-pen: !type:ContainerSlot {}
+  - type: ItemSlots
   - type: Clothing
     quickEquip: false
     slots:
@@ -43,8 +48,8 @@
     interfaces:
     - key: enum.PDAUiKey.Key
       type: PDABoundUserInterface
-    - key: enum.UplinkUiKey.Key
-      type: UplinkBoundUserInterface
+    - key: enum.StoreUiKey.Key
+      type: StoreBoundUserInterface
     - key: enum.RingerUiKey.Key
       type: RingerBoundUserInterface
     - key: enum.InstrumentUiKey.Key
@@ -101,7 +106,7 @@
   parent: BasePDA
   id: MedicalInternPDA
   name: medical intern PDA
-  description: Why isn't it white?
+  description: Why isn't it white? Has a built-in health analyzer.
   components:
   - type: PDA
     id: MedicalInternIDCard
@@ -111,6 +116,8 @@
       state: pda-internmed
   - type: Icon
     state: pda-internmed
+  - type: HealthAnalyzer
+    scanDelay: 1.4
 
 - type: entity
   parent: BasePDA
@@ -627,13 +634,28 @@
     state: pda-syndi
 
 - type: entity
-  parent: HoSPDA
+  parent: BasePDA
   id: ERTLeaderPDA
   name: ERT PDA
   description: Red for firepower.
   components:
   - type: PDA
     id: ERTLeaderIDCard
+  - type: Appearance
+    visuals:
+    - type: PDAVisualizer
+      state: pda-ert
+  - type: Icon
+    state: pda-ert
+
+- type: entity
+  parent: ERTLeaderPDA
+  id: CBURNPDA
+  name: CBURN PDA
+  description: Smells like rotten flesh.
+  components:
+  - type: PDA
+    id: CBURNIDcard
 
 - type: entity
   parent: BasePDA

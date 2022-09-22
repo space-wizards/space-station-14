@@ -4,6 +4,7 @@
     "ZeroDayDaemon" = "Daemon"
     "ElectroJr" = "ElectroSR"
     "Partmedia" = "notafet"
+    "Just-a-Unity-Dev" = "eclips_e"
 }
 
 $ignore = @{
