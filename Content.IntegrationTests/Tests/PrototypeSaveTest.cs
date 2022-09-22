@@ -60,7 +60,6 @@ public sealed class PrototypeSaveTest
         "WeaponLauncherChinaLake",
         "WeaponLauncherRocket",
         "WeaponLauncherMultipleRocket",
-        "Crematorium",
         "JawsOfLife",
         "SyndicateJawsOfLife",
         "LightReplacer",
