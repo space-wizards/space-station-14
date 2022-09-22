@@ -4,6 +4,7 @@ using Content.Shared.Preferences;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Humanoid;
 
@@ -13,13 +14,13 @@ public abstract class SharedHumanoidComponent : Component
     ///     Current species. Dictates things like base body sprites,
     ///     base humanoid to spawn, etc.
     /// </summary>
-    [DataField("species")]
+    [DataField("species", customTypeSerializer: typeof(PrototypeIdSerializer<SpeciesPrototype>))]
     public string Species { get; set; } = default!;
 
     /// <summary>
     ///     The initial profile and base layers to apply to this humanoid.
     /// </summary>
-    [DataField("initial")]
+    [DataField("initial", customTypeSerializer: typeof(PrototypeIdSerializer<HumanoidProfilePrototype>))]
     public string Initial { get; } = default!;
 
     /// <summary>
@@ -32,11 +33,9 @@ public abstract class SharedHumanoidComponent : Component
     ///     Visual layers currently hidden. This will affect the base sprite
     ///     on this humanoid layer, and any markings that sit above it.
     /// </summary>
-    [ViewVariables]
-    public readonly HashSet<HumanoidVisualLayers> HiddenLayers = new();
+    [ViewVariables] public readonly HashSet<HumanoidVisualLayers> HiddenLayers = new();
 
-    [DataField("sex")]
-    public Sex Sex = Sex.Male;
+    [DataField("sex")] public Sex Sex = Sex.Male;
 }
 
 [DataDefinition]
