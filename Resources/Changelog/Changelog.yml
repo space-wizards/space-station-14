@@ -1,9 +1,4 @@
 Entries:
-- author: Sammy Boy
-  changes:
-  - {message: Xenos are now Insulated and Immune to diseases!, type: Tweak}
-  id: 1853
-  time: '2022-07-03T02:49:35.0000000+00:00'
 - author: DogZeroX
   changes:
   - {message: 'Exos no longer have an accent, they can talk like a normal person until
@@ -2920,3 +2915,9 @@ Entries:
   - {message: Added missing botany duffle bag, type: Add}
   id: 2352
   time: '2022-09-22T19:02:30.0000000+00:00'
+- author: Mervill
+  changes:
+  - {message: The agent id card interface now remembers the previous fake name and
+      title., type: Fix}
+  id: 2353
+  time: '2022-09-22T19:04:01.0000000+00:00'
