@@ -182,7 +182,7 @@ public sealed class HealingSystem : EntitySystem
         var percentDamage = (float) (damageable.TotalDamage / amount);
         //basically make it scale from 1 to the multiplier.
         var modifier = percentDamage * (component.SelfHealPenaltyMultiplier - 1) + 1;
-        return modifier;
+        return Math.Max(modifier, 0);
     }
 
     private sealed class HealingCompleteEvent : EntityEventArgs
