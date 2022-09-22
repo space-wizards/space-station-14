@@ -1,12 +1,14 @@
 using System.Linq;
+using Content.Client.HUD.UI;
+using Content.Client.Humanoid;
 using Content.Client.Inventory;
 using Content.Client.Preferences;
 using Content.Client.UserInterface.Controls;
-using Content.Shared.CharacterAppearance.Systems;
 using Content.Shared.GameTicking;
+using Content.Shared.Humanoid.Prototypes;
+using Content.Shared.Inventory;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
-using Content.Shared.Species;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -127,7 +129,7 @@ namespace Content.Client.Lobby.UI
                     _viewBox.AddChild(viewWest);
                     _viewBox.AddChild(viewEast);
                     _summaryLabel.Text = selectedCharacter.Summary;
-                    EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(_previewDummy.Value, selectedCharacter);
+                    EntitySystem.Get<HumanoidSystem>().LoadProfile(_previewDummy.Value, selectedCharacter);
                     GiveDummyJobClothes(_previewDummy.Value, selectedCharacter);
                 }
             }
