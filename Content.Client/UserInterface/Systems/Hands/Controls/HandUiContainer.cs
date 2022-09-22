@@ -13,6 +13,7 @@ public sealed class HandsContainer : ItemSlotUIContainer<HandButton>
     public HandsContainer()
     {
         AddChild(_grid = new GridContainer());
+        _grid.ExpandBackwards = true;
     }
 
     public override HandButton? AddButton(HandButton newButton)
@@ -35,7 +36,8 @@ public sealed class HandsContainer : ItemSlotUIContainer<HandButton>
     public override void RemoveButton(string handName)
     {
         var button = GetButton(handName);
-        if (button == null) return;
+        if (button == null)
+            return;
         base.RemoveButton(button);
         _grid.RemoveChild(button);
     }
@@ -55,7 +57,8 @@ public sealed class HandsContainer : ItemSlotUIContainer<HandButton>
     public bool TryRemoveLastHand(out HandButton? control)
     {
         var success = TryGetLastButton(out control);
-        if (control != null) RemoveButton(control);
+        if (control != null)
+            RemoveButton(control);
         return success;
     }
 

@@ -181,26 +181,6 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
         return true;
     }
 
-    private HandButton? GetLastHand() //useful for sorting
-    {
-        TryGetLastHand(out var handButton);
-        return handButton;
-    }
-
-    private bool TryGetLastHand(out HandButton? handButton)
-    {
-        handButton = null;
-        for (var i = _handsContainers.Count - 1; i >= 0; i--)
-        {
-            var hands = _handsContainers[i];
-            if (hands.ButtonCount == 0 || !hands.TryGetLastButton(out handButton))
-                continue;
-            return true;
-        }
-
-        return false;
-    }
-
     //propagate hand activation to the hand system.
     private void StorageActivate(GUIBoundKeyEventArgs args, SlotControl handControl)
     {
@@ -212,22 +192,27 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
         if (handName == null)
         {
             if (_activeHand != null)
-            {
                 _activeHand.Highlight = false;
-            }
 
+            HandsGui?.UpdatePanelEntity(null);
             return;
         }
 
         if (!_handLookup.TryGetValue(handName, out var handControl) || handControl == _activeHand)
             return;
+
         if (_activeHand != null)
-        {
             _activeHand.Highlight = false;
-        }
 
         handControl.Highlight = true;
         _activeHand = handControl;
+
+        if (HandsGui != null &&
+            _playerHandsComponent != null &&
+            _playerHandsComponent.Hands.TryGetValue(handName, out var hand))
+        {
+            HandsGui.UpdatePanelEntity(hand.HeldEntity);
+        }
     }
 
     private HandButton? GetHand(string handName)
@@ -248,7 +233,7 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
 
     private void RemoveHand(string handName)
     {
-        RemoveHand(handName, out var _);
+        RemoveHand(handName, out _);
     }
 
     private bool RemoveHand(string handName, out HandButton? handButton)
