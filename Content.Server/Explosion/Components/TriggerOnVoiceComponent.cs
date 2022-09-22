@@ -19,7 +19,7 @@ namespace Content.Server.Explosion.Components
         private TriggerSystem _triggerSystem = default!;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("keyphrase")]
+        [DataField("keyPhrase")]
         public string? KeyPhrase;
 
         [ViewVariables(VVAccess.ReadWrite)]
