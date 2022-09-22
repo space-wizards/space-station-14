@@ -1,12 +1,6 @@
 Entries:
 - author: DogZeroX
   changes:
-  - {message: 'Exos no longer have an accent, they can talk like a normal person until
-      they get a language.', type: Tweak}
-  id: 1854
-  time: '2022-07-03T02:56:33.0000000+00:00'
-- author: DogZeroX
-  changes:
   - {message: Blue alert now has its own alarm., type: Add}
   - {message: Red alert alarm sounds more alarming., type: Add}
   id: 1855
@@ -2921,3 +2915,9 @@ Entries:
       title., type: Fix}
   id: 2353
   time: '2022-09-22T19:04:01.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: 'psychologist, detective, and reporter ID cards now display correct
+      layers', type: Fix}
+  id: 2354
+  time: '2022-09-22T21:00:14.0000000+00:00'
