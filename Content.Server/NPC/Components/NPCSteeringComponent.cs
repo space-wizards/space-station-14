@@ -40,7 +40,7 @@ public sealed class NPCSteeringComponent : Component
 
     [ViewVariables] public SteeringStatus Status = SteeringStatus.Moving;
 
-    [ViewVariables(VVAccess.ReadWrite)] public PathFlags Flags = PathFlags.Smashing;
+    [ViewVariables(VVAccess.ReadWrite)] public PathFlags Flags = PathFlags.Smashing | PathFlags.Prying;
 }
 
 public enum SteeringStatus : byte

@@ -1,15 +1,16 @@
 using System.Linq;
 using System.Threading;
-using Content.Server.CPUJob.JobQueues;
+using Content.Server.Doors.Systems;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.Pathfinding;
+using Content.Server.Verbs;
 using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
+using Content.Shared.Interaction;
 using Content.Shared.Movement.Components;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
 
 namespace Content.Server.NPC.Systems
@@ -21,8 +22,9 @@ namespace Content.Server.NPC.Systems
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly AccessReaderSystem _accessReader = default!;
+        [Dependency] private readonly DoorSystem _doors = default!;
         [Dependency] private readonly PathfindingSystem _pathfindingSystem = default!;
-        [Dependency] private readonly NPCCombatSystem _combat = default!;
+        [Dependency] private readonly SharedInteractionSystem _interaction = default!;
 
         // This will likely get moved onto an abstract pathfinding node that specifies the max distance allowed from the coordinate.
         private const float TileTolerance = 0.4f;
@@ -185,7 +187,7 @@ namespace Content.Server.NPC.Systems
             // Grab the target position, either the path or our end goal.
             // TODO: Some situations we may not want to move at our target without a path.
             var targetCoordinates = GetTargetCoordinates(steering);
-            var arrivalDistance = TileTolerance;
+            var arrivalDistance = 1f;
 
             if (targetCoordinates.Equals(steering.Coordinates))
             {
@@ -211,38 +213,57 @@ namespace Content.Server.NPC.Systems
             if (direction.Length <= arrivalDistance)
             {
                 // Node needs some kind of special handling like access or smashing.
-                if (steering.CurrentPath.TryPeek(out var node) && TryHandleFlags(steering, node))
+                if (steering.CurrentPath.TryPeek(out var node))
                 {
-                    return;
+                    var status = TryHandleFlags(steering, node, xform);
+
+                    switch (status)
+                    {
+                        case SteeringObstacleStatus.Completed:
+                            break;
+                        case SteeringObstacleStatus.Failed:
+                            // TODO: Blacklist the poly for next query
+                            SetDirection(mover, steering, Vector2.Zero);
+                            steering.Status = SteeringStatus.NoPath;
+                            return;
+                        case SteeringObstacleStatus.Continuing:
+                            return;
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
                 }
 
-                // It was just a node, not the target, so grab the next destination (either the target or next node).
-                if (steering.CurrentPath.Count > 0)
+                // Otherwise it's probably regular pathing so just keep going a bit more to get to tile centre
+                if (direction.Length <= TileTolerance)
                 {
-                    steering.CurrentPath.Dequeue();
-
-                    // Alright just adjust slightly and grab the next node so we don't stop moving for a tick.
-                    // TODO: If it's the last node just grab the target instead.
-                    targetCoordinates = GetTargetCoordinates(steering);
-                    targetMap = targetCoordinates.ToMap(EntityManager);
-
-                    // Can't make it again.
-                    if (ourMap.MapId != targetMap.MapId)
+                    // It was just a node, not the target, so grab the next destination (either the target or next node).
+                    if (steering.CurrentPath.Count > 0)
                     {
+                        steering.CurrentPath.Dequeue();
+
+                        // Alright just adjust slightly and grab the next node so we don't stop moving for a tick.
+                        // TODO: If it's the last node just grab the target instead.
+                        targetCoordinates = GetTargetCoordinates(steering);
+                        targetMap = targetCoordinates.ToMap(EntityManager);
+
+                        // Can't make it again.
+                        if (ourMap.MapId != targetMap.MapId)
+                        {
+                            SetDirection(mover, steering, Vector2.Zero);
+                            steering.Status = SteeringStatus.NoPath;
+                            return;
+                        }
+
+                        // Gonna resume now business as usual
+                        direction = targetMap.Position - ourMap.Position;
+                    }
+                    else
+                    {
+                        // This probably shouldn't happen as we check above but eh.
                         SetDirection(mover, steering, Vector2.Zero);
-                        steering.Status = SteeringStatus.NoPath;
+                        steering.Status = SteeringStatus.InRange;
                         return;
                     }
-
-                    // Gonna resume now business as usual
-                    direction = targetMap.Position - ourMap.Position;
-                }
-                else
-                {
-                    // This probably shouldn't happen as we check above but eh.
-                    SetDirection(mover, steering, Vector2.Zero);
-                    steering.Status = SteeringStatus.InRange;
-                    return;
                 }
             }
 
