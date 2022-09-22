@@ -15,32 +15,26 @@ namespace Content.Server.Explosion.Components
     [ComponentReference(typeof(IListen))]
     public sealed class TriggerOnVoiceComponent : Component, IListen
     {
-        public static readonly char[] PunctuationChars = new char[] { ',', '.', '?', '!', ';', ':' };
-
         private SharedInteractionSystem _sharedInteractionSystem = default!;
         private TriggerSystem _triggerSystem = default!;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("keyphrase")]
-        public string KeyPhrase = "";
+        public string? KeyPhrase;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("listenRange")]
         public int ListenRange { get; private set; } = 4;
 
-        /// <summary>
-        /// Triggger enabled after first recording
-        /// </summary>
-        [ViewVariables]
-        public bool Enabled = false;
-
         [ViewVariables]
         public bool IsRecording = false;
 
         [ViewVariables]
+        [DataField("minLength")]
         public int MinLength = 3;
 
         [ViewVariables]
+        [DataField("maxLength")]
         public int MaxLength = 50;
 
         /// <summary>
@@ -66,15 +60,14 @@ namespace Content.Server.Explosion.Components
 
         void IListen.Listen(string message, EntityUid speaker, RadioChannelPrototype? channel)
         {
-            message = message.Trim().TrimEnd(PunctuationChars);
+            message = message.Trim();
 
-            if (this.IsRecording && message.Length >= this.MinLength && message.Length <= this.MaxLength)
+            if (IsRecording && message.Length >= MinLength && message.Length <= MaxLength)
             {
-                this.KeyPhrase = message;
-                this.Enabled = true; //armed after first successful recording
+                KeyPhrase = message;
                 _triggerSystem.ToggleRecord(this, Activator, true);
             }
-            else if (this.Enabled && Regex.IsMatch(message, $@"\b{Regex.Escape(KeyPhrase)}\b", RegexOptions.IgnoreCase))
+            else if (KeyPhrase != null && message.ToLower().Contains(KeyPhrase.ToLower()))
             {
                 _triggerSystem.Trigger(Owner, speaker);
             }

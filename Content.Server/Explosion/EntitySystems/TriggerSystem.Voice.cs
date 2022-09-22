@@ -18,12 +18,6 @@ namespace Content.Server.Explosion.EntitySystems
         {
             SubscribeLocalEvent<TriggerOnVoiceComponent, ExaminedEvent>(OnVoiceExamine);
             SubscribeLocalEvent<TriggerOnVoiceComponent, GetVerbsEvent<AlternativeVerb>>(OnVoiceGetAltVerbs);
-            SubscribeLocalEvent<TriggerOnVoiceComponent, ComponentInit>(OnComponentInit);
-        }
-
-        private void OnComponentInit(EntityUid uid, TriggerOnVoiceComponent component, ComponentInit args)
-        {
-            component.KeyPhrase = Loc.GetString("trigger-voice-uninitialized");
         }
 
         private void OnVoiceGetAltVerbs(EntityUid uid, TriggerOnVoiceComponent component, GetVerbsEvent<AlternativeVerb> args)
@@ -61,7 +55,7 @@ namespace Content.Server.Explosion.EntitySystems
         private void OnVoiceExamine(EntityUid uid, TriggerOnVoiceComponent component, ExaminedEvent args)
         {
             if (args.IsInDetailsRange)
-                args.PushText(Loc.GetString("examine-trigger-voice", ("keyphrase", component.KeyPhrase)));
+                args.PushText(Loc.GetString("examine-trigger-voice", ("keyphrase", component.KeyPhrase?? Loc.GetString("trigger-voice-uninitialized"))));
         }
     }
 }
