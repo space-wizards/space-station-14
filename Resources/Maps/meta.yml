@@ -42451,14 +42451,9 @@ entities:
 - uid: 2389
   type: BarSign
   components:
-  - desc: All right, buddy. I think you've had EI NATH. Time to get a cab.
-    name: The Ale' Nath
-    type: MetaData
   - pos: 20.5,1.5
     parent: 0
     type: Transform
-  - current: TheAleNath
-    type: BarSign
 - uid: 2390
   type: SignBar
   components:

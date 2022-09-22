@@ -60,19 +60,6 @@
 
 - type: entity
   parent: BaseBarSign
-  id: BarSignLV426
-  name: LV426
-  description: Drinking with fancy facemasks is clearly more important than going to medbay.
-  components:
-  - type: Sprite
-    layers:
-    - state: empty
-    - state: lv426
-      shader: unshaded
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
-
-- type: entity
-  parent: BaseBarSign
   id: BarSignMaidCafe
   name: Maid Cafe
   description: Welcome back, master!
