@@ -1,10 +1,4 @@
 Entries:
-- author: DogZeroX
-  changes:
-  - {message: Blue alert now has its own alarm., type: Add}
-  - {message: Red alert alarm sounds more alarming., type: Add}
-  id: 1855
-  time: '2022-07-03T03:52:40.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: PAI can now only hear Common radio., type: Tweak}
@@ -2921,3 +2915,9 @@ Entries:
       layers', type: Fix}
   id: 2354
   time: '2022-09-22T21:00:14.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: Humanoids were recently changed. Expect to see more variations of humanoids
+      in places, type: Tweak}
+  id: 2355
+  time: '2022-09-22T22:19:00.0000000+00:00'
