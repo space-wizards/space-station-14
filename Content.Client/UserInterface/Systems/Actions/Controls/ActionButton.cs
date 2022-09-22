@@ -142,17 +142,19 @@ public sealed class ActionButton : Control
     {
         Action = action;
 
-        if (action.Provider == null ||
-            !entityManager.TryGetComponent(action.Provider.Value, out SpriteComponent? sprite))
+        if (action.Icon != null)
         {
             IconTexture = action.Icon?.Frame0();
             Sprite.Sprite = null;
+            return;
         }
-        else
-        {
-            IconTexture = null;
-            Sprite.Sprite = sprite;
-        }
+
+        if (action.Provider == null ||
+            !entityManager.TryGetComponent(action.Provider.Value, out SpriteComponent? sprite))
+            return;
+
+        IconTexture = null;
+        Sprite.Sprite = sprite;
     }
 
     public void ClearData()
