@@ -56,6 +56,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     [Dependency] private readonly ShuttleSystem _shuttleSystem = default!;
     [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private readonly GameTicker _ticker = default!;
 
 
     private enum WinType
@@ -118,6 +119,9 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     private List<WinCondition> _winConditions = new ();
 
     private MapId? _nukiePlanet;
+
+    // TODO: use components, don't just cache entity UIDs
+    // There have been (and probably still are) bugs where these refer to deleted entities from old rounds.
     private EntityUid? _nukieOutpost;
     private EntityUid? _nukieShuttle;
     private EntityUid? _targetStation;
@@ -245,6 +249,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             return;
         }
 
+        var filter = Filter.Empty();
         foreach (var nukie in EntityQuery<NukeOperativeComponent>())
         {
             if (!TryComp<ActorComponent>(nukie.Owner, out var actor))
@@ -253,7 +258,10 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             }
 
             _chatManager.DispatchServerMessage(actor.PlayerSession, Loc.GetString("nukeops-welcome", ("station", _targetStation.Value)));
+            filter.AddPlayer(actor.PlayerSession);
         }
+
+        _audioSystem.PlayGlobal(_nukeopsRuleConfig.GreetSound, filter);
     }
 
     private void OnRoundEnd()
@@ -542,11 +550,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             GameTicker.PlayerJoinGame(session);
             _operativePlayers.Add(session);
         }
-
-        if (_nukeopsRuleConfig.GreetSound == null)
-            return;
-
-        _audioSystem.PlayGlobal(_nukeopsRuleConfig.GreetSound, Filter.Empty().AddPlayers(operatives), AudioParams.Default);
     }
 
     private void OnPlayersGhostSpawning(EntityUid uid, NukeOperativeComponent component, GhostRoleSpawnerUsedEvent args)
@@ -583,8 +586,11 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
         _operativePlayers.Add(playerSession);
 
+        if (_ticker.RunLevel != GameRunLevel.InRound)
+            return;
+
         if (_nukeopsRuleConfig.GreetSound != null)
-            _audioSystem.PlayGlobal(_nukeopsRuleConfig.GreetSound, Filter.Empty().AddPlayer(playerSession), AudioParams.Default);
+            _audioSystem.PlayGlobal(_nukeopsRuleConfig.GreetSound, Filter.Empty().AddPlayer(playerSession));
 
         if (_targetStation != null && !string.IsNullOrEmpty(Name(_targetStation.Value)))
             _chatManager.DispatchServerMessage(playerSession, Loc.GetString("nukeops-welcome", ("station", _targetStation.Value)));

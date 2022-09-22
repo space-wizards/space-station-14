@@ -120,6 +120,7 @@
   - type: Transform
     anchored: true
   - type: Anchorable
+  - type: Rotatable
   - type: Sprite
     state: comfy
   - type: Construction
@@ -215,3 +216,30 @@
           path: /Audio/Voice/Human/womanlaugh.ogg
     graph: RitualSeat
     node: chairCursed
+
+- type: entity
+  parent: SeatBase
+  id: ChairFolding
+  name: folding chair
+  description: If you carry six of these you become the coolest kid at church.
+  components:
+  - type: Rotatable
+  - type: Sprite
+    sprite: Structures/Furniture/folding_chair.rsi
+    layers:
+    - state: folding
+      map: ["enum.FoldableVisualLayers.Base"]
+  - type: Item
+    size: 50
+  - type: Foldable
+  - type: Appearance
+    visuals:
+    - type: FoldableVisualizer
+      key: folding
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 15
+  - type: Construction
+    graph: Seat
+    node: chairFolding

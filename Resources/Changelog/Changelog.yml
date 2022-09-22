@@ -1,70 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Basic shuttle call time reduced from 20 minutes to 10 minutes., type: Tweak}
-  - {message: The shuttle can no longer be recalled after half of the time has elapsed.,
-    type: Tweak}
-  id: 1839
-  time: '2022-07-01T20:40:36.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Stomach capacity has been reduced significantly in most cases (besides
-      the rat king and his servants). Humans can eat about 4 bites before needing
-      to wait a little bit, and mice can eat about 2 bites.', type: Tweak}
-  - {message: 'Pills can now only hold 20 units of reagent, down from 50.', type: Tweak}
-  id: 1840
-  time: '2022-07-01T20:42:29.0000000+00:00'
-- author: Solbusaur
-  changes:
-  - {message: Added new "Pharmacy" lobby art by Solbusaur, type: Add}
-  id: 1841
-  time: '2022-07-02T00:54:04.0000000+00:00'
-- author: Emisse
-  changes:
-  - {message: Detective added, type: Add}
-  id: 1842
-  time: '2022-07-02T03:10:51.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: 'Certain instruments now have different styles that you can select,
-      changing the way that they sound.', type: Add}
-  id: 1843
-  time: '2022-07-02T08:08:57.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Footstep sounds should have much more variation and feel more appropriate
-      for a station., type: Tweak}
-  - {message: Walking now reduces footstep volume (and weightlessness removes them),
-    type: Tweak}
-  id: 1844
-  time: '2022-07-02T09:54:39.0000000+00:00'
-- author: Ablankmann
-  changes:
-  - {message: 'Added Shuttle Windows, coming soon to a shuttle near you.', type: Add}
-  id: 1845
-  time: '2022-07-03T02:10:20.0000000+00:00'
-- author: themias
-  changes:
-  - {message: Fixed vomit puddle mopping behavior, type: Fix}
-  id: 1846
-  time: '2022-07-03T02:13:12.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Incidents of sickness from miasma will give all entities the same disease.,
-    type: Tweak}
-  - {message: Moldy food now contains mold., type: Add}
-  id: 1847
-  time: '2022-07-03T02:25:31.0000000+00:00'
-- author: AJCM-git
-  changes:
-  - {message: Disarms now deselect after a usage., type: Tweak}
-  id: 1848
-  time: '2022-07-03T02:26:49.0000000+00:00'
-- author: Aerocrux
-  changes:
-  - {message: 'You can now pet Space Dragons, if you''re brave enough!', type: Add}
-  id: 1849
-  time: '2022-07-03T02:32:09.0000000+00:00'
 - author: ODJ
   changes:
   - {message: Detective Support, type: Add}
@@ -2928,3 +2862,65 @@ Entries:
   - {message: Added a variety of wall-mounted lockers., type: Add}
   id: 2338
   time: '2022-09-17T20:05:39.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added folding chairs. Perfect for slamming people in the back of the
+      head with., type: Add}
+  id: 2339
+  time: '2022-09-18T17:47:31.0000000+00:00'
+- author: corentt
+  changes:
+  - {message: SMES's and substations are no longer filled upon construction, type: Remove}
+  id: 2340
+  time: '2022-09-18T18:02:45.0000000+00:00'
+- author: Sheppard
+  changes:
+  - {message: Comfy chair can now be rotated, type: Fix}
+  id: 2341
+  time: '2022-09-18T19:56:51.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed the Security Techfab not being able to print anything., type: Fix}
+  id: 2342
+  time: '2022-09-19T00:44:25.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed the medical techfab sprite breaking while printing., type: Fix}
+  id: 2343
+  time: '2022-09-19T19:35:31.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: Open soda can no longer show error, type: Fix}
+  id: 2344
+  time: '2022-09-19T23:47:45.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Splitstation minor update. Jetpacks, CMO locker and more.', type: Add}
+  id: 2345
+  time: '2022-09-19T23:50:32.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Added a smoking pipe. Get your Sherlock Holmes on!, type: Add}
+  id: 2346
+  time: '2022-09-19T23:54:33.0000000+00:00'
+- author: 25203
+  changes:
+  - {message: 'Added a computer board for the cargo shuttle console, found in QM''s
+      locker', type: Add}
+  - {message: Fixed a bug that made it impossible to construct a cargo shuttle computer,
+    type: Fix}
+  - {message: Cargo computer board names now match their corresponding computer, type: Fix}
+  id: 2347
+  time: '2022-09-20T09:09:59.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Eye lerping when traversing grids and also when on a rotating grid is
+      much smoother., type: Fix}
+  id: 2348
+  time: '2022-09-21T00:12:45.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added a burger made from the beloved pet of the Head of Personnel.,
+    type: Add}
+  id: 2349
+  time: '2022-09-21T02:16:59.0000000+00:00'
