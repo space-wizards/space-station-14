@@ -6,7 +6,7 @@ namespace Content.Server.VoiceMask;
 [RegisterComponent]
 public sealed class VoiceMaskerComponent : Component
 {
-    public string LastSetName = "Unknown";
+    [ViewVariables(VVAccess.ReadWrite)] public string LastSetName = "Unknown";
 
     [DataField("action", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
     public string Action = "ChangeVoiceMask";
