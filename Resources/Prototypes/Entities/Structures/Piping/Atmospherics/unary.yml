@@ -35,6 +35,7 @@
       transmitFrequencyId: AtmosMonitor
       prefix: device-address-prefix-vent
       sendBroadcastAttemptEvent: true
+      examinableAddress: true
     - type: WiredNetworkConnection
     - type: DeviceNetworkRequiresPower
     - type: AtmosDevice
@@ -127,6 +128,7 @@
       receiveFrequencyId: AtmosMonitor
       transmitFrequencyId: AtmosMonitor
       prefix: device-address-prefix-scrubber
+      examinableAddress: true
     - type: DeviceNetworkRequiresPower
     - type: AtmosMonitor
       temperatureThreshold: stationTemperature
