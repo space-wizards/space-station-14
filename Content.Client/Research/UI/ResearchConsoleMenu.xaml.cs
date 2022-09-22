@@ -114,27 +114,21 @@ namespace Content.Client.Research.UI
 
             foreach (var tech in prototypeMan.EnumeratePrototypes<TechnologyPrototype>())
             {
-                if (!tech.Hidden)
+
+                if (Owner.IsTechnologyUnlocked(tech))
                 {
-                    if (Owner.IsTechnologyUnlocked(tech))
-                    {
-                        UnlockedTechnologies.AddItem(tech.Name, tech.Icon.Frame0());
-                        _unlockedTechnologyPrototypes.Add(tech);
-                        dependencyTech.Add(tech.ID);
-                        foreach (var incompatibleTech in tech.IncompatibleTechnologies)
-                        {
-                            if (!excludedTech.Contains(incompatibleTech))
-                                excludedTech.Add(incompatibleTech);
-                        }
-                    }
-                    else if (Owner.CanUnlockTechnology(tech))
-                    {
-                        UnlockableTechnologies.AddItem(tech.Name, tech.Icon.Frame0());
-                        _unlockableTechnologyPrototypes.Add(tech);
-                        dependencyTech.Add(tech.ID);
-                    }
+                    UnlockedTechnologies.AddItem(tech.Name, tech.Icon.Frame0());
+                    _unlockedTechnologyPrototypes.Add(tech);
+                    dependencyTech.Add(tech.ID);
+                    excludedTech.Add(tech.ID);
                 }
-                else if (Owner.IsTechnologyUnlocked(tech) || Owner.CanUnlockTechnology(tech))
+                else if (Owner.CanUnlockTechnology(tech) && !tech.Hidden)
+                {
+                    UnlockableTechnologies.AddItem(tech.Name, tech.Icon.Frame0());
+                    _unlockableTechnologyPrototypes.Add(tech);
+                    dependencyTech.Add(tech.ID);
+                }
+                else if (Owner.CanUnlockTechnology(tech))
                 {
                     dependencyTech.Add(tech.ID);
                 }
@@ -142,12 +136,19 @@ namespace Content.Client.Research.UI
 
             foreach (var tech in prototypeMan.EnumeratePrototypes<TechnologyPrototype>())
             {
-                if (!tech.Hidden && !dependencyTech.Contains(tech.ID) && !excludedTech.Contains(tech.ID))
+                if (!tech.Hidden && !dependencyTech.Contains(tech.ID))
                 {
                     var requirementsUnlocked = true;
                     foreach (var requiredTech in tech.RequiredTechnologies)
                     {
                         if (!dependencyTech.Contains(requiredTech))
+                        {
+                            requirementsUnlocked = false;
+                        }
+                    }
+                    foreach (var incompatibleTech in tech.IncompatibleTechnologies)
+                    {
+                        if (excludedTech.Contains(incompatibleTech))
                         {
                             requirementsUnlocked = false;
                         }

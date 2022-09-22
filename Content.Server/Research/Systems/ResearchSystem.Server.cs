@@ -89,6 +89,7 @@ public sealed partial class ResearchSystem
     public bool UnlockTechnology(ResearchServerComponent component, TechnologyPrototype prototype,
         TechnologyDatabaseComponent? databaseComponent = null)
     {
+
         if (!Resolve(component.Owner, ref databaseComponent, false)) return false;
 
         if (!CanUnlockTechnology(component, prototype, databaseComponent)) return false;
