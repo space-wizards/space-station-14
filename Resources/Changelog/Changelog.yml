@@ -1,13 +1,4 @@
 Entries:
-- author: ODJ
-  changes:
-  - {message: Detective Support, type: Add}
-  - {message: Arrivals Dock(secondary evac), type: Add}
-  - {message: QoL, type: Add}
-  - {message: Capital L, type: Add}
-  - {message: skub, type: Add}
-  id: 1850
-  time: '2022-07-03T02:34:51.0000000+00:00'
 - author: Sammy Boy
   changes:
   - {message: Wire snipping takes .75 seconds longer to help prevent missclick consequences!,
@@ -2924,3 +2915,9 @@ Entries:
     type: Add}
   id: 2349
   time: '2022-09-21T02:16:59.0000000+00:00'
+- author: Mervill
+  changes:
+  - {message: Forensic pad is now tagged as a document. They can be stored in filling
+      cabinets and folders., type: Fix}
+  id: 2350
+  time: '2022-09-22T15:46:11.0000000+00:00'
