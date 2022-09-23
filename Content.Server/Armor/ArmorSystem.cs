@@ -10,8 +10,11 @@ namespace Content.Server.Armor
 {
     public sealed class ArmorSystem : EntitySystem
     {
+        const double CoefDefaultPrice = 2; // default price of 1% protection against any type of damage
+        const double FlatDefaultPrice = 10; //default price of 1 damage protection against a certain type of damage
 
         [Dependency] private readonly ExamineSystem _examine = default!;
+        [Dependency] private readonly IPrototypeManager _protoManager = default!;
 
         public override void Initialize()
         {
@@ -29,14 +32,9 @@ namespace Content.Server.Armor
 
             double price = 0;
 
-            double coefDefaultPrice = 2; // default price of 1% protection against any type of damage
-            double flatDefaultPrice = 10; //default price of 1 damage protection against a certain type of damage
-
-            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-
             foreach (var modifier in component.Modifiers.Coefficients)
             {
-                prototypeManager.TryIndex(modifier.Key, out DamageTypePrototype? damageType);
+                _protoManager.TryIndex(modifier.Key, out DamageTypePrototype? damageType);
 
                 if (damageType != null)
                 {
@@ -44,12 +42,12 @@ namespace Content.Server.Armor
                 }
                 else
                 {
-                    price += coefDefaultPrice * 100 * (1 - modifier.Value);
+                    price += CoefDefaultPrice * 100 * (1 - modifier.Value);
                 }
             }
             foreach (var modifier in component.Modifiers.FlatReduction)
             {
-                prototypeManager.TryIndex(modifier.Key, out DamageTypePrototype? damageType);
+                _protoManager.TryIndex(modifier.Key, out DamageTypePrototype? damageType);
 
                 if (damageType != null)
                 {
@@ -57,7 +55,7 @@ namespace Content.Server.Armor
                 }
                 else
                 {
-                    price += flatDefaultPrice * modifier.Value;
+                    price += FlatDefaultPrice * modifier.Value;
                 }
             }
             args.Price += price;
