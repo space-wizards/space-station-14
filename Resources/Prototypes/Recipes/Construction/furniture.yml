@@ -152,6 +152,23 @@
   conditions:
     - !type:TileNotBlocked
 
+- type: construction
+  name: folding chair
+  id: ChairFolding
+  graph: Seat
+  startNode: start
+  targetNode: chairFolding
+  category: construction-category-furniture
+  description: An easy to carry chair.
+  icon:
+    sprite: Structures/Furniture/folding_chair.rsi
+    state: folding
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
 #tables
 - type: construction
   name: steel table

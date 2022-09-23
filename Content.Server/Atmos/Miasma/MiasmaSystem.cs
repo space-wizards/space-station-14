@@ -238,7 +238,8 @@ namespace Content.Server.Atmos.Miasma
 
         private void OnFliesShutdown(EntityUid uid, FliesComponent component, ComponentShutdown args)
         {
-            EntityManager.DeleteEntity(component.VirtFlies);
+            if (!Terminating(uid))
+                Del(component.VirtFlies);
         }
 
         /// Public functions
