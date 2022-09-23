@@ -8,6 +8,7 @@ using Content.Client.Shuttles.Systems;
 using Content.Server.GameTicking;
 using Content.Server.Maps;
 using Content.Server.Shuttles.Components;
+using Content.Server.Spawners.Components;
 using Content.Server.Station.Components;
 using NUnit.Framework;
 using Robust.Server.Maps;
@@ -26,6 +27,12 @@ namespace Content.IntegrationTests.Tests
     {
         private const bool SkipTestMaps = true;
         private const string TestMapsPath = "/Maps/Test/";
+
+        private static readonly string[] NoSpawnMaps = new string[]
+        {
+            "centcomm",
+            "Dart",
+        };
 
         [Test]
         public async Task NoSavedPostMapInitTest()
@@ -127,6 +134,7 @@ namespace Content.IntegrationTests.Tests
             var protoManager = server.ResolveDependency<IPrototypeManager>();
             var ticker = entManager.EntitySysManager.GetEntitySystem<GameTicker>();
             var shuttleSystem = entManager.EntitySysManager.GetEntitySystem<ShuttleSystem>();
+            var xformQuery = entManager.GetEntityQuery<TransformComponent>();
 
             await server.WaitPost(() =>
             {
@@ -145,7 +153,8 @@ namespace Content.IntegrationTests.Tests
                 EntityUid? targetGrid = null;
                 var memberQuery = entManager.GetEntityQuery<StationMemberComponent>();
 
-                var grids = mapManager.GetAllMapGrids(mapId);
+                var grids = mapManager.GetAllMapGrids(mapId).ToList();
+                var gridUids = grids.Select(o => o.GridEntityId).ToList();
 
                 foreach (var grid in grids)
                 {
@@ -170,6 +179,28 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(shuttleSystem.TryFTLDock(entManager.GetComponent<ShuttleComponent>(shuttle.gridId!.Value), targetGrid.Value), $"Unable to dock {shuttlePath} to {mapProto}");
 
                 mapManager.DeleteMap(shuttleMap);
+
+                // Test that the map has valid latejoin spawn points
+                if (!NoSpawnMaps.Contains(mapProto))
+                {
+                    var lateSpawns = 0;
+
+                    foreach (var comp in entManager.EntityQuery<SpawnPointComponent>(true))
+                    {
+                        if (comp.SpawnType != SpawnPointType.LateJoin ||
+                            !xformQuery.TryGetComponent(comp.Owner, out var xform) ||
+                            xform.GridUid == null ||
+                            !gridUids.Contains(xform.GridUid.Value))
+                        {
+                            continue;
+                        }
+
+                        lateSpawns++;
+                        break;
+                    }
+
+                    Assert.That(lateSpawns, Is.GreaterThan(0), $"Found no latejoin spawn points on {mapProto}");
+                }
 
                 try
                 {
