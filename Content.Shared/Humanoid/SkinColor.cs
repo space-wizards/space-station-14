@@ -93,9 +93,9 @@ public static class SkinColor
     {
         var colorValues = Color.ToHsv(color);
 
-        var hue = colorValues.X * 360f;
-        var sat = colorValues.Y * 100f;
-        var val = colorValues.Z * 100f;
+        var hue = Math.Round(colorValues.X * 360f);
+        var sat = Math.Round(colorValues.Y * 100f);
+        var val = Math.Round(colorValues.Z * 100f);
         // rangeOffset makes it so that this value
         // is 25 <= hue <= 45
         if (hue < 25 || hue > 45)
