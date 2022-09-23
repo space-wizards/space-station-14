@@ -77,11 +77,11 @@
         AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
         />
     <ui:MenuButton
-        Name="InfoButton"
+        Name="AHelpButton"
         Access="Internal"
         Icon="{xe:Tex '/Textures/Interface/info.svg.192dpi.png'}"
-        BoundKey = "{x:Static is:ContentKeyFunctions.OpenInfo}"
-        ToolTip="{Loc 'ui-options-function-open-info'}"
+        BoundKey = "{x:Static is:ContentKeyFunctions.OpenAHelp}"
+        ToolTip="{Loc 'ui-options-function-open-ahelp'}"
         MinSize="42 64"
         AppendStyleClass="{x:Static style:StyleBase.ButtonOpenLeft}"
         />
