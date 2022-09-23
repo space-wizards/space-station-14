@@ -14,7 +14,7 @@ public sealed class OreVeinComponent : Component
     /// How often an entity will be seeded with ore. Note: the amount of ore
     /// that is dropped is dependent on the ore prototype. <see crefalso="OrePrototype"/>
     /// </summary>
-    [DataField("oreChance"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("oreChance")]
     public float OreChance = 0.1f;
 
     /// <summary>
