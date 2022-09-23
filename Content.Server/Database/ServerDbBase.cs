@@ -6,8 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Shared.Administration.Logs;
-using Content.Shared.CharacterAppearance;
-using Content.Shared.Markings;
+using Content.Shared.Humanoid;
+using Content.Shared.Humanoid.Markings;
 using Content.Shared.Preferences;
 using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Enums;
@@ -190,7 +190,6 @@ namespace Content.Server.Database
                     markings.Add(parsed);
                 }
             }
-            var markingsSet = new MarkingsSet(markings);
 
             return new HumanoidCharacterProfile(
                 profile.CharacterName,
@@ -207,7 +206,7 @@ namespace Content.Server.Database
                     Color.FromHex(profile.FacialHairColor),
                     Color.FromHex(profile.EyeColor),
                     Color.FromHex(profile.SkinColor),
-                    markingsSet
+                    markings
                 ),
                 clothing,
                 backpack,

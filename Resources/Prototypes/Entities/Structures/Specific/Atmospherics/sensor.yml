@@ -40,6 +40,7 @@
       transmitFrequencyId: AtmosMonitor
       prefix: device-address-prefix-sensor
       sendBroadcastAttemptEvent: true
+      examinableAddress: true
     - type: WiredNetworkConnection
     - type: DeviceNetworkRequiresPower
     - type: AtmosDevice

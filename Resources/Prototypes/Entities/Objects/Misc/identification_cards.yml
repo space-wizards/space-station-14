@@ -496,8 +496,8 @@
   components:
   - type: Sprite
     layers:
-    - state: idpsychologist
     - state: default
+    - state: idpsychologist
   - type: PresetIdCard
     job: Psychologist
 
@@ -508,8 +508,8 @@
   components:
   - type: Sprite
     layers:
-    - state: idreporter
     - state: default
+    - state: idreporter
   - type: PresetIdCard
     job: Reporter
 
@@ -532,8 +532,8 @@
   components:
   - type: Sprite
     layers:
-    - state: iddetective
     - state: default
+    - state: iddetective
   - type: PresetIdCard
     job: Detective
 
