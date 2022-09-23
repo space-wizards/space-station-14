@@ -2,7 +2,7 @@ namespace Content.Shared.Humanoid;
 
 public static class SkinColor
 {
-    public static Color ValidHumanSkinTone => Color.FromHsv(new Vector4(0.25f, 0.2f, 1f, 1f));
+    public static Color ValidHumanSkinTone => Color.FromHsv(new Vector4(0.07f, 0.2f, 1f, 1f));
 
     /// <summary>
     ///     Turn a color into a valid tinted hue skin tone.
@@ -93,9 +93,9 @@ public static class SkinColor
     {
         var colorValues = Color.ToHsv(color);
 
-        var hue = colorValues.X * 360f;
-        var sat = colorValues.Y * 100f;
-        var val = colorValues.Z * 100f;
+        var hue = Math.Round(colorValues.X * 360f);
+        var sat = Math.Round(colorValues.Y * 100f);
+        var val = Math.Round(colorValues.Z * 100f);
         // rangeOffset makes it so that this value
         // is 25 <= hue <= 45
         if (hue < 25 || hue > 45)
