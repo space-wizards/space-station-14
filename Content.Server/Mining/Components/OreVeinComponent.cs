@@ -1,4 +1,5 @@
-﻿using Content.Shared.Random;
+﻿using Content.Shared.Mining;
+using Content.Shared.Random;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Mining.Components;
@@ -26,6 +27,6 @@ public sealed class OreVeinComponent : Component
     /// The ore that this entity holds.
     /// If set in the prototype, it will not be overriden.
     /// </summary>
-    [DataField("currentOre"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("currentOre", customTypeSerializer: typeof(PrototypeIdSerializer<OrePrototype>)), ViewVariables(VVAccess.ReadWrite)]
     public string? CurrentOre;
 }
