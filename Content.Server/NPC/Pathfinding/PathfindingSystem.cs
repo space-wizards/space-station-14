@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
 using Content.Server.Destructible;
 using Content.Shared.Administration;
+using Content.Shared.Interaction;
 using Content.Shared.NPC;
 using Robust.Server.Player;
 using Robust.Shared.Map;
@@ -105,6 +106,40 @@ namespace Content.Server.NPC.Pathfinding
             }
         }
 
+        /// <summary>
+        /// Gets the estimated distance from the entity to the target node.
+        /// </summary>
+        public async Task<float?> GetPathDistance(
+            EntityUid entity,
+            EntityCoordinates end,
+            float range,
+            CancellationToken cancelToken)
+        {
+            if (!TryComp<TransformComponent>(entity, out var start))
+                return null;
+
+            var request = GetRequest(entity, start.Coordinates, end, range, cancelToken);
+            var path = await GetPath(request);
+
+            if (path.Result != PathResult.Path)
+                return null;
+
+            if (path.Path.Count == 0)
+                return 0f;
+
+            var distance = 0f;
+            var node = path.Path.Dequeue();
+            var lastNode = node;
+
+            do
+            {
+                distance += GetTileCost(request, lastNode, node);
+                lastNode = node;
+            } while (path.Path.TryDequeue(out node));
+
+            return distance;
+        }
+
         public async Task<PathResultEvent> GetPath(
             EntityUid entity,
             EntityCoordinates start,
@@ -112,19 +147,8 @@ namespace Content.Server.NPC.Pathfinding
             float range,
             CancellationToken cancelToken)
         {
-            var mask = 0;
-            var layer = 0;
-
-            if (TryComp<PhysicsComponent>(entity, out var body))
-            {
-                layer = body.CollisionLayer;
-                mask = body.CollisionMask;
-            }
-
-            // TODO:
-            var flags = PathFlags.Smashing;
-
-            return await GetPath(start, end, flags, range, layer, mask, cancelToken);
+            var request = GetRequest(entity, start, end, range, cancelToken);
+            return await GetPath(request);
         }
 
         /// <summary>
@@ -141,26 +165,7 @@ namespace Content.Server.NPC.Pathfinding
         {
             // Don't allow the caller to pass in the request in case they try to do something with its data.
             var request = new PathRequest(start, end, flags, range, layer, mask, cancelToken);
-            _pathRequests.Add(request);
-
-            await request.Task;
-
-            if (request.Task.Exception != null)
-            {
-                throw request.Task.Exception;
-            }
-
-            if (!request.Task.IsCompletedSuccessfully)
-            {
-                return new PathResultEvent(PathResult.NoPath, new Queue<PathPoly>());
-            }
-
-            // Same context as do_after and not synchronously blocking soooo
-#pragma warning disable RA0004
-            var ev = new PathResultEvent(request.Task.Result, request.Polys);
-#pragma warning restore RA0004
-
-            return ev;
+            return await GetPath(request);
         }
 
         /// <summary>
@@ -208,6 +213,48 @@ namespace Content.Server.NPC.Pathfinding
             }
 
             return null;
+        }
+
+        private PathRequest GetRequest(EntityUid entity, EntityCoordinates start, EntityCoordinates end, float range, CancellationToken cancelToken)
+        {
+            var layer = 0;
+            var mask = 0;
+
+            if (TryComp<PhysicsComponent>(entity, out var body))
+            {
+                layer = body.CollisionLayer;
+                mask = body.CollisionMask;
+            }
+
+            return new PathRequest(start, end, PathFlags.None, SharedInteractionSystem.InteractionRange - 0.5f, layer, mask, cancelToken);
+        }
+
+        private async Task<PathResultEvent> GetPath(
+            PathRequest request)
+        {
+            // We could maybe try an initial quick run to avoid forcing time-slicing over ticks.
+            // For now it seems okay and it shouldn't block on 1 NPC anyway.
+
+            _pathRequests.Add(request);
+
+            await request.Task;
+
+            if (request.Task.Exception != null)
+            {
+                throw request.Task.Exception;
+            }
+
+            if (!request.Task.IsCompletedSuccessfully)
+            {
+                return new PathResultEvent(PathResult.NoPath, new Queue<PathPoly>());
+            }
+
+            // Same context as do_after and not synchronously blocking soooo
+#pragma warning disable RA0004
+            var ev = new PathResultEvent(request.Task.Result, request.Polys);
+#pragma warning restore RA0004
+
+            return ev;
         }
 
         #region Debug handlers

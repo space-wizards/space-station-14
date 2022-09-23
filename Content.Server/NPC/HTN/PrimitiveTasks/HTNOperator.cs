@@ -1,11 +1,12 @@
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks;
 
 /// <summary>
 /// Concrete code that gets run for an NPC task.
 /// </summary>
-[ImplicitDataDefinitionForInheritors]
+[ImplicitDataDefinitionForInheritors, MeansImplicitUse]
 public abstract class HTNOperator
 {
     /// <summary>

@@ -47,16 +47,30 @@ public sealed partial class NPCSteeringSystem
         if ((poly.Data.CollisionLayer & body.CollisionMask) != 0x0 ||
             (poly.Data.CollisionMask & body.CollisionLayer) != 0x0)
         {
+            var obstacleEnts = GetObstacleEntities(poly, body.CollisionMask, body.CollisionLayer);
             var isDoor = (poly.Data.Flags & PathfindingBreadcrumbFlag.Door) != 0x0;
             var isAccess = (poly.Data.Flags & PathfindingBreadcrumbFlag.Access) != 0x0;
 
             // Just walk into it stupid
             if (isDoor && !isAccess)
             {
+                // ... At least if it's not a bump open.
+                foreach (var ent in obstacleEnts)
+                {
+                    if (!TryComp<DoorComponent>(ent, out var door))
+                        continue;
+
+                    if (!door.BumpOpen && door.State != DoorState.Open)
+                    {
+                        if (door.State != DoorState.Opening)
+                            _interaction.InteractionActivate(component.Owner, ent);
+
+                        return SteeringObstacleStatus.Continuing;
+                    }
+                }
+
                 return SteeringObstacleStatus.Completed;
             }
-
-            var obstacleEnts = GetObstacleEntities(poly, body.CollisionMask, body.CollisionLayer);
 
             // TODO: Cooldown
             if ((component.Flags & PathFlags.Prying) != 0x0 && isAccess && isDoor)

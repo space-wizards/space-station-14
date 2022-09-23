@@ -63,6 +63,7 @@ public sealed class PathResultEvent
 
     public PathResultEvent(PathResult result, Queue<PathPoly> path)
     {
+        Result = result;
         Path = path;
     }
 }

@@ -1,24 +1,15 @@
-using Robust.Shared.Map;
+using JetBrains.Annotations;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Ranged;
 
 /// <summary>
 /// Selects a target for ranged combat.
 /// </summary>
+[MeansImplicitUse]
 public sealed class PickRangedTargetOperator : NPCCombatOperator
 {
-    protected override float GetRating(NPCBlackboard blackboard, EntityUid uid, EntityUid existingTarget, bool canMove, EntityQuery<TransformComponent> xformQuery)
+    protected override float GetRating(NPCBlackboard blackboard, EntityUid uid, EntityUid existingTarget, float distance, bool canMove, EntityQuery<TransformComponent> xformQuery)
     {
-        var ourCoordinates = blackboard.GetValueOrDefault<EntityCoordinates>(NPCBlackboard.OwnerCoordinates);
-
-        if (!xformQuery.TryGetComponent(uid, out var targetXform))
-            return -1f;
-
-        var targetCoordinates = targetXform.Coordinates;
-
-        if (!ourCoordinates.TryDistance(EntManager, targetCoordinates, out var distance))
-            return -1f;
-
         // TODO: Uhh make this better with penetration or something.
         var inLOS = Interaction.InRangeUnobstructed(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner),
             uid, distance + 0.1f);
