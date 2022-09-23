@@ -22,13 +22,13 @@ namespace Content.Server.Explosion.EntitySystems
 
             SubscribeLocalEvent<ExplosionResistanceComponent, GetExplosionResistanceEvent>(OnGetResistance);
             SubscribeLocalEvent<ExplosionResistanceComponent, GetVerbsEvent<ExamineVerb>>(OnExamineVerb);
-            SubscribeLocalEvent<ExplosionResistanceComponent, ExamineStatsEvent>(OnExamineStats);
+            SubscribeLocalEvent<ExplosionResistanceComponent, ExamineGroupEvent>(OnExamineStats);
 
         }
 
-        private void OnExamineStats(EntityUid uid, ExplosionResistanceComponent component, ExamineStatsEvent args)
+        private void OnExamineStats(EntityUid uid, ExplosionResistanceComponent component, ExamineGroupEvent args)
         {
-            args.Markup.Add(Loc.GetString("explosion-resistance-examine", ("value", MathF.Round((1f - component.DamageCoefficient) * 100))));
+            args.Entries.Add(new ExamineEntry(3, Loc.GetString("explosion-resistance-examine", ("value", MathF.Round((1f - component.DamageCoefficient) * 100)))));
         }
 
         private void OnExamineVerb(EntityUid uid, ExplosionResistanceComponent component, GetVerbsEvent<ExamineVerb> args)
@@ -36,7 +36,7 @@ namespace Content.Server.Explosion.EntitySystems
             if (!args.CanAccess || !args.CanInteract)
                 return;
 
-            _examine.CreateExamineDetailsVerb("worn-stats", args, "/Textures/Interface/VerbIcons/dot.svg.192dpi.png");
+            _examine.AddExamineGroupVerb("worn-stats", args, "/Textures/Interface/VerbIcons/dot.svg.192dpi.png");
         }
 
         private void OnGetResistance(EntityUid uid, ExplosionResistanceComponent component, GetExplosionResistanceEvent args)

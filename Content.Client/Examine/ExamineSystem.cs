@@ -72,7 +72,7 @@ namespace Content.Client.Examine
             return base.CanExamine(examiner, target, predicate);
         }
 
-        public override void CreateExamineDetailsVerb(string key, GetVerbsEvent<ExamineVerb> examineVerbsEvent, string iconTexture) { }
+        public override void AddExamineGroupVerb(string key, GetVerbsEvent<ExamineVerb> examineVerbsEvent, string iconTexture) { }
 
         private bool HandleExamine(in PointerInputCmdHandler.PointerInputCmdArgs args)
         {

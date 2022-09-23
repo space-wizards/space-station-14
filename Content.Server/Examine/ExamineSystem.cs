@@ -51,24 +51,24 @@ namespace Content.Server.Examine
             RaiseNetworkEvent(ev, session.ConnectedClient);
         }
 
-        public static FormattedMessage GetExamineMessage(ExamineStatsEvent ev)
+        public static FormattedMessage GetExamineGroupMessage(ExamineGroupEvent ev)
         {
             var formattedMessage = new FormattedMessage();
 
-            ev.Markup.Sort();
+            ev.Entries.Sort((a, b) => (a.Priority.CompareTo(b.Priority)));
 
             formattedMessage.AddMarkup(ev.FirstLine);
 
-            foreach (var str in ev.Markup)
+            foreach (var entry in ev.Entries)
             {
                 formattedMessage.PushNewline();
-                formattedMessage.AddMarkup(str);
+                formattedMessage.AddMarkup(entry.Markup);
             }
 
             return formattedMessage;
         }
 
-        public override void CreateExamineDetailsVerb(string key, GetVerbsEvent<ExamineVerb> examineVerbsEvent, string iconTexture)
+        public override void AddExamineGroupVerb(string key, GetVerbsEvent<ExamineVerb> examineVerbsEvent, string iconTexture)
         {
 
             foreach (var verb in examineVerbsEvent.Verbs)
@@ -81,9 +81,9 @@ namespace Content.Server.Examine
             {
                 Act = () =>
                 {
-                    var ev = new ExamineStatsEvent { FirstLine = Loc.GetString("examine-system-" + key + "-title") };
+                    var ev = new ExamineGroupEvent { FirstLine = Loc.GetString("examine-system-" + key + "-title") };
                     RaiseLocalEvent(examineVerbsEvent.Target, ev);
-                    SendExamineTooltip(examineVerbsEvent.User, examineVerbsEvent.Target, GetExamineMessage(ev), false, false);
+                    SendExamineTooltip(examineVerbsEvent.User, examineVerbsEvent.Target, GetExamineGroupMessage(ev), false, false);
                 },
                 Text = Loc.GetString("examine-system-" + key + "-text"),
                 Message = Loc.GetString("examine-system-" + key + "-message"),

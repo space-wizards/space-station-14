@@ -1,4 +1,4 @@
-﻿using Content.Shared.Damage;
+using Content.Shared.Damage;
 using Content.Server.Examine;
 using Content.Shared.Examine;
 using Content.Shared.Verbs;
@@ -17,25 +17,25 @@ namespace Content.Server.Armor
 
             SubscribeLocalEvent<ArmorComponent, DamageModifyEvent>(OnDamageModify);
             SubscribeLocalEvent<ArmorComponent, GetVerbsEvent<ExamineVerb>>(OnArmorVerbExamine);
-            SubscribeLocalEvent<ArmorComponent, ExamineStatsEvent>(OnExamineStats);
+            SubscribeLocalEvent<ArmorComponent, ExamineGroupEvent>(OnExamineStats);
         }
 
-        private void OnExamineStats(EntityUid uid, ArmorComponent component, ExamineStatsEvent args)
+        private void OnExamineStats(EntityUid uid, ArmorComponent component, ExamineGroupEvent args)
         {
             foreach (var coefficientArmor in component.Modifiers.Coefficients)
             {
-                args.Markup.Add(Loc.GetString("armor-coefficient-value",
+                args.Entries.Add(new ExamineEntry(5,Loc.GetString("armor-coefficient-value",
                     ("type", coefficientArmor.Key),
                     ("value", MathF.Round((1f - coefficientArmor.Value) * 100, 1))
-                    ));
+                    )));
             }
 
             foreach (var flatArmor in component.Modifiers.FlatReduction)
             {
-                args.Markup.Add(Loc.GetString("armor-reduction-value",
+                args.Entries.Add(new ExamineEntry(6,Loc.GetString("armor-reduction-value",
                     ("type", flatArmor.Key),
                     ("value", flatArmor.Value)
-                    ));
+                    )));
             }
         }
         private void OnDamageModify(EntityUid uid, ArmorComponent component, DamageModifyEvent args)
@@ -51,7 +51,7 @@ namespace Content.Server.Armor
             if (component.Modifiers == null)
                 return;
 
-            _examine.CreateExamineDetailsVerb("worn-stats", args, "/Textures/Interface/VerbIcons/dot.svg.192dpi.png");
+            _examine.AddExamineGroupVerb("worn-stats", args, "/Textures/Interface/VerbIcons/dot.svg.192dpi.png");
 
         }
     }

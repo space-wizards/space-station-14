@@ -31,13 +31,13 @@ namespace Content.Server.Atmos.EntitySystems
             SubscribeLocalEvent<PressureProtectionComponent, LowPressureEvent>(OnLowPressureEvent);
 
             SubscribeLocalEvent<PressureProtectionComponent, GetVerbsEvent<ExamineVerb>>(OnExamineVerb);
-            SubscribeLocalEvent<PressureProtectionComponent, ExamineStatsEvent>(OnExamineEvent);
+            SubscribeLocalEvent<PressureProtectionComponent, ExamineGroupEvent>(OnExamineEvent);
 
             SubscribeLocalEvent<PressureImmunityComponent, HighPressureEvent>(OnHighPressureImmuneEvent);
             SubscribeLocalEvent<PressureImmunityComponent, LowPressureEvent>(OnLowPressureImmuneEvent);
 
         }
-        private void OnExamineEvent(EntityUid uid, PressureProtectionComponent component, ExamineStatsEvent args)
+        private void OnExamineEvent(EntityUid uid, PressureProtectionComponent component, ExamineGroupEvent args)
         {
             var level = "";
 
@@ -60,14 +60,14 @@ namespace Content.Server.Atmos.EntitySystems
                     break;
             }
 
-            args.Markup.Add(Loc.GetString("pressure-protection-examine", ("level", level)));
+            args.Entries.Add(new ExamineEntry(2,Loc.GetString("pressure-protection-examine", ("level", level))));
         }
         private void OnExamineVerb(EntityUid uid, PressureProtectionComponent component, GetVerbsEvent<ExamineVerb> args)
         {
             if (!args.CanAccess || !args.CanInteract)
                 return;
 
-            _examineSystem.CreateExamineDetailsVerb("worn-stats", args, "/Textures/Interface/VerbIcons/dot.svg.192dpi.png");
+            _examineSystem.AddExamineGroupVerb("worn-stats", args, "/Textures/Interface/VerbIcons/dot.svg.192dpi.png");
         }
         private void OnHighPressureEvent(EntityUid uid, PressureProtectionComponent component, HighPressureEvent args)
         {

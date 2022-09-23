@@ -21,10 +21,10 @@ public sealed class ClothingSpeedModifierSystem : EntitySystem
         SubscribeLocalEvent<ClothingSpeedModifierComponent, ComponentHandleState>(OnHandleState);
         SubscribeLocalEvent<ClothingSpeedModifierComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMoveSpeed);
         SubscribeLocalEvent<ClothingSpeedModifierComponent, GetVerbsEvent<ExamineVerb>>(OnClothingVerbExamine);
-        SubscribeLocalEvent<ClothingSpeedModifierComponent, ExamineStatsEvent>(OnExamineStats);
+        SubscribeLocalEvent<ClothingSpeedModifierComponent, ExamineGroupEvent>(OnExamineStats);
     }
 
-    private void OnExamineStats(EntityUid uid, ClothingSpeedModifierComponent component, ExamineStatsEvent args)
+    private void OnExamineStats(EntityUid uid, ClothingSpeedModifierComponent component, ExamineGroupEvent args)
     {
         var walkModifierPercentage = MathF.Round((1.0f - component.WalkModifier) * 100f, 1);
         var sprintModifierPercentage = MathF.Round((1.0f - component.SprintModifier) * 100f, 1);
@@ -37,19 +37,19 @@ public sealed class ClothingSpeedModifierSystem : EntitySystem
         if (walkModifierPercentage == sprintModifierPercentage)
         {
             if (walkModifierPercentage < 0.0f)
-                args.Markup.Add(Loc.GetString("clothing-speed-increase-equal-examine", ("walkSpeed", MathF.Abs(walkModifierPercentage)), ("runSpeed", MathF.Abs(sprintModifierPercentage))));
+                args.Entries.Add(new ExamineEntry(8,Loc.GetString("clothing-speed-increase-equal-examine", ("walkSpeed", MathF.Abs(walkModifierPercentage)), ("runSpeed", MathF.Abs(sprintModifierPercentage)))));
             else
-                args.Markup.Add(Loc.GetString("clothing-speed-decrease-equal-examine", ("walkSpeed", walkModifierPercentage), ("runSpeed", sprintModifierPercentage)));
+                args.Entries.Add(new ExamineEntry(-1, Loc.GetString("clothing-speed-decrease-equal-examine", ("walkSpeed", walkModifierPercentage), ("runSpeed", sprintModifierPercentage))));
         }
         else
         {
             if (sprintModifierPercentage < 0.0f)
             {
-                args.Markup.Add(Loc.GetString("clothing-speed-increase-run-examine", ("runSpeed", MathF.Abs(sprintModifierPercentage))));
+                args.Entries.Add(new ExamineEntry(8, Loc.GetString("clothing-speed-increase-run-examine", ("runSpeed", MathF.Abs(sprintModifierPercentage)))));
             }
             else if (sprintModifierPercentage > 0.0f)
             {
-                args.Markup.Add(Loc.GetString("clothing-speed-decrease-run-examine", ("runSpeed", sprintModifierPercentage)));
+                args.Entries.Add(new ExamineEntry(-1, Loc.GetString("clothing-speed-decrease-run-examine", ("runSpeed", sprintModifierPercentage))));
             }
             if (walkModifierPercentage != 0.0f && sprintModifierPercentage != 0.0f)
             {
@@ -57,11 +57,11 @@ public sealed class ClothingSpeedModifierSystem : EntitySystem
             }
             if (walkModifierPercentage < 0.0f)
             {
-                args.Markup.Add(Loc.GetString("clothing-speed-increase-walk-examine", ("walkSpeed", MathF.Abs(walkModifierPercentage))));
+                args.Entries.Add(new ExamineEntry(8, Loc.GetString("clothing-speed-increase-walk-examine", ("walkSpeed", MathF.Abs(walkModifierPercentage)))));
             }
             else if (walkModifierPercentage > 0.0f)
             {
-                args.Markup.Add(Loc.GetString("clothing-speed-decrease-walk-examine", ("walkSpeed", walkModifierPercentage)));
+                args.Entries.Add(new ExamineEntry(-1, Loc.GetString("clothing-speed-decrease-walk-examine", ("walkSpeed", walkModifierPercentage))));
             }
         }
     }
@@ -121,6 +121,6 @@ public sealed class ClothingSpeedModifierSystem : EntitySystem
         if (!args.CanInteract || !args.CanAccess)
             return;
 
-        _examine.CreateExamineDetailsVerb("worn-stats", args, "/Textures/Interface/VerbIcons/dot.svg.192dpi.png");
+        _examine.AddExamineGroupVerb("worn-stats", args, "/Textures/Interface/VerbIcons/dot.svg.192dpi.png");
     }
 }

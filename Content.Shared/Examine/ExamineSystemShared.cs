@@ -14,13 +14,23 @@ using Content.Shared.Verbs;
 
 namespace Content.Shared.Examine
 {
-    public sealed class ExamineStatsEvent : EntityEventArgs
+    public sealed class ExamineGroupEvent : EntityEventArgs
     {
-        public List<string> Markup = new List<string>();
+        public List<ExamineEntry> Entries = new List<ExamineEntry>();
         public string FirstLine = "";
         public string Key = "";
         public string Message = "";
         public string IconTexture = "";
+    }
+    public sealed class ExamineEntry
+    {
+        public int Priority = 0;
+        public string Markup = "";
+        public ExamineEntry(int priority, string markup)
+        {
+            Priority = priority;
+            Markup = markup;
+        }
     }
     public abstract class ExamineSystemShared : EntitySystem
     {
@@ -53,7 +63,10 @@ namespace Content.Shared.Examine
         /// </summary>
         public abstract void SendExamineTooltip(EntityUid player, EntityUid target, FormattedMessage message, bool getVerbs, bool centerAtCursor);
 
-        public abstract void CreateExamineDetailsVerb(string key, GetVerbsEvent<ExamineVerb> examineVerbsEvent, string iconTexture);
+        /// <summary>
+        ///     Adds an examine group to the examine verb - a button that shows several entries of details.
+        /// </summary>
+        public abstract void AddExamineGroupVerb(string key, GetVerbsEvent<ExamineVerb> examineVerbsEvent, string iconTexture);
 
         public bool IsInDetailsRange(EntityUid examiner, EntityUid entity)
         {
