@@ -3,8 +3,6 @@ using System.Threading;
 using Content.Server.Doors.Systems;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.Pathfinding;
-using Content.Server.Verbs;
-using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Interaction;
 using Content.Shared.Movement.Components;
