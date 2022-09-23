@@ -71,7 +71,8 @@ public struct PathfindingData : IEquatable<PathfindingData>
     {
         return CollisionLayer.Equals(other.CollisionLayer) &&
                CollisionMask.Equals(other.CollisionMask) &&
-               (Flags & PathfindingBreadcrumbFlag.Space) == (other.Flags & PathfindingBreadcrumbFlag.Space);
+               (Flags & PathfindingBreadcrumbFlag.Space) == (other.Flags & PathfindingBreadcrumbFlag.Space) &&
+               Damage.Equals(other.Damage);
     }
 
     public override bool Equals(object? obj)
@@ -89,12 +90,16 @@ public struct PathfindingData : IEquatable<PathfindingData>
 public enum PathfindingBreadcrumbFlag : ushort
 {
     None = 0,
-    Invalid = 1 << 1,
-    Space = 1 << 2,
-    Interior = 1 << 3,
+    Invalid = 1 << 0,
+    Space = 1 << 1,
 
     /// <summary>
-    /// Are we outside the bounds of our chunk. This is separate to Interior.
+    /// Is there a door that is potentially pryable
     /// </summary>
-    External = 1 << 4,
+    Door = 1 << 2,
+
+    /// <summary>
+    /// Is there access required
+    /// </summary>
+    Access = 1 << 3,
 }

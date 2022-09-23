@@ -176,15 +176,23 @@ public sealed partial class PathfindingSystem
         if ((request.CollisionLayer & end.Data.CollisionMask) != 0x0 ||
             (request.CollisionMask & end.Data.CollisionLayer) != 0x0)
         {
-            // TODO: Airlocks and airlock access
-            if ((request.Flags & PathFlags.Prying) != 0x0)
-            {
-                modifier /= 10f;
-            }
+            var isDoor = (end.Data.Flags & PathfindingBreadcrumbFlag.Door) != 0x0;
+            var isAccess = (end.Data.Flags & PathfindingBreadcrumbFlag.Access) != 0x0;
 
-            if ((request.Flags & PathFlags.Smashing) != 0x0 && end.Data.Damage > 0f)
+            // TODO: Handling power + door prying
+            // Door we should be able to open
+            if (isDoor && !isAccess)
             {
-                modifier += 5f + end.Data.Damage / 100f;
+                modifier += 0.5f;
+            }
+            // Door we can force open one way or another
+            else if (isDoor && isAccess && (request.Flags & PathFlags.Prying) != 0x0)
+            {
+                modifier += 4f;
+            }
+            else if ((request.Flags & PathFlags.Smashing) != 0x0 && end.Data.Damage > 0f)
+            {
+                modifier += 7f + end.Data.Damage / 100f;
             }
             else
             {

@@ -3,6 +3,7 @@ using Content.Server.NPC.Components;
 using Content.Server.NPC.Pathfinding;
 using Content.Shared.Damage;
 using Content.Shared.Doors.Components;
+using Content.Shared.NPC;
 using Robust.Shared.Physics.Components;
 
 namespace Content.Server.NPC.Systems;
@@ -42,13 +43,23 @@ public sealed partial class NPCSteeringSystem
         // and be able to re-check it.
 
         // TODO: Should cache the fact we're doing this somewhere.
+        // See https://github.com/space-wizards/space-station-14/issues/11475
         if ((poly.Data.CollisionLayer & body.CollisionMask) != 0x0 ||
             (poly.Data.CollisionMask & body.CollisionLayer) != 0x0)
         {
+            var isDoor = (poly.Data.Flags & PathfindingBreadcrumbFlag.Door) != 0x0;
+            var isAccess = (poly.Data.Flags & PathfindingBreadcrumbFlag.Access) != 0x0;
+
+            // Just walk into it stupid
+            if (isDoor && !isAccess)
+            {
+                return SteeringObstacleStatus.Completed;
+            }
+
             var obstacleEnts = GetObstacleEntities(poly, body.CollisionMask, body.CollisionLayer);
 
             // TODO: Cooldown
-            if ((component.Flags & PathFlags.Prying) != 0x0)
+            if ((component.Flags & PathFlags.Prying) != 0x0 && isAccess && isDoor)
             {
                 var doorQuery = GetEntityQuery<DoorComponent>();
 
@@ -65,9 +76,8 @@ public sealed partial class NPCSteeringSystem
                 if (obstacleEnts.Count == 0)
                     return SteeringObstacleStatus.Completed;
             }
-
             // Try smashing obstacles.
-            if ((component.Flags & PathFlags.Smashing) != 0x0)
+            else if ((component.Flags & PathFlags.Smashing) != 0x0)
             {
                 var damageQuery = GetEntityQuery<DamageableComponent>();
 

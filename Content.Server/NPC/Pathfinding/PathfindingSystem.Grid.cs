@@ -5,7 +5,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Destructible;
 using Content.Server.Doors.Components;
+using Content.Shared.Access.Components;
 using Content.Shared.Damage;
+using Content.Shared.Doors.Components;
 using Content.Shared.NPC;
 using Content.Shared.Physics;
 using Microsoft.Extensions.ObjectPool;
@@ -81,11 +83,13 @@ public sealed partial class PathfindingSystem
             Parallel.For(0, dirt.Length, i =>
             {
                 // Doing the queries per task seems faster.
+                var accessQuery = GetEntityQuery<AccessReaderComponent>();
                 var destructibleQuery = GetEntityQuery<DestructibleComponent>();
+                var doorQuery = GetEntityQuery<DoorComponent>();
                 var fixturesQuery = GetEntityQuery<FixturesComponent>();
                 var physicsQuery = GetEntityQuery<PhysicsComponent>();
                 var xformQuery = GetEntityQuery<TransformComponent>();
-                BuildBreadcrumbs(dirt[i], mapGridComp.Grid, destructibleQuery, fixturesQuery, physicsQuery, xformQuery);
+                BuildBreadcrumbs(dirt[i], mapGridComp.Grid, accessQuery, destructibleQuery, doorQuery, fixturesQuery, physicsQuery, xformQuery);
             });
 
             const int Division = 4;
@@ -261,7 +265,9 @@ public sealed partial class PathfindingSystem
 
     private void BuildBreadcrumbs(GridPathfindingChunk chunk,
         IMapGrid grid,
+        EntityQuery<AccessReaderComponent> accessQuery,
         EntityQuery<DestructibleComponent> destructibleQuery,
+        EntityQuery<DoorComponent> doorQuery,
         EntityQuery<FixturesComponent> fixturesQuery,
         EntityQuery<PhysicsComponent> physicsQuery,
         EntityQuery<TransformComponent> xformQuery)
@@ -295,10 +301,7 @@ public sealed partial class PathfindingSystem
 
                 var tile = grid.GetTileRef(tilePos);
                 var flags = tile.Tile.IsEmpty ? PathfindingBreadcrumbFlag.Space : PathfindingBreadcrumbFlag.None;
-                var isBorder = x < 0 || y < 0 || x == ChunkSize - 1 || y == ChunkSize - 1;
-
-                if (isBorder)
-                    flags |= PathfindingBreadcrumbFlag.External;
+                // var isBorder = x < 0 || y < 0 || x == ChunkSize - 1 || y == ChunkSize - 1;
 
                 tileEntities.Clear();
                 var anchored = grid.GetAnchoredEntitiesEnumerator(tilePos);
@@ -368,6 +371,16 @@ public sealed partial class PathfindingSystem
 
                                 collisionLayer |= fixture.CollisionLayer;
                                 collisionMask |= fixture.CollisionMask;
+                            }
+
+                            if (accessQuery.HasComponent(ent))
+                            {
+                                flags |= PathfindingBreadcrumbFlag.Access;
+                            }
+
+                            if (doorQuery.HasComponent(ent))
+                            {
+                                flags |= PathfindingBreadcrumbFlag.Door;
                             }
 
                             if (destructibleQuery.TryGetComponent(ent, out var damageable))
