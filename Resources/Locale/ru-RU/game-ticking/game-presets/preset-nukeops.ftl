@@ -1,13 +1,11 @@
 nukeops-title = Ядерные оперативники
 nukeops-description = Ядерные оперативники нацелились на станцию. Постарайтесь не дать им взвести и взорвать ядерную бомбу, защищая ядерный диск!
 nukeops-welcome = Вы - ядерный оперативник. Ваша задача - взорвать { $station } и убедиться, что от неё осталась лишь груда обломков. Ваше руководство, Синдикат, снабдило вас всем необходимым для выполнения этой задачи.
-
 nukeops-opsmajor = Крупная победа Синдиката!
 nukeops-opsminor = Скромная победа Синдиката!
 nukeops-neutral = Ничейный исход!
 nukeops-crewminor = Малая победа экипажа!
 nukeops-crewmajor = Разгромная победа экипажа!
-
 nukeops-cond-nukeexplodedoncorrectstation = Ядерным оперативникам удалось взорвать станцию.
 nukeops-cond-nukeexplodedonnukieoutpost = Аванпост ядерных оперативников был уничтожен ядерным взрывом.
 nukeops-cond-nukeexplodedonincorrectlocation = Ядерная бомба взорвалась вне станции.

@@ -31,3 +31,6 @@ ent-ChairRitual = ritual chair
 ent-ChairCursed = cursed chair
     .desc = It's staring back.
     .suffix = { "" }
+ent-ChairFolding = folding chair
+    .desc = If you carry six of these you become the coolest kid at church.
+    .suffix = { "" }
