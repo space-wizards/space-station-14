@@ -2,7 +2,6 @@ using System.Linq;
 using Content.Server.Radiation.Components;
 using Content.Shared.Physics;
 using Content.Shared.Radiation.Components;
-using Content.Shared.Radiation.Events;
 using Content.Shared.Radiation.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
@@ -60,8 +59,7 @@ public partial class RadiationSystem
         var elapsedTime = stopwatch.Elapsed.TotalMilliseconds;
         var totalSources = sources.Length;
         var totalReceivers = destinations.Length;
-        var ev = new OnRadiationOverlayUpdateEvent(elapsedTime, totalSources, totalReceivers, rays);
-        UpdateDebugOverlay(ev);
+        UpdateGridcastDebugOverlay(elapsedTime, totalSources, totalReceivers, rays);
 
         // send rads to each entity
         foreach (var (receiver, rads) in receivedRads)

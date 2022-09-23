@@ -3,6 +3,7 @@ using Content.Server.Administration;
 using Content.Server.Radiation.Components;
 using Content.Shared.Administration;
 using Content.Shared.Radiation.Events;
+using Content.Shared.Radiation.Systems;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
 using Robust.Shared.Players;
@@ -69,6 +70,16 @@ public partial class RadiationSystem
         }
 
         var ev = new OnRadiationOverlayResistanceUpdateEvent(dict);
+        UpdateDebugOverlay(ev);
+    }
+
+    private void UpdateGridcastDebugOverlay(double elapsedTime, int totalSources,
+        int totalReceivers, List<RadiationRay> rays)
+    {
+        if (_debugSessions.Count == 0)
+            return;
+
+        var ev = new OnRadiationOverlayUpdateEvent(elapsedTime, totalSources, totalReceivers, rays);
         UpdateDebugOverlay(ev);
     }
 }
