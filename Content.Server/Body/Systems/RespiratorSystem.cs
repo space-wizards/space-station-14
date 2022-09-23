@@ -126,7 +126,7 @@ namespace Content.Server.Body.Systems
             if (!Resolve(uid, ref body, false))
                 return;
 
-            var organs = _bodySystem.GetComponentsOnMechanisms<LungComponent>(uid, body).ToArray();
+            var organs = _bodySystem.GetComponentsOnMechanisms<LungComponent>(uid, body);
 
             // exhale gas
 

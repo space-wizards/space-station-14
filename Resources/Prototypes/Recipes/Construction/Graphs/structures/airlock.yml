@@ -48,7 +48,7 @@
       conditions:
       - !type:EntityAnchored {}
       steps:
-      - tag: DoorElectronics
+      - prototype: DoorElectronics
         store: board
         name: "door electronics circuit board"
         icon:

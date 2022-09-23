@@ -19,9 +19,9 @@
   id: SalvageSpecialistGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitSalvageSpecialist
-    back: ClothingBackpackFilled
+    back: ClothingBackpackSalvageFilled
     shoes: ClothingShoesBootsSalvage
     id: SalvagePDA
     ears: ClothingHeadsetCargo
-  satchel: ClothingBackpackSatchelFilled
-  duffelbag: ClothingBackpackDuffelFilled
+  satchel: ClothingBackpackSatchelSalvageFilled
+  duffelbag: ClothingBackpackDuffelSalvageFilled

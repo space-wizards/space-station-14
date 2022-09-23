@@ -1,8 +1,8 @@
 ent-DrinkShaker = shaker
-    .desc = { ent-BaseItem.desc }
+    .desc = The trusty mixing buddy of the bartender.
     .suffix = { "" }
 ent-DrinkShotGlass = shot glass
-    .desc = { ent-DrinkGlassBase.desc }
+    .desc = Perfect for slamming down onto the table angrily.
     .suffix = { "" }
 ent-DrinkCarafe = pitcher
     .desc = A handled glass pitcher.

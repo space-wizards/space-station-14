@@ -28,7 +28,7 @@ public abstract partial class SharedVehicleSystem : EntitySystem
         SubscribeLocalEvent<RiderComponent, PullAttemptEvent>(OnRiderPull);
         SubscribeLocalEvent<VehicleComponent, RefreshMovementSpeedModifiersEvent>(OnVehicleModifier);
         SubscribeLocalEvent<VehicleComponent, ComponentStartup>(OnVehicleStartup);
-        SubscribeLocalEvent<VehicleComponent, RotateEvent>(OnVehicleRotate);
+        SubscribeLocalEvent<VehicleComponent, MoveEvent>(OnVehicleRotate);
 
     }
 
@@ -47,8 +47,11 @@ public abstract partial class SharedVehicleSystem : EntitySystem
     }
 
     // TODO: Shitcode, needs to use sprites instead of actual offsets.
-    private void OnVehicleRotate(EntityUid uid, VehicleComponent component, ref RotateEvent args)
+    private void OnVehicleRotate(EntityUid uid, VehicleComponent component, ref MoveEvent args)
     {
+        if (args.NewRotation == args.OldRotation)
+            return;
+
         // This first check is just for safety
         if (!HasComp<InputMoverComponent>(uid))
         {

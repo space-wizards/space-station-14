@@ -29,6 +29,7 @@
     startingCharge: 1000
   - type: ItemCooldown
   - type: Item
+    heldPrefix: off
     size: 20
   - type: Clothing
     sprite: Objects/Weapons/Melee/stunbaton.rsi

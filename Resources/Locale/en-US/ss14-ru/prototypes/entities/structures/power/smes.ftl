@@ -4,3 +4,6 @@ ent-BaseSMES = SMES
 ent-SMESBasic = { ent-BaseSMES }
     .suffix = Basic, 10MW
     .desc = { ent-BaseSMES.desc }
+ent-SMESBasicEmpty = { ent-SMESBasic }
+    .suffix = Empty
+    .desc = { ent-SMESBasic.desc }

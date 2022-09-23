@@ -17,3 +17,6 @@ device-frequency-prototype-name-surveillance-camera-medical = Камеры (Ме
 device-frequency-prototype-name-surveillance-camera-general = Камеры (Общие)
 device-frequency-prototype-name-surveillance-camera-entertainment = Камеры (Развлечения)
 device-address-prefix-sensor = Снс-
+device-address-prefix-fire-alarm = Fir-
+device-address-prefix-air-alarm = Air-
+device-address-examine-message = The device's address is { $address }.

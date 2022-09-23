@@ -168,6 +168,7 @@
       - CableMVStack
       - CableHVStack
       - ConveyorBeltAssembly
+      - AppraisalTool
       - RCDAmmo
       - HydroponicsToolScythe
       - HydroponicsToolHatchet
@@ -313,7 +314,7 @@
   - type: Lathe
     idleState: icon
     runningState: icon
-    dynamicRecipes:
+    staticRecipes:
       - Flash
       - FlashPayload
       - Handcuffs
@@ -360,7 +361,7 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Lathe
     idleState: icon
-    runningState: building
+    runningState: icon
     dynamicRecipes:
       - HandheldHealthAnalyzer
       - ClothingHandsGlovesLatex

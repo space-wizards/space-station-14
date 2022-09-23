@@ -70,7 +70,7 @@
               doAfter: 0.25
         - to: frame_mailing
           steps:
-            - tag: MailingUnitElectronics
+            - prototype: MailingUnitElectronics
               name: Mailing Unit Electronics
               icon:
                 sprite: "Objects/Misc/module.rsi"

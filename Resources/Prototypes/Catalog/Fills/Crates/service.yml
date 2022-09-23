@@ -74,6 +74,7 @@
       amount: 8
     - id: GroundTobacco
       amount: 4
+    - id: SmokingPipe
     - id: Matchbox
 
 - type: entity
