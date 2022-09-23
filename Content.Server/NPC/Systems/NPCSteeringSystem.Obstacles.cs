@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Server.Destructible;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.Pathfinding;
 using Content.Shared.Damage;
@@ -95,12 +96,15 @@ public sealed partial class NPCSteeringSystem
             // Try smashing obstacles.
             else if ((component.Flags & PathFlags.Smashing) != 0x0)
             {
-                var damageQuery = GetEntityQuery<DamageableComponent>();
+                var destructibleQuery = GetEntityQuery<DestructibleComponent>();
+
+                // TODO: This is a hack around grilles and windows.
+                _random.Shuffle(obstacleEnts);
 
                 foreach (var ent in obstacleEnts)
                 {
                     // TODO: Validate we can damage it
-                    if (damageQuery.HasComponent(ent) &&
+                    if (destructibleQuery.HasComponent(ent) &&
                         TryComp<TransformComponent>(ent, out var targetXform))
                     {
                         _interaction.DoAttack(component.Owner, targetXform.Coordinates, false, targetXform.Owner);

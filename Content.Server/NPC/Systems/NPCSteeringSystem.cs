@@ -6,10 +6,13 @@ using Content.Server.NPC.Pathfinding;
 using Content.Shared.CCVar;
 using Content.Shared.Interaction;
 using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Systems;
 using Content.Shared.NPC;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Systems;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Server.NPC.Systems
@@ -20,9 +23,11 @@ namespace Content.Server.NPC.Systems
         [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly DoorSystem _doors = default!;
         [Dependency] private readonly PathfindingSystem _pathfindingSystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interaction = default!;
+        [Dependency] private readonly SharedMoverController _mover = default!;
 
         // This will likely get moved onto an abstract pathfinding node that specifies the max distance allowed from the coordinate.
         private const float TileTolerance = 0.4f;
@@ -32,6 +37,7 @@ namespace Content.Server.NPC.Systems
         public override void Initialize()
         {
             base.Initialize();
+            UpdatesBefore.Add(typeof(SharedPhysicsSystem));
             InitializeAvoidance();
             _configManager.OnValueChanged(CCVars.NPCEnabled, SetNPCEnabled, true);
 
@@ -291,7 +297,7 @@ namespace Content.Server.NPC.Systems
 
             if (!needsPath)
             {
-                var lastNode = GetCoordinates(steering.CurrentPath.Peek());
+                var lastNode = GetCoordinates(steering.CurrentPath.Last());
                 // I know this is bad and doesn't account for tile size
                 // However with the path I'm going to change it to return pathfinding nodes which include coordinates instead.
 
@@ -332,12 +338,8 @@ namespace Content.Server.NPC.Systems
                 input *= maxDistance / tickMovement;
             }
 
-            // TODO: This isn't going to work for space.
-            if (_mapManager.TryGetGrid(xform.GridUid, out var grid))
-            {
-                input = (-grid.WorldRotation).RotateVec(input);
-            }
-
+            // We have the input in world terms but need to convert it back to what movercontroller is doing.
+            input = (-_mover.GetParentGridAngle(mover)).RotateVec(input);
             SetDirection(mover, steering, input);
         }
 
