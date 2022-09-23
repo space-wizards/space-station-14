@@ -11,63 +11,83 @@
     sprite: Structures/Machines/server.rsi
     state: server-on
   requiredPoints: 2500
-  incompatibleTechnologies:
-    - TestExclusion
+ # incompatibleTechnologies:
+ #   - TestExclusion
 
-- type: technology
-  name: technologies-test-sabotage-victim-technology
-  id: TestVictim
-  description: test
-  icon:
-    sprite: Structures/Machines/server.rsi
-    state: server-on
-  incompatibleTechnologies:
-    - TestSabotage
 
-- type: technology
-  name: technologies-test-hidden-technology
-  id: TestHiddenTechnology
-  description: test
-  icon:
-    sprite: Objects/Specific/Research/researchdisk.rsi
-    state: icon
-  hidden: true
+# test technology
 
-- type: technology
-  name: technologies-test-sabotage-technology
-  id: TestSabotage
-  description: test
-  icon:
-    sprite: Objects/Specific/Research/researchdisk.rsi
-    state: icon
-  hidden: true
+#- type: technology
+#  name: technologies-test-sabotage-victim-technology
+#  id: TestVictim
+#  description: test
+#  icon:
+#    sprite: Structures/Machines/server.rsi
+#    state: server-on
+#  incompatibleTechnologies:
+#    - TestSabotage
 
-- type: technology
-  name: technologies-test-hidden-unlock-technology
-  id: TestHidden
-  description: test
-  icon:
-    sprite: Structures/Machines/server.rsi
-    state: server-on
-  requiredTechnologies:
-    - TestHiddenTechnology
-  unlockedRecipes:
-    - Bucket
-    - MopItem
-    - SprayBottle
-    - BodyBag
+#- type: technology
+#  name: technologies-test-hidden-technology
+#  id: TestHiddenTechnology
+#  description: test
+#  icon:
+#    sprite: Objects/Specific/Research/researchdisk.rsi
+#    state: icon
+#  hidden: true
 
-- type: technology
-  name: technologies-test-exclusion-technology
-  id: TestExclusion
-  description: test
-  icon:
-    sprite: Structures/Machines/server.rsi
-    state: server-on
-  incompatibleTechnologies:
-    - BasicResearch
+#- type: technology
+#  name: technologies-test-sabotage-technology
+#  id: TestSabotage
+#  description: test
+#  icon:
+#    sprite: Objects/Specific/Research/researchdisk.rsi
+#    state: icon
+#  hidden: true
+
+#- type: technology
+#  name: technologies-test-hidden-unlock-technology
+#  id: TestHidden
+#  description: test
+#  icon:
+#    sprite: Structures/Machines/server.rsi
+#    state: server-on
+#  requiredTechnologies:
+#    - TestHiddenTechnology
+#  unlockedRecipes:
+#    - Bucket
+#    - MopItem
+#    - SprayBottle
+#    - BodyBag
+
+#- type: technology
+#  name: technologies-test-exclusion-technology
+#  id: TestExclusion
+#  description: test
+#  icon:
+#    sprite: Structures/Machines/server.rsi
+#    state: server-on
+#  incompatibleTechnologies:
+#    - BasicResearch
 
 # Cleaning Technology Tree
+
+# old tree, to be removed
+#- type: technology
+#  name: technologies-cleaning-technology
+#  id: MopBucket
+#  description: technologies-cleaning-technology-description
+#  icon:
+#    sprite: Objects/Specific/Janitorial/janitorial.rsi
+#    state: mopbucket
+#  requiredPoints: 5000
+#  requiredTechnologies:
+#    - BasicResearch
+#  unlockedRecipes:
+#    - Bucket
+#    - MopItem
+#    - SprayBottle
+#    - BodyBag
 
 - type: technology
   name: technologies-cleaning-technology
@@ -76,14 +96,13 @@
   icon:
     sprite: Objects/Specific/Janitorial/janitorial.rsi
     state: mopbucket
-  requiredPoints: 5000
-  requiredTechnologies:
-    - BasicResearch
   unlockedRecipes:
     - Bucket
     - MopItem
     - SprayBottle
     - BodyBag
+    - MopBucket
+    - AnalysisMopBucket
 
 # Biological Technology Tree
 

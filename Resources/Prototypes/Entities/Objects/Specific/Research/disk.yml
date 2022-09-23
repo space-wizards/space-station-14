@@ -36,22 +36,22 @@
   - type: ResearchDisk
     points: 10000
 
-- type: entity
-  parent: ResearchDiskBase
-  id: TestHiddenTechDisk
-  name: test hidden tech disk
-  description: Will unlock the test hidden tech.
-  components:
-  - type: ResearchDisk
-    technology: TestHiddenTechnology
-    points: 0
+#- type: entity
+#  parent: ResearchDiskBase
+#  id: TestHiddenTechDisk
+#  name: test hidden tech disk
+#  description: Will unlock the test hidden tech.
+#  components:
+#  - type: ResearchDisk
+#    technology: TestHiddenTechnology
+#    points: 0
 
-- type: entity
-  parent: ResearchDiskBase
-  id: TestSabotageDisk
-  name: test sabotage disk
-  description: Will exclude a target technology.
-  components:
-  - type: ResearchDisk
-    technology: TestSabotage
-    points: 0
+#- type: entity
+#  parent: ResearchDiskBase
+#  id: TestSabotageDisk
+#  name: test sabotage disk
+#  description: Will exclude a target technology.
+#  components:
+#  - type: ResearchDisk
+#    technology: TestSabotage
+#    points: 0
