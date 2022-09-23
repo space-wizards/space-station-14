@@ -114,3 +114,17 @@
     steps: 1
     zeroVisible: true
   - type: Appearance
+
+# Admeme
+- type: entity
+  name: meteor launcher
+  parent: WeaponLauncherMultipleRocket
+  id: WeaponLauncherAdmemeMeteorLarge
+  suffix: Admeme
+  description: It fires large meteors
+  components:
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - CartridgeRocket
+    proto: MeteorLarge
