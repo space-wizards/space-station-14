@@ -150,11 +150,6 @@ public sealed partial class PathfindingSystem
         }
 
         request.Path = path;
-
-        // Logger.DebugS("nav", $"Found path in {request.Stopwatch.Elapsed.TotalMilliseconds:0.000}ms");
-
-        // var simplifiedRoute = Simplify(route, 0f);
-        // var actualRoute = new Queue<EntityCoordinates>(simplifiedRoute);
         return PathResult.Path;
     }
 
@@ -181,11 +176,16 @@ public sealed partial class PathfindingSystem
         if ((request.CollisionLayer & end.Data.CollisionMask) != 0x0 ||
             (request.CollisionMask & end.Data.CollisionLayer) != 0x0)
         {
-            if ((request.Flags & PathFlags.Smashing) != 0x0)
-            {
-                modifier = 10f;
-            }
             // TODO: Airlocks and airlock access
+            if ((request.Flags & PathFlags.Prying) != 0x0)
+            {
+                modifier /= 10f;
+            }
+
+            if ((request.Flags & PathFlags.Smashing) != 0x0 && end.Data.Damage > 0f)
+            {
+                modifier += 5f + end.Data.Damage / 100f;
+            }
             else
             {
                 return 0f;

@@ -28,6 +28,8 @@ public sealed class PathPoly : IEquatable<PathPoly>
         return (Data.Flags & PathfindingBreadcrumbFlag.Invalid) == 0x0;
     }
 
+    // Explicitly don't check neighbors.
+
     public bool Equals(PathPoly? other)
     {
         return other != null &&
@@ -35,8 +37,7 @@ public sealed class PathPoly : IEquatable<PathPoly>
                ChunkOrigin.Equals(other.ChunkOrigin) &&
                TileIndex == other.TileIndex &&
                Data.Equals(other.Data) &&
-               Box.Equals(other.Box) &&
-               Neighbors.SetEquals(other.Neighbors);
+               Box.Equals(other.Box);
     }
 
     public override bool Equals(object? obj)

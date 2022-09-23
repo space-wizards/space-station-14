@@ -3,7 +3,9 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Content.Server.Destructible;
 using Content.Server.Doors.Components;
+using Content.Shared.Damage;
 using Content.Shared.NPC;
 using Content.Shared.Physics;
 using Microsoft.Extensions.ObjectPool;
@@ -79,10 +81,11 @@ public sealed partial class PathfindingSystem
             Parallel.For(0, dirt.Length, i =>
             {
                 // Doing the queries per task seems faster.
+                var destructibleQuery = GetEntityQuery<DestructibleComponent>();
                 var fixturesQuery = GetEntityQuery<FixturesComponent>();
                 var physicsQuery = GetEntityQuery<PhysicsComponent>();
                 var xformQuery = GetEntityQuery<TransformComponent>();
-                BuildBreadcrumbs(dirt[i], mapGridComp.Grid, comp, fixturesQuery, physicsQuery, xformQuery);
+                BuildBreadcrumbs(dirt[i], mapGridComp.Grid, destructibleQuery, fixturesQuery, physicsQuery, xformQuery);
             });
 
             const int Division = 4;
@@ -258,7 +261,7 @@ public sealed partial class PathfindingSystem
 
     private void BuildBreadcrumbs(GridPathfindingChunk chunk,
         IMapGrid grid,
-        GridPathfindingComponent component,
+        EntityQuery<DestructibleComponent> destructibleQuery,
         EntityQuery<FixturesComponent> fixturesQuery,
         EntityQuery<PhysicsComponent> physicsQuery,
         EntityQuery<TransformComponent> xformQuery)
@@ -326,6 +329,7 @@ public sealed partial class PathfindingSystem
                         var localPos = new Vector2(StepOffset + gridOrigin.X + x + (float) subX / SubStep, StepOffset + gridOrigin.Y + y + (float) subY / SubStep);
                         var collisionMask = 0x0;
                         var collisionLayer = 0x0;
+                        var damage = 0f;
 
                         foreach (var ent in tileEntities)
                         {
@@ -365,6 +369,11 @@ public sealed partial class PathfindingSystem
                                 collisionLayer |= fixture.CollisionLayer;
                                 collisionMask |= fixture.CollisionMask;
                             }
+
+                            if (destructibleQuery.TryGetComponent(ent, out var damageable))
+                            {
+                                damage += _destructible.DestroyedAt(ent, damageable).Float();
+                            }
                         }
 
                         if ((flags & PathfindingBreadcrumbFlag.Space) != 0x0)
@@ -375,7 +384,7 @@ public sealed partial class PathfindingSystem
                         var crumb = new PathfindingBreadcrumb()
                         {
                             Coordinates = new Vector2i(xOffset, yOffset),
-                            Data = new PathfindingData(flags, collisionLayer, collisionMask),
+                            Data = new PathfindingData(flags, collisionLayer, collisionMask, damage),
                         };
 
                         points[xOffset, yOffset] = crumb;

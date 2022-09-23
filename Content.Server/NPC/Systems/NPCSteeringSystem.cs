@@ -184,7 +184,7 @@ namespace Content.Server.NPC.Systems
             // Grab the target position, either the path or our end goal.
             // TODO: Some situations we may not want to move at our target without a path.
             var targetCoordinates = GetTargetCoordinates(steering);
-            var arrivalDistance = 1f;
+            var arrivalDistance = SharedInteractionSystem.InteractionRange - 0.5f;
 
             if (targetCoordinates.Equals(steering.Coordinates))
             {

@@ -2,6 +2,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
+using Content.Server.Destructible;
 using Content.Shared.Administration;
 using Content.Shared.NPC;
 using Robust.Server.Player;
@@ -31,6 +32,7 @@ namespace Content.Server.NPC.Pathfinding
 
         [Dependency] private readonly IAdminManager _adminManager = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
+        [Dependency] private readonly DestructibleSystem _destructible = default!;
         [Dependency] private readonly FixtureSystem _fixtures = default!;
 
         private ISawmill _sawmill = default!;

@@ -12,11 +12,12 @@ public sealed partial class NPCSteeringSystem
     /*
      * For any custom path handlers, e.g. destroying walls, opening airlocks, etc.
      * Putting it onto steering seemed easier than trying to make a custom compound task for it.
+     * I also considered task interrupts although the problem is handling stuff like pathfinding overlaps
+     * Ideally we could do interrupts but that's TODO.
      */
 
     /*
      * TODO:
-     * - Add "break obstacles to target" below the melee combat one. Make melee combat one require clear path
      * - Add path cap
      * - Circle cast BFS in LOS to determine targets.
      * - Store last known coordinates of X targets.
@@ -73,7 +74,7 @@ public sealed partial class NPCSteeringSystem
                 foreach (var ent in obstacleEnts)
                 {
                     // TODO: Validate we can damage it
-                    if (damageQuery.TryGetComponent(ent, out var damage) &&
+                    if (damageQuery.HasComponent(ent) &&
                         TryComp<TransformComponent>(ent, out var targetXform))
                     {
                         _interaction.DoAttack(component.Owner, targetXform.Coordinates, false, targetXform.Owner);

@@ -15,16 +15,13 @@ public struct PathfindingBreadcrumb : IEquatable<PathfindingBreadcrumb>
 
     public static readonly PathfindingBreadcrumb Invalid = new()
     {
-        Data = new PathfindingData(PathfindingBreadcrumbFlag.None, -1, -1),
+        Data = new PathfindingData(PathfindingBreadcrumbFlag.None, -1, -1, 0f),
     };
 
-    public bool IsInterior => (Data.Flags & PathfindingBreadcrumbFlag.Interior) != 0x0;
-    public bool IsBoundary => (Data.Flags & PathfindingBreadcrumbFlag.Interior) == 0x0;
-
-    public PathfindingBreadcrumb(Vector2i coordinates, int layer, int mask, PathfindingBreadcrumbFlag flags = PathfindingBreadcrumbFlag.None)
+    public PathfindingBreadcrumb(Vector2i coordinates, int layer, int mask, float damage, PathfindingBreadcrumbFlag flags = PathfindingBreadcrumbFlag.None)
     {
         Coordinates = coordinates;
-        Data = new PathfindingData(flags, layer, mask);
+        Data = new PathfindingData(flags, layer, mask, damage);
     }
 
     /// <summary>
@@ -60,12 +57,14 @@ public struct PathfindingData : IEquatable<PathfindingData>
     public PathfindingBreadcrumbFlag Flags;
     public int CollisionLayer;
     public int CollisionMask;
+    public float Damage;
 
-    public PathfindingData(PathfindingBreadcrumbFlag flag, int layer, int mask)
+    public PathfindingData(PathfindingBreadcrumbFlag flag, int layer, int mask, float damage)
     {
         Flags = flag;
         CollisionLayer = layer;
         CollisionMask = mask;
+        Damage = damage;
     }
 
     public bool Equals(PathfindingData other)
