@@ -23,11 +23,11 @@ public sealed class MiningSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<MineableComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<MineableComponent, DestructionEventArgs>(OnDestruction);
+        SubscribeLocalEvent<OreVeinComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<OreVeinComponent, DestructionEventArgs>(OnDestruction);
     }
 
-    private void OnDestruction(EntityUid uid, MineableComponent component, DestructionEventArgs args)
+    private void OnDestruction(EntityUid uid, OreVeinComponent component, DestructionEventArgs args)
     {
         if (component.CurrentOre == null)
             return;
@@ -61,7 +61,7 @@ public sealed class MiningSystem : EntitySystem
         }
     }
 
-    private void OnMapInit(EntityUid uid, MineableComponent component, MapInitEvent args)
+    private void OnMapInit(EntityUid uid, OreVeinComponent component, MapInitEvent args)
     {
         if (component.CurrentOre != null || component.OreRarityPrototypeId == null || !_random.Prob(component.OreChance))
             return;

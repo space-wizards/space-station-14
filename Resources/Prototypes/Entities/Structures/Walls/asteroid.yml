@@ -40,7 +40,7 @@
   - type: IconSmooth
     key: walls
     base: rock_
-  - type: Mineable
+  - type: OreVein
     oreChance: 0.2
     oreRarityPrototypeId: RandomOreDistributionStandard
 
@@ -55,6 +55,6 @@
     whitelist:
       tags:
         - Pickaxe
-  - type: Mineable
+  - type: OreVein
     oreChance: 0.33
     oreRarityPrototypeId: RandomOreDistributionStandard
