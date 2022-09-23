@@ -81,15 +81,9 @@ namespace Content.Server.Chemistry.EntitySystems
             if (TryComp<SolutionContainerManagerComponent>(args.Used, out var solutions))
             {
                 bool solutionPresent = false;
-                foreach (var solutionContainer in (solutions.Solutions))
-                {
-                    //Console.WriteLine(solutionContainer.Value.Count); <-- this does not appear to work
-                    foreach (var solution in (solutionContainer.Value)) //TODO make this not bad (though it does work)
-                    {
+                foreach (var solution in (solutions.Solutions))
+                    if ((solution.Value.Contents.Count > 0))
                         solutionPresent = true;
-                        break;
-                    }
-                }
                 if (!solutionPresent)
                     return;
             }
@@ -108,18 +102,18 @@ namespace Content.Server.Chemistry.EntitySystems
 
             //_popupSystem.PopupEntity(Loc.GetString("machine-insert-item", ("machine", uid), ("item", args.Used)), uid, Filter.Entities(args.User));
 
-                //check if input is from a solution manager and of the right kind (if specified)
-                //if (!HasComp<HandsComponent>(args.User) || HasComp<ToolComponent>(args.Used)) // Don't want to accidentally breach wrenching or whatever
-                //    return;
+            //TODO check if device requires power or not - if it does then treat as if anchorable
+            //if (!HasComp<HandsComponent>(args.User) || HasComp<ToolComponent>(args.Used)) // Don't want to accidentally breach wrenching or whatever
+            //    return;
 
-                //check if device requires power or not - if it does then treat as if anchorable
 
             AddQueue.Enqueue(uid);
             SoundSystem.Play("/Audio/Machines/diagnoser_printing.ogg", Filter.Pvs(uid), uid);
         }
 
         /// <summary>
-        /// 
+        /// Print the results of the analysis - i.e. the contents of the analyser entity
+        /// Depending on the conditions of the specific analyser, may also produce a research disk
         /// </summary>
         private void OnChemAnalyserFinished(EntityUid uid, ChemAnalyserComponent component, ChemAnalyserFinishedEvent args)
         {
@@ -132,17 +126,46 @@ namespace Content.Server.Chemistry.EntitySystems
 
             string reportTitle;
 
-            reportTitle = "test";
-
+            reportTitle = args.Machine.Name + " Report";
             FormattedMessage contents = new();
+            int maxLines = 10;
+
+            if (TryComp<SolutionContainerManagerComponent>(uid, out var solutions))
+            {
                 
+                int numLines = 0;
+                foreach (var solution in (solutions.Solutions)) {
+                    contents.AddMarkup("No. Chemicals Found: ");
+                    contents.AddMarkup(solution.Value.Contents.Count.ToString());
+                    contents.PushNewline();
+                    contents.PushNewline();
+                    contents.AddMarkup("Chemicals Present");
+                    contents.PushNewline();
+                    foreach (var content in (solution.Value.Contents))
+                    {
+                        if (numLines < maxLines) {
+                            contents.AddMarkup(content + "u");
+                            contents.PushNewline();
+                            numLines++;
+                        } else
+                        {
+                            contents.AddMarkup("END OF PRINT");
+                            break;
+                        }
+                    }
+                }
+            } else
+                contents.AddMarkup("No Chemicals Found");
+
             MetaData(printed).EntityName = reportTitle;
+
+            //TODO disk printing...
 
             _paperSystem.SetContent(printed, contents.ToMarkup(), paper);
         }
 
         /// <summary>
-        /// 
+        /// Fires when the Chem Analyser is done and ready to print results
         /// </summary>
         private sealed class ChemAnalyserFinishedEvent : EntityEventArgs
         {
