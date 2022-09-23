@@ -94,6 +94,8 @@ namespace Content.Server.NPC.Pathfinding
 
                 switch (result)
                 {
+                    case PathResult.Continuing:
+                        break;
                     case PathResult.PartialPath:
                     case PathResult.Path:
                     case PathResult.NoPath:
@@ -102,6 +104,8 @@ namespace Content.Server.NPC.Pathfinding
                         _pathRequests.RemoveAt(i);
                         path.Tcs.SetResult(result);
                         break;
+                    default:
+                        throw new NotImplementedException();
                 }
             }
         }
@@ -226,7 +230,7 @@ namespace Content.Server.NPC.Pathfinding
                 mask = body.CollisionMask;
             }
 
-            return new PathRequest(start, end, PathFlags.None, SharedInteractionSystem.InteractionRange - 0.5f, layer, mask, cancelToken);
+            return new PathRequest(start, end, PathFlags.Prying | PathFlags.Smashing, SharedInteractionSystem.InteractionRange - 0.5f, layer, mask, cancelToken);
         }
 
         private async Task<PathResultEvent> GetPath(

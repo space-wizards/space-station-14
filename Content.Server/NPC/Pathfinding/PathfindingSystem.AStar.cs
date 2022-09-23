@@ -6,6 +6,11 @@ namespace Content.Server.NPC.Pathfinding;
 
 public sealed partial class PathfindingSystem
 {
+    /// <summary>
+    /// Maximum amount of nodes we're allowed to expand.
+    /// </summary>
+    private const int NodeLimit = 200;
+
     private sealed class PathComparer : IComparer<ValueTuple<float, PathPoly>>
     {
         public int Compare((float, PathPoly) x, (float, PathPoly) y)
@@ -65,29 +70,22 @@ public sealed partial class PathfindingSystem
             return PathResult.NoPath;
         }
 
-        // TODO: Mixing path nodes and refs has made this spaghet.
-        var currentGraph = startNode.GraphUid;
-
-        if (!graphs.TryGetValue(currentGraph, out var comp))
-        {
-            return PathResult.NoPath;
-        }
-
         currentNode = startNode;
         request.Frontier.Add((0.0f, startNode));
         request.CostSoFar[startNode] = 0.0f;
         var count = 0;
 
-        while (request.Frontier.Count > 0)
+        while (request.Frontier.Count > 0 && count < NodeLimit)
         {
             // Handle whether we need to pause if we've taken too long
-            count++;
-
-            // Suspend
-            if (count % 50 == 0 && count > 0 && request.Stopwatch.Elapsed > PathTime)
+            if (count % 20 == 0 && count > 0 && request.Stopwatch.Elapsed > PathTime)
             {
+                // I had this happen once in testing but I don't think it should be possible?
+                DebugTools.Assert(request.Frontier.Count > 0);
                 return PathResult.Continuing;
             }
+
+            count++;
 
             // Actual pathfinding here
             (_, currentNode) = request.Frontier.Take();

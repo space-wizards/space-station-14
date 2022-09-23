@@ -30,13 +30,13 @@ public sealed partial class NPCSteeringSystem
      */
 
 
-    private SteeringObstacleStatus TryHandleFlags(NPCSteeringComponent component, PathPoly poly, TransformComponent xform, PhysicsComponent? body = null)
+    private SteeringObstacleStatus TryHandleFlags(NPCSteeringComponent component, PathPoly poly, EntityQuery<PhysicsComponent> bodyQuery)
     {
         if (component.Flags == PathFlags.None)
             return SteeringObstacleStatus.Completed;
 
         // TODO: Use bodyquery
-        if (!Resolve(component.Owner, ref body, false))
+        if (!bodyQuery.TryGetComponent(component.Owner, out var body))
             return SteeringObstacleStatus.Failed;
 
         // TODO: Store PathFlags on the steering comp
@@ -47,7 +47,7 @@ public sealed partial class NPCSteeringSystem
         if ((poly.Data.CollisionLayer & body.CollisionMask) != 0x0 ||
             (poly.Data.CollisionMask & body.CollisionLayer) != 0x0)
         {
-            var obstacleEnts = GetObstacleEntities(poly, body.CollisionMask, body.CollisionLayer);
+            var obstacleEnts = GetObstacleEntities(poly, body.CollisionMask, body.CollisionLayer, bodyQuery);
             var isDoor = (poly.Data.Flags & PathfindingBreadcrumbFlag.Door) != 0x0;
             var isAccess = (poly.Data.Flags & PathfindingBreadcrumbFlag.Access) != 0x0;
 
@@ -72,7 +72,6 @@ public sealed partial class NPCSteeringSystem
                 return SteeringObstacleStatus.Completed;
             }
 
-            // TODO: Cooldown
             if ((component.Flags & PathFlags.Prying) != 0x0 && isAccess && isDoor)
             {
                 var doorQuery = GetEntityQuery<DoorComponent>();
@@ -82,7 +81,9 @@ public sealed partial class NPCSteeringSystem
                 {
                     if (doorQuery.TryGetComponent(ent, out var door) && door.State != DoorState.Open)
                     {
-                        _doors.TryPryDoor(ent, component.Owner, component.Owner, door, true);
+                        if (door.State != DoorState.Opening && !door.BeingPried)
+                            _doors.TryPryDoor(ent, component.Owner, component.Owner, door, true);
+
                         return SteeringObstacleStatus.Continuing;
                     }
                 }
@@ -116,7 +117,7 @@ public sealed partial class NPCSteeringSystem
         return SteeringObstacleStatus.Completed;
     }
 
-    private List<EntityUid> GetObstacleEntities(PathPoly poly, int mask, int layer)
+    private List<EntityUid> GetObstacleEntities(PathPoly poly, int mask, int layer, EntityQuery<PhysicsComponent> bodyQuery)
     {
         // TODO: Can probably re-use this from pathfinding or something
         var ents = new List<EntityUid>();
@@ -125,9 +126,6 @@ public sealed partial class NPCSteeringSystem
         {
             return ents;
         }
-
-        // TODO: Pass these around
-        var bodyQuery = GetEntityQuery<PhysicsComponent>();
 
         foreach (var ent in grid.GetLocalAnchoredEntities(poly.Box))
         {

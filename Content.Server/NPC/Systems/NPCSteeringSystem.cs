@@ -212,7 +212,7 @@ namespace Content.Server.NPC.Systems
                 // Node needs some kind of special handling like access or smashing.
                 if (steering.CurrentPath.TryPeek(out var node))
                 {
-                    var status = TryHandleFlags(steering, node, xform);
+                    var status = TryHandleFlags(steering, node, bodyQuery);
 
                     switch (status)
                     {
