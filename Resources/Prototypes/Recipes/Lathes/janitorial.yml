@@ -10,12 +10,26 @@
 
 - type: latheRecipe
   id: MopBucket
-  icon: Objects/Specific/Janitorial/janitorial.rsi
+  icon: 
+    sprite: Objects/Specific/Janitorial/janitorial.rsi
+    state: mopbucket
   result: MopBucket
   completetime: 2
   materials:
     Steel: 100
     Plastic: 100
+
+- type: latheRecipe
+  id: AnalysisMopBucket
+  icon: 
+    sprite: Objects/Specific/Janitorial/janitorial.rsi
+    state: analysismopbucket
+  result: AnalysisMopBucket
+  completetime: 3
+  materials:
+    Steel: 100
+    Plastic: 100
+    Glass: 100
 
 - type: latheRecipe
   id: Bucket

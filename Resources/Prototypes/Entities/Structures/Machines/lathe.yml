@@ -225,6 +225,8 @@
       - LeftArmBorg
       - RightArmBorg
       - HolofanProjector
+      - MopBucket
+      - AnalysisMopBucket
 
 - type: entity
   parent: Protolathe
