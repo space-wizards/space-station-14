@@ -62,7 +62,7 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
     {
         _uiHelper?.Dispose();
         _uiHelper = null;
-        CommandBinds.Unregister<InfoUIController>();
+        CommandBinds.Unregister<AHelpUIController>();
     }
     public void OnSystemLoaded(BwoinkSystem system)
     {
