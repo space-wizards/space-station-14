@@ -6,6 +6,7 @@ using Content.Server.NPC.Pathfinding;
 using Content.Shared.CCVar;
 using Content.Shared.Interaction;
 using Content.Shared.Movement.Components;
+using Content.Shared.NPC;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
@@ -184,6 +185,25 @@ namespace Content.Server.NPC.Systems
             // Grab the target position, either the path or our end goal.
             // TODO: Some situations we may not want to move at our target without a path.
             var targetCoordinates = GetTargetCoordinates(steering);
+
+            // If the next node is invalid then
+            if (!targetCoordinates.IsValid(EntityManager))
+            {
+                if (steering.CurrentPath.TryPeek(out var poly) &&
+                    (poly.Data.Flags & PathfindingBreadcrumbFlag.Invalid) != 0x0)
+                {
+                    steering.CurrentPath.Dequeue();
+                    targetCoordinates = GetTargetCoordinates(steering);
+
+                    // Well get a new path then I guess
+                    if (!targetCoordinates.IsValid(EntityManager))
+                    {
+                        RequestPath(steering, xform);
+                        return;
+                    }
+                }
+            }
+
             var arrivalDistance = SharedInteractionSystem.InteractionRange - 0.5f;
 
             if (targetCoordinates.Equals(steering.Coordinates))
@@ -265,7 +285,7 @@ namespace Content.Server.NPC.Systems
             }
 
             // Do we have no more nodes to follow OR has the target moved sufficiently? If so then re-path.
-            var needsPath = steering.CurrentPath.Count == 0;
+            var needsPath = steering.CurrentPath.Count == 0 || (steering.CurrentPath.Peek().Data.Flags & PathfindingBreadcrumbFlag.Invalid) != 0x0;
 
             // TODO: Probably need partial planning support i.e. patch from the last node to where the target moved to.
 
@@ -283,9 +303,9 @@ namespace Content.Server.NPC.Systems
             }
 
             // Request the new path.
-            if (needsPath && bodyQuery.TryGetComponent(steering.Owner, out var body))
+            if (needsPath)
             {
-                RequestPath(steering, xform, body);
+                RequestPath(steering, xform);
             }
 
             modifierQuery.TryGetComponent(steering.Owner, out var modifier);
@@ -333,12 +353,12 @@ namespace Content.Server.NPC.Systems
 
             // Right now the pathfinder gives EVERY TILE back but ideally it won't someday, it'll just give straightline ones.
             // For now, we just prune up until the closest node + 1 extra.
-            var closest = (GetCoordinates(nodes.Peek()).Position - coordinates.Position).Length;
-            // TODO: Need to handle multi-grid and stuff.
+            var closest = float.MaxValue;
 
             while (nodes.TryPeek(out var node))
             {
-                var length = (coordinates.Position - GetCoordinates(node).Position).Length;
+                if (node.Data.Flags != PathfindingBreadcrumbFlag.None || !coordinates.TryDistance(EntityManager, GetCoordinates(node), out var length))
+                    break;
 
                 if (length < closest)
                 {
@@ -379,7 +399,7 @@ namespace Content.Server.NPC.Systems
         /// <summary>
         /// Get a new job from the pathfindingsystem
         /// </summary>
-        private async void RequestPath(NPCSteeringComponent steering, TransformComponent xform, PhysicsComponent? body)
+        private async void RequestPath(NPCSteeringComponent steering, TransformComponent xform)
         {
             // If we already have a pathfinding request then don't grab another.
             if (steering.Pathfind)

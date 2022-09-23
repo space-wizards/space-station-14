@@ -60,12 +60,13 @@ public sealed partial class NPCSteeringSystem
                     if (!TryComp<DoorComponent>(ent, out var door))
                         continue;
 
-                    if (!door.BumpOpen && door.State != DoorState.Open)
+                    if (!door.BumpOpen)
                     {
                         if (door.State != DoorState.Opening)
+                        {
                             _interaction.InteractionActivate(component.Owner, ent);
-
-                        return SteeringObstacleStatus.Continuing;
+                            return SteeringObstacleStatus.Continuing;
+                        }
                     }
                 }
 

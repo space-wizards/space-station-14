@@ -133,7 +133,6 @@ public sealed partial class PathfindingSystem
         }
 
         var route = ReconstructPath(request.CameFrom, currentNode);
-        request.Polys = route;
         var path = new Queue<EntityCoordinates>(route.Count);
 
         foreach (var node in route)
@@ -147,6 +146,7 @@ public sealed partial class PathfindingSystem
             path.Enqueue(ToCoordinates(node.GraphUid, node));
         }
 
+        request.Polys = route;
         request.Path = path;
         return PathResult.Path;
     }

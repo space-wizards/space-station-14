@@ -49,6 +49,9 @@ namespace Content.Server.NPC.Pathfinding
         /// </summary>
         private const int PathTickLimit = 256;
 
+        private int _portalIndex;
+        private Dictionary<int, PathPortal> _portals = new();
+
         public override void Initialize()
         {
             base.Initialize();
@@ -108,6 +111,80 @@ namespace Content.Server.NPC.Pathfinding
                         throw new NotImplementedException();
                 }
             }
+        }
+
+        /// <summary>
+        /// Creates neighbouring edges at both locations, each leading to the other.
+        /// </summary>
+        public bool TryCreatePortal(EntityCoordinates coordsA, EntityCoordinates coordsB, out int handle)
+        {
+            var mapUidA = coordsA.GetMapUid(EntityManager);
+            var mapUidB = coordsB.GetMapUid(EntityManager);
+            handle = -1;
+
+            if (mapUidA != mapUidB || mapUidA == null)
+            {
+                return false;
+            }
+
+            var gridUidA = coordsA.GetGridUid(EntityManager);
+            var gridUidB = coordsB.GetGridUid(EntityManager);
+
+            if (!TryComp<GridPathfindingComponent>(gridUidA, out var gridA) ||
+                !TryComp<GridPathfindingComponent>(gridUidB, out var gridB))
+            {
+                return false;
+            }
+
+            handle = _portalIndex++;
+            var portal = new PathPortal(handle, coordsA, coordsB);
+            _portals[handle] = portal;
+            var originA = GetOrigin(coordsA, gridUidA.Value);
+            var originB = GetOrigin(coordsB, gridUidB.Value);
+
+            gridA.PortalLookup.Add(portal, originA);
+            gridB.PortalLookup.Add(portal, originB);
+
+            var chunkA = GetChunk(originA, gridUidA.Value);
+            var chunkB = GetChunk(originB, gridUidB.Value);
+            chunkA.Portals.Add(portal);
+            chunkB.Portals.Add(portal);
+
+            // TODO: You already have the chunks
+            DirtyChunk(gridUidA.Value, coordsA);
+            DirtyChunk(gridUidB.Value, coordsB);
+
+            return true;
+        }
+
+        public bool RemovePortal(int handle)
+        {
+            if (!_portals.TryGetValue(handle, out var portal))
+            {
+                return false;
+            }
+
+            _portals.Remove(handle);
+
+            var gridUidA = portal.CoordinatesA.GetGridUid(EntityManager);
+            var gridUidB = portal.CoordinatesB.GetGridUid(EntityManager);
+
+            if (!TryComp<GridPathfindingComponent>(gridUidA, out var gridA) ||
+                !TryComp<GridPathfindingComponent>(gridUidB, out var gridB))
+            {
+                return false;
+            }
+
+            gridA.PortalLookup.Remove(portal);
+            gridB.PortalLookup.Remove(portal);
+            var chunkA = GetChunk(GetOrigin(portal.CoordinatesA, gridUidA.Value), gridUidA.Value, gridA);
+            var chunkB = GetChunk(GetOrigin(portal.CoordinatesB, gridUidB.Value), gridUidB.Value, gridB);
+            chunkA.Portals.Remove(portal);
+            chunkB.Portals.Remove(portal);
+            DirtyChunk(gridUidA.Value, portal.CoordinatesA);
+            DirtyChunk(gridUidB.Value, portal.CoordinatesB);
+
+            return true;
         }
 
         /// <summary>

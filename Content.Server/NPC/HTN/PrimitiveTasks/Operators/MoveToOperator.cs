@@ -73,8 +73,7 @@ public sealed class MoveToOperator : HTNOperator
             return (false, null);
 
         if (!_mapManager.TryGetGrid(xform.GridUid, out var ownerGrid) ||
-            !_mapManager.TryGetGrid(targetCoordinates.GetGridUid(_entManager), out var targetGrid) ||
-            ownerGrid != targetGrid)
+            !_mapManager.TryGetGrid(targetCoordinates.GetGridUid(_entManager), out var targetGrid))
         {
             return (false, null);
         }

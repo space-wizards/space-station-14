@@ -71,7 +71,7 @@ public struct PathfindingData : IEquatable<PathfindingData>
     {
         return CollisionLayer.Equals(other.CollisionLayer) &&
                CollisionMask.Equals(other.CollisionMask) &&
-               (Flags & PathfindingBreadcrumbFlag.Space) == (other.Flags & PathfindingBreadcrumbFlag.Space) &&
+               Flags.Equals(other.Flags) &&
                Damage.Equals(other.Damage);
     }
 
@@ -90,6 +90,10 @@ public struct PathfindingData : IEquatable<PathfindingData>
 public enum PathfindingBreadcrumbFlag : ushort
 {
     None = 0,
+
+    /// <summary>
+    /// Has this poly been replaced and is it no longer valid.
+    /// </summary>
     Invalid = 1 << 0,
     Space = 1 << 1,
 

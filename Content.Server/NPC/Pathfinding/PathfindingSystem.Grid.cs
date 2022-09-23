@@ -1,12 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Destructible;
-using Content.Server.Doors.Components;
 using Content.Shared.Access.Components;
-using Content.Shared.Damage;
 using Content.Shared.Doors.Components;
 using Content.Shared.NPC;
 using Content.Shared.Physics;
@@ -43,9 +40,25 @@ public sealed partial class PathfindingSystem
     {
         SubscribeLocalEvent<GridInitializeEvent>(OnGridInit);
         SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoved);
+        SubscribeLocalEvent<GridPathfindingComponent, ComponentShutdown>(OnGridPathShutdown);
         SubscribeLocalEvent<CollisionChangeEvent>(OnCollisionChange);
         SubscribeLocalEvent<PhysicsBodyTypeChangedEvent>(OnBodyTypeChange);
         SubscribeLocalEvent<MoveEvent>(OnMoveEvent);
+    }
+
+    private void OnGridPathShutdown(EntityUid uid, GridPathfindingComponent component, ComponentShutdown args)
+    {
+        foreach (var chunk in component.Chunks)
+        {
+            // Invalidate all polygons in case there's portals or the likes.
+            foreach (var poly in chunk.Value.Polygons)
+            {
+                ClearTilePolys(poly);
+            }
+        }
+
+        component.DirtyChunks.Clear();
+        component.Chunks.Clear();
     }
 
     private void UpdateGrid()
@@ -67,17 +80,40 @@ public sealed partial class PathfindingSystem
                 continue;
             }
 
+            var dirtyPortals = comp.DirtyPortals;
+            dirtyPortals.Clear();
+
+            // TODO: Often we invalidate the entire chunk when it might be something as simple as an airlock change
+            // Would be better to handle that though this was safer and max it's taking is like 1-2ms every half-second.
             var dirt = new GridPathfindingChunk[comp.DirtyChunks.Count];
             var i = 0;
 
             foreach (var origin in comp.DirtyChunks)
             {
-                var chunk = GetChunk(origin, comp);
+                var chunk = GetChunk(origin, comp.Owner, comp);
                 dirt[i] = chunk;
                 i++;
             }
 
+            // We force clear portals in a single-threaded context to be safe
+            // as they may not be thread-safe to touch.
+            foreach (var chunk in dirt)
+            {
+                foreach (var (_, poly) in chunk.PortalPolys)
+                {
+                    ClearPoly(poly);
+                }
+
+                chunk.PortalPolys.Clear();
+
+                foreach (var portal in chunk.Portals)
+                {
+                    dirtyPortals.Add(portal);
+                }
+            }
+
             // TODO: Inflate grid bounds slightly and get chunks.
+            // This is for map <> grid pathfinding
 
             // Without parallel this is roughly 3x slower on my desktop.
             Parallel.For(0, dirt.Length, i =>
@@ -102,8 +138,7 @@ public sealed partial class PathfindingSystem
             // second iteration: 1,0; 3,0; 1;2
             // third iteration: 0,1; 2,1; 0,3 etc
 
-            // TODO: You can probably skimp on some neighbor chunk caches but this runs in like half a ms on average
-            // It'd mainly be about the initial build (like 30ms or so).
+            // TODO: You can probably skimp on some neighbor chunk caches
             for (var it = 0; it < Division; it++)
             {
                 var it1 = it;
@@ -124,6 +159,26 @@ public sealed partial class PathfindingSystem
                     Interlocked.Increment(ref updateCount);
 #endif
                 });
+            }
+
+            // Handle portals at the end after having cleared their neighbors above.
+            // We do this because there's no guarantee of where these are for chunks.
+            foreach (var portal in dirtyPortals)
+            {
+                var polyA = GetPoly(portal.CoordinatesA);
+                var polyB = GetPoly(portal.CoordinatesB);
+
+                if (polyA == null || polyB == null)
+                    continue;
+
+                DebugTools.Assert((polyA.Data.Flags & PathfindingBreadcrumbFlag.Invalid) == 0x0);
+                DebugTools.Assert((polyB.Data.Flags & PathfindingBreadcrumbFlag.Invalid) == 0x0);
+                var chunkA = GetChunk(polyA.ChunkOrigin, polyA.GraphUid);
+                var chunkB = GetChunk(polyB.ChunkOrigin, polyB.GraphUid);
+
+                chunkA.PortalPolys.TryAdd(portal, polyA);
+                chunkB.PortalPolys.TryAdd(portal, polyB);
+                AddNeighbors(polyA, polyB);
             }
 
             comp.DirtyChunks.Clear();
@@ -163,7 +218,9 @@ public sealed partial class PathfindingSystem
     private void OnMoveEvent(ref MoveEvent ev)
     {
         if (!TryComp<PhysicsComponent>(ev.Sender, out var body) ||
-            body.BodyType != BodyType.Static)
+            body.BodyType != BodyType.Static ||
+            HasComp<IMapGridComponent>(ev.Sender) ||
+            ev.OldPosition.Equals(ev.NewPosition))
         {
             return;
         }
@@ -212,6 +269,9 @@ public sealed partial class PathfindingSystem
         RemComp<GridPathfindingComponent>(ev.EntityUid);
     }
 
+    /// <summary>
+    /// Queues the entire relevant chunk to be re-built in the next update.
+    /// </summary>
     private void DirtyChunk(EntityUid gridUid, EntityCoordinates coordinates)
     {
         if (!TryComp<GridPathfindingComponent>(gridUid, out var comp))
@@ -227,8 +287,13 @@ public sealed partial class PathfindingSystem
         chunks.Add(GetOrigin(coordinates, gridUid));
     }
 
-    private GridPathfindingChunk GetChunk(Vector2i origin, GridPathfindingComponent component)
+    private GridPathfindingChunk GetChunk(Vector2i origin, EntityUid uid, GridPathfindingComponent? component = null)
     {
+        if (!Resolve(uid, ref component))
+        {
+            throw new InvalidOperationException();
+        }
+
         if (component.Chunks.TryGetValue(origin, out var chunk))
             return chunk;
 
@@ -489,13 +554,12 @@ public sealed partial class PathfindingSystem
             {
                 var index = x * ChunkSize + y;
                 var polys = chunkPolys[index];
-
                 var existing = chunk.Polygons[index];
 
                 if (polys.SequenceEqual(existing))
                     continue;
 
-                Clear(existing);
+                ClearTilePolys(existing);
                 existing.AddRange(polys);
             }
         }
@@ -504,23 +568,34 @@ public sealed partial class PathfindingSystem
         SendBreadcrumbs(chunk, grid.GridEntityId);
     }
 
-    private void Clear(List<PathPoly> polys)
+    /// <summary>
+    /// Clears all of the polygons on a tile.
+    /// </summary>
+    private void ClearTilePolys(List<PathPoly> polys)
     {
         foreach (var poly in polys)
         {
-            foreach (var neighbor in poly.Neighbors)
-            {
-                neighbor.Neighbors.Remove(poly);
-                poly.Neighbors.Remove(neighbor);
-            }
-
-            // If any paths have a ref to it let them know that the class is no longer a valid node.
-            poly.Data.Flags = PathfindingBreadcrumbFlag.Invalid;
-            poly.Neighbors.Clear();
-            _neighborPolyPool.Return(poly.Neighbors);
+            ClearPoly(poly);
         }
 
         polys.Clear();
+    }
+
+    /// <summary>
+    /// Clears a polygon and invalidates its flags if anyone still has a reference to it.
+    /// </summary>
+    private void ClearPoly(PathPoly poly)
+    {
+        foreach (var neighbor in poly.Neighbors)
+        {
+            neighbor.Neighbors.Remove(poly);
+            poly.Neighbors.Remove(neighbor);
+        }
+
+        // If any paths have a ref to it let them know that the class is no longer a valid node.
+        poly.Data.Flags = PathfindingBreadcrumbFlag.Invalid;
+        poly.Neighbors.Clear();
+        _neighborPolyPool.Return(poly.Neighbors);
     }
 
     private void BuildNavmesh(GridPathfindingChunk chunk, GridPathfindingComponent component)
@@ -557,8 +632,7 @@ public sealed partial class PathfindingSystem
                         if (overlap <= 0.5f / SubStep)
                             continue;
 
-                        poly.Neighbors.Add(neighbor);
-                        neighbor.Neighbors.Add(poly);
+                        AddNeighbors(poly, neighbor);
                     }
 
                     // TODO: Get neighbor tile polys
@@ -625,8 +699,7 @@ public sealed partial class PathfindingSystem
                                 if (overlap <= 0.5f / SubStep)
                                     continue;
 
-                                poly.Neighbors.Add(neighbor);
-                                neighbor.Neighbors.Add(poly);
+                                AddNeighbors(poly, neighbor);
                             }
                         }
                     }
@@ -636,5 +709,13 @@ public sealed partial class PathfindingSystem
 
         // _sawmill.Debug($"Built navmesh in {sw.Elapsed.TotalMilliseconds}ms");
         SendPolys(chunk, component.Owner, chunkPolys);
+    }
+
+    private void AddNeighbors(PathPoly polyA, PathPoly polyB)
+    {
+        DebugTools.Assert((polyA.Data.Flags & PathfindingBreadcrumbFlag.Invalid) == 0x0);
+        DebugTools.Assert((polyB.Data.Flags & PathfindingBreadcrumbFlag.Invalid) == 0x0);
+        polyA.Neighbors.Add(polyB);
+        polyB.Neighbors.Add(polyA);
     }
 }

@@ -14,10 +14,11 @@ public sealed class PickMeleeTargetOperator : NPCCombatOperator
 
         if (existingTarget == uid)
         {
-            rating += 3f;
+            rating += 2f;
         }
 
-        rating += 1f / distance * 4f;
+        if (distance > 0f)
+            rating += 50f / distance;
 
         return rating;
     }
