@@ -327,5 +327,7 @@ namespace Content.Shared.Verbs
         public override int TypePriority => 0;
 
         public bool ShowOnExamineTooltip = true;
+
+        public string ExamineGroup = "";
     }
 }

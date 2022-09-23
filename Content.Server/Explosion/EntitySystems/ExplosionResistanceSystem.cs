@@ -4,7 +4,6 @@ using Content.Shared.Examine;
 using Content.Shared.Explosion;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
-using Robust.Shared.Utility;
 
 
 namespace Content.Server.Explosion.EntitySystems
@@ -28,7 +27,9 @@ namespace Content.Server.Explosion.EntitySystems
 
         private void OnExamineStats(EntityUid uid, ExplosionResistanceComponent component, ExamineGroupEvent args)
         {
-            args.Entries.Add(new ExamineEntry(3, Loc.GetString("explosion-resistance-examine", ("value", MathF.Round((1f - component.DamageCoefficient) * 100)))));
+            if (args.ExamineGroup != component.ExamineGroup)
+                return;
+            args.Entries.Add(new ExamineEntry(component.ExaminePriority, Loc.GetString("explosion-resistance-examine", ("value", MathF.Round((1f - component.DamageCoefficient) * 100)))));
         }
 
         private void OnExamineVerb(EntityUid uid, ExplosionResistanceComponent component, GetVerbsEvent<ExamineVerb> args)
@@ -36,7 +37,7 @@ namespace Content.Server.Explosion.EntitySystems
             if (!args.CanAccess || !args.CanInteract)
                 return;
 
-            _examine.AddExamineGroupVerb("worn-stats", args, "/Textures/Interface/VerbIcons/dot.svg.192dpi.png");
+            _examine.AddExamineGroupVerb(component.ExamineGroup, args);
         }
 
         private void OnGetResistance(EntityUid uid, ExplosionResistanceComponent component, GetExplosionResistanceEvent args)

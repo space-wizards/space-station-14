@@ -30,15 +30,17 @@ namespace Content.Server.Atmos.EntitySystems
             SubscribeLocalEvent<PressureProtectionComponent, HighPressureEvent>(OnHighPressureEvent);
             SubscribeLocalEvent<PressureProtectionComponent, LowPressureEvent>(OnLowPressureEvent);
 
-            SubscribeLocalEvent<PressureProtectionComponent, GetVerbsEvent<ExamineVerb>>(OnExamineVerb);
-            SubscribeLocalEvent<PressureProtectionComponent, ExamineGroupEvent>(OnExamineEvent);
-
             SubscribeLocalEvent<PressureImmunityComponent, HighPressureEvent>(OnHighPressureImmuneEvent);
             SubscribeLocalEvent<PressureImmunityComponent, LowPressureEvent>(OnLowPressureImmuneEvent);
 
+            SubscribeLocalEvent<PressureProtectionComponent, GetVerbsEvent<ExamineVerb>>(OnExamineVerb);
+            SubscribeLocalEvent<PressureProtectionComponent, ExamineGroupEvent>(OnExamineEvent);
         }
         private void OnExamineEvent(EntityUid uid, PressureProtectionComponent component, ExamineGroupEvent args)
         {
+            if (args.ExamineGroup != component.ExamineGroup)
+                return;
+
             var level = "";
 
             switch (component.LowPressureMultiplier)
@@ -60,14 +62,14 @@ namespace Content.Server.Atmos.EntitySystems
                     break;
             }
 
-            args.Entries.Add(new ExamineEntry(2,Loc.GetString("pressure-protection-examine", ("level", level))));
+            args.Entries.Add(new ExamineEntry(component.ExaminePriority,Loc.GetString("pressure-protection-examine", ("level", level))));
         }
         private void OnExamineVerb(EntityUid uid, PressureProtectionComponent component, GetVerbsEvent<ExamineVerb> args)
         {
             if (!args.CanAccess || !args.CanInteract)
                 return;
 
-            _examineSystem.AddExamineGroupVerb("worn-stats", args, "/Textures/Interface/VerbIcons/dot.svg.192dpi.png");
+            _examineSystem.AddExamineGroupVerb(component.ExamineGroup, args);
         }
         private void OnHighPressureEvent(EntityUid uid, PressureProtectionComponent component, HighPressureEvent args)
         {

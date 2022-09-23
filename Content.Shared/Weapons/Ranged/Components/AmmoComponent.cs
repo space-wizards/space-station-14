@@ -50,4 +50,13 @@ public sealed class CartridgeAmmoComponent : AmmoComponent
 
     [ViewVariables, DataField("soundEject")]
     public SoundSpecifier? EjectSound = new SoundCollectionSpecifier("CasingEject");
+
+    /// <summary>
+    ///     The examine group used for grouping together examine details.
+    /// </summary>
+    [DataField("examineGroup")]
+    public string ExamineGroup = "gun";
+
+    [DataField("examinePriority")]
+    public int ExaminePriority = 10;
 }

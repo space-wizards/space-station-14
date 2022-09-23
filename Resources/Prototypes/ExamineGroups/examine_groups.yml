@@ -1,0 +1,32 @@
+# Examine Groups, used for grouping together examine details
+
+# General stat increases/decreases, such as speed or armor
+- type: examineGroup
+  id: worn-stats
+  icon: "/Textures/Interface/VerbIcons/examinestar.svg.192dpi.png"
+  firstLine: "examine-system-worn-stats-title"
+  text: "examine-system-worn-stats-text"
+  message: "examine-system-worn-stats-message"
+  
+# Environment-related stats, such as pressure or temperature protection
+- type: examineGroup
+  id: atmos
+  icon: "/Textures/Interface/VerbIcons/pressure.svg.192dpi.png"
+  firstLine: "examine-system-atmos-title"
+  text: "examine-system-atmos-text"
+  message: "examine-system-atmos-message"
+  
+# Ranged weapon damage
+- type: examineGroup
+  id: gun
+  icon: "/Textures/Interface/VerbIcons/smite.svg.192dpi.png"
+  text: "damage-examinable-verb-text"
+  message: "damage-examinable-verb-message"
+
+# Melee weapon damage
+- type: examineGroup
+  id: melee
+  icon: "/Textures/Interface/VerbIcons/smite.svg.192dpi.png"
+  firstLine: "damage-examine"
+  text: "damage-examinable-verb-text"
+  message: "damage-examinable-verb-message"

@@ -17,6 +17,18 @@ public sealed class ClothingSpeedModifierComponent : Component
     ///     e.g. magboots can be turned on and off.
     /// </summary>
     [DataField("enabled")] public bool Enabled = true;
+
+    /// <summary>
+    ///     The examine group used for grouping together examine details.
+    /// </summary>
+    [DataField("examineGroup")] public string ExamineGroup = "worn-stats";
+
+    [DataField("examinePriorityIncreaseRunSpeed")] public int ExaminePriorityIncreaseRunSpeed = 9;
+    [DataField("examinePriorityDecreaseRunSpeed")] public int ExaminePriorityDecreaseRunSpeed = -2;
+    [DataField("examinePriorityIncreaseSpeed")] public int ExaminePriorityIncreaseSpeed = 8;
+    [DataField("examinePriorityDecreaseSpeed")] public int ExaminePriorityDecreaseSpeed = -1;
+    [DataField("examinePriorityIncreaseWalkSpeed")] public int ExaminePriorityIncreaseWalkSpeed = 7;
+    [DataField("examinePriorityDecreaseWalkSpeed")] public int ExaminePriorityDecreaseWalkSpeed = -3;
 }
 
 [Serializable, NetSerializable]

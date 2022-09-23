@@ -14,6 +14,8 @@ examinable-unanchored = It is unanchored from the floor
 
 examine-system-worn-stats-title = Stats when worn:
 examine-system-worn-stats-text = Stats when worn
-examine-system-worn-stats-message = Examine detailed stats
+examine-system-worn-stats-message = Examine detailed stats.
 
-
+examine-system-atmos-title = Atmospherical stats:
+examine-system-atmos-text = Atmos stats
+examine-system-atmos-message = Examine atmospherical details.

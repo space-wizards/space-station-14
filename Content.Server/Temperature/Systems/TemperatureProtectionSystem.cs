@@ -20,7 +20,10 @@ namespace Content.Server.Temperature.Systems
 
         public void OnExamineStats(EntityUid uid, TemperatureProtectionComponent component, ExamineGroupEvent args)
         {
-            if (component.Coefficient == 0)
+            if (args.ExamineGroup != component.ExamineGroup)
+                return;
+
+            if (component.Coefficient == 1)
                 return;
 
             var level = "";
@@ -53,7 +56,7 @@ namespace Content.Server.Temperature.Systems
                     break;
             }
 
-            args.Entries.Add(new ExamineEntry(2, Loc.GetString("temperature-protection-examine", ("level", level))));
+            args.Entries.Add(new ExamineEntry(component.ExaminePriority, Loc.GetString("temperature-protection-examine", ("level", level))));
         }
 
         public void OnExamineVerb(EntityUid uid, TemperatureProtectionComponent component, GetVerbsEvent<ExamineVerb> args)
@@ -64,7 +67,7 @@ namespace Content.Server.Temperature.Systems
             if (component.Coefficient == 1)
                 return;
 
-            _examineSystem.AddExamineGroupVerb("worn-stats", args, "/Textures/Interface/VerbIcons/dot.svg.192dpi.png");
+            _examineSystem.AddExamineGroupVerb(component.ExamineGroup, args);
         }
 
         private void OnTemperatureChangeAttempt(EntityUid uid, TemperatureProtectionComponent component, ModifyChangedTemperatureEvent args)

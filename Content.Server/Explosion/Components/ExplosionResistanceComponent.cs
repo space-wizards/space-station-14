@@ -27,4 +27,11 @@ public sealed class ExplosionResistanceComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("resistances", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<float, ExplosionPrototype>))]
     public Dictionary<string, float> Resistances = new();
+
+    /// <summary>
+    ///     The examine group used for grouping together examine details.
+    /// </summary>
+    [DataField("examineGroup")] public string ExamineGroup = "worn-stats";
+
+    [DataField("examinePriority")] public int ExaminePriority = 6;
 }

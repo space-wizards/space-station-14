@@ -1,10 +1,12 @@
 using System.Linq;
 using Content.Server.Verbs;
+using Content.Shared.Damage.Prototypes;
 using Content.Shared.Examine;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Examine
@@ -13,6 +15,7 @@ namespace Content.Server.Examine
     public sealed class ExamineSystem : ExamineSystemShared
     {
         [Dependency] private readonly VerbSystem _verbSystem = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         private static readonly FormattedMessage _entityNotFoundMessage;
 
@@ -55,25 +58,40 @@ namespace Content.Server.Examine
         {
             var formattedMessage = new FormattedMessage();
 
-            ev.Entries.Sort((a, b) => (a.Priority.CompareTo(b.Priority)));
+            // Sorting high to low
+            ev.Entries.Sort((a, b) => (b.Priority.CompareTo(a.Priority)));
 
-            formattedMessage.AddMarkup(ev.FirstLine);
+            var firstLine = true;
+
+            if (!string.IsNullOrEmpty(ev.FirstLine))
+            {
+                formattedMessage.AddMarkup(ev.FirstLine);
+                firstLine = false;
+            }
 
             foreach (var entry in ev.Entries)
             {
-                formattedMessage.PushNewline();
+                if (!firstLine)
+                {
+                    formattedMessage.PushNewline();
+                }
+                else firstLine = false;
                 formattedMessage.AddMarkup(entry.Markup);
             }
 
             return formattedMessage;
         }
 
-        public override void AddExamineGroupVerb(string key, GetVerbsEvent<ExamineVerb> examineVerbsEvent, string iconTexture)
+        public override void AddExamineGroupVerb(string examineGroup, GetVerbsEvent<ExamineVerb> examineVerbsEvent)
         {
+            var groupPrototype = _prototypeManager.Index<ExamineGroupPrototype>(examineGroup);
+
+            if (groupPrototype == null)
+                groupPrototype = default!;
 
             foreach (var verb in examineVerbsEvent.Verbs)
             {
-                if (verb.Text == Loc.GetString("examine-system-" + key + "-text"))
+                if (verb.ExamineGroup == examineGroup)
                     return;
             }
 
@@ -81,14 +99,19 @@ namespace Content.Server.Examine
             {
                 Act = () =>
                 {
-                    var ev = new ExamineGroupEvent { FirstLine = Loc.GetString("examine-system-" + key + "-title") };
+                    var ev = new ExamineGroupEvent
+                    {
+                        FirstLine = !string.IsNullOrEmpty(groupPrototype.FirstLine) ? Loc.GetString(groupPrototype.FirstLine) : string.Empty,
+                        ExamineGroup = examineGroup
+                    };
                     RaiseLocalEvent(examineVerbsEvent.Target, ev);
                     SendExamineTooltip(examineVerbsEvent.User, examineVerbsEvent.Target, GetExamineGroupMessage(ev), false, false);
                 },
-                Text = Loc.GetString("examine-system-" + key + "-text"),
-                Message = Loc.GetString("examine-system-" + key + "-message"),
+                Text = !string.IsNullOrEmpty(groupPrototype.Text) ? Loc.GetString(groupPrototype.Text) : string.Empty,
+                Message = !string.IsNullOrEmpty(groupPrototype.Message) ? Loc.GetString(groupPrototype.Message) : string.Empty,
+                ExamineGroup = examineGroup,
                 Category = VerbCategory.Examine,
-                IconTexture = iconTexture
+                IconTexture = groupPrototype.Icon
             };
 
             examineVerbsEvent.Verbs.Add(examineVerb);

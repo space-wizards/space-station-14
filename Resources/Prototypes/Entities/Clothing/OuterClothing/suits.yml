@@ -28,7 +28,6 @@
     sprite: Clothing/OuterClothing/Suits/emergency.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/emergency.rsi
-  - type: CondensedExamine
     walkModifier: 0.5
     sprintModifier: 0.5
   - type: TemperatureProtection

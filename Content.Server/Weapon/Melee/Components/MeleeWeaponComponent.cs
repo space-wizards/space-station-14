@@ -61,5 +61,11 @@ namespace Content.Server.Weapon.Melee.Components
         [DataField("bluntStaminaDamageFactor")]
         [ViewVariables(VVAccess.ReadWrite)]
         public FixedPoint2 BluntStaminaDamageFactor { get; set; } = 0.5f;
+
+        [DataField("examineGroup")]
+        public string ExamineGroup = "melee";
+
+        [DataField("examinePriority")]
+        public int ExaminePriority = 10;
     }
 }

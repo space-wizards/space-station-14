@@ -13,4 +13,10 @@ public sealed class StaminaDamageOnHitComponent : Component
     /// </summary>
     [DataField("knockdownSound")]
     public SoundSpecifier? KnockdownSound;
+
+    [DataField("examineGroup")]
+    public string ExamineGroup = "melee";
+
+    [DataField("examinePriority")]
+    public int ExaminePriority = 0;
 }

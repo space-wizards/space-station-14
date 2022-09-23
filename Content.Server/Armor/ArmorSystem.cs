@@ -22,9 +22,11 @@ namespace Content.Server.Armor
 
         private void OnExamineStats(EntityUid uid, ArmorComponent component, ExamineGroupEvent args)
         {
+            if (args.ExamineGroup != component.ExamineGroup)
+                return;
             foreach (var coefficientArmor in component.Modifiers.Coefficients)
             {
-                args.Entries.Add(new ExamineEntry(5,Loc.GetString("armor-coefficient-value",
+                args.Entries.Add(new ExamineEntry(component.ExaminePriorityCoefficient,Loc.GetString("armor-coefficient-value",
                     ("type", coefficientArmor.Key),
                     ("value", MathF.Round((1f - coefficientArmor.Value) * 100, 1))
                     )));
@@ -32,7 +34,7 @@ namespace Content.Server.Armor
 
             foreach (var flatArmor in component.Modifiers.FlatReduction)
             {
-                args.Entries.Add(new ExamineEntry(6,Loc.GetString("armor-reduction-value",
+                args.Entries.Add(new ExamineEntry(component.ExaminePriorityFlat,Loc.GetString("armor-reduction-value",
                     ("type", flatArmor.Key),
                     ("value", flatArmor.Value)
                     )));
@@ -51,8 +53,7 @@ namespace Content.Server.Armor
             if (component.Modifiers == null)
                 return;
 
-            _examine.AddExamineGroupVerb("worn-stats", args, "/Textures/Interface/VerbIcons/dot.svg.192dpi.png");
-
+            _examine.AddExamineGroupVerb(component.ExamineGroup, args);
         }
     }
 }

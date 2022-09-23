@@ -15,4 +15,13 @@ public abstract class BatteryAmmoProviderComponent : AmmoProviderComponent
 
     [ViewVariables]
     public int Capacity;
+
+    /// <summary>
+    ///     The examine group used for grouping together examine details.
+    /// </summary>
+    [DataField("examineGroup")]
+    public string ExamineGroup = "gun";
+
+    [DataField("examinePriority")]
+    public int ExaminePriority = 20;
 }

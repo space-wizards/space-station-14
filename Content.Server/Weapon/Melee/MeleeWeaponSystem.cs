@@ -51,46 +51,60 @@ namespace Content.Server.Weapon.Melee
             SubscribeLocalEvent<MeleeWeaponComponent, ClickAttackEvent>(OnClickAttack);
             SubscribeLocalEvent<MeleeWeaponComponent, WideAttackEvent>(OnWideAttack);
             SubscribeLocalEvent<MeleeWeaponComponent, GetVerbsEvent<ExamineVerb>>(OnMeleeExaminableVerb);
+            SubscribeLocalEvent<MeleeWeaponComponent, ExamineGroupEvent>(OnExamineGroup);
             SubscribeLocalEvent<MeleeChemicalInjectorComponent, MeleeHitEvent>(OnChemicalInjectorHit);
         }
 
+        private void OnExamineGroup(EntityUid uid, MeleeWeaponComponent component, ExamineGroupEvent args)
+        {
+            if (component.ExamineGroup != args.ExamineGroup)
+                return;
+
+            if (component.HideFromExamine)
+                return;
+
+            var damageSpec = GetDamage(uid, component);
+
+            if (damageSpec == null)
+                return;
+
+            foreach (var damage in damageSpec.DamageDict)
+            {
+                if (damage.Value != FixedPoint2.Zero)
+                {
+                    args.Entries.Add(new ExamineEntry(component.ExaminePriority, Loc.GetString("damage-value", ("type", damage.Key), ("amount", damage.Value))));
+                }
+            }
+        }
         private void OnMeleeExaminableVerb(EntityUid uid, MeleeWeaponComponent component, GetVerbsEvent<ExamineVerb> args)
         {
             if (!args.CanInteract || !args.CanAccess || component.HideFromExamine)
                 return;
 
+            if (GetDamage(uid, component) == null)
+                return;
+
+            _examine.AddExamineGroupVerb(component.ExamineGroup, args);
+        }
+
+        private DamageSpecifier? GetDamage(EntityUid uid, MeleeWeaponComponent component)
+        {
             var getDamage = new ItemMeleeDamageEvent(component.Damage);
+
             RaiseLocalEvent(uid, getDamage, false);
 
-            var damageSpec = GetDamage(component);
+            var damageSpec = component.Damage.Total > FixedPoint2.Zero ? component.Damage : null;
 
             if (damageSpec == null)
                 damageSpec = new DamageSpecifier();
 
             damageSpec += getDamage.BonusDamage;
+            damageSpec.TrimZeros();
 
-            if (damageSpec.Total == FixedPoint2.Zero)
-                return;
+            if (damageSpec.Empty)
+                return null;
 
-            var verb = new ExamineVerb()
-            {
-                Act = () =>
-                {
-                    var markup = _damageable.GetDamageExamine(damageSpec, Loc.GetString("damage-melee"));
-                    _examine.SendExamineTooltip(args.User, uid, markup, false, false);
-                },
-                Text = Loc.GetString("damage-examinable-verb-text"),
-                Message = Loc.GetString("damage-examinable-verb-message"),
-                Category = VerbCategory.Examine,
-                IconTexture = "/Textures/Interface/VerbIcons/smite.svg.192dpi.png"
-            };
-
-            args.Verbs.Add(verb);
-        }
-
-        private DamageSpecifier? GetDamage(MeleeWeaponComponent component)
-        {
-            return component.Damage.Total > FixedPoint2.Zero ? component.Damage : null;
+            return damageSpec;
         }
 
         private void OnHandSelected(EntityUid uid, MeleeWeaponComponent comp, HandSelectedEvent args)

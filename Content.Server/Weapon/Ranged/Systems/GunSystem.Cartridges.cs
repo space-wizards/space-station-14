@@ -1,3 +1,4 @@
+using Content.Server.Damage.Components;
 using Content.Server.Projectiles.Components;
 using Content.Shared.Damage;
 using Content.Shared.Examine;
@@ -15,11 +16,12 @@ public sealed partial class GunSystem
         base.InitializeCartridge();
         SubscribeLocalEvent<CartridgeAmmoComponent, ExaminedEvent>(OnCartridgeExamine);
         SubscribeLocalEvent<CartridgeAmmoComponent, GetVerbsEvent<ExamineVerb>>(OnCartridgeVerbExamine);
+        SubscribeLocalEvent<CartridgeAmmoComponent, ExamineGroupEvent>(OnExamineGroup);
     }
 
-    private void OnCartridgeVerbExamine(EntityUid uid, CartridgeAmmoComponent component, GetVerbsEvent<ExamineVerb> args)
+    private void OnExamineGroup(EntityUid uid, CartridgeAmmoComponent component, ExamineGroupEvent args)
     {
-        if (!args.CanInteract || !args.CanAccess)
+        if (args.ExamineGroup != component.ExamineGroup)
             return;
 
         var damageSpec = GetProjectileDamage(component.Prototype);
@@ -27,20 +29,48 @@ public sealed partial class GunSystem
         if (damageSpec == null)
             return;
 
-        var verb = new ExamineVerb()
-        {
-            Act = () =>
-            {
-                var markup = Damageable.GetDamageExamine(damageSpec, Loc.GetString("damage-projectile"));
-                _examine.SendExamineTooltip(args.User, uid, markup, false, false);
-            },
-            Text = Loc.GetString("damage-examinable-verb-text"),
-            Message = Loc.GetString("damage-examinable-verb-message"),
-            Category = VerbCategory.Examine,
-            IconTexture = "/Textures/Interface/VerbIcons/smite.svg.192dpi.png"
-        };
+        var type = Loc.GetString("damage-projectile");
 
-        args.Verbs.Add(verb);
+        if (string.IsNullOrEmpty(type))
+        {
+            args.Entries.Add(new ExamineEntry(component.ExaminePriority, Loc.GetString("damage-examine")));
+        }
+        else
+        {
+            args.Entries.Add(new ExamineEntry(component.ExaminePriority, Loc.GetString("damage-examine-type", ("type", type))));
+        }
+
+        foreach (var damage in damageSpec.DamageDict)
+        {
+            if (damage.Value != FixedPoint2.Zero)
+            {
+                args.Entries.Add(new ExamineEntry(component.ExaminePriority-1, Loc.GetString("damage-value", ("type", damage.Key), ("amount", damage.Value))));
+            }
+        }
+
+        // Get stamina damage here
+
+        if (!ProtoManager.TryIndex<EntityPrototype>(component.Prototype, out var entityProto))
+            return;
+        if (entityProto.Components.TryGetValue(_factory.GetComponentName(typeof(StaminaDamageOnCollideComponent)), out var prototype))
+        {
+            var staminaDamageComponent = (StaminaDamageOnCollideComponent) prototype.Component;
+
+            if (staminaDamageComponent.Damage > 0f)
+            {
+                args.Entries.Add(new ExamineEntry(staminaDamageComponent.ExaminePriority, Loc.GetString("damage-value", ("type", "Stamina"), ("amount", staminaDamageComponent.Damage))));
+            }
+        }
+    }
+    private void OnCartridgeVerbExamine(EntityUid uid, CartridgeAmmoComponent component, GetVerbsEvent<ExamineVerb> args)
+    {
+        if (!args.CanInteract || !args.CanAccess)
+            return;
+
+        if (GetProjectileDamage(component.Prototype) == null)
+            return;
+
+        Examine.AddExamineGroupVerb(component.ExamineGroup, args);
     }
 
     private DamageSpecifier? GetProjectileDamage(string proto)

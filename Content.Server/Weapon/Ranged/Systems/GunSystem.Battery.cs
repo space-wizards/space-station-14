@@ -1,6 +1,7 @@
 using Content.Server.Power.Components;
 using Content.Server.Projectiles.Components;
 using Content.Shared.Damage;
+using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged;
@@ -19,11 +20,14 @@ public sealed partial class GunSystem
         SubscribeLocalEvent<HitscanBatteryAmmoProviderComponent, ComponentStartup>(OnBatteryStartup);
         SubscribeLocalEvent<HitscanBatteryAmmoProviderComponent, ChargeChangedEvent>(OnBatteryChargeChange);
         SubscribeLocalEvent<HitscanBatteryAmmoProviderComponent, GetVerbsEvent<ExamineVerb>>(OnBatteryExaminableVerb);
+        SubscribeLocalEvent<HitscanBatteryAmmoProviderComponent, ExamineGroupEvent>(OnExamineGroup);
 
         // Projectile
         SubscribeLocalEvent<ProjectileBatteryAmmoProviderComponent, ComponentStartup>(OnBatteryStartup);
         SubscribeLocalEvent<ProjectileBatteryAmmoProviderComponent, ChargeChangedEvent>(OnBatteryChargeChange);
         SubscribeLocalEvent<ProjectileBatteryAmmoProviderComponent, GetVerbsEvent<ExamineVerb>>(OnBatteryExaminableVerb);
+        SubscribeLocalEvent<ProjectileBatteryAmmoProviderComponent, ExamineGroupEvent>(OnExamineGroup);
+
     }
 
     private void OnBatteryStartup(EntityUid uid, BatteryAmmoProviderComponent component, ComponentStartup args)
@@ -57,9 +61,9 @@ public sealed partial class GunSystem
         UpdateBatteryAppearance(component.Owner, component);
     }
 
-    private void OnBatteryExaminableVerb(EntityUid uid, BatteryAmmoProviderComponent component, GetVerbsEvent<ExamineVerb> args)
+    private void OnExamineGroup(EntityUid uid, BatteryAmmoProviderComponent component, ExamineGroupEvent args)
     {
-        if (!args.CanInteract || !args.CanAccess)
+        if (args.ExamineGroup != component.ExamineGroup)
             return;
 
         var damageSpec = GetDamage(component);
@@ -81,20 +85,34 @@ public sealed partial class GunSystem
                 throw new ArgumentOutOfRangeException();
         }
 
-        var verb = new ExamineVerb()
+        if (string.IsNullOrEmpty(damageType))
         {
-            Act = () =>
-            {
-                var markup = Damageable.GetDamageExamine(damageSpec, damageType);
-                Examine.SendExamineTooltip(args.User, uid, markup, false, false);
-            },
-            Text = Loc.GetString("damage-examinable-verb-text"),
-            Message = Loc.GetString("damage-examinable-verb-message"),
-            Category = VerbCategory.Examine,
-            IconTexture = "/Textures/Interface/VerbIcons/smite.svg.192dpi.png"
-        };
+            args.Entries.Add(new ExamineEntry(component.ExaminePriority, Loc.GetString("damage-examine")));
+        }
+        else
+        {
+            args.Entries.Add(new ExamineEntry(component.ExaminePriority, Loc.GetString("damage-examine-type", ("type", damageType))));
+        }
 
-        args.Verbs.Add(verb);
+        foreach (var damage in damageSpec.DamageDict)
+        {
+            if (damage.Value != FixedPoint2.Zero)
+            {
+                args.Entries.Add(new ExamineEntry(component.ExaminePriority-1, Loc.GetString("damage-value", ("type", damage.Key), ("amount", damage.Value))));
+            }
+        }
+
+    }
+
+    private void OnBatteryExaminableVerb(EntityUid uid, BatteryAmmoProviderComponent component, GetVerbsEvent<ExamineVerb> args)
+    {
+        if (!args.CanInteract || !args.CanAccess)
+            return;
+
+        if (GetDamage(component) == null)
+            return;
+
+        Examine.AddExamineGroupVerb(component.ExamineGroup, args);
     }
 
     private DamageSpecifier? GetDamage(BatteryAmmoProviderComponent component)

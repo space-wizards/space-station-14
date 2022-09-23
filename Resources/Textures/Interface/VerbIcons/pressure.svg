@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <ellipse style="fill: none; stroke: rgb(255, 255, 255); stroke-width: 48px;" cx="248.379" cy="182.478" rx="124.241" ry="124.241"/>
+  <rect y="411.514" width="374.883" height="30.25" style="paint-order: stroke; fill: rgb(255, 255, 255);" x="62.558"/>
+  <rect x="66.055" y="357.852" width="150.169" height="30.25" style="paint-order: stroke; fill: rgb(255, 255, 255);"/>
+  <rect x="284.625" y="359.136" width="150.169" height="30.25" style="paint-order: stroke; fill: rgb(255, 255, 255);"/>
+  <rect x="194.944" y="325.046" width="87.283" height="30.25" style="paint-order: stroke; fill: rgb(255, 255, 255);" transform="matrix(0, 1, -1, 0, 639.932505, 93.654352)"/>
+  <rect x="194.944" y="325.046" width="87.283" height="30.25" style="paint-order: stroke; fill: rgb(255, 255, 255);" transform="matrix(0, 1, -1, 0, 541.195687, 96.886415)"/>
+  <ellipse style="fill: rgb(255, 255, 255);" cx="249.772" cy="183.382" rx="25.122" ry="25.122"/>
+  <path d="M 252.965 142.584 Q 254.291 135.46 255.601 142.584 L 264.893 193.102 Q 266.203 200.226 263.567 200.226 L 244.871 200.226 Q 242.235 200.226 243.561 193.102 Z" style="fill: rgb(255, 255, 255);" transform="matrix(0.643515, 0.765434, -0.765434, 0.643515, 250.103275, -150.149309)" bx:shape="triangle 242.235 135.46 23.968 64.766 0.503 0.11 1@ca388394"/>
+</svg>

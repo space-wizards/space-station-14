@@ -17,7 +17,9 @@ using Robust.Shared.Timing;
 using Robust.Shared.Audio;
 using Robust.Shared.Random;
 using Robust.Shared.Physics.Events;
-
+using Content.Shared.Verbs;
+using Content.Shared.Examine;
+using Content.Server.Examine;
 
 namespace Content.Server.Damage.Systems;
 
@@ -29,6 +31,7 @@ public sealed class StaminaSystem : EntitySystem
     [Dependency] private readonly SharedStunSystem _stunSystem = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly ExamineSystem _examineSystem = default!;
 
     private const float UpdateCooldown = 2f;
     private float _accumulator;
@@ -50,8 +53,27 @@ public sealed class StaminaSystem : EntitySystem
         SubscribeLocalEvent<StaminaComponent, DisarmedEvent>(OnDisarmed);
         SubscribeLocalEvent<StaminaDamageOnCollideComponent, StartCollideEvent>(OnCollide);
         SubscribeLocalEvent<StaminaDamageOnHitComponent, MeleeHitEvent>(OnHit);
+        SubscribeLocalEvent<StaminaDamageOnHitComponent, ExamineGroupEvent>(OnExamineGroup);
+        SubscribeLocalEvent<StaminaDamageOnHitComponent, GetVerbsEvent<ExamineVerb>>(OnExamineVerb);
     }
 
+    private void OnExamineGroup(EntityUid uid, StaminaDamageOnHitComponent component, ExamineGroupEvent args)
+    {
+        if (component.ExamineGroup != args.ExamineGroup)
+            return;
+
+        args.Entries.Add(new ExamineEntry(component.ExaminePriority, Loc.GetString("damage-value", ("type", "Stamina"), ("amount", component.Damage))));
+    }
+    private void OnExamineVerb(EntityUid uid, StaminaDamageOnHitComponent component, GetVerbsEvent<ExamineVerb> args)
+    {
+        if (!args.CanInteract || !args.CanAccess)
+            return;
+
+        if (component.Damage == 0f)
+            return;
+
+        _examineSystem.AddExamineGroupVerb(component.ExamineGroup, args);
+    }
     private void OnShutdown(EntityUid uid, StaminaComponent component, ComponentShutdown args)
     {
         SetStaminaAlert(uid);

@@ -26,42 +26,40 @@ public sealed class ClothingSpeedModifierSystem : EntitySystem
 
     private void OnExamineStats(EntityUid uid, ClothingSpeedModifierComponent component, ExamineGroupEvent args)
     {
+        if (args.ExamineGroup != component.ExamineGroup)
+            return;
+
+        if (component.WalkModifier == 1.0f && component.SprintModifier == 1.0f)
+            return;
+
         var walkModifierPercentage = MathF.Round((1.0f - component.WalkModifier) * 100f, 1);
         var sprintModifierPercentage = MathF.Round((1.0f - component.SprintModifier) * 100f, 1);
 
-        if (walkModifierPercentage == 0.0f && sprintModifierPercentage == 0.0f)
-            return;
-
-        var msg = new FormattedMessage();
 
         if (walkModifierPercentage == sprintModifierPercentage)
         {
             if (walkModifierPercentage < 0.0f)
-                args.Entries.Add(new ExamineEntry(8,Loc.GetString("clothing-speed-increase-equal-examine", ("walkSpeed", MathF.Abs(walkModifierPercentage)), ("runSpeed", MathF.Abs(sprintModifierPercentage)))));
+                args.Entries.Add(new ExamineEntry(component.ExaminePriorityIncreaseSpeed, Loc.GetString("clothing-speed-increase-equal-examine", ("walkSpeed", MathF.Abs(walkModifierPercentage)), ("runSpeed", MathF.Abs(sprintModifierPercentage)))));
             else
-                args.Entries.Add(new ExamineEntry(-1, Loc.GetString("clothing-speed-decrease-equal-examine", ("walkSpeed", walkModifierPercentage), ("runSpeed", sprintModifierPercentage))));
+                args.Entries.Add(new ExamineEntry(component.ExaminePriorityDecreaseSpeed, Loc.GetString("clothing-speed-decrease-equal-examine", ("walkSpeed", walkModifierPercentage), ("runSpeed", sprintModifierPercentage))));
         }
         else
         {
             if (sprintModifierPercentage < 0.0f)
             {
-                args.Entries.Add(new ExamineEntry(8, Loc.GetString("clothing-speed-increase-run-examine", ("runSpeed", MathF.Abs(sprintModifierPercentage)))));
+                args.Entries.Add(new ExamineEntry(component.ExaminePriorityIncreaseRunSpeed, Loc.GetString("clothing-speed-increase-run-examine", ("runSpeed", MathF.Abs(sprintModifierPercentage)))));
             }
             else if (sprintModifierPercentage > 0.0f)
             {
-                args.Entries.Add(new ExamineEntry(-1, Loc.GetString("clothing-speed-decrease-run-examine", ("runSpeed", sprintModifierPercentage))));
-            }
-            if (walkModifierPercentage != 0.0f && sprintModifierPercentage != 0.0f)
-            {
-                msg.PushNewline();
+                args.Entries.Add(new ExamineEntry(component.ExaminePriorityDecreaseRunSpeed, Loc.GetString("clothing-speed-decrease-run-examine", ("runSpeed", sprintModifierPercentage))));
             }
             if (walkModifierPercentage < 0.0f)
             {
-                args.Entries.Add(new ExamineEntry(8, Loc.GetString("clothing-speed-increase-walk-examine", ("walkSpeed", MathF.Abs(walkModifierPercentage)))));
+                args.Entries.Add(new ExamineEntry(component.ExaminePriorityIncreaseWalkSpeed, Loc.GetString("clothing-speed-increase-walk-examine", ("walkSpeed", MathF.Abs(walkModifierPercentage)))));
             }
             else if (walkModifierPercentage > 0.0f)
             {
-                args.Entries.Add(new ExamineEntry(-1, Loc.GetString("clothing-speed-decrease-walk-examine", ("walkSpeed", walkModifierPercentage))));
+                args.Entries.Add(new ExamineEntry(component.ExaminePriorityDecreaseWalkSpeed, Loc.GetString("clothing-speed-decrease-walk-examine", ("walkSpeed", walkModifierPercentage))));
             }
         }
     }
@@ -121,6 +119,6 @@ public sealed class ClothingSpeedModifierSystem : EntitySystem
         if (!args.CanInteract || !args.CanAccess)
             return;
 
-        _examine.AddExamineGroupVerb("worn-stats", args, "/Textures/Interface/VerbIcons/dot.svg.192dpi.png");
+        _examine.AddExamineGroupVerb(component.ExamineGroup, args);
     }
 }

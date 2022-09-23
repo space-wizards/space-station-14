@@ -10,4 +10,10 @@ public sealed class StaminaDamageOnCollideComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite), DataField("damage")]
     public float Damage = 55f;
+
+    [DataField("examineGroup")]
+    public string ExamineGroup = "gun";
+
+    [DataField("examinePriority")]
+    public int ExaminePriority = 0;
 }

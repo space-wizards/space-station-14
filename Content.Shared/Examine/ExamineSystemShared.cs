@@ -18,7 +18,7 @@ namespace Content.Shared.Examine
     {
         public List<ExamineEntry> Entries = new List<ExamineEntry>();
         public string FirstLine = "";
-        public string Key = "";
+        public string ExamineGroup = "";
         public string Message = "";
         public string IconTexture = "";
     }
@@ -66,7 +66,7 @@ namespace Content.Shared.Examine
         /// <summary>
         ///     Adds an examine group to the examine verb - a button that shows several entries of details.
         /// </summary>
-        public abstract void AddExamineGroupVerb(string key, GetVerbsEvent<ExamineVerb> examineVerbsEvent, string iconTexture);
+        public abstract void AddExamineGroupVerb(string key, GetVerbsEvent<ExamineVerb> examineVerbsEvent);
 
         public bool IsInDetailsRange(EntityUid examiner, EntityUid entity)
         {

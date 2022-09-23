@@ -8,4 +8,11 @@ public sealed class TemperatureProtectionComponent : Component
     /// </summary>
     [DataField("coefficient")]
     public float Coefficient = 1.0f;
+
+    /// <summary>
+    ///     The examine group used for grouping together examine details.
+    /// </summary>
+    [DataField("examineGroup")] public string ExamineGroup = "atmos";
+
+    [DataField("examinePriority")] public int ExaminePriority = 1;
 }
