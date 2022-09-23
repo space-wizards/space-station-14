@@ -22,9 +22,8 @@ public partial class RadiationSystem
     public void ToggleDebugView(ICommonSession session)
     {
         bool isEnabled;
-        if (!_debugSessions.Contains(session))
+        if (_debugSessions.Add(session))
         {
-            _debugSessions.Add(session);
             isEnabled = true;
         }
         else
