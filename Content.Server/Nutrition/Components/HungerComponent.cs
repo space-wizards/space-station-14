@@ -151,14 +151,14 @@ namespace Content.Server.Nutrition.Components
 
         public void UpdateFood(float amount)
         {
-            _currentHunger = Math.Min(_currentHunger + amount, HungerThresholds[HungerThreshold.Overfed]);
+            _currentHunger = Math.Clamp(_currentHunger + amount, HungerThresholds[HungerThreshold.Dead], HungerThresholds[HungerThreshold.Overfed]);
         }
 
         // TODO: If mob is moving increase rate of consumption?
         //  Should use a multiplier as something like a disease would overwrite decay rate.
         public void OnUpdate(float frametime)
         {
-            _currentHunger -= frametime * ActualDecayRate;
+            UpdateFood(- frametime * ActualDecayRate);
             UpdateCurrentThreshold();
         }
 

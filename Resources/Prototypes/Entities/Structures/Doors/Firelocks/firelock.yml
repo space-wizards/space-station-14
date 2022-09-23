@@ -13,6 +13,7 @@
     - type: DeviceNetwork
       deviceNetId: AtmosDevices
       receiveFrequencyId: AtmosMonitor
+    - type: DeviceNetworkRequiresPower
     - type: InteractionOutline
     - type: Damageable
       damageContainer: Inorganic
