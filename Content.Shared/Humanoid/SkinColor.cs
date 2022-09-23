@@ -2,7 +2,7 @@ namespace Content.Shared.Humanoid;
 
 public static class SkinColor
 {
-    public static Color ValidHumanSkinTone => Color.FromHsv(new Vector4(0.25f, 0.2f, 1f, 1f));
+    public static Color ValidHumanSkinTone => Color.FromHsv(new Vector4(0.07f, 0.2f, 1f, 1f));
 
     /// <summary>
     ///     Turn a color into a valid tinted hue skin tone.
