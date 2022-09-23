@@ -13,7 +13,7 @@
   - type: GatheringTool
     damage:
       types:
-        Piercing: 25
+        Structural: 50
   - type: ItemCooldown
   - type: MeleeWeapon
     damage:
@@ -40,7 +40,7 @@
   - type: GatheringTool
     damage:
       types:
-        Piercing: 25
+        Structural: 75
     gatheringTime: 0.75
   - type: ItemCooldown
   - type: MeleeWeapon

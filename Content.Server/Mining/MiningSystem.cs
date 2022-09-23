@@ -29,7 +29,6 @@ public sealed class MiningSystem : EntitySystem
 
     private void OnDestruction(EntityUid uid, MineableComponent component, DestructionEventArgs args)
     {
-        Logger.Debug("you've found this.");
         if (component.CurrentOre == null)
             return;
 
@@ -46,7 +45,7 @@ public sealed class MiningSystem : EntitySystem
         {
             while (toSpawn > 0)
             {
-                var ent = Spawn(proto.OreEntity, coords);
+                var ent = Spawn(proto.OreEntity, coords.Offset(_random.NextVector2(0.3f)));
                 var stack = EntityManager.GetComponent<StackComponent>(ent);
                 var amountOnStack = Math.Min(stack.MaxCount, toSpawn);
                 _stack.SetCount(ent, amountOnStack, stack);
@@ -57,14 +56,14 @@ public sealed class MiningSystem : EntitySystem
         {
             for (var i = 0; i < toSpawn; i++)
             {
-                Spawn(proto.OreEntity, coords);
+                Spawn(proto.OreEntity, coords.Offset(_random.NextVector2(0.3f)));
             }
         }
     }
 
     private void OnMapInit(EntityUid uid, MineableComponent component, MapInitEvent args)
     {
-        if (component.CurrentOre != null || component.OreRarityPrototypeId == null)
+        if (component.CurrentOre != null || component.OreRarityPrototypeId == null || !_random.Prob(component.OreChance))
             return;
 
         component.CurrentOre = _proto.Index<WeightedRandomPrototype>(component.OreRarityPrototypeId).Pick(_random);
