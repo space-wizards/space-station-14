@@ -39,6 +39,7 @@ public sealed partial class HumanoidSystem : SharedHumanoidSystem
             component.Species,
             component.CustomBaseLayers,
             component.SkinColor,
+            component.Sex,
             component.AllHiddenLayers.ToList(),
             component.CurrentMarkings.GetForwardEnumerator().ToList());
     }
