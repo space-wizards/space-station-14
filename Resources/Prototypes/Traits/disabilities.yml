@@ -1,0 +1,13 @@
+﻿- type: trait
+  id: Blindness
+  name: Blindness
+  components:
+    - type: PermanentBlindness
+
+- type: trait
+  id: Narcolepsy
+  name: Narcolepsy
+  components:
+    - type: Narcolepsy
+      timeBetweenIncidents: 300, 600
+      durationOfIncident: 10, 30
