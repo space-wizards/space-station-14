@@ -1,4 +1,4 @@
-﻿namespace Content.Server.Traits.Assorted;
+﻿namespace Content.Shared.Traits.Assorted;
 
 /// <summary>
 /// This is used for adjusting something's height.

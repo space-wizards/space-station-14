@@ -1,13 +1,15 @@
-﻿using Robust.Server.GameObjects;
+﻿
+using Robust.Shared.Network;
 
-namespace Content.Server.Traits.Assorted;
+namespace Content.Shared.Traits.Assorted;
 
 /// <summary>
 /// This handles...
 /// </summary>
 public sealed class HeightAdjustedSystem : EntitySystem
 {
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly INetManager _netManager = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -17,8 +19,10 @@ public sealed class HeightAdjustedSystem : EntitySystem
 
     private void SetupHeight(EntityUid uid, HeightAdjustedComponent component, ComponentStartup args)
     {
+        if (_netManager.IsClient && !uid.IsClientSide())
+            return; // This is so the trait works in the character editor without stomping on server state.
+
         EnsureComp<ScaleVisualsComponent>(uid);
-        EnsureComp<ServerAppearanceComponent>(uid);
         if (!_appearance.TryGetData(uid, ScaleVisuals.Scale, out var oldScale))
             oldScale = Vector2.One;
 
