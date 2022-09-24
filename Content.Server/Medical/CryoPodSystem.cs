@@ -1,4 +1,5 @@
-﻿using Content.Server.Atmos.EntitySystems;
+﻿using Content.Server.Atmos;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.Unary.EntitySystems;
 using Content.Server.Body.Components;
@@ -64,13 +65,15 @@ public sealed class CryoPodSystem: EntitySystem
         SubscribeLocalEvent<CryoPodComponent, DragDropEvent>(HandleDragDropOn);
         SubscribeLocalEvent<CryoPodComponent, InteractHandEvent>(HandleInteractHand);
         SubscribeLocalEvent<CryoPodComponent, InteractUsingEvent>(OnInteractUsing);
-        SubscribeLocalEvent<DoInsertCryoPodEvent>(DoInsertCryoPod);
+        SubscribeLocalEvent<CryoPodComponent, DoInsertCryoPodEvent>(DoInsertCryoPod);
         SubscribeLocalEvent<CryoPodComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<CryoPodComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<CryoPodComponent, GotEmaggedEvent>(OnEmagged);
-        SubscribeLocalEvent<CryoPodPryFinished>(OnCryoPodPryFinished);
-        SubscribeLocalEvent<CryoPodPryInterrupted>(OnCryoPodPryInterrupted);
+        SubscribeLocalEvent<CryoPodComponent, CryoPodPryFinished>(OnCryoPodPryFinished);
+        SubscribeLocalEvent<CryoPodComponent, CryoPodPryInterrupted>(OnCryoPodPryInterrupted);
         SubscribeLocalEvent<CryoPodComponent, DestructionEventArgs>(OnDestroyed);
+        SubscribeLocalEvent<CryoPodComponent, GasAnalyzerScanEvent>(OnGasAnalyzed);
+
     }
 
     private void OnComponentInit(EntityUid uid, CryoPodComponent cryoPodComponent, ComponentInit args)
@@ -133,9 +136,10 @@ public sealed class CryoPodSystem: EntitySystem
         if (cryoPodComponent.BodyContainer.ContainedEntity != null)
             return;
 
-        if (!TryComp<MobStateComponent>(target, out var _comp) || !TryComp<TransformComponent>(target, out var xform))
+        if (!HasComp<MobStateComponent>(target))
             return;
 
+        var xform = Transform(target);
         cryoPodComponent.BodyContainer.Insert(target, transform: xform);
         xform.LocalPosition = new Vector2(0, 1); // So that the target appears to be floating within the pod
 
@@ -175,8 +179,7 @@ public sealed class CryoPodSystem: EntitySystem
         _climbSystem.ForciblySetClimbing(contained, uid);
 
         // Restore the correct position of the patient. Checking the components manually feels hacky, but I did not find a better way for now.
-        if (TryComp<KnockedDownComponent>(contained, out var _knockedDown)
-            || TryComp<MobStateComponent>(contained, out var mobStateComponent) && _mobStateSystem.IsIncapacitated(contained))
+        if (HasComp<KnockedDownComponent>(contained) || _mobStateSystem.IsIncapacitated(contained))
         {
             _standingStateSystem.Down(contained);
         }
@@ -197,22 +200,22 @@ public sealed class CryoPodSystem: EntitySystem
             return;
         }
 
-        var doAfterArgs = new DoAfterEventArgs(args.User, cryoPodComponent.EntryDelay, default, args.Dragged)
+        var doAfterArgs = new DoAfterEventArgs(args.User, cryoPodComponent.EntryDelay, default, uid, args.Dragged)
         {
             BreakOnDamage = true,
             BreakOnStun = true,
             BreakOnTargetMove = true,
             BreakOnUserMove = true,
             NeedHand = false,
-            BroadcastFinishedEvent = new DoInsertCryoPodEvent(cryoPodComponent, args.Dragged, uid),
+            TargetFinishedEvent = new DoInsertCryoPodEvent(args.Dragged),
         };
         _doAfterSystem.DoAfter(doAfterArgs);
         args.Handled = true;
     }
 
-    private void DoInsertCryoPod(DoInsertCryoPodEvent ev)
+    private void DoInsertCryoPod(EntityUid uid, CryoPodComponent cryoPodComponent, DoInsertCryoPodEvent args)
     {
-        InsertBody(ev.Unit, ev.ToInsert, ev.CryoPod);
+        InsertBody(uid, args.ToInsert, cryoPodComponent);
     }
 
     private void HandleInteractHand(EntityUid uid, CryoPodComponent cryoPodComponent, InteractHandEvent args)
@@ -221,7 +224,7 @@ public sealed class CryoPodSystem: EntitySystem
         {
             return;
         }
-        if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
+        if (!TryComp(args.User, out ActorComponent? actor))
             return;
 
         if (cryoPodComponent.BodyContainer.ContainedEntity != null)
@@ -244,7 +247,7 @@ public sealed class CryoPodSystem: EntitySystem
         if (args.Handled || !cryoPodComponent.Locked || cryoPodComponent.BodyContainer.ContainedEntity == null)
             return;
 
-        if (EntityManager.TryGetComponent(args.Used, out ToolComponent? tool)
+        if (TryComp(args.Used, out ToolComponent? tool)
             && tool.Qualities.Contains("Prying")) // Why aren't those enums?
         {
             if (cryoPodComponent.IsPrying)
@@ -253,21 +256,21 @@ public sealed class CryoPodSystem: EntitySystem
 
             _toolSystem.UseTool(args.Used, args.User, uid, 0f,
                 cryoPodComponent.PryDelay, "Prying",
-                new CryoPodPryFinished(uid, cryoPodComponent), new CryoPodPryInterrupted(uid, cryoPodComponent));
+                new CryoPodPryFinished(), new CryoPodPryInterrupted(), uid);
 
             args.Handled = true;
         }
     }
 
-    private void OnCryoPodPryFinished(CryoPodPryFinished ev)
+    private void OnCryoPodPryFinished(EntityUid uid, CryoPodComponent cryoPodComponent, CryoPodPryFinished args)
     {
-        ev.CryoPodComponent.IsPrying = false;
-        EjectBody(ev.Uid, ev.CryoPodComponent);
+        cryoPodComponent.IsPrying = false;
+        EjectBody(uid, cryoPodComponent);
     }
 
-    private void OnCryoPodPryInterrupted(CryoPodPryInterrupted ev)
+    private void OnCryoPodPryInterrupted(EntityUid uid, CryoPodComponent cryoPodComponent, CryoPodPryInterrupted args)
     {
-        ev.CryoPodComponent.IsPrying = false;
+        cryoPodComponent.IsPrying = false;
     }
 
     private void AddAlternativeVerbs(EntityUid uid, CryoPodComponent cryoPodComponent, GetVerbsEvent<AlternativeVerb> args)
@@ -324,6 +327,12 @@ public sealed class CryoPodSystem: EntitySystem
 
     private void OnPowerChanged(EntityUid uid, CryoPodComponent component, PowerChangedEvent args)
     {
+        // Needed to avoid adding/removing components on a deleted entity
+        if (Terminating(uid))
+        {
+            return;
+        }
+
         if (args.Powered)
         {
             EnsureComp<ActiveCryoPodComponent>(uid);
@@ -342,7 +351,7 @@ public sealed class CryoPodSystem: EntitySystem
 
     private void OnCryoPodUpdateAtmosphere(EntityUid uid, CryoPodComponent cryoPod, AtmosDeviceUpdateEvent args)
     {
-        if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
+        if (!TryComp(uid, out NodeContainerComponent? nodeContainer))
             return;
 
         if (!nodeContainer.TryGetNode(cryoPod.PortName, out PortablePipeNode? portNode))
@@ -355,13 +364,26 @@ public sealed class CryoPodSystem: EntitySystem
         }
     }
 
+    private void OnGasAnalyzed(EntityUid uid, CryoPodComponent component, GasAnalyzerScanEvent args)
+    {
+        var gasMixDict = new Dictionary<string, GasMixture?> { { Name(uid), component.Air } };
+        // If it's connected to a port, include the port side
+        if (TryComp(uid, out NodeContainerComponent? nodeContainer))
+        {
+            if(nodeContainer.TryGetNode(component.PortName, out PipeNode? port))
+                gasMixDict.Add(component.PortName, port.Air);
+        }
+        args.GasMixtures = gasMixDict;
+    }
+
+
     #endregion
 
     #region Event records
 
-    private record DoInsertCryoPodEvent(CryoPodComponent CryoPod, EntityUid ToInsert, EntityUid Unit);
-    private record CryoPodPryFinished(EntityUid Uid, CryoPodComponent CryoPodComponent);
-    private record CryoPodPryInterrupted(EntityUid Uid, CryoPodComponent CryoPodComponent);
+    private record DoInsertCryoPodEvent(EntityUid ToInsert);
+    private record CryoPodPryFinished;
+    private record CryoPodPryInterrupted;
 
     #endregion
 }

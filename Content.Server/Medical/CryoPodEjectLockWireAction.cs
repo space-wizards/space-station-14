@@ -9,7 +9,7 @@ namespace Content.Server.Medical;
 /// Causes a failure in the cryo pod ejection system when cut. A crowbar will be needed to pry open the pod.
 /// </summary>
 [DataDefinition]
-public sealed class CryoPodWireAction: BaseWireAction
+public sealed class CryoPodEjectLockWireAction: BaseWireAction
 {
     [DataField("color")]
     private Color _statusColor = Color.Red;

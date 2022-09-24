@@ -78,4 +78,4 @@
   dummyWires: 2
   wires:
   - !type:PowerWireAction
-  - !type:CryoPodWireAction
+  - !type:CryoPodEjectLockWireAction
