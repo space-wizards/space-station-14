@@ -77,7 +77,8 @@ namespace Content.Server.Mind
         [ViewVariables]
         public EntityUid? VisitingEntity { get; private set; }
 
-        [ViewVariables] public EntityUid? CurrentEntity => VisitingEntity ?? OwnedEntity;
+        [ViewVariables]
+        public EntityUid? CurrentEntity => VisitingEntity ?? OwnedEntity;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public string? CharacterName { get; set; }
@@ -87,7 +88,7 @@ namespace Content.Server.Mind
         ///     Can be null - will be null if the Mind is not considered "dead".
         /// </summary>
         [ViewVariables]
-        public TimeSpan? TimeOfDeath { get; set; } = null;
+        public TimeSpan? TimeOfDeath { get; set; }
 
         /// <summary>
         ///     The component currently owned by this mind.
