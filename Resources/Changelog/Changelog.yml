@@ -1,9 +1,4 @@
 Entries:
-- author: jessicamaybe
-  changes:
-  - {message: 'Adds a new disease, tongue twister.', type: Add}
-  id: 1858
-  time: '2022-07-04T05:22:30.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Salvage magnet broadcasts over supply instead of announcements now.,
@@ -2921,3 +2916,9 @@ Entries:
   - {message: Latejoin spawns to Pillar, type: Add}
   id: 2357
   time: '2022-09-23T04:19:07.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Minor update and fixes for Splitstation. Salvage is closer to Science,
+      atmos works and other minor changes.', type: Tweak}
+  id: 2358
+  time: '2022-09-24T21:48:39.0000000+00:00'
