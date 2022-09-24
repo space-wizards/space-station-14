@@ -1,18 +1,13 @@
-using Content.Shared.NPC;
 using Robust.Shared.Map;
+using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Server.NPC.Pathfinding;
 
 public sealed partial class PathfindingSystem
 {
-    private PathResult UpdateAStarPath(AStarPathRequest request)
+    private PathResult UpdateBFSPath(IRobustRandom random, BFSPathRequest request)
     {
-        if (request.Start.Equals(request.End))
-        {
-            return PathResult.Path;
-        }
-
         if (request.Task.IsCanceled)
         {
             return PathResult.NoPath;
@@ -48,9 +43,8 @@ public sealed partial class PathfindingSystem
         request.Stopwatch.Restart();
 
         var startNode = GetPoly(request.Start);
-        var endNode = GetPoly(request.End);
 
-        if (startNode == null || endNode == null)
+        if (startNode == null)
         {
             return PathResult.NoPath;
         }
@@ -60,7 +54,7 @@ public sealed partial class PathfindingSystem
         request.CostSoFar[startNode] = 0.0f;
         var count = 0;
 
-        while (request.Frontier.Count > 0 && count < NodeLimit)
+        while (request.Frontier.Count > 0 && count < NodeLimit && count < request.ExpansionLimit)
         {
             // Handle whether we need to pause if we've taken too long
             if (count % 20 == 0 && count > 0 && request.Stopwatch.Elapsed > PathTime)
@@ -74,11 +68,6 @@ public sealed partial class PathfindingSystem
 
             // Actual pathfinding here
             (_, currentNode) = request.Frontier.Take();
-
-            if (currentNode.Equals(endNode))
-            {
-                break;
-            }
 
             foreach (var neighbor in currentNode.Neighbors)
             {
@@ -100,22 +89,17 @@ public sealed partial class PathfindingSystem
 
                 request.CameFrom[neighbor] = currentNode;
                 request.CostSoFar[neighbor] = gScore;
-                // pFactor is tie-breaker where the fscore is otherwise equal.
-                // See http://theory.stanford.edu/~amitp/GameProgramming/Heuristics.html#breaking-ties
-                // There's other ways to do it but future consideration
-                // The closer the fScore is to the actual distance then the better the pathfinder will be
-                // (i.e. somewhere between 1 and infinite)
-                // Can use hierarchical pathfinder or whatever to improve the heuristic but this is fine for now.
-                var hScore = OctileDistance(endNode, neighbor) * (1.0f + 1.0f / 1000.0f);
-                var fScore = gScore + hScore;
-                request.Frontier.Add((fScore, neighbor));
+                request.Frontier.Add((gScore, neighbor));
             }
         }
 
-        if (!endNode.Equals(currentNode))
+        if (request.CostSoFar.Count == 0)
         {
             return PathResult.NoPath;
         }
+
+        // Pick a random node to use?
+        (currentNode, _) = random.Pick(request.CostSoFar);
 
         var route = ReconstructPath(request.CameFrom, currentNode);
         var path = new Queue<EntityCoordinates>(route.Count);

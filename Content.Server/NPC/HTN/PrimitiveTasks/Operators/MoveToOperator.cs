@@ -99,16 +99,14 @@ public sealed class MoveToOperator : HTNOperator
 
         var cancelToken = new CancellationTokenSource();
 
-        var job = _pathfind.GetPath(
+        var path = await _pathfind.GetPath(
             blackboard.GetValue<EntityUid>(NPCBlackboard.Owner),
             xform.Coordinates,
                 targetCoordinates,
             range,
             cancelToken.Token);
 
-        await job;
-
-        if (!job.IsCompletedSuccessfully)
+        if (path.Result != PathResult.Path)
         {
             return (false, null);
         }
@@ -116,9 +114,7 @@ public sealed class MoveToOperator : HTNOperator
         return (true, new Dictionary<string, object>()
         {
             {NPCBlackboard.OwnerCoordinates, targetCoordinates},
-#pragma warning disable RA0004
-            {PathfindKey, job.Result}
-#pragma warning restore RA0004
+            {PathfindKey, path}
         });
 
     }

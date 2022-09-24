@@ -1,4 +1,5 @@
 using Content.Shared.NPC;
+using Robust.Shared.Map;
 
 namespace Content.Server.NPC.Pathfinding;
 
@@ -27,6 +28,8 @@ public sealed class PathPoly : IEquatable<PathPoly>
     {
         return (Data.Flags & PathfindingBreadcrumbFlag.Invalid) == 0x0;
     }
+
+    public EntityCoordinates Coordinates => new(GraphUid, Box.Center);
 
     // Explicitly don't check neighbors.
 

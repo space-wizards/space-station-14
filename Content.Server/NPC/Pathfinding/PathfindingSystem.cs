@@ -1,3 +1,4 @@
+using System.Buffers;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Players;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -33,6 +35,7 @@ namespace Content.Server.NPC.Pathfinding
 
         [Dependency] private readonly IAdminManager _adminManager = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly DestructibleSystem _destructible = default!;
         [Dependency] private readonly FixtureSystem _fixtures = default!;
 
@@ -70,10 +73,9 @@ namespace Content.Server.NPC.Pathfinding
         {
             base.Update(frameTime);
             UpdateGrid();
-            var graphs = EntityQuery<GridPathfindingComponent>(true).ToDictionary(o => o.Owner);
             _stopwatch.Restart();
             var amount = Math.Min(PathTickLimit, _pathRequests.Count);
-            var results = new PathResult[amount];
+            var results = ArrayPool<PathResult>.Shared.Rent(amount);
 
             Parallel.For(0, amount, i =>
             {
@@ -84,13 +86,25 @@ namespace Content.Server.NPC.Pathfinding
                     return;
                 }
 
-                results[i] = UpdatePath(graphs, _pathRequests[i]);
+                var request = _pathRequests[i];
+
+                switch (request)
+                {
+                    case AStarPathRequest astar:
+                        results[i] = UpdateAStarPath(astar);
+                        break;
+                    case BFSPathRequest bfs:
+                        results[i] = UpdateBFSPath(_random, bfs);
+                        break;
+                    default:
+                        throw new NotImplementedException();
+                }
             });
 
             var offset = 0;
 
             // then, single-threaded cleanup.
-            for (var i = 0; i < results.Length; i++)
+            for (var i = 0; i < amount; i++)
             {
                 var resultIndex = i + offset;
                 var path = _pathRequests[resultIndex];
@@ -118,6 +132,8 @@ namespace Content.Server.NPC.Pathfinding
                         throw new NotImplementedException();
                 }
             }
+
+            ArrayPool<PathResult>.Shared.Return(results);
         }
 
         /// <summary>
@@ -194,6 +210,37 @@ namespace Content.Server.NPC.Pathfinding
             return true;
         }
 
+        public async Task<PathResultEvent> GetRandomPath(
+            EntityUid entity,
+            float range,
+            float maxRange,
+            CancellationToken cancelToken,
+            int limit = 40)
+        {
+            // TODO: BFS Expansion
+            if (!TryComp<TransformComponent>(entity, out var start))
+                return new PathResultEvent(PathResult.NoPath, new Queue<PathPoly>());
+
+            // TODO: Need a base type and an A* + BFS types
+            var layer = 0;
+            var mask = 0;
+
+            if (TryComp<PhysicsComponent>(entity, out var body))
+            {
+                layer = body.CollisionLayer;
+                mask = body.CollisionMask;
+            }
+
+            var request = new BFSPathRequest(maxRange, limit, start.Coordinates, PathFlags.None, range, layer, mask, cancelToken);
+
+            var path = await GetPath(request);
+
+            if (path.Result != PathResult.Path)
+                return new PathResultEvent(PathResult.NoPath, new Queue<PathPoly>());
+
+            return new PathResultEvent(PathResult.Path, path.Path);
+        }
+
         /// <summary>
         /// Gets the estimated distance from the entity to the target node.
         /// </summary>
@@ -252,7 +299,7 @@ namespace Content.Server.NPC.Pathfinding
             CancellationToken cancelToken)
         {
             // Don't allow the caller to pass in the request in case they try to do something with its data.
-            var request = new PathRequest(start, end, flags, range, layer, mask, cancelToken);
+            var request = new AStarPathRequest(start, end, flags, range, layer, mask, cancelToken);
             return await GetPath(request);
         }
 
@@ -314,7 +361,7 @@ namespace Content.Server.NPC.Pathfinding
                 mask = body.CollisionMask;
             }
 
-            return new PathRequest(start, end, PathFlags.Prying | PathFlags.Smashing, SharedInteractionSystem.InteractionRange - 0.5f, layer, mask, cancelToken);
+            return new AStarPathRequest(start, end, PathFlags.Prying | PathFlags.Smashing, SharedInteractionSystem.InteractionRange - 0.5f, layer, mask, cancelToken);
         }
 
         private async Task<PathResultEvent> GetPath(
@@ -354,7 +401,7 @@ namespace Content.Server.NPC.Pathfinding
 
             foreach (var neighbor in poly.Neighbors)
             {
-                neighbors.Add(ToCoordinates(neighbor.GraphUid, neighbor));
+                neighbors.Add(neighbor.Coordinates);
             }
 
             return new DebugPathPoly()
