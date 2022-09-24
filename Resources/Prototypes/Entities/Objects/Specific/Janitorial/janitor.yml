@@ -93,9 +93,6 @@
     noRot: true
     layers:
     - state: analysismopbucket
-    - state: mopbucket_water-1
-      map: ["enum.SolutionContainerLayers.Fill"]
-      visible: false
     drawdepth: Objects
   - type: InteractionOutline
   - type: SolutionContainerManager
@@ -110,6 +107,7 @@
     solution: bucket
   - type: RefillableSolution
     solution: bucket
+    inputContainer: Mop
   - type: ExaminableSolution
     solution: bucket
   - type: Tag
@@ -133,9 +131,6 @@
   - type: Drink
     isOpen: true
   - type: Appearance
-  - type: SolutionContainerVisuals
-    maxFillLevels: 3
-    fillBaseName: mopbucket_water-
   - type: ChemAnalyser
     machineOutput: Paper
     machineInputDevice: Mop

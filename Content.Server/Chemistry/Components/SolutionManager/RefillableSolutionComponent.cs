@@ -1,4 +1,7 @@
+using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.FixedPoint;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Chemistry.Components.SolutionManager
 {
@@ -24,6 +27,11 @@ namespace Content.Server.Chemistry.Components.SolutionManager
         [ViewVariables(VVAccess.ReadWrite)]
         public FixedPoint2? MaxRefill { get; set; } = null;
 
-
+        /// <summary>
+        /// What method of input, determined by tag, the target will allow
+        /// If none given it will accept any input
+        /// </summary>
+        [DataField("inputContainer", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>), required: false)]
+        public string InputContainer = string.Empty;
     }
 }

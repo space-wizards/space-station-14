@@ -9,6 +9,7 @@ using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.Tag;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
@@ -77,9 +78,25 @@ namespace Content.Server.Chemistry.EntitySystems
                 return;
 
             var target = args.Target!.Value;
+            var inputContainerRestriction = false;
+            var validInputContainer = false;
+
+            //TODO implement tag-based transfer restrictions for when the target is only supposed to receive from a specific owner
+            //If a reagent tank has an input restriction, then it outputs for everything except for the input (which it will accept input from)
+            if (TryComp<RefillableSolutionComponent>(target, out var outputRefill))
+            {
+                if (outputRefill.InputContainer != string.Empty && TryComp<DrainableSolutionComponent>(uid, out var inputDrain))
+                {
+                    inputContainerRestriction = true;
+                    if (TryComp<TagComponent>(uid, out var tags))
+                        if (tags.Tags.Contains(outputRefill.InputContainer))
+                            validInputContainer = true;
+                }
+            }
 
             //Special case for reagent tanks, because normally clicking another container will give solution, not take it.
-            if (component.CanReceive  && !EntityManager.HasComponent<RefillableSolutionComponent>(target) // target must not be refillable (e.g. Reagent Tanks)
+            if (component.CanReceive  && (!EntityManager.HasComponent<RefillableSolutionComponent>(target)
+                                      || (inputContainerRestriction && !validInputContainer)) // target must not be refillable (e.g. Reagent Tanks)
                                       && _solutionContainer.TryGetDrainableSolution(target, out var targetDrain) // target must be drainable
                                       && EntityManager.TryGetComponent(uid, out RefillableSolutionComponent? refillComp)
                                       && _solutionContainer.TryGetRefillableSolution(uid, out var ownerRefill, refillable: refillComp))
@@ -111,7 +128,8 @@ namespace Content.Server.Chemistry.EntitySystems
 
             // if target is refillable, and owner is drainable
             if (component.CanSend && _solutionContainer.TryGetRefillableSolution(target, out var targetRefill)
-                                  && _solutionContainer.TryGetDrainableSolution(uid, out var ownerDrain))
+                                  && _solutionContainer.TryGetDrainableSolution(uid, out var ownerDrain)
+                                  && (!inputContainerRestriction || validInputContainer))
             {
                 var transferAmount = component.TransferAmount;
 
