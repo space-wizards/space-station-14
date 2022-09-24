@@ -8,9 +8,11 @@ using Content.Server.Popups;
 using Content.Shared.Interaction;
 using Content.Shared.Tools.Components;
 using Content.Shared.Tag;
+using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Utility;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
@@ -21,6 +23,7 @@ namespace Content.Server.Chemistry.EntitySystems
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly PaperSystem _paperSystem = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public override void Initialize()
         {
@@ -128,30 +131,86 @@ namespace Content.Server.Chemistry.EntitySystems
 
             reportTitle = args.Machine.Name + " Report";
             FormattedMessage contents = new();
-            int maxLines = 10;
+            int maxLines = 11;
+
+            //reward conditions (enforce as mutually exclusive, prioritise required names)
+            var rewardRequiredNames = args.Machine.ReagentsRewardRequiredNames;
+            var rewardRequiredCount = args.Machine.ReagentRewardCount;
+
+            //display filters
+            var noDisplayWithGroups = args.Machine.ReagentDisplayExcludedGroupsFilter;
+            var noDisplayWithNames = args.Machine.ReagentDisplayExcludedNamesFilter;
+            var onlyDisplayWithGroup = args.Machine.ReagentDisplayRequiredGroupFilter;
+
+            var displaySolutions = new List<string>();
+
+            //reward filters
+            var noRewardWithGroups = args.Machine.ReagentRewardExcludedGroupsFilter;
+            var noRewardWithNames = args.Machine.ReagentRewardExcludedNamesFilter;
+            var onlyRewardWithGroup = args.Machine.ReagentRewardRequiredGroupFilter;
+
+            var rewardSolutions = new List<string>();
 
             if (TryComp<SolutionContainerManagerComponent>(uid, out var solutions))
             {
-                
-                int numLines = 0;
-                foreach (var solution in (solutions.Solutions)) {
-                    contents.AddMarkup("No. Chemicals Found: ");
-                    contents.AddMarkup(solution.Value.Contents.Count.ToString());
-                    contents.PushNewline();
-                    contents.PushNewline();
-                    contents.AddMarkup("Chemicals Present");
-                    contents.PushNewline();
+                foreach (var solution in (solutions.Solutions)) { //I'm not sure when this will ever be greater than 1 iteration
                     foreach (var content in (solution.Value.Contents))
                     {
-                        if (numLines < maxLines) {
-                            contents.AddMarkup(content + "u");
-                            contents.PushNewline();
-                            numLines++;
-                        } else
+                        var contentHasGroup = false;
+                        if (_prototypeManager.TryIndex(content.ReagentId, out ReagentPrototype? proto))
+                            if (proto != null && proto.Group != string.Empty)
+                                contentHasGroup = true;
+
+                        if (!noDisplayWithNames.Contains(content.ReagentId))
                         {
-                            contents.AddMarkup("END OF PRINT");
-                            break;
+                            if ((noDisplayWithGroups.Count > 0 || onlyDisplayWithGroup != string.Empty))
+                            {
+                                if (proto != null && contentHasGroup
+                                    && !(noDisplayWithGroups.Contains(proto.Group))
+                                    && (onlyDisplayWithGroup == string.Empty || onlyDisplayWithGroup == proto.Group))
+                                    displaySolutions.Add(content.ReagentId + ": " + content.Quantity.ToString() + "u");
+                            }
+                            else
+                                displaySolutions.Add(content.ReagentId + ": " + content.Quantity.ToString() + "u");
                         }
+
+                        if (!noRewardWithNames.Contains(content.ReagentId))
+                        {
+                            if ((noRewardWithGroups.Count > 0 || onlyRewardWithGroup != string.Empty))
+                            {
+                                if (proto != null && contentHasGroup
+                                    && !(noRewardWithGroups.Contains(proto.Group))
+                                    && (onlyRewardWithGroup == string.Empty || onlyRewardWithGroup == proto.Group))
+                                    rewardSolutions.Add(content.ReagentId);
+                            }
+                            else
+                                rewardSolutions.Add(content.ReagentId);
+                        }
+                    }
+                }
+            } 
+
+            if (displaySolutions.Count > 0)
+            {
+                int numLines = 0;
+                contents.AddMarkup("No. Chemicals Found: ");
+                contents.AddMarkup(displaySolutions.Count.ToString());
+                contents.PushNewline();
+                contents.PushNewline();
+                contents.AddMarkup("Chemicals Found:");
+                contents.PushNewline();
+                foreach (var displaySolution in (displaySolutions))
+                {
+                    if (numLines < maxLines)
+                    {
+                        contents.AddMarkup(displaySolution);
+                        contents.PushNewline();
+                        numLines++;
+                    }
+                    else
+                    {
+                        contents.AddMarkup("PRINT LINES EXCEEDED");
+                        break;
                     }
                 }
             } else
@@ -159,7 +218,19 @@ namespace Content.Server.Chemistry.EntitySystems
 
             MetaData(printed).EntityName = reportTitle;
 
-            //TODO disk printing...
+            var rewardEarned = true;
+            if (rewardRequiredNames.Count > 0)
+            {
+                foreach (var name in (rewardRequiredNames))
+                    if (!(rewardSolutions.Contains(name)))
+                        rewardEarned = false;
+            }
+            else if (rewardRequiredCount > 0)
+                if (!(rewardSolutions.Count == rewardRequiredCount))
+                    rewardEarned = false;
+
+            if (rewardEarned)
+                Spawn(args.Machine.ResearchDiskReward, Transform(uid).Coordinates);
 
             _paperSystem.SetContent(printed, contents.ToMarkup(), paper);
         }
