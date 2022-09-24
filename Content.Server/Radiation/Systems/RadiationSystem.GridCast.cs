@@ -99,13 +99,20 @@ public partial class RadiationSystem
         if (rads <= MinIntensity)
             return null;
 
+        // create a new radiation ray from source to destination
+        // at first we assume that it doesn't hit any radiation blockers
+        // and has only distance penalty
+        var ray = new RadiationRay(mapId, sourceUid, sourceWorld, destUid, destWorld, rads);
+
         // if source and destination on the same grid it's possible that
         // between them can be another grid (ie. shuttle in center of donut station)
         // however we can do simplification and ignore that case
         if (GridcastSimplifiedSameGrid && sourceTrs.GridUid != null && sourceTrs.GridUid == destTrs.GridUid)
         {
-            return Gridcast(mapId, sourceTrs.GridUid.Value, sourceUid, destUid,
-                sourceWorld, destWorld, rads, saveVisitedTiles, resistanceQuery);
+            // todo: entity queries doesn't support interface - use it when IMapGridComponent will be removed
+            if (!TryComp(sourceTrs.GridUid.Value, out IMapGridComponent? gridComponent))
+                return ray;
+            return Gridcast(gridComponent.Grid, ray, saveVisitedTiles, resistanceQuery);
         }
 
         // lets check how many grids are between source and destination
@@ -114,64 +121,35 @@ public partial class RadiationSystem
         var box = Box2.FromTwoPoints(sourceWorld, destWorld);
         var grids = _mapManager.FindGridsIntersecting(mapId, box, true);
 
-        // we are only interested in grids that has some radiation blockers
-        // lets count them (could use linq, but this a bit faster)
-        var resGridsCount = 0;
-        EntityUid lastGridUid = default;
+        // gridcast through each grid and try to hit some radiation blockers
+        // the ray will be updated with each grid that has some blockers
         foreach (var grid in grids)
         {
-            if (!resistanceQuery.HasComponent(grid.GridEntityId))
-                continue;
-            lastGridUid = grid.GridEntityId;
+            ray = Gridcast(grid, ray, saveVisitedTiles, resistanceQuery);
 
-            resGridsCount++;
-            if (resGridsCount > 1)
-                break;
+            // looks like last grid blocked all radiation
+            // we can return right now
+            if (ray.Rads <= 0)
+                return ray;
         }
 
-        if (resGridsCount == 0)
-        {
-            // no grids found - so no blockers (just distance penalty)
-            return new RadiationRay(mapId, sourceUid,sourceWorld,
-                destUid,destWorld, rads);
-        }
-        else if (resGridsCount == 1)
-        {
-            // one grid found - use it for gridcast
-            return Gridcast(mapId, lastGridUid, sourceUid, destUid,
-                sourceWorld, destWorld, rads, saveVisitedTiles, resistanceQuery);
-        }
-        else
-        {
-            // more than one grid - fallback to raycast
-            return Raycast(mapId, sourceUid, destUid, sourceWorld, destWorld,
-                dir.Normalized, dist, rads, blockerQuery);
-        }
+        return ray;
     }
 
-    private RadiationRay Gridcast(MapId mapId, EntityUid gridUid, EntityUid sourceUid, EntityUid destUid,
-        Vector2 sourceWorld, Vector2 destWorld, float incomingRads, bool saveVisitedTiles,
+    private RadiationRay Gridcast(IMapGrid grid, RadiationRay ray, bool saveVisitedTiles,
         EntityQuery<RadiationGridResistanceComponent> resistanceQuery)
     {
+        var gridUid = grid.GridEntityId;
         var visitedTiles = new List<(Vector2i, float?)>();
-        var radRay = new RadiationRay(mapId, sourceUid,sourceWorld,
-            destUid,destWorld, incomingRads)
-        {
-            Grid = gridUid,
-            VisitedTiles = visitedTiles
-        };
 
         // if grid doesn't have resistance map just apply distance penalty
         if (!resistanceQuery.TryGetComponent(gridUid, out var resistance))
-            return radRay;
+            return ray;
         var resistanceMap = resistance.ResistancePerTile;
 
         // get coordinate of source and destination in grid coordinates
-        // todo: entity queries doesn't support interface - use it when IMapGridComponent will be removed
-        if (!TryComp(gridUid, out IMapGridComponent? grid))
-            return radRay;
-        var sourceGrid = grid.Grid.TileIndicesFor(sourceWorld);
-        var destGrid = grid.Grid.TileIndicesFor(destWorld);
+        var sourceGrid = grid.TileIndicesFor(ray.Source);
+        var destGrid = grid.TileIndicesFor(ray.Destination);
 
         // iterate tiles in grid line from source to destination
         var line = Line(sourceGrid.X, sourceGrid.Y, destGrid.X, destGrid.Y);
@@ -180,23 +158,27 @@ public partial class RadiationSystem
             (Vector2i, float?) visitedTile = (point, null);
             if (resistanceMap.TryGetValue(point, out var resData))
             {
-                radRay.Rads -= resData;
-                visitedTile.Item2 = radRay.Rads;
+                ray.Rads -= resData;
+                visitedTile.Item2 = ray.Rads;
             }
 
             // save data for debug
             if (saveVisitedTiles)
-                radRay.VisitedTiles.Add(visitedTile);
+                visitedTiles.Add(visitedTile);
 
             // no intensity left after blocker
-            if (radRay.Rads <= MinIntensity)
+            if (ray.Rads <= MinIntensity)
             {
-                radRay.Rads = 0;
-                return radRay;
+                ray.Rads = 0;
+                break;
             }
         }
 
-        return radRay;
+        // save data for debug if needed
+        if (saveVisitedTiles && visitedTiles.Count > 0)
+            ray.VisitedTiles.Add(gridUid, visitedTiles);
+
+        return ray;
     }
 
     private RadiationRay Raycast(MapId mapId, EntityUid sourceUid, EntityUid destUid,

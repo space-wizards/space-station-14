@@ -64,9 +64,12 @@ public sealed class RadiationDebugOverlay : Overlay
                 handle.DrawString(_font, screenCenter, rads.ToString("F2"), 1.5f, Color.White);
             }
 
-            if (_mapManager.TryGetGrid(ray.Grid, out var grid))
+            foreach (var gridUid in ray.VisitedTiles.Keys)
             {
-                foreach (var (tile, rads) in ray.VisitedTiles)
+                if (!_mapManager.TryGetGrid(gridUid, out var grid))
+                    continue;
+
+                foreach (var (tile, rads) in ray.VisitedTiles[gridUid])
                 {
                     if (rads == null)
                         continue;
@@ -132,15 +135,18 @@ public sealed class RadiationDebugOverlay : Overlay
         // draw tiles for gridcast
         foreach (var ray in Rays)
         {
-            if (ray.Grid == null || !_mapManager.TryGetGrid(ray.Grid, out var grid))
-                continue;
-            var xformQuery = _entityManager.GetEntityQuery<TransformComponent>();
-            var gridXform = xformQuery.GetComponent(grid.GridEntityId);
-            var (_, _, worldMatrix, invWorldMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv(xformQuery);
-            var gridBounds = invWorldMatrix.TransformBox(args.WorldBounds);
-            handle.SetTransform(worldMatrix);
+            foreach (var gridUid in ray.VisitedTiles.Keys)
+            {
+                if (!_mapManager.TryGetGrid(gridUid, out var grid))
+                    continue;
+                var xformQuery = _entityManager.GetEntityQuery<TransformComponent>();
+                var gridXform = xformQuery.GetComponent(grid.GridEntityId);
+                var (_, _, worldMatrix, invWorldMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv(xformQuery);
+                var gridBounds = invWorldMatrix.TransformBox(args.WorldBounds);
+                handle.SetTransform(worldMatrix);
 
-            DrawTiles(handle, gridBounds, ray.VisitedTiles);
+                DrawTiles(handle, gridBounds, ray.VisitedTiles[gridUid]);
+            }
         }
 
         handle.SetTransform(Matrix3.Identity);
