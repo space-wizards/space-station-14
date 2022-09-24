@@ -17,11 +17,11 @@ namespace Content.Server.Chemistry.Components
         [DataField("machineInputDevice", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>), required: false)]
         public string MachineInputDevice = string.Empty;
 
+        /// <summary>
+        /// ChemAnalyser runtime and tracking thereof
+        /// </summary>
         [DataField("delay")]
         public float Delay = 5f;
-        /// <summary>
-        /// 
-        /// </summary>
         [ViewVariables]
         [DataField("accumulator")]
         public float Accumulator = 0f;
@@ -31,5 +31,68 @@ namespace Content.Server.Chemistry.Components
         /// </summary>
         [DataField("machineOutput", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>), required: true)]
         public string MachineOutput = string.Empty;
+
+        /// <summary>
+        /// What the machine will spawn when the reward condition is met (if both are provided)
+        /// </summary>
+        [DataField("researchDiskReward", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>), required: false)]
+        public string ResearchDiskReward = string.Empty;
+
+        /// <summary>
+        /// Number of reagents that will trigger the research disk reward (if above 0) mutually exclusive with other reward conditions
+        /// </summary>
+        [ViewVariables]
+        [DataField("reagentRewardCount")]
+        public int ReagentRewardCount = 0;
+
+        /// <summary>
+        /// Reagents required that will trigger the research disk reward (if present) mutually exclusive and overrides with other reward conditions
+        /// </summary>
+        [ViewVariables]
+        [DataField("reagentsRewardRequiredNames")]
+        public readonly List<string> ReagentsRewardRequiredNames = new();
+
+        /// <summary>
+        /// Group reagents must have to count towards the reagentRewardCount
+        /// </summary>
+        [ViewVariables]
+        [DataField("reagentRewardRequiredGroupFilter")]
+        public string ReagentRewardRequiredGroupFilter = string.Empty;
+
+        /// <summary>
+        /// Reagents that will not count toward the reagentRewardCount by name
+        /// </summary>
+        [ViewVariables]
+        [DataField("reagentRewardExcludedNamesFilter")]
+        public readonly List<string> ReagentRewardExcludedNamesFilter = new();
+
+        /// <summary>
+        /// Reagents that will not count toward the reagentRewardCount by group
+        /// </summary>
+        [ViewVariables]
+        [DataField("reagentRewardExcludedGroupsFilter")]
+        public readonly List<string> ReagentRewardExcludedGroupsFilter = new();
+
+        /// <summary>
+        /// Reagents that will not be displayed by group
+        /// </summary>
+        [ViewVariables]
+        [DataField("reagentDisplayExcludedGroupsFilter")]
+        public readonly List<string> ReagentDisplayExcludedGroupsFilter = new();
+
+        /// <summary>
+        /// Groups reagents must have to be displayed
+        /// </summary>
+        [ViewVariables]
+        [DataField("reagentDisplayRequiredGroupFilter")]
+        public string ReagentDisplayRequiredGroupFilter = string.Empty;
+
+        /// <summary>
+        /// Reagents that will not be displayed by name
+        /// </summary>
+        [ViewVariables]
+        [DataField("reagentDisplayExcludedNamesFilter")]
+        public readonly List<string> ReagentDisplayExcludedNamesFilter = new();
+
     }
 }

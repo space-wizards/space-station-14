@@ -34,7 +34,17 @@
   description: A disk for the R&D server containing 10000 points.
   components:
   - type: ResearchDisk
-    points: 10000
+    points: 10000 
+
+- type: entity
+  parent: ResearchDiskBase
+  id: CleaningTechResultsDisk
+  name: analysis mop bucket results disk
+  description: The results of the analysis mop bucket. Use on the R&D server to unlock more technologies.
+  components:
+  - type: ResearchDisk
+    technology: CleaningTechResults
+    points: 0
 
 #- type: entity
 #  parent: ResearchDiskBase

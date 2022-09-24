@@ -91,7 +91,7 @@
 
 - type: technology
   name: technologies-cleaning-technology
-  id: MopBucket
+  id: CleaningTech
   description: technologies-cleaning-technology-description
   icon:
     sprite: Objects/Specific/Janitorial/janitorial.rsi
@@ -103,6 +103,31 @@
     - BodyBag
     - MopBucket
     - AnalysisMopBucket
+
+- type: technology
+  name: analysis mop bucket field test results
+  id: CleaningTechResults
+  description: technologies-cleaning-technology-description
+  requiredTechnologies:
+   - CleaningTech
+  icon:
+    sprite: Objects/Specific/Research/researchdisk.rsi
+    state: icon
+  hidden: true
+
+- type: technology
+  name: Advanced cleaning technology
+  id: AdvancedCleaningTech
+  description: technologies-cleaning-technology-description
+  requiredTechnologies:
+   - CleaningTechResults
+  icon:
+    sprite: Objects/Specific/Janitorial/janitorial.rsi
+    state: analysismopbucket
+  #unlockedRecipes:
+  # - SpeedGaloshes
+  # - SelfSustainingMop
+  # - AnalysisMop
 
 # Biological Technology Tree
 

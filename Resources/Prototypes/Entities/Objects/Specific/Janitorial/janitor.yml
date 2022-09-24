@@ -78,9 +78,7 @@
     maxFillLevels: 3
     fillBaseName: mopbucket_water-
 
-#approach
-#progress bar (that works similar to health meter) for before it prints a disk - look at mining?
-#reagent print out upon wringing? that would be neat - look at viral analyzer
+
 - type: entity
   name: analysis mop bucket
   id: AnalysisMopBucket
@@ -134,6 +132,15 @@
   - type: ChemAnalyser
     machineOutput: Paper
     machineInputDevice: Mop
+    researchDiskReward: CleaningTechResultsDisk
+    reagentRewardCount: 10
+    reagentRewardExcludedNamesFilter:
+        - Water
+    #reagentDisplayExcludedGroupsFilter: #used these for testing display filters
+    #    - Medicine
+    #reagentDisplayExcludedNamesFilter:
+    #    - Water
+    #reagentDisplayRequiredGroupFilter: Drinks
 
 - type: entity
   name: wet floor sign
