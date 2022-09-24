@@ -285,7 +285,8 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 _robustRandom.NextDouble() > 0.75 ||
                 !component.Container.Insert(args.Thrown))
             {
-                _popupSystem.PopupEntity(Loc.GetString("disposal-unit-thrown-missed"), args.Thrown, Filter.Pvs(args.User.Value));
+                if (args.User.HasValue)
+                    _popupSystem.PopupEntity(Loc.GetString("disposal-unit-thrown-missed"), args.Thrown, Filter.Pvs(args.User.Value));
                 return;
             }
 
