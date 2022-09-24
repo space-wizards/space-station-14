@@ -72,26 +72,32 @@ namespace Content.Server.NPC.Pathfinding
             UpdateGrid();
             var graphs = EntityQuery<GridPathfindingComponent>(true).ToDictionary(o => o.Owner);
             _stopwatch.Restart();
-            var results = new PathResult[_pathRequests.Count];
+            var amount = Math.Min(PathTickLimit, _pathRequests.Count);
+            var results = new PathResult[amount];
 
-            Parallel.For(0, _pathRequests.Count, i =>
+            Parallel.For(0, amount, i =>
             {
                 // If we're over the limit (either time-sliced or hard cap).
-                if (i >= PathTickLimit || _stopwatch.Elapsed >= PathTime)
+                if (_stopwatch.Elapsed >= PathTime)
+                {
+                    results[i] = PathResult.Continuing;
                     return;
+                }
 
                 results[i] = UpdatePath(graphs, _pathRequests[i]);
             });
 
+            var offset = 0;
+
             // then, single-threaded cleanup.
-            for (var i = 0; i < Math.Min(_pathRequests.Count, PathTickLimit); i++)
+            for (var i = 0; i < results.Length; i++)
             {
-                var path = _pathRequests[i];
+                var resultIndex = i + offset;
+                var path = _pathRequests[resultIndex];
                 var result = results[i];
 
                 if (path.Task.Exception != null)
                 {
-                    _pathRequests.RemoveAt(i);
                     throw path.Task.Exception;
                 }
 
@@ -104,7 +110,8 @@ namespace Content.Server.NPC.Pathfinding
                     case PathResult.NoPath:
                         SendDebug(path);
                         // Don't use RemoveSwap because we still want to try and process them in order.
-                        _pathRequests.RemoveAt(i);
+                        _pathRequests.RemoveAt(resultIndex);
+                        offset--;
                         path.Tcs.SetResult(result);
                         break;
                     default:

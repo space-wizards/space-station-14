@@ -145,9 +145,9 @@ namespace Content.Server.NPC.Systems
             }
         }
 
-        private void SetDirection(InputMoverComponent component, NPCSteeringComponent steering, Vector2 value)
+        private void SetDirection(InputMoverComponent component, NPCSteeringComponent steering, Vector2 value, bool clear = true)
         {
-            if (value.Equals(Vector2.Zero))
+            if (clear && value.Equals(Vector2.Zero))
             {
                 steering.CurrentPath.Clear();
             }
@@ -191,22 +191,18 @@ namespace Content.Server.NPC.Systems
             // Grab the target position, either the path or our end goal.
             // TODO: Some situations we may not want to move at our target without a path.
             var targetCoordinates = GetTargetCoordinates(steering);
+            var needsPath = false;
 
-            // If the next node is invalid then
+            // If the next node is invalid then get new ones
             if (!targetCoordinates.IsValid(EntityManager))
             {
                 if (steering.CurrentPath.TryPeek(out var poly) &&
                     (poly.Data.Flags & PathfindingBreadcrumbFlag.Invalid) != 0x0)
                 {
                     steering.CurrentPath.Dequeue();
+                    // Try to get the next node temporarily.
                     targetCoordinates = GetTargetCoordinates(steering);
-
-                    // Well get a new path then I guess
-                    if (!targetCoordinates.IsValid(EntityManager))
-                    {
-                        RequestPath(steering, xform);
-                        return;
-                    }
+                    needsPath = true;
                 }
             }
 
@@ -240,6 +236,7 @@ namespace Content.Server.NPC.Systems
                 {
                     var status = TryHandleFlags(steering, node, bodyQuery);
 
+                    // TODO: Need to handle re-pathing in case the target moves around.
                     switch (status)
                     {
                         case SteeringObstacleStatus.Completed:
@@ -250,6 +247,7 @@ namespace Content.Server.NPC.Systems
                             steering.Status = SteeringStatus.NoPath;
                             return;
                         case SteeringObstacleStatus.Continuing:
+                            SetDirection(mover, steering, Vector2.Zero, false);
                             return;
                         default:
                             throw new ArgumentOutOfRangeException();
@@ -291,7 +289,7 @@ namespace Content.Server.NPC.Systems
             }
 
             // Do we have no more nodes to follow OR has the target moved sufficiently? If so then re-path.
-            var needsPath = steering.CurrentPath.Count == 0 || (steering.CurrentPath.Peek().Data.Flags & PathfindingBreadcrumbFlag.Invalid) != 0x0;
+            needsPath = needsPath || steering.CurrentPath.Count == 0 || (steering.CurrentPath.Peek().Data.Flags & PathfindingBreadcrumbFlag.Invalid) != 0x0;
 
             // TODO: Probably need partial planning support i.e. patch from the last node to where the target moved to.
 
@@ -359,7 +357,7 @@ namespace Content.Server.NPC.Systems
 
             while (nodes.TryPeek(out var node))
             {
-                if (node.Data.IsFreeSpace  || !coordinates.TryDistance(EntityManager, GetCoordinates(node), out var length))
+                if (!node.Data.IsFreeSpace  || !coordinates.TryDistance(EntityManager, GetCoordinates(node), out var length))
                     break;
 
                 if (length < closest)

@@ -15,7 +15,7 @@
   - type: HTN
     rootTask: XenoCompound
   - type: Tool
-    speed: 0.3
+    speed: 1.5
     qualities:
       - Prying
     useSound:
