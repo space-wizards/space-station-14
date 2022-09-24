@@ -6,7 +6,7 @@ using Robust.Shared.Network;
 namespace Content.Shared.Traits.Assorted;
 
 /// <summary>
-/// This handles...
+/// This handles permanent blindness, both the examine and the actual effect.
 /// </summary>
 public sealed class PermanentBlindnessSystem : EntitySystem
 {
