@@ -1,0 +1,18 @@
+- type: entity
+  name: Food & Drink Vending Machine Restock Package Spawner
+  id: SpawnFoodDrinkVendingMachineRestockPackage
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - texture: Objects/Specific/Janitorial/vending_restock_package.rsi/icon.png
+  - type: ConditionalSpawner
+    prototypes:
+      - VendingMachineRestockDiscountDans
+      - VendingMachineRestockChang
+      - VendingMachineRestockDonut
+      - VendingMachineRestockGetmoreChocolateCorp
+      - VendingMachineRestockRobustSoftdrinks
+      - VendingMachineRestockHotDrinks
+

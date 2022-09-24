@@ -1,0 +1,10 @@
+- type: cargoProduct
+  id: FoodVendingMachineRestock
+  icon:
+    sprite: Objects/Specific/Janitorial/vending_restock_package.rsi
+    state: icon
+  product: CrateFoodVendingMachineRestock
+  cost: 4000
+  category: Food
+  group: market
+

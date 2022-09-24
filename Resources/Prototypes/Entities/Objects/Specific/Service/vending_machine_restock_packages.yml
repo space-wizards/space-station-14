@@ -1,0 +1,123 @@
+- type: entity
+  parent: BaseItem
+  id: VendingMachineRestockPackage
+  name: vending machine restock package
+  description: A restocking package of corporate goodies.
+  components:
+  - type: VendingMachineRestockPackage
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Specific/Janitorial/vending_restock_package.rsi
+    state: icon
+  - type: ItemCooldown
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 5
+    hitSound:
+      path: /Audio/Weapons/genhit2.ogg
+    missSound:
+      path: /Audio/Weapons/punchmiss.ogg
+  - type: Item
+    size: 50
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 20
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+      - !type:DumpRestockInventory
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  parent: VendingMachineRestockPackage
+  id: VendingMachineRestockDiscountDans
+  name: mega snack package
+  description: A box full of salt and starch. Why suffer Quality when you can have Quantity? Discount Dan's!
+  components:
+  - type: VendingMachineRestockPackage
+    canRestock:
+    - DiscountDansInventory
+  - type: Sprite
+    layers:
+    - state: icon
+    - state: discount
+
+- type: entity
+  parent: VendingMachineRestockPackage
+  id: VendingMachineRestockChang
+  name: noodle package
+  description: A box covered in white labels with bold red Chinese characters, ready to be loaded into the nearest Mr. Chang's vending machine.
+  components:
+  - type: VendingMachineRestockPackage
+    canRestock:
+    - ChangInventory
+  - type: Sprite
+    layers:
+    - state: icon
+    - state: chinese
+
+- type: entity
+  parent: VendingMachineRestockPackage
+  id: VendingMachineRestockDonut
+  name: donut package
+  description: A box full of toroidal bundles of fried dough for restocking a vending machine.
+  components:
+  - type: VendingMachineRestockPackage
+    canRestock:
+    - DonutInventory
+  - type: Sprite
+    layers:
+    - state: icon
+    - state: donuts
+
+- type: entity
+  parent: VendingMachineRestockPackage
+  id: VendingMachineRestockGetmoreChocolateCorp
+  name: GetMore Chocolate package
+  description: A package loaded with the finest ersatz cacao. Only to be used in official Getmore Chocolate vending machines.
+  components:
+  - type: VendingMachineRestockPackage
+    canRestock:
+    - GetmoreChocolateCorpInventory
+  - type: Sprite
+    layers:
+    - state: icon
+    - state: chocolate
+
+- type: entity
+  parent: VendingMachineRestockPackage
+  id: VendingMachineRestockRobustSoftdrinks
+  name: cola can cooler
+  description: A cold, clunky container of colliding chilly cylinders. Use only as directed by Robust Industries, LLC.
+  components:
+  - type: VendingMachineRestockPackage
+    canRestock:
+    - RobustSoftdrinksInventory
+    - BodaInventory
+  - type: Sprite
+    layers:
+    - state: icon
+    - state: cola
+
+- type: entity
+  parent: VendingMachineRestockPackage
+  id: VendingMachineRestockHotDrinks
+  name: box of liquid caffeine
+  description: Toasty! For use in Solar's Best Hot Drinks or other affiliate vending machines.
+  components:
+  - type: VendingMachineRestockPackage
+    canRestock:
+    - HotDrinksMachineInventory
+  - type: Sprite
+    layers:
+    - state: icon
+    - state: coffee
+

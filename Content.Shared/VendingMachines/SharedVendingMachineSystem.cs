@@ -16,6 +16,17 @@ public abstract class SharedVendingMachineSystem : EntitySystem
 
     protected virtual void OnComponentInit(EntityUid uid, SharedVendingMachineComponent component, ComponentInit args)
     {
+        RestockInventoryFromPrototype(uid, component);
+    }
+
+    public void RestockInventoryFromPrototype(EntityUid uid,
+        SharedVendingMachineComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+        {
+            return;
+        }
+
         if (!_prototypeManager.TryIndex(component.PackPrototypeId, out VendingMachineInventoryPrototype? packPrototype))
             return;
 

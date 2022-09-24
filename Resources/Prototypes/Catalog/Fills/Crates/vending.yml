@@ -1,0 +1,13 @@
+- type: entity
+  id: CrateFoodVendingMachineRestock
+  parent: CratePlastic
+  components:
+  - type: StorageFill
+    contents:
+    - id: VendingMachineRestockDiscountDans
+    - id: VendingMachineRestockChang
+    - id: VendingMachineRestockDonut
+    - id: VendingMachineRestockGetmoreChocolateCorp
+    - id: VendingMachineRestockRobustSoftdrinks
+    - id: VendingMachineRestockHotDrinks
+

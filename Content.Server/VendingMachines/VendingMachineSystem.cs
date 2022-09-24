@@ -52,6 +52,8 @@ namespace Content.Server.VendingMachines
             SubscribeLocalEvent<VendingMachineComponent, VendingMachineEjectMessage>(OnInventoryEjectMessage);
 
             SubscribeLocalEvent<VendingMachineComponent, VendingMachineSelfDispenseEvent>(OnSelfDispense);
+
+            SubscribeLocalEvent<VendingMachineComponent, VendingMachineRestockEvent>(OnRestock);
         }
 
         private void OnVendingPrice(EntityUid uid, VendingMachineComponent component, ref PriceCalculationEvent args)
@@ -161,6 +163,15 @@ namespace Content.Server.VendingMachines
 
             args.Handled = true;
             EjectRandom(uid, throwItem: true, forceEject: false, component);
+        }
+
+        private void OnRestock(EntityUid uid, VendingMachineComponent component, VendingMachineRestockEvent args)
+        {
+            if (args.Handled)
+                return;
+
+            args.Handled = true;
+            TryRestockInventory(uid, component);
         }
 
         /// <summary>
@@ -414,6 +425,17 @@ namespace Content.Server.VendingMachines
                     }
                 }
             }
+        }
+
+        public void TryRestockInventory(EntityUid uid, VendingMachineComponent? vendComponent = null)
+        {
+            if (!Resolve(uid, ref vendComponent))
+                return;
+
+            RestockInventoryFromPrototype(uid, vendComponent);
+
+            UpdateVendingMachineInterfaceState(vendComponent);
+            TryUpdateVisualState(uid, vendComponent);
         }
     }
 }

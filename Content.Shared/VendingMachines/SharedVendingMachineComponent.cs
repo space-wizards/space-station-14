@@ -97,4 +97,5 @@ namespace Content.Shared.VendingMachines
     }
 
     public sealed class VendingMachineSelfDispenseEvent : InstantActionEvent { };
+    public sealed class VendingMachineRestockEvent : InstantActionEvent { };
 }
