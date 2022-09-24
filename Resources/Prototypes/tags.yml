@@ -4,9 +4,6 @@
   id: AirAlarm
 
 - type: Tag
-  id: AirAlarmElectronics
-
-- type: Tag
   id: AirSensor
 
 - type: Tag
@@ -166,9 +163,6 @@
   id: DoorBumpOpener
 
 - type: Tag
-  id: DoorElectronics
-
-- type: Tag
   id: DonkPocket
 
 - type: Tag
@@ -191,9 +185,6 @@
 
 - type: Tag
   id: FireAlarm
-
-- type: Tag
-  id: FireAlarmElectronics
 
 - type: Tag
   id: FireAxe
@@ -328,9 +319,6 @@
 
 - type: Tag
   id: Matchstick
-
-- type: Tag
-  id: MailingUnitElectronics
 
 - type: Tag
   id: Medkit

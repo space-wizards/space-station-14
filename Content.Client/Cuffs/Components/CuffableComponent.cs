@@ -1,6 +1,6 @@
 using Content.Shared.ActionBlocker;
-using Content.Shared.CharacterAppearance;
 using Content.Shared.Cuffs.Components;
+using Content.Shared.Humanoid;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.GameObjects;

@@ -1,8 +1,7 @@
 <Control xmlns="https://spacestation14.io"
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-         xmlns:magicmirror="clr-namespace:Content.Client.CharacterAppearance"
          xmlns:prefUi="clr-namespace:Content.Client.Preferences.UI"
-         xmlns:markings="clr-namespace:Content.Client.Markings">
+         xmlns:humanoid="clr-namespace:Content.Client.Humanoid">
     <BoxContainer Orientation="Horizontal">
         <!-- Left side -->
         <BoxContainer Orientation="Vertical" Margin="10 10 10 10">
@@ -98,8 +97,8 @@
                             <!-- Hair -->
                             <prefUi:HighlightedContainer>
                                 <BoxContainer Orientation="Horizontal">
-                                    <magicmirror:HairStylePicker Name="CHairStylePicker" HorizontalAlignment="Center" />
-                                    <magicmirror:HairStylePicker Name="CFacialHairPicker" />
+                                    <humanoid:SingleMarkingPicker Name="CHairStylePicker" Category="Hair" />
+                                    <humanoid:SingleMarkingPicker Name="CFacialHairPicker" Category="FacialHair" />
                                 </BoxContainer>
                             </prefUi:HighlightedContainer>
                             <!-- Clothing -->
@@ -120,7 +119,7 @@
                             <prefUi:HighlightedContainer>
                                 <BoxContainer Orientation="Vertical">
                                     <Label Text="{Loc 'humanoid-profile-editor-eyes-label'}" />
-                                    <magicmirror:EyeColorPicker Name="CEyeColorPicker" />
+                                    <humanoid:EyeColorPicker Name="CEyeColorPicker" />
                                 </BoxContainer>
                             </prefUi:HighlightedContainer>
                         </BoxContainer>
@@ -148,7 +147,7 @@
                 <BoxContainer Name="CMarkingsTab" Orientation="Vertical" Margin="10">
                     <!-- Markings -->
                     <ScrollContainer VerticalExpand="True">
-                        <markings:MarkingPicker Name="CMarkings" />
+                        <humanoid:MarkingPicker Name="CMarkings" IgnoreCategories="Hair,FacialHair" />
                     </ScrollContainer>
                 </BoxContainer>
             </TabContainer>

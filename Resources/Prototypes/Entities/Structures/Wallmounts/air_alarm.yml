@@ -13,6 +13,7 @@
     deviceNetId: AtmosDevices
     receiveFrequencyId: AtmosMonitor
     transmitFrequencyId: AtmosMonitor
+    prefix: device-address-prefix-air-alarm
     sendBroadcastAttemptEvent: true
   - type: WiredNetworkConnection
   - type: DeviceList
