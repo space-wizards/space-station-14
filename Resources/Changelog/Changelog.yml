@@ -1,26 +1,4 @@
 Entries:
-- author: DogZeroX
-  changes:
-  - {message: 'Exos no longer have an accent, they can talk like a normal person until
-      they get a language.', type: Tweak}
-  id: 1854
-  time: '2022-07-03T02:56:33.0000000+00:00'
-- author: DogZeroX
-  changes:
-  - {message: Blue alert now has its own alarm., type: Add}
-  - {message: Red alert alarm sounds more alarming., type: Add}
-  id: 1855
-  time: '2022-07-03T03:52:40.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: PAI can now only hear Common radio., type: Tweak}
-  id: 1856
-  time: '2022-07-03T08:36:40.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Shuttle transit time reduced from 2 minutes to 1 minute., type: Tweak}
-  id: 1857
-  time: '2022-07-04T05:14:04.0000000+00:00'
 - author: jessicamaybe
   changes:
   - {message: 'Adds a new disease, tongue twister.', type: Add}
@@ -2921,3 +2899,25 @@ Entries:
       title., type: Fix}
   id: 2353
   time: '2022-09-22T19:04:01.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: 'psychologist, detective, and reporter ID cards now display correct
+      layers', type: Fix}
+  id: 2354
+  time: '2022-09-22T21:00:14.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: Humanoids were recently changed. Expect to see more variations of humanoids
+      in places, type: Tweak}
+  id: 2355
+  time: '2022-09-22T22:19:00.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Gave descriptions to the shaker and shot glass., type: Add}
+  id: 2356
+  time: '2022-09-22T23:55:31.0000000+00:00'
+- author: illiux
+  changes:
+  - {message: Latejoin spawns to Pillar, type: Add}
+  id: 2357
+  time: '2022-09-23T04:19:07.0000000+00:00'
