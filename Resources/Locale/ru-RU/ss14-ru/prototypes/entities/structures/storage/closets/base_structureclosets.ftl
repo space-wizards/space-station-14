@@ -1,8 +1,8 @@
 ent-ClosetBase = шкаф
     .desc = Стандартное хранилище Nanotrasen.
     .suffix = { "" }
-ent-BaseWallCloset = wall closet
-    .desc = A standard-issue Nanotrasen storage unit, now on walls.
+ent-BaseWallCloset = настенный шкаф
+    .desc = Стандартное хранилище Nanotrasen, теперь и на стене.
     .suffix = { "" }
 ent-BaseWallLocker = { ent-BaseWallCloset }
     .desc = { ent-BaseWallCloset.desc }

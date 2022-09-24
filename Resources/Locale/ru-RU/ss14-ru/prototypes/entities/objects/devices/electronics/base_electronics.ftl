@@ -1,3 +1,3 @@
-ent-BaseElectronics = base electronics
-    .suffix = Electronics
+ent-BaseElectronics = базовая электросхема
+    .suffix = Электросхема
     .desc = { ent-BaseItem.desc }

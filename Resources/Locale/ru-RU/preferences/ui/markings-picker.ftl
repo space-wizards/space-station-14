@@ -5,15 +5,15 @@ markings-remove = Убрать отметину
 markings-rank-up = Вверх
 markings-rank-down = Вниз
 marking-points-remaining = Отметин осталось: { $points }
-marking-used = { $marking-name } ({ $marking-category })
-marking-used-forced = { $marking-name } (Forced)
-marking-slot-add = Add
-marking-slot-remove = Remove
+marking-used = { $marking-name }
+marking-used-forced = { $marking-name } (Принудительно)
+marking-slot-add = Добавить
+marking-slot-remove = Удалить
 
 # Categories
 
-markings-category-Hair = Hair
-markings-category-FacialHair = Facial Hair
+markings-category-Hair = Причёска
+markings-category-FacialHair = Лицевая растительность
 markings-category-Head = Голова
 markings-category-HeadTop = Голова (верх)
 markings-category-HeadSide = Голова (бок)

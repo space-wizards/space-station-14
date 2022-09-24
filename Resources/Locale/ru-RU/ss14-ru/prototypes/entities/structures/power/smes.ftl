@@ -5,5 +5,5 @@ ent-SMESBasic = { ent-BaseSMES }
     .suffix = Базовая, 10МВт
     .desc = { ent-BaseSMES.desc }
 ent-SMESBasicEmpty = { ent-SMESBasic }
-    .suffix = Empty
+    .suffix = Пустой
     .desc = { ent-SMESBasic.desc }

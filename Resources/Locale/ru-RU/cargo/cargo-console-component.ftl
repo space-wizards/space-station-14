@@ -1,6 +1,6 @@
 ## UI
 
-cargo-console-menu-title = Консоль запроса поставки
+cargo-console-menu-title = Компьютер заказа грузов
 cargo-console-menu-account-name-label = Имя аккаунта:{ " " }
 cargo-console-menu-account-name-none-text = Нет
 cargo-console-menu-shuttle-name-label = Название шаттла:{ " " }
@@ -36,7 +36,7 @@ cargo-console-paper-print-text =
     Причина: { $reason }
     Одобрил: { $approver }
 # Cargo shuttle console
-cargo-shuttle-console-menu-title = Консоль грузового шаттла
+cargo-shuttle-console-menu-title = Компьютер вызова грузового шаттла
 cargo-shuttle-console-station-unknown = Неизвестно
 cargo-shuttle-console-shuttle-not-found = Не найден
 cargo-no-shuttle = Грузовой шаттл не найден!

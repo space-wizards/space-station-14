@@ -8,7 +8,7 @@ comms-console-menu-recall-shuttle = Отозвать шаттл экстренн
 comms-console-permission-denied = В доступе отказано
 # Placeholder values
 comms-console-announcement-sent-by = Отправитель
-comms-console-announcement-unknown-sender = Неизвестно
+comms-console-announcement-unknown-sender = Неизвестный
 # Comms console variant titles
 comms-console-announcement-title-station = Консоль связи
 comms-console-announcement-title-centcom = Центральное командование
