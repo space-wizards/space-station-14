@@ -5,6 +5,7 @@ using Content.Server.Ghost.Roles.Components;
 using Content.Server.Ghost.Roles.UI;
 using Content.Server.Mind.Components;
 using Content.Server.Players;
+using Content.Server.Database;
 using Content.Shared.Administration;
 using Content.Shared.Database;
 using Content.Shared.Follower;
@@ -30,6 +31,8 @@ namespace Content.Server.Ghost.Roles
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly FollowerSystem _followerSystem = default!;
+        [Dependency] private readonly IServerDbManager _db = default!;
+
 
         private uint _nextRoleIdentifier;
         private bool _needsUpdateGhostRoleCount = true;
@@ -177,8 +180,14 @@ namespace Content.Server.Ghost.Roles
             UpdateAllEui();
         }
 
-        public void Takeover(IPlayerSession player, uint identifier)
+        public async void Takeover(IPlayerSession player, uint identifier)
         {
+            if (!await _db.GetWhitelistStatusAsync(player.UserId))
+            {
+                CloseEui(player);
+                return;
+            }
+
             if (!_ghostRoles.TryGetValue(identifier, out var role)) return;
             if (!role.Take(player)) return;
 
@@ -222,7 +231,7 @@ namespace Content.Server.Ghost.Roles
 
             foreach (var (id, role) in _ghostRoles)
             {
-                roles[i] = new GhostRoleInfo(){Identifier = id, Name = role.RoleName, Description = role.RoleDescription, Rules = role.RoleRules};
+                roles[i] = new GhostRoleInfo(){Identifier = id, Name = role.RoleName, Description = role.RoleDescription, Rules = ("(REQUIRES WHITELIST) " + role.RoleRules)};
                 i++;
             }
 
@@ -274,7 +283,7 @@ namespace Content.Server.Ghost.Roles
             }
 
             if (role.RoleRules == "")
-                role.RoleRules = Loc.GetString("ghost-role-component-default-rules");
+                role.RoleRules = ("(REQUIRES WHITELIST) " + Loc.GetString("ghost-role-component-default-rules"));
             RegisterGhostRole(role);
         }
 
