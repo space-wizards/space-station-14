@@ -42,22 +42,8 @@ public sealed class RadiationRay
     public bool ReachedDestination => Rads > 0;
 
     /// <summary>
-    ///     Does radiation travel by grid tiles (gridcast) or world coordinates (raycast)?
-    /// </summary>
-    public bool IsGridcast => VisitedTiles.Count != 0;
-
-    /// <summary>
-    ///     All tiles visited by gridcast. If radiation has encountered blockers on this tile
-    ///     will have float with updated radiation value. Empty if not gridcast.
-    /// </summary>
-    /// <remarks>
-    ///     Last tile may have negative value if ray has lost all intensity.
-    /// </remarks>
-    public Dictionary<EntityUid, List<(Vector2i, float?)>> VisitedTiles = new();
-
-    /// <summary>
-    ///     All blockers visited by raycast. Consist of pairs of impact point in world space
-    ///     and float with updated radiation value. Empty if not raycast.
+    ///     All blockers visited by gridcast. Consist of pairs of impact point in world space
+    ///     and float with updated radiation value.
     /// </summary>
     /// <remarks>
     ///     Last position may have negative value if ray has lost all intensity.

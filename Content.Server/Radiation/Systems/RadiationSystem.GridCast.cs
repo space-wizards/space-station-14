@@ -139,10 +139,10 @@ public partial class RadiationSystem
     private RadiationRay Gridcast(IMapGrid grid, RadiationRay ray, bool saveVisitedTiles,
         EntityQuery<RadiationGridResistanceComponent> resistanceQuery)
     {
-        var gridUid = grid.GridEntityId;
-        var visitedTiles = new List<(Vector2i, float?)>();
+        var blockers = new List<(Vector2, float)>();
 
         // if grid doesn't have resistance map just apply distance penalty
+        var gridUid = grid.GridEntityId;
         if (!resistanceQuery.TryGetComponent(gridUid, out var resistance))
             return ray;
         var resistanceMap = resistance.ResistancePerTile;
@@ -155,16 +155,16 @@ public partial class RadiationSystem
         var line = Line(sourceGrid.X, sourceGrid.Y, destGrid.X, destGrid.Y);
         foreach (var point in line)
         {
-            (Vector2i, float?) visitedTile = (point, null);
-            if (resistanceMap.TryGetValue(point, out var resData))
-            {
-                ray.Rads -= resData;
-                visitedTile.Item2 = ray.Rads;
-            }
+            if (!resistanceMap.TryGetValue(point, out var resData))
+                continue;
+            ray.Rads -= resData;
 
             // save data for debug
             if (saveVisitedTiles)
-                visitedTiles.Add(visitedTile);
+            {
+                var worldPos = grid.GridTileToWorldPos(point);
+                blockers.Add((worldPos, ray.Rads));
+            }
 
             // no intensity left after blocker
             if (ray.Rads <= MinIntensity)
@@ -175,44 +175,11 @@ public partial class RadiationSystem
         }
 
         // save data for debug if needed
-        if (saveVisitedTiles && visitedTiles.Count > 0)
-            ray.VisitedTiles.Add(gridUid, visitedTiles);
+        if (saveVisitedTiles && blockers.Count > 0)
+            ray.Blockers = blockers;
 
         return ray;
     }
-
-    private RadiationRay Raycast(MapId mapId, EntityUid sourceUid, EntityUid destUid,
-        Vector2 sourceWorld, Vector2 destWorld, Vector2 dir, float distance, float incomingRads,
-        EntityQuery<RadiationBlockerComponent> blockerQuery)
-    {
-        var blockers = new List<(Vector2, float)>();
-        var radRay = new RadiationRay(mapId, sourceUid, sourceWorld,
-            destUid, destWorld, incomingRads)
-        {
-            Blockers = blockers
-        };
-
-        var colRay = new CollisionRay(sourceWorld, dir, (int) CollisionGroup.Impassable);
-        var results = _physicsSystem.IntersectRay(mapId, colRay, distance, returnOnFirstHit: false);
-
-        foreach (var obstacle in results)
-        {
-            if (!blockerQuery.TryGetComponent(obstacle.HitEntity, out var blocker))
-                continue;
-
-            radRay.Rads -= blocker.RadResistance;
-            blockers.Add((obstacle.HitPos, radRay.Rads));
-
-            if (radRay.Rads <= MinIntensity)
-            {
-                radRay.Rads = 0;
-                return radRay;
-            }
-        }
-
-        return radRay;
-    }
-
 
     // bresenhams line algorithm
     // this is slightly rewritten version of code bellow
