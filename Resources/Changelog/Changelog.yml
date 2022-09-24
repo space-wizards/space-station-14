@@ -1,53 +1,4 @@
 Entries:
-- author: ODJ
-  changes:
-  - {message: Detective Support, type: Add}
-  - {message: Arrivals Dock(secondary evac), type: Add}
-  - {message: QoL, type: Add}
-  - {message: Capital L, type: Add}
-  - {message: skub, type: Add}
-  id: 1850
-  time: '2022-07-03T02:34:51.0000000+00:00'
-- author: Sammy Boy
-  changes:
-  - {message: Wire snipping takes .75 seconds longer to help prevent missclick consequences!,
-    type: Tweak}
-  id: 1851
-  time: '2022-07-03T02:37:44.0000000+00:00'
-- author: Elijahrane
-  changes:
-  - {message: Morgues and body bags should behave much more reliably for stopping
-      rotting., type: Fix}
-  - {message: You can preserve bodies so they never rot., type: Fix}
-  id: 1852
-  time: '2022-07-03T02:46:24.0000000+00:00'
-- author: Sammy Boy
-  changes:
-  - {message: Xenos are now Insulated and Immune to diseases!, type: Tweak}
-  id: 1853
-  time: '2022-07-03T02:49:35.0000000+00:00'
-- author: DogZeroX
-  changes:
-  - {message: 'Exos no longer have an accent, they can talk like a normal person until
-      they get a language.', type: Tweak}
-  id: 1854
-  time: '2022-07-03T02:56:33.0000000+00:00'
-- author: DogZeroX
-  changes:
-  - {message: Blue alert now has its own alarm., type: Add}
-  - {message: Red alert alarm sounds more alarming., type: Add}
-  id: 1855
-  time: '2022-07-03T03:52:40.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: PAI can now only hear Common radio., type: Tweak}
-  id: 1856
-  time: '2022-07-03T08:36:40.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Shuttle transit time reduced from 2 minutes to 1 minute., type: Tweak}
-  id: 1857
-  time: '2022-07-04T05:14:04.0000000+00:00'
 - author: jessicamaybe
   changes:
   - {message: 'Adds a new disease, tongue twister.', type: Add}
@@ -2924,3 +2875,49 @@ Entries:
     type: Add}
   id: 2349
   time: '2022-09-21T02:16:59.0000000+00:00'
+- author: Mervill
+  changes:
+  - {message: Forensic pad is now tagged as a document. They can be stored in filling
+      cabinets and folders., type: Fix}
+  id: 2350
+  time: '2022-09-22T15:46:11.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: We have added a little sticker to some of your devices that should make
+      it easier for you to figure out what that device's local address is., type: Add}
+  id: 2351
+  time: '2022-09-22T19:00:54.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: New backpacks for salvage specialists, type: Add}
+  - {message: Added missing botany duffle bag, type: Add}
+  id: 2352
+  time: '2022-09-22T19:02:30.0000000+00:00'
+- author: Mervill
+  changes:
+  - {message: The agent id card interface now remembers the previous fake name and
+      title., type: Fix}
+  id: 2353
+  time: '2022-09-22T19:04:01.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: 'psychologist, detective, and reporter ID cards now display correct
+      layers', type: Fix}
+  id: 2354
+  time: '2022-09-22T21:00:14.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: Humanoids were recently changed. Expect to see more variations of humanoids
+      in places, type: Tweak}
+  id: 2355
+  time: '2022-09-22T22:19:00.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Gave descriptions to the shaker and shot glass., type: Add}
+  id: 2356
+  time: '2022-09-22T23:55:31.0000000+00:00'
+- author: illiux
+  changes:
+  - {message: Latejoin spawns to Pillar, type: Add}
+  id: 2357
+  time: '2022-09-23T04:19:07.0000000+00:00'

@@ -175041,4 +175041,28 @@ entities:
   - pos: -99.5,8.5
     parent: 8
     type: Transform
+- uid: 21391
+  type: SpawnPointLatejoin
+  components:
+  - pos: -58.5,31.5
+    parent: 8
+    type: Transform
+- uid: 21392
+  type: SpawnPointLatejoin
+  components:
+  - pos: -59.5,31.5
+    parent: 8
+    type: Transform
+- uid: 21393
+  type: SpawnPointLatejoin
+  components:
+  - pos: -60.5,31.5
+    parent: 8
+    type: Transform
+- uid: 21394
+  type: SpawnPointLatejoin
+  components:
+  - pos: -61.5,31.5
+    parent: 8
+    type: Transform
 ...
