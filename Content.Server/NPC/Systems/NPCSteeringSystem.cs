@@ -359,7 +359,7 @@ namespace Content.Server.NPC.Systems
 
             while (nodes.TryPeek(out var node))
             {
-                if (node.Data.Flags != PathfindingBreadcrumbFlag.None || !coordinates.TryDistance(EntityManager, GetCoordinates(node), out var length))
+                if (node.Data.IsFreeSpace  || !coordinates.TryDistance(EntityManager, GetCoordinates(node), out var length))
                     break;
 
                 if (length < closest)
