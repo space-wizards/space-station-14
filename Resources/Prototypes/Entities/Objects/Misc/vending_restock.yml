@@ -10,7 +10,6 @@
     layers:
     - state: refill_custom
   - type: Item
-    Sprite: Objects/Storage/boxes.rsi
     size: 31 #too big for pockets
 
 - type: entity
