@@ -1,10 +1,8 @@
 using System.Linq;
 using Content.Server.Radiation.Components;
-using Content.Shared.Physics;
 using Content.Shared.Radiation.Components;
 using Content.Shared.Radiation.Systems;
 using Robust.Shared.Map;
-using Robust.Shared.Physics;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Radiation.Systems;
@@ -23,7 +21,6 @@ public partial class RadiationSystem
 
         var sources = EntityQuery<RadiationSourceComponent, TransformComponent>().ToArray();
         var destinations = EntityQuery<RadiationReceiverComponent, TransformComponent>().ToArray();
-        var blockerQuery = GetEntityQuery<RadiationBlockerComponent>();
         var resistanceQuery = GetEntityQuery<RadiationGridResistanceComponent>();
         var transformQuery = GetEntityQuery<TransformComponent>();
 
@@ -39,8 +36,7 @@ public partial class RadiationSystem
             {
                 // send ray towards destination entity
                 var ray = Irradiate(sourceTrs.Owner, sourceTrs, destTrs.Owner, destTrs, destWorld,
-                    source.Intensity, source.Slope, saveVisitedTiles,
-                    blockerQuery, resistanceQuery, transformQuery);
+                    source.Intensity, source.Slope, saveVisitedTiles, resistanceQuery, transformQuery);
                 if (ray == null)
                     continue;
 
@@ -77,7 +73,6 @@ public partial class RadiationSystem
     private RadiationRay? Irradiate(EntityUid sourceUid, TransformComponent sourceTrs,
         EntityUid destUid, TransformComponent destTrs, Vector2 destWorld,
         float incomingRads, float slope, bool saveVisitedTiles,
-        EntityQuery<RadiationBlockerComponent> blockerQuery,
         EntityQuery<RadiationGridResistanceComponent> resistanceQuery,
         EntityQuery<TransformComponent> transformQuery)
     {
