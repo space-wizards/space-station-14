@@ -3,4 +3,4 @@ ent-BaseWeaponHeavyMachineGun = BaseWeaponHeavyMachineGun
     .suffix = { "" }
 ent-WeaponMinigun = миниган
     .desc = Вззззззт! Рахрахрахрах! Врррр!
-    .suffix = { "" }
+    .suffix = Пулемёт
