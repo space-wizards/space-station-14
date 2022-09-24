@@ -3,13 +3,20 @@
 /// <summary>
 /// This is used for the narcolepsy trait.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, Access(typeof(NarcolepsySystem))]
 public sealed class NarcolepsyComponent : Component
 {
+    /// <summary>
+    /// The random time between incidents, (min, max).
+    /// </summary>
     [DataField("timeBetweenIncidents", required: true)]
-    public Vector2 TimeBetweenIncidents { get; } = default!;
+    public Vector2 TimeBetweenIncidents { get; }
+
+    /// <summary>
+    /// The duration of incidents, (min, max).
+    /// </summary>
     [DataField("durationOfIncident", required: true)]
-    public Vector2 DurationOfIncident { get; }  = default!;
+    public Vector2 DurationOfIncident { get; }
 
     public float NextIncidentTime;
 }
