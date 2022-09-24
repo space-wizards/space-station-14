@@ -10,7 +10,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 
-namespace Content.IntegrationTests.Tests
+namespace Content.IntegrationTests.Tests.Minds
 {
     // Tests various scenarios of deleting the entity that a player's mind is connected to.
     [TestFixture]
