@@ -5,7 +5,7 @@ using Robust.Shared.Random;
 namespace Content.Server.Traits.Assorted;
 
 /// <summary>
-/// This handles...
+/// This handles narcolepsy, causing the affected to fall asleep uncontrollably at a random interval.
 /// </summary>
 public sealed class NarcolepsySystem : EntitySystem
 {
