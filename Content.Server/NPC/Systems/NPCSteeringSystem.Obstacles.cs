@@ -33,10 +33,9 @@ public sealed partial class NPCSteeringSystem
 
     private SteeringObstacleStatus TryHandleFlags(NPCSteeringComponent component, PathPoly poly, EntityQuery<PhysicsComponent> bodyQuery)
     {
-        if (component.Flags == PathFlags.None)
+        if (poly.Data.IsFreeSpace)
             return SteeringObstacleStatus.Completed;
 
-        // TODO: Use bodyquery
         if (!bodyQuery.TryGetComponent(component.Owner, out var body))
             return SteeringObstacleStatus.Failed;
 
@@ -83,6 +82,7 @@ public sealed partial class NPCSteeringSystem
                 {
                     if (doorQuery.TryGetComponent(ent, out var door) && door.State != DoorState.Open)
                     {
+                        // TODO: Use the verb.
                         if (door.State != DoorState.Opening && !door.BeingPried)
                             _doors.TryPryDoor(ent, component.Owner, component.Owner, door, true);
 

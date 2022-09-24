@@ -38,15 +38,12 @@ public sealed class PickAccessibleOperator : HTNOperator
         // Very inefficient (should weight each region by its node count) but better than the old system
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
 
-        if (!_entManager.TryGetComponent(_entManager.GetComponent<TransformComponent>(owner).GridUid, out IMapGridComponent? grid))
-            return (false, null);
-
         blackboard.TryGetValue<float>(RangeKey, out var maxRange);
 
         if (maxRange == 0f)
             maxRange = 7f;
 
-        var path = await _pathfinding.GetRandomPath(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner), 1.4f, maxRange,
+        var path = await _pathfinding.GetRandomPath(owner, 1.4f, maxRange,
             CancellationToken.None);
 
         if (path.Result != PathResult.Path)

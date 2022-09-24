@@ -49,7 +49,6 @@ public sealed partial class PathfindingSystem
             return PathResult.NoPath;
         }
 
-        currentNode = startNode;
         request.Frontier.Add((0.0f, startNode));
         request.CostSoFar[startNode] = 0.0f;
         var count = 0;

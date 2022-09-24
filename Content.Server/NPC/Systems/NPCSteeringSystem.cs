@@ -206,7 +206,7 @@ namespace Content.Server.NPC.Systems
                 }
             }
 
-            var arrivalDistance = SharedInteractionSystem.InteractionRange - 0.5f;
+            var arrivalDistance = SharedInteractionSystem.InteractionRange - 0.6f;
 
             if (targetCoordinates.Equals(steering.Coordinates))
             {

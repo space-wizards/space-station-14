@@ -217,7 +217,6 @@ namespace Content.Server.NPC.Pathfinding
             CancellationToken cancelToken,
             int limit = 40)
         {
-            // TODO: BFS Expansion
             if (!TryComp<TransformComponent>(entity, out var start))
                 return new PathResultEvent(PathResult.NoPath, new Queue<PathPoly>());
 
@@ -232,7 +231,6 @@ namespace Content.Server.NPC.Pathfinding
             }
 
             var request = new BFSPathRequest(maxRange, limit, start.Coordinates, PathFlags.None, range, layer, mask, cancelToken);
-
             var path = await GetPath(request);
 
             if (path.Result != PathResult.Path)
