@@ -11,3 +11,9 @@
     - type: Narcolepsy
       timeBetweenIncidents: 300, 600
       durationOfIncident: 10, 30
+
+- type: trait
+  id: Pacifist
+  name: Pacifist
+  components:
+    - type: Pacifist
