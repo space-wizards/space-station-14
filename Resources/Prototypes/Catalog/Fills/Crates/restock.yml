@@ -1,0 +1,104 @@
+- type: entity
+  id: CrateBoozeRestockFilled
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: VendingRestockBooze
+        amount: 1
+
+- type: entity
+  id: CrateClothesRestockFilled
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: VendingRestockClothes
+        amount: 1
+      - id: VendingRestockCostume
+        amount: 1
+
+- type: entity
+  id: CrateColaRestockFilled
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: VendingRestockCola
+        amount: 4
+
+- type: entity
+  id: CrateEngiRestockFilled
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: VendingRestockEngi
+        amount: 1
+      - id: VendingRestockYouTool
+        amount: 1
+
+- type: entity
+  id: CrateGamesRestockFilled
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: VendingRestockGames
+        amount: 1
+
+- type: entity
+  id: CrateJoeRestockFilled
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: VendingRestockJoe
+        amount: 2
+
+- type: entity
+  id: CrateMedicalRestockFilled
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: VendingRestockMedical
+        amount: 1
+
+- type: entity
+  id: CratePlantRestockFilled
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: VendingRestockPlant
+        amount: 1
+
+- type: entity
+  id: CrateSecRestockFilled
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: VendingRestockSec
+        amount: 1
+
+- type: entity
+  id: CrateSmokeRestockFilled
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: VendingRestockSmoke
+        amount: 2
+
+- type: entity
+  id: CrateSnackRestockFilled
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: VendingRestockSnackGetmore
+        amount: 2
+      - id: VendingRestockSnackDiscount
+        amount: 2

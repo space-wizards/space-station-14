@@ -11,3 +11,6 @@ ent-CrateMedicalSurgery = Surgical supplies crate
 
 ent-CrateMedicalScrubs = Medical scrubs crate
     .desc = Medical clothings.
+
+ent-CrateMedicalRestockFilled = Medical restock crate
+    .desc = Contains 1 pack for restocking the NanoMed Plus machine

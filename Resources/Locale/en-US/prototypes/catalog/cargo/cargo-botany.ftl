@@ -9,3 +9,6 @@ ent-HydroponicsTools = { ent-CrateHydroponicsTools }
 
 ent-HydroponicsSeeds = { ent-CrateHydroponicsSeeds }
     .desc = { ent-CrateHydroponicsSeeds.desc }
+
+ent-CrateVendingRestockPlant = { ent-CratePlantRestockFilled }
+    .desc = { ent-CratePlantRestockFilled.desc }

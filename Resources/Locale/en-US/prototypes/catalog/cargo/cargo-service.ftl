@@ -18,3 +18,24 @@ ent-ServiceBureaucracy = { ent-CrateServiceBureaucracy }
 
 ent-ServicePersonnel = { ent-CrateServicePersonnel }
     .desc = { ent-CrateServicePersonnel.desc }
+
+ent-CrateVendingRestockBooze = { ent-CrateBoozeRestockFilled }
+    .desc = { ent-CrateBoozeRestockFilled.desc }
+
+ent-CrateVendingRestockClothes = { ent-CrateClothesRestockFilled }
+    .desc = { ent-CrateClothesRestockFilled.desc }
+
+ent-CrateVendingRestockCola = { ent-CrateColaRestockFilled }
+    .desc = { ent-CrateColaRestockFilled.desc }
+
+ent-CrateVendingRestockGames = { ent-CrateGamesRestockFilled }
+    .desc = { ent-CrateGamesRestockFilled.desc }
+
+ent-CrateVendingRestockJoe = { ent-CrateJoeRestockFilled }
+    .desc = { ent-CrateJoeRestockFilled.desc }
+
+ent-CrateVendingRestockSmoke = { ent-CrateSmokeRestockFilled }
+    .desc = { ent-CrateSmokeRestockFilled.desc }
+
+ent-CrateVendingRestockSnack = { ent-CrateSnackRestockFilled }
+    .desc = { ent-CrateSnackRestockFilled.desc }

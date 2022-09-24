@@ -1,0 +1,168 @@
+- type: entity
+  parent: BaseItem
+  id: BaseVendingRestock
+  abstract: true
+  description: Note - only for use with Nanotrasen approved machines
+  components: 
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Misc/vending_restock.rsi
+    layers:
+    - state: refill_custom
+  - type: Item
+    Sprite: Objects/Storage/boxes.rsi
+    size: 31 #too big for pockets
+
+- type: entity
+  parent: BaseVendingRestock
+  id: VendingRestockBooze
+  name: booze restock pack
+  components:
+  - type: Sprite
+    layers:
+    - state: refill_booze
+  - type: VendingMachineRestock
+    pack: BoozeOMatInventory
+
+- type: entity
+  parent: BaseVendingRestock
+  id: VendingRestockClothes
+  name: clothes restock pack
+  components:
+  - type: Sprite
+    layers:
+    - state: refill_clothes
+  - type: VendingMachineRestock
+    pack: ClothesMateInventory
+
+- type: entity
+  parent: BaseVendingRestock
+  id: VendingRestockCola
+  name: soda restock pack
+  components:
+  - type: Sprite
+    layers:
+    - state: refill_cola
+  - type: VendingMachineRestock
+    pack: RobustSoftdrinksInventory
+
+- type: entity
+  parent: BaseVendingRestock
+  id: VendingRestockCostume
+  name: costume restock pack
+  components:
+  - type: Sprite
+    layers:
+    - state: refill_costume
+  - type: VendingMachineRestock
+    pack: AutoDrobeInventory
+
+- type: entity
+  parent: BaseVendingRestock
+  id: VendingRestockEngi
+  name: engi-vend restock pack
+  components:
+  - type: Sprite
+    layers:
+    - state: refill_engi
+  - type: VendingMachineRestock
+    pack: EngiVendInventory
+
+- type: entity
+  parent: BaseVendingRestock
+  id: VendingRestockYouTool
+  name: youtool restock pack
+  components:
+  - type: Sprite
+    layers:
+    - state: refill_engi
+  - type: VendingMachineRestock
+    pack: YouToolInventory
+
+- type: entity
+  parent: BaseVendingRestock
+  id: VendingRestockGames
+  name: games restock pack
+  components:
+  - type: Sprite
+    layers:
+    - state: refill_games
+  - type: VendingMachineRestock
+    pack: GoodCleanFunInventory
+
+- type: entity
+  parent: BaseVendingRestock
+  id: VendingRestockJoe
+  name: hot drinks restock pack
+  components:
+  - type: Sprite
+    layers: 
+    - state: refill_joe
+  - type: VendingMachineRestock
+    pack: HotDrinksMachineInventory
+
+- type: entity
+  parent: BaseVendingRestock
+  id: VendingRestockMedical
+  name: medical restock pack
+  components:
+  - type: Sprite
+    layers: 
+    - state: refill_medical
+  - type: VendingMachineRestock
+    pack: NanoMedPlusInventory
+
+- type: entity
+  parent: BaseVendingRestock
+  id: VendingRestockPlant
+  name: hydroponics restock pack
+  components:
+  - type: Sprite
+    layers: 
+    - state: refill_plant
+  - type: VendingMachineRestock
+    pack: NutriMaxInventory
+
+- type: entity
+  parent: BaseVendingRestock
+  id: VendingRestockSec
+  name: security restock pack
+  components:
+  - type: Sprite
+    layers: 
+    - state: refill_sec
+  - type: VendingMachineRestock
+    pack: SecTechInventory
+
+- type: entity
+  parent: BaseVendingRestock
+  id: VendingRestockSmoke
+  name: cigarette restock pack
+  components:
+  - type: Sprite
+    layers: 
+    - state: refill_smoke
+  - type: VendingMachineRestock
+    pack: CigaretteMachineInventory
+
+- type: entity
+  parent: BaseVendingRestock
+  id: VendingRestockSnackGetmore
+  name: getmore chocolate restock pack
+  components:
+  - type: Sprite
+    layers: 
+    - state: refill_snack
+  - type: VendingMachineRestock
+    pack: GetmoreChocolateCorpInventory
+
+- type: entity
+  parent: BaseVendingRestock
+  id: VendingRestockSnackDiscount
+  name: discount dan's restock pack
+  components:
+  - type: Sprite
+    layers:
+    - state: refill_snack
+  - type: VendingMachineRestock
+    pack: DiscountDansInventory

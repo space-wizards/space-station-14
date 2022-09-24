@@ -18,3 +18,24 @@ ent-CrateServiceBureaucracy = Bureaucracy crate
 
 ent-CrateServicePersonnel = Personnel crate
     .desc = Contains a box of blank ID cards and PDAs.
+
+ent-CrateBoozeRestockFilled = Booze restock crate
+    .desc = Contains 1 pack for restocking the Booze-O-Mat machine
+
+ent-CrateClothesRestockFilled = Clothing restock crate
+    .desc = Contains 1 pack each for restocking the Clothesmate and AutoDrobe machines
+
+ent-CrateColaRestockFilled = Soda restock crate
+    .desc = Contains 4 packs for restocking the soda machines
+
+ent-CrateGamesRestockFilled = Games restock crate
+    .desc = Contains 1 pack for restocking the Fun machines
+
+ent-CrateJoeRestockFilled = Hot drinks restock crate
+    .desc = Contains 2 packs for restocking the hot drinks machines
+
+ent-CrateSmokeRestockFilled = Cigarette restock crate
+    .desc = Contains 2 packs for restocking the cigarette machines
+
+ent-CrateSnackRestockFilled = Snack restock crate
+    .desc = Contains 2 packs each for restocking Discount Dan's and Getmore Chocolate Corp machines

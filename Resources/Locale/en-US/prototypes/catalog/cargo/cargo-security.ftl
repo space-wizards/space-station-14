@@ -18,3 +18,6 @@ ent-SecuritySupplies = { ent-CrateSecuritySupplies }
 
 ent-SecurityRestraints = { ent-CrateRestraints }
     .desc = { ent-CrateRestraints.desc }
+
+ent-CrateVendingRestockSec = { ent-CrateSecRestockFilled }
+    .desc = { ent-CrateSecRestockFilled.desc }

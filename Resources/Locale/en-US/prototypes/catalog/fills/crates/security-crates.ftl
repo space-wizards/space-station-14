@@ -18,3 +18,6 @@ ent-CrateSecuritySupplies = security supplies crate
 
 ent-CrateRestraints = restraints crate
     .desc = Contains two boxes each of handcuffs and zipties. Requires Security access to open.
+
+ent-CrateSecRestockFilled = Security restock crate
+    .desc = Contains 1 pack for restocking the SecTech machines

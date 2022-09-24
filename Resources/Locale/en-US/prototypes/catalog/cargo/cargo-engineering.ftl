@@ -15,3 +15,6 @@ ent-EngineeringElectricalSupplies = { ent-CrateEngineeringElectricalSupplies }
 
 ent-EngineeringJetpack = { ent-CrateEngineeringJetpack }
     .desc = { ent-CrateEngineeringJetpack.desc }
+
+ent-CrateVendingRestockEngi = { ent-CrateEngiRestockFilled }
+    .desc = { ent-CrateEngiRestockFilled.desc }

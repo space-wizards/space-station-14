@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/3ba8a182d96f8f702b6fa55fffb066c49e4c4f8d",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "refill_booze"
+    },
+    {
+      "name": "refill_clothes"
+    },
+    {
+      "name": "refill_cola"
+    },
+    {
+      "name": "refill_costume"
+    },
+    {
+      "name": "refill_custom"
+    },
+    {
+      "name": "refill_donksoft"
+    },
+    {
+      "name": "refill_engi"
+    },
+    {
+      "name": "refill_games"
+    },
+    {
+      "name": "refill_joe"
+    },
+    {
+      "name": "refill_medical"
+    },
+    {
+      "name": "refill_parts"
+    },
+    {
+      "name": "refill_plant"
+    },
+    {
+      "name": "refill_sec"
+    },
+    {
+      "name": "refill_smoke"
+    },
+    {
+      "name": "refill_snack"
+    }
+  ]
+}

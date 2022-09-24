@@ -3,3 +3,6 @@ ent-MedicalSupplies = { ent-CrateMedicalSupplies }
 
 ent-MedicalChemistrySupplies = { ent-CrateChemistrySupplies }
     .desc = { ent-CrateChemistrySupplies.desc }
+
+ent-CrateVendingRestockMedical = { ent-CrateMedicalRestockFilled }
+    .desc = { ent-CrateMedicalRestockFilled.desc }

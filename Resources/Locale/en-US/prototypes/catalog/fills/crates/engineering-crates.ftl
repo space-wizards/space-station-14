@@ -24,3 +24,6 @@ ent-CrateEngineeringElectricalSupplies = Electrical Supplies Crate
 
 ent-CrateEngineeringJetpack = Jetpack crate
     .desc = Two jetpacks for those who don't know how to use fire extinguishers.
+
+ent-CrateEngiRestockFilled = Engineering restock crate
+    .desc = Contains 1 pack each for restocking the Engi-Vend and YouTool machines
