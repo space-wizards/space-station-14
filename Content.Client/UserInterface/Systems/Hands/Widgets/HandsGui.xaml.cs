@@ -21,6 +21,7 @@ public sealed partial class HandsGui : UIWidget
 
         var inventoryUiController = UserInterfaceManager.GetUIController<HandsUIController>();
         inventoryUiController.RegisterHandContainer(HandContainer);
+        LayoutContainer.SetGrowVertical(this, LayoutContainer.GrowDirection.Begin);
     }
 
     private void RepositionStatusPanel()

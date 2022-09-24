@@ -17,8 +17,8 @@ public sealed partial class DefaultGameScreen : UIScreen
 
         SetAnchorAndMarginPreset(TopBar, LayoutPreset.TopLeft, margin: 10);
         SetAnchorAndMarginPreset(Actions, LayoutPreset.BottomLeft, margin: 10);
-        SetAnchorAndMarginPreset(Ghost, LayoutPreset.BottomWide, margin: 75);
-        SetAnchorAndMarginPreset(Hands, LayoutPreset.BottomWide, margin: 75);
+        SetAnchorAndMarginPreset(Ghost, LayoutPreset.BottomWide, margin: 80);
+        SetAnchorAndMarginPreset(Hands, LayoutPreset.BottomWide, margin: 5);
         SetAnchorAndMarginPreset(Chat, LayoutPreset.TopRight, margin: 10);
         SetAnchorAndMarginPreset(Alerts, LayoutPreset.TopRight, margin: 10);
 

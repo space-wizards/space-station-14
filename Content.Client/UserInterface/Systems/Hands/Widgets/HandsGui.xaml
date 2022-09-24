@@ -8,14 +8,23 @@
     VerticalAlignment="Bottom"
     Orientation="Horizontal"
     HorizontalAlignment="Center">
-    <BoxContainer Orientation="Vertical">
-        <BoxContainer Orientation="Horizontal">
-            <inventory:ItemSlotButtonContainer SlotGroup="SecondHotbar" />
-            <hands:HandsContainer
-                Name="HandContainer"
-                Access="Protected"
-                ColumnLimit="6" />
-            <inventory:ItemSlotButtonContainer SlotGroup="MainHotbar" />
-        </BoxContainer>
+    <BoxContainer Orientation="Horizontal" Name="Hotbar">
+        <inventory:ItemSlotButtonContainer
+            Name="SecondHotbar"
+            SlotGroup="SecondHotbar"
+            VerticalAlignment="Bottom"
+            VerticalExpand="False"
+            HorizontalExpand="True"/>
+        <hands:HandsContainer
+            Name="HandContainer"
+            Access="Protected"
+            ColumnLimit="6" />
+        <inventory:ItemSlotButtonContainer
+            Name="MainHotbar"
+            SlotGroup="MainHotbar"
+            VerticalExpand="False"
+            VerticalAlignment="Bottom"
+            HorizontalExpand="True"
+            />
     </BoxContainer>
 </widgets:HandsGui>
