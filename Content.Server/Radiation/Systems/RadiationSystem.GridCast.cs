@@ -139,7 +139,7 @@ public partial class RadiationSystem
     private RadiationRay Gridcast(IMapGrid grid, RadiationRay ray, bool saveVisitedTiles,
         EntityQuery<RadiationGridResistanceComponent> resistanceQuery)
     {
-        var blockers = new List<(Vector2, float)>();
+        var blockers = new List<(Vector2i, float)>();
 
         // if grid doesn't have resistance map just apply distance penalty
         var gridUid = grid.GridEntityId;
@@ -161,10 +161,7 @@ public partial class RadiationSystem
 
             // save data for debug
             if (saveVisitedTiles)
-            {
-                var worldPos = grid.GridTileToWorldPos(point);
-                blockers.Add((worldPos, ray.Rads));
-            }
+                blockers.Add((point, ray.Rads));
 
             // no intensity left after blocker
             if (ray.Rads <= MinIntensity)
@@ -176,7 +173,7 @@ public partial class RadiationSystem
 
         // save data for debug if needed
         if (saveVisitedTiles && blockers.Count > 0)
-            ray.Blockers = blockers;
+            ray.Blockers.Add(gridUid, blockers);
 
         return ray;
     }

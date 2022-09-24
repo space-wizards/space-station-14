@@ -42,13 +42,14 @@ public sealed class RadiationRay
     public bool ReachedDestination => Rads > 0;
 
     /// <summary>
-    ///     All blockers visited by gridcast. Consist of pairs of impact point in world space
-    ///     and float with updated radiation value.
+    ///     All blockers visited by gridcast. Key is uid of grid. Values are pairs
+    ///     of tile indices and floats with updated radiation value.
     /// </summary>
     /// <remarks>
-    ///     Last position may have negative value if ray has lost all intensity.
+    ///     Last tile may have negative value if ray has lost all intensity.
+    ///     Grid traversal order isn't guaranteed.
     /// </remarks>
-    public List<(Vector2, float)> Blockers = new();
+    public Dictionary<EntityUid, List<(Vector2i, float)>> Blockers = new();
 
     public RadiationRay(MapId mapId, EntityUid sourceUid, Vector2 source,
         EntityUid destinationUid, Vector2 destination, float rads)

@@ -10,7 +10,6 @@ namespace Content.Client.Radiation.Overlays;
 public sealed class RadiationDebugOverlay : Overlay
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly IEntityManager _entityManager = default!;
 
     private readonly Font _font;
 
@@ -58,25 +57,16 @@ public sealed class RadiationDebugOverlay : Overlay
                 handle.DrawString(_font, screenCenter, ray.Rads.ToString("F2"), 2f, Color.White);
             }
 
-            foreach (var (blockerPos, rads) in ray.Blockers)
-            {
-                var screenCenter = args.ViewportControl.WorldToScreen(blockerPos);
-                handle.DrawString(_font, screenCenter, rads.ToString("F2"), 1.5f, Color.White);
-            }
-
-            foreach (var gridUid in ray.VisitedTiles.Keys)
+            foreach (var (gridUid, blockers) in ray.Blockers)
             {
                 if (!_mapManager.TryGetGrid(gridUid, out var grid))
                     continue;
 
-                foreach (var (tile, rads) in ray.VisitedTiles[gridUid])
+                foreach (var (tile, rads) in blockers)
                 {
-                    if (rads == null)
-                        continue;
-
                     var worldPos = grid.GridTileToWorldPos(tile);
                     var screenCenter = args.ViewportControl.WorldToScreen(worldPos);
-                    handle.DrawString(_font, screenCenter, rads.Value.ToString("F2"), 1.5f, Color.White);
+                    handle.DrawString(_font, screenCenter, rads.ToString("F2"), 1.5f, Color.White);
                 }
             }
         }
@@ -118,56 +108,21 @@ public sealed class RadiationDebugOverlay : Overlay
         {
             if (ray.MapId != args.MapId)
                 continue;
-            if (ray.IsGridcast)
-                continue;
 
-            var lastPos = ray.Destination;
-            if (!ray.ReachedDestination)
+            if (ray.ReachedDestination)
             {
-                var (lastBlocker, _) = ray.Blockers.LastOrDefault();
-                lastPos = lastBlocker;
+                handle.DrawLine(ray.Source, ray.Destination, Color.Red);
+                continue;
             }
 
-            handle.DrawLine(ray.Source, lastPos, Color.Red);
-
-        }
-
-        // draw tiles for gridcast
-        foreach (var ray in Rays)
-        {
-            foreach (var gridUid in ray.VisitedTiles.Keys)
+            foreach (var (gridUid, blockers) in ray.Blockers)
             {
                 if (!_mapManager.TryGetGrid(gridUid, out var grid))
                     continue;
-                var xformQuery = _entityManager.GetEntityQuery<TransformComponent>();
-                var gridXform = xformQuery.GetComponent(grid.GridEntityId);
-                var (_, _, worldMatrix, invWorldMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv(xformQuery);
-                var gridBounds = invWorldMatrix.TransformBox(args.WorldBounds);
-                handle.SetTransform(worldMatrix);
-
-                DrawTiles(handle, gridBounds, ray.VisitedTiles[gridUid]);
+                var (destTile, _) = blockers.Last();
+                var destWorld = grid.GridTileToWorldPos(destTile);
+                handle.DrawLine(ray.Source, destWorld, Color.Red);
             }
-        }
-
-        handle.SetTransform(Matrix3.Identity);
-    }
-
-    private void DrawTiles(DrawingHandleWorld handle, Box2 gridBounds,
-        List<(Vector2i, float?)> tiles, ushort tileSize = 1)
-    {
-        var color = Color.Green;
-        color.A = 0.5f;
-
-        foreach (var (tile, _) in tiles)
-        {
-            var centre = ((Vector2) tile + 0.5f) * tileSize;
-
-            // is the center of this tile visible to the user?
-            if (!gridBounds.Contains(centre))
-                continue;
-
-            var box = Box2.UnitCentered.Translated(centre);
-            handle.DrawRect(box, color);
         }
     }
 }
