@@ -8,7 +8,7 @@ using Robust.Shared.Random;
 namespace Content.Server.Traits.Assorted;
 
 /// <summary>
-/// This handles...
+/// This handles making people randomly cough/sneeze without a disease.
 /// </summary>
 public sealed class UncontrollableSnoughSystem : EntitySystem
 {
