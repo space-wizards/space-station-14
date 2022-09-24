@@ -33,7 +33,7 @@ namespace Content.Server.Chemistry.EntitySystems
         private Queue<EntityUid> RemoveQueue = new();
 
         /// <summary>
-        /// 
+        /// Analyser timing - ensures the machine has finished before being triggered again
         /// </summary>
         public override void Update(float frameTime)
         {
@@ -90,7 +90,7 @@ namespace Content.Server.Chemistry.EntitySystems
             else
                 return;
 
-            if (component.MachineInputDevice != "") {
+            if (component.MachineInputDevice != string.Empty) {
                 if (TryComp<TagComponent>(args.Used, out var tags))
                 {
                     if (!tags.Tags.Contains(component.MachineInputDevice))
