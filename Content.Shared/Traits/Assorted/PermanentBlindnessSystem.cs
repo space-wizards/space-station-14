@@ -1,14 +1,16 @@
 ﻿using Content.Shared.Examine;
 using Content.Shared.Eye.Blinding;
 using Content.Shared.IdentityManagement;
+using Robust.Shared.Network;
 
-namespace Content.Server.Traits.Assorted;
+namespace Content.Shared.Traits.Assorted;
 
 /// <summary>
 /// This handles...
 /// </summary>
 public sealed class PermanentBlindnessSystem : EntitySystem
 {
+    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly SharedBlindingSystem _blinding = default!;
 
     /// <inheritdoc/>
@@ -21,7 +23,7 @@ public sealed class PermanentBlindnessSystem : EntitySystem
 
     private void OnExamined(EntityUid uid, PermanentBlindnessComponent component, ExaminedEvent args)
     {
-        if (args.IsInDetailsRange)
+        if (args.IsInDetailsRange && !_net.IsClient)
         {
             args.PushMarkup(Loc.GetString("permanent-blindness-trait-examined", ("target", Identity.Entity(uid, EntityManager))));
         }
