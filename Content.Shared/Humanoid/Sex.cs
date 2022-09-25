@@ -29,10 +29,18 @@ namespace Content.Shared.Humanoid
             switch (speciesProto.Naming)
             {
                 case SpeciesNaming.FirstDashFirst:
-                    return $"{GetFirstName(sex, speciesProto, prototypeManager, random)}-{GetFirstName(sex, speciesProto, prototypeManager, random)}";
+                    return Loc.GetString("namepreset-firstdashfirst",
+                        ("first1", GetFirstName(sex, speciesProto, prototypeManager, random)),
+                        ("first2", GetFirstName(sex, speciesProto, prototypeManager, random)));
+                case SpeciesNaming.TheFirstofLast:
+                    return Loc.GetString("namepreset-thefirstoflast",
+                        ("first", GetFirstName(sex, speciesProto, prototypeManager, random)),
+                        ("last", GetLastName(sex, speciesProto, prototypeManager, random)));
                 case SpeciesNaming.FirstLast:
                 default:
-                    return $"{GetFirstName(sex, speciesProto, prototypeManager, random)} {GetLastName(sex, speciesProto, prototypeManager, random)}";
+                    return Loc.GetString("namepreset-firstlast",
+                        ("first", GetFirstName(sex, speciesProto, prototypeManager, random)),
+                        ("last", GetLastName(sex, speciesProto, prototypeManager, random)));
             }
         }
 

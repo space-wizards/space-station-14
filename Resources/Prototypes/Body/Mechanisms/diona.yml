@@ -28,13 +28,6 @@
   - type: Mechanism
     size: 1
     compatibility: Biological
-  - type: Metabolizer
-    maxReagents: 2
-    metabolizerTypes: [Human]
-    groups:
-    - id: Medicine
-    - id: Poison
-    - id: Narcotic
   - type: Input
     context: "ghost"
   - type: InputMover
@@ -88,7 +81,7 @@
   - type: Stomach
   - type: Metabolizer
     maxReagents: 6
-    metabolizerTypes: [ Human ]
+    metabolizerTypes: [ Human, Plant ]
     removeEmpty: true
     groups:
       - id: Food
