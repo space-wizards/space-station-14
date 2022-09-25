@@ -67,7 +67,7 @@ public sealed class VocalSystem : EntitySystem
         if (!_blocker.CanSpeak(uid))
             return false;
 
-        var sex = Sex.Male; //the default is male because requiring humanoid appearance for this is dogshit
+        var sex = Sex.Unsexed;
         if (TryComp(uid, out HumanoidComponent? humanoid))
             sex = humanoid.Sex;
 
@@ -89,7 +89,8 @@ public sealed class VocalSystem : EntitySystem
                 SoundSystem.Play(component.FemaleScream.GetSound(), Filter.Pvs(uid), uid, pitchedParams);
                 break;
             default:
-                throw new ArgumentOutOfRangeException();
+                SoundSystem.Play(component.UnsexedScream.GetSound(), Filter.Pvs(uid), uid, pitchedParams);
+                break;
         }
 
         return true;

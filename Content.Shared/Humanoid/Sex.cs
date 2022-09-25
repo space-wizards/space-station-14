@@ -8,7 +8,8 @@ namespace Content.Shared.Humanoid
     public enum Sex : byte
     {
         Male,
-        Female
+        Female,
+        Unsexed,
     }
 
     public static class SexExtensions
@@ -41,6 +42,7 @@ namespace Content.Shared.Humanoid
             IoCManager.Resolve(ref protoManager);
             IoCManager.Resolve(ref random);
 
+            // Shouldn't this depend on gender?
             switch (sex)
             {
                 case Sex.Male:
