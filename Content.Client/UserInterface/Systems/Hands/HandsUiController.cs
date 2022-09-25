@@ -3,7 +3,7 @@ using Content.Client.Hands;
 using Content.Client.Hands.Systems;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Hands.Controls;
-using Content.Client.UserInterface.Systems.Hands.Widgets;
+using Content.Client.UserInterface.Systems.Hotbar.Widgets;
 using Content.Shared.Hands.Components;
 using Content.Shared.Input;
 using Robust.Client.GameObjects;
@@ -27,7 +27,7 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
     private HandButton? _activeHand = null;
     private int _backupSuffix = 0; //this is used when autogenerating container names if they don't have names
 
-    private HandsGui? HandsGui => UIManager.GetActiveUIWidgetOrNull<HandsGui>();
+    private HotbarGui? HandsGui => UIManager.GetActiveUIWidgetOrNull<HotbarGui>();
 
     public void OnSystemLoaded(HandsSystem system)
     {

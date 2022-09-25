@@ -27,6 +27,9 @@
     <Compile Update="UserInterface\Systems\MenuBar\Widgets\GameTopMenuBar.xaml.cs">
       <DependentUpon>GameTopMenuBar.xaml</DependentUpon>
     </Compile>
+    <Compile Update="UserInterface\Systems\HotBar\Widgets\HotbarGui.xaml.cs">
+      <DependentUpon>HotbarGui.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <Import Project="..\RobustToolbox\MSBuild\XamlIL.targets" />
   <Import Project="..\RobustToolbox\MSBuild\Robust.Analyzers.targets" />

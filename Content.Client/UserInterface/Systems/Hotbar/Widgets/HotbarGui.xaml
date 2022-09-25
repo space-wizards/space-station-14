@@ -1,13 +1,20 @@
-﻿<widgets:HandsGui
+﻿<widgets:HotbarGui
     xmlns="https://spacestation14.io"
     xmlns:inventory="clr-namespace:Content.Client.UserInterface.Systems.Inventory.Controls"
-    xmlns:widgets="clr-namespace:Content.Client.UserInterface.Systems.Hands.Widgets"
     xmlns:hands="clr-namespace:Content.Client.UserInterface.Systems.Hands.Controls"
-    Name="HandsInterface"
+    xmlns:widgets="clr-namespace:Content.Client.UserInterface.Systems.Hotbar.Widgets"
+    Name="HotbarInterface"
     VerticalExpand="False"
     VerticalAlignment="Bottom"
-    Orientation="Horizontal"
+    Orientation="Vertical"
     HorizontalAlignment="Center">
+    <inventory:ItemStatusPanel
+        Name="StatusPanel"
+        Visible="False"
+        />
+    <inventory:ItemSlotButtonContainer
+        Name="InventoryHotbar"
+    />
     <BoxContainer Orientation="Horizontal" Name="Hotbar">
         <inventory:ItemSlotButtonContainer
             Name="SecondHotbar"
@@ -27,4 +34,4 @@
             HorizontalExpand="True"
             />
     </BoxContainer>
-</widgets:HandsGui>
+</widgets:HotbarGui>
