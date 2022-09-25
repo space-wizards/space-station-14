@@ -388,20 +388,6 @@ namespace Content.Server.Mind
         public void ChangeOwningPlayer(NetUserId? newOwner)
         {
             var playerMgr = IoCManager.Resolve<IPlayerManager>();
-            PlayerData? newOwnerData = null;
-
-            if (newOwner.HasValue)
-            {
-                if (!playerMgr.TryGetPlayerData(newOwner.Value, out var uncast))
-                {
-                    // This restriction is because I'm too lazy to initialize the player data
-                    // for a client that hasn't logged in yet.
-                    // Go ahead and remove it if you need.
-                    throw new ArgumentException("new owner must have previously logged into the server.");
-                }
-
-                newOwnerData = uncast.ContentData();
-            }
 
             // Make sure to remove control from our old owner if they're logged in.
             var oldSession = Session;
@@ -419,6 +405,18 @@ namespace Content.Server.Mind
             {
                 return;
             }
+
+            if (!playerMgr.TryGetPlayerData(newOwner.Value, out var uncast))
+            {
+                // This restriction is because I'm too lazy to initialize the player data
+                // for a client that hasn't logged in yet.
+                // Go ahead and remove it if you need.
+                // throw new ArgumentException("new owner must have previously logged into the server.");
+                return;
+            }
+
+            // PlayerData? newOwnerData = null;
+            var newOwnerData = uncast.ContentData();
 
             // Yank new owner out of their old mind too.
             // Can I mention how much I love the word yank?
