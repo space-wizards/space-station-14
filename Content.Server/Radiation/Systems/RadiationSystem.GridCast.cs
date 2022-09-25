@@ -4,6 +4,7 @@ using Content.Shared.Radiation.Components;
 using Content.Shared.Radiation.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Radiation.Systems;
 
@@ -147,9 +148,10 @@ public partial class RadiationSystem
         var destGrid = grid.TileIndicesFor(ray.Destination);
 
         // iterate tiles in grid line from source to destination
-        var line = Line(sourceGrid.X, sourceGrid.Y, destGrid.X, destGrid.Y);
-        foreach (var point in line)
+        var line = new GridLineEnumerator(sourceGrid, destGrid);
+        while (line.MoveNext())
         {
+            var point = line.Current;
             if (!resistanceMap.TryGetValue(point, out var resData))
                 continue;
             ray.Rads -= resData;
@@ -171,46 +173,5 @@ public partial class RadiationSystem
             ray.Blockers.Add(gridUid, blockers);
 
         return ray;
-    }
-
-    // bresenhams line algorithm
-    // this is slightly rewritten version of code bellow
-    // https://stackoverflow.com/questions/11678693/all-cases-covered-bresenhams-line-algorithm
-    private IEnumerable<Vector2i> Line(int x, int y, int x2, int y2)
-    {
-        var w = x2 - x;
-        var h = y2 - y;
-
-        var dx1 = Math.Sign(w);
-        var dy1 = Math.Sign(h);
-        var dx2 = Math.Sign(w);
-        var dy2 = 0;
-
-        var longest = Math.Abs(w);
-        var shortest = Math.Abs(h);
-        if (longest <= shortest)
-        {
-            (longest, shortest) = (shortest, longest);
-            dx2 = 0;
-            dy2 = Math.Sign(h);
-        }
-
-        var numerator = longest / 2;
-        for (var i = 0; i <= longest; i++)
-        {
-            yield return new Vector2i(x, y);
-            numerator += shortest;
-            if (numerator >= longest)
-            {
-                numerator -= longest;
-                x += dx1;
-                y += dy1;
-            }
-            else
-            {
-                x += dx2;
-                y += dy2;
-            }
-        }
     }
 }
