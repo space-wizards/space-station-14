@@ -24,7 +24,6 @@ namespace Content.Client.Gameplay
 
         protected override Type? LinkedScreenType => typeof(DefaultGameScreen);
         public static readonly Vector2i ViewportSize = (EyeManager.PixelsPerMeter * 21, EyeManager.PixelsPerMeter * 15);
-        private ConstructionMenuPresenter? _constructionMenu;
         private FpsCounter _fpsCounter = default!;
 
         public MainViewport Viewport { get; private set; } = default!;
@@ -58,7 +57,6 @@ namespace Content.Client.Gameplay
         protected override void Shutdown()
         {
             _overlayManager.RemoveOverlay<ShowHandItemOverlay>();
-            DisposePresenters();
 
             base.Shutdown();
             Viewport.Dispose();
@@ -66,15 +64,6 @@ namespace Content.Client.Gameplay
             _eyeManager.MainViewport = UserInterfaceManager.MainViewport;
             _fpsCounter.Dispose();
             _uiManager.ClearWindows();
-        }
-
-        /// <summary>
-        /// All UI Presenters should be disposed in here.
-        /// </summary>
-        private void DisposePresenters()
-        {
-            // Windows
-            _constructionMenu?.Dispose();
         }
 
         public override void FrameUpdate(FrameEventArgs e)
