@@ -127,6 +127,7 @@ namespace Content.Server.NPC.Pathfinding
                         _pathRequests.RemoveAt(resultIndex);
                         offset--;
                         path.Tcs.SetResult(result);
+                        SendRoute(path);
                         break;
                     default:
                         throw new NotImplementedException();
@@ -468,6 +469,11 @@ namespace Content.Server.NPC.Pathfinding
             return (mode & (PathfindingDebugMode.Chunks | PathfindingDebugMode.Polys | PathfindingDebugMode.Poly | PathfindingDebugMode.PolyNeighbors)) != 0x0;
         }
 
+        private bool IsRoute(PathfindingDebugMode mode)
+        {
+            return (mode & (PathfindingDebugMode.Routes | PathfindingDebugMode.RouteCosts)) != 0x0;
+        }
+
         private void SendBreadcrumbs(ICommonSession pSession)
         {
             var msg = new PathBreadcrumbsMessage();
@@ -484,6 +490,35 @@ namespace Content.Server.NPC.Pathfinding
             }
 
             RaiseNetworkEvent(msg, pSession.ConnectedClient);
+        }
+
+        private void SendRoute(PathRequest request)
+        {
+            if (_subscribedSessions.Count == 0)
+                return;
+
+            var polys = new List<DebugPathPoly>();
+            var costs = new Dictionary<DebugPathPoly, float>();
+
+            foreach (var poly in request.Polys)
+            {
+                polys.Add(GetDebugPoly(poly));
+            }
+
+            foreach (var (poly, value) in request.CostSoFar)
+            {
+                costs.Add(GetDebugPoly(poly), value);
+            }
+
+            var msg = new PathRouteMessage(polys, costs);
+
+            foreach (var session in _subscribedSessions)
+            {
+                if (!IsRoute(session.Value))
+                    continue;
+
+                RaiseNetworkEvent(msg, session.Key.ConnectedClient);
+            }
         }
 
         private void SendPolys(ICommonSession pSession)

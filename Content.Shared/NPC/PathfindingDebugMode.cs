@@ -41,4 +41,6 @@ public enum PathfindingDebugMode : ushort
     Path = 1 << 9,
 
     Routes = 1 << 10,
+
+    RouteCosts = 1 << 11,
 }

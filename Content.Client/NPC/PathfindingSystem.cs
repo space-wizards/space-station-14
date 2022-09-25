@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Text;
 using Content.Shared.NPC;
 using Robust.Client.Graphics;
@@ -33,7 +34,7 @@ namespace Content.Client.NPC
                 }
                 else if (!overlayManager.HasOverlay<PathfindingOverlay>())
                 {
-                    overlayManager.AddOverlay(new PathfindingOverlay(_eyeManager, _inputManager, _mapManager, _cache, this));
+                    overlayManager.AddOverlay(new PathfindingOverlay(EntityManager, _eyeManager, _inputManager, _mapManager, _cache, this));
                 }
 
                 _modes = value;
@@ -82,7 +83,7 @@ namespace Content.Client.NPC
 
         private void OnRoute(PathRouteMessage ev)
         {
-            Routes.Add((_timing.CurTime, ev));
+            Routes.Add((_timing.CurTime + TimeSpan.FromSeconds(1), ev));
         }
 
         private void OnPolys(PathPolysMessage ev)
@@ -118,6 +119,7 @@ namespace Content.Client.NPC
 
     public sealed class PathfindingOverlay : Overlay
     {
+        private readonly IEntityManager _entManager;
         private readonly IEyeManager _eyeManager;
         private readonly IInputManager _inputManager;
         private readonly IMapManager _mapManager;
@@ -128,12 +130,14 @@ namespace Content.Client.NPC
         private readonly Font _font;
 
         public PathfindingOverlay(
+            IEntityManager entManager,
             IEyeManager eyeManager,
             IInputManager inputManager,
             IMapManager mapManager,
             IResourceCache cache,
             PathfindingSystem system)
         {
+            _entManager = entManager;
             _eyeManager = eyeManager;
             _inputManager = inputManager;
             _mapManager = mapManager;
@@ -461,9 +465,35 @@ namespace Content.Client.NPC
                 {
                     foreach (var node in route.Message.Path)
                     {
-                        // if (!node)
+                        if (!_entManager.TryGetComponent<TransformComponent>(node.GraphUid, out var graphXform))
+                            continue;
 
-                        // worldHandle.DrawRect(node.Box, Color.Red, false);
+                        worldHandle.SetTransform(graphXform.WorldMatrix);
+                        worldHandle.DrawRect(node.Box, Color.Orange.WithAlpha(0.25f));
+                    }
+                }
+            }
+
+            if ((_system.Modes & PathfindingDebugMode.RouteCosts) != 0x0)
+            {
+                var matrix = EntityUid.Invalid;
+
+                foreach (var route in _system.Routes)
+                {
+                    var highestGScore = route.Message.Costs.Values.Max();
+
+                    foreach (var (node, cost) in route.Message.Costs)
+                    {
+                        if (matrix != node.GraphUid)
+                        {
+                            if (!_entManager.TryGetComponent<TransformComponent>(node.GraphUid, out var graphXform))
+                                continue;
+
+                            matrix = node.GraphUid;
+                            worldHandle.SetTransform(graphXform.WorldMatrix);
+                        }
+
+                        worldHandle.DrawRect(node.Box, new Color(0f, cost / highestGScore, 1f - (cost / highestGScore), 0.25f));
                     }
                 }
             }

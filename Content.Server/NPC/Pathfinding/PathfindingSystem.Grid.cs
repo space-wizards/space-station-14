@@ -198,9 +198,25 @@ public sealed partial class PathfindingSystem
 #endif
     }
 
+    private bool IsBodyRelevant(PhysicsComponent body)
+    {
+        if (!body.Hard || !body.CanCollide || body.BodyType != BodyType.Static)
+        {
+            return false;
+        }
+
+        if ((body.CollisionMask & PathfindingCollisionLayer) != 0x0 ||
+            (body.CollisionLayer & PathfindingCollisionMask) != 0x0)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     private void OnCollisionChange(ref CollisionChangeEvent ev)
     {
-        if (ev.Body.BodyType != BodyType.Static)
+        if (!IsBodyRelevant(ev.Body))
             return;
 
         var xform = Transform(ev.Body.Owner);
@@ -214,8 +230,7 @@ public sealed partial class PathfindingSystem
 
     private void OnBodyTypeChange(ref PhysicsBodyTypeChangedEvent ev)
     {
-        if ((ev.Old == BodyType.Static ||
-            ev.New == BodyType.Static) &&
+        if (IsBodyRelevant(ev.Component) &&
             TryComp<TransformComponent>(ev.Entity, out var xform) &&
             xform.GridUid != null)
         {
@@ -383,10 +398,7 @@ public sealed partial class PathfindingSystem
                 {
                     // Irrelevant for pathfinding
                     if (!physicsQuery.TryGetComponent(ent, out var body) ||
-                        !body.CanCollide ||
-                        !body.Hard ||
-                        ((body.CollisionLayer & PathfindingCollisionMask) == 0x0 &&
-                         (body.CollisionMask & PathfindingCollisionLayer) == 0x0))
+                        !IsBodyRelevant(body))
                     {
                         continue;
                     }

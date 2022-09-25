@@ -168,6 +168,13 @@ namespace Content.Server.NPC.Systems
             EntityQuery<PhysicsComponent> bodyQuery,
             float frameTime)
         {
+            if (Deleted(steering.Coordinates.EntityId))
+            {
+                SetDirection(mover, steering, Vector2.Zero);
+                steering.Status = SteeringStatus.NoPath;
+                return;
+            }
+
             var ourCoordinates = xform.Coordinates;
             var destinationCoordinates = steering.Coordinates;
 
