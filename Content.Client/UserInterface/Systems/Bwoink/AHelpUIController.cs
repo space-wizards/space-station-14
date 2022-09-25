@@ -266,7 +266,7 @@ public sealed class UserAHelpUIHandler : IAHelpUIHandler
         DebugTools.Assert(message.UserId == _ownerId);
         EnsureInit();
         _chatPanel!.ReceiveLine(message);
-        _window!.Open();
+        _window!.OpenCentered();
     }
 
     public void Close()
