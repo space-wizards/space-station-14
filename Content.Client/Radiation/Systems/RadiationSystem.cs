@@ -19,6 +19,12 @@ public sealed class RadiationSystem : EntitySystem
         SubscribeNetworkEvent<OnRadiationOverlayResistanceUpdateEvent>(OnResistanceUpdate);
     }
 
+    public override void Shutdown()
+    {
+        base.Shutdown();
+        _overlayMan.RemoveOverlay<RadiationDebugOverlay>();
+    }
+
     private void OnOverlayToggled(OnRadiationOverlayToggledEvent ev)
     {
         if (ev.IsEnabled)
