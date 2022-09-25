@@ -184,8 +184,7 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 4
     fillBaseName: icon-
-  - type: TrashOnEmpty
-    solution: drink
+  - type: Recyclable
 
 - type: entity
   parent: DrinkBaseCup
@@ -210,8 +209,7 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 4
     fillBaseName: icon-
-  - type: TrashOnEmpty
-    solution: drink
+  - type: Recyclable
 
 - type: entity
   parent: DrinkBaseCup
@@ -231,8 +229,7 @@
     state: icon
   - type: Item
     sprite: Objects/Consumable/Drinks/lean.rsi
-  - type: TrashOnEmpty
-    solution: drink
+  - type: Recyclable
 
 - type: entity
   parent: DrinkBaseCup
@@ -251,5 +248,4 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/water_cup.rsi
     state: icon-1
-  - type: TrashOnEmpty
-    solution: drink
+  - type: Recyclable
