@@ -3,14 +3,14 @@
   mapName: 'Pebble Station'
   mapPath: /Maps/pebble.yml
   minPlayers: 0
-  maxPlayers: 35
+  maxPlayers: 20
   votable: true
   stations:
     PebbleStation:
       mapNameTemplate: '{0} Pebble Station {1}'
       nameGenerator:
         !type:NanotrasenNameGenerator
-        prefixCreator: 'TG'
+        prefixCreator: '14'
       overflowJobs:
         - Passenger
       availableJobs:
