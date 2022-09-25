@@ -7,6 +7,8 @@
   markingLimits: MobSlimeMarkingLimits
   dollPrototype: MobSlimePersonDummy
   skinColoration: Hues
+  sexes:
+  - Unsexed
 
 - type: speciesBaseSprites
   id: MobSlimeSprites

@@ -184,6 +184,7 @@ namespace Content.Shared.Preferences
 
         public HumanoidCharacterProfile WithSex(Sex sex)
         {
+            Logger.Error("Creating new profile with sex " + sex);
             return new(this) { Sex = sex };
         }
 

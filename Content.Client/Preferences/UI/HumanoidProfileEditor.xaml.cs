@@ -62,8 +62,7 @@ namespace Content.Client.Preferences.UI
         private Button _randomizeEverythingButton => CRandomizeEverything;
         private RichTextLabel _warningLabel => CWarningLabel;
         private Button _saveButton => CSaveButton;
-        private Button _sexFemaleButton => CSexFemale;
-        private Button _sexMaleButton => CSexMale;
+        private OptionButton _sexButton => CSexButton;
         private OptionButton _genderButton => CPronounsButton;
         private Slider _skinColor => CSkin;
         private OptionButton _clothingButton => CClothingButton;
@@ -140,30 +139,16 @@ namespace Content.Client.Preferences.UI
 
             #region Sex
 
-            var sexButtonGroup = new ButtonGroup();
+            _sexButton.AddItem(Loc.GetString("humanoid-profile-editor-sex-male-text"), (int) Sex.Male);
+            _sexButton.AddItem(Loc.GetString("humanoid-profile-editor-sex-female-text"), (int) Sex.Female);
+            _sexButton.AddItem(Loc.GetString("humanoid-profile-editor-sex-unsexed-text"), (int) Sex.Unsexed);
 
-            _sexMaleButton.Group = sexButtonGroup;
-            _sexMaleButton.OnPressed += args =>
+            _sexButton.OnItemSelected += args =>
             {
-                SetSex(Sex.Male);
-                if (Profile?.Gender == Gender.Female)
-                {
-                    SetGender(Gender.Male);
-                    UpdateGenderControls();
-                }
+                _sexButton.SelectId(args.Id);
+                SetSex((Sex) args.Id);
             };
 
-            _sexFemaleButton.Group = sexButtonGroup;
-            _sexFemaleButton.OnPressed += _ =>
-            {
-                SetSex(Sex.Female);
-
-                if (Profile?.Gender == Gender.Male)
-                {
-                    SetGender(Gender.Female);
-                    UpdateGenderControls();
-                }
-            };
 
             #endregion Sex
 
@@ -779,6 +764,7 @@ namespace Content.Client.Preferences.UI
 
         private void SetSex(Sex newSex)
         {
+            Logger.Error("Setting sex to " + newSex.ToString());
             Profile = Profile?.WithSex(newSex);
             IsDirty = true;
         }
@@ -869,10 +855,12 @@ namespace Content.Client.Preferences.UI
 
         private void UpdateSexControls()
         {
-            if (Profile?.Sex == Sex.Male)
-                _sexMaleButton.Pressed = true;
-            else
-                _sexFemaleButton.Pressed = true;
+            if (Profile == null)
+            {
+                return;
+            }
+
+            _sexButton.SelectId((int) Profile.Sex);
         }
 
         private void UpdateSkinColor()
