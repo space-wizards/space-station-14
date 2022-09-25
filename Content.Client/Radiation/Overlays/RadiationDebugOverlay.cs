@@ -1,5 +1,5 @@
 using System.Linq;
-using Content.Shared.Radiation.Systems;
+using Content.Client.Radiation.Systems;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Enums;
@@ -10,17 +10,17 @@ namespace Content.Client.Radiation.Overlays;
 public sealed class RadiationDebugOverlay : Overlay
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly IEntityManager _entity = default!;
+    private readonly RadiationSystem _radiation;
 
     private readonly Font _font;
-
-    public List<RadiationRay>? Rays;
-    public Dictionary<EntityUid, Dictionary<Vector2i, float>>? ResistanceGrids;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace | OverlaySpace.ScreenSpace;
 
     public RadiationDebugOverlay()
     {
         IoCManager.InjectDependencies(this);
+        _radiation = _entity.System<RadiationSystem>();
 
         var cache = IoCManager.Resolve<IResourceCache>();
         _font = new VectorFont(cache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Regular.ttf"), 8);
@@ -42,11 +42,12 @@ public sealed class RadiationDebugOverlay : Overlay
 
     private void DrawScreenRays(OverlayDrawArgs args)
     {
-        if (Rays == null || args.ViewportControl == null)
+        var rays = _radiation.Rays;
+        if (rays == null || args.ViewportControl == null)
             return;
 
         var handle = args.ScreenHandle;
-        foreach (var ray in Rays)
+        foreach (var ray in rays)
         {
             if (ray.MapId != args.MapId)
                 continue;
@@ -74,11 +75,12 @@ public sealed class RadiationDebugOverlay : Overlay
 
     private void DrawScreenResistance(OverlayDrawArgs args)
     {
-        if (ResistanceGrids == null || args.ViewportControl == null)
+        var resistance = _radiation.ResistanceGrids;
+        if (resistance == null || args.ViewportControl == null)
             return;
 
         var handle = args.ScreenHandle;
-        foreach (var (gridUid, resMap) in ResistanceGrids)
+        foreach (var (gridUid, resMap) in resistance)
         {
             if (!_mapManager.TryGetGrid(gridUid, out var grid))
                 continue;
@@ -98,13 +100,13 @@ public sealed class RadiationDebugOverlay : Overlay
 
     private void DrawWorld(in OverlayDrawArgs args)
     {
-        var handle = args.WorldHandle;
-
-        if (Rays == null)
+        var rays = _radiation.Rays;
+        if (rays == null)
             return;
 
+        var handle = args.WorldHandle;
         // draw lines for raycasts
-        foreach (var ray in Rays)
+        foreach (var ray in rays)
         {
             if (ray.MapId != args.MapId)
                 continue;
