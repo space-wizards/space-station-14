@@ -43,7 +43,7 @@ public sealed class MindTests
     [Test]
     public async Task TestCreateAndTransferMind()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{ NoClient = true, ExtraPrototypes = Prototypes });
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{ NoClient = true });
         var server = pairTracker.Pair.Server;
 
         var entMan = server.ResolveDependency<IServerEntityManager>();
@@ -52,8 +52,8 @@ public sealed class MindTests
         {
             var mindSystem = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
 
-            var entity = entMan.SpawnEntity("MindTestEntity", new MapCoordinates());
-            var mindComp = entMan.GetComponent<MindComponent>(entity);
+            var entity = entMan.SpawnEntity(null, new MapCoordinates());
+            var mindComp = entMan.EnsureComponent<MindComponent>(entity);
             var userId = new NetUserId(Guid.NewGuid());
             var mind = mindSystem.CreateMind(userId);
 
@@ -95,7 +95,7 @@ public sealed class MindTests
         {
             // var playerSession = new PlayerSession();
 
-            var entity = entMan.SpawnEntity("MindTestEntity", new MapCoordinates());
+            var entity = entMan.SpawnEntity(null, new MapCoordinates());
 
             var mindSys = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
 
@@ -111,7 +111,7 @@ public sealed class MindTests
     [Test]
     public async Task TestMindTransfersToOtherEntity()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{ NoClient = true, ExtraPrototypes = Prototypes });
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{ NoClient = true });
         var server = pairTracker.Pair.Server;
 
         var entMan = server.ResolveDependency<IServerEntityManager>();
@@ -120,14 +120,15 @@ public sealed class MindTests
         {
             var mindSystem = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
 
-            var entity = entMan.SpawnEntity("MindTestEntity", new MapCoordinates());
-            var targetEntity = entMan.SpawnEntity("MindTestEntity", new MapCoordinates());
+            var entity = entMan.SpawnEntity(null, new MapCoordinates());
+            var targetEntity = entMan.SpawnEntity(null, new MapCoordinates());
+            var mindComp = entMan.EnsureComponent<MindComponent>(entity);
+            entMan.EnsureComponent<MindComponent>(targetEntity);
 
             var mind = mindSystem.CreateMind(new NetUserId(Guid.NewGuid()));
 
             mindSystem.TransferTo(mind, entity);
 
-            var mindComp = entMan.GetComponent<MindComponent>(entity);
             Assert.That(mindSystem.GetMind(entity, mindComp), Is.EqualTo(mind));
 
             mindSystem.TransferTo(mind, targetEntity);
@@ -141,7 +142,7 @@ public sealed class MindTests
     [Test]
     public async Task TestOwningPlayerCanBeChanged()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{ NoClient = true, ExtraPrototypes = Prototypes });
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{ NoClient = true });
         var server = pairTracker.Pair.Server;
 
         var entMan = server.ResolveDependency<IServerEntityManager>();
@@ -150,14 +151,14 @@ public sealed class MindTests
         {
             var mindSystem = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
 
-            var entity = entMan.SpawnEntity("MindTestEntity", new MapCoordinates());
+            var entity = entMan.SpawnEntity(null, new MapCoordinates());
+            var mindComp = entMan.EnsureComponent<MindComponent>(entity);
 
             var userId = new NetUserId(Guid.NewGuid());
             var mind = mindSystem.CreateMind(userId);
 
             mindSystem.TransferTo(mind, entity);
 
-            var mindComp = entMan.GetComponent<MindComponent>(entity);
             Assert.That(mindSystem.GetMind(entity, mindComp), Is.EqualTo(mind));
             Assert.That(mind.UserId, Is.EqualTo(userId));
 
