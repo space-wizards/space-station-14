@@ -8,6 +8,7 @@
         - state: red
         - texture: Structures/Wallmounts/barsign.rsi/empty.png
     - type: RandomSpawner
+      offset: 0
       prototypes:
         - BarSignComboCafe
         - BarSignEmergencyRumParty
