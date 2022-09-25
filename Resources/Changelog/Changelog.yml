@@ -1,10 +1,4 @@
 Entries:
-- author: ike709
-  changes:
-  - {message: A song now plays during the nuke countdown. It can be disabled with
-      the Event Music audio setting., type: Add}
-  id: 1860
-  time: '2022-07-04T06:29:38.0000000+00:00'
 - author: keronshb
   changes:
   - {message: Blocking has now been added! Use shields to lower incoming damage.,
@@ -2921,3 +2915,9 @@ Entries:
   - {message: Mouse Migration events are now less common., type: Tweak}
   id: 2359
   time: '2022-09-25T04:44:29.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixes an issue where you could insert incorrect materials into lathes
+      exactly once., type: Fix}
+  id: 2360
+  time: '2022-09-25T14:45:29.0000000+00:00'
