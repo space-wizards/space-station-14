@@ -133,7 +133,7 @@ namespace Content.Shared.Preferences
             var sex = random.Prob(0.5f) ? Sex.Male : Sex.Female;
             var gender = sex == Sex.Male ? Gender.Male : Gender.Female;
 
-            var name = sex.GetName(species, prototypeManager, random);
+            var name = GetName(species, gender);
             var age = random.Next(MinimumAge, MaximumAge);
 
             return new HumanoidCharacterProfile(name, "", species, age, sex, gender, HumanoidCharacterAppearance.Random(species, sex), ClothingPreference.Jumpsuit, BackpackPreference.Backpack,
@@ -329,7 +329,7 @@ namespace Content.Shared.Preferences
             string name;
             if (string.IsNullOrEmpty(Name))
             {
-                name = Sex.GetName(Species);
+                name = GetName(Species, gender);
             }
             else if (Name.Length > MaxNameLength)
             {
@@ -358,7 +358,7 @@ namespace Content.Shared.Preferences
 
             if (string.IsNullOrEmpty(name))
             {
-                name = Sex.GetName(Species);
+                name = GetName(Species, gender);
             }
 
             string flavortext;
@@ -438,6 +438,14 @@ namespace Content.Shared.Preferences
 
             _traitPreferences.Clear();
             _traitPreferences.AddRange(traits);
+        }
+
+        // sorry this is kind of weird and duplicated,
+        /// working inside these non entity systems is a bit wack
+        public static string GetName(string species, Gender gender)
+        {
+            var namingSystem = IoCManager.Resolve<IEntityManager>().EntitySysManager.GetEntitySystem<NamingSystem>();
+            return namingSystem.GetName(species, gender);
         }
 
         public override bool Equals(object? obj)
