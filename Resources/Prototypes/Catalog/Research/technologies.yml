@@ -3,6 +3,7 @@
 
 # Base Technology
 
+#will remove once all new tech trees are established
 - type: technology
   name: technologies-basic-research-technology
   id: BasicResearch
@@ -14,6 +15,23 @@
  # incompatibleTechnologies:
  #   - TestExclusion
 
+ # Basic Parts Technology Tree - may be worth just auto unlocking all basic parts OR unlocking via each tree start
+- type: technology
+  name: technologies-basic-parts-technology
+  id: BasicPartsTechnology
+  description: technologies-basic-parts-technology-description
+  icon:
+    sprite: Objects/Misc/stock_parts.rsi
+    state: micro_mani
+  requiredPoints: 3000
+  requiredTechnologies:
+    - BasicResearch
+  unlockedRecipes:
+    - CapacitorStockPart
+    - MatterBinStockPart
+    - MicroLaserStockPart
+    - MicroManipulatorStockPart
+    - ScanningModuleStockPart
 
 # test technology
 
@@ -70,24 +88,11 @@
 #  incompatibleTechnologies:
 #    - BasicResearch
 
-# Cleaning Technology Tree
 
-# old tree, to be removed
-#- type: technology
-#  name: technologies-cleaning-technology
-#  id: MopBucket
-#  description: technologies-cleaning-technology-description
-#  icon:
-#    sprite: Objects/Specific/Janitorial/janitorial.rsi
-#    state: mopbucket
-#  requiredPoints: 5000
-#  requiredTechnologies:
-#    - BasicResearch
-#  unlockedRecipes:
-#    - Bucket
-#    - MopItem
-#    - SprayBottle
-#    - BodyBag
+#trees will be made mutually exclusive from one another per server
+#though we may go easy on that to start until each tree has plenty to offer
+#may even want to keep points for some techs for now
+# Cleaning Technology Tree
 
 - type: technology
   name: technologies-cleaning-technology
@@ -96,6 +101,7 @@
   icon:
     sprite: Objects/Specific/Janitorial/janitorial.rsi
     state: mopbucket
+  requiredPoints: 100
   unlockedRecipes:
     - Bucket
     - MopItem
@@ -124,10 +130,74 @@
   icon:
     sprite: Objects/Specific/Janitorial/janitorial.rsi
     state: analysismopbucket
+  requiredPoints: 1000
   #unlockedRecipes:
-  # - SpeedGaloshes
-  # - SelfSustainingMop
+  # - SpeedGaloshes <-- maybe reserve for the next tier
+  # - HighCapacityMop
   # - AnalysisMop
+  # - AnalysisMopScanner
+
+  #Applied molecular cleaning theory
+  # SuperTrashbag
+  # AnalysisTrashbag
+
+  #Applied janitorial bluespace technology
+  # SpeedGaloshes
+  # The Janifier
+  # (Later) The Bluespace Engine
+
+# Medical Tech Tree
+# for now viral tech will all fall under here but may (or may not) warrant a separate tree later
+# chem analysis for chem progression (unlock chem machines)
+# same viral analysis approach as before (unlock viral cultivator for more vaccines?)
+# monkey cloner! (unlock clone machines - perhaps later unlock BETTER clone machines)
+  #clone monkeys at varying states of decay, with a steadily increasing max decay allowed after each clone
+  #two thresholds - when first threshold is reached print cloner disks, when second is reached print SUPER cloner disk
+
+# Engineering Tech Tree
+# anything not covered by other trees will come here - but this tree will primarily focus on power and utility
+# (for example AppliedMusicology and Avionics would fall under here for now)
+# things like robotics and computer tech will be here until separate branches are made
+# power analysis unit (basically a power monitor that prints results after n minutes, bit boring but still a step up from points imo)
+    #unlock the various better generators and such - really just how things are now but you have to build for the (not)points I guess
+# robot analyser and robot fabricator (analyser to unlock latter, latter requires only basic materials to make robots)
+
+# Security Tech tree <- low priority
+# never allow sec tech to be directly printable via main lathe, always work with them
+# impact analysis dummy (tracks damage, link to terminal for tech unlocks)
+    #(unlock shields and vests for sec techfab (make them earn it))
+# impact analysis vest (same as above but wearable... submit to scanner for unlocks?)
+    #unlock armor forge which can make sec hardsuits, bombsuits, and riot armor
+# impact analysis hardsuit (same as above...)
+    #(unlock super sec hardsuit)
+
+# Agricultural Tech Tree <- low priority - can be integrated in to basic tools research and engineering
+# Produce analyser (similar to chem analyser -
+#   perhaps add an auto grind tool for certain objects that treat the solid objects as pills going in to water)
+# Seed Cloner (takes biomass, clones seeds)
+# Seed Mutator (depends on progress towards plant mutations)
+
+#Xenoarcheology
+# basic analysis tools provided as non-mutually exclusive basic tech
+
+#everything under here will be re-allocated in some wayS
+
+# old tree, to be removed
+#- type: technology
+#  name: technologies-cleaning-technology
+#  id: MopBucket
+#  description: technologies-cleaning-technology-description
+#  icon:
+#    sprite: Objects/Specific/Janitorial/janitorial.rsi
+#    state: mopbucket
+#  requiredPoints: 5000
+#  requiredTechnologies:
+#    - BasicResearch
+#  unlockedRecipes:
+#    - Bucket
+#    - MopItem
+#    - SprayBottle
+#    - BodyBag
 
 # Biological Technology Tree
 
@@ -169,7 +239,7 @@
 
 - type: technology
   name: technologies-advanced-surgery
-  id: AdvancedSugery
+  id: AdvancedSurgery
   description: technologies-advanced-surgery-description
   icon:
     sprite: Objects/Specific/Medical/Surgery/saw.rsi
@@ -239,7 +309,7 @@
   requiredPoints: 20000
   requiredTechnologies:
     - MedicalMachinery
-    - AdvancedSugery
+    - AdvancedSurgery
   unlockedRecipes:
     - CloningPodMachineCircuitboard
     - MedicalScannerMachineCircuitboard
@@ -489,24 +559,6 @@
     - PowerCellAdvanced
   unlockedRecipes:
     - PowerCellHigh
-# Basic Parts Technology Tree
-
-- type: technology
-  name: technologies-basic-parts-technology
-  id: BasicPartsTechnology
-  description: technologies-basic-parts-technology-description
-  icon:
-    sprite: Objects/Misc/stock_parts.rsi
-    state: micro_mani
-  requiredPoints: 3000
-  requiredTechnologies:
-    - BasicResearch
-  unlockedRecipes:
-    - CapacitorStockPart
-    - MatterBinStockPart
-    - MicroLaserStockPart
-    - MicroManipulatorStockPart
-    - ScanningModuleStockPart
 
 - type: technology
   name: technologies-robotics-technology
