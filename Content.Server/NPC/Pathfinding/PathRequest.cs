@@ -17,7 +17,7 @@ public abstract class PathRequest
     public Task<PathResult> Task => Tcs.Task;
     public readonly TaskCompletionSource<PathResult> Tcs;
 
-    public Queue<PathPoly> Polys = default!;
+    public Queue<PathPoly> Polys = new();
 
     public bool Started = false;
 

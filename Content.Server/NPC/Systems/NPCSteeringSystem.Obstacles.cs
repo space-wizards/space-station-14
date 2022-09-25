@@ -5,6 +5,7 @@ using Content.Server.NPC.Pathfinding;
 using Content.Shared.Damage;
 using Content.Shared.Doors.Components;
 using Content.Shared.NPC;
+using Robust.Shared.Collections;
 using Robust.Shared.Physics.Components;
 
 namespace Content.Server.NPC.Systems;
@@ -47,17 +48,21 @@ public sealed partial class NPCSteeringSystem
         if ((poly.Data.CollisionLayer & body.CollisionMask) != 0x0 ||
             (poly.Data.CollisionMask & body.CollisionLayer) != 0x0)
         {
-            var obstacleEnts = GetObstacleEntities(poly, body.CollisionMask, body.CollisionLayer, bodyQuery);
+            var obstacleEnts = new List<EntityUid>();
+
+            GetObstacleEntities(poly, body.CollisionMask, body.CollisionLayer, bodyQuery, obstacleEnts);
             var isDoor = (poly.Data.Flags & PathfindingBreadcrumbFlag.Door) != 0x0;
             var isAccess = (poly.Data.Flags & PathfindingBreadcrumbFlag.Access) != 0x0;
 
             // Just walk into it stupid
             if (isDoor && !isAccess)
             {
+                var doorQuery = GetEntityQuery<DoorComponent>();
+
                 // ... At least if it's not a bump open.
                 foreach (var ent in obstacleEnts)
                 {
-                    if (!TryComp<DoorComponent>(ent, out var door))
+                    if (!doorQuery.TryGetComponent(ent, out var door))
                         continue;
 
                     if (!door.BumpOpen)
@@ -97,6 +102,7 @@ public sealed partial class NPCSteeringSystem
             else if ((component.Flags & PathFlags.Smashing) != 0x0)
             {
                 var destructibleQuery = GetEntityQuery<DestructibleComponent>();
+                var xformQuery = GetEntityQuery<TransformComponent>();
 
                 // TODO: This is a hack around grilles and windows.
                 _random.Shuffle(obstacleEnts);
@@ -105,7 +111,7 @@ public sealed partial class NPCSteeringSystem
                 {
                     // TODO: Validate we can damage it
                     if (destructibleQuery.HasComponent(ent) &&
-                        TryComp<TransformComponent>(ent, out var targetXform))
+                        xformQuery.TryGetComponent(ent, out var targetXform))
                     {
                         _interaction.DoAttack(component.Owner, targetXform.Coordinates, false, targetXform.Owner);
                         return SteeringObstacleStatus.Continuing;
@@ -122,14 +128,13 @@ public sealed partial class NPCSteeringSystem
         return SteeringObstacleStatus.Completed;
     }
 
-    private List<EntityUid> GetObstacleEntities(PathPoly poly, int mask, int layer, EntityQuery<PhysicsComponent> bodyQuery)
+    private void GetObstacleEntities(PathPoly poly, int mask, int layer, EntityQuery<PhysicsComponent> bodyQuery,
+        List<EntityUid> ents)
     {
         // TODO: Can probably re-use this from pathfinding or something
-        var ents = new List<EntityUid>();
-
         if (!_mapManager.TryGetGrid(poly.GraphUid, out var grid))
         {
-            return ents;
+            return;
         }
 
         foreach (var ent in grid.GetLocalAnchoredEntities(poly.Box))
@@ -137,15 +142,13 @@ public sealed partial class NPCSteeringSystem
             if (!bodyQuery.TryGetComponent(ent, out var body) ||
                 !body.Hard ||
                 !body.CanCollide ||
-                ((body.CollisionMask & layer)) == 0x0 && (body.CollisionLayer & mask) == 0x0)
+                (body.CollisionMask & layer) == 0x0 && (body.CollisionLayer & mask) == 0x0)
             {
                 continue;
             }
 
             ents.Add(ent);
         }
-
-        return ents;
     }
 
     private enum SteeringObstacleStatus : byte
