@@ -431,7 +431,7 @@
   description: An exploding game of hot potato.
   productEntity: HotPotato
   cost:
-    Telecrystal: 7
+    Telecrystal: 4
   categories:
     - UplinkJob
   conditions:

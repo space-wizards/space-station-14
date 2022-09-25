@@ -1,6 +1,6 @@
-hot-potato-give = {CAPITALIZE(THE($user))} forces { THE($item) } onto {CAPITALIZE(THE($target))}!
+hot-potato-give = {CAPITALIZE(THE($user))} forces { THE($item) } onto {THE($target)}!
 
-hot-potato-give-fail = You try to force { THE($item) } onto {CAPITALIZE(THE($target))}, but it is unable to attach!
+hot-potato-give-fail = You try to force { THE($item) } onto {THE($target)}, but it is unable to attach!
 
 hot-potato-give-fail-not-sapient = { THE($item) } refuses to attach to a non-sapient creature!
 

@@ -26,7 +26,7 @@ namespace Content.Server.HotPotato
         public string TurnInto = "FoodMealPotatoLoaded";
 
         /// <summary>
-        /// For dud potatos, Item the dud will turn into after it's timer has run out
+        /// For dud potatos, the sound the potato will make when it duds
         /// </summary>
         [ViewVariables(VVAccess.ReadOnly)] [DataField("dudSound")]
         public SoundSpecifier DudSound = new SoundPathSpecifier("/Audio/Effects/desecration-01.ogg");
