@@ -1,3 +1,4 @@
+using Content.Server.Database;
 using Content.Server.GameTicking;
 using Content.Server.Ghost;
 using Content.Server.Ghost.Components;
@@ -6,6 +7,7 @@ using Content.Shared.Examine;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Interaction.Events;
 using Robust.Shared.Map;
+using Robust.Shared.Network;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Mind;
@@ -171,5 +173,43 @@ public sealed class MindSystem : EntitySystem
         {
             args.BlockSuicideAttempt(true);
         }
+    }
+
+    public Mind? GetMind(EntityUid uid, MindComponent? mind = null)
+    {
+        if (!Resolve(uid, ref mind))
+            return null;
+
+        if (mind.HasMind)
+            return mind.Mind;
+        return null;
+    }
+
+    public void TransferTo(EntityUid uid, EntityUid? target, MindComponent? mind = null)
+    {
+        if (!Resolve(uid, ref mind))
+            return;
+
+        if (!mind.HasMind)
+            return;
+
+        mind.Mind!.TransferTo(target);
+    }
+
+    public void TransferTo(Mind mind, EntityUid? target)
+    {
+        mind.TransferTo(target);
+    }
+
+    public Mind CreateMind(NetUserId userId)
+    {
+        var mind = new Mind(userId);
+        ChangeOwningPlayer(mind, userId);
+        return mind;
+    }
+
+    public void ChangeOwningPlayer(Mind mind, NetUserId? netUserId)
+    {
+        mind.ChangeOwningPlayer(netUserId);
     }
 }
