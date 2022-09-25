@@ -49,12 +49,12 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
     {
         if (_uiHelper is not { IsOpen: true })
             return;
-        EnsureHelper();
+        EnsureUIHelper();
     }
 
     private void AHelpButtonPressed(BaseButton.ButtonEventArgs obj)
     {
-        EnsureHelper();
+        EnsureUIHelper();
         _uiHelper!.ToggleWindow();
     }
 
@@ -97,7 +97,7 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
             _clyde.RequestWindowAttention();
         }
 
-        EnsureHelper();
+        EnsureUIHelper();
         if (!_uiHelper!.IsOpen)
         {
             _ahelpButton?.StyleClasses.Add(MenuButton.StyleClassRedTopButton);
@@ -105,7 +105,7 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
         _uiHelper!.Receive(message);
     }
 
-    public void EnsureHelper()
+    public void EnsureUIHelper()
     {
         var isAdmin = _adminManager.HasFlag(AdminFlags.Adminhelp);
 
@@ -134,19 +134,21 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
         {
             return;
         }
-        EnsureHelper();
-        _uiHelper?.Open(localPlayer.UserId);
+        EnsureUIHelper();
+        if (_uiHelper!.IsOpen)
+            return;
+        _uiHelper!.Open(localPlayer.UserId);
     }
     public void Open(NetUserId userId)
     {
-        EnsureHelper();
+        EnsureUIHelper();
         if (!_uiHelper!.IsAdmin)
             return;
         _uiHelper?.Open(userId);
     }
     public void ToggleWindow()
     {
-        EnsureHelper();
+        EnsureUIHelper();
         _uiHelper?.ToggleWindow();
     }
 }
@@ -196,7 +198,7 @@ public sealed class AdminAHelpUIHandler : IAHelpUIHandler
         }
         else
         {
-            _window.Open();
+            _window.OpenCentered();
         }
     }
 
@@ -207,7 +209,7 @@ public sealed class AdminAHelpUIHandler : IAHelpUIHandler
     public void Open(NetUserId channelId)
     {
         SelectChannel(channelId);
-        _window?.Open();
+        _window?.OpenCentered();
     }
 
     private void EnsureWindow()
@@ -281,7 +283,7 @@ public sealed class UserAHelpUIHandler : IAHelpUIHandler
         }
         else
         {
-            _window.Open();
+            _window.OpenCentered();
         }
     }
 
@@ -292,7 +294,7 @@ public sealed class UserAHelpUIHandler : IAHelpUIHandler
     public void Open(NetUserId channelId)
     {
         EnsureInit();
-        _window!.Open();
+        _window!.OpenCentered();
     }
 
     private void EnsureInit()
