@@ -201,7 +201,18 @@ namespace Content.Server.Voting.Managers
                         Loc.GetString("ui-vote-map-win", ("winner", maps[picked])));
                 }
 
-                _gameMapManager.TrySelectMap(picked.ID);
+                var ticker = EntitySystem.Get<GameTicker>();
+                if (ticker.RunLevel == GameRunLevel.PreRoundLobby)
+                {
+                    if (_gameMapManager.TrySelectMapIfEligible(picked.ID))
+                    {
+                        ticker.UpdateInfoText();
+                    }
+                }
+                else
+                {
+                    _chatManager.DispatchServerAnnouncement(Loc.GetString("ui-vote-map-notlobby"));
+                }
             };
         }
 
