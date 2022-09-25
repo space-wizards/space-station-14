@@ -314,6 +314,7 @@ namespace Content.Shared.Preferences
             {
                 Sex.Male => Sex.Male,
                 Sex.Female => Sex.Female,
+                Sex.Unsexed => Sex.Unsexed,
                 _ => Sex.Male // Invalid enum values.
             };
 
