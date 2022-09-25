@@ -8,6 +8,7 @@ using Content.Server.Recycling;
 using Content.Server.Recycling.Components;
 using Content.Shared.Conveyor;
 using Content.Shared.Item;
+using Content.Shared.Maps;
 using Content.Shared.Movement.Components;
 using Content.Shared.Physics;
 using Robust.Shared.Containers;
@@ -60,7 +61,8 @@ namespace Content.Server.Physics.Controllers
         {
             var otherUid = args.OtherFixture.Body.Owner;
 
-            if (args.OtherFixture.Body.BodyType == BodyType.Static) return;
+            if (args.OtherFixture.Body.BodyType == BodyType.Static)
+                return;
 
             component.Intersecting.Add(otherUid);
             EnsureComp<ActiveConveyorComponent>(uid);
@@ -101,9 +103,15 @@ namespace Content.Server.Physics.Controllers
             if (args.Port == component.OffPort)
                 SetState(component, ConveyorState.Off);
             else if (args.Port == component.ForwardPort)
+            {
+                AwakenEntities(component);
                 SetState(component, ConveyorState.Forward);
+            }
             else if (args.Port == component.ReversePort)
+            {
+                AwakenEntities(component);
                 SetState(component, ConveyorState.Reverse);
+            }
         }
 
         private void SetState(ConveyorComponent component, ConveyorState state)
@@ -119,6 +127,34 @@ namespace Content.Server.Physics.Controllers
             }
 
             UpdateAppearance(component);
+        }
+
+        /// <summary>
+        /// Awakens sleeping entities on the conveyor belt's tile when it's turned on.
+        /// Fixes an issue where non-hard/sleeping entities refuse to wake up + collide if a belt is turned off and on again.
+        /// </summary>
+        private void AwakenEntities(ConveyorComponent component)
+        {
+            var xformQuery = GetEntityQuery<TransformComponent>();
+            var bodyQuery = GetEntityQuery<PhysicsComponent>();
+
+            if (!xformQuery.TryGetComponent(component.Owner, out var xform))
+                return;
+
+            var beltTileRef = xform.Coordinates.GetTileRef();
+
+            if (beltTileRef != null)
+            {
+                var intersecting = _lookup.GetEntitiesIntersecting(beltTileRef.Value);
+
+                foreach (var entity in intersecting)
+                {
+                    if (!bodyQuery.TryGetComponent(entity, out var physics))
+                        continue;
+
+                    physics.Awake = true;
+                }
+            }
         }
 
         public bool CanRun(ConveyorComponent component)
@@ -197,7 +233,8 @@ namespace Content.Server.Physics.Controllers
 
         private static Vector2 Convey(Vector2 direction, float speed, float frameTime, Vector2 itemRelative)
         {
-            if (speed == 0 || direction.Length == 0) return Vector2.Zero;
+            if (speed == 0 || direction.Length == 0)
+                return Vector2.Zero;
 
             /*
              * Basic idea: if the item is not in the middle of the conveyor in the direction that the conveyor is running,
