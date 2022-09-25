@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Salvage magnet broadcasts over supply instead of announcements now.,
-    type: Tweak}
-  id: 1859
-  time: '2022-07-04T06:19:41.0000000+00:00'
 - author: ike709
   changes:
   - {message: A song now plays during the nuke countdown. It can be disabled with
@@ -2922,3 +2916,8 @@ Entries:
       atmos works and other minor changes.', type: Tweak}
   id: 2358
   time: '2022-09-24T21:48:39.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Mouse Migration events are now less common., type: Tweak}
+  id: 2359
+  time: '2022-09-25T04:44:29.0000000+00:00'
