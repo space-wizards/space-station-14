@@ -1,15 +1,14 @@
-using Content.Shared.Disease;
-using Content.Shared.Revenant;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using System.Threading;
+using Content.Shared.Disease;
 using Content.Shared.FixedPoint;
 using Content.Shared.Store;
+using Robust.Shared.GameStates;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Revenant;
+namespace Content.Shared.Revenant.Components;
 
-[RegisterComponent]
-public sealed class RevenantComponent : SharedRevenantComponent
+[RegisterComponent, NetworkedComponent]
+public sealed class RevenantComponent : Component
 {
     /// <summary>
     /// The total amount of Essence the revenant has. Functions
@@ -32,13 +31,13 @@ public sealed class RevenantComponent : SharedRevenantComponent
     /// The coefficient of damage taken to actual health lost.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("damageToEssenceCoefficient")]
-    public float DamageToEssenceCoefficient = 1f;
+    public float DamageToEssenceCoefficient = 0.75f;
 
     /// <summary>
     /// The amount of essence passively generated per second.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("essencePerSecond")]
-    public FixedPoint2 EssencePerSecond = 0.25f;
+    public FixedPoint2 EssencePerSecond = 0.5f;
 
     [ViewVariables]
     public float Accumulator = 0;
@@ -129,13 +128,13 @@ public sealed class RevenantComponent : SharedRevenantComponent
     /// The radius around the user that this ability affects
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("overloadRadius")]
-    public float OverloadRadius = 3.5f;
+    public float OverloadRadius = 5f;
 
     /// <summary>
-    /// The chance that each light in the radius of the ability will break and explode.
+    /// How close to the light the entity has to be in order to be zapped.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("overloadBreakChance")]
-    public float OverloadBreakChance = 0.5f;
+    [ViewVariables(VVAccess.ReadWrite), DataField("overloadZapRadius")]
+    public float OverloadZapRadius = 2f;
     #endregion
 
     #region Blight Ability
@@ -187,28 +186,15 @@ public sealed class RevenantComponent : SharedRevenantComponent
     [ViewVariables(VVAccess.ReadWrite), DataField("malfunctionRadius")]
     public float MalfunctionRadius = 3.5f;
     #endregion
+
+    #region Visualizer
+    [DataField("state")]
+    public string State = "idle";
+    [DataField("corporealState")]
+    public string CorporealState = "active";
+    [DataField("stunnedState")]
+    public string StunnedState = "stunned";
+    [DataField("harvestingState")]
+    public string HarvestingState = "harvesting";
+    #endregion
 }
-
-public sealed class SoulSearchDoAfterComplete : EntityEventArgs
-{
-    public readonly EntityUid Target;
-
-    public SoulSearchDoAfterComplete(EntityUid target)
-    {
-        Target = target;
-    }
-}
-
-public sealed class SoulSearchDoAfterCancelled : EntityEventArgs { }
-
-public sealed class HarvestDoAfterComplete : EntityEventArgs
-{
-    public readonly EntityUid Target;
-
-    public HarvestDoAfterComplete(EntityUid target)
-    {
-        Target = target;
-    }
-}
-
-public sealed class HarvestDoAfterCancelled : EntityEventArgs { }
