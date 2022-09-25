@@ -160,7 +160,7 @@ entities:
     type: Transform
 - uid: 7
   components:
-  - name: Kroma Station
+  - name: Pebble Station
     type: MetaData
   - pos: -0.010280192,2.4700837
     parent: 8
@@ -5180,7 +5180,7 @@ entities:
       - 0
       - 0
     type: GridAtmosphere
-  - id: KromaStation
+  - id: PebbleStation
     type: BecomesStation
 - uid: 8
   components:
