@@ -10,7 +10,7 @@ namespace Content.Client.Radiation.Overlays;
 public sealed class RadiationDebugOverlay : Overlay
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly IEntityManager _entity = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
     private readonly RadiationSystem _radiation;
 
     private readonly Font _font;
@@ -20,7 +20,7 @@ public sealed class RadiationDebugOverlay : Overlay
     public RadiationDebugOverlay()
     {
         IoCManager.InjectDependencies(this);
-        _radiation = _entity.System<RadiationSystem>();
+        _radiation = _entityManager.System<RadiationSystem>();
 
         var cache = IoCManager.Resolve<IResourceCache>();
         _font = new VectorFont(cache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Regular.ttf"), 8);
@@ -80,11 +80,12 @@ public sealed class RadiationDebugOverlay : Overlay
             return;
 
         var handle = args.ScreenHandle;
+        var query = _entityManager.GetEntityQuery<TransformComponent>();
         foreach (var (gridUid, resMap) in resistance)
         {
             if (!_mapManager.TryGetGrid(gridUid, out var grid))
                 continue;
-            if (grid.ParentMapId != args.MapId)
+            if (query.TryGetComponent(gridUid, out var trs) && trs.MapID != args.MapId)
                 continue;
 
             var offset = new Vector2(grid.TileSize, -grid.TileSize) * 0.25f;
