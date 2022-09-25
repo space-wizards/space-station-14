@@ -15,6 +15,13 @@
       showExamineInfo: true
     - type: Input
       context: "human"
+    - type: Respirator
+      damage:
+        types:
+          Asphyxiation: 0.5
+      damageRecovery:
+        types:
+          Asphyxiation: -1.0
     - type: MobMover
     - type: InputMover
     - type: Alerts
@@ -25,4 +32,3 @@
     - type: Faction
       factions:
         - NanoTrasen
-#Weh

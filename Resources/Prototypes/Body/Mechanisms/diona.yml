@@ -36,6 +36,15 @@
     baseSprintSpeed: 0
   - type: GhostOnMove
   - type: Brain
+  - type: Lung #lungs in they head. why they there tho?
+  - type: Metabolizer
+    removeEmpty: true
+    solutionOnBody: false
+    solution: "Lung"
+    metabolizerTypes: [ Plant ]
+    groups:
+    - id: Gas
+      rateModifier: 100.0
 
 - type: entity
   id: OrganDionaEyes
@@ -81,7 +90,7 @@
   - type: Stomach
   - type: Metabolizer
     maxReagents: 6
-    metabolizerTypes: [ Human, Plant ]
+    metabolizerTypes: [ Plant ]
     removeEmpty: true
     groups:
       - id: Food
