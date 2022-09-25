@@ -188,7 +188,7 @@ namespace Content.Server.NPC.Systems
                 return;
             }
 
-            // Grab the target position, either the path or our end goal.
+            // Grab the target position, either the next path node or our end goal.
             // TODO: Some situations we may not want to move at our target without a path.
             var targetCoordinates = GetTargetCoordinates(steering);
             var needsPath = false;
@@ -206,13 +206,18 @@ namespace Content.Server.NPC.Systems
                 }
             }
 
-            var arrivalDistance = SharedInteractionSystem.InteractionRange - 0.8f;
+            // Need to be pretty close if it's just a node to make sure LOS for door bashes or the likes.
+            float arrivalDistance;
 
             if (targetCoordinates.Equals(steering.Coordinates))
             {
                 // What's our tolerance for arrival.
                 // If it's a pathfinding node it might be different to the destination.
                 arrivalDistance = steering.Range;
+            }
+            else
+            {
+                arrivalDistance = SharedInteractionSystem.InteractionRange - 0.8f;
             }
 
             // Check if mapids match.
@@ -248,6 +253,7 @@ namespace Content.Server.NPC.Systems
                             return;
                         case SteeringObstacleStatus.Continuing:
                             SetDirection(mover, steering, Vector2.Zero, false);
+                            CheckPath(steering, xform, needsPath);
                             return;
                         default:
                             throw new ArgumentOutOfRangeException();
@@ -292,25 +298,7 @@ namespace Content.Server.NPC.Systems
             needsPath = needsPath || steering.CurrentPath.Count == 0 || (steering.CurrentPath.Peek().Data.Flags & PathfindingBreadcrumbFlag.Invalid) != 0x0;
 
             // TODO: Probably need partial planning support i.e. patch from the last node to where the target moved to.
-
-            if (!needsPath)
-            {
-                var lastNode = GetCoordinates(steering.CurrentPath.Last());
-                // I know this is bad and doesn't account for tile size
-                // However with the path I'm going to change it to return pathfinding nodes which include coordinates instead.
-
-                if (lastNode.TryDistance(EntityManager, steering.Coordinates, out var lastDistance) &&
-                    lastDistance > steering.RepathRange)
-                {
-                    needsPath = true;
-                }
-            }
-
-            // Request the new path.
-            if (needsPath)
-            {
-                RequestPath(steering, xform);
-            }
+            CheckPath(steering, xform, needsPath);
 
             modifierQuery.TryGetComponent(steering.Owner, out var modifier);
             var moveSpeed = GetSprintSpeed(steering.Owner, modifier);
@@ -339,6 +327,27 @@ namespace Content.Server.NPC.Systems
             // We have the input in world terms but need to convert it back to what movercontroller is doing.
             input = (-_mover.GetParentGridAngle(mover)).RotateVec(input);
             SetDirection(mover, steering, input);
+        }
+
+        private void CheckPath(NPCSteeringComponent steering, TransformComponent xform, bool needsPath)
+        {
+            if (!needsPath)
+            {
+                // If the target has sufficiently moved.
+                var lastNode = GetCoordinates(steering.CurrentPath.Last());
+
+                if (lastNode.TryDistance(EntityManager, steering.Coordinates, out var lastDistance) &&
+                    lastDistance > steering.RepathRange)
+                {
+                    needsPath = true;
+                }
+            }
+
+            // Request the new path.
+            if (needsPath)
+            {
+                RequestPath(steering, xform);
+            }
         }
 
         /// <summary>
@@ -415,6 +424,7 @@ namespace Content.Server.NPC.Systems
                 steering.PathfindToken.Token);
 
             steering.CurrentPath = result.Path;
+            steering.PathfindToken = null;
         }
 
         // TODO: Move these to movercontroller
