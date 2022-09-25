@@ -431,7 +431,7 @@
   description: The classical two part series on how to further hone your mime skills.
   productEntity: MimeSpellbook
   cost:
-    Telecrystal: 20
+    Telecrystal: 12
   categories:
     - UplinkJob
   conditions:
