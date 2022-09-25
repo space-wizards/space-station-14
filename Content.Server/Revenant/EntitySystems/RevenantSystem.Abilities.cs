@@ -201,7 +201,7 @@ public sealed partial class RevenantSystem
         if (damage == null)
             return;
         DamageSpecifier dspec = new();
-        dspec.DamageDict.Add("Toxin", damage.Value);
+        dspec.DamageDict.Add("Poison", damage.Value);
         _damage.TryChangeDamage(args.Target, dspec, true);
     }
 
