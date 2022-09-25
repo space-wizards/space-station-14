@@ -1,7 +1,7 @@
 - type: gameMap
-  id: SplitStation
+  id: Split
   mapName: 'Split Station'
-  mapPath: /Maps/splitstation.yml
+  mapPath: /Maps/split.yml
   minPlayers: 50
   stations:
     Split:

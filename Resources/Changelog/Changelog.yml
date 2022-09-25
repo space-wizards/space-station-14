@@ -1,16 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Shuttle transit time reduced from 2 minutes to 1 minute., type: Tweak}
-  id: 1857
-  time: '2022-07-04T05:14:04.0000000+00:00'
-- author: jessicamaybe
-  changes:
-  - {message: 'Adds a new disease, tongue twister.', type: Add}
-  id: 1858
-  time: '2022-07-04T05:22:30.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Salvage magnet broadcasts over supply instead of announcements now.,
     type: Tweak}
   id: 1859
@@ -2921,3 +2911,14 @@ Entries:
   - {message: Gave descriptions to the shaker and shot glass., type: Add}
   id: 2356
   time: '2022-09-22T23:55:31.0000000+00:00'
+- author: illiux
+  changes:
+  - {message: Latejoin spawns to Pillar, type: Add}
+  id: 2357
+  time: '2022-09-23T04:19:07.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Minor update and fixes for Splitstation. Salvage is closer to Science,
+      atmos works and other minor changes.', type: Tweak}
+  id: 2358
+  time: '2022-09-24T21:48:39.0000000+00:00'

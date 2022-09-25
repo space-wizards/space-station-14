@@ -36,14 +36,14 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
             return;
         }
 
-        bool dirty;
+        bool dirty = data.SkinColor != component.SkinColor;
         if (data.CustomBaseLayerInfo.Count != 0)
         {
-            dirty = MergeCustomBaseSprites(uid, baseSprites.Sprites, data.CustomBaseLayerInfo, component);
+            dirty |= MergeCustomBaseSprites(uid, baseSprites.Sprites, data.CustomBaseLayerInfo, component);
         }
         else
         {
-            dirty = MergeCustomBaseSprites(uid, baseSprites.Sprites, null, component);
+            dirty |= MergeCustomBaseSprites(uid, baseSprites.Sprites, null, component);
         }
 
         if (dirty)
