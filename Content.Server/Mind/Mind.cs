@@ -393,9 +393,9 @@ namespace Content.Server.Mind
             var oldSession = Session;
             oldSession?.AttachToEntity(null);
 
-            if (UserId.HasValue)
+            if (UserId.HasValue && playerMgr.TryGetPlayerData(UserId.Value, out var oldUncast))
             {
-                var data = playerMgr.GetPlayerData(UserId.Value).ContentData();
+                var data = oldUncast.ContentData();
                 DebugTools.AssertNotNull(data);
                 data!.UpdateMindFromMindChangeOwningPlayer(null);
             }

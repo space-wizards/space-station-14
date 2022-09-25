@@ -19,6 +19,11 @@ public sealed class MindTests
   id: MindTestEntity
   components:
   - type: Mind
+
+- type: entity
+  parent: MindTestEntity
+  id: MindTestEntityDamageable
+  components:
   - type: Damageable
   - type: MobState
     thresholds:
@@ -52,7 +57,6 @@ public sealed class MindTests
             var userId = new NetUserId(Guid.NewGuid());
             var mind = mindSystem.CreateMind(userId);
 
-            mindSystem.ChangeOwningPlayer(mind, userId);
             Assert.That(mind.UserId, Is.EqualTo(userId));
 
             mindSystem.TransferTo(mind, entity);
@@ -129,6 +133,37 @@ public sealed class MindTests
             mindSystem.TransferTo(mind, targetEntity);
             Assert.That(mindSystem.GetMind(entity, mindComp), Is.EqualTo(null));
             Assert.That(mindSystem.GetMind(targetEntity), Is.EqualTo(mind));
+        });
+
+        await pairTracker.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task TestOwningPlayerCanBeChanged()
+    {
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{ NoClient = true, ExtraPrototypes = Prototypes });
+        var server = pairTracker.Pair.Server;
+
+        var entMan = server.ResolveDependency<IServerEntityManager>();
+
+        await server.WaitAssertion(() =>
+        {
+            var mindSystem = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
+
+            var entity = entMan.SpawnEntity("MindTestEntity", new MapCoordinates());
+
+            var userId = new NetUserId(Guid.NewGuid());
+            var mind = mindSystem.CreateMind(userId);
+
+            mindSystem.TransferTo(mind, entity);
+
+            var mindComp = entMan.GetComponent<MindComponent>(entity);
+            Assert.That(mindSystem.GetMind(entity, mindComp), Is.EqualTo(mind));
+            Assert.That(mind.UserId, Is.EqualTo(userId));
+
+            var newUserId = new NetUserId(Guid.NewGuid());
+            mindSystem.ChangeOwningPlayer(entity, newUserId, mindComp);
+            Assert.That(mind.UserId, Is.EqualTo(newUserId));
         });
 
         await pairTracker.CleanReturnAsync();

@@ -212,4 +212,16 @@ public sealed class MindSystem : EntitySystem
     {
         mind.ChangeOwningPlayer(netUserId);
     }
+
+    public void ChangeOwningPlayer(EntityUid uid, NetUserId? netUserId, MindComponent? mindComp = null)
+    {
+        if (!Resolve(uid, ref mindComp))
+            return;
+
+        if (!mindComp.HasMind)
+            return;
+
+        var mind = mindComp.Mind;
+        mind!.ChangeOwningPlayer(netUserId);
+    }
 }
