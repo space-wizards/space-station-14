@@ -141,7 +141,7 @@ namespace Content.Server.Physics.Controllers
             if (!xformQuery.TryGetComponent(component.Owner, out var xform))
                 return;
 
-            var beltTileRef = xform.Coordinates.GetTileRef();
+            var beltTileRef = xform.Coordinates.GetTileRef(EntityManager, _mapManager);
 
             if (beltTileRef != null)
             {
