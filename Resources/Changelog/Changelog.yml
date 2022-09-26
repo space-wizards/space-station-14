@@ -1,15 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Added telescreens and a large flat screen TV., type: Add}
-  id: 1863
-  time: '2022-07-04T07:10:30.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Added rusted metal walls! Use a welder to remove the rust. They're weaker
-      so be careful., type: Add}
-  id: 1864
-  time: '2022-07-04T07:11:47.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: No more playing hot potato with ID cards to early launch the shuttle.,
@@ -2920,3 +2909,15 @@ Entries:
       PTech for HoP. Salvage is back near Cargo. Cargo should space less.', type: Tweak}
   id: 2362
   time: '2022-09-26T19:35:42.0000000+00:00'
+- author: Mervill
+  changes:
+  - {message: Proper feedback for when items thrown toward the disposal bin don't
+      go in (25% chance to miss)., type: Add}
+  id: 2363
+  time: '2022-09-26T19:42:49.0000000+00:00'
+- author: ashtronaut
+  changes:
+  - {message: A new speaker in the Hot Drinks machine means you can now hear it brew
+      your beverage., type: Tweak}
+  id: 2364
+  time: '2022-09-26T19:43:21.0000000+00:00'
