@@ -24,7 +24,7 @@
     back: ClothingBackpackSecurityFilled
     shoes: ClothingShoesBootsJack
     eyes: ClothingEyesGlassesSecurity
-    head: ClothingHeadHelmetHelmetOld
+    head: ClothingHeadHelmetHelmet
     outerClothing: ClothingOuterVestKevlar
     id: SecurityPDA
     ears: ClothingHeadsetSecurity
