@@ -1,4 +1,4 @@
-using Content.Client.Buckle.Strap;
+using Content.Client.Eye;
 using Content.Shared.Vehicle;
 using Content.Shared.Vehicle.Components;
 using Robust.Client.GameObjects;
@@ -12,6 +12,7 @@ namespace Content.Client.Vehicle
     {
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly EyeLerpingSystem _lerpSys = default!;
 
         public override void Initialize()
         {
@@ -24,8 +25,17 @@ namespace Content.Client.Vehicle
 
         private void OnRiderShutdown(EntityUid uid, RiderComponent component, ComponentShutdown args)
         {
+            if (component.Vehicle != null)
+                _lerpSys.RemoveEye(component.Vehicle.Value);
+
+            if (uid == _playerManager.LocalPlayer?.ControlledEntity
+                && TryComp(uid, out EyeComponent? eye)
+                && eye.Eye != null)
+            {
+                _eyeManager.CurrentEye = eye.Eye;
+            }
+
             component.Vehicle = null;
-            UpdateEye(component);
         }
 
         private void OnRiderAttached(EntityUid uid, RiderComponent component, PlayerAttachedEvent args)
@@ -35,18 +45,16 @@ namespace Content.Client.Vehicle
 
         private void OnRiderDetached(EntityUid uid, RiderComponent component, PlayerDetachedEvent args)
         {
-            UpdateEye(component);
+            if (component.Vehicle != null)
+                _lerpSys.RemoveEye(component.Vehicle.Value);
         }
 
         private void UpdateEye(RiderComponent component)
         {
-            if (!TryComp(component.Vehicle, out EyeComponent? eyeComponent))
-            {
-                TryComp(_playerManager.LocalPlayer?.ControlledEntity, out eyeComponent);
-            }
+            if (!TryComp(component.Vehicle, out EyeComponent? eyeComponent) || eyeComponent.Eye == null)
+                return;
 
-            if (eyeComponent?.Eye == null) return;
-
+            _lerpSys.AddEye(component.Vehicle.Value, eyeComponent);
             _eyeManager.CurrentEye = eyeComponent.Eye;
         }
 

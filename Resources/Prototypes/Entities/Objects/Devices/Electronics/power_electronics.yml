@@ -1,7 +1,7 @@
 ﻿# APC
 - type: entity
   id: APCElectronics
-  parent: BaseItem
+  parent: BaseElectronics
   name: APC electronics
   description: Circuit used in APC construction.
   components:
@@ -10,13 +10,11 @@
       sprite: Objects/Misc/module.rsi
       state: charger_APC
       netsync: false
-    - type: StaticPrice
-      price: 100
 
 # Wallmount Substation
 - type: entity
   id: WallmountSubstationElectronics
-  parent: BaseItem
+  parent: BaseElectronics
   name: wallmount substation electronics
   description: Circuit used to construct a wallmount substation.
   components:
@@ -24,13 +22,11 @@
       sprite: Objects/Misc/module.rsi
       state: charger_APC
       netsync: false
-    - type: StaticPrice
-      price: 100
 
 # Wallmount Generator
 - type: entity
   id: WallmountGeneratorElectronics
-  parent: BaseItem
+  parent: BaseElectronics
   name: wallmount generator electronics
   description: Circuit used to construct a wallmount generator.
   components:
@@ -38,13 +34,11 @@
       sprite: Objects/Misc/module.rsi
       state: charger_APC
       netsync: false
-    - type: StaticPrice
-      price: 100
 
 # APU
 - type: entity
   id: WallmountGeneratorAPUElectronics
-  parent: BaseItem
+  parent: BaseElectronics
   name: wallmount APU electronics
   description: Circuit used to construct a wallmount APU.
   components:
@@ -52,12 +46,10 @@
       sprite: Objects/Misc/module.rsi
       state: charger_APC
       netsync: false
-    - type: StaticPrice
-      price: 100
 
 # Solar Tracker Electronics
 - type: entity
-  parent: BaseItem
+  parent: BaseElectronics
   id: SolarTrackerElectronics
   name: solar tracker electronics
   description: Advanced circuit board used to detect differences in pressure, temperature and gas concentrations between the two sides of the door.
@@ -66,5 +58,3 @@
       sprite: Objects/Misc/module.rsi
       state: generic
       netsync: false
-    - type: StaticPrice
-      price: 100

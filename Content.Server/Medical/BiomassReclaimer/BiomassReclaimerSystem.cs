@@ -10,13 +10,13 @@ using Content.Shared.Nutrition.Components;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
-using Content.Shared.CharacterAppearance.Components;
 using Content.Server.MobState;
 using Content.Server.Power.Components;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Server.Climbing;
 using Content.Server.DoAfter;
+using Content.Server.Humanoid;
 using Content.Server.Mind.Components;
 using Content.Server.Stack;
 using Robust.Shared.Player;
@@ -210,7 +210,7 @@ namespace Content.Server.Medical.BiomassReclaimer
                 return false;
 
             // Reject souled bodies in easy mode.
-            if (_configManager.GetCVar(CCVars.BiomassEasyMode) && HasComp<HumanoidAppearanceComponent>(dragged) &&
+            if (_configManager.GetCVar(CCVars.BiomassEasyMode) && HasComp<HumanoidComponent>(dragged) &&
                 TryComp<MindComponent>(dragged, out var mindComp))
                 {
                     if (mindComp.Mind?.UserId != null && _playerManager.TryGetSessionById(mindComp.Mind.UserId.Value, out var client))

@@ -213,3 +213,13 @@
         - id: BoxLightMixed
         - id: BoxLightMixed
         - id: Soap
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackSalvage
+  id: ClothingBackpackSalvageFilled
+  components:
+    - type: StorageFill
+      contents:
+        - id: BoxSurvival
+
