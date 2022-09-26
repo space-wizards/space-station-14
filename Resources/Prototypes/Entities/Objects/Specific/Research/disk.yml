@@ -40,10 +40,30 @@
   parent: ResearchDiskBase
   id: CleaningTechResultsDisk
   name: analysis mop bucket results disk
-  description: The results of the analysis mop bucket. Use on the R&D server to unlock more technologies.
+  description: The results from the analysis mop bucket. Use on the R&D server to unlock more technologies.
   components:
   - type: ResearchDisk
     technology: CleaningTechResults
+    points: 0
+
+- type: entity
+  parent: ResearchDiskBase
+  id: ChemTechResultsDisk
+  name: chemical analysis machine results disk
+  description: The results from the chemical analysis machine. Use on the R&D server to unlock more technologies.
+  components:
+  - type: ResearchDisk
+    technology: ChemTechResults
+    points: 0
+
+- type: entity
+  parent: ResearchDiskBase
+  id: MedTechResultsDisk
+  name: chemical analysis machine results disk
+  description: The results from the research medical bed. Use on the R&D server to unlock more technologies.
+  components:
+  - type: ResearchDisk
+    technology: MedTechResults
     points: 0
 
 #- type: entity

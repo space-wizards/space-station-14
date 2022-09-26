@@ -178,9 +178,9 @@
     - Syringe
     - PillCanister
     - ChemistryEmptyBottle01
-    #- ChemicalAnalyserBoard
     #- MedicalResearchBed <- a medbed with a monitor interface (either inbuilt or linkable)
-
+    #- ChemicalAnalyserBoard
+    
 - type: technology
   name: Chemical analysis laboratory results
   id: ChemTechResults

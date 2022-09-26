@@ -80,6 +80,42 @@
     node: medicalbed
 
 - type: entity
+  parent: MedicalBed
+  id: MedicalResearchBed
+  name: medical research bed
+  description: A medical bed with an in-built health analyser and body analysis system for research purposes.
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/researchmedbed.rsi
+    state: bed-RESMED
+  - type: ApcPowerReceiver
+    powerLoad: 1000
+  - type: ExtensionCableReceiver
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 75
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 2
+  - type: MedicalResearchBed
+  #- type: ActivatableUI <-- remove until this can be fixed (may just need an alternative activation component)
+  #  key: enum.MedicalResearchBedUiKey.Key
+  - type: UserInterface
+    interfaces:
+    - key: enum.MedicalResearchBedUiKey.Key
+      type: MedicalResearchBedBoundUserInterface
+
+- type: entity
   parent: Bed
   id: DogBed
   name: dog bed
