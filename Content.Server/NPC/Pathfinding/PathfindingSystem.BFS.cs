@@ -114,6 +114,7 @@ public sealed partial class PathfindingSystem
             path.Enqueue(node.Coordinates);
         }
 
+        DebugTools.Assert(route.Count > 0);
         request.Polys = route;
         return PathResult.Path;
     }

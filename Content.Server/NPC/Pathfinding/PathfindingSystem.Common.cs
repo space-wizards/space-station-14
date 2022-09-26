@@ -34,10 +34,8 @@ public sealed partial class PathfindingSystem
             running.Add(currentNodeRef);
         }
 
-        // TODO: Need to cut corners where possible.
-
-        running.Reverse();
         running = Simplify(running);
+        running.Reverse();
         var result = new Queue<PathPoly>(running);
         return result;
     }
@@ -45,6 +43,12 @@ public sealed partial class PathfindingSystem
     private float GetTileCost(PathRequest request, PathPoly start, PathPoly end)
     {
         var modifier = 1f;
+
+        // TODO
+        if ((end.Data.Flags & PathfindingBreadcrumbFlag.Space) != 0x0)
+        {
+            return 0f;
+        }
 
         if ((request.CollisionLayer & end.Data.CollisionMask) != 0x0 ||
             (request.CollisionMask & end.Data.CollisionLayer) != 0x0)
@@ -61,11 +65,11 @@ public sealed partial class PathfindingSystem
             // Door we can force open one way or another
             else if (isDoor && isAccess && (request.Flags & PathFlags.Prying) != 0x0)
             {
-                modifier += 4f;
+                modifier += 10f;
             }
             else if ((request.Flags & PathFlags.Smashing) != 0x0 && end.Data.Damage > 0f)
             {
-                modifier += 7f + end.Data.Damage / 100f;
+                modifier += 10f + end.Data.Damage / 100f;
             }
             else
             {
@@ -100,7 +104,8 @@ public sealed partial class PathfindingSystem
             var nextData = next.Data;
 
             // If they collinear, continue
-            if (prevData.Equals(currentData) &&
+            if (i != 0 && i != vertices.Count - 1 &&
+                prevData.Equals(currentData) &&
                 currentData.Equals(nextData) &&
                 IsCollinear(prev, current, next, tolerance))
             {
@@ -116,6 +121,11 @@ public sealed partial class PathfindingSystem
             simplified.Add(vertices[0]);
             simplified.Add(vertices[^1]);
         }
+
+        // Check LOS and cut out more nodes
+        // TODO: Grid cast
+        // https://github.com/recastnavigation/recastnavigation/blob/c5cbd53024c8a9d8d097a4371215e3342d2fdc87/Detour/Source/DetourNavMeshQuery.cpp#L2455
+        // Essentially you just do a raycast but a specialised version.
 
         return simplified;
     }

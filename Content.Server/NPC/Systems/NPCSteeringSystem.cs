@@ -30,7 +30,7 @@ namespace Content.Server.NPC.Systems
         [Dependency] private readonly SharedMoverController _mover = default!;
 
         // This will likely get moved onto an abstract pathfinding node that specifies the max distance allowed from the coordinate.
-        private const float TileTolerance = 0.4f;
+        private const float TileTolerance = 0.25f;
 
         private bool _enabled;
 
@@ -302,7 +302,10 @@ namespace Content.Server.NPC.Systems
             }
 
             // Do we have no more nodes to follow OR has the target moved sufficiently? If so then re-path.
-            needsPath = needsPath || steering.CurrentPath.Count == 0 || (steering.CurrentPath.Peek().Data.Flags & PathfindingBreadcrumbFlag.Invalid) != 0x0;
+            if (!needsPath)
+            {
+                needsPath = steering.CurrentPath.Count == 0 || (steering.CurrentPath.Peek().Data.Flags & PathfindingBreadcrumbFlag.Invalid) != 0x0;
+            }
 
             // TODO: Probably need partial planning support i.e. patch from the last node to where the target moved to.
             CheckPath(steering, xform, needsPath);
@@ -369,7 +372,7 @@ namespace Content.Server.NPC.Systems
 
             // Right now the pathfinder gives EVERY TILE back but ideally it won't someday, it'll just give straightline ones.
             // For now, we just prune up until the closest node + 1 extra.
-            var closest = float.MaxValue;
+            float closest = float.MaxValue;
 
             while (nodes.TryPeek(out var node))
             {

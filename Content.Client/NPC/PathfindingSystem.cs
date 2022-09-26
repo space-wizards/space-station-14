@@ -74,7 +74,7 @@ namespace Content.Client.NPC
             {
                 var route = Routes[i];
 
-                if (_timing.CurTime < route.Time)
+                if (_timing.RealTime < route.Time)
                     break;
 
                 Routes.RemoveAt(i);
@@ -83,7 +83,7 @@ namespace Content.Client.NPC
 
         private void OnRoute(PathRouteMessage ev)
         {
-            Routes.Add((_timing.CurTime + TimeSpan.FromSeconds(1), ev));
+            Routes.Add((_timing.RealTime + TimeSpan.FromSeconds(1), ev));
         }
 
         private void OnPolys(PathPolysMessage ev)
@@ -490,7 +490,7 @@ namespace Content.Client.NPC
                             continue;
 
                         worldHandle.SetTransform(graphXform.WorldMatrix);
-                        worldHandle.DrawRect(node.Box, Color.Orange.WithAlpha(0.25f));
+                        worldHandle.DrawRect(node.Box, Color.Orange.WithAlpha(0.10f));
                     }
                 }
             }
@@ -514,7 +514,7 @@ namespace Content.Client.NPC
                             worldHandle.SetTransform(graphXform.WorldMatrix);
                         }
 
-                        worldHandle.DrawRect(node.Box, new Color(0f, cost / highestGScore, 1f - (cost / highestGScore), 0.25f));
+                        worldHandle.DrawRect(node.Box, new Color(0f, cost / highestGScore, 1f - (cost / highestGScore), 0.10f));
                     }
                 }
             }
