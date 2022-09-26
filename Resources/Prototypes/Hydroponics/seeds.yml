@@ -204,7 +204,7 @@
 - type: seed
   id: towercap
   name: seeds-towercap-name
-  noun: seeds-noun-seeds
+  noun: seeds-noun-spores
   displayName: seeds-towercap-display-name
   plantRsi: Objects/Specific/Hydroponics/towercap.rsi
   productPrototypes:
@@ -587,7 +587,7 @@
 - type: seed
   id: lingzhi
   name: seeds-lingzhi-name
-  noun: seeds-noun-seeds
+  noun: seeds-noun-spores
   displayName: seeds-lingzhi-display-name
   plantRsi: Objects/Specific/Hydroponics/lingzhi.rsi
   productPrototypes:
@@ -670,7 +670,7 @@
 - type: seed
   id: flyAmanita
   name: seeds-flyamanita-name
-  noun: seeds-noun-seeds
+  noun: seeds-noun-spores
   displayName: seeds-flyamanita-display-name
   plantRsi: Objects/Specific/Hydroponics/fly_amanita.rsi
   productPrototypes:
