@@ -68,7 +68,7 @@ namespace Content.Server.Salvage
             // If we ever want to give magnets names, and announce them individually, we would need to loop this, before removing it.
             if (_salvageGridStates.Remove(ev.EntityUid))
             {
-                var gridUid = _mapManager.GetGridEuid(ev.GridId);
+                var gridUid = ev.EntityUid;
                 if (EntityManager.TryGetComponent<SalvageGridComponent>(gridUid, out var salvComp) && salvComp.SpawnerMagnet != null)
                     Report(salvComp.SpawnerMagnet.Owner, salvComp.SpawnerMagnet.SalvageChannel, "salvage-system-announcement-spawn-magnet-lost");
                 // For the very unlikely possibility that the salvage magnet was on a salvage, we will not return here
