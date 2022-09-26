@@ -8,7 +8,6 @@ namespace Content.Server.Power.EntitySystems
     [UsedImplicitly]
     public sealed class BatterySystem : EntitySystem
     {
-        private const float PricePerJoule = 0.0001f;
 
         public override void Initialize()
         {
@@ -74,7 +73,7 @@ namespace Content.Server.Power.EntitySystems
         /// </summary>
         private void CalculateBatteryPrice(EntityUid uid, BatteryComponent component, ref PriceCalculationEvent args)
         {
-            args.Price += component.CurrentCharge * PricePerJoule;
+            args.Price += component.CurrentCharge * component.PricePerJoule;
         }
     }
 }
