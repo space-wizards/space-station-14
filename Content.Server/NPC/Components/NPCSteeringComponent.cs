@@ -31,12 +31,12 @@ public sealed class NPCSteeringComponent : Component
     /// <summary>
     /// How close are we trying to get to the coordinates before being considered in range.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)] public float Range = 0.2f;
+    [ViewVariables(VVAccess.ReadWrite)] public float Range = 1.2f;
 
     /// <summary>
     /// How far does the last node in the path need to be before considering re-pathfinding.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)] public float RepathRange = 1.5f;
+    [ViewVariables(VVAccess.ReadWrite)] public float RepathRange = 2f;
 
     [ViewVariables] public SteeringStatus Status = SteeringStatus.Moving;
 

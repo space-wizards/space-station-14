@@ -1,6 +1,4 @@
-using System.Linq;
 using Content.Shared.NPC;
-using Robust.Shared.Map;
 
 namespace Content.Server.NPC.Pathfinding;
 
@@ -35,6 +33,8 @@ public sealed partial class PathfindingSystem
             path.Remove(previousCurrent);
             running.Add(currentNodeRef);
         }
+
+        // TODO: Need to cut corners where possible.
 
         running.Reverse();
         running = Simplify(running);
@@ -80,6 +80,9 @@ public sealed partial class PathfindingSystem
 
     public List<PathPoly> Simplify(List<PathPoly> vertices, float tolerance = 0)
     {
+        return vertices;
+
+        // TODO: Needs more work
         if (vertices.Count <= 3)
             return vertices;
 

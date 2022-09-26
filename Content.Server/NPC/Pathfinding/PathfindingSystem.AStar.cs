@@ -59,6 +59,7 @@ public sealed partial class PathfindingSystem
         request.Frontier.Add((0.0f, startNode));
         request.CostSoFar[startNode] = 0.0f;
         var count = 0;
+        var arrived = false;
 
         while (request.Frontier.Count > 0 && count < NodeLimit)
         {
@@ -75,8 +76,12 @@ public sealed partial class PathfindingSystem
             // Actual pathfinding here
             (_, currentNode) = request.Frontier.Take();
 
-            if (currentNode.Equals(endNode))
+            // TODO: Need this at some stage but need to fix some steering bugs first before it's useable.
+            if (currentNode.Equals(endNode))// ||
+                //(endNode.GraphUid == currentNode.GraphUid &&
+                 //(endNode.Box.Center - currentNode.Box.Center).Length < request.Range))
             {
+                arrived = true;
                 break;
             }
 
@@ -112,7 +117,7 @@ public sealed partial class PathfindingSystem
             }
         }
 
-        if (!endNode.Equals(currentNode))
+        if (!arrived)
         {
             return PathResult.NoPath;
         }
