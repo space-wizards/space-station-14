@@ -176,7 +176,7 @@ namespace Content.Client.DoAfter
                     // based on ping. Right now these would show as cancelled near completion if we moved at the end
                     // despite succeeding.
                     continue;
-
+                    /*
                     if (doAfter.BreakOnUserMove)
                     {
                         if (!userGrid.InRange(EntityManager, doAfter.UserGrid, doAfter.MovementThreshold))
@@ -196,6 +196,7 @@ namespace Content.Client.DoAfter
                             continue;
                         }
                     }
+                    */
                 }
 
                 foreach (var doAfter in toRemove)

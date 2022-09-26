@@ -6,7 +6,7 @@ using Robust.Shared.Log;
 
 namespace Content.Server.Info;
 
-public class InfoSystem : EntitySystem
+public sealed class InfoSystem : EntitySystem
 {
     [Dependency] private readonly IResourceManager _res = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
@@ -16,7 +16,7 @@ public class InfoSystem : EntitySystem
         SubscribeNetworkEvent<RequestRulesMessage>(OnRequestRules);
     }
 
-    protected void OnRequestRules(RequestRulesMessage message, EntitySessionEventArgs eventArgs)
+    private void OnRequestRules(RequestRulesMessage message, EntitySessionEventArgs eventArgs)
     {
         Logger.DebugS("info", "Client requested rules.");
         var title = Loc.GetString(_cfg.GetCVar(CCVars.RulesHeader));

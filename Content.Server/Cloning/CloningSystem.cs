@@ -142,7 +142,7 @@ namespace Content.Server.Cloning.Systems
 
         public bool TryCloning(EntityUid uid, EntityUid bodyToClone, Mind.Mind mind, CloningPodComponent? clonePod)
         {
-            if (!Resolve(uid, ref clonePod) || bodyToClone == null)
+            if (!Resolve(uid, ref clonePod) || bodyToClone is not { Valid: true})
                 return false;
 
             if (HasComp<ActiveCloningPodComponent>(uid))

@@ -5,7 +5,6 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Content.Client.Items.Managers;
 using Content.Client.UserInterface.Controls;
-using JetBrains.Annotations;
 using static Content.Shared.Storage.SharedStorageComponent;
 
 namespace Content.Client.Storage

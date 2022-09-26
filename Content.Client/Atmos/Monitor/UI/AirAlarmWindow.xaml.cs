@@ -21,7 +21,6 @@ public sealed partial class AirAlarmWindow : DefaultWindow
     public event Action<string, IAtmosDeviceData>? AtmosDeviceDataChanged;
     public event Action<string, AtmosMonitorThresholdType, AtmosAlarmThreshold, Gas?>? AtmosAlarmThresholdChanged;
     public event Action<AirAlarmMode>? AirAlarmModeChanged;
-    public event Action<string>? ResyncDeviceRequested;
     public event Action? ResyncAllRequested;
     public event Action<AirAlarmTab>? AirAlarmTabChange;
 

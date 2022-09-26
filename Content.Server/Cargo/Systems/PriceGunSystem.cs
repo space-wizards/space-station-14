@@ -27,7 +27,7 @@ public sealed class PriceGunSystem : EntitySystem
     private void OnUtilityVerb(EntityUid uid, PriceGunComponent component, GetVerbsEvent<UtilityVerb> args)
     {
 
-        if (!args.CanAccess || !args.CanInteract || args.Target == null)
+        if (!args.CanAccess || !args.CanInteract || args.Target is not { Valid: true})
             return;
 
         if (TryComp(args.Using, out UseDelayComponent? useDelay) && useDelay.ActiveDelay)
