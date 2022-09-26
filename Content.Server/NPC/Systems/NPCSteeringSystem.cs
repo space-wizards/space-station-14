@@ -30,7 +30,7 @@ namespace Content.Server.NPC.Systems
         [Dependency] private readonly SharedMoverController _mover = default!;
 
         // This will likely get moved onto an abstract pathfinding node that specifies the max distance allowed from the coordinate.
-        private const float TileTolerance = 0.25f;
+        private const float TileTolerance = 0.40f;
 
         private bool _enabled;
 
@@ -260,7 +260,7 @@ namespace Content.Server.NPC.Systems
                             return;
                         case SteeringObstacleStatus.Continuing:
                             SetDirection(mover, steering, Vector2.Zero, false);
-                            CheckPath(steering, xform, needsPath);
+                            CheckPath(steering, xform, needsPath, distance);
                             return;
                         default:
                             throw new ArgumentOutOfRangeException();
@@ -308,7 +308,7 @@ namespace Content.Server.NPC.Systems
             }
 
             // TODO: Probably need partial planning support i.e. patch from the last node to where the target moved to.
-            CheckPath(steering, xform, needsPath);
+            CheckPath(steering, xform, needsPath, distance);
 
             modifierQuery.TryGetComponent(steering.Owner, out var modifier);
             var moveSpeed = GetSprintSpeed(steering.Owner, modifier);
@@ -339,7 +339,7 @@ namespace Content.Server.NPC.Systems
             SetDirection(mover, steering, input);
         }
 
-        private void CheckPath(NPCSteeringComponent steering, TransformComponent xform, bool needsPath)
+        private void CheckPath(NPCSteeringComponent steering, TransformComponent xform, bool needsPath, float targetDistance)
         {
             if (!needsPath)
             {
@@ -356,7 +356,7 @@ namespace Content.Server.NPC.Systems
             // Request the new path.
             if (needsPath)
             {
-                RequestPath(steering, xform);
+                RequestPath(steering, xform, targetDistance);
             }
         }
 
@@ -418,10 +418,11 @@ namespace Content.Server.NPC.Systems
         /// <summary>
         /// Get a new job from the pathfindingsystem
         /// </summary>
-        private async void RequestPath(NPCSteeringComponent steering, TransformComponent xform)
+        private async void RequestPath(NPCSteeringComponent steering, TransformComponent xform, float targetDistance)
         {
             // If we already have a pathfinding request then don't grab another.
-            if (steering.Pathfind)
+            // If we're in range then just beeline them; this can avoid stutter stepping and is an easy way to look nicer.
+            if (steering.Pathfind || targetDistance < steering.RepathRange)
                 return;
 
             steering.PathfindToken = new CancellationTokenSource();
