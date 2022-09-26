@@ -128,9 +128,9 @@
   description: High-quality nitrile gloves. Expensive medical PPE.
   components:
   - type: Sprite
-    sprite: Clothing/Hands/Gloves/Color/blue.rsi
+    sprite: Clothing/Hands/Gloves/nitrile.rsi
   - type: Clothing
-    sprite: Clothing/Hands/Gloves/Color/blue.rsi
+    sprite: Clothing/Hands/Gloves/nitrile.rsi
   - type: DiseaseProtection
     protection: 0.15
   - type: Fiber
@@ -210,9 +210,9 @@
   description: These tactical gloves are fireproof and shock resistant.
   components:
   - type: Sprite
-    sprite: Clothing/Hands/Gloves/Color/black.rsi
+    sprite: Clothing/Hands/Gloves/combat.rsi
   - type: Clothing
-    sprite: Clothing/Hands/Gloves/Color/black.rsi
+    sprite: Clothing/Hands/Gloves/combat.rsi
   - type: GloveHeatResistance
     heatResistance: 1400
   - type: Insulated
