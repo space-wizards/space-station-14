@@ -1,12 +1,4 @@
 Entries:
-- author: keronshb
-  changes:
-  - {message: Blocking has now been added! Use shields to lower incoming damage.,
-    type: Add}
-  - {message: 'Riot, Laser, Ballistic, Mirror, Clockwork, Makeshift, and Buckler Shields
-      have been added!', type: Add}
-  id: 1861
-  time: '2022-07-04T06:31:13.0000000+00:00'
 - author: themias
   changes:
   - {message: No more Dine and Dash (alt clicking food and running away), type: Fix}
@@ -2921,3 +2913,9 @@ Entries:
       exactly once., type: Fix}
   id: 2360
   time: '2022-09-25T14:45:29.0000000+00:00'
+- author: Scribbles0
+  changes:
+  - {message: Fixed Vector magazines showing the wrong name., type: Fix}
+  - {message: Gun descriptions now show the type of ammo it uses when examined., type: Add}
+  id: 2361
+  time: '2022-09-26T04:51:53.0000000+00:00'
