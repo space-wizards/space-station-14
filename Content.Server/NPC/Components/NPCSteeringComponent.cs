@@ -38,9 +38,16 @@ public sealed class NPCSteeringComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)] public float RepathRange = 1.2f;
 
+    public const int FailedPathLimit = 3;
+
+    /// <summary>
+    /// How many times we've failed to pathfind. Once this hits the limit we'll stop steering.
+    /// </summary>
+    [ViewVariables] public int FailedPathCount;
+
     [ViewVariables] public SteeringStatus Status = SteeringStatus.Moving;
 
-    [ViewVariables(VVAccess.ReadWrite)] public PathFlags Flags = PathFlags.Smashing | PathFlags.Prying;
+    [ViewVariables(VVAccess.ReadWrite)] public PathFlags Flags = PathFlags.None;
 }
 
 public enum SteeringStatus : byte

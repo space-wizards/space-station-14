@@ -104,7 +104,8 @@ public sealed class MoveToOperator : HTNOperator
             xform.Coordinates,
                 targetCoordinates,
             range,
-            cancelToken.Token);
+            cancelToken.Token,
+            _pathfind.GetFlags(blackboard));
 
         if (path.Result != PathResult.Path)
         {
@@ -127,9 +128,10 @@ public sealed class MoveToOperator : HTNOperator
 
         // Need to remove the planning value for execution.
         blackboard.Remove<EntityCoordinates>(NPCBlackboard.OwnerCoordinates);
+        var targetCoordinates = blackboard.GetValue<EntityCoordinates>(TargetKey);
 
         // Re-use the path we may have if applicable.
-        var comp = _steering.Register(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner), blackboard.GetValue<EntityCoordinates>(TargetKey));
+        var comp = _steering.Register(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner), targetCoordinates);
 
         if (blackboard.TryGetValue<float>(RangeKey, out var range))
         {
@@ -140,7 +142,8 @@ public sealed class MoveToOperator : HTNOperator
         {
             if (blackboard.TryGetValue<EntityCoordinates>(NPCBlackboard.OwnerCoordinates, out var coordinates))
             {
-                _steering.PrunePath(coordinates, result.Path);
+                var mapCoords = coordinates.ToMap(_entManager);
+                _steering.PrunePath(mapCoords, targetCoordinates.ToMapPos(_entManager) - mapCoords.Position, result.Path);
             }
 
             comp.CurrentPath = result.Path;

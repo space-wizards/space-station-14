@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
 using Content.Server.Destructible;
+using Content.Server.NPC.Components;
 using Content.Shared.Administration;
 using Content.Shared.Interaction;
 using Content.Shared.NPC;
@@ -216,12 +217,12 @@ namespace Content.Server.NPC.Pathfinding
             float range,
             float maxRange,
             CancellationToken cancelToken,
-            int limit = 40)
+            int limit = 40,
+            PathFlags flags = PathFlags.None)
         {
             if (!TryComp<TransformComponent>(entity, out var start))
                 return new PathResultEvent(PathResult.NoPath, new Queue<PathPoly>());
 
-            // TODO: Need a base type and an A* + BFS types
             var layer = 0;
             var mask = 0;
 
@@ -231,7 +232,7 @@ namespace Content.Server.NPC.Pathfinding
                 mask = body.CollisionMask;
             }
 
-            var request = new BFSPathRequest(maxRange, limit, start.Coordinates, PathFlags.None, range, layer, mask, cancelToken);
+            var request = new BFSPathRequest(maxRange, limit, start.Coordinates, flags, range, layer, mask, cancelToken);
             var path = await GetPath(request);
 
             if (path.Result != PathResult.Path)
@@ -247,12 +248,13 @@ namespace Content.Server.NPC.Pathfinding
             EntityUid entity,
             EntityCoordinates end,
             float range,
-            CancellationToken cancelToken)
+            CancellationToken cancelToken,
+            PathFlags flags = PathFlags.None)
         {
             if (!TryComp<TransformComponent>(entity, out var start))
                 return null;
 
-            var request = GetRequest(entity, start.Coordinates, end, range, cancelToken);
+            var request = GetRequest(entity, start.Coordinates, end, range, cancelToken, flags);
             var path = await GetPath(request);
 
             if (path.Result != PathResult.Path)
@@ -279,9 +281,10 @@ namespace Content.Server.NPC.Pathfinding
             EntityCoordinates start,
             EntityCoordinates end,
             float range,
-            CancellationToken cancelToken)
+            CancellationToken cancelToken,
+            PathFlags flags = PathFlags.None)
         {
-            var request = GetRequest(entity, start, end, range, cancelToken);
+            var request = GetRequest(entity, start, end, range, cancelToken, flags);
             return await GetPath(request);
         }
 
@@ -291,11 +294,11 @@ namespace Content.Server.NPC.Pathfinding
         public async Task<PathResultEvent> GetPath(
             EntityCoordinates start,
             EntityCoordinates end,
-            PathFlags flags,
             float range,
             int layer,
             int mask,
-            CancellationToken cancelToken)
+            CancellationToken cancelToken,
+            PathFlags flags = PathFlags.None)
         {
             // Don't allow the caller to pass in the request in case they try to do something with its data.
             var request = new AStarPathRequest(start, end, flags, range, layer, mask, cancelToken);
@@ -310,7 +313,8 @@ namespace Content.Server.NPC.Pathfinding
             EntityCoordinates start,
             EntityCoordinates end,
             float range,
-            CancellationToken cancelToken)
+            CancellationToken cancelToken,
+            PathFlags flags = PathFlags.None)
         {
             var path = await GetPath(uid, start, end, range, cancelToken);
             RaiseLocalEvent(uid, path);
@@ -349,7 +353,7 @@ namespace Content.Server.NPC.Pathfinding
             return null;
         }
 
-        private PathRequest GetRequest(EntityUid entity, EntityCoordinates start, EntityCoordinates end, float range, CancellationToken cancelToken)
+        private PathRequest GetRequest(EntityUid entity, EntityCoordinates start, EntityCoordinates end, float range, CancellationToken cancelToken, PathFlags flags)
         {
             var layer = 0;
             var mask = 0;
@@ -360,7 +364,34 @@ namespace Content.Server.NPC.Pathfinding
                 mask = body.CollisionMask;
             }
 
-            return new AStarPathRequest(start, end, PathFlags.Prying | PathFlags.Smashing, SharedInteractionSystem.InteractionRange - 0.5f, layer, mask, cancelToken);
+            return new AStarPathRequest(start, end, flags, range, layer, mask, cancelToken);
+        }
+
+        public PathFlags GetFlags(EntityUid uid)
+        {
+            if (!TryComp<NPCComponent>(uid, out var npc))
+            {
+                return PathFlags.None;
+            }
+
+            return GetFlags(npc.Blackboard);
+        }
+
+        public PathFlags GetFlags(NPCBlackboard blackboard)
+        {
+            var flags = PathFlags.None;
+
+            if (blackboard.TryGetValue<bool>(NPCBlackboard.NavPry, out var pry))
+            {
+                flags |= PathFlags.Prying;
+            }
+
+            if (blackboard.TryGetValue<bool>(NPCBlackboard.NavSmash, out var smash))
+            {
+                flags |= PathFlags.Smashing;
+            }
+
+            return flags;
         }
 
         private async Task<PathResultEvent> GetPath(

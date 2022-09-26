@@ -78,7 +78,7 @@ public abstract class NPCCombatOperator : HTNOperator
         if (xformQuery.TryGetComponent(existingTarget, out var targetXform))
         {
             var distance = await _pathfinding.GetPathDistance(owner, targetXform.Coordinates,
-                SharedInteractionSystem.InteractionRange, cancelToken.Token);
+                SharedInteractionSystem.InteractionRange, cancelToken.Token, _pathfinding.GetFlags(blackboard));
 
             if (distance != null)
             {
@@ -109,7 +109,7 @@ public abstract class NPCCombatOperator : HTNOperator
             }
 
             var distance = await _pathfinding.GetPathDistance(owner, targetXform.Coordinates,
-                SharedInteractionSystem.InteractionRange, cancelToken.Token);
+                SharedInteractionSystem.InteractionRange, cancelToken.Token, _pathfinding.GetFlags(blackboard));
 
             if (distance == null)
                 continue;

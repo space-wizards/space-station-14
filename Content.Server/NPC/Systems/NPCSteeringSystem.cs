@@ -83,6 +83,7 @@ namespace Content.Server.NPC.Systems
             else
             {
                 component = AddComp<NPCSteeringComponent>(uid);
+                component.Flags = _pathfindingSystem.GetFlags(uid);
             }
 
             EnsureComp<NPCRVOComponent>(uid);
@@ -187,6 +188,13 @@ namespace Content.Server.NPC.Systems
                 return;
             }
 
+            // No path set from pathfinding or the likes.
+            if (steering.Status == SteeringStatus.NoPath)
+            {
+                SetDirection(mover, steering, Vector2.Zero);
+                return;
+            }
+
             // Can't move at all, just noop input.
             if (!mover.CanMove)
             {
@@ -239,6 +247,11 @@ namespace Content.Server.NPC.Systems
             }
 
             var direction = targetMap.Position - ourMap.Position;
+
+            if (steering.Owner == new EntityUid(15315))
+            {
+
+            }
 
             // Are we in range
             if (direction.Length <= arrivalDistance)
@@ -363,30 +376,30 @@ namespace Content.Server.NPC.Systems
         /// <summary>
         /// We may be pathfinding and moving at the same time in which case early nodes may be out of date.
         /// </summary>
-        /// <param name="coordinates">Our coordinates we are pruning from</param>
-        /// <param name="nodes">Path we're pruning</param>
-        public void PrunePath(EntityCoordinates coordinates, Queue<PathPoly> nodes)
+        public void PrunePath(MapCoordinates mapCoordinates, Vector2 direction, Queue<PathPoly> nodes)
         {
             if (nodes.Count == 0)
                 return;
 
-            // Right now the pathfinder gives EVERY TILE back but ideally it won't someday, it'll just give straightline ones.
-            // For now, we just prune up until the closest node + 1 extra.
-            float closest = float.MaxValue;
+            // Prune the first node as it's irrelevant.
+            nodes.Dequeue();
 
             while (nodes.TryPeek(out var node))
             {
-                if (!node.Data.IsFreeSpace  || !coordinates.TryDistance(EntityManager, GetCoordinates(node), out var length))
+                if (!node.Data.IsFreeSpace)
                     break;
 
-                if (length < closest)
+                var nodeMap = node.Coordinates.ToMap(EntityManager);
+
+                // If any nodes are 'behind us' relative to the target we'll prune them.
+                // This isn't perfect but should fix most cases of stutter stepping.
+                if (nodeMap.MapId == mapCoordinates.MapId &&
+                    Vector2.Dot(direction, nodeMap.Position - mapCoordinates.Position) < 0f)
                 {
-                    closest = length;
                     nodes.Dequeue();
                     continue;
                 }
 
-                nodes.Dequeue();
                 break;
             }
         }
@@ -427,13 +440,34 @@ namespace Content.Server.NPC.Systems
 
             steering.PathfindToken = new CancellationTokenSource();
 
+            var flags = _pathfindingSystem.GetFlags(steering.Owner);
+
             var result = await _pathfindingSystem.GetPath(
                 steering.Owner,
                 xform.Coordinates,
                 steering.Coordinates,
                 steering.Range,
-                steering.PathfindToken.Token);
+                steering.PathfindToken.Token,
+                flags);
 
+            if (result.Result == PathResult.NoPath)
+            {
+                steering.CurrentPath.Clear();
+                steering.PathfindToken = null;
+                steering.FailedPathCount++;
+
+                if (steering.FailedPathCount >= NPCSteeringComponent.FailedPathLimit)
+                {
+                    steering.Status = SteeringStatus.NoPath;
+                }
+
+                return;
+            }
+
+            var targetPos = steering.Coordinates.ToMap(EntityManager);
+            var ourPos = xform.MapPosition;
+
+            PrunePath(ourPos, targetPos.Position - ourPos.Position, result.Path);
             steering.CurrentPath = result.Path;
             steering.PathfindToken = null;
         }

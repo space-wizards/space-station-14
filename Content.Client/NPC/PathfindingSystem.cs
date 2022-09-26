@@ -83,7 +83,7 @@ namespace Content.Client.NPC
 
         private void OnRoute(PathRouteMessage ev)
         {
-            Routes.Add((_timing.RealTime + TimeSpan.FromSeconds(1), ev));
+            Routes.Add((_timing.RealTime + TimeSpan.FromSeconds(0.5), ev));
         }
 
         private void OnPolys(PathPolysMessage ev)

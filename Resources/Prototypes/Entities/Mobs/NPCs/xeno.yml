@@ -14,6 +14,11 @@
   - type: MobMover
   - type: HTN
     rootTask: XenoCompound
+    blackboard:
+      NavPry: !type:Bool
+        true
+      NavSmash: !type:Bool
+        true
   - type: Tool
     speed: 1.5
     qualities:

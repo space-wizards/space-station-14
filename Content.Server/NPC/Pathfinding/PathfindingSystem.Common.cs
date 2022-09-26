@@ -84,8 +84,6 @@ public sealed partial class PathfindingSystem
 
     public List<PathPoly> Simplify(List<PathPoly> vertices, float tolerance = 0)
     {
-        return vertices;
-
         // TODO: Needs more work
         if (vertices.Count <= 3)
             return vertices;

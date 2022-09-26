@@ -11,7 +11,6 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
 /// </summary>
 public sealed class PickAccessibleOperator : HTNOperator
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
     private PathfindingSystem _pathfinding = default!;
 
     [DataField("rangeKey", required: true)]
@@ -43,8 +42,12 @@ public sealed class PickAccessibleOperator : HTNOperator
         if (maxRange == 0f)
             maxRange = 7f;
 
-        var path = await _pathfinding.GetRandomPath(owner, 1.4f, maxRange,
-            CancellationToken.None);
+        var path = await _pathfinding.GetRandomPath(
+            owner,
+            1.4f,
+            maxRange,
+            CancellationToken.None,
+            flags: _pathfinding.GetFlags(blackboard));
 
         if (path.Result != PathResult.Path)
         {
