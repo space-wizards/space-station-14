@@ -18,6 +18,7 @@
             <CheckBox Name="PathCrumbs" Text="Breadcrumbs"/>
             <CheckBox Name="PathPolys" Text="Polygons"/>
             <CheckBox Name="PathNeighbors" Text="Neighbors"/>
+            <CheckBox Name="PathRouteCosts" Text="Route costs"/>
             <CheckBox Name="PathRoutes" Text="Routes"/>
         </BoxContainer>
     </BoxContainer>
