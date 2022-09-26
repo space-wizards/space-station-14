@@ -17,7 +17,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 5
+      density: 15
       mask:
       - GhostImpassable
   - type: InputMover

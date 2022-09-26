@@ -60,7 +60,7 @@
         - shape:
             !type:PhysShapeCircle
             radius: 0.35
-          mass: 10
+          density: 25
           mask:
             - FlyingMobMask
           layer:

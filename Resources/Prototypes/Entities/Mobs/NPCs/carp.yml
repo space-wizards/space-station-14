@@ -40,7 +40,7 @@
         - shape:
             !type:PhysShapeCircle
             radius: 0.40
-          mass: 40
+          density: 80
           mask:
             - MobMask
           layer:
@@ -123,7 +123,7 @@
         - shape:
             !type:PhysShapeCircle
             radius: 0.40
-          mass: 5
+          density: 10
           mask:
             - MobMask
           layer:
