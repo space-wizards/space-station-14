@@ -54,10 +54,10 @@ namespace Content.Server.ParticleAccelerator.Components
 
         // Powered: power switch is on AND the PA is actively firing (if not on standby)
         [ViewVariables] private bool _isPowered;
-        [ViewVariables] private bool _wireInterfaceBlocked;
-        [ViewVariables] private bool _wirePowerBlocked;
-        [ViewVariables] private bool _wireLimiterCut;
-        [ViewVariables] private bool _wireStrengthCut;
+        [ViewVariables] private bool _wireInterfaceBlocked = false;
+        [ViewVariables] private bool _wirePowerBlocked = false;
+        [ViewVariables] private bool _wireLimiterCut = false;
+        [ViewVariables] private bool _wireStrengthCut = false;
         [ViewVariables] private CancellationTokenSource? _fireCancelTokenSrc;
 
         /// <summary>
