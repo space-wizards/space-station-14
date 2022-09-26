@@ -221,6 +221,7 @@
       - HolofanProjector
       - MopBucket
       - AnalysisMopBucket
+      - HighCapMopItem
 
 - type: entity
   parent: Protolathe

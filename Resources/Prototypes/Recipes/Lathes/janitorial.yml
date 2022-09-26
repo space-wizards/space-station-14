@@ -9,6 +9,18 @@
     Plastic: 100
 
 - type: latheRecipe
+  id: HighCapMopItem
+  icon:
+    sprite: Objects/Specific/Janitorial/highcapmop.rsi
+    state: highcapmop
+  result: HighCapMopItem
+  completetime: 2
+  materials:
+    Plastic: 200
+    Steel: 200
+    Glass: 100
+
+- type: latheRecipe
   id: MopBucket
   icon: 
     sprite: Objects/Specific/Janitorial/janitorial.rsi
@@ -25,10 +37,10 @@
     sprite: Objects/Specific/Janitorial/janitorial.rsi
     state: analysismopbucket
   result: AnalysisMopBucket
-  completetime: 3
+  completetime: 4
   materials:
     Steel: 100
-    Plastic: 100
+    Plastic: 200
     Glass: 100
 
 - type: latheRecipe
