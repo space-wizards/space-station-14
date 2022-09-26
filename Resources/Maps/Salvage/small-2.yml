@@ -265,7 +265,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-          restitution: 0.1
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 3,-4
@@ -277,7 +277,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-          restitution: 0.1
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 0,0
