@@ -406,11 +406,13 @@ namespace Content.Client.NPC
             {
                 foreach (var grid in _mapManager.FindGridsIntersecting(args.MapId, aabb))
                 {
-                    if (!_system.Polys.TryGetValue(grid.GridEntityId, out var data))
+                    if (!_system.Polys.TryGetValue(grid.GridEntityId, out var data) ||
+                        !_entManager.TryGetComponent<TransformComponent>(grid.GridEntityId, out var gridXform))
                         continue;
 
-                    worldHandle.SetTransform(grid.WorldMatrix);
-                    var localAABB = grid.InvWorldMatrix.TransformBox(aabb);
+                    var (_, _, worldMatrix, invMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv();
+                    worldHandle.SetTransform(worldMatrix);
+                    var localAABB = invMatrix.TransformBox(aabb);
 
                     foreach (var chunk in data)
                     {
@@ -427,7 +429,26 @@ namespace Content.Client.NPC
                             {
                                 foreach (var neighborPoly in poly.Neighbors)
                                 {
-                                    worldHandle.DrawLine(poly.Box.Center, neighborPoly.Position, Color.Blue);
+                                    Color color;
+                                    Vector2 neighborPos;
+
+                                    if (neighborPoly.EntityId != poly.GraphUid)
+                                    {
+                                        color = Color.Green;
+                                        var neighborMap = neighborPoly.ToMap(_entManager);
+
+                                        if (neighborMap.MapId != args.MapId)
+                                            continue;
+
+                                        neighborPos = invMatrix.Transform(neighborMap.Position);
+                                    }
+                                    else
+                                    {
+                                        color = Color.Blue;
+                                        neighborPos = neighborPoly.Position;
+                                    }
+
+                                    worldHandle.DrawLine(poly.Box.Center, neighborPos, color);
                                 }
                             }
                         }
