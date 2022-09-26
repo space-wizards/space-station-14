@@ -199,7 +199,7 @@ namespace Content.Server.Construction
             anchorable.CancelToken = new CancellationTokenSource();
 
             _tool.UseTool(usingUid, userUid, uid, 0f, anchorable.Delay, usingTool.Qualities,
-                new TryAnchorCompletedEvent(), new TryAnchorCancelledEvent(), uid, cancelToken: anchorable.CancelToken.Token);
+                new TryAnchorCompletedEvent(userUid, userUid), new TryAnchorCancelledEvent(userUid, userUid), uid, cancelToken: anchorable.CancelToken.Token);
         }
 
         /// <summary>
@@ -222,7 +222,7 @@ namespace Content.Server.Construction
             anchorable.CancelToken = new CancellationTokenSource();
 
             _tool.UseTool(usingUid, userUid, uid, 0f, anchorable.Delay, usingTool.Qualities,
-                new TryUnanchorCompletedEvent(), new TryUnanchorCancelledEvent(), uid, cancelToken: anchorable.CancelToken.Token);
+                new TryUnanchorCompletedEvent(userUid, userUid), new TryUnanchorCancelledEvent(userUid, userUid), uid, cancelToken: anchorable.CancelToken.Token);
         }
 
         /// <summary>
@@ -252,26 +252,40 @@ namespace Content.Server.Construction
         {
             public EntityUid User;
             public EntityUid Using;
+
+            protected AnchorEvent(EntityUid user, EntityUid @using)
+            {
+                User = user;
+                Using = @using;
+            }
         }
 
         private sealed class TryUnanchorCompletedEvent : AnchorEvent
         {
-
+            public TryUnanchorCompletedEvent(EntityUid user, EntityUid @using) : base(user, @using)
+            {
+            }
         }
 
         private sealed class TryUnanchorCancelledEvent : AnchorEvent
         {
-
+            public TryUnanchorCancelledEvent(EntityUid user, EntityUid @using) : base(user, @using)
+            {
+            }
         }
 
         private sealed class TryAnchorCompletedEvent : AnchorEvent
         {
-
+            public TryAnchorCompletedEvent(EntityUid user, EntityUid @using) : base(user, @using)
+            {
+            }
         }
 
         private sealed class TryAnchorCancelledEvent : AnchorEvent
         {
-
+            public TryAnchorCancelledEvent(EntityUid user, EntityUid @using) : base(user, @using)
+            {
+            }
         }
     }
 }

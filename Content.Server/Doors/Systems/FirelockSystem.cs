@@ -19,8 +19,6 @@ namespace Content.Server.Doors.Systems
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
         [Dependency] private readonly AtmosAlarmableSystem _atmosAlarmable = default!;
-        [Dependency] private readonly AtmosphereSystem _atmosSystem = default!;
-        [Dependency] private readonly AirtightSystem _airtightSystem = default!;
 
         private static float _visualUpdateInterval = 0.2f;
         private float _accumulatedFrameTime;

@@ -44,7 +44,6 @@ public sealed class ClothingVisualsSystem : EntitySystem
 
     [Dependency] private IResourceCache _cache = default!;
     [Dependency] private InventorySystem _inventorySystem = default!;
-    [Dependency] private TagSystem _tagSystem = default!;
 
     public override void Initialize()
     {

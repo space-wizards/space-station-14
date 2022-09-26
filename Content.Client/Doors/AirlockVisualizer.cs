@@ -28,10 +28,6 @@ namespace Content.Client.Doors
         [DataField("denyAnimationTime")]
         private float _denyDelay = 0.3f;
 
-
-        [DataField("emagAnimationTime")]
-        private float _delayEmag = 1.5f;
-
         /// <summary>
         ///     Whether the maintenance panel is animated or stays static.
         ///     False for windoors.

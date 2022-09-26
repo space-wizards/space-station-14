@@ -86,15 +86,4 @@ public abstract partial class SharedGunSystem
         var nextMode = GetNextMode(component);
         SelectFire(component, nextMode, user);
     }
-
-    // TODO: Actions need doing for guns anyway.
-    private sealed class CycleModeEvent : InstantActionEvent
-    {
-        public SelectiveFire Mode;
-    }
-
-    private void OnCycleMode(EntityUid uid, GunComponent component, CycleModeEvent args)
-    {
-        SelectFire(component, args.Mode, args.Performer);
-    }
 }

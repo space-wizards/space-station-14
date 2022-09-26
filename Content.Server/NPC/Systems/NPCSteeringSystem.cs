@@ -24,7 +24,6 @@ namespace Content.Server.NPC.Systems
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly AccessReaderSystem _accessReader = default!;
         [Dependency] private readonly PathfindingSystem _pathfindingSystem = default!;
-        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
         // This will likely get moved onto an abstract pathfinding node that specifies the max distance allowed from the coordinate.
         private const float TileTolerance = 0.4f;
