@@ -9,6 +9,7 @@ using Content.Shared.Administration;
 using Content.Shared.Interaction;
 using Content.Shared.NPC;
 using Robust.Server.Player;
+using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
@@ -36,6 +37,7 @@ namespace Content.Server.NPC.Pathfinding
 
         [Dependency] private readonly IAdminManager _adminManager = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly DestructibleSystem _destructible = default!;
         [Dependency] private readonly FixtureSystem _fixtures = default!;
@@ -60,6 +62,7 @@ namespace Content.Server.NPC.Pathfinding
         {
             base.Initialize();
             _sawmill = Logger.GetSawmill("nav");
+            _playerManager.PlayerStatusChanged += OnPlayerChange;
             InitializeGrid();
             SubscribeNetworkEvent<RequestPathfindingDebugMessage>(OnBreadcrumbs);
         }
@@ -68,6 +71,7 @@ namespace Content.Server.NPC.Pathfinding
         {
             base.Shutdown();
             _subscribedSessions.Clear();
+            _playerManager.PlayerStatusChanged -= OnPlayerChange;
         }
 
         public override void Update(float frameTime)
@@ -655,6 +659,14 @@ namespace Content.Server.NPC.Pathfinding
             }
 
             return polys;
+        }
+
+        private void OnPlayerChange(object? sender, SessionStatusEventArgs e)
+        {
+            if (e.NewStatus == SessionStatus.Connected || !_subscribedSessions.ContainsKey(e.Session))
+                return;
+
+            _subscribedSessions.Remove(e.Session);
         }
 
         #endregion

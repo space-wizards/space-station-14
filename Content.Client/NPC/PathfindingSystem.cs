@@ -100,7 +100,8 @@ namespace Content.Client.NPC
         public override void Shutdown()
         {
             base.Shutdown();
-            Modes = PathfindingDebugMode.None;
+            // Don't send any messages to server, just shut down quietly.
+            _modes = PathfindingDebugMode.None;
         }
 
         private void OnBreadcrumbs(PathBreadcrumbsMessage ev)
