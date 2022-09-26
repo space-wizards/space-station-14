@@ -81,9 +81,16 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public float MaxTemperatureDelta = 300;
 
-        [DataField("machinePartMatterBin", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
-        public string MachinePartMatterBin = "MatterBin";
-        [DataField("machinePartLaser", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
-        public string MachinePartLaser = "Laser";
+        /// <summary>
+        ///     The machine part that affects the heat capacity.
+        /// </summary>
+        [DataField("machinePartHeatCapacity", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
+        public string MachinePartHeatCapacity = "MatterBin";
+
+        /// <summary>
+        ///     The machine part that affects the temperature range.
+        /// </summary>
+        [DataField("machinePartTemperature", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
+        public string MachinePartTemperature = "Laser";
     }
 }

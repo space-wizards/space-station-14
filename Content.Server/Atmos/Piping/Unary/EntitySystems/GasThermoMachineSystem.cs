@@ -65,8 +65,8 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnGasThermoRefreshParts(EntityUid uid, GasThermoMachineComponent component, RefreshPartsEvent args)
         {
-            var matterBinRating = args.PartRatings[component.MachinePartMatterBin];
-            var laserRating = args.PartRatings[component.MachinePartLaser];
+            var matterBinRating = args.PartRatings[component.MachinePartHeatCapacity];
+            var laserRating = args.PartRatings[component.MachinePartTemperature];
 
             component.HeatCapacity = 5000 * MathF.Pow(matterBinRating, 2);
 

@@ -7,8 +7,8 @@ namespace Content.Server.Construction.Components
     public sealed class MachinePartComponent : Component
     {
         [ViewVariables]
-        [DataField("part", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
-        public string PartType { get; private set; } = "Capacitor";
+        [DataField("part", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
+        public string PartType { get; private set; } = default!;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("rating")]
