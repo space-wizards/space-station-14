@@ -32,9 +32,4 @@ public sealed class RandomHumanoidAppearanceSystem : EntitySystem
             meta.EntityName = profile.Name;
         }
     }
-
-    private void A(string a, string a2 = "2", string b = "somethng")
-    {
-        A("test", b: "something else");
-    }
 }
