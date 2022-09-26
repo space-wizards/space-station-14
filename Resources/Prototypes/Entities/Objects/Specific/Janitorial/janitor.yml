@@ -22,6 +22,28 @@
       - Mop
 
 - type: entity
+  parent: BaseItem
+  name: high capacity mop
+  id: HighCapMopItem
+  description: Utilising an advanced understanding of janitorial theory, this high capacity mop was designed to be ULTRA absorbent.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Janitorial/highcapmop.rsi
+    state: highcapmop
+  - type: Item
+    size: 15
+    sprite: Objects/Specific/Janitorial/highcapmop.rsi
+  - type: Absorbent
+  - type: SolutionContainerManager
+    solutions:
+      absorbed:
+        maxVol: 500
+  - type: Tag
+    tags:
+      - DroneUsable #No bucket because it holds chems, they can drag the cart or use a drain
+      - Mop
+
+- type: entity
   name: mop bucket
   id: MopBucket
   description: Holds water and the tears of the janitor.
