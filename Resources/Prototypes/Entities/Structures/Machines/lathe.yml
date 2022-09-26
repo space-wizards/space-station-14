@@ -19,9 +19,6 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-  - type: LatheVisuals
-    idleState: icon
-    runningState: building
   - type: WiresVisuals
   - type: Physics
     bodyType: Static
@@ -56,9 +53,20 @@
   - type: Wires
     BoardName: "Autolathe"
     LayoutId: Autolathe
-  - type: LatheDatabase
-    static: true
-    recipes:
+  - type: ActivatableUI
+    key: enum.LatheUiKey.Key
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+    - key: enum.LatheUiKey.Key
+      type: LatheBoundUserInterface
+  - type: Transform
+    anchored: true
+  - type: Pullable
+  - type: Lathe
+    idleState: icon
+    runningState: building
+    staticRecipes:
       - Wirecutter
       - Screwdriver
       - Welder
@@ -74,17 +82,6 @@
       - TRayScanner
       - GasAnalyzer
       - UtilityBelt
-  - type: ActivatableUI
-    key: enum.LatheUiKey.Key
-  - type: ActivatableUIRequiresPower
-  - type: UserInterface
-    interfaces:
-    - key: enum.LatheUiKey.Key
-      type: LatheBoundUserInterface
-  - type: Transform
-    anchored: true
-  - type: Pullable
-  - type: Lathe
   - type: StaticPrice
     price: 800
 
@@ -109,9 +106,6 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-  - type: LatheVisuals
-    idleState: icon
-    runningState: building
   - type: WiresVisuals
   - type: Physics
     bodyType: Static
@@ -148,8 +142,22 @@
         - Sheet
         - RawMaterial
         - Ingot
-  - type: ProtolatheDatabase
-    protolatherecipes:
+  - type: ActivatableUI
+    key: enum.LatheUiKey.Key #Yes only having 1 of them here doesn't break anything
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+    - key: enum.LatheUiKey.Key
+      type: LatheBoundUserInterface
+    - key: enum.ResearchClientUiKey.Key
+      type: ResearchClientBoundUserInterface
+  - type: Transform
+    anchored: true
+  - type: Pullable
+  - type: Lathe
+    idleState: icon
+    runningState: building
+    dynamicRecipes:
       - LightTube
       - LightBulb
       - SheetSteel
@@ -160,6 +168,7 @@
       - CableMVStack
       - CableHVStack
       - ConveyorBeltAssembly
+      - AppraisalTool
       - RCDAmmo
       - HydroponicsToolScythe
       - HydroponicsToolHatchet
@@ -210,19 +219,6 @@
       - LeftArmBorg
       - RightArmBorg
       - HolofanProjector
-  - type: ActivatableUI
-    key: enum.LatheUiKey.Key #Yes only having 1 of them here doesn't break anything
-  - type: ActivatableUIRequiresPower
-  - type: UserInterface
-    interfaces:
-    - key: enum.LatheUiKey.Key
-      type: LatheBoundUserInterface
-    - key: enum.ResearchClientUiKey.Key
-      type: ResearchClientBoundUserInterface
-  - type: Transform
-    anchored: true
-  - type: Pullable
-  - type: Lathe
 
 - type: entity
   parent: Protolathe
@@ -241,8 +237,13 @@
       map: ["enum.PowerDeviceVisualLayers.Powered"]
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: ProtolatheDatabase
-    protolatherecipes:
+  - type: Machine
+    board: CircuitImprinterMachineCircuitboard
+  - type: Lathe
+    producingSound: /Audio/Machines/circuitprinter.ogg
+    idleState: icon
+    runningState: building
+    dynamicRecipes:
       - SMESMachineCircuitboard
       - SubstationMachineCircuitboard
       - ThermomachineFreezerMachineCircuitBoard
@@ -282,10 +283,6 @@
       - WallmountSubstationElectronics
       - EmitterCircuitboard
       - GasRecyclerMachineCircuitboard
-  - type: Machine
-    board: CircuitImprinterMachineCircuitboard
-  - type: Lathe
-    producingSound: /Audio/Machines/circuitprinter.ogg
   - type: MaterialStorage
     whitelist:
       tags:
@@ -312,12 +309,12 @@
       map: ["enum.LatheVisualLayers.IsInserting"]
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: LatheVisuals
+  - type: Machine
+    board: SecurityTechFabCircuitboard
+  - type: Lathe
     idleState: icon
     runningState: icon
-  - type: LatheDatabase
-    static: true
-    recipes:
+    staticRecipes:
       - Flash
       - FlashPayload
       - Handcuffs
@@ -335,9 +332,6 @@
       - CartridgeCaselessRifleRubber
       - CartridgeLightRifleRubber
       - CartridgeRifleRubber
-  - type: Machine
-    board: SecurityTechFabCircuitboard
-  - type: Lathe
   - type: MaterialStorage
     whitelist:
       tags:
@@ -365,11 +359,10 @@
       map: ["enum.LatheVisualLayers.IsInserting"]
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: LatheVisuals
+  - type: Lathe
     idleState: icon
     runningState: icon
-  - type: ProtolatheDatabase
-    protolatherecipes:
+    dynamicRecipes:
       - HandheldHealthAnalyzer
       - ClothingHandsGlovesLatex
       - ClothingHandsGlovesNitrile
@@ -401,9 +394,20 @@
   components:
   - type: Transform
     noRot: false
-  - type: LatheDatabase
-    static: true
-    recipes:
+  - type: Sprite
+    sprite: Structures/Machines/uniform_printer.rsi
+    netsync: false
+    snapCardinals: false
+    layers:
+    - state: icon
+      map: ["enum.LatheVisualLayers.IsRunning"]
+  - type: Machine
+    board: UniformPrinterMachineCircuitboard
+  - type: Lathe
+    producingSound: /Audio/Machines/uniformprinter.ogg
+    idleState: icon
+    runningState: building
+    staticRecipes:
       - ClothingUniformJumpsuitColorGrey
       - ClothingUniformJumpskirtColorGrey
       - ClothingUniformJumpsuitBartender
@@ -468,17 +472,6 @@
       - ClothingOuterWinterMusician
       - ClothingOuterWinterClown
       - ClothingOuterWinterMime
-  - type: Sprite
-    sprite: Structures/Machines/uniform_printer.rsi
-    netsync: false
-    snapCardinals: false
-    layers:
-    - state: icon
-      map: ["enum.LatheVisualLayers.IsRunning"]
-  - type: Machine
-    board: UniformPrinterMachineCircuitboard
-  - type: Lathe
-    producingSound: /Audio/Machines/uniformprinter.ogg
   - type: MaterialStorage
     whitelist:
       tags:
@@ -492,8 +485,6 @@
   name: ore processor
   description: It produces sheets and ingots using ores.
   components:
-    - type: LatheVisuals
-      ignoreColor: true
     - type: Sprite
       sprite: Structures/Machines/ore_processor.rsi
       netsync: false
@@ -509,9 +500,13 @@
           map: ["enum.WiresVisualLayers.MaintenancePanel"]
     - type: Machine
       board: OreProcessorMachineCircuitboard
-    - type: LatheDatabase
-      static: true
-      recipes:
+    - type: MaterialStorage
+      whitelist:
+        tags:
+          - Ore
+    - type: Lathe
+      ignoreColor: true
+      staticRecipes:
         - SheetSteel30
         - SheetGlass30
         - SheetRGlass30
@@ -521,8 +516,3 @@
         - SheetUranium1
         - IngotGold1
         - IngotSilver1
-    - type: MaterialStorage
-      whitelist:
-        tags:
-          - Ore
-    - type: Lathe

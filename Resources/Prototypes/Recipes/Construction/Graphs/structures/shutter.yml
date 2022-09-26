@@ -44,7 +44,7 @@
             - !type:EntityAnchored
               anchored: true
           steps:
-            - tag: DoorElectronics
+            - prototype: DoorElectronics
               name: Door Electronics
               icon:
                 sprite: "Objects/Misc/module.rsi"
