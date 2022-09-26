@@ -69,6 +69,13 @@ public struct PathfindingData : IEquatable<PathfindingData>
         Damage = damage;
     }
 
+    public bool IsEquivalent(PathfindingData other)
+    {
+        return CollisionLayer.Equals(other.CollisionLayer) &&
+               CollisionMask.Equals(other.CollisionMask) &&
+               Flags.Equals(other.Flags);
+    }
+
     public bool Equals(PathfindingData other)
     {
         return CollisionLayer.Equals(other.CollisionLayer) &&

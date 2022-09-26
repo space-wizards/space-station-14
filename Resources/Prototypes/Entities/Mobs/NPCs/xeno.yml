@@ -69,7 +69,7 @@
     arc:
     damage:
       groups:
-        Brute: 20
+        Brute: 12
   - type: Appearance
   - type: DamageStateVisuals
     rotate: true
@@ -233,7 +233,7 @@
     hidden: true
     damage:
      groups:
-       Brute: 35
+       Brute: 20
     cooldownTime: 1.5
   - type: SlowOnDamage
     speedModifierThresholds:
@@ -272,7 +272,7 @@
     hidden: true
     damage:
      groups:
-       Brute: 15
+       Brute: 8
     cooldownTime: 0.5
   - type: SlowOnDamage
     speedModifierThresholds:

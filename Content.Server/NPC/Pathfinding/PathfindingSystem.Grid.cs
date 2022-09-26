@@ -574,10 +574,30 @@ public sealed partial class PathfindingSystem
             {
                 var index = x * ChunkSize + y;
                 var polys = chunkPolys[index];
-                var existing = chunk.Polygons[index];
+                ref var existing = ref chunk.Polygons[index];
 
-                if (polys.SequenceEqual(existing))
-                    continue;
+                var isEquivalent = true;
+
+                if (polys.Count == existing.Count)
+                {
+                    // May want to update damage or the likes if it's different but not invalidate the ref.
+                    for (var i = 0; i < existing.Count; i++)
+                    {
+                        var ePoly = existing[i];
+                        var poly = polys[i];
+
+                        if (!ePoly.IsEquivalent(poly))
+                        {
+                            isEquivalent = false;
+                            break;
+                        }
+
+                        ePoly.Data.Damage = poly.Data.Damage;
+                    }
+
+                    if (isEquivalent)
+                        continue;
+                }
 
                 ClearTilePolys(existing);
                 existing.AddRange(polys);

@@ -33,6 +33,15 @@ public sealed class PathPoly : IEquatable<PathPoly>
 
     // Explicitly don't check neighbors.
 
+    public bool IsEquivalent(PathPoly other)
+    {
+        return GraphUid.Equals(other.GraphUid) &&
+               ChunkOrigin.Equals(other.ChunkOrigin) &&
+               TileIndex == other.TileIndex &&
+               Data.IsEquivalent(other.Data) &&
+               Box.Equals(other.Box);
+    }
+
     public bool Equals(PathPoly? other)
     {
         return other != null &&
