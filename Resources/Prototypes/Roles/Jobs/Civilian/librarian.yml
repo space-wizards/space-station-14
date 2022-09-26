@@ -18,5 +18,5 @@
     id: LibrarianPDA
     ears: ClothingHeadsetService
     pocket1: d10Dice
-  innerclothingskirt: ClothingUniformJumpskirtColorLightBrown
+  innerclothingskirt: ClothingUniformJumpskirtLibrarian # Corvax
 
