@@ -1,0 +1,27 @@
+- type: entity
+  name: chemistry bag
+  id: ChemBag
+  parent: BaseStorageItem
+  description: A bag for storing various medicines, in the form of bottle, pill canister, tablet and pill.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Specific/Chemistry/chem_bag.rsi
+    state: icon
+  - type: Clothing
+    sprite: Objects/Specific/Chemistry/chem_bag.rsi
+    quickEquip: false
+    slots:
+    - belt
+  - type: Item
+    size: 176
+  - type: Storage
+    capacity: 175
+    quickInsert: true
+    areaInsert: true
+    whitelist:
+      tags:
+        - PillCanister
+        - Pill
+        - Bottle
+  - type: Dumpable
