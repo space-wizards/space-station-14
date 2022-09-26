@@ -35,10 +35,7 @@ using Robust.Client.Player;
 using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Robust.Shared.Configuration;
-#if FULL_RELEASE
 using Robust.Shared;
-using Robust.Shared.Configuration;
-#endif
 using Robust.Shared.ContentPack;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
