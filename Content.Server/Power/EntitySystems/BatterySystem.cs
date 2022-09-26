@@ -8,7 +8,6 @@ namespace Content.Server.Power.EntitySystems
     [UsedImplicitly]
     public sealed class BatterySystem : EntitySystem
     {
-
         public override void Initialize()
         {
             base.Initialize();
