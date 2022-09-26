@@ -17,14 +17,14 @@ public sealed class RandomHumanoidAppearanceSystem : EntitySystem
     private void OnMapInit(EntityUid uid, RandomHumanoidAppearanceComponent component, MapInitEvent args)
     {
         // If we have an initial profile/base layer set, do not randomize this humanoid.
-        if (TryComp(uid, out HumanoidComponent? humanoid) && !string.IsNullOrEmpty(humanoid.Initial))
+        if (!TryComp(uid, out HumanoidComponent? humanoid) || !string.IsNullOrEmpty(humanoid.Initial))
         {
             return;
         }
 
-        var profile = HumanoidCharacterProfile.Random(component.IgnoredSpecies);
+        var profile = HumanoidCharacterProfile.RandomWithSpecies(humanoid.Species);
 
-        _humanoid.LoadProfile(uid, profile);
+        _humanoid.LoadProfile(uid, profile, humanoid);
 
         if (component.RandomizeName)
         {
