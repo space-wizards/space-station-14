@@ -60,7 +60,9 @@ namespace Content.Client.Vehicle
 
         private void OnRiderHandleState(EntityUid uid, RiderComponent component, ref ComponentHandleState args)
         {
-            // Server should only be sending states for our entity.
+            if (uid != _playerManager.LocalPlayer?.ControlledEntity)
+                return;
+
             if (args.Current is not RiderComponentState state) return;
             component.Vehicle = state.Entity;
 
