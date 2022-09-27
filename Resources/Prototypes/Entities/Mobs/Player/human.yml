@@ -208,3 +208,35 @@
   components:
     - type: NukeOperative
     - type: RandomHumanoidAppearance
+
+- type: entity
+  name: ERT janitor
+  suffix: EVA
+  id: RandomHumanoidERTJanitorEVA
+  components:
+    - type: Icon
+      sprite: Markers/jobs.rsi
+      state: ertjanitoreva
+    - type: RandomHumanoid
+      settings: ERTJanitor
+
+- type: randomHumanoid
+  id: ERTJanitor
+  components:
+    - type: Loadout
+      prototypes: [ ERTJanitorGearEVA ]
+
+- type: entity
+  id: RandomHumanoidNukeOp
+  name: Nuclear Operative
+  components:
+    - type: Icon
+      sprite: Markers/jobs.rsi
+      state: ertjanitoreva
+    - type: RandomHumanoid
+      settings: NukeOp
+
+- type: randomHumanoid
+  id: NukeOp
+  components:
+    - type: NukeOperative
