@@ -760,6 +760,20 @@ namespace Content.Client.Preferences.UI
         private void SetSex(Sex newSex)
         {
             Profile = Profile?.WithSex(newSex);
+            // for convenience, default to most common gender when new sex is selected
+            switch (newSex)
+            {
+                case Sex.Male:
+                    Profile = Profile?.WithGender(Gender.Male);
+                    break;
+                case Sex.Female:
+                    Profile = Profile?.WithGender(Gender.Female);
+                    break;
+                default:
+                    Profile = Profile?.WithGender(Gender.Epicene);
+                    break;
+            }
+            UpdateGenderControls();
             IsDirty = true;
         }
 
