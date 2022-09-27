@@ -179,8 +179,7 @@ public sealed partial class MarkingPicker : Control
 
         foreach (var marking in markings.Values)
         {
-            if (_currentMarkings.TryGetCategory(_selectedMarkingCategory, out var listing)
-                && listing.Contains(marking.AsMarking()))
+            if (_currentMarkings.TryGetMarking(_selectedMarkingCategory, marking.ID, out _))
             {
                 continue;
             }

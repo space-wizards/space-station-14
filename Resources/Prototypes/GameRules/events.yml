@@ -101,7 +101,7 @@
     id: MouseMigration
     earliestStart: 30
     minimumPlayers: 35
-    weightLow: 5
+    weight: 5
     maxOccurrences: 1
     endAfter: 50
 

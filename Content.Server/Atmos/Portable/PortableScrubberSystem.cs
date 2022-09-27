@@ -165,14 +165,13 @@ namespace Content.Server.Atmos.Portable
         /// </summary>
         private void OnScrubberAnalyzed(EntityUid uid, PortableScrubberComponent component, GasAnalyzerScanEvent args)
         {
-            var gasMixDict = new Dictionary<string, GasMixture?>();
+            var gasMixDict = new Dictionary<string, GasMixture?> { { Name(uid), component.Air } };
             // If it's connected to a port, include the port side
-            if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
+            if (TryComp(uid, out NodeContainerComponent? nodeContainer))
             {
-                if(nodeContainer != null && nodeContainer.TryGetNode(component.PortName, out PipeNode? port))
+                if(nodeContainer.TryGetNode(component.PortName, out PipeNode? port))
                     gasMixDict.Add(component.PortName, port.Air);
             }
-            gasMixDict.Add(Name(uid), component.Air);
             args.GasMixtures = gasMixDict;
         }
     }
