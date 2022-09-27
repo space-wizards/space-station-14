@@ -108,7 +108,8 @@ namespace Content.Server.Zombies
             //This is needed for stupid entities that fuck up combat mode component
             //in an attempt to make an entity not attack. This is the easiest way to do it.
             RemComp<CombatModeComponent>(target);
-            AddComp<CombatModeComponent>(target);
+            var combat = AddComp<CombatModeComponent>(target);
+            combat.IsInCombatMode = true;
 
             var vocal = EnsureComp<VocalComponent>(target);
             var scream = new SoundCollectionSpecifier ("ZombieScreams");
