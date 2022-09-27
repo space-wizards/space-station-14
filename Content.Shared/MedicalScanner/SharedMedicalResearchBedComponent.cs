@@ -1,4 +1,5 @@
 using Robust.Shared.Serialization;
+using Content.Shared.Chemistry.Components;
 
 namespace Content.Shared.MedicalScanner
 {
@@ -11,10 +12,12 @@ namespace Content.Shared.MedicalScanner
         public sealed class MedicalResearchBedScannedUserMessage : BoundUserInterfaceMessage
         {
             public readonly EntityUid? BuckledEntity;
+            public readonly IReadOnlyList<Solution.ReagentQuantity> BufferReagents;
 
-            public MedicalResearchBedScannedUserMessage(EntityUid? buckledEntity)
+            public MedicalResearchBedScannedUserMessage(EntityUid? buckledEntity, IReadOnlyList<Solution.ReagentQuantity> bufferReagents)
             {
                 BuckledEntity = buckledEntity;
+                BufferReagents = bufferReagents;
             }
         }
 
