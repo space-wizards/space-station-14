@@ -406,7 +406,7 @@ public abstract class SharedDoorSystem : EntitySystem
         {
             door.CurrentlyCrushing.Add(entity);
             if (door.CrushDamage != null)
-                _damageableSystem.TryChangeDamage(entity, door.CrushDamage);
+                _damageableSystem.TryChangeDamage(entity, door.CrushDamage, origin: uid);
 
             _stunSystem.TryParalyze(entity, stunTime, true);
         }

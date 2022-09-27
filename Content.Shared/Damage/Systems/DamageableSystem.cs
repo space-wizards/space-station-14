@@ -112,7 +112,7 @@ namespace Content.Shared.Damage
         ///     The damage changed event is used by other systems, such as damage thresholds.
         /// </remarks>
         public void DamageChanged(DamageableComponent component, DamageSpecifier? damageDelta = null,
-            bool interruptsDoAfters = true)
+            bool interruptsDoAfters = true, EntityUid? origin = null)
         {
             component.DamagePerGroup = component.Damage.GetDamagePerGroup(_prototypeManager);
             component.TotalDamage = component.Damage.Total;
@@ -123,7 +123,7 @@ namespace Content.Shared.Damage
                 var data = new DamageVisualizerGroupData(damageDelta.GetDamagePerGroup(_prototypeManager).Keys.ToList());
                 appearance.SetData(DamageVisualizerKeys.DamageUpdateGroups, data);
             }
-            RaiseLocalEvent(component.Owner, new DamageChangedEvent(component, damageDelta, interruptsDoAfters), false);
+            RaiseLocalEvent(component.Owner, new DamageChangedEvent(component, damageDelta, interruptsDoAfters, origin), false);
         }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace Content.Shared.Damage
         ///     null if the user had no applicable components that can take damage.
         /// </returns>
         public DamageSpecifier? TryChangeDamage(EntityUid? uid, DamageSpecifier damage, bool ignoreResistances = false,
-            bool interruptsDoAfters = true, DamageableComponent? damageable = null)
+            bool interruptsDoAfters = true, DamageableComponent? damageable = null, EntityUid? origin = null)
         {
             if (!uid.HasValue || !Resolve(uid.Value, ref damageable, false))
             {
@@ -363,10 +363,16 @@ namespace Content.Shared.Damage
         /// </summary>
         public readonly bool InterruptsDoAfters = false;
 
-        public DamageChangedEvent(DamageableComponent damageable, DamageSpecifier? damageDelta, bool interruptsDoAfters)
+        /// <summary>
+        ///     Contains the entity which caused the change in damage, if any was responsible.
+        /// </summary>
+        public readonly EntityUid? Origin;
+
+        public DamageChangedEvent(DamageableComponent damageable, DamageSpecifier? damageDelta, bool interruptsDoAfters, EntityUid? origin)
         {
             Damageable = damageable;
             DamageDelta = damageDelta;
+            Origin = origin;
 
             if (DamageDelta == null)
                 return;

@@ -152,7 +152,7 @@ namespace Content.Server.Weapon.Melee
                     var modifiersList = getDamageEvent.ModifiersList;
                     modifiersList.AddRange(hitEvent.ModifiersList);
                     var modifiedDamage = DamageSpecifier.ApplyModifierSets(comp.Damage + hitEvent.BonusDamage + getDamageEvent.BonusDamage, modifiersList);
-                    var damageResult = _damageable.TryChangeDamage(target, modifiedDamage);
+                    var damageResult = _damageable.TryChangeDamage(target, modifiedDamage, origin: owner);
 
                     if (damageResult != null && damageResult.Total > FixedPoint2.Zero)
                     {
@@ -252,7 +252,7 @@ namespace Content.Server.Weapon.Melee
                 {
                     RaiseLocalEvent(entity, new AttackedEvent(args.Used, args.User, args.ClickLocation), true);
 
-                    var damageResult = _damageable.TryChangeDamage(entity, modifiedDamage);
+                    var damageResult = _damageable.TryChangeDamage(entity, modifiedDamage, origin: owner);
 
                     if (damageResult != null && damageResult.Total > FixedPoint2.Zero)
                     {
