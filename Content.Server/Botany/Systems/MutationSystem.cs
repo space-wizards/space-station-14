@@ -4,6 +4,8 @@ namespace Content.Server.Botany;
 
 public class MutationSystem
 {
+    [Dependency] private static readonly IRobustRandom _robustRandom = default!;
+
     /// <summary>
     // Main idea: Simulate genetic mutation using random binary flips.  Each
     // seed attribute can be encoded with a variable number of bits, e.g.
@@ -182,8 +184,7 @@ public class MutationSystem
                 Color.Purple,
                 Color.Pink
             };
-            var rng = IoCManager.Resolve<IRobustRandom>();
-            return rng.Pick(colors);
+            return _robustRandom.Pick(colors);
         }
         return color;
     }
@@ -205,7 +206,6 @@ public class MutationSystem
 
     private static bool random(float p)
     {
-        var rng = IoCManager.Resolve<IRobustRandom>();
-        return rng.Prob(p);
+        return _robustRandom.Prob(p);
     }
 }

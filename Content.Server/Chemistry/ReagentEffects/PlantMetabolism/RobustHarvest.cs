@@ -9,6 +9,15 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
     [DataDefinition]
     public sealed class RobustHarvest : ReagentEffect
     {
+        [DataField("potencyLimit")]
+        public int PotencyLimit = 50;
+
+        [DataField("potencyIncrease")]
+        public int PotencyIncrease = 3;
+
+        [DataField("potencySeedlessThreshold")]
+        public int PotencySeedlessThreshold = 30;
+
         public override void Effect(ReagentEffectArgs args)
         {
             if (!args.EntityManager.TryGetComponent(args.SolutionEntity, out PlantHolderComponent? plantHolderComp)
@@ -16,15 +25,14 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
                                     plantHolderComp.Seed.Immutable)
                 return;
 
-            const int potencyLimit = 50;
             var random = IoCManager.Resolve<IRobustRandom>();
 
-            if (plantHolderComp.Seed.Potency < potencyLimit)
+            if (plantHolderComp.Seed.Potency < PotencyLimit)
             {
                 plantHolderComp.EnsureUniqueSeed();
-                plantHolderComp.Seed.Potency = Math.Min(plantHolderComp.Seed.Potency + 3, potencyLimit);
+                plantHolderComp.Seed.Potency = Math.Min(plantHolderComp.Seed.Potency + PotencyIncrease, PotencyLimit);
 
-                if (plantHolderComp.Seed.Potency > 30)
+                if (plantHolderComp.Seed.Potency > PotencySeedlessThreshold)
                 {
                     plantHolderComp.Seed.Seedless = true;
                 }
