@@ -1,7 +1,7 @@
 - type: gameMap
   id: Pillar
   mapName: 'NSS Pillar'
-  mapPath: /Maps/newpillar.yml
+  mapPath: /Maps/pillar.yml
   minPlayers: 40
   stations:
     Pillar:

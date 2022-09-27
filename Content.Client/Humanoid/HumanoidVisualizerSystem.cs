@@ -36,14 +36,16 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
             return;
         }
 
-        bool dirty;
+        var dirty = data.SkinColor != component.SkinColor || data.Sex != component.Sex;
+        component.Sex = data.Sex;
+
         if (data.CustomBaseLayerInfo.Count != 0)
         {
-            dirty = MergeCustomBaseSprites(uid, baseSprites.Sprites, data.CustomBaseLayerInfo, component);
+            dirty |= MergeCustomBaseSprites(uid, baseSprites.Sprites, data.CustomBaseLayerInfo, component);
         }
         else
         {
-            dirty = MergeCustomBaseSprites(uid, baseSprites.Sprites, null, component);
+            dirty |= MergeCustomBaseSprites(uid, baseSprites.Sprites, null, component);
         }
 
         if (dirty)
@@ -442,6 +444,4 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
             }
         }
     }
-
-
 }

@@ -245,6 +245,7 @@
     denyState: deny-unshaded
     screenState: screen
     ejectDelay: 5
+    soundVend: /Audio/Machines/machine_vend_hot_drink.ogg
   - type: Advertise
     pack: HotDrinksMachineAds
   - type: Speech
