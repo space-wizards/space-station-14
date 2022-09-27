@@ -1,12 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: 'Taking blood from mobs now also takes a small amount of their chemstream,
-      letting you see what''s affecting them.', type: Add}
-  - {message: All mobs whose blood couldn't be drawn for no reason before should work
-      now., type: Fix}
-  id: 1867
-  time: '2022-07-05T00:37:21.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Colliding with ignited mobs will now properly ignite you as well., type: Tweak}
@@ -2920,3 +2912,9 @@ Entries:
   - {message: Fixed some machines being unable to be deconstructed., type: Fix}
   id: 2366
   time: '2022-09-27T06:47:05.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The biomass reclaimer's speed and yield can now be upgraded using machine
+      parts., type: Add}
+  id: 2367
+  time: '2022-09-27T08:00:30.0000000+00:00'
