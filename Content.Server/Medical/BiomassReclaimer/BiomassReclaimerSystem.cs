@@ -179,11 +179,9 @@ namespace Content.Server.Medical.BiomassReclaimer
         }
         private void StartProcessing(EntityUid toProcess, BiomassReclaimerComponent component)
         {
-            if (!TryComp<PhysicsComponent>(toProcess, out var physics))
-            {
-                Logger.Error("Somehow tried to extract biomass from {0}, which has no physics component.", toProcess);
+            PhysicsComponent? physics = null;
+            if (!Resolve(toProcess, ref physics))
                 return;
-            }
 
             AddComp<ActiveBiomassReclaimerComponent>(component.Owner);
 

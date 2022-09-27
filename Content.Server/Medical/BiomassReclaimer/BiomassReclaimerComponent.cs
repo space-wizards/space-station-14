@@ -28,14 +28,14 @@ namespace Content.Server.Medical.BiomassReclaimer
         /// When it hits 0, spit out biomass.
         /// </summary>
         [ViewVariables]
-        public float ProcessingTimer = default!;
+        public float ProcessingTimer = default;
 
         /// <summary>
         /// Amount of biomass that the mob being processed will yield.
         /// This is calculated from the YieldPerUnitMass.
         /// </summary>
         [ViewVariables]
-        public uint CurrentExpectedYield = default!;
+        public uint CurrentExpectedYield = default;
 
         /// <summary>
         /// The reagent that will be spilled while processing a mob.
@@ -52,7 +52,7 @@ namespace Content.Server.Medical.BiomassReclaimer
         /// How many units of biomass it produces for each unit of mass.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public float YieldPerUnitMass = default!;
+        public float YieldPerUnitMass = default;
 
         /// <summary>
         /// The base yield per mass unit when no components are upgraded.
@@ -77,7 +77,7 @@ namespace Content.Server.Medical.BiomassReclaimer
         /// The time it takes to process a mob, per mass.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public float ProcessingTimePerUnitMass = default!;
+        public float ProcessingTimePerUnitMass = default;
 
         /// <summary>
         /// The base time per mass unit that it takes to process a mob
