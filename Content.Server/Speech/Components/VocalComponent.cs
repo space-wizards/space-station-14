@@ -16,6 +16,8 @@ public sealed class VocalComponent : Component
 
     [DataField("femaleScream")]
     public SoundSpecifier FemaleScream = new SoundCollectionSpecifier("FemaleScreams");
+
+    [DataField("unsexedScream")]
     public SoundSpecifier UnsexedScream = new SoundCollectionSpecifier("MaleScreams");
 
     [DataField("wilhelm")]
