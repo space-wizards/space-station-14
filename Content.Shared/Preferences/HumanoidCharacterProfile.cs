@@ -230,7 +230,6 @@ namespace Content.Shared.Preferences
 
         public HumanoidCharacterProfile WithSex(Sex sex)
         {
-            Logger.Error("Creating new profile with sex " + sex);
             return new(this) { Sex = sex };
         }
 
@@ -357,6 +356,10 @@ namespace Content.Shared.Preferences
         {
             var age = Math.Clamp(Age, MinimumAge, MaximumAge);
 
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+
+            prototypeManager.TryIndex<SpeciesPrototype>(Species, out var speciesPrototype);
+
             var sex = Sex switch
             {
                 Sex.Male => Sex.Male,
@@ -364,6 +367,15 @@ namespace Content.Shared.Preferences
                 Sex.Unsexed => Sex.Unsexed,
                 _ => Sex.Male // Invalid enum values.
             };
+
+            // ensure the species can be that sex
+            if (speciesPrototype != null)
+            {
+                if (!speciesPrototype.Sexes.Contains(sex))
+                {
+                    sex = speciesPrototype.Sexes[0];
+                }
+            }
 
             var gender = Gender switch
             {
@@ -442,8 +454,6 @@ namespace Content.Shared.Preferences
                 BackpackPreference.Duffelbag => BackpackPreference.Duffelbag,
                 _ => BackpackPreference.Backpack // Invalid enum values.
             };
-
-            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
 
             var priorities = new Dictionary<string, JobPriority>(JobPriorities
                 .Where(p => prototypeManager.HasIndex<JobPrototype>(p.Key) && p.Value switch
