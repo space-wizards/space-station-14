@@ -1,3 +1,4 @@
+using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 
@@ -21,9 +22,11 @@ public abstract class HTNOperator
     /// Called during planning.
     /// </summary>
     /// <param name="blackboard">The blackboard for the NPC.</param>
+    /// <param name="cancelToken"></param>
     /// <returns>Whether the plan is still valid and the effects to apply to the blackboard.
     /// These get re-applied during execution and are up to the operator to use or discard.</returns>
-    public virtual async Task<(bool Valid, Dictionary<string, object>? Effects)> Plan(NPCBlackboard blackboard)
+    public virtual async Task<(bool Valid, Dictionary<string, object>? Effects)> Plan(NPCBlackboard blackboard,
+        CancellationToken cancelToken)
     {
         return (true, null);
     }

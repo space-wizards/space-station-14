@@ -41,7 +41,8 @@ public abstract class NPCCombatOperator : HTNOperator
         _pathfinding = sysManager.GetEntitySystem<PathfindingSystem>();
     }
 
-    public override async Task<(bool Valid, Dictionary<string, object>? Effects)> Plan(NPCBlackboard blackboard)
+    public override async Task<(bool Valid, Dictionary<string, object>? Effects)> Plan(NPCBlackboard blackboard,
+        CancellationToken cancelToken)
     {
         var targets = await GetTargets(blackboard);
 

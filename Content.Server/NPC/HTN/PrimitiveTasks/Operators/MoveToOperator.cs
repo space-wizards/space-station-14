@@ -59,7 +59,8 @@ public sealed class MoveToOperator : HTNOperator
         _steering = sysManager.GetEntitySystem<NPCSteeringSystem>();
     }
 
-    public override async Task<(bool Valid, Dictionary<string, object>? Effects)> Plan(NPCBlackboard blackboard)
+    public override async Task<(bool Valid, Dictionary<string, object>? Effects)> Plan(NPCBlackboard blackboard,
+        CancellationToken cancelToken)
     {
         if (!blackboard.TryGetValue<EntityCoordinates>(TargetKey, out var targetCoordinates))
         {
@@ -97,14 +98,12 @@ public sealed class MoveToOperator : HTNOperator
             });
         }
 
-        var cancelToken = new CancellationTokenSource();
-
         var path = await _pathfind.GetPath(
             blackboard.GetValue<EntityUid>(NPCBlackboard.Owner),
             xform.Coordinates,
                 targetCoordinates,
             range,
-            cancelToken.Token,
+            cancelToken,
             _pathfind.GetFlags(blackboard));
 
         if (path.Result != PathResult.Path)

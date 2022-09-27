@@ -1,3 +1,4 @@
+using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.MobState;
 using Content.Server.NPC.Components;
@@ -34,7 +35,8 @@ public sealed class MeleeOperator : HTNOperator
         melee.Target = blackboard.GetValue<EntityUid>(TargetKey);
     }
 
-    public override async Task<(bool Valid, Dictionary<string, object>? Effects)> Plan(NPCBlackboard blackboard)
+    public override async Task<(bool Valid, Dictionary<string, object>? Effects)> Plan(NPCBlackboard blackboard,
+        CancellationToken cancelToken)
     {
         // Don't attack if they're already as wounded as we want them.
         if (!blackboard.TryGetValue<EntityUid>(TargetKey, out var target))

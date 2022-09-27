@@ -32,7 +32,8 @@ public sealed class PickAccessibleOperator : HTNOperator
     }
 
     /// <inheritdoc/>
-    public override async Task<(bool Valid, Dictionary<string, object>? Effects)> Plan(NPCBlackboard blackboard)
+    public override async Task<(bool Valid, Dictionary<string, object>? Effects)> Plan(NPCBlackboard blackboard,
+        CancellationToken cancelToken)
     {
         // Very inefficient (should weight each region by its node count) but better than the old system
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
@@ -46,7 +47,7 @@ public sealed class PickAccessibleOperator : HTNOperator
             owner,
             1.4f,
             maxRange,
-            CancellationToken.None,
+            cancelToken,
             flags: _pathfinding.GetFlags(blackboard));
 
         if (path.Result != PathResult.Path)
