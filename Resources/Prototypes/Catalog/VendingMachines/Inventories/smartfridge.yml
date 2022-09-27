@@ -1,2 +1,6 @@
 - type: vendingMachineInventory
   id: SmartFridgeInventory
+  startingInventory:
+    BoxBottle: 3
+    BoxPillCanister: 3
+    BoxBeaker: 3
