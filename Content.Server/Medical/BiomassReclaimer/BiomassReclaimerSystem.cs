@@ -236,7 +236,7 @@ namespace Content.Server.Medical.BiomassReclaimer
             return true;
         }
 
-        private sealed class ReclaimCancelledEvent : EntityEventArgs
+        private readonly struct ReclaimCancelledEvent
         {
             public readonly EntityUid Reclaimer;
 
@@ -246,7 +246,7 @@ namespace Content.Server.Medical.BiomassReclaimer
             }
         }
 
-        private sealed class ReclaimSuccessfulEvent : EntityEventArgs
+        private readonly struct ReclaimSuccessfulEvent
         {
             public readonly EntityUid User;
             public readonly EntityUid Target;
