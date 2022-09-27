@@ -1,11 +1,6 @@
 Entries:
 - author: mirrorcult
   changes:
-  - {message: Colliding with ignited mobs will now properly ignite you as well., type: Tweak}
-  id: 1868
-  time: '2022-07-05T01:30:45.0000000+00:00'
-- author: mirrorcult
-  changes:
   - {message: The nuke music now times itself properly so as to end right before the
       nuke alarm goes off., type: Tweak}
   - {message: 'The nuke can no longer have its disk ejected while the nuke is armed.
@@ -2918,3 +2913,8 @@ Entries:
       parts., type: Add}
   id: 2367
   time: '2022-09-27T08:00:30.0000000+00:00'
+- author: themias
+  changes:
+  - {message: You can eat with utensils again, type: Fix}
+  id: 2368
+  time: '2022-09-27T16:26:14.0000000+00:00'
