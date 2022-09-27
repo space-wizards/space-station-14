@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: No more playing hot potato with ID cards to early launch the shuttle.,
-    type: Tweak}
-  id: 1865
-  time: '2022-07-04T13:09:10.0000000+00:00'
 - author: ike709
   changes:
   - {message: Players can now examine each other's ID card slots while an ID/PDA is
@@ -2921,3 +2915,9 @@ Entries:
       your beverage., type: Tweak}
   id: 2364
   time: '2022-09-26T19:43:21.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added science recipes for advanced machine parts. Use these in your
+      machines to make them work better., type: Add}
+  id: 2365
+  time: '2022-09-27T02:45:37.0000000+00:00'
