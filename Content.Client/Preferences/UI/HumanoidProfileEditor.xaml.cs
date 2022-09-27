@@ -759,7 +759,6 @@ namespace Content.Client.Preferences.UI
 
         private void SetSex(Sex newSex)
         {
-            Logger.Error("Setting sex to " + newSex.ToString());
             Profile = Profile?.WithSex(newSex);
             IsDirty = true;
         }
@@ -871,14 +870,12 @@ namespace Content.Client.Preferences.UI
             {
                 sexes.Add(Sex.Unsexed);
             }
-            Logger.Error("Sex.Male as a string: " + Sex.Male.ToString());
 
-            if (sexes.Contains(Sex.Male))
-                _sexButton.AddItem(Loc.GetString("humanoid-profile-editor-sex-male-text"), (int) Sex.Male);
-            if (sexes.Contains(Sex.Female))
-                _sexButton.AddItem(Loc.GetString("humanoid-profile-editor-sex-female-text"), (int) Sex.Female);
-            if (sexes.Contains(Sex.Unsexed))
-                _sexButton.AddItem(Loc.GetString("humanoid-profile-editor-sex-unsexed-text"), (int) Sex.Unsexed);
+            // add button for each sex
+            foreach (var sex in sexes)
+            {
+                _sexButton.AddItem(Loc.GetString($"humanoid-profile-editor-sex-{sex.ToString().ToLower()}-text"), (int) sex);
+            }
 
             _sexButton.SelectId((int) sexes[0]);
         }

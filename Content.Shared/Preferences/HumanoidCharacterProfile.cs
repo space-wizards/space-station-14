@@ -171,7 +171,12 @@ namespace Content.Shared.Preferences
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             var random = IoCManager.Resolve<IRobustRandom>();
 
-            var sex = random.Prob(0.5f) ? Sex.Male : Sex.Female;
+            var sex = Sex.Unsexed;
+            if (prototypeManager.TryIndex<SpeciesPrototype>(species, out var speciesPrototype))
+            {
+                sex = random.Pick(speciesPrototype.Sexes);
+            }
+
             var gender = sex == Sex.Male ? Gender.Male : Gender.Female;
 
             var name = GetName(species, gender);
