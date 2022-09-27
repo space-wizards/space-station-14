@@ -1,4 +1,4 @@
-using Content.Server.Database;
+using System.Diagnostics.CodeAnalysis;
 using Content.Server.GameTicking;
 using Content.Server.Ghost;
 using Content.Server.Ghost.Components;
@@ -206,6 +206,13 @@ public sealed class MindSystem : EntitySystem
         var mind = new Mind(userId);
         ChangeOwningPlayer(mind, userId);
         return mind;
+    }
+
+    public bool TryCreateMind(NetUserId userId, [NotNullWhen(true)]out Mind? mind)
+    {
+        mind = new Mind(userId);
+        ChangeOwningPlayer(mind, userId);
+        return true;
     }
 
     public void ChangeOwningPlayer(Mind mind, NetUserId? netUserId)

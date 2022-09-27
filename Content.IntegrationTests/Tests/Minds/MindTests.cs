@@ -3,11 +3,16 @@ using System;
 using System.Threading.Tasks;
 using Content.Server.Mind;
 using Content.Server.Mind.Components;
+using Content.Shared.Damage;
+using Content.Shared.Damage.Prototypes;
+using Content.Shared.FixedPoint;
 using NUnit.Framework;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Minds;
 
@@ -40,6 +45,23 @@ public sealed class MindTests
         - !type:GibBehavior { }
 ";
 
+    // Exception handling for PlayerData and NetUserId invalid due to testing.
+    // Can be removed when Players can be mocked.
+    private Mind CreateMind(NetUserId userId, MindSystem mindSystem)
+    {
+        Mind? mind = null;
+        try
+        {
+            mindSystem.TryCreateMind(userId, out mind);
+        }
+        catch (ArgumentException)
+        {
+        }
+
+        Assert.That(mind, Is.Not.Null);
+        return mind!;
+    }
+
     [Test]
     public async Task TestCreateAndTransferMind()
     {
@@ -55,9 +77,10 @@ public sealed class MindTests
             var entity = entMan.SpawnEntity(null, new MapCoordinates());
             var mindComp = entMan.EnsureComponent<MindComponent>(entity);
             var userId = new NetUserId(Guid.NewGuid());
-            var mind = mindSystem.CreateMind(userId);
 
-            Assert.That(mind.UserId, Is.EqualTo(userId));
+            var mind = CreateMind(userId, mindSystem);
+
+            Assert.That(mind!.UserId, Is.EqualTo(userId));
 
             mindSystem.TransferTo(mind, entity);
             Assert.That(mindSystem.GetMind(entity, mindComp), Is.EqualTo(mind));
@@ -66,16 +89,48 @@ public sealed class MindTests
         await pairTracker.CleanReturnAsync();
     }
 
-
     [Test]
     public async Task TestEntityDeadWhenGibbed()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{ NoClient = true });
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{ NoClient = true, ExtraPrototypes = Prototypes });
         var server = pairTracker.Pair.Server;
+
+        var entMan = server.ResolveDependency<IServerEntityManager>();
+        var protoMan = server.ResolveDependency<IPrototypeManager>();
+
+        EntityUid entity = default!;
+        MindComponent mindComp = default!;
+        Mind mind = default!;
+        var mindSystem = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
+        var damageableSystem = entMan.EntitySysManager.GetEntitySystem<DamageableSystem>();
 
         await server.WaitAssertion(() =>
         {
+            entity = entMan.SpawnEntity("MindTestEntityDamageable", new MapCoordinates());
+            mindComp = entMan.EnsureComponent<MindComponent>(entity);
+            var userId = new NetUserId(Guid.NewGuid());
 
+            mind = CreateMind(userId, mindSystem);
+
+            Assert.That(mind.UserId, Is.EqualTo(userId));
+
+            mindSystem.TransferTo(mind, entity);
+            Assert.That(mindSystem.GetMind(entity, mindComp), Is.EqualTo(mind));
+
+        });
+
+        await PoolManager.RunTicksSync(pairTracker.Pair, 5);
+
+        await server.WaitAssertion(() =>
+        {
+            var damageable = entMan.GetComponent<DamageableComponent>(entity);
+            if (!protoMan.TryIndex<DamageTypePrototype>("Blunt", out var prototype))
+            {
+                return;
+            }
+
+            damageableSystem.SetDamage(damageable, new DamageSpecifier(prototype, FixedPoint2.New(401)));
+            Assert.That(mindSystem.GetMind(entity, mindComp), Is.EqualTo(mind));
         });
 
         await PoolManager.RunTicksSync(pairTracker.Pair, 5);
@@ -125,7 +180,7 @@ public sealed class MindTests
             var mindComp = entMan.EnsureComponent<MindComponent>(entity);
             entMan.EnsureComponent<MindComponent>(targetEntity);
 
-            var mind = mindSystem.CreateMind(new NetUserId(Guid.NewGuid()));
+            var mind = CreateMind(new NetUserId(Guid.NewGuid()), mindSystem);
 
             mindSystem.TransferTo(mind, entity);
 
@@ -155,7 +210,7 @@ public sealed class MindTests
             var mindComp = entMan.EnsureComponent<MindComponent>(entity);
 
             var userId = new NetUserId(Guid.NewGuid());
-            var mind = mindSystem.CreateMind(userId);
+            var mind = CreateMind(userId, mindSystem);
 
             mindSystem.TransferTo(mind, entity);
 
@@ -163,7 +218,15 @@ public sealed class MindTests
             Assert.That(mind.UserId, Is.EqualTo(userId));
 
             var newUserId = new NetUserId(Guid.NewGuid());
-            mindSystem.ChangeOwningPlayer(entity, newUserId, mindComp);
+            // Exception handling for PlayerData and NetUserId invalid due to testing.
+            // Can be removed when Players can be mocked.
+            try
+            {
+                mindSystem.ChangeOwningPlayer(entity, newUserId, mindComp);
+            }
+            catch (ArgumentException)
+            {
+            }
             Assert.That(mind.UserId, Is.EqualTo(newUserId));
         });
 

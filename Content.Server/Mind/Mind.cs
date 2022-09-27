@@ -393,11 +393,18 @@ namespace Content.Server.Mind
             var oldSession = Session;
             oldSession?.AttachToEntity(null);
 
-            if (UserId.HasValue && playerMgr.TryGetPlayerData(UserId.Value, out var oldUncast))
+            if (UserId.HasValue)
             {
-                var data = oldUncast.ContentData();
-                DebugTools.AssertNotNull(data);
-                data!.UpdateMindFromMindChangeOwningPlayer(null);
+                if (playerMgr.TryGetPlayerData(UserId.Value, out var oldUncast))
+                {
+                    var data = oldUncast.ContentData();
+                    DebugTools.AssertNotNull(data);
+                    data!.UpdateMindFromMindChangeOwningPlayer(null);
+                }
+                else
+                {
+                    Logger.Warning($"Mind UserId {newOwner} is does not exist in PlayerManager");
+                }
             }
 
             UserId = newOwner;
@@ -411,8 +418,7 @@ namespace Content.Server.Mind
                 // This restriction is because I'm too lazy to initialize the player data
                 // for a client that hasn't logged in yet.
                 // Go ahead and remove it if you need.
-                // throw new ArgumentException("new owner must have previously logged into the server.");
-                return;
+                throw new ArgumentException("new owner must have previously logged into the server.", nameof(newOwner));
             }
 
             // PlayerData? newOwnerData = null;
