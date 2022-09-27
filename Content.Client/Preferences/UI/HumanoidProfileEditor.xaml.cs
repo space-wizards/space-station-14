@@ -138,11 +138,6 @@ namespace Content.Client.Preferences.UI
             _tabContainer.SetTabTitle(0, Loc.GetString("humanoid-profile-editor-appearance-tab"));
 
             #region Sex
-
-            _sexButton.AddItem(Loc.GetString("humanoid-profile-editor-sex-male-text"), (int) Sex.Male);
-            _sexButton.AddItem(Loc.GetString("humanoid-profile-editor-sex-female-text"), (int) Sex.Female);
-            _sexButton.AddItem(Loc.GetString("humanoid-profile-editor-sex-unsexed-text"), (int) Sex.Unsexed);
-
             _sexButton.OnItemSelected += args =>
             {
                 _sexButton.SelectId(args.Id);
@@ -780,6 +775,7 @@ namespace Content.Client.Preferences.UI
             Profile = Profile?.WithSpecies(newSpecies);
             OnSkinColorOnValueChanged(); // Species may have special color prefs, make sure to update it.
             CMarkings.SetSpecies(newSpecies); // Repopulate the markings tab as well.
+            UpdateSexControls(); // update sex for new species
             NeedsDummyRebuild = true;
             IsDirty = true;
         }
@@ -860,7 +856,31 @@ namespace Content.Client.Preferences.UI
                 return;
             }
 
-            _sexButton.SelectId((int) Profile.Sex);
+            _sexButton.Clear();
+
+            var sexes = new List<Sex>();
+
+            // add species sex options, default to just none if we are in bizzaro world and have no species
+            if (_prototypeManager.TryIndex<SpeciesPrototype>(Profile.Species, out var speciesProto))
+            {
+                foreach (var sex in speciesProto.Sexes)
+                {
+                    sexes.Add(sex);
+                }
+            } else
+            {
+                sexes.Add(Sex.Unsexed);
+            }
+            Logger.Error("Sex.Male as a string: " + Sex.Male.ToString());
+
+            if (sexes.Contains(Sex.Male))
+                _sexButton.AddItem(Loc.GetString("humanoid-profile-editor-sex-male-text"), (int) Sex.Male);
+            if (sexes.Contains(Sex.Female))
+                _sexButton.AddItem(Loc.GetString("humanoid-profile-editor-sex-female-text"), (int) Sex.Female);
+            if (sexes.Contains(Sex.Unsexed))
+                _sexButton.AddItem(Loc.GetString("humanoid-profile-editor-sex-unsexed-text"), (int) Sex.Unsexed);
+
+            _sexButton.SelectId((int) sexes[0]);
         }
 
         private void UpdateSkinColor()
