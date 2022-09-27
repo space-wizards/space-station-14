@@ -1,6 +1,6 @@
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.BarSign
+namespace Content.Shared.BarSign
 {
     [Prototype("barSign")]
     public sealed class BarSignPrototype : IPrototype
