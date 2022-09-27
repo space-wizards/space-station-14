@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using Robust.Shared.Network;
+﻿using Robust.Shared.Network;
 
 namespace Content.Server.Corvax.Sponsors;
 
@@ -8,7 +7,14 @@ public interface ISponsorsManager
     void Initialize();
 
     /**
-     * Gets the cached color of the players OOC if he is a sponsor
+     * Gets the cached on player join sponsor info
      */
-    bool TryGetCustomOOCColor(NetUserId userId, [MaybeNullWhen(false)] out string color);
+    ISponsor? GetSponsorInfo(NetUserId userId);
+}
+
+public interface ISponsor
+{
+    int? Tier { get; }
+    string? OOCColor { get; }
+    bool HavePriorityJoin { get; }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Immutable;
 using System.Threading.Tasks;
+using Content.Server.Corvax.Sponsors;
 using Content.Server.Database;
 using Content.Server.GameTicking;
 using Content.Server.Preferences.Managers;
@@ -27,6 +28,7 @@ namespace Content.Server.Connection
         [Dependency] private readonly IServerNetManager _netMgr = default!;
         [Dependency] private readonly IServerDbManager _db = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
+        [Dependency] private readonly ISponsorsManager _sponsorsManager = default!;
 
         public void Initialize()
         {
@@ -100,6 +102,7 @@ namespace Content.Server.Connection
             }
 
             var adminData = await _dbManager.GetAdminDataForAsync(e.UserId);
+            var sponsorData = _sponsorsManager.GetSponsorInfo(e.UserId);
 
             if (_cfg.GetCVar(CCVars.PanicBunkerEnabled))
             {
@@ -113,10 +116,11 @@ namespace Content.Server.Connection
                 }
             }
 
+            var havePriorityJoin = sponsorData?.HavePriorityJoin == true;
             var wasInGame = EntitySystem.TryGet<GameTicker>(out var ticker) &&
                             ticker.PlayerGameStatuses.TryGetValue(userId, out var status) &&
                             status == PlayerGameStatus.JoinedGame;
-            if ((_plyMgr.PlayerCount >= _cfg.GetCVar(CCVars.SoftMaxPlayers) && adminData is null) && !wasInGame)
+            if ((_plyMgr.PlayerCount >= _cfg.GetCVar(CCVars.SoftMaxPlayers) && adminData is null && !havePriorityJoin) && !wasInGame)
             {
                 return (ConnectionDenyReason.Full, Loc.GetString("soft-player-cap-full"), null);
             }

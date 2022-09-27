@@ -87,6 +87,7 @@ namespace Content.Server.Entry
                 logManager.GetSawmill("Storage").Level = LogLevel.Info;
                 logManager.GetSawmill("db.ef").Level = LogLevel.Info;
 
+                IoCManager.Resolve<ISponsorsManager>().Initialize();
                 IoCManager.Resolve<IAdminLogManager>().Initialize();
                 IoCManager.Resolve<IConnectionManager>().Initialize();
                 IoCManager.Resolve<IServerDbManager>().Init();
@@ -134,7 +135,6 @@ namespace Content.Server.Entry
                 IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<GameTicker>().PostInitialize();
                 IoCManager.Resolve<IBqlQueryManager>().DoAutoRegistrations();
                 IoCManager.Resolve<RoleBanManager>().Initialize();
-                IoCManager.Resolve<ISponsorsManager>().Initialize();
             }
         }
 
