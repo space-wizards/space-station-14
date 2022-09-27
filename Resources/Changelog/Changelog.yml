@@ -1,10 +1,4 @@
 Entries:
-- author: ike709
-  changes:
-  - {message: Players can now examine each other's ID card slots while an ID/PDA is
-      worn, type: Add}
-  id: 1866
-  time: '2022-07-05T00:20:44.0000000+00:00'
 - author: Rane
   changes:
   - {message: 'Taking blood from mobs now also takes a small amount of their chemstream,
@@ -2921,3 +2915,8 @@ Entries:
       machines to make them work better., type: Add}
   id: 2365
   time: '2022-09-27T02:45:37.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed some machines being unable to be deconstructed., type: Fix}
+  id: 2366
+  time: '2022-09-27T06:47:05.0000000+00:00'
