@@ -1,6 +1,7 @@
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.Components;
 using Content.Server.Paper;
 using Content.Server.Hands.Components;
 using Content.Server.Station.Systems;
@@ -106,6 +107,7 @@ namespace Content.Server.Chemistry.EntitySystems
             //_popupSystem.PopupEntity(Loc.GetString("machine-insert-item", ("machine", uid), ("item", args.Used)), uid, Filter.Entities(args.User));
 
             //TODO check if device requires power or not - if it does then treat as if anchorable
+            //also you know... make sure it stops if not powered (disease diagnoser has good example of midway failure)
             //if (!HasComp<HandsComponent>(args.User) || HasComp<ToolComponent>(args.Used)) // Don't want to accidentally breach wrenching or whatever
             //    return;
 

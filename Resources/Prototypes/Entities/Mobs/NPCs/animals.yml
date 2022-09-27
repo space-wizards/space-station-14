@@ -675,6 +675,8 @@
   parent: SimpleMobBase
   description: New church of neo-darwinists actually believe that EVERY animal evolved from a monkey. Tastes like pork, and killing them is both fun and relaxing.
   components:
+  - type: InjectableSolution
+    solution: chemicals
   - type: CombatMode
     disarm: null
   - type: NameIdentifier
