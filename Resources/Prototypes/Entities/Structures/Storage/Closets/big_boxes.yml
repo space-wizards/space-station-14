@@ -1,0 +1,69 @@
+﻿- type: entity
+  id: BaseBigBox
+  name: cardboard box
+  description: Huh? Just a box...
+  components:
+    - type: Transform
+      noRot: true
+    - type: Clickable
+    - type: Physics
+      bodyType: KinematicController
+    - type: Fixtures
+      fixtures:
+        - shape:
+            !type:PhysShapeAabb
+            bounds: "-0.4,-0.4,0.4,0.4"
+          mask:
+            - MobMask
+          layer:
+            - SlipLayer
+          hard: true
+    - type: Pullable
+    - type: Box
+      effectSound: /Audio/Effects/chime.ogg
+      capacity: 1
+    - type: InputMover
+    - type: EntityStorage
+      isCollidableWhenOpen: false
+      openOnMove: false
+    - type: ContainerContainer
+      containers:
+        entity_storage: !type:Container
+    - type: Sprite
+      noRot: true
+      netsync: false
+      sprite: Structures/Storage/closet.rsi
+      layers:
+      - state: cardboard
+      - state: cardboard_open
+        map: ["enum.StorageVisualLayers.Door"]
+    - type: Appearance
+      visuals:
+      - type: StorageVisualizer
+        state: cardboard
+        state_open: cardboard_open
+    - type: Tag
+      tags:
+        - DoorBumpOpener
+
+- type: entity
+  id: Exclamation
+  name: exclamation
+  noSpawn: true
+  save: false
+  components:
+    - type: Transform
+      noRot: true
+    - type: Sprite
+      sprite: Structures/Storage/closet.rsi
+      drawdepth: Effects
+      noRot: true
+      netsync: false
+      layers:
+        - state: "cardboard_special"
+    - type: TimedDespawn
+      lifetime: 1
+    - type: Tag
+      tags:
+        - HideContextMenu
+

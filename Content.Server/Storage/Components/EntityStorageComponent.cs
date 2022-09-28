@@ -37,6 +37,15 @@ public sealed class EntityStorageComponent : Component, IGasMixtureHolder
     [DataField("isCollidableWhenOpen")]
     public bool IsCollidableWhenOpen;
 
+    /// <summary>
+    /// If true, it opens the storage when the entity inside of it moves
+    /// If false, it prevents the storage from opening when the entity inside of it moves.
+    /// This is for objects that you want the player to move while inside, like large cardboard boxes, without opening the storage.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("openOnMove")]
+    public bool OpenOnMove = true;
+
     //The offset for where items are emptied/vacuumed for the EntityStorage.
     [DataField("enteringOffset")]
     public Vector2 EnteringOffset = new(0, 0);
