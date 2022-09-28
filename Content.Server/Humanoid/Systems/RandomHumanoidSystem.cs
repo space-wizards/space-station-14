@@ -9,7 +9,7 @@ using Robust.Shared.Serialization.Manager;
 namespace Content.Server.Humanoid.Systems;
 
 /// <summary>
-/// This handles...
+///     This deals with spawning and setting up random humanoids.
 /// </summary>
 public sealed class RandomHumanoidSystem : EntitySystem
 {
@@ -22,19 +22,19 @@ public sealed class RandomHumanoidSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<RandomHumanoidComponent, MapInitEvent>(OnMapInit,
+        SubscribeLocalEvent<RandomHumanoidSpawnerComponent, MapInitEvent>(OnMapInit,
             after: new []{ typeof(RandomMetadataSystem) });
     }
 
-    private void OnMapInit(EntityUid uid, RandomHumanoidComponent component, MapInitEvent args)
+    private void OnMapInit(EntityUid uid, RandomHumanoidSpawnerComponent component, MapInitEvent args)
     {
         QueueDel(uid);
-        SpawnRandomHumanoid(component.RandomSettingsId, Transform(uid).Coordinates, MetaData(uid).EntityName);
+        SpawnRandomHumanoid(component.SettingsPrototypeId, Transform(uid).Coordinates, MetaData(uid).EntityName);
     }
 
     public EntityUid SpawnRandomHumanoid(string prototypeId, EntityCoordinates coordinates, string name)
     {
-        if (!_prototypeManager.TryIndex<RandomHumanoidPrototype>(prototypeId, out var prototype))
+        if (!_prototypeManager.TryIndex<RandomHumanoidSettingsPrototype>(prototypeId, out var prototype))
         {
             throw new ArgumentException("Could not get random humanoid settings");
         }

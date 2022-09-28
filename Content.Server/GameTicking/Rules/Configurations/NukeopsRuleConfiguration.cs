@@ -26,7 +26,7 @@ public sealed class NukeopsRuleConfiguration : GameRuleConfiguration
     [DataField("maxOps")]
     public int MaxOperatives = 5;
 
-    [DataField("randomHumanoidSettings", customTypeSerializer: typeof(PrototypeIdSerializer<RandomHumanoidPrototype>))]
+    [DataField("randomHumanoidSettings", customTypeSerializer: typeof(PrototypeIdSerializer<RandomHumanoidSettingsPrototype>))]
     public string RandomHumanoidSettingsPrototype = "NukeOp";
 
     [DataField("spawnPointProto", customTypeSerializer: typeof(PrototypeIdSerializer<StartingGearPrototype>))]

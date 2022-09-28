@@ -3,7 +3,7 @@
 ## ERT Leader
 
 - type: entity
-  id: RandomHumanoidERTLeader
+  id: RandomHumanoidSpawnerERTLeader
   name: ERT leader
   components:
     - type: Icon
@@ -11,10 +11,10 @@
       state: ertleader
     - type: RandomMetadata
       nameSegments: [ NamesFirstMilitaryLeader ]
-    - type: RandomHumanoid
+    - type: RandomHumanoidSpawner
       settings: ERTLeader
 
-- type: randomHumanoid
+- type: randomHumanoidSettings
   id: ERTLeader
   randomizeName: false
   components:
@@ -27,18 +27,18 @@
       nameSegments: [ NamesFirstMilitaryLeader ]
 
 - type: entity
-  id: RandomHumanoidERTLeaderEVA
-  parent: RandomHumanoidERTLeader
+  id: RandomHumanoidSpawnerERTLeaderEVA
+  parent: RandomHumanoidSpawnerERTLeader
   name: ERT leader
   suffix: EVA
   components:
     - type: Icon
       sprite: Markers/jobs.rsi
       state: ertleadereva
-    - type: RandomHumanoid
+    - type: RandomHumanoidSpawner
       settings: ERTLeaderEVA
 
-- type: randomHumanoid
+- type: randomHumanoidSettings
   id: ERTLeaderEVA
   parent: ERTLeader
   components:
@@ -48,17 +48,17 @@
 ## ERT Janitor
 
 - type: entity
-  id: RandomHumanoidERTJanitor
-  parent: RandomHumanoidERTLeader
+  id: RandomHumanoidSpawnerERTJanitor
+  parent: RandomHumanoidSpawnerERTLeader
   name: ERT janitor
   components:
     - type: Icon
       sprite: Markers/jobs.rsi
       state: ertjanitor
-    - type: RandomHumanoid
+    - type: RandomHumanoidSpawner
       settings: ERTJanitor
 
-- type: randomHumanoid
+- type: randomHumanoidSettings
   id: ERTJanitor
   parent: ERTLeader
   components:
@@ -69,18 +69,18 @@
       prototypes: [ ERTJanitorGear ]
 
 - type: entity
-  id: RandomHumanoidERTJanitorEVA
-  parent: RandomHumanoidERTJanitor
+  id: RandomHumanoidSpawnerERTJanitorEVA
+  parent: RandomHumanoidSpawnerERTJanitor
   name: ERT janitor
   suffix: EVA
   components:
     - type: Icon
       sprite: Markers/jobs.rsi
       state: ertjanitoreva
-    - type: RandomHumanoid
+    - type: RandomHumanoidSpawner
       settings: ERTJanitorEVA
 
-- type: randomHumanoid
+- type: randomHumanoidSettings
   id: ERTJanitorEVA
   parent: ERTJanitor
   components:
@@ -90,17 +90,17 @@
 ## ERT Engineer
 
 - type: entity
-  id: RandomHumanoidERTEngineer
-  parent: RandomHumanoidERTLeader
+  id: RandomHumanoidSpawnerERTEngineer
+  parent: RandomHumanoidSpawnerERTLeader
   name: ERT engineer
   components:
     - type: Icon
       sprite: Markers/jobs.rsi
       state: ertengineer
-    - type: RandomHumanoid
+    - type: RandomHumanoidSpawner
       settings: ERTEngineer
 
-- type: randomHumanoid
+- type: randomHumanoidSettings
   id: ERTEngineer
   parent: ERTLeader
   components:
@@ -111,18 +111,18 @@
       prototypes: [ ERTEngineerGear ]
 
 - type: entity
-  id: RandomHumanoidERTEngineerEVA
-  parent: RandomHumanoidERTEngineer
+  id: RandomHumanoidSpawnerERTEngineerEVA
+  parent: RandomHumanoidSpawnerERTEngineer
   name: ERT engineer
   suffix: EVA
   components:
     - type: Icon
       sprite: Markers/jobs.rsi
       state: ertengineereva
-    - type: RandomHumanoid
+    - type: RandomHumanoidSpawner
       settings: ERTEngineerEVA
 
-- type: randomHumanoid
+- type: randomHumanoidSettings
   id: ERTEngineerEVA
   parent: ERTEngineer
   components:
@@ -132,17 +132,17 @@
 ## ERT Security
 
 - type: entity
-  id: RandomHumanoidERTSecurity
-  parent: RandomHumanoidERTLeader
+  id: RandomHumanoidSpawnerERTSecurity
+  parent: RandomHumanoidSpawnerERTLeader
   name: ERT security
   components:
     - type: Icon
       sprite: Markers/jobs.rsi
       state: ertsecurity
-    - type: RandomHumanoid
+    - type: RandomHumanoidSpawner
       settings: ERTSecurity
 
-- type: randomHumanoid
+- type: randomHumanoidSettings
   id: ERTSecurity
   parent: ERTLeader
   components:
@@ -153,18 +153,18 @@
       prototypes: [ ERTSecurityGear ]
 
 - type: entity
-  id: RandomHumanoidERTSecurityEVA
-  parent: RandomHumanoidERTSecurity
+  id: RandomHumanoidSpawnerERTSecurityEVA
+  parent: RandomHumanoidSpawnerERTSecurity
   name: ERT security
   suffix: EVA
   components:
     - type: Icon
       sprite: Markers/jobs.rsi
       state: ertsecurityeva
-    - type: RandomHumanoid
+    - type: RandomHumanoidSpawner
       settings: ERTSecurityEVA
 
-- type: randomHumanoid
+- type: randomHumanoidSettings
   id: ERTSecurityEVA
   parent: ERTSecurity
   components:
@@ -174,17 +174,17 @@
 ## ERT Medic
 
 - type: entity
-  id: RandomHumanoidERTMedical
-  parent: RandomHumanoidERTLeader
+  id: RandomHumanoidSpawnerERTMedical
+  parent: RandomHumanoidSpawnerERTLeader
   name: ERT medic
   components:
     - type: Icon
       sprite: Markers/jobs.rsi
       state: ertmedical
-    - type: RandomHumanoid
+    - type: RandomHumanoidSpawner
       settings: ERTMedical
 
-- type: randomHumanoid
+- type: randomHumanoidSettings
   id: ERTMedical
   parent: ERTLeader
   components:
@@ -195,18 +195,18 @@
       prototypes: [ ERTMedicalGear ]
 
 - type: entity
-  id: RandomHumanoidERTMedicalEVA
-  parent: RandomHumanoidERTMedical
+  id: RandomHumanoidSpawnerERTMedicalEVA
+  parent: RandomHumanoidSpawnerERTMedical
   name: ERT medic
   suffix: EVA
   components:
     - type: Icon
       sprite: Markers/jobs.rsi
       state: ertmedicaleva
-    - type: RandomHumanoid
+    - type: RandomHumanoidSpawner
       settings: ERTMedicalEVA
 
-- type: randomHumanoid
+- type: randomHumanoidSettings
   id: ERTMedicalEVA
   parent: ERTMedical
   components:
@@ -216,13 +216,13 @@
 ## CBURN
 
 - type: entity
-  id: RandomHumanoidCBURNUnit
+  id: RandomHumanoidSpawnerCBURNUnit
   name: CBURN Agent
   components:
-    - type: RandomHumanoid
+    - type: RandomHumanoidSpawner
       settings: CBURNAgent
 
-- type: randomHumanoid
+- type: randomHumanoidSettings
   id: CBURNAgent
   components:
     - type: Loadout
@@ -235,15 +235,15 @@
 
 - type: entity
   name: CentCom official
-  id: RandomHumanoidCentcomOfficial
+  id: RandomHumanoidSpawnerCentcomOfficial
   components:
     - type: Icon
       sprite: Markers/jobs.rsi
       state: centcom
-    - type: RandomHumanoid
+    - type: RandomHumanoidSpawner
       settings: CentcomOfficial
 
-- type: randomHumanoid
+- type: randomHumanoidSettings
   id: CentcomOfficial
   components:
     - type: GhostTakeoverAvailable
@@ -255,7 +255,7 @@
 ## Syndicate
 
 - type: entity
-  id: RandomHumanoidSyndicateAgent
+  id: RandomHumanoidSpawnerSyndicateAgent
   name: Syndicate Agent
   components:
     - type: Icon
@@ -263,26 +263,26 @@
       state: full
     - type: RandomMetadata
       nameSegments: [ names_death_commando ]
-    - type: RandomHumanoid
+    - type: RandomHumanoidSpawner
       settings: SyndicateAgent
 
-- type: randomHumanoid
+- type: randomHumanoidSettings
   id: SyndicateAgent
   components:
     - type: Loadout
       prototypes: [SyndicateOperativeGearExtremelyBasic]
 
 - type: entity
-  id: RandomHumanoidNukeOp
+  id: RandomHumanoidSpawnerNukeOp
   name: Nuclear Operative
   components:
     - type: Icon
       sprite: Mobs/Species/Human/parts.rsi
       state: full
-    - type: RandomHumanoid
+    - type: RandomHumanoidSpawner
       settings: NukeOp
 
-- type: randomHumanoid
+- type: randomHumanoidSettings
   id: NukeOp
   components:
     - type: NukeOperative

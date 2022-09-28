@@ -3,18 +3,25 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.Humanoid.Prototypes;
 
-[Prototype("randomHumanoid")]
-public sealed class RandomHumanoidPrototype : IPrototype, IInheritingPrototype
+/// <summary>
+///     This is what is used to change a humanoid spawned by RandomHumanoidSystem in Content.Server.
+/// </summary>
+[Prototype("randomHumanoidSettings")]
+public sealed class RandomHumanoidSettingsPrototype : IPrototype, IInheritingPrototype
 {
     [IdDataField] public string ID { get; } = default!;
 
-    [ParentDataField(typeof(PrototypeIdArraySerializer<RandomHumanoidPrototype>))]
+    [ParentDataField(typeof(PrototypeIdArraySerializer<RandomHumanoidSettingsPrototype>))]
     public string[]? Parents { get; }
 
     [AbstractDataField]
     public bool Abstract { get; }
 
-    [DataField("randomizeName")] public bool RandomizeName { get; } = true;
+    /// <summary>
+    ///     Whether the humanoid's name should take from the randomized profile or not.
+    /// </summary>
+    [DataField("randomizeName")]
+    public bool RandomizeName { get; } = true;
 
     /// <summary>
     ///     Species that will be ignored by the randomizer.
