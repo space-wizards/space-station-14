@@ -21,7 +21,7 @@
         unlitIcon: unlit-icon
 
 - type: entity
-  id: SmokingPipeFilledTobacco
+  id: 	SmokingPipeFilledTobacco
   parent: SmokingPipe
   name: pipe
   description: Just like grandpappy used to smoke.
@@ -43,7 +43,7 @@
         path: /Audio/Weapons/Guns/Empty/empty.ogg
 
 - type: entity
-  id: SmokingPipeFilledCannabis
+  id: 	SmokingPipeFilledCannabis
   parent: SmokingPipe
   name: pipe
   description: Just like grandpappy used to smoke.
