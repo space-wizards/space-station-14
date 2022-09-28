@@ -1,11 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: 'The nuke keypad now plays a scale (C mixolydian blues), so you can
-      bang out some funny tunes on it. "0" plays the last note an octave higher.',
-    type: Add}
-  id: 1870
-  time: '2022-07-05T07:24:37.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Cargo shuttle console now no longer needs to be facing South for controls.,
@@ -2912,3 +2905,8 @@ Entries:
       the environment.', type: Fix}
   id: 2369
   time: '2022-09-27T20:55:45.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Zombies now automatically enter combat mode upon turning., type: Add}
+  id: 2370
+  time: '2022-09-28T00:13:35.0000000+00:00'
