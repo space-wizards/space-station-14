@@ -163,8 +163,6 @@ namespace Content.Server.GameTicking
             }).Result;
 #pragma warning restore RA0004
 
-            SendDiscordStartRoundAlert();
-
             var startingEvent = new RoundStartingEvent(RoundId);
             RaiseLocalEvent(startingEvent);
 
@@ -214,7 +212,7 @@ namespace Content.Server.GameTicking
             ReqWindowAttentionAll();
             UpdateLateJoinStatus();
             AnnounceRound();
-            var roundStartedEvent = new RoundStartedEvent();
+            var roundStartedEvent = new RoundStartedEvent(RoundId);
             RaiseLocalEvent(roundStartedEvent);
 #if EXCEPTION_TOLERANCE
             }
@@ -335,7 +333,6 @@ namespace Content.Server.GameTicking
             RaiseNetworkEvent(new RoundEndMessageEvent(gamemodeTitle, roundEndText, roundDuration, RoundId,
                 listOfPlayerInfoFinal.Length, listOfPlayerInfoFinal, LobbySong,
                 new SoundCollectionSpecifier("RoundEnd").GetSound()));
-            SendDiscordEndRoundAlert(roundDuration);
         }
 
         public void RestartRound()
@@ -360,7 +357,6 @@ namespace Content.Server.GameTicking
             LobbySong = _robustRandom.Pick(_lobbyMusicCollection.PickFiles).ToString();
             RandomizeLobbyBackground();
             ResettingCleanup();
-            SendDiscordNewRoundAlert();
 
             if (!LobbyEnabled)
             {
