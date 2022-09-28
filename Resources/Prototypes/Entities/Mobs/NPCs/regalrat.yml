@@ -6,8 +6,8 @@
   components:
   - type: CombatMode
   - type: MovementSpeedModifier
-    baseWalkSpeed : 3.75
-    baseSprintSpeed : 3.75
+    baseWalkSpeed : 3.00
+    baseSprintSpeed : 5.00
   - type: InputMover
   - type: MobMover
   - type: Reactive
@@ -32,9 +32,9 @@
         radius: 0.3
       mass: 65
       mask:
-      - MobMask
+      - SmallMobMask
       layer:
-      - MobLayer
+      - SmallMobLayer
   - type: MobState
     thresholds:
       0: Alive
@@ -93,10 +93,6 @@
       event: !type:RatKingDomainActionEvent
     hungerPerDomainUse: 50
   - type: MobsterAccent
-  - type: Access #he's so baller he gets his own access. NT got nothing on him
-    tags:
-    - Maintenance
-    - Service
   - type: Butcherable
     spawned:
     - id: ClothingHeadHatFancyCrown #how did that get there?
@@ -201,7 +197,7 @@
   - type: MobState
     thresholds:
       0: Alive
-      30: Critical
+      40: Critical
       60: Dead
   - type: MeleeWeapon
     hidden: true
