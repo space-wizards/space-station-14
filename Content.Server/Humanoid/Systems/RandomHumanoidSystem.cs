@@ -46,26 +46,22 @@ public sealed class RandomHumanoidSystem : EntitySystem
         var speciesProto = _prototypeManager.Index<SpeciesPrototype>(profile.Species);
         var humanoid = Spawn(speciesProto.Prototype, Transform(uid).Coordinates);
 
-        if (prototype.RandomizeName)
-        {
-            MetaData(humanoid).EntityName = profile.Name;
-        }
-        else
-        {
-            // Hacky solution, as RandomMetadata only occurs after the entity is created.
-            MetaData(humanoid).EntityName = MetaData(uid).EntityName;
-        }
+        MetaData(humanoid).EntityName = prototype.RandomizeName
+            ? profile.Name
+            : MetaData(uid).EntityName;
 
         _humanoid.LoadProfile(humanoid, profile);
 
-        if (prototype.Components != null)
+        if (prototype.Components == null)
         {
-            foreach (var entry in prototype.Components.Values)
-            {
-                var comp = (Component) _serialization.Copy(entry.Component);
-                comp.Owner = humanoid;
-                EntityManager.AddComponent(humanoid, comp, true);
-            }
+            return;
+        }
+
+        foreach (var entry in prototype.Components.Values)
+        {
+            var comp = (Component) _serialization.Copy(entry.Component);
+            comp.Owner = humanoid;
+            EntityManager.AddComponent(humanoid, comp, true);
         }
     }
 }
