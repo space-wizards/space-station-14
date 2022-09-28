@@ -17,6 +17,7 @@ using Content.Server.MobState;
 using Content.Shared.Chemistry.Components;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Chat.Systems;
+using Content.Server.Construction;
 using Content.Server.Construction.Components;
 using Content.Server.Materials;
 using Content.Server.Stack;
@@ -30,7 +31,6 @@ using Robust.Shared.Random;
 using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Components;
-
 
 namespace Content.Server.Cloning.Systems
 {
@@ -48,6 +48,7 @@ namespace Content.Server.Cloning.Systems
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly TransformSystem _transformSystem = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly SharedStackSystem _stackSystem = default!;
         [Dependency] private readonly StackSystem _serverStackSystem = default!;
         [Dependency] private readonly SpillableSystem _spillableSystem = default!;
@@ -63,6 +64,7 @@ namespace Content.Server.Cloning.Systems
             base.Initialize();
 
             SubscribeLocalEvent<CloningPodComponent, ComponentInit>(OnComponentInit);
+            SubscribeLocalEvent<CloningPodComponent, RefreshPartsEvent>(OnPartsRefreshed);
             SubscribeLocalEvent<CloningPodComponent, MachineDeconstructedEvent>(OnDeconstruct);
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<BeingClonedComponent, MindAddedMessage>(HandleMindAdded);
@@ -77,6 +79,15 @@ namespace Content.Server.Cloning.Systems
             _signalSystem.EnsureReceiverPorts(uid, CloningPodComponent.PodPort);
         }
 
+        private void OnPartsRefreshed(EntityUid uid, CloningPodComponent component, RefreshPartsEvent args)
+        {
+            var materialRating = args.PartRatings[component.MachinePartMaterialUse];
+            var speedRating = args.PartRatings[component.MachinePartCloningSpeed];
+
+            component.BiomassRequirementMultiplier = MathF.Pow(component.PartRatingMaterialMultiplier, materialRating - 1);
+            component.CloningTime = component.BaseCloningTime * MathF.Pow(component.PartRatingSpeedMultiplier, speedRating - 1);
+        }
+
         private void OnDeconstruct(EntityUid uid, CloningPodComponent component, MachineDeconstructedEvent args)
         {
             _serverStackSystem.SpawnMultiple(_material.GetMaterialAmount(uid, "Biomass"), 100, "Biomass", Transform(uid).Coordinates);
@@ -85,7 +96,7 @@ namespace Content.Server.Cloning.Systems
         private void UpdateAppearance(CloningPodComponent clonePod)
         {
             if (TryComp<AppearanceComponent>(clonePod.Owner, out var appearance))
-                appearance.SetData(CloningPodVisuals.Status, clonePod.Status);
+                _appearance.SetData(clonePod.Owner, CloningPodVisuals.Status, clonePod.Status, appearance);
         }
 
         internal void TransferMindToClone(Mind.Mind mind)
@@ -106,7 +117,7 @@ namespace Content.Server.Cloning.Systems
             if (clonedComponent.Parent == EntityUid.Invalid ||
                 !EntityManager.EntityExists(clonedComponent.Parent) ||
                 !TryComp<CloningPodComponent>(clonedComponent.Parent, out var cloningPodComponent) ||
-                clonedComponent.Owner != cloningPodComponent.BodyContainer?.ContainedEntity)
+                clonedComponent.Owner != cloningPodComponent.BodyContainer.ContainedEntity)
             {
                 EntityManager.RemoveComponent<BeingClonedComponent>(clonedComponent.Owner);
                 return;
@@ -142,7 +153,7 @@ namespace Content.Server.Cloning.Systems
 
         public bool TryCloning(EntityUid uid, EntityUid bodyToClone, Mind.Mind mind, CloningPodComponent? clonePod)
         {
-            if (!Resolve(uid, ref clonePod) || bodyToClone == null)
+            if (!Resolve(uid, ref clonePod))
                 return false;
 
             if (HasComp<ActiveCloningPodComponent>(uid))
@@ -175,7 +186,7 @@ namespace Content.Server.Cloning.Systems
             if (!TryComp<PhysicsComponent>(bodyToClone, out var physics))
                 return false;
 
-            int cloningCost = (int) physics.FixturesMass;
+            var cloningCost = (int) Math.Round(physics.FixturesMass * clonePod.BiomassRequirementMultiplier);
 
             if (_configManager.GetCVar(CCVars.BiomassEasyMode))
                 cloningCost = (int) Math.Round(cloningCost * EasyModeCloningCost);
@@ -221,7 +232,6 @@ namespace Content.Server.Cloning.Systems
             cloneMindReturn.Mind = mind;
             cloneMindReturn.Parent = clonePod.Owner;
             clonePod.BodyContainer.Insert(mob);
-            clonePod.CapturedMind = mind;
             ClonesWaitingForMind.Add(mind, mob);
             UpdateStatus(CloningPodStatus.NoMind, clonePod);
             _euiManager.OpenEui(new AcceptCloningEui(mind, this), client);
@@ -235,7 +245,7 @@ namespace Content.Server.Cloning.Systems
             {
                 foreach (var special in mind.CurrentJob.Prototype.Special)
                 {
-                    if (special.GetType() == typeof(AddComponentSpecial))
+                    if (special is AddComponentSpecial)
                         special.AfterEquip(mob);
                 }
             }
@@ -280,7 +290,6 @@ namespace Content.Server.Cloning.Systems
 
             EntityManager.RemoveComponent<BeingClonedComponent>(entity);
             clonePod.BodyContainer.Remove(entity);
-            clonePod.CapturedMind = null;
             clonePod.CloningProgress = 0f;
             clonePod.UsedBiomass = 0;
             UpdateStatus(CloningPodStatus.Idle, clonePod);
