@@ -49,13 +49,14 @@ public sealed class RandomHumanoidSystem : EntitySystem
         if (prototype.RandomizeName)
         {
             MetaData(humanoid).EntityName = profile.Name;
-            _humanoid.LoadProfile(humanoid, profile);
         }
         else
         {
             // Hacky solution, as RandomMetadata only occurs after the entity is created.
             MetaData(humanoid).EntityName = MetaData(uid).EntityName;
         }
+
+        _humanoid.LoadProfile(humanoid, profile);
 
         if (prototype.Components != null)
         {
