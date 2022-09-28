@@ -79,19 +79,19 @@
   parent: BaseMobCarp
   id: MobCarp
   components:
-    - type: Sprite
-      layers:
-      - map: [ "enum.DamageStateVisualLayers.Base" ]
-        state: base
-      - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
-        state: mouth
-        shader: unshaded
-    - type: RandomSprite
-      available:
-        - enum.DamageStateVisualLayers.Base:
-            base: Rainbow
-          enum.DamageStateVisualLayers.BaseUnshaded:
-            mouth: ""
+  - type: Sprite
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: base
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: mouth
+      shader: unshaded
+  - type: RandomSprite
+    available:
+    - enum.DamageStateVisualLayers.Base:
+        base: Rainbow
+      enum.DamageStateVisualLayers.BaseUnshaded:
+        mouth: ""
 
 - type: entity
   name: magicarp
