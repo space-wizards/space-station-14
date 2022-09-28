@@ -1,4 +1,4 @@
-using Content.Shared.Damage;
+﻿using Content.Shared.Damage;
 using Content.Server.Examine;
 using Content.Shared.Examine;
 using Content.Shared.Verbs;

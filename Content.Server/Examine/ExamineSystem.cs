@@ -82,14 +82,14 @@ namespace Content.Server.Examine
             return formattedMessage;
         }
 
-        public override void AddExamineGroupVerb(string examineGroup, GetVerbsEvent<ExamineVerb> examineVerbsEvent)
+        public override void AddExamineGroupVerb(string examineGroup, GetVerbsEvent<ExamineVerb> args)
         {
             var groupPrototype = _prototypeManager.Index<ExamineGroupPrototype>(examineGroup);
 
             if (groupPrototype == null)
                 groupPrototype = default!;
 
-            foreach (var verb in examineVerbsEvent.Verbs)
+            foreach (var verb in args.Verbs)
             {
                 if (verb.ExamineGroup == examineGroup)
                     return;
@@ -104,8 +104,8 @@ namespace Content.Server.Examine
                         FirstLine = !string.IsNullOrEmpty(groupPrototype.FirstLine) ? Loc.GetString(groupPrototype.FirstLine) : string.Empty,
                         ExamineGroup = examineGroup
                     };
-                    RaiseLocalEvent(examineVerbsEvent.Target, ev);
-                    SendExamineTooltip(examineVerbsEvent.User, examineVerbsEvent.Target, GetExamineGroupMessage(ev), false, false);
+                    RaiseLocalEvent(args.Target, ev);
+                    SendExamineTooltip(args.User, args.Target, GetExamineGroupMessage(ev), false, false);
                 },
                 Text = !string.IsNullOrEmpty(groupPrototype.Text) ? Loc.GetString(groupPrototype.Text) : string.Empty,
                 Message = !string.IsNullOrEmpty(groupPrototype.Message) ? Loc.GetString(groupPrototype.Message) : string.Empty,
@@ -114,7 +114,7 @@ namespace Content.Server.Examine
                 IconTexture = groupPrototype.Icon
             };
 
-            examineVerbsEvent.Verbs.Add(examineVerb);
+            args.Verbs.Add(examineVerb);
         }
 
         private void ExamineInfoRequest(ExamineSystemMessages.RequestExamineInfoMessage request, EntitySessionEventArgs eventArgs)
