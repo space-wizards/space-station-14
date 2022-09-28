@@ -59,7 +59,7 @@
       settings: ERTJanitor
 
 - type: randomHumanoid
-  id: RandomHumanoidERTJanitor
+  id: ERTJanitor
   parent: ERTLeader
   components:
     - type: GhostTakeoverAvailable

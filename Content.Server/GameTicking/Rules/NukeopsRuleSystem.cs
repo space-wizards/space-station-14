@@ -734,7 +734,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
             if (sessions.TryGetValue(i, out var session))
             {
-                var mob = _randomHumanoid.SpawnRandomHumanoid(_nukeopsRuleConfig.SpawnEntityPrototype, _random.Pick(spawns), string.Empty);
+                var mob = _randomHumanoid.SpawnRandomHumanoid(_nukeopsRuleConfig.RandomHumanoidSettingsPrototype, _random.Pick(spawns), string.Empty);
                 var profile = _prefs.GetPreferences(session.UserId).SelectedCharacter as HumanoidCharacterProfile;
                 SetupOperativeEntity(mob, spawnDetails.Name, spawnDetails.Gear, profile);
 
