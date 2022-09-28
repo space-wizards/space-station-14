@@ -95,6 +95,7 @@ namespace Content.Server.Polymorph.Systems
                         slot.EmptyContainer();
 
                 foreach (var hand in _sharedHands.EnumerateHeld(uid))
+                    // This causes errors/bugs. Use hand related functions instead.
                     hand.TryRemoveFromContainer();
             }
 
@@ -116,7 +117,7 @@ namespace Content.Server.Polymorph.Systems
             if (!_proto.TryIndex(component.Prototype, out PolymorphPrototype? proto))
             {
                 // warning instead of error because of the all-comps one entity test.
-                Logger.Warning($"{nameof(PolymorphedEntitySystem)} encountered an improperly set upo polymorph component while initializing. Entity {ToPrettyString(uid)}. Prototype: {component.Prototype}");
+                Logger.Warning($"{nameof(PolymorphedEntitySystem)} encountered an improperly set up polymorph component while initializing. Entity {ToPrettyString(uid)}. Prototype: {component.Prototype}");
                 RemCompDeferred(uid, component);
                 return;
             }
