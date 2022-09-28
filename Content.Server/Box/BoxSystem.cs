@@ -18,6 +18,23 @@ public sealed class BoxSystem : SharedBoxSystem
         SubscribeLocalEvent<BoxComponent, StorageAfterOpenEvent>(AfterStorageOpen);
     }
 
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        foreach (var box in EntityQuery<BoxComponent>())
+        {
+            if (box.EffectPlayed)
+                box.Accumulator += frameTime;
+
+            if (box.Accumulator >= box.EffectCooldown)
+            {
+                box.Accumulator -= box.EffectCooldown;
+                box.EffectPlayed = false;
+            }
+        }
+    }
+
     private void OnBeforeStorageClosed(EntityUid uid, BoxComponent component, StorageBeforeCloseEvent args)
     {
         //Grab the first mob in the hash to set as the mover and to prevent other mobs from entering.
@@ -41,11 +58,16 @@ public sealed class BoxSystem : SharedBoxSystem
 
     private void AfterStorageOpen(EntityUid uid, BoxComponent component, StorageAfterOpenEvent args)
     {
+        //Remove the mover after the box is opened and play the effect if it hasn't been played yet.
         if (component.Mover != null)
         {
             RemComp<RelayInputMoverComponent>(component.Mover.Value);
-            RaiseNetworkEvent(new PlayBoxEffectMessage(component.Owner, component.Mover.Value), Filter.PvsExcept(component.Owner));
-            _audio.PlayPvs(component.EffectSound, component.Owner);
+            if (!component.EffectPlayed)
+            {
+                RaiseNetworkEvent(new PlayBoxEffectMessage(component.Owner, component.Mover.Value), Filter.PvsExcept(component.Owner));
+                _audio.PlayPvs(component.EffectSound, component.Owner);
+                component.EffectPlayed = true;
+            }
         }
 
         component.Mover = null;
