@@ -21,11 +21,11 @@
     - type: Pullable
     - type: Box
       effectSound: /Audio/Effects/chime.ogg
-      capacity: 1
     - type: InputMover
     - type: EntityStorage
       isCollidableWhenOpen: false
       openOnMove: false
+      capacity: 1
     - type: ContainerContainer
       containers:
         entity_storage: !type:Container

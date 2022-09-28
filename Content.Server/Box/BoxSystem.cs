@@ -20,9 +20,12 @@ public sealed class BoxSystem : SharedBoxSystem
 
     private void OnRelayMovement(EntityUid uid, BoxComponent component, ref ContainerRelayMovementEntityEvent args)
     {
-        var relay = EnsureComp<RelayInputMoverComponent>(args.Entity);
-        relay.RelayEntity = uid;
-        component.Mover = args.Entity;
+        if (component.Mover == null)
+        {
+            var relay = EnsureComp<RelayInputMoverComponent>(args.Entity);
+            relay.RelayEntity = uid;
+            component.Mover = args.Entity;
+        }
     }
 
     private void AfterStorageOpen(EntityUid uid, BoxComponent component, StorageAfterOpenEvent args)
@@ -30,11 +33,10 @@ public sealed class BoxSystem : SharedBoxSystem
         if (component.Mover != null)
         {
             RemComp<RelayInputMoverComponent>(component.Mover.Value);
-            component.Mover = null;
+            RaiseNetworkEvent(new PlayBoxEffectMessage(component.Owner, component.Mover.Value), Filter.PvsExcept(component.Owner));
+            _audio.PlayPvs(component.EffectSound, component.Owner);
         }
 
-        RaiseNetworkEvent(new PlayBoxEffectMessage(component.Owner), Filter.PvsExcept(component.Owner));
-
-        _audio.PlayPvs(component.EffectSound, component.Owner);
+        component.Mover = null;
     }
 }

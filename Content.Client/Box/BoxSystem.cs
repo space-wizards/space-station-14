@@ -1,19 +1,15 @@
 ﻿using Content.Client.Box.Components;
-using Content.Client.Interactable;
 using Content.Shared.Box;
 using Content.Shared.Box.Components;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Movement.Components;
-using Content.Shared.Physics;
 using Robust.Client.GameObjects;
-using Robust.Shared.Map;
 
 namespace Content.Client.Box;
 
 public sealed class BoxSystem : SharedBoxSystem
 {
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
-    [Dependency] private readonly InteractionSystem _interactionSystem = default!;
 
     public override void Initialize()
     {
@@ -39,7 +35,7 @@ public sealed class BoxSystem : SharedBoxSystem
 
         foreach (var entity in _entityLookup.GetEntitiesInRange(xform.Coordinates, box.Distance))
         {
-            if (!mobMoverQuery.HasComponent(entity))
+            if (!mobMoverQuery.HasComponent(entity) || msg.Mover == entity)
                 continue;
 
             mobMoverEntities.Add(entity);
@@ -47,18 +43,12 @@ public sealed class BoxSystem : SharedBoxSystem
 
         foreach (var entity in mobMoverEntities)
         {
-            if (!xformQuery.TryGetComponent(entity, out var moverTransform))
-                continue;
-
-            if(!msg.Source.InRangeUnOccluded(moverTransform.MapPosition, box.Distance))
+            if (!xformQuery.TryGetComponent(entity, out var moverTransform) || !msg.Source.InRangeUnOccluded(moverTransform.MapPosition, box.Distance))
                 continue;
 
             var ent = Spawn(box.Effect, moverTransform.MapPosition);
 
-            if (!xformQuery.TryGetComponent(ent, out var entTransform))
-                continue;
-
-            if (!TryComp<SpriteComponent>(ent, out var sprite))
+            if (!xformQuery.TryGetComponent(ent, out var entTransform) || !TryComp<SpriteComponent>(ent, out var sprite))
                 continue;
 
             sprite.Offset = new Vector2(0, 1);

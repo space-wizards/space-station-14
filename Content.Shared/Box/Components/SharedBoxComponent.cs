@@ -41,9 +41,11 @@ public abstract class SharedBoxComponent : Component
 public sealed class PlayBoxEffectMessage : EntityEventArgs
 {
     public EntityUid Source;
+    public EntityUid Mover;
 
-    public PlayBoxEffectMessage(EntityUid source)
+    public PlayBoxEffectMessage(EntityUid source, EntityUid mover)
     {
         Source = source;
+        Mover = mover;
     }
 }
