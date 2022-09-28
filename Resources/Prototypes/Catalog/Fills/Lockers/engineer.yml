@@ -57,6 +57,7 @@
         prob: 0.2
       - id: CableApcStack
         prob: 0.3
+      - id: OilCanFilled
 
 - type: entity
   id: LockerWeldingSuppliesFilled

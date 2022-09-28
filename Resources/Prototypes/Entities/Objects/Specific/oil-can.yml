@@ -1,0 +1,49 @@
+- type: entity
+  id: OilCan
+  name: can of oil
+  description: A can of oil.
+  parent: BaseItem
+  components:
+  - type: Sprite
+    sprite: Objects/Tanks/oil.rsi
+    state: icon
+    netsync: false
+  - type: Item
+    sprite: Objects/Tanks/oil.rsi
+  - type: Clothing
+    sprite: Objects/Tanks/oil.rsi
+    slots:
+      - Belt
+      - suitStorage
+  - type: RefillableSolution
+    solution: can
+  - type: DrainableSolution
+    solution: can
+  - type: ExaminableSolution
+    solution: can
+  - type: DrawableSolution
+    solution: can
+  - type: SolutionTransfer
+    maxTransferAmount: 30
+    canChangeTransferAmount: true
+  - type: UserInterface
+    interfaces:
+    - key: enum.TransferAmountUiKey.Key
+      type: TransferAmountBoundUserInterface
+  - type: SolutionContainerManager
+    solutions:
+      can:
+        maxVol: 90
+
+- type: entity
+  id: OilCanFilled
+  parent: OilCan
+  suffix: Filled
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      can:
+        maxVol: 90
+        reagents:
+        - ReagentId: Oil
+          Quantity: 90
