@@ -25,7 +25,7 @@
     - type: EntityStorage
       isCollidableWhenOpen: false
       openOnMove: false
-      capacity: 1
+      capacity: 4 #4 Entities seems like a nice comfy fit for a cardboard box.
     - type: ContainerContainer
       containers:
         entity_storage: !type:Container
@@ -46,6 +46,7 @@
       tags:
         - DoorBumpOpener
 
+#Exclamation effect for box opening
 - type: entity
   id: Exclamation
   name: exclamation
@@ -66,4 +67,3 @@
     - type: Tag
       tags:
         - HideContextMenu
-

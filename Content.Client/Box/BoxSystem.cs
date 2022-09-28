@@ -14,7 +14,6 @@ public sealed class BoxSystem : SharedBoxSystem
     public override void Initialize()
     {
         base.Initialize();
-
         SubscribeNetworkEvent<PlayBoxEffectMessage>(OnBoxEffect);
     }
 
@@ -30,10 +29,12 @@ public sealed class BoxSystem : SharedBoxSystem
 
         //Any mob that can move should be surprised?
         //God mind rework needs to come faster so it can just check for mind
+        //TODO: Replace with Mind Query when mind rework is in.
         var mobMoverEntities = new HashSet<EntityUid>();
         var mobMoverQuery = GetEntityQuery<MobMoverComponent>();
 
-        foreach (var entity in _entityLookup.GetEntitiesInRange(xform.Coordinates, box.Distance))
+        //Filter out entities in range to see that they're a mob and add them to the mobMoverEntities hash for faster lookup
+        foreach (var entity in _entityLookup.GetEntitiesInRange(xform.Coordinates, box.Distance, LookupFlags.Approximate))
         {
             if (!mobMoverQuery.HasComponent(entity) || msg.Mover == entity)
                 continue;
@@ -41,9 +42,10 @@ public sealed class BoxSystem : SharedBoxSystem
             mobMoverEntities.Add(entity);
         }
 
-        foreach (var entity in mobMoverEntities)
+        //Play the effect for the mobs as long as they can see the box and are in range.
+        foreach (var mob in mobMoverEntities)
         {
-            if (!xformQuery.TryGetComponent(entity, out var moverTransform) || !msg.Source.InRangeUnOccluded(moverTransform.MapPosition, box.Distance))
+            if (!xformQuery.TryGetComponent(mob, out var moverTransform) || !msg.Source.InRangeUnOccluded(moverTransform.MapPosition, box.Distance))
                 continue;
 
             var ent = Spawn(box.Effect, moverTransform.MapPosition);
@@ -52,7 +54,9 @@ public sealed class BoxSystem : SharedBoxSystem
                 continue;
 
             sprite.Offset = new Vector2(0, 1);
-            entTransform.AttachParent(entity);
+            entTransform.AttachParent(mob);
         }
+
+        mobMoverEntities.Clear();
     }
 }
