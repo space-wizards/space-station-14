@@ -26,18 +26,9 @@ public sealed class RandomHumanoidSystem : EntitySystem
             after: new []{ typeof(RandomMetadataSystem) });
     }
 
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        foreach (var comp in EntityQuery<RandomHumanoidComponent>())
-        {
-            Del(comp.Owner);
-        }
-    }
-
     private void OnMapInit(EntityUid uid, RandomHumanoidComponent component, MapInitEvent args)
     {
+        QueueDel(uid);
         SpawnRandomHumanoid(component.RandomSettingsId, Transform(uid).Coordinates, MetaData(uid).EntityName);
     }
 
