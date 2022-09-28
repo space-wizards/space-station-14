@@ -209,6 +209,51 @@
     - type: NukeOperative
     - type: RandomHumanoidAppearance
 
+# True random humanoids
+
+- type: entity
+  name: ERT leader
+  id: RandomHumanoidERTLeader
+  components:
+    - type: Icon
+      sprite: Markers/jobs.rsi
+      state: ertleader
+    - type: RandomMetadata
+      nameSegments: [ NamesFirstMilitaryLeader ]
+    - type: RandomHumanoid
+      settings: ERTLeader
+
+- type: randomHumanoid
+  id: ERTLeader
+  randomizeName: false
+  components:
+    - type: GhostTakeoverAvailable
+      name: ERT Leader
+      description: Lead a team of specialists to resolve the stations issues.
+    - type: Loadout
+      prototypes: [ ERTLeaderGear ]
+    - type: RandomMetadata
+      nameSegments: [ NamesFirstMilitaryLeader ]
+
+- type: entity
+  name: ERT leader
+  suffix: EVA
+  id: RandomHumanoidERTLeaderEVA
+  parent: RandomHumanoidERTLeader
+  components:
+    - type: Icon
+      sprite: Markers/jobs.rsi
+      state: ertleadereva
+    - type: RandomHumanoid
+      settings: ERTLeaderEVA
+
+- type: randomHumanoid
+  parent: ERTLeader
+  id: ERTLeaderEVA
+  components:
+    - type: Loadout
+      prototypes: [ ERTLeaderGearEVA ]
+
 - type: entity
   name: ERT janitor
   suffix: EVA
