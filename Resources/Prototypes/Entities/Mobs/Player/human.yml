@@ -34,6 +34,18 @@
     factions:
     - NanoTrasen
 
+#Syndie
+- type: entity
+  parent: MobHuman
+  id: MobHumanSyndicateAgent
+  name: Syndicate Agent
+  components:
+    - type: Loadout
+      prototype: SyndicateOperativeGearExtremelyBasic
+      prototypes: [SyndicateOperativeGearExtremelyBasic]
+    - type: RandomMetadata
+      nameSegments: [names_death_commando]
+
 # Nuclear Operative
 - type: entity
   noSpawn: true
