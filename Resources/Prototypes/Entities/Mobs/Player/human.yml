@@ -33,3 +33,13 @@
   - type: Faction
     factions:
     - NanoTrasen
+
+# Nuclear Operative
+- type: entity
+  noSpawn: true
+  name: Nuclear Operative
+  parent: MobHuman
+  id: MobHumanNukeOp
+  components:
+    - type: NukeOperative
+    - type: RandomHumanoidAppearance
