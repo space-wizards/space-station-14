@@ -17,6 +17,8 @@ public sealed class RandomHumanoidPrototype : IPrototype
 {
     [IdDataField] public string ID { get; } = default!;
 
+    [DataField("randomizeName")] public bool RandomizeName { get; } = true;
+
     /// <summary>
     ///     Species that will be ignored by the randomizer.
     /// </summary>

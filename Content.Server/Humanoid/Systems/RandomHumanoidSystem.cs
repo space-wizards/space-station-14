@@ -1,4 +1,5 @@
 using Content.Server.Humanoid.Components;
+using Content.Server.RandomMetadata;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Preferences;
 using Robust.Shared.Prototypes;
@@ -20,7 +21,8 @@ public sealed class RandomHumanoidSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<RandomHumanoidComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<RandomHumanoidComponent, MapInitEvent>(OnMapInit,
+            after: new []{ typeof(RandomMetadataSystem) });
     }
 
     public override void Update(float frameTime)
@@ -44,8 +46,16 @@ public sealed class RandomHumanoidSystem : EntitySystem
         var speciesProto = _prototypeManager.Index<SpeciesPrototype>(profile.Species);
         var humanoid = Spawn(speciesProto.Prototype, Transform(uid).Coordinates);
 
-        MetaData(humanoid).EntityName = profile.Name;
-        _humanoid.LoadProfile(humanoid, profile);
+        if (prototype.RandomizeName)
+        {
+            MetaData(humanoid).EntityName = profile.Name;
+            _humanoid.LoadProfile(humanoid, profile);
+        }
+        else
+        {
+            // Hacky solution, as RandomMetadata only occurs after the entity is created.
+            MetaData(humanoid).EntityName = MetaData(uid).EntityName;
+        }
 
         if (prototype.Components != null)
         {
