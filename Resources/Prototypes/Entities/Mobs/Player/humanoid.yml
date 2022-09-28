@@ -1,0 +1,288 @@
+# Random humanoids
+
+## ERT Leader
+
+- type: entity
+  id: RandomHumanoidERTLeader
+  name: ERT leader
+  components:
+    - type: Icon
+      sprite: Markers/jobs.rsi
+      state: ertleader
+    - type: RandomMetadata
+      nameSegments: [ NamesFirstMilitaryLeader ]
+    - type: RandomHumanoid
+      settings: ERTLeader
+
+- type: randomHumanoid
+  id: ERTLeader
+  randomizeName: false
+  components:
+    - type: GhostTakeoverAvailable
+      name: ERT Leader
+      description: Lead a team of specialists to resolve the stations issues.
+    - type: Loadout
+      prototypes: [ ERTLeaderGear ]
+    - type: RandomMetadata
+      nameSegments: [ NamesFirstMilitaryLeader ]
+
+- type: entity
+  id: RandomHumanoidERTLeaderEVA
+  parent: RandomHumanoidERTLeader
+  name: ERT leader
+  suffix: EVA
+  components:
+    - type: Icon
+      sprite: Markers/jobs.rsi
+      state: ertleadereva
+    - type: RandomHumanoid
+      settings: ERTLeaderEVA
+
+- type: randomHumanoid
+  id: ERTLeaderEVA
+  parent: ERTLeader
+  components:
+    - type: Loadout
+      prototypes: [ ERTLeaderGearEVA ]
+
+## ERT Janitor
+
+- type: entity
+  id: RandomHumanoidERTJanitor
+  parent: RandomHumanoidERTLeader
+  name: ERT janitor
+  components:
+    - type: Icon
+      sprite: Markers/jobs.rsi
+      state: ertjanitor
+    - type: RandomHumanoid
+      settings: ERTJanitor
+
+- type: randomHumanoid
+  id: RandomHumanoidERTJanitor
+  parent: ERTLeader
+  components:
+    - type: GhostTakeoverAvailable
+      name: ERT Janitor
+      description: Assist with custodial efforts to resolve the stations issues.
+    - type: Loadout
+      prototypes: [ ERTJanitorGear ]
+
+- type: entity
+  id: RandomHumanoidERTJanitorEVA
+  parent: RandomHumanoidERTJanitor
+  name: ERT janitor
+  suffix: EVA
+  components:
+    - type: Icon
+      sprite: Markers/jobs.rsi
+      state: ertjanitoreva
+    - type: RandomHumanoid
+      settings: ERTJanitorEVA
+
+- type: randomHumanoid
+  id: ERTJanitorEVA
+  parent: ERTJanitor
+  components:
+    - type: Loadout
+      prototypes: [ ERTJanitorGearEVA ]
+
+## ERT Engineer
+
+- type: entity
+  id: RandomHumanoidERTEngineer
+  parent: RandomHumanoidERTLeader
+  name: ERT engineer
+  components:
+    - type: Icon
+      sprite: Markers/jobs.rsi
+      state: ertengineer
+    - type: RandomHumanoid
+      settings: ERTEngineer
+
+- type: randomHumanoid
+  id: ERTEngineer
+  parent: ERTLeader
+  components:
+    - type: GhostTakeoverAvailable
+      name: ERT Engineer
+      description: Assist with engineering efforts to resolve the stations issues.
+    - type: Loadout
+      prototypes: [ ERTEngineerGear ]
+
+- type: entity
+  id: RandomHumanoidERTEngineerEVA
+  parent: RandomHumanoidERTEngineer
+  name: ERT engineer
+  suffix: EVA
+  components:
+    - type: Icon
+      sprite: Markers/jobs.rsi
+      state: ertengineereva
+    - type: RandomHumanoid
+      settings: ERTEngineerEVA
+
+- type: randomHumanoid
+  id: ERTEngineerEVA
+  parent: ERTEngineer
+  components:
+    - type: Loadout
+      prototypes: [ ERTEngineerGearEVA ]
+
+## ERT Security
+
+- type: entity
+  id: RandomHumanoidERTSecurity
+  parent: RandomHumanoidERTLeader
+  name: ERT security
+  components:
+    - type: Icon
+      sprite: Markers/jobs.rsi
+      state: ertsecurity
+    - type: RandomHumanoid
+      settings: ERTSecurity
+
+- type: randomHumanoid
+  id: ERTSecurity
+  parent: ERTLeader
+  components:
+    - type: GhostTakeoverAvailable
+      name: ERT Security
+      description: Assist with security efforts to resolve the stations issues.
+    - type: Loadout
+      prototypes: [ ERTSecurityGear ]
+
+- type: entity
+  id: RandomHumanoidERTSecurityEVA
+  parent: RandomHumanoidERTSecurity
+  name: ERT security
+  suffix: EVA
+  components:
+    - type: Icon
+      sprite: Markers/jobs.rsi
+      state: ertsecurityeva
+    - type: RandomHumanoid
+      settings: ERTSecurityEVA
+
+- type: randomHumanoid
+  id: ERTSecurityEVA
+  parent: ERTSecurity
+  components:
+    - type: Loadout
+      prototypes: [ ERTSecurityGearEVA ]
+
+## ERT Medic
+
+- type: entity
+  id: RandomHumanoidERTMedical
+  parent: RandomHumanoidERTLeader
+  name: ERT medic
+  components:
+    - type: Icon
+      sprite: Markers/jobs.rsi
+      state: ertmedical
+    - type: RandomHumanoid
+      settings: ERTMedical
+
+- type: randomHumanoid
+  id: ERTMedical
+  parent: ERTLeader
+  components:
+    - type: GhostTakeoverAvailable
+      name: ERT Medical
+      description: Assist with medicaling efforts to resolve the stations issues.
+    - type: Loadout
+      prototypes: [ ERTMedicalGear ]
+
+- type: entity
+  id: RandomHumanoidERTMedicalEVA
+  parent: RandomHumanoidERTMedical
+  name: ERT medic
+  suffix: EVA
+  components:
+    - type: Icon
+      sprite: Markers/jobs.rsi
+      state: ertmedicaleva
+    - type: RandomHumanoid
+      settings: ERTMedicalEVA
+
+- type: randomHumanoid
+  id: ERTMedicalEVA
+  parent: ERTMedical
+  components:
+    - type: Loadout
+      prototypes: [ ERTMedicalGearEVA ]
+
+## CBURN
+
+- type: entity
+  id: RandomHumanoidCBURNUnit
+  name: CBURN Agent
+  components:
+    - type: RandomHumanoid
+      settings: CBURNAgent
+
+- type: randomHumanoid
+  id: CBURNAgent
+  components:
+    - type: Loadout
+      prototypes: [CBURNGear]
+    - type: GhostTakeoverAvailable
+      name: CBURN Agent
+      description: A highly trained CentCom agent, capable of dealing with various threats.
+
+## Central Command
+
+- type: entity
+  name: CentCom official
+  id: RandomHumanoidCentcomOfficial
+  components:
+    - type: Icon
+      sprite: Markers/jobs.rsi
+      state: centcom
+    - type: RandomHumanoid
+      settings: CentcomOfficial
+
+- type: randomHumanoid
+  id: CentcomOfficial
+  components:
+    - type: GhostTakeoverAvailable
+      name: CentCom official
+      description: Inspect the station, jot down performance reviews for heads of staff, bug the Captain.
+    - type: Loadout
+      prototypes: [ CentcomGear ]
+
+## Syndicate
+
+- type: entity
+  id: RandomHumanoidSyndicateAgent
+  name: Syndicate Agent
+  components:
+    - type: Icon
+      sprite: Mobs/Species/Human/parts.rsi
+      state: full
+    - type: RandomMetadata
+      nameSegments: [ names_death_commando ]
+    - type: RandomHumanoid
+      settings: SyndicateAgent
+
+- type: randomHumanoid
+  id: SyndicateAgent
+  components:
+    - type: Loadout
+      prototypes: [SyndicateOperativeGearExtremelyBasic]
+
+- type: entity
+  id: RandomHumanoidNukeOp
+  name: Nuclear Operative
+  components:
+    - type: Icon
+      sprite: Mobs/Species/Human/parts.rsi
+      state: full
+    - type: RandomHumanoid
+      settings: NukeOp
+
+- type: randomHumanoid
+  id: NukeOp
+  components:
+    - type: NukeOperative
