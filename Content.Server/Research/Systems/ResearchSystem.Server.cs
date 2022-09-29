@@ -96,7 +96,8 @@ public sealed partial class ResearchSystem
     {
         var points = 0;
 
-        if (CanRun(component))
+        // Is our machine powered, and are we below our limit of passive point gain?
+        if (CanRun(component) && component.Points < (component.PassiveLimitPerSource * component.PointSources.Count))
         {
             foreach (var source in component.PointSources)
             {
