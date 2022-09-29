@@ -757,32 +757,6 @@
     energy: 1.6
     color: "#9dc5c9"
 
-- type: entity
-  parent: VendingMachine
-  id: VendingMachineWallMedical
-  name: NanoMed
-  description: "It's a wall-mounted medical equipment dispenser. Natural chemicals only!"
-  components:
-  - type: VendingMachine
-    pack: NanoMedInventory
-    offState: off
-    brokenState: broken
-    normalState: normal-unshaded
-    denyState: deny-unshaded
-  - type: Sprite
-    sprite: Structures/Machines/VendingMachines/wallmed.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Base"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - texture: Structures/Machines/VendingMachines/maintenance_panel.png
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: Appearance
-  - type: WiresVisuals
-  - type: AccessReader
-    access: [["Medical"]]
 
 - type: entity
   parent: VendingMachine
@@ -945,6 +919,46 @@
     radius: 1.5
     energy: 1.6
     color: "#d4ab33"
+
+# wallmounted machines
+
+- type: entity
+  id: VendingMachineWallmount
+  parent: VendingMachine
+  name: vending machine
+  abstract: true
+  - type: Sprite
+    netsync: false
+    snapCardinals: false
+  - type: WallMount
+    arc: 180
+  - type: Transform
+    noRot: false
+
+- type: entity
+  parent: VendingMachineWallmount
+  id: VendingMachineWallMedical
+  name: NanoMed
+  description: "It's a wall-mounted medical equipment dispenser. Natural chemicals only!"
+  components:
+  - type: VendingMachine
+    pack: NanoMedInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+    denyState: deny-unshaded
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/wallmed.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - texture: Structures/Machines/VendingMachines/maintenance_panel.png
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: AccessReader
+    access: [["Medical"]]
 
 # job clothing
 
