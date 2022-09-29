@@ -889,7 +889,10 @@ namespace Content.Client.Preferences.UI
                 _sexButton.AddItem(Loc.GetString($"humanoid-profile-editor-sex-{sex.ToString().ToLower()}-text"), (int) sex);
             }
 
-            _sexButton.SelectId((int) sexes[0]);
+            if (sexes.Contains(Profile.Sex))
+                _sexButton.SelectId((int) Profile.Sex);
+            else
+                _sexButton.SelectId((int) sexes[0]);
         }
 
         private void UpdateSkinColor()
