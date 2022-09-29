@@ -54,6 +54,6 @@
     sprite: Objects/Tanks/Jetpacks/mini.rsi
     state: icon
   product: CrateEVASupply
-  cost: 3000
+  cost: 1000
   category: Emergency
   group: market
