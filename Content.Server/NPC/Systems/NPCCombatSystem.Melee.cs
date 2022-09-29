@@ -1,8 +1,8 @@
 using Content.Server.CombatMode;
 using Content.Server.NPC.Components;
-using Content.Server.Weapon.Melee.Components;
 using Content.Shared.MobState;
 using Content.Shared.MobState.Components;
+using Content.Shared.Weapons.Melee;
 using Robust.Shared.Map;
 
 namespace Content.Server.NPC.Systems;
@@ -95,6 +95,6 @@ public sealed partial class NPCCombatSystem
 
         // Gets unregistered on component shutdown.
         _steering.TryRegister(component.Owner, new EntityCoordinates(component.Target, Vector2.Zero));
-        _interaction.DoAttack(component.Owner, targetXform.Coordinates, false, component.Target);
+        _melee.AttemptLightAttack(component.Owner, weapon, component.Target);
     }
 }

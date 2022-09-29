@@ -1,6 +1,6 @@
 using Content.Shared.Roles;
-using Content.Shared.Weapons.Melee;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Zombies
@@ -52,8 +52,8 @@ namespace Content.Shared.Zombies
         /// <summary>
         /// The attack arc of the zombie
         /// </summary>
-        [DataField("attackArc", customTypeSerializer: typeof(PrototypeIdSerializer<MeleeWeaponAnimationPrototype>))]
-        public string AttackArc = "claw";
+        [DataField("attackArc", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        public string AttackAnimation = "WeaponArcClaw";
 
         /// <summary>
         /// The role prototype of the zombie antag role

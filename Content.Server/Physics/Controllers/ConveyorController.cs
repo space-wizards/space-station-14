@@ -219,7 +219,10 @@ namespace Content.Server.Physics.Controllers
             }
             else
             {
-                var velocity = r.Normalized * speed;
+                // Give a slight nudge in the direction of the conveyor to prevent
+                // to collidable objects (e.g. crates) on the locker from getting stuck
+                // pushing each other when rounding a corner.
+                var velocity = (r + direction*0.2f).Normalized * speed;
                 return velocity * frameTime;
             }
         }

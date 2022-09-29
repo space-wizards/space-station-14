@@ -56,8 +56,8 @@
   - type: MeleeWeapon
     hidden: true
     range: 1.5
-    arcwidth: 0
-    arc: bite
+    angle: 0
+    animation: WeaponArcBite
     damage:
       types:
         Piercing: 5
@@ -133,8 +133,8 @@
   - type: MeleeWeapon
     hidden: true
     range: 0.3
-    arcwidth: 0
-    arc: bite
+    angle: 0
+    animation: WeaponArcBite
     damage:
       types:
         Poison: 2
@@ -640,7 +640,7 @@
   description: A large marsupial herbivore. It has powerful hind legs and... boxing gloves?
   components:
   - type: CombatMode
-    canDisarm: true
+    disarm: null
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -659,8 +659,8 @@
   - type: MeleeWeapon
     hidden: true
     range: 1.5
-    arcwidth: 0
-    arc: claw
+    angle: 0
+    animation: WeaponArcClaw
     damage:
       types:
         Blunt: 10
@@ -679,7 +679,7 @@
   description: New church of neo-darwinists actually believe that EVERY animal evolved from a monkey. Tastes like pork, and killing them is both fun and relaxing.
   components:
   - type: CombatMode
-    canDisarm: true
+    disarm: null
   - type: NameIdentifier
     group: Monkey
   - type: SentienceTarget
@@ -1187,8 +1187,8 @@
   - type: MeleeWeapon
     hidden: true
     range: 0.5
-    arcwidth: 0
-    arc: bite
+    angle: 0
+    animation: WeaponArcBite
     damage:
       groups:
         Brute: 5

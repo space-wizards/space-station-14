@@ -22,7 +22,6 @@
   - type: Physics
     bodyType: Dynamic
     fixedRotation: false
-    canCollide: false # most entities start asleep.
   - type: Fixtures
     fixtures:
     - shape:
