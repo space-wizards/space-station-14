@@ -1,9 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Rat kings will not spawn until someone takes the ghost role., type: Tweak}
-  id: 1878
-  time: '2022-07-06T03:43:24.0000000+00:00'
 - author: ike709
   changes:
   - {message: Fuel tanks and water tanks can now be sold by cargo, type: Add}
@@ -2921,3 +2916,8 @@ Entries:
       much damage you have taken., type: Tweak}
   id: 2377
   time: '2022-09-29T07:12:16.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix combat mode and cuff interactions., type: Fix}
+  id: 2378
+  time: '2022-09-29T13:38:25.0000000+00:00'
