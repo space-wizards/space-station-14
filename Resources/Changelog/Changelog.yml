@@ -1,9 +1,4 @@
 Entries:
-- author: themias
-  changes:
-  - {message: You can no longer become so hungry that you ascend hunger, type: Fix}
-  id: 1876
-  time: '2022-07-06T03:08:57.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Added the Zombie game mode as a low chance option in Secret., type: Add}
@@ -2927,3 +2922,8 @@ Entries:
       change in frequency on bleeding / chemical injection procs)., type: Tweak}
   id: 2375
   time: '2022-09-29T05:51:59.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Cargo order sorting will now ignore case., type: Tweak}
+  id: 2376
+  time: '2022-09-29T07:09:29.0000000+00:00'
