@@ -31,7 +31,7 @@ public sealed partial class VoiceMaskSystem
 
     private void OnUnequip(EntityUid uid, VoiceMaskerComponent compnent, GotUnequippedEvent args)
     {
-        RemCompDeferred<VoiceMaskComponent>(args.Equipee);
+        RemComp<VoiceMaskComponent>(args.Equipee);
     }
 
     private void TrySetLastKnownName(EntityUid maskWearer, string lastName)
