@@ -294,7 +294,9 @@ public sealed partial class RevenantSystem
                 continue;
 
             var nearbyLights = _lookup.GetEntitiesInRange(ent, component.OverloadZapRadius)
-                .Where(e => poweredLights.HasComponent(e) && !HasComp<RevenantOverloadedLightsComponent>(e)).ToArray();
+                .Where(e => poweredLights.HasComponent(e) && !HasComp<RevenantOverloadedLightsComponent>(e) &&
+                            _interact.InRangeUnobstructed(e, uid, -1)).ToArray();
+
             if (!nearbyLights.Any())
                 continue;
 
