@@ -1,4 +1,3 @@
-using System.Reflection.Metadata;
 using Content.Shared.Popups;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
@@ -8,12 +7,12 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Popups;
 
 /// <summary>
-/// Draws world popups. Screen / cursor popups are implemented as labels.
+/// Draws popup text, either in world or on screen.
 /// </summary>
 public sealed class PopupOverlay : Overlay
 {
-    private IEntityManager _entManager;
-    private PopupSystem _popup;
+    private readonly IEntityManager _entManager;
+    private readonly PopupSystem _popup;
 
     private readonly ShaderInstance _shader;
     private readonly Font _smallFont;
@@ -22,12 +21,12 @@ public sealed class PopupOverlay : Overlay
 
     public override OverlaySpace Space => OverlaySpace.ScreenSpace;
 
-    public PopupOverlay(IEntityManager entManager, IResourceCache cache, PopupSystem popup)
+    public PopupOverlay(IEntityManager entManager, IPrototypeManager protoManager, IResourceCache cache, PopupSystem popup)
     {
         _entManager = entManager;
         _popup = popup;
 
-        _shader = IoCManager.Resolve<IPrototypeManager>().Index<ShaderPrototype>("unshaded").Instance();
+        _shader = protoManager.Index<ShaderPrototype>("unshaded").Instance();
         _smallFont = new VectorFont(cache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Italic.ttf"), 10);
         _mediumFont = new VectorFont(cache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Italic.ttf"), 12);
         _largeFont = new VectorFont(cache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-BoldItalic.ttf"), 14);

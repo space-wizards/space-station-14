@@ -6,6 +6,7 @@ using Robust.Client.Input;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Popups
@@ -29,7 +30,7 @@ namespace Content.Client.Popups
             SubscribeNetworkEvent<PopupEntityEvent>(OnPopupEntityEvent);
             SubscribeNetworkEvent<RoundRestartCleanupEvent>(OnRoundRestart);
             IoCManager.Resolve<IOverlayManager>()
-                .AddOverlay(new PopupOverlay(EntityManager, IoCManager.Resolve<IResourceCache>(), this));
+                .AddOverlay(new PopupOverlay(EntityManager, IoCManager.Resolve<IPrototypeManager>(), IoCManager.Resolve<IResourceCache>(), this));
         }
 
         public override void Shutdown()
