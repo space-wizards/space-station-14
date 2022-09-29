@@ -17,19 +17,19 @@ namespace Content.Server.UserInterface;
 public sealed class StatValuesCommand : IConsoleCommand
 {
     public string Command => "showvalues";
-    public string Description => "Dumps all stats for a particular category into a table.";
+    public string Description => Loc.GetString("stat-values-desc");
     public string Help => $"{Command} <cargosell / lathsell / melee>";
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (shell.Player is not IPlayerSession pSession)
         {
-            shell.WriteError($"{Command} can't be run on server!");
+            shell.WriteError(Loc.GetString("stat-values-server"));
             return;
         }
 
         if (args.Length != 1)
         {
-            shell.WriteError($"Invalid number of args, need 1");
+            shell.WriteError(Loc.GetString("stat-values-args"));
             return;
         }
 
@@ -47,7 +47,7 @@ public sealed class StatValuesCommand : IConsoleCommand
                 message = GetMelee();
                 break;
             default:
-                shell.WriteError($"{args[0]} is not a valid stat!");
+                shell.WriteError(Loc.GetString("stat-values-invalid", ("arg", args[0])));
                 return;
         }
 
@@ -64,7 +64,7 @@ public sealed class StatValuesCommand : IConsoleCommand
 
         var values = new List<string[]>();
         var entManager = IoCManager.Resolve<IEntityManager>();
-        var priceSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<PricingSystem>();
+        var priceSystem = entManager.System<PricingSystem>();
         var metaQuery = entManager.GetEntityQuery<MetaDataComponent>();
         var prices = new HashSet<string>(256);
 
@@ -93,11 +93,11 @@ public sealed class StatValuesCommand : IConsoleCommand
 
         var state = new StatValuesEuiMessage()
         {
-            Title = "Cargo sell prices",
+            Title = Loc.GetString("stat-cargo-values"),
             Headers = new List<string>()
             {
-                "ID",
-                "Price",
+                Loc.GetString("stat-cargo-id"),
+                Loc.GetString("stat-cargo-price"),
             },
             Values = values,
         };
@@ -179,12 +179,12 @@ public sealed class StatValuesCommand : IConsoleCommand
 
         var state = new StatValuesEuiMessage()
         {
-            Title = "Lathe sell prices",
+            Title = Loc.GetString("stat-lathe-values"),
             Headers = new List<string>()
             {
-                "ID",
-                "Cost",
-                "Sell price",
+                Loc.GetString("stat-lathe-id"),
+                Loc.GetString("stat-lathe-cost"),
+                Loc.GetString("stat-lathe-sell"),
             },
             Values = values,
         };
