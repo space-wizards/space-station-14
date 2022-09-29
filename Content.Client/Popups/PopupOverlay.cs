@@ -20,7 +20,7 @@ public sealed class PopupOverlay : Overlay
     private readonly Font _mediumFont;
     private readonly Font _largeFont;
 
-    public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV | OverlaySpace.ScreenSpace;
+    public override OverlaySpace Space => OverlaySpace.ScreenSpace;
 
     public PopupOverlay(IEntityManager entManager, IResourceCache cache, PopupSystem popup)
     {
@@ -35,28 +35,23 @@ public sealed class PopupOverlay : Overlay
 
     protected override void Draw(in OverlayDrawArgs args)
     {
+        if (args.ViewportControl == null)
+            return;
+
         args.DrawingHandle.UseShader(_shader);
 
-        switch (args.DrawingHandle)
-        {
-            case DrawingHandleWorld worldHandle:
-                DrawWorld(worldHandle, args);
-                break;
-            case DrawingHandleScreen screenHandle:
-                DrawScreen(screenHandle, args);
-                break;
-        }
+        DrawWorld(args.ScreenHandle, args);
+        DrawScreen(args.ScreenHandle, args);
 
         args.DrawingHandle.UseShader(null);
     }
 
-    private void DrawWorld(DrawingHandleWorld worldHandle, OverlayDrawArgs args)
+    private void DrawWorld(DrawingHandleScreen worldHandle, OverlayDrawArgs args)
     {
         if (_popup.WorldLabels.Count == 0)
             return;
 
-        var rotation = args.Viewport.Eye?.Rotation ?? Angle.Zero;
-        var rotationMatrix = Matrix3.CreateRotation(-rotation);
+        var matrix = args.ViewportControl!.GetWorldToScreenMatrix();
 
         foreach (var popup in _popup.WorldLabels)
         {
@@ -68,16 +63,9 @@ public sealed class PopupOverlay : Overlay
             if (!args.WorldAABB.Contains(mapPos.Position))
                 continue;
 
-            var worldMatrix = Matrix3.CreateTranslation(mapPos.Position);
-            Matrix3.Multiply(rotationMatrix, worldMatrix, out var matty);
-            worldHandle.SetTransform(matty);
-
-            var position = Vector2.Zero;
-
-            DrawPopup(popup, worldHandle, position);
+            var pos = matrix.Transform(mapPos.Position);
+            DrawPopup(popup, worldHandle, pos);
         }
-
-        worldHandle.SetTransform(Matrix3.Identity);
     }
 
     private void DrawScreen(DrawingHandleScreen screenHandle, OverlayDrawArgs args)
@@ -92,33 +80,40 @@ public sealed class PopupOverlay : Overlay
         }
     }
 
-    private void DrawPopup(PopupSystem.PopupLabel popup, DrawingHandleBase handle, Vector2 position)
+    private void DrawPopup(PopupSystem.PopupLabel popup, DrawingHandleScreen handle, Vector2 position)
     {
         const float alphaMinimum = 0.5f;
 
-        var alpha = MathF.Max(1f, 1f - (popup.TotalTime - alphaMinimum) / (PopupSystem.PopupLifetime - alphaMinimum));
+        var alpha = MathF.Min(1f, 1f - (popup.TotalTime - alphaMinimum) / (PopupSystem.PopupLifetime - alphaMinimum));
+        var updatedPosition = position - new Vector2(0f, 20f * (popup.TotalTime * popup.TotalTime + popup.TotalTime));
+        var font = _smallFont;
+        var dimensions = Vector2.Zero;
+        var color = Color.White.WithAlpha(alpha);
 
         switch (popup.Type)
         {
             case PopupType.SmallCaution:
-                handle.DrawString(_smallFont, position, popup.Text, Color.Red.WithAlpha(alpha));
+                color = Color.Red;
                 break;
             case PopupType.Medium:
-                handle.DrawString(_mediumFont, position, popup.Text, Color.LightGray.WithAlpha(alpha));
+                font = _mediumFont;
+                color = Color.LightGray;
                 break;
             case PopupType.MediumCaution:
-                handle.DrawString(_mediumFont, position, popup.Text, Color.Red.WithAlpha(alpha));
+                font = _mediumFont;
+                color = Color.Red;
                 break;
             case PopupType.Large:
-                handle.DrawString(_largeFont, position, popup.Text, Color.LightGray.WithAlpha(alpha));
+                font = _largeFont;
+                color = Color.LightGray;
                 break;
             case PopupType.LargeCaution:
-                handle.DrawString(_largeFont, position, popup.Text, Color.Red.WithAlpha(alpha));
-                break;
-            case PopupType.Small:
-            default:
-                handle.DrawString(_smallFont, position, popup.Text, Color.White.WithAlpha(alpha));
+                font = _largeFont;
+                color = Color.Red;
                 break;
         }
+
+        dimensions = handle.GetDimensions(font, popup.Text, 1f);
+        handle.DrawString(font, updatedPosition - dimensions / 2f, popup.Text, color.WithAlpha(alpha));
     }
 }
