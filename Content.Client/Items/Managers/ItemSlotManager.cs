@@ -71,7 +71,7 @@ namespace Content.Client.Items.Managers
                 _entitySystemManager.GetEntitySystem<ExamineSystem>()
                     .DoExamine(item.Value);
             }
-            else if (args.Function == EngineKeyFunctions.AltUse)
+            else if (args.Function == EngineKeyFunctions.UseSecondary)
             {
                 _entitySystemManager.GetEntitySystem<VerbSystem>().VerbMenu.OpenVerbMenu(item.Value);
             }

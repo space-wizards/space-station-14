@@ -80,7 +80,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         }
 
         var useDown = _inputSystem.CmdStates.GetState(EngineKeyFunctions.Use);
-        var altDown = _inputSystem.CmdStates.GetState(EngineKeyFunctions.AltUse);
+        var altDown = _inputSystem.CmdStates.GetState(EngineKeyFunctions.UseSecondary);
         var currentTime = Timing.CurTime;
 
         // Heavy attack.
