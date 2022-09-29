@@ -25,11 +25,11 @@
     damageModifierSet: Scale
   - type: MeleeWeapon
     hidden: true
-    hitSound:
+    soundHit:
       path: /Audio/Weapons/pierce.ogg
     range: 0.8
-    arcwidth: 30
-    arc: fist
+    angle: 30
+    animation: WeaponArcFist
     damage:
       types:
         Piercing: 5
