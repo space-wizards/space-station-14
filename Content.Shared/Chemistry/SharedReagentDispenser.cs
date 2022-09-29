@@ -60,12 +60,10 @@ namespace Content.Shared.Chemistry
         /// </summary>
         public readonly List<string> Inventory;
 
-        public readonly string DispenserName;
         public readonly ReagentDispenserDispenseAmount SelectedDispenseAmount;
 
-        public ReagentDispenserBoundUserInterfaceState(string dispenserName, ContainerInfo? outputContainer, List<string> inventory, ReagentDispenserDispenseAmount selectedDispenseAmount)
+        public ReagentDispenserBoundUserInterfaceState(ContainerInfo? outputContainer, List<string> inventory, ReagentDispenserDispenseAmount selectedDispenseAmount)
         {
-            DispenserName = dispenserName;
             OutputContainer = outputContainer;
             Inventory = inventory;
             SelectedDispenseAmount = selectedDispenseAmount;

@@ -48,10 +48,9 @@ namespace Content.Server.Chemistry.EntitySystems
             var outputContainer = _itemSlotsSystem.GetItem(reagentDispenser.Owner, SharedReagentDispenser.OutputSlotName);
             var outputContainerInfo = BuildOutputContainerInfo(outputContainer);
 
-            var dispenserName = Name(reagentDispenser.Owner);
             var inventory = GetInventory(reagentDispenser);
 
-            var state = new ReagentDispenserBoundUserInterfaceState(dispenserName, outputContainerInfo, inventory, reagentDispenser.DispenseAmount);
+            var state = new ReagentDispenserBoundUserInterfaceState(outputContainerInfo, inventory, reagentDispenser.DispenseAmount);
             _userInterfaceSystem.TrySetUiState(reagentDispenser.Owner, ReagentDispenserUiKey.Key, state);
         }
 

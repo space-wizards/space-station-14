@@ -62,15 +62,12 @@ namespace Content.Server.Chemistry.EntitySystems
             var inputContainer = _itemSlotsSystem.GetItem(chemMaster.Owner, SharedChemMaster.InputSlotName);
             var outputContainer = _itemSlotsSystem.GetItem(chemMaster.Owner, SharedChemMaster.OutputSlotName);
 
-            var dispenserName = Name(chemMaster.Owner);
             var bufferReagents = bufferSolution.Contents;
             var bufferCurrentVolume = bufferSolution.CurrentVolume;
 
             var state = new ChemMasterBoundUserInterfaceState(
-                chemMaster.Mode, dispenserName,
-                BuildInputContainerInfo(inputContainer), BuildOutputContainerInfo(outputContainer),
-                bufferReagents, bufferCurrentVolume,
-                chemMaster.PillType, chemMaster.PillDosageLimit, updateLabel);
+                chemMaster.Mode, BuildInputContainerInfo(inputContainer), BuildOutputContainerInfo(outputContainer),
+                bufferReagents, bufferCurrentVolume, chemMaster.PillType, chemMaster.PillDosageLimit, updateLabel);
 
             _userInterfaceSystem.TrySetUiState(chemMaster.Owner, ChemMasterUiKey.Key, state);
         }

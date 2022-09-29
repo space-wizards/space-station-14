@@ -77,7 +77,6 @@ namespace Content.Client.Chemistry.UI
         public void UpdateState(BoundUserInterfaceState state)
         {
             var castState = (ReagentDispenserBoundUserInterfaceState) state;
-            Title = castState.DispenserName;
             UpdateContainerInfo(castState);
             UpdateReagentsList(castState.Inventory);
 

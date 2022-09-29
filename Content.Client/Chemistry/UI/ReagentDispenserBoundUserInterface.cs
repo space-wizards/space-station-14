@@ -11,6 +11,7 @@ namespace Content.Client.Chemistry.UI
     [UsedImplicitly]
     public sealed class ReagentDispenserBoundUserInterface : BoundUserInterface
     {
+        [Dependency] private readonly IEntityManager _entityManager = default!;
         private ReagentDispenserWindow? _window;
         private ReagentDispenserBoundUserInterfaceState? _lastState;
 
@@ -28,7 +29,10 @@ namespace Content.Client.Chemistry.UI
             base.Open();
 
             // Setup window layout/elements
-            _window = new();
+            _window = new()
+            {
+                Title = _entityManager.GetComponent<MetaDataComponent>(Owner.Owner).EntityName,
+            };
 
             _window.OpenCentered();
             _window.OnClose += Close;
