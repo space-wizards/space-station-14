@@ -34,6 +34,7 @@
   id: CombatModeToggle
   name: action-name-combat
   description: action-description-combat
+  checkCanInteract: false
   icon: Interface/Actions/harmOff.png
   iconOn: Interface/Actions/harm.png
   userPopup: action-popup-combat
