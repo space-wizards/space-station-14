@@ -14,4 +14,4 @@ ent-CrateEmergencyInflatablewall = Inflatable wall crate
     .desc = Three stacks of inflatable walls for when the stations metal walls don't want to hold atmosphere anymore.
 
 ent-CrateEVASupply = EVA supply crate
-    .desc = Contains EVA suits, magboots, double emergency oxygen tanks, and mini jetpacks.
+    .desc = Contains EVA suits, magboots, and double emergency oxygen tanks.
