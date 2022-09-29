@@ -1,11 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: The security techfab now starts with all technologies unlocked., type: Tweak}
-  - {message: Removed security tech tree from science., type: Remove}
-  - {message: Department lathes no longer print common items., type: Tweak}
-  id: 1875
-  time: '2022-07-05T19:56:58.0000000+00:00'
 - author: themias
   changes:
   - {message: You can no longer become so hungry that you ascend hunger, type: Fix}
@@ -2916,3 +2909,21 @@ Entries:
   - {message: Fixed revenants spawning out into space when killed., type: Fix}
   id: 2374
   time: '2022-09-29T02:30:48.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Melee combat swings are now predicted. The damage effect still only
+      shows when the server confirms the hit., type: Fix}
+  - {message: Melee combat sprite lunge direction has been fixed., type: Fix}
+  - {message: 'You won''t pick up items (e.g. rats, spears) when trying to melee them
+      anymore.', type: Fix}
+  - {message: Melee combat now has light and heavy attacks. Light attacks under your
+      cursor and heavy attack in your cursor's direction. Heavy attacks also do more
+      DPS and can cleave but require a windup., type: Add}
+  - {message: Disarm is now on right-click when you have a free hand., type: Tweak}
+  - {message: The context menu won't show up when in combat mode anymore as right-click
+      has been repurposed., type: Tweak}
+  - {message: Most melee values have been tweaked (mainly attack rates and damage
+      values) to make weapons more distinct. DPS values are similar (excluding the
+      change in frequency on bleeding / chemical injection procs)., type: Tweak}
+  id: 2375
+  time: '2022-09-29T05:51:59.0000000+00:00'
