@@ -8,6 +8,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.NPC;
+using Content.Shared.Weapons.Melee;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
@@ -27,6 +28,7 @@ namespace Content.Server.NPC.Systems
         [Dependency] private readonly DoorSystem _doors = default!;
         [Dependency] private readonly PathfindingSystem _pathfindingSystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interaction = default!;
+        [Dependency] private readonly SharedMeleeWeaponSystem _melee = default!;
         [Dependency] private readonly SharedMoverController _mover = default!;
 
         // This will likely get moved onto an abstract pathfinding node that specifies the max distance allowed from the coordinate.

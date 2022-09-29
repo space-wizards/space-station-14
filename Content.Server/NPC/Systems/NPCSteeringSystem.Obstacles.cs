@@ -1,11 +1,9 @@
-using System.Linq;
 using Content.Server.Destructible;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.Pathfinding;
-using Content.Shared.Damage;
 using Content.Shared.Doors.Components;
 using Content.Shared.NPC;
-using Robust.Shared.Collections;
+using Content.Shared.Weapons.Melee;
 using Robust.Shared.Physics.Components;
 
 namespace Content.Server.NPC.Systems;
@@ -99,10 +97,10 @@ public sealed partial class NPCSteeringSystem
                     return SteeringObstacleStatus.Completed;
             }
             // Try smashing obstacles.
-            else if ((component.Flags & PathFlags.Smashing) != 0x0)
+            else if ((component.Flags & PathFlags.Smashing) != 0x0 && TryComp<NPCMeleeCombatComponent>(component.Owner, out var melee) &&
+                     TryComp<MeleeWeaponComponent>(melee.Weapon, out var meleeWeapon))
             {
                 var destructibleQuery = GetEntityQuery<DestructibleComponent>();
-                var xformQuery = GetEntityQuery<TransformComponent>();
 
                 // TODO: This is a hack around grilles and windows.
                 _random.Shuffle(obstacleEnts);
@@ -110,10 +108,9 @@ public sealed partial class NPCSteeringSystem
                 foreach (var ent in obstacleEnts)
                 {
                     // TODO: Validate we can damage it
-                    if (destructibleQuery.HasComponent(ent) &&
-                        xformQuery.TryGetComponent(ent, out var targetXform))
+                    if (destructibleQuery.HasComponent(ent))
                     {
-                        _interaction.DoAttack(component.Owner, targetXform.Coordinates, false, targetXform.Owner);
+                        _melee.AttemptLightAttack(component.Owner, meleeWeapon, ent);
                         return SteeringObstacleStatus.Continuing;
                     }
                 }
