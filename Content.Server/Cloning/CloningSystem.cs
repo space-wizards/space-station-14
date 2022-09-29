@@ -93,12 +93,6 @@ namespace Content.Server.Cloning.Systems
             _serverStackSystem.SpawnMultiple(_material.GetMaterialAmount(uid, "Biomass"), 100, "Biomass", Transform(uid).Coordinates);
         }
 
-        private void UpdateAppearance(CloningPodComponent clonePod)
-        {
-            if (TryComp<AppearanceComponent>(clonePod.Owner, out var appearance))
-                _appearance.SetData(clonePod.Owner, CloningPodVisuals.Status, clonePod.Status, appearance);
-        }
-
         internal void TransferMindToClone(Mind.Mind mind)
         {
             if (!ClonesWaitingForMind.TryGetValue(mind, out var entity) ||
@@ -256,7 +250,7 @@ namespace Content.Server.Cloning.Systems
         public void UpdateStatus(CloningPodStatus status, CloningPodComponent cloningPod)
         {
             cloningPod.Status = status;
-            UpdateAppearance(cloningPod);
+            _appearance.SetData(cloningPod.Owner, CloningPodVisuals.Status, cloningPod.Status);
         }
 
         public override void Update(float frameTime)
