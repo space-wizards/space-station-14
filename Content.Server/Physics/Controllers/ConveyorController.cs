@@ -31,6 +31,7 @@ namespace Content.Server.Physics.Controllers
         [Dependency] private readonly GravitySystem _gravity = default!;
         [Dependency] private readonly RecyclerSystem _recycler = default!;
         [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
         public const string ConveyorFixture = "conveyor";
 
@@ -152,7 +153,7 @@ namespace Content.Server.Physics.Controllers
                     if (!bodyQuery.TryGetComponent(entity, out var physics))
                         continue;
 
-                    physics.Awake = true;
+                    _physics.WakeBody(physics);
                 }
             }
         }
