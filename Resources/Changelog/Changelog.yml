@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Taking damage now has an overlay., type: Add}
-  id: 1880
-  time: '2022-07-06T07:58:14.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Stamina has been added so weapons won't always immediately stun the
       target., type: Add}
   - {message: Stun batons apply a 5 seconds stun with a 7 second cooldown., type: Tweak}
@@ -2921,3 +2916,8 @@ Entries:
   - {message: Wallmount Nanomed are now fully functional !, type: Fix}
   id: 2379
   time: '2022-09-29T16:46:39.0000000+00:00'
+- author: civilCornball
+  changes:
+  - {message: Fixes the recycler not recycling some trash., type: Fix}
+  id: 2380
+  time: '2022-09-29T20:44:56.0000000+00:00'
