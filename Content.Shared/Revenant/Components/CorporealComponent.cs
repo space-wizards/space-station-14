@@ -1,4 +1,4 @@
-namespace Content.Server.Revenant;
+namespace Content.Shared.Revenant.Components;
 
 /// <summary>
 /// Makes the target solid, visible, and applies a slowdown.

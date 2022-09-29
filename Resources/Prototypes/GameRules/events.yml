@@ -44,6 +44,17 @@
     minimumPlayers: 15
 
 - type: gameRule
+  id: RevenantSpawn
+  config:
+    !type:StationEventRuleConfiguration
+    id: RevenantSpawn
+    weight: 5
+    endAfter: 1
+    earliestStart: 45
+    maxOccurrences: 1
+    minimumPlayers: 20
+
+- type: gameRule
   id: FalseAlarm
   config:
     !type:StationEventRuleConfiguration
