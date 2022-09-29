@@ -5,6 +5,9 @@
   - node: start
     edges:
     - to: bot
+    conditions:
+    - !type:ContainerEmpty 
+       container: "medkit"
       steps:
       - tag: Medkit
         icon:
@@ -28,6 +31,6 @@
           sprite: Mobs/Silicon/drone.rsi
           state: l_hand
         name: borg arm
-        doAfter: 2
+        doAfter: 2     
   - node: bot
     entity: MobMedibot
