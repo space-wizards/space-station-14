@@ -1,13 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Stamina has been added so weapons won't always immediately stun the
-      target., type: Add}
-  - {message: Stun batons apply a 5 seconds stun with a 7 second cooldown., type: Tweak}
-  - {message: Disablers have been added. It takes 4 shots to put someone into stamcrit
-      for 5 seconds., type: Add}
-  id: 1881
-  time: '2022-07-06T08:06:12.0000000+00:00'
 - author: ike709
   changes:
   - {message: 'Failing to insert an item into a storage container will now give you
@@ -2921,3 +2912,15 @@ Entries:
   - {message: Fixes the recycler not recycling some trash., type: Fix}
   id: 2380
   time: '2022-09-29T20:44:56.0000000+00:00'
+- author: moony
+  changes:
+  - {message: A permanent blindness trait has been added so you no longer need to
+      hunt down a blindfold., type: Add}
+  - {message: 'A narcolepsy trait has been added, for if you enjoy the impending doom
+      of falling asleep mid-nukies.', type: Add}
+  - {message: You can now give yourself a runny nose and sneeze randomly on occasion
+      if that's your thing., type: Add}
+  - {message: 'You can, if you like, be permanently pacifist with no ability to fight
+      back.', type: Add}
+  id: 2381
+  time: '2022-09-29T23:23:13.0000000+00:00'
