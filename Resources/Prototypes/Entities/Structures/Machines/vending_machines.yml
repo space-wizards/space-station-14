@@ -878,6 +878,7 @@
   parent: VendingMachine
   name: vending machine
   abstract: true
+  components:
   - type: Sprite
     netsync: false
     snapCardinals: false
