@@ -2,6 +2,7 @@ using Content.Client.CombatMode;
 using Content.Client.Gameplay;
 using Content.Client.Hands;
 using Content.Client.Weapons.Melee.Components;
+using Content.Shared.MobState.Components;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Client.Animations;
@@ -207,7 +208,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         // If target doesn't have hands then we can't disarm so will let the player know it's pointless.
         if (!HasComp<HandsComponent>(ev.Target!.Value))
         {
-            if (Timing.IsFirstTimePredicted)
+            if (Timing.IsFirstTimePredicted && HasComp<MobStateComponent>(ev.Target.Value))
                 PopupSystem.PopupEntity(Loc.GetString("disarm-action-disarmable", ("targetName", ev.Target.Value)), ev.Target.Value, Filter.Local());
 
             return false;
