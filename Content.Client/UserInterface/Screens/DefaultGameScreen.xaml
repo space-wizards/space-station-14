@@ -13,7 +13,6 @@
     VerticalAlignment="Bottom"
     HorizontalAlignment="Center">
     <controls:MainViewport Name="MainViewport" Access="Protected" />
-    <menuBar:MenuBar Name="TopBar" Access="Protected" />
     <menuBar:GameTopMenuBar Name="TopBar" Access="Protected" />
     <widgets:GhostGui Name="Ghost" Access="Protected" />
     <hotbar:HotbarGui Name="Hotbar" Access="Protected" />
