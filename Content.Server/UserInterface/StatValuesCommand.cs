@@ -53,7 +53,7 @@ public sealed class StatValuesCommand : IConsoleCommand
 
         var values = new List<string[]>();
         var entManager = IoCManager.Resolve<IEntityManager>();
-        var priceSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<PricingSystem>();
+        var priceSystem = entManager.System<PricingSystem>();
         var metaQuery = entManager.GetEntityQuery<MetaDataComponent>();
         var prices = new HashSet<string>(256);
 
