@@ -1,14 +1,4 @@
 Entries:
-- author: Aerocrux
-  changes:
-  - {message: Cap Guns now have visible held sprites, type: Add}
-  id: 1873
-  time: '2022-07-05T17:09:54.0000000+00:00'
-- author: BurninDreamer
-  changes:
-  - {message: Make the uplink lantern actually flash you., type: Tweak}
-  id: 1874
-  time: '2022-07-05T18:40:19.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: The security techfab now starts with all technologies unlocked., type: Tweak}
@@ -2913,3 +2903,16 @@ Entries:
       they might not be who they sound like.', type: Add}
   id: 2372
   time: '2022-09-29T02:22:27.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Cloning Pods can now be upgraded to make them faster and use less biomass.,
+    type: Add}
+  id: 2373
+  time: '2022-09-29T02:30:11.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Expect a familiar ghost to be appearing around the station more often,
+      this time with some new tricks!', type: Add}
+  - {message: Fixed revenants spawning out into space when killed., type: Fix}
+  id: 2374
+  time: '2022-09-29T02:30:48.0000000+00:00'
