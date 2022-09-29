@@ -67,9 +67,7 @@ public sealed class VocalSystem : EntitySystem
         if (!_blocker.CanSpeak(uid))
             return false;
 
-        var sex = Sex.Unsexed;
-        if (TryComp(uid, out HumanoidComponent? humanoid))
-            sex = humanoid.Sex;
+        var sex = CompOrNull<HumanoidComponent>(uid)?.Sex ?? Sex.Unsexed;
 
         if (_random.Prob(component.WilhelmProbability))
         {

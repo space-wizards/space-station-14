@@ -11,6 +11,7 @@ namespace Content.Client.Preferences.UI
     {
         private readonly IRobustRandom _random;
         private readonly IPrototypeManager _prototypeManager;
+
         private void RandomizeEverything()
         {
             Profile = HumanoidCharacterProfile.Random();

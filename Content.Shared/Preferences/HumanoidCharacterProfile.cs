@@ -502,7 +502,7 @@ namespace Content.Shared.Preferences
         /// working inside these non entity systems is a bit wack
         public static string GetName(string species, Gender gender)
         {
-            var namingSystem = IoCManager.Resolve<IEntityManager>().EntitySysManager.GetEntitySystem<NamingSystem>();
+            var namingSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<NamingSystem>();
             return namingSystem.GetName(species, gender);
         }
 

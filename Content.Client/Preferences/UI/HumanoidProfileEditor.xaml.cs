@@ -138,12 +138,12 @@ namespace Content.Client.Preferences.UI
             _tabContainer.SetTabTitle(0, Loc.GetString("humanoid-profile-editor-appearance-tab"));
 
             #region Sex
+
             _sexButton.OnItemSelected += args =>
             {
                 _sexButton.SelectId(args.Id);
                 SetSex((Sex) args.Id);
             };
-
 
             #endregion Sex
 
@@ -865,9 +865,7 @@ namespace Content.Client.Preferences.UI
         private void UpdateSexControls()
         {
             if (Profile == null)
-            {
                 return;
-            }
 
             _sexButton.Clear();
 
