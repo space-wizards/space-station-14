@@ -1,7 +1,9 @@
 using Content.Server.Chat.Systems;
 using Content.Server.Radio.Components;
 using Content.Server.Radio.EntitySystems;
+using Content.Server.VoiceMask;
 using Content.Shared.Chat;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Radio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
@@ -58,6 +60,13 @@ namespace Content.Server.Headset
 
             var playerChannel = actor.PlayerSession.ConnectedClient;
 
+            var name = _entMan.GetComponent<MetaDataComponent>(source).EntityName;
+
+            if (_entMan.TryGetComponent(source, out VoiceMaskComponent? mask) && mask.Enabled)
+            {
+                name = Identity.Name(source, _entMan);
+            }
+
             message = _chatSystem.TransformSpeech(source, message);
             if (message.Length == 0)
                 return;
@@ -67,7 +76,7 @@ namespace Content.Server.Headset
                 Channel = ChatChannel.Radio,
                 Message = message,
                 //Square brackets are added here to avoid issues with escaping
-                MessageWrap = Loc.GetString("chat-radio-message-wrap", ("color", channel.Color), ("channel", $"\\[{channel.LocalizedName}\\]"), ("name", _entMan.GetComponent<MetaDataComponent>(source).EntityName))
+                MessageWrap = Loc.GetString("chat-radio-message-wrap", ("color", channel.Color), ("channel", $"\\[{channel.LocalizedName}\\]"), ("name", name))
             };
 
             _netManager.ServerSendMessage(msg, playerChannel);
