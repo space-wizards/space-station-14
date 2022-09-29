@@ -68,6 +68,10 @@
     baseSprintSpeed: 0
   - type: InputMover
   - type: GhostOnMove
+  - type: Tag
+    tags:
+      - Head
+
 
 - type: entity
   id: LeftArmReptilian
