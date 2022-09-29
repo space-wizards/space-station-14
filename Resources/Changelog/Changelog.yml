@@ -1,16 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Added the Zombie game mode as a low chance option in Secret., type: Add}
-  - {message: 'Added the CBURN Unit, an advanced operations team for Chemical, Biological,
-      Undead, Radiological, and Nuclear threats.', type: Add}
-  - {message: Non-human zombies no longer get a damage buff., type: Tweak}
-  - {message: Zombie infection chance is now based on the amount of clothing worn.,
-    type: Tweak}
-  - {message: Zombies have had a visual overhaul., type: Tweak}
-  - {message: Zombies now do less damage to each other rather than more., type: Fix}
-  id: 1877
-  time: '2022-07-06T03:42:52.0000000+00:00'
 - author: Rane
   changes:
   - {message: Rat kings will not spawn until someone takes the ghost role., type: Tweak}
@@ -2927,3 +2915,9 @@ Entries:
   - {message: Cargo order sorting will now ignore case., type: Tweak}
   id: 2376
   time: '2022-09-29T07:09:29.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The duration of manual healing items on yourself now scales with how
+      much damage you have taken., type: Tweak}
+  id: 2377
+  time: '2022-09-29T07:12:16.0000000+00:00'
