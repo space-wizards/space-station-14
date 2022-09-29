@@ -880,6 +880,7 @@
   abstract: true
   components:
   - type: Sprite
+    drawdepth: WallMountedItems
     netsync: false
     snapCardinals: false
   - type: WallMount
