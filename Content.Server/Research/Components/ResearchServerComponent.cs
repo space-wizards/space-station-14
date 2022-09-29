@@ -14,7 +14,7 @@ namespace Content.Server.Research.Components
         /// <summary>
         /// To encourage people to spend points,
         /// will not accept passive points gain above this number for each source.
-        /// </summary
+        /// </summary>
         [DataField("passiveLimitPerSource")]
         public int PassiveLimitPerSource = 30000;
         [ViewVariables(VVAccess.ReadOnly)] public int Id { get; set; }
