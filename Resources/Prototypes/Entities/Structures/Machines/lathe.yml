@@ -291,6 +291,7 @@
       - WallmountSubstationElectronics
       - EmitterCircuitboard
       - GasRecyclerMachineCircuitboard
+      - MedicalResearchBedCircuitboard
   - type: MaterialStorage
     whitelist:
       tags:

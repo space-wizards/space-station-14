@@ -231,6 +231,9 @@ namespace Content.Server.Chemistry.EntitySystems
                 if (!(rewardSolutions.Count == rewardRequiredCount))
                     rewardEarned = false;
 
+
+            //TODO make reagent and disk reward tracking component so disk is printed only once per analyser and paper is only printed
+            //if the composition of reagents change
             if (rewardEarned)
                 Spawn(args.Machine.ResearchDiskReward, Transform(uid).Coordinates);
 

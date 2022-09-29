@@ -72,7 +72,13 @@ namespace Content.Server.Medical
                                 }
                             }
 
-                            Console.WriteLine(server.healthChanges);
+                            //Console.WriteLine(server.healthChanges);
+                            if (server.healthChanges >= medicalResearchBed.HealthGoal && !server.diskPrinted)
+                            {
+                                Spawn(medicalResearchBed.ResearchDiskReward, Transform(uid).Coordinates);
+                                server.diskPrinted = true;
+                            }
+
                             medicalResearchBed.UserInterface?.SendMessage(new MedicalResearchBedScannedUserMessage(buckledEntity, solutions.Solutions["chemicals"].Contents));
                         }
 
@@ -101,27 +107,31 @@ namespace Content.Server.Medical
                         {
                             
                             if (server.bedChange)
+                            {
+                                server.bedChange = false;
+                                server.lastHealthRecording = damageable.TotalDamage;
+                            }
+                            else
+                            {
+                                if (damageable.TotalDamage < server.lastHealthRecording)
                                 {
-                                    server.bedChange = false;
+                                    server.healthChanges += server.lastHealthRecording - damageable.TotalDamage;
                                     server.lastHealthRecording = damageable.TotalDamage;
-                                }
-                                else
+                                } else
                                 {
-                                    if (damageable.TotalDamage < server.lastHealthRecording)
-                                    {
-                                        server.healthChanges += server.lastHealthRecording - damageable.TotalDamage;
-                                        server.lastHealthRecording = damageable.TotalDamage;
-                                    } else
-                                    {
-                                        server.lastHealthRecording = damageable.TotalDamage;
-                                    }   
-                                }
+                                    server.lastHealthRecording = damageable.TotalDamage;
+                                }   
+                            }
                             
-                            Console.WriteLine(server.healthChanges);
+                            //Console.WriteLine(server.healthChanges);
+                            if (server.healthChanges >= medicalResearchBed.HealthGoal && !server.diskPrinted)
+                            {
+                                Spawn(medicalResearchBed.ResearchDiskReward, Transform(uid).Coordinates);
+                                server.diskPrinted = true;
+                            }
+
                             medicalResearchBed.UserInterface?.SendMessage(new MedicalResearchBedScannedUserMessage(buckledEntity, solutions.Solutions["chemicals"].Contents));
                         }
-
-                        
                     }
                 }
             }
