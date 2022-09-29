@@ -31,6 +31,6 @@
           sprite: Mobs/Silicon/drone.rsi
           state: l_hand
         name: borg arm
-        doAfter: 2     
+        doAfter: 2
   - node: bot
     entity: MobMedibot
