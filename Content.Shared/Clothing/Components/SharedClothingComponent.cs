@@ -42,6 +42,10 @@ public abstract class SharedClothingComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("sprite")]
     public string? RsiPath;
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("femaleMask")]
+    public FemaleClothingMask FemaleMask = FemaleClothingMask.UniformFull;
 }
 
 [Serializable, NetSerializable]
@@ -53,4 +57,11 @@ public sealed class ClothingComponentState : ComponentState
     {
         EquippedPrefix = equippedPrefix;
     }
+}
+
+public enum FemaleClothingMask : byte
+{
+    NoMask = 0,
+    UniformFull,
+    UniformTop
 }

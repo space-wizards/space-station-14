@@ -10,6 +10,7 @@
       receiveFrequencyId: SurveillanceCamera
       transmitFrequencyId: SurveillanceCamera
     - type: WiredNetworkConnection
+    - type: DeviceNetworkRequiresPower
     - type: UserInterface
       interfaces:
         - key: enum.SurveillanceCameraSetupUiKey.Router
@@ -18,6 +19,7 @@
       board: SurveillanceCameraRouterCircuitboard
     - type: Sprite
       sprite: Structures/Machines/server.rsi
+      snapCardinals: true
       layers:
         - state: server
 
@@ -113,6 +115,7 @@
       transmitFrequencyId: SurveillanceCamera
     - type: WirelessNetworkConnection
       range: 200
+    - type: DeviceNetworkRequiresPower
     - type: UserInterface
       interfaces:
         - key: enum.SurveillanceCameraSetupUiKey.Router

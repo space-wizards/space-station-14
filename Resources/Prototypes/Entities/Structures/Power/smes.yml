@@ -16,6 +16,7 @@
     - type: Sprite
       netsync: false
       sprite: Structures/Power/smes.rsi
+      snapCardinals: true
       layers:
         - state: smes
     - type: Smes
@@ -57,6 +58,8 @@
     - type: Machine
       board: SMESMachineCircuitboard
     - type: StationInfiniteBatteryTarget
+    - type: StaticPrice
+      price: 750
 
 # SMES' in use
 
@@ -68,3 +71,11 @@
   - type: Battery
     maxCharge: 10000000
     startingCharge: 10000000
+
+- type: entity
+  parent: SMESBasic
+  id: SMESBasicEmpty
+  suffix: Empty
+  components:
+  - type: Battery
+    startingCharge: 0

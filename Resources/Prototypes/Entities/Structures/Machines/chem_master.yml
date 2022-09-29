@@ -9,6 +9,7 @@
   - type: Sprite
     sprite: Structures/Machines/mixer.rsi
     netsync: false
+    snapCardinals: true
     layers:
     - state: mixer_empty
     - state: mixer_screens
@@ -17,11 +18,7 @@
     sprite: Structures/Machines/mixer.rsi
     state: mixer_loaded
   - type: ChemMaster
-    beakerSlot:
-      whitelistFailPopup: chem-master-component-cannot-put-entity-message
-      whitelist:
-        components:
-        - FitsInDispenser
+    pillDosageLimit: 50
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -62,10 +59,22 @@
   - type: MaterialStorage
   - type: ContainerContainer
     containers:
+      beakerSlot: !type:ContainerSlot
+      outputSlot: !type:ContainerSlot
       machine_board: !type:Container
       machine_parts: !type:Container
-      ChemMaster-beaker: !type:ContainerSlot
   - type: ItemSlots
+    slots:
+      beakerSlot:
+        whitelist:
+          components:
+          - FitsInDispenser
+      outputSlot:
+        whitelistFailPopup: chem-master-component-cannot-put-entity-message
+        whitelist:
+          tags:
+          - Bottle
+          - PillCanister
   - type: SolutionContainerManager
     solutions:
       buffer: {}

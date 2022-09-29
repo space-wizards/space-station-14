@@ -10,6 +10,7 @@
   components:
   - type: Sprite # TODO: add sprite for maintenance panel open
     sprite: Structures/Power/substation.rsi
+    snapCardinals: true
     layers:
     - state: substation
     - state: screen
@@ -167,6 +168,14 @@
   - type: Battery
     maxCharge: 4000000
     startingCharge: 4000000
+
+- type: entity
+  parent: SubstationBasic
+  id: SubstationBasicEmpty
+  suffix: Empty
+  components:
+  - type: Battery
+    startingCharge: 0
 
 - type: entity
   parent: BaseSubstationWall

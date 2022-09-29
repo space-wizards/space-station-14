@@ -90,11 +90,10 @@
     damageRecovery:
       types:
         Asphyxiation: -1.0
-  - type: HumanoidAppearance
-    canColorHair: false
-    canColorFacialHair: false
-    categoriesHair: VoxHair
-    categoriesFacialHair: VoxFacialHair
+  - type: Humanoid
+    species: Vox
+    # canColorHair: false
+    # canColorFacialHair: false
   - type: Inventory
     speciesId: vox
   - type: Butcherable
@@ -108,85 +107,8 @@
   parent: MobHumanDummy
   noSpawn: true
   components:
-  - type: Sprite
-    netsync: false
-    noRot: true
-    drawdepth: Mobs
-    layers:
-      - map: [ "enum.HumanoidVisualLayers.Chest" ]
-        sprite: Mobs/Species/Vox/parts.rsi
-        state: torso_m
-      - map: [ "enum.HumanoidVisualLayers.Head" ]
-        sprite: Mobs/Species/Vox/parts.rsi
-        state: head_m
-      - map: [ "enum.HumanoidVisualLayers.Eyes" ]
-        color: "#008800"
-        sprite: Mobs/Customization/eyes.rsi
-        state: vox_eyes_s
-      - map: [ "enum.HumanoidVisualLayers.RArm" ]
-        sprite: Mobs/Species/Vox/parts.rsi
-        state: r_arm
-      - map: [ "enum.HumanoidVisualLayers.LArm" ]
-        sprite: Mobs/Species/Vox/parts.rsi
-        state: l_arm
-      - map: [ "enum.HumanoidVisualLayers.RLeg" ]
-        sprite: Mobs/Species/Vox/parts.rsi
-        state: r_leg
-      - map: [ "enum.HumanoidVisualLayers.LLeg" ]
-        sprite: Mobs/Species/Vox/parts.rsi
-        state: l_leg
-      # Vox don't have female clothing masks.
-      #- shader: StencilClear
-      #  sprite: Mobs/Species/Vox/parts.rsi
-      #  state: l_leg
-      #- shader: StencilMask
-      #  map: [ "enum.HumanoidVisualLayers.StencilMask" ]
-      #  sprite: Mobs/Customization/masking_helpers.rsi
-      #  state: female_full
-      #  visible: false
-      #- map: [ "jumpsuit" ]
-      #  shader: StencilDraw
-      - map: [ "enum.HumanoidVisualLayers.LHand" ]
-        sprite: Mobs/Species/Vox/parts.rsi
-        state: l_hand
-      - map: [ "enum.HumanoidVisualLayers.RHand" ]
-        sprite: Mobs/Species/Vox/parts.rsi
-        state: r_hand
-      - map: [ "enum.HumanoidVisualLayers.LFoot" ]
-        sprite: Mobs/Species/Vox/parts.rsi
-        state: l_foot
-      - map: [ "enum.HumanoidVisualLayers.RFoot" ]
-        sprite: Mobs/Species/Vox/parts.rsi
-        state: r_foot
-      - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
-        color: "#ffffff"
-        sprite: Objects/Misc/handcuffs.rsi
-        state: body-overlay-2
-        visible: false
-      - map: [ "id" ]
-      - map: [ "gloves" ]
-      - map: [ "shoes" ]
-      - map: [ "ears" ]
-      - map: [ "outerClothing" ]
-      - map: [ "eyes" ]
-      - map: [ "belt" ]
-      - map: [ "neck" ]
-      - map: [ "back" ]
-      - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
-        state: shaved
-        sprite: Mobs/Customization/human_facial_hair.rsi
-      - map: [ "enum.HumanoidVisualLayers.Hair" ]
-        state: bald
-        sprite: Mobs/Customization/human_hair.rsi
-      - map: [ "mask" ]
-      - map: [ "head" ]
-      - map: [ "pocket1" ]
-      - map: [ "pocket2" ]
-  - type: HumanoidAppearance
-    canColorHair: false
-    canColorFacialHair: false
-    categoriesHair: VoxHair
-    categoriesFacialHair: VoxFacialHair
+  - type: Humanoid
+    species: Vox
   - type: Body
     template: HumanoidTemplate
     preset: VoxPreset

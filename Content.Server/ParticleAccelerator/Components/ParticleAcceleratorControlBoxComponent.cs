@@ -191,6 +191,9 @@ namespace Content.Server.ParticleAccelerator.Components
 
         protected override void OnRemove()
         {
+            _fireCancelTokenSrc?.Cancel();
+            _fireCancelTokenSrc = null;
+
             Master = null;
             foreach (var part in AllParts())
             {
@@ -659,7 +662,7 @@ namespace Content.Server.ParticleAccelerator.Components
             appearanceComponent.SetData(ParticleAcceleratorVisuals.VisualState, state);
         }
 
-        public override void Rotated()
+        public override void Moved()
         {
             // We rotate OURSELVES when scanning for parts, so don't actually run rescan on rotate.
             // That would be silly.

@@ -12,12 +12,15 @@
   - type: Sprite
     sprite: Objects/Misc/bedsheets.rsi
     netsync: false
+    noRot: true
   - type: Item
     size: 10
   - type: Clothing
     quickEquip: true
     slots:
     - neck
+  - type: StaticPrice
+    price: 100
 
 - type: entity
   id: BedsheetBlack

@@ -17,6 +17,7 @@ namespace Content.Shared.Vehicle;
 /// </summary>
 public abstract partial class SharedVehicleSystem : EntitySystem
 {
+    [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _modifier = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
@@ -27,7 +28,8 @@ public abstract partial class SharedVehicleSystem : EntitySystem
         SubscribeLocalEvent<RiderComponent, PullAttemptEvent>(OnRiderPull);
         SubscribeLocalEvent<VehicleComponent, RefreshMovementSpeedModifiersEvent>(OnVehicleModifier);
         SubscribeLocalEvent<VehicleComponent, ComponentStartup>(OnVehicleStartup);
-        SubscribeLocalEvent<VehicleComponent, RotateEvent>(OnVehicleRotate);
+        SubscribeLocalEvent<VehicleComponent, MoveEvent>(OnVehicleRotate);
+
     }
 
     private void OnVehicleModifier(EntityUid uid, VehicleComponent component, RefreshMovementSpeedModifiersEvent args)
@@ -45,8 +47,11 @@ public abstract partial class SharedVehicleSystem : EntitySystem
     }
 
     // TODO: Shitcode, needs to use sprites instead of actual offsets.
-    private void OnVehicleRotate(EntityUid uid, VehicleComponent component, ref RotateEvent args)
+    private void OnVehicleRotate(EntityUid uid, VehicleComponent component, ref MoveEvent args)
     {
+        if (args.NewRotation == args.OldRotation)
+            return;
+
         // This first check is just for safety
         if (!HasComp<InputMoverComponent>(uid))
         {
@@ -134,10 +139,7 @@ public abstract partial class SharedVehicleSystem : EntitySystem
     /// </summary>
     protected void UpdateDrawDepth(EntityUid uid, int drawDepth)
     {
-        if (!TryComp<AppearanceComponent>(uid, out var appearance))
-            return;
-
-        appearance.SetData(VehicleVisuals.DrawDepth, drawDepth);
+        Appearance.SetData(uid, VehicleVisuals.DrawDepth, drawDepth);
     }
 
     /// <summary>
@@ -145,10 +147,7 @@ public abstract partial class SharedVehicleSystem : EntitySystem
     /// </summary>
     protected void UpdateAutoAnimate(EntityUid uid, bool autoAnimate)
     {
-        if (!TryComp<AppearanceComponent>(uid, out var appearance))
-            return;
-
-        appearance.SetData(VehicleVisuals.AutoAnimate, autoAnimate);
+        Appearance.SetData(uid, VehicleVisuals.AutoAnimate, autoAnimate);
     }
 }
 

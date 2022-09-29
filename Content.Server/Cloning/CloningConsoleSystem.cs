@@ -7,8 +7,8 @@ using Content.Server.Mind.Components;
 using Content.Server.MachineLinking.System;
 using Content.Server.MachineLinking.Events;
 using Content.Server.UserInterface;
-using Content.Shared.MobState.Components;
 using Content.Server.MobState;
+using Content.Shared.MobState.Components;
 using Content.Server.Power.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -54,10 +54,6 @@ namespace Content.Server.Cloning.Systems
                 case UiButton.Clone:
                     if (consoleComponent.GeneticScanner != null && consoleComponent.CloningPod != null)
                         TryClone(uid, consoleComponent.CloningPod.Value, consoleComponent.GeneticScanner.Value, consoleComponent: consoleComponent);
-                    break;
-                case UiButton.Eject:
-                    if (consoleComponent.CloningPod != null)
-                        TryEject(uid, consoleComponent.CloningPod.Value, consoleComponent: consoleComponent);
                     break;
             }
             UpdateUserInterface(consoleComponent);
@@ -121,14 +117,6 @@ namespace Content.Server.Cloning.Systems
             var newState = GetUserInterfaceState(consoleComponent);
 
             _uiSystem.GetUiOrNull(consoleComponent.Owner, CloningConsoleUiKey.Key)?.SetState(newState);
-        }
-
-        public void TryEject(EntityUid uid, EntityUid clonePodUid, CloningPodComponent? cloningPod = null, CloningConsoleComponent? consoleComponent = null)
-        {
-            if (!Resolve(uid, ref consoleComponent) || !Resolve(clonePodUid, ref cloningPod))
-                return;
-
-            _cloningSystem.Eject(clonePodUid, cloningPod);
         }
 
         public void TryClone(EntityUid uid, EntityUid cloningPodUid, EntityUid scannerUid, CloningPodComponent? cloningPod = null, MedicalScannerComponent? scannerComp = null, CloningConsoleComponent? consoleComponent = null)
@@ -222,9 +210,10 @@ namespace Content.Server.Cloning.Systems
                 EntityUid? cloneBody = clonePod.BodyContainer.ContainedEntity;
 
                 clonerMindPresent = clonePod.Status == CloningPodStatus.Cloning;
-                if (cloneBody != null)
+                if (HasComp<ActiveCloningPodComponent>(consoleComponent.CloningPod))
                 {
-                    cloneBodyInfo = Identity.Name(cloneBody.Value, EntityManager);
+                    if (cloneBody != null)
+                        cloneBodyInfo = Identity.Name(cloneBody.Value, EntityManager);
                     clonerStatus = ClonerStatus.ClonerOccupied;
                 }
             }
@@ -244,5 +233,6 @@ namespace Content.Server.Cloning.Systems
                 clonerInRange
                 );
         }
+
     }
 }

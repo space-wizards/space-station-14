@@ -78,6 +78,8 @@
     damage:
       types:
         Blunt: 5
+  - type: StaticPrice
+    price: 30
 
 - type: entity
   name: beaker
@@ -104,6 +106,7 @@
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
   - type: Item
+    size: 10
     sprite: Objects/Specific/Chemistry/beaker_large.rsi
   - type: SolutionContainerManager
     solutions:
@@ -113,6 +116,8 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 6
     fillBaseName: beakerlarge
+  - type: StaticPrice
+    price: 40
 
 - type: entity
   name: cryostasis beaker
@@ -205,12 +210,15 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 1
     fillBaseName: dropper
+  - type: StaticPrice
+    price: 40
 
 - type: entity
   name: syringe
   parent: BaseItem
   description: Used to draw blood samples from mobs, or to inject them with reagents.
-  id: Syringe
+  id: BaseSyringe
+  abstract: true
   components:
   - type: Sprite
     sprite: Objects/Specific/Chemistry/syringe.rsi
@@ -240,6 +248,14 @@
     fillBaseName: syringe
 
 - type: entity
+  parent: BaseSyringe
+  id: Syringe
+  components:
+  - type: Tag
+    tags:
+    - Trash
+
+- type: entity
   name: pill
   parent: BaseItem
   id: Pill
@@ -259,6 +275,8 @@
     transferAmount: null
     eatMessage: food-swallow
     useSound: /Audio/Items/pill.ogg
+  - type: FlavorProfile
+    ignoreReagents: []
   - type: SolutionContainerManager
     solutions:
       food:
@@ -268,6 +286,8 @@
   - type: DeleteOnTrigger
   - type: Extractable
     grindableSolutionName: food
+  - type: StaticPrice
+    price: 0
 
 - type: entity
   name: pill canister

@@ -115,6 +115,8 @@
       radius: 1.5
       energy: 1.6
       color: "#c94242"
+    - type: Computer
+      board: CargoShuttleConsoleCircuitboard
 
 - type: entity
   parent: BaseComputer
@@ -548,7 +550,7 @@
     - key: enum.CargoConsoleUiKey.Shuttle
       type: CargoShuttleConsoleBoundUserInterface
   - type: Computer
-    board: SupplyComputerCircuitboard
+    board: CargoShuttleComputerCircuitboard
   - type: PointLight
     radius: 1.5
     energy: 1.6
@@ -576,7 +578,7 @@
     - key: enum.CargoConsoleUiKey.Orders
       type: CargoOrderConsoleBoundUserInterface
   - type: Computer
-    board: SupplyComputerCircuitboard
+    board: CargoRequestComputerCircuitboard
   - type: PointLight
     radius: 1.5
     energy: 1.6
@@ -609,6 +611,9 @@
     color: "#1f8c28"
   - type: SignalTransmitter
     transmissionRange: 4
+    outputs:
+      MedicalScannerSender: []
+      CloningPodSender: []
   - type: ActivatableUI
     key: enum.CloningConsoleUiKey.Key
   - type: ActivatableUIRequiresPower
@@ -616,6 +621,8 @@
     interfaces:
       - key: enum.CloningConsoleUiKey.Key
         type: CloningConsoleBoundUserInterface
+  - type: Speech
+    speechSounds: Pai
 
 - type: entity
   parent: BaseComputer
@@ -635,6 +642,7 @@
       receiveFrequencyId: SurveillanceCamera
       transmitFrequencyId: SurveillanceCamera
     - type: WiredNetworkConnection
+    - type: DeviceNetworkRequiresPower
     - type: SurveillanceCameraMonitor
     - type: ActivatableUI
       key: enum.SurveillanceCameraMonitorUiKey.Key
@@ -665,6 +673,7 @@
       transmitFrequencyId: SurveillanceCamera
     - type: WirelessNetworkConnection
       range: 200
+    - type: DeviceNetworkRequiresPower
     - type: SurveillanceCameraMonitor
     - type: ActivatableUI
       key: enum.SurveillanceCameraMonitorUiKey.Key

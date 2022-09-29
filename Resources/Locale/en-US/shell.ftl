@@ -8,6 +8,7 @@ shell-invalid-command = Invalid command.
 shell-invalid-command-specific = Invalid {$commandName} command.
 shell-cannot-run-command-from-server = You cannot run this command from the server.
 shell-only-players-can-run-this-command = Only players can run this command.
+shell-must-be-attached-to-entity = You must be attached to an entity to run this command.
 
 ## Arguments
 

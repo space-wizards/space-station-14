@@ -1,0 +1,180 @@
+- type: entity
+  id: ClosetWall
+  parent: BaseWallCloset
+  name: maintenance wall closet
+  description: It's a storage unit.
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: generic
+      state_open: generic_open
+      state_closed: generic_door
+
+- type: entity
+  id: ClosetWallEmergency
+  name: emergency wall closet
+  parent: BaseWallCloset
+  description: It's a storage unit for emergency breath masks and O2 tanks.
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: emergency
+      state_open: emergency_open
+      state_closed: emergency_door
+
+- type: entity
+  id: ClosetWallFire
+  name: fire-safety wall closet
+  parent: BaseWallCloset
+  description: It's a storage unit for fire-fighting supplies.
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: fire
+      state_open: fire_open
+      state_closed: fire_door
+
+- type: entity
+  id: ClosetWallBlue
+  parent: BaseWallCloset
+  name: blue wall closet
+  description: "A wardrobe packed with stylish blue clothing."
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: generic
+      state_open: generic_open
+      state_closed: blue_door
+
+- type: entity
+  id: ClosetWallPink
+  parent: BaseWallCloset
+  name: pink wall closet
+  description: "A wardrobe packed with fabulous pink clothing."
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: generic
+      state_open: generic_open
+      state_closed: pink_door
+
+- type: entity
+  id: ClosetWallBlack
+  parent: BaseWallCloset
+  name: black wall closet
+  description: "A wardrobe packed with stylish black clothing."
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: generic
+      state_open: generic_open
+      state_closed: black_door
+
+- type: entity
+  id: ClosetWallGreen
+  parent: BaseWallCloset
+  name: green wall closet
+  description: "A wardrobe packed with stylish green clothing."
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: generic
+      state_open: generic_open
+      state_closed: green_door
+
+- type: entity
+  id: ClosetWallOrange
+  parent: BaseWallCloset
+  name: prison wall closet
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: generic
+      state_open: generic_open
+      state_closed: orange_door
+
+- type: entity
+  id: ClosetWallYellow
+  parent: BaseWallCloset
+  name: yellow wall closet
+  description: "A wardrobe packed with stylish yellow clothing."
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: generic
+      state_open: generic_open
+      state_closed: yellow_door
+
+- type: entity
+  id: ClosetWallWhite
+  parent: BaseWallCloset
+  name: white wall closet
+  description: "A wardrobe packed with stylish white clothing."
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: generic
+      state_open: generic_open
+      state_closed: white_door
+
+- type: entity
+  id: ClosetWallGrey
+  parent: BaseWallCloset
+  name: grey wall closet
+  description: "A wardrobe packed with a tide of grey clothing."
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: generic
+      state_open: generic_open
+      state_closed: gray_door
+
+- type: entity
+  id: ClosetWallMixed
+  parent: BaseWallCloset
+  name: mixed wall closet
+  description: "A wardrobe packed with a mix of colorful clothing."
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: generic
+      state_open: generic_open
+      state_closed: mixed_door
+
+- type: entity
+  id: ClosetWallAtmospherics
+  parent: BaseWallCloset
+  name: atmospherics wall closet
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: generic
+      state_open: generic_open
+      state_closed: atmos_door
+
+- type: entity
+  id: LockerWallMedical
+  parent: BaseWallLocker
+  name: medical doctor's wall locker
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: med
+      state_open: med_open
+      state_closed: med_door
+  - type: AccessReader
+    access: [["Medical"]]

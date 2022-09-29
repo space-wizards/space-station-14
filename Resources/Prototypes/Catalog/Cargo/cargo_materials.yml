@@ -4,7 +4,7 @@
     sprite: Objects/Materials/Sheets/glass.rsi
     state: glass_3
   product: CrateMaterialGlass
-  cost: 1500
+  cost: 1000
   category: Materials
   group: market
 
@@ -14,7 +14,7 @@
     sprite: Objects/Materials/Sheets/metal.rsi
     state: steel_3
   product: CrateMaterialSteel
-  cost: 1500
+  cost: 1000
   category: Materials
   group: market
 
@@ -34,7 +34,7 @@
     sprite: Objects/Materials/Sheets/metal.rsi
     state: plasteel_3
   product: CrateMaterialPlasteel
-  cost: 6000
+  cost: 3000
   category: Materials
   group: market
 
@@ -44,7 +44,7 @@
     sprite: Objects/Materials/Sheets/other.rsi
     state: plasma_3
   product: CrateMaterialPlasma
-  cost: 5000
+  cost: 2000
   category: Materials
   group: market
 

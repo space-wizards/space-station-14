@@ -33,7 +33,7 @@ namespace Content.Client.CharacterInterface
 
             public CharacterWindow(List<ICharacterUI> windowComponents)
             {
-                Title = "Character";
+                Title = Loc.GetString("character-info-title");
 
                 var contentsVBox = new BoxContainer
                 {

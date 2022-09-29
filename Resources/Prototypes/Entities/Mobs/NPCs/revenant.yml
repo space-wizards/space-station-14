@@ -56,8 +56,8 @@
   - type: Revenant
   - type: PointLight
     color: MediumPurple
-    radius: 1.5
-    softness: 0.75
+    radius: 2
+    softness: 1
   - type: UserInterface
     interfaces:
     - key: enum.StoreUiKey.Key
@@ -70,36 +70,10 @@
     - RevenantAbilities
     currencyWhitelist:
     - StolenEssence
-
-- type: entity
-  parent: BaseItem
-  id: RevenantEctoplasm
-  name: ectoplasm
-  description: A weird bit of goo. You probably shouldn't leave it lying around like this.
-  noSpawn: true
-  components:
-  - type: Sprite
-    noRot: true
-    netsync: false
-    sprite: Mobs/Ghosts/revenant.rsi
-    layers:
-    - state: ectoplasm
-  - type: Eye
-  - type: MovementSpeedModifier
-    baseWalkSpeed: 0
-    baseSprintSpeed: 0
-  - type: Damageable
-    damageContainer: Inorganic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 5
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-  - type: DamageOnLand
-    ignoreResistances: true
-    damage:
-      types:
-        Blunt: 5
+  - type: RandomMetadata
+    nameSegments:
+    - The
+    - RevenantType
+    - of
+    - RevenantAdjective
+    - RevenantTheme

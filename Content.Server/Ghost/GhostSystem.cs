@@ -16,6 +16,7 @@ using Content.Shared.Movement.Events;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Ghost
@@ -48,7 +49,6 @@ namespace Content.Server.Ghost
 
             SubscribeNetworkEvent<GhostWarpsRequestEvent>(OnGhostWarpsRequest);
             SubscribeNetworkEvent<GhostReturnToBodyRequest>(OnGhostReturnToBodyRequest);
-            SubscribeNetworkEvent<GhostWarpToLocationRequestEvent>(OnGhostWarpToLocationRequest);
             SubscribeNetworkEvent<GhostWarpToTargetRequestEvent>(OnGhostWarpToTargetRequest);
 
             SubscribeLocalEvent<GhostComponent, BooActionEvent>(OnActionPerform);
@@ -157,7 +157,7 @@ namespace Content.Server.Ghost
                 return;
             }
 
-            var response = new GhostWarpsResponseEvent(GetLocationNames().ToList(), GetPlayerWarps(entity));
+            var response = new GhostWarpsResponseEvent(GetPlayerWarps(entity).Concat(GetLocationWarps()).ToList());
             RaiseNetworkEvent(response, args.SenderSession.ConnectedClient);
         }
 
@@ -175,24 +175,6 @@ namespace Content.Server.Ghost
             actor.PlayerSession.ContentData()!.Mind?.UnVisit();
         }
 
-        private void OnGhostWarpToLocationRequest(GhostWarpToLocationRequestEvent msg, EntitySessionEventArgs args)
-        {
-            if (args.SenderSession.AttachedEntity is not {Valid: true} attached ||
-                !EntityManager.TryGetComponent(attached, out GhostComponent? ghost))
-            {
-                Logger.Warning($"User {args.SenderSession.Name} tried to warp to {msg.Name} without being a ghost.");
-                return;
-            }
-
-            if (FindLocation(msg.Name) is { } warp)
-            {
-                EntityManager.GetComponent<TransformComponent>(ghost.Owner).Coordinates = EntityManager.GetComponent<TransformComponent>(warp.Owner).Coordinates;
-                return;
-            }
-
-            Logger.Warning($"User {args.SenderSession.Name} tried to warp to an invalid warp: {msg.Name}");
-        }
-
         private void OnGhostWarpToTargetRequest(GhostWarpToTargetRequestEvent msg, EntitySessionEventArgs args)
         {
             if (args.SenderSession.AttachedEntity is not {Valid: true} attached ||
@@ -208,7 +190,18 @@ namespace Content.Server.Ghost
                 return;
             }
 
-            _followerSystem.StartFollowingEntity(ghost.Owner, msg.Target);
+            if (TryComp(msg.Target, out WarpPointComponent? warp) && warp.Follow
+                || HasComp<MobStateComponent>(msg.Target))
+            {
+                 _followerSystem.StartFollowingEntity(ghost.Owner, msg.Target);
+                 return;
+            }
+
+            var xform = Transform(ghost.Owner);
+            xform.Coordinates = Transform(msg.Target).Coordinates;
+            xform.AttachToGridOrMap();
+            if (TryComp(attached, out PhysicsComponent? physics))
+                physics.LinearVelocity = Vector2.Zero;
         }
 
         private void DeleteEntity(EntityUid uid)
@@ -221,50 +214,33 @@ namespace Content.Server.Ghost
             EntityManager.DeleteEntity(uid);
         }
 
-        private IEnumerable<string> GetLocationNames()
+        private IEnumerable<GhostWarp> GetLocationWarps()
         {
             foreach (var warp in EntityManager.EntityQuery<WarpPointComponent>(true))
             {
                 if (warp.Location != null)
                 {
-                    yield return warp.Location;
+                    yield return new GhostWarp(warp.Owner, warp.Location, true);
                 }
             }
         }
 
-        private WarpPointComponent? FindLocation(string name)
+        private IEnumerable<GhostWarp> GetPlayerWarps(EntityUid except)
         {
-            foreach (var warp in EntityManager.EntityQuery<WarpPointComponent>(true))
-            {
-                if (warp.Location == name)
-                {
-                    return warp;
-                }
-            }
-
-            return null;
-        }
-
-        private Dictionary<EntityUid, string> GetPlayerWarps(EntityUid except)
-        {
-            var players = new Dictionary<EntityUid, string>();
-
             foreach (var player in _playerManager.Sessions)
             {
                 if (player.AttachedEntity is {Valid: true} attached)
                 {
+                    if (attached == except) continue;
+
                     TryComp<MindComponent>(attached, out var mind);
 
                     string playerInfo = $"{EntityManager.GetComponent<MetaDataComponent>(attached).EntityName} ({mind?.Mind?.CurrentJob?.Name ?? "Unknown"})";
 
                     if (TryComp<MobStateComponent>(attached, out var state) && !state.IsDead())
-                        players.Add(attached, playerInfo);
+                        yield return new GhostWarp(attached, playerInfo, false);
                 }
             }
-
-            players.Remove(except);
-
-            return players;
         }
 
         public void OnEntityStorageInsertAttempt(EntityUid uid, GhostComponent comp, InsertIntoEntityStorageAttemptEvent args)

@@ -66,14 +66,14 @@
 - Flags: MAPPING
   Commands:
   - addmap
-  - loadbp
+  - loadgrid
   - loadmap
   - pausemap
   - querymappaused
   - rmgrid
   - rmmap
   - mapinit
-  - savebp
+  - savegrid
   - savemap
   - tpgrid
   - gridtc

@@ -40,6 +40,7 @@
     sprite: Structures/Machines/juicer.rsi
     state: juicer0
     drawdepth: SmallObjects
+    snapCardinals: true
   - type: ApcPowerReceiver
     powerLoad: 300
   - type: ItemSlots

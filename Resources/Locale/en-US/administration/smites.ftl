@@ -8,9 +8,10 @@ admin-smite-vomit-organs-self = You puke, and feel rather hollow!
 admin-smite-vomit-organs-others = {CAPITALIZE($name)} vomits up their organs!
 admin-smite-remove-hands-self = Your hands fall off!
 admin-smite-remove-hands-other = {CAPITALIZE($name)}'s hands fall off!
-admin-smite-turned-ash-other = {CAPITALISE($name)} turns into a pile of ash!
+admin-smite-turned-ash-other = {CAPITALIZE($name)} turns into a pile of ash!
 admin-smite-stomach-removal-self = Your stomach feels hollow...
 admin-smite-run-walk-swap-prompt = You have to press shift to run!
+admin-smite-super-speed-prompt = You move at mach 0.8!
 admin-smite-lung-removal-self = You can't breath!
 
 
@@ -47,6 +48,7 @@ admin-smite-maid-description = Forcibly converts them into a janitorial cat maid
 admin-smite-zoom-in-description = Zooms in their view so that they can no longer see their surroundings.
 admin-smite-flip-eye-description = Flips their view, effectively reversing their controls and making the game annoying to play.
 admin-smite-run-walk-swap-description = Swaps running and walking, forcing them to hold shift to move fast.
+admin-smite-super-speed-description = Makes them really fast, causing them to turn into gibs when hitting a wall.
 admin-smite-stomach-removal-description = Removes their stomach, rendering them unable to eat.
 admin-smite-speak-backwards-description = Forces them to speak backwards, so they can't call for help.
 admin-smite-lung-removal-description = Removes their lungs, drowning them.

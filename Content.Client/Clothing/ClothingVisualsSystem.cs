@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Client.Inventory;
-using Content.Shared.CharacterAppearance;
 using Content.Shared.Clothing;
 using Content.Shared.Clothing.Components;
+using Content.Shared.Humanoid;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
@@ -150,17 +150,6 @@ public sealed class ClothingVisualsSystem : EntitySystem
 
     private void OnGotUnequipped(EntityUid uid, ClothingComponent component, GotUnequippedEvent args)
     {
-        if (component.InSlot == "head"
-            && _tagSystem.HasTag(uid, "HidesHair")
-            && TryComp(args.Equipee, out SpriteComponent? sprite))
-        {
-            if (sprite.LayerMapTryGet(HumanoidVisualLayers.FacialHair, out var facial))
-                sprite[facial].Visible = true;
-
-            if (sprite.LayerMapTryGet(HumanoidVisualLayers.Hair, out var hair))
-                sprite[hair].Visible = true;
-        }
-
         component.InSlot = null;
     }
 
@@ -197,17 +186,6 @@ public sealed class ClothingVisualsSystem : EntitySystem
     private void OnGotEquipped(EntityUid uid, ClothingComponent component, GotEquippedEvent args)
     {
         component.InSlot = args.Slot;
-
-        if (args.Slot == "head"
-            && _tagSystem.HasTag(uid, "HidesHair")
-            && TryComp(args.Equipee, out SpriteComponent? sprite))
-        {
-            if (sprite.LayerMapTryGet(HumanoidVisualLayers.FacialHair, out var facial))
-                sprite[facial].Visible = false;
-
-            if (sprite.LayerMapTryGet(HumanoidVisualLayers.Hair, out var hair))
-                sprite[hair].Visible = false;
-        }
 
         RenderEquipment(args.Equipee, uid, args.Slot, clothingComponent: component);
     }

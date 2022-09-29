@@ -57,6 +57,13 @@
   event: !type:ToggleCombatActionEvent
 
 - type: instantAction
+  id: ChangeVoiceMask
+  name: voice-mask-name-change-set
+  icon: Interface/Actions/scream.png # somebody else can figure out a better icon for this
+  description: voice-mask-name-change-set-description
+  serverEvent: !type:VoiceMaskSetNameEvent
+
+- type: instantAction
   id: VendingThrow
   name: vending-machine-action-name
   description: vending-machine-action-description
@@ -70,6 +77,13 @@
   icon: Objects/Weapons/Melee/shields.rsi/teleriot-icon.png
   iconOn: Objects/Weapons/Melee/shields.rsi/teleriot-on.png
   event: !type:ToggleActionEvent
+
+- type: instantAction
+  id: ClearNetworkLinkOverlays
+  name: network-configurator-clear-network-link-overlays
+  description: network-configurator-clear-network-link-overlays-desc
+  icon: Objects/Tools/multitool.rsi/icon.png
+  event: !type:ClearAllOverlaysEvent
 
 - type: instantAction
   id: AnimalLayEgg

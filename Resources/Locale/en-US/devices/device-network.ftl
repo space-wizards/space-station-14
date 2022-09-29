@@ -19,3 +19,8 @@ device-frequency-prototype-name-surveillance-camera-entertainment = Entertainmen
 # prefixes for randomly generated device addresses
 device-address-prefix-vent = Vnt-
 device-address-prefix-scrubber = Scr-
+device-address-prefix-sensor = Sns-
+device-address-prefix-fire-alarm = Fir-
+device-address-prefix-air-alarm = Air-
+
+device-address-examine-message = The device's address is {$address}.

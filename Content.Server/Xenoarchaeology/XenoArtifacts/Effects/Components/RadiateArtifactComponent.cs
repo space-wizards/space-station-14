@@ -1,4 +1,3 @@
-using Content.Server.Radiation;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -12,7 +11,6 @@ public sealed class RadiateArtifactComponent : Component
 {
     /// <summary>
     ///     Radiation pulse prototype to spawn.
-    ///     Should has <see cref="RadiationPulseComponent"/>.
     /// </summary>
     [DataField("pulsePrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string PulsePrototype = "RadiationPulse";

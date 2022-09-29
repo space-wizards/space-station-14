@@ -8,7 +8,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Network;
 namespace Content.IntegrationTests.Tests.Lobby;
 
-public class ServerReloginTest
+public sealed class ServerReloginTest
 {
     [Test]
     public async Task Relogin()

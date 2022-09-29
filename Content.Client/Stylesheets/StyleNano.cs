@@ -405,6 +405,13 @@ namespace Content.Client.Stylesheets
             itemListItemBackgroundTransparent.SetContentMarginOverride(StyleBox.Margin.Vertical, 2);
             itemListItemBackgroundTransparent.SetContentMarginOverride(StyleBox.Margin.Horizontal, 4);
 
+            var squareTex = resCache.GetTexture("/Textures/Interface/Nano/square.png");
+            var listContainerButton = new StyleBoxTexture
+            {
+                Texture = squareTex,
+                ContentMarginLeftOverride = 10
+            };
+
             // NanoHeading
             var nanoHeadingTex = resCache.GetTexture("/Textures/Interface/Nano/nanoheading.svg.96dpi.png");
             var nanoHeadingBox = new StyleBoxTexture
@@ -716,24 +723,44 @@ namespace Content.Client.Stylesheets
                     .Prop(TextureRect.StylePropertyTexture, directionIconHereTex),
 
                 // Thin buttons (No padding nor vertical margin)
-                Element<EntityContainerButton>().Class(StyleClassStorageButton)
+                Element<ContainerButton>().Class(StyleClassStorageButton)
                     .Prop(ContainerButton.StylePropertyStyleBox, buttonStorage),
 
-                Element<EntityContainerButton>().Class(StyleClassStorageButton)
+                Element<ContainerButton>().Class(StyleClassStorageButton)
                     .Pseudo(ContainerButton.StylePseudoClassNormal)
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorDefault),
 
-                Element<EntityContainerButton>().Class(StyleClassStorageButton)
+                Element<ContainerButton>().Class(StyleClassStorageButton)
                     .Pseudo(ContainerButton.StylePseudoClassHover)
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorHovered),
 
-                Element<EntityContainerButton>().Class(StyleClassStorageButton)
+                Element<ContainerButton>().Class(StyleClassStorageButton)
                     .Pseudo(ContainerButton.StylePseudoClassPressed)
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorPressed),
 
-                Element<EntityContainerButton>().Class(StyleClassStorageButton)
+                Element<ContainerButton>().Class(StyleClassStorageButton)
                     .Pseudo(ContainerButton.StylePseudoClassDisabled)
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorDisabled),
+
+                // ListContainer
+                Element<ContainerButton>().Class(ListContainer.StyleClassListContainerButton)
+                    .Prop(ContainerButton.StylePropertyStyleBox, listContainerButton),
+
+                Element<ContainerButton>().Class(ListContainer.StyleClassListContainerButton)
+                    .Pseudo(ContainerButton.StylePseudoClassNormal)
+                    .Prop(Control.StylePropertyModulateSelf, new Color(55, 55, 68)),
+
+                Element<ContainerButton>().Class(ListContainer.StyleClassListContainerButton)
+                    .Pseudo(ContainerButton.StylePseudoClassHover)
+                    .Prop(Control.StylePropertyModulateSelf, new Color(75, 75, 86)),
+
+                Element<ContainerButton>().Class(ListContainer.StyleClassListContainerButton)
+                    .Pseudo(ContainerButton.StylePseudoClassPressed)
+                    .Prop(Control.StylePropertyModulateSelf, new Color(75, 75, 86)),
+
+                Element<ContainerButton>().Class(ListContainer.StyleClassListContainerButton)
+                    .Pseudo(ContainerButton.StylePseudoClassDisabled)
+                    .Prop(Control.StylePropertyModulateSelf, new Color(10, 10, 12)),
 
                 // action slot hotbar buttons
                 new StyleRule(new SelectorElement(typeof(ActionSlot), null, null, new[] {ContainerButton.StylePseudoClassNormal}), new[]

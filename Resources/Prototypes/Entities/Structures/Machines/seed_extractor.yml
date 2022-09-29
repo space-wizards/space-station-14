@@ -6,6 +6,7 @@
   components:
   - type: Sprite
     sprite: Structures/Machines/seed_extractor.rsi
+    snapCardinals: true
     layers:
     - state: seedextractor-off
     - state: seedextractor-unlit

@@ -16,8 +16,9 @@
         prob: 0.7
       - id: ClothingHeadHatQMsoft
         prob: 0.8
-      - id: SupplyRequestComputerCircuitboard
-      - id: SupplyComputerCircuitboard
+      - id: CargoRequestComputerCircuitboard
+      - id: CargoShuttleComputerCircuitboard
+      - id: CargoShuttleConsoleCircuitboard
       - id: CigPackGreen
         prob: 0.50
       - id: DoorRemoteCargo
@@ -132,6 +133,8 @@
       - id: DoorRemoteMedical
       - id: RubberStampCMO
       - id: MedicalTechFabCircuitboard
+      - id: MaterialBiomass
+        amount: 3
 
 - type: entity
   id: LockerResearchDirectorFilled
