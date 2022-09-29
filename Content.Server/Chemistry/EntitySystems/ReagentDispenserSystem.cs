@@ -45,7 +45,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void UpdateUiState(ReagentDispenserComponent reagentDispenser)
         {
-            var outputContainer = _itemSlotsSystem.GetItem(reagentDispenser.Owner, SharedReagentDispenser.OutputSlotName);
+            var outputContainer = _itemSlotsSystem.GetItemOrNull(reagentDispenser.Owner, SharedReagentDispenser.OutputSlotName);
             var outputContainerInfo = BuildOutputContainerInfo(outputContainer);
 
             var inventory = GetInventory(reagentDispenser);
@@ -111,7 +111,7 @@ namespace Content.Server.Chemistry.EntitySystems
             if (!GetInventory(reagentDispenser).Contains(message.ReagentId))
                 return;
 
-            var outputContainer = _itemSlotsSystem.GetItem(reagentDispenser.Owner, SharedReagentDispenser.OutputSlotName);
+            var outputContainer = _itemSlotsSystem.GetItemOrNull(reagentDispenser.Owner, SharedReagentDispenser.OutputSlotName);
             if (outputContainer is not {Valid: true} || !_solutionContainerSystem.TryGetFitsInDispenser(outputContainer.Value, out var solution))
                 return;
 
@@ -128,7 +128,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void OnClearContainerSolutionMessage(EntityUid uid, ReagentDispenserComponent reagentDispenser, ReagentDispenserClearContainerSolutionMessage message)
         {
-            var outputContainer = _itemSlotsSystem.GetItem(reagentDispenser.Owner, SharedReagentDispenser.OutputSlotName);
+            var outputContainer = _itemSlotsSystem.GetItemOrNull(reagentDispenser.Owner, SharedReagentDispenser.OutputSlotName);
             if (outputContainer is not {Valid: true} || !_solutionContainerSystem.TryGetFitsInDispenser(outputContainer.Value, out var solution))
                 return;
 

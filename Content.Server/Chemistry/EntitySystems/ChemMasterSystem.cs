@@ -59,8 +59,8 @@ namespace Content.Server.Chemistry.EntitySystems
         {
             if (!_solutionContainerSystem.TryGetSolution(chemMaster.Owner, SharedChemMaster.BufferSolutionName, out var bufferSolution))
                 return;
-            var inputContainer = _itemSlotsSystem.GetItem(chemMaster.Owner, SharedChemMaster.InputSlotName);
-            var outputContainer = _itemSlotsSystem.GetItem(chemMaster.Owner, SharedChemMaster.OutputSlotName);
+            var inputContainer = _itemSlotsSystem.GetItemOrNull(chemMaster.Owner, SharedChemMaster.InputSlotName);
+            var outputContainer = _itemSlotsSystem.GetItemOrNull(chemMaster.Owner, SharedChemMaster.OutputSlotName);
 
             var bufferReagents = bufferSolution.Contents;
             var bufferCurrentVolume = bufferSolution.CurrentVolume;
@@ -118,7 +118,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void TransferReagents(ChemMasterComponent chemMaster, string reagentId, FixedPoint2 amount, bool fromBuffer)
         {
-            var container = _itemSlotsSystem.GetItem(chemMaster.Owner, SharedChemMaster.InputSlotName);
+            var container = _itemSlotsSystem.GetItemOrNull(chemMaster.Owner, SharedChemMaster.InputSlotName);
             if (container is null ||
                 !_solutionContainerSystem.TryGetFitsInDispenser(container.Value, out var containerSolution) ||
                 !_solutionContainerSystem.TryGetSolution(chemMaster.Owner, SharedChemMaster.BufferSolutionName, out var bufferSolution))
@@ -154,7 +154,7 @@ namespace Content.Server.Chemistry.EntitySystems
             }
             else
             {
-                var container = _itemSlotsSystem.GetItem(chemMaster.Owner, SharedChemMaster.InputSlotName);
+                var container = _itemSlotsSystem.GetItemOrNull(chemMaster.Owner, SharedChemMaster.InputSlotName);
                 if (container is not null &&
                     _solutionContainerSystem.TryGetFitsInDispenser(container.Value, out var containerSolution))
                 {
@@ -170,7 +170,7 @@ namespace Content.Server.Chemistry.EntitySystems
         private void OnCreatePillsMessage(EntityUid uid, ChemMasterComponent chemMaster, ChemMasterCreatePillsMessage message)
         {
             var user = message.Session.AttachedEntity;
-            var maybeContainer = _itemSlotsSystem.GetItem(chemMaster.Owner, SharedChemMaster.OutputSlotName);
+            var maybeContainer = _itemSlotsSystem.GetItemOrNull(chemMaster.Owner, SharedChemMaster.OutputSlotName);
             if (maybeContainer is not { Valid: true } container
                 || !TryComp(container, out ServerStorageComponent? storage)
                 || storage.Storage is null)
@@ -215,7 +215,7 @@ namespace Content.Server.Chemistry.EntitySystems
             EntityUid uid, ChemMasterComponent chemMaster, ChemMasterOutputToBottleMessage message)
         {
             var user = message.Session.AttachedEntity;
-            var maybeContainer = _itemSlotsSystem.GetItem(chemMaster.Owner, SharedChemMaster.OutputSlotName);
+            var maybeContainer = _itemSlotsSystem.GetItemOrNull(chemMaster.Owner, SharedChemMaster.OutputSlotName);
             if (maybeContainer is not { Valid: true } container
                 || !_solutionContainerSystem.TryGetSolution(
                     container, SharedChemMaster.BottleSolutionName, out var solution))
