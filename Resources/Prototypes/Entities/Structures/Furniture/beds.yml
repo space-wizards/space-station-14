@@ -109,8 +109,8 @@
             min: 1
             max: 2
   - type: MedicalResearchBed
-  #- type: ActivatableUI <-- remove until this can be fixed (may just need an alternative activation component)
-  #  key: enum.MedicalResearchBedUiKey.Key
+    healthGoal: 150 #health to heal before disk print
+    researchDiskReward:  MedTechResultsDisk
   - type: UserInterface
     interfaces:
     - key: enum.MedicalResearchBedUiKey.Key

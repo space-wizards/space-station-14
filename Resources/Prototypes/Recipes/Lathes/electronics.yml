@@ -415,6 +415,16 @@
     Glass: 900
 
 - type: latheRecipe
+  id: MedicalResearchBedCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: MedicalResearchBedCircuitboard
+  completetime: 4
+  materials:
+     Steel: 100
+     Glass: 900
+    Glass: 900
+
+- type: latheRecipe
   id: SeedExtractorMachineCircuitboard
   icon: Objects/Misc/module.rsi/id_mod.png
   result: SeedExtractorMachineCircuitboard

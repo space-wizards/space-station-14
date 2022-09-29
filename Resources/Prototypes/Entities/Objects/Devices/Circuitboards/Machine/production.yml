@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: AutolatheMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: autolathe machine board
@@ -571,3 +571,20 @@
     materialRequirements:
       Steel: 10
       Plasma: 10
+
+- type: entity
+  id: MedicalResearchBedCircuitboard
+  parent: BaseMachineCircuitboard
+  name: medical research bed machine board
+  components:
+    - type: Sprite
+      state: medical
+    - type: MachineBoard
+      prototype: MedicalResearchBed
+      requirements:
+        ScanningModule: 1
+        Laser: 1
+        Capacitor: 1
+      materialRequirements:
+        Glass: 1
+        Cable: 1

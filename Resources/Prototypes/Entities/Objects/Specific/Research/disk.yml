@@ -59,7 +59,7 @@
 - type: entity
   parent: ResearchDiskBase
   id: MedTechResultsDisk
-  name: chemical analysis machine results disk
+  name: medical research bed results disk
   description: The results from the research medical bed. Use on the R&D server to unlock more technologies.
   components:
   - type: ResearchDisk

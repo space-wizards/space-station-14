@@ -116,7 +116,7 @@
 - type: technology
   name: Analysis mop bucket field test results
   id: CleaningTechResults
-  description: A breakdown of the various liquid distributed in to the analysis mop bucket. The findings may help unlock the secrets of efficient cleaning technology!
+  description: A breakdown of the various liquid distributed in to the analysis mop bucket. #The findings may help unlock the secrets of efficient cleaning technology! <--longer descriptions are not supported...
   requiredTechnologies:
    - CleaningTech
   icon:
@@ -161,9 +161,9 @@
 - type: technology
   name: Basic Medical Technology
   id: MedicalTech
-  description: The underlying technologies for basic modern medical practice - from healing minor wounds to protecting against contagious diseases.
+  description: The underlying technologies for basic modern medical practice.
   icon:
-    sprite: Objects/Specific/Janitorial/healthanalyzer.rsi
+    sprite: Objects/Specific/Medical/healthanalyzer.rsi
     state: icon
   requiredPoints: 500
   unlockedRecipes:
@@ -178,13 +178,13 @@
     - Syringe
     - PillCanister
     - ChemistryEmptyBottle01
-    #- MedicalResearchBed <- a medbed with a monitor interface (either inbuilt or linkable)
-    #- ChemicalAnalyserBoard
+    - MedicalResearchBedCircuitboard
+    #- ChemicalAnalysisCircuitboard
     
 - type: technology
   name: Chemical analysis laboratory results
   id: ChemTechResults
-  description: The molecular analysis of several medicinal compounds that may assist in developing advanced chemical production and anti-viral analysis.
+  description: The molecular analysis of several medicinal compounds. # that may assist in developing advanced chemical production and anti-viral analysis.
   requiredTechnologies:
    - MedicalTech
   icon:
@@ -195,7 +195,7 @@
 - type: technology
   name: Health analysis laboratory results
   id: MedTechResults
-  description: The analysis of bodily function under various stress levels and the healing thereof is essential for the development of advanced life support systems.
+  description: The analysis of bodily function under various stress levels #and the healing thereof. # is essential for the development of advanced life support systems.
   requiredTechnologies:
    - MedicalTech
   icon:
@@ -206,7 +206,7 @@
 - type: technology
   name: Advanced chemical production
   id: AdvancedChemTech
-  description: Advanced chemical production enabled by the development of advanced dispenser and mixture processing machinery.
+  description: Advanced chemical production #enabled by the development of advanced dispenser and mixture processing machinery.
   requiredTechnologies:
    - ChemTechResults
   icon:
@@ -224,11 +224,11 @@
 - type: technology
   name: Advanced viral analysis
   id: AdvancedViralTech
-  description: The development of viral analysis machinery that can be used for developing cures and vaccinations.
+  description: viral analysis machinery used for developing cures and vaccinations. #The development of 
   requiredTechnologies:
    - ChemTechResults
   icon:
-    sprite: Structures/dispensers.rsi
+    sprite: Structures/Machines/diagnoser.rsi
     state: industrial-working
   requiredPoints: 1000
   unlockedRecipes:
@@ -238,7 +238,7 @@
 - type: technology
   name: Exploratory cloning technology
   id: CloningTech
-  description: Exploration of cloning technology - essential tools for cloning experimentation... primarily involving monkeys...
+  description: Exploration of cloning technology #- essential tools for cloning experimentation... primarily involving monkeys...
   requiredTechnologies:
    - MedTechResults
   icon:
@@ -271,9 +271,9 @@
     - Hemostat
 
 - type: technology
-  name: Advanced Health Monitoring Technology
+  name: Advanced health monitoring technology
   id: AdvancedHealthMonitor
-  description: Helpful monitoring systems that can be used to help assist those in need of medical attention.
+  description: Helpful health monitoring systems.
   icon:
     sprite: Objects/Specific/Medical/handheldcrewmonitor.rsi
     state: icon

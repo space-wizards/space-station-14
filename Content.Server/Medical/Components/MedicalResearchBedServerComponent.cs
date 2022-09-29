@@ -10,11 +10,11 @@ namespace Content.Server.Medical.Components
         /// <summary>
         /// The health changes this server has recorded.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
 
         public bool bedChange = true;
-
+        public bool diskPrinted = false;
         public FixedPoint2 lastHealthRecording = 0f;
+        [ViewVariables(VVAccess.ReadWrite)]
         public FixedPoint2 healthChanges = 0f;
     }
 }
