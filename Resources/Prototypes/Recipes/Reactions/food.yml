@@ -40,6 +40,35 @@
     - !type:CreateEntityReactionEffect
       entity: FoodCakeBatter
 
+- type: reaction
+  id: CreateButter
+  impact: Low
+  quantized: true
+  reactants:
+    Milk:
+      amount: 30
+    TableSalt:
+      amount: 5
+      catalyst: true
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: FoodButter
+
+- type: reaction
+  id: CreatePieDough
+  impact: Low
+  quantized: true
+  reactants:
+    Flour:
+      amount: 15
+    Egg:
+      amount: 12
+    TableSalt:
+      amount: 5
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: FoodDoughPie
+
 # TG has a cake recipe that uses soy milk instead of eggs.
 # but afaik it spawns the exact same cake batter entity. 
 # Maybe change this if you want to do allergies or something
@@ -93,3 +122,18 @@
       amount: 5
   products:
     Hotsauce: 15
+
+- type: reaction
+  id: CreateMeatball
+  impact: Low
+  quantized: true
+  reactants:
+    UncookedAnimalProteins:
+      amount: 5
+    Flour:
+      amount: 5
+    Egg:
+      amount: 6
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: FoodMeatMeatball

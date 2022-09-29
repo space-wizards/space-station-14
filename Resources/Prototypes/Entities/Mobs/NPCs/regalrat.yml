@@ -6,15 +6,15 @@
   components:
   - type: CombatMode
   - type: MovementSpeedModifier
-    baseWalkSpeed : 3.75
-    baseSprintSpeed : 3.75
+    baseWalkSpeed : 3.00
+    baseSprintSpeed : 5.00
   - type: InputMover
   - type: MobMover
   - type: Reactive
     groups:
       Flammable: [Touch]
       Extinguish: [Touch]
-  - type: AiFactionTag
+  - type: Faction
     factions:
     - SimpleHostile
   - type: Sprite
@@ -32,15 +32,16 @@
         radius: 0.3
       mass: 65
       mask:
-      - MobMask
+      - SmallMobMask
       layer:
-      - MobLayer
+      - SmallMobLayer
   - type: MobState
     thresholds:
       0: Alive
       150: Critical
       200: Dead
   - type: MeleeWeapon
+    hidden: true
     range: 1
     arcwidth: 0
     arc: claw
@@ -92,10 +93,6 @@
       event: !type:RatKingDomainActionEvent
     hungerPerDomainUse: 50
   - type: MobsterAccent
-  - type: Access #he's so baller he gets his own access. NT got nothing on him
-    tags:
-    - Maintenance
-    - Service
   - type: Butcherable
     spawned:
     - id: ClothingHeadHatFancyCrown #how did that get there?
@@ -113,6 +110,10 @@
     - TongueTwister
   - type: MobPrice
     price: 2500 # rat wealth
+  - type: RandomMetadata
+    nameSegments:
+    - RegalRatNameKingdom
+    - RegalRatNameTitle
 
 - type: entity
   id: MobRatKingBuff
@@ -132,6 +133,7 @@
       300: Critical
       350: Dead
   - type: MeleeWeapon
+    hidden: true
     range: 1.5
     arcwidth: 0
     arc: fist
@@ -171,7 +173,7 @@
     groups:
       Flammable: [Touch]
       Extinguish: [Touch]
-  - type: AiFactionTag
+  - type: Faction
     factions:
     - SimpleHostile
   - type: Sprite
@@ -195,9 +197,10 @@
   - type: MobState
     thresholds:
       0: Alive
-      30: Critical
+      40: Critical
       60: Dead
   - type: MeleeWeapon
+    hidden: true
     range: 1
     arcwidth: 0
     arc: claw

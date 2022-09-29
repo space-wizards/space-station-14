@@ -57,6 +57,13 @@
   event: !type:ToggleCombatActionEvent
 
 - type: instantAction
+  id: ChangeVoiceMask
+  name: voice-mask-name-change-set
+  icon: Interface/Actions/scream.png # somebody else can figure out a better icon for this
+  description: voice-mask-name-change-set-description
+  serverEvent: !type:VoiceMaskSetNameEvent
+
+- type: instantAction
   id: VendingThrow
   name: vending-machine-action-name
   description: vending-machine-action-description

@@ -7,8 +7,8 @@
   - type: InputMover
   - type: MobMover
   - type: Loadout
-    prototype: PassengerGear
-  - type: AiFactionTag
+    prototypes: [PassengerGear]
+  - type: Faction
     factions:
     - NanoTrasen
 
@@ -18,7 +18,7 @@
   id: MobSpirate
   description: Yarr!
   components:
-  - type: AiFactionTag
+  - type: Faction
     factions:
       - Syndicate
   - type: InputMover
@@ -34,7 +34,7 @@
   components:
   - type: RandomHumanoidAppearance
   - type: Loadout
-    prototype: CBURNGear
+    prototypes: [CBURNGear]
   - type: GhostTakeoverAvailable
     makeSentient: false
     name: CBURN Agent

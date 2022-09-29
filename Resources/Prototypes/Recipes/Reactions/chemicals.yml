@@ -339,3 +339,13 @@
       amount: 1
   products:
     Pax: 3
+
+- type: reaction
+  id: Charcoal
+  reactants:
+    Carbon:
+      amount: 1
+    Ash:
+      amount: 1
+  products:
+    Charcoal: 1

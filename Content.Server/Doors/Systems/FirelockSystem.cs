@@ -156,7 +156,11 @@ namespace Content.Server.Doors.Systems
 
         private void OnAtmosAlarm(EntityUid uid, FirelockComponent component, AtmosAlarmEvent args)
         {
-            if (!TryComp<DoorComponent>(uid, out var doorComponent)) return;
+            if (!this.IsPowered(uid, EntityManager))
+                return;
+
+            if (!TryComp<DoorComponent>(uid, out var doorComponent))
+                return;
 
             if (args.AlarmType == AtmosAlarmType.Normal || args.AlarmType == AtmosAlarmType.Warning)
             {

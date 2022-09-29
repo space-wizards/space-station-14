@@ -69,6 +69,8 @@
   - type: Actions
   - type: SentienceTarget
     flavorKind: mechanical
+  - type: StaticPrice
+    price: 200
 
 - type: entity
   parent: VendingMachine
@@ -243,6 +245,7 @@
     denyState: deny-unshaded
     screenState: screen
     ejectDelay: 5
+    soundVend: /Audio/Machines/machine_vend_hot_drink.ogg
   - type: Advertise
     pack: HotDrinksMachineAds
   - type: Speech

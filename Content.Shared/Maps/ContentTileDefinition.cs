@@ -14,6 +14,7 @@ namespace Content.Shared.Maps
     public sealed class ContentTileDefinition : IPrototype, IInheritingPrototype, ITileDefinition
     {
         public const string SpaceID = "Space";
+        private string _name = string.Empty;
 
         [ParentDataFieldAttribute(typeof(AbstractPrototypeIdArraySerializer<ContentTileDefinition>))]
         public string[]? Parents { get; private set; }
@@ -26,7 +27,12 @@ namespace Content.Shared.Maps
 
         public ushort TileId { get; private set; }
 
-        [DataField("name")] public string Name { get; } = string.Empty;
+        [DataField("name")]
+        public string Name
+        {
+            get => _name;
+            private set => _name = Loc.GetString(value);
+        }
 
         [DataField("sprite")] public ResourcePath? Sprite { get; }
 

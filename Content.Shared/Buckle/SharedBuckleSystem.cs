@@ -5,6 +5,7 @@ using Content.Shared.Movement.Events;
 using Content.Shared.Standing;
 using Content.Shared.Throwing;
 using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Physics.Events;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Buckle
@@ -16,7 +17,7 @@ namespace Content.Shared.Buckle
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<SharedStrapComponent, RotateEvent>(OnStrapRotate);
+            SubscribeLocalEvent<SharedStrapComponent, MoveEvent>(OnStrapRotate);
 
             SubscribeLocalEvent<SharedBuckleComponent, PreventCollideEvent>(PreventCollision);
             SubscribeLocalEvent<SharedBuckleComponent, DownAttemptEvent>(HandleDown);
@@ -26,12 +27,13 @@ namespace Content.Shared.Buckle
             SubscribeLocalEvent<SharedBuckleComponent, ChangeDirectionAttemptEvent>(OnBuckleChangeDirectionAttempt);
         }
 
-        private void OnStrapRotate(EntityUid uid, SharedStrapComponent component, ref RotateEvent args)
+        private void OnStrapRotate(EntityUid uid, SharedStrapComponent component, ref MoveEvent args)
         {
             // TODO: This looks dirty af.
             // On rotation of a strap, reattach all buckled entities.
             // This fixes buckle offsets and draw depths.
             // This is mega cursed. Please somebody save me from Mr Buckle's wild ride.
+            // Oh god I'm back here again. Send help.
 
             // Consider a chair that has a player strapped to it. Then the client receives a new server state, showing
             // that the player entity has moved elsewhere, and the chair has rotated. If the client applies the player
@@ -42,7 +44,7 @@ namespace Content.Shared.Buckle
             // One option is to just never trigger re-buckles during state application.
             // another is to.. just not do this? Like wtf is this code. But I CBF with buckle atm.
 
-            if (GameTiming.ApplyingState)
+            if (GameTiming.ApplyingState || args.NewRotation == args.OldRotation)
                 return;
 
             foreach (var buckledEntity in component.BuckledEntities)
@@ -105,13 +107,13 @@ namespace Content.Shared.Buckle
             args.Cancel();
         }
 
-        private void PreventCollision(EntityUid uid, SharedBuckleComponent component, PreventCollideEvent args)
+        private void PreventCollision(EntityUid uid, SharedBuckleComponent component, ref PreventCollideEvent args)
         {
             if (args.BodyB.Owner != component.LastEntityBuckledTo) return;
 
             if (component.Buckled || component.DontCollide)
             {
-                args.Cancel();
+                args.Cancelled = true;
             }
         }
     }

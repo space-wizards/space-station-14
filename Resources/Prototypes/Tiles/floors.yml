@@ -1,6 +1,6 @@
 - type: tile
   id: FloorSteel
-  name: steel floor
+  name: tiles-steel-floor
   sprite: /Textures/Tiles/steel.png
   variants: 4
   placementVariants: [0, 1, 2, 3]
@@ -17,7 +17,7 @@
 
 - type: tile
   id: FloorWood
-  name: wood
+  name: tiles-wood
   sprite: /Textures/Tiles/wood.png
   variants: 4
   placementVariants: [0, 1, 2, 3]
@@ -36,7 +36,7 @@
 
 - type: tile
   id: FloorWhite
-  name: white floor
+  name: tiles-white-floor
   sprite: /Textures/Tiles/white.png
   variants: 4
   placementVariants: [0, 1, 2, 3]
@@ -53,7 +53,7 @@
 
 - type: tile
   id: FloorDark
-  name: dark floor
+  name: tiles-dark-floor
   sprite: /Textures/Tiles/dark.png
   variants: 4
   placementVariants: [ 0, 1, 2, 3 ]
@@ -70,7 +70,7 @@
 
 - type: tile
   id: FloorTechMaint
-  name: techmaint floor
+  name: tiles-techmaint-floor
   sprite: /Textures/Tiles/tech_maint.png
   baseTurfs:
   - Plating
@@ -85,7 +85,7 @@
 
 - type: tile
   id: FloorReinforced
-  name: reinforced floor
+  name: tiles-reinforced-floor
   sprite: /Textures/Tiles/reinforced.png
   baseTurfs:
   - Plating
@@ -100,7 +100,7 @@
 
 - type: tile
   id: FloorMono
-  name: mono floor
+  name: tiles-mono-floor
   sprite: /Textures/Tiles/mono.png
   baseTurfs:
   - Plating
@@ -115,7 +115,7 @@
 
 - type: tile
   id: FloorLino
-  name: linoleum floor
+  name: tiles-linoleum-floor
   sprite: /Textures/Tiles/lino.png
   baseTurfs:
   - Plating
@@ -130,7 +130,7 @@
 
 - type: tile
   id: FloorSteelDirty
-  name: dirty steel floor
+  name: tiles-dirty-steel-floor
   sprite: /Textures/Tiles/steel_dirty.png
   baseTurfs:
   - Plating
@@ -145,7 +145,7 @@
 
 - type: tile
   id: FloorElevatorShaft
-  name: elevator shaft
+  name: tiles-elevator-shaft
   sprite: /Textures/Tiles/elevator_shaft.png
   baseTurfs:
   - Plating
@@ -160,7 +160,7 @@
 
 - type: tile
   id: FloorMetalDiamond
-  name: diamond plate floor
+  name: tiles-diamond-plate-floor
   sprite: /Textures/Tiles/metaldiamond.png
   baseTurfs:
   - Plating
@@ -175,7 +175,7 @@
 
 - type: tile
   id: FloorRockVault
-  name: rock floor
+  name: tiles-rock-floor
   sprite: /Textures/Tiles/rock_vault.png
   baseTurfs:
   - Plating
@@ -190,7 +190,7 @@
 
 - type: tile
   id: FloorBlue
-  name: blue tile
+  name: tiles-blue-tile
   sprite: /Textures/Tiles/blue.png
   baseTurfs:
   - Plating
@@ -206,7 +206,7 @@
 # Departamental
 - type: tile
   id: FloorFreezer
-  name: freezer
+  name: tiles-freezer
   sprite: /Textures/Tiles/freezer.png
   baseTurfs:
   - Plating
@@ -221,7 +221,7 @@
 
 - type: tile
   id: FloorShowroom
-  name: showroom floor
+  name: tiles-showroom-floor
   sprite: /Textures/Tiles/showroom.png
   baseTurfs:
   - Plating
@@ -236,7 +236,7 @@
 
 - type: tile
   id: FloorHydro
-  name: hydro floor
+  name: tiles-hydro-floor
   sprite: /Textures/Tiles/hydro.png
   baseTurfs:
   - Plating
@@ -251,7 +251,7 @@
 
 - type: tile
   id: FloorBar
-  name: bar floor
+  name: tiles-bar-floor
   sprite: /Textures/Tiles/bar.png
   variants: 4
   placementVariants: [ 0, 1, 2, 3 ]
@@ -268,7 +268,7 @@
 
 - type: tile
   id: FloorClown
-  name: clown floor
+  name: tiles-clown-floor
   sprite: /Textures/Tiles/clown.png
   baseTurfs:
   - Plating
@@ -283,7 +283,7 @@
 
 - type: tile
   id: FloorMime
-  name: mime floor
+  name: tiles-mime-floor
   sprite: /Textures/Tiles/mime.png
   baseTurfs:
   - Plating
@@ -298,7 +298,7 @@
 
 - type: tile
   id: FloorKitchen
-  name: kitchen floor
+  name: tiles-kitchen-floor
   sprite: /Textures/Tiles/kitchen.png
   baseTurfs:
   - Plating
@@ -313,7 +313,7 @@
 
 - type: tile
   id: FloorLaundry
-  name: laundry floor
+  name: tiles-laundry-floor
   sprite: /Textures/Tiles/laundry.png
   baseTurfs:
   - Plating
@@ -329,7 +329,7 @@
 # Carpets (non smoothing)
 - type: tile
   id: FloorArcadeBlue
-  name: blue arcade floor
+  name: tiles-blue-arcade-floor
   sprite: /Textures/Tiles/arcadeblue.png
   baseTurfs:
   - Plating
@@ -346,7 +346,7 @@
 
 - type: tile
   id: FloorArcadeBlue2
-  name: blue arcade floor
+  name: tiles-blue-arcade-floor
   sprite: /Textures/Tiles/arcadeblue2.png
   baseTurfs:
   - Plating
@@ -363,7 +363,7 @@
 
 - type: tile
   id: FloorArcadeRed
-  name: red arcade floor
+  name: tiles-red-arcade-floor
   sprite: /Textures/Tiles/arcadered.png
   baseTurfs:
   - Plating
@@ -380,7 +380,7 @@
 
 - type: tile
   id: FloorEighties
-  name: eighties floor
+  name: tiles-eighties-floor
   sprite: /Textures/Tiles/eighties.png
   baseTurfs:
   - Plating
@@ -397,7 +397,7 @@
 
 - type: tile
   id: FloorCarpetClown
-  name: clown carpet floor
+  name: tiles-clown-carpet-floor
   sprite: /Textures/Tiles/carpetclown.png
   baseTurfs:
   - Plating
@@ -414,7 +414,7 @@
 
 - type: tile
   id: FloorCarpetOffice
-  name: office carpet floor
+  name: tiles-office-carpet-floor
   sprite: /Textures/Tiles/carpetoffice.png
   baseTurfs:
   - Plating
@@ -431,7 +431,7 @@
 
 - type: tile
   id: FloorBoxing
-  name: boxing ring floor
+  name: tiles-boxing-ring-floor
   sprite: /Textures/Tiles/boxing.png
   variants: 4
   placementVariants: [0, 1, 2, 3]
@@ -448,7 +448,7 @@
 
 - type: tile
   id: FloorGym
-  name: gym floor
+  name: tiles-gym-floor
   sprite: /Textures/Tiles/gym.png
   variants: 4
   placementVariants: [0, 1, 2, 3]
@@ -466,7 +466,7 @@
 # Shuttle
 - type: tile
   id: FloorShuttleWhite
-  name: white shuttle floor
+  name: tiles-white-shuttle-floor
   sprite: /Textures/Tiles/shuttlewhite.png
   baseTurfs:
   - Plating
@@ -481,7 +481,7 @@
 
 - type: tile
   id: FloorShuttleBlue
-  name: blue shuttle floor
+  name: tiles-blue-shuttle-floor
   sprite: /Textures/Tiles/shuttleblue.png
   baseTurfs:
   - Plating
@@ -496,7 +496,7 @@
 
 - type: tile
   id: FloorShuttleOrange
-  name: orange shuttle floor
+  name: tiles-orange-shuttle-floor
   sprite: /Textures/Tiles/shuttleorange.png
   baseTurfs:
   - Plating
@@ -511,7 +511,7 @@
 
 - type: tile
   id: FloorShuttlePurple
-  name: purple shuttle floor
+  name: tiles-purple-shuttle-floor
   sprite: /Textures/Tiles/shuttlepurple.png
   baseTurfs:
   - Plating
@@ -526,7 +526,7 @@
 
 - type: tile
   id: FloorShuttleRed
-  name: red shuttle floor
+  name: tiles-red-shuttle-floor
   sprite: /Textures/Tiles/shuttlered.png
   baseTurfs:
   - Plating
@@ -543,7 +543,7 @@
 # Materials
 - type: tile
   id: FloorGold
-  name: gold tile
+  name: tiles-gold-tile
   sprite: /Textures/Tiles/gold.png
   baseTurfs:
   - Plating
@@ -558,7 +558,7 @@
 
 - type: tile
   id: FloorSilver
-  name: silver tile
+  name: tiles-silver-tile
   sprite: /Textures/Tiles/silver.png
   baseTurfs:
   - Plating
@@ -573,7 +573,7 @@
 
 - type: tile
   id: FloorGlass
-  name: glass floor
+  name: tiles-glass-floor
   sprite: /Textures/Tiles/glass.png
   baseTurfs:
   - Plating
@@ -588,7 +588,7 @@
 
 - type: tile
   id: FloorRGlass
-  name: reinforced glass floor
+  name: tiles-reinforced-glass-floor
   sprite: /Textures/Tiles/rglass.png
   baseTurfs:
   - Plating
@@ -604,7 +604,7 @@
 # Circuits
 - type: tile
   id: FloorGreenCircuit
-  name: green circuit floor
+  name: tiles-green-circuit-floor
   sprite: /Textures/Tiles/green_circuit.png
   baseTurfs:
   - Plating
@@ -619,7 +619,7 @@
 
 - type: tile
   id: FloorBlueCircuit
-  name: blue circuit floor
+  name: tiles-blue-circuit-floor
   sprite: /Textures/Tiles/blue_circuit.png
   baseTurfs:
   - Plating
@@ -635,7 +635,7 @@
 # Terrain
 - type: tile
   id: FloorSnow
-  name: snow
+  name: tiles-snow
   sprite: /Textures/Tiles/snow.png
   baseTurfs:
   - FloorDirt
@@ -650,7 +650,7 @@
 
 - type: tile
   id: FloorGrass
-  name: grass floor
+  name: tiles-grass-floor
   sprite: /Textures/Tiles/grass.png
   baseTurfs:
   - FloorDirt
@@ -665,7 +665,7 @@
 
 - type: tile
   id: FloorGrassJungle
-  name: jungle grass floor
+  name: tiles-jungle-grass-floor
   sprite: /Textures/Tiles/grassjungle.png
   baseTurfs:
   - FloorDirt
@@ -680,7 +680,7 @@
 
 - type: tile
   id: FloorGrassDark
-  name: dark grass floor
+  name: tiles-dark-grass-floor
   sprite: /Textures/Tiles/grassdark.png
   variants: 4
   placementVariants: [0, 1, 2, 3]
@@ -696,7 +696,7 @@
 
 - type: tile
   id: FloorGrassLight
-  name: light grass floor
+  name: tiles-light-grass-floor
   sprite: /Textures/Tiles/grasslight.png
   variants: 4
   placementVariants: [0, 1, 2, 3]
@@ -712,7 +712,7 @@
 
 - type: tile
   id: FloorDirt
-  name: dirt floor
+  name: tiles-dirt-floor
   sprite: /Textures/Tiles/dirt.png
   variants: 4
   placementVariants: [0, 1, 2, 3]
@@ -729,7 +729,7 @@
 # Asteroid
 - type: tile
   id: FloorAsteroidSand
-  name: asteroid floor
+  name: tiles-asteroid-floor
   sprite: /Textures/Tiles/Asteroid/asteroid_sand.png
   baseTurfs:
   - Space
@@ -743,7 +743,7 @@
 
 - type: tile
   id: FloorAsteroidTile
-  name: asteroid tile
+  name: tiles-asteroid-tile
   sprite: /Textures/Tiles/Asteroid/asteroid_tile.png
   baseTurfs:
   - Plating
@@ -757,7 +757,7 @@
 
 - type: tile
   id: FloorAsteroidCoarseSand0
-  name: asteroid coarse sand
+  name: tiles-asteroid-coarse-sand
   sprite: /Textures/Tiles/Asteroid/asteroid_coarse_sand.png
   variants: 3
   placementVariants: [ 0, 1, 2 ]
@@ -781,7 +781,7 @@
 
 - type: tile
   id: FloorAsteroidCoarseSandDug
-  name: asteroid dug coarse sand
+  name: tiles-asteroid-dug-coarse-sand
   sprite: /Textures/Tiles/Asteroid/asteroid_coarse_sand_dug.png
   baseTurfs:
   - Space
@@ -795,7 +795,7 @@
 
 - type: tile
   id: FloorAsteroidIronsand1
-  name: asteroid ironsand
+  name: tiles-asteroid-ironsand
   sprite: /Textures/Tiles/ironsand1.png
   baseTurfs:
   - Space
@@ -809,7 +809,7 @@
 
 - type: tile
   id: FloorAsteroidIronsand2
-  name: asteroid ironsand pebbles
+  name: tiles-asteroid-ironsand-pebbles
   sprite: /Textures/Tiles/ironsand2.png
   baseTurfs:
   - Space
@@ -823,7 +823,7 @@
 
 - type: tile
   id: FloorAsteroidIronsand3
-  name: asteroid ironsand pebbles 2
+  name: tiles-asteroid-ironsand-pebbles
   sprite: /Textures/Tiles/ironsand3.png
   baseTurfs:
   - Space
@@ -837,7 +837,7 @@
 
 - type: tile
   id: FloorAsteroidIronsand4
-  name: asteroid ironsand rock
+  name: tiles-asteroid-ironsand-rock
   sprite: /Textures/Tiles/ironsand4.png
   baseTurfs:
   - Space
@@ -852,7 +852,7 @@
 # Caves
 - type: tile
   id: FloorCave
-  name: cave
+  name: tiles-cave
   sprite: /Textures/Tiles/cave.png
   variants: 7
   placementVariants: [0, 1, 2, 3, 4, 5, 6]
@@ -868,7 +868,7 @@
 
 - type: tile
   id: FloorCaveDrought
-  name: cave drought
+  name: tiles-cave-drought
   sprite: /Textures/Tiles/cavedrought.png
   variants: 8
   placementVariants: [0, 1, 2, 3, 4, 5, 6, 7]

@@ -4,9 +4,6 @@
   id: AirAlarm
 
 - type: Tag
-  id: AirAlarmElectronics
-
-- type: Tag
   id: AirSensor
 
 - type: Tag
@@ -97,6 +94,9 @@
   id: CartridgeRocket
 
 - type: Tag
+  id: Cigarette
+
+- type: Tag
   id: CigFilter
 
 - type: Tag
@@ -163,9 +163,6 @@
   id: DoorBumpOpener
 
 - type: Tag
-  id: DoorElectronics
-
-- type: Tag
   id: DonkPocket
 
 - type: Tag
@@ -190,10 +187,10 @@
   id: FireAlarm
 
 - type: Tag
-  id: FireAlarmElectronics
+  id: FireAxe
 
 - type: Tag
-  id: FireAxe
+  id: WhitelistChameleon
 
 - type: Tag
   id: FirelockElectronics
@@ -324,9 +321,6 @@
   id: Matchstick
 
 - type: Tag
-  id: MailingUnitElectronics
-
-- type: Tag
   id: Medkit
 
 - type: Tag
@@ -438,6 +432,9 @@
 - type: Tag
   id: Shovel
 
+- type: Tag
+  id: Smokable
+  
 - type: Tag
   id: Soap
 
