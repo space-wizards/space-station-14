@@ -129,6 +129,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
             return;
 
         var damage = component.Damage * GetModifier(component, true);
+
         // Sawmill.Debug($"Melee damage is {damage.Total} out of {component.Damage.Total}");
 
         // Raise event before doing damage so we can cancel damage if the event is handled
@@ -138,6 +139,11 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         if (hitEvent.Handled)
             return;
 
+        var itemDamage = new ItemMeleeDamageEvent(damage);
+        RaiseLocalEvent(component.Owner, itemDamage);
+        var modifiers = itemDamage.ModifiersList;
+        modifiers.AddRange(hitEvent.ModifiersList);
+
         var targets = new List<EntityUid>(1)
         {
             ev.Target.Value
@@ -146,7 +152,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         // For stuff that cares about it being attacked.
         RaiseLocalEvent(ev.Target.Value, new AttackedEvent(component.Owner, user, targetXform.Coordinates));
 
-        var modifiedDamage = DamageSpecifier.ApplyModifierSets(damage + hitEvent.BonusDamage, hitEvent.ModifiersList);
+        var modifiedDamage = DamageSpecifier.ApplyModifierSets(damage + hitEvent.BonusDamage + itemDamage.BonusDamage, hitEvent.ModifiersList);
         var damageResult = _damageable.TryChangeDamage(ev.Target, modifiedDamage);
 
         if (damageResult != null && damageResult.Total > FixedPoint2.Zero)
@@ -237,13 +243,18 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         if (hitEvent.Handled)
             return;
 
+        var itemDamage = new ItemMeleeDamageEvent(damage);
+        RaiseLocalEvent(component.Owner, itemDamage);
+        var modifiers = itemDamage.ModifiersList;
+        modifiers.AddRange(hitEvent.ModifiersList);
+
         // For stuff that cares about it being attacked.
         foreach (var target in targets)
         {
             RaiseLocalEvent(target, new AttackedEvent(component.Owner, user, Transform(target).Coordinates));
         }
 
-        var modifiedDamage = DamageSpecifier.ApplyModifierSets(damage + hitEvent.BonusDamage, hitEvent.ModifiersList);
+        var modifiedDamage = DamageSpecifier.ApplyModifierSets(damage + hitEvent.BonusDamage + itemDamage.BonusDamage, hitEvent.ModifiersList);
         var appliedDamage = new DamageSpecifier();
 
         foreach (var entity in targets)
