@@ -140,14 +140,13 @@ namespace Content.Client.Popups
             for (var i = 0; i < _aliveWorldLabels.Count; i++)
             {
                 var label = _aliveWorldLabels[i];
+                label.TotalTime += frameTime;
+
                 if (label.TotalTime > PopupLifetime || Deleted(label.InitialPos.EntityId))
                 {
                     _aliveWorldLabels.RemoveSwap(i);
                     i--;
-                    continue;
                 }
-
-                label.TotalTime += frameTime;
             }
 
             for (var i = 0; i < _aliveCursorLabels.Count; i++)
