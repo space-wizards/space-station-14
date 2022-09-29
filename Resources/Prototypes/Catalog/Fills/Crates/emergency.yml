@@ -90,7 +90,5 @@
         amount: 2
       - id: ClothingShoesBootsMag
         amount: 2
-      - id: JetpackMiniFilled
-        amount: 2
       - id: DoubleEmergencyOxygenTankFilled
         amount: 2
