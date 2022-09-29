@@ -5,7 +5,7 @@
     id: BreakerFlip
     weight: 10
     endAfter: 1
-    maxOccurrences: 5
+    maxOccurrences: 0 # disabled
     minimumPlayers: 15
 
 - type: gameRule
