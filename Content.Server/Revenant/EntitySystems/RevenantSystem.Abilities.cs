@@ -23,8 +23,8 @@ using Content.Shared.MobState;
 using Content.Server.Explosion.EntitySystems;
 using System.Linq;
 using Content.Server.Emag;
+using Content.Server.Humanoid;
 using Content.Server.Store.Components;
-using Content.Shared.CharacterAppearance.Components;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Utility;
@@ -68,7 +68,7 @@ public sealed partial class RevenantSystem : EntitySystem
             return;
         }
 
-        if (!HasComp<MobStateComponent>(target) || !HasComp<HumanoidAppearanceComponent>(target) || HasComp<RevenantComponent>(target))
+        if (!HasComp<MobStateComponent>(target) || !HasComp<HumanoidComponent>(target) || HasComp<RevenantComponent>(target))
             return;
 
         if (!_interact.InRangeUnobstructed(uid, target))

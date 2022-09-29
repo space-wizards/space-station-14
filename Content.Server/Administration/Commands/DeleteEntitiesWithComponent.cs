@@ -4,7 +4,7 @@ using Robust.Shared.Console;
 
 namespace Content.Server.Administration.Commands
 {
-    [AdminCommand(AdminFlags.VarEdit)]
+    [AdminCommand(AdminFlags.Spawn)]
     sealed class DeleteEntitiesWithComponent : IConsoleCommand
     {
         public string Command => "deleteewc";

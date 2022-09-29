@@ -131,7 +131,7 @@
       edges:
         - to: girder
           completed:
-            - !type:SpawnPrototype
+            - !type:GivePrototype
               prototype: SheetSteel1
               amount: 2
           steps:
@@ -143,7 +143,7 @@
       edges:
         - to: girder
           completed:
-            - !type:SpawnPrototype
+            - !type:GivePrototype
               prototype: MaterialWoodPlank1
               amount: 2
           steps:
@@ -155,7 +155,7 @@
       edges:
         - to: girder
           completed:
-            - !type:SpawnPrototype
+            - !type:GivePrototype
               prototype: SheetUranium1
               amount: 2
           steps:
@@ -169,7 +169,7 @@
       edges:
         - to: girder
           completed:
-            - !type:SpawnPrototype
+            - !type:GivePrototype
               prototype: IngotSilver1
               amount: 2
           steps:
@@ -183,7 +183,7 @@
       edges:
         - to: girder
           completed:
-            - !type:SpawnPrototype
+            - !type:GivePrototype
               prototype: SheetSteel1
               amount: 2
           steps:
@@ -195,7 +195,7 @@
       edges:
         - to: girder
           completed:
-            - !type:SpawnPrototype
+            - !type:GivePrototype
               prototype: SheetPlasma1
               amount: 2
           steps:
@@ -209,7 +209,7 @@
       edges:
         - to: girder
           completed:
-            - !type:SpawnPrototype
+            - !type:GivePrototype
               prototype: IngotGold1
               amount: 2
           steps:

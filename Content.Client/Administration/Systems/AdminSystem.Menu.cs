@@ -24,10 +24,6 @@ namespace Content.Client.Administration.Systems
         [Dependency] private readonly IGameHud _gameHud = default!;
         [Dependency] private readonly IClientAdminManager _clientAdminManager = default!;
         [Dependency] private readonly IClientConGroupController _clientConGroupController = default!;
-        [Dependency] private readonly IOverlayManager _overlayManager = default!;
-        [Dependency] private readonly IResourceCache _resourceCache = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
         [Dependency] private readonly IClientConsoleHost _clientConsoleHost = default!;
 
         [Dependency] private readonly VerbSystem _verbSystem = default!;

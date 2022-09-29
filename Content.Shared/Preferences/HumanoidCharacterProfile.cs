@@ -2,11 +2,11 @@ using System.Linq;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using Content.Shared.CCVar;
-using Content.Shared.CharacterAppearance;
 using Content.Shared.GameTicking;
+using Content.Shared.Humanoid;
+using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Roles;
-using Content.Shared.Species;
 using Content.Shared.Traits;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
@@ -20,6 +20,7 @@ namespace Content.Shared.Preferences
     /// <summary>
     /// Character profile. Looks immutable, but uses non-immutable semantics internally for serialization/code sanity purposes.
     /// </summary>
+    [DataDefinition]
     [Serializable, NetSerializable]
     public sealed class HumanoidCharacterProfile : ICharacterProfile
     {
@@ -98,12 +99,17 @@ namespace Content.Shared.Preferences
         {
         }
 
+        /// <summary>
+        ///     Get the default humanoid character profile, using internal constant values.
+        ///     Defaults to <see cref="SharedHumanoidSystem.DefaultSpecies"/> for the species.
+        /// </summary>
+        /// <returns></returns>
         public static HumanoidCharacterProfile Default()
         {
             return new(
                 "John Doe",
                 "",
-                SpeciesManager.DefaultSpecies,
+                SharedHumanoidSystem.DefaultSpecies,
                 MinimumAge,
                 Sex.Male,
                 Gender.Male,
@@ -119,20 +125,59 @@ namespace Content.Shared.Preferences
                 new List<string>());
         }
 
-        public static HumanoidCharacterProfile Random()
+        /// <summary>
+        ///     Return a default character profile, based on species.
+        /// </summary>
+        /// <param name="species">The species to use in this default profile. The default species is <see cref="SharedHumanoidSystem.DefaultSpecies"/>.</param>
+        /// <returns>Humanoid character profile with default settings.</returns>
+        public static HumanoidCharacterProfile DefaultWithSpecies(string species = SharedHumanoidSystem.DefaultSpecies)
+        {
+            return new(
+                "John Doe",
+                "",
+                species,
+                MinimumAge,
+                Sex.Male,
+                Gender.Male,
+                HumanoidCharacterAppearance.DefaultWithSpecies(species),
+                ClothingPreference.Jumpsuit,
+                BackpackPreference.Backpack,
+                new Dictionary<string, JobPriority>
+                {
+                    {SharedGameTicker.FallbackOverflowJob, JobPriority.High}
+                },
+                PreferenceUnavailableMode.SpawnAsOverflow,
+                new List<string>(),
+                new List<string>());
+        }
+
+        // TODO: This should eventually not be a visual change only.
+        public static HumanoidCharacterProfile Random(HashSet<string>? ignoredSpecies = null)
         {
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             var random = IoCManager.Resolve<IRobustRandom>();
 
             var species = random.Pick(prototypeManager
-                .EnumeratePrototypes<SpeciesPrototype>().Where(x => x.RoundStart).ToArray()).ID;
+                .EnumeratePrototypes<SpeciesPrototype>()
+                .Where(x => ignoredSpecies == null ? x.RoundStart : x.RoundStart && !ignoredSpecies.Contains(x.ID))
+                .ToArray()
+            ).ID;
+
+            return RandomWithSpecies(species);
+        }
+
+        public static HumanoidCharacterProfile RandomWithSpecies(string species = SharedHumanoidSystem.DefaultSpecies)
+        {
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+            var random = IoCManager.Resolve<IRobustRandom>();
+
             var sex = random.Prob(0.5f) ? Sex.Male : Sex.Female;
             var gender = sex == Sex.Male ? Gender.Male : Gender.Female;
 
             var name = sex.GetName(species, prototypeManager, random);
             var age = random.Next(MinimumAge, MaximumAge);
 
-            return new HumanoidCharacterProfile(name, "", species, age, sex, gender, HumanoidCharacterAppearance.Random(sex), ClothingPreference.Jumpsuit, BackpackPreference.Backpack,
+            return new HumanoidCharacterProfile(name, "", species, age, sex, gender, HumanoidCharacterAppearance.Random(species, sex), ClothingPreference.Jumpsuit, BackpackPreference.Backpack,
                 new Dictionary<string, JobPriority>
                 {
                     {SharedGameTicker.FallbackOverflowJob, JobPriority.High},
@@ -142,10 +187,19 @@ namespace Content.Shared.Preferences
         public string Name { get; private set; }
         public string FlavorText { get; private set; }
         public string Species { get; private set; }
+
+        [DataField("age")]
         public int Age { get; private set; }
+
+        [DataField("sex")]
         public Sex Sex { get; private set; }
+
+        [DataField("gender")]
         public Gender Gender { get; private set; }
+
         public ICharacterAppearance CharacterAppearance => Appearance;
+
+        [DataField("appearance")]
         public HumanoidCharacterAppearance Appearance { get; private set; }
         public ClothingPreference Clothing { get; private set; }
         public BackpackPreference Backpack { get; private set; }

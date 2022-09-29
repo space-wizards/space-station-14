@@ -23,6 +23,7 @@ public sealed class StatValuesEui : BaseEui
         if (msg is not StatValuesEuiMessage eui)
             return;
 
+        _window.Title = eui.Title;
         _window.UpdateValues(eui.Headers, eui.Values);
     }
 }

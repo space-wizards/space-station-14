@@ -30,7 +30,6 @@ namespace Content.Client.IoC
             IoCManager.Register<IGameHud, GameHud>();
             IoCManager.Register<IParallaxManager, ParallaxManager>();
             IoCManager.Register<IChatManager, ChatManager>();
-            IoCManager.Register<IEscapeMenuOwner, EscapeMenuOwner>();
             IoCManager.Register<IModuleManager, ClientModuleManager>();
             IoCManager.Register<IClientPreferencesManager, ClientPreferencesManager>();
             IoCManager.Register<IItemSlotManager, ItemSlotManager>();

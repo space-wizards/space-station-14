@@ -63,3 +63,5 @@
           enum.CloningPodStatus.Gore: pod_g
           enum.CloningPodStatus.Idle: pod_0
   - type: Climbable
+  - type: StaticPrice
+    price: 1000

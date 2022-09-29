@@ -9,6 +9,10 @@ namespace Content.Shared.UserInterface;
 [Serializable, NetSerializable]
 public sealed class StatValuesEuiMessage : EuiMessageBase
 {
+    /// <summary>
+    /// Titles for the window.
+    /// </summary>
+    public string Title = string.Empty;
     public List<string> Headers = new();
     public List<string[]> Values = new();
 }

@@ -75,6 +75,7 @@
       Dead:
         Base: narsian_dead
   - type: MeleeWeapon
+    hidden: true
     range: 1.5
     angle: 0
     animation: WeaponArcBite
@@ -86,7 +87,7 @@
   - type: MobMover
   - type: HTN
     rootTask: SimpleHostileCompound
-  - type: AiFactionTag
+  - type: Faction
     factions:
     - SimpleHostile
   - type: InteractionPopup
