@@ -1,9 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: 'Security Officer, Warden and HoS now have external access.', type: Tweak}
-  id: 1872
-  time: '2022-07-05T14:11:29.0000000+00:00'
 - author: Aerocrux
   changes:
   - {message: Cap Guns now have visible held sprites, type: Add}
@@ -2910,3 +2905,11 @@ Entries:
   - {message: Rat Servants now have slightly more health., type: Tweak}
   id: 2371
   time: '2022-09-28T04:16:20.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: Voice masking is now possible for mobs that speak., type: Add}
+  - {message: 'The Syndicate has found a supplier for voice modification tools, and
+      is now supplying them to their agents. Be aware of who you''re speaking to:
+      they might not be who they sound like.', type: Add}
+  id: 2372
+  time: '2022-09-29T02:22:27.0000000+00:00'
