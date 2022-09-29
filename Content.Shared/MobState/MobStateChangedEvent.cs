@@ -7,7 +7,8 @@ namespace Content.Shared.MobState
         public MobStateChangedEvent(
             MobStateComponent component,
             DamageState? oldMobState,
-            DamageState currentMobState, EntityUid? origin)
+            DamageState currentMobState, 
+            EntityUid? origin)
         {
             Component = component;
             OldMobState = oldMobState;
