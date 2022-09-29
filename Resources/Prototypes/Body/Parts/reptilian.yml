@@ -72,7 +72,6 @@
     tags:
       - Head
 
-
 - type: entity
   id: LeftArmReptilian
   name: "left reptilian arm"

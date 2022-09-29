@@ -67,7 +67,6 @@
       tags:
         - Head
 
-
 - type: entity
   id: LeftArmSlime
   name: "left slime arm"

@@ -74,9 +74,6 @@
       tags:
         - Head
 
-
-
-
 - type: entity
   id: LeftArmSkeleton
   name: "left skeleton arm"
