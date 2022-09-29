@@ -1,3 +1,4 @@
+using System.Globalization;
 using Content.Server.Administration;
 using Content.Server.Cargo.Systems;
 using Content.Server.EUI;
@@ -5,6 +6,7 @@ using Content.Shared.Administration;
 using Content.Shared.Materials;
 using Content.Shared.Research.Prototypes;
 using Content.Shared.UserInterface;
+using Content.Shared.Weapons.Melee;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Prototypes;
@@ -40,8 +42,9 @@ public sealed class StatValuesCommand : IConsoleCommand
                 break;
             case "lathesell":
                 message = GetLatheMessage();
+                break;
             case "melee":
-                message = GetMelee(compFactory, protoManager);
+                message = GetMelee();
                 break;
             default:
                 shell.WriteError($"{args[0]} is not a valid stat!");
@@ -85,8 +88,28 @@ public sealed class StatValuesCommand : IConsoleCommand
             {
                 id,
                 $"{price:0}",
-    private StatValuesEuiMessage GetMelee(IComponentFactory compFactory, IPrototypeManager protoManager)
+            });
+        }
+
+        var state = new StatValuesEuiMessage()
+        {
+            Title = "Cargo sell prices",
+            Headers = new List<string>()
+            {
+                "ID",
+                "Price",
+            },
+            Values = values,
+        };
+
+        return state;
+    }
+
+    private StatValuesEuiMessage GetMelee()
     {
+        var compFactory = IoCManager.Resolve<IComponentFactory>();
+        var protoManager = IoCManager.Resolve<IPrototypeManager>();
+
         var values = new List<string[]>();
 
         foreach (var proto in protoManager.EnumeratePrototypes<EntityPrototype>())
@@ -162,13 +185,6 @@ public sealed class StatValuesCommand : IConsoleCommand
                 "ID",
                 "Cost",
                 "Sell price",
-            Headers = new List<string>()
-            {
-                "ID",
-                "DPS",
-                "Attack Rate",
-                "Damage",
-                "Range",
             },
             Values = values,
         };
