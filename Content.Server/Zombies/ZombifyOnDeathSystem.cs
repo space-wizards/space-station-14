@@ -16,7 +16,6 @@ using Content.Server.Ghost.Roles.Components;
 using Content.Server.Hands.Components;
 using Content.Server.Mind.Commands;
 using Content.Server.Temperature.Components;
-using Content.Server.Weapon.Melee.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.MobState;
 using Robust.Shared.Prototypes;
@@ -29,6 +28,7 @@ using Content.Server.Humanoid;
 using Content.Server.IdentityManagement;
 using Content.Shared.Humanoid;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Weapons.Melee;
 using Robust.Shared.Audio;
 
 namespace Content.Server.Zombies
@@ -119,8 +119,7 @@ namespace Content.Server.Zombies
             //This is the actual damage of the zombie. We assign the visual appearance
             //and range here because of stuff we'll find out later
             var melee = EnsureComp<MeleeWeaponComponent>(target);
-            melee.Arc = zombiecomp.AttackArc;
-            melee.ClickArc = zombiecomp.AttackArc;
+            melee.Animation = zombiecomp.AttackAnimation;
             melee.Range = 0.75f;
 
             //We have specific stuff for humanoid zombies because they matter more

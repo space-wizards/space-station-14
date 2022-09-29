@@ -1,8 +1,8 @@
 using Content.Server.CombatMode;
 using Content.Server.NPC.Components;
-using Content.Server.Weapon.Melee.Components;
 using Content.Shared.MobState;
 using Content.Shared.MobState.Components;
+using Content.Shared.Weapons.Melee;
 
 namespace Content.Server.NPC.Systems;
 
@@ -64,7 +64,7 @@ public sealed partial class NPCCombatSystem
             return;
         }
 
-        if (weapon.CooldownEnd > _timing.CurTime)
+        if (weapon.NextAttack > _timing.CurTime)
         {
             return;
         }
@@ -84,6 +84,6 @@ public sealed partial class NPCCombatSystem
             return;
         }
 
-        _interaction.DoAttack(component.Owner, targetXform.Coordinates, false, component.Target);
+        _melee.AttemptLightAttack(component.Owner, weapon, component.Target);
     }
 }

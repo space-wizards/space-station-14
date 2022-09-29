@@ -1,3 +1,4 @@
+using System.Globalization;
 using Content.Server.Administration;
 using Content.Server.Cargo.Systems;
 using Content.Server.EUI;
@@ -5,6 +6,7 @@ using Content.Shared.Administration;
 using Content.Shared.Materials;
 using Content.Shared.Research.Prototypes;
 using Content.Shared.UserInterface;
+using Content.Shared.Weapons.Melee;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Prototypes;
@@ -16,7 +18,7 @@ public sealed class StatValuesCommand : IConsoleCommand
 {
     public string Command => "showvalues";
     public string Description => "Dumps all stats for a particular category into a table.";
-    public string Help => $"{Command} <cargosell / lathsell>";
+    public string Help => $"{Command} <cargosell / lathsell / melee>";
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (shell.Player is not IPlayerSession pSession)
@@ -40,6 +42,9 @@ public sealed class StatValuesCommand : IConsoleCommand
                 break;
             case "lathesell":
                 message = GetLatheMessage();
+                break;
+            case "melee":
+                message = GetMelee();
                 break;
             default:
                 shell.WriteError($"{args[0]} is not a valid stat!");
@@ -83,6 +88,51 @@ public sealed class StatValuesCommand : IConsoleCommand
             {
                 id,
                 $"{price:0}",
+            });
+        }
+
+        var state = new StatValuesEuiMessage()
+        {
+            Title = "Cargo sell prices",
+            Headers = new List<string>()
+            {
+                "ID",
+                "Price",
+            },
+            Values = values,
+        };
+
+        return state;
+    }
+
+    private StatValuesEuiMessage GetMelee()
+    {
+        var compFactory = IoCManager.Resolve<IComponentFactory>();
+        var protoManager = IoCManager.Resolve<IPrototypeManager>();
+
+        var values = new List<string[]>();
+
+        foreach (var proto in protoManager.EnumeratePrototypes<EntityPrototype>())
+        {
+            if (proto.Abstract ||
+                !proto.Components.TryGetValue(compFactory.GetComponentName(typeof(MeleeWeaponComponent)),
+                    out var meleeComp))
+            {
+                continue;
+            }
+
+            var comp = (MeleeWeaponComponent) meleeComp.Component;
+
+            // TODO: Wielded damage
+            // TODO: Esword damage
+
+            values.Add(new[]
+            {
+                proto.ID,
+                (comp.Damage.Total * comp.AttackRate).ToString(),
+                comp.AttackRate.ToString(CultureInfo.CurrentCulture),
+                comp.Damage.Total.ToString(),
+                comp.Range.ToString(CultureInfo.CurrentCulture),
             });
         }
 

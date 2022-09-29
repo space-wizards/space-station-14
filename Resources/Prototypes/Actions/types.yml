@@ -30,22 +30,6 @@
   useDelay: 1 # equip noise spam.
   event: !type:ToggleClothingEvent
 
-- type: entityTargetAction
-  id: Disarm
-  name: action-name-disarm
-  description: action-description-disarm
-  icon: Interface/Actions/disarmOff.png
-  iconOn: Interface/Actions/disarm.png
-  repeat: true
-  useDelay: 1.5
-  interactOnMiss: true
-  event: !type:DisarmActionEvent
-  canTargetSelf: false
-  whitelist:
-    components:
-    - Hands
-    - StatusEffects
-
 - type: instantAction
   id: CombatModeToggle
   name: action-name-combat
