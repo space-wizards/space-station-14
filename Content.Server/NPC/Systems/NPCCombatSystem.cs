@@ -1,7 +1,8 @@
 using Content.Server.Interaction;
-using Content.Server.Weapon.Ranged.Systems;
+using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.CombatMode;
 using Content.Shared.Interaction;
+using Content.Shared.Weapons.Melee;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
@@ -17,6 +18,7 @@ public sealed partial class NPCCombatSystem : EntitySystem
     [Dependency] private readonly GunSystem _gun = default!;
     [Dependency] private readonly InteractionSystem _interaction = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedMeleeWeaponSystem _melee = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
