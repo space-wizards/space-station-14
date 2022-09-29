@@ -36,6 +36,9 @@ namespace Content.Client.MedicalResearchBed.UI
                 IReadOnlyDictionary<string, FixedPoint2> DamagePerGroup = damageable.DamagePerGroup;
                 IReadOnlyDictionary<string, FixedPoint2> DamagePerType = damageable.Damage.DamageDict;
 
+                text.Append("Total damage healed on bed: \n");
+                text.Append(msg.HealthChanges + "\n\n");
+
                 text.Append($"{Loc.GetString("health-analyzer-window-entity-health-text", ("entityName", entityName))}\n");
 
                 /// Status Effects / Components
