@@ -105,7 +105,7 @@ namespace Content.Client.Options.UI.Tabs
 
             AddHeader("ui-options-header-interaction-basic");
             AddButton(EngineKeyFunctions.Use);
-            AddButton(EngineKeyFunctions.AltUse);
+            AddButton(EngineKeyFunctions.UseSecondary);
             AddButton(ContentKeyFunctions.UseItemInHand);
             AddButton(ContentKeyFunctions.AltUseItemInHand);
             AddButton(ContentKeyFunctions.ActivateItemInWorld);

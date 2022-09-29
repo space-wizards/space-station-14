@@ -68,7 +68,7 @@ namespace Content.Client.ContextMenu.UI
             _cfg.OnValueChanged(CCVars.EntityMenuGroupingType, OnGroupingChanged, true);
 
             CommandBinds.Builder
-                .Bind(EngineKeyFunctions.AltUse,  new PointerInputCmdHandler(HandleOpenEntityMenu, outsidePrediction: true))
+                .Bind(EngineKeyFunctions.UseSecondary,  new PointerInputCmdHandler(HandleOpenEntityMenu, outsidePrediction: true))
                 .Register<EntityMenuPresenter>();
         }
 
@@ -113,7 +113,7 @@ namespace Content.Client.ContextMenu.UI
                 return;
 
             // open verb menu?
-            if (args.Function == EngineKeyFunctions.AltUse)
+            if (args.Function == EngineKeyFunctions.UseSecondary)
             {
                 _verbSystem.VerbMenu.OpenVerbMenu(entity.Value);
                 args.Handle();

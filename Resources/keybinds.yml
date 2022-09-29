@@ -17,7 +17,7 @@ binds:
   type: State
   key: MouseLeft
   canFocus: true
-- function: AltUse
+- function: UseSecondary
   type: State
   key: MouseRight
   canFocus: true
