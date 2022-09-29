@@ -1,7 +1,7 @@
-using System.Linq;
 using Content.Server.Radiation.Components;
 using Content.Shared.Radiation.Components;
 using Content.Shared.Radiation.Systems;
+using Robust.Shared.Collections;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -20,24 +20,35 @@ public partial class RadiationSystem
         var stopwatch = new Stopwatch();
         stopwatch.Start();
 
-        var sources = EntityQuery<RadiationSourceComponent, TransformComponent>().ToArray();
-        var destinations = EntityQuery<RadiationReceiverComponent, TransformComponent>().ToArray();
+        var sources = EntityQuery<RadiationSourceComponent, TransformComponent>();
+        var destinations = EntityQuery<RadiationReceiverComponent, TransformComponent>();
         var resistanceQuery = GetEntityQuery<RadiationGridResistanceComponent>();
         var transformQuery = GetEntityQuery<TransformComponent>();
 
+        // precalculate world positions for each source
+        // so we won't need to calc this in cycle over and over again
+        var sourcesData = new ValueList<(RadiationSourceComponent, TransformComponent, Vector2)>();
+        foreach (var (source, sourceTrs) in sources)
+        {
+            var worldPos = _transform.GetWorldPosition(sourceTrs, transformQuery);
+            var data = (source, sourceTrs, worldPos);
+            sourcesData.Add(data);
+        }
+
         // trace all rays from rad source to rad receivers
         var rays = new List<RadiationRay>();
-        var receivedRads = new List<(RadiationReceiverComponent, float)>();
+        var receiversTotalRads = new ValueList<(RadiationReceiverComponent, float)>();
         foreach (var (dest, destTrs) in destinations)
         {
             var destWorld = _transform.GetWorldPosition(destTrs, transformQuery);
 
             var rads = 0f;
-            foreach (var (source, sourceTrs) in sources)
+            foreach (var (source, sourceTrs, sourceWorld) in sourcesData)
             {
                 // send ray towards destination entity
-                var ray = Irradiate(sourceTrs.Owner, sourceTrs, destTrs.Owner, destTrs, destWorld,
-                    source.Intensity, source.Slope, saveVisitedTiles, resistanceQuery, transformQuery);
+                var ray = Irradiate(sourceTrs.Owner, sourceTrs, sourceWorld,
+                    destTrs.Owner, destTrs, destWorld,
+                    source.Intensity, source.Slope, saveVisitedTiles, resistanceQuery);
                 if (ray == null)
                     continue;
 
@@ -49,17 +60,17 @@ public partial class RadiationSystem
                     rads += ray.Rads;
             }
 
-            receivedRads.Add((dest, rads));
+            receiversTotalRads.Add((dest, rads));
         }
 
         // update information for debug overlay
         var elapsedTime = stopwatch.Elapsed.TotalMilliseconds;
-        var totalSources = sources.Length;
-        var totalReceivers = destinations.Length;
+        var totalSources = sourcesData.Count;
+        var totalReceivers = receiversTotalRads.Count;
         UpdateGridcastDebugOverlay(elapsedTime, totalSources, totalReceivers, rays);
 
         // send rads to each entity
-        foreach (var (receiver, rads) in receivedRads)
+        foreach (var (receiver, rads) in receiversTotalRads)
         {
             // update radiation value of receiver
             // if no radiation rays reached target, that will set it to 0
@@ -71,11 +82,10 @@ public partial class RadiationSystem
         }
     }
 
-    private RadiationRay? Irradiate(EntityUid sourceUid, TransformComponent sourceTrs,
+    private RadiationRay? Irradiate(EntityUid sourceUid, TransformComponent sourceTrs, Vector2 sourceWorld,
         EntityUid destUid, TransformComponent destTrs, Vector2 destWorld,
         float incomingRads, float slope, bool saveVisitedTiles,
-        EntityQuery<RadiationGridResistanceComponent> resistanceQuery,
-        EntityQuery<TransformComponent> transformQuery)
+        EntityQuery<RadiationGridResistanceComponent> resistanceQuery)
     {
         // lets first check that source and destination on the same map
         if (sourceTrs.MapID != destTrs.MapID)
@@ -83,7 +93,6 @@ public partial class RadiationSystem
         var mapId = sourceTrs.MapID;
 
         // get direction from rad source to destination and its distance
-        var sourceWorld = _transform.GetWorldPosition(sourceTrs, transformQuery);
         var dir = destWorld - sourceWorld;
         var dist = dir.Length;
 
