@@ -1,78 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Colliding with ignited mobs will now properly ignite you as well., type: Tweak}
-  id: 1868
-  time: '2022-07-05T01:30:45.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: The nuke music now times itself properly so as to end right before the
-      nuke alarm goes off., type: Tweak}
-  - {message: 'The nuke can no longer have its disk ejected while the nuke is armed.
-      This means nuclear operatives have a phase where they must defend the nuke for
-      the time that it''s active, until the timer hits 30 seconds and they can run.',
-    type: Tweak}
-  - {message: Disarming the nuke now has a suspenseful 30 second doafter., type: Tweak}
-  - {message: 'The nuke now has a much, much larger blast radius.', type: Tweak}
-  id: 1869
-  time: '2022-07-05T06:49:19.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'The nuke keypad now plays a scale (C mixolydian blues), so you can
-      bang out some funny tunes on it. "0" plays the last note an octave higher.',
-    type: Add}
-  id: 1870
-  time: '2022-07-05T07:24:37.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Cargo shuttle console now no longer needs to be facing South for controls.,
-    type: Fix}
-  id: 1871
-  time: '2022-07-05T13:40:30.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: 'Security Officer, Warden and HoS now have external access.', type: Tweak}
-  id: 1872
-  time: '2022-07-05T14:11:29.0000000+00:00'
-- author: Aerocrux
-  changes:
-  - {message: Cap Guns now have visible held sprites, type: Add}
-  id: 1873
-  time: '2022-07-05T17:09:54.0000000+00:00'
-- author: BurninDreamer
-  changes:
-  - {message: Make the uplink lantern actually flash you., type: Tweak}
-  id: 1874
-  time: '2022-07-05T18:40:19.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: The security techfab now starts with all technologies unlocked., type: Tweak}
-  - {message: Removed security tech tree from science., type: Remove}
-  - {message: Department lathes no longer print common items., type: Tweak}
-  id: 1875
-  time: '2022-07-05T19:56:58.0000000+00:00'
-- author: themias
-  changes:
-  - {message: You can no longer become so hungry that you ascend hunger, type: Fix}
-  id: 1876
-  time: '2022-07-06T03:08:57.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Added the Zombie game mode as a low chance option in Secret., type: Add}
-  - {message: 'Added the CBURN Unit, an advanced operations team for Chemical, Biological,
-      Undead, Radiological, and Nuclear threats.', type: Add}
-  - {message: Non-human zombies no longer get a damage buff., type: Tweak}
-  - {message: Zombie infection chance is now based on the amount of clothing worn.,
-    type: Tweak}
-  - {message: Zombies have had a visual overhaul., type: Tweak}
-  - {message: Zombies now do less damage to each other rather than more., type: Fix}
-  id: 1877
-  time: '2022-07-06T03:42:52.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Rat kings will not spawn until someone takes the ghost role., type: Tweak}
-  id: 1878
-  time: '2022-07-06T03:43:24.0000000+00:00'
 - author: ike709
   changes:
   - {message: Fuel tanks and water tanks can now be sold by cargo, type: Add}
@@ -2918,3 +2844,80 @@ Entries:
       parts., type: Add}
   id: 2367
   time: '2022-09-27T08:00:30.0000000+00:00'
+- author: themias
+  changes:
+  - {message: You can eat with utensils again, type: Fix}
+  id: 2368
+  time: '2022-09-27T16:26:14.0000000+00:00'
+- author: Vordenburg
+  changes:
+  - {message: 'Gas analyzers no longer close when you move, if you''re only monitoring
+      the environment.', type: Fix}
+  id: 2369
+  time: '2022-09-27T20:55:45.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Zombies now automatically enter combat mode upon turning., type: Add}
+  id: 2370
+  time: '2022-09-28T00:13:35.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The Rat King now moves faster and can move under doors., type: Tweak}
+  - {message: Rat Servants now have slightly more health., type: Tweak}
+  id: 2371
+  time: '2022-09-28T04:16:20.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: Voice masking is now possible for mobs that speak., type: Add}
+  - {message: 'The Syndicate has found a supplier for voice modification tools, and
+      is now supplying them to their agents. Be aware of who you''re speaking to:
+      they might not be who they sound like.', type: Add}
+  id: 2372
+  time: '2022-09-29T02:22:27.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Cloning Pods can now be upgraded to make them faster and use less biomass.,
+    type: Add}
+  id: 2373
+  time: '2022-09-29T02:30:11.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Expect a familiar ghost to be appearing around the station more often,
+      this time with some new tricks!', type: Add}
+  - {message: Fixed revenants spawning out into space when killed., type: Fix}
+  id: 2374
+  time: '2022-09-29T02:30:48.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Melee combat swings are now predicted. The damage effect still only
+      shows when the server confirms the hit., type: Fix}
+  - {message: Melee combat sprite lunge direction has been fixed., type: Fix}
+  - {message: 'You won''t pick up items (e.g. rats, spears) when trying to melee them
+      anymore.', type: Fix}
+  - {message: Melee combat now has light and heavy attacks. Light attacks under your
+      cursor and heavy attack in your cursor's direction. Heavy attacks also do more
+      DPS and can cleave but require a windup., type: Add}
+  - {message: Disarm is now on right-click when you have a free hand., type: Tweak}
+  - {message: The context menu won't show up when in combat mode anymore as right-click
+      has been repurposed., type: Tweak}
+  - {message: Most melee values have been tweaked (mainly attack rates and damage
+      values) to make weapons more distinct. DPS values are similar (excluding the
+      change in frequency on bleeding / chemical injection procs)., type: Tweak}
+  id: 2375
+  time: '2022-09-29T05:51:59.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Cargo order sorting will now ignore case., type: Tweak}
+  id: 2376
+  time: '2022-09-29T07:09:29.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The duration of manual healing items on yourself now scales with how
+      much damage you have taken., type: Tweak}
+  id: 2377
+  time: '2022-09-29T07:12:16.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix combat mode and cuff interactions., type: Fix}
+  id: 2378
+  time: '2022-09-29T13:38:25.0000000+00:00'

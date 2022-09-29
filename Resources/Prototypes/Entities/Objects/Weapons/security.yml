@@ -15,13 +15,11 @@
   - type: MeleeWeapon
     damage:
       types:
-        Blunt: 5
+        Blunt: 7
     bluntStaminaDamageFactor: 2.0
     range: 1.5
-    arcwidth: 60
-    arc: default
-    cooldownTime: 1.5
-    arcCooldownTime: 1.5
+    angle: 60
+    animation: WeaponArcSlash
   - type: StaminaDamageOnHit
     damage: 55
   - type: Battery
@@ -64,8 +62,7 @@
         types:
           Blunt: 0 # why is this classed as a melee weapon? Is it needed for some interaction?
       range: 1
-      arcWidth: 10
-      arc: default
+      angle: 10
     - type: Item
       size: 5
       sprite: Objects/Weapons/Melee/flash.rsi
