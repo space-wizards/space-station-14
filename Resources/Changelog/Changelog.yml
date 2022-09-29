@@ -1,9 +1,4 @@
 Entries:
-- author: ike709
-  changes:
-  - {message: Fuel tanks and water tanks can now be sold by cargo, type: Add}
-  id: 1879
-  time: '2022-07-06T03:52:36.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Taking damage now has an overlay., type: Add}
@@ -2921,3 +2916,8 @@ Entries:
   - {message: Fix combat mode and cuff interactions., type: Fix}
   id: 2378
   time: '2022-09-29T13:38:25.0000000+00:00'
+- author: corentt
+  changes:
+  - {message: Wallmount Nanomed are now fully functional !, type: Fix}
+  id: 2379
+  time: '2022-09-29T16:46:39.0000000+00:00'
