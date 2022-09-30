@@ -86,6 +86,7 @@ ui-options-function-camera-rotate-left = Повернуть налево
 ui-options-function-camera-rotate-right = Повернуть направо
 ui-options-function-camera-reset = Сбросить камеру
 ui-options-function-use = Использовать
+ui-options-function-alt-use = Alt use
 ui-options-function-wide-attack = Размашистая атака
 ui-options-function-activate-item-in-hand = Использовать предмет в руке
 ui-options-function-alt-activate-item-in-hand = Альтернативно использовать предмет в руке
