@@ -15,8 +15,8 @@ public sealed class SpillableComponent : Component
     [DataField("spillWorn")]
     public bool SpillWorn = true;
 
-    [DataField("delay")]
-    public float? Delay;
+    [DataField("spillDelay")]
+    public float? SpillDelay;
 
     public CancellationTokenSource? CancelToken;
 }

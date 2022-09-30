@@ -130,7 +130,7 @@ public sealed class SpillableSystem : EntitySystem
         Verb verb = new();
         verb.Text = Loc.GetString("spill-target-verb-get-data-text");
         // TODO VERB ICONS spill icon? pouring out a glass/beaker?
-        if (component.Delay == null)
+        if (component.SpillDelay == null)
         {
             verb.Act = () =>
             {
@@ -146,7 +146,7 @@ public sealed class SpillableSystem : EntitySystem
                 if (component.CancelToken == null)
                 {
                     component.CancelToken = new CancellationTokenSource();
-                    _doAfterSystem.DoAfter(new DoAfterEventArgs(args.User, component.Delay.Value, component.CancelToken.Token, component.Owner)
+                    _doAfterSystem.DoAfter(new DoAfterEventArgs(args.User, component.SpillDelay.Value, component.CancelToken.Token, component.Owner)
                     {
                         BreakOnTargetMove = true,
                         BreakOnUserMove = true,
