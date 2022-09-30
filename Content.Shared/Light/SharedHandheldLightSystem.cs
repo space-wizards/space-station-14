@@ -12,7 +12,7 @@ namespace Content.Shared.Light;
 public abstract class SharedHandheldLightSystem : EntitySystem
 {
     [Dependency] private readonly SharedItemSystem _itemSys = default!;
-    [Dependency] private readonly ClothingSystem _clothingSys = default!;
+    [Dependency] private readonly SharedClothingSystem _clothingSys = default!;
     [Dependency] private readonly SharedActionsSystem _actionSystem = default!;
 
     public override void Initialize()

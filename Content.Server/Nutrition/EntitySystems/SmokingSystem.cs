@@ -26,7 +26,7 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly AtmosphereSystem _atmos = default!;
         [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
-        [Dependency] private readonly ClothingSystem _clothing = default!;
+        [Dependency] private readonly SharedClothingSystem _clothing = default!;
         [Dependency] private readonly SharedItemSystem _items = default!;
 
         private const float UpdateTimer = 3f;

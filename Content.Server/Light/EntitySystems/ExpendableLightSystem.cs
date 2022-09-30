@@ -17,7 +17,7 @@ namespace Content.Server.Light.EntitySystems
     public sealed class ExpendableLightSystem : EntitySystem
     {
         [Dependency] private readonly SharedItemSystem _item = default!;
-        [Dependency] private readonly ClothingSystem _clothing = default!;
+        [Dependency] private readonly SharedClothingSystem _clothing = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
 
         public override void Initialize()

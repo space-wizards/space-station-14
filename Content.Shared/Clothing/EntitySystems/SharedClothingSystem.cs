@@ -5,7 +5,7 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.Clothing.EntitySystems;
 
-public sealed class ClothingSystem : EntitySystem
+public abstract class SharedClothingSystem : EntitySystem
 {
     [Dependency] private readonly SharedItemSystem _itemSys = default!;
 
@@ -28,6 +28,11 @@ public sealed class ClothingSystem : EntitySystem
             SetEquippedPrefix(uid, state.EquippedPrefix, component);
     }
 
+    protected virtual void OnHidesHairUpdated(EntityUid uid, SharedClothingComponent clothing)
+    {
+
+    }
+
     #region Public API
 
     public void SetEquippedPrefix(EntityUid uid, string? prefix, SharedClothingComponent? clothing = null)
@@ -41,6 +46,18 @@ public sealed class ClothingSystem : EntitySystem
         clothing.EquippedPrefix = prefix;
         _itemSys.VisualsChanged(uid);
         Dirty(clothing);
+    }
+
+    public void SetHidesHair(EntityUid uid, bool hidesHair, SharedClothingComponent? clothing = null)
+    {
+        if (!Resolve(uid, ref clothing, false))
+            return;
+
+        if (clothing.HidesHair == hidesHair)
+            return;
+
+        clothing.HidesHair = hidesHair;
+        OnHidesHairUpdated(uid, clothing);
     }
 
     public void SetSlots(EntityUid uid, SlotFlags slots, SharedClothingComponent? clothing = null)
@@ -64,6 +81,7 @@ public sealed class ClothingSystem : EntitySystem
         clothing.EquippedPrefix = otherClothing.EquippedPrefix;
         clothing.RsiPath = otherClothing.RsiPath;
         clothing.FemaleMask = otherClothing.FemaleMask;
+        clothing.HidesHair = otherClothing.HidesHair;
 
         _itemSys.VisualsChanged(uid);
         Dirty(clothing);

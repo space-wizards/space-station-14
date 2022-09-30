@@ -34,4 +34,9 @@ public sealed class ServerClothingSystem : EntitySystem
                 HumanoidVisualLayersExtension.Sublayers(HumanoidVisualLayers.Head), true);
         }
     }
+
+    private void UpdateHidesHair()
+    {
+
+    }
 }

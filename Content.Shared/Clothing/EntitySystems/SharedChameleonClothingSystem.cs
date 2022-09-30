@@ -11,7 +11,7 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
     [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedItemSystem _itemSystem = default!;
-    [Dependency] private readonly ClothingSystem _clothingSystem = default!;
+    [Dependency] private readonly SharedClothingSystem _clothingSystem = default!;
 
     // Updates chameleon visuals and meta information.
     // This function is called on a server after user selected new outfit.

@@ -39,7 +39,7 @@ namespace Content.IntegrationTests.Tests
                 var child = entMgr.SpawnEntity(null, MapCoordinates.Nullspace);
                 var item = entMgr.AddComponent<ClothingComponent>(child);
 
-                IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ClothingSystem>().SetSlots(item.Owner, SlotFlags.HEAD, item);
+                IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedClothingSystem>().SetSlots(item.Owner, SlotFlags.HEAD, item);
 
                 // Equip item.
                 Assert.That(invSystem.TryEquip(container, child, "head"), Is.True);
