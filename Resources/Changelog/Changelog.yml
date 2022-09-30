@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Explosion resistance is now multiplicative and not additive., type: Tweak}
-  id: 1883
-  time: '2022-07-07T03:15:20.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Attacks that do no damage now have a particular sound., type: Add}
@@ -2923,3 +2918,9 @@ Entries:
   - {message: Fixes an issue where items would stop moving on conveyor belts., type: Fix}
   id: 2382
   time: '2022-09-30T00:44:28.0000000+00:00'
+- author: Emisse
+  changes:
+  - {message: All command roles now take 30 hours of total playtime on top of other
+      requirements., type: Add}
+  id: 2383
+  time: '2022-09-30T03:53:02.0000000+00:00'
