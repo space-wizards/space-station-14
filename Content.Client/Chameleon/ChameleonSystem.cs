@@ -11,7 +11,6 @@ public sealed class ChameleonSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     private ShaderInstance _shader = default!;
 
@@ -39,7 +38,8 @@ public sealed class ChameleonSystem : EntitySystem
         if (!TryComp(uid, out SpriteComponent? sprite))
             return;
 
-        sprite.LayerSetShader(2, "unshaded");
+        sprite.PostShader = null;
+        sprite.LayerSetShader(0, "unshaded");
         sprite.GetScreenTexture = false;
         sprite.RaiseShaderEvent = false;
 
@@ -52,7 +52,8 @@ public sealed class ChameleonSystem : EntitySystem
         if (!TryComp(uid, out SpriteComponent? sprite))
             return;
 
-        sprite.LayerSetShader(2, "chameleon");
+        sprite.PostShader = _shader;
+        sprite.LayerSetShader(0, "chameleon");
         sprite.GetScreenTexture = true;
         sprite.RaiseShaderEvent = true;
 
