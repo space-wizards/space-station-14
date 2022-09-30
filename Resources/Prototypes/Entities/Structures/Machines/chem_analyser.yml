@@ -1,0 +1,33 @@
+- type: entity
+  id: ChemicalAnalysisMachine
+  parent: BaseMachinePowered
+  name: Chemical Analysis Machine
+  description: A machine that analyzes chemical samples.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: Spillable
+  - type: DrainableSolution
+    solution: analyser
+  - type: RefillableSolution
+    solution: analyser
+    inputContainer: Bottle
+  - type: ExaminableSolution
+    solution: analyser
+  - type: Sprite
+    sprite: Structures/Machines/chem_analyser.rsi
+    state: icon
+  - type: InteractionOutline
+  - type: SolutionContainerManager
+    solutions:
+      analyser:
+        maxVol: 500
+  - type: SolutionTransfer
+  - type: ChemAnalyser
+    machineOutput: Paper
+    machineInputDevice: Bottle
+    researchDiskReward: ChemTechResultsDisk
+    reagentRewardCount: 5
+    reagentDisplayRequiredGroupFilter: Medicine
+    reagentRewardRequiredGroupFilter: Medicine
