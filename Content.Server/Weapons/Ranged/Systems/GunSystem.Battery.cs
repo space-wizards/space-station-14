@@ -27,7 +27,6 @@ public sealed partial class GunSystem
         SubscribeLocalEvent<ProjectileBatteryAmmoProviderComponent, ChargeChangedEvent>(OnBatteryChargeChange);
         SubscribeLocalEvent<ProjectileBatteryAmmoProviderComponent, GetVerbsEvent<ExamineVerb>>(OnBatteryExaminableVerb);
         SubscribeLocalEvent<ProjectileBatteryAmmoProviderComponent, ExamineGroupEvent>(OnExamineGroup);
-
     }
 
     private void OnBatteryStartup(EntityUid uid, BatteryAmmoProviderComponent component, ComponentStartup args)
