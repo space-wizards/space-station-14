@@ -14,8 +14,13 @@
   - type: MobMover
   - type: HTN
     rootTask: XenoCompound
+    blackboard:
+      NavPry: !type:Bool
+        true
+      NavSmash: !type:Bool
+        true
   - type: Tool
-    speed: 0.3
+    speed: 1.5
     qualities:
       - Prying
     useSound:
@@ -69,7 +74,7 @@
     animation: WeaponArcClaw
     damage:
       groups:
-        Brute: 20
+        Brute: 12
   - type: Appearance
   - type: DamageStateVisuals
     rotate: true
@@ -232,7 +237,7 @@
     hidden: true
     damage:
      groups:
-       Brute: 35
+       Brute: 20
   - type: SlowOnDamage
     speedModifierThresholds:
       450: 0.7
@@ -270,7 +275,7 @@
     hidden: true
     damage:
      groups:
-       Brute: 15
+       Brute: 8
   - type: SlowOnDamage
     speedModifierThresholds:
       200: 0.7

@@ -3,11 +3,14 @@ using Content.Server.NPC.Components;
 using Content.Shared.MobState;
 using Content.Shared.MobState.Components;
 using Content.Shared.Weapons.Melee;
+using Robust.Shared.Map;
 
 namespace Content.Server.NPC.Systems;
 
 public sealed partial class NPCCombatSystem
 {
+    private const float TargetMeleeLostRange = 14f;
+
     private void InitializeMelee()
     {
         SubscribeLocalEvent<NPCMeleeCombatComponent, ComponentStartup>(OnMeleeStartup);
@@ -20,6 +23,8 @@ public sealed partial class NPCCombatSystem
         {
             combatMode.IsInCombatMode = false;
         }
+
+        _steering.Unregister(component.Owner);
     }
 
     private void OnMeleeStartup(EntityUid uid, NPCMeleeCombatComponent component, ComponentStartup args)
@@ -54,18 +59,12 @@ public sealed partial class NPCCombatSystem
     {
         component.Status = CombatStatus.Normal;
 
-        // TODO: Also need to co-ordinate with steering to keep in range.
-        // For now I've just moved the utlity version over.
+        // TODO:
         // Also need some blackboard data for stuff like juke frequency, assigning target slots (to surround targets), etc.
         // miss %
         if (!TryComp<MeleeWeaponComponent>(component.Weapon, out var weapon))
         {
             component.Status = CombatStatus.NoWeapon;
-            return;
-        }
-
-        if (weapon.NextAttack > _timing.CurTime)
-        {
             return;
         }
 
@@ -76,14 +75,26 @@ public sealed partial class NPCCombatSystem
             return;
         }
 
-        if (!xform.Coordinates.TryDistance(EntityManager, targetXform.Coordinates, out var distance) ||
-            distance > weapon.Range)
+        if (!xform.Coordinates.TryDistance(EntityManager, targetXform.Coordinates, out var distance))
         {
-            // TODO: Steering in combat.
             component.Status = CombatStatus.TargetUnreachable;
             return;
         }
 
+        if (distance > TargetMeleeLostRange)
+        {
+            component.Status = CombatStatus.TargetUnreachable;
+            return;
+        }
+
+        if (distance > weapon.Range)
+        {
+            component.Status = CombatStatus.TargetOutOfRange;
+            return;
+        }
+
+        // Gets unregistered on component shutdown.
+        _steering.TryRegister(component.Owner, new EntityCoordinates(component.Target, Vector2.Zero));
         _melee.AttemptLightAttack(component.Owner, weapon, component.Target);
     }
 }
