@@ -119,6 +119,7 @@
     sprite: Clothing/Head/Helmets/scaf.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/scaf.rsi
+    hidesHair: true
   - type: IngestionBlocker
   - type: Armor
     modifiers:
@@ -126,9 +127,6 @@
         Blunt: 0.8
         Slash: 0.8
         Piercing: 0.8
-  - type: Tag
-    tags:
-    - HidesHair
 
 - type: entity
   parent: ClothingHeadBase
@@ -140,10 +138,8 @@
     sprite: Clothing/Head/Helmets/spaceninja.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/spaceninja.rsi
+    hidesHair: true
   - type: IngestionBlocker
-  - type: Tag
-    tags:
-    - HidesHair
   - type: IdentityBlocker
 
 - type: entity
@@ -237,6 +233,7 @@
   - type: Clothing
     sprite: Clothing/Head/Helmets/atmos_firehelmet.rsi
     quickEquip: true
+    hidesHair: true
   - type: IngestionBlocker
   - type: TemperatureProtection
     coefficient: 0.005
@@ -254,7 +251,6 @@
   - type: IdentityBlocker
   - type: Tag
     tags:
-    - HidesHair
     - WhitelistChameleon
 
 - type: entity

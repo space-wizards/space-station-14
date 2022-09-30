@@ -43,6 +43,11 @@ public abstract class SharedClothingComponent : Component
     [DataField("sprite")]
     public string? RsiPath;
 
+    [Access(typeof(ClothingSystem))]
+    [ViewVariables(VVAccess.ReadOnly)]
+    [DataField("hidesHair")]
+    public bool HidesHair = false;
+
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("femaleMask")]
     public FemaleClothingMask FemaleMask = FemaleClothingMask.UniformFull;

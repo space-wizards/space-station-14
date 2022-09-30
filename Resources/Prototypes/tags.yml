@@ -241,9 +241,6 @@
   id: HideContextMenu
 
 - type: Tag
-  id: HidesHair # for headwear.
-
-- type: Tag
   id: Hoe
 
 - type: Tag #Drop this innate tool instead of deleting it.

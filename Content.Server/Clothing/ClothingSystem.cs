@@ -19,8 +19,7 @@ public sealed class ServerClothingSystem : EntitySystem
 
     private void OnGotEquipped(EntityUid uid, SharedClothingComponent component, GotEquippedEvent args)
     {
-        if (args.Slot == "head"
-            && _tagSystem.HasTag(args.Equipment, "HidesHair"))
+        if (args.Slot == "head" && component.HidesHair)
         {
             _humanoidSystem.SetLayersVisibility(args.Equipee,
                 HumanoidVisualLayersExtension.Sublayers(HumanoidVisualLayers.Head), false);
@@ -29,8 +28,7 @@ public sealed class ServerClothingSystem : EntitySystem
 
     private void OnGotUnequipped(EntityUid uid, SharedClothingComponent component, GotUnequippedEvent args)
     {
-        if (args.Slot == "head"
-            && _tagSystem.HasTag(args.Equipment, "HidesHair"))
+        if (args.Slot == "head" && component.HidesHair)
         {
             _humanoidSystem.SetLayersVisibility(args.Equipee,
                 HumanoidVisualLayersExtension.Sublayers(HumanoidVisualLayers.Head), true);

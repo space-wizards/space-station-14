@@ -9,11 +9,9 @@
     sprite: Clothing/Head/Hoods/Bio/general.rsi
   - type: Clothing
     sprite: Clothing/Head/Hoods/Bio/general.rsi
+    hidesHair: true
   - type: DiseaseProtection
     protection: 0.15
-  - type: Tag
-    tags:
-    - HidesHair
 
 - type: entity
   parent: ClothingHeadHatHoodBioGeneral
