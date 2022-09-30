@@ -1,10 +1,4 @@
 Entries:
-- author: ike709
-  changes:
-  - {message: 'Failing to insert an item into a storage container will now give you
-      an actual failure reason, such as insufficient capacity.', type: Tweak}
-  id: 1882
-  time: '2022-07-07T00:45:00.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Explosion resistance is now multiplicative and not additive., type: Tweak}
@@ -2924,3 +2918,8 @@ Entries:
       back.', type: Add}
   id: 2381
   time: '2022-09-29T23:23:13.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: Fixes an issue where items would stop moving on conveyor belts., type: Fix}
+  id: 2382
+  time: '2022-09-30T00:44:28.0000000+00:00'
