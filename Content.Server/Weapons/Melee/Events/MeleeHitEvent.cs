@@ -44,6 +44,11 @@ public sealed class MeleeHitEvent : HandledEntityEventArgs
     /// </summary>
     public EntityUid User { get; }
 
+    /// <summary>
+    /// Is this an actual attack being done?
+    /// </summary>
+    public bool IsHit = true;
+
     public MeleeHitEvent(List<EntityUid> hitEntities, EntityUid user, DamageSpecifier baseDamage)
     {
         HitEntities = hitEntities;

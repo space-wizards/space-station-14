@@ -64,7 +64,8 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         if (!args.CanInteract || !args.CanAccess || component.HideFromExamine)
             return;
 
-        var getDamage = new ItemMeleeDamageEvent(component.Damage);
+        var getDamage = new MeleeHitEvent(new List<EntityUid>(), args.User, component.Damage);
+        getDamage.IsHit = false;
         RaiseLocalEvent(uid, getDamage);
 
         var damageSpec = GetDamage(component);
@@ -139,11 +140,6 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         if (hitEvent.Handled)
             return;
 
-        var itemDamage = new ItemMeleeDamageEvent(damage);
-        RaiseLocalEvent(component.Owner, itemDamage);
-        var modifiers = itemDamage.ModifiersList;
-        modifiers.AddRange(hitEvent.ModifiersList);
-
         var targets = new List<EntityUid>(1)
         {
             ev.Target.Value
@@ -152,7 +148,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         // For stuff that cares about it being attacked.
         RaiseLocalEvent(ev.Target.Value, new AttackedEvent(component.Owner, user, targetXform.Coordinates));
 
-        var modifiedDamage = DamageSpecifier.ApplyModifierSets(damage + hitEvent.BonusDamage + itemDamage.BonusDamage, hitEvent.ModifiersList);
+        var modifiedDamage = DamageSpecifier.ApplyModifierSets(damage + hitEvent.BonusDamage, hitEvent.ModifiersList);
         var damageResult = _damageable.TryChangeDamage(ev.Target, modifiedDamage);
 
         if (damageResult != null && damageResult.Total > FixedPoint2.Zero)
@@ -243,18 +239,13 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         if (hitEvent.Handled)
             return;
 
-        var itemDamage = new ItemMeleeDamageEvent(damage);
-        RaiseLocalEvent(component.Owner, itemDamage);
-        var modifiers = itemDamage.ModifiersList;
-        modifiers.AddRange(hitEvent.ModifiersList);
-
         // For stuff that cares about it being attacked.
         foreach (var target in targets)
         {
             RaiseLocalEvent(target, new AttackedEvent(component.Owner, user, Transform(target).Coordinates));
         }
 
-        var modifiedDamage = DamageSpecifier.ApplyModifierSets(damage + hitEvent.BonusDamage + itemDamage.BonusDamage, hitEvent.ModifiersList);
+        var modifiedDamage = DamageSpecifier.ApplyModifierSets(damage + hitEvent.BonusDamage, hitEvent.ModifiersList);
         var appliedDamage = new DamageSpecifier();
 
         foreach (var entity in targets)
@@ -515,6 +506,9 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
     private void OnChemicalInjectorHit(EntityUid owner, MeleeChemicalInjectorComponent comp, MeleeHitEvent args)
     {
+        if (!args.IsHit)
+            return;
+
         if (!_solutions.TryGetInjectableSolution(owner, out var solutionContainer))
             return;
 
