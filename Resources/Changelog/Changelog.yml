@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Attacks that do no damage now have a particular sound., type: Add}
-  id: 1884
-  time: '2022-07-07T03:37:47.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Splitstation update and changes. See github PR 9495 for full changelog.,
@@ -2924,3 +2919,11 @@ Entries:
       requirements., type: Add}
   id: 2383
   time: '2022-09-30T03:53:02.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: 'The NPC pathfinding has been refactored and some changes have been
+      made to their behaviours as well, such as the ability to break obstacles. It''s
+      still a going concern though is much easier to tweak in future.', type: Tweak}
+  - {message: NPCs require a line of sight for new targets before attacking., type: Tweak}
+  id: 2384
+  time: '2022-09-30T04:39:48.0000000+00:00'
