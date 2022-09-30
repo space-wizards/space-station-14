@@ -1,3 +1,4 @@
+using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.NPC.Components;
@@ -31,7 +32,8 @@ public sealed class PickNearbyInjectableOperator : HTNOperator
         _lookup = sysManager.GetEntitySystem<EntityLookupSystem>();
     }
 
-    public override async Task<(bool Valid, Dictionary<string, object>? Effects)> Plan(NPCBlackboard blackboard)
+    public override async Task<(bool Valid, Dictionary<string, object>? Effects)> Plan(NPCBlackboard blackboard,
+        CancellationToken cancelToken)
     {
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
 

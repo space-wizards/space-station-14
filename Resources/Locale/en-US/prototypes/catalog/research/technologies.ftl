@@ -55,5 +55,8 @@ technologies-super-powercell-printing-description = Print super powercells.
 technologies-basic-parts-technology = Basic parts technology
 technologies-basic-parts-technology-description = They aren't great, but at least they're something.
 
+technologies-adv-parts-technology = Advanced parts technology
+technologies-adv-parts-technology-description = Good for upgrading machines.
+
 technologies-robotics-technology = Robotics technology
 technologies-robotics-technology-description = Robot parts.
