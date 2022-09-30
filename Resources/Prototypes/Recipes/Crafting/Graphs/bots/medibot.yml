@@ -5,6 +5,9 @@
   - node: start
     edges:
     - to: bot
+      conditions:
+        - !type:ContainerEmpty 
+          container: "storagebase"
       steps:
       - tag: Medkit
         icon:
@@ -29,8 +32,5 @@
           state: l_hand
         name: borg arm
         doAfter: 2
-    condition:
-      - !type:ContainerEmpty 
-        container: "storagebase"
   - node: bot
     entity: MobMedibot
