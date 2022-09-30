@@ -1,11 +1,13 @@
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
-using Content.Shared.Chemistry.Components;
+using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Server.Paper;
 using Content.Server.Hands.Components;
 using Content.Server.Station.Systems;
 using Content.Server.Popups;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Tools.Components;
 using Content.Shared.Tag;
@@ -14,6 +16,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Utility;
 using Robust.Shared.Prototypes;
+using System.Linq;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
@@ -106,11 +109,14 @@ namespace Content.Server.Chemistry.EntitySystems
 
             //_popupSystem.PopupEntity(Loc.GetString("machine-insert-item", ("machine", uid), ("item", args.Used)), uid, Filter.Entities(args.User));
 
-            //TODO check if device requires power or not - if it does then treat as if anchorable
+            //check if device requires power or not - if it does then treat as if anchorable
             //also you know... make sure it stops if not powered (disease diagnoser has good example of midway failure)
-            //if (!HasComp<HandsComponent>(args.User) || HasComp<ToolComponent>(args.Used)) // Don't want to accidentally breach wrenching or whatever
-            //    return;
-
+            if (HasComp<ApcPowerReceiverComponent>(uid)) {
+                if (!HasComp<HandsComponent>(args.User) || HasComp<ToolComponent>(args.Used))
+                    return;
+                if (!this.IsPowered(uid, EntityManager))
+                    return;
+            }
 
             AddQueue.Enqueue(uid);
             SoundSystem.Play("/Audio/Machines/diagnoser_printing.ogg", Filter.Pvs(uid), uid);
@@ -122,12 +128,6 @@ namespace Content.Server.Chemistry.EntitySystems
         /// </summary>
         private void OnChemAnalyserFinished(EntityUid uid, ChemAnalyserComponent component, ChemAnalyserFinishedEvent args)
         {
-
-            // spawn a piece of paper.
-            var printed = Spawn(args.Machine.MachineOutput, Transform(uid).Coordinates);
-
-            if (!TryComp<PaperComponent>(printed, out var paper))
-                return;
 
             string reportTitle;
 
@@ -145,6 +145,7 @@ namespace Content.Server.Chemistry.EntitySystems
             var onlyDisplayWithGroup = args.Machine.ReagentDisplayRequiredGroupFilter;
 
             var displaySolutions = new List<string>();
+            var displayReagents = new List<string>();
 
             //reward filters
             var noRewardWithGroups = args.Machine.ReagentRewardExcludedGroupsFilter;
@@ -170,10 +171,16 @@ namespace Content.Server.Chemistry.EntitySystems
                                 if (proto != null && contentHasGroup
                                     && !(noDisplayWithGroups.Contains(proto.Group))
                                     && (onlyDisplayWithGroup == string.Empty || onlyDisplayWithGroup == proto.Group))
+                                    {
                                     displaySolutions.Add(content.ReagentId + ": " + content.Quantity.ToString() + "u");
+                                    displayReagents.Add(content.ReagentId);
+                                    }
                             }
                             else
+                            { 
                                 displaySolutions.Add(content.ReagentId + ": " + content.Quantity.ToString() + "u");
+                                displayReagents.Add(content.ReagentId);
+                            }
                         }
 
                         if (!noRewardWithNames.Contains(content.ReagentId))
@@ -190,10 +197,23 @@ namespace Content.Server.Chemistry.EntitySystems
                         }
                     }
                 }
-            } 
+            }
 
-            if (displaySolutions.Count > 0)
+
+            var sameSet = false;
+
+            if (args.Machine.LastRecordedReagentSet.All(displayReagents.Contains) && args.Machine.LastRecordedReagentSet.Count == displayReagents.Count)
+                    sameSet = true;
+
+            args.Machine.LastRecordedReagentSet = displayReagents;
+
+            if (!sameSet && displaySolutions.Count > 0)
             {
+                // spawn a piece of paper.
+                var printed = Spawn(args.Machine.MachineOutput, Transform(uid).Coordinates);
+                if (!TryComp<PaperComponent>(printed, out var paper))
+                    return;
+
                 int numLines = 0;
                 contents.AddMarkup("No. Chemicals Found: ");
                 contents.AddMarkup(displaySolutions.Count.ToString());
@@ -215,10 +235,12 @@ namespace Content.Server.Chemistry.EntitySystems
                         break;
                     }
                 }
+                MetaData(printed).EntityName = reportTitle;
+                _paperSystem.SetContent(printed, contents.ToMarkup(), paper);
             } else
                 contents.AddMarkup("No Chemicals Found");
 
-            MetaData(printed).EntityName = reportTitle;
+            
 
             var rewardEarned = true;
             if (rewardRequiredNames.Count > 0)
@@ -231,13 +253,13 @@ namespace Content.Server.Chemistry.EntitySystems
                 if (!(rewardSolutions.Count == rewardRequiredCount))
                     rewardEarned = false;
 
-
-            //TODO make reagent and disk reward tracking component so disk is printed only once per analyser and paper is only printed
-            //if the composition of reagents change
-            if (rewardEarned)
+            //disk is printed only once per analyser and paper is only printed if the composition of reagents change
+            if (rewardEarned && !args.Machine.DiskPrinted)
+            {
+                args.Machine.DiskPrinted = true;
                 Spawn(args.Machine.ResearchDiskReward, Transform(uid).Coordinates);
-
-            _paperSystem.SetContent(printed, contents.ToMarkup(), paper);
+            }
+                    
         }
 
         /// <summary>
