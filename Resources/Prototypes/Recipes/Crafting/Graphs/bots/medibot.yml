@@ -29,7 +29,7 @@
           state: l_hand
         name: borg arm
         doAfter: 2
-    conditions:
+    condition:
       - !type:ContainerEmpty 
         container: "medkit"
   - node: bot
