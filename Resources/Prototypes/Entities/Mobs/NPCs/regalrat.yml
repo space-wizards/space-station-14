@@ -6,8 +6,8 @@
   components:
   - type: CombatMode
   - type: MovementSpeedModifier
-    baseWalkSpeed : 3.75
-    baseSprintSpeed : 3.75
+    baseWalkSpeed : 3.00
+    baseSprintSpeed : 5.00
   - type: InputMover
   - type: MobMover
   - type: Reactive
@@ -32,9 +32,9 @@
         radius: 0.3
       mass: 65
       mask:
-      - MobMask
+      - SmallMobMask
       layer:
-      - MobLayer
+      - SmallMobLayer
   - type: MobState
     thresholds:
       0: Alive
@@ -43,8 +43,8 @@
   - type: MeleeWeapon
     hidden: true
     range: 1
-    arcwidth: 0
-    arc: claw
+    angle: 0
+    animation: WeaponArcClaw
     damage:
       types:
         Slash: 12
@@ -93,10 +93,6 @@
       event: !type:RatKingDomainActionEvent
     hungerPerDomainUse: 50
   - type: MobsterAccent
-  - type: Access #he's so baller he gets his own access. NT got nothing on him
-    tags:
-    - Maintenance
-    - Service
   - type: Butcherable
     spawned:
     - id: ClothingHeadHatFancyCrown #how did that get there?
@@ -139,11 +135,12 @@
   - type: MeleeWeapon
     hidden: true
     range: 1.5
-    arcwidth: 0
-    arc: fist
+    angle: 0
+    attackRate: 0.75
+    animation: WeaponArcFist
     damage:
       types:
-        Blunt: 50 #oof ouch owie my bones
+        Blunt: 66 #oof ouch owie my bones
   - type: Fixtures
     fixtures:
     - shape:
@@ -201,13 +198,13 @@
   - type: MobState
     thresholds:
       0: Alive
-      30: Critical
+      40: Critical
       60: Dead
   - type: MeleeWeapon
     hidden: true
     range: 1
-    arcwidth: 0
-    arc: claw
+    angle: 0
+    animation: WeaponArcClaw
     damage:
       types:
         Slash: 5
