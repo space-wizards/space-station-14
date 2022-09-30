@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using Content.Server.Botany.Components;
 using Content.Server.Botany.Systems;
 using Content.Shared.Atmos;
@@ -68,21 +69,40 @@ public struct SeedChemQuantity
 public class SeedData
 {
     #region Tracking
+    private string _name = String.Empty;
+    private string _noun = String.Empty;
+    private string _displayName = String.Empty;
+    
     /// <summary>
     ///     The name of this seed. Determines the name of seed packets.
     /// </summary>
-    [DataField("name")] public string Name = string.Empty;
+    [DataField("name")]
+    public string Name
+    {
+        get => _name;
+        private set => _name = Loc.GetString(value);
+    }
 
     /// <summary>
     ///     The noun for this type of seeds. E.g. for fungi this should probably be "spores" instead of "seeds". Also
     ///     used to determine the name of seed packets.
     /// </summary>
-    [DataField("noun")] public string Noun = "seeds";
+    [DataField("noun")]
+    public string Noun
+    {
+        get => _noun;
+        private set => _noun = Loc.GetString(value);
+    }
 
     /// <summary>
     ///     Name displayed when examining the hydroponics tray. Describes the actual plant, not the seed itself.
     /// </summary>
-    [DataField("displayName")] public string DisplayName = string.Empty;
+    [DataField("displayName")]
+    public string DisplayName
+    {
+        get => _displayName;
+        private set => _displayName = Loc.GetString(value);
+    }
 
     [DataField("mysterious")] public bool Mysterious;
 

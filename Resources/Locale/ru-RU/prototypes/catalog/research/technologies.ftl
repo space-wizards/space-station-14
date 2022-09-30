@@ -36,5 +36,7 @@ technologies-super-powercell-printing = Печать суперэлементо�
 technologies-super-powercell-printing-description = Печать супербатарей.
 technologies-basic-parts-technology = Технология базовых компонентов
 technologies-basic-parts-technology-description = Не лучшие, но хоть что-то.
+technologies-adv-parts-technology = Advanced parts technology
+technologies-adv-parts-technology-description = Good for upgrading machines.
 technologies-robotics-technology = Робототехника
 technologies-robotics-technology-description = Запчасти для роботов.

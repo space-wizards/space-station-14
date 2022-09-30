@@ -21,7 +21,7 @@
   - type: UseDelay
     delay: 1.0
   - type: MeleeWeapon
-    hitSound:
+    soundHit:
       collection: ToySqueak
     damage:
       types:
@@ -105,7 +105,7 @@
     sound:
       path: /Audio/Items/Toys/weh.ogg
   - type: MeleeWeapon
-    hitSound:
+    soundHit:
       path: /Audio/Items/Toys/weh.ogg
 
 - type: entity
@@ -126,7 +126,7 @@
     sound:
       path: /Audio/Items/Toys/muffled_weh.ogg
   - type: MeleeWeapon
-    hitSound:
+    soundHit:
       path: /Audio/Items/Toys/muffled_weh.ogg
 
 - type: entity
@@ -168,7 +168,7 @@
     sound:
       path: /Audio/Effects/bite.ogg
   - type: MeleeWeapon
-    hitSound:
+    soundHit:
       path: /Audio/Effects/bite.ogg
 
 - type: entity
@@ -192,7 +192,7 @@
     sound:
       path: /Audio/Items/Toys/rattle.ogg
   - type: MeleeWeapon
-    hitSound:
+    soundHit:
       path: /Audio/Items/Toys/rattle.ogg
 
 - type: entity
@@ -207,7 +207,7 @@
     sound:
       path: /Audio/Items/Toys/mousesqueek.ogg
   - type: MeleeWeapon
-    hitSound:
+    soundHit:
       path: /Audio/Items/Toys/mousesqueek.ogg
 
 - type: entity
@@ -244,7 +244,7 @@
     sound:
       path: /Audio/Voice/Vox/shriek1.ogg
   - type: MeleeWeapon
-    hitSound:
+    soundHit:
       path: /Audio/Voice/Vox/shriek1.ogg
 ## Figurines
 
@@ -313,7 +313,7 @@
     sound:
       path: /Audio/Items/Toys/ian.ogg
   - type: MeleeWeapon
-    hitSound:
+    soundHit:
       path: /Audio/Items/Toys/ian.ogg
 
 - type: entity
@@ -549,9 +549,10 @@
     sprite: Objects/Fun/toys.rsi
     state: foamblade
   - type: MeleeWeapon
+    attackRate: 1.5
     range: 2.0
-    arcwidth: 0
-    arc: spear
+    angle: 0
+    animation: WeaponArcThrust
     damage:
       types:
         Blunt: 0

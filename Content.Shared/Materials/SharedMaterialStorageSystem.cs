@@ -200,6 +200,7 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
         var ev = new GetMaterialWhitelistEvent(uid);
         RaiseLocalEvent(uid, ev);
         component.MaterialWhiteList = ev.Whitelist;
+        Dirty(component);
     }
 
     /// <remarks>
