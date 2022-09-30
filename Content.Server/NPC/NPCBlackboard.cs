@@ -195,6 +195,16 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
     public const string Owner = "Owner";
     public const string OwnerCoordinates = "OwnerCoordinates";
     public const string MovementTarget = "MovementTarget";
+
+    /// <summary>
+    /// Can the NPC pry open doors for steering.
+    /// </summary>
+    public const string NavPry = "NavPry";
+
+    /// <summary>
+    /// Can the NPC smash obstacles for steering.
+    /// </summary>
+    public const string NavSmash = "NavSmash";
     public const string RotateSpeed = "RotateSpeed";
     public const string VisionRadius = "VisionRadius";
     public const float MeleeRange = 1f;
