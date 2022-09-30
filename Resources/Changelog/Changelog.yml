@@ -1,39 +1,4 @@
 Entries:
-- author: ike709
-  changes:
-  - {message: Fuel tanks and water tanks can now be sold by cargo, type: Add}
-  id: 1879
-  time: '2022-07-06T03:52:36.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Taking damage now has an overlay., type: Add}
-  id: 1880
-  time: '2022-07-06T07:58:14.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Stamina has been added so weapons won't always immediately stun the
-      target., type: Add}
-  - {message: Stun batons apply a 5 seconds stun with a 7 second cooldown., type: Tweak}
-  - {message: Disablers have been added. It takes 4 shots to put someone into stamcrit
-      for 5 seconds., type: Add}
-  id: 1881
-  time: '2022-07-06T08:06:12.0000000+00:00'
-- author: ike709
-  changes:
-  - {message: 'Failing to insert an item into a storage container will now give you
-      an actual failure reason, such as insufficient capacity.', type: Tweak}
-  id: 1882
-  time: '2022-07-07T00:45:00.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Explosion resistance is now multiplicative and not additive., type: Tweak}
-  id: 1883
-  time: '2022-07-07T03:15:20.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Attacks that do no damage now have a particular sound., type: Add}
-  id: 1884
-  time: '2022-07-07T03:37:47.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Splitstation update and changes. See github PR 9495 for full changelog.,
@@ -2921,3 +2886,44 @@ Entries:
   - {message: Fix combat mode and cuff interactions., type: Fix}
   id: 2378
   time: '2022-09-29T13:38:25.0000000+00:00'
+- author: corentt
+  changes:
+  - {message: Wallmount Nanomed are now fully functional !, type: Fix}
+  id: 2379
+  time: '2022-09-29T16:46:39.0000000+00:00'
+- author: civilCornball
+  changes:
+  - {message: Fixes the recycler not recycling some trash., type: Fix}
+  id: 2380
+  time: '2022-09-29T20:44:56.0000000+00:00'
+- author: moony
+  changes:
+  - {message: A permanent blindness trait has been added so you no longer need to
+      hunt down a blindfold., type: Add}
+  - {message: 'A narcolepsy trait has been added, for if you enjoy the impending doom
+      of falling asleep mid-nukies.', type: Add}
+  - {message: You can now give yourself a runny nose and sneeze randomly on occasion
+      if that's your thing., type: Add}
+  - {message: 'You can, if you like, be permanently pacifist with no ability to fight
+      back.', type: Add}
+  id: 2381
+  time: '2022-09-29T23:23:13.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: Fixes an issue where items would stop moving on conveyor belts., type: Fix}
+  id: 2382
+  time: '2022-09-30T00:44:28.0000000+00:00'
+- author: Emisse
+  changes:
+  - {message: All command roles now take 30 hours of total playtime on top of other
+      requirements., type: Add}
+  id: 2383
+  time: '2022-09-30T03:53:02.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: 'The NPC pathfinding has been refactored and some changes have been
+      made to their behaviours as well, such as the ability to break obstacles. It''s
+      still a going concern though is much easier to tweak in future.', type: Tweak}
+  - {message: NPCs require a line of sight for new targets before attacking., type: Tweak}
+  id: 2384
+  time: '2022-09-30T04:39:48.0000000+00:00'
