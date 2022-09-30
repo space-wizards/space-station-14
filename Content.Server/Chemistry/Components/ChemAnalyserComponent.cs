@@ -32,6 +32,8 @@ namespace Content.Server.Chemistry.Components
         [DataField("machineOutput", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>), required: true)]
         public string MachineOutput = string.Empty;
 
+        //TODO it may be worth separating the reward conditions as a separate component so the same machine can support multiple rewards
+        //for now keep it as is, but doing the above may allow the same machine to support multiple research tiers
         /// <summary>
         /// What the machine will spawn when the reward condition is met (if both are provided)
         /// </summary>
@@ -94,5 +96,12 @@ namespace Content.Server.Chemistry.Components
         [DataField("reagentDisplayExcludedNamesFilter")]
         public readonly List<string> ReagentDisplayExcludedNamesFilter = new();
 
+        /// <summary>
+        /// The printer checks this list with the one it has - if the reagents are identical (quantity disregarded) the machine will not print
+        /// </summary>
+        [ViewVariables]
+        public List<string> LastRecordedReagentSet = new();
+        [ViewVariables]
+        public bool DiskPrinted = false;
     }
 }

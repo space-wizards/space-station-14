@@ -7,6 +7,9 @@ namespace Content.Server.Medical.Components
     [RegisterComponent]
     public sealed class MedicalResearchBedServerComponent : Component
     {
+
+        //note - this was originally going to be a server shared between serverl beds per station, but for several reasons this was abandoned
+        //it may be worth consolidating this with the main MedicalResearchBedComponent
         /// <summary>
         /// The health changes this server has recorded.
         /// </summary>
