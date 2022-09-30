@@ -586,6 +586,7 @@
   - type: Physics
     bodyType: Static
   - type: Pullable
+  - type: Airtight
   - type: Fixtures
     fixtures:
     - shape:
