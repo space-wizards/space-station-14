@@ -80,4 +80,4 @@ reagent-physical-desc-sweet = сладкое
 reagent-physical-desc-electric = электрическое
 reagent-physical-desc-chewy = жевательное
 reagent-physical-desc-volatile = нестабильное
-reagent-physical-desc-inky = inky
+reagent-physical-desc-inky = чернильное

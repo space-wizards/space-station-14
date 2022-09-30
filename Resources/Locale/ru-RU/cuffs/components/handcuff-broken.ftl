@@ -1,4 +1,4 @@
-handcuff-broken-cables-name = broken cables
-handcuff-broken-cables-desc = These cables are broken in several places and don't seem very useful.
-handcuff-broken-zipties-name = broken zipties
-handcuff-broken-zipties-desc = These zipties look like they tried to manage the wrong cables.
+handcuff-broken-cables-name = порванные самодельные наручники
+handcuff-broken-cables-desc = Эти кабеля разорваны в нескольких местах и кажутся не особо полезными.
+handcuff-broken-zipties-name = порванные кабельные стяжки
+handcuff-broken-zipties-desc = Эти кабельные стяжки выглядят так, словно ими пытались стянуть не тот кабель.

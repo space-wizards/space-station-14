@@ -19,7 +19,7 @@ disposal-self-insert-verb-get-data-text = Залезть внутрь
 ## No hands
 
 disposal-unit-no-hands = У вас нет рук!
-disposal-flush-verb-get-data-text = Flush
-disposal-unit-thrown-missed = Missed!
-disposal-self-insert-verb-get-data-text = Jump inside
-disposal-eject-verb-get-data-text = Eject contents
+disposal-flush-verb-get-data-text = Смыть
+disposal-unit-thrown-missed = Промах!
+disposal-self-insert-verb-get-data-text = Залезть внутрь
+disposal-eject-verb-get-data-text = Извлечь всё

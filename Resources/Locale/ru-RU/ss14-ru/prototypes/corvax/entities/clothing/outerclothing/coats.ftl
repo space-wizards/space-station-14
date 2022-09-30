@@ -1,3 +1,3 @@
-ent-ClothingOuterCoatHoSGreatcoat = armored greatcoat
-    .desc = A greatcoat enhanced with a special alloy for some extra protection and style for those with a commanding presence.
+ent-ClothingOuterCoatHoSGreatcoat = бронированная шинель
+    .desc = Шинель, усиленная специальными сплавами для дополнительной защиты и стиля для тех, кто обладает властным характером.
     .suffix = { "" }
