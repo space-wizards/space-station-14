@@ -29,8 +29,8 @@
           state: l_hand
         name: borg arm
         doAfter: 2
-  conditions:
-    - !type:ContainerEmpty 
-       container: "medkit"
+    conditions:
+      - !type:ContainerEmpty 
+        container: "medkit"
   - node: bot
     entity: MobMedibot
