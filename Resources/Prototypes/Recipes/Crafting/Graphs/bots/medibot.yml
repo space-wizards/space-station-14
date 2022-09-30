@@ -31,6 +31,6 @@
         doAfter: 2
     condition:
       - !type:ContainerEmpty 
-        container: "medkit"
+        container: "storagebase"
   - node: bot
     entity: MobMedibot
