@@ -99,6 +99,11 @@ namespace Content.Shared.Preferences
         {
         }
 
+        /// <summary>
+        ///     Get the default humanoid character profile, using internal constant values.
+        ///     Defaults to <see cref="SharedHumanoidSystem.DefaultSpecies"/> for the species.
+        /// </summary>
+        /// <returns></returns>
         public static HumanoidCharacterProfile Default()
         {
             return new(
@@ -120,6 +125,33 @@ namespace Content.Shared.Preferences
                 new List<string>());
         }
 
+        /// <summary>
+        ///     Return a default character profile, based on species.
+        /// </summary>
+        /// <param name="species">The species to use in this default profile. The default species is <see cref="SharedHumanoidSystem.DefaultSpecies"/>.</param>
+        /// <returns>Humanoid character profile with default settings.</returns>
+        public static HumanoidCharacterProfile DefaultWithSpecies(string species = SharedHumanoidSystem.DefaultSpecies)
+        {
+            return new(
+                "John Doe",
+                "",
+                species,
+                MinimumAge,
+                Sex.Male,
+                Gender.Male,
+                HumanoidCharacterAppearance.DefaultWithSpecies(species),
+                ClothingPreference.Jumpsuit,
+                BackpackPreference.Backpack,
+                new Dictionary<string, JobPriority>
+                {
+                    {SharedGameTicker.FallbackOverflowJob, JobPriority.High}
+                },
+                PreferenceUnavailableMode.SpawnAsOverflow,
+                new List<string>(),
+                new List<string>());
+        }
+
+        // TODO: This should eventually not be a visual change only.
         public static HumanoidCharacterProfile Random(HashSet<string>? ignoredSpecies = null)
         {
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
@@ -130,6 +162,15 @@ namespace Content.Shared.Preferences
                 .Where(x => ignoredSpecies == null ? x.RoundStart : x.RoundStart && !ignoredSpecies.Contains(x.ID))
                 .ToArray()
             ).ID;
+
+            return RandomWithSpecies(species);
+        }
+
+        public static HumanoidCharacterProfile RandomWithSpecies(string species = SharedHumanoidSystem.DefaultSpecies)
+        {
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+            var random = IoCManager.Resolve<IRobustRandom>();
+
             var sex = random.Prob(0.5f) ? Sex.Male : Sex.Female;
             var gender = sex == Sex.Male ? Gender.Male : Gender.Female;
 

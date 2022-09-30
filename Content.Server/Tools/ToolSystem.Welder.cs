@@ -3,7 +3,7 @@ using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Tools.Components;
-using Content.Server.Weapon.Melee;
+using Content.Server.Weapons.Melee.Events;
 using Content.Shared.Audio;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;

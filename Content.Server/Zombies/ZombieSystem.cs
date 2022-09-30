@@ -3,7 +3,6 @@ using Robust.Shared.Random;
 using Content.Server.Body.Systems;
 using Content.Server.Disease.Components;
 using Content.Server.Drone.Components;
-using Content.Server.Weapon.Melee;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.MobState.Components;
 using Content.Server.Disease;
@@ -13,6 +12,8 @@ using Content.Server.Inventory;
 using Robust.Shared.Prototypes;
 using Content.Server.Speech;
 using Content.Server.Chat.Systems;
+using Content.Server.Weapons.Melee.Events;
+using Content.Shared.Movement.Systems;
 using Content.Shared.Damage;
 using Content.Shared.Zombies;
 

@@ -506,7 +506,7 @@ namespace Content.Shared.CCVar
          */
 
         public static readonly CVarDef<int> NPCMaxUpdates =
-            CVarDef.Create("npc.max_updates", 64);
+            CVarDef.Create("npc.max_updates", 128);
 
         public static readonly CVarDef<bool> NPCEnabled = CVarDef.Create("npc.enabled", true);
 

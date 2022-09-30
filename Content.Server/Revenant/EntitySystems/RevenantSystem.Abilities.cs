@@ -20,24 +20,25 @@ using Content.Server.Disease.Components;
 using Content.Shared.Item;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.MobState;
-using Content.Server.Explosion.EntitySystems;
 using System.Linq;
+using Content.Server.Beam;
 using Content.Server.Emag;
 using Content.Server.Humanoid;
+using Content.Server.Revenant.Components;
 using Content.Server.Store.Components;
 using Content.Shared.FixedPoint;
+using Content.Shared.Revenant.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Revenant.EntitySystems;
 
-public sealed partial class RevenantSystem : EntitySystem
+public sealed partial class RevenantSystem
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly ThrowingSystem _throwing = default!;
     [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
     [Dependency] private readonly DiseaseSystem _disease = default!;
-    [Dependency] private readonly ExplosionSystem _explosion = default!;
     [Dependency] private readonly EmagSystem _emag = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly GhostSystem _ghost = default!;
@@ -181,8 +182,10 @@ public sealed partial class RevenantSystem : EntitySystem
         essence.Harvested = true;
         ChangeEssenceAmount(uid, essence.EssenceAmount, component);
         if (TryComp<StoreComponent>(uid, out var store))
+        {
             _store.TryAddCurrency(new Dictionary<string, FixedPoint2>()
-                    { {component.StolenEssenceCurrencyPrototype, essence.EssenceAmount} }, store);
+                { {component.StolenEssenceCurrencyPrototype, essence.EssenceAmount} }, store);
+        }
 
         if (!TryComp<MobStateComponent>(args.Target, out var mobstate))
             return;
@@ -198,7 +201,7 @@ public sealed partial class RevenantSystem : EntitySystem
         if (damage == null)
             return;
         DamageSpecifier dspec = new();
-        dspec.DamageDict.Add("Cellular", damage.Value);
+        dspec.DamageDict.Add("Poison", damage.Value);
         _damage.TryChangeDamage(args.Target, dspec, true);
     }
 
@@ -280,22 +283,28 @@ public sealed partial class RevenantSystem : EntitySystem
 
         args.Handled = true;
 
+        var xform = Transform(uid);
         var poweredLights = GetEntityQuery<PoweredLightComponent>();
+        var mobState = GetEntityQuery<MobStateComponent>();
         var lookup = _lookup.GetEntitiesInRange(uid, component.OverloadRadius);
-
+        //TODO: feels like this might be a sin and a half
         foreach (var ent in lookup)
         {
-            if (!poweredLights.HasComponent(ent))
+            if (!mobState.HasComponent(ent) || !_mobState.IsAlive(ent))
                 continue;
 
-            var ev = new GhostBooEvent(); //light go flicker
-            RaiseLocalEvent(ent, ev);
+            var nearbyLights = _lookup.GetEntitiesInRange(ent, component.OverloadZapRadius)
+                .Where(e => poweredLights.HasComponent(e) && !HasComp<RevenantOverloadedLightsComponent>(e) &&
+                            _interact.InRangeUnobstructed(e, uid, -1)).ToArray();
 
-            if (_random.Prob(component.OverloadBreakChance))
-            {
-                //values
-                _explosion.QueueExplosion(ent, "RevenantElectric", 15, 3, 5, canCreateVacuum: false);
-            }
+            if (!nearbyLights.Any())
+                continue;
+
+            //get the closest light
+            var allLight = nearbyLights.OrderBy(e =>
+                Transform(e).Coordinates.TryDistance(EntityManager, xform.Coordinates, out var dist) ? component.OverloadZapRadius : dist);
+            var comp = EnsureComp<RevenantOverloadedLightsComponent>(allLight.First());
+            comp.Target = ent; //who they gon fire at?
         }
     }
 
@@ -310,10 +319,11 @@ public sealed partial class RevenantSystem : EntitySystem
         args.Handled = true;
 
         var emo = GetEntityQuery<DiseaseCarrierComponent>();
-
         foreach (var ent in _lookup.GetEntitiesInRange(uid, component.BlightRadius))
+        {
             if (emo.TryGetComponent(ent, out var comp))
-                _disease.TryInfect(comp, component.BlightDiseasePrototypeId);
+                _disease.TryAddDisease(ent, component.BlightDiseasePrototypeId, comp);
+        }
     }
 
     private void OnMalfunctionAction(EntityUid uid, RevenantComponent component, RevenantMalfunctionActionEvent args)
@@ -327,6 +337,8 @@ public sealed partial class RevenantSystem : EntitySystem
         args.Handled = true;
 
         foreach (var ent in _lookup.GetEntitiesInRange(uid, component.MalfunctionRadius))
+        {
             _emag.DoEmag(ent, ent); //it emags itself. spooky.
+        }
     }
 }

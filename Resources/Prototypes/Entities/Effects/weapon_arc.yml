@@ -1,12 +1,66 @@
 - type: entity
-  id: WeaponArc
-  save: false
+  # Just fades out with no movement animation
+  id: WeaponArcStatic
   noSpawn: true
   components:
-  - type: Sprite
-    sprite: Effects/arcs.rsi
-    netsync: false
-    noRot: false
-    offset: 0, -0.85
-    drawdepth: Effects
-  - type: MeleeWeaponArcAnimation
+    - type: Sprite
+      sprite: Effects/arcs.rsi
+      state: spear
+      netsync: false
+      drawdepth: Effects
+    - type: EffectVisuals
+    - type: WeaponArcVisuals
+
+# TODO: Camera recoil (try it as a shake, i.e. zoom out and then rotate slightly maybe)
+# See https://github.com/gasgiant/Camera-Shake
+
+- type: entity
+  id: WeaponArcThrust
+  parent: WeaponArcStatic
+  noSpawn: true
+  components:
+    - type: WeaponArcVisuals
+      animation: Thrust
+
+  # TODO: Hold for 0.1, thrust out n distance, then fade out
+
+- type: entity
+  id: WeaponArcSlash
+  parent: WeaponArcStatic
+  noSpawn: true
+  components:
+    - type: WeaponArcVisuals
+      animation: Slash
+
+
+- type: entity
+  id: WeaponArcBite
+  parent: WeaponArcStatic
+  noSpawn: true
+  components:
+    - type: Sprite
+      state: bite
+
+- type: entity
+  id: WeaponArcClaw
+  parent: WeaponArcStatic
+  noSpawn: true
+  components:
+    - type: Sprite
+      state: claw
+
+- type: entity
+  id: WeaponArcDisarm
+  parent: WeaponArcStatic
+  noSpawn: true
+  components:
+    - type: Sprite
+      state: disarm
+
+- type: entity
+  id: WeaponArcFist
+  parent: WeaponArcStatic
+  noSpawn: true
+  components:
+    - type: Sprite
+      state: fist

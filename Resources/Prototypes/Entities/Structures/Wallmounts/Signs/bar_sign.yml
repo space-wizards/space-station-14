@@ -17,6 +17,7 @@
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: BarSign
+  - type: Appearance
   - type: Destructible
     thresholds:
     - trigger:
@@ -31,8 +32,6 @@
   id: BarSign
   name: bar sign
   suffix: Random
-  components:
-  - type: BarSign
 
 - type: entity
   id: LargeBarSign
