@@ -28,10 +28,7 @@ public abstract class SharedClothingSystem : EntitySystem
             SetEquippedPrefix(uid, state.EquippedPrefix, component);
     }
 
-    protected virtual void OnHidesHairUpdated(EntityUid uid, SharedClothingComponent clothing)
-    {
-
-    }
+    protected virtual void OnHidesHairToggled(EntityUid uid, SharedClothingComponent clothing) {}
 
     #region Public API
 
@@ -57,7 +54,7 @@ public abstract class SharedClothingSystem : EntitySystem
             return;
 
         clothing.HidesHair = hidesHair;
-        OnHidesHairUpdated(uid, clothing);
+        OnHidesHairToggled(uid, clothing);
     }
 
     public void SetSlots(EntityUid uid, SlotFlags slots, SharedClothingComponent? clothing = null)
@@ -81,7 +78,8 @@ public abstract class SharedClothingSystem : EntitySystem
         clothing.EquippedPrefix = otherClothing.EquippedPrefix;
         clothing.RsiPath = otherClothing.RsiPath;
         clothing.FemaleMask = otherClothing.FemaleMask;
-        clothing.HidesHair = otherClothing.HidesHair;
+
+        SetHidesHair(uid, otherClothing.HidesHair, clothing);
 
         _itemSys.VisualsChanged(uid);
         Dirty(clothing);

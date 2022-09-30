@@ -36,7 +36,7 @@ namespace Content.Client.Inventory
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IConfigurationManager _config = default!;
         [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
-        [Dependency] private readonly ClothingVisualsSystem _clothingVisualsSystem = default!;
+        [Dependency] private readonly ClothingSystem _clothingSystem = default!;
 
         public const int ButtonSize = 64;
         private const int ButtonSeparation = 4;
@@ -165,7 +165,7 @@ namespace Content.Client.Inventory
 
         private void OnInit(EntityUid uid, ClientInventoryComponent component, ComponentInit args)
         {
-            _clothingVisualsSystem.InitClothing(uid, component);
+            _clothingSystem.InitClothing(uid, component);
 
             if (!TryGetUIElements(uid, out var window, out var bottomLeft, out var bottomRight, out var topQuick,
                     component))
@@ -218,7 +218,7 @@ namespace Content.Client.Inventory
 
             // only raise event if either itemUid is not null, or the user is holding something
             if (itemUid != null || TryComp(uid, out SharedHandsComponent? hands) && hands.ActiveHandEntity != null)
-                EntityManager.RaisePredictiveEvent(new UseSlotNetworkMessage(slot)); 
+                EntityManager.RaisePredictiveEvent(new UseSlotNetworkMessage(slot));
         }
 
         private bool TryGetUIElements(EntityUid uid, [NotNullWhen(true)] out DefaultWindow? invWindow,
