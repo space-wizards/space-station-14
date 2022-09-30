@@ -175,7 +175,7 @@ namespace Content.Shared.MobState.EntitySystems
 
         public void UpdateState(EntityUid _, MobStateComponent component, DamageChangedEvent args)
         {
-            UpdateState(component, args.Damageable.TotalDamage);
+            UpdateState(component, args.Damageable.TotalDamage, args.Origin);
         }
 
         private void OnMoveAttempt(EntityUid uid, MobStateComponent component, UpdateCanMoveEvent args)
