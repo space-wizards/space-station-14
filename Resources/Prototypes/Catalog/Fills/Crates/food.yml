@@ -50,3 +50,31 @@
       amount: 3
     - id: KitchenKnife
       amount: 1
+
+- type: entity
+  id: CrateFoodMeat
+  parent: CrateFreezer
+  components:
+  - type: StorageFill
+    contents:
+    - id: FoodMeat
+      amount: 10
+    - id: FoodMeatChicken
+      amount: 5
+      prob: 0.40
+      orGroup: Meat
+    - id: FoodMeatDuck
+      amount: 5
+      prob: 0.40
+      orGroup: Meat
+    - id: FoodMeatBacon
+      amount: 5
+      prob: 0.20
+      orGroup: Meat
+    - id: FoodKebabSkewer
+      amount: 3
+    - id: FoodCondimentPacketSalt
+      amount: 2
+    - id: FoodCondimentBottleBBQ
+      amount: 1
+      prob: 0.5

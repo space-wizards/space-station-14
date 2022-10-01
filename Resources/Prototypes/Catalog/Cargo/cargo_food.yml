@@ -29,6 +29,16 @@
   group: market
 
 - type: cargoProduct
+  id: FoodMeat
+  icon:
+    sprite: Objects/Consumable/Food/meat.rsi
+    state: plain
+  product: CrateFoodMeat
+  cost: 1500
+  category: Food
+  group: market
+
+- type: cargoProduct
   id: FoodCrateKvassTank
   icon:
     sprite: Structures/Storage/kvass.rsi
