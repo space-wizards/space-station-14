@@ -31,7 +31,7 @@ public abstract class SharedChameleonSystem : EntitySystem
 
     private void OnChameleonGetState(EntityUid uid, SharedChameleonComponent component, ref ComponentGetState args)
     {
-        args.State = new ChameleonComponentState(component.HadOutline, component.Speed);
+        args.State = new ChameleonComponentState(component.Speed);
     }
 
     private void OnChameleonHandlesState(EntityUid uid, SharedChameleonComponent component, ref ComponentHandleState args)
@@ -39,15 +39,11 @@ public abstract class SharedChameleonSystem : EntitySystem
         if (args.Current is not ChameleonComponentState cast)
             return;
 
-        component.HadOutline = cast.HadOutline;
         component.Speed = cast.Speed;
     }
 
     private void OnMove(EntityUid uid, SharedChameleonComponent component, ref MoveEvent args)
     {
-        if (!_timing.IsFirstTimePredicted)
-            return;
-
         if (args.NewPosition.EntityId != args.OldPosition.EntityId)
             return;
 

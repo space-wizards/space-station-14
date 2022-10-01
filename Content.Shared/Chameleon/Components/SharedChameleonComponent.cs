@@ -20,27 +20,10 @@ public sealed class SharedChameleonComponent : Component
 [Serializable, NetSerializable]
 public sealed class ChameleonComponentState : ComponentState
 {
-    public bool HadOutline;
     public float Speed;
 
-    public ChameleonComponentState(bool hadOutline, float speed)
+    public ChameleonComponentState(float speed)
     {
-        HadOutline = hadOutline;
         Speed = speed;
-    }
-}
-
-[Serializable, NetSerializable]
-public sealed class ChameleonUpdateEvent : EntityEventArgs
-{
-    public bool HadOutline;
-    public float Speed;
-    public EntityUid Owner;
-
-    public ChameleonUpdateEvent(bool hadOutline, float speed, EntityUid owner)
-    {
-        HadOutline = hadOutline;
-        Speed = speed;
-        Owner = owner;
     }
 }

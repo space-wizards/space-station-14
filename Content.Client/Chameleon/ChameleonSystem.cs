@@ -15,6 +15,8 @@ public sealed class ChameleonSystem : SharedChameleonSystem
 
     public override void Initialize()
     {
+        base.Initialize();
+
         _shader = _protoMan.Index<ShaderPrototype>("Chameleon").InstanceUnique();
         SubscribeLocalEvent<SharedChameleonComponent, ComponentInit>(OnAdd);
         SubscribeLocalEvent<SharedChameleonComponent, ComponentRemove>(OnRemove);
