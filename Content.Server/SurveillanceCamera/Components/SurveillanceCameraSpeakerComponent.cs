@@ -1,7 +1,8 @@
 namespace Content.Server.SurveillanceCamera;
 
 /// <summary>
-/// This is used for...
+///     This allows surveillance cameras to speak, if the camera in question
+///     has a microphone that listens to speech.
 /// </summary>
 [RegisterComponent]
 public sealed class SurveillanceCameraSpeakerComponent : Component
@@ -11,7 +12,7 @@ public sealed class SurveillanceCameraSpeakerComponent : Component
 
     [ViewVariables] public float SpeechSoundCooldown = 0.5f;
 
-    [ViewVariables] public Queue<string> LastSpokenNames = new();
+    [ViewVariables] public readonly Queue<string> LastSpokenNames = new();
 
     public TimeSpan LastSoundPlayed = TimeSpan.Zero;
 }

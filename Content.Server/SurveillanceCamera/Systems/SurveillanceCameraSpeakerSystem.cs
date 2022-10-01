@@ -7,7 +7,7 @@ using Robust.Shared.Timing;
 namespace Content.Server.SurveillanceCamera;
 
 /// <summary>
-/// This handles speech for surveillance camera monitors.
+///     This handles speech for surveillance camera monitors.
 /// </summary>
 public sealed class SurveillanceCameraSpeakerSystem : EntitySystem
 {
