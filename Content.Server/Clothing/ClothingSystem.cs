@@ -3,7 +3,6 @@ using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Humanoid;
 using Content.Shared.Inventory.Events;
-using Content.Shared.Tag;
 using Robust.Shared.Containers;
 
 namespace Content.Server.Clothing;
@@ -21,20 +20,18 @@ public sealed class ClothingSystem : SharedClothingSystem
 
     private void OnGotEquipped(EntityUid uid, SharedClothingComponent component, GotEquippedEvent args)
     {
-        if (args.Slot == "head" && component.HidesHair)
-        {
-            _humanoidSystem.SetLayersVisibility(args.Equipee,
-                HumanoidVisualLayersExtension.Sublayers(HumanoidVisualLayers.Head), false);
-        }
+        if (!component.HidesHair)
+            return;
+
+        UpdateHumanoidHair(uid, args.Equipee, args.Slot, false, component);
     }
 
     private void OnGotUnequipped(EntityUid uid, SharedClothingComponent component, GotUnequippedEvent args)
     {
-        if (args.Slot == "head" && component.HidesHair)
-        {
-            _humanoidSystem.SetLayersVisibility(args.Equipee,
-                HumanoidVisualLayersExtension.Sublayers(HumanoidVisualLayers.Head), true);
-        }
+        if (!component.HidesHair)
+            return;
+
+        UpdateHumanoidHair(uid, args.Equipee, args.Slot, true, component);
     }
 
     protected override void OnHidesHairToggled(EntityUid uid, SharedClothingComponent clothing)
@@ -43,10 +40,19 @@ public sealed class ClothingSystem : SharedClothingSystem
             return;
 
         var slot = container.ID;
+        var hairVisible = !clothing.HidesHair;
+        UpdateHumanoidHair(uid, container.Owner, slot, hairVisible, clothing);
+    }
+
+    private void UpdateHumanoidHair(EntityUid clothingUid, EntityUid humanoidUid, string slot, bool hairVisible,
+        SharedClothingComponent? clothing = null, HumanoidComponent? humanoid = null)
+    {
         if (slot != "head")
             return;
+        if (!Resolve(clothingUid, ref clothing) || !Resolve(humanoidUid, ref humanoid, false))
+            return;
 
-        var layers = HumanoidVisualLayersExtension.Sublayers(HumanoidVisualLayers.Head);
-        _humanoidSystem.SetLayersVisibility(container.Owner, layers, !clothing.HidesHair);
+        var hairLayers = HumanoidVisualLayersExtension.Sublayers(HumanoidVisualLayers.Head);
+        _humanoidSystem.SetLayersVisibility(humanoidUid, hairLayers, hairVisible, humanoid: humanoid);
     }
 }
