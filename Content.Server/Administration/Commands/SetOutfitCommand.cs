@@ -121,9 +121,8 @@ namespace Content.Server.Administration.Commands
             if (entityManager.TryGetComponent(target, out HandsComponent? handsComponent))
             {
                 var handsSystem = entityManager.EntitySysManager.GetEntitySystem<HandsSystem>();
-                var inhand = startingGear.Inhand;
                 var coords = entityManager.GetComponent<TransformComponent>(target).Coordinates;
-                foreach (var (hand, prototype) in inhand)
+                foreach (var (hand, prototype) in startingGear.Inhand)
                 {
                     var inhandEntity = entityManager.SpawnEntity(prototype, coords);
                     handsSystem.TryPickup(target, inhandEntity, hand, checkActionBlocker: false, handsComp: handsComponent);
