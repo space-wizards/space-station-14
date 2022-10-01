@@ -21,6 +21,6 @@ public static class FaxMachineConstants
 
     // Data
 
-    public const string FaxIdData = "fax_data_id";
+    public const string FaxNameData = "fax_data_name";
     public const string FaxContentData = "fax_data_content";
 }

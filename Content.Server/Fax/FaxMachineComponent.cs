@@ -6,18 +6,18 @@ namespace Content.Server.Fax;
 public sealed class FaxMachineComponent : Component
 {
     /**
-     * Visible to other id of current fax in network
+     * Visible to other name of current fax in network
      */
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("id")]
-    public string FaxId { get; set; } = "fax";
+    [DataField("name")]
+    public string FaxName { get; set; } = "fax";
 
     /**
-     * Id of fax in network to which paper will be send
+     * Device address of fax in network to which paper will be send
      */
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("destinationId")]
-    public string? DestinationFaxId { get; set; }
+    [DataField("destinationAddress")]
+    public string? DestinationFaxAddress { get; set; }
 
     /**
      * Contains the item to be send, assumes it's paper...
@@ -32,6 +32,6 @@ public sealed class FaxMachineComponent : Component
     [DataField("isVisibleInNetwork")]
     public bool IsVisibleInNetwork { get; set; } = true;
     
-    // Known faxes in network by address with faxId
+    // Known faxes in network by address with fax names
     public Dictionary<string, string> KnownFaxes { get; } = new();
 }

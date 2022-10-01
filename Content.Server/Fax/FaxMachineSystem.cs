@@ -90,14 +90,14 @@ public sealed class FaxMachineSystem : EntitySystem
         });
 
         // destination select verbs
-        foreach (var (faxId, _) in component.KnownFaxes)
+        foreach (var (faxAddress, faxName) in component.KnownFaxes)
         {
             args.Verbs.Add(new()
             {
-                Text = faxId,
+                Text = faxName,
                 Message = Loc.GetString("fax-machine-verb-destination-desc"),
                 Category = VerbCategory.FaxDestination,
-                Act = () => SetDestination(uid, faxId),
+                Act = () => SetDestination(uid, faxAddress),
             });
         }
     }
@@ -118,17 +118,16 @@ public sealed class FaxMachineSystem : EntitySystem
                     var payload = new NetworkPayload()
                     {
                         { DeviceNetworkConstants.Command, FaxMachineConstants.FaxPongCommand },
-                        { FaxMachineConstants.FaxIdData, component.FaxId }
+                        { FaxMachineConstants.FaxNameData, component.FaxName }
                     };
                     _deviceNetworkSystem.QueuePacket(uid, null, payload);
 
                     break;
                 case FaxMachineConstants.FaxPongCommand:
-                    if (!args.Data.TryGetValue(FaxMachineConstants.FaxIdData, out string? faxId))
+                    if (!args.Data.TryGetValue(FaxMachineConstants.FaxNameData, out string? faxName))
                         return;
 
-                    if (!component.KnownFaxes.ContainsKey(faxId))
-                        component.KnownFaxes.Add(faxId, args.SenderAddress);
+                    component.KnownFaxes[args.SenderAddress] = faxName;
 
                     break;
                 case FaxMachineConstants.FaxPrintCommand:
@@ -142,14 +141,18 @@ public sealed class FaxMachineSystem : EntitySystem
         }
     }
 
-    public void SetDestination(EntityUid uid, string destinationFaxId, FaxMachineComponent? component = null)
+    public void SetDestination(EntityUid uid, string destAddress, FaxMachineComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
 
-        component.DestinationFaxId = destinationFaxId;
+        component.DestinationFaxAddress = destAddress;
 
-        var msg = Loc.GetString("fax-machine-popup-destination", ("destination", destinationFaxId));
+        var faxName = "fax-machine-popup-destination-unknown";
+        if (component.KnownFaxes.ContainsKey(destAddress)) // If admin manually set unknown for fax address
+            faxName = component.KnownFaxes[destAddress];
+
+        var msg = Loc.GetString("fax-machine-popup-destination", ("destination", faxName));
         _popupSystem.PopupEntity(msg, uid, Filter.Pvs(uid));
     }
 
@@ -158,7 +161,7 @@ public sealed class FaxMachineSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        component.DestinationFaxId = null;
+        component.DestinationFaxAddress = null;
         component.KnownFaxes.Clear();
         
         var payload = new NetworkPayload()
@@ -180,17 +183,17 @@ public sealed class FaxMachineSystem : EntitySystem
             return;
         }
 
-        if (component.DestinationFaxId == null)
+        if (component.DestinationFaxAddress == null)
         {
             _popupSystem.PopupEntity(Loc.GetString("fax-machine-popup-destination-not-selected"), uid, Filter.Pvs(uid));
             return;
         }
 
-        if (!component.KnownFaxes.TryGetValue(component.DestinationFaxId, out string? destinationAddress))
-        {
-            _popupSystem.PopupEntity(Loc.GetString("fax-machine-popup-destination-not-found"), uid, Filter.Pvs(uid));
-            return;
-        }
+        // if (!component.KnownFaxes.TryGetValue(component.DestinationFaxId, out string? destinationAddress))
+        // {
+        //     _popupSystem.PopupEntity(Loc.GetString("fax-machine-popup-destination-not-found"), uid, Filter.Pvs(uid));
+        //     return;
+        // }
 
         if (!TryComp<PaperComponent>(sendEntity, out var paper))
             return;
@@ -200,7 +203,7 @@ public sealed class FaxMachineSystem : EntitySystem
             { DeviceNetworkConstants.Command, FaxMachineConstants.FaxPrintCommand },
             { FaxMachineConstants.FaxContentData, paper.Content }
         };
-        _deviceNetworkSystem.QueuePacket(uid, destinationAddress, payload);
+        _deviceNetworkSystem.QueuePacket(uid, component.DestinationFaxAddress, payload);
 
         _popupSystem.PopupEntity(Loc.GetString("fax-machine-popup-send"), uid, Filter.Pvs(uid));
     }

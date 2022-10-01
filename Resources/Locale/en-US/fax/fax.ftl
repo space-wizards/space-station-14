@@ -9,4 +9,5 @@ fax-machine-popup-destination = Send destination: {$destination}
 fax-machine-popup-paper-not-inserted = Paper not inserted!
 fax-machine-popup-destination-not-selected = Destination not selected!
 fax-machine-popup-destination-not-found = Destination fax not found!
+fax-machine-popup-destination-unknown = unknown
 fax-machine-popup-send = Fax start scanning paper
