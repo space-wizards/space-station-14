@@ -7,6 +7,7 @@ using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Fax;
 
@@ -17,9 +18,11 @@ namespace Content.Server.Fax;
 // TODO: Add separate paper container for new messages? Add ink? Add paper jamming?
 // TODO: Messages receive queue and send history?
 // TODO: Fax wires hacking?
+// TODO: Allow rename fax with multitool
 
 public sealed class FaxMachineSystem : EntitySystem
 {
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
@@ -117,12 +120,15 @@ public sealed class FaxMachineSystem : EntitySystem
             switch (command)
             {
                 case FaxMachineConstants.FaxPingCommand:
+                    if (!component.IsVisibleInNetwork)
+                        return;
+
                     var payload = new NetworkPayload()
                     {
                         { DeviceNetworkConstants.Command, FaxMachineConstants.FaxPongCommand },
                         { FaxMachineConstants.FaxNameData, component.FaxName }
                     };
-                    _deviceNetworkSystem.QueuePacket(uid, null, payload);
+                    _deviceNetworkSystem.QueuePacket(uid, args.SenderAddress, payload);
 
                     break;
                 case FaxMachineConstants.FaxPongCommand:
@@ -190,6 +196,12 @@ public sealed class FaxMachineSystem : EntitySystem
             _popupSystem.PopupEntity(Loc.GetString("fax-machine-popup-destination-not-selected"), uid, Filter.Pvs(uid));
             return;
         }
+        
+        if (!component.KnownFaxes.TryGetValue(component.DestinationFaxAddress, out var faxName))
+        {
+            _popupSystem.PopupEntity(Loc.GetString("fax-machine-popup-destination-not-found"), uid, Filter.Pvs(uid));
+            return;
+        }
 
         if (!TryComp<PaperComponent>(sendEntity, out var paper))
             return;
@@ -200,6 +212,8 @@ public sealed class FaxMachineSystem : EntitySystem
             { FaxMachineConstants.FaxContentData, paper.Content }
         };
         _deviceNetworkSystem.QueuePacket(uid, component.DestinationFaxAddress, payload);
+
+        SaveHistoryRecord(uid, "Send", faxName, component);
 
         _popupSystem.PopupEntity(Loc.GetString("fax-machine-popup-send"), uid, Filter.Pvs(uid));
     }
@@ -213,6 +227,8 @@ public sealed class FaxMachineSystem : EntitySystem
         if (fromAddress != null && component.KnownFaxes.ContainsKey(fromAddress)) // If message received from unknown for fax address
             faxName = component.KnownFaxes[fromAddress];
         
+        SaveHistoryRecord(uid, "Receive", faxName, component);
+        
         _popupSystem.PopupEntity(Loc.GetString("fax-machine-popup-received", ("from", faxName)), uid, Filter.Pvs(uid));
         
         var printed = EntityManager.SpawnEntity("Paper", Transform(uid).Coordinates);
@@ -220,5 +236,15 @@ public sealed class FaxMachineSystem : EntitySystem
             return;
 
         _paperSystem.SetContent(printed, content);
+    }
+
+    public void SaveHistoryRecord(EntityUid uid, string type, string faxName, FaxMachineComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+        
+        // var currentTime = _gameTiming.CurTime.Subtract(_gameTicker.RoundStartTimeSpan).ToString("hh\\:mm"); // Need subtract?
+        var currentTime = _gameTiming.CurTime.ToString("hh\\:mm\\:ss");
+        component.History.Add(new HistoryRecord(type, faxName, currentTime));
     }
 }
