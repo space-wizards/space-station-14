@@ -19,6 +19,6 @@
     ears: ClothingHeadsetService
     pocket1: d10Dice
   inhand:
-    left hand: BriefcaseBrownFilled
+    right hand: BriefcaseBrownFilled
   innerclothingskirt: ClothingUniformJumpskirtColorLightBrown
 
