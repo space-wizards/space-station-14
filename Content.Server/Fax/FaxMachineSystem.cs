@@ -213,8 +213,6 @@ public sealed class FaxMachineSystem : EntitySystem
         };
         _deviceNetworkSystem.QueuePacket(uid, component.DestinationFaxAddress, payload);
 
-        SaveHistoryRecord(uid, "Send", faxName, component);
-
         _popupSystem.PopupEntity(Loc.GetString("fax-machine-popup-send"), uid, Filter.Pvs(uid));
     }
 
@@ -226,9 +224,7 @@ public sealed class FaxMachineSystem : EntitySystem
         var faxName = Loc.GetString("fax-machine-popup-source-unknown");
         if (fromAddress != null && component.KnownFaxes.ContainsKey(fromAddress)) // If message received from unknown for fax address
             faxName = component.KnownFaxes[fromAddress];
-        
-        SaveHistoryRecord(uid, "Receive", faxName, component);
-        
+
         _popupSystem.PopupEntity(Loc.GetString("fax-machine-popup-received", ("from", faxName)), uid, Filter.Pvs(uid));
         
         var printed = EntityManager.SpawnEntity("Paper", Transform(uid).Coordinates);
@@ -236,15 +232,5 @@ public sealed class FaxMachineSystem : EntitySystem
             return;
 
         _paperSystem.SetContent(printed, content);
-    }
-
-    public void SaveHistoryRecord(EntityUid uid, string type, string faxName, FaxMachineComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
-            return;
-        
-        // var currentTime = _gameTiming.CurTime.Subtract(_gameTicker.RoundStartTimeSpan).ToString("hh\\:mm"); // Need subtract?
-        var currentTime = _gameTiming.CurTime.ToString("hh\\:mm\\:ss");
-        component.History.Add(new HistoryRecord(type, faxName, currentTime));
     }
 }

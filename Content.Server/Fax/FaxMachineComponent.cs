@@ -37,33 +37,4 @@ public sealed class FaxMachineComponent : Component
      */
     [ViewVariables]
     public Dictionary<string, string> KnownFaxes { get; } = new();
-
-    /*
-     * History records of sent and received fax messages
-     */
-    [ViewVariables]
-    public List<HistoryRecord> History { get; } = new();
 }
-
-/// <summary>
-/// Fax sent/received history record
-/// </summary>
-public sealed class HistoryRecord
-{
-    [ViewVariables]
-    public string Type { get; set; } // TODO: Make enum or something simple
-
-    [ViewVariables]
-    public string FaxName { get; set; }
-
-    [ViewVariables]
-    public string Time { get; set; }
-
-    public HistoryRecord(string type, string faxName, string time)
-    {
-        Type = type;
-        FaxName = faxName;
-        Time = time;
-    }
-}
-
