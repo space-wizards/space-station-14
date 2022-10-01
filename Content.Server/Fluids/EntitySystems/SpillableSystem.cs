@@ -152,6 +152,7 @@ public sealed class SpillableSystem : EntitySystem
                         BreakOnUserMove = true,
                         BreakOnDamage = true,
                         BreakOnStun = true,
+                        NeedHand = true,
                         TargetFinishedEvent = new SpillFinishedEvent(args.User, component.Owner, solution),
                         TargetCancelledEvent = new SpillCancelledEvent(component.Owner)
                     });
