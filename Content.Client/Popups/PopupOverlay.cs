@@ -37,6 +37,7 @@ public sealed class PopupOverlay : Overlay
         if (args.ViewportControl == null)
             return;
 
+        args.DrawingHandle.SetTransform(Matrix3.Identity);
         args.DrawingHandle.UseShader(_shader);
 
         DrawWorld(args.ScreenHandle, args);
