@@ -7,7 +7,7 @@ ent-CrateFoodMRE = MRE crate
 ent-CrateFoodCooking = Kitchen supplies crate
     .desc = Extra kitchen supplies, in case the botanists are absent.
 
-ent-CrateFoodCooking = Assorted meat crate
+ent-CrateFoodMeat = Assorted meat crate
     .desc = Also known as emergency barbeque supplies.
 
 ent-CrateFoodKvassTank = Kvass tank crate
