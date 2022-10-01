@@ -64,8 +64,8 @@ public sealed class ChameleonSystem : SharedChameleonSystem
         var reference = args.Viewport.WorldToLocal(parentXform.WorldPosition);
 
         _shader.SetParameter("reference", reference);
-        _shader.SetParameter("speed", component.Speed);
-        args.Sprite.Color = new Color(component.Speed, component.Speed, 1, 1);
+        _shader.SetParameter("stealthLevel", component.StealthLevel);
+        args.Sprite.Color = new Color(component.StealthLevel, component.StealthLevel, 1, 1);
 
         Dirty(component);
     }

@@ -23,7 +23,7 @@ public abstract class SharedChameleonSystem : EntitySystem
 
         foreach (var chameleon in EntityQuery<SharedChameleonComponent>())
         {
-            chameleon.Speed = Math.Clamp(chameleon.Speed - frameTime * 0.15f, -1f, 1f);
+            chameleon.StealthLevel = Math.Clamp(chameleon.StealthLevel - frameTime * chameleon.InvisibilityRate, -1f, 1f);
 
             Dirty(chameleon);
         }
@@ -31,7 +31,7 @@ public abstract class SharedChameleonSystem : EntitySystem
 
     private void OnChameleonGetState(EntityUid uid, SharedChameleonComponent component, ref ComponentGetState args)
     {
-        args.State = new ChameleonComponentState(component.Speed);
+        args.State = new ChameleonComponentState(component.StealthLevel);
     }
 
     private void OnChameleonHandlesState(EntityUid uid, SharedChameleonComponent component, ref ComponentHandleState args)
@@ -39,7 +39,7 @@ public abstract class SharedChameleonSystem : EntitySystem
         if (args.Current is not ChameleonComponentState cast)
             return;
 
-        component.Speed = cast.Speed;
+        component.StealthLevel = cast.StealthLevel;
     }
 
     private void OnMove(EntityUid uid, SharedChameleonComponent component, ref MoveEvent args)
@@ -47,8 +47,8 @@ public abstract class SharedChameleonSystem : EntitySystem
         if (args.NewPosition.EntityId != args.OldPosition.EntityId)
             return;
 
-        component.Speed += 0.2f*(args.NewPosition.Position - args.OldPosition.Position).Length;
-        component.Speed = Math.Clamp(component.Speed, -1f, 1f);
+        component.StealthLevel += component.VisibilityRate*(args.NewPosition.Position - args.OldPosition.Position).Length;
+        component.StealthLevel = Math.Clamp(component.StealthLevel, -1f, 1f);
 
         Dirty(component);
     }
