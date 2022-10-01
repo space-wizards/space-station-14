@@ -1,16 +1,15 @@
 ﻿using Content.Client.Chameleon.Components;
 using Content.Client.Interactable.Components;
+using Content.Shared.Chameleon;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
 
 namespace Content.Client.Chameleon;
 
-public sealed class ChameleonSystem : EntitySystem
+public sealed class ChameleonSystem : SharedChameleonSystem
 {
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
 
     private ShaderInstance _shader = default!;
 
@@ -18,33 +17,8 @@ public sealed class ChameleonSystem : EntitySystem
     {
         _shader = _protoMan.Index<ShaderPrototype>("Chameleon").InstanceUnique();
         SubscribeLocalEvent<ChameleonComponent, ComponentInit>(OnAdd);
-        SubscribeLocalEvent<ChameleonComponent, MoveEvent>(OnMove);
         SubscribeLocalEvent<ChameleonComponent, ComponentRemove>(OnRemove);
         SubscribeLocalEvent<ChameleonComponent, BeforePostShaderRenderEvent>(OnShaderRender);
-    }
-
-    public override void FrameUpdate(float frameTime)
-    {
-        base.FrameUpdate(frameTime);
-
-        foreach (var chameleon in EntityQuery<ChameleonComponent>())
-        {
-            chameleon.Speed = Math.Clamp(chameleon.Speed - frameTime * 0.15f, -1f, 1f);
-        }
-    }
-
-    private void OnRemove(EntityUid uid, ChameleonComponent component, ComponentRemove args)
-    {
-        if (!TryComp(uid, out SpriteComponent? sprite))
-            return;
-
-        sprite.PostShader = null;
-        sprite.LayerSetShader(0, "unshaded");
-        sprite.GetScreenTexture = false;
-        sprite.RaiseShaderEvent = false;
-
-        if (component.HadOutline)
-            AddComp<InteractionOutlineComponent>(uid);
     }
 
     private void OnAdd(EntityUid uid, ChameleonComponent component, ComponentInit args)
@@ -53,7 +27,6 @@ public sealed class ChameleonSystem : EntitySystem
             return;
 
         sprite.PostShader = _shader;
-        sprite.LayerSetShader(0, "chameleon");
         sprite.GetScreenTexture = true;
         sprite.RaiseShaderEvent = true;
 
@@ -64,16 +37,17 @@ public sealed class ChameleonSystem : EntitySystem
         }
     }
 
-    private void OnMove(EntityUid uid, ChameleonComponent component, ref MoveEvent args)
+    private void OnRemove(EntityUid uid, ChameleonComponent component, ComponentRemove args)
     {
-        if (!_timing.IsFirstTimePredicted)
+        if (!TryComp(uid, out SpriteComponent? sprite))
             return;
 
-        if (args.NewPosition.EntityId != args.OldPosition.EntityId)
-            return;
+        sprite.PostShader = null;
+        sprite.GetScreenTexture = false;
+        sprite.RaiseShaderEvent = false;
 
-        component.Speed += 0.2f*(args.NewPosition.Position - args.OldPosition.Position).Length;
-        component.Speed = Math.Clamp(component.Speed, -1f, 1f);
+        if (component.HadOutline)
+            AddComp<InteractionOutlineComponent>(uid);
     }
 
     private void OnShaderRender(EntityUid uid, ChameleonComponent component, BeforePostShaderRenderEvent args)
