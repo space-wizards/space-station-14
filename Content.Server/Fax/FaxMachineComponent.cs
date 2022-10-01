@@ -10,7 +10,7 @@ public sealed class FaxMachineComponent : Component
      */
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("name")]
-    public string FaxName { get; set; } = "fax";
+    public string FaxName { get; set; } = "Unknown";
 
     /**
      * Device address of fax in network to which paper will be send

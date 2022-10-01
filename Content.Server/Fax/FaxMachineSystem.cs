@@ -12,9 +12,11 @@ namespace Content.Server.Fax;
 
 // TODO: Emag change frequency to Syndicate
 // TODO: Sending cooldown
-// TODO: Display placed paper
+// TODO: Correct visualizer for paper-insert/sending/receiving/idle
 // TODO: Support not only text send? Not only paper? But how serialize?
-// Faxes with same id not adds as different
+// TODO: Add separate paper container for new messages? Add ink? Add paper jamming?
+// TODO: Messages receive queue and send history?
+// TODO: Fax wires hacking?
 
 public sealed class FaxMachineSystem : EntitySystem
 {
@@ -134,7 +136,7 @@ public sealed class FaxMachineSystem : EntitySystem
                     if (!args.Data.TryGetValue(FaxMachineConstants.FaxContentData, out string? content))
                         return;
 
-                    Print(uid, content);
+                    Print(uid, content, args.SenderAddress);
 
                     break;
             }
@@ -148,8 +150,8 @@ public sealed class FaxMachineSystem : EntitySystem
 
         component.DestinationFaxAddress = destAddress;
 
-        var faxName = "fax-machine-popup-destination-unknown";
-        if (component.KnownFaxes.ContainsKey(destAddress)) // If admin manually set unknown for fax address
+        var faxName = Loc.GetString("fax-machine-popup-source-unknown");
+        if (component.KnownFaxes.ContainsKey(destAddress)) // If admin manually set address unknown for fax
             faxName = component.KnownFaxes[destAddress];
 
         var msg = Loc.GetString("fax-machine-popup-destination", ("destination", faxName));
@@ -189,12 +191,6 @@ public sealed class FaxMachineSystem : EntitySystem
             return;
         }
 
-        // if (!component.KnownFaxes.TryGetValue(component.DestinationFaxId, out string? destinationAddress))
-        // {
-        //     _popupSystem.PopupEntity(Loc.GetString("fax-machine-popup-destination-not-found"), uid, Filter.Pvs(uid));
-        //     return;
-        // }
-
         if (!TryComp<PaperComponent>(sendEntity, out var paper))
             return;
 
@@ -208,10 +204,16 @@ public sealed class FaxMachineSystem : EntitySystem
         _popupSystem.PopupEntity(Loc.GetString("fax-machine-popup-send"), uid, Filter.Pvs(uid));
     }
 
-    public void Print(EntityUid uid, string content, FaxMachineComponent? component = null)
+    public void Print(EntityUid uid, string content, string? fromAddress, FaxMachineComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
+
+        var faxName = Loc.GetString("fax-machine-popup-source-unknown");
+        if (fromAddress != null && component.KnownFaxes.ContainsKey(fromAddress)) // If message received from unknown for fax address
+            faxName = component.KnownFaxes[fromAddress];
+        
+        _popupSystem.PopupEntity(Loc.GetString("fax-machine-popup-received", ("from", faxName)), uid, Filter.Pvs(uid));
         
         var printed = EntityManager.SpawnEntity("Paper", Transform(uid).Coordinates);
         if (!TryComp<PaperComponent>(printed, out var paper))

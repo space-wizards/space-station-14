@@ -5,9 +5,10 @@ fax-machine-verb-refresh-desc = Refresh available faxes in network.
 fax-machine-verb-send = Send
 fax-machine-verb-send-desc = Send message to selected destination.
 
-fax-machine-popup-destination = Send destination: {$destination}
+fax-machine-popup-destination = Send destination: { $destination }
 fax-machine-popup-paper-not-inserted = Paper not inserted!
 fax-machine-popup-destination-not-selected = Destination not selected!
 fax-machine-popup-destination-not-found = Destination fax not found!
-fax-machine-popup-destination-unknown = unknown
+fax-machine-popup-source-unknown = unknown
 fax-machine-popup-send = Fax start scanning paper
+fax-machine-popup-received = Received correspondence from { $from }.
