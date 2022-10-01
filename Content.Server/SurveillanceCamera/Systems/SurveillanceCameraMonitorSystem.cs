@@ -21,11 +21,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
     [Dependency] private readonly SurveillanceCameraSystem _surveillanceCameras = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
     [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
-    [Dependency] private readonly ChatSystem _chatSystem = default!;
-    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+
 
     public override void Initialize()
     {
@@ -40,7 +36,6 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
         SubscribeLocalEvent<SurveillanceCameraMonitorComponent, SurveillanceCameraRefreshCamerasMessage>(OnRefreshCamerasMessage);
         SubscribeLocalEvent<SurveillanceCameraMonitorComponent, SurveillanceCameraRefreshSubnetsMessage>(OnRefreshSubnetsMessage);
         SubscribeLocalEvent<SurveillanceCameraMonitorComponent, SurveillanceCameraDisconnectMessage>(OnDisconnectMessage);
-        SubscribeLocalEvent<SurveillanceCameraMonitorComponent, SurveillanceCameraSpeechSendEvent>(OnSpeechSent);
     }
 
     private const float _maxHeartbeatTime = 300f;
@@ -224,54 +219,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
         RemoveViewer(uid, args.Session.AttachedEntity.Value, component);
     }
 
-    private void OnSpeechSent(EntityUid uid, SurveillanceCameraMonitorComponent component,
-        SurveillanceCameraSpeechSendEvent args)
-    {
-        if (!component.SpeechEnabled)
-        {
-            return;
-        }
 
-        var time = _gameTiming.CurTime;
-        var cd = TimeSpan.FromSeconds(component.SpeechSoundCooldown);
-
-        // this part's mostly copied from speech
-        if (time - component.LastSoundPlayed < cd
-            && TryComp<SharedSpeechComponent>(args.Speaker, out var speech)
-            && speech.SpeechSounds != null
-            && _prototypeManager.TryIndex(speech.SpeechSounds, out SpeechSoundsPrototype? speechProto))
-        {
-            var sound = args.OriginalMessage[^1] switch
-            {
-                '?' => speechProto.AskSound,
-                '!' => speechProto.ExclaimSound,
-                _ => speechProto.SaySound
-            };
-
-            var uppercase = 0;
-            for (var i = 0; i < args.OriginalMessage.Length; i++)
-            {
-                if (char.IsUpper(args.OriginalMessage[i]))
-                {
-                    uppercase++;
-                }
-            }
-
-            if (uppercase > args.OriginalMessage.Length / 2)
-            {
-                sound = speechProto.ExclaimSound;
-            }
-
-            var scale = (float) _random.NextGaussian(1, speechProto.Variation);
-            var param = speech.AudioParams.WithPitchScale(scale);
-            _audioSystem.PlayPvs(sound, uid, param);
-
-            component.LastSoundPlayed = time;
-        }
-
-
-        _chatSystem.TrySendInGameICMessage(uid, args.WrappedMessage, InGameICChatType.Speak, false);
-    }
     #endregion
 
     private void SendHeartbeat(EntityUid uid, SurveillanceCameraMonitorComponent? monitor = null)
