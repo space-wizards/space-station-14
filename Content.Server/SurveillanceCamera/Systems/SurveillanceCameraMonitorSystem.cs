@@ -22,7 +22,6 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
     [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
 
-
     public override void Initialize()
     {
         SubscribeLocalEvent<SurveillanceCameraMonitorComponent, SurveillanceCameraDeactivateEvent>(OnSurveillanceCameraDeactivate);
@@ -218,8 +217,6 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
 
         RemoveViewer(uid, args.Session.AttachedEntity.Value, component);
     }
-
-
     #endregion
 
     private void SendHeartbeat(EntityUid uid, SurveillanceCameraMonitorComponent? monitor = null)
