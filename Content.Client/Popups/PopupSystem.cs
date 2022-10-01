@@ -61,10 +61,10 @@ namespace Content.Client.Popups
 
         public void PopupEntity(string message, EntityUid uid, PopupType type=PopupType.Small)
         {
-            if (!TryComp<TransformComponent>(uid, out var transform))
+            if (Deleted(uid))
                 return;
 
-            PopupMessage(message, type, transform.Coordinates);
+            PopupMessage(message, type, new EntityCoordinates(uid, Vector2.Zero));
         }
 
         private void PopupMessage(string message, PopupType type, EntityCoordinates coordinates)
