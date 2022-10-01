@@ -2,8 +2,8 @@
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Chameleon.Components;
-[NetworkedComponent]
-public abstract class SharedChameleonComponent : Component
+[RegisterComponent, NetworkedComponent]
+public sealed class SharedChameleonComponent : Component
 {
     /// <summary>
     ///     Whether or not the entity previously had an interaction outline prior to cloaking.

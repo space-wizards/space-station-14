@@ -1,10 +1,8 @@
-﻿using Content.Client.Chameleon.Components;
-using Content.Client.Interactable.Components;
+﻿using Content.Client.Interactable.Components;
 using Content.Shared.Chameleon;
 using Content.Shared.Chameleon.Components;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
-using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Chameleon;
@@ -18,22 +16,12 @@ public sealed class ChameleonSystem : SharedChameleonSystem
     public override void Initialize()
     {
         _shader = _protoMan.Index<ShaderPrototype>("Chameleon").InstanceUnique();
-        SubscribeLocalEvent<ChameleonComponent, ComponentInit>(OnAdd);
-        SubscribeLocalEvent<ChameleonComponent, ComponentRemove>(OnRemove);
-        SubscribeNetworkEvent<ChameleonUpdateEvent>(OnChameleonUpdate);
-        SubscribeLocalEvent<ChameleonComponent, BeforePostShaderRenderEvent>(OnShaderRender);
+        SubscribeLocalEvent<SharedChameleonComponent, ComponentInit>(OnAdd);
+        SubscribeLocalEvent<SharedChameleonComponent, ComponentRemove>(OnRemove);
+        SubscribeLocalEvent<SharedChameleonComponent, BeforePostShaderRenderEvent>(OnShaderRender);
     }
 
-    private void OnChameleonUpdate(ChameleonUpdateEvent ev)
-    {
-        if (TryComp<ChameleonComponent>(ev.Owner, out var chameleon))
-        {
-            chameleon.HadOutline = ev.HadOutline;
-            chameleon.Speed = ev.Speed;
-        }
-    }
-
-    private void OnAdd(EntityUid uid, ChameleonComponent component, ComponentInit args)
+    private void OnAdd(EntityUid uid, SharedChameleonComponent component, ComponentInit args)
     {
         if (!TryComp(uid, out SpriteComponent? sprite))
             return;
@@ -47,10 +35,9 @@ public sealed class ChameleonSystem : SharedChameleonSystem
             RemComp(uid, outline);
             component.HadOutline = true;
         }
-        Dirty(component);
     }
 
-    private void OnRemove(EntityUid uid, ChameleonComponent component, ComponentRemove args)
+    private void OnRemove(EntityUid uid, SharedChameleonComponent component, ComponentRemove args)
     {
         if (!TryComp(uid, out SpriteComponent? sprite))
             return;
@@ -63,7 +50,7 @@ public sealed class ChameleonSystem : SharedChameleonSystem
             AddComp<InteractionOutlineComponent>(uid);
     }
 
-    private void OnShaderRender(EntityUid uid, ChameleonComponent component, BeforePostShaderRenderEvent args)
+    private void OnShaderRender(EntityUid uid, SharedChameleonComponent component, BeforePostShaderRenderEvent args)
     {
         // Distortion effect uses screen coordinates. If a player moves, the entities appear to move on screen. this
         // makes the distortion very noticeable.
@@ -77,6 +64,7 @@ public sealed class ChameleonSystem : SharedChameleonSystem
         _shader.SetParameter("reference", reference);
         _shader.SetParameter("speed", component.Speed);
         args.Sprite.Color = new Color(component.Speed, component.Speed, 1, 1);
+
         Dirty(component);
     }
 }

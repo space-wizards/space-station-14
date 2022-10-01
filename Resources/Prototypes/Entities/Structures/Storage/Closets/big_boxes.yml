@@ -66,6 +66,7 @@
         - type: StorageVisualizer
           state: agentbox
           state_open: cardboard_open
+    - type: Chameleon
 
 #For admin spawning only
 - type: entity
