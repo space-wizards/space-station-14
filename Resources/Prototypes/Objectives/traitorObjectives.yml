@@ -40,18 +40,6 @@
   canBeDuplicate: true
 
 - type: objective
-  id: StayAliveObjective
-  issuer: syndicate
-  requirements:
-    - !type:TraitorRequirement {}
-    - !type:IncompatibleConditionsRequirement
-        conditions:
-          - DieCondition
-          - EscapeShuttleCondition
-  conditions:
-    - !type:StayAliveCondition {}
-
-- type: objective
   id: DieObjective
   issuer: syndicate
   prob: 0.03
@@ -59,7 +47,6 @@
     - !type:TraitorRequirement {}
     - !type:IncompatibleConditionsRequirement
       conditions:
-        - StayAliveCondition
         - StealCondition
         - EscapeShuttleCondition
   conditions:
@@ -232,6 +219,5 @@
     - !type:IncompatibleConditionsRequirement
       conditions:
         - DieCondition
-        - StayAliveCondition
   conditions:
     - !type:EscapeShuttleCondition {}
