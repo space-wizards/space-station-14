@@ -1,1 +1,1 @@
-surveillance-camera-microphone-message = {$speaker} [{$originalName}]
+surveillance-camera-microphone-message = {$speaker} ({$originalName})
