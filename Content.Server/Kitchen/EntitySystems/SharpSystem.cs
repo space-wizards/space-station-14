@@ -80,18 +80,19 @@ public sealed class SharpSystem : EntitySystem
         sharp.Butchering.Remove(ev.Entity);
 
         var spawnEntities = EntitySpawnCollection.GetSpawns(butcher.SpawnedEntities, _robustRandom);
-        var coords = Transform(ev.Entity).Coordinates;
+        var coords = Transform(ev.Entity).MapPosition;
         EntityUid popupEnt = default;
         foreach (var proto in spawnEntities)
         {
-            popupEnt = Spawn(proto, coords);
+            // distribute the spawned items randomly in a small radius around the origin
+            popupEnt = Spawn(proto, coords.Offset(_robustRandom.NextAngle().ToVec() * 0.25f));
         }
 
         _popupSystem.PopupEntity(Loc.GetString("butcherable-knife-butchered-success", ("target", ev.Entity), ("knife", ev.Sharp)),
             popupEnt, Filter.Entities(ev.User), PopupType.LargeCaution);
 
         if (TryComp<SharedBodyComponent>(ev.Entity, out var body))
-        {
+        { 
             body.Gib();
         }
         else
