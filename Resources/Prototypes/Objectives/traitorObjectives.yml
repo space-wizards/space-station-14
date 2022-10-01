@@ -47,6 +47,7 @@
     - !type:IncompatibleConditionsRequirement
         conditions:
           - DieCondition
+          - EscapeShuttleCondition
   conditions:
     - !type:StayAliveCondition {}
 
@@ -60,6 +61,7 @@
       conditions:
         - StayAliveCondition
         - StealCondition
+        - EscapeShuttleCondition
   conditions:
     - !type:DieCondition {}
 
@@ -221,3 +223,15 @@
   conditions:
     - !type:StealCondition
       prototype: JetpackCaptainFilled
+
+- type: objective
+  id: EscapeShuttleObjective
+  issuer: syndicate
+  requirements:
+    - !type:TraitorRequirement {}
+    - !type:IncompatibleConditionsRequirement
+      conditions:
+        - DieCondition
+        - StayAliveCondition
+  conditions:
+    - !type:EscapeShuttleCondition {}
