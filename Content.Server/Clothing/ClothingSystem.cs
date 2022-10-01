@@ -36,6 +36,8 @@ public sealed class ClothingSystem : SharedClothingSystem
 
     protected override void OnHidesHairToggled(EntityUid uid, SharedClothingComponent clothing)
     {
+        base.OnHidesHairToggled(uid, clothing);
+        
         if (!_container.TryGetContainingContainer(uid, out var container))
             return;
 
