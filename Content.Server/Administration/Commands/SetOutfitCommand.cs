@@ -93,7 +93,7 @@ namespace Content.Server.Administration.Commands
                 profile = prefs.SelectedCharacter as HumanoidCharacterProfile;
             }
 
-            var invSystem = entityManager.EntitySysManager.GetEntitySystem<InventorySystem>();
+            var invSystem = entityManager.System<InventorySystem>();
             if (invSystem.TryGetSlots(target, out var slotDefinitions, inventoryComponent))
             {
                 foreach (var slot in slotDefinitions)
@@ -120,7 +120,7 @@ namespace Content.Server.Administration.Commands
 
             if (entityManager.TryGetComponent(target, out HandsComponent? handsComponent))
             {
-                var handsSystem = entityManager.EntitySysManager.GetEntitySystem<HandsSystem>();
+                var handsSystem = entityManager.System<HandsSystem>();
                 var coords = entityManager.GetComponent<TransformComponent>(target).Coordinates;
                 foreach (var (hand, prototype) in startingGear.Inhand)
                 {
