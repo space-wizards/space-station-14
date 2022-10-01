@@ -1,3 +1,4 @@
+using Content.Server.Cuffs.Components;
 using Content.Server.Objectives.Interfaces;
 using Content.Server.Station.Systems;
 using Content.Server.Station.Components;
@@ -62,6 +63,12 @@ namespace Content.Server.Objectives.Conditions
 
                 var shuttleContainsAgent = false;
                 var agentIsAlive = !_mind.CharacterDeadIC;
+                var agentIsEscaping = true;
+
+                if (entMan.TryGetComponent<CuffableComponent>(_mind.OwnedEntity, out var cuffed)
+                    && cuffed.CuffedHandCount > 0)
+                    // You're not escaping if you're restrained!
+                    agentIsEscaping = false;
 
                 if (_stationData == null) {
                     // Fallback and let the agent escape on any emergency shuttle.
@@ -75,7 +82,7 @@ namespace Content.Server.Objectives.Conditions
                 } else
                     shuttleContainsAgent = IsAgentOnShuttle(xform, _stationData.EmergencyShuttle);
 
-                return (shuttleContainsAgent && agentIsAlive) ? 1f : 0f;
+                return (shuttleContainsAgent && agentIsAlive && agentIsEscaping) ? 1f : 0f;
             }
         }
 
