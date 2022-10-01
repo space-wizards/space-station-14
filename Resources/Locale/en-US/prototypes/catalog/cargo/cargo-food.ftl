@@ -7,5 +7,8 @@ ent-FoodMRE = { ent-CrateFoodMRE }
 ent-FoodCook = { ent-CrateFoodCooking }
     .desc = { ent-CrateFoodCooking.desc }
 
+ent-FoodMeat = { ent-CrateFoodMeat }
+    .desc = { ent-CrateFoodMeat.desc }    
+
 ent-FoodCrateKvassTank = { ent-CrateFoodKvassTank }
     .desc = { ent-CrateFoodKvassTank.desc }
