@@ -92,8 +92,8 @@ namespace Content.Server.Recycling
         {
             RecyclableComponent? recyclable = null;
 
-            // Can only recycle things that are recyclable... And also check the safety of the thing to recycle.
-            if (!_tags.HasTag(entity, "Recyclable") &&
+            // Can only recycle things that are tagged trash or recyclable... And also check the safety of the thing to recycle.
+            if (!_tags.HasAnyTag(entity, "Trash", "Recyclable") &&
                 (!TryComp(entity, out recyclable) || !recyclable.Safe && component.Safe))
             {
                 return;
