@@ -39,6 +39,8 @@ public sealed class ChameleonSystem : SharedChameleonSystem
         foreach (var chameleon in EntityQuery<ChameleonComponent>())
         {
             chameleon.Speed = Math.Clamp(chameleon.Speed - frameTime * 0.15f, -1f, 1f);
+
+            RaiseNetworkEvent(new ChameleonUpdateEvent(chameleon.HadOutline, chameleon.Speed, chameleon.Owner));
             Dirty(chameleon);
         }
     }

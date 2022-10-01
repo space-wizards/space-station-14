@@ -29,3 +29,18 @@ public sealed class ChameleonComponentState : ComponentState
         Speed = speed;
     }
 }
+
+[Serializable, NetSerializable]
+public sealed class ChameleonUpdateEvent : EntityEventArgs
+{
+    public bool HadOutline;
+    public float Speed;
+    public EntityUid Owner;
+
+    public ChameleonUpdateEvent(bool hadOutline, float speed, EntityUid owner)
+    {
+        HadOutline = hadOutline;
+        Speed = speed;
+        Owner = owner;
+    }
+}

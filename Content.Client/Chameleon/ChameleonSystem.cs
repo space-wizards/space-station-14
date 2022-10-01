@@ -1,8 +1,10 @@
 ﻿using Content.Client.Chameleon.Components;
 using Content.Client.Interactable.Components;
 using Content.Shared.Chameleon;
+using Content.Shared.Chameleon.Components;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Chameleon;
@@ -18,7 +20,17 @@ public sealed class ChameleonSystem : SharedChameleonSystem
         _shader = _protoMan.Index<ShaderPrototype>("Chameleon").InstanceUnique();
         SubscribeLocalEvent<ChameleonComponent, ComponentInit>(OnAdd);
         SubscribeLocalEvent<ChameleonComponent, ComponentRemove>(OnRemove);
+        SubscribeNetworkEvent<ChameleonUpdateEvent>(OnChameleonUpdate);
         SubscribeLocalEvent<ChameleonComponent, BeforePostShaderRenderEvent>(OnShaderRender);
+    }
+
+    private void OnChameleonUpdate(ChameleonUpdateEvent ev)
+    {
+        if (TryComp<ChameleonComponent>(ev.Owner, out var chameleon))
+        {
+            chameleon.HadOutline = ev.HadOutline;
+            chameleon.Speed = ev.Speed;
+        }
     }
 
     private void OnAdd(EntityUid uid, ChameleonComponent component, ComponentInit args)
@@ -35,6 +47,7 @@ public sealed class ChameleonSystem : SharedChameleonSystem
             RemComp(uid, outline);
             component.HadOutline = true;
         }
+        Dirty(component);
     }
 
     private void OnRemove(EntityUid uid, ChameleonComponent component, ComponentRemove args)
@@ -64,6 +77,7 @@ public sealed class ChameleonSystem : SharedChameleonSystem
         _shader.SetParameter("reference", reference);
         _shader.SetParameter("speed", component.Speed);
         args.Sprite.Color = new Color(component.Speed, component.Speed, 1, 1);
+        Dirty(component);
     }
 }
 
