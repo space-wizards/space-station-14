@@ -177,9 +177,9 @@ namespace Content.Server.Medical.BiomassReclaimer
                 return;
             reclaimer.CancelToken = null;
         }
-        private void StartProcessing(EntityUid toProcess, BiomassReclaimerComponent component)
+
+        private void StartProcessing(EntityUid toProcess, BiomassReclaimerComponent component, PhysicsComponent? physics = null)
         {
-            PhysicsComponent? physics = null;
             if (!Resolve(toProcess, ref physics))
                 return;
 
