@@ -67,8 +67,8 @@
           state: agentbox
           state_open: cardboard_open
     - type: Chameleon
-      invisibilityRate: 0.24
-      visibilityRate: 0.10
+      passiveVisibilityRate: -0.24
+      movementVisibilityRate: 0.10
 
 #For admin spawning only
 - type: entity
