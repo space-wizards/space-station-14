@@ -52,3 +52,13 @@
     deviceNetId: Wireless
     receiveFrequencyId: FaxCentcom
     transmitFrequencyId: FaxCentcom
+
+- type: entity
+  id: FaxMachineSyndie
+  parent: FaxMachine
+  name: syndicate fax machine
+  description: Bluespace technologies on the application of bureaucracy.
+  components:
+  - type: FaxMachine
+    shouldResponsePings: false
+    emagged: true
