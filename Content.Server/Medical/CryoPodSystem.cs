@@ -289,7 +289,7 @@ public sealed class CryoPodSystem: EntitySystem
 
     private void OnExamined(EntityUid uid, CryoPodComponent component, ExaminedEvent args)
     {
-        var container = _itemSlotsSystem.GetItem(component.Owner, "beakerSlot");
+        var container = _itemSlotsSystem.GetItem(component.Owner, component.SolutionContainerName);
         if (args.IsInDetailsRange && container != null && _solutionContainerSystem.TryGetFitsInDispenser(container.Value, out var containerSolution))
         {
             args.PushMarkup(Loc.GetString("cryo-pod-examine", ("beaker", Name(container.Value))));
