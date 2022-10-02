@@ -21,7 +21,7 @@
     machinePartEfficiency: 1
     powerCapacityGain: 2500000
   - type: Battery
-    maxCharge: 4000000
+    maxCharge: 2500000
     startingCharge: 0
   - type: ExaminableBattery
   - type: PointLight
@@ -169,8 +169,8 @@
   suffix: Basic, 4MW
   components:
   - type: Battery
-    maxCharge: 4000000
-    startingCharge: 4000000
+    maxCharge: 2500000
+    startingCharge: 2500000
 
 - type: entity
   parent: SubstationBasic

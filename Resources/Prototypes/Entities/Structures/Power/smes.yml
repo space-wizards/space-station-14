@@ -27,7 +27,7 @@
       visuals:
         - type: SmesVisualizer
     - type: Battery
-      maxCharge: 10000000
+      maxCharge: 8000000
       startingCharge: 0
     - type: ExaminableBattery
     - type: NodeContainer
@@ -72,8 +72,8 @@
   suffix: Basic, 10MW
   components:
   - type: Battery
-    maxCharge: 10000000
-    startingCharge: 10000000
+    maxCharge: 8000000
+    startingCharge: 8000000
 
 - type: entity
   parent: SMESBasic
