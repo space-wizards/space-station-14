@@ -19,9 +19,10 @@ namespace Content.Server.Fax;
 // TODO: Sending cooldown
 // TODO: Add separate paper container for new messages? Add ink? Add paper jamming?
 // TODO: Messages receive and send history?
-// TODO: Allow rename fax with multitool
 // TODO: Serialize faxName to map file
 // TODO: Refresh after map fully loaded to cache all faxes in list (to prevent taking fax name that was mapped)
+// TODO: Add construction
+// TODO: Add printing/inserting sounds
 // ID-card based authentication?
 // TODO: UI, guh
 
@@ -65,13 +66,11 @@ public sealed class FaxMachineSystem : EntitySystem
 
                 var isAnimationEnd = comp.PrintingTimeRemaining <= 0;
                 if (isAnimationEnd)
-                {
                     SpawnPaperFromQueue(comp.Owner, comp);
-
-                    var isMoreInQueue = comp.PrintingQueue.Count > 0;
-                    if (isMoreInQueue)
-                        comp.PrintingTimeRemaining = comp.PrintingTime;
-                }
+            }
+            else if (comp.PrintingQueue.Count > 0)
+            {
+                comp.PrintingTimeRemaining = comp.PrintingTime;
             }
 
             if (comp.InsertingTimeRemaining > 0)
