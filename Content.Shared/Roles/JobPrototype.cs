@@ -28,6 +28,12 @@ namespace Content.Shared.Roles
         [DataField("name")]
         public string Name { get; } = string.Empty;
 
+        /// <summary>
+        ///     The name of this job as displayed to players.
+        /// </summary>
+        [DataField("description")]
+        public string? Description { get; }
+
         [ViewVariables(VVAccess.ReadOnly)]
         public string LocalizedName => Loc.GetString(Name);
 
