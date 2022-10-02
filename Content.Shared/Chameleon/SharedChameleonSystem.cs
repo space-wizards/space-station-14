@@ -72,10 +72,8 @@ public abstract class SharedChameleonSystem : EntitySystem
 
         if (component.LastUpdated != null)
         {
-            var curTime = _timing.CurTime;
-            var deltaTime = curTime - component.LastUpdated.Value;
-            component.LastVisibility = Math.Clamp(component.LastVisibility + (float) deltaTime.TotalSeconds * component.PassiveVisibilityRate, -1f, 1f);
-            component.LastUpdated = curTime;
+            component.LastVisibility = Getvisibility(uid, component);
+            component.LastUpdated = _timing.CurTime;
         }
 
         component.LastVisibility = Math.Clamp(component.LastVisibility + delta, -1f, 1f);
