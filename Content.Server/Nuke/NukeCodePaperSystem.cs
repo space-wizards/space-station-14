@@ -22,12 +22,17 @@ namespace Content.Server.Nuke
 
         private void OnMapInit(EntityUid uid, NukeCodePaperComponent component, MapInitEvent args)
         {
-            if (!TryComp<PaperComponent>(uid, out var paper))
+            SetupPaper(uid);
+        }
+
+        private void SetupPaper(EntityUid uid, EntityUid? station = null, PaperComponent? paper = null)
+        {
+            if (!Resolve(uid, ref paper))
             {
                 return;
             }
 
-            var owningStation = _station.GetOwningStation(uid);
+            var owningStation = station ?? _station.GetOwningStation(uid);
             var transform = Transform(uid);
 
             // Find the first nuke that matches the paper's location.
@@ -67,7 +72,8 @@ namespace Content.Server.Nuke
                 }
 
                 var consolePos = transform.MapPosition;
-                Spawn(NukePaperPrototype, consolePos);
+                var uid = Spawn(NukePaperPrototype, consolePos);
+                SetupPaper(uid, station);
 
                 wasSent = true;
             }
