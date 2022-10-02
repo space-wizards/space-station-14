@@ -17,7 +17,7 @@
       shader: unshaded
     - state: full
       shader: unshaded
-  - type: MachineBattery
+  - type: UpgradeBattery
     maxChargeMultiplier: 2
     baseMaxCharge: 2500000
   - type: Battery

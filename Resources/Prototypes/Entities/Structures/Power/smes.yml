@@ -20,7 +20,7 @@
       layers:
         - state: smes
     - type: Smes
-    - type: MachineBattery
+    - type: UpgradeBattery
       maxChargeMultiplier: 2
       baseMaxCharge: 8000000
     - type: Appearance
