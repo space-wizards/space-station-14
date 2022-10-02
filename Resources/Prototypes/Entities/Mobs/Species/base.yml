@@ -248,7 +248,7 @@
       collection: Punch
     range: 1.5
     angle: 30
-    animation: WeaponArcFist
+    animation: WeaponArcPunch
     attackRate: 1
     damage:
       types:
