@@ -418,7 +418,7 @@ namespace Content.Server.Mind
                 // This restriction is because I'm too lazy to initialize the player data
                 // for a client that hasn't logged in yet.
                 // Go ahead and remove it if you need.
-                throw new ArgumentException("new owner must have previously logged into the server.", nameof(newOwner));
+                throw new ArgumentException("New owner must have previously logged into the server.", nameof(newOwner));
             }
 
             // PlayerData? newOwnerData = null;

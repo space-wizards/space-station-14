@@ -50,16 +50,32 @@ public sealed class MindTests
     private Mind CreateMind(NetUserId userId, MindSystem mindSystem)
     {
         Mind? mind = null;
+
+        CatchPlayerDataException(() =>
+            mindSystem.TryCreateMind(userId, out mind));
+
+        Assert.NotNull(mind);
+        return mind!;
+    }
+
+    /// <summary>
+    ///     Exception handling for PlayerData and NetUserId invalid due to testing.
+    ///     Can be removed when Players can be mocked.
+    /// </summary>
+    /// <param name="func"></param>
+    private void CatchPlayerDataException(Action func)
+    {
         try
         {
-            mindSystem.TryCreateMind(userId, out mind);
+            func();
         }
-        catch (ArgumentException)
+        catch (ArgumentException e)
         {
+            // Prevent exiting due to PlayerData not being initialized.
+            if (e.Message == "New owner must have previously logged into the server. (Parameter 'newOwner')")
+                return;
+            throw;
         }
-
-        Assert.That(mind, Is.Not.Null);
-        return mind!;
     }
 
     [Test]
@@ -80,7 +96,7 @@ public sealed class MindTests
 
             var mind = CreateMind(userId, mindSystem);
 
-            Assert.That(mind!.UserId, Is.EqualTo(userId));
+            Assert.That(mind.UserId, Is.EqualTo(userId));
 
             mindSystem.TransferTo(mind, entity);
             Assert.That(mindSystem.GetMind(entity, mindComp), Is.EqualTo(mind));
@@ -218,15 +234,9 @@ public sealed class MindTests
             Assert.That(mind.UserId, Is.EqualTo(userId));
 
             var newUserId = new NetUserId(Guid.NewGuid());
-            // Exception handling for PlayerData and NetUserId invalid due to testing.
-            // Can be removed when Players can be mocked.
-            try
-            {
-                mindSystem.ChangeOwningPlayer(entity, newUserId, mindComp);
-            }
-            catch (ArgumentException)
-            {
-            }
+            CatchPlayerDataException(() =>
+                mindSystem.ChangeOwningPlayer(entity, newUserId, mindComp));
+
             Assert.That(mind.UserId, Is.EqualTo(newUserId));
         });
 
