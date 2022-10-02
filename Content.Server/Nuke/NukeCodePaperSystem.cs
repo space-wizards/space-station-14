@@ -44,7 +44,7 @@ namespace Content.Server.Nuke
                     continue;
                 }
 
-                paper.Content += $"{MetaData(uid).EntityName} - {nuke.Code}";
+                paper.Content += $"{MetaData(nuke.Owner).EntityName} - {nuke.Code}";
                 break;
             }
         }
