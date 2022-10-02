@@ -196,7 +196,7 @@ namespace Content.Server.Medical.BiomassReclaimer
 
             component.CurrentExpectedYield = (uint) Math.Max(0, physics.FixturesMass * component.YieldPerUnitMass);
             component.ProcessingTimer = physics.FixturesMass * component.ProcessingTimePerUnitMass;
-            EntityManager.QueueDeleteEntity(toProcess);
+            QueueDel(toProcess);
         }
 
         private bool CanGib(EntityUid uid, EntityUid dragged, BiomassReclaimerComponent component)
