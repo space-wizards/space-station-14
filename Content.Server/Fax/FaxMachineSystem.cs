@@ -1,23 +1,27 @@
-﻿using Content.Server.DeviceNetwork;
+﻿using Content.Server.Administration;
+using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Paper;
 using Content.Server.Popups;
+using Content.Server.Tools;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Fax;
+using Content.Shared.Interaction;
 using Content.Shared.Verbs;
+using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 
 namespace Content.Server.Fax;
 
-// TODO: Emag change frequency to Syndicate
 // TODO: Sending cooldown
 // TODO: Add separate paper container for new messages? Add ink? Add paper jamming?
 // TODO: Messages receive and send history?
 // TODO: Allow rename fax with multitool
 // TODO: Serialize faxName to map file
+// TODO: Refresh after map fully loaded to cache all faxes in list (to prevent taking fax name that was mapped)
 // ID-card based authentication?
 // TODO: UI, guh
 
@@ -29,6 +33,8 @@ public sealed class FaxMachineSystem : EntitySystem
     [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
     [Dependency] private readonly PaperSystem _paperSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private readonly ToolSystem _toolSystem = default!;
+    [Dependency] private readonly QuickDialogSystem _quickDialog = default!;
 
     public const string PaperSlotId = "FaxMachine-paper";
 
@@ -42,6 +48,7 @@ public sealed class FaxMachineSystem : EntitySystem
         SubscribeLocalEvent<FaxMachineComponent, EntRemovedFromContainerMessage>(OnItemSlotChanged);
         SubscribeLocalEvent<FaxMachineComponent, GetVerbsEvent<Verb>>(OnVerb);
         SubscribeLocalEvent<FaxMachineComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
+        SubscribeLocalEvent<FaxMachineComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<FaxMachineComponent, GotEmaggedEvent>(OnEmagged);
     }
 
@@ -103,6 +110,39 @@ public sealed class FaxMachineSystem : EntitySystem
             component.InsertingTimeRemaining = component.InsertionTime;
             _itemSlotsSystem.SetLock(uid, component.PaperSlot, true);
         }
+    }
+    
+    private void OnInteractUsing(EntityUid uid, FaxMachineComponent component, InteractUsingEvent args)
+    {
+        if (args.Handled ||
+            !TryComp<ActorComponent>(args.User, out var actor) ||
+            !_toolSystem.HasQuality(args.Used, "Screwing")) // Screwing because Pulsing already used by device linking
+            return;
+
+        _quickDialog.OpenDialog(actor.PlayerSession,
+            Loc.GetString("fax-machine-dialog-rename"),
+            Loc.GetString("fax-machine-dialog-field-name"),
+            (string newName) =>
+        {
+            if (component.FaxName == newName)
+                return;
+
+            if (newName.Length > 20)
+            {
+                _popupSystem.PopupEntity(Loc.GetString("fax-machine-popup-name-long"), uid, Filter.Pvs(uid));
+                return;
+            }
+
+            if (component.KnownFaxes.ContainsValue(newName) && !component.Emagged) // Allow exist names if emagged for fun
+            {
+                _popupSystem.PopupEntity(Loc.GetString("fax-machine-popup-name-exist"), uid, Filter.Pvs(uid));
+                return;
+            }
+
+            args.Handled = true;
+            component.FaxName = newName;
+            _popupSystem.PopupEntity(Loc.GetString("fax-machine-popup-name-set"), uid, Filter.Pvs(uid));
+        });
     }
     
     private void OnEmagged(EntityUid uid, FaxMachineComponent component, GotEmaggedEvent args)
