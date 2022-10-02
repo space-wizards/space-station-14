@@ -11,11 +11,16 @@ namespace Content.Server.Nuke.Commands
     {
         public string Command => "nukecodes";
         public string Description => "Send nuke codes to the communication console";
-        public string Help => "nukecodes";
+        public string Help => "nukecodes [station EntityUid]";
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            EntitySystem.Get<NukeCodeSystem>().SendNukeCodes();
+            if (!EntityUid.TryParse(args[1], out var uid))
+            {
+                shell.WriteError("Could not parse station UID.");
+            }
+
+            IoCManager.Resolve<EntityManager>().System<NukeCodePaperSystem>().SendNukeCodes(uid);
         }
     }
 }
