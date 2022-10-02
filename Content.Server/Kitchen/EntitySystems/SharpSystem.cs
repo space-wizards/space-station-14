@@ -92,7 +92,7 @@ public sealed class SharpSystem : EntitySystem
             popupEnt, Filter.Entities(ev.User), PopupType.LargeCaution);
 
         if (TryComp<SharedBodyComponent>(ev.Entity, out var body))
-        { 
+        {
             body.Gib();
         }
         else
