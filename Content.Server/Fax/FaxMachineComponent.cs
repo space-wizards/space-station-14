@@ -6,14 +6,14 @@ namespace Content.Server.Fax;
 public sealed class FaxMachineComponent : Component
 {
     /// <summary>
-    /// Visible to other name of current fax in network
+    /// Name with which the fax will be visible to others on the network
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("name")]
     public string FaxName { get; set; } = "Unknown";
 
     /// <summary>
-    /// Device address of fax in network to which paper will be send
+    /// Device address of fax in network to which data will be send
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("destinationAddress")]
@@ -26,11 +26,12 @@ public sealed class FaxMachineComponent : Component
     public ItemSlot PaperSlot = new();
 
     /// <summary>
-    /// Is fax machine should be visible to other fax machines in network
+    /// Is fax machine should respond to pings in network
+    /// This will make it visible to others on the network
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("isVisibleInNetwork")]
-    public bool IsVisibleInNetwork { get; set; } = true;
+    [DataField("shouldResponsePings")]
+    public bool ShouldResponsePings { get; set; } = true;
 
     /// <summary>
     /// Known faxes in network by address with fax names
@@ -39,10 +40,10 @@ public sealed class FaxMachineComponent : Component
     public Dictionary<string, string> KnownFaxes { get; } = new();
 
     /// <summary>
-    /// Buffer of printing text
+    /// Print queue of the incoming message
     /// </summary>
     [ViewVariables]
-    public string? TextBuffer;
+    public Queue<string> PrintingQueue { get; } = new();
 
     /// <summary>
     /// Remain time of inserting animation

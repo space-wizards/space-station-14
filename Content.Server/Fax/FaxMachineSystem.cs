@@ -50,21 +50,30 @@ public sealed class FaxMachineSystem : EntitySystem
         foreach (var comp in EntityQuery<FaxMachineComponent>())
         {
             if (comp.PrintingTimeRemaining > 0)
+            {
                 comp.PrintingTimeRemaining -= frameTime;
+                UpdateAppearance(comp.Owner, comp);
+
+                var isAnimationEnd = comp.PrintingTimeRemaining <= 0;
+                if (isAnimationEnd)
+                {
+                    SpawnPaperFromQueue(comp.Owner, comp);
+
+                    var isMoreInQueue = comp.PrintingQueue.Count > 0;
+                    if (isMoreInQueue)
+                        comp.PrintingTimeRemaining = comp.PrintingTime;
+                }
+            }
+
             if (comp.InsertingTimeRemaining > 0)
+            {
                 comp.InsertingTimeRemaining -= frameTime;
+                UpdateAppearance(comp.Owner, comp);
 
-            if (comp.PrintingTimeRemaining <= 0)
-            {
-                SpawnPaperFromBuffer(comp.Owner, comp);
+                var isAnimationEnd = comp.InsertingTimeRemaining <= 0;
+                if (isAnimationEnd)
+                    _itemSlotsSystem.SetLock(comp.Owner, comp.PaperSlot, false);
             }
-
-            if (comp.InsertingTimeRemaining <= 0)
-            {
-                _itemSlotsSystem.SetLock(comp.Owner, comp.PaperSlot, false);
-            }
-            
-            UpdateAppearance(comp.Owner, comp);
         }
     }
 
@@ -142,7 +151,7 @@ public sealed class FaxMachineSystem : EntitySystem
             switch (command)
             {
                 case FaxMachineConstants.FaxPingCommand:
-                    if (!component.IsVisibleInNetwork)
+                    if (!component.ShouldResponsePings)
                         return;
 
                     var payload = new NetworkPayload()
@@ -164,7 +173,7 @@ public sealed class FaxMachineSystem : EntitySystem
                     if (!args.Data.TryGetValue(FaxMachineConstants.FaxContentData, out string? content))
                         return;
 
-                    Print(uid, content, args.SenderAddress);
+                    Receive(uid, content, args.SenderAddress);
 
                     break;
             }
@@ -251,7 +260,7 @@ public sealed class FaxMachineSystem : EntitySystem
         _popupSystem.PopupEntity(Loc.GetString("fax-machine-popup-send"), uid, Filter.Pvs(uid));
     }
 
-    public void Print(EntityUid uid, string content, string? fromAddress, FaxMachineComponent? component = null)
+    public void Receive(EntityUid uid, string content, string? fromAddress, FaxMachineComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
@@ -263,25 +272,17 @@ public sealed class FaxMachineSystem : EntitySystem
         _popupSystem.PopupEntity(Loc.GetString("fax-machine-popup-received", ("from", faxName)), uid, Filter.Pvs(uid));
         _appearance.SetData(uid, FaxMachineVisuals.BaseState, FaxMachineVisualState.Printing);
 
-        component.TextBuffer = content;
-
-        component.PrintingTimeRemaining = component.PrintingTime;
-        UpdateAppearance(uid, component);
+        component.PrintingQueue.Enqueue(content);
     }
 
-    private void SpawnPaperFromBuffer(EntityUid uid, FaxMachineComponent? component = null)
+    private void SpawnPaperFromQueue(EntityUid uid, FaxMachineComponent? component = null)
     {
-        if (!Resolve(uid, ref component))
-            return;
-        
-        if (component.TextBuffer == null)
+        if (!Resolve(uid, ref component) || component.PrintingQueue.Count == 0)
             return;
 
+        var content = component.PrintingQueue.Dequeue();
         var printed = EntityManager.SpawnEntity("Paper", Transform(uid).Coordinates);
-        if (!TryComp<PaperComponent>(printed, out var paper))
-            return;
-
-        _paperSystem.SetContent(printed, component.TextBuffer);
-        component.TextBuffer = null;
+        if (TryComp<PaperComponent>(printed, out var paper))
+            _paperSystem.SetContent(printed, content);
     }
 }
