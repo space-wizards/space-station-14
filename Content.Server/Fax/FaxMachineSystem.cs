@@ -23,6 +23,8 @@ namespace Content.Server.Fax;
 // TODO: Refresh after map fully loaded to cache all faxes in list (to prevent taking fax name that was mapped)
 // TODO: Add construction
 // TODO: Add printing/inserting sounds
+// TODO: Transfer paper stamps
+// TODO: Add unlit printing animation
 // ID-card based authentication?
 // TODO: UI, guh
 
