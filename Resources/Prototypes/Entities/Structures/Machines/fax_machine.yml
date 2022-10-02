@@ -40,6 +40,7 @@
     powerLoad: 250
   - type: FaxMachine
     paperSlot:
+      insertSound: /Audio/Machines/scanning.ogg
       ejectSound: /Audio/Machines/tray_eject.ogg
       whitelist:
         components:

@@ -23,3 +23,5 @@ printer.ogg from https://github.com/tgstation/tgstation/blob/31c5aaf4b885a50c9d5
 high_tech_confirm.ogg from https://github.com/tgstation/tgstation/blob/14aa5d2d8efca6370778d730e36ffcf258b9352e/sound/machines/high_tech_confirm.ogg
 
 tray_eject.ogg from https://github.com/tgstation/tgstation/blob/3eeba3899f22638595333c63b7b7433001f91bb2/sound/machines/eject.ogg
+
+scanning.ogg from https://freesound.org/people/SamuelGremaud/sounds/455375/ and edited
