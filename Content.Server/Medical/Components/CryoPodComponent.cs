@@ -24,7 +24,6 @@ public sealed class CryoPodComponent: Component, IGasMixtureHolder
     /// <summary>
     /// Container for mobs inserted in the pod.
     /// </summary>
-    [DataField("bodyContainer")]
     public ContainerSlot BodyContainer = default!;
 
     /// <summary>
