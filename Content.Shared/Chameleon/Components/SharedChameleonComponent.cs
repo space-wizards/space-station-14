@@ -1,4 +1,4 @@
-﻿using Robust.Shared.GameStates;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Chameleon.Components;
@@ -8,46 +8,52 @@ namespace Content.Shared.Chameleon.Components;
 /// It also turns the entity invisible
 /// </summary>
 [RegisterComponent, NetworkedComponent]
+[Access(typeof(SharedChameleonSystem))]
 public sealed class SharedChameleonComponent : Component
 {
     /// <summary>
-    ///     Whether or not the entity previously had an interaction outline prior to cloaking.
+    /// Whether or not the entity previously had an interaction outline prior to cloaking.
     /// </summary>
     [DataField("hadOutline")]
     public bool HadOutline;
 
     /// <summary>
-    /// Current level of stealth based on movement in the <exception cref="Chameleon SYstem"></exception>
-    /// -1f and 1f are the current maximums for now.
+    /// Last set level of visibility. Ranges from 1 (fully visible) and -1 (fully hidden). To get the actual current
+    /// visibility, use <see cref="SharedChameleonSystem.Getvisibility(EntityUid, SharedChameleonComponent?)"/>
     /// </summary>
-    [ViewVariables]
-    [DataField("stealthLevel")]
-    public float StealthLevel;
+    [DataField("lastVisibility")]
+    [Access(typeof(SharedChameleonSystem),  Other = AccessPermissions.None)]
+    public float LastVisibility;
 
     /// <summary>
-    /// Rate that effects how fast an entity gains stealth
-    /// If you want the entity to become invisible faster it should be higher than the <see cref="VisibilityRate"/>
+    /// Time at which <see cref="LastVisibility"/> was set. Null implies the entity is currently paused and not
+    /// accumulating any visibility change.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("invisibilityRate")]
-    public float InvisibilityRate = 0.15f;
+    [DataField("lastUpdate")]
+    public TimeSpan? LastUpdated;
 
     /// <summary>
-    /// Rate that effects how fast an entity loses stealth
-    /// If you want the entity to become visible faster it should be higher than the <see cref="InvisibilityRate"/>
+    /// Rate that effects how fast an entity's visibility passively changes.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("visibilityRate")]
-    public float VisibilityRate = 0.2f;
+    [DataField("passiveVisibilityRate")]
+    public readonly float PassiveVisibilityRate = -0.15f;
+
+    /// <summary>
+    /// Rate for movement induced visibility changes. Scales with distance moved.
+    /// </summary>
+    [DataField("movementVisibilityRate")]
+    public readonly float MovementVisibilityRate = 0.2f;
 }
 
 [Serializable, NetSerializable]
 public sealed class ChameleonComponentState : ComponentState
 {
-    public float StealthLevel;
+    public float Visibility;
+    public TimeSpan? LastUpdated;
 
-    public ChameleonComponentState(float stealthLevel)
+    public ChameleonComponentState(float stealthLevel, TimeSpan? lastUpdated)
     {
-        StealthLevel = stealthLevel;
+        Visibility = stealthLevel;
+        LastUpdated = lastUpdated;
     }
 }

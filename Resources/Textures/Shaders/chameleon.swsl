@@ -1,7 +1,7 @@
 light_mode unshaded;
 
 uniform sampler2D SCREEN_TEXTURE;
-uniform highp float stealthLevel;
+uniform highp float visibility; // number between -1 and 1
 uniform mediump vec2 reference;
 
 const mediump float time_scale = 0.25;
@@ -22,14 +22,13 @@ void fragment() {
     // visualize distortion via:
     // COLOR = vec4(w,w,w,1);
 
-    w *= (3 + stealthLevel * 2);
+    w *= (3 + visibility * 2);
 
     vec4 background = zTextureSpec(SCREEN_TEXTURE, ( FRAGCOORD.xy + vec2(w) ) * SCREEN_PIXEL_SIZE );
 
     float alpha;
-    //-1 and 1 are the current maximums
-    if (stealthLevel>0)
-      alpha = sprite.a * stealthLevel;
+    if (visibility>0)
+      alpha = sprite.a * visibility;
     else
       alpha = 0;
 

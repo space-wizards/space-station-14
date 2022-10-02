@@ -1,4 +1,4 @@
-﻿using Content.Client.Interactable.Components;
+using Content.Client.Interactable.Components;
 using Content.Shared.Chameleon;
 using Content.Shared.Chameleon.Components;
 using Robust.Client.GameObjects;
@@ -18,13 +18,13 @@ public sealed class ChameleonSystem : SharedChameleonSystem
         base.Initialize();
 
         _shader = _protoMan.Index<ShaderPrototype>("Chameleon").InstanceUnique();
-        SubscribeLocalEvent<SharedChameleonComponent, ComponentInit>(OnAdd);
         SubscribeLocalEvent<SharedChameleonComponent, ComponentRemove>(OnRemove);
         SubscribeLocalEvent<SharedChameleonComponent, BeforePostShaderRenderEvent>(OnShaderRender);
     }
 
-    private void OnAdd(EntityUid uid, SharedChameleonComponent component, ComponentInit args)
+    protected override void OnInit(EntityUid uid, SharedChameleonComponent component, ComponentInit args)
     {
+        base.OnInit(uid, component, args);
         if (!TryComp(uid, out SpriteComponent? sprite))
             return;
 
@@ -47,6 +47,7 @@ public sealed class ChameleonSystem : SharedChameleonSystem
         sprite.PostShader = null;
         sprite.GetScreenTexture = false;
         sprite.RaiseShaderEvent = false;
+        sprite.Color = Color.White;
 
         if (component.HadOutline)
             AddComp<InteractionOutlineComponent>(uid);
@@ -62,12 +63,12 @@ public sealed class ChameleonSystem : SharedChameleonSystem
         // unchanged.
         var parentXform = Transform(Transform(uid).ParentUid);
         var reference = args.Viewport.WorldToLocal(parentXform.WorldPosition);
-
+        var visibility = Getvisibility(uid, component);
         _shader.SetParameter("reference", reference);
-        _shader.SetParameter("stealthLevel", component.StealthLevel);
-        args.Sprite.Color = new Color(component.StealthLevel, component.StealthLevel, 1, 1);
+        _shader.SetParameter("visibility", visibility);
 
-        Dirty(component);
+        visibility = MathF.Max(0, visibility);
+        args.Sprite.Color = new Color(visibility, visibility, 1, 1);
     }
 }
 
