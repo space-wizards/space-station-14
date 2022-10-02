@@ -66,6 +66,8 @@ public sealed class ChameleonSystem : SharedChameleonSystem
         var visibility = Getvisibility(uid, component);
         _shader.SetParameter("reference", reference);
         _shader.SetParameter("visibility", visibility);
+
+        visibility = MathF.Max(0, visibility);
         args.Sprite.Color = new Color(visibility, visibility, 1, 1);
     }
 }
