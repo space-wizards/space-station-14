@@ -70,8 +70,10 @@
     id: GasLeak
     startAnnouncement: station-event-gas-leak-start-announcement
     startAudio:
-      path: /Audio/Announcements/attention.ogg
+      path: /Audio/Announcements/gasleak_start.ogg
     endAnnouncement: station-event-gas-leak-end-announcement
+    endAudio:
+      path: /Audio/Announcements/gasleak_end.ogg
     earliestStart: 10
     minimumPlayers: 5
     weight: 5
@@ -137,7 +139,7 @@
     weight: 10
     endAfter: 1
     startAudio:
-      path: /Audio/Announcements/attention.ogg
+      path: /Audio/Announcements/sentience.ogg
 
 - type: gameRule
   id: VentClog
@@ -146,7 +148,7 @@
     id: VentClog
     startAnnouncement: station-event-vent-clog-start-announcement
     startAudio:
-      path: /Audio/Announcements/attention.ogg
+      path: /Audio/Announcements/ventclog.ogg
     earliestStart: 15
     minimumPlayers: 15
     weight: 5

@@ -21,7 +21,7 @@ random-sentience-event-strength-8 = ИИ
 ## Announcement text
 
 station-event-random-sentience-announcement =
-    Опираясь на { $data }, мы полагаем что несколько станционных { $amount ->
+    Опираясь на { $data }, стало известно что некоторые { $amount ->
         [1] { $kind1 }
         [2] { $kind1 } и { $kind2 }
         [3] { $kind1 }, { $kind2 }, и { $kind3 }
