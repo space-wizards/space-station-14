@@ -18,6 +18,7 @@ namespace Content.Server.Research.Components
         [DataField("passiveLimitPerSource")]
         public int PassiveLimitPerSource = 30000;
         [ViewVariables(VVAccess.ReadOnly)] public int Id { get; set; }
+
         [ViewVariables(VVAccess.ReadOnly)]
         public List<ResearchPointSourceComponent> PointSources { get; } = new();
 
