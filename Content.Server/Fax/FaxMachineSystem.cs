@@ -13,13 +13,10 @@ namespace Content.Server.Fax;
 
 // TODO: Emag change frequency to Syndicate
 // TODO: Sending cooldown
-// TODO: Correct visualizer for paper-insert/sending/receiving/idle
-// TODO: Support not only text send? Not only paper? But how serialize?
 // TODO: Add separate paper container for new messages? Add ink? Add paper jamming?
-// TODO: Messages receive queue and send history?
-// TODO: Fax wires hacking?
+// TODO: Messages receive and send history?
 // TODO: Allow rename fax with multitool
-// TODO: Add receive messages queue for printing
+// TODO: UI, guh
 
 public sealed class FaxMachineSystem : EntitySystem
 {
