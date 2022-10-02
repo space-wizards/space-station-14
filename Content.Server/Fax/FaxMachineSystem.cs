@@ -4,6 +4,7 @@ using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Paper;
 using Content.Server.Popups;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Emag.Systems;
 using Content.Shared.Fax;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
@@ -16,16 +17,19 @@ namespace Content.Server.Fax;
 // TODO: Add separate paper container for new messages? Add ink? Add paper jamming?
 // TODO: Messages receive and send history?
 // TODO: Allow rename fax with multitool
+// TODO: Serialize faxName to map file
+// ID-card based authentication?
 // TODO: UI, guh
 
 public sealed class FaxMachineSystem : EntitySystem
 {
     [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
     [Dependency] private readonly PaperSystem _paperSystem = default!;
-    
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+
     public const string PaperSlotId = "FaxMachine-paper";
 
     public override void Initialize()
@@ -38,6 +42,7 @@ public sealed class FaxMachineSystem : EntitySystem
         SubscribeLocalEvent<FaxMachineComponent, EntRemovedFromContainerMessage>(OnItemSlotChanged);
         SubscribeLocalEvent<FaxMachineComponent, GetVerbsEvent<Verb>>(OnVerb);
         SubscribeLocalEvent<FaxMachineComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
+        SubscribeLocalEvent<FaxMachineComponent, GotEmaggedEvent>(OnEmagged);
     }
 
     public override void Update(float frameTime)
@@ -99,6 +104,16 @@ public sealed class FaxMachineSystem : EntitySystem
             _itemSlotsSystem.SetLock(uid, component.PaperSlot, true);
         }
     }
+    
+    private void OnEmagged(EntityUid uid, FaxMachineComponent component, GotEmaggedEvent args)
+    {
+        if (component.Emagged)
+            return;
+
+        _audioSystem.PlayPvs(component.EmagSound, uid);
+        component.Emagged = true;
+        args.Handled = true;
+    }
 
     private void OnVerb(EntityUid uid, FaxMachineComponent component, GetVerbsEvent<Verb> args)
     {
@@ -137,10 +152,7 @@ public sealed class FaxMachineSystem : EntitySystem
     
     private void OnPacketReceived(EntityUid uid, FaxMachineComponent component, DeviceNetworkPacketEvent args)
     {
-        if (string.IsNullOrEmpty(args.SenderAddress))
-            return;
-        
-        if (!TryComp(uid, out DeviceNetworkComponent? deviceNet))
+        if (!HasComp<DeviceNetworkComponent>(uid) || string.IsNullOrEmpty(args.SenderAddress))
             return;
 
         if (args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? command))
@@ -148,7 +160,9 @@ public sealed class FaxMachineSystem : EntitySystem
             switch (command)
             {
                 case FaxMachineConstants.FaxPingCommand:
-                    if (!component.ShouldResponsePings)
+                    var isForSyndie = component.Emagged &&
+                                      args.Data.ContainsKey(FaxMachineConstants.FaxSyndicateData);
+                    if (!isForSyndie && !component.ShouldResponsePings)
                         return;
 
                     var payload = new NetworkPayload()
@@ -183,11 +197,11 @@ public sealed class FaxMachineSystem : EntitySystem
             return;
 
         if (component.InsertingTimeRemaining > 0)
-            _appearance.SetData(uid, FaxMachineVisuals.BaseState, FaxMachineVisualState.Inserting);
+            _appearanceSystem.SetData(uid, FaxMachineVisuals.BaseState, FaxMachineVisualState.Inserting);
         else if (component.PrintingTimeRemaining > 0)
-            _appearance.SetData(uid, FaxMachineVisuals.BaseState, FaxMachineVisualState.Printing);
+            _appearanceSystem.SetData(uid, FaxMachineVisuals.BaseState, FaxMachineVisualState.Printing);
         else
-            _appearance.SetData(uid, FaxMachineVisuals.BaseState, FaxMachineVisualState.Normal);
+            _appearanceSystem.SetData(uid, FaxMachineVisuals.BaseState, FaxMachineVisualState.Normal);
     }
 
     public void SetDestination(EntityUid uid, string destAddress, FaxMachineComponent? component = null)
@@ -217,6 +231,10 @@ public sealed class FaxMachineSystem : EntitySystem
         {
             { DeviceNetworkConstants.Command, FaxMachineConstants.FaxPingCommand }
         };
+
+        if (component.Emagged)
+            payload.Add(FaxMachineConstants.FaxSyndicateData, true);
+
         _deviceNetworkSystem.QueuePacket(uid, null, payload);
     }
 
@@ -267,7 +285,7 @@ public sealed class FaxMachineSystem : EntitySystem
             faxName = component.KnownFaxes[fromAddress];
 
         _popupSystem.PopupEntity(Loc.GetString("fax-machine-popup-received", ("from", faxName)), uid, Filter.Pvs(uid));
-        _appearance.SetData(uid, FaxMachineVisuals.BaseState, FaxMachineVisualState.Printing);
+        _appearanceSystem.SetData(uid, FaxMachineVisuals.BaseState, FaxMachineVisualState.Printing);
 
         component.PrintingQueue.Enqueue(content);
     }

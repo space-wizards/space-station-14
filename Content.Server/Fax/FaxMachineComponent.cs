@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Containers.ItemSlots;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Fax;
 
@@ -32,6 +33,19 @@ public sealed class FaxMachineComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("shouldResponsePings")]
     public bool ShouldResponsePings { get; set; } = true;
+    
+    /// <summary>
+    /// Is fax was emaaged
+    /// </summary>
+    [ViewVariables]
+    [DataField("emagged")]
+    public bool Emagged { get; set; } = false;
+
+    /// <summary>
+    /// Sound to play when fax has been emagged
+    /// </summary>
+    [DataField("emagSound")]
+    public SoundSpecifier EmagSound = new SoundCollectionSpecifier("sparks");
 
     /// <summary>
     /// Known faxes in network by address with fax names
