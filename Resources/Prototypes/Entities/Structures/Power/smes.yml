@@ -21,8 +21,8 @@
         - state: smes
     - type: Smes
     - type: MachineBattery
-      machinePartEfficiency: 1.5
-      powerCapacityGain: 8000000
+      maxChargeMultiplier: 2
+      baseMaxCharge: 8000000
     - type: Appearance
       visuals:
         - type: SmesVisualizer

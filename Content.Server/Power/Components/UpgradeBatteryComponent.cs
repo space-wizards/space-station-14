@@ -5,7 +5,7 @@ namespace Content.Server.Power.Components
 {
 
     [RegisterComponent]
-    public sealed class MachineBatteryComponent : Component
+    public sealed class UpgradeBatteryComponent : Component
     {
         /// <summary>
         ///     The machine part that affects the power capacity.
@@ -16,13 +16,13 @@ namespace Content.Server.Power.Components
         /// <summary>
         ///     The machine part rating is raised to this power when calculating power gain
         /// </summary>
-        [DataField("machinePartEfficiency")]
-        public float MachinePartEfficiency = 1.5f;
+        [DataField("maxChargeMultiplier")]
+        public float MaxChargeMultiplier = 2f;
 
         /// <summary>
         ///     Power gain scaling
         /// </summary>
-        [DataField("powerCapacityGain")]
-        public float PowerCapacityScaling = 8000000;
+        [DataField("baseMaxCharge")]
+        public float BaseMaxCharge = 8000000;
     }
 }

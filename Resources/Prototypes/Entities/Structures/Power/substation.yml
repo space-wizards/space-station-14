@@ -18,8 +18,8 @@
     - state: full
       shader: unshaded
   - type: MachineBattery
-    machinePartEfficiency: 1
-    powerCapacityGain: 2500000
+    maxChargeMultiplier: 2
+    baseMaxCharge: 2500000
   - type: Battery
     maxCharge: 2500000
     startingCharge: 0

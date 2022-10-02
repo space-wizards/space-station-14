@@ -5,22 +5,22 @@ using JetBrains.Annotations;
 namespace Content.Server.Power.SMES
 {
     [UsedImplicitly]
-    public sealed class MachineBatterySystem : EntitySystem
+    public sealed class UpgradeBatterySystem : EntitySystem
     {
         public override void Initialize()
         {
             base.Initialize();
 
-            SubscribeLocalEvent<MachineBatteryComponent, RefreshPartsEvent>(OnRefreshParts);
+            SubscribeLocalEvent<UpgradeBatteryComponent, RefreshPartsEvent>(OnRefreshParts);
         }
 
-        public void OnRefreshParts(EntityUid uid, MachineBatteryComponent component, RefreshPartsEvent args)
+        public void OnRefreshParts(EntityUid uid, UpgradeBatteryComponent component, RefreshPartsEvent args)
         {
             var capacitorRating = args.PartRatings[component.MachinePartPowerCapacity];
 
             if (TryComp<BatteryComponent>(uid, out var batteryComp))
             {
-                batteryComp.MaxCharge = MathF.Pow(capacitorRating,component.MachinePartEfficiency) * component.PowerCapacityScaling;
+                batteryComp.MaxCharge = MathF.Pow(component.MaxChargeMultiplier, capacitorRating - 1) * component.BaseMaxCharge;
             }
         }
     }
