@@ -58,6 +58,9 @@ public abstract class SharedChameleonSystem : EntitySystem
 
     private void OnMove(EntityUid uid, SharedChameleonComponent component, ref MoveEvent args)
     {
+        if (args.FromStateHandling)
+            return;
+
         if (args.NewPosition.EntityId != args.OldPosition.EntityId)
             return;
 
