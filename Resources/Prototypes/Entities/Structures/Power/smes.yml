@@ -71,3 +71,11 @@
   - type: Battery
     maxCharge: 10000000
     startingCharge: 10000000
+
+- type: entity
+  parent: SMESBasic
+  id: SMESBasicEmpty
+  suffix: Empty
+  components:
+  - type: Battery
+    startingCharge: 0

@@ -1,6 +1,6 @@
 ﻿- type: gas
   id: 0
-  name: Oxygen
+  name: gases-oxygen
   specificHeat: 20
   heatCapacityRatio: 1.4
   molarMass: 32
@@ -10,7 +10,7 @@
 
 - type: gas
   id: 1
-  name: Nitrogen
+  name: gases-nitrogen
   specificHeat: 30
   heatCapacityRatio: 1.4
   molarMass: 28
@@ -20,7 +20,7 @@
 
 - type: gas
   id: 2
-  name: Carbon Dioxide
+  name: gases-co2
   specificHeat: 30
   heatCapacityRatio: 1.3
   molarMass: 44
@@ -30,7 +30,7 @@
 
 - type: gas
   id: 3
-  name: Plasma
+  name: gases-plasma
   specificHeat: 200
   heatCapacityRatio: 1.7
   molarMass: 120
@@ -42,7 +42,7 @@
 
 - type: gas
   id: 4
-  name: Tritium
+  name: gases-tritium
   specificHeat: 10
   heatCapacityRatio: 1.3
   molarMass: 6
@@ -54,7 +54,7 @@
 
 - type: gas
   id: 5
-  name: Water Vapor
+  name: gases-water-vapor
   specificHeat: 40
   heatCapacityRatio: 1.33
   molarMass: 18
@@ -66,7 +66,7 @@
 
 - type: gas
   id: 6
-  name: Miasma
+  name: gases-miasma
   specificHeat: 20
   heatCapacityRatio: 1.4
   molarMass: 44
@@ -80,7 +80,7 @@
 
 - type: gas
   id: 7
-  name: NitrousOxide
+  name: gases-n2o
   specificHeat: 40
   heatCapacityRatio: 1.3
   molarMass: 44

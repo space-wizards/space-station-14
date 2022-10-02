@@ -92,7 +92,7 @@
       soundPerceivedByOthers: false # A 75% chance for a loud roar would get old fast.
     - type: MeleeWeapon
       hidden: true
-      hitSound:
+      soundHit:
         path: /Audio/Effects/bite.ogg
       damage:
         types:

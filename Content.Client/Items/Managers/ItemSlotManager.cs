@@ -11,6 +11,7 @@ using Content.Shared.Interaction;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Input;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -70,7 +71,7 @@ namespace Content.Client.Items.Managers
                 _entitySystemManager.GetEntitySystem<ExamineSystem>()
                     .DoExamine(item.Value);
             }
-            else if (args.Function == ContentKeyFunctions.OpenContextMenu)
+            else if (args.Function == EngineKeyFunctions.UseSecondary)
             {
                 _entitySystemManager.GetEntitySystem<VerbSystem>().VerbMenu.OpenVerbMenu(item.Value);
             }

@@ -36,11 +36,7 @@ namespace Content.Shared.Cargo
             {
                 sb.Append($"({idCard.JobTitle})");
             }
-
-            if (sb.Length > 0)
-            {
-                Approver = sb.ToString();
-            }
+            Approver = sb.ToString();
         }
     }
 }

@@ -221,6 +221,7 @@
   requiredTechnologies:
     - BasicResearch
   unlockedRecipes:
+    - AppraisalTool
     - ConveyorBeltAssembly
     - RCD
     - RCDAmmo
@@ -420,6 +421,25 @@
     - ProximitySensor
     - LeftArmBorg
     - RightArmBorg
+
+- type: technology
+  name: technologies-adv-parts-technology
+  id: AdvancedPartsTechnology
+  description: technologies-adv-parts-technology-description
+  icon:
+    sprite: Objects/Misc/stock_parts.rsi
+    state: adv_capacitor
+  requiredPoints: 8000
+  requiredTechnologies:
+    - BasicPartsTechnology
+    - IndustrialEngineering
+    - PowerCellBasic
+  unlockedRecipes:
+    - AdvancedCapacitorStockPart
+    - AdvancedMatterBinStockPart
+    - HighPowerMicroLaserStockPart
+    - NanoManipulatorStockPart
+    - AdvancedScanningModuleStockPart
 
 # Bluespace Theory Technology Tree
 

@@ -104,6 +104,8 @@ namespace Content.Shared.Eye.Blinding
             }
 
             blindable.Sources = Math.Max(blindable.Sources, 0);
+
+            Dirty(blindable);
         }
 
         public void AdjustEyeDamage(EntityUid uid, bool add, BlindableComponent? blindable = null)
