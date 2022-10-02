@@ -14,6 +14,7 @@ using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
 using Content.Server.Tools;
+using Content.Server.UserInterface;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Destructible;
@@ -54,7 +55,6 @@ public sealed class CryoPodSystem: EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
 
-
     public override void Initialize()
     {
         base.Initialize();
@@ -63,7 +63,6 @@ public sealed class CryoPodSystem: EntitySystem
         SubscribeLocalEvent<CryoPodComponent, AtmosDeviceUpdateEvent>(OnCryoPodUpdateAtmosphere);
         SubscribeLocalEvent<CryoPodComponent, GetVerbsEvent<AlternativeVerb>>(AddAlternativeVerbs);
         SubscribeLocalEvent<CryoPodComponent, DragDropEvent>(HandleDragDropOn);
-        SubscribeLocalEvent<CryoPodComponent, InteractHandEvent>(HandleInteractHand);
         SubscribeLocalEvent<CryoPodComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<CryoPodComponent, DoInsertCryoPodEvent>(DoInsertCryoPod);
         SubscribeLocalEvent<CryoPodComponent, ExaminedEvent>(OnExamined);
@@ -73,7 +72,8 @@ public sealed class CryoPodSystem: EntitySystem
         SubscribeLocalEvent<CryoPodComponent, CryoPodPryInterrupted>(OnCryoPodPryInterrupted);
         SubscribeLocalEvent<CryoPodComponent, DestructionEventArgs>(OnDestroyed);
         SubscribeLocalEvent<CryoPodComponent, GasAnalyzerScanEvent>(OnGasAnalyzed);
-
+        SubscribeLocalEvent<CryoPodComponent, ActivatableUIOpenAttemptEvent>(OnActivateUIAttempt);
+        SubscribeLocalEvent<CryoPodComponent, AfterActivatableUIOpenEvent>(OnActivateUI);
     }
 
     private void OnComponentInit(EntityUid uid, CryoPodComponent cryoPodComponent, ComponentInit args)
@@ -110,16 +110,14 @@ public sealed class CryoPodSystem: EntitySystem
 
             cryoPod.Accumulator -= cryoPod.BeakerTransferTime;
 
-            var container = _itemSlotsSystem.GetItem(cryoPod.Owner, "beakerSlot");
+            var container = _itemSlotsSystem.GetItem(cryoPod.Owner, cryoPod.SolutionContainerName);
             var patient = cryoPod.BodyContainer.ContainedEntity;
             if (container != null
                 && container.Value.Valid
                 && patient != null
                 && _solutionContainerSystem.TryGetFitsInDispenser(container.Value, out var containerSolution))
             {
-
-                var bloodstreamQuery = GetEntityQuery<BloodstreamComponent>();
-                if (!bloodstreamQuery.TryGetComponent(patient, out var bloodstream))
+                if (!TryComp<BloodstreamComponent>(patient, out var bloodstream))
                 {
                     continue;
                 }
@@ -218,28 +216,26 @@ public sealed class CryoPodSystem: EntitySystem
         InsertBody(uid, args.ToInsert, cryoPodComponent);
     }
 
-    private void HandleInteractHand(EntityUid uid, CryoPodComponent cryoPodComponent, InteractHandEvent args)
+    private void OnActivateUIAttempt(EntityUid uid, CryoPodComponent cryoPodComponent, ActivatableUIOpenAttemptEvent args)
     {
-        if (!HasComp<ActiveCryoPodComponent>(uid))
+        if (args.Cancelled)
         {
             return;
         }
-        if (!TryComp(args.User, out ActorComponent? actor))
-            return;
 
-        if (cryoPodComponent.BodyContainer.ContainedEntity != null)
+        var containedEntity = cryoPodComponent.BodyContainer.ContainedEntity;
+        if (containedEntity == null || containedEntity == args.User || !HasComp<ActiveCryoPodComponent>(uid))
         {
-            if (args.User == cryoPodComponent.BodyContainer.ContainedEntity)
-            {
-                return;
-            }
-            _userInterfaceSystem.TryOpen(uid, SharedHealthAnalyzerComponent.HealthAnalyzerUiKey.Key, actor.PlayerSession);
-            _userInterfaceSystem.TrySendUiMessage(
-                uid,
-                SharedHealthAnalyzerComponent.HealthAnalyzerUiKey.Key,
-                new SharedHealthAnalyzerComponent.HealthAnalyzerScannedUserMessage(cryoPodComponent.BodyContainer.ContainedEntity));
-            args.Handled = true;
+            args.Cancel();
         }
+    }
+
+    private void OnActivateUI(EntityUid uid, CryoPodComponent cryoPodComponent, AfterActivatableUIOpenEvent args)
+    {
+        _userInterfaceSystem.TrySendUiMessage(
+            uid,
+            SharedHealthAnalyzerComponent.HealthAnalyzerUiKey.Key,
+            new SharedHealthAnalyzerComponent.HealthAnalyzerScannedUserMessage(cryoPodComponent.BodyContainer.ContainedEntity));
     }
 
     private void OnInteractUsing(EntityUid uid, CryoPodComponent cryoPodComponent, InteractUsingEvent args)

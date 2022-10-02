@@ -85,6 +85,10 @@
         type: HealthAnalyzerBoundUserInterface
       - key: enum.WiresUiKey.Key
         type: WiresBoundUserInterface
+  - type: ActivatableUI
+    key: enum.HealthAnalyzerUiKey.Key
+    requireHands: false
+  - type: ActivatableUIRequiresPower
   - type: PointLight
     color: "#3a807f"
     radius: 2
