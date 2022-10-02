@@ -19,3 +19,5 @@ airlock_open.ogg and airlock_close.ogg are from: https://github.com/tgstation/tg
 machine_vend_hot_drink.ogg original from https://freesound.org/people/waxsocks/sounds/402603/ CC0 (by waxsocks) and edited
 
 printer.ogg from https://github.com/tgstation/tgstation/blob/31c5aaf4b885a50c9d5a0777e2647af64e7193bf/sound/machines/printer.ogg
+
+high_tech_confirm.ogg from https://github.com/tgstation/tgstation/blob/14aa5d2d8efca6370778d730e36ffcf258b9352e/sound/machines/high_tech_confirm.ogg

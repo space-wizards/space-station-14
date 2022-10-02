@@ -312,6 +312,7 @@ public sealed class FaxMachineSystem : EntitySystem
         };
         _deviceNetworkSystem.QueuePacket(uid, component.DestinationFaxAddress, payload);
 
+        _audioSystem.PlayPvs(component.SendSound, uid);
         _popupSystem.PopupEntity(Loc.GetString("fax-machine-popup-send"), uid, Filter.Pvs(uid));
     }
 

@@ -54,6 +54,12 @@ public sealed class FaxMachineComponent : Component
     public SoundSpecifier PrintSound = new SoundPathSpecifier("/Audio/Machines/printer.ogg");
 
     /// <summary>
+    /// Sound to play when fax successfully send message
+    /// </summary>
+    [DataField("sendSound")]
+    public SoundSpecifier SendSound = new SoundPathSpecifier("/Audio/Machines/high_tech_confirm.ogg");
+
+    /// <summary>
     /// Known faxes in network by address with fax names
     /// </summary>
     [ViewVariables]
