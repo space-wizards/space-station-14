@@ -48,6 +48,12 @@ public sealed class FaxMachineComponent : Component
     public SoundSpecifier EmagSound = new SoundCollectionSpecifier("sparks");
 
     /// <summary>
+    /// Sound to play when fax printing new message
+    /// </summary>
+    [DataField("printSound")]
+    public SoundSpecifier PrintSound = new SoundPathSpecifier("/Audio/Machines/printer.ogg");
+
+    /// <summary>
     /// Known faxes in network by address with fax names
     /// </summary>
     [ViewVariables]

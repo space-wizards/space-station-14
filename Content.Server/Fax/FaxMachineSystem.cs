@@ -71,6 +71,7 @@ public sealed class FaxMachineSystem : EntitySystem
             else if (comp.PrintingQueue.Count > 0)
             {
                 comp.PrintingTimeRemaining = comp.PrintingTime;
+                _audioSystem.PlayPvs(comp.PrintSound, comp.Owner);
             }
 
             if (comp.InsertingTimeRemaining > 0)
