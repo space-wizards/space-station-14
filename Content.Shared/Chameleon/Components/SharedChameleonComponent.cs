@@ -2,6 +2,11 @@
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Chameleon.Components;
+/// <summary>
+/// Add this component to an entity that you want to be cloaked.
+/// It overlays a shader on the entity to give them an invisibility cloaked effect
+/// It also turns the entity invisible
+/// </summary>
 [RegisterComponent, NetworkedComponent]
 public sealed class SharedChameleonComponent : Component
 {

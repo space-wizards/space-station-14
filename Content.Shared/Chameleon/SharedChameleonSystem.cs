@@ -6,7 +6,11 @@ namespace Content.Shared.Chameleon;
 
 public abstract class SharedChameleonSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
+    /// <summary>
+    /// The maximum threshold of stealth. Should stay -1.
+    /// Helps prevent the component from updating every tick when it doesn't need to anymore.
+    /// </summary>
+    private const float StealthThreshold = -1;
 
     public override void Initialize()
     {
@@ -23,9 +27,14 @@ public abstract class SharedChameleonSystem : EntitySystem
 
         foreach (var chameleon in EntityQuery<SharedChameleonComponent>())
         {
-            chameleon.StealthLevel = Math.Clamp(chameleon.StealthLevel - frameTime * chameleon.InvisibilityRate, -1f, 1f);
+            //Only update if the current stealth level is above the stealth threshold
+            //This stops it from needlessly updating and calling Dirty once it's hit max stealth
+            if (chameleon.StealthLevel > StealthThreshold)
+            {
+                chameleon.StealthLevel = Math.Clamp(chameleon.StealthLevel - frameTime * chameleon.InvisibilityRate, -1f, 1f);
 
-            Dirty(chameleon);
+                Dirty(chameleon);
+            }
         }
     }
 
