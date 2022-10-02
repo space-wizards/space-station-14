@@ -3,15 +3,17 @@
 [RegisterComponent]
 public sealed class FaxMachineVisualsComponent : Component
 {
-    [DataField("receivingState", required: true)]
-    public string ReceivingState = default!;
+    [DataField("normalState", required: true)]
+    public string NormalState = default!;
 
-    [DataField("sendingState", required: true)]
-    public string SendingState = default!;
+    [DataField("insertingState", required: true)]
+    public string InsertingState = default!;
+    
+    [DataField("printState", required: true)]
+    public string PrintState = default!;
 }
 
 public enum FaxMachineVisualLayers : byte
 {
-    IsReceiving,
-    IsSending
+    Base,
 }

@@ -30,26 +30,7 @@
       ]
     },
     {
-      "name": "idle",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1
-        ]
-      ]
-    },
-    {
-      "name": "sending",
+      "name": "inserting",
       "delays": [
         [
           0.1,
@@ -75,7 +56,7 @@
       ]
     },
     {
-      "name": "receiving",
+      "name": "printing",
       "delays": [
         [
           0.1,

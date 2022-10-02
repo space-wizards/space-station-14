@@ -8,14 +8,11 @@
     sprite: Structures/Machines/fax_machine.rsi
     netsync: false
     layers:
-      - state: icon
-      - state: idle_unlit
-        shader: unshaded
-        map: ["enum.PowerDeviceVisualLayers.Powered"]
-#      - state: sending
-#        map: ["enum.FaxMachineVisualLayers.IsSending"]
-#      - state: receiving
-#        map: ["enum.FaxMachineVisualLayers.IsReceiving"]
+    - state: icon
+      map: ["enum.FaxMachineVisualLayers.Base"]
+    - state: idle_unlit
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
   - type: Icon
     sprite: Structures/Machines/fax_machine.rsi
     state: icon
@@ -47,10 +44,9 @@
         components:
           - Paper
   - type: FaxMachineVisuals
-    offState: icon
-    idleState: idle_unlit
-    sendingState: sending
-    receivingState: receiving
+    normalState: icon
+    insertingState: inserting
+    printState: printing
   - type: ItemSlots
   - type: DeviceNetwork
     deviceNetId: Wireless

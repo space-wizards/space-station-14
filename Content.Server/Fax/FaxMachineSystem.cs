@@ -4,10 +4,10 @@ using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Paper;
 using Content.Server.Popups;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Fax;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Fax;
 
@@ -19,10 +19,10 @@ namespace Content.Server.Fax;
 // TODO: Messages receive queue and send history?
 // TODO: Fax wires hacking?
 // TODO: Allow rename fax with multitool
+// TODO: Add receive messages queue for printing
 
 public sealed class FaxMachineSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
@@ -43,6 +43,31 @@ public sealed class FaxMachineSystem : EntitySystem
         SubscribeLocalEvent<FaxMachineComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
     }
 
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        foreach (var comp in EntityQuery<FaxMachineComponent>())
+        {
+            if (comp.PrintingTimeRemaining > 0)
+                comp.PrintingTimeRemaining -= frameTime;
+            if (comp.InsertingTimeRemaining > 0)
+                comp.InsertingTimeRemaining -= frameTime;
+
+            if (comp.PrintingTimeRemaining <= 0)
+            {
+                SpawnPaperFromBuffer(comp.Owner, comp);
+            }
+
+            if (comp.InsertingTimeRemaining <= 0)
+            {
+                _itemSlotsSystem.SetLock(comp.Owner, comp.PaperSlot, false);
+            }
+            
+            UpdateAppearance(comp.Owner, comp);
+        }
+    }
+
     private void OnComponentInit(EntityUid uid, FaxMachineComponent component, ComponentInit args)
     {
         _itemSlotsSystem.AddItemSlot(uid, FaxMachineSystem.PaperSlotId, component.PaperSlot);
@@ -61,17 +86,14 @@ public sealed class FaxMachineSystem : EntitySystem
         if (args.Container.ID != component.PaperSlot.ID)
             return;
 
-        UpdateAppearance(uid, component);
+        var isPaperInserted = component.PaperSlot.Item.HasValue;
+        if (isPaperInserted)
+        {
+            component.InsertingTimeRemaining = component.InsertionTime;
+            _itemSlotsSystem.SetLock(uid, component.PaperSlot, true);
+        }
     }
 
-    private void UpdateAppearance(EntityUid uid, FaxMachineComponent? component = null, AppearanceComponent? appearance = null)
-    {
-        if (!Resolve(uid, ref component, ref appearance, false))
-            return;
-        
-        // TODO: Update
-    }
-    
     private void OnVerb(EntityUid uid, FaxMachineComponent component, GetVerbsEvent<Verb> args)
     {
         // standard interaction checks
@@ -147,6 +169,19 @@ public sealed class FaxMachineSystem : EntitySystem
                     break;
             }
         }
+    }
+
+    private void UpdateAppearance(EntityUid uid, FaxMachineComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        if (component.InsertingTimeRemaining > 0)
+            _appearance.SetData(uid, FaxMachineVisuals.BaseState, FaxMachineVisualState.Inserting);
+        else if (component.PrintingTimeRemaining > 0)
+            _appearance.SetData(uid, FaxMachineVisuals.BaseState, FaxMachineVisualState.Printing);
+        else
+            _appearance.SetData(uid, FaxMachineVisuals.BaseState, FaxMachineVisualState.Normal);
     }
 
     public void SetDestination(EntityUid uid, string destAddress, FaxMachineComponent? component = null)
@@ -226,11 +261,27 @@ public sealed class FaxMachineSystem : EntitySystem
             faxName = component.KnownFaxes[fromAddress];
 
         _popupSystem.PopupEntity(Loc.GetString("fax-machine-popup-received", ("from", faxName)), uid, Filter.Pvs(uid));
+        _appearance.SetData(uid, FaxMachineVisuals.BaseState, FaxMachineVisualState.Printing);
+
+        component.TextBuffer = content;
+
+        component.PrintingTimeRemaining = component.PrintingTime;
+        UpdateAppearance(uid, component);
+    }
+
+    private void SpawnPaperFromBuffer(EntityUid uid, FaxMachineComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
         
+        if (component.TextBuffer == null)
+            return;
+
         var printed = EntityManager.SpawnEntity("Paper", Transform(uid).Coordinates);
         if (!TryComp<PaperComponent>(printed, out var paper))
             return;
 
-        _paperSystem.SetContent(printed, content);
+        _paperSystem.SetContent(printed, component.TextBuffer);
+        component.TextBuffer = null;
     }
 }
