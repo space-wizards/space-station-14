@@ -334,7 +334,7 @@ public sealed class AtmosMonitorSystem : EntitySystem
     {
         if (!monitor.NetEnabled) return;
 
-        if (!Resolve(monitor.Owner, ref tags))
+        if (!Resolve(monitor.Owner, ref tags, false))
         {
             return;
         }
