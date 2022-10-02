@@ -49,9 +49,9 @@
   description: Robust combat boots for combat scenarios or combat situations. All combat, all the time.
   components:
   - type: Sprite
-    sprite: Clothing/Shoes/Boots/jackboots.rsi
+    sprite: Clothing/Shoes/Boots/combatboots.rsi
   - type: Clothing
-    sprite: Clothing/Shoes/Boots/jackboots.rsi
+    sprite: Clothing/Shoes/Boots/combatboots.rsi
   - type: Storage
     whitelist:
       tags:
