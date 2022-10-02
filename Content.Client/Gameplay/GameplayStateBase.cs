@@ -78,7 +78,6 @@ namespace Content.Client.Gameplay
 
             foundEntities.Sort(_comparer);
             // 0 is the top element.
-            foundEntities.Reverse();
             return foundEntities.Select(a => a.clicked).ToList();
         }
 
@@ -94,7 +93,7 @@ namespace Content.Client.Gameplay
             public int Compare((EntityUid clicked, int depth, uint renderOrder) x,
                 (EntityUid clicked, int depth, uint renderOrder) y)
             {
-                var val = x.depth.CompareTo(y.depth);
+                var val = y.depth.CompareTo(x.depth);
                 if (val != 0)
                 {
                     return val;
