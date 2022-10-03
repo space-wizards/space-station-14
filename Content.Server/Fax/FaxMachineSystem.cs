@@ -17,6 +17,8 @@ using Robust.Shared.Player;
 namespace Content.Server.Fax;
 
 // TODO: Transfer paper stamps
+// TODO: Send message to admins when someone write to Syndicate or Centcom (via bwonk menu or in chat)
+// Add field that represent will be admins notified if someone send to that fax
 // TODO: Remove verbs and add UI, guh
 // Should Syndicate saw all CantCom channels?
 
