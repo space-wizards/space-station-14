@@ -586,6 +586,11 @@
   - type: Physics
     bodyType: Static
   - type: Pullable
+  - type: Airtight
+    noAirWhenFullyAirBlocked: false
+    airBlockedDirection:
+    - South
+    - East
   - type: Fixtures
     fixtures:
     - shape:

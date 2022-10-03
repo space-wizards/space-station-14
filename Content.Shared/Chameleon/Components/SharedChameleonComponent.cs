@@ -1,5 +1,6 @@
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Chameleon.Components;
 /// <summary>
@@ -19,7 +20,7 @@ public sealed class SharedChameleonComponent : Component
 
     /// <summary>
     /// Last set level of visibility. Ranges from 1 (fully visible) and -1 (fully hidden). To get the actual current
-    /// visibility, use <see cref="SharedChameleonSystem.Getvisibility(EntityUid, SharedChameleonComponent?)"/>
+    /// visibility, use <see cref="SharedChameleonSystem.GetVisibility(EntityUid, SharedChameleonComponent?)"/>
     /// </summary>
     [DataField("lastVisibility")]
     [Access(typeof(SharedChameleonSystem),  Other = AccessPermissions.None)]
@@ -29,7 +30,7 @@ public sealed class SharedChameleonComponent : Component
     /// Time at which <see cref="LastVisibility"/> was set. Null implies the entity is currently paused and not
     /// accumulating any visibility change.
     /// </summary>
-    [DataField("lastUpdate")]
+    [DataField("lastUpdate", customTypeSerializer:typeof(TimeOffsetSerializer))]
     public TimeSpan? LastUpdated;
 
     /// <summary>

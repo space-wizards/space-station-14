@@ -1,15 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Splitstation update and changes. See github PR 9495 for full changelog.,
-    type: Tweak}
-  id: 1885
-  time: '2022-07-07T03:39:03.0000000+00:00'
-- author: ODJ
-  changes:
-  - {message: Fully Updated Pillar, type: Add}
-  id: 1886
-  time: '2022-07-07T03:39:32.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Useless materials can no longer be inserted in lathes., type: Fix}
@@ -2927,3 +2916,14 @@ Entries:
   - {message: NPCs require a line of sight for new targets before attacking., type: Tweak}
   id: 2384
   time: '2022-09-30T04:39:48.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Lemons now have lemon juice instead of lime juice., type: Fix}
+  id: 2385
+  time: '2022-10-02T01:40:32.0000000+00:00'
+- author: Carbonhell
+  changes:
+  - {message: 'Ports the Tomb of the Unknown Employee, in memory of those who died
+      after contributing to Space Station 13 and Space Station 14.', type: Add}
+  id: 2386
+  time: '2022-10-02T21:26:46.0000000+00:00'
