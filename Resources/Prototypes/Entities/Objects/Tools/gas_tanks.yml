@@ -97,6 +97,7 @@
     sprite: Objects/Tanks/emergency.rsi
     slots:
     - Pocket
+    - Belt
     - suitStorage
 
 - type: entity
@@ -119,6 +120,7 @@
     sprite: Objects/Tanks/emergency_yellow.rsi
     slots:
     - Pocket
+    - Belt
     - suitStorage
 
 - type: entity
@@ -139,6 +141,7 @@
     sprite: Objects/Tanks/emergency_double.rsi
     slots:
     - Pocket
+    - Belt
     - suitStorage
 
 - type: entity
@@ -197,4 +200,5 @@
     - type: Clothing
       sprite: Objects/Tanks/plasma.rsi
       slots:
+        - Belt
         - suitStorage
