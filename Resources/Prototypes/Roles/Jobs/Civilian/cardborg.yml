@@ -7,7 +7,7 @@
       department: Civilian
       time: 1800
   startingGear: CardborgGear
-  setPreference: true
+  setPreference: false
   icon: "Unknown"
   supervisors: job-supervisors-cardborg
   access:
