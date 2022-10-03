@@ -22,12 +22,11 @@
   - type: SolutionContainerManager
     solutions:
       analyser:
-        maxVol: 500
+        maxVol: 1000
   - type: SolutionTransfer
   - type: ChemAnalyser
     machineOutput: Paper
     machineInputDevice: Bottle
     researchDiskReward: ChemTechResultsDisk
     reagentRewardCount: 5
-    reagentDisplayRequiredGroupFilter: Medicine
     reagentRewardRequiredGroupFilter: Medicine
