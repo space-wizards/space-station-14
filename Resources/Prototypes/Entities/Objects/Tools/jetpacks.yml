@@ -187,10 +187,10 @@
     outputPressure: 42.6
     air:
       temperature: 293.15
-      volume: 2
+      volume: 12
       moles:
-      - 0.161
-      - 0.161
+      - 1.61
+      - 1.61
 
 #Empty security
 - type: entity
