@@ -11,7 +11,7 @@
       "name": "icon"
     },
     {
-      "name": "idle_unlit",
+      "name": "idle",
       "delays": [
         [
           0.1,

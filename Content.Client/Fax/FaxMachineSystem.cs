@@ -12,24 +12,19 @@ public sealed class FaxMachineSystem : VisualizerSystem<FaxMachineVisualsCompone
         if (args.Sprite == null)
             return;
 
-        if (args.Component.TryGetData(PowerDeviceVisuals.Powered, out bool powered) &&
-            args.Sprite.LayerMapTryGet(PowerDeviceVisualLayers.Powered, out var poweredLayer))
-        {
-            args.Sprite.LayerSetVisible(poweredLayer, powered);
-        }
+        if (!args.Component.TryGetData(PowerDeviceVisuals.Powered, out bool powered) ||
+            !args.Component.TryGetData(FaxMachineVisuals.VisualState, out FaxMachineVisualState visualState) ||
+            !args.Sprite.LayerMapTryGet(FaxMachineVisualLayers.Base, out var baseLayer))
+            return;
 
-        if (args.Component.TryGetData(FaxMachineVisuals.BaseState, out FaxMachineVisualState baseState) &&
-            args.Sprite.LayerMapTryGet(FaxMachineVisualLayers.Base, out var baseLayer))
+        var layerState = visualState switch
         {
-            var state = baseState switch
-            {
-                FaxMachineVisualState.Inserting => component.InsertingState,
-                FaxMachineVisualState.Printing => component.PrintState,
-                _ => component.NormalState,
-            };
+            FaxMachineVisualState.Inserting => component.InsertingState,
+            FaxMachineVisualState.Printing => component.PrintState,
+            _ => powered ? component.IdleState : component.OffState,
+        };
 
-            args.Sprite.LayerSetAnimationTime(baseLayer, 0f);
-            args.Sprite.LayerSetState(baseLayer, state);
-        }
+        args.Sprite.LayerSetAnimationTime(baseLayer, 0f);
+        args.Sprite.LayerSetState(baseLayer, layerState);
     }
 }

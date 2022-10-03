@@ -95,6 +95,7 @@ public sealed class FaxMachineSystem : EntitySystem
     private void OnComponentInit(EntityUid uid, FaxMachineComponent component, ComponentInit args)
     {
         _itemSlotsSystem.AddItemSlot(uid, FaxMachineSystem.PaperSlotId, component.PaperSlot);
+        UpdateAppearance(uid, component);
     }
 
     private void OnComponentRemove(EntityUid uid, FaxMachineComponent component, ComponentRemove args)
@@ -245,11 +246,11 @@ public sealed class FaxMachineSystem : EntitySystem
             return;
 
         if (component.InsertingTimeRemaining > 0)
-            _appearanceSystem.SetData(uid, FaxMachineVisuals.BaseState, FaxMachineVisualState.Inserting);
+            _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.Inserting);
         else if (component.PrintingTimeRemaining > 0)
-            _appearanceSystem.SetData(uid, FaxMachineVisuals.BaseState, FaxMachineVisualState.Printing);
+            _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.Printing);
         else
-            _appearanceSystem.SetData(uid, FaxMachineVisuals.BaseState, FaxMachineVisualState.Normal);
+            _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.Normal);
     }
 
     public void SetDestination(EntityUid uid, string destAddress, FaxMachineComponent? component = null)
@@ -336,7 +337,7 @@ public sealed class FaxMachineSystem : EntitySystem
             faxName = component.KnownFaxes[fromAddress];
 
         _popupSystem.PopupEntity(Loc.GetString("fax-machine-popup-received", ("from", faxName)), uid, Filter.Pvs(uid));
-        _appearanceSystem.SetData(uid, FaxMachineVisuals.BaseState, FaxMachineVisualState.Printing);
+        _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.Printing);
 
         component.PrintingQueue.Enqueue(content);
     }

@@ -3,8 +3,11 @@
 [RegisterComponent]
 public sealed class FaxMachineVisualsComponent : Component
 {
-    [DataField("normalState", required: true)]
-    public string NormalState = default!;
+    [DataField("offState", required: true)]
+    public string OffState = default!;
+
+    [DataField("idleState", required: true)]
+    public string IdleState = default!;
 
     [DataField("insertingState", required: true)]
     public string InsertingState = default!;

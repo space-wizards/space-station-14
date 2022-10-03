@@ -10,9 +10,6 @@
     layers:
     - state: icon
       map: ["enum.FaxMachineVisualLayers.Base"]
-    - state: idle_unlit
-      shader: unshaded
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
   - type: Icon
     sprite: Structures/Machines/fax_machine.rsi
     state: icon
@@ -46,7 +43,8 @@
         components:
           - Paper
   - type: FaxMachineVisuals
-    normalState: icon
+    offState: icon
+    idleState: idle
     insertingState: inserting
     printState: printing
   - type: ItemSlots
