@@ -87,12 +87,19 @@ public sealed class SharpSystem : EntitySystem
             popupEnt = Spawn(proto, coords);
         }
 
-        _popupSystem.PopupEntity(Loc.GetString("butcherable-knife-butchered-success", ("target", ev.Entity), ("knife", ev.Sharp)),
-            popupEnt, Filter.Entities(ev.User), PopupType.LargeCaution);
+        var hasBody = TryComp<SharedBodyComponent>(ev.Entity, out var body);
 
-        if (TryComp<SharedBodyComponent>(ev.Entity, out var body))
+        // only show a big popup when butchering living things.
+        var popupType = PopupType.Small;
+        if (hasBody)
+            popupType = PopupType.LargeCaution;
+
+        _popupSystem.PopupEntity(Loc.GetString("butcherable-knife-butchered-success", ("target", ev.Entity), ("knife", ev.Sharp)),
+            popupEnt, Filter.Entities(ev.User), popupType);
+
+        if (hasBody)
         {
-            body.Gib();
+            body!.Gib();
         }
         else
         {
@@ -113,6 +120,9 @@ public sealed class SharpSystem : EntitySystem
         if (component.Type != ButcheringType.Knife || args.Hands == null)
             return;
 
+        if (args.Using is null || !HasComp<SharpComponent>(args.Using))
+            return;
+
         bool disabled = false;
         string? message = null;
 
@@ -120,12 +130,6 @@ public sealed class SharpSystem : EntitySystem
         {
             disabled = true;
             message = Loc.GetString("butcherable-mob-isnt-dead");
-        }
-
-        if (args.Using is null || !HasComp<SharpComponent>(args.Using))
-        {
-            disabled = true;
-            message = Loc.GetString("butcherable-need-knife");
         }
 
         InteractionVerb verb = new()
