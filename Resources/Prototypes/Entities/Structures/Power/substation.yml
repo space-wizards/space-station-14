@@ -21,7 +21,6 @@
     maxChargeMultiplier: 2
     baseMaxCharge: 2500000
   - type: Battery
-    maxCharge: 2500000
     startingCharge: 0
   - type: ExaminableBattery
   - type: PointLight
@@ -166,7 +165,7 @@
 - type: entity
   parent: BaseSubstation
   id: SubstationBasic
-  suffix: Basic, 4MW
+  suffix: Basic, 2.5MW
   components:
   - type: Battery
     maxCharge: 2500000
