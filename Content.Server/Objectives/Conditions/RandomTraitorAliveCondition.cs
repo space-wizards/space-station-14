@@ -18,7 +18,7 @@ namespace Content.Server.Objectives.Conditions
             var entityMgr = IoCManager.Resolve<IEntityManager>();
             var traitors = EntitySystem.Get<TraitorRuleSystem>().Traitors;
 
-            if (traitors.Count == 0) return new RandomTraitorAliveCondition { _target = mind }; //You were made a traitor by admins, and are the first/only.
+            if (traitors.Count == 0) return new StayAliveCondition {}; //You were made a traitor by admins, and are the first/only.
             return new RandomTraitorAliveCondition { _target = IoCManager.Resolve<IRobustRandom>().Pick(traitors).Mind };
         }
 
