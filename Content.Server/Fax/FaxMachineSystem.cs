@@ -16,9 +16,6 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Fax;
 
-// TODO: Refresh after map fully load in cache all faxes on map (to prevent taking fax name that was mapped)
-// TODO: Add construction graph & circuit board
-// TODO: Add circuit board to RND
 // TODO: Transfer paper stamps
 // TODO: Remove verbs and add UI, guh
 // Should Syndicate saw all CantCom channels?
@@ -41,6 +38,7 @@ public sealed class FaxMachineSystem : EntitySystem
         base.Initialize();
         
         SubscribeLocalEvent<FaxMachineComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<FaxMachineComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<FaxMachineComponent, ComponentRemove>(OnComponentRemove);
         SubscribeLocalEvent<FaxMachineComponent, EntInsertedIntoContainerMessage>(OnItemSlotChanged);
         SubscribeLocalEvent<FaxMachineComponent, EntRemovedFromContainerMessage>(OnItemSlotChanged);
@@ -99,7 +97,13 @@ public sealed class FaxMachineSystem : EntitySystem
     {
         _itemSlotsSystem.RemoveItemSlot(uid, component.PaperSlot);
     }
-    
+
+    private void OnMapInit(EntityUid uid, FaxMachineComponent component, MapInitEvent args)
+    {
+        // Load all faxes on map in cache each other to prevent taking same name by user created fax
+        Refresh(uid, component);
+    }
+
     private void OnItemSlotChanged(EntityUid uid, FaxMachineComponent component, ContainerModifiedMessage args)
     {
         if (!component.Initialized)
@@ -180,7 +184,7 @@ public sealed class FaxMachineSystem : EntitySystem
         {
             Text = Loc.GetString("fax-machine-verb-refresh"),
             Message = Loc.GetString("fax-machine-verb-refresh-desc"),
-            Act = () => RefreshFaxes(uid),
+            Act = () => Refresh(uid),
         });
 
         // destination select verbs
@@ -265,7 +269,7 @@ public sealed class FaxMachineSystem : EntitySystem
         _popupSystem.PopupEntity(msg, uid, Filter.Pvs(uid));
     }
 
-    public void RefreshFaxes(EntityUid uid, FaxMachineComponent? component = null)
+    public void Refresh(EntityUid uid, FaxMachineComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
