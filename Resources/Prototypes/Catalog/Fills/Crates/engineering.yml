@@ -95,4 +95,6 @@
   - type: StorageFill
     contents:
       - id: JetpackBlue
-        amount: 2
+        amount: 1
+      - id: JetpackMini
+        amount: 1
