@@ -23,7 +23,7 @@ public abstract class SharedChameleonSystem : EntitySystem
     {
         if (args.Paused)
         {
-            component.LastVisibility = Getvisibility(uid, component);
+            component.LastVisibility = GetVisibility(uid, component);
             component.LastUpdated = null;
         }
         else
@@ -65,17 +65,21 @@ public abstract class SharedChameleonSystem : EntitySystem
             return;
 
         var delta = component.MovementVisibilityRate * (args.NewPosition.Position - args.OldPosition.Position).Length;
-        AddVisibility(uid, delta, component);
+        ModifyVisibility(uid, delta, component);
     }
 
-    public void AddVisibility(EntityUid uid, float delta, SharedChameleonComponent? component = null)
+    /// <summary>
+    /// Modifies the visibility based on the delta provided.
+    /// </summary>
+    /// <param name="delta">The delta to be used in visibility calculation.</param>
+    public void ModifyVisibility(EntityUid uid, float delta, SharedChameleonComponent? component = null)
     {
         if (delta == 0 || !Resolve(uid, ref component))
             return;
 
         if (component.LastUpdated != null)
         {
-            component.LastVisibility = Getvisibility(uid, component);
+            component.LastVisibility = GetVisibility(uid, component);
             component.LastUpdated = _timing.CurTime;
         }
 
@@ -83,6 +87,10 @@ public abstract class SharedChameleonSystem : EntitySystem
         Dirty(component);
     }
 
+    /// <summary>
+    /// Sets the visibility directly with no modifications
+    /// </summary>
+    /// <param name="value">The value to set the visibility to. -1 is fully invisible, 1 is fully visible</param>
     public void SetVisibility(EntityUid uid, float value, SharedChameleonComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -95,7 +103,12 @@ public abstract class SharedChameleonSystem : EntitySystem
         Dirty(component);
     }
 
-    public float Getvisibility(EntityUid uid, SharedChameleonComponent? component = null)
+    /// <summary>
+    /// Gets the current visibility from the <see cref="SharedChameleonComponent"/>
+    /// Use this instead of getting LastVisibility from the component directly.
+    /// </summary>
+    /// <returns>Returns a calculation that accounts for any stealth change that happened since last update, otherwise returns based on if it can resolve the component.</returns>
+    public float GetVisibility(EntityUid uid, SharedChameleonComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return 1;

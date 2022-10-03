@@ -63,7 +63,7 @@ public sealed class ChameleonSystem : SharedChameleonSystem
         // unchanged.
         var parentXform = Transform(Transform(uid).ParentUid);
         var reference = args.Viewport.WorldToLocal(parentXform.WorldPosition);
-        var visibility = Getvisibility(uid, component);
+        var visibility = GetVisibility(uid, component);
         _shader.SetParameter("reference", reference);
         _shader.SetParameter("visibility", visibility);
 
