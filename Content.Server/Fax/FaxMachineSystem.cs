@@ -16,15 +16,12 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Fax;
 
-// TODO: Add separate paper container for new messages? Add ink? Add paper jamming?
-// TODO: Messages receive and send history?
-// TODO: Serialize faxName to map file
-// TODO: Refresh after map fully loaded to cache all faxes in list (to prevent taking fax name that was mapped)
-// TODO: Add construction
+// TODO: Refresh after map fully load in cache all faxes on map (to prevent taking fax name that was mapped)
+// TODO: Add construction graph & circuit board
+// TODO: Add circuit board to RND
 // TODO: Transfer paper stamps
-// TODO: Add unlit printing animation
-// ID-card based authentication?
-// TODO: UI, guh
+// TODO: Remove verbs and add UI, guh
+// Should Syndicate saw all CantCom channels?
 
 public sealed class FaxMachineSystem : EntitySystem
 {
