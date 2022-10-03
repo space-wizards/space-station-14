@@ -10,7 +10,6 @@
   - type: Icon
     sprite: Mobs/Species/Skeleton/parts.rsi
     state: full
-  # Other
   - type: Body
     template: HumanoidTemplate
     preset: SkeletonPreset
@@ -18,15 +17,29 @@
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Skeleton
+  - type: Barotrauma #no space damage.
+    damage:
+      types:
+        Blunt: 0
+  - type: Bloodstream
+    bloodReagent: Milk
+    bloodlossDamage: #no bloodloss damage. overriding base components
+      types:
+        Bloodloss: 0
+    bloodlossHealDamage:
+      types:
+        Bloodloss: 0
   - type: MobState
     thresholds:
       0: Alive
-      100: Dead
+      100: Critical
+      150: Dead
+  - type: TransferMindOnGib
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 150
       behaviors:
       - !type:GibBehavior { }
   - type: SlowOnDamage #modified speeds because they're so weak

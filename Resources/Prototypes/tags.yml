@@ -333,6 +333,9 @@
   id: MicrowaveSelfUnsafe
 
 - type: Tag
+  id: MindTransferTarget
+
+- type: Tag
   id: MonkeyCube
 
 - type: Tag
