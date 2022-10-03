@@ -179,7 +179,7 @@
     - PillCanister
     - ChemistryEmptyBottle01
     - MedicalResearchBedCircuitboard
-    #- ChemicalAnalysisCircuitboard
+    - ChemicalAnalysisCircuitboard
     
 - type: technology
   name: Chemical analysis laboratory results
@@ -229,7 +229,7 @@
    - ChemTechResults
   icon:
     sprite: Structures/Machines/diagnoser.rsi
-    state: industrial-working
+    state: icon
   requiredPoints: 1000
   unlockedRecipes:
     - VaccinatorMachineCircuitboard

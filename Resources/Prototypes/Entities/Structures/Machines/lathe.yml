@@ -299,6 +299,7 @@
       - EmitterCircuitboard
       - GasRecyclerMachineCircuitboard
       - MedicalResearchBedCircuitboard
+      - ChemicalAnalysisCircuitboard
       - SeedExtractorMachineCircuitboard
   - type: MaterialStorage
     whitelist:

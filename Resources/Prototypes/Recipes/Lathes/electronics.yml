@@ -422,6 +422,15 @@
   materials:
      Steel: 100
      Glass: 900
+
+- type: latheRecipe
+  id: ChemicalAnalysisCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: ChemicalAnalysisCircuitboard
+  completetime: 4
+  materials:
+     Steel: 100
+     Glass: 900
     Glass: 900
 
 - type: latheRecipe

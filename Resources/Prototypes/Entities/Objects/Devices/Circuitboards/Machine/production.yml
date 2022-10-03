@@ -588,3 +588,20 @@
       materialRequirements:
         Glass: 1
         Cable: 1
+
+- type: entity
+  id: ChemicalAnalysisCircuitboard
+  parent: BaseMachineCircuitboard
+  name: chemical analysis machine board
+  components:
+    - type: Sprite
+      state: medical
+    - type: MachineBoard
+      prototype: ChemicalAnalysisMachine
+      requirements:
+        ScanningModule: 1
+        MatterBin: 1
+        Capacitor: 1
+      materialRequirements:
+        Glass: 1
+        Cable: 1
