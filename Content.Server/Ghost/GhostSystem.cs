@@ -10,6 +10,7 @@ using Content.Server.Warps;
 using Content.Shared.Actions;
 using Content.Shared.Examine;
 using Content.Shared.Follower;
+using Content.Shared.GameTicking;
 using Content.Shared.Ghost;
 using Content.Shared.MobState.Components;
 using Content.Shared.Movement.Events;
@@ -53,6 +54,8 @@ namespace Content.Server.Ghost
 
             SubscribeLocalEvent<GhostComponent, BooActionEvent>(OnActionPerform);
             SubscribeLocalEvent<GhostComponent, InsertIntoEntityStorageAttemptEvent>(OnEntityStorageInsertAttempt);
+
+            SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEnd);
         }
         private void OnActionPerform(EntityUid uid, GhostComponent component, BooActionEvent args)
         {
@@ -246,6 +249,18 @@ namespace Content.Server.Ghost
         public void OnEntityStorageInsertAttempt(EntityUid uid, GhostComponent comp, InsertIntoEntityStorageAttemptEvent args)
         {
             args.Cancel();
+        }
+
+        /// <summary>
+        /// When the round ends, make all players able to see ghosts.
+        /// </summary>
+        /// <param name="args"></param>
+        private void OnRoundEnd(RoundEndTextAppendEvent args)
+        {
+            foreach (var component in EntityQuery<EyeComponent>())
+            {
+                component.VisibilityMask |= (uint) VisibilityFlags.Ghost;
+            }
         }
 
         public bool DoGhostBooEvent(EntityUid target)
