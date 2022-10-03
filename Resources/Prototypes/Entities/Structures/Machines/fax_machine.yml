@@ -9,7 +9,7 @@
     netsync: false
     layers:
     - state: icon
-      map: ["enum.FaxMachineVisualLayers.Base"]
+      map: ["base"]
   - type: Icon
     sprite: Structures/Machines/fax_machine.rsi
     state: icon
@@ -42,11 +42,16 @@
       whitelist:
         components:
           - Paper
-  - type: FaxMachineVisuals
-    offState: icon
-    idleState: idle
-    insertingState: inserting
-    printState: printing
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        base:
+          True: { state: idle }
+          False: { state: icon }
+      enum.FaxMachineVisuals.VisualState:
+        base:
+          Inserting: { state: inserting }
+          Printing: { state: printing }
   - type: ItemSlots
   - type: DeviceNetwork
     deviceNetId: Wireless
