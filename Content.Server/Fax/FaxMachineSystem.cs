@@ -16,13 +16,11 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Fax;
 
-// TODO: Sending cooldown
 // TODO: Add separate paper container for new messages? Add ink? Add paper jamming?
 // TODO: Messages receive and send history?
 // TODO: Serialize faxName to map file
 // TODO: Refresh after map fully loaded to cache all faxes in list (to prevent taking fax name that was mapped)
 // TODO: Add construction
-// TODO: Add printing/inserting sounds
 // TODO: Transfer paper stamps
 // TODO: Add unlit printing animation
 // ID-card based authentication?
@@ -61,6 +59,7 @@ public sealed class FaxMachineSystem : EntitySystem
 
         foreach (var comp in EntityQuery<FaxMachineComponent>())
         {
+            // Printing animation
             if (comp.PrintingTimeRemaining > 0)
             {
                 comp.PrintingTimeRemaining -= frameTime;
@@ -76,6 +75,7 @@ public sealed class FaxMachineSystem : EntitySystem
                 _audioSystem.PlayPvs(comp.PrintSound, comp.Owner);
             }
 
+            // Inserting animation
             if (comp.InsertingTimeRemaining > 0)
             {
                 comp.InsertingTimeRemaining -= frameTime;
@@ -85,6 +85,10 @@ public sealed class FaxMachineSystem : EntitySystem
                 if (isAnimationEnd)
                     _itemSlotsSystem.SetLock(comp.Owner, comp.PaperSlot, false);
             }
+
+            // Sending timeout
+            if (comp.SendTimeoutRemaining > 0)
+                comp.SendTimeoutRemaining -= frameTime;
         }
     }
 
@@ -164,11 +168,13 @@ public sealed class FaxMachineSystem : EntitySystem
             return;
         
         // send verb
+        var isSendTimeout = component.SendTimeoutRemaining > 0;
         args.Verbs.Add(new Verb
         {
             Text = Loc.GetString("fax-machine-verb-send"),
             Message = Loc.GetString("fax-machine-verb-send-desc"),
             Act = () => Send(uid),
+            Disabled = isSendTimeout,
         });
         
         // refresh network verb
@@ -314,6 +320,8 @@ public sealed class FaxMachineSystem : EntitySystem
         };
         _deviceNetworkSystem.QueuePacket(uid, component.DestinationFaxAddress, payload);
 
+        component.SendTimeoutRemaining += component.SendTimeout;
+        
         _audioSystem.PlayPvs(component.SendSound, uid);
         _popupSystem.PopupEntity(Loc.GetString("fax-machine-popup-send"), uid, Filter.Pvs(uid));
     }

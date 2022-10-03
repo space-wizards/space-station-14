@@ -72,6 +72,19 @@ public sealed class FaxMachineComponent : Component
     public Queue<string> PrintingQueue { get; } = new();
 
     /// <summary>
+    /// Message sending timeout
+    /// </summary>
+    [ViewVariables]
+    public float SendTimeoutRemaining;
+
+    /// <summary>
+    /// Message sending timeout
+    /// </summary>
+    [ViewVariables]
+    [DataField("sendTimeout")]
+    public float SendTimeout = 5f;
+
+    /// <summary>
     /// Remain time of inserting animation
     /// </summary>
     [DataField("insertingTimeRemaining")]
