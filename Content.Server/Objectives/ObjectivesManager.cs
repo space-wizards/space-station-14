@@ -11,11 +11,11 @@ namespace Content.Server.Objectives
         [Dependency] private IPrototypeManager _prototypeManager = default!;
         [Dependency] private IRobustRandom _random = default!;
 
-        public ObjectivePrototype? GetRandomObjective(Mind.Mind mind)
+        public ObjectivePrototype? GetRandomObjective(Mind.Mind mind, string objectiveGroupProto)
         {
-            if (!_prototypeManager.TryIndex<WeightedRandomPrototype>("ObjectiveGroups", out var groups))
+            if (!_prototypeManager.TryIndex<WeightedRandomPrototype>(objectiveGroupProto, out var groups))
             {
-                Logger.Error("Tried to get a random objective, but can't index WeightedRandomPrototype 'ObjectiveGroups.'");
+                Logger.Error("Tried to get a random objective, but can't index WeightedRandomPrototype " + objectiveGroupProto);
                 return null;
             }
 

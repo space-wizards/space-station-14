@@ -1,13 +1,14 @@
+# Traitor
 - type: weightedRandom
-  id: ObjectiveGroups
+  id: TraitorObjectiveGroups
   weights:
-    ObjectiveGroupSteal: 1
-    ObjectiveGroupKill: 1
-    ObjectiveGroupState: 1 #As in, something about your character. Alive, dead, arrested, gained an ability...
-    ObjectiveGroupSocial: 1 #Involves helping/harming others without killing them or stealing their stuff
+    TraitorObjectiveGroupSteal: 1
+    TraitorObjectiveGroupKill: 1
+    TraitorObjectiveGroupState: 1 #As in, something about your character. Alive, dead, arrested, gained an ability...
+    TraitorObjectiveGroupSocial: 1 #Involves helping/harming others without killing them or stealing their stuff
 
 - type: weightedRandom
-  id: ObjectiveGroupSteal
+  id: TraitorObjectiveGroupSteal
   weights:
     CaptainIDStealObjective: 1
     CMOHyposprayStealObjective: 1
@@ -21,17 +22,19 @@
     CaptainJetpackStealObjective: 0.5
 
 - type: weightedRandom
-  id: ObjectiveGroupKill
+  id: TraitorObjectiveGroupKill
   weights:
     KillRandomObjective: 1
 
 - type: weightedRandom
-  id: ObjectiveGroupState
+  id: TraitorObjectiveGroupState
   weights:
     StayAliveObjective: 1
     DieObjective: 0.05
 
 - type: weightedRandom
-  id: ObjectiveGroupSocial
+  id: TraitorObjectiveGroupSocial
   weights:
     RandomTraitorAliveObjective: 1
+
+#Changeling, crew, wizard, when you code it...
