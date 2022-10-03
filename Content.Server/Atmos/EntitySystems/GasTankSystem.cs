@@ -68,13 +68,13 @@ namespace Content.Server.Atmos.EntitySystems
         public void UpdateUserInterface(GasTankComponent component, bool initialUpdate = false)
         {
             var internals = GetInternalsComponent(component);
-            _ui.GetUiOrNull(component.Owner, SharedGasTankUiKey.Key)?.SetState(
+            _ui.TrySetUiState(component.Owner, SharedGasTankUiKey.Key,
                 new GasTankBoundUserInterfaceState
                 {
                     TankPressure = component.Air?.Pressure ?? 0,
                     OutputPressure = initialUpdate ? component.OutputPressure : null,
                     InternalsConnected = component.IsConnected,
-                    CanConnectInternals = IsFunctional(component) && internals != null
+                    CanConnectInternals = CanConnectToInternals(component)
                 });
         }
 
@@ -189,12 +189,13 @@ namespace Content.Server.Atmos.EntitySystems
 
         public bool CanConnectToInternals(GasTankComponent component)
         {
-            return !component.IsConnected && IsFunctional(component);
+            var internals = GetInternalsComponent(component);
+            return internals != null && internals.BreathToolEntity != null;
         }
 
         public void ConnectToInternals(GasTankComponent component)
         {
-            if (!CanConnectToInternals(component)) return;
+            if (component.IsConnected || !CanConnectToInternals(component)) return;
             var internals = GetInternalsComponent(component);
             if (internals == null) return;
 
@@ -318,11 +319,6 @@ namespace Content.Server.Atmos.EntitySystems
 
             if (component.Integrity < 3)
                 component.Integrity++;
-        }
-
-        private bool IsFunctional(GasTankComponent component)
-        {
-            return GetInternalsComponent(component) != null;
         }
 
         /// <summary>
