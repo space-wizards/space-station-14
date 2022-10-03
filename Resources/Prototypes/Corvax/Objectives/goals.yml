@@ -14,3 +14,7 @@
   id: StationGoalArtifacts
   text: station-goal-artifacts
 
+- type: stationGoal
+  id: StationGoalBank
+  text: station-goal-bank
+
