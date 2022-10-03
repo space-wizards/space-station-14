@@ -450,7 +450,7 @@ entities:
   - name: Central Command
     type: MetaData
   - pos: -1.5406153,-0.3539288
-    parent: 2515
+    parent: null
     type: Transform
   - index: 0
     type: MapGrid
@@ -1634,18 +1634,18 @@ entities:
           color: '#FFFFFFFF'
           id: Rock05
           coordinates: 1,26
-        515:
-          color: '#FFFFFFFF'
-          id: Flowersy3
-          coordinates: 3.0071383,28.047894
-        507:
+        506:
           color: '#FFFFFFFF'
           id: Rock03
           coordinates: 2,26
-        511:
+        510:
           color: '#FFFFFFFF'
           id: Rock01
           coordinates: 2,30
+        514:
+          color: '#FFFFFFFF'
+          id: Flowersy3
+          coordinates: 3.0071383,28.047894
       1,1:
         94:
           zIndex: 1
@@ -2639,23 +2639,23 @@ entities:
           color: '#FFFFFFFF'
           id: Rock05
           coordinates: -5,30
-        500:
+        499:
           color: '#FFFFFFFF'
           id: Rock05
           coordinates: -4,19
-        501:
+        500:
           color: '#FFFFFFFF'
           id: Rock05
           coordinates: -2,21
-        508:
+        507:
           color: '#FFFFFFFF'
           id: Rock03
           coordinates: -1,28
-        509:
+        508:
           color: '#FFFFFFFF'
           id: Rock03
           coordinates: -3,19
-        510:
+        509:
           color: '#FFFFFFFF'
           id: Rock01
           coordinates: -5,21
@@ -2837,35 +2837,35 @@ entities:
           color: '#FFFFFFFF'
           id: Flowersy1
           coordinates: -3,39
-        502:
+        501:
           color: '#FFFFFFFF'
           id: Rock05
           coordinates: -2,34
-        503:
+        502:
           color: '#FFFFFFFF'
           id: Rock05
           coordinates: -4,35
-        504:
+        503:
           color: '#FFFFFFFF'
           id: Rock05
           coordinates: -2,37
-        505:
+        504:
           color: '#FFFFFFFF'
           id: Rock03
           coordinates: -3,36
-        506:
+        505:
           color: '#FFFFFFFF'
           id: Rock03
           coordinates: -1,35
-        512:
+        511:
           color: '#FFFFFFFF'
           id: Rock01
           coordinates: -3,35
-        513:
+        512:
           color: '#FFFFFFFF'
           id: Rock01
           coordinates: -4,37
-        514:
+        513:
           color: '#FFFFFFFF'
           id: Rock06
           coordinates: -5,36
@@ -6496,8 +6496,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 21.213781
-      - 79.80423
+      - 20.619795
+      - 77.56971
       - 0
       - 0
       - 0
@@ -21522,10 +21522,6 @@ entities:
   - pos: 57.5,29.5
     parent: 55
     type: Transform
-- uid: 2515
-  components:
-  - index: 2
-    type: Map
 - uid: 2516
   type: FloraTreeLarge05
   components:
