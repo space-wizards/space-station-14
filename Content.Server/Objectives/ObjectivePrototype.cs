@@ -13,8 +13,6 @@ namespace Content.Server.Objectives
 
         [ViewVariables] [DataField("issuer")] public string Issuer { get; private set; } = "Unknown";
 
-        [ViewVariables] [DataField("prob")] public float Probability { get; private set; } = 0.3f;
-
         [ViewVariables]
         public float Difficulty => _difficultyOverride ?? _conditions.Sum(c => c.Difficulty);
 
