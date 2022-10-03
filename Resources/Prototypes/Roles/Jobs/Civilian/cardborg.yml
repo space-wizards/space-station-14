@@ -1,0 +1,36 @@
+- type: job
+  id: Cardborg
+  name: job-name-cardborg
+  playTimeTracker: JobCardborg
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Civilian
+      time: 1800
+  startingGear: CardborgGear
+  setPreference: true
+  icon: "Unknown"
+  supervisors: job-supervisors-cardborg
+  access:
+  - Service
+  - Maintenance
+  - Bar
+  - Kitchen
+  - Hydroponics
+  - External
+
+- type: startingGear
+  id: CardborgGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBlack
+    back: ClothingBackpackFilled
+    shoes: ClothingShoesSpaceNinja
+    head: ClothingHeadHatCardborg
+    eyes: ClothingEyesGlassesMeson
+    belt: ClothingBeltUtilityFilled
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterCardborg
+    id: CardborgPDA
+    ears: ClothingHeadsetGrey
+  innerclothingskirt: ClothingUniformJumpskirtColorBlack
+  satchel: ClothingBackpackSatchelFilled
+  duffelbag: ClothingBackpackDuffelFilled

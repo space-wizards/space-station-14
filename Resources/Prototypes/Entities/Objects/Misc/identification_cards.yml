@@ -35,6 +35,26 @@
     job: Passenger
 
 - type: entity
+  parent: IDCardStandard
+  id: CardborgIDCard
+  name: cardborg ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idpassenger
+  - type: IdCard
+    jobTitle: Cardborg
+  - type: Access
+    tags:
+    - Service
+    - Maintenance
+    - Bar
+    - Kitchen
+    - Hydroponics
+    - External
+
+- type: entity
   parent: PassengerIDCard
   id: TechnicalAssistantIDCard
   name: technical assistant ID card

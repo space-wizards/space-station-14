@@ -30,6 +30,7 @@ job-name-bartender = bartender
 job-name-passenger = passenger
 job-name-salvagespec = salvage specialist
 job-name-qm = quartermaster
+job-name-cardborg = cardborg
 job-name-cargotech = cargo technician
 job-name-chef = chef
 job-name-clown = clown

@@ -620,6 +620,21 @@
 
 - type: entity
   parent: BasePDA
+  id: CardborgPDA
+  name: clear PDA
+  description: 99 and 44/100ths percent pure plastic.
+  components:
+  - type: PDA
+    id: CardborgIDCard
+  - type: Appearance
+    visuals:
+      - type: PDAVisualizer
+        state: pda-clear
+  - type: Icon
+    state: pda-clear
+
+- type: entity
+  parent: BasePDA
   id: SyndiPDA
   name: syndicate PDA
   description: Ok, time to be a productive member of- oh cool I'm a bad guy time to kill people!
