@@ -5,6 +5,7 @@ using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Paper;
 using Content.Server.Popups;
 using Content.Server.Tools;
+using Content.Server.UserInterface;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Fax;
@@ -51,10 +52,12 @@ public sealed class FaxMachineSystem : EntitySystem
         SubscribeLocalEvent<FaxMachineComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
         SubscribeLocalEvent<FaxMachineComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<FaxMachineComponent, GotEmaggedEvent>(OnEmagged);
+        SubscribeLocalEvent<FaxMachineComponent, AfterActivatableUIOpenEvent>(OnToggleInterface);
         
         // UI
         SubscribeLocalEvent<FaxMachineComponent, FaxSendMessage>(OnSendButtonPressed);
         SubscribeLocalEvent<FaxMachineComponent, FaxRefreshMessage>(OnRefreshButtonPressed);
+        SubscribeLocalEvent<FaxMachineComponent, FaxDestinationMessage>(OnDestinationSelected);
     }
 
     public override void Update(float frameTime)
@@ -98,7 +101,12 @@ public sealed class FaxMachineSystem : EntitySystem
 
             // Sending timeout
             if (comp.SendTimeoutRemaining > 0)
+            {
                 comp.SendTimeoutRemaining -= frameTime;
+                
+                if (comp.SendTimeoutRemaining <= 0)
+                    UpdateUserInterface(comp.Owner, comp);
+            }
         }
     }
 
@@ -167,6 +175,7 @@ public sealed class FaxMachineSystem : EntitySystem
             args.Handled = true;
             component.FaxName = newName;
             _popupSystem.PopupEntity(Loc.GetString("fax-machine-popup-name-set"), uid, Filter.Pvs(uid));
+            UpdateUserInterface(uid, component);
         });
     }
     
@@ -246,6 +255,8 @@ public sealed class FaxMachineSystem : EntitySystem
 
                     component.KnownFaxes[args.SenderAddress] = faxName;
 
+                    UpdateUserInterface(uid, component);
+
                     break;
                 case FaxMachineConstants.FaxPrintCommand:
                     if (!args.Data.TryGetValue(FaxMachineConstants.FaxContentData, out string? content))
@@ -258,6 +269,11 @@ public sealed class FaxMachineSystem : EntitySystem
         }
     }
     
+    private void OnToggleInterface(EntityUid uid, FaxMachineComponent component, AfterActivatableUIOpenEvent args)
+    {
+        UpdateUserInterface(uid, component);
+    }
+    
     private void OnSendButtonPressed(EntityUid uid, FaxMachineComponent component, FaxSendMessage args)
     {
         Send(uid, component);
@@ -266,6 +282,11 @@ public sealed class FaxMachineSystem : EntitySystem
     private void OnRefreshButtonPressed(EntityUid uid, FaxMachineComponent component, FaxRefreshMessage args)
     {
         Refresh(uid, component);
+    }
+    
+    private void OnDestinationSelected(EntityUid uid, FaxMachineComponent component, FaxDestinationMessage args)
+    {
+        SetDestination(uid, args.Address, component);
     }
 
     private void UpdateAppearance(EntityUid uid, FaxMachineComponent? component = null)
@@ -286,11 +307,12 @@ public sealed class FaxMachineSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        var canSend = component.PaperSlot.Item != null &&
+        var isPaperInserted = component.PaperSlot.Item != null;
+        var canSend = isPaperInserted &&
                       component.DestinationFaxAddress != null &&
                       component.SendTimeoutRemaining <= 0 &&
                       component.InsertingTimeRemaining <= 0;
-        var state = new FaxUiState(component.KnownFaxes, canSend, component.DestinationFaxAddress);
+        var state = new FaxUiState(component.FaxName, component.KnownFaxes, canSend, isPaperInserted, component.DestinationFaxAddress);
         _userInterface.TrySetUiState(uid, FaxUiKey.Key, state);
     }
 
@@ -328,8 +350,6 @@ public sealed class FaxMachineSystem : EntitySystem
             payload.Add(FaxMachineConstants.FaxSyndicateData, true);
 
         _deviceNetworkSystem.QueuePacket(uid, null, payload);
-        
-        UpdateUserInterface(uid, component);
     }
 
     public void Send(EntityUid uid, FaxMachineComponent? component = null)
