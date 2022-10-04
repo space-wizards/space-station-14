@@ -5,6 +5,7 @@ using Content.Shared.CardboardBox;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Robust.Shared.Player;
+using Robust.Shared.Timing;
 
 namespace Content.Server.CardboardBox;
 
@@ -12,6 +13,8 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
 {
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedMoverController _mover = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -19,26 +22,8 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
         SubscribeLocalEvent<CardboardBoxComponent, StorageAfterOpenEvent>(AfterStorageOpen);
     }
 
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        foreach (var box in EntityQuery<CardboardBoxComponent>())
-        {
-            if (box.EffectPlayed)
-                box.Accumulator += frameTime;
-
-            if (box.Accumulator >= box.EffectCooldown)
-            {
-                box.Accumulator -= box.EffectCooldown;
-                box.EffectPlayed = false;
-            }
-        }
-    }
-
     private void OnBeforeStorageClosed(EntityUid uid, CardboardBoxComponent component, StorageBeforeCloseEvent args)
     {
-
         var mobMover = args.Contents.Where(HasComp<MobMoverComponent>).ToList();
 
         //Grab the first mob to set as the mover and to prevent other mobs from entering.
@@ -63,11 +48,11 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
         if (component.Mover != null)
         {
             RemComp<RelayInputMoverComponent>(component.Mover.Value);
-            if (!component.EffectPlayed)
+            if (_timing.CurTime > component.EffectCooldown)
             {
                 RaiseNetworkEvent(new PlayBoxEffectMessage(component.Owner, component.Mover.Value), Filter.PvsExcept(component.Owner));
                 _audio.PlayPvs(component.EffectSound, component.Owner);
-                component.EffectPlayed = true;
+                component.EffectCooldown = _timing.CurTime + CardboardBoxComponent.MaxEffectCooldown;
             }
         }
 

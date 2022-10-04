@@ -34,9 +34,12 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
         var mobMoverEntities = new HashSet<EntityUid>();
 
         //Filter out entities in range to see that they're a mob and add them to the mobMoverEntities hash for faster lookup
-        foreach (var entity in _entityLookup.GetComponentsInRange<MobMoverComponent>(xform.Coordinates, box.Distance))
+        foreach (var moverComp in _entityLookup.GetComponentsInRange<MobMoverComponent>(xform.Coordinates, box.Distance))
         {
-            mobMoverEntities.Add(entity.Owner);
+            if (moverComp.Owner == msg.Mover)
+                continue;
+
+            mobMoverEntities.Add(moverComp.Owner);
         }
 
         //Play the effect for the mobs as long as they can see the box and are in range.

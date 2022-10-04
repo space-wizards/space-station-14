@@ -1,6 +1,7 @@
 ﻿using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.CardboardBox.Components;
 /// <summary>
@@ -39,26 +40,18 @@ public sealed class CardboardBoxComponent : Component
     public float Distance = 6f;
 
     /// <summary>
-    /// Cooldown accumulator to prevent effect spam
-    /// </summary>
-    [ViewVariables]
-    [DataField("accumulator")]
-    public float Accumulator = 0f;
-
-    /// <summary>
-    /// Max time needed to wait until the effect can play again
+    /// Current time + max effect cooldown to check to see if effect can play again
     /// Prevents effect spam
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("effectCooldown")]
-    public float EffectCooldown = 5f;
+    [DataField("effectCooldown", customTypeSerializer: typeof(TimeOffsetSerializer))]
+    public TimeSpan EffectCooldown = TimeSpan.FromSeconds(1f);
 
     /// <summary>
-    /// Checks to see if the effect played recently to stop effect spam
+    /// How much time should pass + current time until the effect plays again
+    /// Prevents effect spam
     /// </summary>
-    [ViewVariables]
-    [DataField("effectPlayed")]
-    public bool EffectPlayed;
+    [DataField("maxEffectCooldown", customTypeSerializer: typeof(TimeOffsetSerializer))]
+    public static readonly TimeSpan MaxEffectCooldown = TimeSpan.FromSeconds(5f);
 }
 
 [Serializable, NetSerializable]
