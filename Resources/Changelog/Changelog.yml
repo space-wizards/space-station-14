@@ -1,10 +1,4 @@
 Entries:
-- author: themias
-  changes:
-  - {message: Fixed an issue where the t-ray scanner would sometimes flicker when
-      turned off, type: Fix}
-  id: 1897
-  time: '2022-07-08T21:45:16.0000000+00:00'
 - author: Ablankmann
   changes:
   - {message: 'Added the MagiVend, your one-stop shop for various wizard goodies.',
@@ -2932,3 +2926,8 @@ Entries:
   - {message: Melee windup now only shows for yourself., type: Tweak}
   id: 2396
   time: '2022-10-04T01:58:37.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed capitalization in Revenant names., type: Fix}
+  id: 2397
+  time: '2022-10-04T03:33:32.0000000+00:00'
