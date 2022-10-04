@@ -17,6 +17,7 @@ namespace Content.Server.Shuttles.Systems
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly FixtureSystem _fixtures = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
@@ -36,6 +37,7 @@ namespace Content.Server.Shuttles.Systems
             InitializeEscape();
             InitializeFTL();
             InitializeIFF();
+            InitializeImpact();
 
             SubscribeLocalEvent<ShuttleComponent, ComponentAdd>(OnShuttleAdd);
             SubscribeLocalEvent<ShuttleComponent, ComponentStartup>(OnShuttleStartup);
