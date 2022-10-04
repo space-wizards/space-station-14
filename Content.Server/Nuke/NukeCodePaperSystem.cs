@@ -5,6 +5,7 @@ namespace Content.Server.Nuke
     public sealed class NukeCodePaperSystem : EntitySystem
     {
         [Dependency] private readonly NukeCodeSystem _codes = default!;
+        [Dependency] private readonly PaperSystem _paperSystem = default!;
 
         public override void Initialize()
         {
@@ -14,11 +15,8 @@ namespace Content.Server.Nuke
 
         private void OnMapInit(EntityUid uid, NukeCodePaperComponent component, MapInitEvent args)
         {
-            PaperComponent? paper = null;
-            if (!Resolve(uid, ref paper))
-                return;
-
-            paper.Content += _codes.Code;
+            var msg = Loc.GetString("nuke-paper-content", ("code", _codes.Code));
+            _paperSystem.SetContent(uid, msg);
         }
     }
 }

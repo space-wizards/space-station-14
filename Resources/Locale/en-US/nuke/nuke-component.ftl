@@ -26,4 +26,6 @@ nuke-user-interface-second-status-time = TIME: {$time}
 nuke-user-interface-second-status-current-code = CODE: {$code}
 nuke-user-interface-second-status-cooldown-time = WAIT: {$time}
 
-
+# Nuke paper
+nuke-paper-content = [color=red]TOP SECRET![/color]
+      Nuclear device activation code: {$code}

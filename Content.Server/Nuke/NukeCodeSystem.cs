@@ -1,6 +1,7 @@
 using Content.Server.Chat;
 using Content.Server.Chat.Systems;
 using Content.Server.Communications;
+using Content.Server.Fax;
 using Content.Server.Station.Systems;
 using Content.Shared.GameTicking;
 using Robust.Shared.Random;
@@ -15,6 +16,7 @@ namespace Content.Server.Nuke
     {
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly ChatSystem _chatSystem = default!;
+        [Dependency] private readonly FaxSystem _faxSystem = default!;
 
         private const int CodeLength = 6;
         public string Code { get; private set; } = default!;
@@ -61,17 +63,12 @@ namespace Content.Server.Nuke
         /// <returns>True if at least one console received codes</returns>
         public bool SendNukeCodes()
         {
-            // todo: this should probably be handled by fax system
             var wasSent = false;
-            var consoles = EntityManager.EntityQuery<CommunicationsConsoleComponent>();
-            foreach (var console in consoles)
+            var faxes = EntityManager.EntityQuery<FaxMachineComponent>();
+            foreach (var fax in faxes)
             {
-                if (!EntityManager.TryGetComponent((console).Owner, out TransformComponent? transform))
-                    continue;
-
-                var consolePos = transform.MapPosition;
-                EntityManager.SpawnEntity("NukeCodePaper", consolePos);
-
+                var content = Loc.GetString("nuke-paper-content", ("code", Code));
+                _faxSystem.Receive(fax.Owner, content, null, fax);
                 wasSent = true;
             }
 
