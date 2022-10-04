@@ -1,4 +1,6 @@
 ﻿using Content.Server.Administration;
+using Content.Server.Administration.Managers;
+using Content.Server.Chat.Managers;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
@@ -17,12 +19,12 @@ using Robust.Shared.Player;
 namespace Content.Server.Fax;
 
 // TODO: Transfer paper stamps
-// TODO: Send message to admins when someone write to Syndicate or Centcom (via bwonk menu or in chat)
-// Add field that represent will be admins notified if someone send to that fax
 // What if scanning paper and someone send you message? Add check for queue is currently scanning something? And block sending on receiving animation.
 
 public sealed class FaxSystem : EntitySystem
 {
+    [Dependency] private readonly IChatManager _chat = default!;
+    [Dependency] private readonly IAdminManager _adminManager = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
@@ -347,6 +349,9 @@ public sealed class FaxSystem : EntitySystem
         _popupSystem.PopupEntity(Loc.GetString("fax-machine-popup-received", ("from", faxName)), uid, Filter.Pvs(uid));
         _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.Printing);
 
+        if (component.NotifyAdmins)
+            NotifyAdmins(faxName);
+
         component.PrintingQueue.Enqueue(content);
     }
 
@@ -359,5 +364,11 @@ public sealed class FaxSystem : EntitySystem
         var printed = EntityManager.SpawnEntity("Paper", Transform(uid).Coordinates);
         if (TryComp<PaperComponent>(printed, out var paper))
             _paperSystem.SetContent(printed, content);
+    }
+
+    private void NotifyAdmins(string faxName)
+    {
+        _chat.SendAdminAnnouncement(Loc.GetString("fax-machine-chat-notify", ("fax", faxName)));
+        _audioSystem.PlayGlobal("/Audio/Machines/high_tech_confirm.ogg", Filter.Empty().AddPlayers(_adminManager.ActiveAdmins));
     }
 }

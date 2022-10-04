@@ -35,6 +35,13 @@ public sealed class FaxMachineComponent : Component
     public bool ShouldResponsePings { get; set; } = true;
     
     /// <summary>
+    /// Should admins be notified on message receive
+    /// </summary>
+    [ViewVariables]
+    [DataField("notifyAdmins")]
+    public bool NotifyAdmins { get; set; } = false;
+    
+    /// <summary>
     /// Is fax was emaaged
     /// </summary>
     [ViewVariables]

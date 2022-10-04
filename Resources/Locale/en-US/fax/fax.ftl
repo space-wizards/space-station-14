@@ -16,3 +16,5 @@ fax-machine-ui-from = From:
 fax-machine-ui-paper = Paper:
 fax-machine-ui-paper-inserted = Paper in tray
 fax-machine-ui-paper-not-inserted = No paper
+
+fax-machine-chat-notify = Received new fax message on "{$fax}" fax
