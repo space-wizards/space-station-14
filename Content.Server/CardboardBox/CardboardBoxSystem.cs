@@ -1,28 +1,27 @@
 ﻿using System.Linq;
-using Content.Server.Box.Components;
+using Content.Shared.CardboardBox.Components;
 using Content.Server.Storage.Components;
-using Content.Shared.Box;
-using Content.Shared.Box.Components;
+using Content.Shared.CardboardBox;
 using Content.Shared.Movement.Components;
 using Robust.Shared.Player;
 
-namespace Content.Server.Box;
+namespace Content.Server.CardboardBox;
 
-public sealed class BoxSystem : SharedBoxSystem
+public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
 {
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<BoxComponent, StorageBeforeCloseEvent>(OnBeforeStorageClosed);
-        SubscribeLocalEvent<BoxComponent, StorageAfterOpenEvent>(AfterStorageOpen);
+        SubscribeLocalEvent<CardboardBoxComponent, StorageBeforeCloseEvent>(OnBeforeStorageClosed);
+        SubscribeLocalEvent<CardboardBoxComponent, StorageAfterOpenEvent>(AfterStorageOpen);
     }
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
-        foreach (var box in EntityQuery<BoxComponent>())
+        foreach (var box in EntityQuery<CardboardBoxComponent>())
         {
             if (box.EffectPlayed)
                 box.Accumulator += frameTime;
@@ -35,7 +34,7 @@ public sealed class BoxSystem : SharedBoxSystem
         }
     }
 
-    private void OnBeforeStorageClosed(EntityUid uid, BoxComponent component, StorageBeforeCloseEvent args)
+    private void OnBeforeStorageClosed(EntityUid uid, CardboardBoxComponent component, StorageBeforeCloseEvent args)
     {
         //Grab the first mob in the hash to set as the mover and to prevent other mobs from entering.
         var firstMob = args.Contents.Where(e => HasComp<MobMoverComponent>(e)).Select(e => e).FirstOrDefault();
@@ -56,7 +55,7 @@ public sealed class BoxSystem : SharedBoxSystem
         }
     }
 
-    private void AfterStorageOpen(EntityUid uid, BoxComponent component, StorageAfterOpenEvent args)
+    private void AfterStorageOpen(EntityUid uid, CardboardBoxComponent component, StorageAfterOpenEvent args)
     {
         //Remove the mover after the box is opened and play the effect if it hasn't been played yet.
         if (component.Mover != null)

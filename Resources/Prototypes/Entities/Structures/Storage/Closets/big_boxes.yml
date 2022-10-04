@@ -19,7 +19,7 @@
             - SlipLayer
           hard: true
     - type: Pullable
-    - type: Box
+    - type: CardboardBox
       effectSound: /Audio/Effects/chime.ogg
     - type: InputMover
     - type: EntityStorage

@@ -1,13 +1,12 @@
-﻿using Content.Client.Box.Components;
-using Content.Shared.Box;
-using Content.Shared.Box.Components;
-using Content.Shared.Interaction.Helpers;
+﻿using Content.Shared.CardboardBox;
+using Content.Shared.CardboardBox.Components;
+using Content.Shared.Examine;
 using Content.Shared.Movement.Components;
 using Robust.Client.GameObjects;
 
-namespace Content.Client.Box;
+namespace Content.Client.CardboardBox;
 
-public sealed class BoxSystem : SharedBoxSystem
+public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
 {
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
 
@@ -19,7 +18,7 @@ public sealed class BoxSystem : SharedBoxSystem
 
     private void OnBoxEffect(PlayBoxEffectMessage msg)
     {
-        if (!TryComp<BoxComponent>(msg.Source, out var box))
+        if (!TryComp<CardboardBoxComponent>(msg.Source, out var box))
             return;
 
         var xformQuery = GetEntityQuery<TransformComponent>();
@@ -27,25 +26,23 @@ public sealed class BoxSystem : SharedBoxSystem
         if (!xformQuery.TryGetComponent(msg.Source, out var xform))
             return;
 
+        var sourcePos = xform.MapPosition;
+
         //Any mob that can move should be surprised?
         //God mind rework needs to come faster so it can just check for mind
         //TODO: Replace with Mind Query when mind rework is in.
         var mobMoverEntities = new HashSet<EntityUid>();
-        var mobMoverQuery = GetEntityQuery<MobMoverComponent>();
 
         //Filter out entities in range to see that they're a mob and add them to the mobMoverEntities hash for faster lookup
-        foreach (var entity in _entityLookup.GetEntitiesInRange(xform.Coordinates, box.Distance, LookupFlags.Approximate))
+        foreach (var entity in _entityLookup.GetComponentsInRange<MobMoverComponent>(xform.Coordinates, box.Distance))
         {
-            if (!mobMoverQuery.HasComponent(entity) || msg.Mover == entity)
-                continue;
-
-            mobMoverEntities.Add(entity);
+            mobMoverEntities.Add(entity.Owner);
         }
 
         //Play the effect for the mobs as long as they can see the box and are in range.
         foreach (var mob in mobMoverEntities)
         {
-            if (!xformQuery.TryGetComponent(mob, out var moverTransform) || !msg.Source.InRangeUnOccluded(moverTransform.MapPosition, box.Distance))
+            if (!xformQuery.TryGetComponent(mob, out var moverTransform) || !ExamineSystemShared.InRangeUnOccluded(sourcePos, moverTransform.MapPosition, box.Distance, null))
                 continue;
 
             var ent = Spawn(box.Effect, moverTransform.MapPosition);
@@ -56,7 +53,5 @@ public sealed class BoxSystem : SharedBoxSystem
             sprite.Offset = new Vector2(0, 1);
             entTransform.AttachParent(mob);
         }
-
-        mobMoverEntities.Clear();
     }
 }

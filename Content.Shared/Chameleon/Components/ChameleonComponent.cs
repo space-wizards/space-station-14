@@ -10,7 +10,7 @@ namespace Content.Shared.Chameleon.Components;
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedChameleonSystem))]
-public sealed class SharedChameleonComponent : Component
+public sealed class ChameleonComponent : Component
 {
     /// <summary>
     /// Whether or not the entity previously had an interaction outline prior to cloaking.
@@ -20,7 +20,7 @@ public sealed class SharedChameleonComponent : Component
 
     /// <summary>
     /// Last set level of visibility. Ranges from 1 (fully visible) and -1 (fully hidden). To get the actual current
-    /// visibility, use <see cref="SharedChameleonSystem.GetVisibility(EntityUid, SharedChameleonComponent?)"/>
+    /// visibility, use <see cref="SharedChameleonSystem.GetVisibility(EntityUid, ChameleonComponent?)"/>
     /// </summary>
     [DataField("lastVisibility")]
     [Access(typeof(SharedChameleonSystem),  Other = AccessPermissions.None)]

@@ -18,11 +18,11 @@ public sealed class ChameleonSystem : SharedChameleonSystem
         base.Initialize();
 
         _shader = _protoMan.Index<ShaderPrototype>("Chameleon").InstanceUnique();
-        SubscribeLocalEvent<SharedChameleonComponent, ComponentRemove>(OnRemove);
-        SubscribeLocalEvent<SharedChameleonComponent, BeforePostShaderRenderEvent>(OnShaderRender);
+        SubscribeLocalEvent<ChameleonComponent, ComponentRemove>(OnRemove);
+        SubscribeLocalEvent<ChameleonComponent, BeforePostShaderRenderEvent>(OnShaderRender);
     }
 
-    protected override void OnInit(EntityUid uid, SharedChameleonComponent component, ComponentInit args)
+    protected override void OnInit(EntityUid uid, ChameleonComponent component, ComponentInit args)
     {
         base.OnInit(uid, component, args);
         if (!TryComp(uid, out SpriteComponent? sprite))
@@ -39,7 +39,7 @@ public sealed class ChameleonSystem : SharedChameleonSystem
         }
     }
 
-    private void OnRemove(EntityUid uid, SharedChameleonComponent component, ComponentRemove args)
+    private void OnRemove(EntityUid uid, ChameleonComponent component, ComponentRemove args)
     {
         if (!TryComp(uid, out SpriteComponent? sprite))
             return;
@@ -53,7 +53,7 @@ public sealed class ChameleonSystem : SharedChameleonSystem
             AddComp<InteractionOutlineComponent>(uid);
     }
 
-    private void OnShaderRender(EntityUid uid, SharedChameleonComponent component, BeforePostShaderRenderEvent args)
+    private void OnShaderRender(EntityUid uid, ChameleonComponent component, BeforePostShaderRenderEvent args)
     {
         // Distortion effect uses screen coordinates. If a player moves, the entities appear to move on screen. this
         // makes the distortion very noticeable.

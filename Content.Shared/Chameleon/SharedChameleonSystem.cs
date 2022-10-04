@@ -12,14 +12,14 @@ public abstract class SharedChameleonSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SharedChameleonComponent, ComponentGetState>(OnChameleonGetState);
-        SubscribeLocalEvent<SharedChameleonComponent, ComponentHandleState>(OnChameleonHandlesState);
-        SubscribeLocalEvent<SharedChameleonComponent, MoveEvent>(OnMove);
-        SubscribeLocalEvent<SharedChameleonComponent, EntityPausedEvent>(OnPaused);
-        SubscribeLocalEvent<SharedChameleonComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<ChameleonComponent, ComponentGetState>(OnChameleonGetState);
+        SubscribeLocalEvent<ChameleonComponent, ComponentHandleState>(OnChameleonHandlesState);
+        SubscribeLocalEvent<ChameleonComponent, MoveEvent>(OnMove);
+        SubscribeLocalEvent<ChameleonComponent, EntityPausedEvent>(OnPaused);
+        SubscribeLocalEvent<ChameleonComponent, ComponentInit>(OnInit);
     }
 
-    private void OnPaused(EntityUid uid, SharedChameleonComponent component, EntityPausedEvent args)
+    private void OnPaused(EntityUid uid, ChameleonComponent component, EntityPausedEvent args)
     {
         if (args.Paused)
         {
@@ -34,7 +34,7 @@ public abstract class SharedChameleonSystem : EntitySystem
         Dirty(component);
     }
 
-    protected virtual void OnInit(EntityUid uid, SharedChameleonComponent component, ComponentInit args)
+    protected virtual void OnInit(EntityUid uid, ChameleonComponent component, ComponentInit args)
     {
         if (component.LastUpdated != null || Paused(uid))
             return;
@@ -42,12 +42,12 @@ public abstract class SharedChameleonSystem : EntitySystem
         component.LastUpdated = _timing.CurTime;
     }
 
-    private void OnChameleonGetState(EntityUid uid, SharedChameleonComponent component, ref ComponentGetState args)
+    private void OnChameleonGetState(EntityUid uid, ChameleonComponent component, ref ComponentGetState args)
     {
         args.State = new ChameleonComponentState(component.LastVisibility, component.LastUpdated);
     }
 
-    private void OnChameleonHandlesState(EntityUid uid, SharedChameleonComponent component, ref ComponentHandleState args)
+    private void OnChameleonHandlesState(EntityUid uid, ChameleonComponent component, ref ComponentHandleState args)
     {
         if (args.Current is not ChameleonComponentState cast)
             return;
@@ -56,7 +56,7 @@ public abstract class SharedChameleonSystem : EntitySystem
         component.LastUpdated = cast.LastUpdated;
     }
 
-    private void OnMove(EntityUid uid, SharedChameleonComponent component, ref MoveEvent args)
+    private void OnMove(EntityUid uid, ChameleonComponent component, ref MoveEvent args)
     {
         if (args.FromStateHandling)
             return;
@@ -72,7 +72,7 @@ public abstract class SharedChameleonSystem : EntitySystem
     /// Modifies the visibility based on the delta provided.
     /// </summary>
     /// <param name="delta">The delta to be used in visibility calculation.</param>
-    public void ModifyVisibility(EntityUid uid, float delta, SharedChameleonComponent? component = null)
+    public void ModifyVisibility(EntityUid uid, float delta, ChameleonComponent? component = null)
     {
         if (delta == 0 || !Resolve(uid, ref component))
             return;
@@ -91,7 +91,7 @@ public abstract class SharedChameleonSystem : EntitySystem
     /// Sets the visibility directly with no modifications
     /// </summary>
     /// <param name="value">The value to set the visibility to. -1 is fully invisible, 1 is fully visible</param>
-    public void SetVisibility(EntityUid uid, float value, SharedChameleonComponent? component = null)
+    public void SetVisibility(EntityUid uid, float value, ChameleonComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
@@ -104,11 +104,11 @@ public abstract class SharedChameleonSystem : EntitySystem
     }
 
     /// <summary>
-    /// Gets the current visibility from the <see cref="SharedChameleonComponent"/>
+    /// Gets the current visibility from the <see cref="ChameleonComponent"/>
     /// Use this instead of getting LastVisibility from the component directly.
     /// </summary>
     /// <returns>Returns a calculation that accounts for any stealth change that happened since last update, otherwise returns based on if it can resolve the component.</returns>
-    public float GetVisibility(EntityUid uid, SharedChameleonComponent? component = null)
+    public float GetVisibility(EntityUid uid, ChameleonComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return 1;

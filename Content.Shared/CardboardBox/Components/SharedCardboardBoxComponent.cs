@@ -1,12 +1,14 @@
 ﻿using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Box.Components;
+namespace Content.Shared.CardboardBox.Components;
 /// <summary>
 /// Allows a user to control an EntityStorage entity while inside of it.
 /// Used for big cardboard box entities.
 /// </summary>
-public abstract class SharedBoxComponent : Component
+[RegisterComponent, NetworkedComponent]
+public sealed class CardboardBoxComponent : Component
 {
     /// <summary>
     /// The person in control of this box
