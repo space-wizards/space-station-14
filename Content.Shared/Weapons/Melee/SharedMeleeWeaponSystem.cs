@@ -229,13 +229,13 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         if (weapon.NextAttack > curTime)
             return;
 
+        if (!CombatMode.IsInCombatMode(user))
+            return;
+
         if (!Blocker.CanAttack(user))
             return;
 
         // Windup time checked elsewhere.
-
-        if (!CombatMode.IsInCombatMode(user))
-            return;
 
         if (weapon.NextAttack < curTime)
             weapon.NextAttack = curTime;
