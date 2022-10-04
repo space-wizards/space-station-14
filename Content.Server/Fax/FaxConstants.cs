@@ -1,6 +1,6 @@
 ﻿namespace Content.Server.Fax;
 
-public static class FaxMachineConstants
+public static class FaxConstants
 {
     // Commands
 

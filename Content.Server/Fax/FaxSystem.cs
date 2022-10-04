@@ -10,7 +10,6 @@ using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Fax;
 using Content.Shared.Interaction;
-using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
@@ -20,12 +19,9 @@ namespace Content.Server.Fax;
 // TODO: Transfer paper stamps
 // TODO: Send message to admins when someone write to Syndicate or Centcom (via bwonk menu or in chat)
 // Add field that represent will be admins notified if someone send to that fax
-// TODO: Remove verbs and add UI, guh
-// Should Syndicate saw all CantCom channels?
 // What if scanning paper and someone send you message? Add check for queue is currently scanning something? And block sending on receiving animation.
-// Use state instead of check is animation end?
 
-public sealed class FaxMachineSystem : EntitySystem
+public sealed class FaxSystem : EntitySystem
 {
     [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
@@ -111,7 +107,7 @@ public sealed class FaxMachineSystem : EntitySystem
 
     private void OnComponentInit(EntityUid uid, FaxMachineComponent component, ComponentInit args)
     {
-        _itemSlotsSystem.AddItemSlot(uid, FaxMachineSystem.PaperSlotId, component.PaperSlot);
+        _itemSlotsSystem.AddItemSlot(uid, FaxSystem.PaperSlotId, component.PaperSlot);
         UpdateAppearance(uid, component);
     }
 
@@ -197,22 +193,22 @@ public sealed class FaxMachineSystem : EntitySystem
         {
             switch (command)
             {
-                case FaxMachineConstants.FaxPingCommand:
+                case FaxConstants.FaxPingCommand:
                     var isForSyndie = component.Emagged &&
-                                      args.Data.ContainsKey(FaxMachineConstants.FaxSyndicateData);
+                                      args.Data.ContainsKey(FaxConstants.FaxSyndicateData);
                     if (!isForSyndie && !component.ShouldResponsePings)
                         return;
 
                     var payload = new NetworkPayload()
                     {
-                        { DeviceNetworkConstants.Command, FaxMachineConstants.FaxPongCommand },
-                        { FaxMachineConstants.FaxNameData, component.FaxName }
+                        { DeviceNetworkConstants.Command, FaxConstants.FaxPongCommand },
+                        { FaxConstants.FaxNameData, component.FaxName }
                     };
                     _deviceNetworkSystem.QueuePacket(uid, args.SenderAddress, payload);
 
                     break;
-                case FaxMachineConstants.FaxPongCommand:
-                    if (!args.Data.TryGetValue(FaxMachineConstants.FaxNameData, out string? faxName))
+                case FaxConstants.FaxPongCommand:
+                    if (!args.Data.TryGetValue(FaxConstants.FaxNameData, out string? faxName))
                         return;
 
                     component.KnownFaxes[args.SenderAddress] = faxName;
@@ -220,8 +216,8 @@ public sealed class FaxMachineSystem : EntitySystem
                     UpdateUserInterface(uid, component);
 
                     break;
-                case FaxMachineConstants.FaxPrintCommand:
-                    if (!args.Data.TryGetValue(FaxMachineConstants.FaxContentData, out string? content))
+                case FaxConstants.FaxPrintCommand:
+                    if (!args.Data.TryGetValue(FaxConstants.FaxContentData, out string? content))
                         return;
 
                     Receive(uid, content, args.SenderAddress);
@@ -298,11 +294,11 @@ public sealed class FaxMachineSystem : EntitySystem
         
         var payload = new NetworkPayload()
         {
-            { DeviceNetworkConstants.Command, FaxMachineConstants.FaxPingCommand }
+            { DeviceNetworkConstants.Command, FaxConstants.FaxPingCommand }
         };
 
         if (component.Emagged)
-            payload.Add(FaxMachineConstants.FaxSyndicateData, true);
+            payload.Add(FaxConstants.FaxSyndicateData, true);
 
         _deviceNetworkSystem.QueuePacket(uid, null, payload);
     }
@@ -327,8 +323,8 @@ public sealed class FaxMachineSystem : EntitySystem
 
         var payload = new NetworkPayload()
         {
-            { DeviceNetworkConstants.Command, FaxMachineConstants.FaxPrintCommand },
-            { FaxMachineConstants.FaxContentData, paper.Content }
+            { DeviceNetworkConstants.Command, FaxConstants.FaxPrintCommand },
+            { FaxConstants.FaxContentData, paper.Content }
         };
         _deviceNetworkSystem.QueuePacket(uid, component.DestinationFaxAddress, payload);
 
