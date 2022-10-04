@@ -1,6 +1,5 @@
 using Content.Server.Cuffs.Components;
 using Content.Server.Objectives.Interfaces;
-using Content.Server.Station.Systems;
 using Content.Server.Station.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Utility;
