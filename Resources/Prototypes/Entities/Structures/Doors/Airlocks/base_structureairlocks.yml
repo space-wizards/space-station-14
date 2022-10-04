@@ -83,6 +83,12 @@
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
+  - type: DeviceNetwork
+    deviceNetId: Wired
+    receiveFrequencyId: Airlock
+    transmitFrequencyId: Airlock
+  - type: WiredNetworkConnection
+  - type: DeviceNetworkRequiresPower
   - type: Destructible
     thresholds:
     - trigger:

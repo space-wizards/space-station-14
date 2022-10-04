@@ -1,3 +1,5 @@
+using Content.Server.DeviceNetwork;
+using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Doors.Components;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
@@ -17,6 +19,16 @@ namespace Content.Server.Doors.Systems
         [Dependency] private readonly WiresSystem _wiresSystem = default!;
         [Dependency] private readonly PowerReceiverSystem _power = default!;
 
+        /// <summary>
+        ///     Toggles an airlock open and closed.
+        /// </summary>
+        public const string AirlockToggleOpen = "airlock_toggle_open";
+
+        /// <summary>
+        ///     Toggles the bolts on an airlock.
+        /// </summary>
+        public const string AirlockToggleBolts = "airlock_toggle_bolts";
+
         public override void Initialize()
         {
             base.Initialize();
@@ -28,6 +40,47 @@ namespace Content.Server.Doors.Systems
             SubscribeLocalEvent<AirlockComponent, ActivateInWorldEvent>(OnActivate, before: new [] {typeof(DoorSystem)});
             SubscribeLocalEvent<AirlockComponent, DoorGetPryTimeModifierEvent>(OnGetPryMod);
             SubscribeLocalEvent<AirlockComponent, BeforeDoorPryEvent>(OnDoorPry);
+            SubscribeLocalEvent<AirlockComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
+        }
+
+        private void OnPacketReceived(EntityUid uid, AirlockComponent component, DeviceNetworkPacketEvent args)
+        {
+            if (!TryComp<DoorComponent>(uid, out var door))
+            {
+                return;
+            }
+
+            if (!args.Data.TryGetValue(DeviceNetworkConstants.Command, out var cmdObj)
+                || cmdObj is not string cmd
+                || cmd != DeviceNetworkConstants.CmdSetState)
+            {
+                return;
+            }
+
+            if (!args.Data.TryGetValue(DeviceNetworkConstants.CmdSetState, out var stateObj)
+                || stateObj is not AirlockStatusToggle state)
+            {
+                return;
+            }
+
+            switch (state)
+            {
+                case AirlockStatusToggle.Open:
+                    switch (door.State)
+                    {
+                        case DoorState.Closed:
+                            DoorSystem.TryOpen(uid, door);
+                            break;
+                        case DoorState.Open:
+                            DoorSystem.TryClose(uid, door);
+                            break;
+                    }
+
+                    break;
+                case AirlockStatusToggle.Bolts:
+                    component.SetBoltsWithAudio(!component.BoltsDown);
+                    break;
+            }
         }
 
         private void OnPowerChanged(EntityUid uid, AirlockComponent component, PowerChangedEvent args)
@@ -171,5 +224,11 @@ namespace Content.Server.Doors.Systems
                 args.Cancel();
             }
         }
+    }
+
+    public enum AirlockStatusToggle
+    {
+        Open,
+        Bolts
     }
 }
