@@ -3,6 +3,7 @@ using Content.Server.GameTicking;
 using Content.Server.Ghost.Components;
 using Content.Server.Mind;
 using Content.Server.Mind.Components;
+using Content.Server.MobState;
 using Content.Server.Players;
 using Content.Server.Storage.Components;
 using Content.Server.Visible;
@@ -10,7 +11,6 @@ using Content.Server.Warps;
 using Content.Shared.Actions;
 using Content.Shared.Examine;
 using Content.Shared.Follower;
-using Content.Shared.GameTicking;
 using Content.Shared.Ghost;
 using Content.Shared.MobState.Components;
 using Content.Shared.Movement.Events;
@@ -33,6 +33,7 @@ namespace Content.Server.Ghost
         [Dependency] private readonly VisibilitySystem _visibilitySystem = default!;
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly FollowerSystem _followerSystem = default!;
+        [Dependency] private readonly MobStateSystem _mobState = default!;
 
         public override void Initialize()
         {
@@ -55,7 +56,7 @@ namespace Content.Server.Ghost
             SubscribeLocalEvent<GhostComponent, BooActionEvent>(OnActionPerform);
             SubscribeLocalEvent<GhostComponent, InsertIntoEntityStorageAttemptEvent>(OnEntityStorageInsertAttempt);
 
-            SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEnd);
+            SubscribeLocalEvent<RoundEndTextAppendEvent>(_ => MakeVisible());
         }
         private void OnActionPerform(EntityUid uid, GhostComponent component, BooActionEvent args)
         {
@@ -82,9 +83,14 @@ namespace Content.Server.Ghost
         private void OnRelayMoveInput(EntityUid uid, GhostOnMoveComponent component, ref MoveInputEvent args)
         {
             // Let's not ghost if our mind is visiting...
-            if (EntityManager.HasComponent<VisitingMindComponent>(uid)) return;
-            if (!EntityManager.TryGetComponent<MindComponent>(uid, out var mind) || !mind.HasMind || mind.Mind!.IsVisitingEntity) return;
-            if (component.MustBeDead && TryComp<MobStateComponent>(uid, out var state) && !state.IsDead()) return;
+            if (EntityManager.HasComponent<VisitingMindComponent>(uid))
+                return;
+
+            if (!EntityManager.TryGetComponent<MindComponent>(uid, out var mind) || !mind.HasMind || mind.Mind!.IsVisitingEntity)
+                return;
+
+            if (component.MustBeDead && (_mobState.IsAlive(uid) || _mobState.IsCritical(uid)))
+                return;
 
             _ticker.OnGhostAttempt(mind.Mind!, component.CanReturn);
         }
@@ -94,9 +100,12 @@ namespace Content.Server.Ghost
             // Allow this entity to be seen by other ghosts.
             var visibility = EntityManager.EnsureComponent<VisibilityComponent>(component.Owner);
 
-            _visibilitySystem.AddLayer(visibility, (int) VisibilityFlags.Ghost, false);
-            _visibilitySystem.RemoveLayer(visibility, (int) VisibilityFlags.Normal, false);
-            _visibilitySystem.RefreshVisibility(visibility);
+            if (_ticker.RunLevel != GameRunLevel.PostRound)
+            {
+                _visibilitySystem.AddLayer(visibility, (int) VisibilityFlags.Ghost, false);
+                _visibilitySystem.RemoveLayer(visibility, (int) VisibilityFlags.Normal, false);
+                _visibilitySystem.RefreshVisibility(visibility);
+            }
 
             if (EntityManager.TryGetComponent(component.Owner, out EyeComponent? eye))
             {
@@ -240,13 +249,13 @@ namespace Content.Server.Ghost
 
                     string playerInfo = $"{EntityManager.GetComponent<MetaDataComponent>(attached).EntityName} ({mind?.Mind?.CurrentJob?.Name ?? "Unknown"})";
 
-                    if (TryComp<MobStateComponent>(attached, out var state) && !state.IsDead())
+                    if (_mobState.IsAlive(attached) || _mobState.IsCritical(attached))
                         yield return new GhostWarp(attached, playerInfo, false);
                 }
             }
         }
 
-        public void OnEntityStorageInsertAttempt(EntityUid uid, GhostComponent comp, InsertIntoEntityStorageAttemptEvent args)
+        private void OnEntityStorageInsertAttempt(EntityUid uid, GhostComponent comp, InsertIntoEntityStorageAttemptEvent args)
         {
             args.Cancel();
         }
@@ -254,12 +263,13 @@ namespace Content.Server.Ghost
         /// <summary>
         /// When the round ends, make all players able to see ghosts.
         /// </summary>
-        /// <param name="args"></param>
-        private void OnRoundEnd(RoundEndTextAppendEvent args)
+        public void MakeVisible()
         {
-            foreach (var component in EntityQuery<EyeComponent>())
+            foreach (var (_, vis) in EntityQuery<GhostComponent, VisibilityComponent>())
             {
-                component.VisibilityMask |= (uint) VisibilityFlags.Ghost;
+                _visibilitySystem.AddLayer(vis, (int) VisibilityFlags.Normal, false);
+                _visibilitySystem.RemoveLayer(vis, (int) VisibilityFlags.Ghost, false);
+                _visibilitySystem.RefreshVisibility(vis);
             }
         }
 
