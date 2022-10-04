@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Useless materials can no longer be inserted in lathes., type: Fix}
-  id: 1887
-  time: '2022-07-07T03:44:32.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: 'Emergency lights now change color on certain alert levels, and can
@@ -2927,3 +2922,10 @@ Entries:
       after contributing to Space Station 13 and Space Station 14.', type: Add}
   id: 2386
   time: '2022-10-02T21:26:46.0000000+00:00'
+- author: Mervill
+  changes:
+  - {message: Objects to be butchered must not be worn or be in a container., type: Fix}
+  - {message: Items dropped by butchering now drop within a tight circle around the
+      butchered object., type: Tweak}
+  id: 2387
+  time: '2022-10-04T00:50:56.0000000+00:00'
