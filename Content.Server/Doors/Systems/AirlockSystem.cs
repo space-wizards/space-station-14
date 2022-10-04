@@ -18,6 +18,7 @@ namespace Content.Server.Doors.Systems
     {
         [Dependency] private readonly WiresSystem _wiresSystem = default!;
         [Dependency] private readonly PowerReceiverSystem _power = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
         public override void Initialize()
         {
@@ -59,9 +60,38 @@ namespace Content.Server.Doors.Systems
                     DoorSystem.TryToggleDoor(uid, door);
                     break;
                 case AirlockStatusToggle.Bolts:
-                    component.SetBoltsWithAudio(!component.BoltsDown);
+                    SetBoltsWithAudio(uid, !component.BoltsDown, component);
                     break;
             }
+        }
+
+        // TODO: This should eventually replace the component method.
+        public void SetBoltsWithAudio(EntityUid uid, bool toggle, AirlockComponent? airlock = null)
+        {
+            if (!Resolve(uid, ref airlock) || toggle == airlock.BoltsDown)
+            {
+                return;
+            }
+
+            var cutWires = 0;
+            var totalWires = 0;
+            foreach (var wire in _wiresSystem.TryGetWires<DoorBoltWireAction>(uid))
+            {
+                totalWires++;
+                if (wire.IsCut)
+                {
+                    cutWires++;
+                }
+            }
+
+            if (cutWires == totalWires && totalWires != 0)
+            {
+                return;
+            }
+
+            airlock.BoltsDown = toggle;
+
+            _audioSystem.PlayPvs(toggle ? airlock.BoltDownSound : airlock.BoltUpSound, uid);
         }
 
         private void OnPowerChanged(EntityUid uid, AirlockComponent component, PowerChangedEvent args)

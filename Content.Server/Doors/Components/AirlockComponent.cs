@@ -165,6 +165,7 @@ namespace Content.Server.Doors.Components
             }
         }
 
+        [Obsolete("Use the method in AirlockSystem instead")]
         public void SetBoltsWithAudio(bool newBolts)
         {
             if (newBolts == BoltsDown)
