@@ -221,7 +221,7 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.4,-0.3,0.4,0.3"
-      mass: 2.5
+      density: 5
       mask:
       - ItemMask
 
