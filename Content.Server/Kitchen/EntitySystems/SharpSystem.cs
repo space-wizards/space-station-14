@@ -80,19 +80,27 @@ public sealed class SharpSystem : EntitySystem
         sharp.Butchering.Remove(ev.Entity);
 
         var spawnEntities = EntitySpawnCollection.GetSpawns(butcher.SpawnedEntities, _robustRandom);
-        var coords = Transform(ev.Entity).Coordinates;
+        var coords = Transform(ev.Entity).MapPosition;
         EntityUid popupEnt = default;
         foreach (var proto in spawnEntities)
         {
-            popupEnt = Spawn(proto, coords);
+            // distribute the spawned items randomly in a small radius around the origin
+            popupEnt = Spawn(proto, coords.Offset(_robustRandom.NextVector2(0.25f)));
         }
 
-        _popupSystem.PopupEntity(Loc.GetString("butcherable-knife-butchered-success", ("target", ev.Entity), ("knife", ev.Sharp)),
-            popupEnt, Filter.Entities(ev.User), PopupType.LargeCaution);
+        var hasBody = TryComp<SharedBodyComponent>(ev.Entity, out var body);
 
-        if (TryComp<SharedBodyComponent>(ev.Entity, out var body))
+        // only show a big popup when butchering living things.
+        var popupType = PopupType.Small;
+        if (hasBody)
+            popupType = PopupType.LargeCaution;
+
+        _popupSystem.PopupEntity(Loc.GetString("butcherable-knife-butchered-success", ("target", ev.Entity), ("knife", ev.Sharp)),
+            popupEnt, Filter.Entities(ev.User), popupType);
+
+        if (hasBody)
         {
-            body.Gib();
+            body!.Gib();
         }
         else
         {
@@ -125,7 +133,8 @@ public sealed class SharpSystem : EntitySystem
         if (args.Using is null || !HasComp<SharpComponent>(args.Using))
         {
             disabled = true;
-            message = Loc.GetString("butcherable-need-knife");
+            message = Loc.GetString("butcherable-need-knife",
+                ("target", uid));
         }
 
         InteractionVerb verb = new()
