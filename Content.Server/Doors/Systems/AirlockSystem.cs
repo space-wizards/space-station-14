@@ -56,16 +56,7 @@ namespace Content.Server.Doors.Systems
             switch (state)
             {
                 case AirlockStatusToggle.Open:
-                    switch (door.State)
-                    {
-                        case DoorState.Closed:
-                            DoorSystem.TryOpen(uid, door);
-                            break;
-                        case DoorState.Open:
-                            DoorSystem.TryClose(uid, door);
-                            break;
-                    }
-
+                    DoorSystem.TryToggleDoor(uid, door);
                     break;
                 case AirlockStatusToggle.Bolts:
                     component.SetBoltsWithAudio(!component.BoltsDown);
