@@ -170,7 +170,7 @@ public sealed class DoorSystem : SharedDoorSystem
 
         args.Verbs.Add(new AlternativeVerb()
         {
-            Text = "Pry door",
+            Text = Loc.GetString("door-pry"),
             Impact = LogImpact.Low,
             Act = () => TryPryDoor(uid, args.User, args.User, component, true),
         });
@@ -180,7 +180,7 @@ public sealed class DoorSystem : SharedDoorSystem
     /// <summary>
     ///     Pry open a door. This does not check if the user is holding the required tool.
     /// </summary>
-    private bool TryPryDoor(EntityUid target, EntityUid tool, EntityUid user, DoorComponent door, bool force = false)
+    public bool TryPryDoor(EntityUid target, EntityUid tool, EntityUid user, DoorComponent door, bool force = false)
     {
         if (door.BeingPried)
             return false;

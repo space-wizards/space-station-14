@@ -24,6 +24,7 @@ public abstract class SharedDeviceListSystem : EntitySystem
         if (!Resolve(uid, ref deviceList))
             return DeviceListUpdateResult.NoComponent;
 
+        var oldDevices = deviceList.Devices.ToList();
         var newDevices = merge ? new HashSet<EntityUid>(deviceList.Devices) : new();
         var devicesList = devices.ToList();
 
@@ -35,7 +36,7 @@ public abstract class SharedDeviceListSystem : EntitySystem
 
         deviceList.Devices = newDevices;
 
-        RaiseLocalEvent(uid, new DeviceListUpdateEvent(devicesList));
+        RaiseLocalEvent(uid, new DeviceListUpdateEvent(oldDevices, devicesList));
 
         Dirty(deviceList);
 
@@ -71,11 +72,13 @@ public abstract class SharedDeviceListSystem : EntitySystem
 
 public sealed class DeviceListUpdateEvent : EntityEventArgs
 {
-    public DeviceListUpdateEvent(List<EntityUid> devices)
+    public DeviceListUpdateEvent(List<EntityUid> oldDevices, List<EntityUid> devices)
     {
+        OldDevices = oldDevices;
         Devices = devices;
     }
 
+    public List<EntityUid> OldDevices { get; }
     public List<EntityUid> Devices { get; }
 }
 

@@ -43,8 +43,8 @@
   - type: MeleeWeapon
     hidden: true
     range: 1
-    arcwidth: 0
-    arc: claw
+    angle: 0
+    animation: WeaponArcClaw
     damage:
       types:
         Slash: 12
@@ -135,11 +135,12 @@
   - type: MeleeWeapon
     hidden: true
     range: 1.5
-    arcwidth: 0
-    arc: fist
+    angle: 0
+    attackRate: 0.75
+    animation: WeaponArcFist
     damage:
       types:
-        Blunt: 50 #oof ouch owie my bones
+        Blunt: 66 #oof ouch owie my bones
   - type: Fixtures
     fixtures:
     - shape:
@@ -202,8 +203,8 @@
   - type: MeleeWeapon
     hidden: true
     range: 1
-    arcwidth: 0
-    arc: claw
+    angle: 0
+    animation: WeaponArcClaw
     damage:
       types:
         Slash: 5

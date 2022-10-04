@@ -81,13 +81,12 @@
     - type: MeleeWeapon
       hidden: true
       range: 2
-      arcwidth: 30
-      arc: fist
-      cooldownTime: 0.7
-      arcCooldownTime: 0.7
+      angle: 30
+      animation: WeaponArcFist
+      attackRate: 1.5
       damage:
         types:
-          Blunt: 22
+          Blunt: 20
     - type: Actions
     - type: Guardian
     - type: InteractionPopup
