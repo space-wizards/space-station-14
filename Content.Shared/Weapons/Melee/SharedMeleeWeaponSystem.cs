@@ -1,6 +1,9 @@
 using Content.Shared.ActionBlocker;
 using Content.Shared.CombatMode;
+using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
+using Content.Shared.Interaction.Events;
+using Content.Shared.Inventory.Events;
 using Content.Shared.Popups;
 using Content.Shared.Weapons.Melee.Events;
 using JetBrains.Annotations;
@@ -34,6 +37,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
         SubscribeLocalEvent<MeleeWeaponComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<MeleeWeaponComponent, ComponentHandleState>(OnHandleState);
+        SubscribeLocalEvent<MeleeWeaponComponent, HandDeselectedEvent>(OnMeleeDropped);
 
         SubscribeAllEvent<LightAttackEvent>(OnLightAttack);
         SubscribeAllEvent<StartHeavyAttackEvent>(OnStartHeavyAttack);
@@ -41,6 +45,15 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         SubscribeAllEvent<HeavyAttackEvent>(OnHeavyAttack);
         SubscribeAllEvent<DisarmAttackEvent>(OnDisarmAttack);
         SubscribeAllEvent<StopAttackEvent>(OnStopAttack);
+    }
+
+    private void OnMeleeDropped(EntityUid uid, MeleeWeaponComponent component, HandDeselectedEvent args)
+    {
+        if (component.WindUpStart == null)
+            return;
+
+        component.WindUpStart = null;
+        Dirty(component);
     }
 
     private void OnStopAttack(StopAttackEvent msg, EntitySessionEventArgs args)
