@@ -79,3 +79,62 @@
   components:
   - type: Battery
     startingCharge: 0
+
+
+- type: entity
+  parent: [ BaseMachine, ConstructibleMachine ]
+  name: Research SMES
+  id: ResearchSMES
+  description: A high-capacity superconducting magnetic energy storage (SMES) unit.
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: AmbientSound
+      volume: -7
+      range: 3
+      sound:
+        path: /Audio/Ambience/Objects/periodic_beep.ogg
+    - type: Sprite
+      netsync: false
+      sprite: Structures/Power/research_smes.rsi
+      snapCardinals: true
+      layers:
+        - state: research_smes
+    - type: Smes
+    - type: Battery
+      maxCharge: 10000000
+      startingCharge: 0
+    - type: ExaminableBattery
+    - type: NodeContainer
+      examinable: true
+      nodes:
+        input:
+          !type:CableDeviceNode
+          nodeGroupID: HVPower
+        output:
+          !type:CableTerminalPortNode
+          nodeGroupID: HVPower
+    - type: BatteryCharger
+      voltage: High
+      node: output
+    - type: BatteryDischarger
+      voltage: High
+      node: input
+    - type: PowerNetworkBattery
+      maxSupply: 150000
+      maxChargeRate: 5000
+      supplyRampTolerance: 5000
+      supplyRampRate: 1000
+    - type: PointLight
+      radius: 1.5
+      energy: 1.6
+      color: "#c9c042"
+      castShadows: false
+    - type: Wires
+      BoardName: "SMES"
+      LayoutId: SMES
+    - type: Machine
+      board: SMESMachineCircuitboard
+    - type: StationInfiniteBatteryTarget
+    - type: StaticPrice
+      price: 750
