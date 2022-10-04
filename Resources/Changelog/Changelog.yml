@@ -1,9 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: Fixed bug where tiles would not get depressurized on rare cases., type: Fix}
-  id: 1894
-  time: '2022-07-08T12:30:46.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Fixed an error in the Retro Laser Guns inhand sprites, type: Fix}
@@ -2931,3 +2926,9 @@ Entries:
   - {message: Fix melee windup persisting in some instances., type: Fix}
   id: 2393
   time: '2022-10-04T01:12:45.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Pillar minor flavour update. See PR for details. There's now a Newscaster
+      room near boxing and the abandoned theatre has some life now., type: Tweak}
+  id: 2394
+  time: '2022-10-04T01:47:24.0000000+00:00'
