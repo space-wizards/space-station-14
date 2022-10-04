@@ -1,10 +1,4 @@
 Entries:
-- author: Ablankmann
-  changes:
-  - {message: 'Added the MagiVend, your one-stop shop for various wizard goodies.',
-    type: Add}
-  id: 1898
-  time: '2022-07-09T02:40:49.0000000+00:00'
 - author: themias
   changes:
   - {message: The hot drinks machine now dispenses tea into teacups instead of glasses,
@@ -2931,3 +2925,8 @@ Entries:
   - {message: Fixed capitalization in Revenant names., type: Fix}
   id: 2397
   time: '2022-10-04T03:33:32.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Shuttle impacts now have sounds, type: Add}
+  id: 2398
+  time: '2022-10-04T05:00:45.0000000+00:00'
