@@ -7,6 +7,7 @@ using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
 using Content.Shared.Storage;
 using Content.Shared.Verbs;
+using Robust.Server.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
@@ -16,6 +17,7 @@ public sealed class SharpSystem : EntitySystem
 {
     [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+    [Dependency] private readonly ContainerSystem _containerSystem = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
     public override void Initialize()
@@ -77,6 +79,9 @@ public sealed class SharpSystem : EntitySystem
         if (!TryComp<SharpComponent>(ev.Sharp, out var sharp))
             return;
 
+        if (_containerSystem.IsEntityInContainer(target))
+            return;
+
         sharp.Butchering.Remove(ev.Entity);
 
         var spawnEntities = EntitySpawnCollection.GetSpawns(butcher.SpawnedEntities, _robustRandom);
@@ -124,17 +129,22 @@ public sealed class SharpSystem : EntitySystem
         bool disabled = false;
         string? message = null;
 
-        if (TryComp<MobStateComponent>(uid, out var state) && !state.IsDead())
-        {
-            disabled = true;
-            message = Loc.GetString("butcherable-mob-isnt-dead");
-        }
-
         if (args.Using is null || !HasComp<SharpComponent>(args.Using))
         {
             disabled = true;
             message = Loc.GetString("butcherable-need-knife",
                 ("target", uid));
+        }
+        else if (_containerSystem.IsEntityInContainer(uid))
+        {
+            message = Loc.GetString("butcherable-not-in-container",
+                ("target", uid));
+            disabled = true;
+        }
+        else if (TryComp<MobStateComponent>(uid, out var state) && !state.IsDead())
+        {
+            disabled = true;
+            message = Loc.GetString("butcherable-mob-isnt-dead");
         }
 
         InteractionVerb verb = new()
