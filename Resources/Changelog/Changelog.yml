@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed an error in the Retro Laser Guns inhand sprites, type: Fix}
-  id: 1895
-  time: '2022-07-08T18:09:27.0000000+00:00'
 - author: Aerocrux
   changes:
   - {message: Servers now post their max player counts for the launcher to display
@@ -2932,3 +2927,9 @@ Entries:
       room near boxing and the abandoned theatre has some life now., type: Tweak}
   id: 2394
   time: '2022-10-04T01:47:24.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Tranquilizer rounds come with a tranquilizer solution and can no longer
+      be injected with other chemicals, type: Tweak}
+  id: 2395
+  time: '2022-10-04T01:57:34.0000000+00:00'
