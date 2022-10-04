@@ -28,6 +28,9 @@ namespace Content.Shared.Roles
         [DataField("name")]
         public string Name { get; } = string.Empty;
 
+        [ViewVariables(VVAccess.ReadOnly)]
+        public string LocalizedName => Loc.GetString(Name);
+
         /// <summary>
         ///     The name of this job as displayed to players.
         /// </summary>
@@ -35,7 +38,7 @@ namespace Content.Shared.Roles
         public string? Description { get; }
 
         [ViewVariables(VVAccess.ReadOnly)]
-        public string LocalizedName => Loc.GetString(Name);
+        public string? LocalizedDescription => Description is null ? null : Loc.GetString(Description);
 
         [DataField("requirements")]
         public HashSet<JobRequirement>? Requirements;

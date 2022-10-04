@@ -1163,9 +1163,9 @@ namespace Content.Client.Preferences.UI
                     MinSize = (175, 0)
                 };
 
-                if (job.Description != null)
+                if (job.LocalizedDescription != null)
                 {
-                    _jobTitle.ToolTip = job.Description;
+                    _jobTitle.ToolTip = job.LocalizedDescription;
                     _jobTitle.TooltipDelay = 0.2f;
                 }
 
