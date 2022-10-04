@@ -1,10 +1,4 @@
 Entries:
-- author: themias
-  changes:
-  - {message: The hot drinks machine now dispenses tea into teacups instead of glasses,
-    type: Tweak}
-  id: 1899
-  time: '2022-07-09T02:43:27.0000000+00:00'
 - author: LilJard
   changes:
   - {message: Added new sprite for fireaxe, type: Add}
@@ -2930,3 +2924,8 @@ Entries:
   - {message: Shuttle impacts now have sounds, type: Add}
   id: 2398
   time: '2022-10-04T05:00:45.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: You can now suicide into biomass reclaimers., type: Add}
+  id: 2399
+  time: '2022-10-04T11:08:47.0000000+00:00'
