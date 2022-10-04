@@ -1,12 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: 'Emergency lights now change color on certain alert levels, and can
-      be forcibly activated by the very dangerous alert levels.', type: Add}
-  - {message: Emergency lights can now be examined to show the current station alert
-      level., type: Tweak}
-  id: 1888
-  time: '2022-07-07T16:16:48.0000000+00:00'
 - author: themias
   changes:
   - {message: Practice shotgun shells are now much less lethal, type: Fix}
@@ -2929,3 +2921,10 @@ Entries:
       butchered object., type: Tweak}
   id: 2387
   time: '2022-10-04T00:50:56.0000000+00:00'
+- author: rolfero
+  changes:
+  - {message: SMES and Substations now hold a bit less power at the start., type: Tweak}
+  - {message: SMES and Substations can now be upgraded with better capacitors to hold
+      much more power!, type: Add}
+  id: 2388
+  time: '2022-10-04T00:59:40.0000000+00:00'
