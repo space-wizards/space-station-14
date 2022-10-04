@@ -1,5 +1,6 @@
 ﻿using Content.Server.DoAfter;
 using Content.Server.Kitchen.Components;
+using Content.Server.MobState;
 using Content.Shared.Body.Components;
 using Content.Shared.Interaction;
 using Content.Shared.MobState.Components;
@@ -18,6 +19,7 @@ public sealed class SharpSystem : EntitySystem
     [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly ContainerSystem _containerSystem = default!;
+    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
     public override void Initialize()
@@ -50,7 +52,7 @@ public sealed class SharpSystem : EntitySystem
         if (butcher.Type != ButcheringType.Knife)
             return;
 
-        if (TryComp<MobStateComponent>(target, out var mobState) && !mobState.IsDead())
+        if (TryComp<MobStateComponent>(target, out var mobState) && !_mobStateSystem.IsDead(target, mobState))
             return;
 
         if (!sharp.Butchering.Add(target))
@@ -141,7 +143,7 @@ public sealed class SharpSystem : EntitySystem
                 ("target", uid));
             disabled = true;
         }
-        else if (TryComp<MobStateComponent>(uid, out var state) && !state.IsDead())
+        else if (TryComp<MobStateComponent>(uid, out var state) && !_mobStateSystem.IsDead(uid, state))
         {
             disabled = true;
             message = Loc.GetString("butcherable-mob-isnt-dead");
