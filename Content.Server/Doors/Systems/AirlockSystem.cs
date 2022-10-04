@@ -19,16 +19,6 @@ namespace Content.Server.Doors.Systems
         [Dependency] private readonly WiresSystem _wiresSystem = default!;
         [Dependency] private readonly PowerReceiverSystem _power = default!;
 
-        /// <summary>
-        ///     Toggles an airlock open and closed.
-        /// </summary>
-        public const string AirlockToggleOpen = "airlock_toggle_open";
-
-        /// <summary>
-        ///     Toggles the bolts on an airlock.
-        /// </summary>
-        public const string AirlockToggleBolts = "airlock_toggle_bolts";
-
         public override void Initialize()
         {
             base.Initialize();
