@@ -38,22 +38,21 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
 
     private void OnBeforeStorageClosed(EntityUid uid, CardboardBoxComponent component, StorageBeforeCloseEvent args)
     {
-        //Grab the first mob in the hash to set as the mover and to prevent other mobs from entering.
-        var firstMob = args.Contents.FirstOrDefault(HasComp<MobMoverComponent>);
+
         var mobMover = args.Contents.Where(HasComp<MobMoverComponent>).ToList();
 
-        //Set the movement relay for the box as the first mob
-        if (component.Mover == null && args.Contents.Contains(firstMob))
-        {
-            var relay = EnsureComp<RelayInputMoverComponent>(firstMob);
-            _mover.SetRelay(firstMob, uid, relay);
-            component.Mover = firstMob;
-        }
-
-        //Check the contents of the box and remove any mobs other than the driver.
+        //Grab the first mob to set as the mover and to prevent other mobs from entering.
         foreach (var mover in mobMover)
         {
-            if (mover != firstMob)
+            //Set the movement relay for the box as the first mob
+            if (component.Mover == null && args.Contents.Contains(mover))
+            {
+                var relay = EnsureComp<RelayInputMoverComponent>(mover);
+                _mover.SetRelay(mover, uid, relay);
+                component.Mover = mover;
+            }
+
+            if (mover != component.Mover)
                 args.Contents.Remove(mover);
         }
     }
