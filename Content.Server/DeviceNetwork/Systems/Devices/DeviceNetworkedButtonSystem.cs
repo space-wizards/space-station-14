@@ -1,10 +1,12 @@
 using Content.Server.DeviceNetwork.Components;
+using Content.Server.DeviceNetwork.Components.Devices;
 using Content.Shared.Interaction;
 
 namespace Content.Server.DeviceNetwork.Systems.Devices;
 
 /// <summary>
-/// This handles...
+///     This system handles sending a single enum to a set of devices when the
+///     entity in question has been interacted with.
 /// </summary>
 public sealed class DeviceNetworkedButtonSystem : EntitySystem
 {
