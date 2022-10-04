@@ -19,7 +19,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 12
+      density: 30
       mask:
       - MobMask
       layer:
@@ -75,9 +75,10 @@
       Dead:
         Base: narsian_dead
   - type: MeleeWeapon
+    hidden: true
     range: 1.5
-    arcwidth: 0
-    arc: bite
+    angle: 0
+    animation: WeaponArcBite
     damage:
       types:
         Piercing: 5
@@ -86,7 +87,7 @@
   - type: MobMover
   - type: HTN
     rootTask: SimpleHostileCompound
-  - type: AiFactionTag
+  - type: Faction
     factions:
     - SimpleHostile
   - type: InteractionPopup
@@ -246,7 +247,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 5
+      density: 15
       mask:
       - MobMask
       layer:
@@ -390,7 +391,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 15
+      density: 40
       mask:
       - MobMask
       layer:
@@ -420,7 +421,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 6
+      density: 15
       mask:
       - MobMask
       layer:
@@ -466,7 +467,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 2
+      density: 5
       mask:
       - MobMask
       layer:
@@ -523,7 +524,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 5
+      density: 12
       mask:
       - MobMask
       layer:
@@ -569,7 +570,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 8
+      density: 20
       mask:
       - MobMask
       layer:
@@ -652,7 +653,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 20
+      density: 50
       mask:
       - MobMask
       layer:

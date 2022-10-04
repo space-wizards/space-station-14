@@ -13,7 +13,7 @@ namespace Content.IntegrationTests.Tests;
 public sealed class CargoTest
 {
     [Test]
-    public async Task NoArbitrage()
+    public async Task NoCargoOrderArbitrage()
     {
         await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings() {NoClient = true});
         var server = pairTracker.Pair.Server;
@@ -32,8 +32,13 @@ public sealed class CargoTest
                 var ent = entManager.SpawnEntity(proto.Product, new MapCoordinates(Vector2.Zero, mapId));
                 var price = pricing.GetPrice(ent);
 
-                Assert.That(price, Is.LessThan(proto.PointCost), $"Found arbitrage on {proto.ID} cargo product!");
+                Assert.That(price, Is.LessThan(proto.PointCost), $"Found arbitrage on {proto.ID} cargo product! Cost is {proto.PointCost} but sell is {price}!");
+                entManager.DeleteEntity(ent);
             }
+
+            mapManager.DeleteMap(mapId);
         });
+
+        await pairTracker.CleanReturnAsync();
     }
 }

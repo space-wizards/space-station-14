@@ -16,7 +16,7 @@ namespace Content.Shared.Vehicle.Components
         /// <summary>
         /// Whether someone is currently riding the vehicle
         /// </summary>
-        public bool HasRider = false;
+        public bool HasRider => Rider != null;
 
         /// <summary>
         /// The entity currently riding the vehicle.
@@ -58,6 +58,7 @@ namespace Content.Shared.Vehicle.Components
         /// <summary>
         /// Whether the vehicle has a key currently inside it or not.
         /// </summary>
+        [ViewVariables]
         public bool HasKey = false;
 
         // TODO: Fix this

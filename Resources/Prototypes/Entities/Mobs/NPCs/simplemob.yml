@@ -18,7 +18,7 @@
     rootTask: IdleCompound
   - type: Input
     context: "human"
-  - type: AiFactionTag
+  - type: Faction
     factions:
     - SimpleNeutral
   - type: MovementSpeedModifier
@@ -52,7 +52,7 @@
         # Circles, cuz rotation of rectangles looks very bad
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 20
+      density: 50
       mask:
       - MobMask
       layer:
@@ -116,9 +116,10 @@
     preset: AnimalPreset
   - type: Examiner
   - type: MeleeWeapon
+    hidden: true
     range: 1.5
-    arcwidth: 0
-    arc: bite
+    angle: 0
+    animation: WeaponArcBite
     damage:
       groups:
         Brute: 5

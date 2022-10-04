@@ -1,3 +1,4 @@
+using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
@@ -11,6 +12,9 @@ public sealed class SlowContactsComponent : Component
 
     [ViewVariables, DataField("sprintSpeedModifier")]
     public float SprintSpeedModifier { get; set; } = 1.0f;
+
+    [DataField("ignoreWhitelist")]
+    public EntityWhitelist? IgnoreWhitelist;
 }
 
 [Serializable, NetSerializable]

@@ -124,14 +124,10 @@
   - type: SolutionContainerManager
     solutions:
       ammo:
-        maxVol: 15
-  - type: RefillableSolution
-    solution: ammo
-  - type: DrainableSolution
-    solution: ammo
+        reagents:
+        - ReagentId: ChloralHydrate
+          Quantity: 15
   - type: SolutionTransfer
     maxTransferAmount: 15
-  - type: ExaminableSolution
-    solution: ammo
   - type: SpentAmmoVisuals
     state: "practice"

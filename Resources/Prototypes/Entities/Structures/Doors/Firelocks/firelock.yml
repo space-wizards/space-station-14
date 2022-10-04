@@ -13,6 +13,7 @@
     - type: DeviceNetwork
       deviceNetId: AtmosDevices
       receiveFrequencyId: AtmosMonitor
+    - type: DeviceNetworkRequiresPower
     - type: InteractionOutline
     - type: Damageable
       damageContainer: Inorganic
@@ -99,6 +100,8 @@
       node: Firelock
     - type: WallMount
       arc: 360
+    - type: StaticPrice
+      price: 150
 
 - type: entity
   id: FirelockGlass
@@ -152,3 +155,5 @@
       occludes: false
     - type: Physics
       canCollide: false
+    - type: StaticPrice
+      price: 100

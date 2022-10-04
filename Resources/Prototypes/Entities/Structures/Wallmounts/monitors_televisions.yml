@@ -32,7 +32,7 @@
         - shape:
             !type:PhysShapeAabb
             bounds: "-0.20,-0.10,0.25,0.35"
-          mass: 50
+          density: 250
           mask:
             - FullTileMask
           layer:
@@ -82,6 +82,7 @@
       receiveFrequencyId: SurveillanceCamera
       transmitFrequencyId: SurveillanceCamera
     - type: WiredNetworkConnection
+    - type: DeviceNetworkRequiresPower
     - type: SurveillanceCameraMonitor
     - type: ActivatableUI
       key: enum.SurveillanceCameraMonitorUiKey.Key
@@ -111,7 +112,7 @@
         - shape:
             !type:PhysShapeAabb
             bounds: "-0.75,-0.10,0.75,0.35"
-          mass: 50
+          density: 75
           mask:
             - FullTileMask
           layer:
@@ -157,6 +158,7 @@
       transmitFrequencyId: SurveillanceCamera
     - type: WirelessNetworkConnection
       range: 200
+    - type: DeviceNetworkRequiresPower
     - type: SurveillanceCameraMonitor
     - type: ActivatableUI
       key: enum.SurveillanceCameraMonitorUiKey.Key

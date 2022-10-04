@@ -6,7 +6,7 @@
   components:
   - type: InputMover
   - type: MobMover
-  - type: AiFactionTag
+  - type: Faction
     factions:
     - SimpleHostile
   - type: Sprite
@@ -20,7 +20,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.5
-      mass: 320
+      density: 400
       mask:
       - MobMask
       layer:
@@ -57,9 +57,10 @@
     heatDamageThreshold: 500
     coldDamageThreshold: 0
   - type: MeleeWeapon
+    hidden: true
     range: 0.5
-    arcwidth: 0
-    arc: claw
+    angle: 0
+    animation: WeaponArcClaw
     damage:
       groups:
         Brute: 15

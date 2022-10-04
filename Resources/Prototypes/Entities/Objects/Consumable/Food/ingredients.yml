@@ -98,6 +98,8 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: TrashOnEmpty
+    solution: food
 
 - type: entity
   parent: ReagentContainerBase

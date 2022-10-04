@@ -4,9 +4,10 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
 using Content.Server.GameTicking;
-using Content.Server.GameTicking.Events;
 using Content.Server.Players;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
@@ -31,16 +32,26 @@ namespace Content.Server.Administration.Systems
         private ISawmill _sawmill = default!;
         private readonly HttpClient _httpClient = new();
         private string _webhookUrl = string.Empty;
+        private WebhookData? _webhookData;
         private string _footerIconUrl = string.Empty;
         private string _avatarUrl = string.Empty;
         private string _serverName = string.Empty;
-        private readonly Dictionary<NetUserId, (string id, string username, string messages, string? characterName)> _relayMessages = new();
+        private readonly Dictionary<NetUserId, (string? id, string username, string description, string? characterName, GameRunLevel lastRunLevel)> _relayMessages = new();
+        private Dictionary<NetUserId, string> _oldMessageIds = new();
         private readonly Dictionary<NetUserId, Queue<string>> _messageQueues = new();
         private readonly HashSet<NetUserId> _processingChannels = new();
 
         // Max embed description length is 4096, according to https://discord.com/developers/docs/resources/channel#embed-object-embed-limits
         // Keep small margin, just to be safe
         private const ushort DescriptionMax = 4000;
+
+        // Maximum length a message can be before it is cut off
+        // Should be shorter than DescriptionMax
+        private const ushort MessageLengthCap = 3000;
+
+        // Text to be used to cut off messages that are too long. Should be shorter than MessageLengthCap
+        private const string TooLongText = "... **(too long)**";
+
         private int _maxAdditionalChars;
 
         public override void Initialize()
@@ -53,11 +64,31 @@ namespace Content.Server.Administration.Systems
             _sawmill = IoCManager.Resolve<ILogManager>().GetSawmill("AHELP");
             _maxAdditionalChars = GenerateAHelpMessage("", "", true).Length;
 
-            SubscribeLocalEvent<RoundStartingEvent>(RoundStarting);
+            SubscribeLocalEvent<GameRunLevelChangedEvent>(OnGameRunLevelChanged);
         }
 
-        private void RoundStarting(RoundStartingEvent ev)
+        private void OnGameRunLevelChanged(GameRunLevelChangedEvent args)
         {
+            // Don't make a new embed if we
+            // 1. were in the lobby just now, and
+            // 2. are not entering the lobby or directly into a new round.
+            if (args.Old is GameRunLevel.PreRoundLobby ||
+                args.New is not (GameRunLevel.PreRoundLobby or GameRunLevel.InRound))
+            {
+                return;
+            }
+
+            // Store the Discord message IDs of the previous round
+            _oldMessageIds = new Dictionary<NetUserId, string>();
+            foreach (var message in _relayMessages)
+            {
+                var id = message.Value.id;
+                if (id == null)
+                    return;
+
+                _oldMessageIds[message.Key] = id;
+            }
+
             _relayMessages.Clear();
         }
 
@@ -74,9 +105,48 @@ namespace Content.Server.Administration.Systems
             _config.UnsubValueChanged(CVars.GameHostName, OnServerNameChanged);
         }
 
-        private void OnWebhookChanged(string obj)
+        private void OnWebhookChanged(string url)
         {
-            _webhookUrl = obj;
+            _webhookUrl = url;
+
+            if (url == string.Empty)
+                return;
+
+            // Basic sanity check and capturing webhook ID and token
+            var match = Regex.Match(url, @"^https://discord\.com/api/webhooks/(\d+)/((?!.*/).*)$");
+
+            if (!match.Success)
+            {
+                // TODO: Ideally, CVar validation during setting should be better integrated
+                Logger.Warning("Webhook URL does not appear to be valid. Using anyways...");
+                return;
+            }
+
+            if (match.Groups.Count <= 2)
+            {
+                Logger.Error("Could not get webhook ID or token.");
+                return;
+            }
+
+            var webhookId = match.Groups[1].Value;
+            var webhookToken = match.Groups[2].Value;
+
+            // Fire and forget
+            _ = SetWebhookData(webhookId, webhookToken);
+        }
+
+        private async Task SetWebhookData(string id, string token)
+        {
+            var response = await _httpClient.GetAsync($"https://discord.com/api/v10/webhooks/{id}/{token}");
+
+            var content = await response.Content.ReadAsStringAsync();
+            if (!response.IsSuccessStatusCode)
+            {
+                _sawmill.Log(LogLevel.Error, $"Discord returned bad status code when trying to get webhook data (perhaps the webhook URL is invalid?): {response.StatusCode}\nResponse: {content}");
+                return;
+            }
+
+            _webhookData = JsonSerializer.Deserialize<WebhookData>(content);
         }
 
         private void OnFooterIconChanged(string url)
@@ -89,32 +159,76 @@ namespace Content.Server.Administration.Systems
             _avatarUrl = url;
         }
 
-        private async void ProcessQueue(NetUserId channelId, Queue<string> messages)
+        private async void ProcessQueue(NetUserId userId, Queue<string> messages)
         {
-            if (!_relayMessages.TryGetValue(channelId, out var oldMessage) || messages.Sum(x => x.Length + 2) + oldMessage.messages.Length > DescriptionMax)
+            // Whether an embed already exists for this player
+            var exists = _relayMessages.TryGetValue(userId, out var existingEmbed);
+
+            // Whether the message will become too long after adding these new messages
+            var tooLong = exists && messages.Sum(msg => Math.Min(msg.Length, MessageLengthCap) + "\n".Length)
+                    + existingEmbed.description.Length > DescriptionMax;
+
+            // If there is no existing embed, or it is getting too long, we create a new embed
+            if (!exists || tooLong)
             {
-                var lookup = await _playerLocator.LookupIdAsync(channelId);
+                var lookup = await _playerLocator.LookupIdAsync(userId);
 
                 if (lookup == null)
                 {
-                    _sawmill.Log(LogLevel.Error, $"Unable to find player for netuserid {channelId} when sending discord webhook.");
-                    _relayMessages.Remove(channelId);
+                    _sawmill.Log(LogLevel.Error, $"Unable to find player for NetUserId {userId} when sending discord webhook.");
+                    _relayMessages.Remove(userId);
                     return;
                 }
 
-                var characterName = _playerManager.GetPlayerData(channelId).ContentData()?.Mind?.CharacterName;
+                var characterName = _playerManager.GetPlayerData(userId).ContentData()?.Mind?.CharacterName;
 
-                oldMessage = (string.Empty, lookup.Username, string.Empty, characterName);
+                var linkToPrevious = string.Empty;
+
+                // If we have all the data required, we can link to the embed of the previous round or embed that was too long
+                if (_webhookData is { GuildId: { } guildId, ChannelId: { } channelId })
+                {
+                    if (tooLong && existingEmbed.id != null)
+                    {
+                        linkToPrevious = $"**[Go to previous embed of this round](https://discord.com/channels/{guildId}/{channelId}/{existingEmbed.id})**\n";
+                    }
+                    else if (_oldMessageIds.TryGetValue(userId, out var id) && !string.IsNullOrEmpty(id))
+                    {
+                        linkToPrevious = $"**[Go to last round's conversation with this player](https://discord.com/channels/{guildId}/{channelId}/{id})**\n";
+                    }
+                }
+
+                existingEmbed = (null, lookup.Username, linkToPrevious, characterName, _gameTicker.RunLevel);
             }
 
+            // Previous message was in another RunLevel, so show that in the embed
+            if (existingEmbed.lastRunLevel != _gameTicker.RunLevel)
+            {
+                existingEmbed.description += _gameTicker.RunLevel switch
+                {
+                    GameRunLevel.PreRoundLobby => "\n\n:arrow_forward: _**Pre-round lobby started**_\n",
+                    GameRunLevel.InRound => "\n\n:arrow_forward: _**Round started**_\n",
+                    GameRunLevel.PostRound => "\n\n:stop_button: _**Post-round started**_\n",
+                    _ => throw new ArgumentOutOfRangeException(nameof(_gameTicker.RunLevel), $"{_gameTicker.RunLevel} was not matched."),
+                };
+
+                existingEmbed.lastRunLevel = _gameTicker.RunLevel;
+            }
+
+            // Add available messages to the embed description
             while (messages.TryDequeue(out var message))
             {
-                oldMessage.messages += $"\n{message}";
+                // In case someone thinks they're funny
+                if (message.Length > MessageLengthCap)
+                    message = message[..(MessageLengthCap - TooLongText.Length)] + TooLongText;
+
+                existingEmbed.description += $"\n{message}";
             }
 
-            var payload = GeneratePayload(oldMessage.messages, oldMessage.username, oldMessage.characterName);
+            var payload = GeneratePayload(existingEmbed.description, existingEmbed.username, existingEmbed.characterName);
 
-            if (oldMessage.id == string.Empty)
+            // If there is no existing embed, create a new one
+            // Otherwise patch (edit) it
+            if (existingEmbed.id == null)
             {
                 var request = await _httpClient.PostAsync($"{_webhookUrl}?wait=true",
                     new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json"));
@@ -123,7 +237,7 @@ namespace Content.Server.Administration.Systems
                 if (!request.IsSuccessStatusCode)
                 {
                     _sawmill.Log(LogLevel.Error, $"Discord returned bad status code when posting message (perhaps the message is too long?): {request.StatusCode}\nResponse: {content}");
-                    _relayMessages.Remove(channelId);
+                    _relayMessages.Remove(userId);
                     return;
                 }
 
@@ -131,29 +245,29 @@ namespace Content.Server.Administration.Systems
                 if (id == null)
                 {
                     _sawmill.Log(LogLevel.Error, $"Could not find id in json-content returned from discord webhook: {content}");
-                    _relayMessages.Remove(channelId);
+                    _relayMessages.Remove(userId);
                     return;
                 }
 
-                oldMessage.id = id.ToString();
+                existingEmbed.id = id.ToString();
             }
             else
             {
-                var request = await _httpClient.PatchAsync($"{_webhookUrl}/messages/{oldMessage.id}",
+                var request = await _httpClient.PatchAsync($"{_webhookUrl}/messages/{existingEmbed.id}",
                     new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json"));
 
                 if (!request.IsSuccessStatusCode)
                 {
                     var content = await request.Content.ReadAsStringAsync();
                     _sawmill.Log(LogLevel.Error, $"Discord returned bad status code when patching message (perhaps the message is too long?): {request.StatusCode}\nResponse: {content}");
-                    _relayMessages.Remove(channelId);
+                    _relayMessages.Remove(userId);
                     return;
                 }
             }
 
-            _relayMessages[channelId] = oldMessage;
+            _relayMessages[userId] = existingEmbed;
 
-            _processingChannels.Remove(channelId);
+            _processingChannels.Remove(userId);
         }
 
         private WebhookPayload GeneratePayload(string messages, string username, string? characterName = null)
@@ -168,8 +282,15 @@ namespace Content.Server.Administration.Systems
             // Limit server name to 1500 characters, in case someone tries to be a little funny
             var serverName = _serverName[..Math.Min(_serverName.Length, 1500)];
 
-            // If the round ID is 0, it most likely means we are in the lobby
-            var round = _gameTicker.RoundId == 0 ? "lobby" : $"round {_gameTicker.RoundId}";
+            var round = _gameTicker.RunLevel switch
+            {
+                GameRunLevel.PreRoundLobby => _gameTicker.RoundId == 0
+                    ? "pre-round lobby after server restart" // first round after server restart has ID == 0
+                    : $"pre-round lobby for round {_gameTicker.RoundId + 1}",
+                GameRunLevel.InRound => $"round {_gameTicker.RoundId}",
+                GameRunLevel.PostRound => $"post-round {_gameTicker.RoundId}",
+                _ => throw new ArgumentOutOfRangeException(nameof(_gameTicker.RunLevel), $"{_gameTicker.RunLevel} was not matched."),
+            };
 
             return new WebhookPayload
             {
@@ -195,19 +316,19 @@ namespace Content.Server.Administration.Systems
         {
             base.Update(frameTime);
 
-            foreach (var channelId in _messageQueues.Keys.ToArray())
+            foreach (var userId in _messageQueues.Keys.ToArray())
             {
-                if (_processingChannels.Contains(channelId))
+                if (_processingChannels.Contains(userId))
                     continue;
 
-                var queue = _messageQueues[channelId];
-                _messageQueues.Remove(channelId);
+                var queue = _messageQueues[userId];
+                _messageQueues.Remove(userId);
                 if (queue.Count == 0)
                     continue;
 
-                _processingChannels.Add(channelId);
+                _processingChannels.Add(userId);
 
-                ProcessQueue(channelId, queue);
+                ProcessQueue(userId, queue);
             }
         }
 
@@ -218,7 +339,7 @@ namespace Content.Server.Administration.Systems
 
             // TODO: Sanitize text?
             // Confirm that this person is actually allowed to send a message here.
-            var personalChannel = senderSession.UserId == message.ChannelId;
+            var personalChannel = senderSession.UserId == message.UserId;
             var senderAdmin = _adminManager.GetAdminData(senderSession);
             var senderAHelpAdmin = senderAdmin?.HasFlag(AdminFlags.Adminhelp) ?? false;
             var authorized = personalChannel || senderAHelpAdmin;
@@ -239,7 +360,7 @@ namespace Content.Server.Administration.Systems
                 _ => $"{senderSession.Name}: {escapedText}",
             };
 
-            var msg = new BwoinkTextMessage(message.ChannelId, senderSession.UserId, bwoinkText);
+            var msg = new BwoinkTextMessage(message.UserId, senderSession.UserId, bwoinkText);
 
             LogBwoink(msg);
 
@@ -252,7 +373,7 @@ namespace Content.Server.Administration.Systems
             }
 
             // Notify player
-            if (_playerManager.TryGetSessionById(message.ChannelId, out var session))
+            if (_playerManager.TryGetSessionById(message.UserId, out var session))
             {
                 if (!admins.Contains(session.ConnectedClient))
                     RaiseNetworkEvent(msg, session.ConnectedClient);
@@ -261,8 +382,8 @@ namespace Content.Server.Administration.Systems
             var sendsWebhook = _webhookUrl != string.Empty;
             if (sendsWebhook)
             {
-                if (!_messageQueues.ContainsKey(msg.ChannelId))
-                    _messageQueues[msg.ChannelId] = new Queue<string>();
+                if (!_messageQueues.ContainsKey(msg.UserId))
+                    _messageQueues[msg.UserId] = new Queue<string>();
 
                 var str = message.Text;
                 var unameLength = senderSession.Name.Length;
@@ -271,7 +392,7 @@ namespace Content.Server.Administration.Systems
                 {
                     str = str[..(DescriptionMax - _maxAdditionalChars - unameLength)];
                 }
-                _messageQueues[msg.ChannelId].Enqueue(GenerateAHelpMessage(senderSession.Name, str, !personalChannel, admins.Count == 0));
+                _messageQueues[msg.UserId].Enqueue(GenerateAHelpMessage(senderSession.Name, str, !personalChannel, admins.Count == 0));
             }
 
             if (admins.Count != 0)
@@ -281,7 +402,7 @@ namespace Content.Server.Administration.Systems
             var systemText = sendsWebhook ?
                 Loc.GetString("bwoink-system-starmute-message-no-other-users-webhook") :
                 Loc.GetString("bwoink-system-starmute-message-no-other-users");
-            var starMuteMsg = new BwoinkTextMessage(message.ChannelId, SystemUserId, systemText);
+            var starMuteMsg = new BwoinkTextMessage(message.UserId, SystemUserId, systemText);
             RaiseNetworkEvent(starMuteMsg, senderSession.ConnectedClient);
         }
 
@@ -329,7 +450,9 @@ namespace Content.Server.Administration.Systems
                     { "parse", Array.Empty<string>() },
                 };
 
-            public WebhookPayload() { }
+            public WebhookPayload()
+            {
+            }
         }
 
         // https://discord.com/developers/docs/resources/channel#embed-object-embed-structure
@@ -359,6 +482,20 @@ namespace Content.Server.Administration.Systems
             public string IconUrl { get; set; } = "";
 
             public EmbedFooter()
+            {
+            }
+        }
+
+        // https://discord.com/developers/docs/resources/webhook#webhook-object-webhook-structure
+        private struct WebhookData
+        {
+            [JsonPropertyName("guild_id")]
+            public string? GuildId { get; set; } = null;
+
+            [JsonPropertyName("channel_id")]
+            public string? ChannelId { get; set; } = null;
+
+            public WebhookData()
             {
             }
         }

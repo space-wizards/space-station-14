@@ -8,6 +8,7 @@
       amount: 4
     - id: KnifePlastic
     - id: LidSalami
+      prob: 0.01
 
 - type: entity
   id: CrateFoodMRE
