@@ -56,7 +56,7 @@ namespace Content.Server.Ghost
             SubscribeLocalEvent<GhostComponent, BooActionEvent>(OnActionPerform);
             SubscribeLocalEvent<GhostComponent, InsertIntoEntityStorageAttemptEvent>(OnEntityStorageInsertAttempt);
 
-            SubscribeLocalEvent<RoundEndTextAppendEvent>(_ => MakeVisible());
+            SubscribeLocalEvent<RoundEndTextAppendEvent>(_ => MakeVisible(true));
         }
         private void OnActionPerform(EntityUid uid, GhostComponent component, BooActionEvent args)
         {
@@ -263,12 +263,20 @@ namespace Content.Server.Ghost
         /// <summary>
         /// When the round ends, make all players able to see ghosts.
         /// </summary>
-        public void MakeVisible()
+        public void MakeVisible(bool visible)
         {
             foreach (var (_, vis) in EntityQuery<GhostComponent, VisibilityComponent>())
             {
-                _visibilitySystem.AddLayer(vis, (int) VisibilityFlags.Normal, false);
-                _visibilitySystem.RemoveLayer(vis, (int) VisibilityFlags.Ghost, false);
+                if (visible)
+                {
+                    _visibilitySystem.AddLayer(vis, (int) VisibilityFlags.Normal, false);
+                    _visibilitySystem.RemoveLayer(vis, (int) VisibilityFlags.Ghost, false);
+                }
+                else
+                {
+                    _visibilitySystem.AddLayer(vis, (int) VisibilityFlags.Ghost, false);
+                    _visibilitySystem.RemoveLayer(vis, (int) VisibilityFlags.Normal, false);
+                }
                 _visibilitySystem.RefreshVisibility(vis);
             }
         }

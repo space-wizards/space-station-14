@@ -57,7 +57,7 @@ public sealed partial class RevenantSystem : EntitySystem
         SubscribeLocalEvent<RevenantComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<RevenantComponent, StatusEffectAddedEvent>(OnStatusAdded);
         SubscribeLocalEvent<RevenantComponent, StatusEffectEndedEvent>(OnStatusEnded);
-        SubscribeLocalEvent<RoundEndTextAppendEvent>(_ => MakeVisible());
+        SubscribeLocalEvent<RoundEndTextAppendEvent>(_ => MakeVisible(true));
 
         InitializeAbilities();
     }
@@ -175,12 +175,20 @@ public sealed partial class RevenantSystem : EntitySystem
         _store.ToggleUi(uid, store);
     }
 
-    public void MakeVisible()
+    public void MakeVisible(bool visible)
     {
         foreach (var (_, vis) in EntityQuery<RevenantComponent, VisibilityComponent>())
         {
-            _visibility.AddLayer(vis, (int) VisibilityFlags.Normal, false);
-            _visibility.RemoveLayer(vis, (int) VisibilityFlags.Ghost, false);
+            if (visible)
+            {
+                _visibility.AddLayer(vis, (int) VisibilityFlags.Normal, false);
+                _visibility.RemoveLayer(vis, (int) VisibilityFlags.Ghost, false);
+            }
+            else
+            {
+                _visibility.AddLayer(vis, (int) VisibilityFlags.Ghost, false);
+                _visibility.RemoveLayer(vis, (int) VisibilityFlags.Normal, false);
+            }
             _visibility.RefreshVisibility(vis);
         }
     }
