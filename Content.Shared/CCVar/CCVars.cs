@@ -392,7 +392,7 @@ namespace Content.Shared.CCVar
             CVarDef.Create("database.pg_database", "ss14", CVar.SERVERONLY);
 
         public static readonly CVarDef<string> DatabasePgUsername =
-            CVarDef.Create("database.pg_username", "", CVar.SERVERONLY);
+            CVarDef.Create("database.pg_username", "postgres", CVar.SERVERONLY);
 
         public static readonly CVarDef<string> DatabasePgPassword =
             CVarDef.Create("database.pg_password", "", CVar.SERVERONLY | CVar.CONFIDENTIAL);
