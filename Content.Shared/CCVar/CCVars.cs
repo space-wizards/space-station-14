@@ -359,7 +359,7 @@ namespace Content.Shared.CCVar
          */
 
         public static readonly CVarDef<string> DatabaseEngine =
-            CVarDef.Create("database.engine", "postgres", CVar.SERVERONLY);
+            CVarDef.Create("database.engine", "sqlite", CVar.SERVERONLY);
 
         public static readonly CVarDef<string> DatabaseSqliteDbPath =
             CVarDef.Create("database.sqlite_dbpath", "preferences.db", CVar.SERVERONLY);
@@ -395,7 +395,7 @@ namespace Content.Shared.CCVar
             CVarDef.Create("database.pg_username", "postgres", CVar.SERVERONLY);
 
         public static readonly CVarDef<string> DatabasePgPassword =
-            CVarDef.Create("database.pg_password", "Ohiyome2", CVar.SERVERONLY | CVar.CONFIDENTIAL);
+            CVarDef.Create("database.pg_password", "", CVar.SERVERONLY | CVar.CONFIDENTIAL);
 
         // Basically only exists for integration tests to avoid race conditions.
         public static readonly CVarDef<bool> DatabaseSynchronous =
