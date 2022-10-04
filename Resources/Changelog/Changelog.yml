@@ -1,19 +1,4 @@
 Entries:
-- author: themias
-  changes:
-  - {message: Practice shotgun shells are now much less lethal, type: Fix}
-  id: 1889
-  time: '2022-07-07T17:30:37.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Humans can now eat/drink about twice as much at once, and can eat 2
-      pills at once.', type: Tweak}
-  - {message: Pills now hold 25u up from 20u., type: Tweak}
-  - {message: Lizards now have the same stomach capacity as humans., type: Tweak}
-  - {message: Drinks no longer spill their contents if you try to drink too much.,
-    type: Fix}
-  id: 1890
-  time: '2022-07-07T18:21:27.0000000+00:00'
 - author: TekuNut
   changes:
   - {message: Hunger and thirst will no longer affect jetpack speed., type: Tweak}
@@ -2928,3 +2913,17 @@ Entries:
       much more power!, type: Add}
   id: 2388
   time: '2022-10-04T00:59:40.0000000+00:00'
+- author: kognise
+  changes:
+  - {message: the o2 button now works for tanks clipped to a belt, type: Fix}
+  - {message: the gas tank ui "toggle" button is now disabled when not wearing a breathing
+      tool, type: Fix}
+  id: 2389
+  time: '2022-10-04T01:01:20.0000000+00:00'
+- author: BurninDreamer
+  changes:
+  - {message: 'Combat boots can now store knives, HoS, Warden and Nukies get those.',
+    type: Add}
+  - {message: 'Knives from Nukies'' backpacks, they''re in your boots now.', type: Remove}
+  id: 2390
+  time: '2022-10-04T01:01:43.0000000+00:00'
