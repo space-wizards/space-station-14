@@ -1,9 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Pizza boxes can no longer be used for nefarious deeds., type: Fix}
-  id: 1892
-  time: '2022-07-07T19:37:47.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Diseases can now have different stages., type: Add}
@@ -2928,3 +2923,11 @@ Entries:
     type: Tweak}
   id: 2391
   time: '2022-10-04T01:05:03.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'Passive research points will not generate above 30,000 stored points.
+      Rate or total available research is not affected. All this means is you have
+      to actively spend them, rather than let them accumulate the whole round and
+      unlock all techs at once.', type: Tweak}
+  id: 2392
+  time: '2022-10-04T01:10:17.0000000+00:00'
