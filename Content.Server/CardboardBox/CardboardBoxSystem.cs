@@ -3,6 +3,7 @@ using Content.Shared.CardboardBox.Components;
 using Content.Server.Storage.Components;
 using Content.Shared.CardboardBox;
 using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Systems;
 using Robust.Shared.Player;
 
 namespace Content.Server.CardboardBox;
@@ -10,6 +11,7 @@ namespace Content.Server.CardboardBox;
 public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
 {
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedMoverController _mover = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -44,7 +46,7 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
         if (component.Mover == null && args.Contents.Contains(firstMob))
         {
             var relay = EnsureComp<RelayInputMoverComponent>(firstMob);
-            relay.RelayEntity = uid;
+            _mover.SetRelay(firstMob, uid, relay);
             component.Mover = firstMob;
         }
 
