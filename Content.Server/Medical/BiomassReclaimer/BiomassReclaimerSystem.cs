@@ -105,8 +105,7 @@ namespace Content.Server.Medical.BiomassReclaimer
         {
             if (args.Handled)
                 return;
-            args.SetHandled(SuicideKind.Blunt);
-
+            
             if (HasComp<ActiveBiomassReclaimerComponent>(uid))
                 return;
 
@@ -115,6 +114,7 @@ namespace Content.Server.Medical.BiomassReclaimer
 
             _popup.PopupEntity(Loc.GetString("biomass-reclaimer-suicide-others", ("victim", args.Victim)), uid, Filter.Pvs(uid), PopupType.LargeCaution);
             StartProcessing(args.Victim, component);
+            args.SetHandled(SuicideKind.Blunt);
         }
 
         private void OnInit(EntityUid uid, ActiveBiomassReclaimerComponent component, ComponentInit args)
