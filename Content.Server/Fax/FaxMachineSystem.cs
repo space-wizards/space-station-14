@@ -21,7 +21,8 @@ namespace Content.Server.Fax;
 // Add field that represent will be admins notified if someone send to that fax
 // TODO: Remove verbs and add UI, guh
 // Should Syndicate saw all CantCom channels?
-// What if scanning paper and someone send you message? Add check for queue is currently scanning something?
+// What if scanning paper and someone send you message? Add check for queue is currently scanning something? And block sending on receiving animation.
+// Use state instead of check is animation end?
 
 public sealed class FaxMachineSystem : EntitySystem
 {
@@ -33,6 +34,7 @@ public sealed class FaxMachineSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly ToolSystem _toolSystem = default!;
     [Dependency] private readonly QuickDialogSystem _quickDialog = default!;
+    [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
 
     public const string PaperSlotId = "FaxMachine-paper";
 
@@ -49,6 +51,10 @@ public sealed class FaxMachineSystem : EntitySystem
         SubscribeLocalEvent<FaxMachineComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
         SubscribeLocalEvent<FaxMachineComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<FaxMachineComponent, GotEmaggedEvent>(OnEmagged);
+        
+        // UI
+        SubscribeLocalEvent<FaxMachineComponent, FaxSendMessage>(OnSendButtonPressed);
+        SubscribeLocalEvent<FaxMachineComponent, FaxRefreshMessage>(OnRefreshButtonPressed);
     }
 
     public override void Update(float frameTime)
@@ -65,7 +71,10 @@ public sealed class FaxMachineSystem : EntitySystem
 
                 var isAnimationEnd = comp.PrintingTimeRemaining <= 0;
                 if (isAnimationEnd)
+                {
                     SpawnPaperFromQueue(comp.Owner, comp);
+                    UpdateUserInterface(comp.Owner, comp);
+                }
             }
             else if (comp.PrintingQueue.Count > 0)
             {
@@ -81,7 +90,10 @@ public sealed class FaxMachineSystem : EntitySystem
 
                 var isAnimationEnd = comp.InsertingTimeRemaining <= 0;
                 if (isAnimationEnd)
+                {
                     _itemSlotsSystem.SetLock(comp.Owner, comp.PaperSlot, false);
+                    UpdateUserInterface(comp.Owner, comp);
+                }
             }
 
             // Sending timeout
@@ -121,6 +133,8 @@ public sealed class FaxMachineSystem : EntitySystem
             component.InsertingTimeRemaining = component.InsertionTime;
             _itemSlotsSystem.SetLock(uid, component.PaperSlot, true);
         }
+
+        UpdateUserInterface(uid, component);
     }
     
     private void OnInteractUsing(EntityUid uid, FaxMachineComponent component, InteractUsingEvent args)
@@ -243,6 +257,16 @@ public sealed class FaxMachineSystem : EntitySystem
             }
         }
     }
+    
+    private void OnSendButtonPressed(EntityUid uid, FaxMachineComponent component, FaxSendMessage args)
+    {
+        Send(uid, component);
+    }
+    
+    private void OnRefreshButtonPressed(EntityUid uid, FaxMachineComponent component, FaxRefreshMessage args)
+    {
+        Refresh(uid, component);
+    }
 
     private void UpdateAppearance(EntityUid uid, FaxMachineComponent? component = null)
     {
@@ -255,6 +279,19 @@ public sealed class FaxMachineSystem : EntitySystem
             _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.Printing);
         else
             _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.Normal);
+    }
+
+    private void UpdateUserInterface(EntityUid uid, FaxMachineComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        var canSend = component.PaperSlot.Item != null &&
+                      component.DestinationFaxAddress != null &&
+                      component.SendTimeoutRemaining <= 0 &&
+                      component.InsertingTimeRemaining <= 0;
+        var state = new FaxUiState(component.KnownFaxes, canSend, component.DestinationFaxAddress);
+        _userInterface.TrySetUiState(uid, FaxUiKey.Key, state);
     }
 
     public void SetDestination(EntityUid uid, string destAddress, FaxMachineComponent? component = null)
@@ -270,6 +307,8 @@ public sealed class FaxMachineSystem : EntitySystem
 
         var msg = Loc.GetString("fax-machine-popup-destination", ("destination", faxName));
         _popupSystem.PopupEntity(msg, uid, Filter.Pvs(uid));
+        
+        UpdateUserInterface(uid, component);
     }
 
     public void Refresh(EntityUid uid, FaxMachineComponent? component = null)
@@ -289,6 +328,8 @@ public sealed class FaxMachineSystem : EntitySystem
             payload.Add(FaxMachineConstants.FaxSyndicateData, true);
 
         _deviceNetworkSystem.QueuePacket(uid, null, payload);
+        
+        UpdateUserInterface(uid, component);
     }
 
     public void Send(EntityUid uid, FaxMachineComponent? component = null)
@@ -329,6 +370,8 @@ public sealed class FaxMachineSystem : EntitySystem
         
         _audioSystem.PlayPvs(component.SendSound, uid);
         _popupSystem.PopupEntity(Loc.GetString("fax-machine-popup-send"), uid, Filter.Pvs(uid));
+        
+        UpdateUserInterface(uid, component);
     }
 
     public void Receive(EntityUid uid, string content, string? fromAddress, FaxMachineComponent? component = null)

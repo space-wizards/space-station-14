@@ -21,3 +21,4 @@ fax-machine-dialog-field-name = Name
 
 fax-machine-ui-window = Fax Machine
 fax-machine-ui-send-button = Send
+fax-machine-ui-refresh-button = Refresh
