@@ -1,9 +1,4 @@
 Entries:
-- author: TekuNut
-  changes:
-  - {message: Hunger and thirst will no longer affect jetpack speed., type: Tweak}
-  id: 1891
-  time: '2022-07-07T18:29:25.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Pizza boxes can no longer be used for nefarious deeds., type: Fix}
@@ -2927,3 +2922,9 @@ Entries:
   - {message: 'Knives from Nukies'' backpacks, they''re in your boots now.', type: Remove}
   id: 2390
   time: '2022-10-04T01:01:43.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: 'Nuclear bombs are now less heavy thanks to Bluespace [REDACTED] Tech.',
+    type: Tweak}
+  id: 2391
+  time: '2022-10-04T01:05:03.0000000+00:00'
