@@ -1,9 +1,4 @@
 Entries:
-- author: LilJard
-  changes:
-  - {message: Added new sprite for fireaxe, type: Add}
-  id: 1900
-  time: '2022-07-09T03:03:21.0000000+00:00'
 - author: Myctai
   changes:
   - {message: machine pistol magazine (.35 auto high-velocity) now comes with corresponding
@@ -2929,3 +2924,9 @@ Entries:
   - {message: You can now suicide into biomass reclaimers., type: Add}
   id: 2399
   time: '2022-10-04T11:08:47.0000000+00:00'
+- author: Vordenburg
+  changes:
+  - {message: Added the Escape on the Emergency Shuttle objective., type: Add}
+  - {message: Removed the Stay Alive objective., type: Remove}
+  id: 2400
+  time: '2022-10-04T21:57:15.0000000+00:00'
