@@ -81,7 +81,7 @@ public sealed class SharpSystem : EntitySystem
         if (!TryComp<SharpComponent>(ev.Sharp, out var sharp))
             return;
 
-        if (_containerSystem.IsEntityInContainer(target))
+        if (_containerSystem.IsEntityInContainer(ev.Entity))
             return;
 
         sharp.Butchering.Remove(ev.Entity);
