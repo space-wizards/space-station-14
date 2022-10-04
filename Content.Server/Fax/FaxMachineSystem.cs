@@ -21,6 +21,7 @@ namespace Content.Server.Fax;
 // Add field that represent will be admins notified if someone send to that fax
 // TODO: Remove verbs and add UI, guh
 // Should Syndicate saw all CantCom channels?
+// What if scanning paper and someone send you message? Add check for queue is currently scanning something?
 
 public sealed class FaxMachineSystem : EntitySystem
 {
