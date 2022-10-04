@@ -2,10 +2,10 @@ using System.Threading;
 
 namespace Content.Server.Botany
 {
-    [RegisterComponent]
     /// <summary>
     /// Anything that can be used to cross-pollinate plants.
     /// </summary>
+    [RegisterComponent]
     public sealed class BotanySwabComponent : Component
     {
         [DataField("swabDelay")]

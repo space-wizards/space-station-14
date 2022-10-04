@@ -50,7 +50,6 @@ public class MutationSystem
         MutateBool(ref seed.Slip           , true  , 10 , totalbits , severity);
         MutateBool(ref seed.Sentient       , true  , 10 , totalbits , severity);
         MutateBool(ref seed.Ligneous       , true  , 10 , totalbits , severity);
-        MutateBool(ref seed.Mysterious     , true  , 10 , totalbits , severity);
         MutateBool(ref seed.Bioluminescent , true  , 10 , totalbits , severity);
         seed.BioluminescentColor = RandomColor(seed.BioluminescentColor, 10, totalbits, severity);
     }
@@ -129,7 +128,7 @@ public class MutationSystem
         }
 
         // Set value based on mutated thermometer code.
-        float nval = (float)Math.Min(Math.Max((float)np/bits * (max - min) + min, min), max);
+        float nval = MathF.Min(MathF.Max((float)np/bits * (max - min) + min, min), max);
         val = nval;
     }
 
