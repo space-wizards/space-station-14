@@ -24,7 +24,8 @@ namespace Content.Client.Audio
     /// </summary>
     public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
     {
-        [Dependency] private EntityLookupSystem _lookup = default!;
+        [Dependency] private readonly EntityLookupSystem _lookup = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -43,7 +44,7 @@ namespace Content.Client.Audio
         /// </summary>
         private int MaxSingleSound => (int) (_maxAmbientCount / (16.0f / 6.0f));
 
-        private Dictionary<AmbientSoundComponent, (IPlayingAudioStream? Stream, string Sound)> _playingSounds = new();
+        private readonly Dictionary<AmbientSoundComponent, (IPlayingAudioStream? Stream, string Sound)> _playingSounds = new();
 
         private const float RangeBuffer = 3f;
 
@@ -58,7 +59,7 @@ namespace Content.Client.Audio
 
                 if (_overlayEnabled)
                 {
-                    _overlay = new AmbientSoundOverlay(EntityManager, this, Get<EntityLookupSystem>());
+                    _overlay = new AmbientSoundOverlay(EntityManager, this, EntityManager.System<EntityLookupSystem>());
                     overlayManager.AddOverlay(_overlay);
                 }
                 else
@@ -119,7 +120,8 @@ namespace Content.Client.Audio
 
             foreach (var (_, (_, sound)) in _playingSounds)
             {
-                if (sound.Equals(countSound)) count++;
+                if (sound.Equals(countSound))
+                    count++;
             }
 
             return count;
@@ -180,7 +182,7 @@ namespace Content.Client.Audio
                     continue;
                 }
 
-                var key = ambientComp.Sound.GetSound();
+                var key = _audio.GetSound(ambientComp.Sound);
 
                 if (!sourceDict.ContainsKey(key))
                     sourceDict[key] = new List<AmbientSoundComponent>(MaxSingleSound);
@@ -188,6 +190,7 @@ namespace Content.Client.Audio
                 sourceDict[key].Add(ambientComp);
             }
 
+            // TODO: Just store the distance from above...
             foreach (var (key, val) in sourceDict)
             {
                 sourceDict[key] = val.OrderByDescending(x =>
@@ -236,7 +239,7 @@ namespace Content.Client.Audio
                     if (_playingSounds.ContainsKey(comp))
                         continue;
 
-                    var sound = comp.Sound.GetSound();
+                    var sound = _audio.GetSound(comp.Sound);
 
                     if (PlayingCount(sound) >= MaxSingleSound)
                     {
@@ -250,7 +253,7 @@ namespace Content.Client.Audio
                         continue;
                     }
 
-                    var audioParams = AudioHelpers
+                    var audioParams = AudioParams.Default
                         .WithVariation(0.01f)
                         .WithVolume(comp.Volume + _ambienceVolume)
                         .WithLoop(true)
@@ -259,9 +262,7 @@ namespace Content.Client.Audio
                         .WithPlayOffset(_random.NextFloat(0.0f, 100.0f))
                         .WithMaxDistance(comp.Range);
 
-                    var stream = SoundSystem.Play(sound,
-                        Filter.Local(),
-                        comp.Owner, audioParams);
+                    var stream = _audio.PlayPvs(comp.Sound, comp.Owner, audioParams);
 
                     if (stream == null) continue;
 

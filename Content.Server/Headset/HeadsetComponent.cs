@@ -64,7 +64,7 @@ namespace Content.Server.Headset
 
             if (_entMan.TryGetComponent(source, out VoiceMaskComponent? mask) && mask.Enabled)
             {
-                name = Identity.Name(source, _entMan);
+                name = mask.VoiceName;
             }
 
             message = _chatSystem.TransformSpeech(source, message);

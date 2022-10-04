@@ -25,6 +25,14 @@ namespace Content.Shared.Chemistry
             }
         }
 
+        public void DoEntityReaction(EntityUid uid, Solution solution, ReactionMethod method)
+        {
+            foreach (var (reagentId, quantity) in solution.Contents.ToArray())
+            {
+                ReactionEntity(uid, method, reagentId, quantity, solution);
+            }
+        }
+
         public void ReactionEntity(EntityUid uid, ReactionMethod method, string reagentId, FixedPoint2 reactVolume, Solution? source)
         {
             // We throw if the reagent specified doesn't exist.

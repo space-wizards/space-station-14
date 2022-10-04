@@ -19,7 +19,7 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.49,-0.49,0.49,-0.45"
-      mass: 50
+      density: 1000
       mask:
       - TableMask
       layer:
@@ -71,7 +71,7 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.49,-0.49,0.49,-0.45"
-      mass: 50
+      density: 1000
       mask:
       - TableMask
       layer:
@@ -79,7 +79,7 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "0.49,0.49,0.45,-0.49"
-      mass: 50
+      density: 1000
       mask:
       - TableMask
       layer:
@@ -131,7 +131,7 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.49,0.49,-0.45,0.45"
-      mass: 50
+      density: 1000
       mask:
       - TableMask
       layer:
