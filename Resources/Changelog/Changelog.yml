@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Diseases can now have different stages., type: Add}
-  id: 1893
-  time: '2022-07-08T03:44:39.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Fixed bug where tiles would not get depressurized on rare cases., type: Fix}
@@ -2931,3 +2926,8 @@ Entries:
       unlock all techs at once.', type: Tweak}
   id: 2392
   time: '2022-10-04T01:10:17.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix melee windup persisting in some instances., type: Fix}
+  id: 2393
+  time: '2022-10-04T01:12:45.0000000+00:00'
