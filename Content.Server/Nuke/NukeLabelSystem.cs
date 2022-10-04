@@ -16,6 +16,6 @@ public sealed class NukeLabelSystem : EntitySystem
     {
         var label = Loc.GetString(nuke.NukeLabel, ("serial", _nuke.GenerateRandomNumberString(nuke.SerialLength)));
         var meta = MetaData(uid);
-        MetaData(uid).EntityName = $"{meta.EntityName} ({label})";
+        meta.EntityName = $"{meta.EntityName} ({label})";
     }
 }
