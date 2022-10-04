@@ -26,13 +26,13 @@
           - MachineMask
         layer:
           - MachineLayer
-#  - type: ActivatableUI # TODO: Fix this bullshit code with the fax system instead of copying it from CHEMMASTER
-#    key: enum.ChemMasterUiKey.Key
-#  - type: ActivatableUIRequiresPower
-#  - type: UserInterface
-#    interfaces:
-#      - key: enum.ChemMasterUiKey.Key
-#        type: FaxMachineBoundUserInterface
+  - type: ActivatableUI
+    key: enum.FaxUiKey.Key
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+      - key: enum.FaxUiKey.Key
+        type: FaxBoundUi
   - type: ApcPowerReceiver
     powerLoad: 250
   - type: FaxMachine

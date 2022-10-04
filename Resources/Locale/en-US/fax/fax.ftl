@@ -18,3 +18,6 @@ fax-machine-popup-name-set = Device name has been updated
 
 fax-machine-dialog-rename = Rename
 fax-machine-dialog-field-name = Name
+
+fax-machine-ui-window = Fax Machine
+fax-machine-ui-send-button = Send
