@@ -1,7 +1,7 @@
 using Content.Server.DeviceNetwork.Components;
 using Content.Shared.Interaction;
 
-namespace Content.Server.DeviceNetwork.Systems;
+namespace Content.Server.DeviceNetwork.Systems.Devices;
 
 /// <summary>
 /// This handles...
