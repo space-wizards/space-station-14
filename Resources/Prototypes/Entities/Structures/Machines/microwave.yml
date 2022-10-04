@@ -20,7 +20,7 @@
       enum.PowerDeviceVisuals.Powered:
         enum.MicrowaveVisualizerLayers.BaseUnlit:
           True: { visible: true }
-          False: { visible: false }   
+          False: { visible: false }
   - type: ActivatableUI
     key: enum.MicrowaveUiKey.Key
   - type: UserInterface
@@ -33,7 +33,7 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.3,-0.16,0.3,0.16"
-      mass: 25
+      density: 190
       mask:
       - TabletopMachineMask
       layer:

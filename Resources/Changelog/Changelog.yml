@@ -1,92 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Splitstation update and changes. See github PR 9495 for full changelog.,
-    type: Tweak}
-  id: 1885
-  time: '2022-07-07T03:39:03.0000000+00:00'
-- author: ODJ
-  changes:
-  - {message: Fully Updated Pillar, type: Add}
-  id: 1886
-  time: '2022-07-07T03:39:32.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Useless materials can no longer be inserted in lathes., type: Fix}
-  id: 1887
-  time: '2022-07-07T03:44:32.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Emergency lights now change color on certain alert levels, and can
-      be forcibly activated by the very dangerous alert levels.', type: Add}
-  - {message: Emergency lights can now be examined to show the current station alert
-      level., type: Tweak}
-  id: 1888
-  time: '2022-07-07T16:16:48.0000000+00:00'
-- author: themias
-  changes:
-  - {message: Practice shotgun shells are now much less lethal, type: Fix}
-  id: 1889
-  time: '2022-07-07T17:30:37.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Humans can now eat/drink about twice as much at once, and can eat 2
-      pills at once.', type: Tweak}
-  - {message: Pills now hold 25u up from 20u., type: Tweak}
-  - {message: Lizards now have the same stomach capacity as humans., type: Tweak}
-  - {message: Drinks no longer spill their contents if you try to drink too much.,
-    type: Fix}
-  id: 1890
-  time: '2022-07-07T18:21:27.0000000+00:00'
-- author: TekuNut
-  changes:
-  - {message: Hunger and thirst will no longer affect jetpack speed., type: Tweak}
-  id: 1891
-  time: '2022-07-07T18:29:25.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Pizza boxes can no longer be used for nefarious deeds., type: Fix}
-  id: 1892
-  time: '2022-07-07T19:37:47.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Diseases can now have different stages., type: Add}
-  id: 1893
-  time: '2022-07-08T03:44:39.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fixed bug where tiles would not get depressurized on rare cases., type: Fix}
-  id: 1894
-  time: '2022-07-08T12:30:46.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed an error in the Retro Laser Guns inhand sprites, type: Fix}
-  id: 1895
-  time: '2022-07-08T18:09:27.0000000+00:00'
-- author: Aerocrux
-  changes:
-  - {message: Servers now post their max player counts for the launcher to display
-      alongside current player count, type: Add}
-  id: 1896
-  time: '2022-07-08T19:44:49.0000000+00:00'
-- author: themias
-  changes:
-  - {message: Fixed an issue where the t-ray scanner would sometimes flicker when
-      turned off, type: Fix}
-  id: 1897
-  time: '2022-07-08T21:45:16.0000000+00:00'
-- author: Ablankmann
-  changes:
-  - {message: 'Added the MagiVend, your one-stop shop for various wizard goodies.',
-    type: Add}
-  id: 1898
-  time: '2022-07-09T02:40:49.0000000+00:00'
-- author: themias
-  changes:
-  - {message: The hot drinks machine now dispenses tea into teacups instead of glasses,
-    type: Tweak}
-  id: 1899
-  time: '2022-07-09T02:43:27.0000000+00:00'
 - author: LilJard
   changes:
   - {message: Added new sprite for fireaxe, type: Add}
@@ -2927,3 +2839,93 @@ Entries:
   - {message: NPCs require a line of sight for new targets before attacking., type: Tweak}
   id: 2384
   time: '2022-09-30T04:39:48.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Lemons now have lemon juice instead of lime juice., type: Fix}
+  id: 2385
+  time: '2022-10-02T01:40:32.0000000+00:00'
+- author: Carbonhell
+  changes:
+  - {message: 'Ports the Tomb of the Unknown Employee, in memory of those who died
+      after contributing to Space Station 13 and Space Station 14.', type: Add}
+  id: 2386
+  time: '2022-10-02T21:26:46.0000000+00:00'
+- author: Mervill
+  changes:
+  - {message: Objects to be butchered must not be worn or be in a container., type: Fix}
+  - {message: Items dropped by butchering now drop within a tight circle around the
+      butchered object., type: Tweak}
+  id: 2387
+  time: '2022-10-04T00:50:56.0000000+00:00'
+- author: rolfero
+  changes:
+  - {message: SMES and Substations now hold a bit less power at the start., type: Tweak}
+  - {message: SMES and Substations can now be upgraded with better capacitors to hold
+      much more power!, type: Add}
+  id: 2388
+  time: '2022-10-04T00:59:40.0000000+00:00'
+- author: kognise
+  changes:
+  - {message: the o2 button now works for tanks clipped to a belt, type: Fix}
+  - {message: the gas tank ui "toggle" button is now disabled when not wearing a breathing
+      tool, type: Fix}
+  id: 2389
+  time: '2022-10-04T01:01:20.0000000+00:00'
+- author: BurninDreamer
+  changes:
+  - {message: 'Combat boots can now store knives, HoS, Warden and Nukies get those.',
+    type: Add}
+  - {message: 'Knives from Nukies'' backpacks, they''re in your boots now.', type: Remove}
+  id: 2390
+  time: '2022-10-04T01:01:43.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: 'Nuclear bombs are now less heavy thanks to Bluespace [REDACTED] Tech.',
+    type: Tweak}
+  id: 2391
+  time: '2022-10-04T01:05:03.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'Passive research points will not generate above 30,000 stored points.
+      Rate or total available research is not affected. All this means is you have
+      to actively spend them, rather than let them accumulate the whole round and
+      unlock all techs at once.', type: Tweak}
+  id: 2392
+  time: '2022-10-04T01:10:17.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix melee windup persisting in some instances., type: Fix}
+  id: 2393
+  time: '2022-10-04T01:12:45.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Pillar minor flavour update. See PR for details. There's now a Newscaster
+      room near boxing and the abandoned theatre has some life now., type: Tweak}
+  id: 2394
+  time: '2022-10-04T01:47:24.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Tranquilizer rounds come with a tranquilizer solution and can no longer
+      be injected with other chemicals, type: Tweak}
+  id: 2395
+  time: '2022-10-04T01:57:34.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Melee windup now only shows for yourself., type: Tweak}
+  id: 2396
+  time: '2022-10-04T01:58:37.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed capitalization in Revenant names., type: Fix}
+  id: 2397
+  time: '2022-10-04T03:33:32.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Shuttle impacts now have sounds, type: Add}
+  id: 2398
+  time: '2022-10-04T05:00:45.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: You can now suicide into biomass reclaimers., type: Add}
+  id: 2399
+  time: '2022-10-04T11:08:47.0000000+00:00'

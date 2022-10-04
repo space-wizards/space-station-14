@@ -34,7 +34,7 @@
         # Circles, cuz rotation of rectangles looks very bad
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 20
+      density: 50
       mask:
       - MobMask
       layer:
@@ -132,7 +132,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 20
+      density: 50
       mask:
       - SmallMobMask
       layer:
@@ -211,7 +211,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 1
-      mass: 500
+      density: 160
       mask:
       - LargeMobMask
       layer:

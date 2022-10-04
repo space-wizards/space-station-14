@@ -5,6 +5,7 @@ using Content.Shared.Info;
 using Robust.Client.Console;
 using Robust.Client.State;
 using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 
@@ -20,7 +21,9 @@ public sealed class RulesManager : SharedRulesManager
     [Dependency] private readonly IEntitySystemManager _sysMan = default!;
 
     private InfoSection rulesSection = new InfoSection("", "", false);
-    private bool _shouldShowRules;
+    private bool _shouldShowRules = false;
+
+    private RulesPopup? _activePopup;
 
     public void Initialize()
     {
@@ -28,6 +31,11 @@ public sealed class RulesManager : SharedRulesManager
         _netManager.RegisterNetMessage<ShowRulesPopupMessage>(OnShowRulesPopupMessage);
         _netManager.RegisterNetMessage<RulesAcceptedMessage>();
         _stateManager.OnStateChanged += OnStateChanged;
+
+        _consoleHost.RegisterCommand("fuckrules", "", "", (_, _, _) =>
+        {
+            OnAcceptPressed();
+        });
     }
 
     private void OnShouldShowRules(ShouldShowRulesPopupMessage message)
@@ -55,13 +63,17 @@ public sealed class RulesManager : SharedRulesManager
 
     private void ShowRules(float time)
     {
-        var rulesPopup = new RulesPopup
+        if (_activePopup != null)
+            return;
+
+        _activePopup = new RulesPopup
         {
             Timer = time
         };
-        rulesPopup.OnQuitPressed += OnQuitPressed;
-        rulesPopup.OnAcceptPressed += OnAcceptPressed;
-        _userInterfaceManager.RootControl.AddChild(rulesPopup);
+        _activePopup.OnQuitPressed += OnQuitPressed;
+        _activePopup.OnAcceptPressed += OnAcceptPressed;
+        _userInterfaceManager.StateRoot.AddChild(_activePopup);
+        LayoutContainer.SetAnchorAndMarginPreset(_activePopup, LayoutContainer.LayoutPreset.Wide);
     }
 
     private void OnQuitPressed()
@@ -71,8 +83,10 @@ public sealed class RulesManager : SharedRulesManager
 
     private void OnAcceptPressed()
     {
-        var message = _netManager.CreateNetMessage<RulesAcceptedMessage>();
-        _netManager.ClientSendMessage(message);
+        _netManager.ClientSendMessage(new RulesAcceptedMessage());
+
+        _activePopup?.Orphan();
+        _activePopup = null;
     }
 
     public void UpdateRules()

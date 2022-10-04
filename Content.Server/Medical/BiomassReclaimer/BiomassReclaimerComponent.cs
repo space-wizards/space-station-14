@@ -10,39 +10,54 @@ namespace Content.Server.Medical.BiomassReclaimer
     {
         public CancellationTokenSource? CancelToken;
 
-        [DataField("accumulator")]
-        public float Accumulator = 0f;
+        /// <summary>
+        /// This gets set for each mob it processes.
+        /// When it hits 0, there is a chance for the reclaimer to either spill blood or throw an item.
+        /// </summary>
+        [ViewVariables]
+        public float RandomMessTimer = 0f;
 
-        [DataField("randomMessAccumulator")]
-        public float RandomMessAccumulator = 0f;
+        /// <summary>
+        /// The interval for <see cref="RandomMessTimer"/>.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite), DataField("randomMessInterval")]
         public TimeSpan RandomMessInterval = TimeSpan.FromSeconds(5);
 
         /// <summary>
         /// This gets set for each mob it processes.
-        /// When accumulator hits this, spit out biomass.
+        /// When it hits 0, spit out biomass.
         /// </summary>
-        public float CurrentProcessingTime = 70f;
+        [ViewVariables]
+        public float ProcessingTimer = default;
 
         /// <summary>
-        /// This is calculated from the YieldPerUnitMass
-        /// and adjusted for genetic damage too.
+        /// Amount of biomass that the mob being processed will yield.
+        /// This is calculated from the YieldPerUnitMass.
         /// </summary>
-        public float CurrentExpectedYield = 28f;
+        [ViewVariables]
+        public uint CurrentExpectedYield = default;
 
-        public string BloodReagent = "Blood";
+        /// <summary>
+        /// The reagent that will be spilled while processing a mob.
+        /// </summary>
+        [ViewVariables]
+        public string? BloodReagent;
 
+        /// <summary>
+        /// Entities that can be randomly spawned while processing a mob.
+        /// </summary>
         public List<EntitySpawnEntry> SpawnedEntities = new();
 
         /// <summary>
         /// How many units of biomass it produces for each unit of mass.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public float YieldPerUnitMass = 0.4f;
+        public float YieldPerUnitMass = default;
 
         /// <summary>
-        /// The base yield when no components are upgraded
+        /// The base yield per mass unit when no components are upgraded.
         /// </summary>
-        [DataField("baseYieldPerUnitMass")]
+        [ViewVariables, DataField("baseYieldPerUnitMass")]
         public float BaseYieldPerUnitMass = 0.4f;
 
         /// <summary>
@@ -52,18 +67,24 @@ namespace Content.Server.Medical.BiomassReclaimer
         public string MachinePartYieldAmount = "Manipulator";
 
         /// <summary>
-        /// Lower number = faster processing.
-        /// Good for machine upgrading I guess.
+        /// How much the machine part quality affects the yield.
+        /// Going up a tier will multiply the yield by this amount.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float ProcessingSpeedMultiplier = 0.4f;
+        [DataField("partRatingYieldAmountMultiplier")]
+        public float PartRatingYieldAmountMultiplier = 1.25f;
 
         /// <summary>
-        /// The base multiplier of processing speed with no upgrades
-        /// that is used with the weight to calculate the yield
+        /// The time it takes to process a mob, per mass.
         /// </summary>
-        [DataField("baseProcessingSpeedMultiplier")]
-        public float BaseProcessingSpeedMultiplier = 0.4f;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float ProcessingTimePerUnitMass = default;
+
+        /// <summary>
+        /// The base time per mass unit that it takes to process a mob
+        /// when no components are upgraded.
+        /// </summary>
+        [ViewVariables, DataField("baseProcessingTimePerUnitMass")]
+        public float BaseProcessingTimePerUnitMass = 0.5f;
 
         /// <summary>
         /// The machine part that increses the processing speed.
@@ -72,9 +93,16 @@ namespace Content.Server.Medical.BiomassReclaimer
         public string MachinePartProcessingSpeed = "Laser";
 
         /// <summary>
+        /// How much the machine part quality affects the yield.
+        /// Going up a tier will multiply the speed by this amount.
+        /// </summary>
+        [ViewVariables, DataField("partRatingSpeedMultiplier")]
+        public float PartRatingSpeedMultiplier = 1.35f;
+
+        /// <summary>
         /// Will this refuse to gib a living mob?
         /// </summary>
-        [DataField("safetyEnabled")]
+        [ViewVariables(VVAccess.ReadWrite), DataField("safetyEnabled")]
         public bool SafetyEnabled = true;
     }
 }

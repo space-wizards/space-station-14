@@ -103,7 +103,7 @@ namespace Content.Server.Clothing
                 identity.Enabled = !mask.IsToggled;
 
             // toggle voice masking
-            if (TryComp<VoiceMaskComponent>(uid, out var voiceMask))
+            if (TryComp<VoiceMaskComponent>(wearer, out var voiceMask))
                 voiceMask.Enabled = !mask.IsToggled;
 
             // toggle breath tool connection (skip during equip since that is handled in LungSystem)

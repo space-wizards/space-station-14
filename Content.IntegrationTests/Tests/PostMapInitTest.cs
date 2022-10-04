@@ -91,9 +91,9 @@ namespace Content.IntegrationTests.Tests
                     var mapNames = new List<string>();
                     var naughty = new HashSet<string>()
                     {
-                        "empty",
-                        "infiltrator",
-                        "pirate",
+                        "Empty",
+                        "Infiltrator",
+                        "Pirate",
                     };
 
                     foreach (var map in maps)

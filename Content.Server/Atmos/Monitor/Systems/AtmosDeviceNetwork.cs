@@ -16,6 +16,11 @@ public sealed class AtmosDeviceNetworkSystem : EntitySystem
     public const string RegisterDevice = "atmos_register_device";
 
     /// <summary>
+    ///     Deregister a device's address on this device.
+    /// </summary>
+    public const string DeregisterDevice = "atmos_deregister_device";
+
+    /// <summary>
     ///     Synchronize the data this device has with the sender.
     /// </summary>
     public const string SyncData = "atmos_sync_data";
@@ -30,6 +35,16 @@ public sealed class AtmosDeviceNetworkSystem : EntitySystem
         };
 
         _deviceNet.QueuePacket(uid, address, registerPayload);
+    }
+
+    public void Deregister(EntityUid uid, string? address)
+    {
+        var deregisterPayload = new NetworkPayload
+        {
+            [DeviceNetworkConstants.Command] = DeregisterDevice
+        };
+
+        _deviceNet.QueuePacket(uid, address, deregisterPayload);
     }
 
     public void Sync(EntityUid uid, string? address)

@@ -27,7 +27,7 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.35,-0.35,0.35,0.35"
-      mass: 500
+      density: 1000
       mask:
       - MobMask
       layer:

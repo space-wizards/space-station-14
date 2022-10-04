@@ -24,6 +24,7 @@ namespace Content.Server.Polymorph.Systems
 
         [Dependency] private readonly ActionsSystem _actions = default!;
         [Dependency] private readonly IPrototypeManager _proto = default!;
+        [Dependency] private readonly IComponentFactory _compFact = default!;
         [Dependency] private readonly ServerInventorySystem _inventory = default!;
         [Dependency] private readonly SharedHandsSystem _sharedHands = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
@@ -98,10 +99,11 @@ namespace Content.Server.Polymorph.Systems
             var child = Spawn(proto.Entity, targetTransformComp.Coordinates);
             MakeSentientCommand.MakeSentient(child, EntityManager);
 
-            var comp = EnsureComp<PolymorphedEntityComponent>(child);
+            var comp = _compFact.GetComponent<PolymorphedEntityComponent>();
+            comp.Owner = child;
             comp.Parent = target;
-            comp.Prototype = proto;
-            RaiseLocalEvent(child, new PolymorphComponentSetupEvent(), true);
+            comp.Prototype = proto.ID;
+            EntityManager.AddComponent(child, comp);
 
             var childXform = Transform(child);
             childXform.LocalRotation = targetTransformComp.LocalRotation;
@@ -211,11 +213,6 @@ namespace Content.Server.Polymorph.Systems
                 _actions.RemoveAction(target, val);
         }
     }
-
-    /// <summary>
-    /// Used after the polymorphedEntity component has it's data set up.
-    /// </summary>
-    public sealed class PolymorphComponentSetupEvent : InstantActionEvent { };
 
     public sealed class PolymorphActionEvent : InstantActionEvent
     {
