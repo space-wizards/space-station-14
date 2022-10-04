@@ -10,14 +10,15 @@
   - type: Sharp
   - type: Sprite
     sprite: Objects/Weapons/Melee/spear.rsi
+    netsync: false
     state: spear
   - type: MeleeWeapon
     damage:
       types:
         Piercing: 10
     range: 1.5
-    arcwidth: 0
-    arc: spear
+    angle: 0
+    animation: WeaponArcThrust
   - type: DamageOtherOnHit
     damage:
       types:
@@ -76,10 +77,3 @@
     damage:
       types:
         Blunt: 5
-
-- type: MeleeWeaponAnimation
-  id: spear
-  state: spear
-  length: 0.10
-  speed: 6
-  arcType: Poke

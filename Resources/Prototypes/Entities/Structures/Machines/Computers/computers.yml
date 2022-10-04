@@ -720,7 +720,7 @@
         - shape:
             !type:PhysShapeAabb
             bounds: "-0.25,-0.25,0.25,0.25"
-          mass: 50
+          density: 200
           mask:
             - TabletopMachineMask
           layer:

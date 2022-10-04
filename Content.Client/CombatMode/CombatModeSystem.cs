@@ -4,8 +4,8 @@ using Content.Shared.Targeting;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
+using Robust.Shared.GameStates;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.IoC;
 
 namespace Content.Client.CombatMode
 {
@@ -23,6 +23,16 @@ namespace Content.Client.CombatMode
 
             SubscribeLocalEvent<CombatModeComponent, PlayerAttachedEvent>((_, component, _) => component.PlayerAttached());
             SubscribeLocalEvent<CombatModeComponent, PlayerDetachedEvent>((_, component, _) => component.PlayerDetached());
+            SubscribeLocalEvent<SharedCombatModeComponent, ComponentHandleState>(OnHandleState);
+        }
+
+        private void OnHandleState(EntityUid uid, SharedCombatModeComponent component, ref ComponentHandleState args)
+        {
+            if (args.Current is not CombatModeComponentState state)
+                return;
+
+            component.IsInCombatMode = state.IsInCombatMode;
+            component.ActiveZone = state.TargetingZone;
         }
 
         public override void Shutdown()
@@ -33,17 +43,17 @@ namespace Content.Client.CombatMode
 
         public bool IsInCombatMode()
         {
-            return EntityManager.TryGetComponent(_playerManager.LocalPlayer?.ControlledEntity, out CombatModeComponent? combatMode) &&
-                   combatMode.IsInCombatMode;
+            var entity = _playerManager.LocalPlayer?.ControlledEntity;
+
+            if (entity == null)
+                return false;
+
+            return IsInCombatMode(entity.Value);
         }
 
         private void OnTargetingZoneChanged(TargetingZone obj)
         {
             EntityManager.RaisePredictiveEvent(new CombatModeSystemMessages.SetTargetZoneMessage(obj));
         }
-    }
-
-    public static class A
-    {
     }
 }

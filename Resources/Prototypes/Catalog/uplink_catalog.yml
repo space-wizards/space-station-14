@@ -260,6 +260,16 @@
   categories:
   - UplinkUtility
 
+- type: listing
+  id: UplinkVoiceMask
+  name: Voice Mask
+  description: A gas mask that lets you adjust your voice to whoever you can think of.
+  productEntity: ClothingMaskGasVoiceMasker
+  cost:
+    Telecrystal: 5
+  categories:
+  - UplinkUtility
+
 # Bundles
 
 - type: listing
@@ -641,7 +651,7 @@
     Telecrystal: 4
   categories:
   - UplinkPointless
-  
+
 - type: listing
   id: UplinkOperativeSuit
   description: A suit given to our nuclear operatives with fine fabric to make sure you stand out, no other benefits aside from looking cool.
@@ -650,7 +660,7 @@
     Telecrystal: 1
   categories:
   - UplinkPointless
-  
+
 - type: listing
   id: UplinkOperativeSkirt
   description: A skirt given to our nuclear operatives with fine fabric to make sure you stand out, no other benefits aside from looking cool.

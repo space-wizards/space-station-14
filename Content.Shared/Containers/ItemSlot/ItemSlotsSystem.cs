@@ -532,9 +532,10 @@ namespace Content.Shared.Containers.ItemSlots
         /// <summary>
         ///     Get the contents of some item slot.
         /// </summary>
-        public EntityUid? GetItem(EntityUid uid, string id, ItemSlotsComponent? itemSlots = null)
+        /// <returns>The item in the slot, or null if the slot is empty or the entity doesn't have an <see cref="ItemSlotsComponent"/>.</returns>
+        public EntityUid? GetItemOrNull(EntityUid uid, string id, ItemSlotsComponent? itemSlots = null)
         {
-            if (!Resolve(uid, ref itemSlots))
+            if (!Resolve(uid, ref itemSlots, logMissing: false))
                 return null;
 
             return itemSlots.Slots.GetValueOrDefault(id)?.Item;

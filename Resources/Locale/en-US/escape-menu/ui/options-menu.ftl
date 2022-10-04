@@ -91,6 +91,7 @@ ui-options-function-camera-rotate-right = Rotate right
 ui-options-function-camera-reset = Reset
 
 ui-options-function-use = Use
+ui-options-function-alt-use = Alt use
 ui-options-function-wide-attack = Wide attack
 ui-options-function-activate-item-in-hand = Activate item in hand
 ui-options-function-alt-activate-item-in-hand = Alternative activate item in hand
@@ -176,24 +177,24 @@ ui-options-function-shuttle-brake = Brake
 ## Network menu
 
 ui-options-net-interp-ratio = State buffer size
-ui-options-net-interp-ratio-tooltip = Increasing this will generally make the game more resistant 
-                                      to server->client packet-loss, however in doing so it 
-                                      effectively adds slightly more latency and requires the 
+ui-options-net-interp-ratio-tooltip = Increasing this will generally make the game more resistant
+                                      to server->client packet-loss, however in doing so it
+                                      effectively adds slightly more latency and requires the
                                       client to predict more future ticks.
 
 ui-options-net-predict-tick-bias = Prediction tick bias
-ui-options-net-predict-tick-bias-tooltip = Increasing this will generally make the game more resistant 
-                                           to client->server packet-loss, however in doing so it 
-                                           effectively adds slightly more latency and requires the 
+ui-options-net-predict-tick-bias-tooltip = Increasing this will generally make the game more resistant
+                                           to client->server packet-loss, however in doing so it
+                                           effectively adds slightly more latency and requires the
                                            client to predict more future ticks.
 
 ui-options-net-pvs-entry = PVS entity budget
-ui-options-net-pvs-entry-tooltip = This limits the rate at which the server will send new 
-                                       entities to the client. Lowering this can help reduce 
+ui-options-net-pvs-entry-tooltip = This limits the rate at which the server will send new
+                                       entities to the client. Lowering this can help reduce
                                        stuttering due to entity spawning, but can lead to pop-in.
 
 ui-options-net-pvs-leave = PVS detach rate
-ui-options-net-pvs-leave-tooltip = This limits the rate at which the client will remove 
-                                       out-of-view entities. Lowering this can help reduce 
-                                       stuttering when walking around, but could occasionally 
+ui-options-net-pvs-leave-tooltip = This limits the rate at which the client will remove
+                                       out-of-view entities. Lowering this can help reduce
+                                       stuttering when walking around, but could occasionally
                                        lead to mispredicts and other issues.

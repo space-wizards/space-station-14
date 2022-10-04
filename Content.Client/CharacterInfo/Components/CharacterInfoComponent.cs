@@ -16,7 +16,7 @@ namespace Content.Client.CharacterInfo.Components
 
         public void Opened()
         {
-            EntitySystem.Get<CharacterInfoSystem>().RequestCharacterInfo(Owner);
+            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<CharacterInfoSystem>().RequestCharacterInfo(Owner);
         }
 
         public sealed class CharacterInfoControl : BoxContainer

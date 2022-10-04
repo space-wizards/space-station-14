@@ -15,6 +15,7 @@ using Content.Server.Power.Components;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Server.Climbing;
+using Content.Server.Construction;
 using Content.Server.DoAfter;
 using Content.Server.Humanoid;
 using Content.Server.Mind.Components;
@@ -48,37 +49,34 @@ namespace Content.Server.Medical.BiomassReclaimer
 
             foreach (var (_, reclaimer) in EntityQuery<ActiveBiomassReclaimerComponent, BiomassReclaimerComponent>())
             {
-                reclaimer.Accumulator += frameTime;
-                reclaimer.RandomMessAccumulator += frameTime;
+                reclaimer.ProcessingTimer -= frameTime;
+                reclaimer.RandomMessTimer -= frameTime;
 
-                if (reclaimer.RandomMessAccumulator >= reclaimer.RandomMessInterval.TotalSeconds)
+                if (reclaimer.RandomMessTimer <= 0)
                 {
-                    if (_robustRandom.Prob(0.3f))
+                    if (_robustRandom.Prob(0.2f) && reclaimer.BloodReagent is not null)
                     {
-                        if (_robustRandom.Prob(0.7f))
-                        {
-                            Solution blood = new();
-                            blood.AddReagent(reclaimer.BloodReagent, 50);
-                            _spillableSystem.SpillAt(reclaimer.Owner, blood, "PuddleBlood");
-                        }
-                        if (_robustRandom.Prob(0.1f) && reclaimer.SpawnedEntities.Count > 0)
-                        {
-                            var thrown = Spawn(_robustRandom.Pick(reclaimer.SpawnedEntities).PrototypeId, Transform(reclaimer.Owner).Coordinates);
-                            Vector2 direction = (_robustRandom.Next(-30, 30), _robustRandom.Next(-30, 30));
-                            _throwing.TryThrow(thrown, direction, _robustRandom.Next(1, 10));
-                        }
+                        Solution blood = new();
+                        blood.AddReagent(reclaimer.BloodReagent, 50);
+                        _spillableSystem.SpillAt(reclaimer.Owner, blood, "PuddleBlood");
                     }
-                    reclaimer.RandomMessAccumulator -= (float) reclaimer.RandomMessInterval.TotalSeconds;
+                    if (_robustRandom.Prob(0.03f) && reclaimer.SpawnedEntities.Count > 0)
+                    {
+                        var thrown = Spawn(_robustRandom.Pick(reclaimer.SpawnedEntities).PrototypeId, Transform(reclaimer.Owner).Coordinates);
+                        Vector2 direction = (_robustRandom.Next(-30, 30), _robustRandom.Next(-30, 30));
+                        _throwing.TryThrow(thrown, direction, _robustRandom.Next(1, 10));
+                    }
+                    reclaimer.RandomMessTimer += (float) reclaimer.RandomMessInterval.TotalSeconds;
                 }
 
-                if (reclaimer.Accumulator < reclaimer.CurrentProcessingTime)
+                if (reclaimer.ProcessingTimer > 0)
                 {
                     continue;
                 }
-                reclaimer.Accumulator = 0;
 
                 _stackSystem.SpawnMultiple((int) reclaimer.CurrentExpectedYield, 100, "Biomass", Transform(reclaimer.Owner).Coordinates);
 
+                reclaimer.BloodReagent = null;
                 reclaimer.SpawnedEntities.Clear();
                 RemCompDeferred<ActiveBiomassReclaimerComponent>(reclaimer.Owner);
             }
@@ -91,6 +89,7 @@ namespace Content.Server.Medical.BiomassReclaimer
             SubscribeLocalEvent<ActiveBiomassReclaimerComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
             SubscribeLocalEvent<BiomassReclaimerComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
             SubscribeLocalEvent<BiomassReclaimerComponent, ClimbedOnEvent>(OnClimbedOn);
+            SubscribeLocalEvent<BiomassReclaimerComponent, RefreshPartsEvent>(OnRefreshParts);
             SubscribeLocalEvent<ReclaimSuccessfulEvent>(OnReclaimSuccessful);
             SubscribeLocalEvent<ReclaimCancelledEvent>(OnReclaimCancelled);
         }
@@ -148,6 +147,20 @@ namespace Content.Server.Medical.BiomassReclaimer
             StartProcessing(args.Climber, component);
         }
 
+        private void OnRefreshParts(EntityUid uid, BiomassReclaimerComponent component, RefreshPartsEvent args)
+        {
+            var laserRating = args.PartRatings[component.MachinePartProcessingSpeed];
+            var manipRating = args.PartRatings[component.MachinePartYieldAmount];
+
+            // Processing time slopes downwards with part rating.
+            component.ProcessingTimePerUnitMass =
+                component.BaseProcessingTimePerUnitMass / MathF.Pow(component.PartRatingSpeedMultiplier, laserRating - 1);
+
+            // Yield slopes upwards with part rating.
+            component.YieldPerUnitMass =
+                component.BaseYieldPerUnitMass * MathF.Pow(component.PartRatingYieldAmountMultiplier, manipRating - 1);
+        }
+
         private void OnReclaimSuccessful(ReclaimSuccessfulEvent args)
         {
             if (!TryComp<BiomassReclaimerComponent>(args.Reclaimer, out var reclaimer))
@@ -164,8 +177,12 @@ namespace Content.Server.Medical.BiomassReclaimer
                 return;
             reclaimer.CancelToken = null;
         }
-        private void StartProcessing(EntityUid toProcess, BiomassReclaimerComponent component)
+
+        private void StartProcessing(EntityUid toProcess, BiomassReclaimerComponent component, PhysicsComponent? physics = null)
         {
+            if (!Resolve(toProcess, ref physics))
+                return;
+
             AddComp<ActiveBiomassReclaimerComponent>(component.Owner);
 
             if (TryComp<BloodstreamComponent>(toProcess, out var stream))
@@ -177,19 +194,9 @@ namespace Content.Server.Medical.BiomassReclaimer
                 component.SpawnedEntities = butcherableComponent.SpawnedEntities;
             }
 
-            component.CurrentExpectedYield = CalculateYield(toProcess, component);
-            component.CurrentProcessingTime = component.CurrentExpectedYield / component.YieldPerUnitMass * component.ProcessingSpeedMultiplier;
-            EntityManager.QueueDeleteEntity(toProcess);
-        }
-        private float CalculateYield(EntityUid uid, BiomassReclaimerComponent component)
-        {
-            if (!TryComp<PhysicsComponent>(uid, out var physics))
-            {
-                Logger.Error("Somehow tried to extract biomass from " + uid +  ", which has no physics component.");
-                return 0f;
-            }
-
-            return (physics.FixturesMass * component.YieldPerUnitMass);
+            component.CurrentExpectedYield = (uint) Math.Max(0, physics.FixturesMass * component.YieldPerUnitMass);
+            component.ProcessingTimer = physics.FixturesMass * component.ProcessingTimePerUnitMass;
+            QueueDel(toProcess);
         }
 
         private bool CanGib(EntityUid uid, EntityUid dragged, BiomassReclaimerComponent component)
@@ -210,19 +217,20 @@ namespace Content.Server.Medical.BiomassReclaimer
                 return false;
 
             // Reject souled bodies in easy mode.
-            if (_configManager.GetCVar(CCVars.BiomassEasyMode) && HasComp<HumanoidComponent>(dragged) &&
+            if (_configManager.GetCVar(CCVars.BiomassEasyMode) &&
+                HasComp<HumanoidComponent>(dragged) &&
                 TryComp<MindComponent>(dragged, out var mindComp))
-                {
-                    if (mindComp.Mind?.UserId != null && _playerManager.TryGetSessionById(mindComp.Mind.UserId.Value, out var client))
-                        return false;
-                }
+            {
+                if (mindComp.Mind?.UserId != null && _playerManager.TryGetSessionById(mindComp.Mind.UserId.Value, out _))
+                    return false;
+            }
 
             return true;
         }
 
-        private sealed class ReclaimCancelledEvent : EntityEventArgs
+        private readonly struct ReclaimCancelledEvent
         {
-            public EntityUid Reclaimer;
+            public readonly EntityUid Reclaimer;
 
             public ReclaimCancelledEvent(EntityUid reclaimer)
             {
@@ -230,11 +238,11 @@ namespace Content.Server.Medical.BiomassReclaimer
             }
         }
 
-        private sealed class ReclaimSuccessfulEvent : EntityEventArgs
+        private readonly struct ReclaimSuccessfulEvent
         {
-            public EntityUid User;
-            public EntityUid Target;
-            public EntityUid Reclaimer;
+            public readonly EntityUid User;
+            public readonly EntityUid Target;
+            public readonly EntityUid Reclaimer;
             public ReclaimSuccessfulEvent(EntityUid user, EntityUid target, EntityUid reclaimer)
             {
                 User = user;

@@ -39,6 +39,7 @@ public sealed partial class HumanoidSystem : SharedHumanoidSystem
             component.Species,
             component.CustomBaseLayers,
             component.SkinColor,
+            component.Sex,
             component.AllHiddenLayers.ToList(),
             component.CurrentMarkings.GetForwardEnumerator().ToList());
     }
@@ -50,19 +51,20 @@ public sealed partial class HumanoidSystem : SharedHumanoidSystem
             return;
         }
 
-        SetSpecies(uid, humanoid.Species, false, humanoid);
-
-        if (!string.IsNullOrEmpty(humanoid.Initial)
-            && _prototypeManager.TryIndex(humanoid.Initial, out HumanoidProfilePrototype? startingSet))
+        if (string.IsNullOrEmpty(humanoid.Initial)
+            || !_prototypeManager.TryIndex(humanoid.Initial, out HumanoidProfilePrototype? startingSet))
         {
-            // Do this first, because profiles currently do not support custom base layers
-            foreach (var (layer, info) in startingSet.CustomBaseLayers)
-            {
-                humanoid.CustomBaseLayers.Add(layer, info);
-            }
-
-            LoadProfile(uid, startingSet.Profile, humanoid);
+            LoadProfile(uid, HumanoidCharacterProfile.DefaultWithSpecies(humanoid.Species), humanoid);
+            return;
         }
+
+        // Do this first, because profiles currently do not support custom base layers
+        foreach (var (layer, info) in startingSet.CustomBaseLayers)
+        {
+            humanoid.CustomBaseLayers.Add(layer, info);
+        }
+
+        LoadProfile(uid, startingSet.Profile, humanoid);
     }
 
     private void OnExamined(EntityUid uid, HumanoidComponent component, ExaminedEvent args)

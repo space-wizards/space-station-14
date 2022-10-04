@@ -42,7 +42,8 @@
     - toggledecals
     - nodevis
     - nodevisfilter
-    - showspread
+    - showmeleespread
+    - showgunspread
     - showambient
     - showemergencyshuttle
     - zoom

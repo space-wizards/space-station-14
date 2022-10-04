@@ -11,14 +11,16 @@
   - type: BoxingGloves
   - type: StaminaDamageOnHit
     damage: 8 #Stam damage values seem a bit higher than regular damage because of the decay, etc
-    knockdownSound: /Audio/Weapons/boxingbell.ogg
+    # This needs to be moved to boxinggloves
+    #knockdownSound: /Audio/Weapons/boxingbell.ogg
   - type: MeleeWeapon
+    attackRate: 1.5
     damage:
       types:
-        Blunt: 0.6
-    hitSound:
+        Blunt: 0.4
+    soundHit:
       collection: BoxingHit
-    arc: fist
+    animation: WeaponArcFist
   - type: Fiber
     fiberMaterial: fibers-leather
     fiberColor: fibers-red

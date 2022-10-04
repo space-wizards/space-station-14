@@ -20,9 +20,10 @@
           shard3: ""
   - type: ItemCooldown
   - type: MeleeWeapon
+    attackRate: 1.5
     damage:
       types:
-        Slash: 5
+        Slash: 3.5
   - type: Item
     sprite: Objects/Materials/Shards/shard.rsi
   - type: CollisionWake
@@ -39,7 +40,7 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.2,-0.2,0.2,0.2"
-      mass: 5
+      density: 30
       mask:
       - ItemMask
   - type: DamageOtherOnHit
