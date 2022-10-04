@@ -33,11 +33,11 @@ namespace Content.Shared.Construction.Conditions
                 return false;
 
             // now we need to check that user actually tries to build wallmount on a wall
-            var physics = EntitySystem.Get<SharedPhysicsSystem>();
+            var physics = entManager.System<SharedPhysicsSystem>();
             var rUserToObj = new CollisionRay(userWorldPosition, userToObject.Normalized, (int) CollisionGroup.Impassable);
             var length = userToObject.Length;
 
-            var tagSystem = EntitySystem.Get<TagSystem>();
+            var tagSystem = entManager.System<TagSystem>();
 
             var userToObjRaycastResults = physics.IntersectRayWithPredicate(entManager.GetComponent<TransformComponent>(user).MapID, rUserToObj, maxLength: length,
                 predicate: (e) => !tagSystem.HasTag(e, "Wall"));

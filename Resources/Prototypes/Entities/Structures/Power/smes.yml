@@ -20,11 +20,13 @@
       layers:
         - state: smes
     - type: Smes
+    - type: UpgradeBattery
+      maxChargeMultiplier: 2
+      baseMaxCharge: 8000000
     - type: Appearance
       visuals:
         - type: SmesVisualizer
     - type: Battery
-      maxCharge: 10000000
       startingCharge: 0
     - type: ExaminableBattery
     - type: NodeContainer
@@ -66,11 +68,11 @@
 - type: entity
   parent: BaseSMES
   id: SMESBasic
-  suffix: Basic, 10MW
+  suffix: Basic, 8MW
   components:
   - type: Battery
-    maxCharge: 10000000
-    startingCharge: 10000000
+    maxCharge: 8000000
+    startingCharge: 8000000
 
 - type: entity
   parent: SMESBasic
