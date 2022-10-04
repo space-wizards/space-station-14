@@ -48,7 +48,6 @@ public sealed class FaxMachineSystem : EntitySystem
         SubscribeLocalEvent<FaxMachineComponent, ComponentRemove>(OnComponentRemove);
         SubscribeLocalEvent<FaxMachineComponent, EntInsertedIntoContainerMessage>(OnItemSlotChanged);
         SubscribeLocalEvent<FaxMachineComponent, EntRemovedFromContainerMessage>(OnItemSlotChanged);
-        SubscribeLocalEvent<FaxMachineComponent, GetVerbsEvent<Verb>>(OnVerb);
         SubscribeLocalEvent<FaxMachineComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
         SubscribeLocalEvent<FaxMachineComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<FaxMachineComponent, GotEmaggedEvent>(OnEmagged);
@@ -189,43 +188,6 @@ public sealed class FaxMachineSystem : EntitySystem
         args.Handled = true;
     }
 
-    private void OnVerb(EntityUid uid, FaxMachineComponent component, GetVerbsEvent<Verb> args)
-    {
-        // standard interaction checks
-        if (!args.CanAccess || !args.CanInteract || args.Hands == null)
-            return;
-        
-        // send verb
-        var isSendTimeout = component.SendTimeoutRemaining > 0;
-        args.Verbs.Add(new Verb
-        {
-            Text = Loc.GetString("fax-machine-verb-send"),
-            Message = Loc.GetString("fax-machine-verb-send-desc"),
-            Act = () => Send(uid),
-            Disabled = isSendTimeout,
-        });
-        
-        // refresh network verb
-        args.Verbs.Add(new Verb
-        {
-            Text = Loc.GetString("fax-machine-verb-refresh"),
-            Message = Loc.GetString("fax-machine-verb-refresh-desc"),
-            Act = () => Refresh(uid),
-        });
-
-        // destination select verbs
-        foreach (var (faxAddress, faxName) in component.KnownFaxes)
-        {
-            args.Verbs.Add(new()
-            {
-                Text = faxName,
-                Message = Loc.GetString("fax-machine-verb-destination-desc"),
-                Category = VerbCategory.FaxDestination,
-                Act = () => SetDestination(uid, faxAddress),
-            });
-        }
-    }
-    
     private void OnPacketReceived(EntityUid uid, FaxMachineComponent component, DeviceNetworkPacketEvent args)
     {
         if (!HasComp<DeviceNetworkComponent>(uid) || string.IsNullOrEmpty(args.SenderAddress))
@@ -323,13 +285,6 @@ public sealed class FaxMachineSystem : EntitySystem
 
         component.DestinationFaxAddress = destAddress;
 
-        var faxName = Loc.GetString("fax-machine-popup-source-unknown");
-        if (component.KnownFaxes.ContainsKey(destAddress)) // If admin manually set address unknown for fax
-            faxName = component.KnownFaxes[destAddress];
-
-        var msg = Loc.GetString("fax-machine-popup-destination", ("destination", faxName));
-        _popupSystem.PopupEntity(msg, uid, Filter.Pvs(uid));
-        
         UpdateUserInterface(uid, component);
     }
 
@@ -359,22 +314,13 @@ public sealed class FaxMachineSystem : EntitySystem
 
         var sendEntity = component.PaperSlot.Item;
         if (sendEntity == null)
-        {
-            _popupSystem.PopupEntity(Loc.GetString("fax-machine-popup-paper-not-inserted"), uid, Filter.Pvs(uid));
             return;
-        }
 
         if (component.DestinationFaxAddress == null)
-        {
-            _popupSystem.PopupEntity(Loc.GetString("fax-machine-popup-destination-not-selected"), uid, Filter.Pvs(uid));
             return;
-        }
         
         if (!component.KnownFaxes.TryGetValue(component.DestinationFaxAddress, out var faxName))
-        {
-            _popupSystem.PopupEntity(Loc.GetString("fax-machine-popup-destination-not-found"), uid, Filter.Pvs(uid));
             return;
-        }
 
         if (!TryComp<PaperComponent>(sendEntity, out var paper))
             return;
@@ -389,7 +335,6 @@ public sealed class FaxMachineSystem : EntitySystem
         component.SendTimeoutRemaining += component.SendTimeout;
         
         _audioSystem.PlayPvs(component.SendSound, uid);
-        _popupSystem.PopupEntity(Loc.GetString("fax-machine-popup-send"), uid, Filter.Pvs(uid));
         
         UpdateUserInterface(uid, component);
     }
