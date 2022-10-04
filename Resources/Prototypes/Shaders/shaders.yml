@@ -73,6 +73,6 @@
 
 # cloaking distortion effect
 - type: shader
-  id: Chameleon
+  id: Stealth
   kind: source
-  path: "/Textures/Shaders/chameleon.swsl"
+  path: "/Textures/Shaders/stealth.swsl"

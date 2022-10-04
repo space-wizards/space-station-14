@@ -2,15 +2,15 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Shared.Chameleon.Components;
+namespace Content.Shared.Stealth.Components;
 /// <summary>
 /// Add this component to an entity that you want to be cloaked.
 /// It overlays a shader on the entity to give them an invisibility cloaked effect
 /// It also turns the entity invisible
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-[Access(typeof(SharedChameleonSystem))]
-public sealed class ChameleonComponent : Component
+[Access(typeof(SharedStealthSystem))]
+public sealed class StealthComponent : Component
 {
     /// <summary>
     /// Whether or not the entity previously had an interaction outline prior to cloaking.
@@ -20,10 +20,10 @@ public sealed class ChameleonComponent : Component
 
     /// <summary>
     /// Last set level of visibility. Ranges from 1 (fully visible) and -1 (fully hidden). To get the actual current
-    /// visibility, use <see cref="SharedChameleonSystem.GetVisibility(EntityUid, ChameleonComponent?)"/>
+    /// visibility, use <see cref="SharedStealthSystem.GetVisibility(EntityUid, StealthComponent?)"/>
     /// </summary>
     [DataField("lastVisibility")]
-    [Access(typeof(SharedChameleonSystem),  Other = AccessPermissions.None)]
+    [Access(typeof(SharedStealthSystem),  Other = AccessPermissions.None)]
     public float LastVisibility;
 
     /// <summary>
@@ -47,12 +47,12 @@ public sealed class ChameleonComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed class ChameleonComponentState : ComponentState
+public sealed class StealthComponentState : ComponentState
 {
     public float Visibility;
     public TimeSpan? LastUpdated;
 
-    public ChameleonComponentState(float stealthLevel, TimeSpan? lastUpdated)
+    public StealthComponentState(float stealthLevel, TimeSpan? lastUpdated)
     {
         Visibility = stealthLevel;
         LastUpdated = lastUpdated;

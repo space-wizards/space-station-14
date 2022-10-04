@@ -1,13 +1,13 @@
 using Content.Client.Interactable.Components;
-using Content.Shared.Chameleon;
-using Content.Shared.Chameleon.Components;
+using Content.Shared.Stealth;
+using Content.Shared.Stealth.Components;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Prototypes;
 
-namespace Content.Client.Chameleon;
+namespace Content.Client.Stealth;
 
-public sealed class ChameleonSystem : SharedChameleonSystem
+public sealed class StealthSystem : SharedStealthSystem
 {
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
 
@@ -17,12 +17,12 @@ public sealed class ChameleonSystem : SharedChameleonSystem
     {
         base.Initialize();
 
-        _shader = _protoMan.Index<ShaderPrototype>("Chameleon").InstanceUnique();
-        SubscribeLocalEvent<ChameleonComponent, ComponentRemove>(OnRemove);
-        SubscribeLocalEvent<ChameleonComponent, BeforePostShaderRenderEvent>(OnShaderRender);
+        _shader = _protoMan.Index<ShaderPrototype>("Stealth").InstanceUnique();
+        SubscribeLocalEvent<StealthComponent, ComponentRemove>(OnRemove);
+        SubscribeLocalEvent<StealthComponent, BeforePostShaderRenderEvent>(OnShaderRender);
     }
 
-    protected override void OnInit(EntityUid uid, ChameleonComponent component, ComponentInit args)
+    protected override void OnInit(EntityUid uid, StealthComponent component, ComponentInit args)
     {
         base.OnInit(uid, component, args);
         if (!TryComp(uid, out SpriteComponent? sprite))
@@ -39,7 +39,7 @@ public sealed class ChameleonSystem : SharedChameleonSystem
         }
     }
 
-    private void OnRemove(EntityUid uid, ChameleonComponent component, ComponentRemove args)
+    private void OnRemove(EntityUid uid, StealthComponent component, ComponentRemove args)
     {
         if (!TryComp(uid, out SpriteComponent? sprite))
             return;
@@ -53,13 +53,13 @@ public sealed class ChameleonSystem : SharedChameleonSystem
             AddComp<InteractionOutlineComponent>(uid);
     }
 
-    private void OnShaderRender(EntityUid uid, ChameleonComponent component, BeforePostShaderRenderEvent args)
+    private void OnShaderRender(EntityUid uid, StealthComponent component, BeforePostShaderRenderEvent args)
     {
         // Distortion effect uses screen coordinates. If a player moves, the entities appear to move on screen. this
         // makes the distortion very noticeable.
 
         // So we need to use relative screen coordinates. The reference frame we use is the parent's position on screen.
-        // this ensures that if the chameleon is not moving relative to the parent, its relative screen position remains
+        // this ensures that if the Stealth is not moving relative to the parent, its relative screen position remains
         // unchanged.
         var parentXform = Transform(Transform(uid).ParentUid);
         var reference = args.Viewport.WorldToLocal(parentXform.WorldPosition);
