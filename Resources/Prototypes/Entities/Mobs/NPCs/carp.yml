@@ -15,20 +15,10 @@
     - type: Sprite
       drawdepth: Mobs
       netsync: false
+      sprite: Mobs/Aliens/Carps/space.rsi
       layers:
-        - map: [ "enum.DamageStateVisualLayers.Base" ]
-          state: base
-          sprite: Mobs/Aliens/Carps/space.rsi
-        - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
-          state: mouth
-          sprite: Mobs/Aliens/Carps/space.rsi
-          shader: unshaded
-    - type: RandomSprite
-      available:
-        - enum.DamageStateVisualLayers.Base:
-            base: Rainbow
-          enum.DamageStateVisualLayers.BaseUnshaded:
-            mouth: ""
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        state: base
     - type: CombatMode
       disarmAction:
         enabled: false
@@ -67,9 +57,9 @@
     - type: MeleeWeapon
       hidden: true
       range: 1.5
-      arcwidth: 0
-      arc: bite
-      hitSound:
+      angle: 0
+      animation: WeaponArcBite
+      soundHit:
         path: /Audio/Effects/bite.ogg
       damage:
         types:
@@ -82,41 +72,46 @@
       tags:
         - Carp
         - DoorBumpOpener
+    - type: ReplacementAccent
+      accent: genericAggressive
 
 - type: entity
   parent: BaseMobCarp
   id: MobCarp
   components:
-    - type: ReplacementAccent
-      accent: genericAggressive
+  - type: Sprite
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: base
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: mouth
+      shader: unshaded
+  - type: RandomSprite
+    available:
+    - enum.DamageStateVisualLayers.Base:
+        base: Rainbow
+      enum.DamageStateVisualLayers.BaseUnshaded:
+        mouth: ""
 
 - type: entity
   name: magicarp
-  parent: MobCarp
+  parent: BaseMobCarp
   id: MobCarpMagic
   description: Looks like some kind of fish. Might be magical.
   components:
     - type: Sprite
-      drawdepth: Mobs
-      layers:
-        - map: [ "enum.DamageStateVisualLayers.Base" ]
-          state: base
-          sprite: Mobs/Aliens/Carps/magic.rsi
+      sprite: Mobs/Aliens/Carps/magic.rsi
     - type: TypingIndicator
       proto: guardian
 
 - type: entity
   name: holocarp
-  parent: MobCarp
+  parent: BaseMobCarp
   id: MobCarpHolo
   description: Carp made out of holographic energies. Sadly for you, it is very much real.
   components:
     - type: Sprite
-      drawdepth: Mobs
-      layers:
-        - map: [ "enum.DamageStateVisualLayers.Base" ]
-          state: base
-          sprite: Mobs/Aliens/Carps/holo.rsi
+      sprite: Mobs/Aliens/Carps/holo.rsi
     - type: Physics
     - type: Fixtures
       fixtures:

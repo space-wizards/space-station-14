@@ -9,13 +9,18 @@
   - type: DiseaseProtection
     protection: 1
   - type: CombatMode
-    canDisarm: true
+    disarm: null
   - type: InputMover
   - type: MobMover
   - type: HTN
     rootTask: XenoCompound
+    blackboard:
+      NavPry: !type:Bool
+        true
+      NavSmash: !type:Bool
+        true
   - type: Tool
-    speed: 0.3
+    speed: 1.5
     qualities:
       - Prying
     useSound:
@@ -63,13 +68,13 @@
   - type: MeleeWeapon
     hidden: true
     range: 1.5
-    arcwidth: 0
-    hitSound:
+    angle: 0
+    soundHit:
      collection: AlienClaw
-    arc:
+    animation: WeaponArcClaw
     damage:
       groups:
-        Brute: 20
+        Brute: 12
   - type: Appearance
   - type: DamageStateVisuals
     rotate: true
@@ -195,7 +200,6 @@
     damage:
      groups:
        Brute: 40
-    cooldownTime: 2
   - type: SlowOnDamage
     speedModifierThresholds:
       1000: 0.7
@@ -233,8 +237,7 @@
     hidden: true
     damage:
      groups:
-       Brute: 35
-    cooldownTime: 1.5
+       Brute: 20
   - type: SlowOnDamage
     speedModifierThresholds:
       450: 0.7
@@ -272,8 +275,7 @@
     hidden: true
     damage:
      groups:
-       Brute: 15
-    cooldownTime: 0.5
+       Brute: 8
   - type: SlowOnDamage
     speedModifierThresholds:
       200: 0.7
@@ -363,8 +365,8 @@
   - type: MeleeWeapon
     hidden: true
     range: 1.5
-    arcwidth: 0
-    arc: bite
+    angle: 0
+    animation: WeaponArcBite
     damage:
       types:
         Piercing: 5

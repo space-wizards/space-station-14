@@ -22,7 +22,6 @@
     frictionNoInput: 6
     baseWalkSpeed: 4.5
     baseSprintSpeed: 6
-  - type: Eye
   - type: Tag
   - type: Pullable
   - type: Physics

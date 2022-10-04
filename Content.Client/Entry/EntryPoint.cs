@@ -103,7 +103,6 @@ namespace Content.Client.Entry
 
             // Do not add to these, they are legacy.
             _componentFactory.RegisterClass<SharedSpawnPointComponent>();
-            _componentFactory.RegisterClass<SharedReagentDispenserComponent>();
             _componentFactory.RegisterClass<SharedGravityGeneratorComponent>();
             _componentFactory.RegisterClass<SharedAMEControllerComponent>();
             // Do not add to the above, they are legacy

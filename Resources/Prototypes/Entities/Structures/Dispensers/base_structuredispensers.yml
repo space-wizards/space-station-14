@@ -48,16 +48,17 @@
         sound:
           path: /Audio/Effects/metalbreak.ogg
   - type: ReagentDispenser
-    beakerSlot:
-      whitelistFailPopup: reagent-dispenser-component-cannot-put-entity-message
-      whitelist:
-        components:
-        - FitsInDispenser
   - type: ItemSlots
+    slots:
+      beakerSlot:
+        whitelistFailPopup: reagent-dispenser-component-cannot-put-entity-message
+        whitelist:
+          components:
+          - FitsInDispenser
   - type: ContainerContainer
     containers:
       machine_board: !type:Container
       machine_parts: !type:Container
-      ReagentDispenser-beaker: !type:ContainerSlot
+      beakerSlot: !type:ContainerSlot
   - type: StaticPrice
     price: 1000

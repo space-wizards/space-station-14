@@ -30,6 +30,7 @@ namespace Content.Client.Audio
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly IStateManager _stateManager = default!;
         [Dependency] private readonly ClientGameTicker _gameTicker = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
 
         private readonly AudioParams _ambientParams = new(-10f, 1, "Master", 0, 0, 0, true, 0f);
         private readonly AudioParams _lobbyParams = new(-5f, 1, "Master", 0, 0, 0, true, 0f);
@@ -211,7 +212,8 @@ namespace Content.Client.Audio
                 return;
             _playingCollection = _currentCollection;
             var file = _robustRandom.Pick(_currentCollection.PickFiles).ToString();
-            _ambientStream = SoundSystem.Play(file, Filter.Local(), _ambientParams.WithVolume(_ambientParams.Volume + _configManager.GetCVar(CCVars.AmbienceVolume)));
+            _ambientStream = _audio.PlayGlobal(file, Filter.Local(),
+                _ambientParams.WithVolume(_ambientParams.Volume + _configManager.GetCVar(CCVars.AmbienceVolume)));
         }
 
         private void EndAmbience()
@@ -304,7 +306,8 @@ namespace Content.Client.Audio
             {
                 return;
             }
-            _lobbyStream = SoundSystem.Play(file, Filter.Local(), _lobbyParams);
+
+            _lobbyStream = _audio.PlayGlobal(file, Filter.Local(), _lobbyParams);
         }
 
         private void EndLobbyMusic()

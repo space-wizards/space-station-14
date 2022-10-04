@@ -183,7 +183,7 @@ public sealed class MachineFrameSystem : EntitySystem
 
     public void ResetProgressAndRequirements(MachineFrameComponent component, MachineBoardComponent machineBoard)
     {
-        component.Requirements = new Dictionary<MachinePart, int>(machineBoard.Requirements);
+        component.Requirements = new Dictionary<string, int>(machineBoard.Requirements);
         component.MaterialRequirements = new Dictionary<string, int>(machineBoard.MaterialIdRequirements);
         component.ComponentRequirements = new Dictionary<string, GenericPartInfo>(machineBoard.ComponentRequirements);
         component.TagRequirements = new Dictionary<string, GenericPartInfo>(machineBoard.TagRequirements);

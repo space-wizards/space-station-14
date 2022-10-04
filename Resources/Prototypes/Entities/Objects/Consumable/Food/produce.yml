@@ -273,7 +273,7 @@
   - type: Extractable
     juiceSolution:
       reagents:
-      - ReagentId: JuiceLime
+      - ReagentId: JuiceLemon
         Quantity: 10
 
 - type: entity

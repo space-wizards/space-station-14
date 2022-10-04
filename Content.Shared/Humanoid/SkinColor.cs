@@ -15,11 +15,10 @@ public static class SkinColor
     }
 
     /// <summary>
-    ///     Get a human skin tone based on a scale of 0 to 100.
+    ///     Get a human skin tone based on a scale of 0 to 100. The value is clamped between 0 and 100.
     /// </summary>
     /// <param name="tone">Skin tone. Valid range is 0 to 100, inclusive. 0 is gold/yellowish, 100 is dark brown.</param>
     /// <returns>A human skin tone.</returns>
-    /// <exception cref="ArgumentException">Exception if the value is under 0 or over 100.</exception>
     public static Color HumanSkinTone(int tone)
     {
         // 0 - 100, 0 being gold/yellowish and 100 being dark
@@ -31,10 +30,7 @@ public static class SkinColor
         // 20 is 25 - 20 - 100
         // 100 is 25 - 100 - 20
 
-        if (tone < 0 || tone > 100)
-        {
-            throw new ArgumentException("Skin tone value was under 0 or over 100.");
-        }
+        tone = Math.Clamp(tone, 0, 100);
 
         var rangeOffset = tone - 20;
 
