@@ -42,7 +42,7 @@ public static class PoolManager
         (CCVars.DatabaseSynchronous.Name, "true", false),
         (CCVars.DatabaseSqliteDelay.Name, "0", false),
         (CCVars.HolidaysEnabled.Name, "false", false),
-        (CCVars.GameMap.Name, "empty", true),
+        (CCVars.GameMap.Name, "Empty", true),
         (CCVars.GameMapForced.Name, "true", true),
         (CCVars.AdminLogsQueueSendDelay.Name, "0", true),
         (CCVars.NetPVS.Name, "false", true),
