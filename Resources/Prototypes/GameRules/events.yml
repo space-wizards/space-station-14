@@ -104,7 +104,9 @@
     startAnnouncement: station-event-meteor-swarm-start-announcement
     endAnnouncement: station-event-meteor-swarm-end-announcement
     startAudio:
-      path: /Audio/Announcements/meteors.ogg
+      path: /Audio/Announcements/meteors_start.ogg
+    endAudio:
+      path: /Audio/Announcements/meteors_end.ogg
     startAfter: 30
 
 - type: gameRule
