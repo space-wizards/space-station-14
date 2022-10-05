@@ -40,7 +40,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
     {
         base.Initialize();
         InitializeEffect();
-        _overlayManager.AddOverlay(new MeleeWindupOverlay(EntityManager, _timing, _protoManager, _cache));
+        _overlayManager.AddOverlay(new MeleeWindupOverlay(EntityManager, _timing, _player, _protoManager, _cache));
         SubscribeNetworkEvent<DamageEffectEvent>(OnDamageEffect);
         SubscribeNetworkEvent<MeleeLungeEvent>(OnMeleeLunge);
     }

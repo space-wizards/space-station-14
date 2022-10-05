@@ -642,7 +642,7 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.4,-0.4,0.4,0.29"
-      mass: 75
+      density: 135
       mask:
       - LargeMobMask
       layer:

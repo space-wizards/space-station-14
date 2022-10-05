@@ -30,7 +30,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.3
-      mass: 65
+      density: 230
       mask:
       - SmallMobMask
       layer:
@@ -146,7 +146,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 150
+      density: 400
       mask:
       - MobMask
       layer:
@@ -190,7 +190,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.2
-      mass: 4 #Bulky by mouse standards...
+      density: 30 #Bulky by mouse standards...
       mask:
       - SmallMobMask
       layer:
