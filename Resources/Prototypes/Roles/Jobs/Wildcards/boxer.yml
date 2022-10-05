@@ -5,7 +5,7 @@
   startingGear: BoxerGear
   setPreference: false
   icon: "Boxer"
-  supervisors: "the head of personnel"
+  supervisors: job-supervisors-hop
   access:
   - Service
   special:
