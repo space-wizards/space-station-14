@@ -20,6 +20,8 @@ using Content.Server.DoAfter;
 using Content.Server.Humanoid;
 using Content.Server.Mind.Components;
 using Content.Server.Stack;
+using Content.Shared.Interaction.Events;
+using Content.Shared.Popups;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Configuration;
@@ -36,6 +38,7 @@ namespace Content.Server.Medical.BiomassReclaimer
         [Dependency] private readonly SharedJitteringSystem _jitteringSystem = default!;
         [Dependency] private readonly SharedAudioSystem _sharedAudioSystem = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
+        [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly SpillableSystem _spillableSystem = default!;
         [Dependency] private readonly ThrowingSystem _throwing = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
@@ -90,8 +93,25 @@ namespace Content.Server.Medical.BiomassReclaimer
             SubscribeLocalEvent<BiomassReclaimerComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
             SubscribeLocalEvent<BiomassReclaimerComponent, ClimbedOnEvent>(OnClimbedOn);
             SubscribeLocalEvent<BiomassReclaimerComponent, RefreshPartsEvent>(OnRefreshParts);
+            SubscribeLocalEvent<BiomassReclaimerComponent, SuicideEvent>(OnSuicide);
             SubscribeLocalEvent<ReclaimSuccessfulEvent>(OnReclaimSuccessful);
             SubscribeLocalEvent<ReclaimCancelledEvent>(OnReclaimCancelled);
+        }
+
+        private void OnSuicide(EntityUid uid, BiomassReclaimerComponent component, SuicideEvent args)
+        {
+            if (args.Handled)
+                return;
+            
+            if (HasComp<ActiveBiomassReclaimerComponent>(uid))
+                return;
+
+            if (TryComp<ApcPowerReceiverComponent>(uid, out var power) && !power.Powered)
+                return;
+
+            _popup.PopupEntity(Loc.GetString("biomass-reclaimer-suicide-others", ("victim", args.Victim)), uid, Filter.Pvs(uid), PopupType.LargeCaution);
+            StartProcessing(args.Victim, component);
+            args.SetHandled(SuicideKind.Blunt);
         }
 
         private void OnInit(EntityUid uid, ActiveBiomassReclaimerComponent component, ComponentInit args)

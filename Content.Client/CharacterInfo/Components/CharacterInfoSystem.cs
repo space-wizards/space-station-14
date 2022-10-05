@@ -10,6 +10,8 @@ namespace Content.Client.CharacterInfo.Components;
 
 public sealed class CharacterInfoSystem : EntitySystem
 {
+    [Dependency] private readonly SpriteSystem _sprite = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -71,7 +73,7 @@ public sealed class CharacterInfoSystem : EntitySystem
                 };
                 hbox.AddChild(new ProgressTextureRect
                 {
-                    Texture = objectiveCondition.SpriteSpecifier.Frame0(),
+                    Texture = _sprite.Frame0(objectiveCondition.SpriteSpecifier),
                     Progress = objectiveCondition.Progress,
                     VerticalAlignment = Control.VAlignment.Center
                 });

@@ -106,7 +106,7 @@
         - MachineMask
         layer:
         - MachineLayer
-        mass: 70
+        density: 380
     - type: Appearance
     - type: AnimationPlayer
     - type: PointLight

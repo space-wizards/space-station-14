@@ -147,7 +147,7 @@
       - shape:
           !type:PhysShapeCircle
           radius: 0.35
-        mass: 70
+        density: 185
         restitution: 0.0
         mask:
           - MobMask
@@ -359,7 +359,7 @@
       - shape:
           !type:PhysShapeAabb
           bounds: "-0.35,-0.35,0.35,0.35"
-        mass: 70
+        density: 185
         restitution: 0.0
         mask:
         - MobMask

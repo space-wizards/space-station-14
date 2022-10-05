@@ -22,7 +22,6 @@
     frictionNoInput: 6
     baseWalkSpeed: 4.5
     baseSprintSpeed: 6
-  - type: Eye
   - type: Tag
   - type: Pullable
   - type: Physics
@@ -33,7 +32,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.4
-      mass: 180
+      density: 360
       restitution: 0.0
       mask:
       - MobMask

@@ -98,7 +98,7 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.2, -0.5, 0.2, 0.5"
-      mass: 20
+      density: 50
       mask:
       - MachineMask
       layer:
@@ -163,7 +163,7 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.2, -0.5, 0.2, 0.5"
-      mass: 20
+      density: 50
       mask:
       - MachineMask
       layer:

@@ -21,7 +21,7 @@ public sealed class RulesManager : SharedRulesManager
     [Dependency] private readonly IEntitySystemManager _sysMan = default!;
 
     private InfoSection rulesSection = new InfoSection("", "", false);
-    private bool _shouldShowRules = true;
+    private bool _shouldShowRules = false;
 
     private RulesPopup? _activePopup;
 
