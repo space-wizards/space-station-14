@@ -30,7 +30,7 @@
   targetNode: muzzle
   category: construction-category-tools
   objectType: Item
-  description: "A muzzle for all your kidnapping needs."
+  description: "A muzzle to shut your victim up."
   icon:
     sprite: Clothing/Mask/muzzle.rsi
     state: icon
