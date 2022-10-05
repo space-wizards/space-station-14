@@ -162,7 +162,7 @@
     Poison:
       effects:
         - !type:AdjustTemperature
-          amount: 2500 # thermal energy, not temp
+          amount: 250 # thermal energy, not temp
         - !type:HealthChange
           conditions:
             - !type:ReagentThreshold
