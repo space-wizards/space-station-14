@@ -617,7 +617,7 @@ public sealed class WiresSystem : EntitySystem
 
         foreach (var wire in wires.WiresList)
         {
-            if (wire.GetType() == typeof(T))
+            if (wire.Action.GetType() == typeof(T))
             {
                 yield return wire;
             }
