@@ -29,7 +29,7 @@
 - type: weightedRandom
   id: TraitorObjectiveGroupState
   weights:
-    StayAliveObjective: 1
+    EscapeShuttleObjective: 1
     DieObjective: 0.05
 
 - type: weightedRandom
