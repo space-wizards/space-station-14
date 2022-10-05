@@ -18,21 +18,21 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-      - shape:
-          !type:PhysShapeAabb
-          bounds: "-0.25,-0.4,0.25,0.4"
-        mass: 25
-        mask:
-          - MachineMask
-        layer:
-          - MachineLayer
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.25,-0.4,0.25,0.4"
+      density: 25
+      mask:
+      - MachineMask
+      layer:
+      - MachineLayer
   - type: ActivatableUI
     key: enum.FaxUiKey.Key
   - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
-      - key: enum.FaxUiKey.Key
-        type: FaxBoundUi
+    - key: enum.FaxUiKey.Key
+      type: FaxBoundUi
   - type: ApcPowerReceiver
     powerLoad: 250
   - type: FaxMachine
