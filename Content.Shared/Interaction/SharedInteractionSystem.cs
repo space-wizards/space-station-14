@@ -54,7 +54,7 @@ namespace Content.Shared.Interaction
         private const CollisionGroup InRangeUnobstructedMask
             = CollisionGroup.Impassable | CollisionGroup.InteractImpassable;
 
-        public const float InteractionRange = 1.2f;
+        public const float InteractionRange = 1.5f;
         public const float InteractionRangeSquared = InteractionRange * InteractionRange;
 
         public const float MaxRaycastRange = 100f;
