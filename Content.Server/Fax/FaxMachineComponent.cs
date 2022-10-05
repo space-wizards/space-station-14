@@ -31,8 +31,8 @@ public sealed class FaxMachineComponent : Component
     /// This will make it visible to others on the network
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("shouldResponsePings")]
-    public bool ShouldResponsePings { get; set; } = true;
+    [DataField("responsePings")]
+    public bool ResponsePings { get; set; } = true;
     
     /// <summary>
     /// Should admins be notified on message receive

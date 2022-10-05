@@ -19,7 +19,7 @@ using Robust.Shared.Player;
 namespace Content.Server.Fax;
 
 // TODO: Transfer paper stamps
-// What if scanning paper and someone send you message? Add check for queue is currently scanning something? And block sending on receiving animation.
+// TODO: Add fax entities for all departs
 
 public sealed class FaxSystem : EntitySystem
 {
@@ -198,7 +198,7 @@ public sealed class FaxSystem : EntitySystem
                 case FaxConstants.FaxPingCommand:
                     var isForSyndie = component.Emagged &&
                                       args.Data.ContainsKey(FaxConstants.FaxSyndicateData);
-                    if (!isForSyndie && !component.ShouldResponsePings)
+                    if (!isForSyndie && !component.ResponsePings)
                         return;
 
                     var payload = new NetworkPayload()

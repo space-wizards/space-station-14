@@ -74,6 +74,6 @@
   description: Bluespace technologies on the application of bureaucracy.
   components:
   - type: FaxMachine
-    shouldResponsePings: false
+    responsePings: false
     emagged: true
     notifyAdmins: true
