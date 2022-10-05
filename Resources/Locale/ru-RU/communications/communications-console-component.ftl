@@ -2,8 +2,8 @@
 comms-console-menu-title = Консоль связи
 comms-console-menu-announcement-placeholder = Объявление
 comms-console-menu-announcement-button = Сделать объявление
-comms-console-menu-call-shuttle = Вызвать шаттл экстренной эвакуации
-comms-console-menu-recall-shuttle = Отозвать шаттл экстренной эвакуации
+comms-console-menu-call-shuttle = Вызвать эвакуационный шаттл
+comms-console-menu-recall-shuttle = Отозвать эвакуационный шаттл
 # Popup
 comms-console-permission-denied = В доступе отказано
 # Placeholder values
