@@ -1,6 +1,6 @@
 - type: job
   id: Boxer
-  name: "boxer"
+  name: job-name-boxer
   playTimeTracker: JobBoxer
   startingGear: BoxerGear
   setPreference: false
