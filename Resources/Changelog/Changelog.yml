@@ -2875,7 +2875,7 @@ Entries:
   time: '2022-10-04T01:01:43.0000000+00:00'
 - author: DogZeroX
   changes:
-  - {message: 'Nuclear bombs are now less heavy thanks to Bluespace [REDACTED] Tech.',
+  - {message: 'Nuclear bombs are now less heavy thanks to Bluespace \[REDACTED] Tech.',
     type: Tweak}
   id: 2391
   time: '2022-10-04T01:05:03.0000000+00:00'
