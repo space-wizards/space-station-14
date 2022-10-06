@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Projectiles now have impact effects. Most bullets have sparkles and
-      disablers have a laser., type: Add}
-  id: 1902
-  time: '2022-07-09T03:46:11.0000000+00:00'
 - author: themias
   changes:
   - {message: force-feeding works again, type: Fix}
@@ -2930,3 +2924,8 @@ Entries:
       during a specific rotation, type: Fix}
   id: 2401
   time: '2022-10-06T02:53:41.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Ghosts are now visible in the post-round period., type: Add}
+  id: 2402
+  time: '2022-10-06T02:55:11.0000000+00:00'
