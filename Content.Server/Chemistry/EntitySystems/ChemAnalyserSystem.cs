@@ -250,7 +250,7 @@ namespace Content.Server.Chemistry.EntitySystems
                         rewardEarned = false;
             }
             else if (rewardRequiredCount > 0)
-                if (!(rewardSolutions.Count == rewardRequiredCount))
+                if (!(rewardSolutions.Count >= rewardRequiredCount))
                     rewardEarned = false;
 
             //disk is printed only once per analyser and paper is only printed if the composition of reagents change
