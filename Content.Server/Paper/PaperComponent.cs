@@ -1,8 +1,9 @@
 using Content.Shared.Paper;
+using Robust.Shared.GameStates;
 
 namespace Content.Server.Paper
 {
-    [RegisterComponent]
+    [NetworkedComponent, RegisterComponent]
     public sealed class PaperComponent : SharedPaperComponent
     {
         public PaperAction Mode;

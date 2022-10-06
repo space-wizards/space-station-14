@@ -121,11 +121,8 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         {
             return;
         }
-
-        // InRangeUnobstructed is insufficient rn as it checks the centre of the body rather than the nearest edge.
-        // TODO: Look at fixing it
-        // This is mainly to keep consistency between the wide attack raycast and the click attack raycast.
-        if (!_interaction.InRangeUnobstructed(user, ev.Target.Value, component.Range + 0.35f))
+        
+        if (!_interaction.InRangeUnobstructed(user, ev.Target.Value, component.Range))
             return;
 
         var damage = component.Damage * GetModifier(component, true);

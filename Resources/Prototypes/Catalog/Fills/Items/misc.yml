@@ -1,0 +1,8 @@
+- type: entity
+  id: ClothingShoesBootsCombatFilled
+  parent: ClothingShoesBootsCombat
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: CombatKnife

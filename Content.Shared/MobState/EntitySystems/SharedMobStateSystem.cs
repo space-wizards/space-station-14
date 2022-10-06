@@ -15,6 +15,7 @@ using Content.Shared.Speech;
 using Content.Shared.Standing;
 using Content.Shared.StatusEffect;
 using Content.Shared.Throwing;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.MobState.EntitySystems
@@ -22,9 +23,11 @@ namespace Content.Shared.MobState.EntitySystems
     public abstract partial class SharedMobStateSystem : EntitySystem
     {
         [Dependency] protected readonly AlertsSystem Alerts = default!;
-        [Dependency] private readonly ActionBlockerSystem _blocker = default!;
-        [Dependency] protected readonly StandingStateSystem Standing = default!;
+        [Dependency] private   readonly ActionBlockerSystem _blocker = default!;
+        [Dependency] private   readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private   readonly SharedPhysicsSystem _physics = default!;
         [Dependency] protected readonly StatusEffectsSystem Status = default!;
+        [Dependency] private   readonly StandingStateSystem _standing = default!;
 
         public override void Initialize()
         {

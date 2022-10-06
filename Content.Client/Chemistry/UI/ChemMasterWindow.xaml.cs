@@ -98,7 +98,6 @@ namespace Content.Client.Chemistry.UI
         public void UpdateState(BoundUserInterfaceState state)
         {
             var castState = (ChemMasterBoundUserInterfaceState) state;
-            Title = castState.DispenserName;
             if (castState.UpdateLabel)
                 LabelLine = GenerateLabel(castState);
             UpdatePanelInfo(castState);

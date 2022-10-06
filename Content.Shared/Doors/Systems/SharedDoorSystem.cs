@@ -21,11 +21,11 @@ namespace Content.Shared.Doors.Systems;
 
 public abstract class SharedDoorSystem : EntitySystem
 {
+    [Dependency] protected readonly IGameTiming GameTiming = default!;
     [Dependency] protected readonly SharedPhysicsSystem PhysicsSystem = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly SharedStunSystem _stunSystem = default!;
     [Dependency] protected readonly TagSystem Tags = default!;
-    [Dependency] protected readonly IGameTiming GameTiming = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
@@ -380,7 +380,7 @@ public abstract class SharedDoorSystem : EntitySystem
             return;
 
         if (Resolve(uid, ref physics, false))
-            physics.CanCollide = collidable;
+            PhysicsSystem.SetCanCollide(physics, collidable);
 
         if (!collidable)
             door.CurrentlyCrushing.Clear();
