@@ -25,7 +25,7 @@ namespace Content.Server.Storage.EntitySystems
         private void OnInit(EntityUid uid, SecretStashComponent component, ComponentInit args)
         {
             // set default secret part name
-            if (component.SecretPartName == "")
+            if (component.SecretPartName == string.Empty)
             {
                 var meta = EntityManager.GetComponent<MetaDataComponent>(uid);
                 var entityName = Loc.GetString("comp-secret-stash-secret-part-name", ("name", meta.EntityName));
