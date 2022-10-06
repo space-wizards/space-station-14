@@ -152,8 +152,13 @@ namespace Content.Server.Physics.Controllers
                 {
                     if (!bodyQuery.TryGetComponent(entity, out var physics))
                         continue;
+                    if (!xformQuery.TryGetComponent(entity, out var intersectingXform))
+                        continue;
 
-                    _physics.WakeBody(physics);
+                    if (!intersectingXform.Anchored)
+                    {
+                        _physics.WakeBody(physics);
+                    }
                 }
             }
         }
