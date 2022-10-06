@@ -16,7 +16,7 @@
   - type: ItemSlots
     slots:
       cell_slot:
-        statingItem: PowerCellMedium
+        startingItem: PowerCellMedium
   - type: Sprite
     sprite: Objects/Devices/Holoprojectors/custodial.rsi
     state: icon

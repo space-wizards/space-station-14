@@ -33,7 +33,7 @@
   - type: ItemSlots
     slots:
       cell_slot:
-        statingItem: PowerCellMedium
+        startingItem: PowerCellMedium
   - type: Sprite
     sprite: Objects/Tools/flashlight.rsi
     netsync: false
@@ -69,7 +69,7 @@
   - type: ItemSlots
     slots:
       cell_slot:
-        statingItem: PowerCellHigh
+        startingItem: PowerCellHigh
   - type: HandheldLight
     addPrefix: false
   - type: ToggleableLightVisuals

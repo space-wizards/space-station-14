@@ -39,7 +39,7 @@
   - type: ItemSlots
     slots:
       cell_slot:
-        statingItem: PowerCellMedium
+        startingItem: PowerCellMedium
   - type: Item
     heldPrefix: off
   - type: ContainerContainer

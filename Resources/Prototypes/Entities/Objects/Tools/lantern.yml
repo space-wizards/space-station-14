@@ -32,7 +32,7 @@
     - type: ItemSlots
       slots:
         cell_slot:
-          statingItem: PowerCellMedium
+          startingItem: PowerCellMedium
     - type: ContainerContainer
       containers:
         cell_slot: !type:ContainerSlot {}
