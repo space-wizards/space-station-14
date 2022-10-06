@@ -79,7 +79,7 @@ namespace Content.Shared.Stacks
         private bool TryMergeStacks(
             EntityUid donor,
             EntityUid recipient,
-            out ulong transfered,
+            out int transfered,
             SharedStackComponent? donorStack = null,
             SharedStackComponent? recipientStack = null)
         {
@@ -131,7 +131,7 @@ namespace Content.Shared.Stacks
             HandsSystem.PickupOrDrop(user, item, handsComp: hands);
         }
 
-        public virtual void SetCount(EntityUid uid, ulong amount, SharedStackComponent? component = null)
+        public virtual void SetCount(EntityUid uid, int amount, SharedStackComponent? component = null)
         {
             if (!Resolve(uid, ref component))
                 return;
@@ -157,7 +157,7 @@ namespace Content.Shared.Stacks
         /// <summary>
         ///     Try to use an amount of items on this stack. Returns whether this succeeded.
         /// </summary>
-        public bool Use(EntityUid uid, ulong amount, SharedStackComponent? stack = null)
+        public bool Use(EntityUid uid, int amount, SharedStackComponent? stack = null)
         {
             if (!Resolve(uid, ref stack))
                 return false;
@@ -184,7 +184,7 @@ namespace Content.Shared.Stacks
         /// <param name="entityId"></param>
         /// <returns></returns>
         [PublicAPI]
-        public ulong GetMaxCount(string entityId)
+        public int GetMaxCount(string entityId)
         {
             var entProto = _prototype.Index<EntityPrototype>(entityId);
             entProto.TryGetComponent<SharedStackComponent>(out var stackProto);
@@ -197,7 +197,7 @@ namespace Content.Shared.Stacks
         /// <param name="uid"></param>
         /// <returns></returns>
         [PublicAPI]
-        public ulong GetMaxCount(EntityUid uid)
+        public int GetMaxCount(EntityUid uid)
         {
             return GetMaxCount(CompOrNull<SharedStackComponent>(uid));
         }
@@ -213,11 +213,11 @@ namespace Content.Shared.Stacks
         /// </remarks>
         /// <param name="component"></param>
         /// <returns></returns>
-        public ulong GetMaxCount(SharedStackComponent? component)
+        public int GetMaxCount(SharedStackComponent? component)
         {
             return component == null ? 1 : component.MaxCountOverride ?? (component.StackTypeId == null
                 ? 1
-                : _prototype.Index<StackPrototype>(component.StackTypeId).MaxCount ?? ulong.MaxValue);
+                : _prototype.Index<StackPrototype>(component.StackTypeId).MaxCount ?? int.MaxValue);
         }
 
         /// <summary>
@@ -226,7 +226,7 @@ namespace Content.Shared.Stacks
         /// <param name="component"></param>
         /// <returns></returns>
         [PublicAPI]
-        public ulong GetAvailableSpace(SharedStackComponent component)
+        public int GetAvailableSpace(SharedStackComponent component)
         {
             return GetMaxCount(component) - component.Count;
         }
@@ -278,14 +278,14 @@ namespace Content.Shared.Stacks
         /// <summary>
         ///     The old stack count.
         /// </summary>
-        public ulong OldCount;
+        public int OldCount;
 
         /// <summary>
         ///     The new stack count.
         /// </summary>
-        public ulong NewCount;
+        public int NewCount;
 
-        public StackCountChangedEvent(ulong oldCount, ulong newCount)
+        public StackCountChangedEvent(int oldCount, int newCount)
         {
             OldCount = oldCount;
             NewCount = newCount;

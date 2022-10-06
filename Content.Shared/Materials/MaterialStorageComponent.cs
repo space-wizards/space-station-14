@@ -11,7 +11,7 @@ namespace Content.Shared.Materials;
 public sealed class MaterialStorageComponent : Component
 {
     [ViewVariables]
-    public Dictionary<string, long> Storage { get; set; } = new();
+    public Dictionary<string, int> Storage { get; set; } = new();
 
     /// <summary>
     ///     How much material the storage can store in total.
@@ -76,11 +76,11 @@ public sealed class GetMaterialWhitelistEvent : EntityEventArgs
 [Serializable, NetSerializable]
 public sealed class MaterialStorageComponentState : ComponentState
 {
-    public Dictionary<string, long> Storage;
+    public Dictionary<string, int> Storage;
 
     public List<string>? MaterialWhitelist;
 
-    public MaterialStorageComponentState(Dictionary<string, long> storage, List<string>? materialWhitelist)
+    public MaterialStorageComponentState(Dictionary<string, int> storage, List<string>? materialWhitelist)
     {
         Storage = storage;
         MaterialWhitelist = materialWhitelist;

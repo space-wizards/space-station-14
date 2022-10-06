@@ -32,7 +32,7 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
         if (args.Current is not MaterialStorageComponentState state)
             return;
 
-        component.Storage = new Dictionary<string, long>(state.Storage);
+        component.Storage = new Dictionary<string, int>(state.Storage);
 
         if (state.MaterialWhitelist != null)
             component.MaterialWhiteList = new List<string>(state.MaterialWhitelist);
@@ -46,7 +46,7 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
     /// <param name="component"></param>
     /// <returns>The volume of the material</returns>
     [PublicAPI]
-    public long GetMaterialAmount(EntityUid uid, MaterialPrototype material, MaterialStorageComponent? component = null)
+    public int GetMaterialAmount(EntityUid uid, MaterialPrototype material, MaterialStorageComponent? component = null)
     {
         return GetMaterialAmount(uid, material.ID, component);
     }
@@ -58,7 +58,7 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
     /// <param name="material"></param>
     /// <param name="component"></param>
     /// <returns>The volume of the material</returns>
-    public long GetMaterialAmount(EntityUid uid, string material, MaterialStorageComponent? component = null)
+    public int GetMaterialAmount(EntityUid uid, string material, MaterialStorageComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return 0; //you have nothing
@@ -71,7 +71,7 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
     /// <param name="uid"></param>
     /// <param name="component"></param>
     /// <returns>The volume of all materials in the storage</returns>
-    public long GetTotalMaterialAmount(EntityUid uid, MaterialStorageComponent? component = null)
+    public int GetTotalMaterialAmount(EntityUid uid, MaterialStorageComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return 0;
@@ -118,7 +118,7 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
     /// <param name="volume"></param>
     /// <param name="component"></param>
     /// <returns>If it was successful</returns>
-    public bool TryChangeMaterialAmount(EntityUid uid, string materialId, long volume, MaterialStorageComponent? component = null)
+    public bool TryChangeMaterialAmount(EntityUid uid, string materialId, int volume, MaterialStorageComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return false;
@@ -164,9 +164,8 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
                 return false;
         }
 
-        var multiplier = (long) (TryComp<SharedStackComponent>(toInsert, out var stackComponent) ? stackComponent.Count : 1);
-
-        long totalVolume = 0;
+        var multiplier = TryComp<SharedStackComponent>(toInsert, out var stackComponent) ? stackComponent.Count : 1;
+        var totalVolume = 0;
         foreach (var (mat, vol) in component.Storage)
         {
             if (!CanChangeMaterialAmount(receiver, mat, vol, component))

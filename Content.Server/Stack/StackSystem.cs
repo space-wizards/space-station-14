@@ -17,7 +17,7 @@ namespace Content.Server.Stack
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-        public static readonly ulong[] DefaultSplitAmounts = { 1, 5, 10, 20, 30, 50 };
+        public static readonly int[] DefaultSplitAmounts = { 1, 5, 10, 20, 30, 50 };
 
         public override void Initialize()
         {
@@ -26,7 +26,7 @@ namespace Content.Server.Stack
             SubscribeLocalEvent<StackComponent, GetVerbsEvent<AlternativeVerb>>(OnStackAlternativeInteract);
         }
 
-        public override void SetCount(EntityUid uid, ulong amount, SharedStackComponent? component = null)
+        public override void SetCount(EntityUid uid, int amount, SharedStackComponent? component = null)
         {
             if (!Resolve(uid, ref component))
                 return;
@@ -41,7 +41,7 @@ namespace Content.Server.Stack
         /// <summary>
         ///     Try to split this stack into two. Returns a non-null <see cref="Robust.Shared.GameObjects.EntityUid"/> if successful.
         /// </summary>
-        public EntityUid? Split(EntityUid uid, ulong amount, EntityCoordinates spawnPosition, SharedStackComponent? stack = null)
+        public EntityUid? Split(EntityUid uid, int amount, EntityCoordinates spawnPosition, SharedStackComponent? stack = null)
         {
             if (!Resolve(uid, ref stack))
                 return null;
@@ -75,7 +75,7 @@ namespace Content.Server.Stack
         /// <summary>
         ///     Spawns a stack of a certain stack type. See <see cref="StackPrototype"/>.
         /// </summary>
-        public EntityUid Spawn(ulong amount, StackPrototype prototype, EntityCoordinates spawnPosition)
+        public EntityUid Spawn(int amount, StackPrototype prototype, EntityCoordinates spawnPosition)
         {
             // Set the output result parameter to the new stack entity...
             var entity = Spawn(prototype.Spawn, spawnPosition);
@@ -90,7 +90,7 @@ namespace Content.Server.Stack
         ///     Say you want to spawn 97 stacks of something that has a max stack count of 30.
         ///     This would spawn 3 stacks of 30 and 1 stack of 7.
         /// </summary>
-        public EntityUid SpawnMultiple(string entityPrototype, ulong amount, EntityCoordinates spawnPosition)
+        public EntityUid SpawnMultiple(string entityPrototype, int amount, EntityCoordinates spawnPosition)
         {
             var entity = EntityUid.Invalid;
             var proto = _prototypeManager.Index<EntityPrototype>(entityPrototype);
@@ -152,7 +152,7 @@ namespace Content.Server.Stack
             }
         }
 
-        private void UserSplit(EntityUid uid, EntityUid userUid, ulong amount,
+        private void UserSplit(EntityUid uid, EntityUid userUid, int amount,
             StackComponent? stack = null,
             TransformComponent? userTransform = null)
         {

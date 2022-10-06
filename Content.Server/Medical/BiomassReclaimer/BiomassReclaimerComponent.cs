@@ -36,7 +36,7 @@ namespace Content.Server.Medical.BiomassReclaimer
         /// This is calculated from the YieldPerUnitMass.
         /// </summary>
         [ViewVariables]
-        public uint CurrentExpectedYield = default;
+        public int CurrentExpectedYield = default;
 
         /// <summary>
         /// The reagent that will be spilled while processing a mob.

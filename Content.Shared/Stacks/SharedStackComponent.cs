@@ -17,7 +17,7 @@ namespace Content.Shared.Stacks
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("count")]
-        public ulong Count { get; set; } = 30;
+        public int Count { get; set; } = 30;
 
         /// <summary>
         ///     Max amount of things that can be in the stack.
@@ -25,7 +25,7 @@ namespace Content.Shared.Stacks
         /// </summary>
         [ViewVariables(VVAccess.ReadOnly)]
         [DataField("maxCountOverride")]
-        public ulong? MaxCountOverride  { get; set; }
+        public int? MaxCountOverride  { get; set; }
 
         /// <summary>
         ///     Set to true to not reduce the count when used.
@@ -38,10 +38,10 @@ namespace Content.Shared.Stacks
     [Serializable, NetSerializable]
     public sealed class StackComponentState : ComponentState
     {
-        public ulong Count { get; }
-        public ulong MaxCount { get; }
+        public int Count { get; }
+        public int MaxCount { get; }
 
-        public StackComponentState(ulong count, ulong maxCount)
+        public StackComponentState(int count, int maxCount)
         {
             Count = count;
             MaxCount = maxCount;

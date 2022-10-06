@@ -8,7 +8,7 @@ namespace Content.Server.Construction.Completions
     [DataDefinition]
     public sealed class SetStackCount : IGraphAction
     {
-        [DataField("amount")] public ulong Amount { get; } = 1;
+        [DataField("amount")] public int Amount { get; } = 1;
 
         public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {

@@ -36,6 +36,6 @@ namespace Content.Shared.Stacks
         ///     if null, simply has unlimited max count.
         /// </summary>
         [DataField("maxCount")]
-        public ulong? MaxCount { get; }
+        public int? MaxCount { get; }
     }
 }

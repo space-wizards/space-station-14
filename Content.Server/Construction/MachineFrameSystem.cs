@@ -105,7 +105,7 @@ public sealed class MachineFrameSystem : EntitySystem
                     return;
                 }
 
-                var splitStack = _stack.Split(args.Used, (ulong) needed,
+                var splitStack = _stack.Split(args.Used, needed,
                     Comp<TransformComponent>(uid).Coordinates, stack);
 
                 if (splitStack == null)

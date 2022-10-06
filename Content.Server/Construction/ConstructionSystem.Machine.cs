@@ -107,7 +107,7 @@ public sealed partial class ConstructionSystem
 
         foreach (var (stackType, amount) in machineBoard.MaterialRequirements)
         {
-            var stack = _stackSystem.Spawn((ulong) amount, stackType, Transform(component.Owner).Coordinates);
+            var stack = _stackSystem.Spawn(amount, stackType, Transform(component.Owner).Coordinates);
 
             if (!partContainer.Insert(stack))
                 throw new Exception($"Couldn't insert machine material of type {stackType} to machine with prototype {MetaData(component.Owner).EntityPrototype?.ID ?? "N/A"}");

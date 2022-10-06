@@ -35,7 +35,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                 if (EntityPrototypeHelpers.HasComponent<StackComponent>(entityId, system.PrototypeManager, system.ComponentFactory))
                 {
                     var spawned = system.EntityManager.SpawnEntity(entityId, position.Offset(getRandomVector()));
-                    system.StackSystem.SetCount(spawned, (ulong) count);
+                    system.StackSystem.SetCount(spawned, count);
                 }
                 else
                 {

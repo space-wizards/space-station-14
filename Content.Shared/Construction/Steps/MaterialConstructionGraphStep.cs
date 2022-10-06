@@ -14,7 +14,7 @@ namespace Content.Shared.Construction.Steps
         [DataField("material", required:true, customTypeSerializer:typeof(PrototypeIdSerializer<StackPrototype>))]
         public string MaterialPrototypeId { get; } = "Steel";
 
-        [DataField("amount")] public ulong Amount { get; } = 1;
+        [DataField("amount")] public int Amount { get; } = 1;
 
         public override void DoExamine(ExaminedEvent examinedEvent)
         {
