@@ -197,6 +197,11 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
     public const string MovementTarget = "MovementTarget";
 
     /// <summary>
+    /// Can the NPC click open entities such as doors.
+    /// </summary>
+    public const string NavInteract = "NavInteract";
+
+    /// <summary>
     /// Can the NPC pry open doors for steering.
     /// </summary>
     public const string NavPry = "NavPry";
