@@ -85,7 +85,7 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
     /// <param name="volume"></param>
     /// <param name="component"></param>
     /// <returns>If the specified volume will fit</returns>
-    public bool CanTakeVolume(EntityUid uid, long volume, MaterialStorageComponent? component = null)
+    public bool CanTakeVolume(EntityUid uid, int volume, MaterialStorageComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return false;
@@ -100,7 +100,7 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
     /// <param name="volume"></param>
     /// <param name="component"></param>
     /// <returns>If the amount can be changed</returns>
-    public bool CanChangeMaterialAmount(EntityUid uid, string materialId, long volume, MaterialStorageComponent? component = null)
+    public bool CanChangeMaterialAmount(EntityUid uid, string materialId, int volume, MaterialStorageComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return false;

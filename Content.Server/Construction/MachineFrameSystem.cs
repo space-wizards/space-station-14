@@ -93,7 +93,7 @@ public sealed class MachineFrameSystem : EntitySystem
                     return;
 
                 var needed = component.MaterialRequirements[type] - component.MaterialProgress[type];
-                var count = (int) stack.Count;
+                var count = stack.Count;
 
                 if (count < needed)
                 {
