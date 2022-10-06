@@ -1,9 +1,4 @@
 Entries:
-- author: themias
-  changes:
-  - {message: force-feeding works again, type: Fix}
-  id: 1903
-  time: '2022-07-09T03:57:18.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: The China Lake's projectiles now have smaller explosions., type: Tweak}
@@ -2929,3 +2924,12 @@ Entries:
   - {message: Ghosts are now visible in the post-round period., type: Add}
   id: 2402
   time: '2022-10-06T02:55:11.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: 'Interaction range is now based on nearest edge and not the centre of
+      entities, giving larger entities the same distance from its edge to interact
+      with as smaller entities. The interaction range has been dropped from 2m (centre
+      of each entity) to 1.5m (nearest edge of each entity) to compensate. In some
+      scenarios the range will go up and in some it will go down.', type: Tweak}
+  id: 2403
+  time: '2022-10-06T13:37:22.0000000+00:00'
