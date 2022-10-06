@@ -203,6 +203,17 @@ public sealed class StationRecordsSystem : EntitySystem
         return records.Records.GetRecordsOfType<T>();
     }
 
+    /// <summary>
+    ///     Adds a record to a station's record set.
+    /// </summary>
+    /// <param name="station">The station to add a record to.</param>
+    /// <param name="records">Station records component.</param>
+    /// <returns>
+    ///     A station record key, which can be used to add and get records.
+    /// </returns>
+    /// <exception cref="ArgumentException">
+    ///     Occurs when the entity given does not have a station records component.
+    /// </exception>
     public StationRecordKey AddRecord(EntityUid station, StationRecordsComponent? records)
     {
         if (!Resolve(station, ref records))
