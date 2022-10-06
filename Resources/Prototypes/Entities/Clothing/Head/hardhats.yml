@@ -35,14 +35,16 @@
       head:
       - state: on-equipped-HELMET
   - type: PowerCellSlot
-    cellSlot:
-      startingItem: PowerCellMedium
+    cellSlotId: cell_slot
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        statingItem: PowerCellMedium
   - type: Item
     heldPrefix: off
   - type: ContainerContainer
     containers:
       cell_slot: !type:ContainerSlot
-  - type: ItemSlots
 
 - type: entity
   parent: ClothingHeadHatHardhatBase

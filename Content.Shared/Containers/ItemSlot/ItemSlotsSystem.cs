@@ -125,6 +125,16 @@ namespace Content.Shared.Containers.ItemSlots
             else
                 Dirty(itemSlots);
         }
+
+        public bool TryGetSlotById(EntityUid uid, string slotId, [NotNullWhen(true)] out ItemSlot? itemSlot, ItemSlotsComponent? component = null)
+        {
+            itemSlot = null;
+
+            if (!Resolve(uid, ref component))
+                return false;
+
+            return component.Slots.TryGetValue(slotId, out itemSlot);
+        }
         #endregion
 
         #region Interactions

@@ -208,8 +208,7 @@
     quickEquip: true
   - type: IngestionBlocker
   - type: PowerCellSlot
-    cellSlot:
-      startingItem: PowerCellMedium
+    cellSlotId: cell_slot
   - type: TemperatureProtection
     coefficient: 0.01
   - type: Armor
@@ -222,6 +221,9 @@
         Radiation: 1
   - type: IdentityBlocker
   - type: ItemSlots
+    slots:
+      cell_slot:
+        statingItem: PowerCellMedium
   - type: ContainerContainer
     containers:
       cell_slot: !type:ContainerSlot {}

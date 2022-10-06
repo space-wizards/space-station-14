@@ -58,7 +58,10 @@ public abstract class SharedPowerCellSystem : EntitySystem
 
     private void OnCellSlotInit(EntityUid uid, PowerCellSlotComponent component, ComponentInit args)
     {
-        _itemSlotsSystem.AddItemSlot(uid, CellSlotContainer, component.CellSlot);
+        if (_itemSlotsSystem.TryGetSlotById(uid, component.CellSlotId, out var itemSlot))
+        {
+            component.CellSlot = itemSlot;
+        }
 
         if (string.IsNullOrWhiteSpace(component.CellSlot.Name) &&
             !string.IsNullOrWhiteSpace(component.SlotName))

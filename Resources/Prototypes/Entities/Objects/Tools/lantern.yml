@@ -28,9 +28,11 @@
         - type: LanternVisualizer
     - type: ToggleableLightVisuals
     - type: PowerCellSlot
-      cellSlot:
-        startingItem: PowerCellMedium
+      cellSlotId: cell_slot
     - type: ItemSlots
+      slots:
+        cell_slot:
+          statingItem: PowerCellMedium
     - type: ContainerContainer
       containers:
         cell_slot: !type:ContainerSlot {}

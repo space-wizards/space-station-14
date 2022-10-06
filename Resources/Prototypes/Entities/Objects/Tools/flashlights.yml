@@ -26,12 +26,14 @@
       - state: inhand-right-light
         shader: unshaded
   - type: PowerCellSlot
-    cellSlot:
-      startingItem: PowerCellMedium
+    cellSlotId: cell_slot
   - type: ContainerContainer
     containers:
       cell_slot: !type:ContainerSlot
   - type: ItemSlots
+    slots:
+      cell_slot:
+        statingItem: PowerCellMedium
   - type: Sprite
     sprite: Objects/Tools/flashlight.rsi
     netsync: false
@@ -64,9 +66,10 @@
   - type: Tag
     tags:
       - SecBeltEquip
-  - type: PowerCellSlot
-    cellSlot:
-      startingItem: PowerCellHigh
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        statingItem: PowerCellHigh
   - type: HandheldLight
     addPrefix: false
   - type: ToggleableLightVisuals

@@ -7,7 +7,10 @@
   - type: HandheldLight
     addPrefix: true
   - type: PowerCellSlot
+    cellSlotId: cell_slot
   - type: ItemSlots
+    slots:
+      cell_slot: !type:ItemSlot
   - type: ContainerContainer
     containers:
       cell_slot: !type:ContainerSlot
