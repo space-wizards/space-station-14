@@ -79,7 +79,7 @@ namespace Content.Shared.Stacks
         private bool TryMergeStacks(
             EntityUid donor,
             EntityUid recipient,
-            out long transfered,
+            out ulong transfered,
             SharedStackComponent? donorStack = null,
             SharedStackComponent? recipientStack = null)
         {
@@ -87,7 +87,7 @@ namespace Content.Shared.Stacks
             if (!Resolve(recipient, ref recipientStack, false) || !Resolve(donor, ref donorStack, false))
                 return false;
 
-            if (!recipientStack.StackTypeId.Equals(donorStack.StackTypeId))
+            if (recipientStack.StackTypeId == null || !recipientStack.StackTypeId.Equals(donorStack.StackTypeId))
                 return false;
 
             transfered = Math.Min(donorStack.Count, GetAvailableSpace(recipientStack));
@@ -131,7 +131,7 @@ namespace Content.Shared.Stacks
             HandsSystem.PickupOrDrop(user, item, handsComp: hands);
         }
 
-        public virtual void SetCount(EntityUid uid, long amount, SharedStackComponent? component = null)
+        public virtual void SetCount(EntityUid uid, ulong amount, SharedStackComponent? component = null)
         {
             if (!Resolve(uid, ref component))
                 return;
@@ -157,7 +157,7 @@ namespace Content.Shared.Stacks
         /// <summary>
         ///     Try to use an amount of items on this stack. Returns whether this succeeded.
         /// </summary>
-        public bool Use(EntityUid uid, long amount, SharedStackComponent? stack = null)
+        public bool Use(EntityUid uid, ulong amount, SharedStackComponent? stack = null)
         {
             if (!Resolve(uid, ref stack))
                 return false;
@@ -184,7 +184,7 @@ namespace Content.Shared.Stacks
         /// <param name="entityId"></param>
         /// <returns></returns>
         [PublicAPI]
-        public long GetMaxCount(string entityId)
+        public ulong GetMaxCount(string entityId)
         {
             var entProto = _prototype.Index<EntityPrototype>(entityId);
             entProto.TryGetComponent<SharedStackComponent>(out var stackProto);
@@ -197,7 +197,7 @@ namespace Content.Shared.Stacks
         /// <param name="uid"></param>
         /// <returns></returns>
         [PublicAPI]
-        public long GetMaxCount(EntityUid uid)
+        public ulong GetMaxCount(EntityUid uid)
         {
             return GetMaxCount(CompOrNull<SharedStackComponent>(uid));
         }
@@ -213,9 +213,11 @@ namespace Content.Shared.Stacks
         /// </remarks>
         /// <param name="component"></param>
         /// <returns></returns>
-        public long GetMaxCount(SharedStackComponent? component)
+        public ulong GetMaxCount(SharedStackComponent? component)
         {
-            return component == null ? 1 : component.MaxCountOverride ?? _prototype.Index<StackPrototype>(component.StackTypeId).MaxCount ?? long.MaxValue;
+            return component == null ? 1 : component.MaxCountOverride ?? (component.StackTypeId == null
+                ? 1
+                : _prototype.Index<StackPrototype>(component.StackTypeId).MaxCount ?? ulong.MaxValue);
         }
 
         /// <summary>
@@ -224,7 +226,7 @@ namespace Content.Shared.Stacks
         /// <param name="component"></param>
         /// <returns></returns>
         [PublicAPI]
-        public long GetAvailableSpace(SharedStackComponent component)
+        public ulong GetAvailableSpace(SharedStackComponent component)
         {
             return GetMaxCount(component) - component.Count;
         }
@@ -276,14 +278,14 @@ namespace Content.Shared.Stacks
         /// <summary>
         ///     The old stack count.
         /// </summary>
-        public long OldCount;
+        public ulong OldCount;
 
         /// <summary>
         ///     The new stack count.
         /// </summary>
-        public long NewCount;
+        public ulong NewCount;
 
-        public StackCountChangedEvent(long oldCount, long newCount)
+        public StackCountChangedEvent(ulong oldCount, ulong newCount)
         {
             OldCount = oldCount;
             NewCount = newCount;

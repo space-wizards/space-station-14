@@ -9,7 +9,7 @@ namespace Content.Shared.Stacks
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("stackType", required:true, customTypeSerializer:typeof(PrototypeIdSerializer<StackPrototype>))]
-        public string StackTypeId { get; private set; } = string.Empty;
+        public string? StackTypeId { get; private set; }
 
         /// <summary>
         ///     Current stack count.
@@ -17,7 +17,7 @@ namespace Content.Shared.Stacks
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("count")]
-        public long Count { get; set; } = 30;
+        public ulong Count { get; set; } = 30;
 
         /// <summary>
         ///     Max amount of things that can be in the stack.
@@ -25,7 +25,7 @@ namespace Content.Shared.Stacks
         /// </summary>
         [ViewVariables(VVAccess.ReadOnly)]
         [DataField("maxCountOverride")]
-        public long? MaxCountOverride  { get; set; }
+        public ulong? MaxCountOverride  { get; set; }
 
         /// <summary>
         ///     Set to true to not reduce the count when used.
@@ -38,10 +38,10 @@ namespace Content.Shared.Stacks
     [Serializable, NetSerializable]
     public sealed class StackComponentState : ComponentState
     {
-        public long Count { get; }
-        public long MaxCount { get; }
+        public ulong Count { get; }
+        public ulong MaxCount { get; }
 
-        public StackComponentState(long count, long maxCount)
+        public StackComponentState(ulong count, ulong maxCount)
         {
             Count = count;
             MaxCount = maxCount;

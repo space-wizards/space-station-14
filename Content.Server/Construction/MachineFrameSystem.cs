@@ -84,6 +84,8 @@ public sealed class MachineFrameSystem : EntitySystem
             if (TryComp<StackComponent?>(args.Used, out var stack))
             {
                 var type = stack.StackTypeId;
+                if (type == null)
+                    return;
                 if (!component.MaterialRequirements.ContainsKey(type))
                     return;
 
@@ -91,19 +93,19 @@ public sealed class MachineFrameSystem : EntitySystem
                     return;
 
                 var needed = component.MaterialRequirements[type] - component.MaterialProgress[type];
-                var count = stack.Count;
+                var count = (int) stack.Count;
 
                 if (count < needed)
                 {
                     if (!component.PartContainer.Insert(stack.Owner))
                         return;
 
-                    component.MaterialProgress[type] += (int) count;
+                    component.MaterialProgress[type] += count;
                     args.Handled = true;
                     return;
                 }
 
-                var splitStack = _stack.Split(args.Used, needed,
+                var splitStack = _stack.Split(args.Used, (ulong) needed,
                     Comp<TransformComponent>(uid).Coordinates, stack);
 
                 if (splitStack == null)
@@ -261,6 +263,8 @@ public sealed class MachineFrameSystem : EntitySystem
             {
                 var type = stack.StackTypeId;
                 // Check this is part of the requirements...
+                if (type == null)
+                    continue;
                 if (!component.MaterialRequirements.ContainsKey(type))
                     continue;
 

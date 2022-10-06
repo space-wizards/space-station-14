@@ -15,7 +15,7 @@ namespace Content.Server.Construction.Completions
         [DataField("prototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string Prototype { get; private set; } = string.Empty;
         [DataField("amount")]
-        public int Amount { get; private set; } = 1;
+        public ulong Amount { get; private set; } = 1;
 
         public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {
@@ -33,7 +33,7 @@ namespace Content.Server.Construction.Completions
             }
             else
             {
-                for (var i = 0; i < Amount; i++)
+                for (ulong i = 0; i < Amount; i++)
                 {
                     var item = entityManager.SpawnEntity(Prototype, coordinates);
                     entityManager.EntitySysManager.GetEntitySystem<SharedHandsSystem>().PickupOrDrop(userUid, item);

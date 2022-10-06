@@ -199,7 +199,7 @@ public sealed partial class StoreSystem : EntitySystem
         foreach (var value in sortedCashValues)
         {
             var cashId = proto.Cash[value];
-            var amountToSpawn = (int) Math.Floor((double) (amountRemaining / value));
+            var amountToSpawn = (ulong) MathF.Floor((float) (amountRemaining / value));
             var ent = _stack.SpawnMultiple(cashId, amountToSpawn, coordinates);
             _hands.PickupOrDrop(buyer, ent);
             amountRemaining -= value * amountToSpawn;
