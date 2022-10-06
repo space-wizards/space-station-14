@@ -1,6 +1,6 @@
 ﻿- type: entity
-  id: FaxMachine
   parent: BaseMachinePowered
+  id: FaxMachineBase
   name: long range fax machine
   description: Bluespace technologies on the application of bureaucracy.
   components:
@@ -58,20 +58,21 @@
     receiveFrequencyId: FaxCentcom
     transmitFrequencyId: FaxCentcom
 
+# Special
 - type: entity
+  parent: FaxMachineBase
   id: FaxMachineCentcom
-  parent: FaxMachine
   name: centcom long range fax machine
-  description: Bluespace technologies on the application of bureaucracy.
+  suffix: Centcom
   components:
   - type: FaxMachine
     notifyAdmins: true
 
 - type: entity
+  parent: FaxMachineBase
   id: FaxMachineSyndie
-  parent: FaxMachine
   name: syndicate long range fax machine
-  description: Bluespace technologies on the application of bureaucracy.
+  suffix: Syndicate
   components:
   - type: FaxMachine
     responsePings: false
