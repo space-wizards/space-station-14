@@ -1,29 +1,6 @@
 Entries:
 - author: themias
   changes:
-  - {message: The hot drinks machine now dispenses tea into teacups instead of glasses,
-    type: Tweak}
-  id: 1899
-  time: '2022-07-09T02:43:27.0000000+00:00'
-- author: LilJard
-  changes:
-  - {message: Added new sprite for fireaxe, type: Add}
-  id: 1900
-  time: '2022-07-09T03:03:21.0000000+00:00'
-- author: Myctai
-  changes:
-  - {message: machine pistol magazine (.35 auto high-velocity) now comes with corresponding
-      stronger cartridges instead of regular ones, type: Fix}
-  id: 1901
-  time: '2022-07-09T03:42:40.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Projectiles now have impact effects. Most bullets have sparkles and
-      disablers have a laser., type: Add}
-  id: 1902
-  time: '2022-07-09T03:46:11.0000000+00:00'
-- author: themias
-  changes:
   - {message: force-feeding works again, type: Fix}
   id: 1903
   time: '2022-07-09T03:57:18.0000000+00:00'
@@ -2886,7 +2863,7 @@ Entries:
   time: '2022-10-04T01:01:43.0000000+00:00'
 - author: DogZeroX
   changes:
-  - {message: 'Nuclear bombs are now less heavy thanks to Bluespace [REDACTED] Tech.',
+  - {message: 'Nuclear bombs are now less heavy thanks to Bluespace \[REDACTED] Tech.',
     type: Tweak}
   id: 2391
   time: '2022-10-04T01:05:03.0000000+00:00'
@@ -2930,3 +2907,25 @@ Entries:
   - {message: Shuttle impacts now have sounds, type: Add}
   id: 2398
   time: '2022-10-04T05:00:45.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: You can now suicide into biomass reclaimers., type: Add}
+  id: 2399
+  time: '2022-10-04T11:08:47.0000000+00:00'
+- author: Vordenburg
+  changes:
+  - {message: Added the Escape on the Emergency Shuttle objective., type: Add}
+  - {message: Removed the Stay Alive objective., type: Remove}
+  id: 2400
+  time: '2022-10-04T21:57:15.0000000+00:00'
+- author: YanehCheck
+  changes:
+  - {message: Fixed an error in which part of a toilet sprite was offset by a pixel
+      during a specific rotation, type: Fix}
+  id: 2401
+  time: '2022-10-06T02:53:41.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Ghosts are now visible in the post-round period., type: Add}
+  id: 2402
+  time: '2022-10-06T02:55:11.0000000+00:00'
