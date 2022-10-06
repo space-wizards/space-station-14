@@ -1,10 +1,4 @@
 Entries:
-- author: Myctai
-  changes:
-  - {message: machine pistol magazine (.35 auto high-velocity) now comes with corresponding
-      stronger cartridges instead of regular ones, type: Fix}
-  id: 1901
-  time: '2022-07-09T03:42:40.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Projectiles now have impact effects. Most bullets have sparkles and
@@ -2930,3 +2924,9 @@ Entries:
   - {message: Removed the Stay Alive objective., type: Remove}
   id: 2400
   time: '2022-10-04T21:57:15.0000000+00:00'
+- author: YanehCheck
+  changes:
+  - {message: Fixed an error in which part of a toilet sprite was offset by a pixel
+      during a specific rotation, type: Fix}
+  id: 2401
+  time: '2022-10-06T02:53:41.0000000+00:00'
