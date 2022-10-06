@@ -126,7 +126,6 @@ public sealed class StationRecordsSystem : EntitySystem
 
         var key = AddRecord(station, records);
         AddRecordEntry(key, record, records);
-        // entry.Entries.Add(typeof(GeneralStationRecord), record);
 
         if (idUid != null)
         {
