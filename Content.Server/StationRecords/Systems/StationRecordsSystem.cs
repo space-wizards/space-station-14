@@ -124,8 +124,8 @@ public sealed class StationRecordsSystem : EntitySystem
             DisplayPriority = jobPrototype.Weight
         };
 
-        var key = records.Records.AddRecord(station);
-        records.Records.AddRecordEntry(key, record);
+        var key = AddRecord(station, records);
+        AddRecordEntry(key, record, records);
         // entry.Entries.Add(typeof(GeneralStationRecord), record);
 
         if (idUid != null)
@@ -202,6 +202,34 @@ public sealed class StationRecordsSystem : EntitySystem
         }
 
         return records.Records.GetRecordsOfType<T>();
+    }
+
+    public StationRecordKey AddRecord(EntityUid station, StationRecordsComponent? records)
+    {
+        if (!Resolve(station, ref records))
+        {
+            throw new ArgumentException($"Could not retrieve a StationRecordsComponent from entity {station}");
+        }
+
+        return records.Records.AddRecord(station);
+    }
+
+    /// <summary>
+    ///     Adds a record entry to a station's record set.
+    /// </summary>
+    /// <param name="key">The key to add the record to.</param>
+    /// <param name="record">The record to add.</param>
+    /// <param name="records">Station records component.</param>
+    /// <typeparam name="T">The type of record to add.</typeparam>
+    public void AddRecordEntry<T>(StationRecordKey key, T record,
+        StationRecordsComponent? records = null)
+    {
+        if (!Resolve(key.OriginStation, ref records))
+        {
+            return;
+        }
+
+        records.Records.AddRecordEntry(key, record);
     }
 
     /// <summary>
