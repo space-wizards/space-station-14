@@ -90,7 +90,7 @@ namespace Content.Server.Cloning.Systems
 
         private void OnDeconstruct(EntityUid uid, CloningPodComponent component, MachineDeconstructedEvent args)
         {
-            _serverStackSystem.SpawnMultiple(_material.GetMaterialAmount(uid, "Biomass"), 100, "Biomass", Transform(uid).Coordinates);
+            _serverStackSystem.SpawnMultiple(component.MaterialCloningOuput, _material.GetMaterialAmount(uid, component.RequiredMaterial), Transform(uid).Coordinates);
         }
 
         internal void TransferMindToClone(Mind.Mind mind)
@@ -142,7 +142,7 @@ namespace Content.Server.Cloning.Systems
             if (!args.IsInDetailsRange || !_powerReceiverSystem.IsPowered(uid))
                 return;
 
-            args.PushMarkup(Loc.GetString("cloning-pod-biomass", ("number", _material.GetMaterialAmount(uid, "Biomass"))));
+            args.PushMarkup(Loc.GetString("cloning-pod-biomass", ("number", _material.GetMaterialAmount(uid, component.RequiredMaterial))));
         }
 
         public bool TryCloning(EntityUid uid, EntityUid bodyToClone, Mind.Mind mind, CloningPodComponent? clonePod)
@@ -186,7 +186,7 @@ namespace Content.Server.Cloning.Systems
                 cloningCost = (int) Math.Round(cloningCost * EasyModeCloningCost);
 
             // biomass checks
-            var biomassAmount = _material.GetMaterialAmount(uid, "Biomass");
+            var biomassAmount = _material.GetMaterialAmount(uid, clonePod.RequiredMaterial);
 
             if (biomassAmount < cloningCost)
             {
@@ -195,7 +195,7 @@ namespace Content.Server.Cloning.Systems
                 return false;
             }
 
-            _material.TryChangeMaterialAmount(uid, "Biomass", -cloningCost);
+            _material.TryChangeMaterialAmount(uid, clonePod.RequiredMaterial, -cloningCost);
             clonePod.UsedBiomass = cloningCost;
             // end of biomass checks
 
@@ -312,7 +312,7 @@ namespace Content.Server.Cloning.Systems
             }
             _spillableSystem.SpillAt(uid, bloodSolution, "PuddleBlood");
 
-            var biomassStack = Spawn("MaterialBiomass", transform.Coordinates);
+            var biomassStack = Spawn(clonePod.MaterialCloningOuput, transform.Coordinates);
             _stackSystem.SetCount(biomassStack, _robustRandom.Next(1, (int) (clonePod.UsedBiomass / 2.5)));
 
             clonePod.UsedBiomass = 0;

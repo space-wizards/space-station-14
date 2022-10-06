@@ -17,14 +17,15 @@ namespace Content.Shared.Stacks
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("count")]
-        public int Count { get; set; } = 30;
+        public long Count { get; set; } = 30;
 
         /// <summary>
         ///     Max amount of things that can be in the stack.
+        ///     Overrides the max defined on the stack prototype.
         /// </summary>
         [ViewVariables(VVAccess.ReadOnly)]
-        [DataField("max")]
-        public int MaxCount  { get; set; } = 30;
+        [DataField("maxCountOverride")]
+        public long? MaxCountOverride  { get; set; }
 
         /// <summary>
         ///     Set to true to not reduce the count when used.
@@ -32,18 +33,15 @@ namespace Content.Shared.Stacks
         [DataField("unlimited")]
         [ViewVariables(VVAccess.ReadOnly)]
         public bool Unlimited { get; set; }
-
-        [ViewVariables]
-        public int AvailableSpace => MaxCount - Count;
     }
 
     [Serializable, NetSerializable]
     public sealed class StackComponentState : ComponentState
     {
-        public int Count { get; }
-        public int MaxCount { get; }
+        public long Count { get; }
+        public long MaxCount { get; }
 
-        public StackComponentState(int count, int maxCount)
+        public StackComponentState(long count, long maxCount)
         {
             Count = count;
             MaxCount = maxCount;

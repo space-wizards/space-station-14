@@ -26,7 +26,7 @@ namespace Content.Server.Stack
             SubscribeLocalEvent<StackComponent, GetVerbsEvent<AlternativeVerb>>(OnStackAlternativeInteract);
         }
 
-        public override void SetCount(EntityUid uid, int amount, SharedStackComponent? component = null)
+        public override void SetCount(EntityUid uid, long amount, SharedStackComponent? component = null)
         {
             if (!Resolve(uid, ref component))
                 return;
@@ -41,7 +41,7 @@ namespace Content.Server.Stack
         /// <summary>
         ///     Try to split this stack into two. Returns a non-null <see cref="Robust.Shared.GameObjects.EntityUid"/> if successful.
         /// </summary>
-        public EntityUid? Split(EntityUid uid, int amount, EntityCoordinates spawnPosition, SharedStackComponent? stack = null)
+        public EntityUid? Split(EntityUid uid, long amount, EntityCoordinates spawnPosition, SharedStackComponent? stack = null)
         {
             if (!Resolve(uid, ref stack))
                 return null;
@@ -72,7 +72,7 @@ namespace Content.Server.Stack
         /// <summary>
         ///     Spawns a stack of a certain stack type. See <see cref="StackPrototype"/>.
         /// </summary>
-        public EntityUid Spawn(int amount, StackPrototype prototype, EntityCoordinates spawnPosition)
+        public EntityUid Spawn(long amount, StackPrototype prototype, EntityCoordinates spawnPosition)
         {
             // Set the output result parameter to the new stack entity...
             var entity = Spawn(prototype.Spawn, spawnPosition);
@@ -87,38 +87,31 @@ namespace Content.Server.Stack
         ///     Say you want to spawn 97 stacks of something that has a max stack count of 30.
         ///     This would spawn 3 stacks of 30 and 1 stack of 7.
         /// </summary>
-        public void SpawnMultiple(int amount, int maxCountPerStack, StackPrototype prototype, EntityCoordinates spawnPosition)
+        public EntityUid SpawnMultiple(string entityPrototype, long amount, EntityCoordinates spawnPosition)
         {
+            var entity = EntityUid.Invalid;
+            var proto = _prototypeManager.Index<EntityPrototype>(entityPrototype);
+            proto.TryGetComponent<StackComponent>(out var stack);
+            var maxCountPerStack = GetMaxCount(stack);
             while (amount > 0)
             {
                 if (amount > maxCountPerStack)
                 {
-                    var entity = Spawn("MaterialBiomass", spawnPosition);
-                    var stack = Comp<StackComponent>(entity);
+                    entity = Spawn(entityPrototype, spawnPosition);
 
-                    SetCount(entity, maxCountPerStack, stack);
+                    SetCount(entity, maxCountPerStack);
                     amount -= maxCountPerStack;
                 }
                 else
                 {
-                    var entity = Spawn("MaterialBiomass", spawnPosition);
-                    var stack = Comp<StackComponent>(entity);
+                    //just doing this so that the entity returned is always a full stack.
+                    var e = Spawn(entityPrototype, spawnPosition);
 
-                    SetCount(entity, amount, stack);
+                    SetCount(e, amount);
                     amount = 0;
                 }
             }
-        }
-
-        public void SpawnMultiple(int amount, int maxCountPerStack, string prototype, EntityCoordinates spawnPosition)
-        {
-            if (!_prototypeManager.TryIndex<StackPrototype>(prototype, out var stackType))
-            {
-                Logger.Error("Failed to index stack prototype " + prototype);
-                return;
-            }
-
-            SpawnMultiple(amount, maxCountPerStack, stackType, spawnPosition);
+            return entity;
         }
 
         private void OnStackAlternativeInteract(EntityUid uid, StackComponent stack, GetVerbsEvent<AlternativeVerb> args)
@@ -156,7 +149,7 @@ namespace Content.Server.Stack
             }
         }
 
-        private void UserSplit(EntityUid uid, EntityUid userUid, int amount,
+        private void UserSplit(EntityUid uid, EntityUid userUid, long amount,
             StackComponent? stack = null,
             TransformComponent? userTransform = null)
         {

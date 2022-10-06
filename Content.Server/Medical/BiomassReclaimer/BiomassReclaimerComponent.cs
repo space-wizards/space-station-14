@@ -1,6 +1,7 @@
 using Content.Shared.Storage;
 using System.Threading;
 using Content.Shared.Construction.Prototypes;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Medical.BiomassReclaimer
@@ -53,6 +54,12 @@ namespace Content.Server.Medical.BiomassReclaimer
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public float YieldPerUnitMass = default;
+
+        /// <summary>
+        /// The entity that is output by the reclaimer
+        /// </summary>
+        [DataField("outputEntityId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)), ViewVariables(VVAccess.ReadWrite)]
+        public string OutputEntityId = "MaterialBiomass";
 
         /// <summary>
         /// The base yield per mass unit when no components are upgraded.

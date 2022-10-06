@@ -77,7 +77,8 @@ namespace Content.Server.Medical.BiomassReclaimer
                     continue;
                 }
 
-                _stackSystem.SpawnMultiple((int) reclaimer.CurrentExpectedYield, 100, "Biomass", Transform(reclaimer.Owner).Coordinates);
+                //TODO: don't leave this hardcoded
+                _stackSystem.SpawnMultiple(reclaimer.OutputEntityId, (int) reclaimer.CurrentExpectedYield, Transform(reclaimer.Owner).Coordinates);
 
                 reclaimer.BloodReagent = null;
                 reclaimer.SpawnedEntities.Clear();
@@ -102,7 +103,7 @@ namespace Content.Server.Medical.BiomassReclaimer
         {
             if (args.Handled)
                 return;
-            
+
             if (HasComp<ActiveBiomassReclaimerComponent>(uid))
                 return;
 

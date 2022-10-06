@@ -11,13 +11,13 @@ namespace Content.Shared.Materials;
 public sealed class MaterialStorageComponent : Component
 {
     [ViewVariables]
-    public Dictionary<string, int> Storage { get; set; } = new();
+    public Dictionary<string, long> Storage { get; set; } = new();
 
     /// <summary>
     ///     How much material the storage can store in total.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("storageLimit")]
-    public int? StorageLimit;
+    public long? StorageLimit;
 
     /// <summary>
     /// Whitelist for specifying the kind of items that can be insert into this entity.
@@ -76,11 +76,11 @@ public sealed class GetMaterialWhitelistEvent : EntityEventArgs
 [Serializable, NetSerializable]
 public sealed class MaterialStorageComponentState : ComponentState
 {
-    public Dictionary<string, int> Storage;
+    public Dictionary<string, long> Storage;
 
     public List<string>? MaterialWhitelist;
 
-    public MaterialStorageComponentState(Dictionary<string, int> storage, List<string>? materialWhitelist)
+    public MaterialStorageComponentState(Dictionary<string, long> storage, List<string>? materialWhitelist)
     {
         Storage = storage;
         MaterialWhitelist = materialWhitelist;

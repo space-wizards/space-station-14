@@ -98,7 +98,7 @@ public sealed class MachineFrameSystem : EntitySystem
                     if (!component.PartContainer.Insert(stack.Owner))
                         return;
 
-                    component.MaterialProgress[type] += count;
+                    component.MaterialProgress[type] += (int) count;
                     args.Handled = true;
                     return;
                 }
