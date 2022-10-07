@@ -24,11 +24,13 @@ namespace Content.Server.Prayer
         public override void Initialize()
         {
             base.Initialize();
+
             SubscribeLocalEvent<PrayableComponent, GetVerbsEvent<ActivationVerb>>(AddPrayVerb);
         }
 
         private void AddPrayVerb(EntityUid uid, PrayableComponent comp, GetVerbsEvent<ActivationVerb> args)
         {
+            // if it doesn't have an actor and we can't reach it then don't add the verb
             if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
                 return;
 
@@ -40,13 +42,14 @@ namespace Content.Server.Prayer
             prayerVerb.IconTexture = "/Textures/Interface/pray.svg.png";
             prayerVerb.Act = () =>
             {
+                if (comp.BibleUserOnly && !EntityManager.TryGetComponent<BibleUserComponent>(args.User, out var bibleUser))
+                {
+                    _popupSystem.PopupEntity(Loc.GetString("prayer-popup-notify-locked"), uid, Filter.Empty().AddPlayer(actor.PlayerSession), PopupType.Large);
+                    return;
+                }
+
                 _quickDialog.OpenDialog(actor.PlayerSession, "Pray", "Message", (string message) =>
                 {
-                    if (comp.BibleUserOnly && !EntityManager.TryGetComponent<BibleUserComponent>(args.User, out var bibleUser))
-                    {
-                        _popupSystem.PopupEntity(Loc.GetString("prayer-popup-notify-locked"), uid, Filter.Empty().AddPlayer(actor.PlayerSession), PopupType.Large);
-                        return;
-                    }
                     Pray(actor.PlayerSession, message);
                 });
             };
@@ -64,6 +67,7 @@ namespace Content.Server.Prayer
         {
             if (target.AttachedEntity == null)
                 return;
+
             _popupSystem.PopupEntity(popupMessage, target.AttachedEntity.Value, Filter.Empty().AddPlayer(target), PopupType.Large);
             _chatManager.ChatMessageToOne(ChatChannel.Local, messageString, popupMessage + " \"{0}\"", EntityUid.Invalid, false, target.ConnectedClient);
         }
