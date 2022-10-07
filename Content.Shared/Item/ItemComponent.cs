@@ -18,6 +18,7 @@ public sealed class ItemComponent : Component
     [Access(typeof(SharedItemSystem), Other = AccessPermissions.ReadExecute)]
     public int Size = 5;
 
+    [Access(typeof(SharedItemSystem))]
     [DataField("inhandVisuals")]
     public Dictionary<HandLocation, List<SharedSpriteComponent.PrototypeLayerData>> InhandVisuals = new();
 
@@ -29,9 +30,10 @@ public sealed class ItemComponent : Component
     /// <summary>
     ///     Rsi of the sprite shown on the player when this item is in their hands. Used to generate a default entry for <see cref="InhandVisuals"/>
     /// </summary>
+    [Access(typeof(SharedItemSystem))]
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("sprite")]
-    public readonly string? RsiPath;
+    public string? RsiPath;
 }
 
 [Serializable, NetSerializable]

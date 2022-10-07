@@ -5,7 +5,7 @@ using Content.Server.Power.Components;
 using Content.Server.Power.Events;
 using Content.Server.Speech.EntitySystems;
 using Content.Server.Stunnable.Components;
-using Content.Server.Weapon.Melee;
+using Content.Server.Weapons.Melee.Events;
 using Content.Shared.Audio;
 using Content.Shared.Examine;
 using Content.Shared.Interaction.Events;
@@ -33,10 +33,10 @@ namespace Content.Server.Stunnable.Systems
             SubscribeLocalEvent<StunbatonComponent, UseInHandEvent>(OnUseInHand);
             SubscribeLocalEvent<StunbatonComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<StunbatonComponent, StaminaDamageOnHitAttemptEvent>(OnStaminaHitAttempt);
-            SubscribeLocalEvent<StunbatonComponent, MeleeHitEvent>(OnMeleeHit);
+            SubscribeLocalEvent<StunbatonComponent, ItemMeleeDamageEvent>(OnMeleeHit);
         }
 
-        private void OnMeleeHit(EntityUid uid, StunbatonComponent component, MeleeHitEvent args)
+        private void OnMeleeHit(EntityUid uid, StunbatonComponent component, ItemMeleeDamageEvent args)
         {
             if (!component.Activated) return;
 

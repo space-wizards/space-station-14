@@ -1,9 +1,9 @@
+using Content.Server.Humanoid;
 using Content.Server.Speech.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
-using Content.Shared.CharacterAppearance;
-using Content.Shared.CharacterAppearance.Components;
+using Content.Shared.Humanoid;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -68,7 +68,7 @@ public sealed class VocalSystem : EntitySystem
             return false;
 
         var sex = Sex.Male; //the default is male because requiring humanoid appearance for this is dogshit
-        if (TryComp(uid, out HumanoidAppearanceComponent? humanoid))
+        if (TryComp(uid, out HumanoidComponent? humanoid))
             sex = humanoid.Sex;
 
         if (_random.Prob(component.WilhelmProbability))

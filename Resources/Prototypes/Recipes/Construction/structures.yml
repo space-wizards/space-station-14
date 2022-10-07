@@ -17,6 +17,24 @@
     - !type:TileNotBlocked
 
 - type: construction
+  name: reinforced girder
+  id: ReinforcedGirder
+  graph: Girder
+  startNode: start
+  targetNode: reinforcedGirder
+  category: construction-category-structures
+  description: A large structural assembly made out of metal and plasteel.
+  icon:
+    sprite: /Textures/Structures/Walls/solid.rsi
+    state: reinforced_wall_girder
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
   name: wall
   id: Wall
   graph: Girder

@@ -13,11 +13,11 @@ public sealed class GunSpreadOverlay : Overlay
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
     private IEntityManager _entManager;
-    private IEyeManager _eye;
-    private IGameTiming _timing;
-    private IInputManager _input;
-    private IPlayerManager _player;
-    private GunSystem _guns;
+    private readonly IEyeManager _eye;
+    private readonly IGameTiming _timing;
+    private readonly IInputManager _input;
+    private readonly IPlayerManager _player;
+    private readonly GunSystem _guns;
 
     public GunSpreadOverlay(IEntityManager entManager, IEyeManager eyeManager, IGameTiming timing, IInputManager input, IPlayerManager player, GunSystem system)
     {

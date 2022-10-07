@@ -2,13 +2,14 @@ using System;
 using System.Linq;
 using Content.Client.Chat;
 using Content.Client.Chat.Managers;
-using Content.Client.EscapeMenu.UI;
+using Content.Client.Options.UI;
 using Content.Client.GameTicking.Managers;
 using Content.Client.LateJoin;
 using Content.Client.Lobby.UI;
 using Content.Client.Preferences;
 using Content.Client.Preferences.UI;
 using Content.Client.Resources;
+using Content.Client.UserInterface.Systems.EscapeMenu;
 using Content.Client.Voting;
 using Content.Shared.GameTicking;
 using Robust.Client;
@@ -50,7 +51,7 @@ namespace Content.Client.Lobby
 
         private ClientGameTicker _gameTicker = default!;
 
-        public override void Startup()
+        protected override void Startup()
         {
             _gameTicker = EntitySystem.Get<ClientGameTicker>();
             _characterSetup = new CharacterSetupGui(_entityManager, _resourceCache, _preferencesManager,
@@ -106,7 +107,7 @@ namespace Content.Client.Lobby
             };
 
             _lobby.LeaveButton.OnPressed += _ => _consoleHost.ExecuteCommand("disconnect");
-            _lobby.OptionsButton.OnPressed += _ => new OptionsMenu().Open();
+            _lobby.OptionsButton.OnPressed += OnOptionsPressed;
 
 
             _gameTicker.InfoBlobUpdated += UpdateLobbyUi;
@@ -114,7 +115,12 @@ namespace Content.Client.Lobby
             _gameTicker.LobbyLateJoinStatusUpdated += LobbyLateJoinStatusUpdated;
         }
 
-        public override void Shutdown()
+        private void OnOptionsPressed(BaseButton.ButtonEventArgs obj)
+        {
+            IoCManager.Resolve<IUserInterfaceManager>().GetUIController<OptionsUIController>().ToggleWindow();
+        }
+
+        protected override void Shutdown()
         {
             _gameTicker.InfoBlobUpdated -= UpdateLobbyUi;
             _gameTicker.LobbyStatusUpdated -= LobbyStatusUpdated;

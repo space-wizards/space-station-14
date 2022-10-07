@@ -19,7 +19,7 @@
         - shape:
             !type:PhysShapeCircle
             radius: 0.45
-          mass: 50
+          density: 80
           mask:
             - MachineMask
     - type: UserInterface

@@ -15,6 +15,7 @@ using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
@@ -80,7 +81,7 @@ namespace Content.Server.Recycling
             _ambience.SetAmbience(component.Owner, false);
         }
 
-        private void OnCollide(EntityUid uid, RecyclerComponent component, StartCollideEvent args)
+        private void OnCollide(EntityUid uid, RecyclerComponent component, ref StartCollideEvent args)
         {
             if (component.Enabled && args.OurFixture.ID != "brrt") return;
 
@@ -91,8 +92,8 @@ namespace Content.Server.Recycling
         {
             RecyclableComponent? recyclable = null;
 
-            // Can only recycle things that are recyclable... And also check the safety of the thing to recycle.
-            if (!_tags.HasTag(entity, "Recyclable") &&
+            // Can only recycle things that are tagged trash or recyclable... And also check the safety of the thing to recycle.
+            if (!_tags.HasAnyTag(entity, "Trash", "Recyclable") &&
                 (!TryComp(entity, out recyclable) || !recyclable.Safe && component.Safe))
             {
                 return;
