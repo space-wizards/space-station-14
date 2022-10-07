@@ -2,9 +2,11 @@
 using Content.Server.Administration;
 using Content.Server.Body.Components;
 using Content.Server.Cargo.Components;
-using Content.Shared.Materials;
+using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Stack;
 using Content.Shared.Administration;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Materials;
 using Content.Shared.MobState.Components;
 using Robust.Shared.Console;
 using Robust.Shared.Containers;
@@ -21,6 +23,7 @@ public sealed class PricingSystem : EntitySystem
 {
     [Dependency] private readonly IConsoleHost _consoleHost = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -28,6 +31,7 @@ public sealed class PricingSystem : EntitySystem
         SubscribeLocalEvent<StaticPriceComponent, PriceCalculationEvent>(CalculateStaticPrice);
         SubscribeLocalEvent<StackPriceComponent, PriceCalculationEvent>(CalculateStackPrice);
         SubscribeLocalEvent<MobPriceComponent, PriceCalculationEvent>(CalculateMobPrice);
+        SubscribeLocalEvent<SolutionPriceComponent, PriceCalculationEvent>(CalculateSolutionPrice);
 
         _consoleHost.RegisterCommand("appraisegrid",
             "Calculates the total value of the given grids.",
@@ -105,6 +109,26 @@ public sealed class PricingSystem : EntitySystem
         }
 
         args.Price += stack.Count * component.Price;
+    }
+
+    private void CalculateSolutionPrice(EntityUid uid, SolutionPriceComponent component, ref PriceCalculationEvent args)
+    {
+        SolutionContainerManagerComponent? solutionsManager = null;
+        if (!Resolve(uid, ref solutionsManager)
+            || !solutionsManager.Solutions.TryGetValue(component.Solution, out var solution)
+            || solution.Contents.Count == 0)
+            return;
+
+        var price = 0f;
+
+        foreach(var reagent in solution.Contents)
+        {
+            if (!_prototypeManager.TryIndex<ReagentPrototype>(reagent.ReagentId, out var reagentProto))
+                continue;
+            price += (float) reagent.Quantity * reagentProto.PricePerUnit;
+        }
+
+        args.Price += price;
     }
 
     private void CalculateStaticPrice(EntityUid uid, StaticPriceComponent component, ref PriceCalculationEvent args)
