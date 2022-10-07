@@ -963,3 +963,12 @@
   components:
   - type: Sprite
     state: waystationmap
+
+- type: entity
+  parent: PosterBase
+  id: PosterMapOrigin
+  name: "origin map"
+  description: "A map of Origin Station."
+  components:
+  - type: Sprite
+    state: originmap
