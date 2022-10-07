@@ -4,6 +4,7 @@ using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Fluids.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Directions;
+using Content.Shared.Doors.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Physics;
 using JetBrains.Annotations;
@@ -35,10 +36,10 @@ public sealed class FluidSpreaderSystem : EntitySystem
         FluidSpreaderComponent? spreaderComponent = null;
         if (puddleSolution == null &&
             !_solutionsSystem.TryGetSolution(puddle.Owner, puddle.SolutionName, out puddleSolution)
-            || !Resolve(puddle.Owner, ref spreaderComponent, ref transformComponent, false))
+            || !Resolve(puddle.Owner, ref transformComponent, false))
             return;
 
-        
+
         var fluidSpreadComponent = new FluidSpreaderComponent
         {
             OverflownSolution = puddleSolution,
@@ -220,7 +221,8 @@ public sealed class FluidSpreaderSystem : EntitySystem
 
             // This is an invalid location
             if (Resolve(entity, ref physics, false)
-                && (physics.CollisionLayer & (int) CollisionGroup.Impassable) != 0)
+                && ((physics.CollisionLayer & (int) CollisionGroup.Impassable) != 0
+                    || TryComp<DoorComponent>(entity, out var door) && door.State == DoorState.Closed))
             {
                 uid = null;
                 return false;
