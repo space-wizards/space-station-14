@@ -19,7 +19,7 @@
       groups:
         Burn: 10
   - type: Prayable
-    bibleOnly: true
+    bibleUserOnly: true
   - type: Summonable
     specialItem: SpawnPointGhostRemilia
   - type: ItemCooldown

@@ -24,8 +24,6 @@ namespace Content.Server.Prayer
         public override void Initialize()
         {
             base.Initialize();
-
-            // error is here
             SubscribeLocalEvent<PrayableComponent, GetVerbsEvent<ActivationVerb>>(AddPrayVerb);
         }
 
@@ -33,6 +31,7 @@ namespace Content.Server.Prayer
         {
             if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
                 return;
+
             if (!args.CanAccess)
                 return;
 
@@ -58,15 +57,13 @@ namespace Content.Server.Prayer
         /// <summary>
         /// Subtly messages a player by giving them a popup and a chat message.
         /// </summary>
-        /// <param name="target"></param>
-        /// <param name="messageString"></param>
-        /// <param name="popupMessage"></param>
+        /// <param name="target">The IPlayerSession that you want to send the message to</param>
+        /// <param name="messageString">The main message sent to the player via the chatbox</param>
+        /// <param name="popupMessage">The popup to notify the player, also prepended to the messageString</param>
         public void SendSubtleMessage(IPlayerSession target, string messageString, string popupMessage)
         {
             if (target.AttachedEntity == null)
                 return;
-            if (popupMessage == String.Empty)
-                popupMessage = Loc.GetString("prayer-popup-subtle-default");
             _popupSystem.PopupEntity(popupMessage, target.AttachedEntity.Value, Filter.Empty().AddPlayer(target), PopupType.Large);
             _chatManager.ChatMessageToOne(ChatChannel.Local, messageString, popupMessage + " \"{0}\"", EntityUid.Invalid, false, target.ConnectedClient);
         }
@@ -74,8 +71,12 @@ namespace Content.Server.Prayer
         /// <summary>
         /// Sends a message to the admin channel with a message and username
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="message"></param>
+        /// <param name="sender">The IPlayerSession who sent the original message</param>
+        /// <param name="message">Message to be sent to the admin chat</param>
+        /// <remarks>
+        /// You may be wondering, "Why the admin chat, specifically? Nobody even reads it!"
+        /// Exactly.
+        ///  </remarks>
         public void Pray(IPlayerSession sender, string message)
         {
             if (sender.AttachedEntity == null)

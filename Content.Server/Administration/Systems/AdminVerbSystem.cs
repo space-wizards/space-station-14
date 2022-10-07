@@ -82,7 +82,7 @@ namespace Content.Server.Administration.Systems
                     verb.Impact = LogImpact.Low;
                     args.Verbs.Add(verb);
 
-                    // Subltle Messages
+                    // Subtle Messages
                     Verb prayerVerb = new();
                     prayerVerb.Text = Loc.GetString("prayer-verbs-subtle-message");
                     prayerVerb.Category = VerbCategory.Admin;
@@ -91,7 +91,7 @@ namespace Content.Server.Administration.Systems
                     {
                         _quickDialog.OpenDialog(player, "Subtle Message", "Message", "Popup Message", (string message, string popupMessage) =>
                         {
-                            _prayerSystem.SendSubtleMessage(targetActor.PlayerSession, message, popupMessage == "" ? "You hear a voice in your head..." : popupMessage);
+                            _prayerSystem.SendSubtleMessage(targetActor.PlayerSession, message, popupMessage == "" ? Loc.GetString("prayer-popup-subtle-default") : popupMessage);
                         });
                     };
                     prayerVerb.Impact = LogImpact.Low;

@@ -9,7 +9,7 @@
         /// <summary>
         /// If bible users are only allowed to use this prayable entity
         /// </summary>
-        [DataField("bibleOnly")]
+        [DataField("bibleUserOnly")]
         [ViewVariables(VVAccess.ReadWrite)]
         public bool BibleUserOnly;
     }
