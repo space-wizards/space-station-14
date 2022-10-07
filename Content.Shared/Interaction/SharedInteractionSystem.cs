@@ -451,7 +451,11 @@ namespace Content.Shared.Interaction
             // that means we wouldn't be able to easily check overlap interactions.
             if (range > 0f &&
                 TryComp<FixturesComponent>(origin, out var fixtureA) &&
+                // These fixture counts are stuff that has the component but no fixtures for <reasons> (e.g. buttons).
+                // At least until they get removed.
+                fixtureA.FixtureCount > 0 &&
                 TryComp<FixturesComponent>(other, out var fixtureB) &&
+                fixtureB.FixtureCount > 0 &&
                 TryComp<TransformComponent>(origin, out var xformA) &&
                 TryComp<TransformComponent>(other, out var xformB))
             {
