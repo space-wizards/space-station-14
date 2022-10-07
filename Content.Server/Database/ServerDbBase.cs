@@ -742,25 +742,13 @@ namespace Content.Server.Database
 
             if (filter.AnyPlayers != null)
             {
-                var players = await db.AdminLogPlayer
-                    .Where(player => filter.AnyPlayers.Contains(player.PlayerUserId))
-                    .ToListAsync();
-
-                if (players.Count > 0)
-                {
-                    query = from log in query
-                        join player in db.AdminLogPlayer on log.Id equals player.LogId
-                        where filter.AnyPlayers.Contains(player.Player.UserId)
-                        select log;
-                }
+                query = query.Where(log => log.Players.Any(p => filter.AnyPlayers.Contains(p.PlayerUserId)));
             }
 
             if (filter.AllPlayers != null)
             {
-                // TODO ADMIN LOGGING
+                query = query.Where(log => log.Players.All(p => filter.AllPlayers.Contains(p.PlayerUserId)));
             }
-
-            query = query.Distinct();
 
             if (filter.LastLogId != null)
             {
@@ -781,9 +769,14 @@ namespace Content.Server.Database
                     $"Unknown {nameof(DateOrder)} value {filter.DateOrder}")
             };
 
+            const int hardLogLimit = 500_000;
             if (filter.Limit != null)
             {
-                query = query.Take(filter.Limit.Value);
+                query = query.Take(Math.Min(filter.Limit.Value, hardLogLimit));
+            }
+            else
+            {
+                query = query.Take(hardLogLimit);
             }
 
             return query;

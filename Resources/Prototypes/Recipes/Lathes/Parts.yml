@@ -1,3 +1,4 @@
+#Rating 1
 - type: latheRecipe
   id: CapacitorStockPart
   icon: Objects/Misc/stock_parts.rsi/capacitor.png
@@ -44,3 +45,56 @@
     Steel: 50
     Glass: 50
     Plastic: 50
+
+#Rating 2
+- type: latheRecipe
+  id: AdvancedCapacitorStockPart
+  icon: Objects/Misc/stock_parts.rsi/adv_capacitor.png
+  result: AdvancedCapacitorStockPart
+  completetime: 3
+  materials:
+    Steel: 150
+    Plastic: 100
+    Gold: 50
+
+- type: latheRecipe
+  id: AdvancedMatterBinStockPart
+  icon: Objects/Misc/stock_parts.rsi/advanced_matter_bin.png
+  result: AdvancedMatterBinStockPart
+  completetime: 3
+  materials:
+    Steel: 150
+    Plastic: 150
+    Plasma: 50
+
+- type: latheRecipe
+  id: HighPowerMicroLaserStockPart
+  icon: Objects/Misc/stock_parts.rsi/high_micro_laser.png
+  result: HighPowerMicroLaserStockPart
+  completetime: 3
+  materials:
+    Steel: 100
+    Glass: 150
+    Plastic: 150
+    Gold: 50
+
+- type: latheRecipe
+  id: NanoManipulatorStockPart
+  icon: Objects/Misc/stock_parts.rsi/nano_mani.png
+  result: NanoManipulatorStockPart
+  completetime: 3
+  materials:
+    Steel: 150
+    Plastic: 200
+    Plasma: 50
+
+- type: latheRecipe
+  id: AdvancedScanningModuleStockPart
+  icon: Objects/Misc/stock_parts.rsi/adv_scan_module_static.png
+  result: AdvancedScanningModuleStockPart
+  completetime: 3
+  materials:
+    Steel: 100
+    Glass: 150
+    Plastic: 150
+    Plasma: 50

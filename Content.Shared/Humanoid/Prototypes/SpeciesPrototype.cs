@@ -45,6 +45,19 @@ public sealed class SpeciesPrototype : IPrototype
     public string SpriteSet { get; } = default!;
 
     /// <summary>
+    ///     Default skin tone for this species. This applies for non-human skin tones.
+    /// </summary>
+    [DataField("defaultSkinTone")]
+    public Color DefaultSkinTone { get; } = Color.White;
+
+    /// <summary>
+    ///     Default human skin tone for this species. This applies for human skin tones.
+    ///     See <see cref="SkinColor.HumanSkinTone"/> for the valid range of skin tones.
+    /// </summary>
+    [DataField("defaultHumanSkinTone")]
+    public int DefaultHumanSkinTone { get; } = 20;
+
+    /// <summary>
     ///     The limit of body markings that you can place on this species.
     /// </summary>
     [DataField("markingLimits")]
