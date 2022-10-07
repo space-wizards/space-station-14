@@ -10,6 +10,7 @@ using Content.Server.Ghost.Roles;
 using Content.Server.Mind.Commands;
 using Content.Server.Mind.Components;
 using Content.Server.Players;
+using Content.Server.Prayer;
 using Content.Server.Xenoarchaeology.XenoArtifacts;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
 using Content.Shared.Administration;
@@ -81,12 +82,11 @@ namespace Content.Server.Administration.Systems
                     verb.Impact = LogImpact.Low;
                     args.Verbs.Add(verb);
 
-                    // Prayer
-                    // TODO: add functionality and icons
+                    // Subltle Messages
                     Verb prayerVerb = new();
-                    prayerVerb.Text = Loc.GetString("prayer-verbs-message");
+                    prayerVerb.Text = Loc.GetString("prayer-verbs-subtle-message");
                     prayerVerb.Category = VerbCategory.Admin;
-                    // prayerVerb.IconTexture = "/Textures/Interface/gavel.svg.192dpi.png";
+                    prayerVerb.IconTexture = "/Textures/Interface/pray.svg.png";
                     prayerVerb.Act = () =>
                     {
                         _quickDialog.OpenDialog(player, "Subtle Message", "Message", "Popup Message", (string message, string popupMessage) =>

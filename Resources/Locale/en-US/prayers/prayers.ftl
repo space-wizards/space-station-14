@@ -1,3 +1,7 @@
-﻿prayer-verbs-message = Subtle Message
-prayer-command-description = Pray to the gods! Rewards not guaranteed.
-prayer-command-help = pray <message>
+﻿prayer-verbs-subtle-message = Subtle Message
+prayer-verbs-pray = Pray
+prayer-chat-notify = PRAYER: {$username}: {$message}
+
+prayer-popup-subtle-default = You hear a voice in your head...
+prayer-popup-notify-sent = Your message has been sent to the gods...
+prayer-popup-notify-locked = You are not worthy to pray to me.
