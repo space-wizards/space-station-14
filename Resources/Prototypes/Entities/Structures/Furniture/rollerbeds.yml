@@ -25,7 +25,7 @@
       - shape:
           !type:PhysShapeCircle
           radius: 0.35
-        mass: 30
+        density: 80
         mask:
         - MobMask
     - type: Damageable

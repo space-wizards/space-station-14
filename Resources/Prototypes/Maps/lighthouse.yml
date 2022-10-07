@@ -1,5 +1,5 @@
 ﻿- type: gameMap
-  id: lighthouse
+  id: Lighthouse
   mapName: 'Lighthouse'
   mapPath: /Maps/lighthouse.yml
   minPlayers: 35

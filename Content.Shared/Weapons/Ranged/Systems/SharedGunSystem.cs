@@ -275,7 +275,7 @@ public abstract partial class SharedGunSystem : EntitySystem
                 // Don't spam safety sounds at gun fire rate, play it at a reduced rate.
                 // May cause prediction issues? Needs more tweaking
                 gun.NextFire = TimeSpan.FromSeconds(Math.Max(lastFire.TotalSeconds + SafetyNextFire, gun.NextFire.TotalSeconds));
-                PlaySound(gun.Owner, gun.SoundEmpty?.GetSound(Random, ProtoManager), user);
+                Audio.PlayPredicted(gun.SoundEmpty, gun.Owner, user);
                 Dirty(gun);
                 return;
             }
@@ -351,15 +351,10 @@ public abstract partial class SharedGunSystem : EntitySystem
         xform.LocalRotation = Random.NextAngle();
         xform.Coordinates = coordinates;
 
-        string? sound = null;
-
-        if (TryComp<CartridgeAmmoComponent>(entity, out var cartridge))
+        if (playSound && TryComp<CartridgeAmmoComponent>(entity, out var cartridge))
         {
-            sound = cartridge.EjectSound?.GetSound(Random, ProtoManager);
+            Audio.PlayPvs(cartridge.EjectSound, entity, AudioParams.Default.WithVariation(0.05f).WithVolume(-1f));
         }
-
-        if (sound != null && playSound)
-            SoundSystem.Play(sound, Filter.Pvs(entity, entityManager: EntityManager), coordinates, AudioHelpers.WithVariation(0.05f).WithVolume(-1f));
     }
 
     protected void MuzzleFlash(EntityUid gun, AmmoComponent component, EntityUid? user = null)

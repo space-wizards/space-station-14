@@ -1,6 +1,7 @@
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Targeting;
+using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -51,6 +52,7 @@ namespace Content.Shared.CombatMode
                 _isInCombatMode = value;
                 if (CombatToggleAction != null)
                     EntitySystem.Get<SharedActionsSystem>().SetToggled(CombatToggleAction, _isInCombatMode);
+
                 Dirty();
             }
         }

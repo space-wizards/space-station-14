@@ -1,5 +1,5 @@
 - type: gameMap
-  id: saltern
+  id: Saltern
   mapName: 'Saltern'
   mapPath: /Maps/saltern.yml
   minPlayers: 0

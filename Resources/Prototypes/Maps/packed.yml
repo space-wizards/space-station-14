@@ -1,7 +1,7 @@
 ﻿- type: gameMap
-  id: packedstation
+  id: Packed
   mapName: 'Packedstation'
-  mapPath: /Maps/packedstation.yml
+  mapPath: /Maps/packed.yml
   minPlayers: 0
   maxPlayers: 35
   votable: true
@@ -46,3 +46,4 @@
         ServiceWorker: [ 2, 2 ]
         SecurityCadet: [ 2, 2 ]
         SalvageSpecialist: [ 2, 2 ]
+        Quartermaster: [ 1, 1 ]

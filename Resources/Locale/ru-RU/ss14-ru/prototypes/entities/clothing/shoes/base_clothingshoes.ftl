@@ -4,3 +4,6 @@ ent-ClothingShoesBase = { ent-Clothing }
 ent-ClothingShoesBaseButcherable = { ent-ClothingShoesBase }
     .desc = { ent-ClothingShoesBase.desc }
     .suffix = { "" }
+ent-ClothingShoesStorageBase = { ent-ClothingShoesBase }
+    .desc = { ent-ClothingShoesBase.desc }
+    .suffix = { "" }
