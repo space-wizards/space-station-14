@@ -40,17 +40,6 @@
   canBeDuplicate: true
 
 - type: objective
-  id: StayAliveObjective
-  issuer: syndicate
-  requirements:
-    - !type:TraitorRequirement {}
-    - !type:IncompatibleConditionsRequirement
-        conditions:
-          - DieCondition
-  conditions:
-    - !type:StayAliveCondition {}
-
-- type: objective
   id: DieObjective
   issuer: syndicate
   prob: 0.03
@@ -58,8 +47,8 @@
     - !type:TraitorRequirement {}
     - !type:IncompatibleConditionsRequirement
       conditions:
-        - StayAliveCondition
         - StealCondition
+        - EscapeShuttleCondition
   conditions:
     - !type:DieCondition {}
 
@@ -221,3 +210,14 @@
   conditions:
     - !type:StealCondition
       prototype: JetpackCaptainFilled
+
+- type: objective
+  id: EscapeShuttleObjective
+  issuer: syndicate
+  requirements:
+    - !type:TraitorRequirement {}
+    - !type:IncompatibleConditionsRequirement
+      conditions:
+        - DieCondition
+  conditions:
+    - !type:EscapeShuttleCondition {}
