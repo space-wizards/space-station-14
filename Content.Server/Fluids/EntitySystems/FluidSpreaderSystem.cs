@@ -9,6 +9,7 @@ using Content.Shared.Physics;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Fluids.EntitySystems;
@@ -18,11 +19,8 @@ public sealed class FluidSpreaderSystem : EntitySystem
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly PuddleSystem _puddleSystem = default!;
-    [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
-
-
-    private float _accumulatedTimeFrame;
-    private HashSet<EntityUid> _fluidSpread = new();
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
 
     public override void Initialize()
     {
@@ -30,38 +28,54 @@ public sealed class FluidSpreaderSystem : EntitySystem
             FluidSpreaderAdd(uid, component));
     }
 
-    public void AddOverflowingPuddle(PuddleComponent puddleComponent, Solution? solution = null)
+    public void AddOverflowingPuddle(PuddleComponent puddle, Solution? solution = null)
     {
         var puddleSolution = solution;
-        if (puddleSolution == null && !_solutionContainerSystem.TryGetSolution(puddleComponent.Owner,
-                puddleComponent.SolutionName,
-                out puddleSolution)) return;
+        TransformComponent? transformComponent = null;
+        FluidSpreaderComponent? spreaderComponent = null;
+        if (puddleSolution == null &&
+            !_solutionsSystem.TryGetSolution(puddle.Owner, puddle.SolutionName, out puddleSolution)
+            || !Resolve(puddle.Owner, ref spreaderComponent, ref transformComponent, false))
+            return;
 
-        var spreaderComponent = EntityManager.EnsureComponent<FluidSpreaderComponent>(puddleComponent.Owner);
-        spreaderComponent.OverflownSolution = puddleSolution;
-        spreaderComponent.Enabled = true;
-        FluidSpreaderAdd(spreaderComponent.Owner, spreaderComponent);
+        
+        var fluidSpreadComponent = new FluidSpreaderComponent
+        {
+            OverflownSolution = puddleSolution,
+            Enabled = true,
+            MapUid = transformComponent.MapUid!.Value,
+            Owner = puddle.Owner
+        };
+        EntityManager.AddComponent(puddle.Owner, fluidSpreadComponent);
     }
 
     private void FluidSpreaderAdd(EntityUid uid, FluidSpreaderComponent component)
     {
-        if (component.Enabled)
-            _fluidSpread.Add(uid);
+        if (!component.Enabled)
+            return;
+
+        EntityManager.EnsureComponent(component.MapUid, out FluidMapDataComponent mapData);
+        mapData.FluidSpread.Add(uid);
+        mapData.UpdateGoal(_gameTiming.CurTime);
     }
 
     public override void Update(float frameTime)
     {
-        _accumulatedTimeFrame += frameTime;
-
-        if (!(_accumulatedTimeFrame >= 1.0f))
-            return;
-
-        _accumulatedTimeFrame -= 1.0f;
-
         base.Update(frameTime);
+        foreach (var fluidMapData in EntityQuery<FluidMapDataComponent>())
+        {
+            if (_gameTiming.CurTime > fluidMapData.GoalTime)
+            {
+                RunSpread(fluidMapData.FluidSpread);
+                fluidMapData.UpdateGoal(_gameTiming.CurTime);
+            }
+        }
+    }
 
+    private void RunSpread(HashSet<EntityUid> fluidSpread)
+    {
         var remQueue = new RemQueue<EntityUid>();
-        foreach (var uid in _fluidSpread)
+        foreach (var uid in fluidSpread)
         {
             if (!TryComp(uid, out MetaDataComponent? meta) || meta.Deleted)
             {
@@ -79,7 +93,7 @@ public sealed class FluidSpreaderSystem : EntitySystem
 
         foreach (var removeUid in remQueue)
         {
-            _fluidSpread.Remove(removeUid);
+            fluidSpread.Remove(removeUid);
         }
     }
 
@@ -126,7 +140,8 @@ public sealed class FluidSpreaderSystem : EntitySystem
 
                 posAndUid.Uid = puddleUid;
 
-                if (puddle.CurrentVolume >= puddle.OverflowVolume) continue;
+                if (puddle.CurrentVolume >= puddle.OverflowVolume)
+                    continue;
 
                 // -puddle.OverflowLeft is guaranteed to be >= 0
                 // iff puddle.CurrentVolume >= puddle.OverflowVolume
@@ -175,7 +190,7 @@ public sealed class FluidSpreaderSystem : EntitySystem
         var puddlePos = pos ?? transform!.Coordinates.ToVector2i(EntityManager, _mapManager);
 
         // prepare next set of puddles to be expanded
-        foreach (var direction in SharedDirectionExtensions.RandomDirections().ToArray())
+        foreach (var direction in SharedDirectionExtensions.RandomCardinalDirection().ToArray())
         {
             var newPos = puddlePos.Offset(direction);
             if (visitedTiles.Contains(newPos))

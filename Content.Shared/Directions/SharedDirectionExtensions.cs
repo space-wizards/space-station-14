@@ -43,6 +43,39 @@ namespace Content.Shared.Directions
         }
 
         /// <summary>
+        ///     Gets random directions until none are left. Only
+        /// returns the four cardinal direction (north, east, south, west)
+        /// </summary>
+        /// <returns>An enumerable of the directions.</returns>
+        public static IEnumerable<Direction> RandomCardinalDirection()
+        {
+            var directions = new[]
+            {
+                Direction.North,
+                Direction.East,
+                Direction.South,
+                Direction.West,
+            };
+
+            var robustRandom = IoCManager.Resolve<IRobustRandom>();
+            var n = directions.Length;
+
+            while (n > 1)
+            {
+                n--;
+                var k = robustRandom.Next(n + 1);
+                var value = directions[k];
+                directions[k] = directions[n];
+                directions[n] = value;
+            }
+
+            foreach (var direction in directions)
+            {
+                yield return direction;
+            }
+        }
+
+        /// <summary>
         ///     Gets tiles in random directions from the given one.
         /// </summary>
         /// <returns>An enumerable of the adjacent tiles.</returns>
@@ -55,7 +88,8 @@ namespace Content.Shared.Directions
         ///     Gets tiles in random directions from the given one.
         /// </summary>
         /// <returns>An enumerable of the adjacent tiles.</returns>
-        public static IEnumerable<TileRef> AdjacentTilesRandom(this EntityCoordinates coordinates, bool ignoreSpace = false)
+        public static IEnumerable<TileRef> AdjacentTilesRandom(this EntityCoordinates coordinates,
+            bool ignoreSpace = false)
         {
             foreach (var direction in RandomDirections())
             {
