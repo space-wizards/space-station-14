@@ -96,7 +96,7 @@ namespace Content.Server.Singularity.Components
         /// Used for machine part rating calculations.
         /// </summary>
         [DataField("baseFireBurstDelayMin"), ViewVariables]
-        public TimeSpan BaseFireBurstDelayMin = TimeSpan.FromSeconds(2);
+        public TimeSpan BaseFireBurstDelayMin = TimeSpan.FromSeconds(4);
 
         /// <summary>
         /// The base maximum delay between shot bursts.
