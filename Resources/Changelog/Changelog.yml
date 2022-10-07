@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: The China Lake's projectiles now have smaller explosions., type: Tweak}
-  - {message: The China Lake bundle no longer comes with flash grenades., type: Tweak}
-  id: 1904
-  time: '2022-07-09T04:53:23.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Emergency shuttle will now announce its arrival direction., type: Add}
@@ -2933,3 +2927,8 @@ Entries:
       scenarios the range will go up and in some it will go down.', type: Tweak}
   id: 2403
   time: '2022-10-06T13:37:22.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Space bears will attack again., type: Fix}
+  id: 2404
+  time: '2022-10-07T06:10:08.0000000+00:00'
