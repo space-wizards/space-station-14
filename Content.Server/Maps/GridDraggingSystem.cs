@@ -3,6 +3,7 @@ using Robust.Server.Console;
 using Robust.Server.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Utility;
+using Robust.Shared.Physics.Components;
 
 namespace Content.Server.Maps;
 

@@ -1,0 +1,25 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+            Title="NPC debug"
+            MinSize="200 200">
+    <BoxContainer Name="Options" Orientation="Vertical">
+        <controls:StripeBack>
+            <Label Text="NPC" HorizontalAlignment="Center"/>
+        </controls:StripeBack>
+        <BoxContainer Name="NPCBox" Orientation="Vertical">
+            <CheckBox Name="NPCPath" Text="Path"/>
+            <CheckBox Name="NPCThonk" Text="Thonk"/>
+        </BoxContainer>
+        <controls:StripeBack>
+            <Label Text="Pathfinder" HorizontalAlignment="Center"/>
+        </controls:StripeBack>
+        <BoxContainer Name="PathfinderBox" Orientation="Vertical">
+            <CheckBox Name="PathCrumbs" Text="Breadcrumbs"/>
+            <CheckBox Name="PathPolys" Text="Polygons"/>
+            <CheckBox Name="PathNeighbors" Text="Neighbors"/>
+            <CheckBox Name="PathRouteCosts" Text="Route costs"/>
+            <CheckBox Name="PathRoutes" Text="Routes"/>
+        </BoxContainer>
+    </BoxContainer>
+</controls:FancyWindow>

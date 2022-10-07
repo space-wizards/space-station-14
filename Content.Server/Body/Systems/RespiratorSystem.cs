@@ -109,8 +109,7 @@ namespace Content.Server.Body.Systems
                 return;
             }
 
-            var ratio = (Atmospherics.BreathVolume / ev.Gas.Volume);
-            var actualGas = ev.Gas.RemoveRatio(ratio);
+            var actualGas = ev.Gas.RemoveVolume(Atmospherics.BreathVolume);
 
             var lungRatio = 1.0f / organs.Count;
             var gas = organs.Count == 1 ? actualGas : actualGas.RemoveRatio(lungRatio);
@@ -127,7 +126,7 @@ namespace Content.Server.Body.Systems
             if (!Resolve(uid, ref body, false))
                 return;
 
-            var organs = _bodySystem.GetComponentsOnMechanisms<LungComponent>(uid, body).ToArray();
+            var organs = _bodySystem.GetComponentsOnMechanisms<LungComponent>(uid, body);
 
             // exhale gas
 

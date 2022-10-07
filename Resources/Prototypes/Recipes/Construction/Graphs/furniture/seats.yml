@@ -46,6 +46,13 @@
             - material: WoodPlank
               amount: 3
               doAfter: 1
+        - to: chairFolding
+          steps:
+            - material: Plastic
+              amount: 1
+              doAfter: 1
+            - material: MetalRod
+              amount: 2
 
     - node: chair
       entity: Chair
@@ -139,3 +146,19 @@
           steps:
             - tool: Screwing
               doAfter: 1
+
+    - node: chairFolding
+      entity: ChairFolding
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetPlastic1
+              amount: 1
+            - !type:SpawnPrototype
+              prototype: PartRodMetal1
+              amount: 2
+          steps:
+            - tool: Screwing
+              doAfter: 1
+

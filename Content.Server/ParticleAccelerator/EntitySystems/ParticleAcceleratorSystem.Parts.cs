@@ -1,5 +1,7 @@
-﻿using Content.Server.ParticleAccelerator.Components;
+using Content.Server.ParticleAccelerator.Components;
 using JetBrains.Annotations;
+using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Events;
 
 namespace Content.Server.ParticleAccelerator.EntitySystems
 {
@@ -8,7 +10,7 @@ namespace Content.Server.ParticleAccelerator.EntitySystems
     {
         private void InitializePartSystem()
         {
-            SubscribeLocalEvent<ParticleAcceleratorPartComponent, RotateEvent>(OnRotateEvent);
+            SubscribeLocalEvent<ParticleAcceleratorPartComponent, MoveEvent>(OnMoveEvent);
             SubscribeLocalEvent<ParticleAcceleratorPartComponent, PhysicsBodyTypeChangedEvent>(BodyTypeChanged);
         }
 
@@ -20,9 +22,9 @@ namespace Content.Server.ParticleAccelerator.EntitySystems
             component.OnAnchorChanged();
         }
 
-        private static void OnRotateEvent(EntityUid uid, ParticleAcceleratorPartComponent component, ref RotateEvent args)
+        private static void OnMoveEvent(EntityUid uid, ParticleAcceleratorPartComponent component, ref MoveEvent args)
         {
-            component.Rotated();
+            component.Moved();
         }
     }
 }

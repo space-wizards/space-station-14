@@ -15,7 +15,7 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:GivePrototype
               prototype: CableApcStack1
               amount: 10
             - !type:DeleteEntity

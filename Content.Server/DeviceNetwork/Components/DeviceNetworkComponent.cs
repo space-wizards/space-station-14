@@ -81,6 +81,13 @@ namespace Content.Server.DeviceNetwork.Components
         public bool ReceiveAll;
 
         /// <summary>
+        ///     If the device should show its address upon an examine. Useful for devices
+        ///     that do not have a visible UI.
+        /// </summary>
+        [DataField("examinableAddress")]
+        public bool ExaminableAddress;
+
+        /// <summary>
         ///     Whether the device should attempt to join the network on map init.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]

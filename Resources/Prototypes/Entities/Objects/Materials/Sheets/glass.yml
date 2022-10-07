@@ -175,7 +175,7 @@
   components:
   - type: Material
     materials:
-      ReinforcedPlasmaGlass: 500
+      ReinforcedPlasmaGlass: 100
   - type: Stack
     stackType: ReinforcedPlasmaGlass
   - type: Sprite

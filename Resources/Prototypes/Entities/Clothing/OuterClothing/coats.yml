@@ -19,6 +19,9 @@
     sprite: Clothing/OuterClothing/Coats/detective.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/detective.rsi
+  - type: StorageFill
+    contents:
+    - id: SmokingPipeFilledTobacco
   - type: Armor
     modifiers:
       coefficients:

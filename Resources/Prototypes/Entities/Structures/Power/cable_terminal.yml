@@ -11,6 +11,7 @@
       drawdepth: BelowFloor
     - type: Clickable
     - type: InteractionOutline
+    - type: CollideOnAnchor
     - type: Transform
       anchored: true
     - type: Damageable

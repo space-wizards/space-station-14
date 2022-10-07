@@ -5,14 +5,17 @@ using Content.Shared.Inventory;
 using Content.Shared.MobState;
 using Content.Shared.MobState.Components;
 using Content.Shared.Radiation.Events;
+using Content.Shared.Rejuvenate;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Damage
 {
     public sealed class DamageableSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         public override void Initialize()
         {
@@ -20,6 +23,35 @@ namespace Content.Shared.Damage
             SubscribeLocalEvent<DamageableComponent, ComponentHandleState>(DamageableHandleState);
             SubscribeLocalEvent<DamageableComponent, ComponentGetState>(DamageableGetState);
             SubscribeLocalEvent<DamageableComponent, OnIrradiatedEvent>(OnIrradiated);
+            SubscribeLocalEvent<DamageableComponent, RejuvenateEvent>(OnRejuvenate);
+        }
+
+        /// <summary>
+        /// Retrieves the damage examine values.
+        /// </summary>
+        public FormattedMessage GetDamageExamine(DamageSpecifier damageSpecifier, string? type = null)
+        {
+            var msg = new FormattedMessage();
+
+            if (string.IsNullOrEmpty(type))
+            {
+                msg.AddMarkup(Loc.GetString("damage-examine"));
+            }
+            else
+            {
+                msg.AddMarkup(Loc.GetString("damage-examine-type", ("type", type)));
+            }
+
+            foreach (var damage in damageSpecifier.DamageDict)
+            {
+                if (damage.Value != FixedPoint2.Zero)
+                {
+                    msg.PushNewline();
+                    msg.AddMarkup(Loc.GetString("damage-value", ("type", damage.Key), ("amount", damage.Value)));
+                }
+            }
+
+            return msg;
         }
 
         /// <summary>
@@ -90,9 +122,9 @@ namespace Content.Shared.Damage
             if (EntityManager.TryGetComponent<AppearanceComponent>(component.Owner, out var appearance) && damageDelta != null)
             {
                 var data = new DamageVisualizerGroupData(damageDelta.GetDamagePerGroup(_prototypeManager).Keys.ToList());
-                appearance.SetData(DamageVisualizerKeys.DamageUpdateGroups, data);
+                _appearance.SetData(component.Owner, DamageVisualizerKeys.DamageUpdateGroups, data, appearance);
             }
-            RaiseLocalEvent(component.Owner, new DamageChangedEvent(component, damageDelta, interruptsDoAfters), false);
+            RaiseLocalEvent(component.Owner, new DamageChangedEvent(component, damageDelta, interruptsDoAfters));
         }
 
         /// <summary>
@@ -214,6 +246,11 @@ namespace Content.Shared.Damage
             }
 
             TryChangeDamage(uid, damage);
+        }
+
+        private void OnRejuvenate(EntityUid uid, DamageableComponent component, RejuvenateEvent args)
+        {
+            SetAllDamage(component, 0);
         }
 
         private void DamageableHandleState(EntityUid uid, DamageableComponent component, ref ComponentHandleState args)

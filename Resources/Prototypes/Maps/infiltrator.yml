@@ -1,5 +1,5 @@
 - type: gameMap
-  id: infiltrator
+  id: Infiltrator
   mapName: 'Syndicate Infiltrator'
   mapPath: /Maps/infiltrator.yml
   minPlayers: 0

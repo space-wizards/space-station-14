@@ -124,7 +124,7 @@ public sealed class InternalsSystem : EntitySystem
         // Prioritise
         // 1. exo-slot tanks
         // 2. in-hand tanks
-        // 3. pocket tanks
+        // 3. pocket/belt tanks
         InventoryComponent? inventory = null;
         ContainerManagerComponent? containerManager = null;
 
@@ -153,7 +153,7 @@ public sealed class InternalsSystem : EntitySystem
 
         if (Resolve(component.Owner, ref inventory, false))
         {
-            var enumerator = new InventorySystem.ContainerSlotEnumerator(component.Owner, inventory.TemplateId, _protoManager, _inventory, SlotFlags.POCKET);
+            var enumerator = new InventorySystem.ContainerSlotEnumerator(component.Owner, inventory.TemplateId, _protoManager, _inventory, SlotFlags.POCKET | SlotFlags.BELT);
 
             while (enumerator.MoveNext(out var container))
             {

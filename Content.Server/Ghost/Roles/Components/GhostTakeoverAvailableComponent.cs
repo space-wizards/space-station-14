@@ -23,7 +23,7 @@ namespace Content.Server.Ghost.Roles.Components
                 return false;
 
             if (MakeSentient)
-                MakeSentientCommand.MakeSentient(Owner, IoCManager.Resolve<IEntityManager>());
+                MakeSentientCommand.MakeSentient(Owner, IoCManager.Resolve<IEntityManager>(), AllowMovement, AllowSpeech);
 
             var ghostRoleSystem = EntitySystem.Get<GhostRoleSystem>();
             ghostRoleSystem.GhostRoleInternalCreateMindAndTransfer(session, Owner, Owner, this);

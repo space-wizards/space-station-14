@@ -7,9 +7,9 @@
   - type: StorageFill
     contents:
       - id: Beaker
-        amount: 3
+        amount: 2
       - id: LargeBeaker
-        amount: 3
+        amount: 2
   - type: Sprite
     layers:
       - state: box

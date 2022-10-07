@@ -1,0 +1,87 @@
+- type: entity
+  id: Girder
+  parent: BaseStructureDynamic
+  name: girder
+  description: A large structural assembly made out of metal; It requires a layer of metal before it can be considered a wall.
+  components:
+  - type: Transform
+    anchored: true
+    noRot: true
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.45,-0.45,0.45,0.45"
+      density: 60
+      mask:
+      - MachineMask
+      layer:
+      - GlassAirlockLayer
+  - type: InteractionOutline
+  - type: Construction
+    graph: Girder
+    node: girder
+  - type: Sprite
+    sprite: Structures/Walls/solid.rsi
+    state: wall_girder
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors: #excess damage, don't spawn entities.
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: StaticPrice
+    price: 0.5
+
+- type: entity
+  id: ReinforcedGirder
+  parent: Girder
+  name: reinforced girder
+  description: A large structural assembly made out of metal and plasteel; It requires a layer of plasteel before it can be considered a reinforced wall.
+  components:
+    - type: Sprite
+      sprite: Structures/Walls/solid.rsi
+      state: reinforced_wall_girder
+    - type: Construction
+      graph: Girder
+      node: reinforcedGirder
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 200
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+        - trigger:
+            !type:DamageTrigger
+            damage: 50
+          behaviors:
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                SheetSteel1:
+                  min: 1
+                  max: 1
+                SheetPlasteel1:
+                  min: 1
+                  max: 1
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
