@@ -14,6 +14,36 @@ namespace Content.Server.Objectives.Conditions
         {
             var entityMgr = IoCManager.Resolve<IEntityManager>();
             var traitors = EntitySystem.Get<TraitorRuleSystem>().Traitors;
+            List<Traitor.TraitorRole> removeList = new();
+
+            foreach (var traitor in traitors)
+            {
+                if (traitor.Mind == null)
+                {
+                    removeList.Add(traitor);
+                    continue;
+                }
+                if (traitor.Mind == mind)
+                {
+                    removeList.Add(traitor);
+                    continue;
+                }
+                foreach (var objective in traitor.Mind.AllObjectives)
+                {
+                    foreach (var condition in objective.Conditions)
+                    {
+                        if (condition.GetType() == typeof(RandomTraitorProgressCondition))
+                        {
+                            removeList.Add(traitor);
+                        }
+                    }
+                }
+            }
+
+            foreach (var traitor in removeList)
+            {
+                traitors.Remove(traitor);
+            }
 
             if (traitors.Count == 0) return new EscapeShuttleCondition{}; //You were made a traitor by admins, and are the first/only.
             return new RandomTraitorProgressCondition { _target = IoCManager.Resolve<IRobustRandom>().Pick(traitors).Mind };
@@ -55,6 +85,8 @@ namespace Content.Server.Objectives.Conditions
                     Logger.Error("Null target on RandomTraitorProgressCondition.");
                     return 1f;
                 }
+
+                Logger.Error("Target: " + _target.CurrentEntity);
 
                 foreach (var objective in _target.AllObjectives)
                 {
