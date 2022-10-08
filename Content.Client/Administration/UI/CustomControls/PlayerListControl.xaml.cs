@@ -54,7 +54,7 @@ namespace Content.Client.Administration.UI.CustomControls
                 if (OverrideText != null && args.Button.Children.FirstOrDefault()?.Children?.FirstOrDefault() is Label label)
                     label.Text = GetText(selectedPlayer);
             }
-            else if (args.Event.Function == ContentKeyFunctions.OpenContextMenu)
+            else if (args.Event.Function == EngineKeyFunctions.UseSecondary)
             {
                 _verbSystem.VerbMenu.OpenVerbMenu(selectedPlayer.EntityUid);
             }

@@ -1,7 +1,9 @@
 using Content.Server.Mind.Components;
+using Content.Server.Revenant.Components;
 using Content.Shared.Examine;
 using Content.Shared.MobState;
 using Content.Shared.MobState.Components;
+using Content.Shared.Revenant.Components;
 using Robust.Shared.Random;
 
 namespace Content.Server.Revenant.EntitySystems;

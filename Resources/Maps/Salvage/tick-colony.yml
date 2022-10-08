@@ -702,7 +702,6 @@ entities:
       - LowImpassable
       layer:
       - Opaque
-      mass: 70
     type: Fixtures
   - standing: False
     type: StandingState
@@ -954,7 +953,6 @@ entities:
       - LowImpassable
       layer:
       - Opaque
-      mass: 70
     type: Fixtures
   - standing: False
     type: StandingState
@@ -1206,7 +1204,6 @@ entities:
       - LowImpassable
       layer:
       - Opaque
-      mass: 70
     type: Fixtures
   - standing: False
     type: StandingState

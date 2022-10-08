@@ -36,7 +36,9 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
             return;
         }
 
-        bool dirty = data.SkinColor != component.SkinColor;
+        var dirty = data.SkinColor != component.SkinColor || data.Sex != component.Sex;
+        component.Sex = data.Sex;
+
         if (data.CustomBaseLayerInfo.Count != 0)
         {
             dirty |= MergeCustomBaseSprites(uid, baseSprites.Sprites, data.CustomBaseLayerInfo, component);
@@ -442,6 +444,4 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
             }
         }
     }
-
-
 }

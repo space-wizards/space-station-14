@@ -7,7 +7,6 @@ using Content.Server.UserInterface;
 using Content.Shared.Actions;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
-using Content.Shared.Audio;
 using Content.Shared.Toggleable;
 using Content.Shared.Examine;
 using JetBrains.Annotations;
@@ -25,6 +24,7 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly ExplosionSystem _explosions = default!;
         [Dependency] private readonly InternalsSystem _internals = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSys = default!;
         [Dependency] private readonly SharedContainerSystem _containers = default!;
         [Dependency] private readonly SharedActionsSystem _actions = default!;
         [Dependency] private readonly UserInterfaceSystem _ui = default!;
@@ -68,13 +68,13 @@ namespace Content.Server.Atmos.EntitySystems
         public void UpdateUserInterface(GasTankComponent component, bool initialUpdate = false)
         {
             var internals = GetInternalsComponent(component);
-            _ui.GetUiOrNull(component.Owner, SharedGasTankUiKey.Key)?.SetState(
+            _ui.TrySetUiState(component.Owner, SharedGasTankUiKey.Key,
                 new GasTankBoundUserInterfaceState
                 {
                     TankPressure = component.Air?.Pressure ?? 0,
                     OutputPressure = initialUpdate ? component.OutputPressure : null,
                     InternalsConnected = component.IsConnected,
-                    CanConnectInternals = IsFunctional(component) && internals != null
+                    CanConnectInternals = CanConnectToInternals(component)
                 });
         }
 
@@ -189,12 +189,13 @@ namespace Content.Server.Atmos.EntitySystems
 
         public bool CanConnectToInternals(GasTankComponent component)
         {
-            return !component.IsConnected && IsFunctional(component);
+            var internals = GetInternalsComponent(component);
+            return internals != null && internals.BreathToolEntity != null;
         }
 
         public void ConnectToInternals(GasTankComponent component)
         {
-            if (!CanConnectToInternals(component)) return;
+            if (component.IsConnected || !CanConnectToInternals(component)) return;
             var internals = GetInternalsComponent(component);
             if (internals == null) return;
 
@@ -209,7 +210,7 @@ namespace Content.Server.Atmos.EntitySystems
             component.ConnectStream?.Stop();
 
             if (component.ConnectSound != null)
-                component.ConnectStream = SoundSystem.Play(component.ConnectSound.GetSound(), Filter.Pvs(component.Owner, entityManager: EntityManager), component.Owner, component.ConnectSound.Params);
+                component.ConnectStream = _audioSys.Play(component.ConnectSound, Filter.Pvs(component.Owner, entityManager: EntityManager), component.Owner, component.ConnectSound.Params);
 
             UpdateUserInterface(component);
         }
@@ -228,7 +229,7 @@ namespace Content.Server.Atmos.EntitySystems
             component.DisconnectStream?.Stop();
 
             if (component.DisconnectSound != null)
-                component.DisconnectStream = SoundSystem.Play(component.DisconnectSound.GetSound(), Filter.Pvs(component.Owner, entityManager: EntityManager), component.Owner, component.DisconnectSound.Params);
+                component.DisconnectStream = _audioSys.Play(component.DisconnectSound, Filter.Pvs(component.Owner, entityManager: EntityManager), component.Owner, component.DisconnectSound.Params);
 
             UpdateUserInterface(component);
         }
@@ -287,7 +288,7 @@ namespace Content.Server.Atmos.EntitySystems
                     if(environment != null)
                         _atmosphereSystem.Merge(environment, component.Air);
 
-                    SoundSystem.Play(component.RuptureSound.GetSound(), Filter.Pvs(component.Owner), Transform(component.Owner).Coordinates, AudioHelpers.WithVariation(0.125f));
+                    _audioSys.Play(component.RuptureSound, Filter.Pvs(component.Owner), Transform(component.Owner).Coordinates, AudioParams.Default.WithVariation(0.125f));
 
                     QueueDel(component.Owner);
                     return;
@@ -318,11 +319,6 @@ namespace Content.Server.Atmos.EntitySystems
 
             if (component.Integrity < 3)
                 component.Integrity++;
-        }
-
-        private bool IsFunctional(GasTankComponent component)
-        {
-            return GetInternalsComponent(component) != null;
         }
 
         /// <summary>

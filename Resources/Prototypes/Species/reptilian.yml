@@ -4,6 +4,7 @@
   roundStart: true
   prototype: MobReptilian
   sprites: MobReptilianSprites
+  defaultSkinTone: "#34a223"
   markingLimits: MobReptilianMarkingLimits
   dollPrototype: MobReptilianDummy
   skinColoration: Hues

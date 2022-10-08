@@ -40,6 +40,7 @@
       - FullTileMask
       layer:
       - WallLayer
+      density: 1000
   - type: Occluder
     sizeX: 32
     sizeY: 32
@@ -436,7 +437,7 @@
         acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
-        damage: 600
+        damage: 100
       behaviors:
       - !type:ChangeConstructionNodeBehavior
         node: girder
@@ -586,6 +587,11 @@
   - type: Physics
     bodyType: Static
   - type: Pullable
+  - type: Airtight
+    noAirWhenFullyAirBlocked: false
+    airBlockedDirection:
+    - South
+    - East
   - type: Fixtures
     fixtures:
     - shape:

@@ -98,6 +98,9 @@ public sealed class AtmosMonitorSystem : EntitySystem
             case AtmosDeviceNetworkSystem.RegisterDevice:
                 component.RegisteredDevices.Add(args.SenderAddress);
                 break;
+            case AtmosDeviceNetworkSystem.DeregisterDevice:
+                component.RegisteredDevices.Remove(args.SenderAddress);
+                break;
             case AtmosAlarmableSystem.ResetAll:
                 Reset(uid);
                 // Don't clear alarm states here.

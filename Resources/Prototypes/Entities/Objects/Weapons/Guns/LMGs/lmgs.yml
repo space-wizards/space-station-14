@@ -58,7 +58,7 @@
   name: L6 SAW
   id: WeaponLightMachineGunL6
   parent: BaseWeaponLightMachineGun
-  description: A rather traditionally made LMG with a pleasantly lacquered wooden pistol grip.
+  description: A rather traditionally made LMG with a pleasantly lacquered wooden pistol grip. Uses .30 rifle ammo.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/LMGs/l6.rsi

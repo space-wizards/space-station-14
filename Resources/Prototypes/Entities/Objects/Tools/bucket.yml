@@ -48,3 +48,6 @@
     fillBaseName: fill-
   - type: ExaminableSolution
     solution: bucket
+  - type: Tag
+    tags:
+      - Bucket
