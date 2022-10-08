@@ -28,11 +28,16 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Wires
     LayoutId: Docking
+  - type: ContainerFill
+    contents:
+      board: [ DoorElectronics ]
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
   - type: Door
     bumpOpen: false
     closeTimeTwo: 0.4
     openTimeTwo: 0.4
-    board: DoorElectronics
     crushDamage:
       types:
         Blunt: 15
@@ -56,6 +61,8 @@
   - type: Construction
     graph: AirlockShuttle
     node: airlock
+    containers:
+    - board
 
 - type: entity
   id: AirlockGlassShuttle

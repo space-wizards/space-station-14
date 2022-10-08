@@ -1,5 +1,6 @@
 - type: entity
-  id: Firelock
+  id: BaseFirelock
+  abstract: true
   parent: BaseStructure
   name: firelock
   description: Apply crowbar.
@@ -95,17 +96,30 @@
       noAirWhenFullyAirBlocked: true
     - type: Occluder
       enabled: false
-    - type: Construction
-      graph: Firelock
-      node: Firelock
     - type: WallMount
       arc: 360
     - type: StaticPrice
       price: 150
 
 - type: entity
+  id: Firelock
+  parent: BaseFirelock
+  components:
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
+  - type: Construction
+    graph: Firelock
+    node: Firelock
+    containers:
+    - board
+  - type: ContainerFill
+    contents:
+      board: [ FirelockElectronics ]
+        
+- type: entity
   id: FirelockGlass
-  parent: Firelock
+  parent: BaseFirelock
   name: glass firelock
   components:
     - type: Sprite
@@ -127,7 +141,7 @@
 
 - type: entity
   id: FirelockEdge
-  parent: Firelock
+  parent: BaseFirelock
   name: firelock
   components:
     - type: Sprite
