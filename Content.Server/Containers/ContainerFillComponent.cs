@@ -23,7 +23,14 @@ namespace Content.Server.Containers;
 public sealed class ContainerFillComponent : Component
 {
     [DataField("contents", customTypeSerializer:typeof(ContainerFillSerializer))]
-    public Dictionary<string, List<string>> Contents = new(); 
+    public readonly Dictionary<string, List<string>> Contents = new();
+
+    /// <summary>
+    ///     If true, entities spawned via the construction system will not have entities spawned into containers managed
+    ///     by the construction system.
+    /// </summary>
+    [DataField("ignoreConstructionSpawn")]
+    public bool IgnoreConstructionSpawn = true;
 }
 
 // this all just exists to validate prototype ids.

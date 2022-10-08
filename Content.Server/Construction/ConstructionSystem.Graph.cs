@@ -1,4 +1,5 @@
 using Content.Server.Construction.Components;
+using Content.Server.Containers;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Construction.Steps;
@@ -277,19 +278,30 @@ namespace Content.Server.Construction
             Resolve(uid, ref containerManager, false);
 
             // We create the new entity.
-            var newUid = EntityManager.SpawnEntity(newEntity, transform.Coordinates);
+            var newUid = EntityManager.CreateEntityUninitialized(newEntity, transform.Coordinates);
 
             // Construction transferring.
             var newConstruction = EntityManager.EnsureComponent<ConstructionComponent>(newUid);
 
-            // We set the graph and node accordingly... Then we append our containers to theirs.
+            // Transfer all construction-owned containers.
+            newConstruction.Containers.UnionWith(construction.Containers);
+
+            // Prevent on-map-init spawned entities from populating in the containers Some containers get added via the
+            // ChangeGraph() step, which will not be included here. But this should be fine, as long as the target
+            // entity properly declared it's managed containers.
+            if (TryComp(newUid, out ContainerFillComponent? containerFill) && containerFill.IgnoreConstructionSpawn)
+            {
+                foreach (var id in newConstruction.Containers)
+                {
+                    containerFill.Contents.Remove(id);
+                }
+            }
+
+            // We set the graph and node accordingly.
             ChangeGraph(newUid, userUid, construction.Graph, construction.Node, false, newConstruction);
 
             if (construction.TargetNode is {} targetNode)
                 SetPathfindingTarget(newUid, targetNode, newConstruction);
-
-            // Transfer all construction-owned containers.
-            newConstruction.Containers.UnionWith(construction.Containers);
 
             // Transfer all pending interaction events too.
             while (construction.InteractionQueue.TryDequeue(out var ev))
