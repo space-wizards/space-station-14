@@ -218,7 +218,7 @@ public sealed class StationRecordsSystem : EntitySystem
     {
         if (!Resolve(station, ref records))
         {
-            throw new ArgumentException($"Could not retrieve a StationRecordsComponent from entity {station}");
+            throw new ArgumentException($"Could not retrieve a {nameof(StationRecordsComponent)} from entity {station}");
         }
 
         return records.Records.AddRecord(station);
