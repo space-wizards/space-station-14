@@ -86,8 +86,6 @@ namespace Content.Server.Objectives.Conditions
                     return 1f;
                 }
 
-                Logger.Error("Target: " + _target.CurrentEntity);
-
                 foreach (var objective in _target.AllObjectives)
                 {
                     foreach (var condition in objective.Conditions)
@@ -104,7 +102,7 @@ namespace Content.Server.Objectives.Conditions
                 }
 
                 var completion = total / max;
-                Logger.Error("completion: " + completion);
+
                 if (completion >= 0.5f)
                     return 1f;
                 else
