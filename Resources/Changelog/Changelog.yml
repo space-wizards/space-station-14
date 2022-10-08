@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Emergency shuttle will now announce its arrival direction., type: Add}
-  id: 1905
-  time: '2022-07-09T05:19:53.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Emergency shuttle will now actually warp-in nearby if there's no available
       docks., type: Fix}
   id: 1906
@@ -2932,3 +2927,9 @@ Entries:
   - {message: Space bears will attack again., type: Fix}
   id: 2404
   time: '2022-10-07T06:10:08.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: Fixes an issue where the singulo would bounce off of containment fields
+      like items or mobs would., type: Fix}
+  id: 2405
+  time: '2022-10-08T03:27:16.0000000+00:00'
