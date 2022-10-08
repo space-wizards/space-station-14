@@ -297,3 +297,16 @@
         Slash: 0.95
         Heat: 0.90
         Radiation: 0.75
+
+- type: entity
+  parent: ClothingHeadEVAHelmetBase
+  id: ClothingHeadHelmetCosmonaut
+  name: deep space EVA helmet
+  suffix: pirate
+  description: An old but durable deep space helmet.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/pirateeva.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/pirateeva.rsi
+  - type: IngestionBlocker

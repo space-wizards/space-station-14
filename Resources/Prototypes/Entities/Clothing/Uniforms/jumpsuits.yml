@@ -855,3 +855,29 @@
     sprite: Clothing/Uniforms/Jumpsuit/musician.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/musician.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitPirate
+  name: pirate slops
+  description: A pirate variation of a space sailor's jumpsuit.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/pirate.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/pirate.rsi
+  - type: AddAccentClothing
+    accent: PirateAccent
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitPirateCaptain
+  name: Pirate Captain slops
+  description: The pirate captain's distinguished slops.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/pirate_captain.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/pirate_captain.rsi
+  - type: AddAccentClothing
+    accent: PirateAccent

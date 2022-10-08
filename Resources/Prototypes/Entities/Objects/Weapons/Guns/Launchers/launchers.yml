@@ -114,3 +114,38 @@
     steps: 1
     zeroVisible: true
   - type: Appearance
+
+- type: entity
+  name: pirate cannon
+  parent: BaseWeaponLauncher
+  id: WeaponLauncherPirateCannon
+  description: PLOOP
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Launchers/pirate_cannon.rsi
+    layers:
+      - state: icon
+        map: ["enum.GunVisualLayers.Base"]
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Launchers/pirate_cannon.rsi
+  - type: Gun
+    fireRate: 1
+    selectedMode: SemiAuto
+    availableModes:
+      - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/mateba.ogg
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - Grenade
+    autoCycle: true
+    capacity: 1
+    proto: CannonBall
+    soundInsert:
+      path: /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
+  - type: Appearance
