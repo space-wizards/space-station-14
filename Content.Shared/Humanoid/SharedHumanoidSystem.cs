@@ -1,5 +1,7 @@
 using Content.Shared.Humanoid.Markings;
+using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Preferences;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Humanoid;
 
@@ -14,7 +16,7 @@ namespace Content.Shared.Humanoid;
 /// </summary>
 public abstract class SharedHumanoidSystem : EntitySystem
 {
-    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public const string DefaultSpecies = "Human";
 
@@ -22,10 +24,11 @@ public abstract class SharedHumanoidSystem : EntitySystem
         string species,
         Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo> customBaseLayer,
         Color skinColor,
+        Sex sex,
         List<HumanoidVisualLayers> visLayers,
         List<Marking> markings)
     {
-        var data = new HumanoidVisualizerData(species, customBaseLayer, skinColor, visLayers, markings);
+        var data = new HumanoidVisualizerData(species, customBaseLayer, skinColor, sex, visLayers, markings);
 
         // Locally raise an event for this, because there might be some systems interested
         // in this.

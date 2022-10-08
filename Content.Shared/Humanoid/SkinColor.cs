@@ -2,7 +2,7 @@ namespace Content.Shared.Humanoid;
 
 public static class SkinColor
 {
-    public static Color ValidHumanSkinTone => Color.FromHsv(new Vector4(0.25f, 0.2f, 1f, 1f));
+    public static Color ValidHumanSkinTone => Color.FromHsv(new Vector4(0.07f, 0.2f, 1f, 1f));
 
     /// <summary>
     ///     Turn a color into a valid tinted hue skin tone.
@@ -15,11 +15,10 @@ public static class SkinColor
     }
 
     /// <summary>
-    ///     Get a human skin tone based on a scale of 0 to 100.
+    ///     Get a human skin tone based on a scale of 0 to 100. The value is clamped between 0 and 100.
     /// </summary>
     /// <param name="tone">Skin tone. Valid range is 0 to 100, inclusive. 0 is gold/yellowish, 100 is dark brown.</param>
     /// <returns>A human skin tone.</returns>
-    /// <exception cref="ArgumentException">Exception if the value is under 0 or over 100.</exception>
     public static Color HumanSkinTone(int tone)
     {
         // 0 - 100, 0 being gold/yellowish and 100 being dark
@@ -31,10 +30,7 @@ public static class SkinColor
         // 20 is 25 - 20 - 100
         // 100 is 25 - 100 - 20
 
-        if (tone < 0 || tone > 100)
-        {
-            throw new ArgumentException("Skin tone value was under 0 or over 100.");
-        }
+        tone = Math.Clamp(tone, 0, 100);
 
         var rangeOffset = tone - 20;
 
@@ -93,9 +89,9 @@ public static class SkinColor
     {
         var colorValues = Color.ToHsv(color);
 
-        var hue = colorValues.X * 360f;
-        var sat = colorValues.Y * 100f;
-        var val = colorValues.Z * 100f;
+        var hue = Math.Round(colorValues.X * 360f);
+        var sat = Math.Round(colorValues.Y * 100f);
+        var val = Math.Round(colorValues.Z * 100f);
         // rangeOffset makes it so that this value
         // is 25 <= hue <= 45
         if (hue < 25 || hue > 45)

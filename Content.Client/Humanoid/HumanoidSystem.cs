@@ -57,6 +57,7 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
             profile.Species,
             customBaseLayers,
             profile.Appearance.SkinColor,
+            profile.Sex,
             new(), // doesn't exist yet
             markings.GetForwardEnumerator().ToList());
     }

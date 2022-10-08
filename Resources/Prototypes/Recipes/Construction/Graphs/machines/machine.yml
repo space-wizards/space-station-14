@@ -101,7 +101,7 @@
             - !type:WirePanel
           steps:
             - tool: Prying
-              doAfter: 0.25
+              doAfter: 2
 
     - node: destroyedMachineFrame
       entity: MachineFrameDestroyed

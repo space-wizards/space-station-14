@@ -43,7 +43,7 @@
   name: Kardashev-Mosin
   parent: BaseWeaponSniper
   id: WeaponSniperMosin
-  description: A weapon for hunting, or endless trench warfare.
+  description: A weapon for hunting, or endless trench warfare. Uses .30 rifle ammo.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
@@ -52,7 +52,7 @@
   name: Hristov
   parent: BaseWeaponSniper
   id: WeaponSniperHristov
-  description: A portable anti-armour rifle. Fires armor piercing 14.5mm shells.
+  description: A portable anti-armour rifle. Fires armor piercing 14.5mm shells. Uses .60 anti-material ammo.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
@@ -69,7 +69,7 @@
   name: musket
   parent: BaseWeaponSniper
   id: Musket
-  description: This should've been in a museum long before you were born.
+  description: This should've been in a museum long before you were born. Uses .60 anti-material ammo.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/musket.rsi
@@ -90,7 +90,7 @@
   name: flintlock pistol
   parent: BaseWeaponSniper
   id: WeaponPistolFlintlock
-  description: A pirate's companion. Yarrr!
+  description: A pirate's companion. Yarrr! Uses .60 anti-material ammo.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/flintlock.rsi
