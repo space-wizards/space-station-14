@@ -1,6 +1,6 @@
 ﻿- type: trait
   id: UncontrollableSneezing
-  name: Runny nose
+  name: trait-sneezing
   components:
     - type: UncontrollableSnough
       snoughSound:
