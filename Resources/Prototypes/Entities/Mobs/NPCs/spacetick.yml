@@ -25,7 +25,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.20
-      mass: 2.5
+      density: 20
       mask:
       - SmallMobMask
       layer:

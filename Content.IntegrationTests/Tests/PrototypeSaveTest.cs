@@ -290,7 +290,8 @@ public sealed class PrototypeSaveTest
             return new ValidatedValueNode(node);
         }
 
-        public DataNode Write(ISerializationManager serializationManager, EntityUid value, bool alwaysWrite = false,
+        public DataNode Write(ISerializationManager serializationManager, EntityUid value,
+            IDependencyCollection dependencies, bool alwaysWrite = false,
             ISerializationContext? context = null)
         {
             // EntityUids should be nullable and have no initial value.

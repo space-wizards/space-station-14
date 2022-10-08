@@ -1,4 +1,5 @@
 using Content.Client.HUD;
+using Content.Client.Verbs;
 using Content.Shared.CombatMode;
 using Content.Shared.Targeting;
 using Robust.Client.GameObjects;
@@ -50,6 +51,8 @@ namespace Content.Client.CombatMode
                 return;
             }
 
+            var verbs = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<VerbSystem>();
+            verbs.CloseAllMenus();
             _gameHud.TargetingZone = ActiveZone;
         }
     }
