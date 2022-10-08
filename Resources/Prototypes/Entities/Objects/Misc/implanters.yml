@@ -1,0 +1,37 @@
+﻿- type: entity
+  name: implanter
+  id: BaseImplanter
+  parent: BaseItem
+  abstract: true
+  components:
+    - type: Storage
+      capacity: 1
+      whitelist:
+        components:
+        - SubdermalImplant
+    - type: Implanter
+    - type: Sprite
+      sprite: Objects/Specific/Chemistry/syringe.rsi
+      state: "syringe_base0"
+      netsync: false
+    - type: Item
+      sprite: Objects/Specific/Chemistry/syringe.rsi
+      heldPrefix: 0
+
+- type: entity
+  id: Implanter
+  parent: BaseImplanter
+  components:
+    - type: Tag
+      tags:
+        - Trash
+
+- type: entity
+  id: TrackingImplanter
+  name: tracking implanter
+  parent: Implanter
+  components:
+    - type: StorageFill
+      contents:
+        - id: #Insert Tracking Subdermal Implant here
+          amount: 1
