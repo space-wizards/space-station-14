@@ -1,7 +1,7 @@
 meta:
   format: 2
-  name: DemoStation
-  author: Space-Wizards
+  name: Kettle
+  author: checkraze
   postmapinit: false
 tilemap:
   0: Space
@@ -867,6 +867,8 @@ entities:
     type: Transform
   - index: 0
     type: MapGrid
+  - id: Kettle
+    type: BecomesStation
   - angularDamping: 0.05
     linearDamping: 0.05
     fixedRotation: False
