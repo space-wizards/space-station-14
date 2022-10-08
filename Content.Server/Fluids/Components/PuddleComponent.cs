@@ -53,10 +53,7 @@ namespace Content.Server.Fluids.Components
         ///     How much should this puddle's opacity be multiplied by?
         ///     Useful for puddles that have a high overflow volume but still want to be mostly opaque.
         /// </summary>
-        [DataField("opacityModifier")]
-        public float OpacityModifier = 1.0f;
-
-        public FixedPoint2 OverflowLeft => CurrentVolume - OverflowVolume;
+        [DataField("opacityModifier")] public float OpacityModifier = 1.0f;
 
         [DataField("solution")] public string SolutionName { get; set; } = DefaultSolutionName;
     }

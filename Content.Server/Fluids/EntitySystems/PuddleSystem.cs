@@ -120,6 +120,14 @@ namespace Content.Server.Fluids.EntitySystems
                 : FixedPoint2.Zero;
         }
 
+        public FixedPoint2 OverflowLeft(EntityUid uid, PuddleComponent? puddleComponent = null)
+        {
+            if (!Resolve(uid, ref puddleComponent))
+                return FixedPoint2.Zero;
+
+            return puddleComponent.OverflowVolume - CurrentVolume(uid, puddleComponent);
+        }
+
         /// <summary>
         ///
         /// </summary>
@@ -185,5 +193,6 @@ namespace Content.Server.Fluids.EntitySystems
 
             return puddle.CurrentVolume + solution.TotalVolume > puddle.OverflowVolume;
         }
+
     }
 }
