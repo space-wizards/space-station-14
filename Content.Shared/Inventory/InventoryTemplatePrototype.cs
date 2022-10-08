@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Prototypes;
+﻿using Content.Shared.Whitelist;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Inventory;
 
@@ -38,6 +39,16 @@ public sealed class SlotDefinition
     ///     Offset for the clothing sprites.
     /// </summary>
     [DataField("offset")] public Vector2 Offset { get; } = Vector2.Zero;
+
+    /// <summary>
+    ///     Entity whitelist for CanEquip checks.
+    /// </summary>
+    [DataField("whitelist")] public EntityWhitelist? Whitelist = null;
+
+    /// <summary>
+    ///     Entity blacklist for CanEquip checks.
+    /// </summary>
+    [DataField("blacklist")] public EntityWhitelist? Blacklist = null;
 }
 
 public enum SlotUIContainer
