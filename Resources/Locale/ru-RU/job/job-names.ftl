@@ -39,7 +39,6 @@ job-name-ertsecurity = офицер безопасности ОБР
 job-name-ertmedic = медик ОБР
 job-name-ertjanitor = уборщик ОБР
 job-name-boxer = боксёр
-job-name-iaa = агент внутренних дел
 # Role timers - Make these alphabetical or I cut you
 JobAtmosphericTechnician = атмосферный техник
 JobBartender = бармен
