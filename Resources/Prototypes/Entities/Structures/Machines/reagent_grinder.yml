@@ -23,8 +23,6 @@
     - key: enum.ReagentGrinderUiKey.Key
       type: ReagentGrinderBoundUserInterface
   - type: Appearance
-    visuals:
-    - type: ReagentGrinderVisualizer
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -38,9 +36,11 @@
   - type: Sprite
     netsync: false
     sprite: Structures/Machines/juicer.rsi
-    state: juicer0
     drawdepth: SmallObjects
     snapCardinals: true
+    layers:
+    - state: juicer0
+      map: ["enum.ReagentGrinderVisualLayers.Base"]
   - type: ApcPowerReceiver
     powerLoad: 300
   - type: ItemSlots
