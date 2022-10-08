@@ -297,6 +297,8 @@ namespace Content.Server.Construction
                 }
             }
 
+            EntityManager.InitializeAndStartEntity(newUid);
+
             // We set the graph and node accordingly.
             ChangeGraph(newUid, userUid, construction.Graph, construction.Node, false, newConstruction);
 
