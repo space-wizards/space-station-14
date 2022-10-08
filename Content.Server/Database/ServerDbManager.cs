@@ -661,6 +661,9 @@ namespace Content.Server.Database
             var configPreferencesDbPath = _cfg.GetCVar(CCVars.DatabaseSqliteDbPath);
             var inMemory = _res.UserData.RootDir == null;
 
+#if USE_SYSTEM_SQLITE
+            SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlite3());
+#endif
             SqliteConnection connection;
             if (!inMemory)
             {
