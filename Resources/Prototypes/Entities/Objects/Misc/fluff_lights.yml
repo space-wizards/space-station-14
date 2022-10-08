@@ -25,8 +25,6 @@
     energy: 2
   - type: ToggleableLightVisuals
   - type: Appearance
-    visuals:
-    - type: FlashLightVisualizer # todo move to light visuals component.
 
 - type: entity
   name: lamp

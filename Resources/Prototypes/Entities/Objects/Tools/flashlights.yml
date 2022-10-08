@@ -50,8 +50,6 @@
     autoRot: true
     radius: 3
   - type: Appearance
-    visuals:
-      - type: FlashLightVisualizer
   - type: StaticPrice
     price: 40
 

@@ -45,6 +45,12 @@ namespace Content.Shared.Light
 
         public const int StatusLevels = 6;
 
+        /// <summary>
+        /// Keeps track of the original radius of the PointLightComponent of the entity.
+        /// This is needed since HandheldLightComponent animations edit the value and do not reset it to the previous value.
+        /// </summary>
+        public float? OriginalRadius;
+
         [Serializable, NetSerializable]
         public sealed class HandheldLightComponentState : ComponentState
         {

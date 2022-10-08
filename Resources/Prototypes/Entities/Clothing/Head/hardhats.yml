@@ -20,8 +20,6 @@
     autoRot: true
     radius: 3
   - type: Appearance
-    visuals:
-      - type: FlashLightVisualizer
   - type: HandheldLight
     addPrefix: false
   - type: ToggleableLightVisuals

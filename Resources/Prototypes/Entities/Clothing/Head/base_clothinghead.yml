@@ -54,8 +54,6 @@
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
   - type: Appearance
-    visuals:
-    - type: FlashLightVisualizer
   - type: HandheldLight
     addPrefix: true
   - type: Battery
@@ -151,8 +149,6 @@
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
   - type: Appearance
-    visuals:
-    - type: FlashLightVisualizer
   - type: HandheldLight
     addPrefix: true
   - type: Battery
