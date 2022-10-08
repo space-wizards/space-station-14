@@ -21,7 +21,7 @@
     bodyType: Dynamic
   - type: Fixtures
     fixtures:
-    - mass: 5
+    - density: 30
       shape:
         !type:PhysShapeAabb
         bounds: "-0.35,-0.2,0.25,0.1"

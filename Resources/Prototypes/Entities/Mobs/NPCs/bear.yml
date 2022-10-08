@@ -6,6 +6,8 @@
   components:
   - type: InputMover
   - type: MobMover
+  - type: HTN
+    rootTask: SimpleHostileCompound
   - type: Faction
     factions:
     - SimpleHostile
@@ -20,7 +22,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.5
-      mass: 320
+      density: 400
       mask:
       - MobMask
       layer:

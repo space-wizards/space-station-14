@@ -6,7 +6,6 @@ using Content.Shared.Movement.Events;
 using Content.Shared.Popups;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
-using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization;
@@ -22,6 +21,7 @@ public abstract class SharedJetpackSystem : EntitySystem
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
     [Dependency] protected readonly SharedContainerSystem Container = default!;
     [Dependency] private readonly SharedPopupSystem _popups = default!;
+    [Dependency] private readonly SharedMoverController _mover = default!;
 
     public override void Initialize()
     {
@@ -102,7 +102,7 @@ public abstract class SharedJetpackSystem : EntitySystem
     {
         var user = EnsureComp<JetpackUserComponent>(uid);
         var relay = EnsureComp<RelayInputMoverComponent>(uid);
-        relay.RelayEntity = component.Owner;
+        _mover.SetRelay(uid, component.Owner, relay);
         user.Jetpack = component.Owner;
     }
 

@@ -70,8 +70,9 @@
         0: Alive
     #    criticalThreshold: 50
     #    deadThreshold: 120
-
-
+    - type: Tag
+      tags:
+        - Head
 
 - type: entity
   id: LeftArmSkeleton
