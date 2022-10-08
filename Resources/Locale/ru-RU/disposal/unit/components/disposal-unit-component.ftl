@@ -22,7 +22,7 @@ disposal-unit-no-hands = У вас нет рук!
 disposal-flush-verb-get-data-text = Смыть
 disposal-unit-thrown-missed = Промах!
 # state
-disposal-unit-state-Ready = Ready
-disposal-unit-state-Pressurizing = Pressurizing
+disposal-unit-state-Ready = Готов
+disposal-unit-state-Pressurizing = Нагнетание
 disposal-self-insert-verb-get-data-text = Залезть внутрь
 disposal-eject-verb-get-data-text = Извлечь всё

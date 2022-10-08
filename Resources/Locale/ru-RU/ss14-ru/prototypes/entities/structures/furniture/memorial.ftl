@@ -1,9 +1,9 @@
 ent-Memorial = памятник
     .desc = Увековечивает что-то или кого-то.
     .suffix = { "" }
-ent-SS13Memorial = Tomb of the Unknown Employee
+ent-SS13Memorial = Могила Неизвестного Сотрудника
     .desc =
-        Here rests an unknown employee
-        Unknown by name or rank
-        Whose acts will not be forgotten
+        Здесь покоится неизвестный сотрудник
+        Неизвестный по имени и званию
+        Чьи деяния не будут забыты
     .suffix = { "" }
