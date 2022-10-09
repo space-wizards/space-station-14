@@ -157,7 +157,7 @@
   id: ClosetWallJanitor
   parent: ClosetWallMixed
   name: custodial closet
-  description: It's a storage unit for janitorial clothes and gear.
+  description: It's a storage unit for janitorial supplies.
 
 - type: entity
   id: ClosetWallAtmospherics
