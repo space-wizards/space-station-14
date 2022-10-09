@@ -46,7 +46,7 @@ namespace Content.MapRenderer
                 }
 
                 var selectedIds = new List<int>();
-                if (input == "all")
+                if (input is "all" or "\"all\"")
                 {
                     selectedIds = Enumerable.Range(0, mapIds.Length).ToList();
                 }
