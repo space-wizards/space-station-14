@@ -5,66 +5,58 @@
       slotTexture: shoes
       slotFlags: FEET
       stripTime: 3
-      uiContainer: Top
       uiWindowPos: 1,3
       displayName: Shoes
     - name: jumpsuit
       slotTexture: uniform
       slotFlags: INNERCLOTHING
       stripTime: 6
-      uiContainer: Top
       uiWindowPos: 0,2
       displayName: Jumpsuit
     - name: outerClothing
       slotTexture: suit
       slotFlags: OUTERCLOTHING
+      slotGroup: MainHotbar
       stripTime: 6
-      uiContainer: Top
       uiWindowPos: 1,2
       displayName: Suit
     - name: gloves
       slotTexture: gloves
       slotFlags: GLOVES
-      uiContainer: Top
       uiWindowPos: 2,2
       displayName: Gloves
     - name: neck
       slotTexture: neck
       slotFlags: NECK
-      uiContainer: Top
       uiWindowPos: 0,1
       displayName: Neck
     - name: mask
       slotTexture: mask
       slotFlags: MASK
-      uiContainer: Top
       uiWindowPos: 1,1
       displayName: Mask
     - name: eyes
       slotTexture: glasses
       slotFlags: EYES
       stripTime: 3
-      uiContainer: Top
       uiWindowPos: 0,0
       displayName: Eyes
     - name: ears
       slotTexture: ears
       slotFlags: EARS
       stripTime: 3
-      uiContainer: Top
       uiWindowPos: 2,0
       displayName: Ears
     - name: head
       slotTexture: head
       slotFlags: HEAD
-      uiContainer: Top
       uiWindowPos: 1,0
       displayName: Head
     - name: pocket1
       slotTexture: pocket
       slotFlags: POCKET
+      slotGroup: MainHotbar
       stripTime: 3
-      uiContainer: BottomRight
       uiWindowPos: 0,3
       dependsOn: jumpsuit
       displayName: Pocket 1
@@ -72,8 +64,8 @@
     - name: pocket2
       slotTexture: pocket
       slotFlags: POCKET
+      slotGroup: MainHotbar
       stripTime: 3
-      uiContainer: BottomRight
       uiWindowPos: 2,3
       dependsOn: jumpsuit
       displayName: Pocket 2
@@ -82,29 +74,28 @@
       slotTexture: suit_storage
       slotFlags:   SUITSTORAGE
       stripTime: 3
-      uiContainer: BottomLeft
       uiWindowPos: 2,0
       dependsOn: outerClothing
       displayName: Suit Storage
     - name: id
       slotTexture: id
       slotFlags: IDCARD
+      slotGroup: SecondHotbar
       stripTime: 6
-      uiContainer: BottomRight
       uiWindowPos: 2,1
       dependsOn: jumpsuit
       displayName: ID
     - name: belt
       slotTexture: belt
       slotFlags: BELT
+      slotGroup: SecondHotbar
       stripTime: 6
-      uiContainer: BottomLeft
       uiWindowPos: 3,1
       displayName: Belt
     - name: back
       slotTexture: back
       slotFlags: BACK
+      slotGroup: SecondHotbar
       stripTime: 6
-      uiContainer: BottomLeft
       uiWindowPos: 3,0
       displayName: Back

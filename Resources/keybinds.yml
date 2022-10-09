@@ -197,7 +197,7 @@ binds:
 - function: OpenCraftingMenu
   type: State
   key: G
-- function: OpenInfo
+- function: OpenAHelp
   type: State
   key: F1
 - function: OpenInventoryMenu
@@ -429,6 +429,10 @@ binds:
 - function: Hotbar9
   type: State
   key: Num9
+- function: Loadout0
+  type: State
+  key: Num0
+  mod1: Shift
 - function: Loadout1
   type: State
   key: Num1

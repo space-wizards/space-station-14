@@ -56,7 +56,7 @@
   name: Atreides
   parent: BaseWeaponSubMachineGun
   id: WeaponSubMachineGunAtreides
-  description: Pla-ket-ket-ket-ket!
+  description: Pla-ket-ket-ket-ket! Uses .35 auto ammo.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/SMGs/atreides.rsi
@@ -79,7 +79,7 @@
   name: C-20r sub machine gun
   parent: BaseWeaponSubMachineGun
   id: WeaponSubMachineGunC20r
-  description: A firearm that is often used by the infamous nuclear operatives.
+  description: A firearm that is often used by the infamous nuclear operatives. Uses .35 auto ammo.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
@@ -105,7 +105,7 @@
   name: Vector
   parent: BaseWeaponSubMachineGun
   id: WeaponSubMachineGunVector
-  description: An excellent fully automatic Heavy SMG.
+  description: An excellent fully automatic Heavy SMG. Uses .40 magnum ammo.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/SMGs/vector.rsi
@@ -155,7 +155,7 @@
   name: WT550
   parent: BaseWeaponSubMachineGun
   id: WeaponSubMachineGunWt550
-  description: An excellent SMG, produced by NanoTrasen's Small Arms Division.
+  description: An excellent SMG, produced by NanoTrasen's Small Arms Division. Uses .35 auto ammo.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/SMGs/wt550.rsi
@@ -205,7 +205,7 @@
   name: Vector
   parent: WeaponSubMachineGunVector
   id: WeaponSubMachineGunVectorRubber
-  description: An excellent fully automatic Heavy SMG.
+  description: An excellent fully automatic Heavy SMG. Uses .40 magnum ammo.
   suffix: Non-Lethal
   components:
   - type: ItemSlots

@@ -33,6 +33,10 @@ namespace Content.Shared.CCVar
         /*
          * Ambience
          */
+        //TODO: This is so that this compiles, yell at me if this is still in
+        public static readonly CVarDef<bool> AmbienceBasicEnabled =
+            CVarDef.Create("ambiance.basic_enabled", true, CVar.CLIENTONLY | CVar.ARCHIVE);
+
 
         /// <summary>
         /// How long we'll wait until re-sampling nearby objects for ambience. Should be pretty fast, but doesn't have to match the tick rate.
