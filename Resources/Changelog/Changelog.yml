@@ -1,9 +1,4 @@
 Entries:
-- author: themias
-  changes:
-  - {message: You can now knock on shutters., type: Tweak}
-  id: 1916
-  time: '2022-07-10T06:54:40.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: The retro and makeshift laser gun are now pistol sized., type: Tweak}
@@ -2934,3 +2929,11 @@ Entries:
   - {message: All salvages with asteroids now have higher ore yield., type: Tweak}
   id: 2415
   time: '2022-10-09T19:13:30.0000000+00:00'
+- author: router
+  changes:
+  - {message: Some spicy foods now cause you to heat up and get burn damage instead
+      of being poisoned., type: Tweak}
+  - {message: The same spicy foods now satiate hunger better due to them being actually
+      spicy., type: Add}
+  id: 2416
+  time: '2022-10-09T19:25:22.0000000+00:00'
