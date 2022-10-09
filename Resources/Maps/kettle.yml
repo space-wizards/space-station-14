@@ -36557,8 +36557,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 20.04244
-      - 75.39776
+      - 19.481253
+      - 73.28662
       - 0
       - 0
       - 0
@@ -36632,8 +36632,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 21.359245
-      - 80.351456
+      - 21.208618
+      - 79.784805
       - 0
       - 0
       - 0
@@ -36647,8 +36647,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 21.744785
-      - 81.80182
+      - 21.703465
+      - 81.64638
       - 0
       - 0
       - 0
@@ -36662,8 +36662,38 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 21.81533
-      - 82.0672
+      - 21.804855
+      - 82.027794
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.15
+      moles:
+      - 21.238972
+      - 79.898994
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.15
+      moles:
+      - 17.389294
+      - 65.41687
       - 0
       - 0
       - 0
@@ -36692,8 +36722,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 18.405577
-      - 69.24003
+      - 21.671135
+      - 81.52475
       - 0
       - 0
       - 0
@@ -36707,38 +36737,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 21.523605
-      - 80.969765
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.15
-      moles:
-      - 21.708618
-      - 81.665764
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.15
-      moles:
-      - 21.359844
-      - 80.3537
+      - 21.209908
+      - 79.78966
       - 0
       - 0
       - 0
@@ -36756,7 +36756,7 @@ entities:
   - pos: 34.5,12.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -123803.11
+  - SecondsUntilStateChange: -133035.73
     state: Opening
     type: Door
   - inputs:
@@ -36768,7 +36768,7 @@ entities:
     type: SignalReceiver
 - uid: 84
   components:
-  - index: 3
+  - index: 2
     type: Map
 - uid: 85
   type: WallSolid
@@ -36889,7 +36889,7 @@ entities:
   - pos: 34.5,14.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -123803.11
+  - SecondsUntilStateChange: -133035.73
     state: Opening
     type: Door
   - inputs:
@@ -40726,12 +40726,26 @@ entities:
   - pos: 46.5,20.5
     parent: 82
     type: Transform
+  - inputs:
+      Open: []
+      Close: []
+      Toggle:
+      - port: Pressed
+        uid: 25326
+    type: SignalReceiver
 - uid: 700
   type: BlastDoor
   components:
   - pos: 46.5,24.5
     parent: 82
     type: Transform
+  - inputs:
+      Open: []
+      Close: []
+      Toggle:
+      - port: Pressed
+        uid: 25328
+    type: SignalReceiver
 - uid: 701
   type: ReinforcedWindow
   components:
@@ -42648,7 +42662,7 @@ entities:
   - pos: 23.5,14.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -123864.36
+  - SecondsUntilStateChange: -133096.98
     state: Closing
     type: Door
   - inputs:
@@ -42664,7 +42678,7 @@ entities:
   - pos: 23.5,13.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -123864.36
+  - SecondsUntilStateChange: -133096.98
     state: Closing
     type: Door
   - inputs:
@@ -42680,7 +42694,7 @@ entities:
   - pos: 23.5,12.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -123864.36
+  - SecondsUntilStateChange: -133096.98
     state: Closing
     type: Door
   - inputs:
@@ -43117,7 +43131,7 @@ entities:
   - pos: 34.5,13.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -123803.11
+  - SecondsUntilStateChange: -133035.73
     state: Opening
     type: Door
   - inputs:
@@ -43611,7 +43625,7 @@ entities:
     parent: 82
     type: Transform
 - uid: 1107
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -58.5,-5.5
@@ -44907,6 +44921,17 @@ entities:
     pos: 48.5,24.5
     parent: 82
     type: Transform
+  - inputs:
+      Reverse:
+      - port: Right
+        uid: 25330
+      Forward:
+      - port: Left
+        uid: 25330
+      Off:
+      - port: Middle
+        uid: 25330
+    type: SignalReceiver
 - uid: 1295
   type: WallReinforced
   components:
@@ -45267,14 +45292,14 @@ entities:
     parent: 82
     type: Transform
 - uid: 1354
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -58.5,-4.5
     parent: 82
     type: Transform
 - uid: 1355
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -59.5,-5.5
@@ -45727,12 +45752,26 @@ entities:
   - pos: 49.5,20.5
     parent: 82
     type: Transform
+  - inputs:
+      Open: []
+      Close: []
+      Toggle:
+      - port: Pressed
+        uid: 25327
+    type: SignalReceiver
 - uid: 1425
   type: BlastDoor
   components:
   - pos: 49.5,24.5
     parent: 82
     type: Transform
+  - inputs:
+      Open: []
+      Close: []
+      Toggle:
+      - port: Pressed
+        uid: 25329
+    type: SignalReceiver
 - uid: 1426
   type: WallReinforced
   components:
@@ -45923,6 +45962,17 @@ entities:
     pos: 49.5,24.5
     parent: 82
     type: Transform
+  - inputs:
+      Reverse:
+      - port: Right
+        uid: 25330
+      Forward:
+      - port: Left
+        uid: 25330
+      Off:
+      - port: Middle
+        uid: 25330
+    type: SignalReceiver
 - uid: 1456
   type: ConveyorBelt
   components:
@@ -45930,6 +45980,17 @@ entities:
     pos: 47.5,24.5
     parent: 82
     type: Transform
+  - inputs:
+      Reverse:
+      - port: Right
+        uid: 25330
+      Forward:
+      - port: Left
+        uid: 25330
+      Off:
+      - port: Middle
+        uid: 25330
+    type: SignalReceiver
 - uid: 1457
   type: ConveyorBelt
   components:
@@ -45937,6 +45998,17 @@ entities:
     pos: 46.5,24.5
     parent: 82
     type: Transform
+  - inputs:
+      Reverse:
+      - port: Right
+        uid: 25330
+      Forward:
+      - port: Left
+        uid: 25330
+      Off:
+      - port: Middle
+        uid: 25330
+    type: SignalReceiver
 - uid: 1458
   type: ConveyorBelt
   components:
@@ -45944,6 +46016,17 @@ entities:
     pos: 45.5,24.5
     parent: 82
     type: Transform
+  - inputs:
+      Reverse:
+      - port: Right
+        uid: 25330
+      Forward:
+      - port: Left
+        uid: 25330
+      Off:
+      - port: Middle
+        uid: 25330
+    type: SignalReceiver
 - uid: 1459
   type: WallReinforced
   components:
@@ -46017,6 +46100,17 @@ entities:
     pos: 45.5,20.5
     parent: 82
     type: Transform
+  - inputs:
+      Reverse:
+      - port: Right
+        uid: 25331
+      Forward:
+      - port: Left
+        uid: 25331
+      Off:
+      - port: Middle
+        uid: 25331
+    type: SignalReceiver
 - uid: 1471
   type: ConveyorBelt
   components:
@@ -46024,6 +46118,17 @@ entities:
     pos: 46.5,20.5
     parent: 82
     type: Transform
+  - inputs:
+      Reverse:
+      - port: Right
+        uid: 25331
+      Forward:
+      - port: Left
+        uid: 25331
+      Off:
+      - port: Middle
+        uid: 25331
+    type: SignalReceiver
 - uid: 1472
   type: ConveyorBelt
   components:
@@ -46031,6 +46136,17 @@ entities:
     pos: 47.5,20.5
     parent: 82
     type: Transform
+  - inputs:
+      Reverse:
+      - port: Right
+        uid: 25331
+      Forward:
+      - port: Left
+        uid: 25331
+      Off:
+      - port: Middle
+        uid: 25331
+    type: SignalReceiver
 - uid: 1473
   type: ConveyorBelt
   components:
@@ -46038,6 +46154,17 @@ entities:
     pos: 48.5,20.5
     parent: 82
     type: Transform
+  - inputs:
+      Reverse:
+      - port: Right
+        uid: 25331
+      Forward:
+      - port: Left
+        uid: 25331
+      Off:
+      - port: Middle
+        uid: 25331
+    type: SignalReceiver
 - uid: 1474
   type: ConveyorBelt
   components:
@@ -46045,6 +46172,17 @@ entities:
     pos: 49.5,20.5
     parent: 82
     type: Transform
+  - inputs:
+      Reverse:
+      - port: Right
+        uid: 25331
+      Forward:
+      - port: Left
+        uid: 25331
+      Off:
+      - port: Middle
+        uid: 25331
+    type: SignalReceiver
 - uid: 1475
   type: WallSolid
   components:
@@ -54684,7 +54822,7 @@ entities:
   - pos: -41.5,-42.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -10831.844
+  - SecondsUntilStateChange: -20064.475
     state: Opening
     type: Door
 - uid: 2822
@@ -54693,7 +54831,7 @@ entities:
   - pos: -41.5,-44.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -10829.627
+  - SecondsUntilStateChange: -20062.258
     state: Opening
     type: Door
 - uid: 2823
@@ -57551,7 +57689,7 @@ entities:
   - pos: 58.5,-6.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -6900.343
+  - SecondsUntilStateChange: -16132.973
     state: Opening
     type: Door
   - inputs:
@@ -58408,6 +58546,17 @@ entities:
     pos: 42.5,26.5
     parent: 82
     type: Transform
+  - inputs:
+      Reverse:
+      - port: Right
+        uid: 21634
+      Forward:
+      - port: Left
+        uid: 21634
+      Off:
+      - port: Middle
+        uid: 21634
+    type: SignalReceiver
 - uid: 3392
   type: ConveyorBelt
   components:
@@ -58415,6 +58564,17 @@ entities:
     pos: 41.5,26.5
     parent: 82
     type: Transform
+  - inputs:
+      Reverse:
+      - port: Right
+        uid: 21634
+      Forward:
+      - port: Left
+        uid: 21634
+      Off:
+      - port: Middle
+        uid: 21634
+    type: SignalReceiver
 - uid: 3393
   type: ConveyorBelt
   components:
@@ -58422,6 +58582,17 @@ entities:
     pos: 40.5,26.5
     parent: 82
     type: Transform
+  - inputs:
+      Reverse:
+      - port: Right
+        uid: 21634
+      Forward:
+      - port: Left
+        uid: 21634
+      Off:
+      - port: Middle
+        uid: 21634
+    type: SignalReceiver
 - uid: 3394
   type: ConveyorBelt
   components:
@@ -58429,6 +58600,17 @@ entities:
     pos: 39.5,26.5
     parent: 82
     type: Transform
+  - inputs:
+      Reverse:
+      - port: Right
+        uid: 21634
+      Forward:
+      - port: Left
+        uid: 21634
+      Off:
+      - port: Middle
+        uid: 21634
+    type: SignalReceiver
 - uid: 3395
   type: ConveyorBelt
   components:
@@ -58436,6 +58618,17 @@ entities:
     pos: 38.5,26.5
     parent: 82
     type: Transform
+  - inputs:
+      Reverse:
+      - port: Right
+        uid: 21634
+      Forward:
+      - port: Left
+        uid: 21634
+      Off:
+      - port: Middle
+        uid: 21634
+    type: SignalReceiver
 - uid: 3396
   type: Table
   components:
@@ -60979,7 +61172,7 @@ entities:
   - pos: 53.5,-25.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -122068.03
+  - SecondsUntilStateChange: -131300.66
     state: Opening
     type: Door
   - inputs:
@@ -60995,7 +61188,7 @@ entities:
   - pos: 53.5,-26.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -122068.03
+  - SecondsUntilStateChange: -131300.66
     state: Opening
     type: Door
   - inputs:
@@ -61011,7 +61204,7 @@ entities:
   - pos: 53.5,-27.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -122068.03
+  - SecondsUntilStateChange: -131300.66
     state: Opening
     type: Door
   - inputs:
@@ -61027,7 +61220,7 @@ entities:
   - pos: 53.5,-28.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -122068.03
+  - SecondsUntilStateChange: -131300.66
     state: Opening
     type: Door
   - inputs:
@@ -61043,7 +61236,7 @@ entities:
   - pos: 53.5,-29.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -122068.03
+  - SecondsUntilStateChange: -131300.66
     state: Opening
     type: Door
   - inputs:
@@ -61059,7 +61252,7 @@ entities:
   - pos: 53.5,-30.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -122068.03
+  - SecondsUntilStateChange: -131300.66
     state: Opening
     type: Door
   - inputs:
@@ -61075,7 +61268,7 @@ entities:
   - pos: 56.5,-25.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -122068.03
+  - SecondsUntilStateChange: -131300.66
     state: Opening
     type: Door
   - inputs:
@@ -61091,7 +61284,7 @@ entities:
   - pos: 56.5,-26.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -122068.03
+  - SecondsUntilStateChange: -131300.66
     state: Opening
     type: Door
   - inputs:
@@ -61107,7 +61300,7 @@ entities:
   - pos: 56.5,-27.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -122068.03
+  - SecondsUntilStateChange: -131300.66
     state: Opening
     type: Door
   - inputs:
@@ -61123,7 +61316,7 @@ entities:
   - pos: 56.5,-28.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -122068.03
+  - SecondsUntilStateChange: -131300.66
     state: Opening
     type: Door
   - inputs:
@@ -61139,7 +61332,7 @@ entities:
   - pos: 56.5,-29.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -122068.03
+  - SecondsUntilStateChange: -131300.66
     state: Opening
     type: Door
   - inputs:
@@ -61155,7 +61348,7 @@ entities:
   - pos: 56.5,-30.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -122068.03
+  - SecondsUntilStateChange: -131300.66
     state: Opening
     type: Door
   - inputs:
@@ -64019,7 +64212,7 @@ entities:
   - pos: -11.5,17.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -187843.67
+  - SecondsUntilStateChange: -197076.3
     state: Opening
     type: Door
 - uid: 4246
@@ -64028,7 +64221,7 @@ entities:
   - pos: -11.5,19.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -187841.9
+  - SecondsUntilStateChange: -197074.53
     state: Opening
     type: Door
 - uid: 4247
@@ -71913,6 +72106,12 @@ entities:
       storagebase: !type:Container
         ents: []
     type: ContainerContainer
+- uid: 5517
+  type: CableApcExtension
+  components:
+  - pos: -43.5,-35.5
+    parent: 82
+    type: Transform
 - uid: 5518
   type: ChairWood
   components:
@@ -74774,6 +74973,12 @@ entities:
   - pos: -42.5,90.5
     parent: 82
     type: Transform
+- uid: 5983
+  type: CableApcExtension
+  components:
+  - pos: -41.5,-36.5
+    parent: 82
+    type: Transform
 - uid: 5984
   type: CableHV
   components:
@@ -75507,6 +75712,12 @@ entities:
   type: Catwalk
   components:
   - pos: -41.5,90.5
+    parent: 82
+    type: Transform
+- uid: 6101
+  type: CableApcExtension
+  components:
+  - pos: -42.5,-36.5
     parent: 82
     type: Transform
 - uid: 6102
@@ -76621,7 +76832,7 @@ entities:
   - pos: -21.5,50.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -62723
+  - SecondsUntilStateChange: -71955.625
     state: Opening
     type: Door
   - inputs:
@@ -76637,7 +76848,7 @@ entities:
   - pos: -21.5,48.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -62723
+  - SecondsUntilStateChange: -71955.625
     state: Opening
     type: Door
   - inputs:
@@ -76843,7 +77054,7 @@ entities:
   - pos: 59.5,-6.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -6900.343
+  - SecondsUntilStateChange: -16132.973
     state: Opening
     type: Door
   - inputs:
@@ -79816,7 +80027,7 @@ entities:
   - pos: -21.5,49.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -62723
+  - SecondsUntilStateChange: -71955.625
     state: Opening
     type: Door
   - inputs:
@@ -79839,7 +80050,7 @@ entities:
   - pos: -21.5,47.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -62723
+  - SecondsUntilStateChange: -71955.625
     state: Opening
     type: Door
   - inputs:
@@ -80830,7 +81041,7 @@ entities:
     pos: 3.5,-19.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -117935.734
+  - SecondsUntilStateChange: -127168.36
     state: Opening
     type: Door
   - inputs:
@@ -80847,7 +81058,7 @@ entities:
     pos: 2.5,-19.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -117935.734
+  - SecondsUntilStateChange: -127168.36
     state: Opening
     type: Door
   - inputs:
@@ -80911,7 +81122,7 @@ entities:
   - pos: 1.5,-8.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -117935.734
+  - SecondsUntilStateChange: -127168.36
     state: Opening
     type: Door
   - inputs:
@@ -80927,7 +81138,7 @@ entities:
   - pos: 2.5,-8.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -117935.734
+  - SecondsUntilStateChange: -127168.36
     state: Opening
     type: Door
   - inputs:
@@ -80943,7 +81154,7 @@ entities:
   - pos: 3.5,-8.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -117935.734
+  - SecondsUntilStateChange: -127168.36
     state: Opening
     type: Door
   - inputs:
@@ -80959,7 +81170,7 @@ entities:
   - pos: 5.5,-8.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -117935.734
+  - SecondsUntilStateChange: -127168.36
     state: Opening
     type: Door
   - inputs:
@@ -80975,7 +81186,7 @@ entities:
   - pos: 6.5,-8.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -117935.734
+  - SecondsUntilStateChange: -127168.36
     state: Opening
     type: Door
   - inputs:
@@ -80991,7 +81202,7 @@ entities:
   - pos: 7.5,-8.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -117935.734
+  - SecondsUntilStateChange: -127168.36
     state: Opening
     type: Door
   - inputs:
@@ -81007,7 +81218,7 @@ entities:
   - pos: 8.5,-8.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -117935.734
+  - SecondsUntilStateChange: -127168.36
     state: Opening
     type: Door
   - inputs:
@@ -81023,7 +81234,7 @@ entities:
   - pos: 9.5,-8.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -117935.734
+  - SecondsUntilStateChange: -127168.36
     state: Opening
     type: Door
   - inputs:
@@ -81039,7 +81250,7 @@ entities:
   - pos: 11.5,-8.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -117935.734
+  - SecondsUntilStateChange: -127168.36
     state: Opening
     type: Door
   - inputs:
@@ -81055,7 +81266,7 @@ entities:
   - pos: 12.5,-8.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -117935.734
+  - SecondsUntilStateChange: -127168.36
     state: Opening
     type: Door
   - inputs:
@@ -81071,7 +81282,7 @@ entities:
   - pos: 13.5,-8.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -117935.734
+  - SecondsUntilStateChange: -127168.36
     state: Opening
     type: Door
   - inputs:
@@ -81087,7 +81298,7 @@ entities:
   - pos: 14.5,-8.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -117935.734
+  - SecondsUntilStateChange: -127168.36
     state: Opening
     type: Door
   - inputs:
@@ -81104,7 +81315,7 @@ entities:
     pos: 16.5,-11.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -117935.734
+  - SecondsUntilStateChange: -127168.36
     state: Opening
     type: Door
   - inputs:
@@ -81966,7 +82177,7 @@ entities:
     pos: 16.5,-10.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -117935.734
+  - SecondsUntilStateChange: -127168.36
     state: Opening
     type: Door
   - inputs:
@@ -81983,7 +82194,7 @@ entities:
     pos: -1.5,-11.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -117935.734
+  - SecondsUntilStateChange: -127168.36
     state: Opening
     type: Door
   - inputs:
@@ -84726,7 +84937,7 @@ entities:
     pos: -1.5,-10.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -117935.734
+  - SecondsUntilStateChange: -127168.36
     state: Opening
     type: Door
   - inputs:
@@ -86078,7 +86289,7 @@ entities:
     pos: 25.5,64.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -18052.598
+  - SecondsUntilStateChange: -27285.229
     state: Opening
     type: Door
   - inputs:
@@ -87342,7 +87553,7 @@ entities:
     parent: 82
     type: Transform
 - uid: 7898
-  type: ComputerIFF
+  type: ComputerBroken
   components:
   - pos: 78.5,-1.5
     parent: 82
@@ -87472,10 +87683,9 @@ entities:
     parent: 82
     type: Transform
 - uid: 7918
-  type: TableCounterMetal
+  type: CableApcExtension
   components:
-  - rot: 3.141592653589793 rad
-    pos: 34.5,50.5
+  - pos: -42.5,-35.5
     parent: 82
     type: Transform
 - uid: 7919
@@ -87528,10 +87738,9 @@ entities:
     parent: 82
     type: Transform
 - uid: 7926
-  type: TableCounterMetal
+  type: CableApcExtension
   components:
-  - rot: 3.141592653589793 rad
-    pos: 34.5,51.5
+  - pos: -44.5,-35.5
     parent: 82
     type: Transform
 - uid: 7927
@@ -87575,42 +87784,42 @@ entities:
     parent: 82
     type: Transform
 - uid: 7933
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -58.5,-6.5
     parent: 82
     type: Transform
 - uid: 7934
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -59.5,-6.5
     parent: 82
     type: Transform
 - uid: 7935
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -60.5,-6.5
     parent: 82
     type: Transform
 - uid: 7936
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -60.5,-7.5
     parent: 82
     type: Transform
 - uid: 7937
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -59.5,-7.5
     parent: 82
     type: Transform
 - uid: 7938
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -59.5,-4.5
@@ -89082,7 +89291,7 @@ entities:
     parent: 82
     type: Transform
 - uid: 8142
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -60.5,-8.5
@@ -90992,7 +91201,7 @@ entities:
     parent: 82
     type: Transform
 - uid: 8433
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -59.5,-8.5
@@ -91069,224 +91278,224 @@ entities:
     parent: 82
     type: Transform
 - uid: 8444
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -60.5,-9.5
     parent: 82
     type: Transform
 - uid: 8445
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -61.5,-8.5
     parent: 82
     type: Transform
 - uid: 8446
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -62.5,-8.5
     parent: 82
     type: Transform
 - uid: 8447
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -62.5,-9.5
     parent: 82
     type: Transform
 - uid: 8448
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -62.5,-10.5
     parent: 82
     type: Transform
 - uid: 8449
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -61.5,-10.5
     parent: 82
     type: Transform
 - uid: 8450
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -60.5,-10.5
     parent: 82
     type: Transform
 - uid: 8451
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -60.5,-11.5
     parent: 82
     type: Transform
 - uid: 8452
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -59.5,-11.5
     parent: 82
     type: Transform
 - uid: 8453
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -60.5,-12.5
     parent: 82
     type: Transform
 - uid: 8454
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -59.5,-12.5
     parent: 82
     type: Transform
 - uid: 8455
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -59.5,-13.5
     parent: 82
     type: Transform
 - uid: 8456
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -60.5,-13.5
     parent: 82
     type: Transform
 - uid: 8457
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -59.5,-14.5
     parent: 82
     type: Transform
 - uid: 8458
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -60.5,-14.5
     parent: 82
     type: Transform
 - uid: 8459
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -61.5,-14.5
     parent: 82
     type: Transform
 - uid: 8460
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -62.5,-15.5
     parent: 82
     type: Transform
 - uid: 8461
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -61.5,-15.5
     parent: 82
     type: Transform
 - uid: 8462
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -63.5,-15.5
     parent: 82
     type: Transform
 - uid: 8463
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -63.5,-16.5
     parent: 82
     type: Transform
 - uid: 8464
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -62.5,-16.5
     parent: 82
     type: Transform
 - uid: 8465
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -64.5,-17.5
     parent: 82
     type: Transform
 - uid: 8466
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -64.5,-18.5
     parent: 82
     type: Transform
 - uid: 8467
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -63.5,-18.5
     parent: 82
     type: Transform
 - uid: 8468
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -62.5,-18.5
     parent: 82
     type: Transform
 - uid: 8469
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -65.5,-18.5
     parent: 82
     type: Transform
 - uid: 8470
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -65.5,-19.5
     parent: 82
     type: Transform
 - uid: 8471
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -64.5,-19.5
     parent: 82
     type: Transform
 - uid: 8472
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -58.5,-13.5
     parent: 82
     type: Transform
 - uid: 8473
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -58.5,-14.5
     parent: 82
     type: Transform
 - uid: 8474
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -58.5,-15.5
     parent: 82
     type: Transform
 - uid: 8475
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -58.5,-16.5
@@ -91398,70 +91607,70 @@ entities:
     parent: 82
     type: Transform
 - uid: 8491
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -61.5,-19.5
     parent: 82
     type: Transform
 - uid: 8492
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -63.5,-22.5
     parent: 82
     type: Transform
 - uid: 8493
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -58.5,-19.5
     parent: 82
     type: Transform
 - uid: 8494
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -57.5,-9.5
     parent: 82
     type: Transform
 - uid: 8495
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -57.5,-12.5
     parent: 82
     type: Transform
 - uid: 8496
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -63.5,-12.5
     parent: 82
     type: Transform
 - uid: 8497
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -63.5,-13.5
     parent: 82
     type: Transform
 - uid: 8498
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -65.5,-14.5
     parent: 82
     type: Transform
 - uid: 8499
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -65.5,-13.5
     parent: 82
     type: Transform
 - uid: 8500
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -66.5,-14.5
@@ -91930,7 +92139,7 @@ entities:
     parent: 82
     type: Transform
 - uid: 8567
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -49.5,24.5
@@ -92048,98 +92257,98 @@ entities:
     parent: 82
     type: Transform
 - uid: 8584
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -49.5,23.5
     parent: 82
     type: Transform
 - uid: 8585
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -49.5,22.5
     parent: 82
     type: Transform
 - uid: 8586
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -49.5,21.5
     parent: 82
     type: Transform
 - uid: 8587
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -50.5,21.5
     parent: 82
     type: Transform
 - uid: 8588
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -50.5,22.5
     parent: 82
     type: Transform
 - uid: 8589
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -50.5,23.5
     parent: 82
     type: Transform
 - uid: 8590
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -50.5,24.5
     parent: 82
     type: Transform
 - uid: 8591
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -51.5,24.5
     parent: 82
     type: Transform
 - uid: 8592
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -51.5,23.5
     parent: 82
     type: Transform
 - uid: 8593
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -51.5,22.5
     parent: 82
     type: Transform
 - uid: 8594
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -51.5,21.5
     parent: 82
     type: Transform
 - uid: 8595
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -50.5,25.5
     parent: 82
     type: Transform
 - uid: 8596
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -49.5,25.5
     parent: 82
     type: Transform
 - uid: 8597
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: -1.5707963267948966 rad
     pos: -49.5,26.5
@@ -92507,271 +92716,271 @@ entities:
     parent: 82
     type: Transform
 - uid: 8654
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -67.5,-38.5
     parent: 82
     type: Transform
 - uid: 8655
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -67.5,-39.5
     parent: 82
     type: Transform
 - uid: 8656
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -68.5,-39.5
     parent: 82
     type: Transform
 - uid: 8657
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -68.5,-38.5
     parent: 82
     type: Transform
 - uid: 8658
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -68.5,-40.5
     parent: 82
     type: Transform
 - uid: 8659
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -69.5,-40.5
     parent: 82
     type: Transform
 - uid: 8660
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -69.5,-42.5
     parent: 82
     type: Transform
 - uid: 8661
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -70.5,-42.5
     parent: 82
     type: Transform
 - uid: 8662
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -70.5,-43.5
     parent: 82
     type: Transform
 - uid: 8663
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -69.5,-44.5
     parent: 82
     type: Transform
 - uid: 8664
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -70.5,-44.5
     parent: 82
     type: Transform
 - uid: 8665
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -69.5,-45.5
     parent: 82
     type: Transform
 - uid: 8666
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -69.5,-46.5
     parent: 82
     type: Transform
 - uid: 8667
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -70.5,-46.5
     parent: 82
     type: Transform
 - uid: 8668
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -71.5,-46.5
     parent: 82
     type: Transform
 - uid: 8669
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -71.5,-47.5
     parent: 82
     type: Transform
 - uid: 8670
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -70.5,-47.5
     parent: 82
     type: Transform
 - uid: 8671
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -69.5,-48.5
     parent: 82
     type: Transform
 - uid: 8672
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -68.5,-48.5
     parent: 82
     type: Transform
 - uid: 8673
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -68.5,-49.5
     parent: 82
     type: Transform
 - uid: 8674
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -67.5,-49.5
     parent: 82
     type: Transform
 - uid: 8675
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -67.5,-50.5
     parent: 82
     type: Transform
 - uid: 8676
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -67.5,-51.5
     parent: 82
     type: Transform
 - uid: 8677
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -66.5,-50.5
     parent: 82
     type: Transform
 - uid: 8678
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -66.5,-49.5
     parent: 82
     type: Transform
 - uid: 8679
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -65.5,-49.5
     parent: 82
     type: Transform
 - uid: 8680
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -65.5,-48.5
     parent: 82
     type: Transform
 - uid: 8681
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -64.5,-48.5
     parent: 82
     type: Transform
 - uid: 8682
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -63.5,-48.5
     parent: 82
     type: Transform
 - uid: 8683
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -63.5,-49.5
     parent: 82
     type: Transform
 - uid: 8684
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -62.5,-51.5
     parent: 82
     type: Transform
 - uid: 8685
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -61.5,-51.5
     parent: 82
     type: Transform
 - uid: 8686
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -59.5,-48.5
     parent: 82
     type: Transform
 - uid: 8687
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -57.5,-50.5
     parent: 82
     type: Transform
 - uid: 8688
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -53.5,-53.5
     parent: 82
     type: Transform
 - uid: 8689
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -52.5,-53.5
     parent: 82
     type: Transform
 - uid: 8690
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -52.5,-52.5
     parent: 82
     type: Transform
 - uid: 8691
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -51.5,-52.5
     parent: 82
     type: Transform
 - uid: 8692
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -52.5,-51.5
     parent: 82
     type: Transform
 - uid: 8693
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -53.5,-51.5
     parent: 82
     type: Transform
 - uid: 8694
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -53.5,-50.5
     parent: 82
     type: Transform
 - uid: 8695
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -50.5,-51.5
     parent: 82
     type: Transform
 - uid: 8696
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -48.5,-50.5
     parent: 82
     type: Transform
 - uid: 8697
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -47.5,-51.5
     parent: 82
     type: Transform
 - uid: 8698
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -47.5,-50.5
     parent: 82
@@ -94009,7 +94218,7 @@ entities:
     pos: -39.5,-42.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -11003.876
+  - SecondsUntilStateChange: -20236.508
     state: Opening
     type: Door
 - uid: 8897
@@ -94187,37 +94396,37 @@ entities:
     parent: 82
     type: Transform
 - uid: 8926
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -30.5,-49.5
     parent: 82
     type: Transform
 - uid: 8927
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -30.5,-50.5
     parent: 82
     type: Transform
 - uid: 8928
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -29.5,-50.5
     parent: 82
     type: Transform
 - uid: 8929
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -28.5,-50.5
     parent: 82
     type: Transform
 - uid: 8930
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -28.5,-49.5
     parent: 82
     type: Transform
 - uid: 8931
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -28.5,-48.5
     parent: 82
@@ -94241,31 +94450,31 @@ entities:
     parent: 82
     type: Transform
 - uid: 8935
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -23.5,-50.5
     parent: 82
     type: Transform
 - uid: 8936
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -22.5,-51.5
     parent: 82
     type: Transform
 - uid: 8937
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -21.5,-50.5
     parent: 82
     type: Transform
 - uid: 8938
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -21.5,-49.5
     parent: 82
     type: Transform
 - uid: 8939
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -20.5,-49.5
     parent: 82
@@ -101018,49 +101227,49 @@ entities:
     parent: 82
     type: Transform
 - uid: 9974
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -44.5,12.5
     parent: 82
     type: Transform
 - uid: 9975
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -41.5,13.5
     parent: 82
     type: Transform
 - uid: 9976
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -40.5,12.5
     parent: 82
     type: Transform
 - uid: 9977
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -38.5,13.5
     parent: 82
     type: Transform
 - uid: 9978
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -39.5,14.5
     parent: 82
     type: Transform
 - uid: 9979
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -39.5,13.5
     parent: 82
     type: Transform
 - uid: 9980
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -45.5,-3.5
     parent: 82
     type: Transform
 - uid: 9981
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -40.5,13.5
     parent: 82
@@ -101114,13 +101323,13 @@ entities:
     parent: 82
     type: Transform
 - uid: 9990
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -44.5,-2.5
     parent: 82
     type: Transform
 - uid: 9991
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: -44.5,-3.5
     parent: 82
@@ -102957,9 +103166,9 @@ entities:
     parent: 82
     type: Transform
 - uid: 10240
-  type: AirlockMedicalGlassLocked
+  type: TableReinforced
   components:
-  - pos: -36.5,-29.5
+  - pos: 34.5,51.5
     parent: 82
     type: Transform
 - uid: 10241
@@ -103005,7 +103214,7 @@ entities:
     parent: 82
     type: Transform
 - uid: 10248
-  type: AirlockMedical
+  type: AirlockMedicalLocked
   components:
   - pos: -34.5,-37.5
     parent: 82
@@ -103046,7 +103255,7 @@ entities:
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 10254
-  type: AirlockMedical
+  type: AirlockMedicalLocked
   components:
   - pos: -55.5,-29.5
     parent: 82
@@ -104156,7 +104365,7 @@ entities:
   - pos: 62.5,-6.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -6900.343
+  - SecondsUntilStateChange: -16132.973
     state: Opening
     type: Door
   - inputs:
@@ -109090,7 +109299,7 @@ entities:
     parent: 82
     type: Transform
 - uid: 11188
-  type: AirlockMedicalGlass
+  type: AirlockMedicalGlassLocked
   components:
   - pos: -20.5,-29.5
     parent: 82
@@ -110724,11 +110933,14 @@ entities:
     parent: 82
     type: Transform
 - uid: 11437
-  type: PortableFlasher
+  type: Poweredlight
   components:
-  - pos: 40.5,-9.5
+  - rot: 1.5707963267948966 rad
+    pos: 51.5,-12.5
     parent: 82
     type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
 - uid: 11438
   type: SurveillanceCameraMedical
   components:
@@ -113563,28 +113775,28 @@ entities:
     parent: 82
     type: Transform
 - uid: 11887
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: 3.141592653589793 rad
     pos: -40.5,4.5
     parent: 82
     type: Transform
 - uid: 11888
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: 3.141592653589793 rad
     pos: -41.5,3.5
     parent: 82
     type: Transform
 - uid: 11889
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: 3.141592653589793 rad
     pos: -39.5,5.5
     parent: 82
     type: Transform
 - uid: 11890
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: 3.141592653589793 rad
     pos: -40.5,5.5
@@ -113640,35 +113852,35 @@ entities:
     parent: 82
     type: Transform
 - uid: 11898
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: 3.141592653589793 rad
     pos: -46.5,2.5
     parent: 82
     type: Transform
 - uid: 11899
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: 3.141592653589793 rad
     pos: -46.5,1.5
     parent: 82
     type: Transform
 - uid: 11900
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: 3.141592653589793 rad
     pos: -46.5,0.5
     parent: 82
     type: Transform
 - uid: 11901
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: 3.141592653589793 rad
     pos: -45.5,1.5
     parent: 82
     type: Transform
 - uid: 11902
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - rot: 3.141592653589793 rad
     pos: -45.5,0.5
@@ -117393,7 +117605,7 @@ entities:
   - pos: -8.5,32.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -16744.486
+  - SecondsUntilStateChange: -25977.117
     state: Opening
     type: Door
   - inputs:
@@ -117409,7 +117621,7 @@ entities:
   - pos: -9.5,32.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -16744.486
+  - SecondsUntilStateChange: -25977.117
     state: Opening
     type: Door
   - inputs:
@@ -117425,7 +117637,7 @@ entities:
   - pos: -7.5,32.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -16744.486
+  - SecondsUntilStateChange: -25977.117
     state: Opening
     type: Door
   - inputs:
@@ -117449,7 +117661,7 @@ entities:
     pos: -6.5,34.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -16744.486
+  - SecondsUntilStateChange: -25977.117
     state: Opening
     type: Door
   - inputs:
@@ -117466,7 +117678,7 @@ entities:
     pos: -6.5,35.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -16744.486
+  - SecondsUntilStateChange: -25977.117
     state: Opening
     type: Door
   - inputs:
@@ -130086,7 +130298,7 @@ entities:
   - pos: 60.5,-6.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -6900.343
+  - SecondsUntilStateChange: -16132.973
     state: Opening
     type: Door
   - inputs:
@@ -137977,6 +138189,12 @@ entities:
   - pos: 27.5,40.5
     parent: 82
     type: Transform
+- uid: 15065
+  type: TableReinforced
+  components:
+  - pos: 34.5,50.5
+    parent: 82
+    type: Transform
 - uid: 15066
   type: CableApcExtension
   components:
@@ -137993,6 +138211,30 @@ entities:
   type: CableApcExtension
   components:
   - pos: 27.5,46.5
+    parent: 82
+    type: Transform
+- uid: 15069
+  type: AirlockChemistryLocked
+  components:
+  - pos: -36.5,-29.5
+    parent: 82
+    type: Transform
+- uid: 15070
+  type: CableApcExtension
+  components:
+  - pos: 21.5,-86.5
+    parent: 82
+    type: Transform
+- uid: 15071
+  type: CableApcExtension
+  components:
+  - pos: 21.5,-85.5
+    parent: 82
+    type: Transform
+- uid: 15072
+  type: CableApcExtension
+  components:
+  - pos: 21.5,-84.5
     parent: 82
     type: Transform
 - uid: 15073
@@ -139478,37 +139720,37 @@ entities:
     parent: 82
     type: Transform
 - uid: 15318
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: 39.5,64.5
     parent: 82
     type: Transform
 - uid: 15319
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: 39.5,63.5
     parent: 82
     type: Transform
 - uid: 15320
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: 38.5,64.5
     parent: 82
     type: Transform
 - uid: 15321
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: 40.5,64.5
     parent: 82
     type: Transform
 - uid: 15322
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: 41.5,64.5
     parent: 82
     type: Transform
 - uid: 15323
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: 42.5,63.5
     parent: 82
@@ -139652,7 +139894,7 @@ entities:
     parent: 82
     type: Transform
 - uid: 15347
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: 47.5,56.5
     parent: 82
@@ -139730,61 +139972,61 @@ entities:
     parent: 82
     type: Transform
 - uid: 15360
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: 50.5,50.5
     parent: 82
     type: Transform
 - uid: 15361
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: 52.5,48.5
     parent: 82
     type: Transform
 - uid: 15362
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: 50.5,48.5
     parent: 82
     type: Transform
 - uid: 15363
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: 51.5,44.5
     parent: 82
     type: Transform
 - uid: 15364
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: 50.5,43.5
     parent: 82
     type: Transform
 - uid: 15365
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: 49.5,42.5
     parent: 82
     type: Transform
 - uid: 15366
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: 50.5,41.5
     parent: 82
     type: Transform
 - uid: 15367
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: 52.5,43.5
     parent: 82
     type: Transform
 - uid: 15368
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: 52.5,46.5
     parent: 82
     type: Transform
 - uid: 15369
-  type: AsteroidRockMining
+  type: AsteroidRock
   components:
   - pos: 50.5,47.5
     parent: 82
@@ -143318,7 +143560,7 @@ entities:
     pos: -39.5,-44.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -10828.894
+  - SecondsUntilStateChange: -20061.525
     state: Opening
     type: Door
 - uid: 15912
@@ -164950,7 +165192,7 @@ entities:
     pos: -46.5,-34.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -9685.631
+  - SecondsUntilStateChange: -18918.262
     state: Opening
     type: Door
   - inputs:
@@ -173308,6 +173550,12 @@ entities:
   - pos: 29.5,61.5
     parent: 82
     type: Transform
+- uid: 20669
+  type: CableApcExtension
+  components:
+  - pos: 21.5,-83.5
+    parent: 82
+    type: Transform
 - uid: 20670
   type: Wrench
   components:
@@ -179231,7 +179479,7 @@ entities:
     pos: 12.5,-19.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -117935.734
+  - SecondsUntilStateChange: -127168.36
     state: Opening
     type: Door
   - inputs:
@@ -179309,6 +179557,41 @@ entities:
   - pos: 39.5,27.5
     parent: 82
     type: Transform
+  - outputs:
+      Left:
+      - port: Forward
+        uid: 3395
+      - port: Forward
+        uid: 3394
+      - port: Forward
+        uid: 3393
+      - port: Forward
+        uid: 3392
+      - port: Forward
+        uid: 3391
+      Right:
+      - port: Reverse
+        uid: 3395
+      - port: Reverse
+        uid: 3394
+      - port: Reverse
+        uid: 3393
+      - port: Reverse
+        uid: 3392
+      - port: Reverse
+        uid: 3391
+      Middle:
+      - port: Off
+        uid: 3395
+      - port: Off
+        uid: 3394
+      - port: Off
+        uid: 3393
+      - port: Off
+        uid: 3392
+      - port: Off
+        uid: 3391
+    type: SignalTransmitter
 - uid: 21635
   type: ChairOfficeDark
   components:
@@ -179932,7 +180215,7 @@ entities:
     pos: 11.5,-19.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -117935.734
+  - SecondsUntilStateChange: -127168.36
     state: Opening
     type: Door
   - inputs:
@@ -180586,7 +180869,7 @@ entities:
     pos: 10.5,-19.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -117935.734
+  - SecondsUntilStateChange: -127168.36
     state: Opening
     type: Door
   - inputs:
@@ -180603,7 +180886,7 @@ entities:
     pos: 4.5,-19.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -117935.734
+  - SecondsUntilStateChange: -127168.36
     state: Opening
     type: Door
   - inputs:
@@ -180619,7 +180902,7 @@ entities:
   - pos: 0.5,-8.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -117935.734
+  - SecondsUntilStateChange: -127168.36
     state: Opening
     type: Door
   - inputs:
@@ -188285,7 +188568,7 @@ entities:
     pos: -6.5,33.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -16744.486
+  - SecondsUntilStateChange: -25977.117
     state: Opening
     type: Door
   - inputs:
@@ -201376,7 +201659,7 @@ entities:
   - pos: -26.5,60.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -62736.348
+  - SecondsUntilStateChange: -71968.98
     state: Closing
     type: Door
   - inputs:
@@ -201392,7 +201675,7 @@ entities:
   - pos: -24.5,60.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -62736.348
+  - SecondsUntilStateChange: -71968.98
     state: Closing
     type: Door
   - inputs:
@@ -201429,7 +201712,7 @@ entities:
   - pos: -25.5,60.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -62736.348
+  - SecondsUntilStateChange: -71968.98
     state: Closing
     type: Door
   - inputs:
@@ -201606,7 +201889,7 @@ entities:
   - pos: -23.5,60.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -62736.348
+  - SecondsUntilStateChange: -71968.98
     state: Closing
     type: Door
   - inputs:
@@ -202194,7 +202477,7 @@ entities:
   - pos: -27.5,60.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -62736.348
+  - SecondsUntilStateChange: -71968.98
     state: Closing
     type: Door
   - inputs:
@@ -205813,7 +206096,7 @@ entities:
   - pos: -10.5,32.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -16744.486
+  - SecondsUntilStateChange: -25977.117
     state: Opening
     type: Door
   - inputs:
@@ -205869,7 +206152,7 @@ entities:
     pos: 25.5,65.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -18052.598
+  - SecondsUntilStateChange: -27285.229
     state: Opening
     type: Door
   - inputs:
@@ -205885,7 +206168,7 @@ entities:
   - pos: 28.5,67.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -18052.598
+  - SecondsUntilStateChange: -27285.229
     state: Opening
     type: Door
   - inputs:
@@ -205901,7 +206184,7 @@ entities:
   - pos: 27.5,67.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -18052.598
+  - SecondsUntilStateChange: -27285.229
     state: Opening
     type: Door
   - inputs:
@@ -205917,7 +206200,7 @@ entities:
   - pos: 28.5,62.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -18052.598
+  - SecondsUntilStateChange: -27285.229
     state: Opening
     type: Door
   - inputs:
@@ -205933,7 +206216,7 @@ entities:
   - pos: 26.5,62.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -18052.598
+  - SecondsUntilStateChange: -27285.229
     state: Opening
     type: Door
   - inputs:
@@ -205949,7 +206232,7 @@ entities:
   - pos: 27.5,62.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -18052.598
+  - SecondsUntilStateChange: -27285.229
     state: Opening
     type: Door
   - inputs:
@@ -206009,7 +206292,7 @@ entities:
     pos: -6.5,36.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -16744.486
+  - SecondsUntilStateChange: -25977.117
     state: Opening
     type: Door
   - inputs:
@@ -206112,6 +206395,12 @@ entities:
       machine_parts: !type:Container
         ents: []
     type: ContainerContainer
+- uid: 25188
+  type: CableApcExtension
+  components:
+  - pos: 21.5,-82.5
+    parent: 82
+    type: Transform
 - uid: 25189
   type: SignalButton
   components:
@@ -206346,7 +206635,7 @@ entities:
   - pos: -41.5,-40.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -10830.81
+  - SecondsUntilStateChange: -20063.441
     state: Opening
     type: Door
 - uid: 25220
@@ -206386,7 +206675,7 @@ entities:
     pos: -46.5,-35.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -9685.631
+  - SecondsUntilStateChange: -18918.262
     state: Opening
     type: Door
   - inputs:
@@ -206402,7 +206691,7 @@ entities:
   - pos: -45.5,-33.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -9685.631
+  - SecondsUntilStateChange: -18918.262
     state: Opening
     type: Door
   - inputs:
@@ -206418,7 +206707,7 @@ entities:
   - pos: -44.5,-33.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -9685.631
+  - SecondsUntilStateChange: -18918.262
     state: Opening
     type: Door
   - inputs:
@@ -206434,7 +206723,7 @@ entities:
   - pos: -42.5,-33.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -9685.631
+  - SecondsUntilStateChange: -18918.262
     state: Opening
     type: Door
   - inputs:
@@ -206450,7 +206739,7 @@ entities:
   - pos: -41.5,-33.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -9685.631
+  - SecondsUntilStateChange: -18918.262
     state: Opening
     type: Door
   - inputs:
@@ -206767,7 +207056,7 @@ entities:
   - pos: 61.5,-6.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -6900.343
+  - SecondsUntilStateChange: -16132.973
     state: Opening
     type: Door
   - inputs:
@@ -206798,7 +207087,7 @@ entities:
     pos: 57.5,-7.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -6900.343
+  - SecondsUntilStateChange: -16132.973
     state: Opening
     type: Door
   - inputs:
@@ -206815,7 +207104,7 @@ entities:
     pos: 57.5,-8.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -6900.343
+  - SecondsUntilStateChange: -16132.973
     state: Opening
     type: Door
   - inputs:
@@ -206832,7 +207121,7 @@ entities:
     pos: 57.5,-10.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -6900.343
+  - SecondsUntilStateChange: -16132.973
     state: Opening
     type: Door
   - inputs:
@@ -206849,7 +207138,7 @@ entities:
     pos: 57.5,-11.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -6900.343
+  - SecondsUntilStateChange: -16132.973
     state: Opening
     type: Door
   - inputs:
@@ -206866,7 +207155,7 @@ entities:
     pos: 57.5,-9.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -6900.343
+  - SecondsUntilStateChange: -16132.973
     state: Opening
     type: Door
   - inputs:
@@ -206883,7 +207172,7 @@ entities:
     pos: 59.5,-14.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -6900.343
+  - SecondsUntilStateChange: -16132.973
     state: Opening
     type: Door
   - inputs:
@@ -206900,7 +207189,7 @@ entities:
     pos: 59.5,-15.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -6900.343
+  - SecondsUntilStateChange: -16132.973
     state: Opening
     type: Door
   - inputs:
@@ -207175,6 +207464,262 @@ entities:
   type: CableApcExtension
   components:
   - pos: 34.5,32.5
+    parent: 82
+    type: Transform
+- uid: 25312
+  type: CableApcExtension
+  components:
+  - pos: 21.5,-81.5
+    parent: 82
+    type: Transform
+- uid: 25313
+  type: CableApcExtension
+  components:
+  - pos: 19.5,-86.5
+    parent: 82
+    type: Transform
+- uid: 25314
+  type: CableApcExtension
+  components:
+  - pos: 19.5,-85.5
+    parent: 82
+    type: Transform
+- uid: 25315
+  type: CableApcExtension
+  components:
+  - pos: 19.5,-84.5
+    parent: 82
+    type: Transform
+- uid: 25316
+  type: CableApcExtension
+  components:
+  - pos: 19.5,-83.5
+    parent: 82
+    type: Transform
+- uid: 25317
+  type: CableApcExtension
+  components:
+  - pos: 19.5,-82.5
+    parent: 82
+    type: Transform
+- uid: 25318
+  type: CableApcExtension
+  components:
+  - pos: 19.5,-81.5
+    parent: 82
+    type: Transform
+- uid: 25319
+  type: Poweredlight
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -37.5,-27.5
+    parent: 82
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+- uid: 25320
+  type: Poweredlight
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -29.5,-14.5
+    parent: 82
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+- uid: 25321
+  type: Poweredlight
+  components:
+  - pos: -50.5,-26.5
+    parent: 82
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+- uid: 25322
+  type: AtmosDeviceFanTiny
+  components:
+  - anchored: True
+    pos: 49.5,21.5
+    parent: 82
+    type: Transform
+- uid: 25323
+  type: AtmosDeviceFanTiny
+  components:
+  - anchored: True
+    pos: 49.5,23.5
+    parent: 82
+    type: Transform
+- uid: 25324
+  type: PortableFlasher
+  components:
+  - pos: 49.5,-16.5
+    parent: 82
+    type: Transform
+- uid: 25325
+  type: DisposalPipe
+  components:
+  - pos: 27.5,57.5
+    parent: 82
+    type: Transform
+- uid: 25326
+  type: SignalButton
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 47.5,19.5
+    parent: 82
+    type: Transform
+  - outputs:
+      Pressed:
+      - port: Toggle
+        uid: 699
+    type: SignalTransmitter
+- uid: 25327
+  type: SignalButton
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 48.5,19.5
+    parent: 82
+    type: Transform
+  - outputs:
+      Pressed:
+      - port: Toggle
+        uid: 1424
+    type: SignalTransmitter
+- uid: 25328
+  type: SignalButton
+  components:
+  - pos: 47.5,25.5
+    parent: 82
+    type: Transform
+  - outputs:
+      Pressed:
+      - port: Toggle
+        uid: 700
+    type: SignalTransmitter
+- uid: 25329
+  type: SignalButton
+  components:
+  - pos: 48.5,25.5
+    parent: 82
+    type: Transform
+  - outputs:
+      Pressed:
+      - port: Toggle
+        uid: 1425
+    type: SignalTransmitter
+- uid: 25330
+  type: TwoWayLever
+  components:
+  - pos: 45.5,25.5
+    parent: 82
+    type: Transform
+  - outputs:
+      Left:
+      - port: Forward
+        uid: 1458
+      - port: Forward
+        uid: 1457
+      - port: Forward
+        uid: 1456
+      - port: Forward
+        uid: 1294
+      - port: Forward
+        uid: 1455
+      Right:
+      - port: Reverse
+        uid: 1458
+      - port: Reverse
+        uid: 1457
+      - port: Reverse
+        uid: 1456
+      - port: Reverse
+        uid: 1294
+      - port: Reverse
+        uid: 1455
+      Middle:
+      - port: Off
+        uid: 1458
+      - port: Off
+        uid: 1457
+      - port: Off
+        uid: 1456
+      - port: Off
+        uid: 1294
+      - port: Off
+        uid: 1455
+    type: SignalTransmitter
+- uid: 25331
+  type: TwoWayLever
+  components:
+  - pos: 45.5,19.5
+    parent: 82
+    type: Transform
+  - outputs:
+      Left:
+      - port: Forward
+        uid: 1470
+      - port: Forward
+        uid: 1471
+      - port: Forward
+        uid: 1472
+      - port: Forward
+        uid: 1473
+      - port: Forward
+        uid: 1474
+      Right:
+      - port: Reverse
+        uid: 1470
+      - port: Reverse
+        uid: 1471
+      - port: Reverse
+        uid: 1472
+      - port: Reverse
+        uid: 1473
+      - port: Reverse
+        uid: 1474
+      Middle:
+      - port: Off
+        uid: 1470
+      - port: Off
+        uid: 1471
+      - port: Off
+        uid: 1472
+      - port: Off
+        uid: 1473
+      - port: Off
+        uid: 1474
+    type: SignalTransmitter
+- uid: 25332
+  type: PoweredSmallLight
+  components:
+  - pos: 22.5,27.5
+    parent: 82
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+  - inputs:
+      On: []
+      Off: []
+      Toggle: []
+    type: SignalReceiver
+- uid: 25333
+  type: SpawnPointServiceWorker
+  components:
+  - pos: -13.5,24.5
+    parent: 82
+    type: Transform
+- uid: 25334
+  type: SpawnPointServiceWorker
+  components:
+  - pos: -14.5,24.5
+    parent: 82
+    type: Transform
+- uid: 25335
+  type: SpawnPointServiceWorker
+  components:
+  - pos: -30.5,-14.5
     parent: 82
     type: Transform
 ...
