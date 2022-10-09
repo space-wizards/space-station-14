@@ -1,9 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Kudzu now grows slower and should be easier to contain., type: Tweak}
-  id: 1915
-  time: '2022-07-09T16:40:43.0000000+00:00'
 - author: themias
   changes:
   - {message: You can now knock on shutters., type: Tweak}
@@ -2934,3 +2929,8 @@ Entries:
       objectives.', type: Add}
   id: 2414
   time: '2022-10-09T19:09:45.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: All salvages with asteroids now have higher ore yield., type: Tweak}
+  id: 2415
+  time: '2022-10-09T19:13:30.0000000+00:00'
