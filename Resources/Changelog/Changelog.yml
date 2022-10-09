@@ -1,11 +1,4 @@
 Entries:
-- author: Rinkashikachi
-  changes:
-  - {message: added item name to order manifest, type: Add}
-  - {message: added approvers full name and job title to order manifest, type: Add}
-  - {message: added order manifest to shuttle orders, type: Add}
-  id: 1914
-  time: '2022-07-09T13:48:57.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Kudzu now grows slower and should be easier to contain., type: Tweak}
@@ -2933,3 +2926,11 @@ Entries:
   - {message: Fixed not being able to deconstruct several machines., type: Fix}
   id: 2413
   time: '2022-10-09T18:38:36.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: You'll no longer be tasked to keep 'fellow traitor' yourself alive.
+      That objective now checks that you aren't getting yourself as a target., type: Fix}
+  - {message: 'New objective: Ensure another traitor completes at like half of their
+      objectives.', type: Add}
+  id: 2414
+  time: '2022-10-09T19:09:45.0000000+00:00'
