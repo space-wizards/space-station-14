@@ -1,10 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Glass shards and d4 dice now deal damage to people who walk over them
-      barefoot., type: Add}
-  id: 1918
-  time: '2022-07-10T09:28:37.0000000+00:00'
 - author: Elijahrane
   changes:
   - {message: Forensic pads and reports now label which entity they are from. Detectives
@@ -2938,3 +2932,10 @@ Entries:
       all use the exact same code., type: Tweak}
   id: 2417
   time: '2022-10-09T19:28:08.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'Healing ticks when you metabolize less reagent than each tick takes
+      away are now scaled accordingly. In other words, 0.1u of omnizine is no longer
+      identical to 0.5u of omnizine, and will heal 5 times less.', type: Fix}
+  id: 2418
+  time: '2022-10-09T19:40:50.0000000+00:00'
