@@ -203,12 +203,6 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
         Dirty(component);
     }
 
-    /// <remarks>
-    ///     This is done because of popup spam and not being able
-    ///     to do entity deletion clientside.
-    /// </remarks>
-    //protected abstract void OnFinishInsertMaterialEntity(EntityUid toInsert, MaterialStorageComponent component);
-
     private void OnInteractUsing(EntityUid uid, MaterialStorageComponent component, InteractUsingEvent args)
     {
         if (args.Handled)
