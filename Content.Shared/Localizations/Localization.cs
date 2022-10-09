@@ -1,13 +1,12 @@
-﻿using System.Globalization;
+﻿﻿using System.Globalization;
 using Robust.Shared.ContentPack;
+using Robust.Shared.Configuration;
+using Content.Shared.CCVar;
 
 namespace Content.Shared.Localizations
 {
     public static class Localization
     {
-        // If you want to change your codebase's language, do it here.
-        private const string Culture = "en-US";
-
         /// <summary>
         /// Custom format strings used for parsing and displaying minutes:seconds timespans.
         /// </summary>
@@ -21,10 +20,16 @@ namespace Content.Shared.Localizations
 
         public static void Init()
         {
-            var loc = IoCManager.Resolve<ILocalizationManager>();
-            var res = IoCManager.Resolve<IResourceManager>();
+            var cfg = IoCManager.Resolve<IConfigurationManager>();
 
-            var culture = new CultureInfo(Culture);
+            var culture = new CultureInfo(cfg.GetCVar(CCVars.Locale));
+            cfg.OnValueChanged(CCVars.Locale, LocaleCVarChanged);
+            LoadCulture(culture);
+        }
+
+        private static void LoadCulture(CultureInfo culture)
+        {
+            var loc = IoCManager.Resolve<ILocalizationManager>();
 
             loc.LoadCulture(culture);
             loc.AddFunction(culture, "PRESSURE", FormatPressure);
@@ -33,6 +38,12 @@ namespace Content.Shared.Localizations
             loc.AddFunction(culture, "UNITS", FormatUnits);
             loc.AddFunction(culture, "TOSTRING", args => FormatToString(culture, args));
             loc.AddFunction(culture, "LOC", FormatLoc);
+        }
+
+        private static void LocaleCVarChanged(string locName)
+        {
+            var culture = new CultureInfo(locName);
+            LoadCulture(culture);
         }
 
         private static ILocValue FormatLoc(LocArgs args)
@@ -56,7 +67,7 @@ namespace Content.Shared.Localizations
 
         private static ILocValue FormatUnitsGeneric(LocArgs args, string mode)
         {
-            const int maxPlaces = 5; // Matches amount in _lib.ftl
+               const int maxPlaces = 5; // Matches amount in _lib.ftl
             var pressure = ((LocValueNumber) args.Args[0]).Value;
 
             var places = 0;
@@ -114,7 +125,7 @@ namespace Content.Shared.Localizations
 
             // Before anyone complains about "{"+"${...}", at least it's better than MS's approach...
             // https://docs.microsoft.com/en-us/dotnet/standard/base-types/composite-formatting#escaping-braces
-            // 
+            //
             // Note that the closing brace isn't replaced so that format specifiers can be applied.
             var res = String.Format(
                     fmtstr.Replace("{UNIT", "{" + $"{fargs.Length - 1}"),

@@ -30,6 +30,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<string> RulesHeader =
             CVarDef.Create("server.rules_header", "ui-rules-header", CVar.REPLICATED | CVar.SERVER);
 
+        /// <summary>
+        ///     The language for this server. Use the same notation as the folders in Resources/Locale.
+        /// </summary>
+        public static readonly CVarDef<string> Locale =
+            CVarDef.Create("server.locale", "en-US", CVar.REPLICATED | CVar.SERVER);
+
         /*
          * Ambience
          */
