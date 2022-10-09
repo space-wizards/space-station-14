@@ -2,6 +2,7 @@
 using Content.Shared.Hands;
 using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
+using Internal.TypeSystem;
 using Robust.Shared.Containers;
 
 namespace Content.Shared.Implants;
@@ -51,6 +52,10 @@ public abstract class SharedImplanterSystem : EntitySystem
 
         //This works to add a container, pog
         //Use a container because someone can have multiple implants
+
+        if (!TryComp<ContainerManagerComponent>(target, out var containerManager) || _container.HasContainer(target, "ImplantContainer", containerManager))
+            return;
+
         var implantContainer = _container.EnsureContainer<Container>(target, "ImplantContainer");
         implantComp.EntityUid = target;
         container.Remove(implant);
