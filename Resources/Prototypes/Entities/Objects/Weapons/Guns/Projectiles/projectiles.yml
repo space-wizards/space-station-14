@@ -368,9 +368,9 @@
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Default
-    maxIntensity: 6
-    intensitySlope: 2
-    totalIntensity: 150
+    maxIntensity: 9
+    intensitySlope: 7
+    totalIntensity: 145
     maxTileBreak: 1
   - type: PointLight
     radius: 2

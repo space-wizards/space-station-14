@@ -1,6 +1,6 @@
 - type: entity
   id: KitchenReagentGrinder
-  parent: BaseMachinePowered
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
   name: reagent grinder
   description: From BlenderTech. Will It Blend? Let's find out!
   suffix: grinder/juicer
@@ -44,7 +44,11 @@
   - type: ApcPowerReceiver
     powerLoad: 300
   - type: ItemSlots
+  - type: Machine
+    board: ReagentGrinderMachineCircuitboard
   - type: ContainerContainer
     containers:
       ReagentGrinder-reagentContainerContainer: !type:ContainerSlot
       ReagentGrinder-entityContainerContainer: !type:Container
+      machine_board: !type:Container
+      machine_parts: !type:Container
