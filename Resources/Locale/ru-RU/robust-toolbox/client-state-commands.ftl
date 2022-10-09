@@ -1,9 +1,9 @@
 # Loc strings for various entity state & client-side PVS related commands
 
 cmd-reset-ent-help = Использование: resetent <Entity UID>
-cmd-reset-ent-desc = Сбросывает сущность до последнего полученного от сервера состояния. Это также сбросит сущности, которые были удалены в null-space.
+cmd-reset-ent-desc = Сбрасывает сущность до последнего полученного от сервера состояния. Это также сбросит сущности, которые были удалены в null-space.
 cmd-reset-all-ents-help = Использование: resetallents
-cmd-reset-all-ents-desc = Сбросывает все сущности до последнего полученного от сервера состояния. Это затрагивает только сущности, которые не были удалены в null-space.
+cmd-reset-all-ents-desc = Сбрасывает все сущности до последнего полученного от сервера состояния. Это затрагивает только сущности, которые не были удалены в null-space.
 cmd-detach-ent-help = Использование: detachent <Entity UID>
 cmd-detach-ent-desc = Удаляет сущность в null-space, как если бы он покинул зону действия PVS.
 cmd-local-delete-help = Использование: localdelete <Entity UID>
