@@ -66,7 +66,7 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
         {
             _handsSystem.UIInventoryExamine(hand.SlotName);
         }
-        else if (args.Function == ContentKeyFunctions.UseSecondary)
+        else if (args.Function == EngineKeyFunctions.UseSecondary)
         {
             _handsSystem.UIHandOpenContextMenu(hand.SlotName);
         }
