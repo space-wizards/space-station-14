@@ -22,35 +22,48 @@ public sealed class StealthSystem : SharedStealthSystem
         SubscribeLocalEvent<StealthComponent, BeforePostShaderRenderEvent>(OnShaderRender);
     }
 
-    protected override void OnInit(EntityUid uid, StealthComponent component, ComponentInit args)
+    public override void SetEnabled(EntityUid uid, bool value, StealthComponent? component = null)
     {
-        base.OnInit(uid, component, args);
-        if (!TryComp(uid, out SpriteComponent? sprite))
+        if (!Resolve(uid, ref component) || component.Enabled == value)
             return;
 
-        sprite.PostShader = _shader;
-        sprite.GetScreenTexture = true;
-        sprite.RaiseShaderEvent = true;
+        base.SetEnabled(uid, value, component);
+        SetShader(uid, value, component);
+    }
+
+    private void SetShader(EntityUid uid, bool enabled, StealthComponent? component = null, SpriteComponent? sprite = null)
+    {
+        if (!Resolve(uid, ref component, ref sprite, false))
+            return;
+
+        sprite.Color = Color.White;
+        sprite.PostShader = enabled ? _shader : null;
+        sprite.GetScreenTexture = enabled;
+        sprite.RaiseShaderEvent = enabled;
+
+        if (!enabled)
+        {
+            if (component.HadOutline)
+                AddComp<InteractionOutlineComponent>(uid);
+            return;
+        }
 
         if (TryComp(uid, out InteractionOutlineComponent? outline))
         {
-            RemComp(uid, outline);
+            RemCompDeferred(uid, outline);
             component.HadOutline = true;
         }
     }
 
+    protected override void OnInit(EntityUid uid, StealthComponent component, ComponentInit args)
+    {
+        base.OnInit(uid, component, args);
+        SetShader(uid, component.Enabled, component);
+    }
+
     private void OnRemove(EntityUid uid, StealthComponent component, ComponentRemove args)
     {
-        if (!TryComp(uid, out SpriteComponent? sprite))
-            return;
-
-        sprite.PostShader = null;
-        sprite.GetScreenTexture = false;
-        sprite.RaiseShaderEvent = false;
-        sprite.Color = Color.White;
-
-        if (component.HadOutline)
-            AddComp<InteractionOutlineComponent>(uid);
+        SetShader(uid, false, component);
     }
 
     private void OnShaderRender(EntityUid uid, StealthComponent component, BeforePostShaderRenderEvent args)

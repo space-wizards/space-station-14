@@ -13,6 +13,12 @@ namespace Content.Shared.Stealth.Components;
 public sealed class StealthComponent : Component
 {
     /// <summary>
+    /// Whether or not the stealth effect should currently be applied.
+    /// </summary>
+    [DataField("enabled")]
+    public bool Enabled = true;
+
+    /// <summary>
     /// Whether or not the entity previously had an interaction outline prior to cloaking.
     /// </summary>
     [DataField("hadOutline")]
@@ -49,12 +55,14 @@ public sealed class StealthComponent : Component
 [Serializable, NetSerializable]
 public sealed class StealthComponentState : ComponentState
 {
-    public float Visibility;
-    public TimeSpan? LastUpdated;
+    public readonly float Visibility;
+    public readonly TimeSpan? LastUpdated;
+    public readonly bool Enabled;
 
-    public StealthComponentState(float stealthLevel, TimeSpan? lastUpdated)
+    public StealthComponentState(float stealthLevel, TimeSpan? lastUpdated, bool enabled)
     {
         Visibility = stealthLevel;
         LastUpdated = lastUpdated;
+        Enabled = enabled;
     }
 }

@@ -19,6 +19,15 @@ public abstract class SharedStealthSystem : EntitySystem
         SubscribeLocalEvent<StealthComponent, ComponentInit>(OnInit);
     }
 
+    public virtual void SetEnabled(EntityUid uid, bool value, StealthComponent? component = null)
+    {
+        if (!Resolve(uid, ref component, false) || component.Enabled == value)
+            return;
+
+        component.Enabled = value;
+        Dirty(component);
+    }
+
     private void OnPaused(EntityUid uid, StealthComponent component, EntityPausedEvent args)
     {
         if (args.Paused)
@@ -44,7 +53,7 @@ public abstract class SharedStealthSystem : EntitySystem
 
     private void OnStealthGetState(EntityUid uid, StealthComponent component, ref ComponentGetState args)
     {
-        args.State = new StealthComponentState(component.LastVisibility, component.LastUpdated);
+        args.State = new StealthComponentState(component.LastVisibility, component.LastUpdated, component.Enabled);
     }
 
     private void OnStealthHandleState(EntityUid uid, StealthComponent component, ref ComponentHandleState args)
@@ -52,6 +61,7 @@ public abstract class SharedStealthSystem : EntitySystem
         if (args.Current is not StealthComponentState cast)
             return;
 
+        SetEnabled(uid, cast.Enabled, component);
         component.LastVisibility = cast.Visibility;
         component.LastUpdated = cast.LastUpdated;
     }
@@ -110,7 +120,7 @@ public abstract class SharedStealthSystem : EntitySystem
     /// <returns>Returns a calculation that accounts for any stealth change that happened since last update, otherwise returns based on if it can resolve the component.</returns>
     public float GetVisibility(EntityUid uid, StealthComponent? component = null)
     {
-        if (!Resolve(uid, ref component))
+        if (!Resolve(uid, ref component) || !component.Enabled)
             return 1;
 
         if (component.LastUpdated == null)
