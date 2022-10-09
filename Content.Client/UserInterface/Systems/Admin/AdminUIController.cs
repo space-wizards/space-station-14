@@ -104,7 +104,7 @@ public sealed class AdminUIController : UIController, IOnStateEntered<GameplaySt
 
         if (function == EngineKeyFunctions.UIClick)
             _conHost.ExecuteCommand($"vv {uid}");
-        else if (function == ContentKeyFunctions.OpenContextMenu)
+        else if (function == ContentKeyFunctions.UseSecondary)
             _verbs.VerbMenu.OpenVerbMenu(uid, true);
         else
             return;
