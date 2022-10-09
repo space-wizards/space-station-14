@@ -30,7 +30,7 @@ namespace Content.Server.Solar.EntitySystems
             _updateTimer += frameTime;
             if (_updateTimer >= 1)
             {
-                _updateTimer -= 1;
+                _updateTimer -= 5;
                 var state = new SolarControlConsoleBoundInterfaceState(_powerSolarSystem.TargetPanelRotation, _powerSolarSystem.TargetPanelVelocity, _powerSolarSystem.TotalPanelPower, _powerSolarSystem.TowardsSun);
                 foreach (var component in EntityManager.EntityQuery<SolarControlConsoleComponent>())
                 {
@@ -38,7 +38,7 @@ namespace Content.Server.Solar.EntitySystems
                 }
             }
         }
- 
+
         private void OnUIMessage(EntityUid uid, SolarControlConsoleComponent component, SolarControlConsoleAdjustMessage msg)
         {
             if (double.IsFinite(msg.Rotation))
