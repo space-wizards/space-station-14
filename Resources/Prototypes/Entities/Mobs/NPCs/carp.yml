@@ -56,7 +56,6 @@
           amount: 2
     - type: MeleeWeapon
       hidden: true
-      range: 1.5
       angle: 0
       animation: WeaponArcBite
       soundHit:

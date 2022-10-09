@@ -42,7 +42,6 @@
       200: Dead
   - type: MeleeWeapon
     hidden: true
-    range: 1
     angle: 0
     animation: WeaponArcClaw
     damage:
@@ -134,7 +133,6 @@
       350: Dead
   - type: MeleeWeapon
     hidden: true
-    range: 1.5
     angle: 0
     attackRate: 0.75
     animation: WeaponArcFist
@@ -202,7 +200,6 @@
       60: Dead
   - type: MeleeWeapon
     hidden: true
-    range: 1
     angle: 0
     animation: WeaponArcClaw
     damage:

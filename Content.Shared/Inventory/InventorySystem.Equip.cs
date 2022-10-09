@@ -281,6 +281,18 @@ public abstract partial class InventorySystem
             return false;
         }
 
+        if (slotDefinition.Whitelist != null && !slotDefinition.Whitelist.IsValid(itemUid))
+        {
+            reason = "inventory-component-can-equip-does-not-fit";
+            return false;
+        }
+
+        if (slotDefinition.Blacklist != null && slotDefinition.Blacklist.IsValid(itemUid))
+        {
+            reason = "inventory-component-can-equip-does-not-fit";
+            return false;
+        }
+
         var attemptEvent = new IsEquippingAttemptEvent(actor, target, itemUid, slotDefinition);
         RaiseLocalEvent(target, attemptEvent, true);
         if (attemptEvent.Cancelled)

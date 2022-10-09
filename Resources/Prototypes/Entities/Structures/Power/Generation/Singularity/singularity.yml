@@ -18,7 +18,7 @@
         !type:PhysShapeCircle
           radius: 0.5
       restitution: 0.9
-      density: 10000
+      density: 99999
       mask:
       - AllMask
       layer:

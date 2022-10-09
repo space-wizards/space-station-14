@@ -178,7 +178,7 @@ namespace Content.Shared.MobState.EntitySystems
 
         public void UpdateState(EntityUid _, MobStateComponent component, DamageChangedEvent args)
         {
-            UpdateState(component, args.Damageable.TotalDamage);
+            UpdateState(component, args.Damageable.TotalDamage, args.Origin);
         }
 
         private void OnMoveAttempt(EntityUid uid, MobStateComponent component, UpdateCanMoveEvent args)
@@ -275,20 +275,20 @@ namespace Content.Shared.MobState.EntitySystems
         /// <summary>
         ///     Updates the mob state..
         /// </summary>
-        public void UpdateState(MobStateComponent component, FixedPoint2 damage)
+        public void UpdateState(MobStateComponent component, FixedPoint2 damage, EntityUid? origin = null)
         {
             if (!TryGetState(component, damage, out var newState, out var threshold))
             {
                 return;
             }
 
-            SetMobState(component, component.CurrentState, (newState.Value, threshold));
+            SetMobState(component, component.CurrentState, (newState.Value, threshold), origin);
         }
 
         /// <summary>
         ///     Sets the mob state and marks the component as dirty.
         /// </summary>
-        private void SetMobState(MobStateComponent component, DamageState? old, (DamageState state, FixedPoint2 threshold)? current)
+        private void SetMobState(MobStateComponent component, DamageState? old, (DamageState state, FixedPoint2 threshold)? current, EntityUid? origin = null)
         {
             if (!current.HasValue)
             {
@@ -313,7 +313,7 @@ namespace Content.Shared.MobState.EntitySystems
             EnterState(component, state);
             UpdateState(component, state, threshold);
 
-            var message = new MobStateChangedEvent(component, old, state);
+            var message = new MobStateChangedEvent(component, old, state, origin);
             RaiseLocalEvent(component.Owner, message, true);
             Dirty(component);
         }

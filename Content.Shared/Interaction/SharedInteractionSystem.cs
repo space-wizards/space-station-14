@@ -54,7 +54,7 @@ namespace Content.Shared.Interaction
         private const CollisionGroup InRangeUnobstructedMask
             = CollisionGroup.Impassable | CollisionGroup.InteractImpassable;
 
-        public const float InteractionRange = 2f;
+        public const float InteractionRange = 1.5f;
         public const float InteractionRangeSquared = InteractionRange * InteractionRange;
 
         public const float MaxRaycastRange = 100f;
@@ -440,10 +440,67 @@ namespace Content.Shared.Interaction
             CollisionGroup collisionMask = InRangeUnobstructedMask,
             Ignored? predicate = null,
             bool popup = false)
-        {;
+        {
             Ignored combinedPredicate = e => e == origin || (predicate?.Invoke(e) ?? false);
+            var inRange = true;
+            MapCoordinates originPos = default;
+            MapCoordinates targetPos = default;
+            Angle targetRot = default;
 
-            var inRange = InRangeUnobstructed(Transform(origin).MapPosition, other, range, collisionMask, combinedPredicate);
+            // Alternatively we could check centre distances first though
+            // that means we wouldn't be able to easily check overlap interactions.
+            if (range > 0f &&
+                TryComp<FixturesComponent>(origin, out var fixtureA) &&
+                // These fixture counts are stuff that has the component but no fixtures for <reasons> (e.g. buttons).
+                // At least until they get removed.
+                fixtureA.FixtureCount > 0 &&
+                TryComp<FixturesComponent>(other, out var fixtureB) &&
+                fixtureB.FixtureCount > 0 &&
+                TryComp<TransformComponent>(origin, out var xformA) &&
+                TryComp<TransformComponent>(other, out var xformB))
+            {
+                // Different map or the likes.
+                if (!_sharedBroadphaseSystem.TryGetNearest(origin, other,
+                        out var pointA, out var pointB, out var distance,
+                        xformA, xformB, fixtureA, fixtureB))
+                {
+                    inRange = false;
+                }
+                // Overlap, early out and no raycast.
+                else if (distance.Equals(0f))
+                {
+                    return true;
+                }
+                // Out of range so don't raycast.
+                else if (distance > range)
+                {
+                    inRange = false;
+                }
+                else
+                {
+                    // We'll still do the raycast from the centres but we'll bump the range as we know they're in range.
+                    originPos = xformA.MapPosition;
+                    (var targetWorld, targetRot) = xformB.GetWorldPositionRotation();
+                    targetPos = new MapCoordinates(targetWorld, xformB.MapID);
+
+                    range = (originPos.Position - targetWorld).Length;
+                }
+            }
+            else
+            {
+                originPos = Transform(origin).MapPosition;
+
+                xformB = Transform(other);
+                (var targetWorld, targetRot) = xformB.GetWorldPositionRotation();
+                targetPos = new MapCoordinates(targetWorld, xformB.MapID);
+            }
+
+            // Do a raycast to check if relevant
+            if (inRange)
+            {
+                var rayPredicate = GetPredicate(originPos, other, targetPos, targetRot, collisionMask, combinedPredicate);
+                inRange = InRangeUnobstructed(originPos, targetPos, range, collisionMask, rayPredicate);
+            }
 
             if (!inRange && popup && _gameTiming.IsFirstTimePredicted)
             {
@@ -464,7 +521,25 @@ namespace Content.Shared.Interaction
             var transform = Transform(target);
             var (position, rotation) = transform.GetWorldPositionRotation();
             var mapPos = new MapCoordinates(position, transform.MapID);
+            var combinedPredicate = GetPredicate(origin, target, mapPos, rotation, collisionMask, predicate);
 
+            return InRangeUnobstructed(origin, mapPos, range, collisionMask, combinedPredicate);
+        }
+
+        /// <summary>
+        /// Gets the entities to ignore for an unobstructed raycast
+        /// </summary>
+        /// <example>
+        /// if the target entity is a wallmount we ignore all other entities on the tile.
+        /// </example>
+        private Ignored GetPredicate(
+            MapCoordinates origin,
+            EntityUid target,
+            MapCoordinates targetCoords,
+            Angle targetRotation,
+            CollisionGroup collisionMask,
+            Ignored? predicate = null)
+        {
             HashSet<EntityUid> ignored = new();
 
             bool ignoreAnchored = false;
@@ -483,23 +558,23 @@ namespace Content.Shared.Interaction
                     ignoreAnchored = true;
                 else
                 {
-                    var angle = Angle.FromWorldVec(origin.Position - position);
-                    var angleDelta = (wallMount.Direction + rotation - angle).Reduced().FlipPositive();
+                    var angle = Angle.FromWorldVec(origin.Position - targetCoords.Position);
+                    var angleDelta = (wallMount.Direction + targetRotation - angle).Reduced().FlipPositive();
                     ignoreAnchored = angleDelta < wallMount.Arc / 2 || Math.Tau - angleDelta < wallMount.Arc / 2;
                 }
 
-                if (ignoreAnchored && _mapManager.TryFindGridAt(mapPos, out var grid))
-                    ignored.UnionWith(grid.GetAnchoredEntities(mapPos));
+                if (ignoreAnchored && _mapManager.TryFindGridAt(targetCoords, out var grid))
+                    ignored.UnionWith(grid.GetAnchoredEntities(targetCoords));
             }
 
             Ignored combinedPredicate = e =>
             {
                 return e == target
-                    || (predicate?.Invoke(e) ?? false)
-                    || ignored.Contains(e);
+                       || (predicate?.Invoke(e) ?? false)
+                       || ignored.Contains(e);
             };
 
-            return InRangeUnobstructed(origin, mapPos, range, collisionMask, combinedPredicate);
+            return combinedPredicate;
         }
 
         /// <summary>
@@ -569,9 +644,9 @@ namespace Content.Shared.Interaction
             Ignored? predicate = null,
             bool popup = false)
         {
-            Ignored combinedPredicatre = e => e == origin || (predicate?.Invoke(e) ?? false);
+            Ignored combinedPredicate = e => e == origin || (predicate?.Invoke(e) ?? false);
             var originPosition = Transform(origin).MapPosition;
-            var inRange = InRangeUnobstructed(originPosition, other, range, collisionMask, combinedPredicatre);
+            var inRange = InRangeUnobstructed(originPosition, other, range, collisionMask, combinedPredicate);
 
             if (!inRange && popup && _gameTiming.IsFirstTimePredicted)
             {
