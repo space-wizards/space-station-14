@@ -28,7 +28,7 @@ public sealed class StealthComponent : Component
     /// Minimum visibility before the entity becomes unexaminable (and thus no longer appears on context menus).
     /// </summary>
     [DataField("examineThreshold")]
-    public readonly float ExamineThreshold = 0.25f;
+    public readonly float ExamineThreshold = 0.5f;
 
     /// <summary>
     /// Last set level of visibility. Ranges from 1 (fully visible) and -1 (fully hidden). To get the actual current
