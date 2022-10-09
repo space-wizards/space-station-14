@@ -136,11 +136,12 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
     /// <summary>
     /// Tries to insert an entity into the material storage.
     /// </summary>
+    /// <param name="user"></param>
     /// <param name="toInsert"></param>
     /// <param name="receiver"></param>
     /// <param name="component"></param>
     /// <returns>If it was successful</returns>
-    public bool TryInsertMaterialEntity(EntityUid toInsert, EntityUid receiver, MaterialStorageComponent? component = null)
+    public virtual bool TryInsertMaterialEntity(EntityUid user, EntityUid toInsert, EntityUid receiver, MaterialStorageComponent? component = null)
     {
         if (!Resolve(receiver, ref component))
             return false;
@@ -182,7 +183,6 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
             TryChangeMaterialAmount(receiver, mat, vol * multiplier, component);
         }
 
-        OnFinishInsertMaterialEntity(toInsert, component);
         RaiseLocalEvent(component.Owner, new MaterialEntityInsertedEvent(material._materials));
         return true;
     }
@@ -203,16 +203,10 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
         Dirty(component);
     }
 
-    /// <remarks>
-    ///     This is done because of popup spam and not being able
-    ///     to do entity deletion clientside.
-    /// </remarks>
-    protected abstract void OnFinishInsertMaterialEntity(EntityUid toInsert, MaterialStorageComponent component);
-
     private void OnInteractUsing(EntityUid uid, MaterialStorageComponent component, InteractUsingEvent args)
     {
         if (args.Handled)
             return;
-        args.Handled = TryInsertMaterialEntity(args.Used, uid, component);
+        args.Handled = TryInsertMaterialEntity(args.User, args.Used, uid, component);
     }
 }
