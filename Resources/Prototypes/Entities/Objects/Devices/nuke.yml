@@ -18,7 +18,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.45
-      mass: 150
+      density: 80 #It has wheels and bluespace tech to make it lighter.
       mask:
       - MachineMask
       layer:
@@ -80,7 +80,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.45
-      mass: 150
+      density: 80
       mask:
       - TabletopMachineMask
       layer:

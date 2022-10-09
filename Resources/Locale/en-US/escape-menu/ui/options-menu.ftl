@@ -91,6 +91,7 @@ ui-options-function-camera-rotate-right = Rotate right
 ui-options-function-camera-reset = Reset
 
 ui-options-function-use = Use
+ui-options-function-alt-use = Alt use
 ui-options-function-wide-attack = Wide attack
 ui-options-function-activate-item-in-hand = Activate item in hand
 ui-options-function-alt-activate-item-in-hand = Alternative activate item in hand

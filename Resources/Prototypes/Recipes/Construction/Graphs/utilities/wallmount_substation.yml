@@ -31,9 +31,9 @@
 
     - node: parts
       edges:
-      - to: electronics 
+      - to: electronics
         steps:
-        - prototype: WallmountSubstationElectronics
+        - tag: WallmountSubstationElectronics
           store: board
           name: "wallmount substation circuit board"
           icon:
@@ -47,8 +47,8 @@
           amount: 5
         steps:
         - tool: Cutting
-          doAfter: 1      
-        
+          doAfter: 1
+
 
     - node: electronics
       edges:
@@ -56,7 +56,7 @@
         steps:
         - tool: Screwing
           doAfter: 2
-      
+
     - node: substation
       entity: BaseSubstationWall
       edges:

@@ -97,6 +97,28 @@ namespace Content.Shared.Humanoid
             );
         }
 
+        public static HumanoidCharacterAppearance DefaultWithSpecies(string species)
+        {
+            var speciesPrototype = IoCManager.Resolve<IPrototypeManager>().Index<SpeciesPrototype>(species);
+            var skinColor = speciesPrototype.SkinColoration switch
+            {
+                HumanoidSkinColor.HumanToned => Humanoid.SkinColor.HumanSkinTone(speciesPrototype.DefaultHumanSkinTone),
+                HumanoidSkinColor.Hues => speciesPrototype.DefaultSkinTone,
+                HumanoidSkinColor.TintedHues => Humanoid.SkinColor.TintedHues(speciesPrototype.DefaultSkinTone),
+                _ => Humanoid.SkinColor.ValidHumanSkinTone
+            };
+
+            return new(
+                HairStyles.DefaultHairStyle,
+                Color.Black,
+                HairStyles.DefaultFacialHairStyle,
+                Color.Black,
+                Color.Black,
+                skinColor,
+                new ()
+            );
+        }
+
         private static IReadOnlyList<Color> RealisticEyeColors = new List<Color>
         {
             Color.Brown,

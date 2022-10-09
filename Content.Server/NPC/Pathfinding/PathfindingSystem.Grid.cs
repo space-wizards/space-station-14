@@ -1,305 +1,761 @@
-using Content.Server.Access;
-using Content.Shared.Access.Systems;
-using Content.Shared.GameTicking;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Content.Server.Destructible;
+using Content.Shared.Access.Components;
+using Content.Shared.Doors.Components;
+using Content.Shared.NPC;
+using Content.Shared.Physics;
+using Microsoft.Extensions.ObjectPool;
+using Robust.Shared.Collections;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.NPC.Pathfinding;
 
 public sealed partial class PathfindingSystem
 {
-    /*
-     * Handles pathfinding while on a grid.
-     */
+    private static readonly TimeSpan UpdateCooldown = TimeSpan.FromSeconds(0.45);
 
-    [Dependency] private readonly AccessReaderSystem _accessReader = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
+    // What relevant collision groups we track for pathfinding.
+    // Stuff like chairs have collision but aren't relevant for mobs.
+    public const int PathfindingCollisionMask = (int) CollisionGroup.MobMask;
+    public const int PathfindingCollisionLayer = (int) CollisionGroup.MobLayer;
 
-    // Queued pathfinding graph updates
-    private readonly Queue<MoveEvent> _moveUpdateQueue = new();
-    private readonly Queue<AccessReaderChangeEvent> _accessReaderUpdateQueue = new();
-    private readonly Queue<TileRef> _tileUpdateQueue = new();
+    private readonly Stopwatch _stopwatch = new();
 
-    public override void Initialize()
+    // Probably can't pool polys as there might be old pathfinding refs to them.
+
+    private readonly ObjectPool<HashSet<PathPoly>> _neighborPolyPool =
+        new DefaultObjectPool<HashSet<PathPoly>>(new DefaultPooledObjectPolicy<HashSet<PathPoly>>(), MaxPoolSize);
+
+    private static int MaxPoolSize = Environment.ProcessorCount * 2 * ChunkSize * ChunkSize;
+
+    private void InitializeGrid()
     {
-        SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
+        SubscribeLocalEvent<GridInitializeEvent>(OnGridInit);
+        SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoved);
+        SubscribeLocalEvent<GridPathfindingComponent, EntityPausedEvent>(OnGridPathPause);
+        SubscribeLocalEvent<GridPathfindingComponent, ComponentShutdown>(OnGridPathShutdown);
         SubscribeLocalEvent<CollisionChangeEvent>(OnCollisionChange);
-        SubscribeLocalEvent<MoveEvent>(OnMoveEvent);
-        SubscribeLocalEvent<AccessReaderChangeEvent>(OnAccessChange);
-        SubscribeLocalEvent<GridAddEvent>(OnGridAdd);
-        SubscribeLocalEvent<TileChangedEvent>(OnTileChange);
         SubscribeLocalEvent<PhysicsBodyTypeChangedEvent>(OnBodyTypeChange);
-
-        // Handle all the base grid changes
-        // Anything that affects traversal (i.e. collision layer) is handled separately.
+        SubscribeLocalEvent<MoveEvent>(OnMoveEvent);
     }
 
-    private void OnBodyTypeChange(ref PhysicsBodyTypeChangedEvent ev)
+    private void OnGridPathPause(EntityUid uid, GridPathfindingComponent component, EntityPausedEvent args)
     {
-        var xform = Transform(ev.Entity);
-
-        if (!IsRelevant(xform, ev.Component)) return;
-
-        var node = GetNode(xform);
-        node?.RemoveEntity(ev.Entity);
-        node?.AddEntity(ev.Entity, ev.Component, EntityManager);
+        // TODO: Need the offsets + time serializer. Mainly just need this here to ensure it gets update after load
+        if (!args.Paused && component.NextUpdate < _timing.CurTime)
+            component.NextUpdate = _timing.CurTime;
     }
 
-    private void OnGridAdd(GridAddEvent ev)
+    private void OnGridPathShutdown(EntityUid uid, GridPathfindingComponent component, ComponentShutdown args)
     {
-        EnsureComp<GridPathfindingComponent>(ev.EntityUid);
-    }
-
-    private void OnCollisionChange(ref CollisionChangeEvent collisionEvent)
-    {
-        if (collisionEvent.CanCollide)
+        foreach (var chunk in component.Chunks)
         {
-            OnEntityAdd(collisionEvent.Body.Owner);
-        }
-        else
-        {
-            OnEntityRemove(collisionEvent.Body.Owner);
-        }
-    }
-
-    private void OnMoveEvent(ref MoveEvent moveEvent)
-    {
-        _moveUpdateQueue.Enqueue(moveEvent);
-    }
-
-    private void OnTileChange(TileChangedEvent ev)
-    {
-        _tileUpdateQueue.Enqueue(ev.NewTile);
-    }
-
-    private void OnAccessChange(AccessReaderChangeEvent message)
-    {
-        _accessReaderUpdateQueue.Enqueue(message);
-    }
-
-    private PathfindingChunk GetOrCreateChunk(TileRef tile)
-    {
-        var chunkX = (int) (Math.Floor((float) tile.X / PathfindingChunk.ChunkSize) * PathfindingChunk.ChunkSize);
-        var chunkY = (int) (Math.Floor((float) tile.Y / PathfindingChunk.ChunkSize) * PathfindingChunk.ChunkSize);
-        var vector2i = new Vector2i(chunkX, chunkY);
-        var comp = Comp<GridPathfindingComponent>(tile.GridUid);
-        var chunks = comp.Graph;
-
-        if (!chunks.TryGetValue(vector2i, out var chunk))
-        {
-            chunk = CreateChunk(comp, vector2i);
+            // Invalidate all polygons in case there's portals or the likes.
+            foreach (var poly in chunk.Value.Polygons)
+            {
+                ClearTilePolys(poly);
+            }
         }
 
-        return chunk;
+        component.DirtyChunks.Clear();
+        component.Chunks.Clear();
     }
 
-    private PathfindingChunk CreateChunk(GridPathfindingComponent comp, Vector2i indices)
+    private void UpdateGrid()
     {
-        var grid = _mapManager.GetGrid(comp.Owner);
-        var newChunk = new PathfindingChunk(grid.GridEntityId, indices);
-        comp.Graph.Add(indices, newChunk);
-        newChunk.Initialize(grid);
+        var curTime = _timing.CurTime;
+#if DEBUG
+        var updateCount = 0;
+#endif
+        _stopwatch.Restart();
 
-        return newChunk;
-    }
-
-
-
-    /// <summary>
-    /// Return the corresponding PathfindingNode for this tile
-    /// </summary>
-    /// <param name="tile"></param>
-    /// <returns></returns>
-    public PathfindingNode GetNode(TileRef tile)
-    {
-        var chunk = GetOrCreateChunk(tile);
-        var node = chunk.GetNode(tile);
-
-        return node;
-    }
-
-    private void OnTileUpdate(TileRef tile)
-    {
-        if (!_mapManager.GridExists(tile.GridUid)) return;
-
-        var node = GetNode(tile);
-        node.UpdateTile(tile);
-    }
-
-    private bool IsRelevant(TransformComponent xform, PhysicsComponent physics)
-    {
-        return xform.GridUid != null && (TrackedCollisionLayers & physics.CollisionLayer) != 0;
-    }
-
-    /// <summary>
-    /// Tries to add the entity to the relevant pathfinding node
-    /// </summary>
-    /// The node will filter it to the correct category (if possible)
-    /// <param name="entity"></param>
-    private void OnEntityAdd(EntityUid entity, TransformComponent? xform = null, PhysicsComponent? physics = null)
-    {
-        if (!Resolve(entity, ref xform, false) ||
-            !Resolve(entity, ref physics, false)) return;
-
-        if (!IsRelevant(xform, physics) ||
-            !_mapManager.TryGetGrid(xform.GridUid, out var grid))
+        // We defer chunk updates because rebuilding a navmesh is hella costly
+        // If we're paused then NPCs can't run anyway.
+        foreach (var comp in EntityQuery<GridPathfindingComponent>())
         {
-            return;
+            if (comp.DirtyChunks.Count == 0 ||
+                comp.NextUpdate < curTime ||
+                !TryComp<IMapGridComponent>(comp.Owner, out var mapGridComp))
+            {
+                continue;
+            }
+
+            var dirtyPortals = comp.DirtyPortals;
+            dirtyPortals.Clear();
+
+            // TODO: Often we invalidate the entire chunk when it might be something as simple as an airlock change
+            // Would be better to handle that though this was safer and max it's taking is like 1-2ms every half-second.
+            var dirt = new GridPathfindingChunk[comp.DirtyChunks.Count];
+            var i = 0;
+
+            foreach (var origin in comp.DirtyChunks)
+            {
+                var chunk = GetChunk(origin, comp.Owner, comp);
+                dirt[i] = chunk;
+                i++;
+            }
+
+            // We force clear portals in a single-threaded context to be safe
+            // as they may not be thread-safe to touch.
+            foreach (var chunk in dirt)
+            {
+                foreach (var (_, poly) in chunk.PortalPolys)
+                {
+                    ClearPoly(poly);
+                }
+
+                chunk.PortalPolys.Clear();
+
+                foreach (var portal in chunk.Portals)
+                {
+                    dirtyPortals.Add(portal);
+                }
+            }
+
+            // TODO: Inflate grid bounds slightly and get chunks.
+            // This is for map <> grid pathfinding
+
+            // Without parallel this is roughly 3x slower on my desktop.
+            Parallel.For(0, dirt.Length, i =>
+            {
+                // Doing the queries per task seems faster.
+                var accessQuery = GetEntityQuery<AccessReaderComponent>();
+                var destructibleQuery = GetEntityQuery<DestructibleComponent>();
+                var doorQuery = GetEntityQuery<DoorComponent>();
+                var fixturesQuery = GetEntityQuery<FixturesComponent>();
+                var physicsQuery = GetEntityQuery<PhysicsComponent>();
+                var xformQuery = GetEntityQuery<TransformComponent>();
+                BuildBreadcrumbs(dirt[i], mapGridComp.Grid, accessQuery, destructibleQuery, doorQuery, fixturesQuery, physicsQuery, xformQuery);
+            });
+
+            const int Division = 4;
+
+            // You can safely do this in parallel as long as no neighbor chunks are being touched in the same iteration.
+            // You essentially do bottom left, bottom right, top left, top right in quadrants.
+            // For each 4x4 block of chunks.
+
+            // i.e. first iteration: 0,0; 2,0; 0,2
+            // second iteration: 1,0; 3,0; 1;2
+            // third iteration: 0,1; 2,1; 0,3 etc
+
+            // TODO: You can probably skimp on some neighbor chunk caches
+            for (var it = 0; it < Division; it++)
+            {
+                var it1 = it;
+
+                Parallel.For(0, dirt.Length, j =>
+                {
+                    var chunk = dirt[j];
+                    // Check if the chunk is safe on this iteration.
+                    var x = Math.Abs(chunk.Origin.X % 2);
+                    var y = Math.Abs(chunk.Origin.Y % 2);
+                    var index = x * 2 + y;
+
+                    if (index != it1)
+                        return;
+
+                    BuildNavmesh(chunk, comp);
+#if DEBUG
+                    Interlocked.Increment(ref updateCount);
+#endif
+                });
+            }
+
+            // Handle portals at the end after having cleared their neighbors above.
+            // We do this because there's no guarantee of where these are for chunks.
+            foreach (var portal in dirtyPortals)
+            {
+                var polyA = GetPoly(portal.CoordinatesA);
+                var polyB = GetPoly(portal.CoordinatesB);
+
+                if (polyA == null || polyB == null)
+                    continue;
+
+                DebugTools.Assert((polyA.Data.Flags & PathfindingBreadcrumbFlag.Invalid) == 0x0);
+                DebugTools.Assert((polyB.Data.Flags & PathfindingBreadcrumbFlag.Invalid) == 0x0);
+                var chunkA = GetChunk(polyA.ChunkOrigin, polyA.GraphUid);
+                var chunkB = GetChunk(polyB.ChunkOrigin, polyB.GraphUid);
+
+                chunkA.PortalPolys.TryAdd(portal, polyA);
+                chunkB.PortalPolys.TryAdd(portal, polyB);
+                AddNeighbors(polyA, polyB);
+            }
+
+            comp.DirtyChunks.Clear();
         }
 
-        var tileRef = grid.GetTileRef(xform.Coordinates);
-
-        var chunk = GetOrCreateChunk(tileRef);
-        var node = chunk.GetNode(tileRef);
-        node.AddEntity(entity, physics, EntityManager);
+#if DEBUG
+        if (updateCount > 0)
+            _sawmill.Debug($"Updated {updateCount} nav chunks in {_stopwatch.Elapsed.TotalMilliseconds:0.000}ms");
+#endif
     }
 
-    private void OnEntityRemove(EntityUid entity, TransformComponent? xform = null)
+    private bool IsBodyRelevant(PhysicsComponent body)
     {
-        if (!Resolve(entity, ref xform, false) ||
-            !_mapManager.TryGetGrid(xform.GridUid, out var grid)) return;
-
-        var node = GetNode(grid.GetTileRef(xform.Coordinates));
-        node.RemoveEntity(entity);
-    }
-
-    private void OnEntityRemove(EntityUid entity, EntityCoordinates coordinates)
-    {
-        var gridId = coordinates.GetGridUid(EntityManager);
-        if (!_mapManager.TryGetGrid(gridId, out var grid)) return;
-
-        var node = GetNode(grid.GetTileRef(coordinates));
-        node.RemoveEntity(entity);
-    }
-
-    private PathfindingNode? GetNode(TransformComponent xform)
-    {
-        if (!_mapManager.TryGetGrid(xform.GridUid, out var grid)) return null;
-        return GetNode(grid.GetTileRef(xform.Coordinates));
-    }
-
-    private PathfindingNode? GetNode(EntityCoordinates coordinates)
-    {
-        if (!_mapManager.TryGetGrid(coordinates.GetGridUid(EntityManager), out var grid)) return null;
-        return GetNode(grid.GetTileRef(coordinates));
-    }
-
-    /// <summary>
-    /// When an entity moves around we'll remove it from its old node and add it to its new node (if applicable)
-    /// </summary>
-    /// <param name="moveEvent"></param>
-    private void OnEntityMove(MoveEvent moveEvent)
-    {
-        if (!TryComp<TransformComponent>(moveEvent.Sender, out var xform)) return;
-
-        // If we've moved to space or the likes then remove us.
-        if (!TryComp<PhysicsComponent>(moveEvent.Sender, out var physics) ||
-            !IsRelevant(xform, physics))
-        {
-            OnEntityRemove(moveEvent.Sender, moveEvent.OldPosition);
-            return;
-        }
-
-        var oldNode = GetNode(moveEvent.OldPosition);
-        var newNode = GetNode(moveEvent.NewPosition);
-
-        if (oldNode?.Equals(newNode) == true) return;
-
-        oldNode?.RemoveEntity(moveEvent.Sender);
-        newNode?.AddEntity(moveEvent.Sender, physics, EntityManager);
-    }
-
-    // TODO: Need to rethink the pathfinder utils (traversable etc.). Maybe just chuck them all in PathfindingSystem
-    // Otherwise you get the steerer using this and the pathfinders using a different traversable.
-    // Also look at increasing tile cost the more physics entities are on it
-    public bool CanTraverse(EntityUid entity, EntityCoordinates coordinates)
-    {
-        var gridId = coordinates.GetGridUid(EntityManager);
-        if (gridId == null)
-                return false;
-        var tile = _mapManager.GetGrid(gridId.Value).GetTileRef(coordinates);
-        var node = GetNode(tile);
-        return CanTraverse(entity, node);
-    }
-
-    private bool CanTraverse(EntityUid entity, PathfindingNode node)
-    {
-        if (EntityManager.TryGetComponent(entity, out IPhysBody? physics) &&
-            (physics.CollisionMask & node.BlockedCollisionMask) != 0)
+        if (!body.Hard || !body.CanCollide || body.BodyType != BodyType.Static)
         {
             return false;
         }
 
-        var access = _accessReader.FindAccessTags(entity);
-        foreach (var reader in node.AccessReaders)
+        if ((body.CollisionMask & PathfindingCollisionLayer) != 0x0 ||
+            (body.CollisionLayer & PathfindingCollisionMask) != 0x0)
         {
-            if (!_accessReader.IsAllowed(access, reader))
-            {
-                return false;
-            }
+            return true;
         }
 
-        return true;
+        return false;
     }
 
-    public void OnRoundRestart(RoundRestartCleanupEvent ev)
+    private void OnCollisionChange(ref CollisionChangeEvent ev)
     {
-        _moveUpdateQueue.Clear();
-        _accessReaderUpdateQueue.Clear();
-        _tileUpdateQueue.Clear();
+        if (!IsBodyRelevant(ev.Body))
+            return;
+
+        var xform = Transform(ev.Body.Owner);
+
+        if (xform.GridUid == null)
+            return;
+
+        // This will also rebuild on door open / closes which I think is good?
+        DirtyChunk(xform.GridUid.Value, xform.Coordinates);
     }
 
-    private void ProcessGridUpdates()
+    private void OnBodyTypeChange(ref PhysicsBodyTypeChangedEvent ev)
     {
-        var totalUpdates = 0;
-        var bodyQuery = GetEntityQuery<PhysicsComponent>();
-        var xformQuery = GetEntityQuery<TransformComponent>();
-
-        foreach (var update in _accessReaderUpdateQueue)
+        if (IsBodyRelevant(ev.Component) &&
+            TryComp<TransformComponent>(ev.Entity, out var xform) &&
+            xform.GridUid != null)
         {
-            if (!xformQuery.TryGetComponent(update.Sender, out var xform) ||
-                !bodyQuery.TryGetComponent(update.Sender, out var body)) continue;
+            DirtyChunk(xform.GridUid.Value, xform.Coordinates);
+        }
+    }
 
-            if (update.Enabled)
+    private void OnMoveEvent(ref MoveEvent ev)
+    {
+        if (!TryComp<PhysicsComponent>(ev.Sender, out var body) ||
+            body.BodyType != BodyType.Static ||
+            HasComp<IMapGridComponent>(ev.Sender) ||
+            ev.OldPosition.Equals(ev.NewPosition))
+        {
+            return;
+        }
+
+        var oldGridUid = ev.OldPosition.GetGridUid(EntityManager);
+        var gridUid = ev.NewPosition.GetGridUid(EntityManager);
+
+        // Not on a grid at all so just ignore.
+        if (oldGridUid == gridUid && oldGridUid == null)
+        {
+            return;
+        }
+
+        if (oldGridUid != null && gridUid != null)
+        {
+            // If the chunk hasn't changed then just dirty that one.
+            var oldOrigin = GetOrigin(ev.OldPosition, oldGridUid.Value);
+            var origin = GetOrigin(ev.NewPosition, gridUid.Value);
+
+            if (oldOrigin == origin)
             {
-                OnEntityAdd(update.Sender, xform, body);
+                // TODO: Don't need to transform again numpty.
+                DirtyChunk(oldGridUid.Value, ev.NewPosition);
+                return;
             }
-            else
+        }
+
+        if (oldGridUid != null)
+        {
+            DirtyChunk(oldGridUid.Value, ev.OldPosition);
+        }
+
+        if (gridUid != null)
+        {
+            DirtyChunk(gridUid.Value, ev.NewPosition);
+        }
+    }
+
+    private void OnGridInit(GridInitializeEvent ev)
+    {
+        EnsureComp<GridPathfindingComponent>(ev.EntityUid);
+    }
+
+    private void OnGridRemoved(GridRemovalEvent ev)
+    {
+        RemComp<GridPathfindingComponent>(ev.EntityUid);
+    }
+
+    /// <summary>
+    /// Queues the entire relevant chunk to be re-built in the next update.
+    /// </summary>
+    private void DirtyChunk(EntityUid gridUid, EntityCoordinates coordinates)
+    {
+        if (!TryComp<GridPathfindingComponent>(gridUid, out var comp))
+            return;
+
+        var currentTime = _timing.CurTime;
+
+        if (comp.NextUpdate < currentTime)
+            comp.NextUpdate = currentTime + UpdateCooldown;
+
+        var chunks = comp.DirtyChunks;
+        // TODO: Change these args around.
+        chunks.Add(GetOrigin(coordinates, gridUid));
+    }
+
+    private GridPathfindingChunk GetChunk(Vector2i origin, EntityUid uid, GridPathfindingComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+        {
+            throw new InvalidOperationException();
+        }
+
+        if (component.Chunks.TryGetValue(origin, out var chunk))
+            return chunk;
+
+        chunk = new GridPathfindingChunk()
+        {
+            Origin = origin,
+        };
+
+        component.Chunks[origin] = chunk;
+        return chunk;
+    }
+
+    private bool TryGetChunk(Vector2i origin, GridPathfindingComponent component, [NotNullWhen(true)] out GridPathfindingChunk? chunk)
+    {
+        return component.Chunks.TryGetValue(origin, out chunk);
+    }
+
+    private byte GetIndex(int x, int y)
+    {
+        return (byte) (x * ChunkSize + y);
+    }
+
+    private Vector2i GetOrigin(Vector2 localPos)
+    {
+        return new Vector2i((int) Math.Floor(localPos.X / ChunkSize), (int) Math.Floor(localPos.Y / ChunkSize));
+    }
+
+    private Vector2i GetOrigin(EntityCoordinates coordinates, EntityUid gridUid)
+    {
+        var gridXform = Transform(gridUid);
+        var localPos = gridXform.InvWorldMatrix.Transform(coordinates.ToMapPos(EntityManager));
+        return new Vector2i((int) Math.Floor(localPos.X / ChunkSize), (int) Math.Floor(localPos.Y / ChunkSize));
+    }
+
+    private void BuildBreadcrumbs(GridPathfindingChunk chunk,
+        IMapGrid grid,
+        EntityQuery<AccessReaderComponent> accessQuery,
+        EntityQuery<DestructibleComponent> destructibleQuery,
+        EntityQuery<DoorComponent> doorQuery,
+        EntityQuery<FixturesComponent> fixturesQuery,
+        EntityQuery<PhysicsComponent> physicsQuery,
+        EntityQuery<TransformComponent> xformQuery)
+    {
+        var sw = new Stopwatch();
+        sw.Start();
+        var points = chunk.Points;
+        var gridOrigin = chunk.Origin * ChunkSize;
+        var tileEntities = new ValueList<EntityUid>();
+
+        // TODO: Pool this or something
+        var chunkPolys = new List<PathPoly>[ChunkSize * ChunkSize];
+
+        for (var i = 0; i < chunkPolys.Length; i++)
+        {
+            chunkPolys[i] = new List<PathPoly>();
+        }
+
+        var tilePolys = new ValueList<Box2i>(SubStep);
+
+        // Need to get the relevant polygons in each tile.
+        // If we wanted to create a larger navmesh we could triangulate these points but in our case we're just going
+        // to treat them as tile-based.
+        for (var x = 0; x < ChunkSize; x++)
+        {
+            for (var y = 0; y < ChunkSize; y++)
             {
-                OnEntityRemove(update.Sender, xform);
+                // Tile
+                var tilePos = new Vector2i(x, y) + gridOrigin;
+                tilePolys.Clear();
+
+                var tile = grid.GetTileRef(tilePos);
+                var flags = tile.Tile.IsEmpty ? PathfindingBreadcrumbFlag.Space : PathfindingBreadcrumbFlag.None;
+                // var isBorder = x < 0 || y < 0 || x == ChunkSize - 1 || y == ChunkSize - 1;
+
+                tileEntities.Clear();
+                var anchored = grid.GetAnchoredEntitiesEnumerator(tilePos);
+
+                while (anchored.MoveNext(out var ent))
+                {
+                    // Irrelevant for pathfinding
+                    if (!physicsQuery.TryGetComponent(ent, out var body) ||
+                        !IsBodyRelevant(body))
+                    {
+                        continue;
+                    }
+
+                    tileEntities.Add(ent.Value);
+                }
+
+                for (var subX = 0; subX < SubStep; subX++)
+                {
+                    for (var subY = 0; subY < SubStep; subY++)
+                    {
+                        var xOffset = x * SubStep + subX;
+                        var yOffset = y * SubStep + subY;
+
+                        // Subtile
+                        var localPos = new Vector2(StepOffset + gridOrigin.X + x + (float) subX / SubStep, StepOffset + gridOrigin.Y + y + (float) subY / SubStep);
+                        var collisionMask = 0x0;
+                        var collisionLayer = 0x0;
+                        var damage = 0f;
+
+                        foreach (var ent in tileEntities)
+                        {
+                            if (!fixturesQuery.TryGetComponent(ent, out var fixtures))
+                                continue;
+
+                            // TODO: Inefficient af
+                            foreach (var (_, fixture) in fixtures.Fixtures)
+                            {
+                                // Don't need to re-do it.
+                                if ((collisionMask & fixture.CollisionMask) == fixture.CollisionMask &&
+                                    (collisionLayer & fixture.CollisionLayer) == fixture.CollisionLayer)
+                                    continue;
+
+                                // Do an AABB check first as it's probably faster, then do an actual point check.
+                                var intersects = false;
+
+                                foreach (var proxy in fixture.Proxies)
+                                {
+                                    if (!proxy.AABB.Contains(localPos))
+                                        continue;
+
+                                    intersects = true;
+                                }
+
+                                if (!intersects ||
+                                    !xformQuery.TryGetComponent(ent, out var xform))
+                                {
+                                    continue;
+                                }
+
+                                if (!_fixtures.TestPoint(fixture.Shape, new Transform(xform.LocalPosition, xform.LocalRotation), localPos))
+                                {
+                                    continue;
+                                }
+
+                                collisionLayer |= fixture.CollisionLayer;
+                                collisionMask |= fixture.CollisionMask;
+                            }
+
+                            if (accessQuery.HasComponent(ent))
+                            {
+                                flags |= PathfindingBreadcrumbFlag.Access;
+                            }
+
+                            if (doorQuery.HasComponent(ent))
+                            {
+                                flags |= PathfindingBreadcrumbFlag.Door;
+                            }
+
+                            if (destructibleQuery.TryGetComponent(ent, out var damageable))
+                            {
+                                damage += _destructible.DestroyedAt(ent, damageable).Float();
+                            }
+                        }
+
+                        if ((flags & PathfindingBreadcrumbFlag.Space) != 0x0)
+                        {
+                            DebugTools.Assert(tileEntities.Count == 0);
+                        }
+
+                        var crumb = new PathfindingBreadcrumb()
+                        {
+                            Coordinates = new Vector2i(xOffset, yOffset),
+                            Data = new PathfindingData(flags, collisionLayer, collisionMask, damage),
+                        };
+
+                        points[xOffset, yOffset] = crumb;
+                    }
+                }
+
+                // Now we got tile data and we can get the polys
+                var data = points[x * SubStep, y * SubStep].Data;
+                var start = Vector2i.Zero;
+
+                for (var i = 0; i < SubStep * SubStep; i++)
+                {
+                    var ix = i / SubStep;
+                    var iy = i % SubStep;
+
+                    var nextX = (i + 1) / SubStep;
+                    var nextY = (i + 1) % SubStep;
+
+                    // End point
+                    if (iy == SubStep - 1 ||
+                        !points[x * SubStep + nextX, y * SubStep + nextY].Data.Equals(data))
+                    {
+                        tilePolys.Add(new Box2i(start, new Vector2i(ix, iy)));
+
+                        if (i < (SubStep * SubStep) - 1)
+                        {
+                            start = new Vector2i(nextX, nextY);
+                            data = points[x * SubStep + nextX, y * SubStep + nextY].Data;
+                        }
+
+                        continue;
+                    }
+                }
+
+                // Now combine the lines
+                var anyCombined = true;
+
+                while (anyCombined)
+                {
+                    anyCombined = false;
+
+                    for (var i = 0; i < tilePolys.Count; i++)
+                    {
+                        var poly = tilePolys[i];
+                        data = points[x * SubStep + poly.Left, y * SubStep + poly.Bottom].Data;
+
+                        for (var j = i + 1; j < tilePolys.Count; j++)
+                        {
+                            var nextPoly = tilePolys[j];
+                            var nextData = points[x * SubStep + nextPoly.Left, y * SubStep + nextPoly.Bottom].Data;
+
+                            // Oh no, Combine
+                            if (poly.Bottom == nextPoly.Bottom &&
+                                poly.Top == nextPoly.Top &&
+                                poly.Right + 1 == nextPoly.Left &&
+                                data.Equals(nextData))
+                            {
+                                tilePolys.RemoveAt(j);
+                                j--;
+                                poly = new Box2i(poly.Left, poly.Bottom, poly.Right + 1, poly.Top);
+                                anyCombined = true;
+                            }
+                        }
+
+                        tilePolys[i] = poly;
+                    }
+                }
+
+                // TODO: Can store a hash for each tile and check if the breadcrumbs match and avoid allocating these at all.
+                var tilePoly = chunkPolys[x * ChunkSize + y];
+                var polyOffset = gridOrigin + new Vector2(x, y);
+
+                foreach (var poly in tilePolys)
+                {
+                    var box = new Box2((Vector2) poly.BottomLeft / SubStep + polyOffset,
+                        (Vector2) (poly.TopRight + Vector2i.One) / SubStep + polyOffset);
+                    var polyData = points[x * SubStep + poly.Left, y * SubStep + poly.Bottom].Data;
+
+                    var neighbors = _neighborPolyPool.Get();
+                    tilePoly.Add(new PathPoly(grid.GridEntityId, chunk.Origin, GetIndex(x, y), box, polyData, neighbors));
+                }
             }
-
-            totalUpdates++;
         }
 
-        _accessReaderUpdateQueue.Clear();
-
-        foreach (var tile in _tileUpdateQueue)
+        // Check if the tiles match
+        for (var x = 0; x < ChunkSize; x++)
         {
-            OnTileUpdate(tile);
-            totalUpdates++;
+            for (var y = 0; y < ChunkSize; y++)
+            {
+                var index = x * ChunkSize + y;
+                var polys = chunkPolys[index];
+                ref var existing = ref chunk.Polygons[index];
+
+                var isEquivalent = true;
+
+                if (polys.Count == existing.Count)
+                {
+                    // May want to update damage or the likes if it's different but not invalidate the ref.
+                    for (var i = 0; i < existing.Count; i++)
+                    {
+                        var ePoly = existing[i];
+                        var poly = polys[i];
+
+                        if (!ePoly.IsEquivalent(poly))
+                        {
+                            isEquivalent = false;
+                            break;
+                        }
+
+                        ePoly.Data.Damage = poly.Data.Damage;
+                    }
+
+                    if (isEquivalent)
+                        continue;
+                }
+
+                ClearTilePolys(existing);
+                existing.AddRange(polys);
+            }
         }
 
-        _tileUpdateQueue.Clear();
-        var moveUpdateCount = Math.Max(50 - totalUpdates, 0);
+        // _sawmill.Debug($"Built breadcrumbs in {sw.Elapsed.TotalMilliseconds}ms");
+        SendBreadcrumbs(chunk, grid.GridEntityId);
+    }
 
-        // Other updates are high priority so for this we'll just defer it if there's a spike (explosion, etc.)
-        // If the move updates grow too large then we'll just do it
-        if (_moveUpdateQueue.Count > 100)
+    /// <summary>
+    /// Clears all of the polygons on a tile.
+    /// </summary>
+    private void ClearTilePolys(List<PathPoly> polys)
+    {
+        foreach (var poly in polys)
         {
-            moveUpdateCount = _moveUpdateQueue.Count - 100;
+            ClearPoly(poly);
         }
 
-        moveUpdateCount = Math.Min(moveUpdateCount, _moveUpdateQueue.Count);
+        polys.Clear();
+    }
 
-        for (var i = 0; i < moveUpdateCount; i++)
+    /// <summary>
+    /// Clears a polygon and invalidates its flags if anyone still has a reference to it.
+    /// </summary>
+    private void ClearPoly(PathPoly poly)
+    {
+        foreach (var neighbor in poly.Neighbors)
         {
-            OnEntityMove(_moveUpdateQueue.Dequeue());
+            neighbor.Neighbors.Remove(poly);
+            poly.Neighbors.Remove(neighbor);
         }
 
-        DebugTools.Assert(_moveUpdateQueue.Count < 1000);
+        // If any paths have a ref to it let them know that the class is no longer a valid node.
+        poly.Data.Flags = PathfindingBreadcrumbFlag.Invalid;
+        poly.Neighbors.Clear();
+        _neighborPolyPool.Return(poly.Neighbors);
+    }
+
+    private void BuildNavmesh(GridPathfindingChunk chunk, GridPathfindingComponent component)
+    {
+        var sw = new Stopwatch();
+        sw.Start();
+        var chunkPolys = chunk.Polygons;
+        component.Chunks.TryGetValue(chunk.Origin + new Vector2i(-1, 0), out var leftChunk);
+        component.Chunks.TryGetValue(chunk.Origin + new Vector2i(0, -1), out var bottomChunk);
+        component.Chunks.TryGetValue(chunk.Origin + new Vector2i(1, 0), out var rightChunk);
+        component.Chunks.TryGetValue(chunk.Origin + new Vector2i(0, 1), out var topChunk);
+
+        // Now we can get the neighbors for our tile polys
+        for (var x = 0; x < ChunkSize; x++)
+        {
+            for (var y = 0; y < ChunkSize; y++)
+            {
+                var index = GetIndex(x, y);
+                var tile = chunkPolys[index];
+
+                for (byte i = 0; i < tile.Count; i++)
+                {
+                    var poly = tile[i];
+                    var enlarged = poly.Box.Enlarged(StepOffset);
+
+                    // Shouldn't need to wraparound as previous neighbors would've handled us.
+                    for (var j = (byte) (i + 1); j < tile.Count; j++)
+                    {
+                        var neighbor = tile[j];
+                        var enlargedNeighbor = neighbor.Box.Enlarged(StepOffset);
+                        var overlap = Box2.Area(enlarged.Intersect(enlargedNeighbor));
+
+                        // Need to ensure they intersect by at least 2 tiles.
+                        if (overlap <= 0.5f / SubStep)
+                            continue;
+
+                        AddNeighbors(poly, neighbor);
+                    }
+
+                    // TODO: Get neighbor tile polys
+                    for (var ix = -1; ix <= 1; ix++)
+                    {
+                        for (var iy = -1; iy <= 1; iy++)
+                        {
+                            if (ix != 0 && iy != 0)
+                                continue;
+
+                            var neighborX = x + ix;
+                            var neighborY = y + iy;
+                            var neighborIndex = GetIndex(neighborX, neighborY);
+                            List<PathPoly> neighborTile;
+
+                            if (neighborX < 0)
+                            {
+                                if (leftChunk == null)
+                                    continue;
+
+                                neighborX = ChunkSize - 1;
+                                neighborIndex = GetIndex(neighborX, neighborY);
+                                neighborTile = leftChunk.Polygons[neighborIndex];
+                            }
+                            else if (neighborY < 0)
+                            {
+                                if (bottomChunk == null)
+                                    continue;
+
+                                neighborY = ChunkSize - 1;
+                                neighborIndex = GetIndex(neighborX, neighborY);
+                                neighborTile = bottomChunk.Polygons[neighborIndex];
+                            }
+                            else if (neighborX >= ChunkSize)
+                            {
+                                if (rightChunk == null)
+                                    continue;
+
+                                neighborX = 0;
+                                neighborIndex = GetIndex(neighborX, neighborY);
+                                neighborTile = rightChunk.Polygons[neighborIndex];
+                            }
+                            else if (neighborY >= ChunkSize)
+                            {
+                                if (topChunk == null)
+                                    continue;
+
+                                neighborY = 0;
+                                neighborIndex = GetIndex(neighborX, neighborY);
+                                neighborTile = topChunk.Polygons[neighborIndex];
+                            }
+                            else
+                            {
+                                neighborTile = chunkPolys[neighborIndex];
+                            }
+
+                            for (byte j = 0; j < neighborTile.Count; j++)
+                            {
+                                var neighbor = neighborTile[j];
+                                var enlargedNeighbor = neighbor.Box.Enlarged(StepOffset);
+                                var overlap = Box2.Area(enlarged.Intersect(enlargedNeighbor));
+
+                                // Need to ensure they intersect by at least 2 tiles.
+                                if (overlap <= 0.5f / SubStep)
+                                    continue;
+
+                                AddNeighbors(poly, neighbor);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // _sawmill.Debug($"Built navmesh in {sw.Elapsed.TotalMilliseconds}ms");
+        SendPolys(chunk, component.Owner, chunkPolys);
+    }
+
+    private void AddNeighbors(PathPoly polyA, PathPoly polyB)
+    {
+        DebugTools.Assert((polyA.Data.Flags & PathfindingBreadcrumbFlag.Invalid) == 0x0);
+        DebugTools.Assert((polyB.Data.Flags & PathfindingBreadcrumbFlag.Invalid) == 0x0);
+        polyA.Neighbors.Add(polyB);
+        polyB.Neighbors.Add(polyA);
     }
 }

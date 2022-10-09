@@ -111,7 +111,7 @@ namespace Content.Server.Chat
                 damagePrototype = _prototypeManager.Index<DamageTypePrototype>(fallback.ToString());
             }
             const int lethalAmountOfDamage = 200; // TODO: Would be nice to get this number from somewhere else
-            _damageableSystem.TryChangeDamage(target, new(damagePrototype, lethalAmountOfDamage), true);
+            _damageableSystem.TryChangeDamage(target, new(damagePrototype, lethalAmountOfDamage), true, origin: target);
         }
     }
 }

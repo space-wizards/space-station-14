@@ -7,7 +7,6 @@ namespace Content.Server.Entry
             "ConstructionGhost",
             "IconSmooth",
             "InteractionOutline",
-            "MeleeWeaponArcAnimation",
             "AnimationsTest",
             "ItemStatus",
             "Marker",

@@ -124,10 +124,10 @@
         amount: 6
 
 - type: entity
-  name: box of .40 Drozd magazines
+  name: box of .40 Vector magazines
   parent: BoxCardboard
   id: BoxMagazineMagnumSubMachineGun
-  description: A box full of .40 Drozd magazines.
+  description: A box full of .40 Vector magazines.
   components:
   - type: StorageFill
     contents:
@@ -135,10 +135,10 @@
         amount: 3
 
 - type: entity
-  name: box of .40 Drozd (high-velocity) magazines
+  name: box of .40 Vector (high-velocity) magazines
   parent: BoxCardboard
   id: BoxMagazineMagnumSubMachineGunHighVelocity
-  description: A box full of .40 Drozd (high-velocity) magazines.
+  description: A box full of .40 Vector (high-velocity) magazines.
   components:
   - type: StorageFill
     contents:
@@ -146,10 +146,10 @@
         amount: 3
 
 - type: entity
-  name: box of .40 Drozd (practice) magazines
+  name: box of .40 Vector (practice) magazines
   parent: BoxCardboard
   id: BoxMagazineMagnumSubMachineGunPractice
-  description: A box full of .40 Drozd (practice) magazines.
+  description: A box full of .40 Vector (practice) magazines.
   components:
   - type: StorageFill
     contents:
@@ -157,10 +157,10 @@
         amount: 3
 
 - type: entity
-  name: box of .40 Drozd (rubber) magazines
+  name: box of .40 Vector (rubber) magazines
   parent: BoxCardboard
   id: BoxMagazineMagnumSubMachineGunRubber
-  description: A box full of .40 Drozd (rubber) magazines.
+  description: A box full of .40 Vector (rubber) magazines.
   components:
   - type: StorageFill
     contents:

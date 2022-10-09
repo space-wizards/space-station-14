@@ -15,3 +15,5 @@ lightswitch.ogg taken from https://github.com/Skyrat-SS13/Skyrat-tg/blob/3f6099b
 reclaimer_startup.ogg - https://freesound.org/people/cmorris035/sounds/319152/, Woodchipper Start (heavy machine) 02.wav CC0 (by cmorris035)
 
 airlock_open.ogg and airlock_close.ogg are from: https://github.com/tgstation/tgstation/tree/5f5002b21253354c20ea224be3f604d79299b37e/sound/machines
+
+machine_vend_hot_drink.ogg original from https://freesound.org/people/waxsocks/sounds/402603/ CC0 (by waxsocks) and edited
