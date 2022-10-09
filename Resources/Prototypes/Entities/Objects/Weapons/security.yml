@@ -17,7 +17,6 @@
       types:
         Blunt: 7
     bluntStaminaDamageFactor: 2.0
-    range: 1.5
     angle: 60
     animation: WeaponArcSlash
   - type: StaminaDamageOnHit
@@ -61,7 +60,6 @@
       damage:
         types:
           Blunt: 0 # why is this classed as a melee weapon? Is it needed for some interaction?
-      range: 1
       angle: 10
     - type: Item
       size: 5
