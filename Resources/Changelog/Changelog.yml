@@ -1,9 +1,4 @@
 Entries:
-- author: AJCM-git
-  changes:
-  - {message: Smite spell now knocks back its target, type: Tweak}
-  id: 1912
-  time: '2022-07-09T09:49:31.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixes the injector sprite not rendering properly when below a floor
@@ -2934,3 +2929,8 @@ Entries:
   - {message: Fixed some toolboxes from the toolbox crates being empty.., type: Fix}
   id: 2411
   time: '2022-10-09T05:52:21.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed incorrect popup for inserting materials into machines., type: Fix}
+  id: 2412
+  time: '2022-10-09T18:16:10.0000000+00:00'
