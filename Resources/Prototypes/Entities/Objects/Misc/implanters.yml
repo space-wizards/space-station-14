@@ -36,3 +36,18 @@
           whitelist:
             tags:
               - SubdermalImplant
+
+- type: entity
+  id: TrackingImplanter
+  name: tracking implanter
+  description: CIA
+  parent: Implanter
+  components:
+    - type: ItemSlots
+      slots:
+        implanter_slot:
+          startingItem: TrackingImplant
+          priority: 0
+          whitelist:
+            tags:
+              - SubdermalImplant

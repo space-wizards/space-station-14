@@ -12,6 +12,7 @@ public abstract class SharedImplanterSystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _container = default!;
 
     public const string ImplanterSlotId = "implanter_slot";
+    public const string ImplantSlotId = "ImplantContainer";
 
     public override void Initialize()
     {
@@ -53,10 +54,10 @@ public abstract class SharedImplanterSystem : EntitySystem
         //This works to add a container, pog
         //Use a container because someone can have multiple implants
 
-        if (!TryComp<ContainerManagerComponent>(target, out var containerManager) || _container.HasContainer(target, "ImplantContainer", containerManager))
+        if (!TryComp<ContainerManagerComponent>(target, out var containerManager) || _container.HasContainer(target, ImplantSlotId, containerManager))
             return;
 
-        var implantContainer = _container.EnsureContainer<Container>(target, "ImplantContainer");
+        var implantContainer = _container.EnsureContainer<Container>(target, ImplantSlotId);
         implantComp.EntityUid = target;
         container.Remove(implant);
         implantContainer.Insert(implant);

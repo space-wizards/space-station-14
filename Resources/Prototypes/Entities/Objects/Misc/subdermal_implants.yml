@@ -1,10 +1,36 @@
 - type: entity
   parent: BaseItem
+  id: BaseSubdermalImplant
+  name: implant
+  abstract: true
+  noSpawn: true
+  components:
+    - type: SubdermalImplant
+    - type: Tag
+      tags:
+        - SubdermalImplant
+
+- type: entity
+  parent: BaseSubdermalImplant
   id: UndeadImplant
   name: undead implant
   components:
     - type: SubdermalImplant
       implantAction: TurnUndead
-    - type: Tag
-      tags:
-        - SubdermalImplant
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: TrackingImplant
+  name: tracking implant
+  components:
+    - type: SubdermalImplant
+    - type: SuitSensor
+      randomMode: false
+      controlsLocked: true
+      mode: SensorCords
+      activationContainer: "ImplantContainer"
+    - type: DeviceNetwork
+      deviceNetId: Wireless
+      transmitFrequencyId: SuitSensor
+    - type: WirelessNetworkConnection
+      range: 500

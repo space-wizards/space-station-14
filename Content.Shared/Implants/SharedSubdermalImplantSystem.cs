@@ -1,6 +1,8 @@
 ﻿using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Implants.Components;
+using Content.Shared.Inventory;
+using Content.Shared.Inventory.Events;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 
@@ -11,6 +13,7 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+    [Dependency] private readonly InventorySystem _inventorySystem = default!;
 
     public override void Initialize()
     {
@@ -26,7 +29,7 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
     {
         //TODO: Probably remove this/swap to partial
 
-        if (component.EntityUid == null)
+        if (component.EntityUid == null || !_inventorySystem.TryGetSlot(component.EntityUid.Value, args.Container.ID, out var slotdef))
             return;
 
         if (component.ImplantAction != null)

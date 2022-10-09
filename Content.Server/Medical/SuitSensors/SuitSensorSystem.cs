@@ -9,6 +9,7 @@ using Content.Shared.Inventory.Events;
 using Content.Shared.Medical.SuitSensor;
 using Content.Shared.MobState.Components;
 using Content.Shared.Verbs;
+using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -35,6 +36,15 @@ namespace Content.Server.Medical.SuitSensors
             SubscribeLocalEvent<SuitSensorComponent, GotUnequippedEvent>(OnUnequipped);
             SubscribeLocalEvent<SuitSensorComponent, ExaminedEvent>(OnExamine);
             SubscribeLocalEvent<SuitSensorComponent, GetVerbsEvent<Verb>>(OnVerb);
+            SubscribeLocalEvent<SuitSensorComponent, EntGotInsertedIntoContainerMessage>(OnInsert);
+        }
+
+        private void OnInsert(EntityUid uid, SuitSensorComponent component, EntGotInsertedIntoContainerMessage args)
+        {
+            if (args.Container.ID != component.ActivationContainer)
+                return;
+
+            component.User = args.Container.Owner;
         }
 
         public override void Update(float frameTime)
