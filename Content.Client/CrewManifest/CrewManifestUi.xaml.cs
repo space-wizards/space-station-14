@@ -104,6 +104,9 @@ public sealed partial class CrewManifestUi : DefaultWindow
             Orientation = LayoutOrientation.Vertical;
             HorizontalExpand = true;
 
+            if (Loc.TryGetString($"department-{sectionTitle}", out var localizedDepart))
+                sectionTitle = localizedDepart;
+ 
             AddChild(new Label()
             {
                 StyleClasses = { "LabelBig" },
