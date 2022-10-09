@@ -1,10 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Split Station now has slightly more emergency lights across the station.
-      Salvage got a better exterior., type: Tweak}
-  id: 1911
-  time: '2022-07-09T09:48:53.0000000+00:00'
 - author: AJCM-git
   changes:
   - {message: Smite spell now knocks back its target, type: Tweak}
@@ -2935,3 +2929,8 @@ Entries:
       nearest cardinal direction., type: Add}
   id: 2410
   time: '2022-10-09T05:45:08.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed some toolboxes from the toolbox crates being empty.., type: Fix}
+  id: 2411
+  time: '2022-10-09T05:52:21.0000000+00:00'
