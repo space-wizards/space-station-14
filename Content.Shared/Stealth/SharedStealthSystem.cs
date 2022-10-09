@@ -114,7 +114,7 @@ public abstract class SharedStealthSystem : EntitySystem
             component.LastUpdated = _timing.CurTime;
         }
 
-        component.LastVisibility = Math.Clamp(component.LastVisibility + delta, -1f, 1f);
+        component.LastVisibility = Math.Clamp(component.LastVisibility + delta, component.MinVisibility, component.MaxVisibility);
         Dirty(component);
     }
 
@@ -127,7 +127,7 @@ public abstract class SharedStealthSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        component.LastVisibility = value;
+        component.LastVisibility = Math.Clamp(value, component.MinVisibility, component.MaxVisibility);
         if (component.LastUpdated != null)
             component.LastUpdated = _timing.CurTime;
 
@@ -138,7 +138,9 @@ public abstract class SharedStealthSystem : EntitySystem
     /// Gets the current visibility from the <see cref="StealthComponent"/>
     /// Use this instead of getting LastVisibility from the component directly.
     /// </summary>
-    /// <returns>Returns a calculation that accounts for any stealth change that happened since last update, otherwise returns based on if it can resolve the component.</returns>
+    /// <returns>Returns a calculation that accounts for any stealth change that happened since last update, otherwise
+    /// returns based on if it can resolve the component. Note that the returned value may be larger than the components
+    /// maximum stealth value if it is currently disabled.</returns>
     public float GetVisibility(EntityUid uid, StealthComponent? component = null)
     {
         if (!Resolve(uid, ref component) || !component.Enabled)
@@ -148,6 +150,6 @@ public abstract class SharedStealthSystem : EntitySystem
             return component.LastVisibility;
 
         var deltaTime = _timing.CurTime - component.LastUpdated.Value;
-        return Math.Clamp(component.LastVisibility + (float) deltaTime.TotalSeconds * component.PassiveVisibilityRate, -1f, 1f);
+        return Math.Clamp(component.LastVisibility + (float) deltaTime.TotalSeconds * component.PassiveVisibilityRate, component.MinVisibility, component.MaxVisibility);
     }
 }

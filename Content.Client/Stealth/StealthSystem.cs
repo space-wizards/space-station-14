@@ -77,6 +77,10 @@ public sealed class StealthSystem : SharedStealthSystem
         var parentXform = Transform(Transform(uid).ParentUid);
         var reference = args.Viewport.WorldToLocal(parentXform.WorldPosition);
         var visibility = GetVisibility(uid, component);
+
+        // actual visual visibility effect is limited to +/- 1.
+        visibility = Math.Clamp(visibility, -1f, 1f);
+
         _shader.SetParameter("reference", reference);
         _shader.SetParameter("visibility", visibility);
 

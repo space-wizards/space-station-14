@@ -71,7 +71,7 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
         // If this box has a stealth/chameleon effect, enable the stealth effect.
         if (TryComp(uid, out StealthComponent? stealth))
         {
-            _stealth.SetVisibility(uid, 1, stealth);
+            _stealth.SetVisibility(uid, stealth.MaxVisibility, stealth);
             _stealth.SetEnabled(uid, true, stealth);
         }
     }
