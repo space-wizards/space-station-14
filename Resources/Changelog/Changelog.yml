@@ -1,11 +1,6 @@
 Entries:
 - author: mirrorcult
   changes:
-  - {message: Many popups now vary in size and color., type: Add}
-  id: 1909
-  time: '2022-07-09T09:09:52.0000000+00:00'
-- author: mirrorcult
-  changes:
   - {message: Chickens and ducks now lay eggs., type: Add}
   id: 1910
   time: '2022-07-09T09:48:16.0000000+00:00'
@@ -2932,3 +2927,9 @@ Entries:
   - {message: Captain's antique laser gun has now the size of 25, type: Tweak}
   id: 2408
   time: '2022-10-09T05:30:43.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: NanoTrasen has supplied your stations with better routers! The static
+      you see will now disappear much more faster than before!, type: Tweak}
+  id: 2409
+  time: '2022-10-09T05:32:06.0000000+00:00'
