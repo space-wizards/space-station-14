@@ -37,7 +37,6 @@
   - type: AnimationPlayer
   - type: MeleeWeapon
     hidden: true
-    range: 1.5
     angle: 0
     animation: WeaponArcFist
     damage:
