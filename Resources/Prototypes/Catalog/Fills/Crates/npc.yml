@@ -29,12 +29,12 @@
 
 
 - type: entity
-  id: CrateNPCCatFloppa
+  id: CrateNPCCatCaracal
   parent: CrateLivestock
   components:
   - type: StorageFill
     contents:
-      - id: MobCatFloppa
+      - id: MobCatCaracal
         amount: 1
 
 

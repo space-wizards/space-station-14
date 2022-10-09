@@ -7,8 +7,8 @@ ent-CrateNPCButterflies = Crate of butterflies
 ent-CrateNPCCat = Cat crate
     .desc = A crate containing a single cat.
 
-ent-CrateNPCCatFloppa = Floppa crate
-    .desc = A crate containing a single floppa.
+ent-CrateNPCCatCaracal = Caracal crate
+    .desc = A crate containing a single caracal.
 
 ent-CrateNPCChicken = Chicken crate
     .desc = A crate containing four fully grown chickens.

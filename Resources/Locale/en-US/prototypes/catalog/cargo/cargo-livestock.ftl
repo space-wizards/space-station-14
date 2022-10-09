@@ -7,8 +7,8 @@ ent-LivestockButterfly = { ent-CrateNPCButterflies }
 ent-LivestockCat = { ent-CrateNPCCat }
     .desc = { ent-CrateNPCCat.desc }
 
-ent-LivestockCatFloppa = { ent-CrateNPCCatFloppa }
-    .desc = { ent-CrateNPCCatFloppa.desc }
+ent-LivestockCatCaracal = { ent-CrateNPCCatCaracal }
+    .desc = { ent-CrateNPCCatCaracal.desc }
 
 ent-LivestockChicken = { ent-CrateNPCChicken }
     .desc = { ent-CrateNPCChicken.desc }
