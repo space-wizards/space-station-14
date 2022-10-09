@@ -29,6 +29,16 @@
 
 
 - type: entity
+  id: CrateNPCCatFloppa
+  parent: CrateLivestock
+  components:
+  - type: StorageFill
+    contents:
+      - id: MobCatFloppa
+        amount: 1
+
+
+- type: entity
   id: CrateNPCChicken
   parent: CrateLivestock
   components:
