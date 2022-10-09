@@ -18,10 +18,11 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
 
         SubscribeLocalEvent<SubdermalImplantComponent, GetItemActionsEvent>(GetImplantAction);
         SubscribeLocalEvent<SubdermalImplantComponent, ContainerGettingInsertedAttemptEvent>(OnInsertAttempt); //replace with engine PR GotInserted
+        SubscribeLocalEvent<SubdermalImplantComponent, GotInsertedEvent>(OnInsert);
         //TODO: Subscribe to GotInsertedEvent, which will be an engine PR for containers that's raised on the inserted entity
     }
 
-    private void OnInsertAttempt(EntityUid uid, SubdermalImplantComponent component, ContainerGettingInsertedAttemptEvent args)
+    private void OnInsert(EntityUid uid, SubdermalImplantComponent component, GotInsertedEvent args)
     {
         if (component.EntityUid == null)
             return;
@@ -31,6 +32,11 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
             var action = new InstantAction(_prototypeManager.Index<InstantActionPrototype>(component.ImplantAction));
             _actionsSystem.AddAction(component.EntityUid.Value, action, uid);
         }
+    }
+
+    private void OnInsertAttempt(EntityUid uid, SubdermalImplantComponent component, ContainerGettingInsertedAttemptEvent args)
+    {
+
     }
 
     private void GetImplantAction(EntityUid uid, SubdermalImplantComponent component, GetItemActionsEvent args)
