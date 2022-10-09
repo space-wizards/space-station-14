@@ -2410,8 +2410,8 @@ Entries:
   time: '2022-09-16T14:16:10.0000000+00:00'
 - author: metalgearsloth
   changes:
-  - {message: Bible heal has been reduced from 70 damage per 5 seconds to 10 damage
-      per 5 seconds., type: Tweak}
+  - {message: Bible heal has been reduced from 70 damage per 5 seconds to 30 damage
+      per 10 seconds., type: Tweak}
   id: 2324
   time: '2022-09-16T14:27:05.0000000+00:00'
 - author: lapatison
