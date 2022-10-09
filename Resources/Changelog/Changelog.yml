@@ -1,17 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: 'Jetpacks got some QOL tweaks. Particles don''t show if they''re stationary,
-      it gives popups when it turns off, and they''re unusable under gravity (as they
-      give no effect anyway).', type: Tweak}
-  id: 1907
-  time: '2022-07-09T08:24:49.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed a bug that would cause additional reagents to appear when failing
-      to drink something., type: Fix}
-  id: 1908
-  time: '2022-07-09T08:53:18.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Many popups now vary in size and color., type: Add}
@@ -2933,3 +2920,15 @@ Entries:
   - {message: Removed Meta, type: Remove}
   id: 2406
   time: '2022-10-09T02:27:03.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Melee range has been temporarily standardised from 1m centre distance
+      up to 1.5m nearest edge distance until interaction outline reflects melee weapon
+      ranges., type: Tweak}
+  id: 2407
+  time: '2022-10-09T05:29:51.0000000+00:00'
+- author: FunkySphere
+  changes:
+  - {message: Captain's antique laser gun has now the size of 25, type: Tweak}
+  id: 2408
+  time: '2022-10-09T05:30:43.0000000+00:00'
