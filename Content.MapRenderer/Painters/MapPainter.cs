@@ -24,7 +24,12 @@ namespace Content.MapRenderer.Painters
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { Map = map });
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
+            {
+                Fresh = true,
+                Map = map
+            });
+
             var server = pairTracker.Pair.Server;
             var client = pairTracker.Pair.Client;
 
