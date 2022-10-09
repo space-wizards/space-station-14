@@ -1,9 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Chickens and ducks now lay eggs., type: Add}
-  id: 1910
-  time: '2022-07-09T09:48:16.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Split Station now has slightly more emergency lights across the station.
@@ -2933,3 +2928,10 @@ Entries:
       you see will now disappear much more faster than before!, type: Tweak}
   id: 2409
   time: '2022-10-09T05:32:06.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Camera rotation controls have been added. Numpad 7-8-9 now control your
+      rotation. When moving from one grid to another your rotation will snap to the
+      nearest cardinal direction., type: Add}
+  id: 2410
+  time: '2022-10-09T05:45:08.0000000+00:00'
