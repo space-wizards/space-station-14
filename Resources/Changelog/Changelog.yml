@@ -1,12 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Emergency shuttle will now actually warp-in nearby if there's no available
-      docks., type: Fix}
-  id: 1906
-  time: '2022-07-09T05:20:23.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: 'Jetpacks got some QOL tweaks. Particles don''t show if they''re stationary,
       it gives popups when it turns off, and they''re unusable under gravity (as they
       give no effect anyway).', type: Tweak}
@@ -2933,3 +2927,9 @@ Entries:
       like items or mobs would., type: Fix}
   id: 2405
   time: '2022-10-08T03:27:16.0000000+00:00'
+- author: Cheackraze
+  changes:
+  - {message: Added Kettle!, type: Add}
+  - {message: Removed Meta, type: Remove}
+  id: 2406
+  time: '2022-10-09T02:27:03.0000000+00:00'
