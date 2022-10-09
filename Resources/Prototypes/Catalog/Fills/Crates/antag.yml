@@ -1,0 +1,15 @@
+- type: entity
+  id: CratePirateChest
+  suffix: antag
+  parent: CratePirate
+  components:
+  - type: StorageFill
+    contents:
+      - id: HatBandRed
+        amount: 1
+      - id: Cutlass
+        amount: 1
+      - id: IngotGold
+        amount: 2
+      - id: CannonBall
+        amount: 2

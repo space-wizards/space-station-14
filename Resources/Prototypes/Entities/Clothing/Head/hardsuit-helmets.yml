@@ -467,3 +467,19 @@
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertjanitor.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertjanitor.rsi
+
+- type: entity
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitPirateCap
+  noSpawn: true
+  name: ancient hardsuit helmet
+  suffix: pirate
+  description: Special hardsuit helmet, made for the captain of a pirate ship.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/piratecaptainhelm.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/piratecaptainhelm.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.3
+    lowPressureMultiplier: 1000

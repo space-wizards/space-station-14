@@ -642,7 +642,7 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.4,-0.4,0.4,0.29"
-      density: 135
+      mass: 75
       mask:
       - LargeMobMask
       layer:
@@ -653,3 +653,31 @@
     containers:
     - entity_storage
 
+- type: entity
+  id: CratePirate
+  name: pirate chest
+  description: A space pirate chest, not for station lubbers.
+  parent: CrateGeneric
+  components:
+  - type: Sprite
+    sprite: Structures/Storage/Crates/piratechest.rsi
+    layers:
+    - state: crate
+    - state: crate_door
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+  - type: Icon
+    sprite: Structures/Storage/Crates/piratechest.rsi
+    state: crate_icon
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state_open: crate_open
+      state_closed: crate_door
+  - type: Construction
+    graph: CrateGenericSteel
+    node: crategenericsteel
+    containers:
+    - entity_storage

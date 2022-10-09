@@ -354,3 +354,25 @@
     damage:
       types:
         Piercing: 0
+
+- type: entity
+  id: BulletCannonBall
+  name: cannonball
+  parent: BaseBulletTrigger
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+      - state: ball
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 6
+    intensitySlope: 2
+    totalIntensity: 150
+    maxTileBreak: 1
+  - type: PointLight
+    radius: 2
+    color: orange
+    energy: 0.5

@@ -223,3 +223,14 @@
       contents:
         - id: BoxSurvival
 
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackPirate
+  id: ClothingBackpackPirateFilled
+  components:
+    - type: StorageFill
+      contents:
+        - id: BoxSurvival
+        - id: Cutlass
+        - id: WeaponRevolverPirate
+        - id: ClothingEyesEyepatch

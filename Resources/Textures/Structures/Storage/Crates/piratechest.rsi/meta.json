@@ -1,0 +1,39 @@
+{
+    "version": 1,
+	"license": "CC-BY-SA-3.0",
+	"copyright": "discord:brainfood#7460 github: brainfood1183.",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "crate",
+            "select": [],
+            "flags": {}
+        },
+        {
+            "name": "crate_door",
+            "select": [],
+            "flags": {}
+        },
+        {
+            "name": "crate_icon",
+            "select": [],
+            "flags": {}
+        },
+        {
+            "name": "welded",
+            "select": [],
+            "flags": {}
+        },
+        {
+            "name": "sparking",            "delays": [[0.1,0.1,0.1,0.1,0.1,0.1]]
+        },
+        {
+            "name": "crate_open",
+            "select": [],
+            "flags": {}
+        }
+    ]
+}
