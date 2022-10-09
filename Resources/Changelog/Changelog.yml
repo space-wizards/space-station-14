@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: The retro and makeshift laser gun are now pistol sized., type: Tweak}
-  id: 1917
-  time: '2022-07-10T07:57:16.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Glass shards and d4 dice now deal damage to people who walk over them
@@ -2937,3 +2932,9 @@ Entries:
       spicy., type: Add}
   id: 2416
   time: '2022-10-09T19:25:22.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: NanoTrasen has finally upgraded all of our nuclear bombs! They no longer
+      all use the exact same code., type: Tweak}
+  id: 2417
+  time: '2022-10-09T19:28:08.0000000+00:00'
