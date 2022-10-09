@@ -7,6 +7,10 @@
   - type: Sprite
     sprite: Objects/Misc/module.rsi
     state: airalarm_electronics
+  - type: Tag
+    tags:
+      - DroneUsable
+      - AirAlarmElectronics
 
 - type: entity
   id: FireAlarmElectronics
@@ -17,3 +21,7 @@
   - type: Sprite
     sprite: Objects/Misc/module.rsi
     state: airalarm_electronics
+  - type: Tag
+    tags:
+      - DroneUsable
+      - FireAlarmElectronics

@@ -55,7 +55,6 @@
       name: action-name-disarm
   - type: MeleeWeapon
     hidden: true
-    range: 0.5
     angle: 0
     animation: WeaponArcBite
     damage:

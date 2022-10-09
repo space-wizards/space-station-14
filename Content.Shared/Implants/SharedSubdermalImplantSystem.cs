@@ -17,13 +17,15 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<SubdermalImplantComponent, GetItemActionsEvent>(GetImplantAction);
-        SubscribeLocalEvent<SubdermalImplantComponent, ContainerGettingInsertedAttemptEvent>(OnInsertAttempt); //replace with engine PR GotInserted
-        SubscribeLocalEvent<SubdermalImplantComponent, GotInsertedEvent>(OnInsert);
-        //TODO: Subscribe to GotInsertedEvent, which will be an engine PR for containers that's raised on the inserted entity
+        SubscribeLocalEvent<SubdermalImplantComponent, EntGotInsertedIntoContainerMessage>(OnInsert);
+
+        //TODO: Add trigger events and such for certain implant types
     }
 
-    private void OnInsert(EntityUid uid, SubdermalImplantComponent component, GotInsertedEvent args)
+    private void OnInsert(EntityUid uid, SubdermalImplantComponent component, EntGotInsertedIntoContainerMessage args)
     {
+        //TODO: Probably remove this/swap to partial
+
         if (component.EntityUid == null)
             return;
 
@@ -32,16 +34,14 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
             var action = new InstantAction(_prototypeManager.Index<InstantActionPrototype>(component.ImplantAction));
             _actionsSystem.AddAction(component.EntityUid.Value, action, uid);
         }
-    }
 
-    private void OnInsertAttempt(EntityUid uid, SubdermalImplantComponent component, ContainerGettingInsertedAttemptEvent args)
-    {
+        //TODO: See if you need to put any passive or reactive implant logic in here
 
+        //TODO: See about dynamically adding components based on some injections (IE Undead, Mindshield, etc)
     }
 
     private void GetImplantAction(EntityUid uid, SubdermalImplantComponent component, GetItemActionsEvent args)
     {
-        //TODO: Determine if this can work since you need to add it on implant, rather than on pickup
-        //TODO: Something like implant > check this component > add action instead of from here
+        //TODO: Determine if you need this at all
     }
 }
