@@ -1,15 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: 'There is now an identity system. Players may not be who they initially
-      seem. Masks and headgear can cover your true identity, and allow you to pass
-      as the ID you''re wearing, or as an unknown person if you have no visible ID.',
-    type: Add}
-  - {message: 'A lot of popups and UI windows were changed to use identity stuff rather
-      than hard-coded name, so if you''re able to see someones ''true'' name when
-      you shouldn''t (through a popup, etc) then please report it.', type: Fix}
-  id: 1921
-  time: '2022-07-11T01:36:53.0000000+00:00'
 - author: keronshb
   changes:
   - {message: Unintended blocking bugs are now fixed., type: Fix}
@@ -2937,3 +2926,15 @@ Entries:
   - {message: Added a crafting recipe for the muzzle, type: Add}
   id: 2420
   time: '2022-10-09T19:46:46.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: 'Cardboard Boxes have been added. They''re large boxes that can hold
+      a single person inside, and that person can move the box! If the box is opened,
+      everyone around them is in for a surprise.', type: Add}
+  - {message: 'Adds the Stealth component! Anything that has it will become invisible
+      if they stand still for a period of time, and gradually becomes visible while
+      moving.', type: Add}
+  - {message: 'Adds Stealth Box, which is a box that goes invisible and will be a
+      traitor item to be added in the future!', type: Add}
+  id: 2421
+  time: '2022-10-09T22:17:53.0000000+00:00'
