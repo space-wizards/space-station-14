@@ -1,11 +1,17 @@
+using Content.Server.Power.EntitySystems;
 using Content.Server.Power.Components;
 using JetBrains.Annotations;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Power.EntitySystems
 {
     [UsedImplicitly]
     internal sealed class ResearchBatterySystem : EntitySystem
     {
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+
+        private const float UpdateRate = 10f;
+        private float _updateDif;
 
         public override void Initialize()
         {
@@ -33,12 +39,70 @@ namespace Content.Server.Power.EntitySystems
 
             if (component.lastRecordedCharge < batteryComponent.CurrentCharge && component.researchMode)
             {
-                component.analysedCharge += batteryComponent.CurrentCharge - component.lastRecordedCharge;
-                batteryComponent.CurrentCharge = component.lastRecordedCharge;
+                if ((component.analysedCharge + ((batteryComponent.CurrentCharge - component.lastRecordedCharge) * component.analysisSiphon)) <= component.MaxAnalysisCharge)
+                {
+                    component.analysedCharge += (batteryComponent.CurrentCharge - component.lastRecordedCharge) * component.analysisSiphon;
+
+                    //ideally the charge should be taken away, but this appears to cause a crash...
+                    //batteryComponent.CurrentCharge -= (batteryComponent.CurrentCharge - component.lastRecordedCharge) * component.analysisSiphon;
+                }
+                else if ((component.analysedCharge + ((batteryComponent.CurrentCharge - component.lastRecordedCharge) * component.analysisSiphon)) > component.MaxAnalysisCharge
+                    && component.analysedCharge < component.MaxAnalysisCharge)
+                {
+                    //batteryComponent.CurrentCharge -= (1000000f - component.analysedCharge);
+                    component.analysedCharge = 1000000f;
+                }
             }
 
             component.lastRecordedCharge = batteryComponent.CurrentCharge;
         }
 
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+
+            // check update rate
+            _updateDif += frameTime;
+            if (_updateDif < UpdateRate)
+                return;
+            _updateDif = 0f;
+
+            var researchBatteries = EntityManager.EntityQuery<ResearchBatteryComponent>();
+
+            foreach (var researchBattery in researchBatteries)
+            {
+                if (researchBattery.researchMode && researchBattery.analysedCharge > 0) {
+                    
+                    if (!TryComp<BatteryComponent>(researchBattery.Owner, out var batteryComponent))
+                        return;
+
+                    if ((batteryComponent.MaxCharge + (researchBattery.analysedCharge * researchBattery.CapIncrease)) <= researchBattery.MaxChargeCeiling)
+                    {
+                        batteryComponent.MaxCharge += researchBattery.analysedCharge * researchBattery.CapIncrease;
+                        //Console.WriteLine("max charge added");
+                    }
+                    else if ((batteryComponent.MaxCharge + (researchBattery.analysedCharge * researchBattery.CapIncrease)) > researchBattery.MaxChargeCeiling
+                        && batteryComponent.MaxCharge < researchBattery.MaxChargeCeiling)
+                    {
+                        batteryComponent.MaxCharge = 100000000f;
+                        //Console.WriteLine("max charge reached");
+                    }
+
+                    if (researchBattery.shieldingActive && researchBattery.analysedCharge >= researchBattery.MaxAnalysisCharge * researchBattery.shieldingCost)
+                        researchBattery.analysedCharge -= researchBattery.MaxAnalysisCharge * researchBattery.shieldingCost;
+                    else if (researchBattery.shieldingActive)
+                    {
+                        researchBattery.shieldingActive = false;
+                        researchBattery.analysedCharge = 0f;
+                    }
+
+                    if (!researchBattery.shieldingActive && researchBattery.analysedCharge > researchBattery.MaxAnalysisCharge * researchBattery.overloadThreshold)
+                        Console.WriteLine("WARNING OVERLOAD OF RESEARCH SMES");
+
+                    researchBattery.analysedCharge -= researchBattery.analysedCharge * researchBattery.AnalysisDischarge;
+                    
+                }
+            }
+        }
     }
 }
