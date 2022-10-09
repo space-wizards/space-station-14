@@ -1,16 +1,4 @@
 Entries:
-- author: Elijahrane
-  changes:
-  - {message: Forensic pads and reports now label which entity they are from. Detectives
-      rejoice!, type: Add}
-  id: 1919
-  time: '2022-07-11T00:52:54.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Bodybags are now printable in the medical techfab., type: Add}
-  - {message: Medical techfab doesn't start with all recipes unlocked anymore., type: Fix}
-  id: 1920
-  time: '2022-07-11T01:11:30.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: 'There is now an identity system. Players may not be who they initially
@@ -2939,3 +2927,13 @@ Entries:
       identical to 0.5u of omnizine, and will heal 5 times less.', type: Fix}
   id: 2418
   time: '2022-10-09T19:40:50.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Dumping a mop bucket now has a short delay, type: Tweak}
+  id: 2419
+  time: '2022-10-09T19:46:08.0000000+00:00'
+- author: Interrobang01
+  changes:
+  - {message: Added a crafting recipe for the muzzle, type: Add}
+  id: 2420
+  time: '2022-10-09T19:46:46.0000000+00:00'
