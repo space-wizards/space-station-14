@@ -4,11 +4,7 @@
   parent: BaseItem
   abstract: true
   components:
-    - type: Storage
-      capacity: 1
-      whitelist:
-        components:
-        - SubdermalImplant
+    - type: ItemSlots
     - type: Implanter
     - type: Sprite
       sprite: Objects/Specific/Chemistry/syringe.rsi
@@ -27,11 +23,16 @@
         - Trash
 
 - type: entity
-  id: TrackingImplanter
-  name: tracking implanter
+  id: UndeadImplanter
+  name: undead implanter
+  description: brains
   parent: Implanter
   components:
-    - type: StorageFill
-      contents:
-        - id: #Insert Tracking Subdermal Implant here
-          amount: 1
+    - type: ItemSlots
+      slots:
+        implanter_slot:
+          startingItem: UndeadImplant
+          priority: 0
+          whitelist:
+            tags:
+              - SubdermalImplant

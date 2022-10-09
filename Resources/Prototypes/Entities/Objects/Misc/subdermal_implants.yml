@@ -1,0 +1,10 @@
+- type: entity
+  parent: BaseItem
+  id: UndeadImplant
+  name: undead implant
+  components:
+    - type: SubdermalImplant
+      implantAction: TurnUndead
+    - type: Tag
+      tags:
+        - SubdermalImplant

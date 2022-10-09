@@ -12,7 +12,9 @@ public sealed class SubdermalImplantComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("implantAction")]
-    public InstantAction? ImplantAction;
+    public string? ImplantAction;
+
+    public EntityUid? EntityUid;
 
     //TODO: Add logic for passive actions (IE tracking implant)
 

@@ -1,4 +1,5 @@
-﻿using Content.Shared.Hands;
+﻿using System.Linq;
+using Content.Shared.Hands;
 using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
 using Robust.Shared.Containers;
@@ -8,7 +9,8 @@ namespace Content.Shared.Implants;
 public abstract class SharedImplanterSystem : EntitySystem
 {
     [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly ContainerManagerComponent _containerManager = default!;
+
+    public const string ImplanterSlotId = "implanter_slot";
 
     public override void Initialize()
     {
@@ -36,10 +38,25 @@ public abstract class SharedImplanterSystem : EntitySystem
         Implant(uid, args.Target.Value, component);
     }
 
-    private void Implant(EntityUid user, EntityUid target, ImplanterComponent component)
+    private void Implant(EntityUid implanter, EntityUid target, ImplanterComponent component)
     {
+        if (!_container.TryGetContainer(implanter, ImplanterSlotId, out var container))
+            return;
+
+        var implant = container.ContainedEntities.FirstOrDefault();
+
+        //This is where it could be beneficial to have a partial
+        if (!TryComp<SubdermalImplantComponent>(implant, out var implantComp))
+            return;
+
         //This works to add a container, pog
         //Use a container because someone can have multiple implants
-        _container.EnsureContainer<Container>(target, "ImplantContainer", _containerManager);
+        var implantContainer = _container.EnsureContainer<Container>(target, "ImplantContainer");
+        implantComp.EntityUid = target;
+        container.Remove(implant);
+        implantContainer.Insert(implant);
+
+        //_container.RemoveEntity(implanter, implant);
+
     }
 }
