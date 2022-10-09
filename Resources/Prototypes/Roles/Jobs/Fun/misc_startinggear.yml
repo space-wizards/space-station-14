@@ -72,7 +72,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitOperative
     back: ClothingBackpackDuffelSyndicateOperative
-    shoes: ClothingShoesBootsCombatFilled
+    shoes: ClothingShoesBootsCombat
   innerclothingskirt: ClothingUniformJumpsuitOperative
   satchel: ClothingBackpackDuffelSyndicateOperative
   duffelbag: ClothingBackpackDuffelSyndicateOperative
@@ -86,7 +86,7 @@
     back: ClothingBackpackDuffelSyndicateOperative
     ears: ClothingHeadsetAltSyndicate
     gloves: ClothingHandsGlovesCombat
-    shoes: ClothingShoesBootsCombatFilled
+    shoes: ClothingShoesBootsCombat
     pocket1: BaseUplinkRadio40TC
     id: AgentIDCard
   innerclothingskirt: ClothingUniformJumpsuitOperative
@@ -105,7 +105,7 @@
     ears: ClothingHeadsetAltSyndicate
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitSyndie
-    shoes: ClothingShoesBootsCombatFilled
+    shoes: ClothingShoesBootsCombat
     id: AgentIDCard
     pocket1: ExtendedEmergencyOxygenTankFilled
     pocket2: BaseUplinkRadio40TC
@@ -125,7 +125,7 @@
     ears: ClothingHeadsetAltSyndicate
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitSyndieCommander
-    shoes: ClothingShoesBootsCombatFilled
+    shoes: ClothingShoesBootsCombat
     id: SyndiPDA
     pocket1: ExtendedEmergencyOxygenTankFilled
     pocket2: BaseUplinkRadio40TC
