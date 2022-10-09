@@ -15,6 +15,7 @@ public sealed class SkeletonAccentSystem : EntitySystem
         { "fuck you", "I've got a BONE to pick with you" },
         { "definitely", "make no bones about it" },
         { "absolutely", "make no bones about it" },
+        { "lonely", "bonely"}
     };
 
     public override void Initialize()
