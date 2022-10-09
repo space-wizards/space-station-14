@@ -1,3 +1,4 @@
+using Content.Shared.Examine;
 using Content.Shared.Stealth.Components;
 using Robust.Shared.GameStates;
 using Robust.Shared.Timing;
@@ -17,6 +18,26 @@ public abstract class SharedStealthSystem : EntitySystem
         SubscribeLocalEvent<StealthComponent, MoveEvent>(OnMove);
         SubscribeLocalEvent<StealthComponent, EntityPausedEvent>(OnPaused);
         SubscribeLocalEvent<StealthComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<StealthComponent, ExamineAttemptEvent>(OnExamine);
+    }
+
+    private void OnExamine(EntityUid uid, StealthComponent component, ExamineAttemptEvent args)
+    {
+        if (!component.Enabled || GetVisibility(uid, component) > component.ExamineThreshold)
+            return;
+
+        // Don't block examine for owner or children of the cloaked entity.
+        // Containers and the like should already block examining, so not bothering to check for occluding containers.
+        var source = args.Examiner;
+        do
+        {
+            if (source == uid)
+                return;
+            source = Transform(uid).ParentUid;
+        }
+        while (uid.IsValid());
+
+        args.Cancel();
     }
 
     public virtual void SetEnabled(EntityUid uid, bool value, StealthComponent? component = null)

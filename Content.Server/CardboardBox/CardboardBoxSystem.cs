@@ -69,6 +69,10 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
     private void AfterStorageClosed(EntityUid uid, CardboardBoxComponent component, StorageAfterCloseEvent args)
     {
         // If this box has a stealth/chameleon effect, enable the stealth effect.
-        _stealth.SetEnabled(uid, true);
+        if (TryComp(uid, out StealthComponent? stealth))
+        {
+            _stealth.SetVisibility(uid, 0, stealth);
+            _stealth.SetEnabled(uid, true, stealth);
+        }
     }
 }
