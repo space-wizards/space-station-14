@@ -101,6 +101,7 @@
       layers:
         - state: research_smes
     - type: Smes
+    - type: ResearchBattery
     - type: Battery
       maxCharge: 10000000
       startingCharge: 0
