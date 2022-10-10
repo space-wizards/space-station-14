@@ -1,10 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: The nuke now forcibly anchors when armed., type: Tweak}
-  - {message: The nuke now announces its coordinates when armed., type: Tweak}
-  id: 1923
-  time: '2022-07-11T07:29:51.0000000+00:00'
 - author: Duddino
   changes:
   - {message: Fixed typo in lobby countdown, type: Fix}
@@ -2939,3 +2933,9 @@ Entries:
       is still bugged., type: Fix}
   id: 2422
   time: '2022-10-10T02:36:28.0000000+00:00'
+- author: Rapidgame7
+  changes:
+  - {message: Improved error pop-up when failing to insert an item into storage containers.,
+    type: Tweak}
+  id: 2423
+  time: '2022-10-10T22:19:59.0000000+00:00'
