@@ -25,7 +25,7 @@
     noRot: true
   - type: PottedPlantHide
   - type: SecretStash
-    secretPartName: the plant
+    secretPartName: secret-stash-part-plant
   - type: ContainerContainer
     containers:
       stash: !type:ContainerSlot {}
