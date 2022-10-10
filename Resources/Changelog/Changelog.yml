@@ -1,9 +1,4 @@
 Entries:
-- author: keronshb
-  changes:
-  - {message: Unintended blocking bugs are now fixed., type: Fix}
-  id: 1922
-  time: '2022-07-11T01:50:09.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: The nuke now forcibly anchors when armed., type: Tweak}
@@ -2938,3 +2933,9 @@ Entries:
       traitor item to be added in the future!', type: Add}
   id: 2421
   time: '2022-10-09T22:17:53.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed firelock construction not working. Deconstructing existing firelocks
+      is still bugged., type: Fix}
+  id: 2422
+  time: '2022-10-10T02:36:28.0000000+00:00'
