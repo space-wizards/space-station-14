@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json.Serialization;
@@ -7,10 +6,11 @@ using System.Threading.Tasks;
 using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Corvax.Sponsors;
 
-public sealed class SponsorsManager : ISponsorsManager
+public sealed class SponsorsManager
 {
     [Dependency] private readonly IServerNetManager _netMgr = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
@@ -20,18 +20,19 @@ public sealed class SponsorsManager : ISponsorsManager
     private ISawmill _sawmill = default!;
     private string _apiUrl = string.Empty;
 
-    private readonly Dictionary<NetUserId, SponsorInfo> _cache = new();
+    private readonly Dictionary<NetUserId, SponsorInfo> _cachedSponsors = new();
 
     public void Initialize()
     {
         _sawmill = Logger.GetSawmill("sponsors");
         _cfg.OnValueChanged(CCVars.SponsorsApiUrl, s => _apiUrl = s, true);
         _netMgr.Connecting += OnConnecting;
+        _netMgr.Disconnect += OnDisconnect;
     }
 
-    public ISponsor? GetSponsorInfo(NetUserId userId)
+    public SponsorInfo? GetSponsorInfo(NetUserId userId)
     {
-        if (!_cache.TryGetValue(userId, out var sponsor))
+        if (!_cachedSponsors.TryGetValue(userId, out var sponsor))
             return null;
         return sponsor;
     }
@@ -42,7 +43,14 @@ public sealed class SponsorsManager : ISponsorsManager
         if (info?.Tier == null)
             return;
 
-        _cache[e.UserId] = info.Value;
+        DebugTools.Assert(!_cachedSponsors.ContainsKey(e.UserId), "Cached data was found on client connect");
+
+        _cachedSponsors[e.UserId] = info.Value;
+    }
+    
+    private void OnDisconnect(object? sender, NetDisconnectedArgs e)
+    {
+        _cachedSponsors.Remove(e.Channel.UserId);
     }
 
     private async Task<SponsorInfo?> LoadSponsorInfo(NetUserId userId)
@@ -69,7 +77,7 @@ public sealed class SponsorsManager : ISponsorsManager
     }
     
 
-    private struct SponsorInfo : ISponsor
+    public struct SponsorInfo
     {
         [JsonPropertyName("tier")]
         public int? Tier { get; set; }
@@ -79,5 +87,8 @@ public sealed class SponsorsManager : ISponsorsManager
 
         [JsonPropertyName("priorityJoin")]
         public bool HavePriorityJoin { get; set; }
+
+        [JsonPropertyName("nekoCharName")]
+        public string? NekoCharName { get; set; }
     }
 }

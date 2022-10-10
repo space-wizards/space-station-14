@@ -38,7 +38,7 @@ namespace Content.Server.Chat.Managers
         [Dependency] private readonly IServerPreferencesManager _preferencesManager = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly ISponsorsManager _sponsorsManager = default!;
+        [Dependency] private readonly SponsorsManager _sponsorsManager = default!;
 
         private StationSystem _stationSystem = default!;
 
@@ -184,7 +184,7 @@ namespace Content.Server.Chat.Managers
             var sponsorData = _sponsorsManager.GetSponsorInfo(player.UserId);
             if (sponsorData?.OOCColor != null)
             {
-                messageWrap = Loc.GetString("chat-manager-send-ooc-patron-wrap-message", ("patronColor", sponsorData.OOCColor),("playerName", player.Name));
+                messageWrap = Loc.GetString("chat-manager-send-ooc-patron-wrap-message", ("patronColor", sponsorData.Value.OOCColor),("playerName", player.Name));
             }
 
             //TODO: player.Name color, this will need to change the structure of the MsgChatMessage

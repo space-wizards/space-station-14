@@ -87,7 +87,6 @@ namespace Content.Server.Entry
                 logManager.GetSawmill("Storage").Level = LogLevel.Info;
                 logManager.GetSawmill("db.ef").Level = LogLevel.Info;
 
-                IoCManager.Resolve<ISponsorsManager>().Initialize();
                 IoCManager.Resolve<IAdminLogManager>().Initialize();
                 IoCManager.Resolve<IConnectionManager>().Initialize();
                 IoCManager.Resolve<IServerDbManager>().Init();
@@ -96,6 +95,7 @@ namespace Content.Server.Entry
                 IoCManager.Resolve<IGamePrototypeLoadManager>().Initialize();
                 IoCManager.Resolve<NetworkResourceManager>().Initialize();
                 IoCManager.Resolve<GhostKickManager>().Initialize();
+                IoCManager.Resolve<SponsorsManager>().Initialize(); // Corvax
 
                 _voteManager.Initialize();
                 _updateManager.Initialize();

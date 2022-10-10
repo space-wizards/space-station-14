@@ -28,7 +28,7 @@ namespace Content.Server.Connection
         [Dependency] private readonly IServerNetManager _netMgr = default!;
         [Dependency] private readonly IServerDbManager _db = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
-        [Dependency] private readonly ISponsorsManager _sponsorsManager = default!;
+        [Dependency] private readonly SponsorsManager _sponsorsManager = default!;
 
         public void Initialize()
         {

@@ -2,6 +2,7 @@ using System.Globalization;
 using System.Linq;
 using Content.Server.Ghost;
 using Content.Server.Ghost.Components;
+using Content.Server.Humanoid;
 using Content.Server.Players;
 using Content.Server.Spawners.Components;
 using Content.Server.Speech.Components;
@@ -9,6 +10,7 @@ using Content.Server.Station.Components;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Content.Shared.Ghost;
+using Content.Shared.Humanoid.Markings;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using JetBrains.Annotations;
@@ -194,6 +196,27 @@ namespace Content.Server.GameTicking
             {
                 EntityManager.AddComponent<OwOAccentComponent>(mob);
             }
+
+            // Corvax-Sponsors-Start: Add sponsor reward to player character
+            var sponsorData = _sponsorsManager.GetSponsorInfo(player.UserId);
+            var selectedCharacterName = _prefsManager.GetPreferences(player.UserId).SelectedCharacter.Name;
+            if (sponsorData?.NekoCharName == selectedCharacterName)
+            {
+                Color? color = null;
+
+                // Get hair color
+                if (TryComp<HumanoidComponent>(mob, out var humanoid) &&
+                    humanoid.CurrentMarkings.TryGetCategory(MarkingCategories.Hair, out var hairMarkings) &&
+                    hairMarkings.Count > 0 &&
+                    hairMarkings[0].MarkingColors.Count > 0)
+                {
+                    color = hairMarkings[0].MarkingColors[0];
+                }
+
+                _humanoid.AddMarking(mob, "CatTail", color, forced: true);
+                _humanoid.AddMarking(mob, "CatEars", color, forced: true);
+            }
+            // Corvax-Sponsors-End
 
             _stationJobs.TryAssignJob(station, jobPrototype);
 
