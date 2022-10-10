@@ -54,6 +54,7 @@
     - type: Input
       context: "human"
     - type: Speech
+    - type: SkeletonAccent
     - type: Vocal
     - type: Emoting
     - type: Grammar
