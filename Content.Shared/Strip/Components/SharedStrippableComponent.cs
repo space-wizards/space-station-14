@@ -60,6 +60,17 @@ namespace Content.Shared.Strip.Components
         }
     }
 
+    [NetSerializable, Serializable]
+    public sealed class StrippingEnsnareButtonPressed : BoundUserInterfaceMessage
+    {
+        public EntityUid Ensnare { get; }
+
+        public StrippingEnsnareButtonPressed(EntityUid ensnare)
+        {
+            Ensnare = ensnare;
+        }
+    }
+
     /// <summary>
     /// Used to modify strip times.
     /// </summary>

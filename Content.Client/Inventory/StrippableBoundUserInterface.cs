@@ -1,6 +1,7 @@
 using Content.Client.Cuffs.Components;
 using Content.Client.Examine;
 using Content.Client.Hands;
+using Content.Client.Hands.UI;
 using Content.Client.HUD;
 using Content.Client.Items.UI;
 using Content.Client.Resources;
@@ -42,7 +43,7 @@ namespace Content.Client.Inventory
         public const string HiddenPocketEntityId = "StrippingHiddenEntity";
         private EntityUid _virtualHiddenEntity;
 
-        public StrippableBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public StrippableBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
             IoCManager.InjectDependencies(this);
             _examine = _entMan.EntitySysManager.GetEntitySystem<ExamineSystem>();
@@ -164,6 +165,10 @@ namespace Content.Client.Inventory
                     };
                 }
             }
+
+            // todo add restraiunt remove button
+            StrippingEnsnareButtonPressed
+
 
             UpdateEntityIcon(button, hand.HeldEntity);
             _strippingMenu!.HandsContainer.AddChild(button);
