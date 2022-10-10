@@ -60,6 +60,7 @@ public sealed class ExplosionOverlay : Overlay
         }
 
         drawHandle.SetTransform(Matrix3.Identity);
+        drawHandle.UseShader(null);
     }
 
     private void DrawExplosion(DrawingHandleWorld drawHandle, Box2Rotated worldBounds, Explosion exp, int index, EntityQuery<TransformComponent> xforms)
@@ -73,7 +74,7 @@ public sealed class ExplosionOverlay : Overlay
             var xform = xforms.GetComponent(grid.GridEntityId);
             var (_, _, worldMatrix, invWorldMatrix) = xform.GetWorldPositionRotationMatrixWithInv(xforms);
 
-            gridBounds = invWorldMatrix.TransformBox(worldBounds);
+            gridBounds = invWorldMatrix.TransformBox(worldBounds).Enlarged(grid.TileSize * 2);
             drawHandle.SetTransform(worldMatrix);
 
             DrawTiles(drawHandle, gridBounds, index, tiles, exp, grid.TileSize);
@@ -82,9 +83,9 @@ public sealed class ExplosionOverlay : Overlay
         if (exp.SpaceTiles == null)
             return;
 
-        gridBounds = Matrix3.Invert(exp.SpaceMatrix).TransformBox(worldBounds);
+        gridBounds = Matrix3.Invert(exp.SpaceMatrix).TransformBox(worldBounds).Enlarged(2);
         drawHandle.SetTransform(exp.SpaceMatrix);
-        
+
         DrawTiles(drawHandle, gridBounds, index, exp.SpaceTiles, exp, exp.SpaceTileSize);
     }
 

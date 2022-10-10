@@ -1,6 +1,5 @@
 - type: entity
   id: CrateEmergencyExplosive
-  name: bomb suit crate
   parent: CrateSecgear
   components:
   - type: StorageFill
@@ -20,7 +19,6 @@
 
 - type: entity
   id: CrateEmergencyFire
-  name: firefighting crate
   parent: CrateGenericSteel
   components:
   - type: StorageFill
@@ -35,12 +33,11 @@
         amount: 2
       - id: ClothingOuterSuitFire
         amount: 2
-      - id: RedOxygenTankFilled
+      - id: YellowOxygenTankFilled
         amount: 2
 
 - type: entity
   id: CrateEmergencyInternals
-  name: internals crate
   parent: CrateInternals
   components:
   - type: StorageFill
@@ -58,7 +55,6 @@
 
 - type: entity
   id: CrateEmergencyRadiation
-  name: radiation protection crate
   parent: CrateRadiation
   components:
   - type: StorageFill
@@ -76,7 +72,6 @@
 
 - type: entity
   id: CrateEmergencyInflatablewall
-  name: inflatable wall crate
   parent: CratePlastic
   components:
   - type: StorageFill

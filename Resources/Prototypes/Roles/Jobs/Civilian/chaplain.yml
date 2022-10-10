@@ -1,9 +1,8 @@
 - type: job
   id: Chaplain
   name: job-name-chaplain
+  playTimeTracker: JobChaplain
   startingGear: ChaplainGear
-  departments:
-  - Civilian
   icon: "Chaplain"
   supervisors: job-supervisors-hop
   access:

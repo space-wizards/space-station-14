@@ -1,12 +1,11 @@
 - type: entity
   save: false
   name: Urisst' Mzhand
-  parent: MobReptilianBase
+  parent: BaseMobReptilian
   id: MobReptilian
-  description: A miserable pile of scales.
   components:
     - type: CombatMode
-      canDisarm: true
+      disarm: null
     - type: InteractionPopup
       successChance: 1
       interactSuccessString: hugging-success-generic
@@ -16,8 +15,8 @@
       showExamineInfo: true
     - type: Input
       context: "human"
-    - type: PlayerMobMover
-    - type: PlayerInputMover
+    - type: MobMover
+    - type: InputMover
     - type: Vocal
       maleScream: /Audio/Voice/Reptilian/reptilian_scream.ogg
       femaleScream: /Audio/Voice/Reptilian/reptilian_scream.ogg
@@ -26,7 +25,7 @@
     - type: CameraRecoil
     - type: Examiner
     - type: CanHostGuardian
-    - type: AiFactionTag
+    - type: Faction
       factions:
         - NanoTrasen
     - type: Respirator

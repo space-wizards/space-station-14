@@ -53,6 +53,8 @@ namespace Content.Server.Administration.Systems
             SubscribeLocalEvent<GetVerbsEvent<Verb>>(AddAdminVerbs);
             SubscribeLocalEvent<GetVerbsEvent<Verb>>(AddDebugVerbs);
             SubscribeLocalEvent<GetVerbsEvent<Verb>>(AddSmiteVerbs);
+            SubscribeLocalEvent<GetVerbsEvent<Verb>>(AddTricksVerbs);
+            SubscribeLocalEvent<GetVerbsEvent<Verb>>(AddAntagVerbs);
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<SolutionContainerManagerComponent, SolutionChangedEvent>(OnSolutionChanged);
         }

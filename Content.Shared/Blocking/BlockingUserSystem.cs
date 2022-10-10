@@ -1,8 +1,6 @@
 ﻿using Content.Shared.Audio;
-using Content.Shared.Buckle.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
-using Content.Shared.Hands.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
@@ -12,9 +10,10 @@ namespace Content.Shared.Blocking;
 
 public sealed class BlockingUserSystem : EntitySystem
 {
-    [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly BlockingSystem _blockingSystem = default!;
+    [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     public override void Initialize()
     {
@@ -57,9 +56,9 @@ public sealed class BlockingUserSystem : EntitySystem
 
     private void OnDamageChanged(EntityUid uid, BlockingUserComponent component, DamageChangedEvent args)
     {
-        if (component.BlockingItem != null)
+        if (args.DamageDelta != null && args.DamageIncreased)
         {
-            RaiseLocalEvent(component.BlockingItem.Value, args);
+            _damageable.TryChangeDamage(component.BlockingItem, args.DamageDelta, origin: args.Origin);
         }
     }
 
@@ -73,7 +72,7 @@ public sealed class BlockingUserSystem : EntitySystem
             if (_proto.TryIndex(blockingComponent.ActiveBlockDamageModifier, out DamageModifierSetPrototype? activeBlockModifier) && blockingComponent.IsBlocking)
             {
                 args.Damage = DamageSpecifier.ApplyModifierSet(args.Damage, activeBlockModifier);
-                SoundSystem.Play(blockingComponent.BlockSound.GetSound(), Filter.Pvs(component.Owner, entityManager: EntityManager), component.Owner, AudioHelpers.WithVariation(0.2f));
+                _audio.PlayPvs(blockingComponent.BlockSound, component.Owner, AudioParams.Default.WithVariation(0.2f));
             }
         }
     }

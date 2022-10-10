@@ -10,6 +10,7 @@ using Content.Shared.Input;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
+using Content.Shared.Movement.Components;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Throwing;
@@ -22,6 +23,8 @@ using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
@@ -46,13 +49,12 @@ namespace Content.Shared.Interaction
         [Dependency] private readonly RotateToFaceSystem _rotateToFaceSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly UseDelaySystem _useDelay = default!;
-        [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
         [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
 
         private const CollisionGroup InRangeUnobstructedMask
             = CollisionGroup.Impassable | CollisionGroup.InteractImpassable;
 
-        public const float InteractionRange = 2f;
+        public const float InteractionRange = 1.5f;
         public const float InteractionRangeSquared = InteractionRange * InteractionRange;
 
         public const float MaxRaycastRange = 100f;
@@ -120,9 +122,8 @@ namespace Content.Shared.Interaction
         /// </summary>
         private void HandleInteractInventorySlotEvent(InteractInventorySlotEvent msg, EntitySessionEventArgs args)
         {
-            var coords = Transform(msg.ItemUid).Coordinates;
             // client sanitization
-            if (!ValidateClientInput(args.SenderSession, coords, msg.ItemUid, out var user))
+            if (!TryComp(msg.ItemUid, out TransformComponent? itemXform) || !ValidateClientInput(args.SenderSession, itemXform.Coordinates, msg.ItemUid, out var user))
             {
                 Logger.InfoS("system.interaction", $"Inventory interaction validation failed.  Session={args.SenderSession}");
                 return;
@@ -135,7 +136,7 @@ namespace Content.Shared.Interaction
 
             if (msg.AltInteract)
                 // Use 'UserInteraction' function - behaves as if the user alt-clicked the item in the world.
-                UserInteraction(user.Value, coords, msg.ItemUid, msg.AltInteract);
+                UserInteraction(user.Value, itemXform.Coordinates, msg.ItemUid, msg.AltInteract);
             else
                 // User used 'E'. We want to activate it, not simulate clicking on the item
                 InteractionActivate(user.Value, msg.ItemUid);
@@ -197,12 +198,9 @@ namespace Content.Shared.Interaction
             if (target != null && Deleted(target.Value))
                 return;
 
-            // TODO COMBAT Consider using alt-interact for advanced combat? maybe alt-interact disarms?
-            if (!altInteract && TryComp(user, out SharedCombatModeComponent? combatMode) && combatMode.IsInCombatMode)
+            if (TryComp(user, out SharedCombatModeComponent? combatMode) && combatMode.IsInCombatMode)
             {
-                // Wide attack if there isn't a target or the target is out of range, click attack otherwise.
-                var shouldWideAttack = target == null || !InRangeUnobstructed(user, target.Value);
-                DoAttack(user, coordinates, shouldWideAttack, target);
+                // Eat the input
                 return;
             }
 
@@ -230,7 +228,14 @@ namespace Content.Shared.Interaction
 
             // Does the user have hands?
             if (!TryComp(user, out SharedHandsComponent? hands) || hands.ActiveHand == null)
+            {
+                if (target != null)
+                {
+                    var ev = new InteractNoHandEvent(user, target.Value);
+                    RaiseLocalEvent(user, ev, true);
+                }
                 return;
+            }
 
             var inRangeUnobstructed = target == null
                 ? !checkAccess || InRangeUnobstructed(user, coordinates)
@@ -290,12 +295,6 @@ namespace Content.Shared.Interaction
                 checkCanInteract: false,
                 checkUseDelay: true,
                 checkAccess: false);
-        }
-
-        public virtual void DoAttack(EntityUid user, EntityCoordinates coordinates, bool wideAttack,
-            EntityUid? targetUid = null)
-        {
-            // TODO PREDICTION move server-side interaction logic into the shared system for interaction prediction.
         }
 
         public void InteractUsingRanged(EntityUid user, EntityUid used, EntityUid? target,
@@ -441,10 +440,67 @@ namespace Content.Shared.Interaction
             CollisionGroup collisionMask = InRangeUnobstructedMask,
             Ignored? predicate = null,
             bool popup = false)
-        {;
+        {
             Ignored combinedPredicate = e => e == origin || (predicate?.Invoke(e) ?? false);
+            var inRange = true;
+            MapCoordinates originPos = default;
+            MapCoordinates targetPos = default;
+            Angle targetRot = default;
 
-            var inRange = InRangeUnobstructed(Transform(origin).MapPosition, other, range, collisionMask, combinedPredicate);
+            // Alternatively we could check centre distances first though
+            // that means we wouldn't be able to easily check overlap interactions.
+            if (range > 0f &&
+                TryComp<FixturesComponent>(origin, out var fixtureA) &&
+                // These fixture counts are stuff that has the component but no fixtures for <reasons> (e.g. buttons).
+                // At least until they get removed.
+                fixtureA.FixtureCount > 0 &&
+                TryComp<FixturesComponent>(other, out var fixtureB) &&
+                fixtureB.FixtureCount > 0 &&
+                TryComp<TransformComponent>(origin, out var xformA) &&
+                TryComp<TransformComponent>(other, out var xformB))
+            {
+                // Different map or the likes.
+                if (!_sharedBroadphaseSystem.TryGetNearest(origin, other,
+                        out var pointA, out var pointB, out var distance,
+                        xformA, xformB, fixtureA, fixtureB))
+                {
+                    inRange = false;
+                }
+                // Overlap, early out and no raycast.
+                else if (distance.Equals(0f))
+                {
+                    return true;
+                }
+                // Out of range so don't raycast.
+                else if (distance > range)
+                {
+                    inRange = false;
+                }
+                else
+                {
+                    // We'll still do the raycast from the centres but we'll bump the range as we know they're in range.
+                    originPos = xformA.MapPosition;
+                    (var targetWorld, targetRot) = xformB.GetWorldPositionRotation();
+                    targetPos = new MapCoordinates(targetWorld, xformB.MapID);
+
+                    range = (originPos.Position - targetWorld).Length;
+                }
+            }
+            else
+            {
+                originPos = Transform(origin).MapPosition;
+
+                xformB = Transform(other);
+                (var targetWorld, targetRot) = xformB.GetWorldPositionRotation();
+                targetPos = new MapCoordinates(targetWorld, xformB.MapID);
+            }
+
+            // Do a raycast to check if relevant
+            if (inRange)
+            {
+                var rayPredicate = GetPredicate(originPos, other, targetPos, targetRot, collisionMask, combinedPredicate);
+                inRange = InRangeUnobstructed(originPos, targetPos, range, collisionMask, rayPredicate);
+            }
 
             if (!inRange && popup && _gameTiming.IsFirstTimePredicted)
             {
@@ -465,12 +521,30 @@ namespace Content.Shared.Interaction
             var transform = Transform(target);
             var (position, rotation) = transform.GetWorldPositionRotation();
             var mapPos = new MapCoordinates(position, transform.MapID);
+            var combinedPredicate = GetPredicate(origin, target, mapPos, rotation, collisionMask, predicate);
 
+            return InRangeUnobstructed(origin, mapPos, range, collisionMask, combinedPredicate);
+        }
+
+        /// <summary>
+        /// Gets the entities to ignore for an unobstructed raycast
+        /// </summary>
+        /// <example>
+        /// if the target entity is a wallmount we ignore all other entities on the tile.
+        /// </example>
+        private Ignored GetPredicate(
+            MapCoordinates origin,
+            EntityUid target,
+            MapCoordinates targetCoords,
+            Angle targetRotation,
+            CollisionGroup collisionMask,
+            Ignored? predicate = null)
+        {
             HashSet<EntityUid> ignored = new();
 
             bool ignoreAnchored = false;
 
-            if (HasComp<SharedItemComponent>(target) && TryComp(target, out PhysicsComponent? physics) && physics.CanCollide)
+            if (HasComp<ItemComponent>(target) && TryComp(target, out PhysicsComponent? physics) && physics.CanCollide)
             {
                 // If the target is an item, we ignore any colliding entities. Currently done so that if items get stuck
                 // inside of walls, users can still pick them up.
@@ -484,23 +558,23 @@ namespace Content.Shared.Interaction
                     ignoreAnchored = true;
                 else
                 {
-                    var angle = Angle.FromWorldVec(origin.Position - position);
-                    var angleDelta = (wallMount.Direction + rotation - angle).Reduced().FlipPositive();
+                    var angle = Angle.FromWorldVec(origin.Position - targetCoords.Position);
+                    var angleDelta = (wallMount.Direction + targetRotation - angle).Reduced().FlipPositive();
                     ignoreAnchored = angleDelta < wallMount.Arc / 2 || Math.Tau - angleDelta < wallMount.Arc / 2;
                 }
 
-                if (ignoreAnchored && _mapManager.TryFindGridAt(mapPos, out var grid))
-                    ignored.UnionWith(grid.GetAnchoredEntities(mapPos));
+                if (ignoreAnchored && _mapManager.TryFindGridAt(targetCoords, out var grid))
+                    ignored.UnionWith(grid.GetAnchoredEntities(targetCoords));
             }
 
             Ignored combinedPredicate = e =>
             {
                 return e == target
-                    || (predicate?.Invoke(e) ?? false)
-                    || ignored.Contains(e);
+                       || (predicate?.Invoke(e) ?? false)
+                       || ignored.Contains(e);
             };
 
-            return InRangeUnobstructed(origin, mapPos, range, collisionMask, combinedPredicate);
+            return combinedPredicate;
         }
 
         /// <summary>
@@ -570,9 +644,9 @@ namespace Content.Shared.Interaction
             Ignored? predicate = null,
             bool popup = false)
         {
-            Ignored combinedPredicatre = e => e == origin || (predicate?.Invoke(e) ?? false);
+            Ignored combinedPredicate = e => e == origin || (predicate?.Invoke(e) ?? false);
             var originPosition = Transform(origin).MapPosition;
-            var inRange = InRangeUnobstructed(originPosition, other, range, collisionMask, combinedPredicatre);
+            var inRange = InRangeUnobstructed(originPosition, other, range, collisionMask, combinedPredicate);
 
             if (!inRange && popup && _gameTiming.IsFirstTimePredicted)
             {
@@ -600,7 +674,7 @@ namespace Content.Shared.Interaction
         /// Finds components with the InteractUsing interface and calls their function
         /// NOTE: Does not have an InRangeUnobstructed check
         /// </summary>
-        public async void InteractUsing(
+        public void InteractUsing(
             EntityUid user,
             EntityUid used,
             EntityUid target,
@@ -629,7 +703,7 @@ namespace Content.Shared.Interaction
         /// <summary>
         ///     Used when clicking on an entity resulted in no other interaction. Used for low-priority interactions.
         /// </summary>
-        public async void InteractDoAfter(EntityUid user, EntityUid used, EntityUid? target, EntityCoordinates clickLocation, bool canReach)
+        public void InteractDoAfter(EntityUid user, EntityUid used, EntityUid? target, EntityCoordinates clickLocation, bool canReach)
         {
             if (target is {Valid: false})
                 target = null;
@@ -792,7 +866,16 @@ namespace Content.Shared.Interaction
             RaiseLocalEvent(item, dropMsg, true);
             if (dropMsg.Handled)
                 _adminLogger.Add(LogType.Drop, LogImpact.Low, $"{ToPrettyString(user):user} dropped {ToPrettyString(item):entity}");
-            Transform(item).LocalRotation = Angle.Zero;
+
+            // If the dropper is rotated then use their targetrelativerotation as the drop rotation
+            var rotation = Angle.Zero;
+
+            if (TryComp<InputMoverComponent>(user, out var mover))
+            {
+                rotation = mover.TargetRelativeRotation;
+            }
+
+            Transform(item).LocalRotation = rotation;
         }
         #endregion
 
@@ -826,6 +909,13 @@ namespace Content.Shared.Interaction
             {
                 Logger.WarningS("system.interaction",
                     $"Client sent interaction with no attached entity. Session={session}");
+                return false;
+            }
+
+            if (!Exists(userEntity))
+            {
+                Logger.WarningS("system.interaction",
+                    $"Client attempted interaction with a non-existent attached entity. Session={session},  entity={userEntity}");
                 return false;
             }
 

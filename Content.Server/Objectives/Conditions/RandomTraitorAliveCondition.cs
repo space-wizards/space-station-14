@@ -1,8 +1,7 @@
-using Content.Server.Mind.Components;
 using Content.Server.Objectives.Interfaces;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
-using Content.Server.Traitor;
+using Content.Server.GameTicking.Rules;
 
 namespace Content.Server.Objectives.Conditions
 {
@@ -14,17 +13,30 @@ namespace Content.Server.Objectives.Conditions
         public IObjectiveCondition GetAssigned(Mind.Mind mind)
         {
             var entityMgr = IoCManager.Resolve<IEntityManager>();
-            var allOtherTraitors = new List<Mind.Mind>();
+            var traitors = EntitySystem.Get<TraitorRuleSystem>().Traitors;
+            List<Traitor.TraitorRole> removeList = new();
 
-            foreach (var targetMind in entityMgr.EntityQuery<MindComponent>())
+            foreach (var traitor in traitors)
             {
-                if (targetMind.Mind?.CharacterDeadIC == false && targetMind.Mind != mind && targetMind.Mind?.HasRole<TraitorRole>() == true)
+                if (traitor.Mind == null)
                 {
-                        allOtherTraitors.Add(targetMind.Mind);
+                    removeList.Add(traitor);
+                    continue;
+                }
+                if (traitor.Mind == mind) // we have different objectives for defending ourselves.
+                {
+                    removeList.Add(traitor);
+                    continue;
                 }
             }
 
-            return new RandomTraitorAliveCondition {_target = IoCManager.Resolve<IRobustRandom>().Pick(allOtherTraitors)};
+            foreach (var traitor in removeList)
+            {
+                traitors.Remove(traitor);
+            }
+
+            if (traitors.Count == 0) return new EscapeShuttleCondition{}; //You were made a traitor by admins, and are the first/only.
+            return new RandomTraitorAliveCondition { _target = IoCManager.Resolve<IRobustRandom>().Pick(traitors).Mind };
         }
 
         public string Title

@@ -10,6 +10,7 @@
   - type: InteractionOutline
   - type: Transform
     anchored: true
+    noRot: true
   - type: Sprite
     netsync: false
     drawdepth: ThinWire
@@ -26,6 +27,7 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: SubFloorHide
+  - type: CollideOnAnchor
   - type: AmbientSound
     enabled: false  # Leaving as false because 90% of them are set to this.
   - type: Appearance
@@ -39,6 +41,7 @@
     lowVoltageNode: power
   - type: CableVis
     node: power
+   
 
 - type: entity
   parent: CableBase

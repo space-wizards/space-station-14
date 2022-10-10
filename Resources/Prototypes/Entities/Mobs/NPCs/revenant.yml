@@ -1,0 +1,79 @@
+- type: entity
+  id: MobRevenant
+  name: revenant
+  description: A spooky ghostie.
+  components:
+  - type: Mind
+  - type: InputMover
+  - type: MobMover
+  - type: Input
+    context: "ghost"
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 6
+    baseSprintSpeed: 6
+  - type: Sprite
+    noRot: true
+    drawdepth: Ghosts
+    netsync: false
+    sprite: Mobs/Ghosts/revenant.rsi
+    layers:
+    - state: active
+  - type: Clickable
+  - type: StatusEffects
+    allowed:
+    - Stun
+    - Corporeal
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: KinematicController
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.40
+      density: 80
+      mask:
+      - GhostImpassable
+  - type: HeatResistance
+  - type: MovementIgnoreGravity
+  - type: Damageable
+    damageContainer: Biological
+  - type: Appearance
+  - type: Examiner
+  - type: NoSlip
+  - type: Actions
+  - type: Eye
+    drawFov: false
+  - type: DoAfter
+  - type: Alerts
+  - type: NameIdentifier
+    group: GenericNumber
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: Revenant
+    description: You are a Revenant. Use your powers to harvest souls and unleash chaos upon the crew. Unlock new abilities with the essence you harvest.
+    rules: You are an antagonist, harvest, defile, and drive the crew insane.
+  - type: Revenant
+  - type: PointLight
+    color: MediumPurple
+    radius: 2
+    softness: 1
+  - type: UserInterface
+    interfaces:
+    - key: enum.StoreUiKey.Key
+      type: StoreBoundUserInterface
+  - type: MobState
+  - type: Visibility
+    layer: 2 #ghost vis layer
+  - type: Store
+    categories:
+    - RevenantAbilities
+    currencyWhitelist:
+    - StolenEssence
+  - type: RandomMetadata
+    nameSegments:
+    - The
+    - RevenantType
+    - of
+    - RevenantAdjective
+    - RevenantTheme

@@ -1,7 +1,5 @@
 - type: cargoProduct
-  name: "exotic seeds crate"
   id: HydroponicsSeedsExotic
-  description: "Any entrepreneuring botanist's dream. Contains many different exotic seeds. Requires Hydroponics access to open."
   icon:
     sprite: Objects/Specific/Hydroponics/banana.rsi
     state: seed
@@ -11,37 +9,31 @@
   group: market
 
 - type: cargoProduct
-  name: "hydroponics crate"
-  id: HydroponicsTools
-  description: "Supplies for growing a great garden! Contains two bottles of ammonia, two Plant-B-Gone spray bottles, a hatchet, cultivator, plant analyzer, as well as a pair of leather gloves and a botanist's apron."
+  id: HydroponicsSeedsMedicinal
   icon:
-    sprite: Objects/Tools/Hydroponics/hoe.rsi
-    state: icon
-  product: CrateHydroponicsTools
-  cost: 1500
+    sprite: Objects/Specific/Hydroponics/galaxythistle.rsi
+    state: seed
+  product: CrateHydroponicsSeedsMedicinal
+  cost: 500
   category: Hydroponics
   group: market
 
 - type: cargoProduct
-  name: "seeds crate"
+  id: HydroponicsTools
+  icon:
+    sprite: Objects/Tools/Hydroponics/hoe.rsi
+    state: icon
+  product: CrateHydroponicsTools
+  cost: 500
+  category: Hydroponics
+  group: market
+
+- type: cargoProduct
   id: HydroponicsSeeds
-  description: "Big things have small beginnings. Contains nine different seeds."
   icon:
     sprite: Objects/Specific/Hydroponics/apple.rsi
     state: seed
   product: CrateHydroponicsSeeds
-  cost: 1000
+  cost: 500
   category: Hydroponics
   group: market
-
-#- type: cargoProduct
-#  name: "hydroponics backpack crate"
-#  id: HydroponicsBackpack
-#  description: "Bring on the flood with this high-capacity backpack crate. Contains 500 units of life-giving H2O. Requires hydroponics access to open."
-#  icon:
-#    sprite:
-#    state:
-#  product:
-#  cost: 1000
-#  category: Hydroponics
-#  group: market

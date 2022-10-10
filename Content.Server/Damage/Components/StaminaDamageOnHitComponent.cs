@@ -1,3 +1,5 @@
+using Robust.Shared.Audio;
+
 namespace Content.Server.Damage.Components;
 
 [RegisterComponent]

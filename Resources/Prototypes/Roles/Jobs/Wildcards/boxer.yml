@@ -1,0 +1,31 @@
+- type: job
+  id: Boxer
+  name: job-name-boxer
+  playTimeTracker: JobBoxer
+  startingGear: BoxerGear
+  setPreference: false
+  icon: "Boxer"
+  supervisors: job-supervisors-hop
+  access:
+  - Service
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: Boxer
+      modifiers:
+        coefficients: #Remember these only apply to unarmed
+          Blunt: 1.5
+          Slash: 1.5
+          Piercing: 1.5
+
+- type: startingGear
+  id: BoxerGear
+  equipment:
+    jumpsuit: UniformShortsRed
+    back: ClothingBackpackFilled
+    id: BoxerPDA
+    ears: ClothingHeadsetService
+    gloves: ClothingHandsGlovesBoxingRed
+  innerclothingskirt: UniformShortsRedWithTop
+  satchel: ClothingBackpackSatchelFilled
+  duffelbag: ClothingBackpackDuffelFilled

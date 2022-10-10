@@ -11,6 +11,10 @@
     capacity: 6
   - type: Sprite
     netsync: false
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
 
 - type: entity
   id: SpeedLoaderMagnum

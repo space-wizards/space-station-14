@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using Content.Client.Items.Components;
 using Content.Client.Resources;
 using Content.Client.Stylesheets;
 using Content.Shared.Hands.Components;
@@ -8,12 +5,8 @@ using Content.Shared.IdentityManagement;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 using static Content.Client.IoC.StaticIoC;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
@@ -22,9 +15,6 @@ namespace Content.Client.Items.UI
     public sealed class ItemStatusPanel : Control
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
-
-        [ViewVariables]
-        private readonly List<(IItemStatus, Control)> _activeStatusComponents = new();
 
         [ViewVariables]
         private readonly Label _itemNameLabel;
@@ -172,13 +162,6 @@ namespace Content.Client.Items.UI
         private void ClearOldStatus()
         {
             _statusContents.RemoveAllChildren();
-
-            foreach (var (itemStatus, control) in _activeStatusComponents)
-            {
-                itemStatus.DestroyControl(control);
-            }
-
-            _activeStatusComponents.Clear();
         }
 
         private void BuildNewEntityStatus()
@@ -186,14 +169,6 @@ namespace Content.Client.Items.UI
             DebugTools.AssertNotNull(_entity);
 
             ClearOldStatus();
-
-            foreach (var statusComponent in _entityManager.GetComponents<IItemStatus>(_entity!.Value))
-            {
-                var control = statusComponent.MakeControl();
-                _statusContents.AddChild(control);
-
-                _activeStatusComponents.Add((statusComponent, control));
-            }
 
             var collectMsg = new ItemStatusCollectMessage();
             _entityManager.EventBus.RaiseLocalEvent(_entity!.Value, collectMsg, true);

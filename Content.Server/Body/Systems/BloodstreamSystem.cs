@@ -12,6 +12,8 @@ using Content.Shared.FixedPoint;
 using Content.Shared.IdentityManagement;
 using Content.Shared.MobState.Components;
 using Content.Shared.Popups;
+using Content.Shared.Drunk;
+using Content.Shared.Rejuvenate;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -28,6 +30,8 @@ public sealed class BloodstreamSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
+    [Dependency] private readonly SharedDrunkSystem _drunkSystem = default!;
+
     // TODO here
     // Update over time. Modify bloodloss damage in accordance with (amount of blood / max blood level), and reduce bleeding over time
     // Sub to damage changed event and modify bloodloss if incurring large hits of slashing/piercing
@@ -42,6 +46,7 @@ public sealed class BloodstreamSystem : EntitySystem
         SubscribeLocalEvent<BloodstreamComponent, BeingGibbedEvent>(OnBeingGibbed);
         SubscribeLocalEvent<BloodstreamComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
         SubscribeLocalEvent<BloodstreamComponent, ReactionAttemptEvent>(OnReactionAttempt);
+        SubscribeLocalEvent<BloodstreamComponent, RejuvenateEvent>(OnRejuvenate);
     }
 
     private void OnReactionAttempt(EntityUid uid, BloodstreamComponent component, ReactionAttemptEvent args)
@@ -108,6 +113,11 @@ public sealed class BloodstreamSystem : EntitySystem
                 var amt = bloodstream.BloodlossDamage / (0.1f + bloodPercentage);
 
                 _damageableSystem.TryChangeDamage(uid, amt, true, false);
+
+                // Apply dizziness as a symptom of bloodloss.
+                // So, threshold is 0.9, you have 0.85 percent blood, it adds (5 * 1.05) or 5.25 seconds of drunkenness.
+                // So, it'd max at 1.9 by default with 0% blood.
+                _drunkSystem.TryApplyDrunkenness(uid, bloodstream.UpdateInterval * (1 + (bloodstream.BloodlossThreshold - bloodPercentage)), false);
             }
             else
             {
@@ -208,6 +218,12 @@ public sealed class BloodstreamSystem : EntitySystem
             component.AccumulatedFrametime = component.UpdateInterval;
     }
 
+    private void OnRejuvenate(EntityUid uid, BloodstreamComponent component, RejuvenateEvent args)
+    {
+        TryModifyBleedAmount(uid, -component.BleedAmount, component);
+        TryModifyBloodLevel(uid, component.BloodSolution.AvailableVolume, component);
+    }
+
     /// <summary>
     ///     Attempt to transfer provided solution to internal solution.
     /// </summary>
@@ -217,6 +233,22 @@ public sealed class BloodstreamSystem : EntitySystem
             return false;
 
         return _solutionContainerSystem.TryAddSolution(uid, component.ChemicalSolution, solution);
+    }
+
+    public bool FlushChemicals(EntityUid uid, string excludedReagentID, FixedPoint2 quantity, BloodstreamComponent? component = null) {
+        if (!Resolve(uid, ref component, false))
+            return false;
+
+        for (var i = component.ChemicalSolution.Contents.Count - 1; i >= 0; i--)
+        {
+            var (reagentId, _) = component.ChemicalSolution.Contents[i];
+            if (reagentId != excludedReagentID)
+            {
+                _solutionContainerSystem.TryRemoveReagent(uid, component.ChemicalSolution, reagentId, quantity);
+            }
+        }
+
+        return true;
     }
 
     public float GetBloodLevelPercentage(EntityUid uid, BloodstreamComponent? component = null)

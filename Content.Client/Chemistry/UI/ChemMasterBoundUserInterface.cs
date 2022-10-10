@@ -1,8 +1,8 @@
+using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Dispenser;
 using Content.Shared.Containers.ItemSlots;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using static Content.Shared.Chemistry.Components.SharedChemMasterComponent;
 
 namespace Content.Client.Chemistry.UI
 {
@@ -12,9 +12,10 @@ namespace Content.Client.Chemistry.UI
     [UsedImplicitly]
     public sealed class ChemMasterBoundUserInterface : BoundUserInterface
     {
+        [Dependency] private readonly IEntityManager _entityManager = default!;
         private ChemMasterWindow? _window;
 
-        public ChemMasterBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public ChemMasterBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
 
         }
@@ -27,29 +28,37 @@ namespace Content.Client.Chemistry.UI
         {
             base.Open();
 
-            //Setup window layout/elements
+            // Setup window layout/elements
             _window = new ChemMasterWindow
             {
-                Title = Loc.GetString("chem-master-bound-user-interface-title"),
+                Title = _entityManager.GetComponent<MetaDataComponent>(Owner.Owner).EntityName,
             };
 
             _window.OpenCentered();
             _window.OnClose += Close;
 
-            //Setup static button actions.
-            _window.EjectButton.OnPressed += _ => SendMessage(new ItemSlotButtonPressedEvent(BeakerSlotId));
-            _window.BufferTransferButton.OnPressed += _ => PrepareData(UiAction.Transfer, null, null, null, null, null);
-            _window.BufferDiscardButton.OnPressed += _ => PrepareData(UiAction.Discard, null, null, null, null, null);
-            _window.CreatePillButton.OnPressed += _ => PrepareData(UiAction.CreatePills, null, _window.LabelLine, null, _window.PillAmount.Value, null);
-            _window.CreateBottleButton.OnPressed += _ => PrepareData(UiAction.CreateBottles, null, _window.LabelLine, null, null, _window.BottleAmount.Value);
+            // Setup static button actions.
+            _window.InputEjectButton.OnPressed += _ => SendMessage(
+                new ItemSlotButtonPressedEvent(SharedChemMaster.InputSlotName));
+            _window.OutputEjectButton.OnPressed += _ => SendMessage(
+                new ItemSlotButtonPressedEvent(SharedChemMaster.OutputSlotName));
+            _window.BufferTransferButton.OnPressed += _ => SendMessage(
+                new ChemMasterSetModeMessage(ChemMasterMode.Transfer));
+            _window.BufferDiscardButton.OnPressed += _ => SendMessage(
+                new ChemMasterSetModeMessage(ChemMasterMode.Discard));
+            _window.CreatePillButton.OnPressed += _ => SendMessage(
+                new ChemMasterCreatePillsMessage(
+                    (uint)_window.PillDosage.Value, (uint)_window.PillNumber.Value, _window.LabelLine));
+            _window.CreateBottleButton.OnPressed += _ => SendMessage(
+                new ChemMasterOutputToBottleMessage((uint)_window.BottleDosage.Value, _window.LabelLine));
 
-            for(uint i = 0; i < _window.PillTypeButtons.Length; i++)
+            for (uint i = 0; i < _window.PillTypeButtons.Length; i++)
             {
-                uint type = i;
-                _window.PillTypeButtons[i].OnPressed += _ => PrepareData(UiAction.SetPillType, null, null, type + 1, null, null);
+                var pillType = i;
+                _window.PillTypeButtons[i].OnPressed += _ => SendMessage(new ChemMasterSetPillTypeMessage(pillType));
             }
 
-            _window.OnChemButtonPressed += (args, button) => PrepareData(UiAction.ChemButton, button, null, null, null, null);
+            _window.OnReagentButtonPressed += (args, button) => SendMessage(new ChemMasterReagentAmountButtonMessage(button.Id, button.Amount, button.IsBuffer));
         }
 
         /// <summary>
@@ -65,19 +74,7 @@ namespace Content.Client.Chemistry.UI
 
             var castState = (ChemMasterBoundUserInterfaceState) state;
 
-            _window?.UpdateState(castState); //Update window state
-        }
-
-        private void PrepareData(UiAction action, ChemButton? button, string? label, uint? pillType, int? pillAmount, int? bottleAmount)
-        {
-            if (button != null)
-            {
-                SendMessage(new UiActionMessage(action, button.Amount, button.Id, button.IsBuffer, null, null, null, null));
-            }
-            else
-            {
-                SendMessage(new UiActionMessage(action, null, null, null, label, pillType, pillAmount, bottleAmount));
-            }
+            _window?.UpdateState(castState); // Update window state
         }
 
         protected override void Dispose(bool disposing)

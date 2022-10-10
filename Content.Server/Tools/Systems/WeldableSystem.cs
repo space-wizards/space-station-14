@@ -96,6 +96,18 @@ public sealed class WeldableSystem : EntitySystem
         appearance.SetData(WeldableVisuals.IsWelded, component.IsWelded);
     }
 
+    public void ForceWeldedState(EntityUid uid, bool state, WeldableComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        component.IsWelded = state;
+
+        RaiseLocalEvent(uid, new WeldableChangedEvent(component.IsWelded));
+
+        UpdateAppearance(uid, component);
+    }
+
     public void SetWeldingTime(EntityUid uid, TimeSpan time, WeldableComponent? component = null)
     {
         if (!Resolve(uid, ref component))

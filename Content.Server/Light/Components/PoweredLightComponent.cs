@@ -1,12 +1,12 @@
 using Content.Server.Light.EntitySystems;
 using Content.Shared.Damage;
 using Content.Shared.Light;
-using Content.Shared.Sound;
 using Robust.Shared.Containers;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Prototypes;
 using Content.Shared.MachineLinking;
 using System.Threading;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Light.Components
 {

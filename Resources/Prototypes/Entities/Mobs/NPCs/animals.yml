@@ -24,7 +24,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.25
-      mass: 2
+      density: 10
       mask:
       - FlyingMobMask
       layer:
@@ -54,9 +54,9 @@
   - type: ReplacementAccent
     accent: mouse
   - type: MeleeWeapon
-    range: 1.5
-    arcwidth: 0
-    arc: bite
+    hidden: true
+    angle: 0
+    animation: WeaponArcBite
     damage:
       types:
         Piercing: 5
@@ -88,7 +88,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.1
-      mass: 1
+      density: 30
       mask:
       - FlyingMobMask
       layer:
@@ -130,20 +130,18 @@
       autoPopulate: false
       name: action-name-disarm
   - type: MeleeWeapon
-    range: 0.3
-    arcwidth: 0
-    arc: bite
+    hidden: true
+    angle: 0
+    animation: WeaponArcBite
     damage:
       types:
         Poison: 2
         Piercing: 1
-  - type: PlayerInputMover
-  - type: PlayerMobMover
-  - type: UtilityAI
-    behaviorSets:
-    - UnarmedAttackHostiles
-    - Idle
-  - type: AiFactionTag
+  - type: InputMover
+  - type: MobMover
+  - type: HTN
+    rootTask: SimpleHostileCompound
+  - type: Faction
     factions:
     - SimpleHostile
   - type: Bloodstream
@@ -167,7 +165,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 3
+      density: 8
       mask:
       - MobMask
       layer:
@@ -218,7 +216,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 2 #They actually are pretty light, I looked it up
+      density: 5 #They actually are pretty light, I looked it up
       mask:
       - MobMask
       layer:
@@ -307,6 +305,7 @@
     baseSprintSpeed : 6
   - type: Sprite
     drawdepth: Mobs
+    netsync: false
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: butterfly
@@ -317,7 +316,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.2
-      mass: 1
+      density: 7.5
       mask:
       - FlyingMobMask
       layer:
@@ -327,16 +326,10 @@
       0: Alive
       5: Critical
       10: Dead
-  - type: RandomSpriteColor
-    state: butterfly
-    colors:
-      blue: "#1861d5"
-      red: "#951710"
-      pink: "#d5188d"
-      brown: "#a05212"
-      green: "#0e7f1b"
-      cyan: "#18a2d5"
-      yellow: "#d58c18"
+  - type: RandomSprite
+    available:
+      - enum.DamageStateVisualLayers.Base:
+          butterfly: Rainbow
   - type: Appearance
   - type: DamageStateVisuals
     states:
@@ -370,7 +363,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.40
-      mass: 700
+      density: 1400
       mask:
       - MobMask
       layer:
@@ -432,7 +425,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 2
+      density: 5
       mask:
       - MobMask
       layer:
@@ -474,7 +467,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 60
+      density: 150
       mask:
       - MobMask
       layer:
@@ -533,7 +526,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 10
+      density: 25
       mask:
       - MobMask
       layer:
@@ -578,7 +571,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.48
-      mass: 150
+      density: 200
       mask:
       - MobMask
       layer:
@@ -620,7 +613,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 50
+      density: 130
       mask:
       - MobMask
       layer:
@@ -645,7 +638,7 @@
   description: A large marsupial herbivore. It has powerful hind legs and... boxing gloves?
   components:
   - type: CombatMode
-    canDisarm: true
+    disarm: null
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -662,18 +655,17 @@
       Dead:
         Base: kangaroo-boxing-dead
   - type: MeleeWeapon
-    range: 1.5
-    arcwidth: 0
-    arc: claw
+    hidden: true
+    angle: 0
+    animation: WeaponArcClaw
     damage:
       types:
         Blunt: 10
-  - type: PlayerInputMover
-  - type: PlayerMobMover
-  - type: UtilityAI
-    behaviorSets:
-    - UnarmedAttackHostiles
-  - type: AiFactionTag
+  - type: InputMover
+  - type: MobMover
+  - type: HTN
+    rootTask: SimpleHostileCompound
+  - type: Faction
     factions:
     - SimpleHostile
 
@@ -684,7 +676,7 @@
   description: New church of neo-darwinists actually believe that EVERY animal evolved from a monkey. Tastes like pork, and killing them is both fun and relaxing.
   components:
   - type: CombatMode
-    canDisarm: true
+    disarm: null
   - type: NameIdentifier
     group: Monkey
   - type: SentienceTarget
@@ -696,7 +688,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 30
+      density: 80
       mask:
       - MobMask
       layer:
@@ -746,8 +738,10 @@
   components:
   - type: GhostTakeoverAvailable
     makeSentient: true
-    name: mouse
-    description: A hungry and mischievous mouse.
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-mouse-name
+    description: ghost-role-information-mouse-description
   - type: Speech
     speechSounds: Squeak
   - type: Sprite
@@ -756,12 +750,13 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: mouse-0
-  - type: Clothing
+  - type: Item
     size: 5
+  - type: Clothing
     quickEquip: false
     sprite: Mobs/Animals/mouse.rsi
-    HeldPrefix: 0
-    Slots:
+    equippedPrefix: 0
+    slots:
     - HEAD
   - type: Physics
   - type: Fixtures
@@ -769,7 +764,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.2
-      mass: 10
+      density: 100
       mask:
       - SmallMobMask
       layer:
@@ -806,7 +801,7 @@
           Quantity: 50
   - type: Butcherable
     spawned:
-    - id: FoodMeat
+    - id: FoodMeatRat
       amount: 1
   - type: ReplacementAccent
     accent: mouse
@@ -861,7 +856,7 @@
       state: mouse-1
       sprite: Mobs/Animals/mouse.rsi
   - type: Clothing
-    HeldPrefix: 1
+    equippedPrefix: 1
   - type: Appearance
   - type: DamageStateVisuals
     states:
@@ -887,7 +882,7 @@
       state: mouse-2
       sprite: Mobs/Animals/mouse.rsi
   - type: Clothing
-    HeldPrefix: 1
+    equippedPrefix: 1
   - type: Appearance
   - type: DamageStateVisuals
     states:
@@ -923,7 +918,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.2
-      mass: 5
+      density: 50
       mask:
       - MobMask
       layer:
@@ -939,7 +934,7 @@
         Base: dead
   - type: Butcherable
     spawned:
-    - id: FoodMeat
+    - id: FoodMeatLizard
       amount: 1
   - type: InteractionPopup
     successChance: 0.3
@@ -974,7 +969,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.2
-      mass: 1
+      density: 5
       mask:
       - MobMask
       layer:
@@ -1020,7 +1015,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.2
-      mass: 1
+      density: 5
       mask:
       - SmallMobMask
       layer:
@@ -1069,7 +1064,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.25
-      mass: 2
+      density: 10
       mask:
       - FlyingMobMask
       layer:
@@ -1115,7 +1110,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.25
-      mass: 20
+      density: 100
       mask:
       - MobMask
       layer:
@@ -1149,12 +1144,11 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 7
     baseSprintSpeed : 7
-  - type: PlayerInputMover
-  - type: PlayerMobMover
-  - type: UtilityAI
-    behaviorSets:
-    - UnarmedAttackHostiles
-  - type: AiFactionTag
+  - type: InputMover
+  - type: MobMover
+  - type: HTN
+    rootTask: SimpleHostileCompound
+  - type: Faction
     factions:
     - Syndicate
   - type: Sprite
@@ -1169,7 +1163,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.25
-      mass: 5
+      density: 25
       mask:
       - MobMask
       layer:
@@ -1188,9 +1182,9 @@
     - id: FoodMeatPenguin
       amount: 3
   - type: MeleeWeapon
-    range: 0.5
-    arcwidth: 0
-    arc: bite
+    hidden: true
+    angle: 0
+    animation: WeaponArcBite
     damage:
       groups:
         Brute: 5
@@ -1227,7 +1221,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.25
-      mass: 2
+      density: 10
       mask:
       - SmallMobMask
       layer:
@@ -1236,13 +1230,10 @@
     states:
       Alive:
         Base: snake
-  - type: Appearance
-    visuals:
-    - type: RotationVisualizer
-# It's death animation is animated so hopefully this should push for separation between "dying" and "death" states.
-     # looks stupid, Rotation visualizer for now
-     # dead: dead
-     # crit: dead
+      Critical:
+        Base: dead
+      Dead:
+        Base: dead
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -1277,7 +1268,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 50
+      density: 130
       mask:
       - MobMask
       layer:
@@ -1314,19 +1305,17 @@
   id: MobGiantSpiderAngry
   suffix: Angry
   components:
-    - type: AiFactionTag
+    - type: Faction
       factions:
         - Xeno
-    - type: PlayerInputMover
-    - type: PlayerMobMover
-    - type: UtilityAI
-      behaviorSets:
-        - Idle
-        - UnarmedAttackHostiles
+    - type: InputMover
+    - type: MobMover
+    - type: HTN
+      rootTask: SimpleHostileCompound
     - type: GhostTakeoverAvailable
       makeSentient: true
-      name: giant spider
-      description: Wreak havoc on the station's inhabitants!
+      name: ghost-role-information-giant-spider-name
+      description: ghost-role-information-giant-spider-description
 
 - type: entity
   name: possum
@@ -1346,7 +1335,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 20
+      density: 50
       mask:
       - MobMask
       layer:
@@ -1405,7 +1394,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 20
+      density: 50
       mask:
       - MobMask
       layer:
@@ -1464,7 +1453,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 20 #They actually are pretty light, I looked it up
+      density: 50 #They actually are pretty light, I looked it up
       mask:
       - MobMask
       layer:

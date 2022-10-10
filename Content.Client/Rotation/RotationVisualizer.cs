@@ -13,6 +13,7 @@ namespace Content.Client.Rotation
     [UsedImplicitly]
     public sealed class RotationVisualizer : AppearanceVisualizer
     {
+        [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
@@ -35,6 +36,11 @@ namespace Content.Client.Rotation
         {
             var entMan = IoCManager.Resolve<IEntityManager>();
             var sprite = entMan.GetComponent<ISpriteComponent>(component.Owner);
+
+            if (sprite.Rotation.Equals(rotation))
+            {
+                return;
+            }
 
             if (!entMan.TryGetComponent(sprite.Owner, out AnimationPlayerComponent? animation))
             {

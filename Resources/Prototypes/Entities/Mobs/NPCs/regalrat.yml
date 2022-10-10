@@ -6,15 +6,15 @@
   components:
   - type: CombatMode
   - type: MovementSpeedModifier
-    baseWalkSpeed : 3.75
-    baseSprintSpeed : 3.75
-  - type: PlayerInputMover
-  - type: PlayerMobMover
+    baseWalkSpeed : 3.00
+    baseSprintSpeed : 5.00
+  - type: InputMover
+  - type: MobMover
   - type: Reactive
     groups:
       Flammable: [Touch]
       Extinguish: [Touch]
-  - type: AiFactionTag
+  - type: Faction
     factions:
     - SimpleHostile
   - type: Sprite
@@ -29,21 +29,21 @@
     fixtures:
     - shape:
         !type:PhysShapeCircle
-        radius: 0.25
-      mass: 120
+        radius: 0.3
+      density: 230
       mask:
-      - MobMask
+      - SmallMobMask
       layer:
-      - MobLayer
+      - SmallMobLayer
   - type: MobState
     thresholds:
       0: Alive
       150: Critical
       200: Dead
   - type: MeleeWeapon
-    range: 1
-    arcwidth: 0
-    arc: claw
+    hidden: true
+    angle: 0
+    animation: WeaponArcClaw
     damage:
       types:
         Slash: 12
@@ -92,10 +92,6 @@
       event: !type:RatKingDomainActionEvent
     hungerPerDomainUse: 50
   - type: MobsterAccent
-  - type: Access #he's so baller he gets his own access. NT got nothing on him
-    tags:
-    - Maintenance
-    - Service
   - type: Butcherable
     spawned:
     - id: ClothingHeadHatFancyCrown #how did that get there?
@@ -110,8 +106,53 @@
     - VanAusdallsRobovirus
     - BleedersBite
     - Plague
+    - TongueTwister
   - type: MobPrice
     price: 2500 # rat wealth
+  - type: RandomMetadata
+    nameSegments:
+    - RegalRatNameKingdom
+    - RegalRatNameTitle
+
+- type: entity
+  id: MobRatKingBuff
+  parent: MobRatKing
+  suffix: Buff
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Animals/buffrat.rsi
+    scale: 1.2, 1.2
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: regalrat
+  - type: MobState
+    thresholds:
+      0: Alive
+      300: Critical
+      350: Dead
+  - type: MeleeWeapon
+    hidden: true
+    angle: 0
+    attackRate: 0.75
+    animation: WeaponArcFist
+    damage:
+      types:
+        Blunt: 66 #oof ouch owie my bones
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      density: 400
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      200: 0.7
+      250: 0.5
 
 - type: entity
   name: Rat Servant
@@ -123,17 +164,15 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 3.5
     baseSprintSpeed : 3.5
-  - type: PlayerInputMover
-  - type: PlayerMobMover
-  - type: UtilityAI
-    behaviorSets:
-    - Idle
-    - UnarmedAttackHostiles
+  - type: InputMover
+  - type: MobMover
+  - type: HTN
+    rootTask: SimpleHostileCompound
   - type: Reactive
     groups:
       Flammable: [Touch]
       Extinguish: [Touch]
-  - type: AiFactionTag
+  - type: Faction
     factions:
     - SimpleHostile
   - type: Sprite
@@ -149,7 +188,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.2
-      mass: 4 #Bulky by mouse standards...
+      density: 30 #Bulky by mouse standards...
       mask:
       - SmallMobMask
       layer:
@@ -157,12 +196,12 @@
   - type: MobState
     thresholds:
       0: Alive
-      30: Critical
+      40: Critical
       60: Dead
   - type: MeleeWeapon
-    range: 1
-    arcwidth: 0
-    arc: claw
+    hidden: true
+    angle: 0
+    animation: WeaponArcClaw
     damage:
       types:
         Slash: 5
@@ -192,6 +231,7 @@
     - VanAusdallsRobovirus
     - BleedersBite
     - Plague
+    - TongueTwister
   - type: Vocal
     # mice are gender neutral who cares
     maleScream: /Audio/Animals/mouse_squeak.ogg

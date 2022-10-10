@@ -65,7 +65,7 @@ namespace Content.Shared.Pulling
 
             if (TryComp(uid, out JointComponent? joints))
             {
-                foreach (var jt in joints.GetJoints)
+                foreach (var jt in joints.GetJoints.Values)
                 {
                     if (jt.BodyAUid == component.Puller || jt.BodyBUid == component.Puller)
                         return;
@@ -117,6 +117,11 @@ namespace Content.Shared.Pulling
                 return;
 
             _alertsSystem.ClearAlert(component.Owner, AlertType.Pulled);
+        }
+
+        public bool IsPulled(EntityUid uid, SharedPullableComponent? component = null)
+        {
+            return Resolve(uid, ref component, false) && component.BeingPulled;
         }
 
         public override void Update(float frameTime)

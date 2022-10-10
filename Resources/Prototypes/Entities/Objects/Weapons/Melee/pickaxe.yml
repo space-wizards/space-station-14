@@ -20,11 +20,9 @@
       types:
         Piercing: 10
         Blunt: 4
-    arcCooldownTime: 3
   - type: Item
     size: 24
     sprite: Objects/Weapons/Melee/pickaxe.rsi
-    prefix: inhand
 
 - type: entity
   name: mining drill
@@ -49,4 +47,3 @@
       types:
         Piercing: 10
         Blunt: 4
-    arcCooldownTime: 3

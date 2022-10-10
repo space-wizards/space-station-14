@@ -1,6 +1,6 @@
 using Content.Shared.Damage;
 using Content.Shared.Projectiles;
-using Content.Shared.Sound;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Projectiles.Components
 {

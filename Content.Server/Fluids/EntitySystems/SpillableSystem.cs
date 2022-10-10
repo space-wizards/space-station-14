@@ -1,9 +1,13 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Threading;
 using Content.Server.Administration.Logs;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Clothing.Components;
+using Content.Server.DoAfter;
 using Content.Server.Fluids.Components;
+using Content.Server.Nutrition.Components;
+using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
@@ -26,6 +30,7 @@ public sealed class SpillableSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger= default!;
+    [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
 
     public override void Initialize()
     {
@@ -34,6 +39,8 @@ public sealed class SpillableSystem : EntitySystem
         SubscribeLocalEvent<SpillableComponent, GetVerbsEvent<Verb>>(AddSpillVerb);
         SubscribeLocalEvent<SpillableComponent, GotEquippedEvent>(OnGotEquipped);
         SubscribeLocalEvent<SpillableComponent, SolutionSpikeOverflowEvent>(OnSpikeOverflow);
+        SubscribeLocalEvent<SpillableComponent, SpillFinishedEvent>(OnSpillFinished);
+        SubscribeLocalEvent<SpillableComponent, SpillCancelledEvent>(OnSpillCancelled);
     }
 
     private void OnSpikeOverflow(EntityUid uid, SpillableComponent component, SolutionSpikeOverflowEvent args)
@@ -56,7 +63,7 @@ public sealed class SpillableSystem : EntitySystem
 
         // check if entity was actually used as clothing
         // not just taken in pockets or something
-        var isCorrectSlot = clothing.SlotFlags.HasFlag(args.SlotFlags);
+        var isCorrectSlot = clothing.Slots.HasFlag(args.SlotFlags);
         if (!isCorrectSlot) return;
 
         if (!_solutionContainerSystem.TryGetSolution(uid, component.SolutionName, out var solution))
@@ -93,6 +100,9 @@ public sealed class SpillableSystem : EntitySystem
     {
         if (!_solutionContainerSystem.TryGetSolution(uid, component.SolutionName, out var solution)) return;
 
+        if (TryComp<DrinkComponent>(uid, out var drink) && (!drink.Opened))
+            return;
+
         if (args.User != null)
         {
             _adminLogger.Add(LogType.Landed,
@@ -111,18 +121,44 @@ public sealed class SpillableSystem : EntitySystem
         if (!_solutionContainerSystem.TryGetDrainableSolution(args.Target, out var solution))
             return;
 
+        if (TryComp<DrinkComponent>(args.Target, out var drink) && (!drink.Opened))
+            return;
+
         if (solution.DrainAvailable == FixedPoint2.Zero)
             return;
 
         Verb verb = new();
         verb.Text = Loc.GetString("spill-target-verb-get-data-text");
         // TODO VERB ICONS spill icon? pouring out a glass/beaker?
-        verb.Act = () =>
+        if (component.SpillDelay == null)
         {
-            var puddleSolution = _solutionContainerSystem.SplitSolution(args.Target,
-                solution, solution.DrainAvailable);
-            SpillAt(puddleSolution, Transform(args.Target).Coordinates, "PuddleSmear");
-        };
+            verb.Act = () =>
+            {
+                var puddleSolution = _solutionContainerSystem.SplitSolution(args.Target,
+                    solution, solution.DrainAvailable);
+                SpillAt(puddleSolution, Transform(args.Target).Coordinates, "PuddleSmear");
+            };
+        }
+        else
+        {
+            verb.Act = () =>
+            {
+                if (component.CancelToken == null)
+                {
+                    component.CancelToken = new CancellationTokenSource();
+                    _doAfterSystem.DoAfter(new DoAfterEventArgs(args.User, component.SpillDelay.Value, component.CancelToken.Token, component.Owner)
+                    {
+                        BreakOnTargetMove = true,
+                        BreakOnUserMove = true,
+                        BreakOnDamage = true,
+                        BreakOnStun = true,
+                        NeedHand = true,
+                        TargetFinishedEvent = new SpillFinishedEvent(args.User, component.Owner, solution),
+                        TargetCancelledEvent = new SpillCancelledEvent(component.Owner)
+                    });
+                }
+            };
+        }
         verb.Impact = LogImpact.Medium; // dangerous reagent reaction are logged separately.
         args.Verbs.Add(verb);
     }
@@ -225,5 +261,48 @@ public sealed class SpillableSystem : EntitySystem
         _puddleSystem.TryAddSolution(startEntity, solution, sound, overflow);
 
         return puddleComponent;
+    }
+
+    private void OnSpillFinished(EntityUid uid, SpillableComponent component, SpillFinishedEvent ev)
+    {
+        component.CancelToken = null;
+
+        //solution gone by other means before doafter completes
+        if (ev.Solution == null || ev.Solution.CurrentVolume == 0)
+            return;
+
+        var puddleSolution = _solutionContainerSystem.SplitSolution(uid,
+            ev.Solution, ev.Solution.DrainAvailable);
+
+        SpillAt(puddleSolution, Transform(component.Owner).Coordinates, "PuddleSmear");
+    }
+
+    private void OnSpillCancelled(EntityUid uid, SpillableComponent component, SpillCancelledEvent ev)
+    {
+        component.CancelToken = null;
+    }
+
+    internal sealed class SpillFinishedEvent : EntityEventArgs
+    {
+        public SpillFinishedEvent(EntityUid user, EntityUid spillable, Solution solution)
+        {
+            User = user;
+            Spillable = spillable;
+            Solution = solution;
+        }
+
+        public EntityUid User { get; }
+        public EntityUid Spillable { get; }
+        public Solution Solution { get; }
+    }
+
+    private sealed class SpillCancelledEvent : EntityEventArgs
+    {
+        public EntityUid Spillable;
+
+        public SpillCancelledEvent(EntityUid spillable)
+        {
+            Spillable = spillable;
+        }
     }
 }

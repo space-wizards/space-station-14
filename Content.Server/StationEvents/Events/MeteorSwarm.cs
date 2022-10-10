@@ -1,10 +1,7 @@
 using Content.Server.GameTicking;
-using Content.Server.GameTicking.Rules;
-using Content.Server.Projectiles.Components;
-using Content.Shared.Sound;
 using Content.Shared.Spawners.Components;
 using Robust.Shared.Map;
-using Robust.Shared.Random;
+using Robust.Shared.Physics.Components;
 
 namespace Content.Server.StationEvents.Events
 {

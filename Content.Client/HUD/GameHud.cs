@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Client.HUD.UI;
 using Content.Client.Info;
 using Content.Client.Administration;
+using Content.Client.Administration.Systems;
 using Content.Client.Resources;
 using Content.Client.Targeting;
 using Content.Shared.CCVar;
@@ -117,7 +118,7 @@ namespace Content.Client.HUD
             }
             dir = proto.Path;
 
-            var resourcePath = (new ResourcePath("/Textures/Interface/Inventory") / dir) / path;
+            var resourcePath = (new ResourcePath("/Textures/Interface/") / dir) / "Slots" / path;
             return _resourceCache.GetTexture(resourcePath);
         }
 

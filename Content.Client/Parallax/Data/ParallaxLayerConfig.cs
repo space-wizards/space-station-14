@@ -62,5 +62,12 @@ public sealed class ParallaxLayerConfig
     /// </summary>
     [DataField("slowness")]
     public float Slowness { get; set; } = 0.5f;
+
+    /// <summary>
+    /// Should the parallax scroll at a specific rate per second.
+    /// </summary>
+    [DataField("scrolling")] public Vector2 Scrolling = Vector2.Zero;
+
+    [DataField("shader")] public string? Shader = "unshaded";
 }
 

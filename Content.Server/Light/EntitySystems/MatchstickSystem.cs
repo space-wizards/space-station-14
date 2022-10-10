@@ -16,6 +16,7 @@ namespace Content.Server.Light.EntitySystems
         private HashSet<MatchstickComponent> _litMatches = new();
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly TransformSystem _transformSystem = default!;
+        [Dependency] private readonly SharedItemSystem _item = default!;
 
         public override void Initialize()
         {
@@ -94,15 +95,15 @@ namespace Content.Server.Light.EntitySystems
                 pointLightComponent.Enabled = component.CurrentState == SmokableState.Lit;
             }
 
-            if (EntityManager.TryGetComponent(component.Owner, out SharedItemComponent? item))
+            if (EntityManager.TryGetComponent(component.Owner, out ItemComponent? item))
             {
                 switch (component.CurrentState)
                 {
                     case SmokableState.Lit:
-                        item.EquippedPrefix = "lit";
+                        _item.SetHeldPrefix(component.Owner, "lit", item);
                         break;
                     default:
-                        item.EquippedPrefix = "unlit";
+                        _item.SetHeldPrefix(component.Owner, "unlit", item);
                         break;
                 }
             }

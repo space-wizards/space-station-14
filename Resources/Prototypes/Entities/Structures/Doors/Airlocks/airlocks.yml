@@ -40,6 +40,14 @@
 
 - type: entity
   parent: Airlock
+  id: AirlockVirology
+  suffix: Virology
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/virology.rsi
+
+- type: entity
+  parent: Airlock
   id: AirlockChemistry
   suffix: Chemistry
   components:
@@ -101,7 +109,7 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.49,-0.49,0.49,0.49" # don't want this colliding with walls or they won't close
-      mass: 100
+      density: 100
       mask:
       - FullTileMask
       layer:     #removed opaque from the layer, allowing lasers to pass through glass airlocks
@@ -119,6 +127,16 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/engineering.rsi
+  - type: PaintableAirlock
+    group: Glass
+
+- type: entity
+  parent: AirlockGlass
+  id: AirlockMaintGlass
+  suffix: Maintenance
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/maint.rsi
   - type: PaintableAirlock
     group: Glass
 
@@ -149,6 +167,16 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/medical.rsi
+  - type: PaintableAirlock
+    group: Glass
+
+- type: entity
+  parent: AirlockGlass
+  id: AirlockVirologyGlass
+  suffix: Virology
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/virology.rsi
   - type: PaintableAirlock
     group: Glass
 

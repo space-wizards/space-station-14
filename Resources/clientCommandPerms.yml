@@ -42,31 +42,24 @@
     - toggledecals
     - nodevis
     - nodevisfilter
-    - showspread
+    - showmeleespread
+    - showgunspread
     - showambient
     - showemergencyshuttle
     - zoom
-
-- Flags: MAPPING
-  Commands:
-    - showmarkers
     - showsubfloor
     - showsubfloorforever
-    - mapping
-    - toggledecals
+    - showmarkers
     - nodevis
     - nodevisfilter
 
-- Flags: FUN
+- Flags: MAPPING
   Commands:
-    - tethergun
-    - griddrag
-
-- Flags: ADMIN
-  Commands:
-    - togglehealthoverlay
-    - togglelight
+    - mapping
+    - toggleautosave
+    - toggledecals
 
 - Flags: QUERY
   Commands:
     - uploadfile
+    - loadprototype

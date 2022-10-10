@@ -17,6 +17,7 @@ namespace Content.Client.Recycling
         [DataField("state_off")]
         private string _stateOff = "grinder-o0";
 
+        [Obsolete("Subscribe to your component being initialised instead.")]
         public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
@@ -31,6 +32,7 @@ namespace Content.Client.Recycling
             UpdateAppearance(appearance, sprite);
         }
 
+        [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);

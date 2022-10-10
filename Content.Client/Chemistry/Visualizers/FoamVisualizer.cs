@@ -33,6 +33,7 @@ namespace Content.Client.Chemistry.Visualizers
             flick.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame(_state, 0f));
         }
 
+        [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);

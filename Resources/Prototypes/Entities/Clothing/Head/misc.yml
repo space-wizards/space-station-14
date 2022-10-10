@@ -34,6 +34,20 @@
 
 - type: entity
   parent: ClothingHeadBase
+  id: ClothingHeadHatFlowerCrown
+  name: flower crown
+  description: A coronet of fresh and fragrant flowers.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/flower-crown.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/flower-crown.rsi
+  - type: Construction
+    graph: flowercrown
+    node: flowercrown
+
+- type: entity
+  parent: ClothingHeadBase
   id: ClothingHeadHatHairflower
   name: hairflower
   description: A red rose for beautiful ladies.

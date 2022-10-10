@@ -30,30 +30,23 @@
   useDelay: 1 # equip noise spam.
   event: !type:ToggleClothingEvent
 
-- type: entityTargetAction
-  id: Disarm
-  name: action-name-disarm
-  description: action-description-disarm
-  icon: Interface/Actions/disarmOff.png
-  iconOn: Interface/Actions/disarm.png
-  useDelay: 1.5
-  interactOnMiss: true
-  event: !type:DisarmActionEvent
-  canTargetSelf: false
-  whitelist:
-    components:
-    - Hands
-    - StatusEffects
-
 - type: instantAction
   id: CombatModeToggle
   name: action-name-combat
   description: action-description-combat
+  checkCanInteract: false
   icon: Interface/Actions/harmOff.png
   iconOn: Interface/Actions/harm.png
   userPopup: action-popup-combat
-  popupToggleSuffix: -disabling
+  popupToggleSuffix: -enabled
   event: !type:ToggleCombatActionEvent
+
+- type: instantAction
+  id: ChangeVoiceMask
+  name: voice-mask-name-change-set
+  icon: Interface/Actions/scream.png # somebody else can figure out a better icon for this
+  description: voice-mask-name-change-set-description
+  serverEvent: !type:VoiceMaskSetNameEvent
 
 - type: instantAction
   id: VendingThrow
@@ -71,9 +64,32 @@
   event: !type:ToggleActionEvent
 
 - type: instantAction
+  id: ClearNetworkLinkOverlays
+  name: network-configurator-clear-network-link-overlays
+  description: network-configurator-clear-network-link-overlays-desc
+  icon: Objects/Tools/multitool.rsi/icon.png
+  event: !type:ClearAllOverlaysEvent
+
+- type: instantAction
   id: AnimalLayEgg
   name: action-name-lay-egg
   description: action-description-lay-egg
   icon: Objects/Consumable/Food/egg.rsi/icon.png
   useDelay: 60
   serverEvent: !type:EggLayInstantActionEvent
+
+- type: instantAction
+  id: Sleep
+  name: action-name-sleep
+  description: action-desc-sleep
+  checkCanInteract: false
+  icon: Objects/Consumable/Food/egg.rsi/icon.png
+  event: !type:SleepActionEvent
+
+- type: instantAction
+  id: Wake
+  name: action-name-wake
+  description: action-desc-wake
+  icon: Objects/Consumable/Food/egg.rsi/icon.png
+  checkCanInteract: false
+  event: !type:WakeActionEvent

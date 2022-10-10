@@ -27,6 +27,12 @@
       - state: icon
         map: ["enum.DrinkCanVisualLayers.Icon"]
     netsync: false
+  - type: FitsInDispenser
+    solution: drink
+  - type: DrawableSolution
+    solution: drink
+  - type: RefillableSolution
+    solution: drink
   - type: DrainableSolution
     solution: drink
   - type: Appearance
@@ -34,12 +40,13 @@
     - type: DrinkCanVisualizer
       stateClosed: icon
       stateOpen: icon_open
-  - type: Tag
-    tags:
-    - Trash
+  - type: Spillable
+    solution: drink
   - type: ItemCooldown
   - type: Recyclable
   - type: SpaceGarbage
+  - type: TrashOnEmpty
+    solution: drink
 
 - type: entity
   parent: DrinkCanBaseFull
@@ -137,7 +144,7 @@
     sprite: Objects/Consumable/Drinks/rootbeer.rsi
 
 - type: entity
-  parent: DrinkGlassBase
+  parent: DrinkCanBaseFull
   id: DrinkSodaWaterCan
   name: soda water can
   description: Soda water. Why not make a scotch and soda?
@@ -145,10 +152,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: SodaWater
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/sodawater.rsi
@@ -216,10 +223,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: TonicWater
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/tonic.rsi

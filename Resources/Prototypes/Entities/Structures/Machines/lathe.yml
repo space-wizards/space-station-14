@@ -1,11 +1,12 @@
 - type: entity
-  parent: BaseMachinePowered
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
   id: Autolathe
   name: autolathe
   description: It produces items using metal and glass.
   components:
   - type: Sprite
     sprite: Structures/Machines/autolathe.rsi
+    snapCardinals: true
     netsync: false
     layers:
     - state: icon
@@ -18,9 +19,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-  - type: LatheVisuals
-    idleState: icon
-    runningState: building
+  - type: WiresVisuals
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -28,14 +27,11 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.4,-0.4,0.4,0.4"
-      mass: 25
+      density: 190
       mask:
       - MachineMask
       layer:
       - MachineLayer
-  - type: Construction
-    graph: Machine
-    node: machine
   - type: Destructible
     thresholds:
     - trigger:
@@ -49,12 +45,28 @@
   - type: Machine
     board: AutolatheMachineCircuitboard
   - type: MaterialStorage
+    whitelist:
+      tags:
+        - Sheet
+        - RawMaterial
+        - Ingot
   - type: Wires
     BoardName: "Autolathe"
     LayoutId: Autolathe
-  - type: LatheDatabase
-    static: true
-    recipes:
+  - type: ActivatableUI
+    key: enum.LatheUiKey.Key
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+    - key: enum.LatheUiKey.Key
+      type: LatheBoundUserInterface
+  - type: Transform
+    anchored: true
+  - type: Pullable
+  - type: Lathe
+    idleState: icon
+    runningState: building
+    staticRecipes:
       - Wirecutter
       - Screwdriver
       - Welder
@@ -67,31 +79,21 @@
       - Spade
       - CableStack
       - HandheldGPSBasic
-  - type: ActivatableUI
-    key: enum.LatheUiKey.Key
-  - type: ActivatableUIRequiresPower
-  - type: UserInterface
-    interfaces:
-    - key: enum.LatheUiKey.Key
-      type: LatheBoundUserInterface
-  - type: Transform
-    anchored: true
-  - type: Pullable
-  - type: Lathe
-    whitelist:
-      tags:
-        - Sheet
-        - RawMaterial
-        - Ingot
+      - TRayScanner
+      - GasAnalyzer
+      - UtilityBelt
+  - type: StaticPrice
+    price: 800
 
 - type: entity
-  parent: BaseMachinePowered
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
   id: Protolathe
   name: protolathe
   description: Converts raw materials into useful objects.
   components:
   - type: Sprite
     sprite: Structures/Machines/protolathe.rsi
+    snapCardinals: true
     netsync: false
     layers:
     - state: icon
@@ -104,9 +106,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-  - type: LatheVisuals
-    idleState: icon
-    runningState: building
+  - type: WiresVisuals
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -114,15 +114,12 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.4,-0.4,0.4,0.4"
-      mass: 25
+      density: 190
       mask:
       - MachineMask
       layer:
       - MachineLayer
   - type: ResearchClient
-  - type: Construction
-    graph: Machine
-    node: machine
   - type: Destructible
     thresholds:
     - trigger:
@@ -140,8 +137,27 @@
     LayoutId: Protolathe
   - type: TechnologyDatabase
   - type: MaterialStorage
-  - type: ProtolatheDatabase
-    protolatherecipes:
+    whitelist:
+      tags:
+        - Sheet
+        - RawMaterial
+        - Ingot
+  - type: ActivatableUI
+    key: enum.LatheUiKey.Key #Yes only having 1 of them here doesn't break anything
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+    - key: enum.LatheUiKey.Key
+      type: LatheBoundUserInterface
+    - key: enum.ResearchClientUiKey.Key
+      type: ResearchClientBoundUserInterface
+  - type: Transform
+    anchored: true
+  - type: Pullable
+  - type: Lathe
+    idleState: icon
+    runningState: building
+    dynamicRecipes:
       - LightTube
       - LightBulb
       - SheetSteel
@@ -152,6 +168,7 @@
       - CableMVStack
       - CableHVStack
       - ConveyorBeltAssembly
+      - AppraisalTool
       - RCDAmmo
       - HydroponicsToolScythe
       - HydroponicsToolHatchet
@@ -169,6 +186,7 @@
       - Dropper
       - Syringe
       - PillCanister
+      - ChemistryEmptyBottle01
       - Drone
       - Flash
       - MicroManipulatorStockPart
@@ -176,11 +194,17 @@
       - MicroLaserStockPart
       - MatterBinStockPart
       - CapacitorStockPart
+      - AdvancedCapacitorStockPart
+      - AdvancedMatterBinStockPart
+      - HighPowerMicroLaserStockPart
+      - NanoManipulatorStockPart
+      - AdvancedScanningModuleStockPart
       - FirelockElectronics
       - DoorElectronics
       - APCElectronics
       - AirAlarmElectronics
       - FireAlarmElectronics
+      - MailingUnitElectronics
       - Bucket
       - MopItem
       - SprayBottle
@@ -196,24 +220,10 @@
       - PowerCellSmall
       - PowerCellMedium
       - PowerCellHigh
-  - type: ActivatableUI
-    key: enum.LatheUiKey.Key #Yes only having 1 of them here doesn't break anything
-  - type: ActivatableUIRequiresPower
-  - type: UserInterface
-    interfaces:
-    - key: enum.LatheUiKey.Key
-      type: LatheBoundUserInterface
-    - key: enum.ResearchClientUiKey.Key
-      type: ResearchClientBoundUserInterface
-  - type: Transform
-    anchored: true
-  - type: Pullable
-  - type: Lathe
-    whitelist:
-      tags:
-        - Sheet
-        - RawMaterial
-        - Ingot
+      - ProximitySensor
+      - LeftArmBorg
+      - RightArmBorg
+      - HolofanProjector
 
 - type: entity
   parent: Protolathe
@@ -232,11 +242,17 @@
       map: ["enum.PowerDeviceVisualLayers.Powered"]
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: ProtolatheDatabase
-    protolatherecipes:
+  - type: Machine
+    board: CircuitImprinterMachineCircuitboard
+  - type: Lathe
+    producingSound: /Audio/Machines/circuitprinter.ogg
+    idleState: icon
+    runningState: building
+    dynamicRecipes:
       - SMESMachineCircuitboard
       - SubstationMachineCircuitboard
       - ThermomachineFreezerMachineCircuitBoard
+      - PortableScrubberMachineCircuitBoard
       - CloningPodMachineCircuitboard
       - MedicalScannerMachineCircuitboard
       - CrewMonitoringComputerCircuitboard
@@ -244,6 +260,7 @@
       - DiagnoserMachineCircuitboard
       - ChemMasterMachineCircuitboard
       - ChemDispenserMachineCircuitboard
+      - BiomassReclaimerMachineCircuitboard
       - SurveillanceCameraRouterCircuitboard
       - SurveillanceCameraMonitorCircuitboard
       - SurveillanceWirelessCameraMonitorCircuitboard
@@ -261,17 +278,17 @@
       - ShuttleConsoleCircuitboard
       - CircuitImprinterMachineCircuitboard
       - DawInstrumentMachineCircuitboard
+      - CloningConsoleComputerCircuitboard
       - StasisBedMachineCircuitboard
       - OreProcessorMachineCircuitboard
       - GeneratorPlasmaMachineCircuitboard
       - GeneratorUraniumMachineCircuitboard
       - WallmountGeneratorElectronics
       - WallmountGeneratorAPUElectronics
+      - WallmountSubstationElectronics
       - EmitterCircuitboard
-  - type: Machine
-    board: CircuitImprinterMachineCircuitboard
-  - type: Lathe
-    producingSound: /Audio/Machines/circuitprinter.ogg
+      - GasRecyclerMachineCircuitboard
+  - type: MaterialStorage
     whitelist:
       tags:
         - Sheet
@@ -297,12 +314,12 @@
       map: ["enum.LatheVisualLayers.IsInserting"]
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: LatheVisuals
+  - type: Machine
+    board: SecurityTechFabCircuitboard
+  - type: Lathe
     idleState: icon
     runningState: icon
-  - type: LatheDatabase
-    static: true
-    recipes:
+    staticRecipes:
       - Flash
       - FlashPayload
       - Handcuffs
@@ -315,13 +332,12 @@
       - ShellShotgun
       - ShellShotgunBeanbag
       - ShellShotgunFlare
+      - ShellTranquilizer
       - CartridgeLightRifle
       - CartridgeCaselessRifleRubber
       - CartridgeLightRifleRubber
       - CartridgeRifleRubber
-  - type: Machine
-    board: SecurityTechFabCircuitboard
-  - type: Lathe
+  - type: MaterialStorage
     whitelist:
       tags:
         - Sheet
@@ -348,18 +364,16 @@
       map: ["enum.LatheVisualLayers.IsInserting"]
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: LatheVisuals
+  - type: Lathe
     idleState: icon
     runningState: icon
-  - type: ProtolatheDatabase
-    protolatherecipes:
+    dynamicRecipes:
       - HandheldHealthAnalyzer
       - ClothingHandsGlovesLatex
       - ClothingHandsGlovesNitrile
       - ClothingMaskSterile
       - DiseaseSwab
       - HandheldCrewMonitor
-      - ShellTranquilizer
       - Scalpel
       - Retractor
       - Cautery
@@ -373,6 +387,7 @@
       - Syringe
       - PillCanister
       - BodyBag
+      - ChemistryEmptyBottle01
   - type: Machine
     board: MedicalTechFabCircuitboard
 
@@ -382,9 +397,22 @@
   name: uniform printer
   description: Prints new or replacement uniforms.
   components:
-  - type: LatheDatabase
-    static: true
-    recipes:
+  - type: Transform
+    noRot: false
+  - type: Sprite
+    sprite: Structures/Machines/uniform_printer.rsi
+    netsync: false
+    snapCardinals: false
+    layers:
+    - state: icon
+      map: ["enum.LatheVisualLayers.IsRunning"]
+  - type: Machine
+    board: UniformPrinterMachineCircuitboard
+  - type: Lathe
+    producingSound: /Audio/Machines/uniformprinter.ogg
+    idleState: icon
+    runningState: building
+    staticRecipes:
       - ClothingUniformJumpsuitColorGrey
       - ClothingUniformJumpskirtColorGrey
       - ClothingUniformJumpsuitBartender
@@ -424,7 +452,7 @@
       - ClothingUniformJumpskirtMedicalDoctor
       - ClothingUniformJumpsuitMime
       - ClothingUniformJumpskirtMime
-      - ClothingUniformJumpsuitLawyerPurple
+      - ClothingUniformJumpsuitMusician
       - ClothingUniformJumpsuitParamedic
       - ClothingUniformJumpskirtParamedic
       - ClothingUniformJumpsuitPrisoner
@@ -446,20 +474,15 @@
       - ClothingOuterWinterHoS
       - ClothingOuterWinterQM
       - ClothingOuterWinterRD
-  - type: Sprite
-    sprite: Structures/Machines/uniform_printer.rsi
-    netsync: false
-    layers:
-    - state: icon
-      map: ["enum.LatheVisualLayers.IsRunning"]
-  - type: Machine
-    board: UniformPrinterMachineCircuitboard
-  - type: Lathe
-    producingSound: /Audio/Machines/uniformprinter.ogg
+      - ClothingOuterWinterMusician
+      - ClothingOuterWinterClown
+      - ClothingOuterWinterMime
+  - type: MaterialStorage
     whitelist:
       tags:
         - Sheet
         - RawMaterial
+        - Ingot
 
 - type: entity
   parent: Autolathe
@@ -467,8 +490,6 @@
   name: ore processor
   description: It produces sheets and ingots using ores.
   components:
-    - type: LatheVisuals
-      ignoreColor: true
     - type: Sprite
       sprite: Structures/Machines/ore_processor.rsi
       netsync: false
@@ -483,10 +504,14 @@
         - state: panel
           map: ["enum.WiresVisualLayers.MaintenancePanel"]
     - type: Machine
-      board: AutolatheMachineCircuitboard
-    - type: LatheDatabase
-      static: true
-      recipes:
+      board: OreProcessorMachineCircuitboard
+    - type: MaterialStorage
+      whitelist:
+        tags:
+          - Ore
+    - type: Lathe
+      ignoreColor: true
+      staticRecipes:
         - SheetSteel30
         - SheetGlass30
         - SheetRGlass30
@@ -496,7 +521,3 @@
         - SheetUranium1
         - IngotGold1
         - IngotSilver1
-    - type: Lathe
-      whitelist:
-        tags:
-          - Ore

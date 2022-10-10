@@ -1,16 +1,21 @@
 ﻿using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Buckle.Components;
+using Content.Shared.Doors.Components;
 using Content.Shared.Hands;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Maps;
+using Content.Shared.MobState.Components;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Toggleable;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
@@ -18,14 +23,16 @@ namespace Content.Shared.Blocking;
 
 public sealed class BlockingSystem : EntitySystem
 {
-    [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
+    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
     public override void Initialize()
     {
@@ -128,12 +135,33 @@ public sealed class BlockingSystem : EntitySystem
 
         if (component.BlockingToggleAction != null)
         {
+            //Don't allow someone to block if they're in a container.
             if (_containerSystem.IsEntityInContainer(user) || !_mapManager.TryFindGridAt(xform.MapPosition, out var grid))
             {
                 CantBlockError(user);
                 return false;
             }
 
+            //Don't allow someone to block if someone else is on the same tile or if they're inside of a doorway
+            var playerTileRef = xform.Coordinates.GetTileRef();
+            if (playerTileRef != null)
+            {
+                var intersecting = _lookup.GetEntitiesIntersecting(playerTileRef.Value);
+                var mobQuery = GetEntityQuery<MobStateComponent>();
+                var doorQuery = GetEntityQuery<DoorComponent>();
+                var xformQuery = GetEntityQuery<TransformComponent>();
+
+                foreach (var uid in intersecting)
+                {
+                    if (uid != user && mobQuery.HasComponent(uid) || xformQuery.GetComponent(uid).Anchored && doorQuery.HasComponent(uid))
+                    {
+                        TooCloseError(user);
+                        return false;
+                    }
+                }
+            }
+
+            //Don't allow someone to block if they're somehow not anchored.
             _transformSystem.AnchorEntity(xform);
             if (!xform.Anchored)
             {
@@ -168,6 +196,12 @@ public sealed class BlockingSystem : EntitySystem
         _popupSystem.PopupEntity(msgError, user, Filter.Entities(user));
     }
 
+    private void TooCloseError(EntityUid user)
+    {
+        var msgError = Loc.GetString("action-popup-blocking-user-too-close");
+        _popupSystem.PopupEntity(msgError, user, Filter.Entities(user));
+    }
+
     /// <summary>
     /// Called where you want the user to stop blocking.
     /// </summary>
@@ -198,7 +232,7 @@ public sealed class BlockingSystem : EntitySystem
 
             _actionsSystem.SetToggled(component.BlockingToggleAction, false);
             _fixtureSystem.DestroyFixture(physicsComponent, BlockingComponent.BlockFixtureID);
-            physicsComponent.BodyType = blockingUserComponent.OriginalBodyType;
+            _physics.SetBodyType(physicsComponent, blockingUserComponent.OriginalBodyType);
             _popupSystem.PopupEntity(msgUser, user, Filter.Entities(user));
             _popupSystem.PopupEntity(msgOther, user, Filter.Pvs(user).RemoveWhereAttachedEntity(e => e == user));
         }

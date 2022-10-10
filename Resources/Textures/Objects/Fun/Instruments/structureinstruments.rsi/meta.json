@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "https://github.com/vgstation-coders/vgstation13 at 8d9c91e19cb52713c7f7f1804c2b6f7203f8d331, daw-base/display from /tg/staiton at commit https://github.com/tgstation/tgstation/commit/ebcf2ab180037d400a7e8ac7a2ba011a0f03edf3, harp.png, timpani.png and contrabass.png by Hyenh, tuba.png by EmoGarbage404",
+  "states": [
+    {
+      "name": "minimoog",
+      "directions": 4
+    },
+    {
+      "name": "church-organ",
+      "directions": 4
+    },
+    {
+      "name": "minimoog-broken",
+      "directions": 4
+    },
+    {
+      "name": "piano",
+      "directions": 4
+    },
+    {
+      "name": "piano-upright",
+      "directions": 4
+    },
+    {
+      "name": "piano-broken",
+      "directions": 4
+    },
+    {
+      "name": "xylophone",
+      "directions": 4
+    },
+    {
+      "name": "xylophone-broken",
+      "directions": 4
+    },
+    {
+      "name": "harp",
+    },
+    {
+      "name": "contrabass",
+    },
+    {
+      "name": "taiko"
+    },
+    {
+      "name": "timpani",
+	  "directions": 4
+    },
+    {
+      "name": "toms",
+	  "directions": 4
+    },
+    {
+      "name": "marimba",
+	  "directions": 4
+    },
+    {
+      "name": "vibraphone",
+	  "directions": 4
+    },
+    {
+      "name": "tuba"
+    },
+    {
+      "name": "daw-base",
+      "directions": 1
+    },
+    {
+      "name": "daw-panel",
+      "directions": 1
+    },
+    {
+      "name": "daw-display",
+      "directions": 1,
+      "delays": [
+        [
+          0.3,
+          0.3,
+          0.3
+        ]
+      ]
+    }
+  ]
+}

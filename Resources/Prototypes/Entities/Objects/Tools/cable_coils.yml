@@ -37,7 +37,7 @@
     state: coilhv-30
   - type: Item
     size: 10
-    HeldPrefix: coilhv
+    heldPrefix: coilhv
   - type: CablePlacer
     cablePrototypeID: CableHV
     blockingWireType: HighVoltage
@@ -73,7 +73,7 @@
     state: coilmv-30
   - type: Item
     size: 10
-    HeldPrefix: coilmv
+    heldPrefix: coilmv
   - type: CablePlacer
     cablePrototypeID: CableMV
     blockingWireType: MediumVoltage
@@ -108,7 +108,7 @@
     state: coillv-30
   - type: Item
     size: 10
-    HeldPrefix: coillv
+    heldPrefix: coillv
   - type: CablePlacer
     cablePrototypeID: CableApcExtension
     blockingWireType: Apc

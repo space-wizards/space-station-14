@@ -29,6 +29,26 @@
   revertOnDeath: true
 
 - type: polymorph
+  id: WizardForcedSkeleton
+  entity: MobSkeletonPerson
+  forced: true
+  inventory: Drop
+  transferName: true
+  transferDamage: true
+  revertOnCrit: false
+  revertOnDeath: false
+
+- type: polymorph
+  id: WizardForcedMonkey
+  entity: MobMonkey
+  forced: true
+  inventory: None
+  transferName: true
+  transferDamage: true
+  revertOnCrit: false
+  revertOnDeath: true
+
+- type: polymorph
   id: WizardWallDoor
   entity: WoodDoor
   forced: true
@@ -45,24 +65,6 @@
   transferName: true
   transferHumanoidAppearance: true
   inventory: Transfer
-
-- type: polymorph
-  id: AdminMonkeySmite
-  entity: MobMonkey
-  forced: true
-  inventory: Drop
-
-- type: polymorph
-  id: AdminBreadSmite
-  entity: FoodBreadPlain
-  forced: true
-  inventory: Drop
-
-- type: polymorph
-  id: AdminInstrumentSmite
-  entity: SuperSynthesizerInstrument
-  forced: true
-  inventory: Drop
 
 - type: polymorph
   id: AMIVMorph

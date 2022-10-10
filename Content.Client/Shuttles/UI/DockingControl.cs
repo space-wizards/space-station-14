@@ -16,7 +16,6 @@ public class DockingControl : Control
     private readonly IEntityManager _entManager;
     private readonly IMapManager _mapManager;
 
-    private const int MinimapRadius = 384;
     private const int MinimapMargin = 4;
 
     private float _range = 8f;
@@ -24,8 +23,8 @@ public class DockingControl : Control
     private const float GridLinesDistance = 32f;
 
     private int MidPoint => SizeFull / 2;
-    private int SizeFull => (int) ((MinimapRadius + MinimapMargin) * 2 * UIScale);
-    private int ScaledMinimapRadius => (int) (MinimapRadius * UIScale);
+    private int SizeFull => (int) ((RadarControl.MinimapRadius + MinimapMargin) * 2 * UIScale);
+    private int ScaledMinimapRadius => (int) (RadarControl.MinimapRadius * UIScale);
     private float MinimapScale => _range != 0 ? ScaledMinimapRadius / _range : 0f;
 
     public EntityUid? ViewedDock;
@@ -76,7 +75,7 @@ public class DockingControl : Control
             Angle == null ||
             !_entManager.TryGetComponent<TransformComponent>(GridEntity, out var gridXform)) return;
 
-        var rotation = Matrix3.CreateRotation(Angle.Value);
+        var rotation = Matrix3.CreateRotation(-Angle.Value + Math.PI);
         var matrix = Matrix3.CreateTranslation(-Coordinates.Value.Position);
 
         // Draw the fixtures around the dock before drawing it

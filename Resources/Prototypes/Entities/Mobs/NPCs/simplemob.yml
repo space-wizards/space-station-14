@@ -12,16 +12,13 @@
       Flammable: [Touch]
       Extinguish: [Touch]
       Acidic: [Touch, Ingestion]
-  - type: PlayerInputMover
-  - type: PlayerMobMover
-  - type: UtilityAI
-    behaviorSets:
-    # - Clothing
-    - Idle
-    # No hunger and thirst for space mobs (need a way to eat station tiles for space carps)
+  - type: InputMover
+  - type: MobMover
+  - type: HTN
+    rootTask: IdleCompound
   - type: Input
     context: "human"
-  - type: AiFactionTag
+  - type: Faction
     factions:
     - SimpleNeutral
   - type: MovementSpeedModifier
@@ -55,7 +52,7 @@
         # Circles, cuz rotation of rectangles looks very bad
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 20
+      density: 50
       mask:
       - MobMask
       layer:
@@ -111,14 +108,17 @@
     - SlowedDown
     - Stutter
     - Electrocution
+    - ForcedSleep
+    - TemporaryBlindness
+    - Pacified
   - type: Body
     template: AnimalTemplate
     preset: AnimalPreset
   - type: Examiner
   - type: MeleeWeapon
-    range: 1.5
-    arcwidth: 0
-    arc: bite
+    hidden: true
+    angle: 0
+    animation: WeaponArcBite
     damage:
       groups:
         Brute: 5
@@ -157,13 +157,8 @@
   parent: SimpleSpaceMobBase
   suffix: AI
   components:
-  - type: PlayerInputMover
-  - type: PlayerMobMover
-  - type: UtilityAI
-    behaviorSets:
-    - Idle
-    # - Hunger TODO: eating on the floor and fix weird AI endless stomach
-    # - Thirst
+  - type: InputMover
+  - type: MobMover
   - type: Hunger
   - type: Thirst
   - type: Barotrauma
@@ -177,6 +172,9 @@
       - SlowedDown
       - Stutter
       - Electrocution
+      - ForcedSleep
+      - TemporaryBlindness
+      - Pacified
   - type: ThermalRegulator
     metabolismHeat: 800
     radiatedHeat: 100

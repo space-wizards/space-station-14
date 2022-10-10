@@ -9,7 +9,7 @@
   - type: Sprite
     state: icon
   - type: Clothing
-    Slots:
+    slots:
     - ears
     sprite: Clothing/Ears/Headsets/base.rsi
 
@@ -25,6 +25,8 @@
     - Supply
   - type: Sprite
     sprite: Clothing/Ears/Headsets/cargo.rsi
+  - type: Clothing
+    sprite: Clothing/Ears/Headsets/cargo.rsi
 
 - type: entity
   parent: ClothingHeadset
@@ -39,11 +41,13 @@
     - Supply
   - type: Sprite
     sprite: Clothing/Ears/Headsets/cargo.rsi
+  - type: Clothing
+    sprite: Clothing/Ears/Headsets/cargo.rsi
 
 - type: entity
   parent: ClothingHeadset
   id: ClothingHeadsetCentCom
-  name: centcomm headset
+  name: CentCom headset
   description: A headset used by the upper echelons of Nanotrasen.
   components:
   - type: Headset
@@ -58,6 +62,8 @@
     - Service
     - Supply
   - type: Sprite
+    sprite: Clothing/Ears/Headsets/centcom.rsi
+  - type: Clothing
     sprite: Clothing/Ears/Headsets/centcom.rsi
 
 - type: entity
@@ -78,6 +84,8 @@
     - Supply
   - type: Sprite
     sprite: Clothing/Ears/Headsets/command.rsi
+  - type: Clothing
+    sprite: Clothing/Ears/Headsets/command.rsi
 
 - type: entity
   parent: ClothingHeadset
@@ -90,6 +98,8 @@
     - Common
     - Engineering
   - type: Sprite
+    sprite: Clothing/Ears/Headsets/engineering.rsi
+  - type: Clothing
     sprite: Clothing/Ears/Headsets/engineering.rsi
 
 - type: entity
@@ -105,6 +115,8 @@
     - Engineering
   - type: Sprite
     sprite: Clothing/Ears/Headsets/engineering.rsi
+  - type: Clothing
+    sprite: Clothing/Ears/Headsets/engineering.rsi
 
 - type: entity
   parent: ClothingHeadset
@@ -117,6 +129,8 @@
     - Common
     - Medical
   - type: Sprite
+    sprite: Clothing/Ears/Headsets/medical.rsi
+  - type: Clothing
     sprite: Clothing/Ears/Headsets/medical.rsi
 
 - type: entity
@@ -132,6 +146,8 @@
     - Science
   - type: Sprite
     sprite: Clothing/Ears/Headsets/medicalscience.rsi
+  - type: Clothing
+    sprite: Clothing/Ears/Headsets/medicalscience.rsi
 
 - type: entity
   parent: ClothingHeadset
@@ -144,6 +160,8 @@
       - Common
       - Supply
   - type: Sprite
+    sprite: Clothing/Ears/Headsets/mining.rsi
+  - type: Clothing
     sprite: Clothing/Ears/Headsets/mining.rsi
 
 - type: entity
@@ -158,6 +176,8 @@
       - Science
   - type: Sprite
     sprite: Clothing/Ears/Headsets/robotics.rsi
+  - type: Clothing
+    sprite: Clothing/Ears/Headsets/robotics.rsi
 
 - type: entity
   parent: ClothingHeadset
@@ -170,6 +190,8 @@
     - Common
     - Science
   - type: Sprite
+    sprite: Clothing/Ears/Headsets/science.rsi
+  - type: Clothing
     sprite: Clothing/Ears/Headsets/science.rsi
 
 - type: entity
@@ -185,6 +207,8 @@
     - Science
   - type: Sprite
     sprite: Clothing/Ears/Headsets/science.rsi
+  - type: Clothing
+    sprite: Clothing/Ears/Headsets/science.rsi
 
 - type: entity
   parent: ClothingHeadset
@@ -198,6 +222,8 @@
     - Security
   - type: Sprite
     sprite: Clothing/Ears/Headsets/security.rsi
+  - type: Clothing
+    sprite: Clothing/Ears/Headsets/security.rsi
 
 - type: entity
   parent: ClothingHeadset
@@ -210,6 +236,8 @@
     - Common
     - Service
   - type: Sprite
+    sprite: Clothing/Ears/Headsets/service.rsi
+  - type: Clothing
     sprite: Clothing/Ears/Headsets/service.rsi
 
 - type: entity

@@ -1,0 +1,13 @@
+﻿- type: vendingMachineInventory
+  id: SalvageEquipmentInventory
+  startingInventory:
+    Crowbar: 2
+    Pickaxe: 4
+    OreBag: 4
+    Flare: 4
+    FlashlightLantern: 2
+    Floodlight: 2
+    HandheldGPSBasic: 2
+    RadioHandheld: 2
+    WeaponProtoKineticAccelerator: 2
+    SurvivalKnife: 2

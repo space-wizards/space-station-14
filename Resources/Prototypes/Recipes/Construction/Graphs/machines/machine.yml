@@ -101,7 +101,7 @@
             - !type:WirePanel
           steps:
             - tool: Prying
-              doAfter: 0.25
+              doAfter: 2
 
     - node: destroyedMachineFrame
       entity: MachineFrameDestroyed
@@ -109,7 +109,7 @@
         - to: start
           steps:
             - tool: Welding
-              doAfter: 5            
+              doAfter: 5
           completed:
             - !type:SpawnPrototype
               prototype: SheetSteel1

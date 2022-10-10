@@ -27,6 +27,9 @@
   id: FoodNoodlesBoiled
   description: A plain dish of noodles, this needs more ingredients.
   components:
+  - type: FlavorProfile
+    flavors:
+      - pasta
   - type: Sprite
     layers:
     - state: plate
@@ -39,6 +42,10 @@
   id: FoodNoodles
   description: Spaghetti and crushed tomatoes. Just like your abusive father used to make!
   components:
+  - type: FlavorProfile
+    flavors:
+      - pasta
+      - tomato
   - type: Sprite
     layers:
     - state: plate
@@ -51,6 +58,9 @@
   id: FoodNoodlesCopy
   description: You probably shouldn't try this, you always hear people talking about how bad it is...
   components:
+  - type: FlavorProfile
+    flavors:
+      - copypasta
   - type: Sprite
     state: copypasta
   - type: SolutionContainerManager
@@ -70,6 +80,10 @@
   id: FoodNoodlesMeatball
   description: Now that's a nice-a meatball!
   components:
+  - type: FlavorProfile
+    flavors:
+      - pasta
+      - meaty
   - type: Sprite
     layers:
     - state: plate
@@ -91,6 +105,10 @@
   id: FoodNoodlesSpesslaw
   description: A lawyer's favourite.
   components:
+  - type: FlavorProfile
+    flavors:
+      - pasta
+      - meaty
   - type: Sprite
     layers:
     - state: plate
@@ -112,6 +130,12 @@
   id: FoodNoodlesChowmein
   description: A nice mix of noodles and fried vegetables.
   components:
+  - type: FlavorProfile
+    flavors:
+      - pasta
+      - oily
+      - eggplant
+      - carrot
   - type: Sprite
     layers:
     - state: plate
@@ -133,6 +157,10 @@
   id: FoodNoodlesButter
   description: Noodles covered in savory butter. Simple and slippery, but delicious.
   components:
+  - type: FlavorProfile
+    flavors:
+      - pasta
+      - butter
   - type: Sprite
     layers:
     - state: plate

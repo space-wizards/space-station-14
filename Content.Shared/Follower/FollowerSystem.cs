@@ -14,7 +14,7 @@ public sealed class FollowerSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<GetVerbsEvent<AlternativeVerb>>(OnGetAlternativeVerbs);
-        SubscribeLocalEvent<FollowerComponent, RelayMoveInputEvent>(OnFollowerMove);
+        SubscribeLocalEvent<FollowerComponent, MoveInputEvent>(OnFollowerMove);
         SubscribeLocalEvent<FollowedComponent, EntityTerminatingEvent>(OnFollowedTerminating);
     }
 
@@ -41,7 +41,7 @@ public sealed class FollowerSystem : EntitySystem
         ev.Verbs.Add(verb);
     }
 
-    private void OnFollowerMove(EntityUid uid, FollowerComponent component, RelayMoveInputEvent args)
+    private void OnFollowerMove(EntityUid uid, FollowerComponent component, ref MoveInputEvent args)
     {
         StopFollowingEntity(uid, component.Following);
     }

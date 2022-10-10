@@ -1,5 +1,4 @@
 using Content.Shared.Shuttles.Systems;
-using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 
@@ -41,11 +40,7 @@ public sealed class FTLComponent : Component
     [ViewVariables(VVAccess.ReadWrite), DataField("soundTravel")]
     public SoundSpecifier? TravelSound = new SoundPathSpecifier("/Audio/Effects/Shuttle/hyperspace_progress.ogg")
     {
-        Params =
-        {
-            Volume = -10,
-            Loop = true,
-        }
+        Params = AudioParams.Default.WithVolume(-3f).WithLoop(true)
     };
 
     public IPlayingAudioStream? TravelStream;

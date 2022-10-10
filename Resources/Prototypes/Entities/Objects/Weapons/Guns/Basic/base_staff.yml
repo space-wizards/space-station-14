@@ -6,8 +6,7 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Basic/staves.rsi
   - type: Item
-    sprite: Objects/Weapons/Guns/Basic/staves.rsi
-    HeldPrefix: staff
+    heldPrefix: staff
     size: 60
   - type: Gun
     fireRate: 1

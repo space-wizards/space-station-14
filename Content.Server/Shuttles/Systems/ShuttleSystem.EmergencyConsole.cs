@@ -5,6 +5,7 @@ using Content.Server.RoundEnd;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.Station.Components;
+using Content.Server.UserInterface;
 using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
@@ -65,7 +66,7 @@ public sealed partial class ShuttleSystem
     private static readonly Color DangerColor = Color.Red;
 
     /// <summary>
-    /// Have the emergency shuttles been authorised to launch at Centcomm?
+    /// Have the emergency shuttles been authorised to launch at CentCom?
     /// </summary>
     private bool _launchedShuttles;
 
@@ -82,6 +83,18 @@ public sealed partial class ShuttleSystem
         SubscribeLocalEvent<EmergencyShuttleConsoleComponent, EmergencyShuttleAuthorizeMessage>(OnEmergencyAuthorize);
         SubscribeLocalEvent<EmergencyShuttleConsoleComponent, EmergencyShuttleRepealMessage>(OnEmergencyRepeal);
         SubscribeLocalEvent<EmergencyShuttleConsoleComponent, EmergencyShuttleRepealAllMessage>(OnEmergencyRepealAll);
+        SubscribeLocalEvent<EmergencyShuttleConsoleComponent, ActivatableUIOpenAttemptEvent>(OnEmergencyOpenAttempt);
+    }
+
+    private void OnEmergencyOpenAttempt(EntityUid uid, EmergencyShuttleConsoleComponent component, ActivatableUIOpenAttemptEvent args)
+    {
+        // I'm hoping ActivatableUI checks it's open before allowing these messages.
+        if (!_configManager.GetCVar(CCVars.EmergencyEarlyLaunchAllowed))
+        {
+            args.Cancel();
+            _popup.PopupEntity(Loc.GetString("emergency-shuttle-console-no-early-launches"), uid, Filter.Entities(args.User));
+            return;
+        }
     }
 
     private void SetAuthorizeTime(float obj)
@@ -123,24 +136,24 @@ public sealed partial class ShuttleSystem
         {
             _launchedShuttles = true;
 
-            if (_centcommMap != null)
+            if (CentComMap != null)
             {
                 foreach (var comp in EntityQuery<StationDataComponent>(true))
                 {
                     if (!TryComp<ShuttleComponent>(comp.EmergencyShuttle, out var shuttle)) continue;
 
-                    if (Deleted(_centcomm))
+                    if (Deleted(CentCom))
                     {
                         // TODO: Need to get non-overlapping positions.
                         FTLTravel(shuttle,
                             new EntityCoordinates(
-                                _mapManager.GetMapEntityId(_centcommMap.Value),
+                                _mapManager.GetMapEntityId(CentComMap.Value),
                                 Vector2.One * 1000f), _consoleAccumulator, TransitTime);
                     }
                     else
                     {
                         FTLTravel(shuttle,
-                            _centcomm.Value, _consoleAccumulator, TransitTime);
+                            CentCom.Value, _consoleAccumulator, TransitTime, dock: true);
                     }
                 }
             }
@@ -156,8 +169,8 @@ public sealed partial class ShuttleSystem
             Timer.Spawn((int) (TransitTime * 1000) + _bufferTime.Milliseconds, () => _roundEnd.EndRound(), _roundEndCancelToken.Token);
 
             // Guarantees that emergency shuttle arrives first before anyone else can FTL.
-            if (_centcomm != null)
-                AddFTLDestination(_centcomm.Value, true);
+            if (CentCom != null)
+                AddFTLDestination(CentCom.Value, true);
 
         }
     }
@@ -222,7 +235,7 @@ public sealed partial class ShuttleSystem
         if (remaining > 0)
             _chatSystem.DispatchGlobalAnnouncement(
                 Loc.GetString("emergency-shuttle-console-auth-left", ("remaining", remaining)),
-                playDefaultSound: false, colorOverride: DangerColor);
+                playSound: false, colorOverride: DangerColor);
 
         if (!CheckForLaunch(component))
             SoundSystem.Play("/Audio/Misc/notice1.ogg", Filter.Broadcast());
@@ -297,7 +310,7 @@ public sealed partial class ShuttleSystem
         _announced = true;
         _chatSystem.DispatchGlobalAnnouncement(
             Loc.GetString("emergency-shuttle-launch-time", ("consoleAccumulator", $"{_consoleAccumulator:0}")),
-            playDefaultSound: false,
+            playSound: false,
             colorOverride: DangerColor);
 
         SoundSystem.Play("/Audio/Misc/notice1.ogg", Filter.Broadcast());

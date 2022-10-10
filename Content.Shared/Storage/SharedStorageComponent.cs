@@ -43,7 +43,6 @@ namespace Content.Shared.Storage
             Key,
         }
 
-        [Dependency] private readonly IEntityManager _entMan = default!;
         public abstract IReadOnlyList<EntityUid>? StoredEntities { get; }
 
         /// <summary>

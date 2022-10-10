@@ -44,7 +44,6 @@ namespace Content.Server.Nutrition.Components
 
         public static readonly Dictionary<ThirstThreshold, AlertType> ThirstThresholdAlertTypes = new()
         {
-            {ThirstThreshold.OverHydrated, AlertType.Overhydrated},
             {ThirstThreshold.Thirsty, AlertType.Thirsty},
             {ThirstThreshold.Parched, AlertType.Parched},
             {ThirstThreshold.Dead, AlertType.Parched},

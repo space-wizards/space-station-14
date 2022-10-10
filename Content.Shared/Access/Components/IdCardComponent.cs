@@ -9,9 +9,6 @@ namespace Content.Shared.Access.Components
     [Access(typeof(SharedIdCardSystem), typeof(SharedPDASystem), typeof(SharedAgentIdCardSystem))]
     public sealed class IdCardComponent : Component
     {
-        [DataField("originalOwnerName")]
-        public string OriginalOwnerName = default!;
-
         [DataField("fullName")]
         [Access(typeof(SharedIdCardSystem), typeof(SharedPDASystem), typeof(SharedAgentIdCardSystem),
             Other = AccessPermissions.ReadWrite)] // FIXME Friends

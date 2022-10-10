@@ -1,7 +1,6 @@
-using System;
-using Content.Client.HUD.UI;
 using Content.Client.Resources;
 using Content.Client.Stylesheets;
+using Content.Client.UserInterface.Controls;
 using Content.Shared.Singularity.Components;
 using Robust.Client.Animations;
 using Robust.Client.Graphics;
@@ -9,9 +8,6 @@ using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 using Robust.Shared.Noise;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -334,11 +330,13 @@ namespace Content.Client.ParticleAccelerator.UI
             {
                 return new(this, resourceCache, name, state);
             }
+
+            UpdateUI(false, false, false, false);
         }
 
         private bool StrengthSpinBoxValid(int n)
         {
-            return (n >= 0 && n <= 4 && !_blockSpinBox);
+            return (n >= 0 && n <= 3 && !_blockSpinBox);
         }
 
         private void PowerStateChanged(object? sender, ValueChangedEventArgs e)
@@ -358,13 +356,15 @@ namespace Content.Client.ParticleAccelerator.UI
                 case 3:
                     newState = ParticleAcceleratorPowerState.Level2;
                     break;
-                case 4:
-                    newState = ParticleAcceleratorPowerState.Level3;
-                    break;
+                // They can't reach this level anyway and I just want to fix the bugginess for now.
+                //case 4:
+                //    newState = ParticleAcceleratorPowerState.Level3;
+                //    break;
                 default:
                     return;
             }
 
+            _stateSpinBox.SetButtonDisabled(true);
             Owner.SendPowerStateMessage(newState);
         }
 

@@ -18,13 +18,14 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.45,-0.45,0.45,0.05"
-      mass: 25
+      density: 190
       mask:
       - TableMask
   - type: Sprite
     sprite: Structures/Furniture/furniture.rsi
     state: bed
     netsync: false
+    noRot: true
   - type: Strap
     position: Down
     rotation: -90

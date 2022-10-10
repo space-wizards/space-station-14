@@ -1,6 +1,9 @@
+using Content.Server.Chat.Systems;
 using Content.Server.Radio.Components;
 using Content.Server.Radio.EntitySystems;
+using Content.Server.VoiceMask;
 using Content.Shared.Chat;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Radio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
@@ -21,6 +24,7 @@ namespace Content.Server.Headset
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IServerNetManager _netManager = default!;
 
+        private ChatSystem _chatSystem = default!;
         private RadioSystem _radioSystem = default!;
 
         [DataField("channels", customTypeSerializer:typeof(PrototypeIdHashSetSerializer<RadioChannelPrototype>))]
@@ -39,12 +43,13 @@ namespace Content.Server.Headset
         {
             base.Initialize();
 
+            _chatSystem = EntitySystem.Get<ChatSystem>();
             _radioSystem = EntitySystem.Get<RadioSystem>();
         }
 
-        public bool CanListen(string message, EntityUid source, RadioChannelPrototype prototype)
+        public bool CanListen(string message, EntityUid source, RadioChannelPrototype? prototype)
         {
-            return Channels.Contains(prototype.ID) && RadioRequested;
+            return prototype != null && Channels.Contains(prototype.ID) && RadioRequested;
         }
 
         public void Receive(string message, RadioChannelPrototype channel, EntityUid source)
@@ -55,19 +60,35 @@ namespace Content.Server.Headset
 
             var playerChannel = actor.PlayerSession.ConnectedClient;
 
+            var name = _entMan.GetComponent<MetaDataComponent>(source).EntityName;
+
+            if (_entMan.TryGetComponent(source, out VoiceMaskComponent? mask) && mask.Enabled)
+            {
+                name = mask.VoiceName;
+            }
+
+            message = _chatSystem.TransformSpeech(source, message);
+            if (message.Length == 0)
+                return;
+
             var msg = new MsgChatMessage
             {
                 Channel = ChatChannel.Radio,
                 Message = message,
                 //Square brackets are added here to avoid issues with escaping
-                MessageWrap = Loc.GetString("chat-radio-message-wrap", ("color", channel.Color), ("channel", $"\\[{channel.LocalizedName}\\]"), ("name", _entMan.GetComponent<MetaDataComponent>(source).EntityName))
+                MessageWrap = Loc.GetString("chat-radio-message-wrap", ("color", channel.Color), ("channel", $"\\[{channel.LocalizedName}\\]"), ("name", name))
             };
 
             _netManager.ServerSendMessage(msg, playerChannel);
         }
 
-        public void Listen(string message, EntityUid speaker, RadioChannelPrototype channel)
+        public void Listen(string message, EntityUid speaker, RadioChannelPrototype? channel)
         {
+            if (channel == null)
+            {
+                return;
+            }
+
             Broadcast(message, speaker, channel);
         }
 

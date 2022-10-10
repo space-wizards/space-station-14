@@ -1,7 +1,13 @@
 # Alphabetical order is now apparently required.
 
 - type: Tag
+  id: AirAlarm
+
+- type: Tag
   id: AirAlarmElectronics
+
+- type: Tag
+  id: AirSensor
 
 - type: Tag
   id: ATVKeys
@@ -13,13 +19,13 @@
   id: Bee
 
 - type: Tag
-  id: BrassInstrument
-
-- type: Tag
-  id: Brutepack
+  id: BikeHorn
 
 - type: Tag
   id: BodyBag
+
+- type: Tag
+  id: BorgArm
 
 - type: Tag
   id: BotanyHatchet
@@ -32,6 +38,21 @@
 
 - type: Tag
   id: Bottle
+
+- type: Tag
+  id: BoxHug
+
+- type: Tag
+  id: BrassInstrument
+
+- type: Tag
+  id: Brutepack
+
+- type: Tag
+  id: Bucket
+
+- type: Tag
+  id: BulletFoam
 
 - type: Tag
   id: CableCoil
@@ -85,10 +106,16 @@
   id: CartridgeRocket
 
 - type: Tag
+  id: Cigarette
+
+- type: Tag
   id: CigFilter
 
 - type: Tag
   id: CigPack
+
+- type: Tag
+  id: ClownRubberStamp
 
 - type: Tag
   id: Crayon
@@ -136,10 +163,16 @@
   id: CombatKnife
 
 - type: Tag
+  id: ComputerTelevisionCircuitboard
+
+- type: Tag
   id: Debug
 
 - type: Tag
   id: Dice
+
+- type: Tag
+  id: DiscreteHealthAnalyzer #So construction recipes don't eat medical PDAs
 
 - type: Tag
   id: Document
@@ -157,9 +190,6 @@
   id: Donut
 
 - type: Tag
-  id: Drone
-
-- type: Tag
   id: DroneUsable
 
 - type: Tag
@@ -175,10 +205,16 @@
   id: ExplosivePassable
 
 - type: Tag
+  id: FireAlarm
+
+- type: Tag
   id: FireAlarmElectronics
 
 - type: Tag
   id: FireAxe
+
+- type: Tag
+  id: WhitelistChameleon
 
 - type: Tag
   id: FirelockElectronics
@@ -188,6 +224,9 @@
 
 - type: Tag
   id: Flashlight
+
+- type: Tag
+  id: Flower
 
 - type: Tag
   id: Folder
@@ -202,10 +241,19 @@
   id: ForceNoFixRotations # fixrotations command WON'T target this
 
 - type: Tag
+  id: GasScrubber
+
+- type: Tag
+  id: GasVent
+
+- type: Tag
   id: Gauze
 
 - type: Tag
   id: GlassBeaker
+
+- type: Tag
+  id: GlassShard
 
 - type: Tag
   id: Grenade
@@ -217,6 +265,9 @@
   id: Handcuffs
 
 - type: Tag
+  id: Head
+
+- type: Tag
   id: HideContextMenu
 
 - type: Tag
@@ -224,6 +275,9 @@
 
 - type: Tag
   id: Hoe
+
+- type: Tag #Drop this innate tool instead of deleting it.
+  id: InnateDontDelete
 
 - type: Tag
   id: Ingot
@@ -294,7 +348,13 @@
   id: MagazinePistolSubMachineGun
 
 - type: Tag
+  id: MailingUnitElectronics
+
+- type: Tag
   id: Matchstick
+
+- type: Tag
+  id: Medkit
 
 - type: Tag
   id: Metal
@@ -313,6 +373,9 @@
 
 - type: Tag
   id: NoSpinOnThrow
+
+- type: Tag
+  id: NukeOpsUplink
 
 - type: Tag
   id: Ointment
@@ -360,6 +423,9 @@
   id: Powerdrill
 
 - type: Tag
+  id: ProximitySensor
+
+- type: Tag
   id: PussyWagonKeys
 
 - type: Tag
@@ -382,7 +448,13 @@
   id: Screwdriver
 
 - type: Tag
+  id: SecBeltEquip
+
+- type: Tag
   id: SecwayKeys
+
+- type: Tag
+  id: ShoesRequiredStepTriggerImmune
 
 - type: Tag
   id: Sheet
@@ -394,7 +466,16 @@
   id: Shovel
 
 - type: Tag
+  id: Smokable
+  
+- type: Tag
   id: Soap
+
+- type: Tag
+  id: SolarAssemblyPart
+
+- type: Tag
+  id: SolarTrackerElectronics
 
 - type: Tag
   id: Spray
@@ -404,6 +485,9 @@
 
 - type: Tag
   id: StringInstrument
+
+- type: Tag
+  id: SurveillanceCameraMonitorCircuitboard
 
 - type: Tag
   id: Syndicate
@@ -428,6 +512,15 @@
 
 - type: Tag
   id: Wall
+
+- type: Tag
+  id: WallmountGeneratorAPUElectronics
+
+- type: Tag
+  id: WallmountGeneratorElectronics
+
+- type: Tag
+  id: WallmountSubstationElectronics
 
 - type: Tag
   id: Window

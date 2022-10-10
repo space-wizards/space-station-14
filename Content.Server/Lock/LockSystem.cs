@@ -3,6 +3,7 @@ using Content.Shared.Emag.Systems;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Examine;
+using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Storage;
@@ -152,6 +153,9 @@ namespace Content.Server.Lock
             if (!Resolve(uid, ref storage, logMissing: false))
                 return true;
 
+            if (!HasComp<SharedHandsComponent>(user))
+                return false;
+
             // Cannot lock if the entity is currently opened.
             if (storage.Open)
                 return false;
@@ -189,7 +193,7 @@ namespace Content.Server.Lock
                 () => TryUnlock(uid, args.User, component) :
                 () => TryLock(uid, args.User, component);
             verb.Text = Loc.GetString(component.Locked ? "toggle-lock-verb-unlock" : "toggle-lock-verb-lock");
-            // TODO VERB ICONS need padlock open/close icons.
+            verb.IconTexture = component.Locked ? "/Textures/Interface/VerbIcons/unlock.svg.192dpi.png" : "/Textures/Interface/VerbIcons/lock.svg.192dpi.png";
             args.Verbs.Add(verb);
         }
 

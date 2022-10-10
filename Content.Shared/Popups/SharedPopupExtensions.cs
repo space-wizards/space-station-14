@@ -32,19 +32,6 @@ namespace Content.Shared.Popups
         }
 
         /// <summary>
-        /// Makes a string of text float up from a location on a grid.
-        /// </summary>
-        /// <param name="coordinates">Location on a grid that the message floats up from.</param>
-        /// <param name="viewer">The client attached entity that the message is being sent to.</param>
-        /// <param name="message">Text contents of the message.</param>
-        [Obsolete("Use PopupSystem.PopupCoordinates instead.")]
-        public static void PopupMessage(this EntityCoordinates coordinates, EntityUid viewer, string message)
-        {
-            var popupSystem = EntitySystem.Get<SharedPopupSystem>();
-            popupSystem.PopupCoordinates(message, coordinates, Filter.Entities(viewer));
-        }
-
-        /// <summary>
         ///     Makes a string of text float up from a client's cursor.
         /// </summary>
         /// <param name="viewer">

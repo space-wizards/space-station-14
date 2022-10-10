@@ -1,5 +1,6 @@
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 
 namespace Content.Shared.Polymorph
 {
@@ -17,8 +18,8 @@ namespace Content.Shared.Polymorph
         [DataField("name")]
         public string Name { get; } = string.Empty;
 
-        [ParentDataField(typeof(AbstractPrototypeIdSerializer<PolymorphPrototype>))]
-        public string? Parent { get; private set; }
+        [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<PolymorphPrototype>))]
+        public string[]? Parents { get; private set; }
 
         [NeverPushInheritance]
         [AbstractDataFieldAttribute]
@@ -87,6 +88,9 @@ namespace Content.Shared.Polymorph
         /// </summary>
         [DataField("revertOnDeath", serverOnly: true)]
         public bool RevertOnDeath = true;
+
+        [DataField("allowRepeatedMorphs", serverOnly: true)]
+        public bool AllowRepeatedMorphs = false;
     }
 
     public enum PolymorphInventoryChange : byte

@@ -1,6 +1,7 @@
-﻿using Content.Server.Construction.Components;
+using Content.Server.Construction.Components;
 using Content.Server.Stack;
 using Content.Shared.Construction;
+using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Tag;
 using Robust.Shared.Containers;
@@ -22,6 +23,7 @@ public sealed class MachineFrameSystem : EntitySystem
         SubscribeLocalEvent<MachineFrameComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<MachineFrameComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<MachineFrameComponent, InteractUsingEvent>(OnInteractUsing);
+        SubscribeLocalEvent<MachineFrameComponent, ExaminedEvent>(OnMachineFrameExamined);
     }
 
     private void OnInit(EntityUid uid, MachineFrameComponent component, ComponentInit args)
@@ -181,7 +183,7 @@ public sealed class MachineFrameSystem : EntitySystem
 
     public void ResetProgressAndRequirements(MachineFrameComponent component, MachineBoardComponent machineBoard)
     {
-        component.Requirements = new Dictionary<MachinePart, int>(machineBoard.Requirements);
+        component.Requirements = new Dictionary<string, int>(machineBoard.Requirements);
         component.MaterialRequirements = new Dictionary<string, int>(machineBoard.MaterialIdRequirements);
         component.ComponentRequirements = new Dictionary<string, GenericPartInfo>(machineBoard.ComponentRequirements);
         component.TagRequirements = new Dictionary<string, GenericPartInfo>(machineBoard.TagRequirements);
@@ -294,5 +296,12 @@ public sealed class MachineFrameSystem : EntitySystem
                     component.TagProgress[tagName]++;
             }
         }
+    }
+    private void OnMachineFrameExamined(EntityUid uid, MachineFrameComponent component, ExaminedEvent args)
+    {
+        if (!args.IsInDetailsRange)
+            return;
+        if (component.HasBoard)
+            args.PushMarkup(Loc.GetString("machine-frame-component-on-examine-label", ("board", EntityManager.GetComponent<MetaDataComponent>(component.BoardContainer.ContainedEntities[0]).EntityName)));
     }
 }

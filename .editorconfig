@@ -115,6 +115,8 @@ csharp_new_line_before_finally = true
 csharp_new_line_before_members_in_object_initializers = false
 csharp_new_line_before_open_brace = all
 csharp_new_line_between_query_expression_clauses = true
+resharper_csharp_place_simple_embedded_statement_on_same_line = never
+resharper_csharp_keep_existing_embedded_arrangement = false
 
 # Indentation preferences
 #csharp_indent_block_contents = true

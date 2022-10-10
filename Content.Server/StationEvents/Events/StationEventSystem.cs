@@ -62,7 +62,7 @@ namespace Content.Server.StationEvents.Events
 
             if (ev.StartAnnouncement != null)
             {
-                ChatSystem.DispatchGlobalAnnouncement(Loc.GetString(ev.StartAnnouncement), playDefaultSound: false, colorOverride: Color.Gold);
+                ChatSystem.DispatchGlobalAnnouncement(Loc.GetString(ev.StartAnnouncement), playSound: false, colorOverride: Color.Gold);
             }
 
             if (ev.StartAudio != null)
@@ -85,7 +85,7 @@ namespace Content.Server.StationEvents.Events
 
             if (ev.EndAnnouncement != null)
             {
-                ChatSystem.DispatchGlobalAnnouncement(Loc.GetString(ev.EndAnnouncement), playDefaultSound: false, colorOverride: Color.Gold);
+                ChatSystem.DispatchGlobalAnnouncement(Loc.GetString(ev.EndAnnouncement), playSound: false, colorOverride: Color.Gold);
             }
 
             if (ev.EndAudio != null)

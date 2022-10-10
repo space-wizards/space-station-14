@@ -1,5 +1,7 @@
 using Content.Shared.MobState;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
+using Robust.Client.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -10,6 +12,8 @@ public sealed class DamageOverlay : Overlay
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
 
     public override OverlaySpace Space => OverlaySpace.ScreenSpace;
 
@@ -40,7 +44,7 @@ public sealed class DamageOverlay : Overlay
 
     private float _oldCritLevel = 0f;
 
-    private float _deadLevel = 1f;
+    public float DeadLevel = 1f;
 
     public DamageOverlay()
     {
@@ -53,6 +57,12 @@ public sealed class DamageOverlay : Overlay
 
     protected override void Draw(in OverlayDrawArgs args)
     {
+        if (!_entityManager.TryGetComponent(_playerManager.LocalPlayer?.ControlledEntity, out EyeComponent? eyeComp))
+            return;
+
+        if (args.Viewport.Eye != eyeComp.Eye)
+            return;
+
         /*
          * Here's the rundown:
          * 1. There's lerping for each level so the transitions are smooth.
@@ -64,7 +74,6 @@ public sealed class DamageOverlay : Overlay
         var viewport = args.ViewportBounds;
         var handle = args.ScreenHandle;
         var distance = args.ViewportBounds.Width;
-        var lerpRate = 0.2f;
 
         var time = (float) _timing.RealTime.TotalSeconds;
         var lastFrameTime = (float) _timing.FrameTime.TotalSeconds;
@@ -72,30 +81,46 @@ public sealed class DamageOverlay : Overlay
         // If they just died then lerp out the white overlay.
         if (State != DamageState.Dead)
         {
-            _deadLevel = 1f;
+            DeadLevel = 1f;
         }
-        else if (!_deadLevel.Equals(0f))
+        else if (!MathHelper.CloseTo(0f, DeadLevel, 0.001f))
         {
-            var diff = -_deadLevel;
-            _deadLevel += GetDiff(diff, lerpRate, lastFrameTime);
+            var diff = -DeadLevel;
+            DeadLevel += GetDiff(diff, lastFrameTime);
+        }
+        else
+        {
+            DeadLevel = 0f;
         }
 
-        if (!_oldBruteLevel.Equals(BruteLevel))
+        if (!MathHelper.CloseTo(_oldBruteLevel, BruteLevel, 0.001f))
         {
             var diff = BruteLevel - _oldBruteLevel;
-            _oldBruteLevel += GetDiff(diff, lerpRate, lastFrameTime);
+            _oldBruteLevel += GetDiff(diff, lastFrameTime);
+        }
+        else
+        {
+            _oldBruteLevel = BruteLevel;
         }
 
-        if (!_oldOxygenLevel.Equals(OxygenLevel))
+        if (!MathHelper.CloseTo(_oldOxygenLevel, OxygenLevel, 0.001f))
         {
             var diff = OxygenLevel - _oldOxygenLevel;
-            _oldOxygenLevel += GetDiff(diff, lerpRate, lastFrameTime);
+            _oldOxygenLevel += GetDiff(diff, lastFrameTime);
+        }
+        else
+        {
+            _oldOxygenLevel = OxygenLevel;
         }
 
-        if (!_oldCritLevel.Equals(CritLevel))
+        if (!MathHelper.CloseTo(_oldCritLevel, CritLevel, 0.001f))
         {
             var diff = CritLevel - _oldCritLevel;
-            _oldCritLevel += GetDiff(diff, lerpRate, lastFrameTime);
+            _oldCritLevel += GetDiff(diff, lastFrameTime);
+        }
+        else
+        {
+            _oldCritLevel = CritLevel;
         }
 
         /*
@@ -190,7 +215,7 @@ public sealed class DamageOverlay : Overlay
             handle.DrawRect(viewport, Color.White);
         }
 
-        level = State != DamageState.Dead ? _oldCritLevel : _deadLevel;
+        level = State != DamageState.Dead ? _oldCritLevel : DeadLevel;
 
         if (level > 0f)
         {
@@ -215,10 +240,19 @@ public sealed class DamageOverlay : Overlay
             handle.UseShader(_critShader);
             handle.DrawRect(viewport, Color.White);
         }
+
+        handle.UseShader(null);
     }
 
-    private float GetDiff(float value, float lerpRate, float lastFrameTime)
+    private float GetDiff(float value, float lastFrameTime)
     {
-        return Math.Clamp(value, -1 * lerpRate * lastFrameTime, lerpRate * lastFrameTime);
+        var adjustment = value * 5f * lastFrameTime;
+
+        if (value < 0f)
+            adjustment = Math.Clamp(adjustment, value, -value);
+        else
+            adjustment = Math.Clamp(adjustment, -value, value);
+
+        return adjustment;
     }
 }

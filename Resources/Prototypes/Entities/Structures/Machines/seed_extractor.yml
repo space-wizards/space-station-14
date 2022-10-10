@@ -6,6 +6,7 @@
   components:
   - type: Sprite
     sprite: Structures/Machines/seed_extractor.rsi
+    snapCardinals: true
     layers:
     - state: seedextractor-off
     - state: seedextractor-unlit
@@ -18,7 +19,7 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.25,-0.4,0.25,0.4"
-      mass: 25
+      density: 190
       mask:
       - MachineMask
       layer:

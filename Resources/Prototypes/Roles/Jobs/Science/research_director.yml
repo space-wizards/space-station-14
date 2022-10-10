@@ -1,11 +1,15 @@
 - type: job
   id: ResearchDirector
   name: job-name-rd
+  playTimeTracker: JobResearchDirector
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Science
+      time: 18000
+    - !type:OverallPlaytimeRequirement
+      time: 108000
   weight: 10
   startingGear: ResearchDirectorGear
-  departments:
-  - Command
-  - Science
   icon: "ResearchDirector"
   requireAdminNotify: true
   supervisors: job-supervisors-captain

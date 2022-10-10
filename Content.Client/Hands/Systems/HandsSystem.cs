@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Client.Animations;
+using Content.Client.Hands.UI;
 using Content.Client.HUD;
 using Content.Client.Strip;
 using Content.Shared.Hands;
@@ -15,7 +16,7 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
-namespace Content.Client.Hands
+namespace Content.Client.Hands.Systems
 {
     [UsedImplicitly]
     public sealed class HandsSystem : SharedHandsSystem
@@ -102,6 +103,14 @@ namespace Content.Client.Hands
             ReusableAnimations.AnimateEntityPickup(item, initialPosition, finalPosition);
         }
         #endregion
+
+        public override void DoDrop(EntityUid uid, Hand hand, bool doDropInteraction = true, SharedHandsComponent? hands = null)
+        {
+            base.DoDrop(uid, hand, doDropInteraction, hands);
+
+            if (TryComp(hand.HeldEntity, out SpriteComponent? sprite))
+                sprite.RenderOrder = EntityManager.CurrentTick.Value;
+        }
 
         public EntityUid? GetActiveHandEntity()
         {

@@ -36,6 +36,8 @@
   - type: Clothing
     sprite: Clothing/Mask/gassyndicate.rsi
   - type: FlashImmunity
+  - type: EyeProtection
+    protectionTime: 5
 
 - type: entity
   parent: ClothingMaskGas
@@ -70,7 +72,7 @@
 - type: entity
   parent: ClothingMaskGasAtmos
   id: ClothingMaskGasCentcom
-  name: centcom gas mask
+  name: CentCom gas mask
   description: Oooh, gold and green. Fancy! This should help as you sit in your office.
   components:
   - type: Sprite
@@ -99,6 +101,15 @@
         Slash: 0.90
         Piercing: 0.95
         Heat: 0.95
+
+- type: entity
+  parent: ClothingMaskGas
+  id: ClothingMaskGasVoiceMasker
+  name: gas mask
+  suffix: Voice Mask
+  description: A face-covering mask that can be connected to an air supply. There are switches and knobs underneath the mask.
+  components:
+    - type: VoiceMasker
 
 - type: entity
   parent: ClothingMaskPullableBase
@@ -141,6 +152,7 @@
   - type: Clothing
     sprite: Clothing/Mask/clown.rsi
   - type: BreathMask
+  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingMaskBase
@@ -165,6 +177,7 @@
   - type: Clothing
     sprite: Clothing/Mask/mime.rsi
   - type: BreathMask
+  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingMaskPullableBase
@@ -194,6 +207,9 @@
     - type: AddAccentClothing
       accent: ReplacementAccent
       replacement: mumble
+    - type: Construction
+      graph: Muzzle
+      node: muzzle
 
 - type: entity
   parent: ClothingMaskPullableBase
@@ -209,3 +225,4 @@
   - type: IngestionBlocker
   - type: DiseaseProtection
     protection: 0.1
+  - type: IdentityBlocker

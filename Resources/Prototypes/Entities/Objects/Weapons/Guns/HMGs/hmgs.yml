@@ -17,13 +17,15 @@
       path: /Audio/Weapons/Guns/Gunshots/lmg.ogg
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/lmg_empty.ogg
+  - type: StaticPrice
+    price: 500
   # No chamber because HMG may want its own
 
 - type: entity
   name: minigun
   id: WeaponMinigun
   parent: BaseWeaponHeavyMachineGun
-  description: Vzzzzzt! Rahrahrahrah! Vrrrrr!
+  description: Vzzzzzt! Rahrahrahrah! Vrrrrr! Uses .10 rifle ammo.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/HMGs/minigun.rsi
@@ -44,3 +46,7 @@
     steps: 4
     zeroVisible: true
   - type: Appearance
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []

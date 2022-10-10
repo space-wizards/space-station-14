@@ -4,44 +4,44 @@ meta:
   author: Space-Wizards
   postmapinit: false
 tilemap:
-  0: space
-  1: floor_asteroid_coarse_sand0
-  2: floor_asteroid_coarse_sand1
-  3: floor_asteroid_coarse_sand2
-  4: floor_asteroid_coarse_sand_dug
-  5: floor_asteroid_sand
-  6: floor_asteroid_tile
-  7: floor_bar
-  8: floor_blue
-  9: floor_blue_circuit
-  10: floor_clown
-  11: floor_dark
-  12: floor_elevator_shaft
-  13: floor_freezer
-  14: floor_glass
-  15: floor_gold
-  16: floor_grass
-  17: floor_green_circuit
-  18: floor_hydro
-  19: floor_kitchen
-  20: floor_laundry
-  21: floor_lino
-  22: floor_mime
-  23: floor_mono
-  24: floor_reinforced
-  25: floor_rglass
-  26: floor_rock_vault
-  27: floor_showroom
-  28: floor_silver
-  29: floor_snow
-  30: floor_steel
-  31: floor_steel_dirty
-  32: floor_techmaint
-  33: floor_white
-  34: floor_wood
-  35: lattice
-  36: plating
-  37: plating
+  0: Space
+  1: FloorAsteroidCoarseSand0
+  2: FloorAsteroidCoarseSand1
+  3: FloorAsteroidCoarseSand2
+  4: FloorAsteroidCoarseSandDug
+  5: FloorAsteroidSand
+  6: FloorAsteroidTile
+  7: FloorBar
+  8: FloorBlue
+  9: FloorBlueCircuit
+  10: FloorClown
+  11: FloorDark
+  12: FloorElevatorShaft
+  13: FloorFreezer
+  14: FloorGlass
+  15: FloorGold
+  16: FloorGrass
+  17: FloorGreenCircuit
+  18: FloorHydro
+  19: FloorKitchen
+  20: FloorLaundry
+  21: FloorLino
+  22: FloorMime
+  23: FloorMono
+  24: FloorReinforced
+  25: FloorRGlass
+  26: FloorRockVault
+  27: FloorShowroom
+  28: FloorSilver
+  29: FloorSnow
+  30: FloorSteel
+  31: FloorSteelDirty
+  32: FloorTechMaint
+  33: FloorWhite
+  34: FloorWood
+  35: Lattice
+  36: Plating
+  37: Plating
 grids:
 - settings:
     chunksize: 16
@@ -57,31 +57,31 @@ grids:
     tiles: IgAAACIAAAAiAAAAAwAAAAMAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACIAAAAiAAAAIgAAAAMAAAADAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAwAAAAMAAAADAAAAAwAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACwAAAAMAAAADAAAAAwAAAAMAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAsAAAADAAAAAwAAAAMAAAADAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAwAAAAMAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAMAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
 entities:
 - uid: 0
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: -5.5,-0.5
     parent: 6
     type: Transform
 - uid: 1
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: -5.5,-1.5
     parent: 6
     type: Transform
 - uid: 2
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: -5.5,-2.5
     parent: 6
     type: Transform
 - uid: 3
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: 4.5,2.5
     parent: 6
     type: Transform
 - uid: 4
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: 4.5,2.5
     parent: 6
@@ -115,7 +115,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 55.281586
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -128,7 +127,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 63.201584
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -141,7 +139,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 71.12159
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -154,7 +151,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 95.1216
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -167,7 +163,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 15.601593
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -180,7 +175,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 19.521591
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -193,7 +187,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 166.96158
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -206,7 +199,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 63.2016
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -219,7 +211,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 111.12158
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -232,7 +223,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 15.601593
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -245,7 +235,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 119.12158
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -258,7 +247,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 15.601593
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -271,7 +259,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 11.681595
       restitution: 0.1
     type: Fixtures
   - gravityShakeSound: !type:SoundPathSpecifier
@@ -606,43 +593,43 @@ entities:
     parent: 6
     type: Transform
 - uid: 37
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: -6.5,5.5
     parent: 6
     type: Transform
 - uid: 38
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: -5.5,5.5
     parent: 6
     type: Transform
 - uid: 39
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: -5.5,4.5
     parent: 6
     type: Transform
 - uid: 40
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: -6.5,4.5
     parent: 6
     type: Transform
 - uid: 41
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: 4.5,3.5
     parent: 6
     type: Transform
 - uid: 42
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: 4.5,1.5
     parent: 6
     type: Transform
 - uid: 43
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: -5.5,3.5
     parent: 6
@@ -708,7 +695,7 @@ entities:
     parent: 6
     type: Transform
 - uid: 54
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: -3.5,4.5
     parent: 6
@@ -720,7 +707,7 @@ entities:
     parent: 6
     type: Transform
 - uid: 56
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: -3.5,5.5
     parent: 6
@@ -937,55 +924,55 @@ entities:
     parent: 6
     type: Transform
 - uid: 92
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: -6.5,1.5
     parent: 6
     type: Transform
 - uid: 93
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: -6.5,2.5
     parent: 6
     type: Transform
 - uid: 94
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: -6.5,3.5
     parent: 6
     type: Transform
 - uid: 95
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: -3.5,3.5
     parent: 6
     type: Transform
 - uid: 96
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: -4.5,4.5
     parent: 6
     type: Transform
 - uid: 97
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: 2.5,4.5
     parent: 6
     type: Transform
 - uid: 98
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: 2.5,3.5
     parent: 6
     type: Transform
 - uid: 99
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: 3.5,3.5
     parent: 6
     type: Transform
 - uid: 100
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: 2.5,-5.5
     parent: 6
@@ -1087,7 +1074,7 @@ entities:
     parent: 6
     type: Transform
 - uid: 117
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: -3.5,6.5
     parent: 6

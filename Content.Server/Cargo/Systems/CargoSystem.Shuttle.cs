@@ -1,11 +1,13 @@
 using System.Linq;
 using Content.Server.Cargo.Components;
 using Content.Server.Labels.Components;
+using Content.Server.MobState;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.UserInterface;
 using Content.Server.Paper;
 using Content.Server.Shuttles.Systems;
+using Content.Server.Station.Components;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.BUI;
 using Content.Shared.Cargo.Components;
@@ -38,6 +40,7 @@ public sealed partial class CargoSystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly PricingSystem _pricing = default!;
     [Dependency] private readonly ShuttleConsoleSystem _console = default!;
     [Dependency] private readonly ShuttleSystem _shuttle = default!;
@@ -286,7 +289,7 @@ public sealed partial class CargoSystem
         var possibleNames = _protoMan.Index<DatasetPrototype>(prototype.NameDataset).Values;
         var name = _random.Pick(possibleNames);
 
-        var (_, shuttleUid) = _loader.LoadBlueprint(CargoMap.Value, prototype.Path.ToString());
+        var (_, shuttleUid) = _loader.LoadGrid(CargoMap.Value, prototype.Path.ToString());
         var xform = Transform(shuttleUid!.Value);
         MetaData(shuttleUid!.Value).EntityName = name;
 
@@ -317,10 +320,15 @@ public sealed partial class CargoSystem
                 // Don't re-sell anything, sell anything anchored (e.g. light fixtures), or anything blacklisted
                 // (e.g. players).
                 if (toSell.Contains(ent) ||
-                    (xformQuery.TryGetComponent(ent, out var xform) && xform.Anchored)) continue;
+                    (xformQuery.TryGetComponent(ent, out var xform) && xform.Anchored))
+                    continue;
+
+                if (HasComp<CargoSellBlacklistComponent>(ent))
+                    continue;
 
                 var price = _pricing.GetPrice(ent);
-                if (price == 0) continue;
+                if (price == 0)
+                    continue;
                 toSell.Add(ent);
                 amount += price;
             }
@@ -353,11 +361,20 @@ public sealed partial class CargoSystem
     /// </summary>
     public void CallShuttle(StationCargoOrderDatabaseComponent orderDatabase)
     {
-        if (!TryComp<CargoShuttleComponent>(orderDatabase.Shuttle, out var shuttle) ||
-            !TryComp<TransformComponent>(orderDatabase.Owner, out var xform)) return;
+        if (!TryComp<CargoShuttleComponent>(orderDatabase.Shuttle, out var shuttle))
+            return;
 
         // Already called / not available
         if (shuttle.NextCall == null || _timing.CurTime < shuttle.NextCall)
+            return;
+
+        if (!TryComp<StationDataComponent>(orderDatabase.Owner, out var stationData))
+            return;
+
+        var targetGrid = _station.GetLargestGrid(stationData);
+
+        // Nowhere to warp in to.
+        if (!TryComp<TransformComponent>(targetGrid, out var xform))
             return;
 
         shuttle.NextCall = null;
@@ -519,8 +536,8 @@ public sealed partial class CargoSystem
 
         while (childEnumerator.MoveNext(out var child))
         {
-            if (mobQuery.HasComponent(child.Value) ||
-                FoundOrganics(child.Value, mobQuery, xformQuery)) return true;
+            if ((mobQuery.TryGetComponent(child.Value, out var mobState) && !_mobState.IsDead(child.Value, mobState))
+                || FoundOrganics(child.Value, mobQuery, xformQuery)) return true;
         }
 
         return false;

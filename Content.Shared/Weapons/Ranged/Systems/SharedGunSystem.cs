@@ -19,6 +19,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -39,12 +40,15 @@ public abstract partial class SharedGunSystem : EntitySystem
     [Dependency] protected readonly DamageableSystem Damageable = default!;
     [Dependency] private   readonly ItemSlotsSystem _slots = default!;
     [Dependency] protected readonly SharedActionsSystem Actions = default!;
+    [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
     [Dependency] private   readonly SharedCombatModeSystem _combatMode = default!;
     [Dependency] protected readonly SharedContainerSystem Containers = default!;
+    [Dependency] protected readonly ExamineSystemShared Examine = default!;
     [Dependency] protected readonly SharedPhysicsSystem Physics = default!;
     [Dependency] protected readonly SharedPopupSystem PopupSystem = default!;
     [Dependency] protected readonly ThrowingSystem ThrowingSystem = default!;
     [Dependency] protected readonly TagSystem TagSystem = default!;
+    [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] protected readonly SharedProjectileSystem Projectiles = default!;
 
     protected ISawmill Sawmill = default!;
@@ -152,21 +156,28 @@ public abstract partial class SharedGunSystem : EntitySystem
         component.AvailableModes = state.AvailableSelectiveFire;
     }
 
+    public bool CanShoot(GunComponent component)
+    {
+        if (component.NextFire > Timing.CurTime)
+            return false;
+
+        return true;
+    }
+
     public GunComponent? GetGun(EntityUid entity)
     {
-        if (!EntityManager.TryGetComponent(entity, out SharedHandsComponent? hands) ||
-            hands.ActiveHandEntity is not { } held)
-        {
-            return null;
-        }
-
-        if (!EntityManager.TryGetComponent(held, out GunComponent? gun))
-            return null;
-
         if (!_combatMode.IsInCombatMode(entity))
             return null;
 
-        return gun;
+        if (EntityManager.TryGetComponent(entity, out SharedHandsComponent? hands) &&
+            hands.ActiveHandEntity is { } held &&
+            TryComp(held, out GunComponent? gun))
+        {
+            return gun;
+        }
+
+        // Last resort is check if the entity itself is a gun.
+        return !TryComp(entity, out gun) ? null : gun;
     }
 
     private void StopShooting(GunComponent gun)
@@ -177,6 +188,16 @@ public abstract partial class SharedGunSystem : EntitySystem
         gun.ShotCounter = 0;
         gun.ShootCoordinates = null;
         Dirty(gun);
+    }
+
+    /// <summary>
+    /// Attempts to shoot at the target coordinates. Resets the shot counter after every shot.
+    /// </summary>
+    public void AttemptShoot(EntityUid user, GunComponent gun, EntityCoordinates toCoordinates)
+    {
+        gun.ShootCoordinates = toCoordinates;
+        AttemptShoot(user, gun);
+        gun.ShotCounter = 0;
     }
 
     private void AttemptShoot(EntityUid user, GunComponent gun)
@@ -254,7 +275,7 @@ public abstract partial class SharedGunSystem : EntitySystem
                 // Don't spam safety sounds at gun fire rate, play it at a reduced rate.
                 // May cause prediction issues? Needs more tweaking
                 gun.NextFire = TimeSpan.FromSeconds(Math.Max(lastFire.TotalSeconds + SafetyNextFire, gun.NextFire.TotalSeconds));
-                PlaySound(gun.Owner, gun.SoundEmpty?.GetSound(Random, ProtoManager), user);
+                Audio.PlayPredicted(gun.SoundEmpty, gun.Owner, user);
                 Dirty(gun);
                 return;
             }
@@ -310,8 +331,7 @@ public abstract partial class SharedGunSystem : EntitySystem
             Dirty(cartridge);
 
         cartridge.Spent = spent;
-        if (!TryComp<AppearanceComponent>(cartridge.Owner, out var appearance)) return;
-        appearance.SetData(AmmoVisuals.Spent, spent);
+        Appearance.SetData(cartridge.Owner, AmmoVisuals.Spent, spent);
     }
 
     /// <summary>
@@ -331,15 +351,10 @@ public abstract partial class SharedGunSystem : EntitySystem
         xform.LocalRotation = Random.NextAngle();
         xform.Coordinates = coordinates;
 
-        string? sound = null;
-
-        if (TryComp<CartridgeAmmoComponent>(entity, out var cartridge))
+        if (playSound && TryComp<CartridgeAmmoComponent>(entity, out var cartridge))
         {
-            sound = cartridge.EjectSound?.GetSound(Random, ProtoManager);
+            Audio.PlayPvs(cartridge.EjectSound, entity, AudioParams.Default.WithVariation(0.05f).WithVolume(-1f));
         }
-
-        if (sound != null && playSound)
-            SoundSystem.Play(sound, Filter.Pvs(entity, entityManager: EntityManager), coordinates, AudioHelpers.WithVariation(0.05f).WithVolume(-1f));
     }
 
     protected void MuzzleFlash(EntityUid gun, AmmoComponent component, EntityUid? user = null)
@@ -349,8 +364,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         if (sprite == null)
             return;
 
-        var ev = new MuzzleFlashEvent(sprite);
-
+        var ev = new MuzzleFlashEvent(gun, sprite, user == gun);
         CreateEffect(gun, ev, user);
     }
 

@@ -7,6 +7,13 @@
   components:
   - type: Damageable
     damageContainer: Biological
+  - type: BodyPart
+  - type: ContainerContainer
+    containers:
+      bodypart: !type:Container
+        ents: []
+  - type: StaticPrice
+    price: 20
 
 - type: entity
   id: TorsoSkeleton
@@ -44,14 +51,6 @@
       partType: Head
       size: 7
       compatibility: Biological
-    #Unique stuff the skull has for one a skelly gets "boned" nyeheheh
-    - type: BodyReassemble
-      action:
-        icon: Mobs/Species/Skeleton/parts.rsi/full.png
-        name: reassemble-action
-        description: reassemble-description
-        itemIconStyle: NoItem
-        event: !type:ReassembleActionEvent
     - type: Input
       context: "human"
     - type: Speech
@@ -71,8 +70,9 @@
         0: Alive
     #    criticalThreshold: 50
     #    deadThreshold: 120
-
-
+    - type: Tag
+      tags:
+        - Head
 
 - type: entity
   id: LeftArmSkeleton

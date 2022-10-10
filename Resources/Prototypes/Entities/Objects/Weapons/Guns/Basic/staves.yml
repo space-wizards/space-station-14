@@ -10,7 +10,7 @@
     layers:
     - state: healing
   - type: Item
-    HeldPrefix: healing
+    heldPrefix: healing
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/Magic/staff_healing.ogg
@@ -28,7 +28,7 @@
     layers:
     - state: door
   - type: Item
-    HeldPrefix: door
+    heldPrefix: door
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/Magic/staff_door.ogg

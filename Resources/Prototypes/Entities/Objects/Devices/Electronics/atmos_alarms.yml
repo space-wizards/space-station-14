@@ -1,27 +1,27 @@
 - type: entity
   id: AirAlarmElectronics
-  parent: BaseItem
+  parent: BaseElectronics
   name: air alarm electronics
   description: An electronics board used in air alarms
   components:
-  - type: Tag
-    tags:
-    - AirAlarmElectronics
-    - DroneUsable
   - type: Sprite
     sprite: Objects/Misc/module.rsi
     state: airalarm_electronics
+  - type: Tag
+    tags:
+      - DroneUsable
+      - AirAlarmElectronics
 
 - type: entity
   id: FireAlarmElectronics
-  parent: BaseItem
+  parent: BaseElectronics
   name: fire alarm electronics
   description: An electronics board used in fire alarms
   components:
-  - type: Tag
-    tags:
-    - FireAlarmElectronics
-    - DroneUsable
   - type: Sprite
     sprite: Objects/Misc/module.rsi
     state: airalarm_electronics
+  - type: Tag
+    tags:
+      - DroneUsable
+      - FireAlarmElectronics

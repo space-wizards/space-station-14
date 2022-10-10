@@ -69,6 +69,9 @@ namespace Content.Server.Guardian
 
             if (!TryComp<GuardianHostComponent>(host, out var hostComponent)) return;
 
+            if (LifeStage(host) >= EntityLifeStage.MapInitialized)
+                return;
+
             RetractGuardian(hostComponent, component);
         }
 
@@ -240,7 +243,7 @@ namespace Content.Server.Guardian
         {
             if (args.DamageDelta == null) return;
 
-            _damageSystem.TryChangeDamage(component.Host, args.DamageDelta * component.DamageShare);
+            _damageSystem.TryChangeDamage(component.Host, args.DamageDelta * component.DamageShare, origin: args.Origin);
             _popupSystem.PopupEntity(Loc.GetString("guardian-entity-taking-damage"), component.Host, Filter.Entities(component.Host));
 
         }

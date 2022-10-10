@@ -1,7 +1,9 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Content.Server.Clothing.Components;
 using Content.Server.Inventory;
+using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Inventory;
+using Content.Shared.Item;
 using NUnit.Framework;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -35,8 +37,9 @@ namespace Content.IntegrationTests.Tests
                 entMgr.AddComponent<ContainerManagerComponent>(container);
 
                 var child = entMgr.SpawnEntity(null, MapCoordinates.Nullspace);
-                var item = entMgr.AddComponent<ItemComponent>(child);
-                item.SlotFlags = SlotFlags.HEAD;
+                var item = entMgr.AddComponent<ClothingComponent>(child);
+
+                IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ClothingSystem>().SetSlots(item.Owner, SlotFlags.HEAD, item);
 
                 // Equip item.
                 Assert.That(invSystem.TryEquip(container, child, "head"), Is.True);

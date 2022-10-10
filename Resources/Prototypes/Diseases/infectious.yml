@@ -190,7 +190,7 @@
       probability: 0.000427 ## ~5% chance over 120 secs
       polymorphId: AMIVMorph
       polymorphMessage: disease-polymorph
-      polymorphSound: 
+      polymorphSound:
         path: /Audio/Animals/monkey_scream.ogg
       stages:
         - 2
@@ -207,6 +207,22 @@
         - 0
         - 1
         - 2
+
+- type: disease
+  id: MemeticAmirmir
+  name: Memetic Amirmir
+  effects:
+    - !type:DiseaseGenericStatusEffect
+      probability: 0.015
+      key: ForcedSleep
+      component: ForcedSleeping
+      time: 3
+      type: Add
+    - !type:DiseaseSnough
+      probability: 0.025
+      snoughMessage: disease-yawn
+      snoughSound:
+        collection: Yawns
 
 - type: disease
   id: BleedersBite

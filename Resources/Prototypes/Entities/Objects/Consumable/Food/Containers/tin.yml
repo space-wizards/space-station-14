@@ -16,8 +16,8 @@
     netsync: false
   - type: Item
     sprite: Objects/Consumable/Food/snacks.rsi
-    HeldPrefix: packet
-    color: gray
+    heldPrefix: packet
+    size: 3
   - type: DamageOnLand
     damage:
       types:
@@ -41,9 +41,11 @@
     netsync: false
   - type: Item
     sprite: Objects/Consumable/Food/snacks.rsi
-    HeldPrefix: packet
-    color: gray
-
+    heldPrefix: packet
+    size: 3
+  - type: Tag
+    tags:
+      - Trash
 # Tins
 
 # Need something that you can open these tins with. I suggest a prying or cutting tool.
@@ -64,7 +66,7 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          collection: canOpenSounds
+          path: /Audio/Items/can_open3.ogg
       - !type:SpawnEntitiesBehavior
         spawn:
           FoodTinPeachesOpen:
@@ -88,6 +90,10 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 15
+  - type: FlavorProfile
+    flavors:
+      - sweet
+      - funny
   - type: Food
     trash: FoodTinPeachesTrash
 
@@ -115,7 +121,7 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          collection: canOpenSounds
+          path: /Audio/Items/can_open3.ogg
       - !type:SpawnEntitiesBehavior
         spawn:
           FoodTinPeachesMaintOpen:
@@ -165,7 +171,7 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          collection: canOpenSounds
+          path: /Audio/Items/can_open3.ogg
       - !type:SpawnEntitiesBehavior
         spawn:
           FoodTinBeansOpen:
@@ -188,6 +194,11 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 15
+  - type: FlavorProfile
+    flavors:
+      - savory
+      - salty
+      - cheap
   - type: Food
     trash: FoodTinBeansTrash
 
@@ -198,13 +209,13 @@
   components:
   - type: Sprite
     state: beans-empty
-
 # MRE can
 
 - type: entity
   parent: FoodTinBase
   id: FoodTinMRE
   name: tinned meat
+  description: A standard issue tin of meat with a convenient pull tab.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/mre.rsi
@@ -217,7 +228,7 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          collection: canOpenSounds
+          path: /Audio/Items/can_open3.ogg
       - !type:SpawnEntitiesBehavior
         spawn:
           FoodTinMREOpen:
@@ -225,11 +236,18 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: SpawnItemsOnUse
+    items:
+      - id: FoodTinMREOpen
+    sound:
+      path: /Audio/Items/can_open3.ogg
+
 
 - type: entity
   parent: FoodTinBase
   id: FoodTinMREOpen
   name: tinned meat
+  description: A standard issue tin of meat.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/mre.rsi
@@ -240,6 +258,11 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 15
+  - type: FlavorProfile
+    flavors:
+      - meaty
+      - salty
+      - cheap
   - type: Food
     trash: FoodTinMRETrash
 

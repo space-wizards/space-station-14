@@ -1,23 +1,18 @@
 using Content.Server.Actions;
-using Content.Server.Body.Components;
 using Content.Server.Buckle.Components;
+using Content.Server.Humanoid;
 using Content.Server.Inventory;
 using Content.Server.Mind.Commands;
 using Content.Server.Mind.Components;
 using Content.Server.Polymorph.Components;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
-using Content.Shared.CharacterAppearance.Components;
-using Content.Shared.CharacterAppearance.Systems;
 using Content.Shared.Damage;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Polymorph;
 using Robust.Server.Containers;
-using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
-using Robust.Shared.Physics.Dynamics;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -29,11 +24,12 @@ namespace Content.Server.Polymorph.Systems
 
         [Dependency] private readonly ActionsSystem _actions = default!;
         [Dependency] private readonly IPrototypeManager _proto = default!;
+        [Dependency] private readonly IComponentFactory _compFact = default!;
         [Dependency] private readonly ServerInventorySystem _inventory = default!;
         [Dependency] private readonly SharedHandsSystem _sharedHands = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly SharedHumanoidAppearanceSystem _sharedHuApp = default!;
+        [Dependency] private readonly HumanoidSystem _humanoid = default!;
         [Dependency] private readonly ContainerSystem _container = default!;
 
         public override void Initialize()
@@ -90,6 +86,10 @@ namespace Content.Server.Polymorph.Systems
             /// logic and conditions specified in the prototype, and everything else that may be needed.
             /// I am clinically insane - emo
 
+            // if it's already morphed, don't allow it again with this condition active.
+            if (!proto.AllowRepeatedMorphs && HasComp<PolymorphedEntityComponent>(target))
+                return null;
+
             // mostly just for vehicles
             if (TryComp<BuckleComponent>(target, out var buckle))
                 buckle.TryUnbuckle(target, true);
@@ -99,10 +99,11 @@ namespace Content.Server.Polymorph.Systems
             var child = Spawn(proto.Entity, targetTransformComp.Coordinates);
             MakeSentientCommand.MakeSentient(child, EntityManager);
 
-            var comp = EnsureComp<PolymorphedEntityComponent>(child);
+            var comp = _compFact.GetComponent<PolymorphedEntityComponent>();
+            comp.Owner = child;
             comp.Parent = target;
-            comp.Prototype = proto;
-            RaiseLocalEvent(child, new PolymorphComponentSetupEvent(), true);
+            comp.Prototype = proto.ID;
+            EntityManager.AddComponent(child, comp);
 
             var childXform = Transform(child);
             childXform.LocalRotation = targetTransformComp.LocalRotation;
@@ -145,12 +146,9 @@ namespace Content.Server.Polymorph.Systems
                 childMeta.EntityName = targetMeta.EntityName;
             }
 
-            if (proto.TransferHumanoidAppearance &&
-                TryComp<HumanoidAppearanceComponent>(target, out var targetHuApp) &&
-                TryComp<HumanoidAppearanceComponent>(child, out var childHuApp))
+            if (proto.TransferHumanoidAppearance)
             {
-                _sharedHuApp.UpdateAppearance(child, targetHuApp.Appearance);
-                _sharedHuApp.ForceAppearanceUpdate(child);
+                _humanoid.CloneAppearance(target, child);
             }
 
             if (TryComp<MindComponent>(target, out var mind) && mind.Mind != null)
@@ -184,8 +182,11 @@ namespace Content.Server.Polymorph.Systems
 
             var act = new InstantAction()
             {
-                Event = new PolymorphActionEvent(polyproto),
-                Name = Loc.GetString("polymorph-self-action-name", ("target", entproto.Name)),
+                Event = new PolymorphActionEvent
+                {
+                    Prototype = polyproto,
+                },
+                DisplayName = Loc.GetString("polymorph-self-action-name", ("target", entproto.Name)),
                 Description = Loc.GetString("polymorph-self-action-description", ("target", entproto.Name)),
                 Icon = new SpriteSpecifier.EntityPrototype(polyproto.Entity),
                 ItemIconStyle = ItemActionIconStyle.NoItem,
@@ -213,22 +214,12 @@ namespace Content.Server.Polymorph.Systems
         }
     }
 
-    /// <summary>
-    /// Used after the polymorphedEntity component has it's data set up.
-    /// </summary>
-    public sealed class PolymorphComponentSetupEvent : InstantActionEvent { };
-
     public sealed class PolymorphActionEvent : InstantActionEvent
     {
         /// <summary>
         /// The polymorph prototype containing all the information about
         /// the specific polymorph.
         /// </summary>
-        public readonly PolymorphPrototype Prototype;
-
-        public PolymorphActionEvent(PolymorphPrototype prototype)
-        {
-            Prototype = prototype;
-        }
+        public PolymorphPrototype Prototype = default!;
     };
 }

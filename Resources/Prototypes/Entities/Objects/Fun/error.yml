@@ -1,0 +1,40 @@
+- type: entity
+  parent: BaseItem
+  id: Error
+  name: error
+  description: Hmmmm. Something went wrong.
+  components:
+  - type: Sprite
+    sprite: error.rsi
+    state: error
+  - type: Food
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 26
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+  - type: Slippery
+    launchForwardsMultiplier: 20
+  - type: StepTrigger
+    intersectRatio: 0.2
+  - type: CollisionWake
+    enabled: false
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.2,-0.2,0.2,0.2"
+      id: "slips"
+      hard: false
+      layer:
+      - SlipLayer
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.2,-0.2,0.2,0.2"
+      density: 30
+      mask:
+      - ItemMask

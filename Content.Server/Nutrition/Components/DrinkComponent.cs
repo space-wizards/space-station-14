@@ -1,8 +1,8 @@
-using Content.Shared.Sound;
 using JetBrains.Annotations;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.FixedPoint;
 using System.Threading;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Nutrition.Components
 {

@@ -13,6 +13,8 @@
     state: icon
     noRot: false
   - type: ImmovableRod
+  - type: TimedDespawn
+    lifetime: 30.0
   - type: Physics
     bodyType: Dynamic
     linearDamping: 0
@@ -25,7 +27,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.5
-      mass: 1
+      density: 1
       hard: false
       layer:
       - Impassable

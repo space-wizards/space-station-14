@@ -7,6 +7,13 @@
   components:
   - type: Damageable
     damageContainer: Biological
+  - type: BodyPart
+  - type: ContainerContainer
+    containers:
+      bodypart: !type:Container
+        ents: []
+  - type: StaticPrice
+    price: 100
 
 - type: entity
   id: TorsoSlime
@@ -51,8 +58,14 @@
     #    deadThreshold: 120
     - type: Input
       context: "ghost"
-    - type: DummyInputMover
+    - type: MovementSpeedModifier
+      baseWalkSpeed: 0
+      baseSprintSpeed: 0
+    - type: InputMover
     - type: GhostOnMove
+    - type: Tag
+      tags:
+        - Head
 
 - type: entity
   id: LeftArmSlime

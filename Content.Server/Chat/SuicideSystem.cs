@@ -82,7 +82,7 @@ namespace Content.Server.Chat
                     return;
             }
 
-            var itemQuery = GetEntityQuery<SharedItemComponent>();
+            var itemQuery = GetEntityQuery<ItemComponent>();
 
             // Suicide by nearby entity (ex: Microwave)
             foreach (var entity in _entityLookupSystem.GetEntitiesInRange(victim, 1, LookupFlags.Approximate | LookupFlags.Anchored))
@@ -111,7 +111,7 @@ namespace Content.Server.Chat
                 damagePrototype = _prototypeManager.Index<DamageTypePrototype>(fallback.ToString());
             }
             const int lethalAmountOfDamage = 200; // TODO: Would be nice to get this number from somewhere else
-            _damageableSystem.TryChangeDamage(target, new(damagePrototype, lethalAmountOfDamage), true);
+            _damageableSystem.TryChangeDamage(target, new(damagePrototype, lethalAmountOfDamage), true, origin: target);
         }
     }
 }

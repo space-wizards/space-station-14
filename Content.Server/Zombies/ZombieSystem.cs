@@ -3,24 +3,30 @@ using Robust.Shared.Random;
 using Content.Server.Body.Systems;
 using Content.Server.Disease.Components;
 using Content.Server.Drone.Components;
-using Content.Server.Weapon.Melee;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.MobState.Components;
 using Content.Server.Disease;
 using Content.Shared.Inventory;
-using Content.Server.Popups;
-using Robust.Shared.Player;
+using Content.Shared.MobState;
 using Content.Server.Inventory;
 using Robust.Shared.Prototypes;
+using Content.Server.Speech;
+using Content.Server.Chat.Systems;
+using Content.Server.Weapons.Melee.Events;
+using Content.Shared.Movement.Systems;
+using Content.Shared.Damage;
+using Content.Shared.Zombies;
 
 namespace Content.Server.Zombies
 {
-    public sealed class ZombieSystem : EntitySystem
+    public sealed class ZombieSystem : SharedZombieSystem
     {
         [Dependency] private readonly DiseaseSystem _disease = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
         [Dependency] private readonly ZombifyOnDeathSystem _zombify = default!;
         [Dependency] private readonly ServerInventorySystem _inv = default!;
+        [Dependency] private readonly VocalSystem _vocal = default!;
+        [Dependency] private readonly ChatSystem _chat = default!;
         [Dependency] private readonly IPrototypeManager _protoManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
@@ -29,11 +35,28 @@ namespace Content.Server.Zombies
             base.Initialize();
 
             SubscribeLocalEvent<ZombieComponent, MeleeHitEvent>(OnMeleeHit);
+            SubscribeLocalEvent<ZombieComponent, MobStateChangedEvent>(OnMobState);
+            SubscribeLocalEvent<ActiveZombieComponent, DamageChangedEvent>(OnDamage);
+
+        }
+
+        private void OnMobState(EntityUid uid, ZombieComponent component, MobStateChangedEvent args)
+        {
+            if (args.CurrentMobState == DamageState.Alive)
+                EnsureComp<ActiveZombieComponent>(uid);
+            else
+                RemComp<ActiveZombieComponent>(uid);
+        }
+
+        private void OnDamage(EntityUid uid, ActiveZombieComponent component, DamageChangedEvent args)
+        {
+            if (args.DamageIncreased)
+                DoGroan(uid, component);
         }
 
         private float GetZombieInfectionChance(EntityUid uid, ZombieComponent component)
         {
-            float baseChance = component.MaxZombieInfectionChance;
+            var baseChance = component.MaxZombieInfectionChance;
 
             if (!TryComp<InventoryComponent>(uid, out var inventoryComponent))
                 return baseChance;
@@ -62,7 +85,7 @@ namespace Content.Server.Zombies
             var max = component.MaxZombieInfectionChance;
             var min = component.MinZombieInfectionChance;
             //gets a value between the max and min based on how many items the entity is wearing
-            float chance = (max-min) * ((total - items)/total) + min;
+            var chance = (max-min) * ((total - items)/total) + min;
             return chance;
         }
 
@@ -74,7 +97,7 @@ namespace Content.Server.Zombies
             if (!args.HitEntities.Any())
                 return;
 
-            foreach (EntityUid entity in args.HitEntities)
+            foreach (var entity in args.HitEntities)
             {
                 if (args.User == entity)
                     continue;
@@ -88,18 +111,52 @@ namespace Content.Server.Zombies
                 if (HasComp<ZombieComponent>(entity))
                     args.BonusDamage = -args.BaseDamage * zombieComp.OtherZombieDamageCoefficient;
 
-                if ((mobState.IsDead() || mobState.IsCritical())
+                if ((mobState.CurrentState == DamageState.Dead || mobState.CurrentState == DamageState.Critical)
                     && !HasComp<ZombieComponent>(entity))
                 {
                     _zombify.ZombifyEntity(entity);
                     args.BonusDamage = -args.BaseDamage;
                 }
-                else if (mobState.IsAlive()) //heals when zombies bite live entities
+                else if (mobState.CurrentState == DamageState.Alive) //heals when zombies bite live entities
                 {
                     var healingSolution = new Solution();
                     healingSolution.AddReagent("Bicaridine", 1.00); //if OP, reduce/change chem
                     _bloodstream.TryAddToChemicals(args.User, healingSolution);
                 }
+            }
+        }
+
+        private void DoGroan(EntityUid uid, ActiveZombieComponent component)
+        {
+            if (component.LastDamageGroanCooldown > 0)
+                return;
+
+            if (_robustRandom.Prob(0.5f)) //this message is never seen by players so it just says this for admins
+                _chat.TrySendInGameICMessage(uid, "[automated zombie groan]", InGameICChatType.Speak, false);
+            else
+                _vocal.TryScream(uid);
+
+            component.LastDamageGroanCooldown = component.GroanCooldown;
+        }
+
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+
+            foreach (var zombiecomp in EntityQuery<ActiveZombieComponent>())
+            {
+                zombiecomp.Accumulator += frameTime;
+                zombiecomp.LastDamageGroanCooldown -= frameTime;
+
+                if (zombiecomp.Accumulator < zombiecomp.RandomGroanAttempt)
+                    continue;
+                zombiecomp.Accumulator -= zombiecomp.RandomGroanAttempt;
+
+                if (!_robustRandom.Prob(zombiecomp.GroanChance))
+                    continue;
+
+                //either do a random accent line or scream
+                DoGroan(zombiecomp.Owner, zombiecomp);
             }
         }
     }

@@ -1,0 +1,26 @@
+- type: entity
+  id: DiseaseDiagnoser
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  name: Disease Diagnoser Delta Extreme
+  description: A machine that analyzes disease samples.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/diagnoser.rsi
+    layers:
+    - state: icon
+      map: ["enum.DiseaseMachineVisualLayers.IsRunning"]
+    - state: unlit
+      shader: unshaded
+      map: ["enum.DiseaseMachineVisualLayers.IsOn"]
+    netsync: false
+  - type: DiseaseDiagnoser
+  - type: DiseaseMachine
+    machineOutput: Paper
+  - type: Appearance
+  - type: DiseaseMachineVisuals
+    idleState: icon
+    runningState: running
+  - type: Machine
+    board: DiagnoserMachineCircuitboard
