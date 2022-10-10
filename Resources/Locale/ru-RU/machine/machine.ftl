@@ -1,1 +1,1 @@
-machine-insert-item = Вы вставляете { $item } в { $machine }.
+machine-insert-item = { $user } помещает { $item } в { $machine }.
