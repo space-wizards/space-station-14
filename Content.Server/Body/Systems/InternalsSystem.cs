@@ -113,7 +113,8 @@ public sealed class InternalsSystem : EntitySystem
     {
         if (component.BreathToolEntity == null || !AreInternalsWorking(component)) return 2;
 
-        if (TryComp<GasTankComponent>(component.GasTankEntity, out var gasTank) && gasTank.Air.Volume < Atmospherics.BreathVolume)
+        if (TryComp<GasTankComponent>(component.GasTankEntity, out var gasTank)
+            && gasTank.OutputPressure * Atmospherics.BreathVolume > gasTank.Air.TotalMoles * Atmospherics.R * gasTank.Air.Temperature)
             return 0;
 
         return 1;
