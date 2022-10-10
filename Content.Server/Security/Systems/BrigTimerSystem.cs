@@ -22,6 +22,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Content.Server.Security.Components;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Security.Systems
 {
@@ -47,6 +48,7 @@ namespace Content.Server.Security.Systems
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         public override void Initialize()
         {
@@ -57,7 +59,7 @@ namespace Content.Server.Security.Systems
 
         private void OnActivate(EntityUid uid, BrigTimerComponent component, ActivateInWorldEvent args)
         {
-            component.TimeRemaining = component.Delay;
+            component.TriggerTime = _gameTiming.CurTime + TimeSpan.FromSeconds(component.Delay);
             component.User = args.User;
             component.Activated = true;
 
@@ -74,77 +76,21 @@ namespace Content.Server.Security.Systems
 
             return true;
         }
-        /*
-        public void HandleTimerTrigger(EntityUid uid, EntityUid? user, float delay , float beepInterval, float? initialBeepDelay, SoundSpecifier? beepSound, AudioParams beepParams)
-        {
-            if (delay <= 0)
-            {
-                RemComp<ActiveTimerTriggerComponent>(uid);
-                Trigger();
-                return;
-            }
-
-            if (HasComp<ActiveTimerTriggerComponent>(uid))
-                return;
-
-            if (user != null)
-            {
-                // Check if entity is bomb/mod. grenade/etc
-                if (_container.TryGetContainer(uid, "payload", out IContainer? container) &&
-                    container.ContainedEntities.Count > 0 &&
-                    TryComp(container.ContainedEntities[0], out ChemicalPayloadComponent? chemicalPayloadComponent))
-                {
-                    // If a beaker is missing, the entity won't explode, so no reason to log it
-                    if (!TryComp(chemicalPayloadComponent?.BeakerSlotA.Item, out SolutionContainerManagerComponent? beakerA) ||
-                        !TryComp(chemicalPayloadComponent?.BeakerSlotB.Item, out SolutionContainerManagerComponent? beakerB))
-                        return;
-
-                    _adminLogger.Add(LogType.Trigger,
-                        $"{ToPrettyString(user.Value):user} started a {delay} second timer trigger on entity {ToPrettyString(uid):timer}, which contains [{string.Join(", ", beakerA.Solutions.Values.First())}] in one beaker and [{string.Join(", ", beakerB.Solutions.Values.First())}] in the other.");
-                }
-                else
-                {
-                    _adminLogger.Add(LogType.Trigger,
-                        $"{ToPrettyString(user.Value):user} started a {delay} second timer trigger on entity {ToPrettyString(uid):timer}");
-                }
-
-            }
-            else
-            {
-                _adminLogger.Add(LogType.Trigger,
-                    $"{delay} second timer trigger started on entity {ToPrettyString(uid):timer}");
-            }
-
-            var active = AddComp<ActiveTimerTriggerComponent>(uid);
-            active.TimeRemaining = delay;
-            active.User = user;
-            active.BeepParams = beepParams;
-            active.BeepSound = beepSound;
-            active.BeepInterval = beepInterval;
-            active.TimeUntilBeep = initialBeepDelay == null ? active.BeepInterval : initialBeepDelay.Value;
-
-            if (TryComp<AppearanceComponent>(uid, out var appearance))
-                appearance.SetData(TriggerVisuals.VisualState, TriggerVisualState.Primed);
-        }
-        */
 
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
-
-            UpdateTimer(frameTime);
+            UpdateTimer();
         }
 
-        private void UpdateTimer(float frameTime)
+        private void UpdateTimer()
         {
             foreach (var timer in EntityQuery<BrigTimerComponent>())
             {
                 if (!timer.Activated)
                     continue;
 
-                timer.TimeRemaining -= frameTime;
-
-                if (timer.TimeRemaining <= 0)
+                if (timer.TriggerTime <= _gameTiming.CurTime)
                 {
                     Trigger(timer);
 

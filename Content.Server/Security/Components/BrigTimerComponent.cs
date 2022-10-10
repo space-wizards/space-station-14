@@ -6,13 +6,13 @@ namespace Content.Server.Security.Components
     public sealed class BrigTimerComponent : Component
     {
         [DataField("delay")]
-        public float Delay = 2f;
+        public double Delay = 2;
 
         [DataField("activated")]
         public bool Activated = false;
 
         [DataField("timeRemaining")]
-        public float TimeRemaining;
+        public TimeSpan TriggerTime;
 
         [DataField("user")]
         public EntityUid? User;

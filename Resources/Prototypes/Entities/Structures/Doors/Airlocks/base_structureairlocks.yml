@@ -10,6 +10,12 @@
         path:
           "/Audio/Weapons/smash.ogg"
   - type: InteractionOutline
+  - type: DoorSignalControl
+  - type: SignalReceiver
+    inputs:
+      Open: []
+      Close: []
+      Toggle: []
   - type: Sprite
     netsync: false
     sprite: Structures/Doors/Airlocks/Standard/basic.rsi
