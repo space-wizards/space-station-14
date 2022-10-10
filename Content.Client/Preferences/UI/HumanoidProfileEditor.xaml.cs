@@ -757,6 +757,7 @@ namespace Content.Client.Preferences.UI
             {
                 _previewSpriteSide.Sprite = sprite;
             }
+            _needUpdatePreview = true;
         }
 
         private void LoadServerData()
