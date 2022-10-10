@@ -11,7 +11,6 @@ using Content.Shared.Inventory.Events;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
-using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Prototypes;
@@ -46,8 +45,10 @@ namespace Content.Client.Inventory
             SubscribeLocalEvent<ClientInventoryComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<ClientInventoryComponent, ComponentShutdown>(OnShutdown);
 
-            SubscribeLocalEvent<ClientInventoryComponent, DidEquipEvent>((_, comp, args) => _equipEventsQueue.Enqueue((comp, args)));
-            SubscribeLocalEvent<ClientInventoryComponent, DidUnequipEvent>((_, comp, args) => _equipEventsQueue.Enqueue((comp, args)));
+            SubscribeLocalEvent<ClientInventoryComponent, DidEquipEvent>((_, comp, args) =>
+                _equipEventsQueue.Enqueue((comp, args)));
+            SubscribeLocalEvent<ClientInventoryComponent, DidUnequipEvent>((_, comp, args) =>
+                _equipEventsQueue.Enqueue((comp, args)));
 
             SubscribeLocalEvent<ClothingComponent, UseInHandEvent>(OnUseInHand);
         }
@@ -97,11 +98,13 @@ namespace Content.Client.Inventory
             if (args.Equipee != _playerManager.LocalPlayer?.ControlledEntity)
                 return;
             var sprite = EntityManager.GetComponentOrNull<ISpriteComponent>(args.Equipment);
-            var update = new SlotSpriteUpdate(args.SlotGroup, args.Slot, sprite, HasComp<ClientStorageComponent>(args.Equipment));
+            var update = new SlotSpriteUpdate(args.SlotGroup, args.Slot, sprite,
+                HasComp<ClientStorageComponent>(args.Equipment));
             OnSpriteUpdate?.Invoke(update);
         }
 
-        private void OnPlayerDetached(EntityUid uid, ClientInventoryComponent component, PlayerDetachedEvent? args = null)
+        private void OnPlayerDetached(EntityUid uid, ClientInventoryComponent component,
+            PlayerDetachedEvent? args = null)
         {
             if (uid == _playerManager.LocalPlayer?.ControlledEntity)
                 OnUnlinkInventory?.Invoke();
@@ -133,11 +136,11 @@ namespace Content.Client.Inventory
 
             foreach (var slot in invTemplate.Slots)
             {
-                TryAddSlotDef(uid,component, slot);
+                TryAddSlotDef(uid, component, slot);
             }
         }
 
-        public void SetSlotHighlight(EntityUid owner,ClientInventoryComponent component, string slotName, bool state)
+        public void SetSlotHighlight(EntityUid owner, ClientInventoryComponent component, string slotName, bool state)
         {
             var oldData = component.SlotData[slotName];
             var newData = component.SlotData[slotName] = new SlotData(oldData, state);
@@ -145,7 +148,8 @@ namespace Content.Client.Inventory
                 EntitySlotUpdate?.Invoke(newData);
         }
 
-        public void UpdateSlot(EntityUid owner,ClientInventoryComponent component,string slotName,bool? blocked = null, bool? highlight = null)
+        public void UpdateSlot(EntityUid owner, ClientInventoryComponent component, string slotName,
+            bool? blocked = null, bool? highlight = null)
         {
             var oldData = component.SlotData[slotName];
             var newHighlight = oldData.Highlighted;
@@ -157,12 +161,13 @@ namespace Content.Client.Inventory
             if (highlight != null)
                 newHighlight = highlight.Value;
 
-            var newData = component.SlotData[slotName] = new SlotData(component.SlotData[slotName], newHighlight, newBlocked);
+            var newData = component.SlotData[slotName] =
+                new SlotData(component.SlotData[slotName], newHighlight, newBlocked);
             if (owner == _playerManager.LocalPlayer?.ControlledEntity)
                 EntitySlotUpdate?.Invoke(newData);
         }
 
-        public bool TryAddSlotDef(EntityUid owner,ClientInventoryComponent component,SlotDefinition newSlotDef)
+        public bool TryAddSlotDef(EntityUid owner, ClientInventoryComponent component, SlotDefinition newSlotDef)
         {
             SlotData newSlotData = newSlotDef; //convert to slotData
             if (!component.SlotData.TryAdd(newSlotDef.Name, newSlotData))
@@ -195,7 +200,8 @@ namespace Content.Client.Inventory
         }
 
         // TODO hud refactor This should also live in a UI Controller
-        private void HoverInSlotButton(EntityUid uid, string slot, SlotControl control, InventoryComponent? inventoryComponent = null, SharedHandsComponent? hands = null)
+        private void HoverInSlotButton(EntityUid uid, string slot, SlotControl control,
+            InventoryComponent? inventoryComponent = null, SharedHandsComponent? hands = null)
         {
             if (!Resolve(uid, ref inventoryComponent))
                 return;
@@ -206,7 +212,7 @@ namespace Content.Client.Inventory
             if (hands.ActiveHandEntity is not EntityUid heldEntity)
                 return;
 
-            if(!TryGetSlotContainer(uid, slot, out var containerSlot, out var slotDef, inventoryComponent))
+            if (!TryGetSlotContainer(uid, slot, out var containerSlot, out var slotDef, inventoryComponent))
                 return;
         }
 
@@ -241,7 +247,8 @@ namespace Content.Client.Inventory
             if (!TryGetSlotEntity(uid, slot, out var item))
                 return;
 
-            EntityManager.EntityNetManager?.SendSystemNetworkMessage(new InteractInventorySlotEvent(item.Value, altInteract: false));
+            EntityManager.EntityNetManager?.SendSystemNetworkMessage(
+                new InteractInventorySlotEvent(item.Value, altInteract: false));
         }
 
         public void UIInventoryAltActivateItem(string slot, EntityUid uid)
@@ -256,17 +263,19 @@ namespace Content.Client.Inventory
         {
             public readonly SlotDefinition SlotDef;
             public EntityUid? HeldEntity => Container?.ContainedEntity;
-            public bool Blocked ;
+            public bool Blocked;
             public bool Highlighted;
             public ContainerSlot? Container;
-            public bool HasSlotGroup => SlotDef.SlotGroup != "";
+            public bool HasSlotGroup => SlotDef.SlotGroup != "Default";
             public Vector2i ButtonOffset => SlotDef.UIWindowPosition;
             public string SlotName => SlotDef.Name;
             public bool ShowInWindow => SlotDef.ShowInWindow;
             public string SlotGroup => SlotDef.SlotGroup;
             public string SlotDisplayName => SlotDef.DisplayName;
-            public string TextureName => "Slots/"+SlotDef.TextureName;
-            public SlotData(SlotDefinition slotDef,ContainerSlot? container = null, bool highlighted = false, bool blocked = false)
+            public string TextureName => "Slots/" + SlotDef.TextureName;
+
+            public SlotData(SlotDefinition slotDef, ContainerSlot? container = null, bool highlighted = false,
+                bool blocked = false)
             {
                 SlotDef = slotDef;
                 Highlighted = highlighted;
@@ -274,7 +283,7 @@ namespace Content.Client.Inventory
                 Container = container;
             }
 
-            public SlotData(SlotData oldData,bool highlighted = false,bool blocked = false)
+            public SlotData(SlotData oldData, bool highlighted = false, bool blocked = false)
             {
                 SlotDef = oldData.SlotDef;
                 Highlighted = highlighted;
@@ -286,6 +295,7 @@ namespace Content.Client.Inventory
             {
                 return new SlotData(s);
             }
+
             public static implicit operator SlotDefinition(SlotData s)
             {
                 return s.SlotDef;

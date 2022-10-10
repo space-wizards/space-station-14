@@ -27,8 +27,9 @@ public sealed class InventoryDisplay : LayoutContainer
         HorizontalExpand = true;
         VerticalExpand = true;
         InheritChildMeasure = true;
-        if (!_buttons.TryAdd(newButton.SlotName, (newButton,buttonOffset))) Logger.Warning("Tried to add button without a slot!");
-        SetPosition(newButton, buttonOffset*ButtonSize+ new Vector2(ButtonSpacing,ButtonSpacing));
+        if (!_buttons.TryAdd(newButton.SlotName, (newButton, buttonOffset)))
+            Logger.Warning("Tried to add button without a slot!");
+        SetPosition(newButton, buttonOffset * ButtonSize + new Vector2(ButtonSpacing, ButtonSpacing));
         UpdateSizeData(buttonOffset);
         return newButton;
     }
@@ -41,20 +42,30 @@ public sealed class InventoryDisplay : LayoutContainer
     private void UpdateSizeData(Vector2i buttonOffset)
     {
         var (x, _) = buttonOffset;
-        if (x > Columns) Columns = x;
+        if (x > Columns)
+            Columns = x;
         var (_, y) = buttonOffset;
-        if (y > Rows) Rows = y;
-        resizer.SetHeight = (Rows +1) * (ButtonSize + ButtonSpacing);
-        resizer.SetWidth = (Columns+1) * (ButtonSize + ButtonSpacing);
+        if (y > Rows)
+            Rows = y;
+        resizer.SetHeight = (Rows + 1) * (ButtonSize + ButtonSpacing);
+        resizer.SetWidth = (Columns + 1) * (ButtonSize + ButtonSpacing);
+    }
+
+    public bool TryGetButton(string slotName, out SlotControl? button)
+    {
+        var success = _buttons.TryGetValue(slotName, out var buttonData);
+        button = buttonData.Item1;
+        return success;
     }
 
     public void RemoveButton(string slotName)
     {
-        if (!_buttons.Remove(slotName)) return;
+        if (!_buttons.Remove(slotName))
+            return;
         //recalculate the size of the control when a slot is removed
         Columns = 0;
         Rows = 0;
-        foreach (var (_,(_,buttonOffset)) in _buttons)
+        foreach (var (_, (_, buttonOffset)) in _buttons)
         {
             UpdateSizeData(buttonOffset);
         }
@@ -64,5 +75,4 @@ public sealed class InventoryDisplay : LayoutContainer
     {
         Children.Clear();
     }
-
 }

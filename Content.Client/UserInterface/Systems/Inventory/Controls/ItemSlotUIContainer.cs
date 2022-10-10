@@ -12,7 +12,7 @@ public interface IItemslotUIContainer
 }
 
 [Virtual]
-public abstract class ItemSlotUIContainer<T> : BoxContainer, IItemslotUIContainer where T : SlotControl
+public abstract class ItemSlotUIContainer<T> : GridContainer, IItemslotUIContainer where T : SlotControl
 {
     protected readonly Dictionary<string, T> _buttons = new();
 
@@ -41,11 +41,14 @@ public abstract class ItemSlotUIContainer<T> : BoxContainer, IItemslotUIContaine
 
     public bool TryRegisterButton(SlotControl control, string newSlotName)
     {
-        if (newSlotName == "") return false;
-        if (!(control is T slotButton)) return false;
+        if (newSlotName == "")
+            return false;
+        if (!(control is T slotButton))
+            return false;
         if (_buttons.TryGetValue(newSlotName, out var foundButton))
         {
-            if (control == foundButton) return true; //if the slotName is already set do nothing
+            if (control == foundButton)
+                return true; //if the slotName is already set do nothing
             throw new Exception("Could not update button to slot:" + newSlotName + " slot already assigned!");
         }
 
@@ -56,13 +59,15 @@ public abstract class ItemSlotUIContainer<T> : BoxContainer, IItemslotUIContaine
 
     public bool TryAddButton(SlotControl control)
     {
-        if (control is not T newButton) return false;
+        if (control is not T newButton)
+            return false;
         return AddButton(newButton) != null;
     }
 
     public virtual T? AddButton(T newButton)
     {
-        if (!Children.Contains(newButton) && newButton.Parent == null && newButton.SlotName != "") AddChild(newButton);
+        if (!Children.Contains(newButton) && newButton.Parent == null && newButton.SlotName != "")
+            AddChild(newButton);
         return AddButtonToDict(newButton);
     }
 
@@ -78,7 +83,8 @@ public abstract class ItemSlotUIContainer<T> : BoxContainer, IItemslotUIContaine
 
     public virtual void RemoveButton(string slotName)
     {
-        if (!_buttons.TryGetValue(slotName, out var button)) return;
+        if (!_buttons.TryGetValue(slotName, out var button))
+            return;
         RemoveButton(button);
     }
 
@@ -94,7 +100,8 @@ public abstract class ItemSlotUIContainer<T> : BoxContainer, IItemslotUIContaine
     {
         foreach (var button in buttons)
         {
-            if (button != null) RemoveButton(button);
+            if (button != null)
+                RemoveButton(button);
         }
     }
 

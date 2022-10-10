@@ -5,11 +5,11 @@ using Robust.Client.UserInterface.XAML;
 namespace Content.Client.UserInterface.Systems.Inventory.Windows;
 
 [GenerateTypedNameReferences]
-public sealed partial class InventoryWindow : UserInterface.Controls.FancyWindow
+public sealed partial class StrippingWindow : UserInterface.Controls.FancyWindow
 {
-    public InventoryWindow()
+    public StrippingWindow()
     {
         RobustXamlLoader.Load(this);
-        LayoutContainer.SetAnchorAndMarginPreset(this,LayoutContainer.LayoutPreset.Center);
+        LayoutContainer.SetAnchorAndMarginPreset(this, LayoutContainer.LayoutPreset.Center);
     }
 }

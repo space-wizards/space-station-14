@@ -16,38 +16,46 @@ using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.UserInterface.Systems.Inventory;
 
-public sealed class InventoryUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>,IOnSystemChanged<ClientInventorySystem>
+public sealed class InventoryUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>,
+    IOnSystemChanged<ClientInventorySystem>
 {
     [UISystemDependency] private readonly ClientInventorySystem _inventorySystem = default!;
     private ClientInventoryComponent? _playerInventory;
     private readonly Dictionary<string, ItemSlotButtonContainer> _slotGroups = new();
-    private readonly Dictionary<(string group, string slot), (ISpriteComponent sprite, bool showStorage)> _sprites = new();
 
-    private InventoryWindow? _inventoryWindow;
+    private readonly Dictionary<(string group, string slot), (ISpriteComponent sprite, bool showStorage)> _sprites =
+        new();
+
+    private StrippingWindow? _strippingWindow;
+    private ItemSlotButtonContainer? _inventoryHotbar;
     private MenuButton? _inventoryButton;
 
     public void OnStateEntered(GameplayState state)
     {
-        DebugTools.Assert(_inventoryWindow == null);
-        _inventoryWindow = UIManager.CreateWindow<InventoryWindow>();
+        DebugTools.Assert(_strippingWindow == null);
+        _strippingWindow = UIManager.CreateWindow<StrippingWindow>();
         _inventoryButton = UIManager.GetActiveUIWidget<MenuBar.Widgets.GameTopMenuBar>().InventoryButton;
-        LayoutContainer.SetAnchorPreset(_inventoryWindow,LayoutContainer.LayoutPreset.Center);
-        _inventoryWindow.OnClose += () => { _inventoryButton.Pressed = false; };
-        _inventoryWindow.OnOpen += () => { _inventoryButton.Pressed = true; };
+        LayoutContainer.SetAnchorPreset(_strippingWindow, LayoutContainer.LayoutPreset.Center);
 
         //bind open inventory key to OpenInventoryMenu;
         CommandBinds.Builder
-            .Bind(ContentKeyFunctions.OpenInventoryMenu, InputCmdHandler.FromDelegate(_ => ToggleInventoryMenu()))
+            .Bind(ContentKeyFunctions.OpenInventoryMenu, InputCmdHandler.FromDelegate(_ => ToggleInventoryBar()))
             .Register<ClientInventorySystem>();
         _inventoryButton.OnPressed += InventoryButtonPressed;
     }
 
     public void OnStateExited(GameplayState state)
     {
-        if (_inventoryWindow != null)
+        if (_strippingWindow != null)
         {
-            _inventoryWindow.Dispose();
-            _inventoryWindow = null;
+            _strippingWindow.Dispose();
+            _strippingWindow = null;
+        }
+
+        if (_inventoryHotbar != null)
+        {
+            _inventoryHotbar.Dispose();
+            _inventoryHotbar = null;
         }
 
         if (_inventoryButton != null)
@@ -60,28 +68,36 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
         CommandBinds.Unregister<ClientInventorySystem>();
     }
 
-    private void InventoryButtonPressed(ButtonEventArgs args)
+    public void RegisterInventoryBarContainer(ItemSlotButtonContainer inventoryHotbar)
     {
-        ToggleInventoryMenu();
+        _inventoryHotbar = inventoryHotbar;
     }
 
-    private void UpdateInventoryWindow(ClientInventoryComponent? clientInv)
+    private void InventoryButtonPressed(ButtonEventArgs args)
+    {
+        ToggleInventoryBar();
+    }
+
+
+    private void UpdateInventoryHotbar(ClientInventoryComponent? clientInv)
     {
         if (clientInv == null)
         {
-            _inventoryWindow!.InventoryButtons.ClearButtons();
+            _inventoryHotbar?.ClearButtons();
             return;
         }
-        foreach (var (_,data) in clientInv.SlotData)
+
+        foreach (var (_, data) in clientInv.SlotData)
         {
-            if (!data.ShowInWindow)
+            if (!data.ShowInWindow || !_slotGroups.TryGetValue(data.SlotGroup, out var container))
                 continue;
-
-            var button = new SlotButton(data);
-            button.Pressed += ItemPressed;
-            button.StoragePressed += StoragePressed;
-
-            _inventoryWindow!.InventoryButtons.AddButton(button, data.ButtonOffset);
+            if (!container.TryGetButton(data.SlotName, out var button))
+            {
+                button = new SlotButton(data);
+                button.Pressed += ItemPressed;
+                button.StoragePressed += StoragePressed;
+                container.AddButton(button);
+            }
 
             if (!_sprites.TryGetValue((data.SlotGroup, data.SlotName), out var tuple))
                 continue;
@@ -91,15 +107,67 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
         }
     }
 
-    public void ToggleInventoryMenu()
+    private void UpdateStrippingWindow(ClientInventoryComponent? clientInv)
     {
-        UpdateInventoryWindow(_playerInventory);
-        if (_inventoryWindow!.IsOpen)
+        if (clientInv == null)
         {
-            _inventoryWindow!.Close();
+            _strippingWindow!.InventoryButtons.ClearButtons();
             return;
         }
-        _inventoryWindow.Open();
+
+        foreach (var (_, data) in clientInv.SlotData)
+        {
+            if (!data.ShowInWindow)
+                continue;
+            if (!_strippingWindow!.InventoryButtons.TryGetButton(data.SlotName, out var button))
+            {
+                button = new SlotButton(data);
+                button.Pressed += ItemPressed;
+                button.StoragePressed += StoragePressed;
+                _strippingWindow!.InventoryButtons.AddButton(button, data.ButtonOffset);
+            }
+
+            if (!_sprites.TryGetValue((data.SlotGroup, data.SlotName), out var tuple))
+                continue;
+
+            var update = new SlotSpriteUpdate(data.SlotGroup, data.SlotName, tuple.sprite, tuple.showStorage);
+            SpriteUpdated(update);
+        }
+    }
+
+    public void ToggleStrippingMenu()
+    {
+        UpdateStrippingWindow(_playerInventory);
+        if (_strippingWindow!.IsOpen)
+        {
+            _strippingWindow!.Close();
+            return;
+        }
+
+        _strippingWindow.Open();
+    }
+
+    public void ToggleInventoryBar()
+    {
+        if (_inventoryHotbar == null)
+        {
+            Logger.Warning("Tried to toggle inventory bar when none are assigned");
+            return;
+        }
+
+        UpdateInventoryHotbar(_playerInventory);
+        if (_inventoryHotbar.Visible)
+        {
+            _inventoryHotbar.Visible = false;
+            if (_inventoryButton != null)
+                _inventoryButton.Pressed = false;
+        }
+        else
+        {
+            _inventoryHotbar.Visible = true;
+            if (_inventoryButton != null)
+                _inventoryButton.Pressed = true;
+        }
     }
 
     // Neuron Activation
@@ -168,7 +236,8 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
 
     private void AddSlot(SlotData data)
     {
-        if(!_slotGroups.TryGetValue(data.SlotGroup, out var slotGroup)) return;
+        if (!_slotGroups.TryGetValue(data.SlotGroup, out var slotGroup))
+            return;
         var button = new SlotButton(data);
         button.Pressed += ItemPressed;
         button.StoragePressed += StoragePressed;
@@ -177,7 +246,8 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
 
     private void RemoveSlot(SlotData data)
     {
-        if (!_slotGroups.TryGetValue(data.SlotGroup, out var slotGroup)) return;
+        if (!_slotGroups.TryGetValue(data.SlotGroup, out var slotGroup))
+            return;
         slotGroup.RemoveButton(data.SlotName);
     }
 
@@ -212,7 +282,7 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
             _sprites[(group, name)] = (sprite, showStorage);
         }
 
-        if (_inventoryWindow?.InventoryButtons.GetButton(update.Name) is { } inventoryButton)
+        if (_strippingWindow?.InventoryButtons.GetButton(update.Name) is { } inventoryButton)
         {
             inventoryButton.SpriteView.Sprite = sprite;
             inventoryButton.StorageButton.Visible = showStorage;
@@ -228,12 +298,20 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
     public void BlockSlot(string slotName, bool blocked)
     {
     }
+
     public void HighlightSlot(string slotName, bool highlight)
     {
     }
+
     public bool RegisterSlotGroupContainer(ItemSlotButtonContainer slotContainer)
     {
-        return _slotGroups.TryAdd(slotContainer.SlotGroup, slotContainer);
+        if (_slotGroups.TryAdd(slotContainer.SlotGroup, slotContainer))
+        {
+            return true;
+        }
+
+        Logger.Warning("Could not add container for slotgroup: " + slotContainer.SlotGroup);
+        return false;
     }
 
     public void RemoveSlotGroup(string slotGroupName)

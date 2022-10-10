@@ -10,15 +10,12 @@ public sealed class HotbarUIController : UIController
 {
     private InventoryUIController? _inventory;
     private HandsUIController? _hands;
-    private ItemStatusPanel? _handStatus;
-    private ItemSlotButtonContainer? _inventoryBar;
 
     public void Setup(HandsContainer handsContainer, ItemSlotButtonContainer inventoryBar, ItemStatusPanel handStatus)
     {
         _inventory = UIManager.GetUIController<InventoryUIController>();
         _hands = UIManager.GetUIController<HandsUIController>();
         _hands.RegisterHandContainer(handsContainer);
-        _handStatus = handStatus;
-        _inventoryBar = inventoryBar;
+        _inventory.RegisterInventoryBarContainer(inventoryBar);
     }
 }
