@@ -123,7 +123,7 @@ public sealed class FluidSpreaderSystem : EntitySystem
     private Dictionary<Vector2i, EntityUid> SpreadSolutionOnEdge(List<PuddlePlacer> newEdge, OverflowEdgeComponent edge)
     {
         var returnVal = new Dictionary<Vector2i, EntityUid>(newEdge.Count);
-        if (newEdge.Count <= 0 || edge.OverflownSolution.CurrentVolume <= MinimalTransfer)
+        if (newEdge.Count <= 0 || edge.OverflownSolution.CurrentVolume < MinimalTransfer)
             return returnVal;
 
         var start = edge.OverflownSolution.CurrentVolume / newEdge.Count;
