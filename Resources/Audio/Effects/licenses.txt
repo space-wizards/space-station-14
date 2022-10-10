@@ -41,3 +41,15 @@ The following sounds are taken from TGstation github (licensed under CC by 3.0):
     demon_dies.ogg: taken at https://github.com/tgstation/tgstation/commit/d4f678a1772007ff8d7eddd21cf7218c8e07bfc0
 
 pop.ogg licensed under CC0 1.0 by mirrorcult
+
+box_deploy.ogg and chime.ogg taken from Citadel Station at commit: https://github.com/Citadel-Station-13/Citadel-Station-13/commit/b604390f334343be80045d955705cf48ee056c61
+
+- files: ["box_deploy.ogg"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "box_deploy.ogg taken from Citadel Station."
+  source: "https://github.com/Citadel-Station-13/Citadel-Station-13/commit/b604390f334343be80045d955705cf48ee056c61"
+
+- files: ["chime.ogg"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "chime.ogg taken from Citadel Station."
+  source: "https://github.com/Citadel-Station-13/Citadel-Station-13/commit/b604390f334343be80045d955705cf48ee056c61"
