@@ -51,3 +51,18 @@
           whitelist:
             tags:
               - SubdermalImplant
+
+- type: entity
+  id: MicroBombImplanter
+  name: micro bomb implanter
+  description: boom
+  parent: Implanter
+  components:
+    - type: ItemSlots
+      slots:
+        implanter_slot:
+          startingItem: MicroBombImplant
+          priority: 0
+          whitelist:
+            tags:
+              - SubdermalImplant

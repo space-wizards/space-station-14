@@ -3,7 +3,6 @@
   id: BaseSubdermalImplant
   name: implant
   abstract: true
-  noSpawn: true
   components:
     - type: SubdermalImplant
     - type: Tag
@@ -14,6 +13,7 @@
   parent: BaseSubdermalImplant
   id: UndeadImplant
   name: undead implant
+  noSpawn: true
   components:
     - type: SubdermalImplant
       implantAction: TurnUndead
@@ -22,6 +22,7 @@
   parent: BaseSubdermalImplant
   id: TrackingImplant
   name: tracking implant
+  noSpawn: true
   components:
     - type: SubdermalImplant
     - type: SuitSensor
@@ -34,3 +35,39 @@
       transmitFrequencyId: SuitSensor
     - type: WirelessNetworkConnection
       range: 500
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: MicroBombImplant
+  name: micro bomb implant
+  noSpawn: true
+  components:
+    - type: SubdermalImplant
+    - type: TriggerOnMobstateChange
+      mobState: Dead
+      gibOnDeath: true
+    - type: ExplodeOnTrigger
+    - type: Explosive
+      explosionType: MicroBomb
+      totalIntensity: 120
+      intensitySlope: 5
+      maxIntensity: 30
+      canCreateVacuum: false
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: MacroBombImplant
+  name: macro bomb implant
+  noSpawn: true
+  components:
+    - type: SubdermalImplant
+    - type: TriggerOnMobstateChange
+      mobState: Dead
+      gibOnDeath: true
+    - type: ExplodeOnTrigger
+    - type: Explosive
+      explosionType: Default
+      totalIntensity: 4000
+      intensitySlope: 5
+      maxIntensity: 50
+      canCreateVacuum: true

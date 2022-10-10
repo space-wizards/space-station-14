@@ -3,6 +3,7 @@ using Content.Shared.Audio;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Humanoid;
+using Content.Shared.Implants.Components;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -121,6 +122,9 @@ namespace Content.Server.Body.Components
                 {
                     foreach (var ent in cont.ContainedEntities)
                     {
+                        if (_entMan.TryGetComponent<SubdermalImplantComponent>(ent, out var implantComponent))
+                            continue;
+
                         cont.ForceRemove(ent);
                         _entMan.GetComponent<TransformComponent>(ent).Coordinates = coordinates;
                         ent.RandomOffset(0.25f);

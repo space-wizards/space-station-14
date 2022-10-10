@@ -1,20 +1,13 @@
 ﻿using System.Threading;
 using Content.Shared.Containers.ItemSlots;
+using Robust.Shared.Containers;
 
 namespace Content.Shared.Implants.Components;
 [RegisterComponent]
 public sealed class ImplanterComponent : Component
 {
-
-    /// <summary>
-    /// The implant to be used in the implanter
-    /// </summary>
-    [DataField("implantPrototype")]
-    public string? ImplantPrototype;
-
-    //TODO: Just check the container for the implant. No need to add a string here. Aka use storagefill to put implant in
+    //TODO: See if you need to add anything else to the implanter
+    //Things like inject only, draw, unremoveable, etc.
 
     public CancellationTokenSource? CancelToken;
-
-    //TODO: Add container to prototype/entity with a whitelist for SubdermalImplants
 }

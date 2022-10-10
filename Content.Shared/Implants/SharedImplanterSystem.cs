@@ -2,7 +2,8 @@
 using Content.Shared.Hands;
 using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
-using Internal.TypeSystem;
+using Content.Shared.MobState;
+using Content.Shared.Movement.Components;
 using Robust.Shared.Containers;
 
 namespace Content.Shared.Implants;
@@ -33,36 +34,34 @@ public abstract class SharedImplanterSystem : EntitySystem
     private void OnImplanterAfterInteract(EntityUid uid, ImplanterComponent component, AfterInteractEvent args)
     {
         //Going to want to check for handled and such, as well as if it's a living entity and if there's a container already.
-
-        if (args.Target == null)
+        if (args.Target == null || args.Handled)
             return;
 
-        Implant(uid, args.Target.Value, component);
+        //Check to instant implant self but not others
+        //if (args.User != args.Target) { }
+
+        Implant(uid, args.Target.Value);
+
+        args.Handled = true;
     }
 
-    private void Implant(EntityUid implanter, EntityUid target, ImplanterComponent component)
+    public void Implant(EntityUid implanter, EntityUid target)
     {
         if (!_container.TryGetContainer(implanter, ImplanterSlotId, out var container))
             return;
 
         var implant = container.ContainedEntities.FirstOrDefault();
 
-        //This is where it could be beneficial to have a partial
         if (!TryComp<SubdermalImplantComponent>(implant, out var implantComp))
             return;
 
-        //This works to add a container, pog
-        //Use a container because someone can have multiple implants
-
-        if (!TryComp<ContainerManagerComponent>(target, out var containerManager) || _container.HasContainer(target, ImplantSlotId, containerManager))
-            return;
+        //If the target doesn't have the implanted component, add it.
+        if (!HasComp<ImplantedComponent>(target))
+            EnsureComp<ImplantedComponent>(target);
 
         var implantContainer = _container.EnsureContainer<Container>(target, ImplantSlotId);
         implantComp.EntityUid = target;
         container.Remove(implant);
         implantContainer.Insert(implant);
-
-        //_container.RemoveEntity(implanter, implant);
-
     }
 }

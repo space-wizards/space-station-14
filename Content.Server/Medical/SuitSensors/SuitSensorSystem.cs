@@ -37,14 +37,7 @@ namespace Content.Server.Medical.SuitSensors
             SubscribeLocalEvent<SuitSensorComponent, ExaminedEvent>(OnExamine);
             SubscribeLocalEvent<SuitSensorComponent, GetVerbsEvent<Verb>>(OnVerb);
             SubscribeLocalEvent<SuitSensorComponent, EntGotInsertedIntoContainerMessage>(OnInsert);
-        }
-
-        private void OnInsert(EntityUid uid, SuitSensorComponent component, EntGotInsertedIntoContainerMessage args)
-        {
-            if (args.Container.ID != component.ActivationContainer)
-                return;
-
-            component.User = args.Container.Owner;
+            SubscribeLocalEvent<SuitSensorComponent, EntGotRemovedFromContainerMessage>(OnRemove);
         }
 
         public override void Update(float frameTime)
@@ -158,6 +151,22 @@ namespace Content.Server.Medical.SuitSensors
                 CreateVerb(uid, component, args.User, SuitSensorMode.SensorVitals),
                 CreateVerb(uid, component, args.User, SuitSensorMode.SensorCords)
             });
+        }
+
+        private void OnInsert(EntityUid uid, SuitSensorComponent component, EntGotInsertedIntoContainerMessage args)
+        {
+            if (args.Container.ID != component.ActivationContainer)
+                return;
+
+            component.User = args.Container.Owner;
+        }
+
+        private void OnRemove(EntityUid uid, SuitSensorComponent component, EntGotRemovedFromContainerMessage args)
+        {
+            if (args.Container.ID != component.ActivationContainer)
+                return;
+
+            component.User = null;
         }
 
         private Verb CreateVerb(EntityUid uid, SuitSensorComponent component, EntityUid userUid, SuitSensorMode mode)
