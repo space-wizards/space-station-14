@@ -27,20 +27,9 @@ public sealed class ReleaseSignallerSystem : EntitySystem
         SubscribeLocalEvent<ReleaseSignallerComponent, UseInHandEvent>(OnUsedInHand);
         SubscribeLocalEvent<ReleaseSignallerComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
         SubscribeLocalEvent<ReleaseSignallerComponent, ReleaseSignallerDisarmCompleteEvent>(OnSuccessfulDisarm);
+        SubscribeLocalEvent<ReleaseSignallerComponent, ReleaseSignallerDisarmFailedEvent>(OnFailedDisarm);
 
         SubscribeLocalEvent<ReleaseSignallerHolderComponent, MobStateChangedEvent>(OnMobStateChanged);
-    }
-
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-        foreach (var holder in EntityQuery<ReleaseSignallerHolderComponent>())
-        {
-            if (holder.Switches.Count == 0)
-            {
-                RemComp<ReleaseSignallerHolderComponent>(holder.Owner);
-            }
-        }
     }
 
     private void OnInit(EntityUid uid, ReleaseSignallerComponent component, ComponentInit args)
@@ -56,10 +45,15 @@ public sealed class ReleaseSignallerSystem : EntitySystem
         if (!component.Armed)
             return;
 
-        _signalSystem.InvokePort(uid, component.Port);
         component.Armed = false;
-        if(EntityManager.TryGetComponent<ReleaseSignallerHolderComponent>(args.User, out var holderComp))
+        _signalSystem.InvokePort(uid, component.Port);
+        if (EntityManager.TryGetComponent<ReleaseSignallerHolderComponent>(args.User, out var holderComp))
+        {
             holderComp.Switches.Remove(component);
+            if (holderComp.Switches.Count == 0)
+                RemComp<ReleaseSignallerHolderComponent>(args.User);
+        }
+
         _popupSystem.PopupEntity(Loc.GetString("release-signaller-release-self", ("device", uid)), args.User, Filter.Entities(args.User), PopupType.MediumCaution);
         _popupSystem.PopupEntity(Loc.GetString("release-signaller-release-other", ("device", uid), ("user", args.User)), args.User, Filter.PvsExcept(args.User), PopupType.MediumCaution);
         args.Handled = true;
@@ -72,7 +66,7 @@ public sealed class ReleaseSignallerSystem : EntitySystem
 
         args.Handled = true;
 
-        if (component.Armed == false)
+        if (!component.Armed)
         {
             var holder = EnsureComp<ReleaseSignallerHolderComponent>(args.User);
             holder.Switches.Add(component);
@@ -92,18 +86,21 @@ public sealed class ReleaseSignallerSystem : EntitySystem
     {
         if (component.Armed)
         {
-            component.CancelToken = new CancellationTokenSource();
             args.Verbs.Add(new AlternativeVerb()
             {
                 Text = Loc.GetString("verb-release-signaller-disarm"),
                 Act = () =>
                 {
+                    component.CancelToken?.Cancel();
+                    component.CancelToken = new CancellationTokenSource();
+
                     _doAfterSystem.DoAfter(new DoAfterEventArgs(args.User, component.DisarmDelay, component.CancelToken.Token, uid)
                     {
                         BreakOnDamage = true,
                         BreakOnStun = true,
                         NeedHand = true,
-                        TargetFinishedEvent = new ReleaseSignallerDisarmCompleteEvent(args.User)
+                        TargetFinishedEvent = new ReleaseSignallerDisarmCompleteEvent(args.User),
+                        TargetCancelledEvent = new ReleaseSignallerDisarmFailedEvent(args.User)
                     });
                 }
             });
@@ -127,11 +124,35 @@ public sealed class ReleaseSignallerSystem : EntitySystem
         _popupSystem.PopupEntity(Loc.GetString("release-signaller-disarmed", ("device", component.Owner)), args.Disarmer, Filter.Entities(args.Disarmer));
     }
 
+    private void OnFailedDisarm(EntityUid uid, ReleaseSignallerComponent component, ReleaseSignallerDisarmFailedEvent args)
+    {
+        if (component.ExplodeOnFailedDisarm)
+        {
+            _popupSystem.PopupEntity(Loc.GetString("release-signaller-disarm-failed-detonate", ("device", component.Owner)), args.Disarmer, Filter.Entities(args.Disarmer), PopupType.MediumCaution);
+            _signalSystem.InvokePort(uid, component.Port);
+            component.Armed = false;
+        }
+        else
+        {
+            _popupSystem.PopupEntity(Loc.GetString("release-signaller-disarm-failed-safely", ("device", component.Owner)), args.Disarmer, Filter.Entities(args.Disarmer), PopupType.SmallCaution);
+        }
+    }
+
     private sealed class ReleaseSignallerDisarmCompleteEvent : EntityEventArgs
     {
         public EntityUid Disarmer { get; }
 
         public ReleaseSignallerDisarmCompleteEvent(EntityUid disarmer)
+        {
+            Disarmer = disarmer;
+        }
+    }
+
+    private sealed class ReleaseSignallerDisarmFailedEvent : EntityEventArgs
+    {
+        public EntityUid Disarmer { get; }
+
+        public ReleaseSignallerDisarmFailedEvent(EntityUid disarmer)
         {
             Disarmer = disarmer;
         }

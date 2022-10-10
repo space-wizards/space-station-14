@@ -22,5 +22,10 @@ public sealed class ReleaseSignallerComponent : Component
     public string Port = "Pressed";
 
     [DataField("disarmDelay")]
+    [ViewVariables(VVAccess.ReadWrite)]
     public float DisarmDelay = 15f;
+
+    [DataField("explodeOnFailedDisarm")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public bool ExplodeOnFailedDisarm;
 }
