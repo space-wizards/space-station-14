@@ -15,11 +15,11 @@ namespace Content.Server.Coordinates.Helpers
         {
             IoCManager.Resolve(ref entMan, ref mapManager);
 
-            var gridId = coordinates.GetGridId(entMan);
+            var gridIdOpt = coordinates.GetGridUid(entMan);
 
             var tileSize = 1f;
 
-            if (gridId.IsValid())
+            if (gridIdOpt is EntityUid gridId && gridId.IsValid())
             {
                 var grid = mapManager.GetGrid(gridId);
                 tileSize = grid.TileSize;

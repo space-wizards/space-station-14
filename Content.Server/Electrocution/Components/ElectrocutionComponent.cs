@@ -10,6 +10,7 @@
         [DataField("timeLeft")] public float TimeLeft { get; set; }
         [DataField("electrocuting")] public EntityUid Electrocuting { get; set; }
         [DataField("accumDamage")] public float AccumulatedDamage { get; set; }
+        [DataField("source")] public EntityUid Source { get; set; }
 
     }
 }

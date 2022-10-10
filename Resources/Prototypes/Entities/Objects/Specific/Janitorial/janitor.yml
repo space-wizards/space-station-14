@@ -46,6 +46,7 @@
         - ReagentId: Water
           Quantity: 250 # half-full at roundstart to leave room for puddles
   - type: Spillable
+    spillDelay: 3.0
   - type: DrainableSolution
     solution: bucket
   - type: RefillableSolution
@@ -141,6 +142,7 @@
         mask:
         - MobMask
     - type: Spillable
+      spillDelay: 3.0
     - type: SolutionContainerManager
       solutions:
         bucket:

@@ -149,7 +149,10 @@ namespace Content.Server.Storage.EntitySystems
                 return;
 
             component.LastInternalOpenAttempt = _gameTiming.CurTime;
-            _entityStorage.TryOpenStorage(args.Entity, component.Owner);
+            if (component.OpenOnMove)
+            {
+                _entityStorage.TryOpenStorage(args.Entity, component.Owner);
+            }
         }
 
 
