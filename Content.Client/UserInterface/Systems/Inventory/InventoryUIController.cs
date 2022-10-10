@@ -215,7 +215,7 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
         {
             _inventorySystem.UIInventoryExamine(slot, _playerInventory.Owner);
         }
-        else if (args.Function == ContentKeyFunctions.OpenContextMenu)
+        else if (args.Function == ContentKeyFunctions.UseSecondary)
         {
             _inventorySystem.UIInventoryOpenContextMenu(slot, _playerInventory.Owner);
         }

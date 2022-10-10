@@ -6,8 +6,8 @@
   components:
   - type: CombatMode
   - type: MovementSpeedModifier
-    baseWalkSpeed : 3.75
-    baseSprintSpeed : 3.75
+    baseWalkSpeed : 3.00
+    baseSprintSpeed : 5.00
   - type: InputMover
   - type: MobMover
   - type: Reactive
@@ -30,11 +30,11 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.3
-      mass: 65
+      density: 230
       mask:
-      - MobMask
+      - SmallMobMask
       layer:
-      - MobLayer
+      - SmallMobLayer
   - type: MobState
     thresholds:
       0: Alive
@@ -42,9 +42,8 @@
       200: Dead
   - type: MeleeWeapon
     hidden: true
-    range: 1
-    arcwidth: 0
-    arc: claw
+    angle: 0
+    animation: WeaponArcClaw
     damage:
       types:
         Slash: 12
@@ -93,10 +92,6 @@
       event: !type:RatKingDomainActionEvent
     hungerPerDomainUse: 50
   - type: MobsterAccent
-  - type: Access #he's so baller he gets his own access. NT got nothing on him
-    tags:
-    - Maintenance
-    - Service
   - type: Butcherable
     spawned:
     - id: ClothingHeadHatFancyCrown #how did that get there?
@@ -138,18 +133,18 @@
       350: Dead
   - type: MeleeWeapon
     hidden: true
-    range: 1.5
-    arcwidth: 0
-    arc: fist
+    angle: 0
+    attackRate: 0.75
+    animation: WeaponArcFist
     damage:
       types:
-        Blunt: 50 #oof ouch owie my bones
+        Blunt: 66 #oof ouch owie my bones
   - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 150
+      density: 400
       mask:
       - MobMask
       layer:
@@ -193,7 +188,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.2
-      mass: 4 #Bulky by mouse standards...
+      density: 30 #Bulky by mouse standards...
       mask:
       - SmallMobMask
       layer:
@@ -201,13 +196,12 @@
   - type: MobState
     thresholds:
       0: Alive
-      30: Critical
+      40: Critical
       60: Dead
   - type: MeleeWeapon
     hidden: true
-    range: 1
-    arcwidth: 0
-    arc: claw
+    angle: 0
+    animation: WeaponArcClaw
     damage:
       types:
         Slash: 5

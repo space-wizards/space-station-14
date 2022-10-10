@@ -14,7 +14,7 @@ namespace Content.Server.Contests
     /// >1 = Advantage to roller
     /// <1 = Advantage to target
     /// Roller should be the entity with an advantage from being bigger/healthier/more skilled, etc.
-    /// <summary>
+    /// </summary>
     public sealed class ContestsSystem : EntitySystem
     {
         [Dependency] private readonly SharedMobStateSystem _mobStateSystem = default!;
@@ -27,13 +27,10 @@ namespace Content.Server.Contests
             if (!Resolve(roller, ref rollerPhysics, false) || !Resolve(target, ref targetPhysics, false))
                 return 1f;
 
-            if (rollerPhysics == null || targetPhysics == null)
-                return 1f;
-
             if (targetPhysics.FixturesMass == 0)
                 return 1f;
 
-            return (rollerPhysics.FixturesMass / targetPhysics.FixturesMass);
+            return rollerPhysics.FixturesMass / targetPhysics.FixturesMass;
         }
 
         /// <summary>
@@ -47,18 +44,15 @@ namespace Content.Server.Contests
             if (!Resolve(roller, ref rollerDamage, false) || !Resolve(target, ref targetDamage, false))
                 return 1f;
 
-            if (rollerDamage == null || targetDamage == null)
-                return 1f;
-
             // First, we'll see what health they go into crit at.
             float rollerThreshold = 100f;
             float targetThreshold = 100f;
 
-            if (TryComp<MobStateComponent>(roller, out var rollerState) && rollerState != null &&
+            if (TryComp<MobStateComponent>(roller, out var rollerState) &&
                 _mobStateSystem.TryGetEarliestIncapacitatedState(rollerState, 10000, out _, out var rollerCritThreshold))
                 rollerThreshold = (float) rollerCritThreshold;
 
-            if (TryComp<MobStateComponent>(target, out var targetState) && targetState != null &&
+            if (TryComp<MobStateComponent>(target, out var targetState) &&
                 _mobStateSystem.TryGetEarliestIncapacitatedState(targetState, 10000, out _, out var targetCritThreshold))
                 targetThreshold = (float) targetCritThreshold;
 
@@ -97,8 +91,9 @@ namespace Content.Server.Contests
             var massMultiplier = massWeight / weightTotal;
             var stamMultiplier = stamWeight / weightTotal;
 
-            return ((DamageContest(roller, target) * damageMultiplier) + (MassContest(roller, target) * massMultiplier)
-                    + (StaminaContest(roller, target) * stamMultiplier));
+            return DamageContest(roller, target) * damageMultiplier +
+                   MassContest(roller, target) * massMultiplier +
+                   StaminaContest(roller, target) * stamMultiplier;
         }
 
         /// <summary>
@@ -109,6 +104,7 @@ namespace Content.Server.Contests
         {
             return score switch
             {
+                // TODO: Should just be a curve
                 <= 0 => 1f,
                 <= 0.25f => 0.9f,
                 <= 0.5f => 0.75f,

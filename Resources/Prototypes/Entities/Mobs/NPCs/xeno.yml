@@ -9,13 +9,18 @@
   - type: DiseaseProtection
     protection: 1
   - type: CombatMode
-    canDisarm: true
+    disarm: null
   - type: InputMover
   - type: MobMover
   - type: HTN
     rootTask: XenoCompound
+    blackboard:
+      NavPry: !type:Bool
+        true
+      NavSmash: !type:Bool
+        true
   - type: Tool
-    speed: 0.3
+    speed: 1.5
     qualities:
       - Prying
     useSound:
@@ -41,7 +46,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.25
-      mass: 200
+      density: 1000
       mask:
       - MobMask
       layer:
@@ -62,14 +67,13 @@
           -0.25
   - type: MeleeWeapon
     hidden: true
-    range: 1.5
-    arcwidth: 0
-    hitSound:
+    angle: 0
+    soundHit:
      collection: AlienClaw
-    arc:
+    animation: WeaponArcClaw
     damage:
       groups:
-        Brute: 20
+        Brute: 12
   - type: Appearance
   - type: DamageStateVisuals
     rotate: true
@@ -132,7 +136,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.45
-      mass: 250
+      density: 400
       mask:
       - MobMask
       layer:
@@ -165,7 +169,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.45
-      mass: 200
+      density: 450
       mask:
       - MobMask
       layer:
@@ -195,7 +199,6 @@
     damage:
      groups:
        Brute: 40
-    cooldownTime: 2
   - type: SlowOnDamage
     speedModifierThresholds:
       1000: 0.7
@@ -204,7 +207,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.45
-      mass: 10000
+      density: 15500
       mask:
       - MobMask
       layer:
@@ -233,8 +236,7 @@
     hidden: true
     damage:
      groups:
-       Brute: 35
-    cooldownTime: 1.5
+       Brute: 20
   - type: SlowOnDamage
     speedModifierThresholds:
       450: 0.7
@@ -243,7 +245,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.45
-      mass: 600
+      density: 1350
       mask:
       - MobMask
       layer:
@@ -272,8 +274,7 @@
     hidden: true
     damage:
      groups:
-       Brute: 15
-    cooldownTime: 0.5
+       Brute: 8
   - type: SlowOnDamage
     speedModifierThresholds:
       200: 0.7
@@ -282,7 +283,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.45
-      mass: 150
+      density: 235
       mask:
       - MobMask
       layer:
@@ -322,7 +323,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.45
-      mass: 150
+      density: 235
       mask:
       - MobMask
       layer:
@@ -362,9 +363,8 @@
     - Xeno
   - type: MeleeWeapon
     hidden: true
-    range: 1.5
-    arcwidth: 0
-    arc: bite
+    angle: 0
+    animation: WeaponArcBite
     damage:
       types:
         Piercing: 5
@@ -386,7 +386,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 10
+      density: 25
       mask:
       - MobMask
       layer:

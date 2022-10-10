@@ -81,7 +81,10 @@ namespace Content.Server.Atmos.EntitySystems
         {
             component.Target = target;
             component.User = user;
-            component.LastPosition = Transform(target ?? user).Coordinates;
+            if (target != null)
+                component.LastPosition = Transform(target.Value).Coordinates;
+            else
+                component.LastPosition = null;
             component.Enabled = true;
             Dirty(component);
             UpdateAppearance(component);
