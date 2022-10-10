@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Linq;
+﻿using System.Linq;
 using System.Runtime.InteropServices;
 using Content.Client.Actions;
 using Content.Client.DragDrop;
@@ -28,7 +27,7 @@ using static Robust.Client.UserInterface.Controls.TextureRect;
 
 namespace Content.Client.UserInterface.Systems.Actions;
 
-public sealed class ActionUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>,IOnSystemChanged<ActionsSystem>
+public sealed class ActionUIController : UIController, IOnStateChanged<GameplayState>, IOnSystemChanged<ActionsSystem>
 {
     [Dependency] private readonly IEntityManager _entities = default!;
 
@@ -160,7 +159,7 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
         var page = _pages[_currentPageIndex];
         _container?.SetActionData(page);
 
-        _actionsBar!.PageButtons.Label.Text = $"{_currentPageIndex}";
+        _actionsBar!.PageButtons.Label.Text = $"{_currentPageIndex + 1}";
     }
 
     private void OnLeftArrowPressed(ButtonEventArgs args)
