@@ -66,3 +66,18 @@
           whitelist:
             tags:
               - SubdermalImplant
+
+- type: entity
+  id: MacroBombImplanter
+  name: macro bomb implanter
+  description: bigger bomb
+  parent: Implanter
+  components:
+    - type: ItemSlots
+      slots:
+        implanter_slot:
+          startingItem: MacroBombImplant
+          priority: 0
+          whitelist:
+            tags:
+              - SubdermalImplant

@@ -19,6 +19,8 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
         base.Initialize();
 
         SubscribeLocalEvent<ImplantedComponent, MobStateChangedEvent>(OnMobstateChanged);
+
+        //TODO: Add more trigger events and such for certain implant types
     }
 
     private void OnMobstateChanged(EntityUid uid, ImplantedComponent component, MobStateChangedEvent args)
