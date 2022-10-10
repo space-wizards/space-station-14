@@ -26,7 +26,7 @@ namespace Content.Server.Armor
                 return;
             foreach (var coefficientArmor in component.Modifiers.Coefficients)
             {
-                args.Entries.Add(new ExamineEntry(component.ExaminePriorityCoefficient,Loc.GetString("armor-coefficient-value",
+                args.Entries.Add(new ExamineEntry(component.ExaminePriority,Loc.GetString("armor-coefficient-value",
                     ("type", coefficientArmor.Key),
                     ("value", MathF.Round((1f - coefficientArmor.Value) * 100, 1))
                     )));
@@ -34,12 +34,13 @@ namespace Content.Server.Armor
 
             foreach (var flatArmor in component.Modifiers.FlatReduction)
             {
-                args.Entries.Add(new ExamineEntry(component.ExaminePriorityFlat,Loc.GetString("armor-reduction-value",
+                args.Entries.Add(new ExamineEntry(component.ExaminePriority + 0.1f,Loc.GetString("armor-reduction-value",
                     ("type", flatArmor.Key),
                     ("value", flatArmor.Value)
                     )));
             }
         }
+
         private void OnDamageModify(EntityUid uid, ArmorComponent component, DamageModifyEvent args)
         {
             args.Damage = DamageSpecifier.ApplyModifierSet(args.Damage, component.Modifiers);

@@ -1,19 +1,19 @@
 ﻿using Content.Shared.Damage;
+using Content.Shared.Damage.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Armor
 {
     [RegisterComponent]
-    public sealed class ArmorComponent : Component
+    public sealed class ArmorComponent : Component, IExamineGroup
     {
         [DataField("modifiers", required: true)]
         public DamageModifierSet Modifiers = default!;
 
-        /// <summary>
-        ///     The examine group used for grouping together examine details.
-        /// </summary>
-        [DataField("examineGroup")] public string ExamineGroup = "worn-stats";
+        [DataField("examineGroup", customTypeSerializer:typeof(PrototypeIdSerializer<ExamineGroupPrototype>))] 
+        public string ExamineGroup { get; set; } = "worn-stats";
 
-        [DataField("examinePriorityCoefficient")] public int ExaminePriorityCoefficient = 4;
-        [DataField("examinePriorityFlat")] public int ExaminePriorityFlat = 5;
+        [DataField("examinePriority")]
+        public float ExaminePriority { get; set; } = 2.0f;
     }
 }

@@ -1,3 +1,4 @@
+using Content.Shared.Damage.Prototypes;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -22,7 +23,7 @@ public class AmmoComponent : Component, IShootable
 /// Spawns another prototype to be shot instead of itself.
 /// </summary>
 [RegisterComponent, NetworkedComponent, ComponentReference(typeof(AmmoComponent))]
-public sealed class CartridgeAmmoComponent : AmmoComponent
+public sealed class CartridgeAmmoComponent : AmmoComponent, IExamineGroup
 {
     [ViewVariables(VVAccess.ReadWrite), DataField("proto", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string Prototype = default!;
@@ -54,9 +55,9 @@ public sealed class CartridgeAmmoComponent : AmmoComponent
     /// <summary>
     ///     The examine group used for grouping together examine details.
     /// </summary>
-    [DataField("examineGroup")]
-    public string ExamineGroup = "gun";
+    [DataField("examineGroup", customTypeSerializer: typeof(PrototypeIdSerializer<ExamineGroupPrototype>))]
+    public string ExamineGroup { get; set; } = "gun";
 
     [DataField("examinePriority")]
-    public int ExaminePriority = 10;
+    public float ExaminePriority { get; set; } = 10;
 }

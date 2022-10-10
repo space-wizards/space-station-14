@@ -1,10 +1,12 @@
 ﻿using Robust.Shared.GameStates;
+using Content.Shared.Damage.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Clothing;
 
 [RegisterComponent, NetworkedComponent, Access(typeof(ClothingSpeedModifierSystem))]
-public sealed class ClothingSpeedModifierComponent : Component
+public sealed class ClothingSpeedModifierComponent : Component, IExamineGroup
 {
     [DataField("walkModifier", required: true)] [ViewVariables(VVAccess.ReadWrite)]
     public float WalkModifier = 1.0f;
@@ -18,17 +20,11 @@ public sealed class ClothingSpeedModifierComponent : Component
     /// </summary>
     [DataField("enabled")] public bool Enabled = true;
 
-    /// <summary>
-    ///     The examine group used for grouping together examine details.
-    /// </summary>
-    [DataField("examineGroup")] public string ExamineGroup = "worn-stats";
+    [DataField("examineGroup", customTypeSerializer: typeof(PrototypeIdSerializer<ExamineGroupPrototype>))]
+    public string ExamineGroup { get; set; } = "worn-stats";
 
-    [DataField("examinePriorityIncreaseRunSpeed")] public int ExaminePriorityIncreaseRunSpeed = 9;
-    [DataField("examinePriorityDecreaseRunSpeed")] public int ExaminePriorityDecreaseRunSpeed = -2;
-    [DataField("examinePriorityIncreaseSpeed")] public int ExaminePriorityIncreaseSpeed = 8;
-    [DataField("examinePriorityDecreaseSpeed")] public int ExaminePriorityDecreaseSpeed = -1;
-    [DataField("examinePriorityIncreaseWalkSpeed")] public int ExaminePriorityIncreaseWalkSpeed = 7;
-    [DataField("examinePriorityDecreaseWalkSpeed")] public int ExaminePriorityDecreaseWalkSpeed = -3;
+    [DataField("examinePriority")]
+    public float ExaminePriority { get; set; } = 1.0f;
 }
 
 [Serializable, NetSerializable]

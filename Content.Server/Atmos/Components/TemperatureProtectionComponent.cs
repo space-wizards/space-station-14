@@ -1,7 +1,10 @@
-﻿namespace Content.Server.Atmos.Components;
+using Content.Shared.Damage.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+
+namespace Content.Server.Atmos.Components;
 
 [RegisterComponent]
-public sealed class TemperatureProtectionComponent : Component
+public sealed class TemperatureProtectionComponent : Component, IExamineGroup
 {
     /// <summary>
     ///     How much to multiply temperature deltas by.
@@ -9,10 +12,9 @@ public sealed class TemperatureProtectionComponent : Component
     [DataField("coefficient")]
     public float Coefficient = 1.0f;
 
-    /// <summary>
-    ///     The examine group used for grouping together examine details.
-    /// </summary>
-    [DataField("examineGroup")] public string ExamineGroup = "atmos";
+    [DataField("examineGroup", customTypeSerializer: typeof(PrototypeIdSerializer<ExamineGroupPrototype>))]
+    public string ExamineGroup { get; set; } = "atmos";
 
-    [DataField("examinePriority")] public int ExaminePriority = 1;
+    [DataField("examinePriority")]
+    public float ExaminePriority { get; set; } = 1.0f;
 }

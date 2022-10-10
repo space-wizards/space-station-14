@@ -69,7 +69,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         if (component.HideFromExamine)
             return;
 
-        var damageSpec = GetDamage(uid, component);
+        var damageSpec = GetItemMeleeDamage(uid, component);
 
         if (damageSpec == null)
             return;
@@ -82,28 +82,24 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
             }
         }
     }
+
     private void OnMeleeExaminableVerb(EntityUid uid, MeleeWeaponComponent component, GetVerbsEvent<ExamineVerb> args)
     {
         if (!args.CanInteract || !args.CanAccess || component.HideFromExamine)
             return;
 
-        if (GetDamage(uid, component) == null)
+        if (GetItemMeleeDamage(uid, component) == null)
             return;
 
         _examine.AddExamineGroupVerb(component.ExamineGroup, args);
     }
 
-    private DamageSpecifier? GetDamage(EntityUid uid, MeleeWeaponComponent component)
+    private DamageSpecifier? GetItemMeleeDamage(EntityUid uid, MeleeWeaponComponent component)
     {
         var getDamage = new ItemMeleeDamageEvent(component.Damage);
-
         RaiseLocalEvent(uid, getDamage);
 
-        var damageSpec = component.Damage.Total > FixedPoint2.Zero ? component.Damage : null;
-
-        if (damageSpec == null)
-            damageSpec = new DamageSpecifier();
-
+        var damageSpec = GetDamage(component) ?? new DamageSpecifier();
         damageSpec += getDamage.BonusDamage;
         damageSpec.TrimZeros();
 
@@ -111,6 +107,11 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
             return null;
 
         return damageSpec;
+    }
+
+    private DamageSpecifier? GetDamage(MeleeWeaponComponent component)
+    {
+        return component.Damage.Total > FixedPoint2.Zero ? component.Damage : null;
     }
 
     protected override void Popup(string message, EntityUid? uid, EntityUid? user)

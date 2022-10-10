@@ -64,6 +64,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             args.Entries.Add(new ExamineEntry(component.ExaminePriority,Loc.GetString("pressure-protection-examine", ("level", level))));
         }
+
         private void OnExamineVerb(EntityUid uid, PressureProtectionComponent component, GetVerbsEvent<ExamineVerb> args)
         {
             if (!args.CanAccess || !args.CanInteract)
@@ -71,6 +72,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             _examineSystem.AddExamineGroupVerb(component.ExamineGroup, args);
         }
+
         private void OnHighPressureEvent(EntityUid uid, PressureProtectionComponent component, HighPressureEvent args)
         {
             args.Modifier += component.HighPressureModifier;
@@ -82,7 +84,6 @@ namespace Content.Server.Atmos.EntitySystems
             args.Modifier += component.LowPressureModifier;
             args.Multiplier *= component.LowPressureMultiplier;
         }
-
 
         /// <summary>
         /// Completely prevent high pressure damage

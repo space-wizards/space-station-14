@@ -64,6 +64,7 @@ public sealed class StaminaSystem : EntitySystem
 
         args.Entries.Add(new ExamineEntry(component.ExaminePriority, Loc.GetString("damage-value", ("type", "Stamina"), ("amount", component.Damage))));
     }
+
     private void OnExamineVerb(EntityUid uid, StaminaDamageOnHitComponent component, GetVerbsEvent<ExamineVerb> args)
     {
         if (!args.CanInteract || !args.CanAccess)
@@ -74,6 +75,7 @@ public sealed class StaminaSystem : EntitySystem
 
         _examineSystem.AddExamineGroupVerb(component.ExamineGroup, args);
     }
+
     private void OnShutdown(EntityUid uid, StaminaComponent component, ComponentShutdown args)
     {
         SetStaminaAlert(uid);

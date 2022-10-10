@@ -24,9 +24,9 @@ namespace Content.Shared.Examine
     }
     public sealed class ExamineEntry
     {
-        public int Priority = 0;
+        public float Priority = 0;
         public string Markup = "";
-        public ExamineEntry(int priority, string markup)
+        public ExamineEntry(float priority, string markup)
         {
             Priority = priority;
             Markup = markup;

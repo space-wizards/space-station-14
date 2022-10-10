@@ -97,7 +97,7 @@ public sealed partial class GunSystem
         {
             if (damage.Value != FixedPoint2.Zero)
             {
-                args.Entries.Add(new ExamineEntry(component.ExaminePriority-1, Loc.GetString("damage-value", ("type", damage.Key), ("amount", damage.Value))));
+                args.Entries.Add(new ExamineEntry(component.ExaminePriority - 0.1f, Loc.GetString("damage-value", ("type", damage.Key), ("amount", damage.Value))));
             }
         }
 

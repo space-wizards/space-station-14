@@ -1,6 +1,9 @@
+using Content.Shared.Damage.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+
 namespace Content.Shared.Weapons.Ranged.Components;
 
-public abstract class BatteryAmmoProviderComponent : AmmoProviderComponent
+public abstract class BatteryAmmoProviderComponent : AmmoProviderComponent, IExamineGroup
 {
     /// <summary>
     /// How much battery it costs to fire once.
@@ -16,12 +19,9 @@ public abstract class BatteryAmmoProviderComponent : AmmoProviderComponent
     [ViewVariables]
     public int Capacity;
 
-    /// <summary>
-    ///     The examine group used for grouping together examine details.
-    /// </summary>
-    [DataField("examineGroup")]
-    public string ExamineGroup = "gun";
+    [DataField("examineGroup", customTypeSerializer: typeof(PrototypeIdSerializer<ExamineGroupPrototype>))]
+    public string ExamineGroup { get; set; } = "gun";
 
     [DataField("examinePriority")]
-    public int ExaminePriority = 20;
+    public float ExaminePriority { get; set; } = 20;
 }

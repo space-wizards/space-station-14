@@ -62,6 +62,7 @@ public sealed partial class GunSystem
             }
         }
     }
+
     private void OnCartridgeVerbExamine(EntityUid uid, CartridgeAmmoComponent component, GetVerbsEvent<ExamineVerb> args)
     {
         if (!args.CanInteract || !args.CanAccess)

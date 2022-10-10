@@ -1,5 +1,7 @@
 using Content.Server.Explosion.EntitySystems;
+using Content.Shared.Damage.Prototypes;
 using Content.Shared.Explosion;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
 namespace Content.Server.Explosion.Components;
@@ -13,7 +15,7 @@ namespace Content.Server.Explosion.Components;
 /// </remarks>
 [RegisterComponent]
 [Access(typeof(ExplosionResistanceSystem))]
-public sealed class ExplosionResistanceComponent : Component
+public sealed class ExplosionResistanceComponent : Component, IExamineGroup
 {
     /// <summary>
     ///     The explosive resistance coefficient, This fraction is multiplied into the total resistance.
@@ -28,10 +30,9 @@ public sealed class ExplosionResistanceComponent : Component
     [DataField("resistances", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<float, ExplosionPrototype>))]
     public Dictionary<string, float> Resistances = new();
 
-    /// <summary>
-    ///     The examine group used for grouping together examine details.
-    /// </summary>
-    [DataField("examineGroup")] public string ExamineGroup = "worn-stats";
+    [DataField("examineGroup", customTypeSerializer: typeof(PrototypeIdSerializer<ExamineGroupPrototype>))]
+    public string ExamineGroup { get; set; } = "worn-stats";
 
-    [DataField("examinePriority")] public int ExaminePriority = 6;
+    [DataField("examinePriority")]
+    public float ExaminePriority { get; set; } = 6.0f;
 }
