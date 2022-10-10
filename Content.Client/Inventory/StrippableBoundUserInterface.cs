@@ -29,10 +29,10 @@ namespace Content.Client.Inventory
 
         private Texture BlockedTexture => _resourceCache.GetTexture(HandsGui.BlockedTexturePath);
 
-        private IGameHud _hud = default!;
-        private IPrototypeManager _protoMan = default!;
-        private IEntityManager _entMan = default!;
-        private IResourceCache _resourceCache = default!;
+        [Dependency] private readonly IGameHud _hud = default!;
+        [Dependency] private readonly IPrototypeManager _protoMan = default!;
+        [Dependency] private readonly IEntityManager _entMan = default!;
+        [Dependency] private readonly IResourceCache _resourceCache = default!;
         private ExamineSystem _examine = default!;
         private InventorySystem _inv = default!;
 
@@ -44,24 +44,19 @@ namespace Content.Client.Inventory
 
         public StrippableBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
+            IoCManager.InjectDependencies(this);
+            _examine = _entMan.EntitySysManager.GetEntitySystem<ExamineSystem>();
+            _inv = _entMan.EntitySysManager.GetEntitySystem<InventorySystem>();
+            _strippingMenu = new StrippingMenu($"{Loc.GetString("strippable-bound-user-interface-stripping-menu-title", ("ownerName", Identity.Name(Owner.Owner, _entMan)))}");
+            _strippingMenu.OnClose += Close;
+            _virtualHiddenEntity = _entMan.SpawnEntity(HiddenPocketEntityId, MapCoordinates.Nullspace);
         }
 
         protected override void Open()
         {
             base.Open();
-
-            _entMan = IoCManager.Resolve<IEntityManager>();
-            _hud = IoCManager.Resolve<IGameHud>();
-            _protoMan = IoCManager.Resolve<IPrototypeManager>();
-            _resourceCache = IoCManager.Resolve<IResourceCache>();
-            _examine = _entMan.EntitySysManager.GetEntitySystem<ExamineSystem>();
-            _inv = _entMan.EntitySysManager.GetEntitySystem<InventorySystem>();
-            _strippingMenu = new StrippingMenu($"{Loc.GetString("strippable-bound-user-interface-stripping-menu-title", ("ownerName", Identity.Name(Owner.Owner, _entMan)))}");
-            _virtualHiddenEntity = _entMan.SpawnEntity(HiddenPocketEntityId, MapCoordinates.Nullspace);
-
-            _strippingMenu.OnClose += Close;
             UpdateMenu();
-            _strippingMenu.OpenCentered();
+            _strippingMenu?.OpenCentered();
         }
 
         protected override void Dispose(bool disposing)
