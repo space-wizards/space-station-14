@@ -314,6 +314,9 @@
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: stamp-clown
+  - type: Tag
+    tags:
+      - ClownRubberStamp
 
 - type: entity
   name: chief medical officer's rubber stamp

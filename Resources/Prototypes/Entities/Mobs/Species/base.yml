@@ -246,7 +246,6 @@
     hidden: true
     soundHit:
       collection: Punch
-    range: 1.5
     angle: 30
     animation: WeaponArcFist
     attackRate: 1
