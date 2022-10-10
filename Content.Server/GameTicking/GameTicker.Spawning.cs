@@ -257,7 +257,7 @@ namespace Content.Server.GameTicking
             newMind.ChangeOwningPlayer(data.UserId);
             newMind.AddRole(new ObserverRole(newMind));
 
-            var mob = SpawnObserverMob(_adminManager.IsAdmin(player));
+            var mob = SpawnObserverMob(_adminManager.IsAdmin(player) && _groupControllerImplementation.CanCommand(player, "aghost"));
             EntityManager.GetComponent<MetaDataComponent>(mob).EntityName = name;
             var ghost = EntityManager.GetComponent<GhostComponent>(mob);
             EntitySystem.Get<SharedGhostSystem>().SetCanReturnToBody(ghost, false);
