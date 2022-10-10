@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Client.CombatMode;
 using Content.Client.ContextMenu.UI;
 using Content.Client.Examine;
 using Content.Client.Gameplay;
@@ -28,6 +29,7 @@ namespace Content.Client.Verbs
     [UsedImplicitly]
     public sealed class VerbSystem : SharedVerbSystem
     {
+        [Dependency] private readonly CombatModeSystem _combatMode = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly ExamineSystem _examineSystem = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
@@ -60,7 +62,7 @@ namespace Content.Client.Verbs
             SubscribeNetworkEvent<VerbsResponseEvent>(HandleVerbResponse);
 
             EntityMenu = new(this);
-            VerbMenu = new(this);
+            VerbMenu = new(_combatMode, this);
         }
 
         public void Reset(RoundRestartCleanupEvent ev)

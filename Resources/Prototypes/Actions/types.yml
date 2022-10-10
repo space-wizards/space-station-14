@@ -30,31 +30,23 @@
   useDelay: 1 # equip noise spam.
   event: !type:ToggleClothingEvent
 
-- type: entityTargetAction
-  id: Disarm
-  name: action-name-disarm
-  description: action-description-disarm
-  icon: Interface/Actions/disarmOff.png
-  iconOn: Interface/Actions/disarm.png
-  repeat: true
-  useDelay: 1.5
-  interactOnMiss: true
-  event: !type:DisarmActionEvent
-  canTargetSelf: false
-  whitelist:
-    components:
-    - Hands
-    - StatusEffects
-
 - type: instantAction
   id: CombatModeToggle
   name: action-name-combat
   description: action-description-combat
+  checkCanInteract: false
   icon: Interface/Actions/harmOff.png
   iconOn: Interface/Actions/harm.png
   userPopup: action-popup-combat
   popupToggleSuffix: -enabled
   event: !type:ToggleCombatActionEvent
+
+- type: instantAction
+  id: ChangeVoiceMask
+  name: voice-mask-name-change-set
+  icon: Interface/Actions/scream.png # somebody else can figure out a better icon for this
+  description: voice-mask-name-change-set-description
+  serverEvent: !type:VoiceMaskSetNameEvent
 
 - type: instantAction
   id: VendingThrow

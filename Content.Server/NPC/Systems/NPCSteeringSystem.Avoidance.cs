@@ -1,11 +1,5 @@
-using System.Linq;
-using Content.Server.NPC.Components;
 using Content.Shared.CCVar;
-using Content.Shared.Movement.Components;
-using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
-using Robust.Shared.Physics;
-using Robust.Shared.Physics.Collision.Shapes;
 
 namespace Content.Server.NPC.Systems;
 

@@ -9,8 +9,12 @@ namespace Content.Client.Materials;
 public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
 {
     [Dependency] private readonly TransformSystem _transform = default!;
-    protected override void OnFinishInsertMaterialEntity(EntityUid toInsert, MaterialStorageComponent component)
+
+    public override bool TryInsertMaterialEntity(EntityUid user, EntityUid toInsert, EntityUid receiver, MaterialStorageComponent? component = null)
     {
+        if (!base.TryInsertMaterialEntity(user, toInsert, receiver, component))
+            return false;
         _transform.DetachParentToNull(Transform(toInsert));
+        return true;
     }
 }
