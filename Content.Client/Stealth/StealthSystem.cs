@@ -74,8 +74,12 @@ public sealed class StealthSystem : SharedStealthSystem
         // So we need to use relative screen coordinates. The reference frame we use is the parent's position on screen.
         // this ensures that if the Stealth is not moving relative to the parent, its relative screen position remains
         // unchanged.
-        var parentXform = Transform(Transform(uid).ParentUid);
+        var parent = Transform(uid).ParentUid;
+        if (!parent.IsValid())
+            return; // should never happen, but lets not kill the client.
+        var parentXform = Transform(parent);
         var reference = args.Viewport.WorldToLocal(parentXform.WorldPosition);
+        reference.X = -reference.X;
         var visibility = GetVisibility(uid, component);
 
         // actual visual visibility effect is limited to +/- 1.
