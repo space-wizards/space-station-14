@@ -67,7 +67,7 @@ namespace Content.Shared.Localizations
 
         private static ILocValue FormatUnitsGeneric(LocArgs args, string mode)
         {
-               const int maxPlaces = 5; // Matches amount in _lib.ftl
+            const int maxPlaces = 5; // Matches amount in _lib.ftl
             var pressure = ((LocValueNumber) args.Args[0]).Value;
 
             var places = 0;
