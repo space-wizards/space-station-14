@@ -13,4 +13,4 @@
       overflowJobs:
         - Passenger
       availableJobs:
-        Passenger: [ 0, 0 ]
+        Passenger: [ 0, 1 ]
