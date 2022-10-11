@@ -5,7 +5,10 @@
   abstract: true
   components:
     - type: ItemSlots
-    - type: ContainerContainer
+    - containers:
+        implanter_slot: !type:ContainerSlot
+          ents: [ ]
+      type: ContainerContainer
     - type: Implanter
     - type: Sprite
       sprite: Objects/Specific/Chemistry/syringe.rsi

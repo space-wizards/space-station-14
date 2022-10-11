@@ -10,7 +10,7 @@ public abstract class SharedImplanterSystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _container = default!;
 
     public const string ImplanterSlotId = "implanter_slot";
-    public const string ImplantSlotId = "ImplantContainer";
+    public const string ImplantSlotId = "implantcontainer";
 
     public override void Initialize()
     {

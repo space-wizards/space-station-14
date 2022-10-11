@@ -11,7 +11,7 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
 
-    public const string ImplantSlotId = "ImplantContainer";
+    public const string ImplantSlotId = "implantContainer";
 
     public override void Initialize()
     {

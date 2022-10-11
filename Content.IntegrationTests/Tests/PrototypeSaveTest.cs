@@ -127,12 +127,7 @@ public sealed class PrototypeSaveTest
         "ClothingHeadHatChef",
         "Bucket",
         "AirlockShuttle",
-        "AirlockGlassShuttle",
-        "UndeadImplanter",
-        "SadTromboneImplanter",
-        "TrackingImplanter",
-        "MicroBombImplanter",
-        "MacroBombImplanter"
+        "AirlockGlassShuttle"
     };
 
     [Test]
