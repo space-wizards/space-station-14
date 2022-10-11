@@ -1,20 +1,4 @@
 Entries:
-- author: keronshb
-  changes:
-  - {message: Unintended blocking bugs are now fixed., type: Fix}
-  id: 1922
-  time: '2022-07-11T01:50:09.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: The nuke now forcibly anchors when armed., type: Tweak}
-  - {message: The nuke now announces its coordinates when armed., type: Tweak}
-  id: 1923
-  time: '2022-07-11T07:29:51.0000000+00:00'
-- author: Duddino
-  changes:
-  - {message: Fixed typo in lobby countdown, type: Fix}
-  id: 1924
-  time: '2022-07-11T18:09:29.0000000+00:00'
 - author: PJB3005
   changes:
   - {message: 'Drop the bad anime act, you can now leave again', type: Fix}
@@ -2938,3 +2922,20 @@ Entries:
       traitor item to be added in the future!', type: Add}
   id: 2421
   time: '2022-10-09T22:17:53.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed firelock construction not working. Deconstructing existing firelocks
+      is still bugged., type: Fix}
+  id: 2422
+  time: '2022-10-10T02:36:28.0000000+00:00'
+- author: Rapidgame7
+  changes:
+  - {message: Improved error pop-up when failing to insert an item into storage containers.,
+    type: Tweak}
+  id: 2423
+  time: '2022-10-10T22:19:59.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix Centcomm map loading failing., type: Fix}
+  id: 2424
+  time: '2022-10-10T23:35:22.0000000+00:00'
