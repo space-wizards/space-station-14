@@ -113,7 +113,7 @@ namespace Content.Server.Explosion.EntitySystems
             if (component.MobState == args.CurrentMobState)
                 Trigger(component.Owner);
 
-            if (TryComp<SharedBodyComponent>(uid, out var body) && component.GibOnDeath)
+            if (TryComp<SharedBodyComponent>(uid, out var body) && args.CurrentMobState == DamageState.Dead && component.GibOnDeath)
                 body.Gib();
         }
 

@@ -11,6 +11,21 @@
 
 - type: entity
   parent: BaseSubdermalImplant
+  id: SadTromboneImplant
+  name: sad trombone implant
+  noSpawn: true
+  components:
+    - type: SubdermalImplant
+    - type: TriggerOnMobstateChange
+      mobState: Dead
+    - type: EmitSoundOnTrigger
+      sound:
+        collection: SadTrombone
+        params:
+          variation: 0.125
+
+- type: entity
+  parent: BaseSubdermalImplant
   id: UndeadImplant
   name: undead implant
   noSpawn: true
