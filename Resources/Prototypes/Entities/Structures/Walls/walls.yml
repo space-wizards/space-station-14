@@ -47,6 +47,8 @@
   - type: Airtight
   - type: StaticPrice
     price: 75
+  - type: RadiationBlocker
+    resistance: 2
 
 - type: entity
   parent: BaseWall
@@ -451,6 +453,8 @@
       - type: ReinforcedWallVisualizer
   - type: StaticPrice
     price: 150
+  - type: RadiationBlocker
+    resistance: 5
 
 # Riveting
 - type: entity
