@@ -1,9 +1,4 @@
 Entries:
-- author: Duddino
-  changes:
-  - {message: Fixed typo in lobby countdown, type: Fix}
-  id: 1924
-  time: '2022-07-11T18:09:29.0000000+00:00'
 - author: PJB3005
   changes:
   - {message: 'Drop the bad anime act, you can now leave again', type: Fix}
@@ -2939,3 +2934,8 @@ Entries:
     type: Tweak}
   id: 2423
   time: '2022-10-10T22:19:59.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix Centcomm map loading failing., type: Fix}
+  id: 2424
+  time: '2022-10-10T23:35:22.0000000+00:00'
