@@ -26,8 +26,10 @@ using static Content.Client.UserInterface.Systems.Actions.Windows.ActionsWindow;
 using static Robust.Client.UserInterface.Control;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 using static Robust.Client.UserInterface.Controls.LineEdit;
-using static Robust.Client.UserInterface.Controls.MultiselectOptionButton<Content.Client.UserInterface.Systems.Actions.Windows.ActionsWindow.Filters>;
+using static Robust.Client.UserInterface.Controls.MultiselectOptionButton<
+    Content.Client.UserInterface.Systems.Actions.Windows.ActionsWindow.Filters>;
 using static Robust.Client.UserInterface.Controls.TextureRect;
+using static Robust.Shared.Input.Binding.PointerInputCmdHandler;
 
 namespace Content.Client.UserInterface.Systems.Actions;
 
@@ -85,7 +87,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         DebugTools.Assert(_window == null);
         _window = UIManager.CreateWindow<ActionsWindow>();
         _actionButton = UIManager.GetActiveUIWidget<MenuBar.Widgets.GameTopMenuBar>().ActionButton;
-        LayoutContainer.SetAnchorPreset(_window,LayoutContainer.LayoutPreset.CenterTop);
+        LayoutContainer.SetAnchorPreset(_window, LayoutContainer.LayoutPreset.CenterTop);
         _window.OnClose += () => { _actionButton.Pressed = false; };
         _window.OnOpen += () => { _actionButton.Pressed = true; };
         _window.ClearButton.OnPressed += OnClearPressed;
@@ -107,8 +109,14 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         {
             var boundId = i; // This is needed, because the lambda captures it.
             var boundKey = hotbarKeys[i];
-            builder = builder.Bind(boundKey,
-                InputCmdHandler.FromDelegate(_ => TriggerAction(boundId)));
+            builder = builder.Bind(boundKey, new PointerInputCmdHandler((in PointerInputCmdArgs args) =>
+            {
+                if (args.State != BoundKeyState.Up)
+                    return false;
+
+                TriggerAction(boundId);
+                return true;
+            }, false));
         }
 
         var loadoutKeys = ContentKeyFunctions.GetLoadoutBoundKeys();
@@ -201,8 +209,8 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             _window.Close();
             return;
         }
-        _window.Open();
 
+        _window.Open();
     }
 
     private void UpdateFilterLabel()
@@ -309,6 +317,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             {
                 CurrentPage[position] = type;
             }
+
             return;
         }
 
@@ -333,7 +342,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             SetAction(button, type);
         }
 
-        if (_menuDragHelper.Dragged is { Parent: ActionButtonContainer } old)
+        if (_menuDragHelper.Dragged is {Parent: ActionButtonContainer} old)
         {
             SetAction(old, null);
         }
@@ -546,6 +555,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             {
                 currentPage = 0;
             }
+
             pagesLeft--;
         }
     }
