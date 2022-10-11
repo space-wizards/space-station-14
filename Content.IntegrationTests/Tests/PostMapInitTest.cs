@@ -182,7 +182,7 @@ namespace Content.IntegrationTests.Tests
                     .Select(spawnpoint => spawnpoint.Job.ID)
                     .Distinct();
                 var missingSpawnPoints = jobList.Except(spawnPoints);
-                Assert.That(missingSpawnPoints.Count() == 0, $"{String.Join(", ", missingSpawnPoints)} have no spawnpoint on {mapProto}");
+                Assert.That(missingSpawnPoints.Count() == 0, $"There is no spawnpoint for {String.Join(", ", missingSpawnPoints)} on {mapProto}.");
 
                 try
                 {
