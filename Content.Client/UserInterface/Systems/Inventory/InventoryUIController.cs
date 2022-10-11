@@ -238,6 +238,7 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
     {
         if (!_slotGroups.TryGetValue(data.SlotGroup, out var slotGroup))
             return;
+
         var button = new SlotButton(data);
         button.Pressed += ItemPressed;
         button.StoragePressed += StoragePressed;
@@ -248,16 +249,20 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
     {
         if (!_slotGroups.TryGetValue(data.SlotGroup, out var slotGroup))
             return;
+
         slotGroup.RemoveButton(data.SlotName);
     }
 
     private void LoadSlots(ClientInventoryComponent clientInv)
     {
+        UnloadSlots();
         _playerInventory = clientInv;
         foreach (var slotData in clientInv.SlotData.Values)
         {
             AddSlot(slotData);
         }
+
+        UpdateInventoryHotbar(_playerInventory);
     }
 
     private void UnloadSlots()
@@ -295,20 +300,10 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
         button.StorageButton.Visible = showStorage;
     }
 
-    public void BlockSlot(string slotName, bool blocked)
-    {
-    }
-
-    public void HighlightSlot(string slotName, bool highlight)
-    {
-    }
-
     public bool RegisterSlotGroupContainer(ItemSlotButtonContainer slotContainer)
     {
         if (_slotGroups.TryAdd(slotContainer.SlotGroup, slotContainer))
-        {
             return true;
-        }
 
         Logger.Warning("Could not add container for slotgroup: " + slotContainer.SlotGroup);
         return false;

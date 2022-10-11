@@ -39,8 +39,8 @@ namespace Content.Client.Inventory
         public override void Initialize()
         {
             base.Initialize();
+
             SubscribeLocalEvent<ClientInventoryComponent, PlayerAttachedEvent>(OnPlayerAttached);
-            SubscribeLocalEvent<ClientInventoryComponent, PlayerDetachedEvent>(OnPlayerDetached);
 
             SubscribeLocalEvent<ClientInventoryComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<ClientInventoryComponent, ComponentShutdown>(OnShutdown);
@@ -103,16 +103,12 @@ namespace Content.Client.Inventory
             OnSpriteUpdate?.Invoke(update);
         }
 
-        private void OnPlayerDetached(EntityUid uid, ClientInventoryComponent component,
-            PlayerDetachedEvent? args = null)
-        {
-            if (uid == _playerManager.LocalPlayer?.ControlledEntity)
-                OnUnlinkInventory?.Invoke();
-        }
-
         private void OnShutdown(EntityUid uid, ClientInventoryComponent component, ComponentShutdown args)
         {
-            OnPlayerDetached(uid, component);
+            if (component.Owner != _playerManager.LocalPlayer?.ControlledEntity)
+                return;
+
+            OnUnlinkInventory?.Invoke();
         }
 
         private void OnPlayerAttached(EntityUid uid, ClientInventoryComponent component, PlayerAttachedEvent args)
