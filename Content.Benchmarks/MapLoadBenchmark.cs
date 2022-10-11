@@ -37,9 +37,6 @@ public class MapLoadBenchmark
     [Benchmark]
     public void LoadMap()
     {
-        var pair = _pair.Pair;
-        var server = pair.Server;
-        var maploader = server.ResolveDependency<IMapLoader>();
-        maploader.LoadMap(new MapId(10), Paths[Map]);
+        _pair.Pair.Server.ResolveDependency<IMapLoader>().LoadMap(new MapId(10), Paths[Map]);
     }
 }
