@@ -68,6 +68,15 @@ public sealed class HandsContainer : ItemSlotUIContainer<HandButton>
         _grid.DisposeAllChildren();
     }
 
+    public IEnumerable<HandButton> GetButtons()
+    {
+        foreach (var child in _grid.Children)
+        {
+            if (child is HandButton hand)
+                yield return hand;
+        }
+    }
+
     public bool IsFull => (MaxButtonCount != 0 && ButtonCount >= MaxButtonCount);
 
     public int ButtonCount => _grid.ChildCount;

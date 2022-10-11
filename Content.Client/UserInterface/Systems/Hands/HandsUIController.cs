@@ -4,12 +4,14 @@ using Content.Client.Hands.Systems;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Hands.Controls;
 using Content.Client.UserInterface.Systems.Hotbar.Widgets;
+using Content.Shared.Cooldown;
 using Content.Shared.Hands.Components;
 using Content.Shared.Input;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Shared.Input;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Client.UserInterface.Systems.Hands;
@@ -293,5 +295,30 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
     {
         if (HandsGui != null)
             HandsGui.Visible = _playerHandsComponent != null;
+    }
+
+    public override void FrameUpdate(FrameEventArgs args)
+    {
+        base.FrameUpdate(args);
+
+        // TODO this should be event based but 2 systems modify the same component differently for some reason
+        foreach (var container in _handsContainers)
+        {
+            foreach (var hand in container.GetButtons())
+            {
+                if (hand.Entity is not { } entity)
+                    return;
+
+                if (_entities.Deleted(entity) ||
+                    !_entities.TryGetComponent(entity, out ItemCooldownComponent? cooldown) ||
+                    cooldown is not { CooldownStart: { } start, CooldownEnd: { } end})
+                {
+                    hand.CooldownDisplay.Visible = false;
+                    return;
+                }
+
+                hand.CooldownDisplay.FromTime(start, end);
+            }
+        }
     }
 }

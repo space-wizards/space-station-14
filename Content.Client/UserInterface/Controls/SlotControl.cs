@@ -1,6 +1,5 @@
 ﻿using Content.Client.Cooldown;
 using Content.Client.UserInterface.Systems.Inventory.Controls;
-using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -20,18 +19,23 @@ namespace Content.Client.UserInterface.Controls
         public SpriteView HoverSpriteView { get; }
         public TextureButton StorageButton { get; }
         public CooldownGraphic CooldownDisplay { get; }
-        private string _slotName = "";
+
+        public EntityUid? Entity => SpriteView.Sprite?.Owner;
+
         private bool _slotNameSet;
+
+        private string _slotName = "";
         public string SlotName
         {
             get => _slotName;
             set
-            {//this auto registers the button with it's parent container when it's set
+            {
+                //this auto registers the button with it's parent container when it's set
                 if (_slotNameSet)
                 {
                     Logger.Warning("Tried to set slotName after init for:" + Name);
                     return;
-                };
+                }
                 _slotNameSet = true;
                 if (Parent is IItemslotUIContainer container)
                 {
@@ -43,8 +47,11 @@ namespace Content.Client.UserInterface.Controls
         }
 
         public bool Highlight { get => HighlightRect.Visible; set => HighlightRect.Visible = value;}
+
         public bool Blocked { get => BlockedRect.Visible; set => BlockedRect.Visible = value;}
+
         public Texture BlockedTexture => Theme.ResolveTexture(BlockedTexturePath);
+
         private string _blockedTexturePath = "";
         public string BlockedTexturePath
         {
@@ -57,6 +64,7 @@ namespace Content.Client.UserInterface.Controls
         }
 
         public Texture ButtonTexture => Theme.ResolveTexture(ButtonTexturePath);
+
         private string _buttonTexturePath = "";
         public string ButtonTexturePath {
             get => _buttonTexturePath;
@@ -66,7 +74,9 @@ namespace Content.Client.UserInterface.Controls
                 ButtonRect.Texture = Theme.ResolveTexture(_buttonTexturePath);
             }
         }
+
         public Texture StorageTexture => Theme.ResolveTexture(StorageTexturePath);
+
         private string _storageTexturePath = "";
         public string StorageTexturePath
         {
@@ -177,12 +187,15 @@ namespace Content.Client.UserInterface.Controls
 
         public void ClearHover()
         {
-            if (!EntityHover) return;
-            ISpriteComponent? tempQualifier = HoverSpriteView.Sprite;
+            if (!EntityHover)
+                return;
+
+            var tempQualifier = HoverSpriteView.Sprite;
             if (tempQualifier != null)
             {
                 IoCManager.Resolve<IEntityManager>().DeleteEntity(tempQualifier.Owner);
             }
+
             HoverSpriteView.Sprite = null;
         }
 
