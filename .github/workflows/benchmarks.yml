@@ -39,10 +39,10 @@ jobs:
         key: ${{ secrets.CENTCOMM_ROBUST_BENCHMARK_RUNNER_KEY }}
         command_timeout: 100000m
         script: |
-          mkdir content_benchmark_run
-          cd content_benchmark_run
+          mkdir benchmark_run_${{ github.sha }}
+          cd benchmark_run_${{ github.sha }}
           wget https://raw.githubusercontent.com/space-wizards/RobustToolbox/${{ steps.engine_version.outputs.out }}/Tools/run_benchmarks.py
           python3 run_benchmarks.py "${{ secrets.BENCHMARKS_WRITE_ADDRESS }}" "${{ secrets.BENCHMARKS_WRITE_PORT }}" "${{ secrets.BENCHMARKS_WRITE_USER }}" "${{ secrets.BENCHMARKS_WRITE_PASSWORD }}" "${{ github.sha }}"
           rm run_benchmarks.py
           cd ..
-          rmdir content_benchmark_run
+          rmdir benchmark_run_${{ github.sha }}
