@@ -6,7 +6,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
-namespace Content.Client.Radiation
+namespace Content.Client.Radiation.Overlays
 {
     public sealed class RadiationPulseOverlay : Overlay
     {
