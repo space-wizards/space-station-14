@@ -22,6 +22,15 @@ jobs:
     name: Run Benchmarks
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: 'recursive'
+    - name: Get Engine version
+      run: |
+        cd RobustToolbox
+        git fetch --depth=1
+        echo "::set-output name=out::$(git rev-parse HEAD)"
+      id: engine_version
     - name: Run script on centcomm
       uses: appleboy/ssh-action@master
       with:
@@ -30,6 +39,6 @@ jobs:
         key: ${{ secrets.CENTCOMM_ROBUST_BENCHMARK_RUNNER_KEY }}
         command_timeout: 100000m
         script: |
-          wget https://raw.githubusercontent.com/space-wizards/RobustToolbox/${{ github.sha }}/Tools/run_benchmarks.py
+          wget https://raw.githubusercontent.com/space-wizards/RobustToolbox/${{ steps.engine_version.outputs.out }}/Tools/run_benchmarks.py
           python3 run_benchmarks.py "${{ secrets.BENCHMARKS_WRITE_ADDRESS }}" "${{ secrets.BENCHMARKS_WRITE_PORT }}" "${{ secrets.BENCHMARKS_WRITE_USER }}" "${{ secrets.BENCHMARKS_WRITE_PASSWORD }}" "${{ github.sha }}"
           rm run_benchmarks.py
