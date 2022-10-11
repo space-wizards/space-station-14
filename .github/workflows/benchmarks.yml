@@ -1,0 +1,35 @@
+﻿name: Benchmarks
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 8 * * *'
+  push:
+    tags:
+      - 'v*'
+
+concurrency: benchmarks
+
+env:
+  ROBUST_BENCHMARKS_ENABLE_SQL: 1
+  ROBUST_BENCHMARKS_SQL_ADDRESS: ${{ secrets.BENCHMARKS_WRITE_ADDRESS }}
+  ROBUST_BENCHMARKS_SQL_PORT: ${{ secrets.BENCHMARKS_WRITE_PORT }}
+  ROBUST_BENCHMARKS_SQL_USER: ${{ secrets.BENCHMARKS_WRITE_USER }}
+  ROBUST_BENCHMARKS_SQL_PASSWORD: ${{ secrets.BENCHMARKS_WRITE_PASSWORD }}
+  ROBUST_BENCHMARKS_SQL_DATABASE: content_benchmarks
+
+jobs:
+  benchmark:
+    name: Run Benchmarks
+    runs-on: ubuntu-latest
+    steps:
+    - name: Run script on centcomm
+      uses: appleboy/ssh-action@master
+      with:
+        host: centcomm.spacestation14.io
+        username: robust-benchmark-runner
+        key: ${{ secrets.CENTCOMM_ROBUST_BENCHMARK_RUNNER_KEY }}
+        command_timeout: 100000m
+        script: |
+          wget https://raw.githubusercontent.com/space-wizards/RobustToolbox/${{ github.sha }}/Tools/run_benchmarks.py
+          python3 run_benchmarks.py "${{ secrets.BENCHMARKS_WRITE_ADDRESS }}" "${{ secrets.BENCHMARKS_WRITE_PORT }}" "${{ secrets.BENCHMARKS_WRITE_USER }}" "${{ secrets.BENCHMARKS_WRITE_PASSWORD }}" "${{ github.sha }}"
+          rm run_benchmarks.py
