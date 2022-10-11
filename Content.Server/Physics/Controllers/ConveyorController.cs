@@ -153,7 +153,10 @@ namespace Content.Server.Physics.Controllers
                     if (!bodyQuery.TryGetComponent(entity, out var physics))
                         continue;
 
-                    _physics.WakeBody(physics);
+                    if (physics.BodyType != BodyType.Static)
+                    {
+                        _physics.WakeBody(physics);
+                    }
                 }
             }
         }

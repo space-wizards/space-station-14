@@ -41,6 +41,8 @@
       sprite: Structures/Windows/cracks.rsi
   - type: StaticPrice
     price: 20.5
+  - type: RadiationBlocker
+    resistance: 2
 
 - type: entity
   id: PlasmaWindowDirectional
