@@ -60,27 +60,27 @@ public sealed class ActionButton : Control
         Button = new TextureRect
         {
             Name = "Button",
-            TextureScale = new Vector2(2,2)
+            TextureScale = new Vector2(2, 2)
         };
         HighlightRect = new PanelContainer
         {
-            StyleClasses = { StyleNano.StyleClassHandSlotHighlight },
+            StyleClasses = {StyleNano.StyleClassHandSlotHighlight},
             MinSize = (32, 32),
             Visible = false
         };
         Icon = new TextureRect
         {
             Name = "Icon",
-            TextureScale = new Vector2(2,2),
+            TextureScale = new Vector2(2, 2),
             MaxSize = (64, 64),
             Stretch = TextureRect.StretchMode.Scale
         };
         Label = new Label
         {
-            Name= "Label",
+            Name = "Label",
             HorizontalAlignment = HAlignment.Left,
             VerticalAlignment = VAlignment.Top,
-            Margin = new Thickness(5, 0,0, 0)
+            Margin = new Thickness(5, 0, 0, 0)
         };
         Sprite = new SpriteView
         {
@@ -166,14 +166,16 @@ public sealed class ActionButton : Control
 
         if (action.Icon != null)
         {
-            IconTexture = action.Icon?.Frame0();
+            IconTexture = GetIcon();
             Sprite.Sprite = null;
             return;
         }
 
         if (action.Provider == null ||
             !entityManager.TryGetComponent(action.Provider.Value, out SpriteComponent? sprite))
+        {
             return;
+        }
 
         IconTexture = null;
         Sprite.Sprite = sprite;
@@ -188,6 +190,14 @@ public sealed class ActionButton : Control
         Cooldown.Progress = 1;
     }
 
+    private Texture? GetIcon()
+    {
+        if (Action == null)
+            return null;
+
+        return _toggled ? (Action.IconOn ?? Action.Icon)?.Frame0() : Action.Icon?.Frame0();
+    }
+
     protected override void FrameUpdate(FrameEventArgs args)
     {
         base.FrameUpdate(args);
@@ -200,7 +210,7 @@ public sealed class ActionButton : Control
         if (Action != null && _toggled != Action.Toggled)
         {
             _toggled = Action.Toggled;
-            IconTexture = _toggled ? (Action.IconOn ?? Action.Icon)?.Frame0() : Action.Icon?.Frame0();
+            IconTexture = GetIcon();
         }
     }
 
