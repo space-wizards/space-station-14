@@ -8,7 +8,7 @@
     <PanelContainer
         Name="Panel"
         ModulateSelfOverride="#FFFFFFE6"
-        HorizontalAlignment="Center">
+        HorizontalExpand="True">
         <PanelContainer.PanelOverride>
             <graphics:StyleBoxTexture
                 ContentMarginLeftOverride="6"
@@ -16,9 +16,9 @@
                 ContentMarginTopOverride="4"
                 ContentMarginBottomOverride="4" />
         </PanelContainer.PanelOverride>
-        <BoxContainer Orientation="Vertical" SeparationOverride="0" HorizontalAlignment="Center">
-            <BoxContainer Name="StatusContents" Orientation="Vertical" HorizontalAlignment="Center"/>
-            <Label Name="ItemNameLabel" ClipText="True" StyleClasses="ItemStatus" HorizontalAlignment="Center"/>
+        <BoxContainer Orientation="Vertical" SeparationOverride="0">
+            <BoxContainer Name="StatusContents" Orientation="Vertical"/>
+            <Label Name="ItemNameLabel" ClipText="True" StyleClasses="ItemStatus"/>
         </BoxContainer>
     </PanelContainer>
 </controls:ItemStatusPanel>
