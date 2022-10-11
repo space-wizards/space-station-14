@@ -6,8 +6,7 @@
   components:
     - type: ItemSlots
     - containers:
-        implanter_slot: !type:ContainerSlot
-          ents: [ ]
+        implanter_slot: !type:ContainerSlot {}
       type: ContainerContainer
     - type: Implanter
     - type: Sprite
