@@ -144727,16 +144727,4 @@ entities:
   - pos: -29.4123,11.565789
     parent: 100
     type: Transform
-- uid: 17062
-  type: SpawnPointBoxer
-  components:
-  - pos: -21.5,28.5
-    parent: 100
-    type: Transform
-- uid: 17063
-  type: SpawnPointBoxer
-  components:
-  - pos: -21.5,29.5
-    parent: 100
-    type: Transform
 ...
