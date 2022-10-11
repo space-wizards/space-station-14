@@ -1,64 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Kudzu now grows slower and should be easier to contain., type: Tweak}
-  id: 1915
-  time: '2022-07-09T16:40:43.0000000+00:00'
-- author: themias
-  changes:
-  - {message: You can now knock on shutters., type: Tweak}
-  id: 1916
-  time: '2022-07-10T06:54:40.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: The retro and makeshift laser gun are now pistol sized., type: Tweak}
-  id: 1917
-  time: '2022-07-10T07:57:16.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Glass shards and d4 dice now deal damage to people who walk over them
-      barefoot., type: Add}
-  id: 1918
-  time: '2022-07-10T09:28:37.0000000+00:00'
-- author: Elijahrane
-  changes:
-  - {message: Forensic pads and reports now label which entity they are from. Detectives
-      rejoice!, type: Add}
-  id: 1919
-  time: '2022-07-11T00:52:54.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Bodybags are now printable in the medical techfab., type: Add}
-  - {message: Medical techfab doesn't start with all recipes unlocked anymore., type: Fix}
-  id: 1920
-  time: '2022-07-11T01:11:30.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'There is now an identity system. Players may not be who they initially
-      seem. Masks and headgear can cover your true identity, and allow you to pass
-      as the ID you''re wearing, or as an unknown person if you have no visible ID.',
-    type: Add}
-  - {message: 'A lot of popups and UI windows were changed to use identity stuff rather
-      than hard-coded name, so if you''re able to see someones ''true'' name when
-      you shouldn''t (through a popup, etc) then please report it.', type: Fix}
-  id: 1921
-  time: '2022-07-11T01:36:53.0000000+00:00'
-- author: keronshb
-  changes:
-  - {message: Unintended blocking bugs are now fixed., type: Fix}
-  id: 1922
-  time: '2022-07-11T01:50:09.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: The nuke now forcibly anchors when armed., type: Tweak}
-  - {message: The nuke now announces its coordinates when armed., type: Tweak}
-  id: 1923
-  time: '2022-07-11T07:29:51.0000000+00:00'
-- author: Duddino
-  changes:
-  - {message: Fixed typo in lobby countdown, type: Fix}
-  id: 1924
-  time: '2022-07-11T18:09:29.0000000+00:00'
 - author: PJB3005
   changes:
   - {message: 'Drop the bad anime act, you can now leave again', type: Fix}
@@ -2934,3 +2874,68 @@ Entries:
       objectives.', type: Add}
   id: 2414
   time: '2022-10-09T19:09:45.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: All salvages with asteroids now have higher ore yield., type: Tweak}
+  id: 2415
+  time: '2022-10-09T19:13:30.0000000+00:00'
+- author: router
+  changes:
+  - {message: Some spicy foods now cause you to heat up and get burn damage instead
+      of being poisoned., type: Tweak}
+  - {message: The same spicy foods now satiate hunger better due to them being actually
+      spicy., type: Add}
+  id: 2416
+  time: '2022-10-09T19:25:22.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: NanoTrasen has finally upgraded all of our nuclear bombs! They no longer
+      all use the exact same code., type: Tweak}
+  id: 2417
+  time: '2022-10-09T19:28:08.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'Healing ticks when you metabolize less reagent than each tick takes
+      away are now scaled accordingly. In other words, 0.1u of omnizine is no longer
+      identical to 0.5u of omnizine, and will heal 5 times less.', type: Fix}
+  id: 2418
+  time: '2022-10-09T19:40:50.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Dumping a mop bucket now has a short delay, type: Tweak}
+  id: 2419
+  time: '2022-10-09T19:46:08.0000000+00:00'
+- author: Interrobang01
+  changes:
+  - {message: Added a crafting recipe for the muzzle, type: Add}
+  id: 2420
+  time: '2022-10-09T19:46:46.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: 'Cardboard Boxes have been added. They''re large boxes that can hold
+      a single person inside, and that person can move the box! If the box is opened,
+      everyone around them is in for a surprise.', type: Add}
+  - {message: 'Adds the Stealth component! Anything that has it will become invisible
+      if they stand still for a period of time, and gradually becomes visible while
+      moving.', type: Add}
+  - {message: 'Adds Stealth Box, which is a box that goes invisible and will be a
+      traitor item to be added in the future!', type: Add}
+  id: 2421
+  time: '2022-10-09T22:17:53.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed firelock construction not working. Deconstructing existing firelocks
+      is still bugged., type: Fix}
+  id: 2422
+  time: '2022-10-10T02:36:28.0000000+00:00'
+- author: Rapidgame7
+  changes:
+  - {message: Improved error pop-up when failing to insert an item into storage containers.,
+    type: Tweak}
+  id: 2423
+  time: '2022-10-10T22:19:59.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix Centcomm map loading failing., type: Fix}
+  id: 2424
+  time: '2022-10-10T23:35:22.0000000+00:00'
