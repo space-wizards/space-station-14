@@ -2,8 +2,10 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Botany;
 
-public class MutationSystem
+public class MutationSystem : EntitySystem
 {
+    [Dependency] private readonly IRobustRandom _robustRandom = default!;
+
     /// <summary>
     // Main idea: Simulate genetic mutation using random binary flips.  Each
     // seed attribute can be encoded with a variable number of bits, e.g.
@@ -14,7 +16,7 @@ public class MutationSystem
     //
     // You MUST clone() seed before mutating it!
     /// </summary>
-    public static void MutateSeed(SeedData seed, float severity)
+    public void MutateSeed(SeedData seed, float severity)
     {
         // Add up everything in the bits column and put the number here.
         const int totalbits = 215;
@@ -52,7 +54,7 @@ public class MutationSystem
         seed.BioluminescentColor = RandomColor(seed.BioluminescentColor, 10, totalbits, severity);
     }
 
-    public static SeedData Cross(SeedData a, SeedData b)
+    public SeedData Cross(SeedData a, SeedData b)
     {
         SeedData result = b.Clone();
 
@@ -101,7 +103,7 @@ public class MutationSystem
     //
     // 'totalbits' and 'mult' are used only to calculate the probability that
     // one bit gets flipped.
-    private static void MutateFloat(ref float val, float min, float max, int bits, int totalbits, float mult)
+    private void MutateFloat(ref float val, float min, float max, int bits, int totalbits, float mult)
     {
         // Probability that a bit flip happens for this value.
         float p = mult*bits/totalbits;
@@ -130,7 +132,7 @@ public class MutationSystem
         val = nval;
     }
 
-    private static void MutateInt(ref int n, int min, int max, int bits, int totalbits, float mult)
+    private void MutateInt(ref int n, int min, int max, int bits, int totalbits, float mult)
     {
         // Probability that a bit flip happens for this value.
         float p = mult*bits/totalbits;
@@ -155,7 +157,7 @@ public class MutationSystem
         n = np;
     }
 
-    private static void MutateBool(ref bool val, bool polarity, int bits, int totalbits, float mult)
+    private void MutateBool(ref bool val, bool polarity, int bits, int totalbits, float mult)
     {
         // Probability that a bit flip happens for this value.
         float p = mult*bits/totalbits;
@@ -167,7 +169,7 @@ public class MutationSystem
         val = polarity;
     }
 
-    private static Color RandomColor(Color color, int bits, int totalbits, float mult)
+    private Color RandomColor(Color color, int bits, int totalbits, float mult)
     {
         float p = mult*bits/totalbits;
         if (random(p))
@@ -187,24 +189,23 @@ public class MutationSystem
         return color;
     }
 
-    private static void CrossFloat(ref float val, float other)
+    private void CrossFloat(ref float val, float other)
     {
         val = random(0.5f) ? val : other;
     }
 
-    private static void CrossInt(ref int val, int other)
+    private void CrossInt(ref int val, int other)
     {
         val = random(0.5f) ? val : other;
     }
 
-    private static void CrossBool(ref bool val, bool other)
+    private void CrossBool(ref bool val, bool other)
     {
         val = random(0.5f) ? val : other;
     }
 
-    private static bool random(float p)
+    private bool random(float p)
     {
-        var rng = IoCManager.Resolve<IRobustRandom>();
-        return rng.Prob(p);
+        return _robustRandom.Prob(p);
     }
 }
