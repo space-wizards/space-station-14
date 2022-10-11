@@ -6,14 +6,6 @@ on:
 
 concurrency: benchmarks
 
-env:
-  ROBUST_BENCHMARKS_ENABLE_SQL: 1
-  ROBUST_BENCHMARKS_SQL_ADDRESS: ${{ secrets.BENCHMARKS_WRITE_ADDRESS }}
-  ROBUST_BENCHMARKS_SQL_PORT: ${{ secrets.BENCHMARKS_WRITE_PORT }}
-  ROBUST_BENCHMARKS_SQL_USER: ${{ secrets.BENCHMARKS_WRITE_USER }}
-  ROBUST_BENCHMARKS_SQL_PASSWORD: ${{ secrets.BENCHMARKS_WRITE_PASSWORD }}
-  ROBUST_BENCHMARKS_SQL_DATABASE: content_benchmarks
-
 jobs:
   benchmark:
     name: Run Benchmarks
@@ -36,10 +28,20 @@ jobs:
         key: ${{ secrets.CENTCOMM_ROBUST_BENCHMARK_RUNNER_KEY }}
         command_timeout: 100000m
         script: |
-          mkdir benchmark_run_${{ github.sha }}
-          cd benchmark_run_${{ github.sha }}
-          wget https://raw.githubusercontent.com/space-wizards/RobustToolbox/${{ steps.engine_version.outputs.out }}/Tools/run_benchmarks.py
-          python3 run_benchmarks.py "${{ secrets.BENCHMARKS_WRITE_ADDRESS }}" "${{ secrets.BENCHMARKS_WRITE_PORT }}" "${{ secrets.BENCHMARKS_WRITE_USER }}" "${{ secrets.BENCHMARKS_WRITE_PASSWORD }}" "${{ github.sha }}"
-          rm run_benchmarks.py
-          cd ..
-          rmdir benchmark_run_${{ github.sha }}
+          mkdir benchmark_run_content_${{ github.sha }}
+          cd benchmark_run_content_${{ github.sha }}
+          git clone https://github.com/space-wizards/space-station-14.git repo_dir --recursive
+          cd repo_dir
+          git checkout ${{ github.sha }}
+          cd Content.Benchmarks
+          dotnet restore
+          export ROBUST_BENCHMARKS_ENABLE_SQL=1
+          export ROBUST_BENCHMARKS_SQL_ADDRESS="${{ secrets.BENCHMARKS_WRITE_ADDRESS }}"
+          export ROBUST_BENCHMARKS_SQL_PORT="${{ secrets.BENCHMARKS_WRITE_PORT }}"
+          export ROBUST_BENCHMARKS_SQL_USER="${{ secrets.BENCHMARKS_WRITE_USER }}"
+          export ROBUST_BENCHMARKS_SQL_PASSWORD="${{ secrets.BENCHMARKS_WRITE_PASSWORD  }}"
+          export ROBUST_BENCHMARKS_SQL_DATABASE="content_benchmarks"
+          export GITHUB_SHA="${{ github.sha }}"
+          dotnet run --filter '*' --configuration Release
+          cd ../../..
+          rm -rf benchmark_run_content_${{ github.sha }}
