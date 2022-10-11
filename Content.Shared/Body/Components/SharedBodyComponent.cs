@@ -389,7 +389,7 @@ namespace Content.Shared.Body.Components
             }
         }
 
-        public virtual HashSet<EntityUid> Gib(bool gibParts = false)
+        public virtual HashSet<EntityUid> Gib(bool gibParts = false, bool deleteItems = false)
         {
             var entMgr = IoCManager.Resolve<IEntityManager>();
             var metaQuery = entMgr.GetEntityQuery<MetaDataComponent>();

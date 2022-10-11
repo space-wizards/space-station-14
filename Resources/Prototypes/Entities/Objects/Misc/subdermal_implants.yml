@@ -2,17 +2,20 @@
   parent: BaseItem
   id: BaseSubdermalImplant
   name: implant
+  description: a microscopic chip that's injected under the skin
   abstract: true
   components:
     - type: SubdermalImplant
     - type: Tag
       tags:
         - SubdermalImplant
+        - HideContextMenu
 
 - type: entity
   parent: BaseSubdermalImplant
   id: SadTromboneImplant
   name: sad trombone implant
+  description: plays a sad tune when the user dies
   noSpawn: true
   components:
     - type: SubdermalImplant
@@ -28,6 +31,7 @@
   parent: BaseSubdermalImplant
   id: UndeadImplant
   name: undead implant
+  description: a loaded zombie virus all in one implant
   noSpawn: true
   components:
     - type: SubdermalImplant
@@ -37,6 +41,7 @@
   parent: BaseSubdermalImplant
   id: TrackingImplant
   name: tracking implant
+  description: tracks whoever was implanted via the suit sensor network
   noSpawn: true
   components:
     - type: SubdermalImplant
@@ -55,6 +60,7 @@
   parent: BaseSubdermalImplant
   id: MicroBombImplant
   name: micro bomb implant
+  description: mission failed, user blows up on death to prevent company equipment from being stolen
   noSpawn: true
   components:
     - type: SubdermalImplant
@@ -73,9 +79,12 @@
   parent: BaseSubdermalImplant
   id: MacroBombImplant
   name: macro bomb implant
+  description: a large explosion packed into a small implant, be warned as this could be dangerous for your teammates
   noSpawn: true
   components:
     - type: SubdermalImplant
+      gibOnDeath: true
+      deleteItemsOnGib: true
     - type: TriggerOnMobstateChange
       mobState: Dead
       gibOnDeath: true

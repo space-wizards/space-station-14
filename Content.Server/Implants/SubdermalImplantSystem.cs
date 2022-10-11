@@ -28,17 +28,21 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
         if (!_container.TryGetContainer(uid, ImplantSlotId, out var implantContainer))
             return;
 
+        var implantQuery = GetEntityQuery<SubdermalImplantComponent>();
+        var mobstateTriggerQuery = GetEntityQuery<TriggerOnMobstateChangeComponent>();
+
         foreach (var implant in implantContainer.ContainedEntities)
         {
+            if (!implantQuery.TryGetComponent(implant, out var implantComp))
+                continue;
+
             if (TryComp<TriggerOnMobstateChangeComponent>(implant, out var trigger) && trigger.MobState == args.CurrentMobState)
             {
                 _trigger.Trigger(implant);
-
-                if (TryComp<SharedBodyComponent>(uid, out var body) && args.CurrentMobState == DamageState.Dead && trigger.GibOnDeath)
-                    body.Gib();
             }
+
+            if (TryComp<SharedBodyComponent>(uid, out var body) && args.CurrentMobState == DamageState.Dead && implantComp.GibOnDeath)
+                body.Gib(deleteItems:implantComp.DeleteItemsOnGib);
         }
-
-
     }
 }

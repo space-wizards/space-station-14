@@ -1,5 +1,6 @@
 ﻿- type: entity
   name: implanter
+  description: a syringe fitted to be used exclusively with implants
   id: BaseImplanter
   parent: BaseItem
   abstract: true

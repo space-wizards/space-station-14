@@ -16,6 +16,20 @@ public sealed class SubdermalImplantComponent : Component
 
     public EntityUid? EntityUid;
 
+    /// <summary>
+    /// For implants that you would like to gib on death.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("gibOnDeath")]
+    public bool GibOnDeath = false;
+
+    /// <summary>
+    /// For implants that gib and you want to delete the entities clothes/bagged items.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("deleteItemsOnGib")]
+    public bool DeleteItemsOnGib = false;
+
     //TODO: Add logic for passive actions (IE tracking implant)
 
     //TODO: Add logic for reactive actions (IE macro bomb on death)
