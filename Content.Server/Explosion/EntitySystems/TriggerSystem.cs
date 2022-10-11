@@ -114,7 +114,7 @@ namespace Content.Server.Explosion.EntitySystems
                 Trigger(component.Owner);
 
             if (TryComp<SharedBodyComponent>(uid, out var body) && args.CurrentMobState == DamageState.Dead && component.GibOnDeath)
-                body.Gib();
+                body.Gib(deleteItems:component.DeleteItemsOnGib);
         }
 
         public bool Trigger(EntityUid trigger, EntityUid? user = null)
