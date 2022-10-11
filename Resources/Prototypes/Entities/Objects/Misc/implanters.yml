@@ -5,6 +5,7 @@
   abstract: true
   components:
     - type: ItemSlots
+    - type: ContainerContainer
     - type: Implanter
     - type: Sprite
       sprite: Objects/Specific/Chemistry/syringe.rsi
@@ -18,7 +19,6 @@
   id: Implanter
   parent: BaseImplanter
   components:
-    - type: ContainerContainer
     - type: Tag
       tags:
         - Trash
