@@ -1,5 +1,5 @@
 ﻿- type: gameMap
-  id: omega
+  id: Omega
   mapName: 'Omega'
   mapPath: /Maps/omega.yml
   minPlayers: 0

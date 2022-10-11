@@ -34923,7 +34923,6 @@ entities:
       - BulletImpassable
       - InteractImpassable
       - Opaque
-      mass: 100
     - shape: !type:PhysShapeCircle
         position: 0,-0.5
         radius: 0.2
@@ -34956,7 +34955,6 @@ entities:
       - BulletImpassable
       - InteractImpassable
       - Opaque
-      mass: 100
     - shape: !type:PhysShapeCircle
         position: 0,-0.5
         radius: 0.2
@@ -41112,7 +41110,6 @@ entities:
       - BulletImpassable
       - InteractImpassable
       - Opaque
-      mass: 100
     - shape: !type:PhysShapeCircle
         position: 0,-0.5
         radius: 0.2
@@ -41145,7 +41142,6 @@ entities:
       - BulletImpassable
       - InteractImpassable
       - Opaque
-      mass: 100
     - shape: !type:PhysShapeCircle
         position: 0,-0.5
         radius: 0.2
@@ -41178,7 +41174,6 @@ entities:
       - BulletImpassable
       - InteractImpassable
       - Opaque
-      mass: 100
     - shape: !type:PhysShapeCircle
         position: 0,-0.5
         radius: 0.2
@@ -41211,7 +41206,6 @@ entities:
       - BulletImpassable
       - InteractImpassable
       - Opaque
-      mass: 100
     - shape: !type:PhysShapeCircle
         position: 0,-0.5
         radius: 0.2
@@ -46132,7 +46126,6 @@ entities:
       - BulletImpassable
       - InteractImpassable
       - Opaque
-      mass: 100
     - shape: !type:PhysShapeCircle
         position: 0,-0.5
         radius: 0.2
@@ -46165,7 +46158,6 @@ entities:
       - BulletImpassable
       - InteractImpassable
       - Opaque
-      mass: 100
     - shape: !type:PhysShapeCircle
         position: 0,-0.5
         radius: 0.2
@@ -70201,7 +70193,6 @@ entities:
       layer:
       - BulletImpassable
       - Opaque
-      mass: 70
     type: Fixtures
   - open: True
     removedMasks: 20

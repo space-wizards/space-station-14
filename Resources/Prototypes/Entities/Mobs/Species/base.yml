@@ -147,7 +147,7 @@
       - shape:
           !type:PhysShapeCircle
           radius: 0.35
-        mass: 70
+        density: 185
         restitution: 0.0
         mask:
           - MobMask
@@ -178,6 +178,7 @@
     preset: HumanPreset
   - type: Damageable
     damageContainer: Biological
+  - type: RadiationReceiver
   - type: ThermalRegulator
     metabolismHeat: 800
     radiatedHeat: 100
@@ -246,7 +247,6 @@
     hidden: true
     soundHit:
       collection: Punch
-    range: 1.5
     angle: 30
     animation: WeaponArcPunch
     attackRate: 1
@@ -359,7 +359,7 @@
       - shape:
           !type:PhysShapeAabb
           bounds: "-0.35,-0.35,0.35,0.35"
-        mass: 70
+        density: 185
         restitution: 0.0
         mask:
         - MobMask

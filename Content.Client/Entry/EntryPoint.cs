@@ -15,7 +15,7 @@ using Content.Client.MainMenu;
 using Content.Client.Parallax.Managers;
 using Content.Client.Players.PlayTimeTracking;
 using Content.Client.Preferences;
-using Content.Client.Radiation;
+using Content.Client.Radiation.Overlays;
 using Content.Client.Screenshot;
 using Content.Client.Singularity;
 using Content.Client.Stylesheets;
@@ -103,7 +103,6 @@ namespace Content.Client.Entry
 
             // Do not add to these, they are legacy.
             _componentFactory.RegisterClass<SharedSpawnPointComponent>();
-            _componentFactory.RegisterClass<SharedReagentDispenserComponent>();
             _componentFactory.RegisterClass<SharedGravityGeneratorComponent>();
             _componentFactory.RegisterClass<SharedAMEControllerComponent>();
             // Do not add to the above, they are legacy

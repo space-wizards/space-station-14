@@ -172,7 +172,7 @@ namespace Content.Server.Body.Systems
 
                     var actualEntity = bodyEntityUid != null ? bodyEntityUid.Value : solutionEntityUid.Value;
                     var args = new ReagentEffectArgs(actualEntity, (meta).Owner, solution, proto, mostToRemove,
-                        EntityManager, null);
+                        EntityManager, null, entry);
 
                     // do all effects, if conditions apply
                     foreach (var effect in entry.Effects)

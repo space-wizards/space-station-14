@@ -169,7 +169,7 @@
 - type: entity
   name: box of hugs
   parent: BoxCardboard
-  id: BoxHug
+  id: BoxHugHealing
   description: A special box for sensitive people.
   components:
   - type: Sprite
@@ -182,6 +182,9 @@
     contents:
       - id: Brutepack
         amount: 6
+  - type: Tag
+    tags:
+      - BoxHug
 
 - type: entity
   name: inflatable wall box

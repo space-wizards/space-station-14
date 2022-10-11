@@ -202,7 +202,7 @@ public sealed partial class RevenantSystem
             return;
         DamageSpecifier dspec = new();
         dspec.DamageDict.Add("Poison", damage.Value);
-        _damage.TryChangeDamage(args.Target, dspec, true);
+        _damage.TryChangeDamage(args.Target, dspec, true, origin: uid);
     }
 
     private void OnHarvestCancelled(EntityUid uid, RevenantComponent component, HarvestDoAfterCancelled args)
@@ -252,7 +252,7 @@ public sealed partial class RevenantSystem
                 //hardcoded damage specifiers til i die.
                 var dspec = new DamageSpecifier();
                 dspec.DamageDict.Add("Structural", 15);
-                _damage.TryChangeDamage(ent, dspec);
+                _damage.TryChangeDamage(ent, dspec, origin: uid);
             }
 
             if (!_random.Prob(component.DefileEffectChance))
