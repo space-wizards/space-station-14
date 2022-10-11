@@ -1,10 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Added blindfolds!, type: Add}
-  - {message: 'Added a rare, funny salvage item.', type: Add}
-  id: 1927
-  time: '2022-07-12T05:55:04.0000000+00:00'
 - author: Delete
   changes:
   - {message: 'Adds extra warning line decal, and fixed up existing ones.', type: Add}
@@ -2941,3 +2935,8 @@ Entries:
       conveyor belts get turned on., type: Fix}
   id: 2426
   time: '2022-10-11T07:28:47.0000000+00:00'
+- author: checkraze
+  changes:
+  - {message: Layout optimizations for Kettle, type: Tweak}
+  id: 2427
+  time: '2022-10-11T14:01:07.0000000+00:00'
