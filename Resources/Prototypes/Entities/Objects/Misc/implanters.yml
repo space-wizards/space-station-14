@@ -29,7 +29,6 @@
   description: brains
   parent: Implanter
   components:
-    - type: ContainerContainer
     - type: ItemSlots
       slots:
         implanter_slot:
@@ -45,7 +44,6 @@
   description: HONK
   parent: Implanter
   components:
-    - type: ContainerContainer
     - type: ItemSlots
       slots:
         implanter_slot:
@@ -61,7 +59,6 @@
   description: CIA
   parent: Implanter
   components:
-    - type: ContainerContainer
     - type: ItemSlots
       slots:
         implanter_slot:
@@ -77,7 +74,6 @@
   description: boom
   parent: Implanter
   components:
-    - type: ContainerContainer
     - type: ItemSlots
       slots:
         implanter_slot:
@@ -93,7 +89,6 @@
   description: bigger bomb
   parent: Implanter
   components:
-    - type: ContainerContainer
     - type: ItemSlots
       slots:
         implanter_slot:
