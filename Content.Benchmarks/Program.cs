@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Running;
 using Content.IntegrationTests;
 using Content.Server.Maps;
