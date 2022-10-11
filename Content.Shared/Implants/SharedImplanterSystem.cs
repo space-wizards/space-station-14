@@ -34,9 +34,9 @@ public abstract class SharedImplanterSystem : EntitySystem
         if (!HasComp<ImplantedComponent>(target))
             EnsureComp<ImplantedComponent>(target);
 
-        var implantContainer = _container.EnsureContainer<Container>(target, ImplantSlotId);
+        //var implantContainer = _container.EnsureContainer<Container>(target, ImplantSlotId);
         implantComp.EntityUid = target;
-        container.Remove(implant);
-        implantContainer.Insert(implant);
+        //container.Remove(implant);
+        //implantContainer.Insert(implant);
     }
 }
