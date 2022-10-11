@@ -23,7 +23,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: ToolboxMechanical
+      - id: ToolboxMechanicalFilled
         amount: 2
       - id: ToolboxElectricalFilled
         amount: 2

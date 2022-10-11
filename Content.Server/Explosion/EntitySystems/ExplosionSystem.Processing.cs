@@ -363,6 +363,7 @@ public sealed partial class ExplosionSystem : EntitySystem
 
             ev.DamageCoefficient = Math.Max(0, ev.DamageCoefficient);
 
+            //todo need a way to track origin of explosion
             if (ev.DamageCoefficient == 1)
             {
                 // no damage-dict multiplication required.

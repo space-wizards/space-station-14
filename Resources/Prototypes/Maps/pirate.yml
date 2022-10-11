@@ -1,5 +1,5 @@
 - type: gameMap
-  id: pirate
+  id: Pirate
   mapName: 'Pirate Ship'
   mapPath: /Maps/pirate.yml
   minPlayers: 0

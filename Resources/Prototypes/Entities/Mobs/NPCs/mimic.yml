@@ -27,7 +27,7 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.35,-0.35,0.35,0.35"
-      mass: 500
+      density: 1000
       mask:
       - MobMask
       layer:
@@ -37,7 +37,6 @@
   - type: AnimationPlayer
   - type: MeleeWeapon
     hidden: true
-    range: 1.5
     angle: 0
     animation: WeaponArcFist
     damage:
