@@ -132,7 +132,7 @@ public sealed class PrototypeSaveTest
         "SadTromboneImplanter",
         "TrackingImplanter",
         "MicroBombImplanter",
-        "MacroBombPlanter"
+        "MacroBombImplanter"
     };
 
     [Test]
