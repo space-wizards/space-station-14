@@ -78,6 +78,15 @@ public class ActionButtonContainer : GridContainer
         return true;
     }
 
+    public IEnumerable<ActionButton> GetButtons()
+    {
+        foreach (var control in Children)
+        {
+            if (control is ActionButton button)
+                yield return button;
+        }
+    }
+
     ~ActionButtonContainer()
     {
         UserInterfaceManager.GetUIController<ActionUIController>().RemoveActionContainer();

@@ -1,5 +1,6 @@
 ﻿using Content.Client.Actions.UI;
 using Content.Client.Cooldown;
+using Content.Client.Stylesheets;
 using Content.Shared.Actions.ActionTypes;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -14,6 +15,11 @@ namespace Content.Client.UserInterface.Systems.Actions.Controls;
 
 public sealed class ActionButton : Control
 {
+    private ActionUIController Controller => UserInterfaceManager.GetUIController<ActionUIController>();
+    private bool _beingHovered;
+    private bool _depressed;
+    private bool _toggled;
+
     public BoundKeyFunction? KeyBind
     {
         set
@@ -29,6 +35,7 @@ public sealed class ActionButton : Control
     private BoundKeyFunction? _keybind;
 
     public readonly TextureRect Button;
+    public readonly PanelContainer HighlightRect;
     public readonly TextureRect Icon;
     public readonly Label Label;
     public readonly SpriteView Sprite;
@@ -55,6 +62,12 @@ public sealed class ActionButton : Control
             Name = "Button",
             TextureScale = new Vector2(2,2)
         };
+        HighlightRect = new PanelContainer
+        {
+            StyleClasses = { StyleNano.StyleClassHandSlotHighlight },
+            MinSize = (32, 32),
+            Visible = false
+        };
         Icon = new TextureRect
         {
             Name = "Icon",
@@ -77,6 +90,7 @@ public sealed class ActionButton : Control
         Cooldown = new CooldownGraphic {Visible = false};
 
         AddChild(Button);
+        AddChild(HighlightRect);
         AddChild(Icon);
         AddChild(Label);
         AddChild(Sprite);
@@ -88,8 +102,16 @@ public sealed class ActionButton : Control
         OnThemeUpdated();
         OnThemeUpdated();
 
-        OnKeyBindDown += OnPressed;
-        OnKeyBindUp += OnUnpressed;
+        OnKeyBindDown += args =>
+        {
+            Depress(args, true);
+            OnPressed(args);
+        };
+        OnKeyBindUp += args =>
+        {
+            Depress(args, false);
+            OnUnpressed(args);
+        };
 
         TooltipDelay = 0.5f;
         TooltipSupplier = SupplyTooltip;
@@ -174,5 +196,92 @@ public sealed class ActionButton : Control
         {
             Cooldown.FromTime(Action.Cooldown.Value.Start, Action.Cooldown.Value.End);
         }
+
+        if (Action != null && _toggled != Action.Toggled)
+        {
+            _toggled = Action.Toggled;
+            IconTexture = _toggled ? (Action.IconOn ?? Action.Icon)?.Frame0() : Action.Icon?.Frame0();
+        }
+    }
+
+    protected override void MouseEntered()
+    {
+        base.MouseEntered();
+
+        _beingHovered = true;
+        DrawModeChanged();
+    }
+
+    protected override void MouseExited()
+    {
+        base.MouseExited();
+
+        _beingHovered = false;
+        DrawModeChanged();
+    }
+
+    /// <summary>
+    /// Press this button down. If it was depressed and now set to not depressed, will
+    /// trigger the action.
+    /// </summary>
+    public void Depress(GUIBoundKeyEventArgs args, bool depress)
+    {
+        // action can still be toggled if it's allowed to stay selected
+        if (Action is not {Enabled: true})
+            return;
+
+        if (_depressed && !depress)
+        {
+            // fire the action
+            OnUnpressed(args);
+        }
+
+        _depressed = depress;
+        DrawModeChanged();
+    }
+
+    public void DrawModeChanged()
+    {
+        HighlightRect.Visible = _beingHovered;
+
+        // always show the normal empty button style if no action in this slot
+        if (Action == null)
+        {
+            SetOnlyStylePseudoClass(ContainerButton.StylePseudoClassNormal);
+            return;
+        }
+
+        // show a hover only if the action is usable or another action is being dragged on top of this
+        if (_beingHovered && (Controller.IsDragging || Action.Enabled))
+        {
+            SetOnlyStylePseudoClass(ContainerButton.StylePseudoClassHover);
+        }
+
+        // it's only depress-able if it's usable, so if we're depressed
+        // show the depressed style
+        if (_depressed)
+        {
+            HighlightRect.Visible = false;
+            SetOnlyStylePseudoClass(ContainerButton.StylePseudoClassPressed);
+            return;
+        }
+
+        // if it's toggled on, always show the toggled on style (currently same as depressed style)
+        if (Action.Toggled || Controller.SelectingTargetFor == this)
+        {
+            // when there's a toggle sprite, we're showing that sprite instead of highlighting this slot
+            SetOnlyStylePseudoClass(Action.IconOn != null
+                ? ContainerButton.StylePseudoClassNormal
+                : ContainerButton.StylePseudoClassPressed);
+            return;
+        }
+
+        if (!Action.Enabled)
+        {
+            SetOnlyStylePseudoClass(ContainerButton.StylePseudoClassDisabled);
+            return;
+        }
+
+        SetOnlyStylePseudoClass(ContainerButton.StylePseudoClassNormal);
     }
 }
