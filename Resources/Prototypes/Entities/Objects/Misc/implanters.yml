@@ -1,0 +1,98 @@
+﻿- type: entity
+  name: implanter
+  id: BaseImplanter
+  parent: BaseItem
+  abstract: true
+  components:
+    - type: ItemSlots
+    - type: Implanter
+    - type: Sprite
+      sprite: Objects/Specific/Chemistry/syringe.rsi
+      state: "syringe_base0"
+      netsync: false
+    - type: Item
+      sprite: Objects/Specific/Chemistry/syringe.rsi
+      heldPrefix: 0
+
+- type: entity
+  id: Implanter
+  parent: BaseImplanter
+  components:
+    - type: Tag
+      tags:
+        - Trash
+
+- type: entity
+  id: UndeadImplanter
+  name: undead implanter
+  description: brains
+  parent: Implanter
+  components:
+    - type: ItemSlots
+      slots:
+        implanter_slot:
+          startingItem: UndeadImplant
+          priority: 0
+          whitelist:
+            tags:
+              - SubdermalImplant
+
+- type: entity
+  id: SadTromboneImplanter
+  name: sad trombone implanter
+  description: HONK
+  parent: Implanter
+  components:
+    - type: ItemSlots
+      slots:
+        implanter_slot:
+          startingItem: SadTromboneImplant
+          priority: 0
+          whitelist:
+            tags:
+              - SubdermalImplant
+
+- type: entity
+  id: TrackingImplanter
+  name: tracking implanter
+  description: CIA
+  parent: Implanter
+  components:
+    - type: ItemSlots
+      slots:
+        implanter_slot:
+          startingItem: TrackingImplant
+          priority: 0
+          whitelist:
+            tags:
+              - SubdermalImplant
+
+- type: entity
+  id: MicroBombImplanter
+  name: micro bomb implanter
+  description: boom
+  parent: Implanter
+  components:
+    - type: ItemSlots
+      slots:
+        implanter_slot:
+          startingItem: MicroBombImplant
+          priority: 0
+          whitelist:
+            tags:
+              - SubdermalImplant
+
+- type: entity
+  id: MacroBombImplanter
+  name: macro bomb implanter
+  description: bigger bomb
+  parent: Implanter
+  components:
+    - type: ItemSlots
+      slots:
+        implanter_slot:
+          startingItem: MacroBombImplant
+          priority: 0
+          whitelist:
+            tags:
+              - SubdermalImplant

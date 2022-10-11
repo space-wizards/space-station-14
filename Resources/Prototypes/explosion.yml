@@ -30,6 +30,22 @@
   fireStates: 3
 
 - type: explosion
+  id: MicroBomb
+  damagePerIntensity:
+    types:
+      Heat: 6
+      Blunt: 6
+      Piercing: 6
+      Structural: 20
+  tileBreakChance: [ 0, 0.5, 1 ]
+  tileBreakIntensity: [ 1, 10, 15 ]
+  tileBreakRerollReduction: 30
+  intensityPerState: 20
+  lightColor: Orange
+  texturePath: /Textures/Effects/fire.rsi
+  fireStates: 6
+
+- type: explosion
   id: Radioactive
   damagePerIntensity:
     types:
@@ -39,7 +55,7 @@
       Piercing: 3
   lightColor: Green
   fireColor: Green
-  texturePath: /Textures/Effects/fire_greyscale.rsi 
+  texturePath: /Textures/Effects/fire_greyscale.rsi
   fireStates: 3
 
 - type: explosion
@@ -47,10 +63,10 @@
   damagePerIntensity:
     types:
       Cold: 5
-      Blunt: 2  
+      Blunt: 2
   tileBreakChance: [0]
   tileBreakIntensity: [0]
   lightColor: Blue
   fireColor: Blue
-  texturePath: /Textures/Effects/fire_greyscale.rsi 
+  texturePath: /Textures/Effects/fire_greyscale.rsi
   fireStates: 3

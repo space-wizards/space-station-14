@@ -6,6 +6,7 @@ using Content.Server.Flash;
 using Content.Server.Flash.Components;
 using Content.Server.Sticky.Events;
 using Content.Shared.Actions;
+using Content.Shared.Body.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Physics;
@@ -15,6 +16,7 @@ using Content.Shared.Trigger;
 using Content.Shared.Database;
 using Content.Shared.Explosion;
 using Content.Shared.Interaction;
+using Content.Shared.MobState;
 using Content.Shared.Payload.Components;
 using Content.Shared.StepTrigger.Systems;
 using Robust.Server.Containers;
@@ -61,6 +63,7 @@ namespace Content.Server.Explosion.EntitySystems
             SubscribeLocalEvent<TriggerOnCollideComponent, StartCollideEvent>(OnTriggerCollide);
             SubscribeLocalEvent<TriggerOnActivateComponent, ActivateInWorldEvent>(OnActivate);
             SubscribeLocalEvent<TriggerOnStepTriggerComponent, StepTriggeredEvent>(OnStepTriggered);
+            SubscribeLocalEvent<TriggerOnMobstateChangeComponent, MobStateChangedEvent>(OnStateChanged);
 
             SubscribeLocalEvent<DeleteOnTriggerComponent, TriggerEvent>(HandleDeleteTrigger);
             SubscribeLocalEvent<ExplodeOnTriggerComponent, TriggerEvent>(HandleExplodeTrigger);
@@ -103,6 +106,15 @@ namespace Content.Server.Explosion.EntitySystems
         private void OnStepTriggered(EntityUid uid, TriggerOnStepTriggerComponent component, ref StepTriggeredEvent args)
         {
             Trigger(uid, args.Tripper);
+        }
+
+        private void OnStateChanged(EntityUid uid, TriggerOnMobstateChangeComponent component, MobStateChangedEvent args)
+        {
+            if (component.MobState == args.CurrentMobState)
+                Trigger(component.Owner);
+
+            if (TryComp<SharedBodyComponent>(uid, out var body) && args.CurrentMobState == DamageState.Dead && component.GibOnDeath)
+                body.Gib();
         }
 
         public bool Trigger(EntityUid trigger, EntityUid? user = null)

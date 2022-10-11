@@ -467,7 +467,7 @@
 
 - type: Tag
   id: Smokable
-  
+
 - type: Tag
   id: Soap
 
@@ -549,3 +549,5 @@
 - type: Tag
   id: Write
 
+- type: Tag
+  id: SubdermalImplant
