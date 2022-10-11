@@ -18,6 +18,7 @@
   id: Implanter
   parent: BaseImplanter
   components:
+    - type: ContainerContainer
     - type: Tag
       tags:
         - Trash
