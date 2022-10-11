@@ -129,7 +129,7 @@ namespace Content.IntegrationTests.Tests
             var protoManager = server.ResolveDependency<IPrototypeManager>();
             var ticker = entManager.EntitySysManager.GetEntitySystem<GameTicker>();
             var shuttleSystem = entManager.EntitySysManager.GetEntitySystem<ShuttleSystem>();
-            var StationJobsSystem = entManager.EntitySysManager.GetEntitySystem<StationJobsSystem>();
+            var stationJobsSystem = entManager.EntitySysManager.GetEntitySystem<StationJobsSystem>();
 
             await server.WaitPost(() =>
             {
@@ -176,7 +176,7 @@ namespace Content.IntegrationTests.Tests
 
                 // Test all availableJobs have spawnPoints
                 // This is done inside gamemap test because loading the map takes ages and we already have it.
-                var jobList = StationJobsSystem.GetAvailableJobs(station);
+                var jobList = stationJobsSystem.GetAvailableJobs(station);
                 var spawnPoints = entManager.EntityQuery<SpawnPointComponent>()
                     .Where(spawnpoint => spawnpoint.SpawnType == SpawnPointType.Job)
                     .Select(spawnpoint => spawnpoint.Job.ID)
