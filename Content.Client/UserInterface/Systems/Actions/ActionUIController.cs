@@ -42,7 +42,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
     [UISystemDependency] private readonly InteractionOutlineSystem _interactionOutline = default!;
     [UISystemDependency] private readonly TargetOutlineSystem _targetOutline = default!;
 
-    private const int DefaultPageIndex = 1;
+    private const int DefaultPageIndex = 0;
     private ActionButtonContainer? _container;
     private readonly List<ActionPage> _pages = new();
     private int _currentPageIndex = DefaultPageIndex;
