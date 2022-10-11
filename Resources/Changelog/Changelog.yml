@@ -1,9 +1,4 @@
 Entries:
-- author: Duddino
-  changes:
-  - {message: Fixed PDA not spawning with the correct light, type: Fix}
-  id: 1926
-  time: '2022-07-12T00:30:03.0000000+00:00'
 - author: Rane
   changes:
   - {message: Added blindfolds!, type: Add}
@@ -2940,3 +2935,9 @@ Entries:
       walls, shutters or airlocks and will lose intensity over distance.', type: Tweak}
   id: 2425
   time: '2022-10-11T03:09:10.0000000+00:00'
+- author: Carbonhell
+  changes:
+  - {message: Fixes supply blast doors not letting crates pass when the underlying
+      conveyor belts get turned on., type: Fix}
+  id: 2426
+  time: '2022-10-11T07:28:47.0000000+00:00'
