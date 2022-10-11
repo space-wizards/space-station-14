@@ -9,28 +9,28 @@ const mediump float distance_scale = 0.125;
 
 void fragment() {
 
-    vec4 sprite = zTexture(UV);
+    highp vec4 sprite = zTexture(UV);
 
     if (sprite.a == 0.0) {
         discard;
     }
 
     // get distortion magnitude. hand crafted from a random jumble of trig functions
-    vec2 coords = (FRAGCOORD.xy + reference) * distance_scale;
-    float w = sin(TIME + (coords.x + coords.y + 2.0*sin(TIME*time_scale) * sin(TIME*time_scale + coords.x - coords.y)) );
+    highp vec2 coords = (FRAGCOORD.xy + reference) * distance_scale;
+    highp float w = sin(TIME + (coords.x + coords.y + 2.0*sin(TIME*time_scale) * sin(TIME*time_scale + coords.x - coords.y)) );
 
     // visualize distortion via:
-    // COLOR = vec4(w,w,w,1);
+    // COLOR = vec4(w,w,w,1.0);
 
-    w *= (3 + visibility * 2);
+    w *= (3.0 + visibility * 2.0);
 
-    vec4 background = zTextureSpec(SCREEN_TEXTURE, ( FRAGCOORD.xy + vec2(w) ) * SCREEN_PIXEL_SIZE );
+    highp vec4 background = zTextureSpec(SCREEN_TEXTURE, ( FRAGCOORD.xy + vec2(w) ) * SCREEN_PIXEL_SIZE );
 
-    float alpha;
-    if (visibility>0)
+    lowp float alpha;
+    if (visibility>0.0)
       alpha = sprite.a * visibility;
     else
-      alpha = 0;
+      alpha = 0.0;
 
     COLOR.xyz = mix(background.xyz, sprite.xyz, alpha);
     COLOR.a = 1.0;
