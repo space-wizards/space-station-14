@@ -60,7 +60,7 @@ namespace Content.Client.Actions
             {
                 if (!component.Actions.TryGetValue(serverAction, out var clientAction))
                 {
-                    added.Add(serverAction);
+                    added.Add((ActionType) serverAction.Clone());
                 }
                 else
                 {
