@@ -6,13 +6,18 @@ public sealed class ItemSlotButtonContainer : ItemSlotUIContainer<SlotControl>
 {
     private readonly InventoryUIController _inventoryController;
     private string _slotGroup = "";
-    public string SlotGroup { get => _slotGroup;
+
+    public string SlotGroup
+    {
+        get => _slotGroup;
         set
         {
             _inventoryController.RemoveSlotGroup(SlotGroup);
             _slotGroup = value;
             _inventoryController.RegisterSlotGroupContainer(this);
-        }}
+        }
+    }
+
     public ItemSlotButtonContainer()
     {
         _inventoryController = UserInterfaceManager.GetUIController<InventoryUIController>();
@@ -22,5 +27,4 @@ public sealed class ItemSlotButtonContainer : ItemSlotUIContainer<SlotControl>
     {
         _inventoryController.RemoveSlotGroup(SlotGroup);
     }
-
 }

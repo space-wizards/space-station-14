@@ -54,8 +54,7 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
 
         if (_inventoryHotbar != null)
         {
-            _inventoryHotbar.Dispose();
-            _inventoryHotbar = null;
+            _inventoryHotbar.Visible = false;
         }
 
         if (_inventoryButton != null)
