@@ -60,7 +60,7 @@ public sealed class GhostUIController : UIController, IOnStateChanged<GameplaySt
         UpdateGui();
     }
 
-    private void OnPlayerDetached(GhostComponent component)
+    private void OnPlayerDetached()
     {
         Gui?.Hide();
     }

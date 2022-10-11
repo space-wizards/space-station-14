@@ -42,7 +42,7 @@ namespace Content.Client.Ghost
         public event Action<GhostComponent>? PlayerRemoved;
         public event Action<GhostComponent>? PlayerUpdated;
         public event Action<GhostComponent>? PlayerAttached;
-        public event Action<GhostComponent>? PlayerDetached;
+        public event Action? PlayerDetached;
         public event Action<GhostWarpsResponseEvent>? GhostWarpsResponse;
         public event Action<GhostUpdateGhostRoleCountEvent>? GhostRoleCountUpdated;
 
@@ -56,6 +56,8 @@ namespace Content.Client.Ghost
 
             SubscribeLocalEvent<GhostComponent, PlayerAttachedEvent>(OnGhostPlayerAttach);
             SubscribeLocalEvent<GhostComponent, PlayerDetachedEvent>(OnGhostPlayerDetach);
+
+            SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttach);
 
             SubscribeNetworkEvent<GhostWarpsResponseEvent>(OnGhostWarpsResponse);
             SubscribeNetworkEvent<GhostUpdateGhostRoleCountEvent>(OnUpdateGhostRoleCount);
@@ -100,14 +102,26 @@ namespace Content.Client.Ghost
             PlayerUpdated?.Invoke(component);
         }
 
-        private void OnGhostPlayerDetach(EntityUid uid, GhostComponent component, PlayerDetachedEvent args)
+        private bool PlayerDetach(EntityUid uid)
         {
             if (uid != _playerManager.LocalPlayer?.ControlledEntity)
-                return;
+                return false;
 
             GhostVisibility = false;
-            component.IsAttached = false;
-            PlayerDetached?.Invoke(component);
+            PlayerDetached?.Invoke();
+            return true;
+        }
+
+        private void OnGhostPlayerDetach(EntityUid uid, GhostComponent component, PlayerDetachedEvent args)
+        {
+            if (PlayerDetach(uid))
+                component.IsAttached = false;
+        }
+
+        private void OnPlayerAttach(PlayerAttachedEvent ev)
+        {
+            if (!HasComp<GhostComponent>(ev.Entity))
+                PlayerDetach(ev.Entity);
         }
 
         private void OnGhostWarpsResponse(GhostWarpsResponseEvent msg)
