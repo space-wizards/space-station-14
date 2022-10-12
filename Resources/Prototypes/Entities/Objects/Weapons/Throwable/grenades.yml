@@ -171,9 +171,6 @@
   - type: Item
     size: 8
   - type: PayloadCase
-  - type: Construction
-    graph: ModularGrenadeGraph
-    node: emptyCase
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
