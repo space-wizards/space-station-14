@@ -16,24 +16,12 @@ public sealed class PowerCellSlotComponent : Component
     public string CellSlotId = string.Empty;
 
     /// <summary>
-    /// Name of the item-slot used to store cells. Determines the eject/insert verb text. E.g., "Eject > Power cell".
-    /// </summary>
-    /// <remarks>
-    /// This is simply used provide a default value for <see cref="CellSlot.Name"/>. If this string is empty or
-    /// whitespace, the verb will instead use the full name of any cell (e.g., "eject > small super-capacity power
-    /// cell").
-    /// </remarks>
-    [DataField("slotName")]
-    public readonly string SlotName = "power-cell-slot-component-slot-name-default"; // gets Loc.GetString()-ed by ItemSlotsSystem
-
-    /// <summary>
     /// Can this entity be inserted directly into a charging station? If false, you need to manually remove the power
     /// cell and recharge it separately.
     /// </summary>
     [DataField("fitsInCharger")]
     public bool FitsInCharger = true;
 
-    public ItemSlot CellSlot { get; set; } = default!;
 }
 
 /// <summary>

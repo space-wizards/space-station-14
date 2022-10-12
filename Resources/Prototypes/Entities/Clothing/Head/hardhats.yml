@@ -39,6 +39,7 @@
   - type: ItemSlots
     slots:
       cell_slot:
+        name: power-cell-slot-component-slot-name-default
         startingItem: PowerCellMedium
   - type: Item
     heldPrefix: off
