@@ -1,0 +1,12 @@
+author: Jezithyr
+changes:
+  - type: Tweak
+    message: Reworked action bar UI
+  - type: Tweak
+    message: Updated visuals for hands and chat
+  - type: Add
+    message: Added dragging actions from their window
+  - type: Fix
+    message: Fixed resolution scaling for some widgets
+  - type: Fix
+    message: Fixed showing no actions when no filters are applied
