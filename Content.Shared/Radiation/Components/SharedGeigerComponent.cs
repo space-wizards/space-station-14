@@ -3,13 +3,19 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Radiation.Components;
 
-[RegisterComponent, NetworkedComponent]
-public sealed class GeigerComponent : Component
+[NetworkedComponent]
+public abstract class SharedGeigerComponent : Component
 {
     [ViewVariables(VVAccess.ReadOnly)]
     public float CurrentRadiation;
-
-
+}
+public enum GeigerDangerLevel
+{
+    None,
+    Low,
+    Med,
+    High,
+    Extreme
 }
 
 [Serializable, NetSerializable]
