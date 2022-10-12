@@ -1,5 +1,6 @@
 ﻿using Content.Client.Gameplay;
 using Content.Client.Inventory;
+using Content.Client.Storage;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Inventory.Controls;
 using Content.Client.UserInterface.Systems.Inventory.Windows;
@@ -19,12 +20,12 @@ namespace Content.Client.UserInterface.Systems.Inventory;
 public sealed class InventoryUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>,
     IOnSystemChanged<ClientInventorySystem>
 {
+    [Dependency] private readonly IEntityManager _entities = default!;
+
     [UISystemDependency] private readonly ClientInventorySystem _inventorySystem = default!;
+
     private ClientInventoryComponent? _playerInventory;
     private readonly Dictionary<string, ItemSlotButtonContainer> _slotGroups = new();
-
-    private readonly Dictionary<(string group, string slot), (ISpriteComponent sprite, bool showStorage)> _sprites =
-        new();
 
     private StrippingWindow? _strippingWindow;
     private ItemSlotButtonContainer? _inventoryHotbar;
@@ -77,7 +78,6 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
         ToggleInventoryBar();
     }
 
-
     private void UpdateInventoryHotbar(ClientInventoryComponent? clientInv)
     {
         if (clientInv == null)
@@ -90,6 +90,7 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
         {
             if (!data.ShowInWindow || !_slotGroups.TryGetValue(data.SlotGroup, out var container))
                 continue;
+
             if (!container.TryGetButton(data.SlotName, out var button))
             {
                 button = new SlotButton(data);
@@ -98,10 +99,9 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
                 container.AddButton(button);
             }
 
-            if (!_sprites.TryGetValue((data.SlotGroup, data.SlotName), out var tuple))
-                continue;
-
-            var update = new SlotSpriteUpdate(data.SlotGroup, data.SlotName, tuple.sprite, tuple.showStorage);
+            var sprite = _entities.GetComponentOrNull<SpriteComponent>(data.HeldEntity);
+            var showStorage = _entities.HasComponent<ClientStorageComponent>(data.HeldEntity);
+            var update = new SlotSpriteUpdate(data.SlotGroup, data.SlotName, sprite, showStorage);
             SpriteUpdated(update);
         }
     }
@@ -118,6 +118,7 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
         {
             if (!data.ShowInWindow)
                 continue;
+
             if (!_strippingWindow!.InventoryButtons.TryGetButton(data.SlotName, out var button))
             {
                 button = new SlotButton(data);
@@ -126,10 +127,9 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
                 _strippingWindow!.InventoryButtons.AddButton(button, data.ButtonOffset);
             }
 
-            if (!_sprites.TryGetValue((data.SlotGroup, data.SlotName), out var tuple))
-                continue;
-
-            var update = new SlotSpriteUpdate(data.SlotGroup, data.SlotName, tuple.sprite, tuple.showStorage);
+            var sprite = _entities.GetComponentOrNull<SpriteComponent>(data.HeldEntity);
+            var showStorage = _entities.HasComponent<ClientStorageComponent>(data.HeldEntity);
+            var update = new SlotSpriteUpdate(data.SlotGroup, data.SlotName, sprite, showStorage);
             SpriteUpdated(update);
         }
     }
@@ -276,15 +276,6 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
     private void SpriteUpdated(SlotSpriteUpdate update)
     {
         var (group, name, sprite, showStorage) = update;
-
-        if (sprite == null)
-        {
-            _sprites.Remove((group, name));
-        }
-        else
-        {
-            _sprites[(group, name)] = (sprite, showStorage);
-        }
 
         if (_strippingWindow?.InventoryButtons.GetButton(update.Name) is { } inventoryButton)
         {

@@ -113,6 +113,23 @@ namespace Content.Client.Inventory
 
         private void OnPlayerAttached(EntityUid uid, ClientInventoryComponent component, PlayerAttachedEvent args)
         {
+            if (TryGetSlots(uid, out var definitions))
+            {
+                foreach (var definition in definitions)
+                {
+                    if (!TryGetSlotContainer(uid, definition.Name, out var container, out _, component))
+                        continue;
+
+                    if (!component.SlotData.TryGetValue(definition.Name, out var data))
+                    {
+                        data = new SlotData(definition);
+                        component.SlotData[definition.Name] = data;
+                    }
+
+                    data.Container = container;
+                }
+            }
+
             if (uid == _playerManager.LocalPlayer?.ControlledEntity)
                 OnLinkInventory?.Invoke(component);
         }
@@ -255,7 +272,7 @@ namespace Content.Client.Inventory
             EntityManager.RaisePredictiveEvent(new InteractInventorySlotEvent(item.Value, altInteract: true));
         }
 
-        public struct SlotData
+        public sealed class SlotData
         {
             public readonly SlotDefinition SlotDef;
             public EntityUid? HeldEntity => Container?.ContainedEntity;

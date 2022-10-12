@@ -44,13 +44,13 @@ public sealed class HandsContainer : ItemSlotUIContainer<HandButton>
 
     public bool TryGetLastButton(out HandButton? control)
     {
-        if (_buttons.Count == 0)
+        if (Buttons.Count == 0)
         {
             control = null;
             return false;
         }
 
-        control = _buttons.Values.Last();
+        control = Buttons.Values.Last();
         return true;
     }
 
