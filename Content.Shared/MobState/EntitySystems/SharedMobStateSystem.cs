@@ -15,6 +15,7 @@ using Content.Shared.Speech;
 using Content.Shared.Standing;
 using Content.Shared.StatusEffect;
 using Content.Shared.Throwing;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.MobState.EntitySystems
@@ -22,9 +23,11 @@ namespace Content.Shared.MobState.EntitySystems
     public abstract partial class SharedMobStateSystem : EntitySystem
     {
         [Dependency] protected readonly AlertsSystem Alerts = default!;
-        [Dependency] private readonly ActionBlockerSystem _blocker = default!;
-        [Dependency] protected readonly StandingStateSystem Standing = default!;
+        [Dependency] private   readonly ActionBlockerSystem _blocker = default!;
+        [Dependency] private   readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private   readonly SharedPhysicsSystem _physics = default!;
         [Dependency] protected readonly StatusEffectsSystem Status = default!;
+        [Dependency] private   readonly StandingStateSystem _standing = default!;
 
         public override void Initialize()
         {
@@ -175,7 +178,7 @@ namespace Content.Shared.MobState.EntitySystems
 
         public void UpdateState(EntityUid _, MobStateComponent component, DamageChangedEvent args)
         {
-            UpdateState(component, args.Damageable.TotalDamage);
+            UpdateState(component, args.Damageable.TotalDamage, args.Origin);
         }
 
         private void OnMoveAttempt(EntityUid uid, MobStateComponent component, UpdateCanMoveEvent args)
@@ -272,20 +275,20 @@ namespace Content.Shared.MobState.EntitySystems
         /// <summary>
         ///     Updates the mob state..
         /// </summary>
-        public void UpdateState(MobStateComponent component, FixedPoint2 damage)
+        public void UpdateState(MobStateComponent component, FixedPoint2 damage, EntityUid? origin = null)
         {
             if (!TryGetState(component, damage, out var newState, out var threshold))
             {
                 return;
             }
 
-            SetMobState(component, component.CurrentState, (newState.Value, threshold));
+            SetMobState(component, component.CurrentState, (newState.Value, threshold), origin);
         }
 
         /// <summary>
         ///     Sets the mob state and marks the component as dirty.
         /// </summary>
-        private void SetMobState(MobStateComponent component, DamageState? old, (DamageState state, FixedPoint2 threshold)? current)
+        private void SetMobState(MobStateComponent component, DamageState? old, (DamageState state, FixedPoint2 threshold)? current, EntityUid? origin = null)
         {
             if (!current.HasValue)
             {
@@ -310,7 +313,7 @@ namespace Content.Shared.MobState.EntitySystems
             EnterState(component, state);
             UpdateState(component, state, threshold);
 
-            var message = new MobStateChangedEvent(component, old, state);
+            var message = new MobStateChangedEvent(component, old, state, origin);
             RaiseLocalEvent(component.Owner, message, true);
             Dirty(component);
         }

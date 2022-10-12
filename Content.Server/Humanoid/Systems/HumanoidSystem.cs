@@ -110,7 +110,6 @@ public sealed partial class HumanoidSystem : SharedHumanoidSystem
         EnsureDefaultMarkings(uid, humanoid);
 
         humanoid.Gender = profile.Gender;
-
         if (TryComp<GrammarComponent>(uid, out var grammar))
         {
             grammar.Gender = profile.Gender;
@@ -143,6 +142,12 @@ public sealed partial class HumanoidSystem : SharedHumanoidSystem
         targetHumanoid.Sex = sourceHumanoid.Sex;
         targetHumanoid.CustomBaseLayers = new(sourceHumanoid.CustomBaseLayers);
         targetHumanoid.CurrentMarkings = new(sourceHumanoid.CurrentMarkings);
+
+        targetHumanoid.Gender = sourceHumanoid.Gender;
+        if (TryComp<GrammarComponent>(target, out var grammar))
+        {
+            grammar.Gender = sourceHumanoid.Gender;
+        }
 
         Synchronize(target, targetHumanoid);
     }

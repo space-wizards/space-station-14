@@ -19,13 +19,14 @@ namespace Content.Shared.Actions;
 
 public abstract class SharedActionsSystem : EntitySystem
 {
+    [Dependency] protected readonly IGameTiming GameTiming = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly RotateToFaceSystem _rotateToFaceSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] protected readonly IGameTiming GameTiming = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     public override void Initialize()
     {
@@ -325,8 +326,7 @@ public abstract class SharedActionsSystem : EntitySystem
 
         var filter = Filter.Pvs(performer).RemoveWhereAttachedEntity(e => e == performer);
 
-        if (action.Sound != null)
-            SoundSystem.Play(action.Sound.GetSound(), filter, performer, action.AudioParams);
+        _audio.Play(action.Sound, filter, performer, action.AudioParams);
 
         if (string.IsNullOrWhiteSpace(action.Popup))
             return true;

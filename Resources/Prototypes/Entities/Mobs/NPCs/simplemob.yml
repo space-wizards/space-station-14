@@ -52,7 +52,7 @@
         # Circles, cuz rotation of rectangles looks very bad
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 20
+      density: 50
       mask:
       - MobMask
       layer:
@@ -69,6 +69,7 @@
           -0.25
   - type: Damageable
     damageContainer: Biological
+  - type: RadiationReceiver
   - type: AtmosExposed
   - type: Flammable
     fireSpread: true
@@ -117,7 +118,6 @@
   - type: Examiner
   - type: MeleeWeapon
     hidden: true
-    range: 1.5
     angle: 0
     animation: WeaponArcBite
     damage:

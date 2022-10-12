@@ -10,6 +10,7 @@ using Content.Shared.Movement.Events;
 using Content.Shared.Speech;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
+using Robust.Shared.Containers;
 
 namespace Content.Shared.ActionBlocker
 {
@@ -19,6 +20,8 @@ namespace Content.Shared.ActionBlocker
     [UsedImplicitly]
     public sealed class ActionBlockerSystem : EntitySystem
     {
+        [Dependency] private readonly SharedContainerSystem _container = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -151,6 +154,9 @@ namespace Content.Shared.ActionBlocker
 
         public bool CanAttack(EntityUid uid, EntityUid? target = null)
         {
+            if (_container.IsEntityInContainer(uid))
+                return false;
+
             var ev = new AttackAttemptEvent(uid, target);
             RaiseLocalEvent(uid, ev);
 

@@ -27,7 +27,6 @@
     hidden: true
     soundHit:
       path: /Audio/Weapons/pierce.ogg
-    range: 0.8
     angle: 30
     animation: WeaponArcFist
     damage:
