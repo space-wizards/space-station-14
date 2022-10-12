@@ -10,9 +10,9 @@ public sealed class SkeletonAccentSystem : EntitySystem
 
     private static readonly Dictionary<string, string> DirectReplacements = new()
     {
+        { "fuck you", "I've got a BONE to pick with you" },
         { "fuck", "rattle rattle" },
         { "shit", "rattle rattle" },
-        { "fuck you", "I've got a BONE to pick with you" },
         { "definitely", "make no bones about it" },
         { "absolutely", "make no bones about it" },
         { "lonely", "bonely"}
