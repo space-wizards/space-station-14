@@ -17,6 +17,8 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Configuration;
 using Robust.Shared.Timing;
+using Robust.Client.Player;
+using Robust.Client.GameObjects;
 
 namespace Content.Client.Gameplay
 {
@@ -32,7 +34,9 @@ namespace Content.Client.Gameplay
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IOverlayManager _overlayManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IPlayerManager _playerMan = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+        [Dependency] private readonly IEntityManager _entMan = default!;
 
         [ViewVariables] private ChatBox? _gameChat;
         private ConstructionMenuPresenter? _constructionMenu;
@@ -146,6 +150,22 @@ namespace Content.Client.Gameplay
             base.FrameUpdate(e);
 
             Viewport.Viewport.Eye = _eyeManager.CurrentEye;
+
+            // verify that the current eye is not "null". Fuck IEyeManager.
+
+            var ent = _playerMan.LocalPlayer?.ControlledEntity;
+            if (_eyeManager.CurrentEye.Position != default || ent == null)
+                return;
+
+            _entMan.TryGetComponent(ent, out EyeComponent? eye);
+            
+            if (eye?.Eye == _eyeManager.CurrentEye
+                && _entMan.GetComponent<TransformComponent>(ent.Value).WorldPosition == default)
+                return; // nothing to worry about, the player is just in null space... actually that is probably a problem?
+
+            // Currently, this shouldn't happen. This likely happened because the main eye was set to null. When this
+            // does happen it can create hard to troubleshoot bugs, so lets print some helpful warnings:
+            Logger.Warning($"Main viewport's eye is in nullspace (main eye is null?). Attached entity: {_entMan.ToPrettyString(ent.Value)}. Entity has eye comp: {eye != null}");
         }
 
         protected override void OnKeyBindStateChanged(ViewportBoundKeyEventArgs args)
