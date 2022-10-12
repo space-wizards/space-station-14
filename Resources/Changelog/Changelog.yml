@@ -1,15 +1,4 @@
 Entries:
-- author: Delete
-  changes:
-  - {message: 'Adds extra warning line decal, and fixed up existing ones.', type: Add}
-  id: 1928
-  time: '2022-07-12T06:03:35.0000000+00:00'
-- author: Myctai
-  changes:
-  - {message: 'Corrected Phalanximine description. It''s not "Anti-Toxin", actually
-      it''s mildly radioactive!', type: Fix}
-  id: 1929
-  time: '2022-07-12T06:05:55.0000000+00:00'
 - author: KIBORG04
   changes:
   - {message: 'Added kvass, you can order it in the cargo!', type: Add}
@@ -2940,3 +2929,14 @@ Entries:
   - {message: Layout optimizations for Kettle, type: Tweak}
   id: 2427
   time: '2022-10-11T14:01:07.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Fixed a bug that would sometimes cause the client to crash when playing
+      particular ghost roles (e.g., mice).', type: Fix}
+  id: 2428
+  time: '2022-10-12T00:55:00.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: Added National Coming Out Day as a holiday., type: Add}
+  id: 2429
+  time: '2022-10-12T06:50:19.0000000+00:00'
