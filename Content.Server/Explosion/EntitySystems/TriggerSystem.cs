@@ -131,11 +131,10 @@ namespace Content.Server.Explosion.EntitySystems
 
         private void OnStateChanged(EntityUid uid, TriggerOnMobstateChangeComponent component, MobStateChangedEvent args)
         {
-            if (component.MobState == args.CurrentMobState)
-                Trigger(component.Owner);
+            if (component.MobState != args.CurrentMobState)
+                return;
 
-            if (TryComp<SharedBodyComponent>(uid, out var body) && args.CurrentMobState == DamageState.Dead && component.GibOnDeath)
-                body.Gib(deleteItems:component.DeleteItemsOnGib);
+            Trigger(component.Owner);
         }
 
         public bool Trigger(EntityUid trigger, EntityUid? user = null)
