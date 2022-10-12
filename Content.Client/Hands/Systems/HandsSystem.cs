@@ -26,15 +26,15 @@ namespace Content.Client.Hands.Systems
         [Dependency] private readonly ExamineSystem _examine = default!;
         [Dependency] private readonly VerbSystem _verbs = default!;
 
-        public event Action<string, HandLocation>? OnAddHand;
-        public event Action<string>? OnRemoveHand;
-        public event Action<string?>? OnSetActiveHand;
+        public event Action<string, HandLocation>? OnPlayerAddHand;
+        public event Action<string>? OnPlayerRemoveHand;
+        public event Action<string?>? OnPlayerSetActiveHand;
         public event Action<HandsComponent>? OnPlayerHandsAdded;
         public event Action? OnPlayerHandsRemoved;
-        public event Action<string, EntityUid>? OnItemAdded;
-        public event Action<string, EntityUid>? OnItemRemoved;
-        public event Action<string>? OnHandBlocked;
-        public event Action<string>? OnHandUnblocked;
+        public event Action<string, EntityUid>? OnPlayerItemAdded;
+        public event Action<string, EntityUid>? OnPlayerItemRemoved;
+        public event Action<string>? OnPlayerHandBlocked;
+        public event Action<string>? OnPlayerHandUnblocked;
 
         public override void Initialize()
         {
@@ -240,10 +240,10 @@ namespace Content.Client.Hands.Systems
             if (uid != _playerManager.LocalPlayer?.ControlledEntity)
                 return;
 
-            OnItemAdded?.Invoke(hand.Name, args.Entity);
+            OnPlayerItemAdded?.Invoke(hand.Name, args.Entity);
 
             if (HasComp<HandVirtualItemComponent>(args.Entity))
-                OnHandBlocked?.Invoke(hand.Name);
+                OnPlayerHandBlocked?.Invoke(hand.Name);
         }
 
         private void HandleItemRemoved(EntityUid uid, SharedHandsComponent handComp, ContainerModifiedMessage args)
@@ -255,10 +255,10 @@ namespace Content.Client.Hands.Systems
             if (uid != _playerManager.LocalPlayer?.ControlledEntity)
                 return;
 
-            OnItemRemoved?.Invoke(hand.Name, args.Entity);
+            OnPlayerItemRemoved?.Invoke(hand.Name, args.Entity);
 
             if (HasComp<HandVirtualItemComponent>(args.Entity))
-                OnHandUnblocked?.Invoke(hand.Name);
+                OnPlayerHandUnblocked?.Invoke(hand.Name);
         }
 
         /// <summary>
@@ -345,7 +345,8 @@ namespace Content.Client.Hands.Systems
 
         private void HandlePlayerAttached(EntityUid uid, HandsComponent component, PlayerAttachedEvent args)
         {
-            OnPlayerHandsAdded?.Invoke(component);
+            if (_playerManager.LocalPlayer?.ControlledEntity == uid)
+                OnPlayerHandsAdded?.Invoke(component);
         }
 
         private void HandlePlayerDetached(EntityUid uid, HandsComponent component, PlayerDetachedEvent args)
@@ -376,7 +377,7 @@ namespace Content.Client.Hands.Systems
             base.AddHand(uid, handName, handLocation, handsComp);
 
             if (uid == _playerManager.LocalPlayer?.ControlledEntity)
-                OnAddHand?.Invoke(handName, handLocation);
+                OnPlayerAddHand?.Invoke(handName, handLocation);
 
             if (handsComp == null)
                 return;
@@ -390,7 +391,7 @@ namespace Content.Client.Hands.Systems
                 handsComp.Hands.ContainsKey(handName) && uid ==
                 _playerManager.LocalPlayer?.ControlledEntity)
             {
-                OnRemoveHand?.Invoke(handName);
+                OnPlayerRemoveHand?.Invoke(handName);
             }
 
             base.RemoveHand(uid, handName, handsComp);
@@ -401,13 +402,16 @@ namespace Content.Client.Hands.Systems
             if (handsComponent == null)
                 return;
 
+            if (_playerManager.LocalPlayer?.ControlledEntity != handsComponent.Owner)
+                return;
+
             if (handsComponent.ActiveHand == null)
             {
-                OnSetActiveHand?.Invoke(null);
+                OnPlayerSetActiveHand?.Invoke(null);
                 return;
             }
 
-            OnSetActiveHand?.Invoke(handsComponent.ActiveHand.Name);
+            OnPlayerSetActiveHand?.Invoke(handsComponent.ActiveHand.Name);
         }
     }
 }

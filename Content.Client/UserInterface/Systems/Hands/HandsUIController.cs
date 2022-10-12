@@ -33,28 +33,28 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
 
     public void OnSystemLoaded(HandsSystem system)
     {
-        _handsSystem.OnAddHand += OnAddHand;
-        _handsSystem.OnItemAdded += OnItemAdded;
-        _handsSystem.OnItemRemoved += OnItemRemoved;
-        _handsSystem.OnSetActiveHand += SetActiveHand;
-        _handsSystem.OnRemoveHand += RemoveHand;
+        _handsSystem.OnPlayerAddHand += OnAddHand;
+        _handsSystem.OnPlayerItemAdded += OnItemAdded;
+        _handsSystem.OnPlayerItemRemoved += OnItemRemoved;
+        _handsSystem.OnPlayerSetActiveHand += SetActiveHand;
+        _handsSystem.OnPlayerRemoveHand += RemoveHand;
         _handsSystem.OnPlayerHandsAdded += LoadPlayerHands;
         _handsSystem.OnPlayerHandsRemoved += UnloadPlayerHands;
-        _handsSystem.OnHandBlocked += HandBlocked;
-        _handsSystem.OnHandUnblocked += HandUnblocked;
+        _handsSystem.OnPlayerHandBlocked += HandBlocked;
+        _handsSystem.OnPlayerHandUnblocked += HandUnblocked;
     }
 
     public void OnSystemUnloaded(HandsSystem system)
     {
-        _handsSystem.OnAddHand -= OnAddHand;
-        _handsSystem.OnItemAdded -= OnItemAdded;
-        _handsSystem.OnItemRemoved -= OnItemRemoved;
-        _handsSystem.OnSetActiveHand -= SetActiveHand;
-        _handsSystem.OnRemoveHand -= RemoveHand;
+        _handsSystem.OnPlayerAddHand -= OnAddHand;
+        _handsSystem.OnPlayerItemAdded -= OnItemAdded;
+        _handsSystem.OnPlayerItemRemoved -= OnItemRemoved;
+        _handsSystem.OnPlayerSetActiveHand -= SetActiveHand;
+        _handsSystem.OnPlayerRemoveHand -= RemoveHand;
         _handsSystem.OnPlayerHandsAdded -= LoadPlayerHands;
         _handsSystem.OnPlayerHandsRemoved -= UnloadPlayerHands;
-        _handsSystem.OnHandBlocked -= HandBlocked;
-        _handsSystem.OnHandUnblocked -= HandUnblocked;
+        _handsSystem.OnPlayerHandBlocked -= HandBlocked;
+        _handsSystem.OnPlayerHandUnblocked -= HandUnblocked;
     }
 
     private void OnAddHand(string name, HandLocation location)
