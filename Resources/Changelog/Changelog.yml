@@ -1,18 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Pizza boxes can no longer swallow players. (for realsies), type: Fix}
-  - {message: Fixed visual issues regarding trays with morgues and crematoriums.,
-    type: Fix}
-  - {message: Fixed visual issues regarding body bags being perpetually open., type: Fix}
-  id: 1933
-  time: '2022-07-13T23:11:59.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Emotes and LOOC no longer reveal your identity., type: Tweak}
-  - {message: Pulling down/up your mask will now properly affect your identity., type: Fix}
-  id: 1934
-  time: '2022-07-14T05:23:56.0000000+00:00'
 - author: Rane
   changes:
   - {message: You now heal yourself much slower than you heal other people when using
@@ -2944,3 +2930,14 @@ Entries:
     type: Fix}
   id: 2432
   time: '2022-10-12T13:07:24.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed not being able to examine and right click entities in backpacks,
+    type: Fix}
+  id: 2433
+  time: '2022-10-12T16:35:25.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed prediction and popups for actions, type: Fix}
+  id: 2434
+  time: '2022-10-12T16:35:36.0000000+00:00'
