@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Interaction outlines won't be so jank at high speeds anymore (e.g. emergency
-      shuttle)., type: Fix}
-  id: 1931
-  time: '2022-07-12T17:46:12.0000000+00:00'
 - author: jessicamaybe
   changes:
   - {message: Robot showcase statue is now anchorable, type: Tweak}
@@ -2944,3 +2938,8 @@ Entries:
   - {message: Fixed showing no actions when no filters are applied, type: Fix}
   id: 2430
   time: '2022-10-12T08:32:42.598514+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed chat staying focused after sending a message., type: Fix}
+  id: 2431
+  time: '2022-10-12T12:53:15.0000000+00:00'
