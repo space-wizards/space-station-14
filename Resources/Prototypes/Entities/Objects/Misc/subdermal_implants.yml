@@ -84,14 +84,14 @@
     - type: TriggerOnMobstateChange
       mobState: Dead
     - type: ExplodeOnTrigger
+    - type: GibOnTrigger
+      deleteItems: true
     - type: Explosive
       explosionType: MicroBomb
       totalIntensity: 120
       intensitySlope: 5
       maxIntensity: 30
       canCreateVacuum: false
-    - type: GibOnTrigger
-      deleteItems: true
 
 #Macro bomb should really have a timer before it goes off
 - type: entity
@@ -109,6 +109,7 @@
       mobState: Dead
     - type: ExplodeOnTrigger
     - type: GibOnTrigger
+      deleteItems: true
     - type: Explosive
       explosionType: Default
       totalIntensity: 4000
