@@ -1,10 +1,4 @@
 Entries:
-- author: Myctai
-  changes:
-  - {message: 'Corrected Phalanximine description. It''s not "Anti-Toxin", actually
-      it''s mildly radioactive!', type: Fix}
-  id: 1929
-  time: '2022-07-12T06:05:55.0000000+00:00'
 - author: KIBORG04
   changes:
   - {message: 'Added kvass, you can order it in the cargo!', type: Add}
@@ -2941,3 +2935,8 @@ Entries:
       particular ghost roles (e.g., mice).', type: Fix}
   id: 2428
   time: '2022-10-12T00:55:00.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: Added National Coming Out Day as a holiday., type: Add}
+  id: 2429
+  time: '2022-10-12T06:50:19.0000000+00:00'
