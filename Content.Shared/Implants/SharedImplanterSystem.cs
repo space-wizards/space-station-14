@@ -37,6 +37,7 @@ public abstract class SharedImplanterSystem : EntitySystem
         var implantContainer = _container.EnsureContainer<Container>(target, ImplantSlotId);
         implantComp.EntityUid = target;
         container.Remove(implant);
+        implantContainer.OccludesLight = false;
         implantContainer.Insert(implant);
     }
 }

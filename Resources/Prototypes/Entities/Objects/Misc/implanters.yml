@@ -57,6 +57,21 @@
               - SubdermalImplant
 
 - type: entity
+  id: LightImplanter
+  name: light implanter
+  description: so bright... but why
+  parent: Implanter
+  components:
+    - type: ItemSlots
+      slots:
+        implanter_slot:
+          startingItem: LightImplant
+          priority: 0
+          whitelist:
+            tags:
+              - SubdermalImplant
+
+- type: entity
   id: TrackingImplanter
   name: tracking implanter
   description: CIA

@@ -20,8 +20,8 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
         base.Initialize();
 
         SubscribeLocalEvent<ImplantedComponent, MobStateChangedEvent>(RelayImplantEvent);
+        //SubscribeLocalEvent<ImplantedComponent, GetVerbsEvent<ActivationVerb>>(RelayImplantEvent); //see if this can get storage working
         //TODO: Revisit when StorageSystem is reworked or there's a way to get the storage verb onto a prototype
-        //TODO: Revisit when chain triggering is a thing to get a timer to work on macrobomb
     }
 
     private void RelayImplantEvent<T>(EntityUid uid, ImplantedComponent component, T args) where T : EntityEventArgs
