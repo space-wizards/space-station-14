@@ -1,12 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: You now heal yourself much slower than you heal other people when using
-      healing items., type: Tweak}
-  - {message: You can no longer attempt to heal targets that are already at full health.,
-    type: Tweak}
-  id: 1935
-  time: '2022-07-14T05:24:36.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Common radio now matches announcement colour., type: Tweak}
@@ -2941,3 +2933,9 @@ Entries:
   - {message: Fixed prediction and popups for actions, type: Fix}
   id: 2434
   time: '2022-10-12T16:35:36.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fix ghost roles button text not showing when latejoining as an observer,
+    type: Fix}
+  id: 2435
+  time: '2022-10-12T17:36:44.0000000+00:00'
