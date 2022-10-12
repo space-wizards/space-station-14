@@ -1,12 +1,16 @@
 using System.IO;
+using System.Linq;
+using Content.Client.Popups;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
+using Robust.Shared.Audio;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameStates;
 using Robust.Shared.Input.Binding;
+using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Markdown;
 using Robust.Shared.Serialization.Markdown.Mapping;
@@ -19,14 +23,19 @@ namespace Content.Client.Actions
     [UsedImplicitly]
     public sealed class ActionsSystem : SharedActionsSystem
     {
+        public delegate void OnActionReplaced(ActionType existing, ActionType action);
+
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IResourceManager _resources = default!;
         [Dependency] private readonly ISerializationManager _serialization = default!;
 
-        public event Action<ActionType>? OnActionAdded;
-        public event Action<ActionType>? OnActionRemoved;
-        public event Action<ActionsComponent>? OnLinkActions;
-        public event Action? OnUnlinkActions;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
+
+        public event Action<ActionType>? ActionAdded;
+        public event Action<ActionType>? ActionRemoved;
+        public event OnActionReplaced? ActionReplaced;
+        public event Action<ActionsComponent>? LinkActions;
+        public event Action? UnlinkActions;
         public event Action? ClearAssignments;
         public event Action<List<SlotAssignment>>? AssignSlot;
 
@@ -42,43 +51,128 @@ namespace Content.Client.Actions
 
         private void HandleComponentState(EntityUid uid, ActionsComponent component, ref ComponentHandleState args)
         {
-            if (args.Current is not ActionsComponentState currentState)
+            if (args.Current is not ActionsComponentState state)
                 return;
 
-            List<ActionType> added = new();
-            List<ActionType> removed = new();
+            var serverActions = new SortedSet<ActionType>(state.Actions);
+            var removed = new List<ActionType>();
 
-            foreach (var actionType in component.Actions)
+            foreach (var act in component.Actions.ToList())
             {
-                if (!currentState.Actions.Contains(actionType))
+                if (act.ClientExclusive)
+                    continue;
+
+                if (!serverActions.TryGetValue(act, out var serverAct))
                 {
-                    removed.Add(actionType);
+                    component.Actions.Remove(act);
+                    if (act.AutoRemove)
+                        removed.Add(act);
+
+                    continue;
                 }
+
+                act.CopyFrom(serverAct);
+                serverActions.Remove(serverAct);
             }
 
-            foreach (var serverAction in currentState.Actions)
+            var added = new List<ActionType>();
+
+            // Anything that remains is a new action
+            foreach (var newAct in serverActions)
             {
-                if (!component.Actions.TryGetValue(serverAction, out var clientAction))
-                {
-                    added.Add((ActionType) serverAction.Clone());
-                }
-                else
-                {
-                    clientAction.CopyFrom(serverAction);
-                }
+                // We create a new action, not just sorting a reference to the state's action.
+                var action = (ActionType) newAct.Clone();
+                component.Actions.Add(action);
+                added.Add(action);
             }
 
-            foreach (var actionType in added)
+            foreach (var action in removed)
             {
-                component.Actions.Add(actionType);
-                OnActionAdded?.Invoke(actionType);
+                ActionRemoved?.Invoke(action);
             }
 
-            foreach (var actionType in removed)
+            foreach (var action in added)
             {
-                component.Actions.Remove(actionType);
-                OnActionRemoved?.Invoke(actionType);
+                ActionAdded?.Invoke(action);
             }
+        }
+
+        protected override void AddActionInternal(ActionsComponent comp, ActionType action)
+        {
+            // Sometimes the client receives actions from the server, before predicting that newly added components will add
+            // their own shared actions. Just in case those systems ever decided to directly access action properties (e.g.,
+            // action.Toggled), we will remove duplicates:
+            if (comp.Actions.TryGetValue(action, out var existing))
+            {
+                comp.Actions.Remove(existing);
+                ActionReplaced?.Invoke(existing, action);
+            }
+
+            comp.Actions.Add(action);
+        }
+
+        public override void AddAction(EntityUid uid, ActionType action, EntityUid? provider, ActionsComponent? comp = null, bool dirty = true)
+        {
+            if (!Resolve(uid, ref comp, false))
+                return;
+
+            base.AddAction(uid, action, provider, comp, dirty);
+
+            if (uid == _playerManager.LocalPlayer?.ControlledEntity)
+                ActionAdded?.Invoke(action);
+        }
+
+        public override void RemoveActions(EntityUid uid, IEnumerable<ActionType> actions, ActionsComponent? comp = null, bool dirty = true)
+        {
+            if (uid != _playerManager.LocalPlayer?.ControlledEntity)
+                return;
+
+            if (!Resolve(uid, ref comp, false))
+                return;
+
+            var actionList = actions.ToList();
+            base.RemoveActions(uid, actionList, comp, dirty);
+
+            foreach (var act in actionList)
+            {
+                if (act.AutoRemove)
+                    ActionRemoved?.Invoke(act);
+            }
+        }
+
+        /// <summary>
+        ///     Execute convenience functionality for actions (pop-ups, sound, speech)
+        /// </summary>
+        protected override bool PerformBasicActions(EntityUid user, ActionType action)
+        {
+            var performedAction = action.Sound != null
+                                  || !string.IsNullOrWhiteSpace(action.UserPopup)
+                                  || !string.IsNullOrWhiteSpace(action.Popup);
+
+            if (!GameTiming.IsFirstTimePredicted)
+                return performedAction;
+
+            if (!string.IsNullOrWhiteSpace(action.UserPopup))
+            {
+                var msg = (!action.Toggled || string.IsNullOrWhiteSpace(action.PopupToggleSuffix))
+                    ? Loc.GetString(action.UserPopup)
+                    : Loc.GetString(action.UserPopup + action.PopupToggleSuffix);
+
+                _popupSystem.PopupEntity(msg, user);
+            }
+            else if (!string.IsNullOrWhiteSpace(action.Popup))
+            {
+                var msg = (!action.Toggled || string.IsNullOrWhiteSpace(action.PopupToggleSuffix))
+                    ? Loc.GetString(action.Popup)
+                    : Loc.GetString(action.Popup + action.PopupToggleSuffix);
+
+                _popupSystem.PopupEntity(msg, user);
+            }
+
+            if (action.Sound != null)
+                SoundSystem.Play(action.Sound.GetSound(), Filter.Local(), user, action.AudioParams);
+
+            return performedAction;
         }
 
         private void OnPlayerAttached(EntityUid uid, ActionsComponent component, PlayerAttachedEvent args)
@@ -86,7 +180,7 @@ namespace Content.Client.Actions
             if (uid != _playerManager.LocalPlayer?.ControlledEntity)
                 return;
 
-            OnLinkActions?.Invoke(component);
+            LinkActions?.Invoke(component);
             PlayerActions = component;
         }
 
@@ -95,7 +189,7 @@ namespace Content.Client.Actions
             if (uid != _playerManager.LocalPlayer?.ControlledEntity)
                 return;
 
-            OnUnlinkActions?.Invoke();
+            UnlinkActions?.Invoke();
             PlayerActions = null;
         }
 

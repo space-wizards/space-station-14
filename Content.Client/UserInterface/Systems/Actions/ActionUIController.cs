@@ -85,21 +85,25 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
     public void OnStateEntered(GameplayState state)
     {
         DebugTools.Assert(_window == null);
+
         _window = UIManager.CreateWindow<ActionsWindow>();
         _actionButton = UIManager.GetActiveUIWidget<MenuBar.Widgets.GameTopMenuBar>().ActionButton;
+        _actionsBar = UIManager.GetActiveUIWidget<ActionsBar>();
         LayoutContainer.SetAnchorPreset(_window, LayoutContainer.LayoutPreset.CenterTop);
-        _window.OnClose += () => { _actionButton.Pressed = false; };
-        _window.OnOpen += () => { _actionButton.Pressed = true; };
+
+        _window.OnOpen += OnWindowOpened;
+        _window.OnClose += OnWindowClosed;
         _window.ClearButton.OnPressed += OnClearPressed;
         _window.SearchBar.OnTextChanged += OnSearchChanged;
         _window.FilterButton.OnItemSelected += OnFilterSelected;
+        _actionButton.OnPressed += ActionButtonPressed;
+        _actionsBar.PageButtons.LeftArrow.OnPressed += OnLeftArrowPressed;
+        _actionsBar.PageButtons.RightArrow.OnPressed += OnRightArrowPressed;
+        _actionsSystem.ActionReplaced += OnActionReplaced;
+
         UpdateFilterLabel();
         SearchAndDisplay();
 
-        _actionsBar = UIManager.GetActiveUIWidget<ActionsBar>();
-        _actionsBar.PageButtons.LeftArrow.OnPressed += OnLeftArrowPressed;
-        _actionsBar.PageButtons.RightArrow.OnPressed += OnRightArrowPressed;
-        _actionButton.OnPressed += ActionButtonPressed;
         _dragShadow.Orphan();
         UIManager.PopupRoot.AddChild(_dragShadow);
 
@@ -134,10 +138,28 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             .Register<ActionUIController>();
     }
 
+    private void OnWindowOpened()
+    {
+        if (_actionButton != null)
+            _actionButton.Pressed = true;
+    }
+
+    private void OnWindowClosed()
+    {
+        if (_actionButton != null)
+            _actionButton.Pressed = false;
+    }
+
     public void OnStateExited(GameplayState state)
     {
         if (_window != null)
         {
+            _window.OnOpen -= OnWindowOpened;
+            _window.OnClose -= OnWindowClosed;
+            _window.ClearButton.OnPressed -= OnClearPressed;
+            _window.SearchBar.OnTextChanged -= OnSearchChanged;
+            _window.FilterButton.OnItemSelected -= OnFilterSelected;
+
             _window.Dispose();
             _window = null;
         }
@@ -192,6 +214,18 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
     private void OnRightArrowPressed(ButtonEventArgs args)
     {
         ChangePage(_currentPageIndex + 1);
+    }
+
+    private void OnActionReplaced(ActionType existing, ActionType action)
+    {
+        if (_container == null)
+            return;
+
+        foreach (var button in _container.GetButtons())
+        {
+            if (button.Action == existing)
+                button.UpdateData(_entities, action);
+        }
     }
 
     private void ActionButtonPressed(ButtonEventArgs args)
@@ -293,14 +327,14 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             if (action.Keywords.Any(keyword => search.Contains(keyword, StringComparison.OrdinalIgnoreCase)))
                 return true;
 
-            if (action.DisplayName.Contains((string) search, StringComparison.OrdinalIgnoreCase))
+            if (action.DisplayName.Contains(search, StringComparison.OrdinalIgnoreCase))
                 return true;
 
             if (action.Provider == null || action.Provider == _actionsSystem.PlayerActions?.Owner)
                 return false;
 
             var name = _entities.GetComponent<MetaDataComponent>(action.Provider.Value).EntityName;
-            return name.Contains((string) search, StringComparison.OrdinalIgnoreCase);
+            return name.Contains(search, StringComparison.OrdinalIgnoreCase);
         });
 
         PopulateActions(actions);
@@ -492,16 +526,16 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
     public void OnSystemLoaded(ActionsSystem system)
     {
-        _actionsSystem.OnLinkActions += OnComponentLinked;
-        _actionsSystem.OnUnlinkActions += OnComponentUnlinked;
+        _actionsSystem.LinkActions += OnComponentLinked;
+        _actionsSystem.UnlinkActions += OnComponentUnlinked;
         _actionsSystem.ClearAssignments += ClearActions;
         _actionsSystem.AssignSlot += AssignSlots;
     }
 
     public void OnSystemUnloaded(ActionsSystem system)
     {
-        _actionsSystem.OnLinkActions -= OnComponentLinked;
-        _actionsSystem.OnUnlinkActions -= OnComponentUnlinked;
+        _actionsSystem.LinkActions -= OnComponentLinked;
+        _actionsSystem.UnlinkActions -= OnComponentUnlinked;
         _actionsSystem.ClearAssignments -= ClearActions;
         _actionsSystem.AssignSlot -= AssignSlots;
     }
