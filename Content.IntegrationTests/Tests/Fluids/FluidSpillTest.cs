@@ -49,6 +49,7 @@ public sealed class FluidSpill
         var entityManager = server.ResolveDependency<IEntityManager>();
         var spillSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<SpillableSystem>();
         var gameTiming = server.ResolveDependency<IGameTiming>();
+        var puddleSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<PuddleSystem>();
         MapId mapId;
         EntityUid gridId = default;
 
@@ -86,14 +87,14 @@ public sealed class FluidSpill
             var puddle = GetPuddle(entityManager, grid, _origin);
 
             Assert.That(puddle, Is.Not.Null);
-            Assert.That(puddle!.CurrentVolume, Is.EqualTo(FixedPoint2.New(20)));
+            Assert.That(puddleSystem.CurrentVolume(puddle!.Owner, puddle), Is.EqualTo(FixedPoint2.New(20)));
 
             foreach (var direction in _dirs)
             {
                 var newPos = _origin.Offset(direction);
                 var sidePuddle = GetPuddle(entityManager, grid, newPos);
                 Assert.That(sidePuddle, Is.Not.Null);
-                Assert.That(sidePuddle!.CurrentVolume, Is.EqualTo(FixedPoint2.New(20)));
+                Assert.That(puddleSystem.CurrentVolume(sidePuddle!.Owner, puddle), Is.EqualTo(FixedPoint2.New(20)));
             }
         });
 
@@ -108,6 +109,7 @@ public sealed class FluidSpill
         var mapManager = server.ResolveDependency<IMapManager>();
         var entityManager = server.ResolveDependency<IEntityManager>();
         var spillSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<SpillableSystem>();
+        var puddleSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<PuddleSystem>();
         var gameTiming = server.ResolveDependency<IGameTiming>();
         MapId mapId;
         EntityUid gridId = default;
@@ -157,7 +159,7 @@ public sealed class FluidSpill
             var puddle = GetPuddle(entityManager, grid, puddleOrigin);
 
             Assert.That(puddle, Is.Not.Null);
-            Assert.That(puddle!.CurrentVolume, Is.EqualTo(FixedPoint2.New(20)));
+            Assert.That(puddleSystem.CurrentVolume(puddle!.Owner, puddle), Is.EqualTo(FixedPoint2.New(20)));
 
             for (var x = 0; x < 3; x++)
             {
@@ -188,6 +190,7 @@ public sealed class FluidSpill
         var mapManager = server.ResolveDependency<IMapManager>();
         var entityManager = server.ResolveDependency<IEntityManager>();
         var spillSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<SpillableSystem>();
+        var puddleSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<PuddleSystem>();
         var gameTiming = server.ResolveDependency<IGameTiming>();
         MapId mapId;
         EntityUid gridId = default;
@@ -235,7 +238,7 @@ public sealed class FluidSpill
                 x o x
                 . x .
             */
-            Assert.That(puddle!.CurrentVolume, Is.EqualTo(FixedPoint2.New(20)));
+            Assert.That(puddleSystem.CurrentVolume(puddle!.Owner, puddle), Is.EqualTo(FixedPoint2.New(20)));
 
             // we don't know where a spill would happen
             // but there should be only one
@@ -249,7 +252,7 @@ public sealed class FluidSpill
                 {
                     emptyField++;
                 }
-                else if (sidePuddle.CurrentVolume >= FluidSpreaderSystem.MinimalTransfer)
+                else if (puddleSystem.CurrentVolume(sidePuddle!.Owner, sidePuddle) >= FluidSpreaderSystem.MinimalTransfer)
                 {
                     fullField++;
                 }

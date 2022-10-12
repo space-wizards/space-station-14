@@ -14,17 +14,12 @@ public sealed class FluidMapDataComponent : Component
     /// <summary>
     /// Delay between two runs of <see cref="FluidSpreaderSystem"/>
     /// </summary>
-    public TimeSpan Delay = TimeSpan.FromSeconds(1);
+    public TimeSpan Delay = TimeSpan.FromSeconds(5);
 
     /// <summary>
-    /// MapUid to which this component belongs, must be set to valid MapUid
+    /// Puddles to be expanded.
     /// </summary>
-    public EntityUid MapUid = EntityUid.Invalid;
-
-    /// <summary>
-    /// Entities needing to be expanded. Maps Puddle Uid to an edge presenting frontier of a BFS (Breadth First Search)
-    /// </summary>
-    public  Dictionary<EntityUid, OverflowEdgeComponent> FluidSpread = new();
+    public  HashSet<EntityUid> Puddles = new();
 
     /// <summary>
     /// Convenience method for setting GoalTime to <paramref name="start"/> + <see cref="Delay"/>
