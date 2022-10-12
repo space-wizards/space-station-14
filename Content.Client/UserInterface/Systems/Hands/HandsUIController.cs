@@ -33,7 +33,7 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
 
     public void OnSystemLoaded(HandsSystem system)
     {
-        _handsSystem.OnAddHand += AddHand;
+        _handsSystem.OnAddHand += OnAddHand;
         _handsSystem.OnItemAdded += OnItemAdded;
         _handsSystem.OnItemRemoved += OnItemRemoved;
         _handsSystem.OnSetActiveHand += SetActiveHand;
@@ -46,7 +46,7 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
 
     public void OnSystemUnloaded(HandsSystem system)
     {
-        _handsSystem.OnAddHand -= AddHand;
+        _handsSystem.OnAddHand -= OnAddHand;
         _handsSystem.OnItemAdded -= OnItemAdded;
         _handsSystem.OnItemRemoved -= OnItemRemoved;
         _handsSystem.OnSetActiveHand -= SetActiveHand;
@@ -55,6 +55,11 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
         _handsSystem.OnPlayerHandsRemoved -= UnloadPlayerHands;
         _handsSystem.OnHandBlocked -= HandBlocked;
         _handsSystem.OnHandUnblocked -= HandUnblocked;
+    }
+
+    private void OnAddHand(string name, HandLocation location)
+    {
+        AddHand(name, location);
     }
 
     private void HandPressed(GUIBoundKeyEventArgs args, SlotControl hand)
@@ -102,7 +107,8 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
         _playerHandsComponent = handsComp;
         foreach (var (name, hand) in handsComp.Hands)
         {
-            AddHand(name, hand.Location);
+            var handButton = AddHand(name, hand.Location);
+            handButton.SpriteView.Sprite = _entities.GetComponentOrNull<SpriteComponent>(hand.HeldEntity);
         }
 
         var activeHand = handsComp.ActiveHand;
@@ -223,14 +229,18 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
         return handControl;
     }
 
-    private void AddHand(string handName, HandLocation location)
+    private HandButton AddHand(string handName, HandLocation location)
     {
-        var newHandButton = new HandButton(handName, location);
-        newHandButton.StoragePressed += StorageActivate;
-        newHandButton.Pressed += HandPressed;
-        if (!_handLookup.TryAdd(handName, newHandButton))
+        var button = new HandButton(handName, location);
+        button.StoragePressed += StorageActivate;
+        button.Pressed += HandPressed;
+
+        if (!_handLookup.TryAdd(handName, button))
             throw new Exception("Tried to add hand with duplicate name to UI. Name:" + handName);
-        GetFirstAvailableContainer().AddButton(newHandButton);
+
+        GetFirstAvailableContainer().AddButton(button);
+
+        return button;
     }
 
     private void RemoveHand(string handName)
