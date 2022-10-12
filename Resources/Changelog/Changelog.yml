@@ -1,9 +1,4 @@
 Entries:
-- author: jessicamaybe
-  changes:
-  - {message: Robot showcase statue is now anchorable, type: Tweak}
-  id: 1932
-  time: '2022-07-13T02:01:24.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Pizza boxes can no longer swallow players. (for realsies), type: Fix}
@@ -2943,3 +2938,9 @@ Entries:
   - {message: Fixed chat staying focused after sending a message., type: Fix}
   id: 2431
   time: '2022-10-12T12:53:15.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed not being able to right click entries in the admin objects tab.,
+    type: Fix}
+  id: 2432
+  time: '2022-10-12T13:07:24.0000000+00:00'
