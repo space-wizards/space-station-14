@@ -1,9 +1,4 @@
 Entries:
-- author: Delete
-  changes:
-  - {message: 'Adds extra warning line decal, and fixed up existing ones.', type: Add}
-  id: 1928
-  time: '2022-07-12T06:03:35.0000000+00:00'
 - author: Myctai
   changes:
   - {message: 'Corrected Phalanximine description. It''s not "Anti-Toxin", actually
@@ -2940,3 +2935,9 @@ Entries:
   - {message: Layout optimizations for Kettle, type: Tweak}
   id: 2427
   time: '2022-10-11T14:01:07.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Fixed a bug that would sometimes cause the client to crash when playing
+      particular ghost roles (e.g., mice).', type: Fix}
+  id: 2428
+  time: '2022-10-12T00:55:00.0000000+00:00'
