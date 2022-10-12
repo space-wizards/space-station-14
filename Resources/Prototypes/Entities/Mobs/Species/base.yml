@@ -240,7 +240,6 @@
   - type: Ensnareable
     sprite: Objects/Misc/ensnare.rsi
     state: icon
-  - type: CharacterInfo
   - type: AnimationPlayer
   - type: Buckle
   - type: MeleeWeapon
