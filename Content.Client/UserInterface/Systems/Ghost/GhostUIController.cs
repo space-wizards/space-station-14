@@ -96,6 +96,7 @@ public sealed class GhostUIController : UIController, IOnStateChanged<GameplaySt
         Gui.TargetWindow.WarpClicked += OnWarpClicked;
 
         Gui.Visible = _system?.IsGhost ?? false;
+        UpdateGui();
     }
 
     public void OnStateExited(GameplayState state)
