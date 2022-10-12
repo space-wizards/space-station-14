@@ -9,6 +9,7 @@ using Content.Shared.Weapons.Melee.Events;
 using JetBrains.Annotations;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
+using Robust.Shared.Players;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -106,7 +107,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         if (weapon?.Owner != msg.Weapon)
             return;
 
-        AttemptAttack(args.SenderSession.AttachedEntity!.Value, weapon, msg);
+        AttemptAttack(args.SenderSession.AttachedEntity!.Value, weapon, msg, args.SenderSession);
     }
 
     private void OnStopHeavyAttack(StopHeavyAttackEvent msg, EntitySessionEventArgs args)
@@ -144,7 +145,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         if (userWeapon != weapon)
             return;
 
-        AttemptAttack(args.SenderSession.AttachedEntity.Value, weapon, msg);
+        AttemptAttack(args.SenderSession.AttachedEntity.Value, weapon, msg, args.SenderSession);
     }
 
     private void OnDisarmAttack(DisarmAttackEvent msg, EntitySessionEventArgs args)
@@ -159,7 +160,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         if (userWeapon == null)
             return;
 
-        AttemptAttack(args.SenderSession.AttachedEntity.Value, userWeapon, msg);
+        AttemptAttack(args.SenderSession.AttachedEntity.Value, userWeapon, msg, args.SenderSession);
     }
 
     private void OnGetState(EntityUid uid, MeleeWeaponComponent component, ref ComponentGetState args)
@@ -208,7 +209,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         if (!TryComp<TransformComponent>(target, out var targetXform))
             return;
 
-        AttemptAttack(user, weapon, new LightAttackEvent(target, weapon.Owner, targetXform.Coordinates));
+        AttemptAttack(user, weapon, new LightAttackEvent(target, weapon.Owner, targetXform.Coordinates), null);
     }
 
     public void AttemptDisarmAttack(EntityUid user, MeleeWeaponComponent weapon, EntityUid target)
@@ -216,13 +217,13 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         if (!TryComp<TransformComponent>(target, out var targetXform))
             return;
 
-        AttemptAttack(user, weapon, new DisarmAttackEvent(target, targetXform.Coordinates));
+        AttemptAttack(user, weapon, new DisarmAttackEvent(target, targetXform.Coordinates), null);
     }
 
     /// <summary>
     /// Called when a windup is finished and an attack is tried.
     /// </summary>
-    private void AttemptAttack(EntityUid user, MeleeWeaponComponent weapon, AttackEvent attack)
+    private void AttemptAttack(EntityUid user, MeleeWeaponComponent weapon, AttackEvent attack, ICommonSession? session)
     {
         var curTime = Timing.CurTime;
 
@@ -249,13 +250,13 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         switch (attack)
         {
             case LightAttackEvent light:
-                DoLightAttack(user, light, weapon);
+                DoLightAttack(user, light, weapon, session);
                 break;
             case DisarmAttackEvent disarm:
-                DoDisarm(user, disarm, weapon);
+                DoDisarm(user, disarm, weapon, session);
                 break;
             case HeavyAttackEvent heavy:
-                DoHeavyAttack(user, heavy, weapon);
+                DoHeavyAttack(user, heavy, weapon, session);
                 break;
             default:
                 throw new NotImplementedException();
@@ -300,17 +301,17 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         return (float) fraction * component.HeavyDamageModifier.Float();
     }
 
-    protected virtual void DoLightAttack(EntityUid user, LightAttackEvent ev, MeleeWeaponComponent component)
+    protected virtual void DoLightAttack(EntityUid user, LightAttackEvent ev, MeleeWeaponComponent component, ICommonSession? session)
     {
 
     }
 
-    protected virtual void DoHeavyAttack(EntityUid user, HeavyAttackEvent ev, MeleeWeaponComponent component)
+    protected virtual void DoHeavyAttack(EntityUid user, HeavyAttackEvent ev, MeleeWeaponComponent component, ICommonSession? session)
     {
 
     }
 
-    protected virtual bool DoDisarm(EntityUid user, DisarmAttackEvent ev, MeleeWeaponComponent component)
+    protected virtual bool DoDisarm(EntityUid user, DisarmAttackEvent ev, MeleeWeaponComponent component, ICommonSession? session)
     {
         if (Deleted(ev.Target) ||
             user == ev.Target)

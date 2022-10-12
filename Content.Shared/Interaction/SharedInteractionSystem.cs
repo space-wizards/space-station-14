@@ -408,6 +408,21 @@ namespace Content.Shared.Interaction
             return rayResults.Count == 0;
         }
 
+        public bool InRangeUnobstructed(
+            EntityUid origin,
+            EntityUid other,
+            float range = InteractionRange,
+            CollisionGroup collisionMask = InRangeUnobstructedMask,
+            Ignored? predicate = null,
+            bool popup = false)
+        {
+            if (!TryComp<TransformComponent>(other, out var otherXform))
+                return false;
+
+            return InRangeUnobstructed(origin, other, otherXform.Coordinates, otherXform.LocalRotation, range, collisionMask, predicate,
+                popup);
+        }
+
         /// <summary>
         ///     Checks that two entities are within a certain distance without any
         ///     entity that matches the collision mask obstructing them.
@@ -418,6 +433,7 @@ namespace Content.Shared.Interaction
         /// </summary>
         /// <param name="origin">The first entity to use.</param>
         /// <param name="other">Other entity to use.</param>
+        /// <param name="otherAngle">The local rotation to use for the other entity.</param>
         /// <param name="range">
         ///     Maximum distance between the two entities.
         /// </param>
@@ -430,12 +446,15 @@ namespace Content.Shared.Interaction
         ///     Whether or not to popup a feedback message on the origin entity for
         ///     it to see.
         /// </param>
+        /// <param name="otherCoordinates">The coordinates to use for the other entity.</param>
         /// <returns>
         ///     True if the two points are within a given range without being obstructed.
         /// </returns>
         public bool InRangeUnobstructed(
             EntityUid origin,
             EntityUid other,
+            EntityCoordinates otherCoordinates,
+            Angle otherAngle,
             float range = InteractionRange,
             CollisionGroup collisionMask = InRangeUnobstructedMask,
             Ignored? predicate = null,
@@ -456,12 +475,11 @@ namespace Content.Shared.Interaction
                 fixtureA.FixtureCount > 0 &&
                 TryComp<FixturesComponent>(other, out var fixtureB) &&
                 fixtureB.FixtureCount > 0 &&
-                TryComp<TransformComponent>(origin, out var xformA) &&
-                TryComp<TransformComponent>(other, out var xformB))
+                TryComp<TransformComponent>(origin, out var xformA))
             {
                 // Different map or the likes.
-                if (!_sharedBroadphaseSystem.TryGetNearest(origin, other,
-                        out var pointA, out var pointB, out var distance,
+                if (!_sharedBroadphaseSystem.TryGetDistance(origin, other,
+                        out var distance,
                         xformA, xformB, fixtureA, fixtureB))
                 {
                     inRange = false;
@@ -480,7 +498,7 @@ namespace Content.Shared.Interaction
                 {
                     // We'll still do the raycast from the centres but we'll bump the range as we know they're in range.
                     originPos = xformA.MapPosition;
-                    (var targetWorld, targetRot) = xformB.GetWorldPositionRotation();
+
                     targetPos = new MapCoordinates(targetWorld, xformB.MapID);
 
                     range = (originPos.Position - targetWorld).Length;
@@ -491,7 +509,7 @@ namespace Content.Shared.Interaction
                 originPos = Transform(origin).MapPosition;
 
                 xformB = Transform(other);
-                (var targetWorld, targetRot) = xformB.GetWorldPositionRotation();
+
                 targetPos = new MapCoordinates(targetWorld, xformB.MapID);
             }
 

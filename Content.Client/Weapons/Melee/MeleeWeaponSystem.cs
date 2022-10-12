@@ -16,6 +16,7 @@ using Robust.Shared.Animations;
 using Robust.Shared.Input;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -197,9 +198,9 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         }
     }
 
-    protected override bool DoDisarm(EntityUid user, DisarmAttackEvent ev, MeleeWeaponComponent component)
+    protected override bool DoDisarm(EntityUid user, DisarmAttackEvent ev, MeleeWeaponComponent component, ICommonSession? session)
     {
-        if (!base.DoDisarm(user, ev, component))
+        if (!base.DoDisarm(user, ev, component, session))
             return false;
 
         if (!HasComp<CombatModeComponent>(user))
