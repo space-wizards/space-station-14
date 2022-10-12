@@ -1,4 +1,5 @@
 using Content.Server.Radiation.Components;
+using Content.Server.Radiation.Events;
 using Content.Shared.Radiation.Components;
 using Content.Shared.Radiation.Systems;
 using Robust.Shared.Collections;
@@ -80,6 +81,9 @@ public partial class RadiationSystem
             if (rads > 0)
                 IrradiateEntity(receiver.Owner, rads,GridcastUpdateRate);
         }
+
+        // raise broadcast event that radiation system has updated
+        RaiseLocalEvent(new OnRadiationSystemUpdated());
     }
 
     private RadiationRay? Irradiate(EntityUid sourceUid, TransformComponent sourceTrs, Vector2 sourceWorld,
@@ -169,7 +173,7 @@ public partial class RadiationSystem
         Vector2 dstLocal = destTrs.ParentUid == grid.GridEntityId
             ? destTrs.LocalPosition
             : gridTrs.InvLocalMatrix.Transform(ray.Destination);
-        
+
         Vector2i sourceGrid = new(
             (int) Math.Floor(srcLocal.X / grid.TileSize),
             (int) Math.Floor(srcLocal.Y / grid.TileSize));
