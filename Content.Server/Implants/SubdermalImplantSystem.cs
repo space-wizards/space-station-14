@@ -5,6 +5,7 @@ using Content.Shared.Body.Components;
 using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
 using Content.Shared.MobState;
+using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 
 namespace Content.Server.Implants;
@@ -18,31 +19,19 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ImplantedComponent, MobStateChangedEvent>(OnMobstateChanged);
-
-        //TODO: Add more trigger events and such for certain implant types
+        SubscribeLocalEvent<ImplantedComponent, MobStateChangedEvent>(RelayImplantEvent);
+        //TODO: Revisit when StorageSystem is reworked or there's a way to get the storage verb onto a prototype
+        //TODO: Revisit when chain triggering is a thing to get a timer to work on macrobomb
     }
 
-    private void OnMobstateChanged(EntityUid uid, ImplantedComponent component, MobStateChangedEvent args)
+    private void RelayImplantEvent<T>(EntityUid uid, ImplantedComponent component, T args) where T : EntityEventArgs
     {
         if (!_container.TryGetContainer(uid, ImplantSlotId, out var implantContainer))
             return;
 
-        var implantQuery = GetEntityQuery<SubdermalImplantComponent>();
-        var mobstateTriggerQuery = GetEntityQuery<TriggerOnMobstateChangeComponent>();
-
         foreach (var implant in implantContainer.ContainedEntities)
         {
-            if (!implantQuery.TryGetComponent(implant, out var implantComp))
-                continue;
-
-            if (TryComp<TriggerOnMobstateChangeComponent>(implant, out var trigger) && trigger.MobState == args.CurrentMobState)
-            {
-                _trigger.Trigger(implant);
-            }
-
-            if (TryComp<SharedBodyComponent>(uid, out var body) && args.CurrentMobState == DamageState.Dead && implantComp.GibOnDeath)
-                body.Gib(deleteItems:implantComp.DeleteItemsOnGib);
+            RaiseLocalEvent(implant, args);
         }
     }
 }

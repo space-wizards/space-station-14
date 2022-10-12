@@ -5,8 +5,6 @@ namespace Content.Shared.Implants.Components;
 [RegisterComponent]
 public sealed class SubdermalImplantComponent : Component
 {
-    //TODO: Add logic for granting instant actions to the owner of the subdermal implant
-
     /// <summary>
     /// Used where you want the implant to grant the owner an instant action.
     /// </summary>
@@ -14,21 +12,10 @@ public sealed class SubdermalImplantComponent : Component
     [DataField("implantAction")]
     public string? ImplantAction;
 
+    /// <summary>
+    /// The entity this implant is inside
+    /// </summary>
     public EntityUid? EntityUid;
-
-    /// <summary>
-    /// For implants that you would like to gib on death.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("gibOnDeath")]
-    public bool GibOnDeath = false;
-
-    /// <summary>
-    /// For implants that gib and you want to delete the entities clothes/bagged items.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("deleteItemsOnGib")]
-    public bool DeleteItemsOnGib = false;
 
     //TODO: Add logic for passive actions (IE tracking implant)
 

@@ -72,6 +72,21 @@
               - SubdermalImplant
 
 - type: entity
+  id: StorageImplanter
+  name: storage implanter
+  description: bag
+  parent: Implanter
+  components:
+    - type: ItemSlots
+      slots:
+        implanter_slot:
+          startingItem: StorageImplant
+          priority: 0
+          whitelist:
+            tags:
+              - SubdermalImplant
+
+- type: entity
   id: MicroBombImplanter
   name: micro bomb implanter
   description: boom

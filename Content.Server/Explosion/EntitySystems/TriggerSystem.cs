@@ -15,6 +15,7 @@ using Robust.Shared.Player;
 using Content.Shared.Trigger;
 using Content.Shared.Database;
 using Content.Shared.Explosion;
+using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
 using Content.Shared.MobState;
 using Content.Shared.Payload.Components;
@@ -68,6 +69,7 @@ namespace Content.Server.Explosion.EntitySystems
             SubscribeLocalEvent<DeleteOnTriggerComponent, TriggerEvent>(HandleDeleteTrigger);
             SubscribeLocalEvent<ExplodeOnTriggerComponent, TriggerEvent>(HandleExplodeTrigger);
             SubscribeLocalEvent<FlashOnTriggerComponent, TriggerEvent>(HandleFlashTrigger);
+            SubscribeLocalEvent<GibOnTriggerComponent, TriggerEvent>(HandleGibTrigger);
         }
 
         private void HandleExplodeTrigger(EntityUid uid, ExplodeOnTriggerComponent component, TriggerEvent args)
@@ -90,6 +92,25 @@ namespace Content.Server.Explosion.EntitySystems
             EntityManager.QueueDeleteEntity(uid);
             args.Handled = true;
         }
+
+        private void HandleGibTrigger(EntityUid uid, GibOnTriggerComponent component, TriggerEvent args)
+        {
+            var bodyQuery = GetEntityQuery<SharedBodyComponent>();
+
+            //Code so implants can properly handle gibbing their owners
+            if (TryComp<SubdermalImplantComponent>(uid, out var implantComponent) &&
+                implantComponent.EntityUid != null &&
+                bodyQuery.TryGetComponent(implantComponent.EntityUid.Value, out var implantedBody))
+            {
+                implantedBody.Gib(deleteItems:component.DeleteItems);
+            }
+
+            if (bodyQuery.TryGetComponent(uid, out var body))
+                body.Gib(deleteItems:component.DeleteItems);
+
+            args.Handled = true;
+        }
+
 
         private void OnTriggerCollide(EntityUid uid, TriggerOnCollideComponent component, ref StartCollideEvent args)
         {

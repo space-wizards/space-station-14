@@ -11,6 +11,8 @@
         - SubdermalImplant
         - HideContextMenu
 
+#Fun Implants
+
 - type: entity
   parent: BaseSubdermalImplant
   id: SadTromboneImplant
@@ -27,15 +29,7 @@
         params:
           variation: 0.125
 
-- type: entity
-  parent: BaseSubdermalImplant
-  id: UndeadImplant
-  name: undead implant
-  description: a loaded zombie virus all in one implant
-  noSpawn: true
-  components:
-    - type: SubdermalImplant
-      implantAction: TurnUndead
+#Security Implants
 
 - type: entity
   parent: BaseSubdermalImplant
@@ -56,6 +50,29 @@
     - type: WirelessNetworkConnection
       range: 500
 
+#Traitor Implants
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: StorageImplant
+  name: storage implant
+  description: made with bluespace technology, allows the user to fit about two medium items in hidden storage
+  noSpawn: true
+  components:
+    - type: SubdermalImplant
+    - type: Storage
+      capacity: 100
+    - type: ContainerContainer
+      containers:
+        storagebase: !type:Container
+          ents: [ ]
+    - type: UserInterface
+      interfaces:
+        - key: enum.StorageUiKey.Key
+          type: StorageBoundUserInterface
+
+#Nuclear Operative/Special implants
+
 - type: entity
   parent: BaseSubdermalImplant
   id: MicroBombImplant
@@ -66,7 +83,6 @@
     - type: SubdermalImplant
     - type: TriggerOnMobstateChange
       mobState: Dead
-      gibOnDeath: true
     - type: ExplodeOnTrigger
     - type: Explosive
       explosionType: MicroBomb
@@ -74,7 +90,10 @@
       intensitySlope: 5
       maxIntensity: 30
       canCreateVacuum: false
+    - type: GibOnTrigger
+      deleteItems: true
 
+#Macro bomb should really have a timer before it goes off
 - type: entity
   parent: BaseSubdermalImplant
   id: MacroBombImplant
@@ -83,15 +102,28 @@
   noSpawn: true
   components:
     - type: SubdermalImplant
-      gibOnDeath: true
-      deleteItemsOnGib: true
-    - type: TriggerOnMobstateChange
+    - type: OnUseTimerTrigger
+      delay: 5
+      initialBeepDelay: 0
+      beepSound: /Audio/Machines/Nuke/general_beep.ogg
       mobState: Dead
-      gibOnDeath: true
     - type: ExplodeOnTrigger
+    - type: GibOnTrigger
     - type: Explosive
       explosionType: Default
       totalIntensity: 4000
       intensitySlope: 5
       maxIntensity: 50
       canCreateVacuum: true
+
+#Admin Spawn implants
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: UndeadImplant
+  name: undead implant
+  description: a loaded zombie virus all in one implant
+  noSpawn: true
+  components:
+    - type: SubdermalImplant
+      implantAction: TurnUndead

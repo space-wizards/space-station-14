@@ -1,3 +1,4 @@
+using Content.Shared.MobState;
 using Robust.Shared.Audio;
 
 namespace Content.Server.Explosion.Components
@@ -44,5 +45,12 @@ namespace Content.Server.Explosion.Components
         /// </summary>
         [DataField("canToggleStartOnStick")]
         public bool AllowToggleStartOnStick;
+
+        /// <summary>
+        /// Have the timer trigger when mobstate changes
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("mobState")]
+        public DamageState MobState = DamageState.Alive;
     }
 }
