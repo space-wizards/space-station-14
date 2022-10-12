@@ -21,6 +21,7 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
+    [Dependency] private readonly SharedAppearanceSystem _sharedAppearanceSystem = default!;
 
     public override void Initialize()
     {
@@ -74,7 +75,7 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
 
         var frac = battery.CurrentCharge / battery.MaxCharge;
         var level = (byte) ContentHelpers.RoundToNearestLevels(frac, 1, PowerCellComponent.PowerCellVisualsLevels);
-        appearance.SetData(PowerCellVisuals.ChargeLevel, level);
+        _sharedAppearanceSystem.SetData(uid, PowerCellVisuals.ChargeLevel, level, appearance);
 
         // If this power cell is inside a cell-slot, inform that entity that the power has changed (for updating visuals n such).
         if (_containerSystem.TryGetContainingContainer(uid, out var container)
