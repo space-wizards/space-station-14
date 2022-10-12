@@ -630,7 +630,7 @@ public sealed class ChatUIController : UIController
 
         box.ChatInput.Input.Clear();
         box.UpdateSelectedChannel();
-        box.ChatInput.ReleaseKeyboardFocus();
+        box.ChatInput.Input.ReleaseKeyboardFocus();
     }
 
     private void OnChatMessage(MsgChatMessage msg)
