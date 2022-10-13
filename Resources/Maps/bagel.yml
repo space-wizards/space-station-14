@@ -86588,7 +86588,7 @@ entities:
     parent: 60
     type: Transform
 - uid: 8769
-  type: OrganHumanHeart
+  type: OrganHeartHuman
   components:
   - pos: -38.6466,-28.391699
     parent: 60

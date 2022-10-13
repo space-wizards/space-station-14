@@ -374,14 +374,14 @@ entities:
     parent: 0
     type: Transform
 - uid: 42
-  type: OrganHumanEyes
+  type: OrganEyesHuman
   components:
   - rot: -1.5707963267948966 rad
     pos: -0.92498416,-0.5751579
     parent: 0
     type: Transform
 - uid: 43
-  type: OrganHumanTongue
+  type: OrganTongueHuman
   components:
   - rot: -1.5707963267948966 rad
     pos: -1.5187342,-1.4814079

@@ -779,14 +779,14 @@ entities:
         - 91
     type: ContainerContainer
 - uid: 90
-  type: OrganHumanBrain
+  type: OrganBrainHuman
   components:
   - parent: 89
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 91
-  type: OrganHumanEyes
+  type: OrganEyesHuman
   components:
   - parent: 89
     type: Transform
@@ -809,14 +809,14 @@ entities:
         - 97
     type: ContainerContainer
 - uid: 93
-  type: OrganHumanHeart
+  type: OrganHeartHuman
   components:
   - parent: 92
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 94
-  type: OrganHumanLungs
+  type: OrganLungsHuman
   components:
   - parent: 92
     type: Transform
@@ -828,21 +828,21 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 95
-  type: OrganHumanStomach
+  type: OrganStomachHuman
   components:
   - parent: 92
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 96
-  type: OrganHumanLiver
+  type: OrganLiverHuman
   components:
   - parent: 92
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 97
-  type: OrganHumanKidneys
+  type: OrganKidneysHuman
   components:
   - parent: 92
     type: Transform
@@ -1030,14 +1030,14 @@ entities:
         - 109
     type: ContainerContainer
 - uid: 108
-  type: OrganHumanBrain
+  type: OrganBrainHuman
   components:
   - parent: 107
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 109
-  type: OrganHumanEyes
+  type: OrganEyesHuman
   components:
   - parent: 107
     type: Transform
@@ -1060,14 +1060,14 @@ entities:
         - 115
     type: ContainerContainer
 - uid: 111
-  type: OrganHumanHeart
+  type: OrganHeartHuman
   components:
   - parent: 110
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 112
-  type: OrganHumanLungs
+  type: OrganLungsHuman
   components:
   - parent: 110
     type: Transform
@@ -1079,21 +1079,21 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 113
-  type: OrganHumanStomach
+  type: OrganStomachHuman
   components:
   - parent: 110
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 114
-  type: OrganHumanLiver
+  type: OrganLiverHuman
   components:
   - parent: 110
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 115
-  type: OrganHumanKidneys
+  type: OrganKidneysHuman
   components:
   - parent: 110
     type: Transform
@@ -1281,14 +1281,14 @@ entities:
         - 127
     type: ContainerContainer
 - uid: 126
-  type: OrganHumanBrain
+  type: OrganBrainHuman
   components:
   - parent: 125
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 127
-  type: OrganHumanEyes
+  type: OrganEyesHuman
   components:
   - parent: 125
     type: Transform
@@ -1311,14 +1311,14 @@ entities:
         - 133
     type: ContainerContainer
 - uid: 129
-  type: OrganHumanHeart
+  type: OrganHeartHuman
   components:
   - parent: 128
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 130
-  type: OrganHumanLungs
+  type: OrganLungsHuman
   components:
   - parent: 128
     type: Transform
@@ -1330,21 +1330,21 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 131
-  type: OrganHumanStomach
+  type: OrganStomachHuman
   components:
   - parent: 128
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 132
-  type: OrganHumanLiver
+  type: OrganLiverHuman
   components:
   - parent: 128
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 133
-  type: OrganHumanKidneys
+  type: OrganKidneysHuman
   components:
   - parent: 128
     type: Transform

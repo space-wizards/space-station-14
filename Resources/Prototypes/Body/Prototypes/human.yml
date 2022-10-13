@@ -28,11 +28,11 @@
     - right foot
   organs:
   - head:
-    - OrganHumanBrain
-    - OrganHumanEyes
+      - OrganBrainHuman
+      - OrganEyesHuman
   - torso:
-    - OrganHumanHeart
-    - OrganHumanLungs
-    - OrganHumanStomach
-    - OrganHumanLiver
-    - OrganHumanKidneys
+      - OrganHeartHuman
+      - OrganLungsHuman
+      - OrganStomachHuman
+      - OrganLiverHuman
+      - OrganKidneysHuman
