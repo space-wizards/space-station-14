@@ -8,7 +8,6 @@ using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
 using Content.Shared.Damage;
 using Content.Shared.Database;
-using Content.Shared.MobState.Components;
 using Content.Shared.MobState.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Shared.Player;
@@ -96,7 +95,7 @@ namespace Content.Server.Body.Systems
             if (!Resolve(uid, ref body, false))
                 return;
 
-            var organs = _bodySystem.GetComponentsOnMechanisms<LungComponent>(uid, body);
+            var organs = _bodySystem.GetComponentsOnOrgans<LungComponent>(uid, body);
 
             // Inhale gas
             var ev = new InhaleLocationEvent();
@@ -126,7 +125,7 @@ namespace Content.Server.Body.Systems
             if (!Resolve(uid, ref body, false))
                 return;
 
-            var organs = _bodySystem.GetComponentsOnMechanisms<LungComponent>(uid, body);
+            var organs = _bodySystem.GetComponentsOnOrgans<LungComponent>(uid, body);
 
             // exhale gas
 

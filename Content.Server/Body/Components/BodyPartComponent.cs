@@ -8,8 +8,6 @@ namespace Content.Server.Body.Components
     [ComponentReference(typeof(SharedBodyPartComponent))]
     public sealed class BodyPartComponent : SharedBodyPartComponent
     {
-        [Dependency] private readonly IEntityManager _entMan = default!;
-
         private Container _mechanismContainer = default!;
 
         public override bool CanAddMechanism(OrganComponent organ)

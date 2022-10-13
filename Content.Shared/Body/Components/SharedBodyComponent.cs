@@ -13,48 +13,18 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Body.Components
 {
     // TODO BODY Damage methods for collections of IDamageableComponents
-
-    [NetworkedComponent()]
-    public abstract class SharedBodyComponent : Component, ISerializationHooks
+    [NetworkedComponent]
+    public abstract class SharedBodyComponent : Component
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         [ViewVariables]
-        [DataField("template", required: true)]
-        private string? TemplateId { get; }
+        [DataField("prototype", required: true)]
+        private string? PrototypeId { get; }
 
         [ViewVariables]
-        [DataField("preset", required: true)]
-        private string? PresetId { get; }
-
-        [ViewVariables]
-        public BodyTemplatePrototype? Template => TemplateId == null
-            ? null
-            : _prototypeManager.Index<BodyTemplatePrototype>(TemplateId);
-
-        [ViewVariables]
-        public BodyPresetPrototype? Preset => PresetId == null
-            ? null
-            : _prototypeManager.Index<BodyPresetPrototype>(PresetId);
-
-        [ViewVariables]
-        private Dictionary<string, BodyPartSlot> SlotIds { get; } = new();
-
-        [ViewVariables]
-        private Dictionary<SharedBodyPartComponent, BodyPartSlot> SlotParts { get; } = new();
-
-        [ViewVariables]
-        public IEnumerable<BodyPartSlot> Slots => SlotIds.Values;
-
-        [ViewVariables]
-        public IEnumerable<KeyValuePair<SharedBodyPartComponent, BodyPartSlot>> Parts => SlotParts;
-
-        public BodyPartSlot? CenterSlot =>
-            Template?.CenterSlot is { } centerSlot
-                ? SlotIds.GetValueOrDefault(centerSlot)
-                : null;
-
-        public SharedBodyPartComponent? CenterPart => CenterSlot?.Part;
+        [DataField("root")]
+        public EntityUid? Root { get; set; }
 
         protected override void Initialize()
         {

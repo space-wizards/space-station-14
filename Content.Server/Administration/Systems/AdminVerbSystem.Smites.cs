@@ -307,7 +307,7 @@ public sealed partial class AdminVerbSystem
                 Act = () =>
                 {
                     _vomitSystem.Vomit(args.Target, -1000, -1000); // You feel hollow!
-                    var organs = _bodySystem.GetComponentsOnMechanisms<TransformComponent>(args.Target, body);
+                    var organs = _bodySystem.GetComponentsOnOrgans<TransformComponent>(args.Target, body);
                     var baseXform = Transform(args.Target);
                     foreach (var (xform, mechanism) in organs)
                     {

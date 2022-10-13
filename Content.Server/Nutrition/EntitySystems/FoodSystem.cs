@@ -1,3 +1,4 @@
+using System.Threading;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.EntitySystems;
@@ -20,7 +21,6 @@ using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
-using System.Threading;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
@@ -152,7 +152,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             args.Food.CancelToken = null;
 
-            if (!_bodySystem.TryGetComponentsOnMechanisms<StomachComponent>(uid, out var stomachs, body))
+            if (!_bodySystem.TryGetComponentsOnOrgans<StomachComponent>(uid, out var stomachs, body))
                 return;
 
             var transferAmount = args.Food.TransferAmount != null
@@ -244,7 +244,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 !ev.CanInteract ||
                 !ev.CanAccess ||
                 !EntityManager.TryGetComponent(ev.User, out SharedBodyComponent? body) ||
-                !_bodySystem.TryGetComponentsOnMechanisms<StomachComponent>(ev.User, out var stomachs, body))
+                !_bodySystem.TryGetComponentsOnOrgans<StomachComponent>(ev.User, out var stomachs, body))
                 return;
 
             if (EntityManager.TryGetComponent<MobStateComponent>(uid, out var mobState) && mobState.IsAlive())
@@ -279,7 +279,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!_solutionContainerSystem.TryGetSolution(uid, food.SolutionName, out var foodSolution))
                 return;
 
-            if (!_bodySystem.TryGetComponentsOnMechanisms<StomachComponent>(target, out var stomachs, body))
+            if (!_bodySystem.TryGetComponentsOnOrgans<StomachComponent>(target, out var stomachs, body))
                 return;
 
             if (food.UsesRemaining <= 0)

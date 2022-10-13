@@ -1,5 +1,5 @@
-using System.Linq;
 using Content.Shared.Body.Components;
+using Content.Shared.Body.Systems;
 using Content.Shared.Damage;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
@@ -104,14 +104,8 @@ namespace Content.Client.Body.UI
             _currentEntity = entity;
             BodyPartList.Clear();
 
-            var body = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<SharedBodyComponent>(_currentEntity);
-
-            if (body == null)
-            {
-                return;
-            }
-
-            foreach (var (part, _) in body.Parts)
+            var bodySystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedBodySystem>();
+            foreach (var part in bodySystem.GetBodyParts(_currentEntity))
             {
                 BodyPartList.AddItem(Loc.GetString(part.Name));
             }
@@ -168,10 +162,7 @@ namespace Content.Client.Body.UI
             }
 
             // TODO BODY Mechanism description
-            var message =
-                Loc.GetString(
-                    $"{mechanism.Name}\nHealth: {mechanism.CurrentDurability}/{mechanism.MaxDurability}");
-
+            var message = Loc.GetString($"{mechanism.Name}");
             MechanismInfoLabel.SetMessage(message);
         }
     }

@@ -297,7 +297,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             var forceDrink = uid != args.User;
 
-            if (!_bodySystem.TryGetComponentsOnMechanisms<StomachComponent>(uid, out var stomachs, body))
+            if (!_bodySystem.TryGetComponentsOnOrgans<StomachComponent>(uid, out var stomachs, body))
             {
                 _popupSystem.PopupEntity(
                     forceDrink ?
@@ -381,7 +381,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 !ev.CanInteract ||
                 !ev.CanAccess ||
                 !EntityManager.TryGetComponent(ev.User, out SharedBodyComponent? body) ||
-                !_bodySystem.TryGetComponentsOnMechanisms<StomachComponent>(ev.User, out var stomachs, body))
+                !_bodySystem.TryGetComponentsOnOrgans<StomachComponent>(ev.User, out var stomachs, body))
                 return;
 
             if (EntityManager.TryGetComponent<MobStateComponent>(uid, out var mobState) && mobState.IsAlive())
