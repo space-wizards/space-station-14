@@ -66,7 +66,7 @@ public sealed class PickNearbyInjectableOperator : HTNOperator
                 {
                     {TargetKey, entity},
                     {TargetMoveKey, _entManager.GetComponent<TransformComponent>(entity).Coordinates},
-                    {"MovementPathfind", path},
+                    {NPCBlackboard.PathfindKey, path},
                 });
             }
         }
