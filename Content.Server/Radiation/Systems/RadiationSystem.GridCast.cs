@@ -48,7 +48,7 @@ public partial class RadiationSystem
                 // send ray towards destination entity
                 var ray = Irradiate(sourceTrs.Owner, sourceTrs, sourceWorld,
                     destTrs.Owner, destTrs, destWorld,
-                    source.Intensity, source.Slope, saveVisitedTiles, resistanceQuery);
+                    source.Intensity, source.Slope, saveVisitedTiles, resistanceQuery, transformQuery);
                 if (ray == null)
                     continue;
 
@@ -85,7 +85,8 @@ public partial class RadiationSystem
     private RadiationRay? Irradiate(EntityUid sourceUid, TransformComponent sourceTrs, Vector2 sourceWorld,
         EntityUid destUid, TransformComponent destTrs, Vector2 destWorld,
         float incomingRads, float slope, bool saveVisitedTiles,
-        EntityQuery<RadiationGridResistanceComponent> resistanceQuery)
+        EntityQuery<RadiationGridResistanceComponent> resistanceQuery,
+        EntityQuery<TransformComponent> transformQuery)
     {
         // lets first check that source and destination on the same map
         if (sourceTrs.MapID != destTrs.MapID)
@@ -117,7 +118,7 @@ public partial class RadiationSystem
             // todo: entity queries doesn't support interface - use it when IMapGridComponent will be removed
             if (!TryComp(sourceTrs.GridUid.Value, out IMapGridComponent? gridComponent))
                 return ray;
-            return Gridcast(gridComponent.Grid, ray, saveVisitedTiles, resistanceQuery);
+            return Gridcast(gridComponent.Grid, ray, saveVisitedTiles, resistanceQuery, sourceTrs, destTrs, transformQuery.GetComponent(sourceTrs.GridUid.Value));
         }
 
         // lets check how many grids are between source and destination
@@ -130,7 +131,7 @@ public partial class RadiationSystem
         // the ray will be updated with each grid that has some blockers
         foreach (var grid in grids)
         {
-            ray = Gridcast(grid, ray, saveVisitedTiles, resistanceQuery);
+            ray = Gridcast(grid, ray, saveVisitedTiles, resistanceQuery, sourceTrs, destTrs, transformQuery.GetComponent(grid.GridEntityId));
 
             // looks like last grid blocked all radiation
             // we can return right now
@@ -142,7 +143,10 @@ public partial class RadiationSystem
     }
 
     private RadiationRay Gridcast(IMapGrid grid, RadiationRay ray, bool saveVisitedTiles,
-        EntityQuery<RadiationGridResistanceComponent> resistanceQuery)
+        EntityQuery<RadiationGridResistanceComponent> resistanceQuery,
+        TransformComponent sourceTrs,
+        TransformComponent destTrs,
+        TransformComponent gridTrs)
     {
         var blockers = new List<(Vector2i, float)>();
 
@@ -153,8 +157,26 @@ public partial class RadiationSystem
         var resistanceMap = resistance.ResistancePerTile;
 
         // get coordinate of source and destination in grid coordinates
-        var sourceGrid = grid.TileIndicesFor(ray.Source);
-        var destGrid = grid.TileIndicesFor(ray.Destination);
+
+        // TODO Grid overlap. This currently assumes the grid is always parented directly to the map (local matrix == world matrix).
+        // If ever grids are allowed to overlap, this might no longer be true. In that case, this should precompute and cache
+        // inverse world matrices.
+
+        Vector2 srcLocal = sourceTrs.ParentUid == grid.GridEntityId
+            ? sourceTrs.LocalPosition
+            : gridTrs.InvLocalMatrix.Transform(ray.Source);
+
+        Vector2 dstLocal = destTrs.ParentUid == grid.GridEntityId
+            ? destTrs.LocalPosition
+            : gridTrs.InvLocalMatrix.Transform(ray.Destination);
+        
+        Vector2i sourceGrid = new(
+            (int) Math.Floor(srcLocal.X / grid.TileSize),
+            (int) Math.Floor(srcLocal.Y / grid.TileSize));
+
+        Vector2i destGrid = new(
+            (int) Math.Floor(dstLocal.X / grid.TileSize),
+            (int) Math.Floor(dstLocal.Y / grid.TileSize));
 
         // iterate tiles in grid line from source to destination
         var line = new GridLineEnumerator(sourceGrid, destGrid);
