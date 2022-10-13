@@ -44,7 +44,7 @@
             - PowerCell
   - type: ContainerContainer
     containers:
-      charger-slot: !type:ContainerSlot
+      charger_slot: !type:ContainerSlot
 
 - type: entity
   name: recharger
