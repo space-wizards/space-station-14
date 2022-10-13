@@ -31,5 +31,5 @@
     BoardName: "chem_dispenser"
     LayoutId: chem_dispenser
   - type: UpgradePowerDraw
-    modifier: 0.75
+    powerDrawMultiplier: 0.75
     scaling: Exponential
