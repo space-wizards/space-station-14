@@ -60,6 +60,10 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
 
     public void OnStateExited(GameplayState state)
     {
+        DebugTools.Assert(_ahelpButton != null);
+        SetAHelpPressed(false);
+        _ahelpButton!.OnPressed -= AHelpButtonPressed;
+        _adminManager.AdminStatusUpdated -= OnAdminStatusUpdated;
         _uiHelper?.Dispose();
         _uiHelper = null;
         CommandBinds.Unregister<AHelpUIController>();
@@ -72,6 +76,8 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
 
     public void OnSystemUnloaded(BwoinkSystem system)
     {
+        DebugTools.Assert(_bwoinkSystem != null);
+        _bwoinkSystem!.OnBwoinkTextMessageRecieved -= RecievedBwoink;
         _bwoinkSystem = null;
     }
 

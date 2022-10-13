@@ -1,7 +1,12 @@
+using Content.Client.Examine;
 using Content.Client.Storage.UI;
 using Content.Client.UserInterface.Controls;
+using Content.Client.Verbs;
+using Content.Shared.Input;
+using Content.Shared.Interaction;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using static Content.Shared.Storage.SharedStorageComponent;
@@ -24,7 +29,8 @@ namespace Content.Client.Storage
             if (_window == null)
             {
                 var entMan = IoCManager.Resolve<IEntityManager>();
-                _window = new StorageWindow(entMan) {Title = entMan.GetComponent<MetaDataComponent>(Owner.Owner).EntityName};
+                _window = new StorageWindow(entMan)
+                    {Title = entMan.GetComponent<MetaDataComponent>(Owner.Owner).EntityName};
 
                 _window.EntityList.GenerateItem += _window.GenerateButton;
                 _window.EntityList.ItemPressed += InteractWithItem;
@@ -43,10 +49,46 @@ namespace Content.Client.Storage
         {
             if (cData is not EntityListData {Uid: var entity})
                 return;
+
             if (args.Event.Function == EngineKeyFunctions.UIClick)
             {
                 SendMessage(new StorageInteractWithItemEvent(entity));
             }
+            else if (IoCManager.Resolve<IEntityManager>().EntityExists(entity))
+            {
+                OnButtonPressed(args.Event, entity);
+            }
+        }
+
+        private void OnButtonPressed(GUIBoundKeyEventArgs args, EntityUid entity)
+        {
+            var entitySys = IoCManager.Resolve<IEntitySystemManager>();
+            var entities = IoCManager.Resolve<IEntityManager>();
+
+            if (args.Function == ContentKeyFunctions.ExamineEntity)
+            {
+                entitySys.GetEntitySystem<ExamineSystem>()
+                    .DoExamine(entity);
+            }
+            else if (args.Function == EngineKeyFunctions.UseSecondary)
+            {
+                entitySys.GetEntitySystem<VerbSystem>().VerbMenu.OpenVerbMenu(entity);
+            }
+            else if (args.Function == ContentKeyFunctions.ActivateItemInWorld)
+            {
+                entities.EntityNetManager?.SendSystemNetworkMessage(
+                    new InteractInventorySlotEvent(entity, altInteract: false));
+            }
+            else if (args.Function == ContentKeyFunctions.AltActivateItemInWorld)
+            {
+                entities.RaisePredictiveEvent(new InteractInventorySlotEvent(entity, altInteract: true));
+            }
+            else
+            {
+                return;
+            }
+
+            args.Handle();
         }
 
         public void TouchedContainerButton(BaseButton.ButtonEventArgs args)

@@ -1,4 +1,5 @@
 ﻿using Content.Client.Gameplay;
+using Content.Client.Hands;
 using Content.Client.Inventory;
 using Content.Client.Storage;
 using Content.Client.UserInterface.Controls;
@@ -11,6 +12,7 @@ using Robust.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
+using Robust.Shared.Map;
 using Robust.Shared.Utility;
 using static Content.Client.Inventory.ClientInventorySystem;
 using static Robust.Client.UserInterface.Controls.BaseButton;
@@ -68,6 +70,16 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
         CommandBinds.Unregister<ClientInventorySystem>();
     }
 
+    private SlotButton CreateSlotButton(SlotData data)
+    {
+        var button = new SlotButton(data);
+        button.Pressed += ItemPressed;
+        button.StoragePressed += StoragePressed;
+        button.Hover += SlotButtonHovered;
+
+        return button;
+    }
+
     public void RegisterInventoryBarContainer(ItemSlotButtonContainer inventoryHotbar)
     {
         _inventoryHotbar = inventoryHotbar;
@@ -93,9 +105,7 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
 
             if (!container.TryGetButton(data.SlotName, out var button))
             {
-                button = new SlotButton(data);
-                button.Pressed += ItemPressed;
-                button.StoragePressed += StoragePressed;
+                button = CreateSlotButton(data);
                 container.AddButton(button);
             }
 
@@ -121,9 +131,7 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
 
             if (!_strippingWindow!.InventoryButtons.TryGetButton(data.SlotName, out var button))
             {
-                button = new SlotButton(data);
-                button.Pressed += ItemPressed;
-                button.StoragePressed += StoragePressed;
+                button = CreateSlotButton(data);
                 _strippingWindow!.InventoryButtons.AddButton(button, data.ButtonOffset);
             }
 
@@ -233,14 +241,39 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
         _inventorySystem.UIInventoryStorageActivate(control.SlotName);
     }
 
+    private void SlotButtonHovered(GUIMouseHoverEventArgs args, SlotControl control)
+    {
+        var player = _playerInventory?.Owner;
+
+        if (!control.MouseIsHovering ||
+            _playerInventory == null ||
+            !_entities.TryGetComponent<HandsComponent>(player, out var hands) ||
+            hands.ActiveHandEntity is not { } held ||
+            !_entities.TryGetComponent(held, out SpriteComponent? sprite) ||
+            !_inventorySystem.TryGetSlotContainer(player.Value, control.SlotName, out var container, out var slotDef, _playerInventory))
+        {
+            control.ClearHover();
+            return;
+        }
+
+        // Set green / red overlay at 50% transparency
+        var hoverEntity = _entities.SpawnEntity("hoverentity", MapCoordinates.Nullspace);
+        var hoverSprite = _entities.GetComponent<SpriteComponent>(hoverEntity);
+        var fits = _inventorySystem.CanEquip(player.Value, held, control.SlotName, out _, slotDef, _playerInventory) &&
+                   container.CanInsert(held, _entities);
+
+        hoverSprite.CopyFrom(sprite);
+        hoverSprite.Color = fits ? new Color(0, 255, 0, 127) : new Color(255, 0, 0, 127);
+
+        control.HoverSpriteView.Sprite = hoverSprite;
+    }
+
     private void AddSlot(SlotData data)
     {
         if (!_slotGroups.TryGetValue(data.SlotGroup, out var slotGroup))
             return;
 
-        var button = new SlotButton(data);
-        button.Pressed += ItemPressed;
-        button.StoragePressed += StoragePressed;
+        var button = CreateSlotButton(data);
         slotGroup.AddButton(button);
     }
 
