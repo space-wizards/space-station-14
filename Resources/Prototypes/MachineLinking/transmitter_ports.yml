@@ -52,6 +52,12 @@
   
 - type: transmitterPort
   id: Timer
-  name: signal-port-name-timer
-  description: signal-port-description-timer
-  defaultLinks: [ On, Open, Forward, Trigger ]
+  name: signal-port-name-timer-trigger
+  description: signal-port-description-timer-trigger
+  defaultLinks: [ AutoClose, On, Open, Forward, Trigger ]
+
+- type: transmitterPort
+  id: Start
+  name: signal-port-name-timer-start
+  description: signal-port-description-timer-start
+  defaultLinks: [ Close, Off ]

@@ -1,12 +1,17 @@
+using Content.Shared.Disposal.Components;
 using Content.Shared.MachineLinking;
 using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using static Content.Shared.Disposal.Components.SharedDisposalUnitComponent;
 
 namespace Content.Server.MachineLinking.Components
 {
     [RegisterComponent]
-    public sealed class SignalTimerComponent : Component
+    [ComponentReference(typeof(SharedSignalTimerComponent))]
+    public sealed class SignalTimerComponent : SharedSignalTimerComponent
     {
+        //public SignalTimerBoundUserInterfaceState? UiState;
+
         [DataField("delay")]
         [ViewVariables(VVAccess.ReadWrite)]
         public double Delay = 5;
@@ -28,6 +33,12 @@ namespace Content.Server.MachineLinking.Components
         /// </summary>
         [DataField("triggerPort", customTypeSerializer: typeof(PrototypeIdSerializer<TransmitterPortPrototype>))]
         public string TriggerPort = "Timer";
+
+        /// <summary>
+        ///     The port that gets signaled when the timer starts.
+        /// </summary>
+        [DataField("startPort", customTypeSerializer: typeof(PrototypeIdSerializer<TransmitterPortPrototype>))]
+        public string StartPort = "Start";
 
         /// <summary>
         ///     If not null, a user can use verbs to configure the delay to one of these options.

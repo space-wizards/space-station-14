@@ -23,7 +23,9 @@ using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
 using Content.Server.MachineLinking.Components;
-using Content.Shared.Text;
+using Content.Shared.TextScreen;
+using Robust.Server.GameObjects;
+using Content.Shared.MachineLinking;
 
 namespace Content.Server.MachineLinking.System
 {
@@ -50,7 +52,10 @@ namespace Content.Server.MachineLinking.System
         private void OnInit(EntityUid uid, SignalTimerComponent component, ComponentInit args)
         {
             if (TryComp(uid, out SignalTransmitterComponent? comp))
+            {
                 comp.Outputs.TryAdd(component.TriggerPort, new());
+                comp.Outputs.TryAdd(component.StartPort, new());
+            }
         }
 
         private void OnActivate(EntityUid uid, SignalTimerComponent component, ActivateInWorldEvent args)
@@ -62,18 +67,16 @@ namespace Content.Server.MachineLinking.System
             _appearanceSystem.SetData(uid, TextScreenVisuals.Mode, TextScreenMode.Timer);
             _appearanceSystem.SetData(uid, TextScreenVisuals.TargetTime, component.TriggerTime);
 
+            _signalSystem.InvokePort(uid, component.StartPort);
+
             args.Handled = true;
         }
 
         public bool Trigger(EntityUid uid, SignalTimerComponent signalTimer)
         {
-            // TODO: Trigger here!
-
             signalTimer.Activated = false;
 
             _signalSystem.InvokePort(uid, signalTimer.TriggerPort);
-
-            // TODO: Send to linked devices
 
             _appearanceSystem.SetData(uid, TextScreenVisuals.Mode, TextScreenMode.Text);
 
