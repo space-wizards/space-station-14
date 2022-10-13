@@ -33,7 +33,7 @@ public sealed class ContainerFillComponent : Component
     public bool IgnoreConstructionSpawn = true;
 }
 
-// this all just exists to validate prototype ids.
+// all of this exists just to validate prototype ids.
 // it be nice if you could specify only a type validator and not have to re-implement everything else.
 // or a dictionary serializer that accepts a custom type serializer for the dictionary values
 public sealed class ContainerFillSerializer : ITypeSerializer<Dictionary<string, List<string>>, MappingDataNode>
