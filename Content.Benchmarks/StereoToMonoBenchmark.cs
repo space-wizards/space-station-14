@@ -1,9 +1,11 @@
 using System.Runtime.Intrinsics.X86;
 using BenchmarkDotNet.Attributes;
+using Robust.Shared.Analyzers;
 
 namespace Content.Benchmarks
 {
-    public sealed class StereoToMonoBenchmark
+    [Virtual]
+    public class StereoToMonoBenchmark
     {
         [Params(128, 256, 512)]
         public int N { get; set; }

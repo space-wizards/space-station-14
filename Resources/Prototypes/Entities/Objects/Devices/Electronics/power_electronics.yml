@@ -22,6 +22,10 @@
       sprite: Objects/Misc/module.rsi
       state: charger_APC
       netsync: false
+    - type: Tag
+      tags:
+        - DroneUsable
+        - WallmountSubstationElectronics
 
 # Wallmount Generator
 - type: entity
@@ -34,6 +38,10 @@
       sprite: Objects/Misc/module.rsi
       state: charger_APC
       netsync: false
+    - type: Tag
+      tags:
+        - DroneUsable
+        - WallmountGeneratorElectronics
 
 # APU
 - type: entity
@@ -46,6 +54,10 @@
       sprite: Objects/Misc/module.rsi
       state: charger_APC
       netsync: false
+    - type: Tag
+      tags:
+        - DroneUsable
+        - WallmountGeneratorAPUElectronics
 
 # Solar Tracker Electronics
 - type: entity
@@ -58,3 +70,7 @@
       sprite: Objects/Misc/module.rsi
       state: generic
       netsync: false
+    - type: Tag
+      tags:
+        - DroneUsable
+        - SolarTrackerElectronics

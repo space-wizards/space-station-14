@@ -36,7 +36,7 @@
     edges:
     - to: electronics
       steps:
-      - prototype: AirAlarmElectronics
+      - tag: AirAlarmElectronics
         store: board
         name: "air alarm electronics"
         icon:
@@ -115,7 +115,7 @@
     edges:
     - to: electronics
       steps:
-      - prototype: FireAlarmElectronics
+      - tag: FireAlarmElectronics
         store: board
         name: "fire alarm electronics"
         icon:

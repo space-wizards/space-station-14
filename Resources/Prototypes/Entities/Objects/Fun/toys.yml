@@ -550,7 +550,6 @@
     state: foamblade
   - type: MeleeWeapon
     attackRate: 1.5
-    range: 2.0
     angle: 0
     animation: WeaponArcThrust
     damage:

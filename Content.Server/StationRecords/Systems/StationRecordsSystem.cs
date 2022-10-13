@@ -124,9 +124,8 @@ public sealed class StationRecordsSystem : EntitySystem
             DisplayPriority = jobPrototype.Weight
         };
 
-        var key = records.Records.AddRecord(station);
-        records.Records.AddRecordEntry(key, record);
-        // entry.Entries.Add(typeof(GeneralStationRecord), record);
+        var key = AddRecord(station, records);
+        AddRecordEntry(key, record, records);
 
         if (idUid != null)
         {
@@ -202,6 +201,45 @@ public sealed class StationRecordsSystem : EntitySystem
         }
 
         return records.Records.GetRecordsOfType<T>();
+    }
+
+    /// <summary>
+    ///     Adds a record to a station's record set.
+    /// </summary>
+    /// <param name="station">The station to add a record to.</param>
+    /// <param name="records">Station records component.</param>
+    /// <returns>
+    ///     A station record key, which can be used to add and get records.
+    /// </returns>
+    /// <exception cref="ArgumentException">
+    ///     Occurs when the entity given does not have a station records component.
+    /// </exception>
+    public StationRecordKey AddRecord(EntityUid station, StationRecordsComponent? records)
+    {
+        if (!Resolve(station, ref records))
+        {
+            throw new ArgumentException($"Could not retrieve a {nameof(StationRecordsComponent)} from entity {station}");
+        }
+
+        return records.Records.AddRecord(station);
+    }
+
+    /// <summary>
+    ///     Adds a record entry to a station's record set.
+    /// </summary>
+    /// <param name="key">The key to add the record to.</param>
+    /// <param name="record">The record to add.</param>
+    /// <param name="records">Station records component.</param>
+    /// <typeparam name="T">The type of record to add.</typeparam>
+    public void AddRecordEntry<T>(StationRecordKey key, T record,
+        StationRecordsComponent? records = null)
+    {
+        if (!Resolve(key.OriginStation, ref records))
+        {
+            return;
+        }
+
+        records.Records.AddRecordEntry(key, record);
     }
 
     /// <summary>
