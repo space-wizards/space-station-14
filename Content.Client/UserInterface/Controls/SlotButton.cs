@@ -1,12 +1,12 @@
-﻿using Content.Client.Inventory;
+﻿using static Content.Client.Inventory.ClientInventorySystem;
 
 namespace Content.Client.UserInterface.Controls
 {
     public sealed class SlotButton : SlotControl
     {
-        public SlotButton(){}
+        public SlotButton() { }
 
-        public SlotButton(ClientInventorySystem.SlotData slotData)
+        public SlotButton(SlotData slotData)
         {
             ButtonTexturePath = slotData.TextureName;
             Blocked = slotData.Blocked;
