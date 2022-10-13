@@ -5,6 +5,7 @@ using Content.Shared.Examine;
 using Content.Shared.PowerCell.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
+using Content.Shared.Power;
 
 namespace Content.Server.Power.EntitySystems;
 
@@ -13,6 +14,8 @@ internal sealed class ChargerSystem : EntitySystem
 {
     [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
     [Dependency] private readonly PowerCellSystem _cellSystem = default!;
+    [Dependency] private readonly IEntityManager _entMan = default!;
+    [Dependency] private readonly SharedAppearanceSystem _sharedAppearanceSystem = default!;
 
     public override void Initialize()
     {
@@ -34,7 +37,10 @@ internal sealed class ChargerSystem : EntitySystem
     {
         foreach (var comp in EntityManager.EntityQuery<ChargerComponent>())
         {
-            comp.OnUpdate(frameTime);
+            if (comp.Status == CellChargerStatus.Empty || comp.Status == CellChargerStatus.Charged || !comp.ChargerSlot.HasItem)
+                continue;
+
+            TransferPower(comp.Owner, comp, frameTime);
         }
     }
     private void OnChargerInit(EntityUid uid, ChargerComponent component, ComponentInit args)
@@ -49,7 +55,7 @@ internal sealed class ChargerSystem : EntitySystem
 
     private void OnPowerChanged(EntityUid uid, ChargerComponent component, PowerChangedEvent args)
     {
-        component.UpdateStatus();
+        UpdateStatus(uid, component);
     }
 
     private void OnInserted(EntityUid uid, ChargerComponent component, EntInsertedIntoContainerMessage args)
@@ -67,7 +73,7 @@ internal sealed class ChargerSystem : EntitySystem
             _cellSystem.TryGetBatteryFromSlot(args.Entity, out component.HeldBattery);
         }
 
-        component.UpdateStatus();
+        UpdateStatus(uid, component);
     }
 
     private void OnRemoved(EntityUid uid, ChargerComponent component, EntRemovedFromContainerMessage args)
@@ -75,7 +81,7 @@ internal sealed class ChargerSystem : EntitySystem
         if (args.Container.ID != component.ChargerSlot.ID)
             return;
 
-        component.UpdateStatus();
+        UpdateStatus(uid, component);
     }
 
     /// <summary>
@@ -94,5 +100,85 @@ internal sealed class ChargerSystem : EntitySystem
 
         if (!cellSlot.FitsInCharger || !cellSlot.CellSlot.HasItem)
             args.Cancel();
+    }
+
+    private void UpdateStatus(EntityUid uid, ChargerComponent component)
+    {
+        var status = GetStatus(uid, component);
+        if (component.Status == status || !TryComp(uid, out ApcPowerReceiverComponent? receiver))
+            return;
+
+        if (!TryComp(uid, out AppearanceComponent? appearance))
+            return;
+
+        component.Status = status;
+        
+        switch (component.Status)
+        {
+            case CellChargerStatus.Off:
+                receiver.Load = 0;
+                _sharedAppearanceSystem.SetData(uid, CellVisual.Light, CellChargerStatus.Off);
+                break;
+            case CellChargerStatus.Empty:
+                receiver.Load = 0;
+                _sharedAppearanceSystem.SetData(uid, CellVisual.Light, CellChargerStatus.Empty);
+                break;
+            case CellChargerStatus.Charging:
+                receiver.Load = component.ChargeRate;
+                _sharedAppearanceSystem.SetData(uid, CellVisual.Light, CellChargerStatus.Charging);
+                break;
+            case CellChargerStatus.Charged:
+                receiver.Load = 0;
+                _sharedAppearanceSystem.SetData(uid, CellVisual.Light, CellChargerStatus.Charged);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+
+        _sharedAppearanceSystem.SetData(uid, CellVisual.Occupied, component.ChargerSlot.HasItem);
+    }
+
+    private CellChargerStatus GetStatus(EntityUid uid, ChargerComponent component)
+    {
+        if (!TryComp(uid, out TransformComponent? transformComponent))
+            return CellChargerStatus.Off;
+
+        if (!transformComponent.Anchored)
+            return CellChargerStatus.Off;
+
+        if (!TryComp(uid, out ApcPowerReceiverComponent? apcPowerReceiverComponent))
+            return CellChargerStatus.Off;
+
+        if (!apcPowerReceiverComponent.Powered)
+            return CellChargerStatus.Off;
+
+        if (!component.ChargerSlot.HasItem)
+            return CellChargerStatus.Empty;
+
+        if (component.HeldBattery != null && Math.Abs(component.HeldBattery.MaxCharge - component.HeldBattery.CurrentCharge) < 0.01)
+            return CellChargerStatus.Charged;
+
+        return CellChargerStatus.Charging;
+    }
+
+    private void TransferPower(EntityUid uid, ChargerComponent component, float frameTime)
+    {
+        if (component.HeldBattery == null)
+            return;
+
+        if (!TryComp(uid, out ApcPowerReceiverComponent? receiverComponent))
+            return;
+
+        if (!receiverComponent.Powered)
+            return;
+
+        component.HeldBattery.CurrentCharge += component.ChargeRate * frameTime;
+        // Just so the sprite won't be set to 99.99999% visibility
+        if (component.HeldBattery.MaxCharge - component.HeldBattery.CurrentCharge < 0.01)
+        {
+            component.HeldBattery.CurrentCharge = component.HeldBattery.MaxCharge;
+        }
+
+        UpdateStatus(uid, component);
     }
 }
