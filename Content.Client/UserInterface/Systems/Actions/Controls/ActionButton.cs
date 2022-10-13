@@ -163,6 +163,7 @@ public sealed class ActionButton : Control
     public void UpdateData(IEntityManager entityManager, ActionType action)
     {
         Action = action;
+        Label.Visible = true;
 
         if (action.Icon != null)
         {
@@ -188,6 +189,7 @@ public sealed class ActionButton : Control
         Sprite.Sprite = null;
         Cooldown.Visible = false;
         Cooldown.Progress = 1;
+        Label.Visible = false;
     }
 
     private Texture? GetIcon()
