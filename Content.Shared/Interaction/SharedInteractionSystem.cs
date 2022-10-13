@@ -463,8 +463,12 @@ namespace Content.Shared.Interaction
             Ignored combinedPredicate = e => e == origin || (predicate?.Invoke(e) ?? false);
             var inRange = true;
             MapCoordinates originPos = default;
-            MapCoordinates targetPos = default;
+            var targetPos = otherCoordinates.ToMap(EntityManager);
             Angle targetRot = default;
+
+            // So essentially:
+            // 1. If fixtures available check nearest point. We take in coordinates / angles because we might want to use a lag compensated position
+            // 2. Fall back to centre of body.
 
             // Alternatively we could check centre distances first though
             // that means we wouldn't be able to easily check overlap interactions.
@@ -477,10 +481,15 @@ namespace Content.Shared.Interaction
                 fixtureB.FixtureCount > 0 &&
                 TryComp<TransformComponent>(origin, out var xformA))
             {
+                var (worldPosA, worldRotA) = xformA.GetWorldPositionRotation();
+                var xfA = new Robust.Shared.Physics.Transform(worldPosA, worldRotA);
+                var rotB = Transform(otherCoordinates.EntityId).WorldRotation;
+                var xfB = new Robust.Shared.Physics.Transform(targetPos.Position, rotB + otherAngle);
+
                 // Different map or the likes.
-                if (!_sharedBroadphaseSystem.TryGetDistance(origin, other,
-                        out var distance,
-                        xformA, xformB, fixtureA, fixtureB))
+                if (!_sharedBroadphaseSystem.TryGetNearest(origin, other,
+                        out _, out _, out var distance,
+                        xfA, xfB, fixtureA, fixtureB))
                 {
                     inRange = false;
                 }
@@ -498,19 +507,12 @@ namespace Content.Shared.Interaction
                 {
                     // We'll still do the raycast from the centres but we'll bump the range as we know they're in range.
                     originPos = xformA.MapPosition;
-
-                    targetPos = new MapCoordinates(targetWorld, xformB.MapID);
-
-                    range = (originPos.Position - targetWorld).Length;
+                    range = (originPos.Position - targetPos.Position).Length;
                 }
             }
             else
             {
                 originPos = Transform(origin).MapPosition;
-
-                xformB = Transform(other);
-
-                targetPos = new MapCoordinates(targetWorld, xformB.MapID);
             }
 
             // Do a raycast to check if relevant

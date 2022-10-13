@@ -381,18 +381,22 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
     private bool InRange(EntityUid user, EntityUid target, float range, ICommonSession? session)
     {
         EntityCoordinates targetCoordinates;
+        Angle targetLocalAngle;
 
         if (session is IPlayerSession pSession)
         {
             var actual = Transform(target).Coordinates;
             targetCoordinates = _lag.GetCoordinates(target, pSession);
+            targetLocalAngle = _lag.GetAngle(target, pSession);
         }
         else
         {
-            targetCoordinates = Transform(target).Coordinates;
+            var xform = Transform(target);
+            targetCoordinates = xform.Coordinates;
+            targetLocalAngle = xform.LocalRotation;
         }
 
-        return _interaction.InRangeUnobstructed(user, targetCoordinates, range);
+        return _interaction.InRangeUnobstructed(user, target, targetCoordinates, targetLocalAngle, range);
     }
 
     private float CalculateDisarmChance(EntityUid disarmer, EntityUid disarmed, EntityUid? inTargetHand, SharedCombatModeComponent disarmerComp)

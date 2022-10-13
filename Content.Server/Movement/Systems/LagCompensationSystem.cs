@@ -58,6 +58,30 @@ public sealed class LagCompensationSystem : EntitySystem
         component.Positions.Enqueue((_timing.CurTime, args.NewPosition, args.NewRotation));
     }
 
+    public Angle GetAngle(EntityUid uid, IPlayerSession pSession, TransformComponent? xform = null)
+    {
+        // TODO: Common method
+        if (!Resolve(uid, ref xform))
+            return Angle.Zero;
+
+        var angle = xform.LocalRotation;
+        var ping = pSession.Ping;
+        var sentTime = _timing.CurTime - TimeSpan.FromMilliseconds(ping);
+
+        if (!TryComp<LagCompensationComponent>(uid, out var lag))
+            return angle;
+
+        foreach (var pos in lag.Positions)
+        {
+            if (pos.Item1 >= sentTime)
+                break;
+
+            angle = pos.Item3;
+        }
+
+        return angle;
+    }
+
     public EntityCoordinates GetCoordinates(EntityUid uid, IPlayerSession pSession, TransformComponent? xform = null)
     {
         if (!Resolve(uid, ref xform))
