@@ -1,119 +1,4 @@
 Entries:
-- author: keronshb
-  changes:
-  - {message: Unintended blocking bugs are now fixed., type: Fix}
-  id: 1922
-  time: '2022-07-11T01:50:09.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: The nuke now forcibly anchors when armed., type: Tweak}
-  - {message: The nuke now announces its coordinates when armed., type: Tweak}
-  id: 1923
-  time: '2022-07-11T07:29:51.0000000+00:00'
-- author: Duddino
-  changes:
-  - {message: Fixed typo in lobby countdown, type: Fix}
-  id: 1924
-  time: '2022-07-11T18:09:29.0000000+00:00'
-- author: PJB3005
-  changes:
-  - {message: 'Drop the bad anime act, you can now leave again', type: Fix}
-  id: 1925
-  time: '2022-07-11T21:25:36.0000000+00:00'
-- author: Duddino
-  changes:
-  - {message: Fixed PDA not spawning with the correct light, type: Fix}
-  id: 1926
-  time: '2022-07-12T00:30:03.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Added blindfolds!, type: Add}
-  - {message: 'Added a rare, funny salvage item.', type: Add}
-  id: 1927
-  time: '2022-07-12T05:55:04.0000000+00:00'
-- author: Delete
-  changes:
-  - {message: 'Adds extra warning line decal, and fixed up existing ones.', type: Add}
-  id: 1928
-  time: '2022-07-12T06:03:35.0000000+00:00'
-- author: Myctai
-  changes:
-  - {message: 'Corrected Phalanximine description. It''s not "Anti-Toxin", actually
-      it''s mildly radioactive!', type: Fix}
-  id: 1929
-  time: '2022-07-12T06:05:55.0000000+00:00'
-- author: KIBORG04
-  changes:
-  - {message: 'Added kvass, you can order it in the cargo!', type: Add}
-  id: 1930
-  time: '2022-07-12T06:11:12.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Interaction outlines won't be so jank at high speeds anymore (e.g. emergency
-      shuttle)., type: Fix}
-  id: 1931
-  time: '2022-07-12T17:46:12.0000000+00:00'
-- author: jessicamaybe
-  changes:
-  - {message: Robot showcase statue is now anchorable, type: Tweak}
-  id: 1932
-  time: '2022-07-13T02:01:24.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Pizza boxes can no longer swallow players. (for realsies), type: Fix}
-  - {message: Fixed visual issues regarding trays with morgues and crematoriums.,
-    type: Fix}
-  - {message: Fixed visual issues regarding body bags being perpetually open., type: Fix}
-  id: 1933
-  time: '2022-07-13T23:11:59.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Emotes and LOOC no longer reveal your identity., type: Tweak}
-  - {message: Pulling down/up your mask will now properly affect your identity., type: Fix}
-  id: 1934
-  time: '2022-07-14T05:23:56.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: You now heal yourself much slower than you heal other people when using
-      healing items., type: Tweak}
-  - {message: You can no longer attempt to heal targets that are already at full health.,
-    type: Tweak}
-  id: 1935
-  time: '2022-07-14T05:24:36.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Common radio now matches announcement colour., type: Tweak}
-  id: 1936
-  time: '2022-07-14T11:38:55.0000000+00:00'
-- author: lapatison
-  changes:
-  - {message: Refining reinforced glass shards now gives metal rods instead of steel
-      sheets., type: Fix}
-  id: 1937
-  time: '2022-07-14T11:42:47.0000000+00:00'
-- author: Deahaka
-  changes:
-  - {message: Added hospital curtains, type: Add}
-  id: 1938
-  time: '2022-07-14T11:53:17.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Fixed blinding., type: Fix}
-  id: 1939
-  time: '2022-07-14T11:58:24.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Recoil has been added back in., type: Tweak}
-  id: 1940
-  time: '2022-07-14T12:01:25.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Hardsuits and outer clothing are now larger and harder to fit in bags.,
-    type: Tweak}
-  - {message: Some outer clothing suits and armour will slow you down slightly now.,
-    type: Tweak}
-  id: 1941
-  time: '2022-07-14T12:43:54.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Muzzle flashes now emit a point light., type: Tweak}
@@ -2938,3 +2823,117 @@ Entries:
       traitor item to be added in the future!', type: Add}
   id: 2421
   time: '2022-10-09T22:17:53.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed firelock construction not working. Deconstructing existing firelocks
+      is still bugged., type: Fix}
+  id: 2422
+  time: '2022-10-10T02:36:28.0000000+00:00'
+- author: Rapidgame7
+  changes:
+  - {message: Improved error pop-up when failing to insert an item into storage containers.,
+    type: Tweak}
+  id: 2423
+  time: '2022-10-10T22:19:59.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix Centcomm map loading failing., type: Fix}
+  id: 2424
+  time: '2022-10-10T23:35:22.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: 'Radiation has been reworked. It can now be blocked by structures like
+      walls, shutters or airlocks and will lose intensity over distance.', type: Tweak}
+  id: 2425
+  time: '2022-10-11T03:09:10.0000000+00:00'
+- author: Carbonhell
+  changes:
+  - {message: Fixes supply blast doors not letting crates pass when the underlying
+      conveyor belts get turned on., type: Fix}
+  id: 2426
+  time: '2022-10-11T07:28:47.0000000+00:00'
+- author: checkraze
+  changes:
+  - {message: Layout optimizations for Kettle, type: Tweak}
+  id: 2427
+  time: '2022-10-11T14:01:07.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Fixed a bug that would sometimes cause the client to crash when playing
+      particular ghost roles (e.g., mice).', type: Fix}
+  id: 2428
+  time: '2022-10-12T00:55:00.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: Added National Coming Out Day as a holiday., type: Add}
+  id: 2429
+  time: '2022-10-12T06:50:19.0000000+00:00'
+- author: Jezithyr
+  changes:
+  - {message: Reworked action bar UI, type: Tweak}
+  - {message: Updated visuals for hands and chat, type: Tweak}
+  - {message: Added dragging actions from their window, type: Add}
+  - {message: Fixed resolution scaling for some widgets, type: Fix}
+  - {message: Fixed showing no actions when no filters are applied, type: Fix}
+  id: 2430
+  time: '2022-10-12T08:32:42.598514+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed chat staying focused after sending a message., type: Fix}
+  id: 2431
+  time: '2022-10-12T12:53:15.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed not being able to right click entries in the admin objects tab.,
+    type: Fix}
+  id: 2432
+  time: '2022-10-12T13:07:24.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed not being able to examine and right click entities in backpacks,
+    type: Fix}
+  id: 2433
+  time: '2022-10-12T16:35:25.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed prediction and popups for actions, type: Fix}
+  id: 2434
+  time: '2022-10-12T16:35:36.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fix ghost roles button text not showing when latejoining as an observer,
+    type: Fix}
+  id: 2435
+  time: '2022-10-12T17:36:44.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Players can no longer call restart votes, as a hotfix for a UI bug.
+      This functionality will come back later.', type: Remove}
+  id: 2436
+  time: '2022-10-13T00:55:42.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'The sandbox button is no longer always visible, even if you can''t
+      use it.', type: Fix}
+  id: 2437
+  time: '2022-10-13T01:21:36.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: The changelog button in the escape menu now functions again., type: Fix}
+  id: 2438
+  time: '2022-10-13T01:25:45.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: PDAs/other items can now be activated in your inventory again., type: Fix}
+  id: 2439
+  time: '2022-10-13T02:26:27.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed inventory button hover indicators not appearing anymore., type: Fix}
+  id: 2440
+  time: '2022-10-13T05:07:27.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Bandaid medibots spamming speech., type: Fix}
+  id: 2441
+  time: '2022-10-13T10:36:29.0000000+00:00'
