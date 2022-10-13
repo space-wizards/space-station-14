@@ -1,4 +1,4 @@
-﻿using Content.Client.Gameplay;
+using Content.Client.Gameplay;
 using Content.Client.Hands;
 using Content.Client.Inventory;
 using Content.Client.Storage;
@@ -204,12 +204,6 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
         if (args.Function == EngineKeyFunctions.UIClick)
         {
             _inventorySystem.UIInventoryActivate(control.SlotName);
-            return;
-        }
-
-        if (args.Function == ContentKeyFunctions.ActivateItemInWorld)
-        {
-            _inventorySystem.UIInventoryStorageActivate(control.SlotName);
             return;
         }
 
