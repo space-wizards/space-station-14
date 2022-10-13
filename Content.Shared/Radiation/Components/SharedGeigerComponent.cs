@@ -6,6 +6,9 @@ namespace Content.Shared.Radiation.Components;
 [NetworkedComponent]
 public abstract class SharedGeigerComponent : Component
 {
+    [DataField("showExamine")]
+    public bool ShowExamine = true;
+
     [ViewVariables(VVAccess.ReadOnly)]
     public float CurrentRadiation;
 }

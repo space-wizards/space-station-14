@@ -13,7 +13,7 @@ public abstract class SharedGeigerSystem : EntitySystem
 
     private void OnExamine(EntityUid uid, SharedGeigerComponent component, ExaminedEvent args)
     {
-        if (!args.IsInDetailsRange)
+        if (!component.ShowExamine || !args.IsInDetailsRange)
             return;
 
         var rads = component.CurrentRadiation.ToString("N1");

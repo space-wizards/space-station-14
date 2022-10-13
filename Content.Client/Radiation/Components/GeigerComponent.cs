@@ -6,5 +6,8 @@ namespace Content.Client.Radiation.Components;
 [ComponentReference(typeof(SharedGeigerComponent))]
 public sealed class GeigerComponent : SharedGeigerComponent
 {
+    [DataField("showControl")]
+    public bool ShowControl = true;
+
     public bool UiUpdateNeeded;
 }

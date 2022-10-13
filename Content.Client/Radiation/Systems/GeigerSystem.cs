@@ -27,6 +27,9 @@ public sealed class GeigerSystem : SharedGeigerSystem
 
     private void OnGetStatusMessage(EntityUid uid, GeigerComponent component, ItemStatusCollectMessage args)
     {
+        if (!component.ShowControl)
+            return;
+
         args.Controls.Add(new GeigerItemControl(component));
     }
 
