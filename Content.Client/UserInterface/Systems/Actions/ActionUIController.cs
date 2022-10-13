@@ -12,6 +12,7 @@ using Content.Client.UserInterface.Systems.Actions.Windows;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Input;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
@@ -38,9 +39,9 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
     [Dependency] private readonly IEntityManager _entities = default!;
     [Dependency] private readonly IOverlayManager _overlays = default!;
 
-    [UISystemDependency] private readonly ActionsSystem _actionsSystem = default!;
-    [UISystemDependency] private readonly InteractionOutlineSystem _interactionOutline = default!;
-    [UISystemDependency] private readonly TargetOutlineSystem _targetOutline = default!;
+    [UISystemDependency] private readonly ActionsSystem? _actionsSystem = default;
+    [UISystemDependency] private readonly InteractionOutlineSystem? _interactionOutline = default;
+    [UISystemDependency] private readonly TargetOutlineSystem? _targetOutline = default;
 
     private const int DefaultPageIndex = 0;
     private ActionButtonContainer? _container;
@@ -99,7 +100,14 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         _actionButton.OnPressed += ActionButtonPressed;
         _actionsBar.PageButtons.LeftArrow.OnPressed += OnLeftArrowPressed;
         _actionsBar.PageButtons.RightArrow.OnPressed += OnRightArrowPressed;
-        _actionsSystem.ActionReplaced += OnActionReplaced;
+
+        if (_actionsSystem != null)
+        {
+            _actionsSystem.ActionAdded += OnActionAdded;
+            _actionsSystem.ActionRemoved += OnActionRemoved;
+            _actionsSystem.ActionReplaced += OnActionReplaced;
+            _actionsSystem.ActionsUpdated += OnActionsUpdated;
+        }
 
         UpdateFilterLabel();
         SearchAndDisplay();
@@ -152,13 +160,21 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
     public void OnStateExited(GameplayState state)
     {
+        if (_actionsSystem != null)
+        {
+            _actionsSystem.ActionAdded -= OnActionAdded;
+            _actionsSystem.ActionRemoved -= OnActionRemoved;
+            _actionsSystem.ActionReplaced -= OnActionReplaced;
+            _actionsSystem.ActionsUpdated -= OnActionsUpdated;
+        }
+
         if (_window != null)
         {
-            _window.OnOpen -= OnWindowOpened;
-            _window.OnClose -= OnWindowClosed;
-            _window.ClearButton.OnPressed -= OnClearPressed;
-            _window.SearchBar.OnTextChanged -= OnSearchChanged;
-            _window.FilterButton.OnItemSelected -= OnFilterSelected;
+            _window.OnOpen += OnWindowOpened;
+            _window.OnClose += OnWindowClosed;
+            _window.ClearButton.OnPressed += OnClearPressed;
+            _window.SearchBar.OnTextChanged += OnSearchChanged;
+            _window.FilterButton.OnItemSelected += OnFilterSelected;
 
             _window.Dispose();
             _window = null;
@@ -166,8 +182,8 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
         if (_actionsBar != null)
         {
-            _actionsBar.PageButtons.LeftArrow.OnPressed -= OnLeftArrowPressed;
-            _actionsBar.PageButtons.RightArrow.OnPressed -= OnRightArrowPressed;
+            _actionsBar.PageButtons.LeftArrow.OnPressed += OnLeftArrowPressed;
+            _actionsBar.PageButtons.RightArrow.OnPressed += OnRightArrowPressed;
         }
 
         if (_actionButton != null)
@@ -184,7 +200,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         if (CurrentPage[index] is not { } type)
             return;
 
-        _actionsSystem.TriggerAction(type);
+        _actionsSystem?.TriggerAction(type);
     }
 
     private void ChangePage(int index)
@@ -216,6 +232,78 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         ChangePage(_currentPageIndex + 1);
     }
 
+    private void AppendAction(ActionType action)
+    {
+        if (_container == null)
+            return;
+
+        foreach (var button in _container.GetButtons())
+        {
+            if (button.Action != null)
+                continue;
+
+            SetAction(button, action);
+            return;
+        }
+
+        foreach (var page in _pages)
+        {
+            for (var i = 0; i < page.Size; i++)
+            {
+                var pageAction = page[i];
+                if (pageAction != null)
+                    continue;
+
+                page[i] = action;
+                return;
+            }
+        }
+    }
+
+    private void OnActionAdded(ActionType action)
+    {
+        foreach (var page in _pages)
+        {
+            for (var i = 0; i < page.Size; i++)
+            {
+                if (page[i] == action)
+                {
+                    return;
+                }
+            }
+        }
+
+        AppendAction(action);
+        SearchAndDisplay();
+    }
+
+    private void OnActionRemoved(ActionType action)
+    {
+        if (_container == null)
+            return;
+
+        foreach (var button in _container.GetButtons())
+        {
+            if (button.Action == action)
+            {
+                SetAction(button, null);
+            }
+        }
+
+        foreach (var page in _pages)
+        {
+            for (var i = 0; i < page.Size; i++)
+            {
+                if (page[i] == action)
+                {
+                    page[i] = null;
+                }
+            }
+        }
+
+        SearchAndDisplay();
+    }
+
     private void OnActionReplaced(ActionType existing, ActionType action)
     {
         if (_container == null)
@@ -224,7 +312,18 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         foreach (var button in _container.GetButtons())
         {
             if (button.Action == existing)
-                button.UpdateData(_entities, action);
+                button.UpdateData(action);
+        }
+    }
+
+    private void OnActionsUpdated()
+    {
+        if (_container == null)
+            return;
+
+        foreach (var button in _container.GetButtons())
+        {
+            button.UpdateIcons();
         }
     }
 
@@ -269,8 +368,8 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         return filter switch
         {
             Filters.Enabled => action.Enabled,
-            Filters.Item => action.Provider != null && action.Provider != _actionsSystem.PlayerActions?.Owner,
-            Filters.Innate => action.Provider == null || action.Provider == _actionsSystem.PlayerActions?.Owner,
+            Filters.Item => action.Provider != null && action.Provider != _actionsSystem?.PlayerActions?.Owner,
+            Filters.Innate => action.Provider == null || action.Provider == _actionsSystem?.PlayerActions?.Owner,
             Filters.Instant => action is InstantAction,
             Filters.Targeted => action is TargetedAction,
             _ => throw new ArgumentOutOfRangeException(nameof(filter), filter, null)
@@ -293,7 +392,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         {
             var button = new ActionButton {Locked = true};
 
-            button.UpdateData(_entities, action);
+            button.UpdateData(action);
             button.ActionPressed += OnWindowActionPressed;
             button.ActionUnpressed += OnWindowActionUnPressed;
             button.ActionFocusExited += OnWindowActionFocusExisted;
@@ -310,7 +409,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         var search = _window.SearchBar.Text;
         var filters = _window.FilterButton.SelectedKeys;
 
-        IEnumerable<ActionType>? actions = _actionsSystem.PlayerActions?.Actions;
+        IEnumerable<ActionType>? actions = _actionsSystem?.PlayerActions?.Actions;
         actions ??= Array.Empty<ActionType>();
 
         if (filters.Count == 0 && string.IsNullOrWhiteSpace(search))
@@ -330,7 +429,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             if (action.DisplayName.Contains(search, StringComparison.OrdinalIgnoreCase))
                 return true;
 
-            if (action.Provider == null || action.Provider == _actionsSystem.PlayerActions?.Owner)
+            if (action.Provider == null || action.Provider == _actionsSystem?.PlayerActions?.Owner)
                 return false;
 
             var name = _entities.GetComponent<MetaDataComponent>(action.Provider.Value).EntityName;
@@ -355,7 +454,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             return;
         }
 
-        if (button.TryReplaceWith(_entities, type) &&
+        if (button.TryReplaceWith(type) &&
             _container != null &&
             _container.TryGetButtonIndex(button, out position))
         {
@@ -461,7 +560,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
                 return;
             }
 
-            _actionsSystem.TriggerAction(button.Action);
+            _actionsSystem?.TriggerAction(button.Action);
             _menuDragHelper.EndDrag();
         }
         else
@@ -474,7 +573,23 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
     private bool OnMenuBeginDrag()
     {
-        _dragShadow.Texture = _menuDragHelper.Dragged?.IconTexture;
+        if (_menuDragHelper.Dragged?.Action is { } action)
+        {
+            if (action.EntityIcon != null)
+            {
+                _dragShadow.Texture = _entities.GetComponent<SpriteComponent>(action.EntityIcon.Value).Icon?
+                    .GetFrame(RSI.State.Direction.South, 0);
+            }
+            else if (action.Icon != null)
+            {
+                _dragShadow.Texture = action.Icon!.Frame0();
+            }
+            else
+            {
+                _dragShadow.Texture = null;
+            }
+        }
+
         LayoutContainer.SetPosition(_dragShadow, UIManager.MousePositionScaled.Position - (32, 32));
         return true;
     }
@@ -488,6 +603,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
     private void OnMenuEndDrag()
     {
+        _dragShadow.Texture = null;
         _dragShadow.Visible = false;
     }
 
@@ -526,18 +642,18 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
     public void OnSystemLoaded(ActionsSystem system)
     {
-        _actionsSystem.LinkActions += OnComponentLinked;
-        _actionsSystem.UnlinkActions += OnComponentUnlinked;
-        _actionsSystem.ClearAssignments += ClearActions;
-        _actionsSystem.AssignSlot += AssignSlots;
+        system.LinkActions += OnComponentLinked;
+        system.UnlinkActions += OnComponentUnlinked;
+        system.ClearAssignments += ClearActions;
+        system.AssignSlot += AssignSlots;
     }
 
     public void OnSystemUnloaded(ActionsSystem system)
     {
-        _actionsSystem.LinkActions -= OnComponentLinked;
-        _actionsSystem.UnlinkActions -= OnComponentUnlinked;
-        _actionsSystem.ClearAssignments -= ClearActions;
-        _actionsSystem.AssignSlot -= AssignSlots;
+        system.LinkActions -= OnComponentLinked;
+        system.UnlinkActions -= OnComponentUnlinked;
+        system.ClearAssignments -= ClearActions;
+        system.AssignSlot -= AssignSlots;
     }
 
     public override void FrameUpdate(FrameEventArgs args)
@@ -655,8 +771,8 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
         var range = entityAction.CheckCanAccess ? action.Range : -1;
 
-        _interactionOutline.SetEnabled(false);
-        _targetOutline.Enable(range, entityAction.CheckCanAccess, predicate, entityAction.Whitelist, null);
+        _interactionOutline?.SetEnabled(false);
+        _targetOutline?.Enable(range, entityAction.CheckCanAccess, predicate, entityAction.Whitelist, null);
     }
 
     /// <summary>
@@ -668,8 +784,8 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             return;
 
         SelectingTargetFor = null;
-        _targetOutline.Disable();
-        _interactionOutline.SetEnabled(true);
+        _targetOutline?.Disable();
+        _interactionOutline?.SetEnabled(true);
 
         if (!_overlays.TryGetOverlay<ShowHandItemOverlay>(out var handOverlay) || handOverlay == null)
             return;

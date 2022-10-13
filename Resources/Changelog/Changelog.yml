@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Muzzle flashes now emit a point light., type: Tweak}
-  id: 1942
-  time: '2022-07-14T13:03:49.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed disposal junctions & other flip-able entities from becoming invisible
@@ -2937,3 +2932,11 @@ Entries:
   - {message: Bandaid medibots spamming speech., type: Fix}
   id: 2441
   time: '2022-10-13T10:36:29.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed some actions such as PDA and helmet lights having the same icon.,
+    type: Fix}
+  - {message: Fixed showing nothing when dragging some actions such as the helmet
+      light., type: Fix}
+  id: 2442
+  time: '2022-10-13T17:14:53.0000000+00:00'
