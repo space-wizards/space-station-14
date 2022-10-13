@@ -492,14 +492,18 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
     {
         if (_menuDragHelper.Dragged?.Action is { } action)
         {
-            if (action.Icon != null)
-            {
-                _dragShadow.Texture = action.Icon!.Frame0();
-            }
-            else if (action.EntityIcon != null)
+            if (action.EntityIcon != null)
             {
                 _dragShadow.Texture = _entities.GetComponent<SpriteComponent>(action.EntityIcon.Value).Icon?
                     .GetFrame(RSI.State.Direction.South, 0);
+            }
+            else if (action.Icon != null)
+            {
+                _dragShadow.Texture = action.Icon!.Frame0();
+            }
+            else
+            {
+                _dragShadow.Texture = null;
             }
         }
 
@@ -516,6 +520,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
     private void OnMenuEndDrag()
     {
+        _dragShadow.Texture = null;
         _dragShadow.Visible = false;
     }
 
