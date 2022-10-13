@@ -130,16 +130,15 @@
     sprite: Objects/Weapons/Guns/Launchers/pirate_cannon.rsi
   - type: Gun
     fireRate: 1
-    selectedMode: SemiAuto
+    selectedMode: FullAuto
     availableModes:
-      - SemiAuto
+      - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/mateba.ogg
   - type: BallisticAmmoProvider
     whitelist:
       tags:
         - Grenade
-    autoCycle: true
     capacity: 1
     proto: CannonBall
     soundInsert:
