@@ -30,8 +30,8 @@
       visuals:
         enum.ImplanterVisuals.Full:
           implantFull:
-            1: {visible: true}
-            0: {visible: false}
+            True: {visible: true}
+            False: {visible: false}
         enum.ImplanterImplantOnlyVisuals.ImplantOnly:
           implantOnly:
             True: {state: broken}

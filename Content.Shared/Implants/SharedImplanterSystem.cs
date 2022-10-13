@@ -27,11 +27,6 @@ public abstract class SharedImplanterSystem : EntitySystem
         component.ImplantData = (implantData.EntityName, implantData.EntityDescription);
     }
 
-    private void OnStartup(EntityUid uid, ImplanterComponent component, ComponentStartup args)
-    {
-
-    }
-
     //Instantly implant something and add all necessary components and containers.
     //Set to draw mode if not implant only
     public void Implant(EntityUid implanter, EntityUid target, ImplanterComponent component)
@@ -105,16 +100,24 @@ public abstract class SharedImplanterSystem : EntitySystem
         if (!TryComp<AppearanceComponent>(component.Owner, out var appearance))
             return;
 
+        bool implantFound;
+
+        if (component.NumberOfEntities > 0)
+            implantFound = true;
+
+        else
+            implantFound = false;
+
         if (component.CurrentMode == ImplanterToggleMode.Inject && !component.ImplantOnly)
-            _appearance.SetData(component.Owner, ImplanterVisuals.Full, component.NumberOfEntities, appearance);
+            _appearance.SetData(component.Owner, ImplanterVisuals.Full, implantFound, appearance);
 
         else if (component.CurrentMode == ImplanterToggleMode.Inject && component.ImplantOnly)
         {
-            _appearance.SetData(component.Owner, ImplanterVisuals.Full, component.NumberOfEntities, appearance);
+            _appearance.SetData(component.Owner, ImplanterVisuals.Full, implantFound, appearance);
             _appearance.SetData(component.Owner, ImplanterImplantOnlyVisuals.ImplantOnly, component.ImplantOnly, appearance);
         }
 
         else
-            _appearance.SetData(component.Owner, ImplanterVisuals.Full, component.NumberOfEntities, appearance);
+            _appearance.SetData(component.Owner, ImplanterVisuals.Full, implantFound, appearance);
     }
 }
