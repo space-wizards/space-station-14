@@ -1,12 +1,9 @@
 ﻿using System.Threading;
 using Content.Server.Body.Components;
 using Content.Server.Coordinates.Helpers;
-using Content.Server.Decals;
 using Content.Server.DoAfter;
 using Content.Server.Doors.Components;
 using Content.Server.Magic.Events;
-using Content.Server.Popups;
-using Content.Server.Spawners.Components;
 using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
@@ -289,7 +286,7 @@ public sealed class MagicSystem : EntitySystem
         foreach (var part in ents)
         {
             // just leaves a brain and clothes
-            if ((HasComp<BodyPartComponent>(part) || HasComp<MechanismComponent>(part))
+            if ((HasComp<BodyPartComponent>(part) || HasComp<OrganComponent>(part))
                 && !HasComp<BrainComponent>(part))
             {
                 QueueDel(part);

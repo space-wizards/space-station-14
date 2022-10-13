@@ -6,7 +6,7 @@
   - type: Sprite
     netsync: false
     sprite: Mobs/Species/Human/organs.rsi
-  - type: Mechanism
+  - type: Organ
   - type: Food
   - type: Extractable
     grindableSolutionName: organ
@@ -25,7 +25,7 @@
   components:
   - type: Sprite
     state: brain
-  - type: Mechanism
+  - type: Organ
     size: 1
     compatibility: Biological
   - type: Input
@@ -47,7 +47,7 @@
     layers:
       - state: eyeball-l
       - state: eyeball-r
-  - type: Mechanism
+  - type: Organ
     size: 1
     compatibility: Biological
 
@@ -59,7 +59,7 @@
   components:
   - type: Sprite
     state: tongue
-  - type: Mechanism
+  - type: Organ
     size: 1
     compatibility: Biological
 
@@ -73,7 +73,7 @@
     - state: appendix
     - state: appendix-inflamed
       visible: false
-  - type: Mechanism
+  - type: Organ
     size: 1
     compatibility: Biological
 
@@ -85,7 +85,7 @@
   components:
   - type: Sprite
     state: ears
-  - type: Mechanism
+  - type: Organ
     size: 1
     compatibility: Biological
 
@@ -99,7 +99,7 @@
     layers:
       - state: lung-l
       - state: lung-r
-  - type: Mechanism
+  - type: Organ
     size: 1
     compatibility: Biological
   - type: Lung
@@ -120,7 +120,7 @@
   components:
   - type: Sprite
     state: heart-on
-  - type: Mechanism
+  - type: Organ
     size: 1
     compatibility: Biological
   # The heart 'metabolizes' medicines and poisons that aren't filtered out by other organs.
@@ -142,7 +142,7 @@
   components:
   - type: Sprite
     state: stomach
-  - type: Mechanism
+  - type: Organ
     size: 1
     compatibility: Biological
   - type: SolutionContainerManager
@@ -169,7 +169,7 @@
   components:
   - type: Sprite
     state: liver
-  - type: Mechanism
+  - type: Organ
     size: 1
     compatibility: Biological
   - type: Metabolizer # The liver metabolizes certain chemicals only, like alcohol.
@@ -189,7 +189,7 @@
     layers:
       - state: kidney-l
       - state: kidney-r
-  - type: Mechanism
+  - type: Organ
     size: 1
     compatibility: Biological
   # The kidneys just remove anything that doesn't currently have any metabolisms, as a stopgap.

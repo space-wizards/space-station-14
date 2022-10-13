@@ -22,7 +22,7 @@ namespace Content.Server.Body.Systems
         public override void Update(float frameTime)
         {
             foreach (var (stomach, mech, sol)
-                in EntityManager.EntityQuery<StomachComponent, MechanismComponent, SolutionContainerManagerComponent>(false))
+                in EntityManager.EntityQuery<StomachComponent, OrganComponent, SolutionContainerManagerComponent>(false))
             {
                 if (mech.Body == null)
                     continue;

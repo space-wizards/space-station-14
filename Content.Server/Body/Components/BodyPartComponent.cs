@@ -12,25 +12,25 @@ namespace Content.Server.Body.Components
 
         private Container _mechanismContainer = default!;
 
-        public override bool CanAddMechanism(MechanismComponent mechanism)
+        public override bool CanAddMechanism(OrganComponent organ)
         {
-            return base.CanAddMechanism(mechanism) &&
-                   _mechanismContainer.CanInsert(mechanism.Owner);
+            return base.CanAddMechanism(organ) &&
+                   _mechanismContainer.CanInsert(organ.Owner);
         }
 
-        protected override void OnAddMechanism(MechanismComponent mechanism)
+        protected override void OnAddMechanism(OrganComponent organ)
         {
-            base.OnAddMechanism(mechanism);
+            base.OnAddMechanism(organ);
 
-            _mechanismContainer.Insert(mechanism.Owner);
+            _mechanismContainer.Insert(organ.Owner);
         }
 
-        protected override void OnRemoveMechanism(MechanismComponent mechanism)
+        protected override void OnRemoveMechanism(OrganComponent organ)
         {
-            base.OnRemoveMechanism(mechanism);
+            base.OnRemoveMechanism(organ);
 
-            _mechanismContainer.Remove(mechanism.Owner);
-            mechanism.Owner.RandomOffset(0.25f);
+            _mechanismContainer.Remove(organ.Owner);
+            organ.Owner.RandomOffset(0.25f);
         }
 
         public void MapInitialize()
@@ -39,21 +39,22 @@ namespace Content.Server.Body.Components
 
             _mechanismContainer = Owner.EnsureContainer<Container>(ContainerId);
 
-            // This is ran in Startup as entities spawned in Initialize
-            // are not synced to the client since they are assumed to be
-            // identical on it
-            foreach (var mechanismId in MechanismIds)
-            {
-                var entity = _entMan.SpawnEntity(mechanismId, _entMan.GetComponent<TransformComponent>(Owner).MapPosition);
-
-                if (!_entMan.TryGetComponent(entity, out MechanismComponent? mechanism))
-                {
-                    Logger.Error($"Entity {mechanismId} does not have a {nameof(MechanismComponent)} component.");
-                    continue;
-                }
-
-                TryAddMechanism(mechanism, true);
-            }
+            // TODO BODY SYSTEM BEFORE MERGE
+            // // This is ran in Startup as entities spawned in Initialize
+            // // are not synced to the client since they are assumed to be
+            // // identical on it
+            // foreach (var mechanismId in MechanismIds)
+            // {
+            //     var entity = _entMan.SpawnEntity(mechanismId, _entMan.GetComponent<TransformComponent>(Owner).MapPosition);
+            //
+            //     if (!_entMan.TryGetComponent(entity, out OrganComponent? mechanism))
+            //     {
+            //         Logger.Error($"Entity {mechanismId} does not have a {nameof(OrganComponent)} component.");
+            //         continue;
+            //     }
+            //
+            //     TryAddMechanism(mechanism, true);
+            // }
         }
     }
 }

@@ -39,7 +39,7 @@ namespace Content.Server.Body.Systems
             }
             else
             {
-                if (EntityManager.TryGetComponent<MechanismComponent>(uid, out var mech))
+                if (EntityManager.TryGetComponent<OrganComponent>(uid, out var mech))
                 {
                     if (mech.Body != null)
                     {
@@ -78,7 +78,7 @@ namespace Content.Server.Body.Systems
             }
         }
 
-        private void TryMetabolize(EntityUid uid, MetabolizerComponent? meta=null, MechanismComponent? mech=null)
+        private void TryMetabolize(EntityUid uid, MetabolizerComponent? meta=null, OrganComponent? mech=null)
         {
             if (!Resolve(uid, ref meta))
                 return;

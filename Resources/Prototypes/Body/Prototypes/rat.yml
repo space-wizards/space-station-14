@@ -1,0 +1,19 @@
+﻿- type: body
+  id: Rat
+  name: "rat"
+  slots:
+    torso: TorsoRat
+    legs: LegsAnimal
+    feet: FeetAnimal
+  connections:
+    torso:
+    - legs
+    legs:
+    - feet
+  organs:
+  - torso:
+    - OrganRatLungs
+    - OrganRatStomach
+    - OrganAnimalLiver
+    - OrganAnimalHeart
+    - OrganAnimalKidneys

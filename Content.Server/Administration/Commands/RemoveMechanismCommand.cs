@@ -33,7 +33,7 @@ namespace Content.Server.Administration.Commands
             var parent = transform.ParentUid;
 
             if (entityManager.TryGetComponent<BodyPartComponent>(parent, out var body) &&
-                entityManager.TryGetComponent<MechanismComponent>(entityUid, out var part))
+                entityManager.TryGetComponent<OrganComponent>(entityUid, out var part))
             {
                 body.RemoveMechanism(part);
             }

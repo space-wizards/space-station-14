@@ -3,9 +3,6 @@ using Content.Shared.Body.Components;
 using Content.Shared.Damage;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 using static Robust.Client.UserInterface.Controls.ItemList;
 
@@ -161,7 +158,7 @@ namespace Content.Client.Body.UI
             UpdateMechanismBox(_currentBodyPart?.Mechanisms.ElementAt(args.ItemIndex));
         }
 
-        private void UpdateMechanismBox(MechanismComponent? mechanism)
+        private void UpdateMechanismBox(OrganComponent? mechanism)
         {
             // TODO BODY Improve UI
             if (mechanism == null)

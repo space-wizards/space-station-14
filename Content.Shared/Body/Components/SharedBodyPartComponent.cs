@@ -16,13 +16,8 @@ namespace Content.Shared.Body.Components
         [Dependency] private readonly IEntityManager _entMan = default!;
         private SharedBodyComponent? _body;
 
-        // TODO BODY Remove
-        [DataField("mechanisms")]
-        private readonly List<string> _mechanismIds = new();
-        public IReadOnlyList<string> MechanismIds => _mechanismIds;
-
         [ViewVariables]
-        private readonly HashSet<MechanismComponent> _mechanisms = new();
+        private readonly HashSet<OrganComponent> _mechanisms = new();
 
         [ViewVariables]
         public SharedBodyComponent? Body
@@ -81,7 +76,7 @@ namespace Content.Shared.Body.Components
 
         // TODO BODY Mechanisms occupying different parts at the body level
         [ViewVariables]
-        public IReadOnlyCollection<MechanismComponent> Mechanisms => _mechanisms;
+        public IReadOnlyCollection<OrganComponent> Mechanisms => _mechanisms;
 
         // TODO BODY Replace with a simulation of organs
         /// <summary>
@@ -96,26 +91,18 @@ namespace Content.Shared.Body.Components
         [DataField("symmetry")]
         public BodyPartSymmetry Symmetry = BodyPartSymmetry.None;
 
-        protected virtual void OnAddMechanism(MechanismComponent mechanism)
+        protected virtual void OnAddMechanism(OrganComponent organ)
         {
-            var prototypeId = _entMan.GetComponent<MetaDataComponent>(mechanism.Owner).EntityPrototype!.ID;
-
-            if (!_mechanismIds.Contains(prototypeId))
-            {
-                _mechanismIds.Add(prototypeId);
-            }
-
-            mechanism.Part = this;
-            SizeUsed += mechanism.Size;
+            organ.Part = this;
+            SizeUsed += organ.Size;
 
             Dirty();
         }
 
-        protected virtual void OnRemoveMechanism(MechanismComponent mechanism)
+        protected virtual void OnRemoveMechanism(OrganComponent organ)
         {
-            _mechanismIds.Remove(_entMan.GetComponent<MetaDataComponent>(mechanism.Owner).EntityPrototype!.ID);
-            mechanism.Part = null;
-            SizeUsed -= mechanism.Size;
+            organ.Part = null;
+            SizeUsed -= organ.Size;
 
             Dirty();
         }
@@ -162,36 +149,36 @@ namespace Content.Shared.Body.Components
             }
         }
 
-        public virtual bool CanAddMechanism(MechanismComponent mechanism)
+        public virtual bool CanAddMechanism(OrganComponent organ)
         {
-            return SizeUsed + mechanism.Size <= Size;
+            return SizeUsed + organ.Size <= Size;
         }
 
         /// <summary>
-        ///     Tries to add a <see cref="MechanismComponent"/> to this part.
+        ///     Tries to add a <see cref="OrganComponent"/> to this part.
         /// </summary>
-        /// <param name="mechanism">The mechanism to add.</param>
+        /// <param name="organ">The organ to add.</param>
         /// <param name="force">
-        ///     Whether or not to check if the mechanism is compatible.
+        ///     Whether or not to check if the organ is compatible.
         ///     Passing true does not guarantee it to be added, for example if
         ///     it was already added before.
         /// </param>
         /// <returns>true if added, false otherwise even if it was already added.</returns>
-        public bool TryAddMechanism(MechanismComponent mechanism, bool force = false)
+        public bool TryAddMechanism(OrganComponent organ, bool force = false)
         {
-            DebugTools.AssertNotNull(mechanism);
+            DebugTools.AssertNotNull(organ);
 
-            if (!force && !CanAddMechanism(mechanism))
+            if (!force && !CanAddMechanism(organ))
             {
                 return false;
             }
 
-            if (!_mechanisms.Add(mechanism))
+            if (!_mechanisms.Add(organ))
             {
                 return false;
             }
 
-            OnAddMechanism(mechanism);
+            OnAddMechanism(organ);
 
             return true;
         }
@@ -199,18 +186,18 @@ namespace Content.Shared.Body.Components
         /// <summary>
         ///     Tries to remove the given <see cref="mechanism"/> from this part.
         /// </summary>
-        /// <param name="mechanism">The mechanism to remove.</param>
+        /// <param name="organnism">The organ to remove.</param>
         /// <returns>True if it was removed, false otherwise.</returns>
-        public bool RemoveMechanism(MechanismComponent mechanism)
+        public bool RemoveMechanism(OrganComponent organ)
         {
-            DebugTools.AssertNotNull(mechanism);
+            DebugTools.AssertNotNull(organ);
 
-            if (!_mechanisms.Remove(mechanism))
+            if (!_mechanisms.Remove(organ))
             {
                 return false;
             }
 
-            OnRemoveMechanism(mechanism);
+            OnRemoveMechanism(organ);
 
             return true;
         }
@@ -219,14 +206,14 @@ namespace Content.Shared.Body.Components
         ///     Tries to remove the given <see cref="mechanism"/> from this
         ///     part and drops it at the specified coordinates.
         /// </summary>
-        /// <param name="mechanism">The mechanism to remove.</param>
+        /// <param name="organnism">The organ to remove.</param>
         /// <param name="coordinates">The coordinates to drop it at.</param>
         /// <returns>True if it was removed, false otherwise.</returns>
-        public bool RemoveMechanism(MechanismComponent mechanism, EntityCoordinates coordinates)
+        public bool RemoveMechanism(OrganComponent organ, EntityCoordinates coordinates)
         {
-            if (RemoveMechanism(mechanism))
+            if (RemoveMechanism(organ))
             {
-                _entMan.GetComponent<TransformComponent>(mechanism.Owner).Coordinates = coordinates;
+                _entMan.GetComponent<TransformComponent>(organ.Owner).Coordinates = coordinates;
                 return true;
             }
 
@@ -234,24 +221,24 @@ namespace Content.Shared.Body.Components
         }
 
         /// <summary>
-        ///     Tries to destroy the given <see cref="MechanismComponent"/> from
+        ///     Tries to destroy the given <see cref="OrganComponent"/> from
         ///     this part.
-        ///     The mechanism won't be deleted if it is not in this body part.
+        ///     The organ won't be deleted if it is not in this body part.
         /// </summary>
         /// <returns>
-        ///     True if the mechanism was in this body part and destroyed,
+        ///     True if the organ was in this body part and destroyed,
         ///     false otherwise.
         /// </returns>
-        public bool DeleteMechanism(MechanismComponent mechanism)
+        public bool DeleteMechanism(OrganComponent organ)
         {
-            DebugTools.AssertNotNull(mechanism);
+            DebugTools.AssertNotNull(organ);
 
-            if (!RemoveMechanism(mechanism))
+            if (!RemoveMechanism(organ))
             {
                 return false;
             }
 
-            _entMan.DeleteEntity(mechanism.Owner);
+            _entMan.DeleteEntity(organ.Owner);
             return true;
         }
 
@@ -304,7 +291,7 @@ namespace Content.Shared.Body.Components
     [Serializable, NetSerializable]
     public sealed class BodyPartComponentState : ComponentState
     {
-        [NonSerialized] private List<MechanismComponent>? _mechanisms;
+        [NonSerialized] private List<OrganComponent>? _mechanisms;
 
         public readonly EntityUid[] MechanismIds;
 
@@ -313,7 +300,7 @@ namespace Content.Shared.Body.Components
             MechanismIds = mechanismIds;
         }
 
-        public List<MechanismComponent> Mechanisms(IEntityManager? entityManager = null)
+        public List<OrganComponent> Mechanisms(IEntityManager? entityManager = null)
         {
             if (_mechanisms != null)
             {
@@ -322,7 +309,7 @@ namespace Content.Shared.Body.Components
 
             IoCManager.Resolve(ref entityManager);
 
-            var mechanisms = new List<MechanismComponent>(MechanismIds.Length);
+            var mechanisms = new List<OrganComponent>(MechanismIds.Length);
 
             foreach (var id in MechanismIds)
             {
@@ -331,7 +318,7 @@ namespace Content.Shared.Body.Components
                     continue;
                 }
 
-                if (!entityManager.TryGetComponent(id, out MechanismComponent? mechanism))
+                if (!entityManager.TryGetComponent(id, out OrganComponent? mechanism))
                 {
                     continue;
                 }

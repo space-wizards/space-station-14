@@ -35,7 +35,7 @@ namespace Content.Server.Administration.Commands
             var entityManager = IoCManager.Resolve<IEntityManager>();
 
             if (entityManager.TryGetComponent<BodyPartComponent>(storageUid, out var storage)
-                && entityManager.TryGetComponent<MechanismComponent>(entityUid, out var bodyPart))
+                && entityManager.TryGetComponent<OrganComponent>(entityUid, out var bodyPart))
             {
                 if (storage.TryAddMechanism(bodyPart))
                 {

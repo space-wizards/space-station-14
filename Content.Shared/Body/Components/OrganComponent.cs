@@ -1,11 +1,10 @@
 ﻿using Content.Shared.Body.Events;
 using Content.Shared.Body.Part;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.Body.Components
 {
     [RegisterComponent]
-    public sealed class MechanismComponent : Component
+    public sealed class OrganComponent : Component
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         private SharedBodyPartComponent? _part;
@@ -64,13 +63,13 @@ namespace Content.Shared.Body.Components
         // TODO BODY OnSizeChanged
         /// <summary>
         ///     Determines whether this
-        ///     <see cref="MechanismComponent"/> can fit into a <see cref="SharedBodyPartComponent"/>.
+        ///     <see cref="OrganComponent"/> can fit into a <see cref="SharedBodyPartComponent"/>.
         /// </summary>
         [DataField("size")] public int Size { get; set; } = 1;
 
         /// <summary>
         ///     What kind of <see cref="SharedBodyPartComponent"/> this
-        ///     <see cref="MechanismComponent"/> can be easily installed into.
+        ///     <see cref="OrganComponent"/> can be easily installed into.
         /// </summary>
         [DataField("compatibility")]
         public BodyPartCompatibility Compatibility { get; set; } = BodyPartCompatibility.Universal;

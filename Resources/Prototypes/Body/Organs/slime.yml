@@ -8,7 +8,7 @@
       netsync: false
       sprite: Mobs/Species/Human/organs.rsi
       state: brain
-    - type: Mechanism
+    - type: Organ
       size: 5
       compatibility: Slime
     - type: Brain
@@ -34,7 +34,7 @@
     layers:
       - state: lung-l
       - state: lung-r
-  - type: Mechanism
+  - type: Organ
     size: 1
     compatibility: Biological
   - type: Lung
