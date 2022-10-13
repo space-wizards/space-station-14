@@ -49,3 +49,9 @@
   id: MedicalScannerSender
   name: signal-port-name-med-scanner-sender
   description: signal-port-description-med-scanner-sender
+  
+- type: transmitterPort
+  id: Timer
+  name: signal-port-name-timer
+  description: signal-port-description-timer
+  defaultLinks: [ On, Open, Forward, Trigger ]

@@ -1,25 +1,38 @@
+using Content.Shared.MachineLinking;
 using Robust.Shared.Audio;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Security.Components
+namespace Content.Server.MachineLinking.Components
 {
     [RegisterComponent]
-    public sealed class BrigTimerComponent : Component
+    public sealed class SignalTimerComponent : Component
     {
         [DataField("delay")]
-        public double Delay = 2;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public double Delay = 5;
 
         [DataField("activated")]
         public bool Activated = false;
 
-        [DataField("timeRemaining")]
+        /// <summary>
+        ///     The time the timer triggers.
+        /// </summary>
+        [DataField("triggerTime")]
         public TimeSpan TriggerTime;
 
         [DataField("user")]
         public EntityUid? User;
 
         /// <summary>
+        ///     The port that gets signaled when the timer triggers.
+        /// </summary>
+        [DataField("triggerPort", customTypeSerializer: typeof(PrototypeIdSerializer<TransmitterPortPrototype>))]
+        public string TriggerPort = "Timer";
+
+        /// <summary>
         ///     If not null, a user can use verbs to configure the delay to one of these options.
         /// </summary>
+        /// TODO : Remove this
         [DataField("delayOptions")]
         public List<float>? DelayOptions = null;
 

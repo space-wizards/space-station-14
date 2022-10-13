@@ -21,58 +21,61 @@ using Robust.Server.Containers;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
-using Content.Server.Security.Components;
 using Robust.Shared.Timing;
+using Content.Server.MachineLinking.Components;
+using Content.Shared.Text;
 
-namespace Content.Server.Security.Systems
+namespace Content.Server.MachineLinking.System
 {
-    /// <summary>
-    /// Raised whenever something is Triggered on the entity.
-    /// </summary>
-    public sealed class TriggerEvent : HandledEntityEventArgs
-    {
-        public EntityUid Triggered { get; }
-        public EntityUid? User { get; }
 
-        public TriggerEvent(EntityUid triggered, EntityUid? user = null)
-        {
-            Triggered = triggered;
-            User = user;
-        }
-    }
-
-    [UsedImplicitly]
-    public sealed partial class BrigTimerSystem : EntitySystem
+    public sealed partial class SignalTimerSystem : EntitySystem
     {
         [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
+
 
         public override void Initialize()
         {
             base.Initialize();
 
-            SubscribeLocalEvent<BrigTimerComponent, ActivateInWorldEvent>(OnActivate);
+            SubscribeLocalEvent<SignalTimerComponent, ComponentInit>(OnInit);
+            SubscribeLocalEvent<SignalTimerComponent, ActivateInWorldEvent>(OnActivate);
         }
 
-        private void OnActivate(EntityUid uid, BrigTimerComponent component, ActivateInWorldEvent args)
+        private void OnInit(EntityUid uid, SignalTimerComponent component, ComponentInit args)
+        {
+            if (TryComp(uid, out SignalTransmitterComponent? comp))
+                comp.Outputs.TryAdd(component.TriggerPort, new());
+        }
+
+        private void OnActivate(EntityUid uid, SignalTimerComponent component, ActivateInWorldEvent args)
         {
             component.TriggerTime = _gameTiming.CurTime + TimeSpan.FromSeconds(component.Delay);
             component.User = args.User;
             component.Activated = true;
 
+            _appearanceSystem.SetData(uid, TextScreenVisuals.Mode, TextScreenMode.Timer);
+            _appearanceSystem.SetData(uid, TextScreenVisuals.TargetTime, component.TriggerTime);
+
             args.Handled = true;
         }
 
-        public bool Trigger(BrigTimerComponent brigTimer)
+        public bool Trigger(EntityUid uid, SignalTimerComponent signalTimer)
         {
             // TODO: Trigger here!
 
-            brigTimer.Activated = false;
+            signalTimer.Activated = false;
+
+            _signalSystem.InvokePort(uid, signalTimer.TriggerPort);
 
             // TODO: Send to linked devices
+
+            _appearanceSystem.SetData(uid, TextScreenVisuals.Mode, TextScreenMode.Text);
 
             return true;
         }
@@ -85,14 +88,14 @@ namespace Content.Server.Security.Systems
 
         private void UpdateTimer()
         {
-            foreach (var timer in EntityQuery<BrigTimerComponent>())
+            foreach (var timer in EntityQuery<SignalTimerComponent>())
             {
                 if (!timer.Activated)
                     continue;
 
                 if (timer.TriggerTime <= _gameTiming.CurTime)
                 {
-                    Trigger(timer);
+                    Trigger(timer.Owner, timer);
 
                     if (timer.DoneSound != null)
                     {
