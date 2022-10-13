@@ -1,8 +1,7 @@
 using Content.Client.Message;
 using Content.Client.Radiation.Components;
-using Content.Client.Radiation.Systems;
 using Content.Client.Stylesheets;
-using Content.Shared.Radiation.Components;
+using Content.Shared.Radiation.Systems;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Timing;
@@ -34,32 +33,12 @@ public sealed class GeigerItemControl : Control
 
     private void Update()
     {
-        var danger = GeigerSystem.RadsToLevel(_component.CurrentRadiation);
-        var color = DangerToColor(danger);
-
+        var color = SharedGeigerSystem.RadsToColor(_component.CurrentRadiation);
         var rads = _component.CurrentRadiation.ToString("N1");
         var msg = Loc.GetString("geiger-item-control-status",
             ("rads", rads), ("color", color));
 
         _label.SetMarkup(msg);
         _component.UiUpdateNeeded = false;
-    }
-
-    private Color DangerToColor(GeigerDangerLevel level)
-    {
-        switch (level)
-        {
-            case GeigerDangerLevel.None:
-                return Color.Green;
-            case GeigerDangerLevel.Low:
-                return Color.Yellow;
-            case GeigerDangerLevel.Med:
-                return Color.DarkOrange;
-            case GeigerDangerLevel.High:
-            case GeigerDangerLevel.Extreme:
-                return Color.Red;
-            default:
-                return Color.White;
-        }
     }
 }

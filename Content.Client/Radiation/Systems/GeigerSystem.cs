@@ -2,11 +2,12 @@ using Content.Client.Items;
 using Content.Client.Radiation.Components;
 using Content.Client.Radiation.UI;
 using Content.Shared.Radiation.Components;
+using Content.Shared.Radiation.Systems;
 using Robust.Shared.GameStates;
 
 namespace Content.Client.Radiation.Systems;
 
-public sealed class GeigerSystem : EntitySystem
+public sealed class GeigerSystem : SharedGeigerSystem
 {
     public override void Initialize()
     {
@@ -29,15 +30,5 @@ public sealed class GeigerSystem : EntitySystem
         args.Controls.Add(new GeigerItemControl(component));
     }
 
-    public static GeigerDangerLevel RadsToLevel(float rads)
-    {
-        return rads switch
-        {
-            < 0.2f => GeigerDangerLevel.None,
-            < 1f => GeigerDangerLevel.Low,
-            < 3f => GeigerDangerLevel.Med,
-            < 6f => GeigerDangerLevel.High,
-            _ => GeigerDangerLevel.Extreme
-        };
-    }
+
 }
