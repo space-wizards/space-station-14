@@ -1,5 +1,6 @@
 using Content.Shared.Ghost;
 using Content.Shared.Radiation;
+using Content.Shared.Radiation.Components;
 using Content.Shared.Singularity.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
@@ -109,7 +110,7 @@ namespace Content.Shared.Singularity
 
             if (EntityManager.TryGetComponent(singularity.Owner, out RadiationSourceComponent? source))
             {
-                source.RadsPerSecond = singularity.RadsPerLevel * value;
+                source.Intensity = singularity.RadsPerLevel * value;
             }
 
             if (EntityManager.TryGetComponent(singularity.Owner, out AppearanceComponent? appearance))

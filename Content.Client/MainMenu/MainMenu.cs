@@ -1,6 +1,4 @@
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using Content.Client.Options.UI;
 using Content.Client.MainMenu.UI;
 using Content.Client.UserInterface.Systems.EscapeMenu;
 using Robust.Client;
@@ -44,6 +42,7 @@ namespace Content.Client.MainMenu
             _mainMenuControl.OptionsButton.OnPressed += OptionsButtonPressed;
             _mainMenuControl.DirectConnectButton.OnPressed += DirectConnectButtonPressed;
             _mainMenuControl.AddressBox.OnTextEntered += AddressBoxEntered;
+            _mainMenuControl.ChangelogButton.OnPressed += ChangelogButtonPressed;
 
             _client.RunLevelChanged += RunLevelChanged;
         }
@@ -57,14 +56,19 @@ namespace Content.Client.MainMenu
             _mainMenuControl.Dispose();
         }
 
-        private void QuitButtonPressed(BaseButton.ButtonEventArgs args)
+        private void ChangelogButtonPressed(BaseButton.ButtonEventArgs args)
         {
-            _controllerProxy.Shutdown();
+            _userInterfaceManager.GetUIController<ChangelogUIController>().ToggleWindow();
         }
 
         private void OptionsButtonPressed(BaseButton.ButtonEventArgs args)
         {
-            IoCManager.Resolve<IUserInterfaceManager>().GetUIController<OptionsUIController>().ToggleWindow();
+            _userInterfaceManager.GetUIController<OptionsUIController>().ToggleWindow();
+        }
+
+        private void QuitButtonPressed(BaseButton.ButtonEventArgs args)
+        {
+            _controllerProxy.Shutdown();
         }
 
         private void DirectConnectButtonPressed(BaseButton.ButtonEventArgs args)
