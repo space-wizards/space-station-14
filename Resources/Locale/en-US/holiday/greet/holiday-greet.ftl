@@ -68,6 +68,7 @@ holiday-name-christmas = Christmas
 holiday-name-festive-season = Festive Season
 holiday-name-boxing-day = Boxing Day
 holiday-name-friday-thirteenth = Friday the 13th
+holiday-name-national-coming-out-day = National Coming Out Day
 
 ## Custom congrats
 
