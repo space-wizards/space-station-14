@@ -12,6 +12,7 @@ using Content.Client.UserInterface.Systems.Actions.Windows;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Input;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
@@ -100,6 +101,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         _actionsBar.PageButtons.LeftArrow.OnPressed += OnLeftArrowPressed;
         _actionsBar.PageButtons.RightArrow.OnPressed += OnRightArrowPressed;
         _actionsSystem.ActionReplaced += OnActionReplaced;
+        _actionsSystem.ActionsUpdated += OnActionsUpdated;
 
         UpdateFilterLabel();
         SearchAndDisplay();
@@ -152,13 +154,16 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
     public void OnStateExited(GameplayState state)
     {
+        _actionsSystem.ActionReplaced -= OnActionReplaced;
+        _actionsSystem.ActionsUpdated -= OnActionsUpdated;
+
         if (_window != null)
         {
-            _window.OnOpen -= OnWindowOpened;
-            _window.OnClose -= OnWindowClosed;
-            _window.ClearButton.OnPressed -= OnClearPressed;
-            _window.SearchBar.OnTextChanged -= OnSearchChanged;
-            _window.FilterButton.OnItemSelected -= OnFilterSelected;
+            _window.OnOpen += OnWindowOpened;
+            _window.OnClose += OnWindowClosed;
+            _window.ClearButton.OnPressed += OnClearPressed;
+            _window.SearchBar.OnTextChanged += OnSearchChanged;
+            _window.FilterButton.OnItemSelected += OnFilterSelected;
 
             _window.Dispose();
             _window = null;
@@ -166,8 +171,8 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
         if (_actionsBar != null)
         {
-            _actionsBar.PageButtons.LeftArrow.OnPressed -= OnLeftArrowPressed;
-            _actionsBar.PageButtons.RightArrow.OnPressed -= OnRightArrowPressed;
+            _actionsBar.PageButtons.LeftArrow.OnPressed += OnLeftArrowPressed;
+            _actionsBar.PageButtons.RightArrow.OnPressed += OnRightArrowPressed;
         }
 
         if (_actionButton != null)
@@ -224,7 +229,18 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         foreach (var button in _container.GetButtons())
         {
             if (button.Action == existing)
-                button.UpdateData(_entities, action);
+                button.UpdateData(action);
+        }
+    }
+
+    private void OnActionsUpdated()
+    {
+        if (_container == null)
+            return;
+
+        foreach (var button in _container.GetButtons())
+        {
+            button.UpdateIcons();
         }
     }
 
@@ -293,7 +309,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         {
             var button = new ActionButton {Locked = true};
 
-            button.UpdateData(_entities, action);
+            button.UpdateData(action);
             button.ActionPressed += OnWindowActionPressed;
             button.ActionUnpressed += OnWindowActionUnPressed;
             button.ActionFocusExited += OnWindowActionFocusExisted;
@@ -355,7 +371,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             return;
         }
 
-        if (button.TryReplaceWith(_entities, type) &&
+        if (button.TryReplaceWith(type) &&
             _container != null &&
             _container.TryGetButtonIndex(button, out position))
         {
@@ -474,7 +490,23 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
     private bool OnMenuBeginDrag()
     {
-        _dragShadow.Texture = _menuDragHelper.Dragged?.IconTexture;
+        if (_menuDragHelper.Dragged?.Action is { } action)
+        {
+            if (action.EntityIcon != null)
+            {
+                _dragShadow.Texture = _entities.GetComponent<SpriteComponent>(action.EntityIcon.Value).Icon?
+                    .GetFrame(RSI.State.Direction.South, 0);
+            }
+            else if (action.Icon != null)
+            {
+                _dragShadow.Texture = action.Icon!.Frame0();
+            }
+            else
+            {
+                _dragShadow.Texture = null;
+            }
+        }
+
         LayoutContainer.SetPosition(_dragShadow, UIManager.MousePositionScaled.Position - (32, 32));
         return true;
     }
@@ -488,6 +520,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
     private void OnMenuEndDrag()
     {
+        _dragShadow.Texture = null;
         _dragShadow.Visible = false;
     }
 
