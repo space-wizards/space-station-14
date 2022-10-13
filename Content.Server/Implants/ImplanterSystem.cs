@@ -114,7 +114,7 @@ public sealed class ImplanterSystem : SharedImplanterSystem
         if (!_container.TryGetContainer(component.Owner, ImplanterSlotId, out var container))
             return;
 
-        args.State = new ImplanterComponentState(component.CurrentMode, container.ContainedEntities.Count);
+        args.State = new ImplanterComponentState(component.CurrentMode, container.ContainedEntities.Count, component.ImplantOnly);
     }
 
     private void OnImplantAttemptSuccess(EntityUid uid, ImplanterComponent component, ImplanterImplantCompleteEvent args)

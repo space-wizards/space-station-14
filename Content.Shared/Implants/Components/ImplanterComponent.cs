@@ -37,8 +37,17 @@ public sealed class ImplanterComponent : Component
     public ImplanterToggleMode CurrentMode;
 
     /// <summary>
-    /// Current number of implants in the implanter
+    /// The name and description of the implant to show on the implanter
     /// </summary>
+    [ViewVariables]
+    [DataField("implantData")]
+    public (string, string) ImplantData;
+
+    /// <summary>
+    /// Current number of implants in the implanter
+    /// Should only be 0 or 1, no more than a single implant should be in an implanter
+    /// </summary>
+    [ViewVariables]
     public int NumberOfEntities;
 
     [ViewVariables(VVAccess.ReadWrite)]
@@ -52,11 +61,13 @@ public sealed class ImplanterComponentState : ComponentState
 {
     public ImplanterToggleMode CurrentMode;
     public int NumberOfEntities;
+    public bool ImplantOnly;
 
-    public ImplanterComponentState(ImplanterToggleMode currentMode, int numberOfEntities)
+    public ImplanterComponentState(ImplanterToggleMode currentMode, int numberOfEntities, bool implantOnly)
     {
         CurrentMode = currentMode;
         NumberOfEntities = numberOfEntities;
+        ImplantOnly = implantOnly;
     }
 }
 
@@ -71,4 +82,10 @@ public enum ImplanterToggleMode : byte
 public enum ImplanterVisuals : byte
 {
     Full
+}
+
+[Serializable, NetSerializable]
+public enum ImplanterImplantOnlyVisuals : byte
+{
+    ImplantOnly
 }

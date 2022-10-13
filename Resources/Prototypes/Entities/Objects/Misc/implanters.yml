@@ -10,6 +10,7 @@
         implanter_slot: !type:ContainerSlot {}
       type: ContainerContainer
     - type: Implanter
+      currentMode: Draw
     - type: Sprite
       sprite: Objects/Specific/Chemistry/syringe.rsi
       netsync: false
@@ -18,7 +19,9 @@
         - state: syringe4
           map: [ "implantFull" ]
           color: '#1cd94e'
+          visible: false
         - state: syringe_base0
+          map: [ "implantOnly" ]
     - type: Item
       sprite: Objects/Specific/Chemistry/syringe.rsi
       heldPrefix: 0
@@ -27,8 +30,12 @@
       visuals:
         enum.ImplanterVisuals.Full:
           implantFull:
-            True: {visible: true}
-            False: {visible: false}
+            1: {visible: true}
+            0: {visible: false}
+        enum.ImplanterImplantOnlyVisuals.ImplantOnly:
+          implantOnly:
+            True: {state: broken}
+            False: {state: syringe_base0}
 
 - type: entity
   id: Implanter
@@ -39,10 +46,30 @@
         - Trash
 
 - type: entity
+  id: BaseImplantOnlyImplanter
+  parent: Implanter
+  abstract: true
+  components:
+    - type: Sprite
+      sprite: Objects/Specific/Chemistry/syringe.rsi
+      netsync: false
+      state: syringe_base0
+      layers:
+        - state: syringe4
+          map: [ "implantFull" ]
+          color: '#1cd94e'
+          visible: true
+        - state: syringe_base0
+          map: [ "implantOnly" ]
+    - type: Implanter
+      currentMode: Inject
+      implantOnly: true
+
+- type: entity
   id: UndeadImplanter
   name: undead implanter
   description: brains
-  parent: Implanter
+  parent: BaseImplantOnlyImplanter
   components:
     - type: ItemSlots
       slots:
@@ -57,7 +84,7 @@
   id: SadTromboneImplanter
   name: sad trombone implanter
   description: HONK
-  parent: Implanter
+  parent: BaseImplantOnlyImplanter
   components:
     - type: ItemSlots
       slots:
@@ -72,7 +99,7 @@
   id: LightImplanter
   name: light implanter
   description: so bright... but why
-  parent: Implanter
+  parent: BaseImplantOnlyImplanter
   components:
     - type: ItemSlots
       slots:
@@ -87,7 +114,7 @@
   id: TrackingImplanter
   name: tracking implanter
   description: CIA
-  parent: Implanter
+  parent: BaseImplantOnlyImplanter
   components:
     - type: ItemSlots
       slots:
@@ -102,7 +129,7 @@
   id: StorageImplanter
   name: storage implanter
   description: bag
-  parent: Implanter
+  parent: BaseImplantOnlyImplanter
   components:
     - type: ItemSlots
       slots:
@@ -117,7 +144,7 @@
   id: MicroBombImplanter
   name: micro bomb implanter
   description: boom
-  parent: Implanter
+  parent: BaseImplantOnlyImplanter
   components:
     - type: ItemSlots
       slots:
@@ -132,7 +159,7 @@
   id: MacroBombImplanter
   name: macro bomb implanter
   description: bigger bomb
-  parent: Implanter
+  parent: BaseImplantOnlyImplanter
   components:
     - type: ItemSlots
       slots:

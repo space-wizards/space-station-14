@@ -23,6 +23,7 @@ public sealed class ImplanterSystem : SharedImplanterSystem
 
         component.CurrentMode = state.CurrentMode;
         component.NumberOfEntities = state.NumberOfEntities;
+        component.ImplantOnly = state.ImplantOnly;
         component.UiUpdateNeeded = true;
     }
 

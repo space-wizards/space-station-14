@@ -16,16 +16,30 @@ public abstract class SharedImplanterSystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<ImplanterComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
+
+    }
+
+    private void OnEntInserted(EntityUid uid, ImplanterComponent component, EntInsertedIntoContainerMessage args)
+    {
+        component.NumberOfEntities = args.Container.ContainedEntities.Count;
+        var implantData = EntityManager.GetComponent<MetaDataComponent>(args.Entity);
+        component.ImplantData = (implantData.EntityName, implantData.EntityDescription);
+    }
+
+    private void OnStartup(EntityUid uid, ImplanterComponent component, ComponentStartup args)
+    {
+
     }
 
     //Instantly implant something and add all necessary components and containers.
     //Set to draw mode if not implant only
     public void Implant(EntityUid implanter, EntityUid target, ImplanterComponent component)
     {
-        if (!_container.TryGetContainer(implanter, ImplanterSlotId, out var container))
+        if (!_container.TryGetContainer(implanter, ImplanterSlotId, out var implanterContainer))
             return;
 
-        var implant = container.ContainedEntities.FirstOrDefault();
+        var implant = implanterContainer.ContainedEntities.FirstOrDefault();
 
         if (!TryComp<SubdermalImplantComponent>(implant, out var implantComp))
             return;
@@ -36,12 +50,17 @@ public abstract class SharedImplanterSystem : EntitySystem
 
         var implantContainer = _container.EnsureContainer<Container>(target, ImplantSlotId);
         implantComp.EntityUid = target;
-        container.Remove(implant);
+        implanterContainer.Remove(implant);
+        component.NumberOfEntities = implanterContainer.ContainedEntities.Count;
         implantContainer.OccludesLight = false;
         implantContainer.Insert(implant);
 
+
         if (component.CurrentMode == ImplanterToggleMode.Inject && !component.ImplantOnly)
             DrawMode(component);
+
+        else
+            ImplantMode(component);
 
         Dirty(component);
     }
@@ -62,13 +81,13 @@ public abstract class SharedImplanterSystem : EntitySystem
             implantContainer.Remove(implant);
             implantComp.EntityUid = null;
             implanterContainer.Insert(implant);
+            component.NumberOfEntities = implanterContainer.ContainedEntities.Count;
 
             if (component.CurrentMode == ImplanterToggleMode.Draw && !component.ImplantOnly)
                 ImplantMode(component);
         }
     }
 
-    //TODO: Remove both of these when surgery is in, this should really be inject only
     private void ImplantMode(ImplanterComponent component)
     {
         component.CurrentMode = ImplanterToggleMode.Inject;
@@ -86,10 +105,16 @@ public abstract class SharedImplanterSystem : EntitySystem
         if (!TryComp<AppearanceComponent>(component.Owner, out var appearance))
             return;
 
-        if (component.CurrentMode == ImplanterToggleMode.Inject)
-            _appearance.SetData(component.Owner, ImplanterVisuals.Full, true, appearance);
+        if (component.CurrentMode == ImplanterToggleMode.Inject && !component.ImplantOnly)
+            _appearance.SetData(component.Owner, ImplanterVisuals.Full, component.NumberOfEntities, appearance);
+
+        else if (component.CurrentMode == ImplanterToggleMode.Inject && component.ImplantOnly)
+        {
+            _appearance.SetData(component.Owner, ImplanterVisuals.Full, component.NumberOfEntities, appearance);
+            _appearance.SetData(component.Owner, ImplanterImplantOnlyVisuals.ImplantOnly, component.ImplantOnly, appearance);
+        }
 
         else
-            _appearance.SetData(component.Owner, ImplanterVisuals.Full, false, appearance);
+            _appearance.SetData(component.Owner, ImplanterVisuals.Full, component.NumberOfEntities, appearance);
     }
 }
