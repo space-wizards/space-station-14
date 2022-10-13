@@ -14,13 +14,10 @@ internal sealed class ChargerSystem : EntitySystem
 {
     [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
     [Dependency] private readonly PowerCellSystem _cellSystem = default!;
-    [Dependency] private readonly IEntityManager _entMan = default!;
     [Dependency] private readonly SharedAppearanceSystem _sharedAppearanceSystem = default!;
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<ChargerComponent, ComponentInit>(OnChargerInit);
-        SubscribeLocalEvent<ChargerComponent, ComponentRemove>(OnChargerRemove);
         SubscribeLocalEvent<ChargerComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<ChargerComponent, EntInsertedIntoContainerMessage>(OnInserted);
         SubscribeLocalEvent<ChargerComponent, EntRemovedFromContainerMessage>(OnRemoved);
@@ -37,22 +34,16 @@ internal sealed class ChargerSystem : EntitySystem
     {
         foreach (var comp in EntityManager.EntityQuery<ChargerComponent>())
         {
-            if (comp.Status == CellChargerStatus.Empty || comp.Status == CellChargerStatus.Charged || !comp.ChargerSlot.HasItem)
+            if (!_itemSlotsSystem.TryGetSlotById(comp.Owner, comp.SlotId, out ItemSlot? slot))
+                continue;
+
+            if (comp.Status == CellChargerStatus.Empty || comp.Status == CellChargerStatus.Charged || !slot.HasItem)
                 continue;
 
             TransferPower(comp.Owner, comp, frameTime);
         }
     }
-    private void OnChargerInit(EntityUid uid, ChargerComponent component, ComponentInit args)
-    {
-        _itemSlotsSystem.AddItemSlot(uid, "charger-slot", component.ChargerSlot);
-    }
-
-    private void OnChargerRemove(EntityUid uid, ChargerComponent component, ComponentRemove args)
-    {
-        _itemSlotsSystem.RemoveItemSlot(uid, component.ChargerSlot);
-    }
-
+    
     private void OnPowerChanged(EntityUid uid, ChargerComponent component, PowerChangedEvent args)
     {
         UpdateStatus(uid, component);
@@ -63,7 +54,7 @@ internal sealed class ChargerSystem : EntitySystem
         if (!component.Initialized)
             return;
 
-        if (args.Container.ID != component.ChargerSlot.ID)
+        if (args.Container.ID != component.SlotId)
             return;
 
         // try get a battery directly on the inserted entity
@@ -78,7 +69,7 @@ internal sealed class ChargerSystem : EntitySystem
 
     private void OnRemoved(EntityUid uid, ChargerComponent component, EntRemovedFromContainerMessage args)
     {
-        if (args.Container.ID != component.ChargerSlot.ID)
+        if (args.Container.ID != component.SlotId)
             return;
 
         UpdateStatus(uid, component);
@@ -92,7 +83,7 @@ internal sealed class ChargerSystem : EntitySystem
         if (!component.Initialized)
             return;
 
-        if (args.Container.ID != component.ChargerSlot.ID)
+        if (args.Container.ID != component.SlotId)
             return;
 
         if (!TryComp(args.EntityUid, out PowerCellSlotComponent? cellSlot))
@@ -109,6 +100,9 @@ internal sealed class ChargerSystem : EntitySystem
             return;
 
         if (!TryComp(uid, out AppearanceComponent? appearance))
+            return;
+
+        if (!_itemSlotsSystem.TryGetSlotById(uid, component.SlotId, out ItemSlot? slot))
             return;
 
         component.Status = status;
@@ -135,7 +129,7 @@ internal sealed class ChargerSystem : EntitySystem
                 throw new ArgumentOutOfRangeException();
         }
 
-        _sharedAppearanceSystem.SetData(uid, CellVisual.Occupied, component.ChargerSlot.HasItem);
+        _sharedAppearanceSystem.SetData(uid, CellVisual.Occupied, slot.HasItem);
     }
 
     private CellChargerStatus GetStatus(EntityUid uid, ChargerComponent component)
@@ -152,7 +146,10 @@ internal sealed class ChargerSystem : EntitySystem
         if (!apcPowerReceiverComponent.Powered)
             return CellChargerStatus.Off;
 
-        if (!component.ChargerSlot.HasItem)
+        if (!_itemSlotsSystem.TryGetSlotById(uid, component.SlotId, out ItemSlot? slot))
+            return CellChargerStatus.Off;
+
+        if (!slot.HasItem)
             return CellChargerStatus.Empty;
 
         if (component.HeldBattery != null && Math.Abs(component.HeldBattery.MaxCharge - component.HeldBattery.CurrentCharge) < 0.01)

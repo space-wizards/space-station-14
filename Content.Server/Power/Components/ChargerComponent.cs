@@ -12,10 +12,12 @@ namespace Content.Server.Power.Components
         [ViewVariables]
         public CellChargerStatus Status;
 
+        [ViewVariables]
         [DataField("chargeRate")]
         public int ChargeRate = 20;
 
-        [DataField("chargerSlot", required: true)]
-        public ItemSlot ChargerSlot = new();
+        [ViewVariables]
+        [DataField("slotId", required: true)]
+        public string SlotId = string.Empty;
     }
 }
