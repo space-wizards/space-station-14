@@ -121,7 +121,7 @@
         
 - type: entity
   id: FirelockGlass
-  parent: BaseFirelock
+  parent: Firelock
   name: glass firelock
   components:
     - type: Sprite
@@ -140,6 +140,8 @@
         - GlassAirlockLayer
     - type: Door
       occludes: false
+    - type: Construction
+      node: FirelockGlass
 
 - type: entity
   id: FirelockEdge
