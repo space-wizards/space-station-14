@@ -12,11 +12,23 @@
     - type: Implanter
     - type: Sprite
       sprite: Objects/Specific/Chemistry/syringe.rsi
-      state: "syringe_base0"
       netsync: false
+      state: syringe_base0
+      layers:
+        - state: syringe4
+          map: [ "implantFull" ]
+          visible: false
+        - state: syringe_base0
     - type: Item
       sprite: Objects/Specific/Chemistry/syringe.rsi
       heldPrefix: 0
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.ImplanterVisuals.Full:
+          implantFull:
+            True: {visible: true}
+            False: {visible: false}
 
 - type: entity
   id: Implanter

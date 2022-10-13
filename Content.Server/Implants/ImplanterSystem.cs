@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Linq;
+using System.Threading;
 using Content.Server.DoAfter;
 using Content.Server.Guardian;
 using Content.Server.Popups;
@@ -8,6 +9,8 @@ using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
 using Content.Shared.MobState.Components;
+using Robust.Server.Containers;
+using Robust.Shared.GameStates;
 using Robust.Shared.Player;
 
 namespace Content.Server.Implants;
@@ -23,8 +26,11 @@ public sealed class ImplanterSystem : SharedImplanterSystem
 
         SubscribeLocalEvent<ImplanterComponent, HandDeselectedEvent>(OnHandDeselect);
         SubscribeLocalEvent<ImplanterComponent, AfterInteractEvent>(OnImplanterAfterInteract);
+        SubscribeLocalEvent<ImplanterComponent, ComponentGetState>(OnImplanterGetState);
+
         SubscribeLocalEvent<ImplanterComponent, ImplanterCompleteEvent>(OnImplantAttemptSuccess);
         SubscribeLocalEvent<ImplanterComponent, ImplanterCancelledEvent>(OnImplantAttemptFail);
+
     }
 
     private void OnImplanterAfterInteract(EntityUid uid, ImplanterComponent component, AfterInteractEvent args)
@@ -45,7 +51,7 @@ public sealed class ImplanterSystem : SharedImplanterSystem
 
         //Implant self instantly, otherwise try to inject the target.
         if (args.User == args.Target)
-            Implant(uid, args.Target.Value);
+            Implant(uid, args.Target.Value, component);
 
         else
             TryImplant(component, args.User, args.Target.Value, uid);
@@ -55,8 +61,8 @@ public sealed class ImplanterSystem : SharedImplanterSystem
 
     private void OnHandDeselect(EntityUid uid, ImplanterComponent component, HandDeselectedEvent args)
     {
-        //TODO: Cancel inject attempt on others
-        //TODO: move to server since it'll need to interact with doafter
+        component.CancelToken?.Cancel();
+        component.CancelToken = null;
     }
 
     //Attempt to implant someone else
@@ -80,10 +86,15 @@ public sealed class ImplanterSystem : SharedImplanterSystem
         });
     }
 
+    private void OnImplanterGetState(EntityUid uid, ImplanterComponent component, ref ComponentGetState args)
+    {
+        args.State = new ImplanterComponentState(component.CurrentMode);
+    }
+
     private void OnImplantAttemptSuccess(EntityUid uid, ImplanterComponent component, ImplanterCompleteEvent args)
     {
         component.CancelToken = null;
-        Implant(args.Implanter, args.Target);
+        Implant(args.Implanter, args.Target, component);
     }
 
     private void OnImplantAttemptFail(EntityUid uid, ImplanterComponent component, ImplanterCancelledEvent args)

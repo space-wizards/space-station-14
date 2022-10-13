@@ -5,6 +5,8 @@ namespace Content.Shared.Implants.Components;
 [RegisterComponent]
 public sealed class SubdermalImplantComponent : Component
 {
+    //TODO: Look into the implant action and see how to get it properly working.
+
     /// <summary>
     /// Used where you want the implant to grant the owner an instant action.
     /// </summary>
@@ -17,7 +19,5 @@ public sealed class SubdermalImplantComponent : Component
     /// </summary>
     public EntityUid? EntityUid;
 
-    //TODO: Add logic for passive actions (IE tracking implant)
-
-    //TODO: Add logic for reactive actions (IE macro bomb on death)
+    //TODO: Add things like unremoveable implant checks
 }
