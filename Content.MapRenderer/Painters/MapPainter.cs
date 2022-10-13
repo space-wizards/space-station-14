@@ -24,7 +24,12 @@ namespace Content.MapRenderer.Painters
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings(){ Map = map });
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
+            {
+                Fresh = true,
+                Map = map
+            });
+
             var server = pairTracker.Pair.Server;
             var client = pairTracker.Pair.Client;
 
@@ -64,7 +69,8 @@ namespace Content.MapRenderer.Painters
                     sEntityManager.DeleteEntity(playerEntity.Value);
                 }
 
-                grids = sMapManager.GetAllMapGrids(new MapId(1)).ToArray();
+                var mapId = sMapManager.GetAllMapIds().Last();
+                grids = sMapManager.GetAllMapGrids(mapId).ToArray();
 
                 foreach (var grid in grids)
                 {
@@ -107,9 +113,11 @@ namespace Content.MapRenderer.Painters
                     gridCanvas.Mutate(e => e.Flip(FlipMode.Vertical));
                 });
 
-                var renderedImage = new RenderedGridImage<Rgba32>(gridCanvas);
-                renderedImage.GridUid = grid.GridEntityId;
-                renderedImage.Offset = grid.WorldPosition;
+                var renderedImage = new RenderedGridImage<Rgba32>(gridCanvas)
+                {
+                    GridUid = grid.GridEntityId,
+                    Offset = grid.WorldPosition
+                };
 
                 yield return renderedImage;
             }

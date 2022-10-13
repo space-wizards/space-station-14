@@ -16,7 +16,6 @@
     damage:
       types:
         Piercing: 10
-    range: 1.5
     angle: 0
     animation: WeaponArcThrust
   - type: DamageOtherOnHit

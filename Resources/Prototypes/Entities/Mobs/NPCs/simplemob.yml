@@ -69,6 +69,7 @@
           -0.25
   - type: Damageable
     damageContainer: Biological
+  - type: RadiationReceiver
   - type: AtmosExposed
   - type: Flammable
     fireSpread: true
@@ -117,7 +118,6 @@
   - type: Examiner
   - type: MeleeWeapon
     hidden: true
-    range: 1.5
     angle: 0
     animation: WeaponArcBite
     damage:

@@ -26,7 +26,6 @@ namespace Content.Client.Administration.Systems
             base.Initialize();
 
             InitializeOverlay();
-            InitializeMenu();
             SubscribeNetworkEvent<FullPlayerListEvent>(OnPlayerListChanged);
             SubscribeNetworkEvent<PlayerInfoChangedEvent>(OnPlayerInfoChanged);
             SubscribeNetworkEvent<RoundRestartCleanupEvent>(OnRoundRestartCleanup);

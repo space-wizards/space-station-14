@@ -58,6 +58,8 @@
       type: WiresBoundUserInterface
   - type: Airtight
     fixVacuum: true
+  - type: RadiationBlocker
+    resistance: 2
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -108,6 +110,8 @@
     enabled: false
   - type: Airtight
     airBlocked: false
+  - type: RadiationBlocker
+    enabled: false
   - type: Construction
     graph: Shutters
     node: Shutters
@@ -151,6 +155,8 @@
     canCollide: false
   - type: Airtight
     airBlocked: false
+  - type: RadiationBlocker
+    enabled: false
 
 - type: entity
   id: ShuttersWindow
@@ -186,6 +192,8 @@
     canCollide: false
   - type: Airtight
     airBlocked: false
+  - type: RadiationBlocker
+    enabled: false
 
 # Frame for construction
 - type: entity
