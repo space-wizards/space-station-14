@@ -1,0 +1,19 @@
+﻿- type: body
+  id: Primate
+  name: "primate"
+  slots:
+    torso: TorsoAnimal
+    legs: LegsAnimal
+    feet: FeetAnimal
+  connections:
+    torso:
+      - legs
+    legs:
+      - feet
+  organs:
+    - torso:
+        - OrganAnimalLungs
+        - OrganAnimalStomach
+        - OrganAnimalLiver
+        - OrganAnimalHeart
+        - OrganAnimalKidneys
