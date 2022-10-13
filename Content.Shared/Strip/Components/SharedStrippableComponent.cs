@@ -44,11 +44,8 @@ namespace Content.Shared.Strip.Components
     [NetSerializable, Serializable]
     public sealed class StrippingEnsnareButtonPressed : BoundUserInterfaceMessage
     {
-        public EntityUid Ensnare { get; }
-
-        public StrippingEnsnareButtonPressed(EntityUid ensnare)
+        public StrippingEnsnareButtonPressed()
         {
-            Ensnare = ensnare;
         }
     }
 

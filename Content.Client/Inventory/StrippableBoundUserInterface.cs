@@ -2,8 +2,10 @@ using Content.Client.Cuffs.Components;
 using Content.Client.Examine;
 using Content.Client.Hands;
 using Content.Client.Strip;
+using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Hands.Controls;
+using Content.Shared.Ensnaring.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Input;
@@ -29,7 +31,6 @@ namespace Content.Client.Inventory
         
         [Dependency] private readonly IPrototypeManager _protoMan = default!;
         [Dependency] private readonly IEntityManager _entMan = default!;
-        [Dependency] private readonly IResourceCache _resourceCache = default!;
         private ExamineSystem _examine = default!;
         private InventorySystem _inv = default!;
 
@@ -44,7 +45,8 @@ namespace Content.Client.Inventory
             IoCManager.InjectDependencies(this);
             _examine = _entMan.EntitySysManager.GetEntitySystem<ExamineSystem>();
             _inv = _entMan.EntitySysManager.GetEntitySystem<InventorySystem>();
-            _strippingMenu = new StrippingMenu($"{Loc.GetString("strippable-bound-user-interface-stripping-menu-title", ("ownerName", Identity.Name(Owner.Owner, _entMan)))}");
+            var title = Loc.GetString("strippable-bound-user-interface-stripping-menu-title", ("ownerName", Identity.Name(Owner.Owner, _entMan)));
+            _strippingMenu = new StrippingMenu(title, this);
             _strippingMenu.OnClose += Close;
             _virtualHiddenEntity = _entMan.SpawnEntity(HiddenPocketEntityId, MapCoordinates.Nullspace);
         }
@@ -52,8 +54,7 @@ namespace Content.Client.Inventory
         protected override void Open()
         {
             base.Open();
-            UpdateMenu();
-            _strippingMenu?.OpenCentered();
+            _strippingMenu?.OpenCenteredLeft();
         }
 
         protected override void Dispose(bool disposing)
@@ -66,6 +67,12 @@ namespace Content.Client.Inventory
                 return;
 
             _strippingMenu?.Dispose();
+        }
+
+        public void DirtyMenu()
+        {
+            if (_strippingMenu != null)
+                _strippingMenu.Dirty = true;
         }
 
         public void UpdateMenu()
@@ -112,6 +119,20 @@ namespace Content.Client.Inventory
                 }
             }
 
+            // snare-removal button. This is just the old button before the change to item slots. It is pretty out of place.
+            if (_entMan.TryGetComponent(Owner.Owner, out SharedEnsnareableComponent? snare) && snare.IsEnsnared)
+            {
+                var button = new Button()
+                {
+                    Text = Loc.GetString("strippable-bound-user-interface-stripping-menu-ensnare-button"),
+                    StyleClasses = { StyleBase.ButtonOpenRight }
+                };
+
+                button.OnPressed += (_) => SendMessage(new StrippingEnsnareButtonPressed());
+
+                _strippingMenu.SnareContainer.AddChild(button);
+            }
+
             // TODO fix layout container measuring (its broken atm).
             // _strippingMenu.InvalidateMeasure();
             // _strippingMenu.Contents.Measure(Vector2.Infinity);
@@ -121,7 +142,7 @@ namespace Content.Client.Inventory
             // for now: shit-code
             // this breaks for drones (too many hands, lots of empty vertical space), and looks shit for monkeys and the like.
             // but the window is realizable, so eh.
-            _strippingMenu.SetSize = (220, 529);
+            _strippingMenu.SetSize = (220, snare?.IsEnsnared == true ? 550 : 530);
         }
 
         private void AddHandButton(Hand hand)
@@ -136,9 +157,6 @@ namespace Content.Client.Inventory
                 if (_entMan.TryGetComponent(Owner.Owner, out CuffableComponent? cuff) && cuff.Container.Contains(virt.BlockingEntity))
                     button.BlockedRect.MouseFilter = MouseFilterMode.Ignore;
             }
-
-            // todo add restraiunt remove button
-            //StrippingEnsnareButtonPressed
             
             UpdateEntityIcon(button, hand.HeldEntity);
             _strippingMenu!.HandsContainer.AddChild(button);

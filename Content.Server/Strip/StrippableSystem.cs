@@ -1,26 +1,20 @@
-using System.Threading;
 using Content.Server.Cuffs.Components;
 using Content.Server.DoAfter;
 using Content.Server.Ensnaring;
 using Content.Server.Ensnaring.Components;
 using Content.Server.Hands.Components;
-using Content.Server.Inventory;
-using Content.Server.UserInterface;
-using Content.Shared.Ensnaring.Components;
+using Content.Shared.CombatMode;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
-using Content.Shared.Inventory.Events;
 using Content.Shared.Popups;
 using Content.Shared.Strip.Components;
 using Content.Shared.Verbs;
-using Content.Shared.CombatMode;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
-using Content.Shared.Cuffs.Components;
+using System.Threading;
 
 namespace Content.Server.Strip
 {
@@ -30,7 +24,6 @@ namespace Content.Server.Strip
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-        [Dependency] private readonly IPrototypeManager _protoMan = default!;
         [Dependency] private readonly EnsnareableSystem _ensnaring = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
 
@@ -44,22 +37,17 @@ namespace Content.Server.Strip
 
             // BUI
             SubscribeLocalEvent<StrippableComponent, StrippingSlotButtonPressed>(OnStripButtonPressed);
-            SubscribeLocalEvent<StrippableComponent, StrippingEnsnareButtonPressed>(OnStripEnsnareMessage);
+            SubscribeLocalEvent<EnsnareableComponent, StrippingEnsnareButtonPressed>(OnStripEnsnareMessage);
         }
 
-        private void OnStripEnsnareMessage(EntityUid uid, StrippableComponent component, StrippingEnsnareButtonPressed args)
+        private void OnStripEnsnareMessage(EntityUid uid, EnsnareableComponent component, StrippingEnsnareButtonPressed args)
         {
             if (args.Session.AttachedEntity is not {Valid: true} user)
                 return;
 
-            var ensnareQuery = GetEntityQuery<EnsnareableComponent>();
-
-            foreach (var entity in ensnareQuery.GetComponent(uid).Container.ContainedEntities)
+            foreach (var entity in component.Container.ContainedEntities)
             {
                 if (!TryComp<EnsnaringComponent>(entity, out var ensnaring))
-                    continue;
-
-                if (entity != args.Ensnare)
                     continue;
 
                 _ensnaring.TryFree(component.Owner, ensnaring, user);
