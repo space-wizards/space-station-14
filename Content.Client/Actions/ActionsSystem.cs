@@ -34,6 +34,7 @@ namespace Content.Client.Actions
         public event Action<ActionType>? ActionAdded;
         public event Action<ActionType>? ActionRemoved;
         public event OnActionReplaced? ActionReplaced;
+        public event Action? ActionsUpdated;
         public event Action<ActionsComponent>? LinkActions;
         public event Action? UnlinkActions;
         public event Action? ClearAssignments;
@@ -95,6 +96,8 @@ namespace Content.Client.Actions
             {
                 ActionAdded?.Invoke(action);
             }
+
+            ActionsUpdated?.Invoke();
         }
 
         protected override void AddActionInternal(ActionsComponent comp, ActionType action)
