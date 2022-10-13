@@ -1,9 +1,4 @@
 Entries:
-- author: Deahaka
-  changes:
-  - {message: Added hospital curtains, type: Add}
-  id: 1938
-  time: '2022-07-14T11:53:17.0000000+00:00'
 - author: Rane
   changes:
   - {message: Fixed blinding., type: Fix}
@@ -2940,3 +2935,8 @@ Entries:
       use it.', type: Fix}
   id: 2437
   time: '2022-10-13T01:21:36.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: The changelog button in the escape menu now functions again., type: Fix}
+  id: 2438
+  time: '2022-10-13T01:25:45.0000000+00:00'
