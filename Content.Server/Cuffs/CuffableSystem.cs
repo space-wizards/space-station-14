@@ -73,6 +73,8 @@ namespace Content.Server.Cuffs
                 return;
             }
 
+            // TODO these messages really need third-party variants. I.e., "{$user} starts cuffing {$target}!"
+
             if (component.Broken)
             {
                 _popup.PopupEntity(Loc.GetString("handcuff-component-cuffs-broken-error"), args.User, Filter.Entities(args.User));
@@ -104,7 +106,7 @@ namespace Content.Server.Cuffs
             else
             {
                 _popup.PopupEntity(Loc.GetString("handcuff-component-start-cuffing-target-message",("targetName", args.Target)), args.User, Filter.Entities(args.User));
-                _popup.PopupEntity(Loc.GetString("handcuff-component-start-cuffing-by-other-message",("otherName", args.User)), target, Filter.Entities(args.User));
+                _popup.PopupEntity(Loc.GetString("handcuff-component-start-cuffing-by-other-message",("otherName", args.User)), target, Filter.Entities(args.Target));
             }
 
             _audio.PlayPvs(component.StartCuffSound, uid);

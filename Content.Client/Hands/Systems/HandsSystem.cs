@@ -1,11 +1,6 @@
-using System.Diagnostics.CodeAnalysis;
 using Content.Client.Animations;
 using Content.Client.Examine;
-using Content.Client.Hands.UI;
-using Content.Client.HUD;
 using Content.Client.Strip;
-using Content.Client.Verbs;
-using Content.Client.Examine;
 using Content.Client.Verbs;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
@@ -18,6 +13,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Client.Hands.Systems
 {
@@ -244,6 +240,7 @@ namespace Content.Client.Hands.Systems
             if (!handComp.Hands.TryGetValue(args.Container.ID, out var hand))
                 return;
             UpdateHandVisuals(uid, args.Entity, hand);
+            _stripSys.UpdateUi(uid);
 
             if (uid != _playerManager.LocalPlayer?.ControlledEntity)
                 return;
@@ -259,6 +256,7 @@ namespace Content.Client.Hands.Systems
             if (!handComp.Hands.TryGetValue(args.Container.ID, out var hand))
                 return;
             UpdateHandVisuals(uid, args.Entity, hand);
+            _stripSys.UpdateUi(uid);
 
             if (uid != _playerManager.LocalPlayer?.ControlledEntity)
                 return;

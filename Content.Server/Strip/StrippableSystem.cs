@@ -20,6 +20,7 @@ using Content.Shared.CombatMode;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Content.Shared.Cuffs.Components;
 
 namespace Content.Server.Strip
 {
@@ -40,33 +41,10 @@ namespace Content.Server.Strip
             base.Initialize();
 
             SubscribeLocalEvent<StrippableComponent, GetVerbsEvent<Verb>>(AddStripVerb);
-            SubscribeLocalEvent<StrippableComponent, GetVerbsEvent<ExamineVerb>>(AddExamineVerb);
-            SubscribeLocalEvent<StrippableComponent, DidEquipEvent>(OnDidEquip);
-            SubscribeLocalEvent<StrippableComponent, DidUnequipEvent>(OnDidUnequip);
-            SubscribeLocalEvent<StrippableComponent, ComponentInit>(OnCompInit);
-            SubscribeLocalEvent<StrippableComponent, CuffedStateChangeEvent>(OnCuffStateChange);
-            SubscribeLocalEvent<StrippableComponent, EnsnaredChangedEvent>(OnEnsnareChange);
 
             // BUI
-            SubscribeLocalEvent<StrippableComponent, StrippingInventoryButtonPressed>(OnStripInvButtonMessage);
-            SubscribeLocalEvent<StrippableComponent, StrippingHandButtonPressed>(OnStripHandMessage);
-            SubscribeLocalEvent<StrippableComponent, StrippingHandcuffButtonPressed>(OnStripHandcuffMessage);
+            SubscribeLocalEvent<StrippableComponent, StrippingSlotButtonPressed>(OnStripButtonPressed);
             SubscribeLocalEvent<StrippableComponent, StrippingEnsnareButtonPressed>(OnStripEnsnareMessage);
-        }
-        private void OnStripHandcuffMessage(EntityUid uid, StrippableComponent component, StrippingHandcuffButtonPressed args)
-        {
-            if (args.Session.AttachedEntity is not { Valid: true } user)
-                return;
-
-            if (TryComp<CuffableComponent>(component.Owner, out var cuffed))
-            {
-                foreach (var entity in cuffed.StoredEntities)
-                {
-                    if (entity != args.Handcuff) continue;
-                    cuffed.TryUncuff(user, entity);
-                    return;
-                }
-            }
         }
 
         private void OnStripEnsnareMessage(EntityUid uid, StrippableComponent component, StrippingEnsnareButtonPressed args)
@@ -89,27 +67,17 @@ namespace Content.Server.Strip
             }
         }
 
-        private void OnStripHandMessage(EntityUid uid, StrippableComponent component, StrippingHandButtonPressed args)
+        private void OnStripButtonPressed(EntityUid uid, StrippableComponent component, StrippingSlotButtonPressed args)
         {
             if (args.Session.AttachedEntity is not {Valid: true} user ||
                 !TryComp<HandsComponent>(user, out var userHands))
                 return;
 
-            if (!TryComp<HandsComponent>(component.Owner, out var hands) || !hands.Hands.TryGetValue(args.Hand, out var hand))
+            if (args.IsHand)
+            {
+                StripHand(uid, user, args.Slot, component,  userHands);
                 return;
-
-            if (hand.IsEmpty && userHands.ActiveHandEntity != null)
-                PlaceActiveHandItemInHands(user, args.Hand, component);
-            else if (!hand.IsEmpty && userHands.ActiveHandEntity == null)
-                TakeItemFromHands(user, args.Hand, component);
-            
-        }
-
-        private void OnStripInvButtonMessage(EntityUid uid, StrippableComponent component, StrippingInventoryButtonPressed args)
-        {
-            if (args.Session.AttachedEntity is not {Valid: true} user ||
-                !TryComp<HandsComponent>(user, out var userHands))
-                return;
+            }
 
             if (!TryComp<InventoryComponent>(component.Owner, out var inventory))
                 return;
@@ -120,6 +88,27 @@ namespace Content.Server.Strip
                 PlaceActiveHandItemInInventory(user, args.Slot, component);
             else if (userHands.ActiveHandEntity == null && hasEnt)
                 TakeItemFromInventory(user, args.Slot, component);
+        }
+
+        private void StripHand(EntityUid target, EntityUid user, string handId, StrippableComponent component, HandsComponent userHands)
+        {
+            if (!TryComp<HandsComponent>(target, out var targetHands)
+                || !targetHands.Hands.TryGetValue(handId, out var hand))
+                return;
+
+            // is the target a handcuff?
+            if (TryComp(hand.HeldEntity, out HandVirtualItemComponent? virt)
+                && TryComp(target, out CuffableComponent? cuff)
+                && cuff.Container.Contains(virt.BlockingEntity))
+            {
+                cuff.TryUncuff(user, virt.BlockingEntity);
+                return;
+            }
+
+            if (hand.IsEmpty && userHands.ActiveHandEntity != null)
+                PlaceActiveHandItemInHands(user, handId, component);
+            else if (!hand.IsEmpty && userHands.ActiveHandEntity == null)
+                TakeItemFromHands(user, handId, component);
         }
 
         public void StartOpeningStripper(EntityUid user, StrippableComponent component, bool openInCombat = false)

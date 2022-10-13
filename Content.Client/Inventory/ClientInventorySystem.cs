@@ -34,8 +34,6 @@ namespace Content.Client.Inventory
         public Action? OnUnlinkInventory = null;
         public Action<SlotSpriteUpdate>? OnSpriteUpdate = null;
 
-        public const string StorageTexture = "back.png";
-
         private readonly Queue<(ClientInventoryComponent comp, EntityEventArgs args)> _equipEventsQueue = new();
 
         public override void Initialize()

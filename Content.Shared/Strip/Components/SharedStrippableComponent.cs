@@ -28,35 +28,16 @@ namespace Content.Shared.Strip.Components
     }
 
     [NetSerializable, Serializable]
-    public sealed class StrippingInventoryButtonPressed : BoundUserInterfaceMessage
+    public sealed class StrippingSlotButtonPressed : BoundUserInterfaceMessage
     {
-        public string Slot { get; }
+        public readonly string Slot;
 
-        public StrippingInventoryButtonPressed(string slot)
+        public readonly bool IsHand;
+
+        public StrippingSlotButtonPressed(string slot, bool isHand)
         {
             Slot = slot;
-        }
-    }
-
-    [NetSerializable, Serializable]
-    public sealed class StrippingHandButtonPressed : BoundUserInterfaceMessage
-    {
-        public string Hand { get; }
-
-        public StrippingHandButtonPressed(string hand)
-        {
-            Hand = hand;
-        }
-    }
-
-    [NetSerializable, Serializable]
-    public sealed class StrippingHandcuffButtonPressed : BoundUserInterfaceMessage
-    {
-        public EntityUid Handcuff { get; }
-
-        public StrippingHandcuffButtonPressed(EntityUid handcuff)
-        {
-            Handcuff = handcuff;
+            IsHand = isHand;
         }
     }
 

@@ -1,11 +1,9 @@
 using Content.Client.Cuffs.Components;
 using Content.Client.Examine;
 using Content.Client.Hands;
-using Content.Client.Hands.UI;
-using Content.Client.HUD;
-using Content.Client.Items.UI;
-using Content.Client.Resources;
 using Content.Client.Strip;
+using Content.Client.UserInterface.Controls;
+using Content.Client.UserInterface.Systems.Hands.Controls;
 using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Input;
@@ -13,24 +11,22 @@ using Content.Shared.Inventory;
 using Content.Shared.Strip.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using static Content.Client.Inventory.ClientInventorySystem;
+using static Robust.Client.UserInterface.Control;
 
 namespace Content.Client.Inventory
 {
     [UsedImplicitly]
     public sealed class StrippableBoundUserInterface : BoundUserInterface
     {
-        private int ButtonSize => ClientInventorySystem.ButtonSize;
         private const int ButtonSeparation = 4;
-
-        private Texture BlockedTexture => _resourceCache.GetTexture(HandsGui.BlockedTexturePath);
-
-        [Dependency] private readonly IGameHud _hud = default!;
+        
         [Dependency] private readonly IPrototypeManager _protoMan = default!;
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
@@ -130,88 +126,65 @@ namespace Content.Client.Inventory
 
         private void AddHandButton(Hand hand)
         {
-            var buttonTextureName = hand.Location switch
-            {
-                HandLocation.Right => "hand_r.png",
-                _ => "hand_l.png"
-            };
+            var button = new HandButton(hand.Name, hand.Location);
 
-            var button = new HandButton(ClientInventorySystem.ButtonSize,
-                buttonTextureName,
-                ClientInventorySystem.StorageTexture,
-                _hud,
-                BlockedTexture,
-                hand.Location);
-
-            button.OnPressed += (ev) =>
-            {
-                // TODO: allow other interactions? Verbs?
-                // But they should probably generator a pop-up and/or have a delay.
-                if (ev.Function == EngineKeyFunctions.Use)
-                    SendMessage(new StrippingHandButtonPressed(hand.Name));
-                else if (ev.Function == ContentKeyFunctions.ExamineEntity && hand.HeldEntity != null)
-                    _examine.DoExamine(hand.HeldEntity.Value);
-            };
+            button.Pressed += SlotPressed;
 
             if (_entMan.TryGetComponent(hand.HeldEntity, out HandVirtualItemComponent? virt))
             {
-                button.Blocked.Visible = true;
+                button.Blocked = true;
                 if (_entMan.TryGetComponent(Owner.Owner, out CuffableComponent? cuff) && cuff.Container.Contains(virt.BlockingEntity))
-                {
-                    button.Blocked.OnKeyBindDown += (ev) =>
-                    {
-                        if (ev.Function == EngineKeyFunctions.Use)
-                            SendMessage(new StrippingHandcuffButtonPressed(virt.BlockingEntity));
-                    };
-                }
+                    button.BlockedRect.MouseFilter = MouseFilterMode.Ignore;
             }
 
             // todo add restraiunt remove button
-            StrippingEnsnareButtonPressed
-
-
+            //StrippingEnsnareButtonPressed
+            
             UpdateEntityIcon(button, hand.HeldEntity);
             _strippingMenu!.HandsContainer.AddChild(button);
         }
 
-        private void AddInventoryButton(string slotId, InventoryTemplatePrototype template, InventoryComponent inv)
+        private void SlotPressed(GUIBoundKeyEventArgs ev, SlotControl slot)
         {
-            SlotDefinition? slotDef = null;
-            foreach (var def in template.Slots)
+            // TODO: allow other interactions? Verbs? But they should then generate a pop-up and/or have a delay so the
+            // user that is being stripped can prevent the verbs from being exectuted.
+            // So for now: only stripping & examining
+            if (ev.Function == EngineKeyFunctions.Use)
             {
-                if (!def.Name.Equals(slotId)) continue;
-                slotDef = def;
-                break;
+                SendMessage(new StrippingSlotButtonPressed(slot.SlotName, slot is HandButton));
+            }
+            else if (ev.Function == ContentKeyFunctions.ExamineEntity && slot.Entity != null)
+            {
+                _examine.DoExamine(slot.Entity.Value);
+                return;
             }
 
-            if (slotDef == null)
+            if (ev.Function != EngineKeyFunctions.Use)
+                return;
+        }
+
+        private void AddInventoryButton(string slotId, InventoryTemplatePrototype template, InventoryComponent inv)
+        {
+            if (!_inv.TryGetSlotContainer(inv.Owner, slotId, out var container, out var slotDef, inv))
                 return;
 
-            _inv.TryGetSlotEntity(inv.Owner, slotId, out var entity, inv);
+            var entity = container.ContainedEntity;
 
             // If this is a full pocket, obscure the real entity
             if (entity != null && slotDef.StripHidden)
                 entity = _virtualHiddenEntity;
 
-            var button = new ItemSlotButton(ButtonSize, $"{slotDef.TextureName}.png", ClientInventorySystem.StorageTexture, _hud);
-            button.OnPressed += (ev) =>
-            {
-                // TODO: allow other interactions? Verbs?
-                // But they should probably generator a pop-up and/or have a delay.
-                if (ev.Function == EngineKeyFunctions.Use)
-                    SendMessage(new StrippingInventoryButtonPressed(slotId));
-                else if (ev.Function == ContentKeyFunctions.ExamineEntity && entity != null)
-                    _examine.DoExamine(entity.Value);
-            };
+            var button = new SlotButton(new SlotData(slotDef, container));
+            button.Pressed += SlotPressed;
 
             _strippingMenu!.InventoryContainer.AddChild(button);
 
             UpdateEntityIcon(button, entity);
 
-            LayoutContainer.SetPosition(button, slotDef.StrippingWindowPos * (ButtonSize + ButtonSeparation));
+            LayoutContainer.SetPosition(button, slotDef.StrippingWindowPos * (SlotControl.DefaultButtonSize + ButtonSeparation));
         }
 
-        private void UpdateEntityIcon(ItemSlotButton button, EntityUid? entity)
+        private void UpdateEntityIcon(SlotControl button, EntityUid? entity)
         {
             // Hovering, highlighting & storage are features of general hands & inv GUIs. This UI just re-uses these because I'm lazy.
             button.ClearHover();
