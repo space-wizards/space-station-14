@@ -6,6 +6,8 @@
   abstract: true
   components:
     - type: ItemSlots
+      slots:
+        implanter_slot:
     - containers:
         implanter_slot: !type:ContainerSlot {}
       type: ContainerContainer
