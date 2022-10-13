@@ -31,13 +31,13 @@ namespace Content.Client.TextScreen
         /// <summary>
         ///     The text to update from
         /// </summary>
-        public string ShowText = "cell1";
+        public string ShowText = "";
 
         /// <summary>
         ///     The text to show
         /// </summary>
         [DataField("text"), ViewVariables(VVAccess.ReadWrite)]
-        public string Text = "cell1";
+        public string Text = "";
 
         /// <summary>
         ///     The different layers for each character.

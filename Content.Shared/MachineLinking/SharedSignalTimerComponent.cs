@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 
 namespace Content.Shared.MachineLinking
 {
-    [NetworkedComponent]
     public abstract class SharedSignalTimerComponent : Component
     {
 
@@ -19,5 +18,54 @@ namespace Content.Shared.MachineLinking
     public enum SignalTimerUiKey
     {
         Key
+    }
+
+    /// <summary>
+    /// Represents an <see cref="SignalTimerComponent"/> state that can be sent to the client
+    /// </summary>
+    [Serializable, NetSerializable]
+    public sealed class SignalTimerBoundUserInterfaceState : BoundUserInterfaceState
+    {
+        public string CurrentText { get; }
+        public string CurrentDelayMinutes { get; }
+        public string CurrentDelaySeconds { get; }
+
+        public SignalTimerBoundUserInterfaceState(string currentText, string currentDelayMinutes, string currentDelaySeconds)
+        {
+            CurrentText = currentText;
+            CurrentDelayMinutes = currentDelayMinutes;
+            CurrentDelaySeconds = currentDelaySeconds;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class SignalTimerTextChangedMessage : BoundUserInterfaceMessage
+    {
+        public string Text { get; }
+
+        public SignalTimerTextChangedMessage(string text)
+        {
+            Text = text;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class SignalTimerDelayChangedMessage : BoundUserInterfaceMessage
+    {
+        public TimeSpan Delay { get; }
+        public SignalTimerDelayChangedMessage(TimeSpan delay)
+        {
+            Delay = delay;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class SignalTimerStartMessage : BoundUserInterfaceMessage
+    {
+        public EntityUid User { get; }
+        public SignalTimerStartMessage(EntityUid user)
+        {
+            User = user;
+        }
     }
 }

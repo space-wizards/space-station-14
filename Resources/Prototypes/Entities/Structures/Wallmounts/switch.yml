@@ -56,6 +56,12 @@
   - type: Fixtures
   - type: SignalTimer
   - type: SignalTransmitter
+  - type: ActivatableUI
+    key: enum.SignalTimerUiKey.Key
+  - type: UserInterface
+    interfaces:
+    - key: enum.SignalTimerUiKey.Key
+      type: SignalTimerBoundUserInterface
 
 - type: entity
   id: SignalButton

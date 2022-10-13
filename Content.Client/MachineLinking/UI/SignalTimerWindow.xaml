@@ -1,0 +1,18 @@
+<DefaultWindow xmlns="https://spacestation14.io"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            Title="Timer">
+    <BoxContainer Orientation="Vertical" SeparationOverride="4" MinWidth="150">
+        <BoxContainer Orientation="Horizontal">
+            <Label Name="CurrentLabel" Text="Label: " />
+            <LineEdit Name="CurrentTextEdit" MinWidth="80" />
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal">
+            <Label Name="CurrentDelay" Text="Delay: " />
+            <LineEdit Name="CurrentDelayEditMinutes" MinWidth="32" />
+            <Label Name="Colon" Text=":" />
+            <LineEdit Name="CurrentDelayEditSeconds" MinWidth="32" />
+            <Label Name="DelayInfo" Text=" (mm:ss)" />
+        </BoxContainer>
+        <Button Name="StartTimer" Text="Start" />
+    </BoxContainer>
+</DefaultWindow>

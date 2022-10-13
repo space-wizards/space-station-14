@@ -28,6 +28,9 @@ namespace Content.Server.MachineLinking.Components
         [DataField("user")]
         public EntityUid? User;
 
+        [DataField("text")]
+        public string Text = "Cell1";
+
         /// <summary>
         ///     The port that gets signaled when the timer triggers.
         /// </summary>
@@ -39,13 +42,6 @@ namespace Content.Server.MachineLinking.Components
         /// </summary>
         [DataField("startPort", customTypeSerializer: typeof(PrototypeIdSerializer<TransmitterPortPrototype>))]
         public string StartPort = "Start";
-
-        /// <summary>
-        ///     If not null, a user can use verbs to configure the delay to one of these options.
-        /// </summary>
-        /// TODO : Remove this
-        [DataField("delayOptions")]
-        public List<float>? DelayOptions = null;
 
         /// <summary>
         ///     If not null, this timer will play this sound when done.

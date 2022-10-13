@@ -26,6 +26,11 @@ using Content.Server.MachineLinking.Components;
 using Content.Shared.TextScreen;
 using Robust.Server.GameObjects;
 using Content.Shared.MachineLinking;
+using Content.Shared.Disposal.Components;
+using Content.Server.UserInterface;
+using Content.Server.Access.Components;
+using Content.Shared.Access.Components;
+using Content.Shared.Access.Systems;
 
 namespace Content.Server.MachineLinking.System
 {
@@ -39,14 +44,27 @@ namespace Content.Server.MachineLinking.System
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
-
+        [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
             SubscribeLocalEvent<SignalTimerComponent, ComponentInit>(OnInit);
-            SubscribeLocalEvent<SignalTimerComponent, ActivateInWorldEvent>(OnActivate);
+            SubscribeLocalEvent<SignalTimerComponent, ActivateInWorldEvent>(OnActivate); //TODO: Remove
+
+            SubscribeLocalEvent<SignalTimerComponent, SignalTimerTextChangedMessage>(OnTextChangedMessage);
+            SubscribeLocalEvent<SignalTimerComponent, SignalTimerDelayChangedMessage>(OnDelayChangedMessage);
+            SubscribeLocalEvent<SignalTimerComponent, SignalTimerStartMessage>(OnTimerStartMessage);
+            SubscribeLocalEvent<SignalTimerComponent, AfterActivatableUIOpenEvent>(AfterUIOpen);
+        }
+
+        private void AfterUIOpen(EntityUid uid, SignalTimerComponent component, AfterActivatableUIOpenEvent args)
+        {
+            if (!_ui.TryGetUi(component.Owner, SignalTimerUiKey.Key, out var ui))
+                return;
+
+            _ui.SetUiState(ui, new SignalTimerBoundUserInterfaceState(component.Text, TimeSpan.FromSeconds(component.Delay).Minutes.ToString("D2"), TimeSpan.FromSeconds(component.Delay).Seconds.ToString("D2")), args.Session);
         }
 
         private void OnInit(EntityUid uid, SignalTimerComponent component, ComponentInit args)
@@ -60,14 +78,13 @@ namespace Content.Server.MachineLinking.System
 
         private void OnActivate(EntityUid uid, SignalTimerComponent component, ActivateInWorldEvent args)
         {
-            component.TriggerTime = _gameTiming.CurTime + TimeSpan.FromSeconds(component.Delay);
-            component.User = args.User;
-            component.Activated = true;
+            if (!TryComp(uid, out ActorComponent? actor))
+                return;
 
-            _appearanceSystem.SetData(uid, TextScreenVisuals.Mode, TextScreenMode.Timer);
-            _appearanceSystem.SetData(uid, TextScreenVisuals.TargetTime, component.TriggerTime);
 
-            _signalSystem.InvokePort(uid, component.StartPort);
+            if (!_ui.TrySetUiState(component.Owner, SignalTimerUiKey.Key, new SignalTimerBoundUserInterfaceState(component.Text, TimeSpan.FromSeconds(component.Delay).Minutes.ToString("D2"), TimeSpan.FromSeconds(component.Delay).Seconds.ToString("D2"))))
+                Logger.DebugS("UIST", "Set UI state failed.");
+
 
             args.Handled = true;
         }
@@ -107,6 +124,30 @@ namespace Content.Server.MachineLinking.System
                     }
                 }
             }
+        }
+
+        private void OnTextChangedMessage(EntityUid uid, SignalTimerComponent component, SignalTimerTextChangedMessage args)
+        {
+            component.Text = args.Text[..Math.Min(5,args.Text.Length)];
+            _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, component.Text);
+        }
+
+        private void OnDelayChangedMessage(EntityUid uid, SignalTimerComponent component, SignalTimerDelayChangedMessage args)
+        {
+            component.Delay = args.Delay.TotalSeconds;
+        }
+
+        private void OnTimerStartMessage(EntityUid uid, SignalTimerComponent component, SignalTimerStartMessage args)
+        {
+            component.TriggerTime = _gameTiming.CurTime + TimeSpan.FromSeconds(component.Delay);
+            component.User = args.User;
+            component.Activated = true;
+
+            _appearanceSystem.SetData(uid, TextScreenVisuals.Mode, TextScreenMode.Timer);
+            _appearanceSystem.SetData(uid, TextScreenVisuals.TargetTime, component.TriggerTime);
+            _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, component.Text);
+
+            _signalSystem.InvokePort(uid, component.StartPort);
         }
     }
 }
