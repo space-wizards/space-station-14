@@ -26,8 +26,8 @@ public sealed class UpgradePowerDrawComponent : Component
     /// <summary>
     /// The multiplier used for scaling the power draw.
     /// </summary>
-    [DataField("modifier", required: true), ViewVariables(VVAccess.ReadWrite)]
-    public float Modifier = 1f;
+    [DataField("powerDrawMultiplier", required: true), ViewVariables(VVAccess.ReadWrite)]
+    public float PowerDrawMultiplier = 1f;
 
     /// <summary>
     /// What type of scaling is being used?
