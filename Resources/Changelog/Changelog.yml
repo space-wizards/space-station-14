@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Recoil has been added back in., type: Tweak}
-  id: 1940
-  time: '2022-07-14T12:01:25.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Hardsuits and outer clothing are now larger and harder to fit in bags.,
@@ -2940,3 +2935,8 @@ Entries:
   - {message: PDAs/other items can now be activated in your inventory again., type: Fix}
   id: 2439
   time: '2022-10-13T02:26:27.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed inventory button hover indicators not appearing anymore., type: Fix}
+  id: 2440
+  time: '2022-10-13T05:07:27.0000000+00:00'
