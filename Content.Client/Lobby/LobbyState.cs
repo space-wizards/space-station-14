@@ -1,17 +1,10 @@
-using System;
-using System.Linq;
-using Content.Client.Chat;
 using Content.Client.Chat.Managers;
-using Content.Client.Options.UI;
 using Content.Client.GameTicking.Managers;
 using Content.Client.LateJoin;
 using Content.Client.Lobby.UI;
 using Content.Client.Preferences;
 using Content.Client.Preferences.UI;
-using Content.Client.Resources;
-using Content.Client.UserInterface.Systems.EscapeMenu;
 using Content.Client.Voting;
-using Content.Shared.GameTicking;
 using Robust.Client;
 using Robust.Client.Console;
 using Robust.Client.Input;
@@ -20,13 +13,10 @@ using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
+using Content.Client.UserInterface.Systems.EscapeMenu;
+
 
 namespace Content.Client.Lobby
 {
@@ -74,14 +64,8 @@ namespace Content.Client.Lobby
             };
 
             LayoutContainer.SetAnchorPreset(_lobby, LayoutContainer.LayoutPreset.Wide);
-
-            _chatManager.SetChatBox(_lobby.Chat);
             _voteManager.SetPopupContainer(_lobby.VoteContainer);
-
-            _lobby.ServerName.Text = _baseClient.GameInfo?.ServerName;
-
-            ChatInput.SetupChatInputHandlers(_inputManager, _lobby.Chat);
-
+            _lobby.ServerName.Text = _baseClient.GameInfo?.ServerName; //The eye of refactor gazes upon you...
             UpdateLobbyUi();
 
             _lobby.CharacterPreview.CharacterSetupButton.OnPressed += _ =>
@@ -107,17 +91,12 @@ namespace Content.Client.Lobby
             };
 
             _lobby.LeaveButton.OnPressed += _ => _consoleHost.ExecuteCommand("disconnect");
-            _lobby.OptionsButton.OnPressed += OnOptionsPressed;
+            _lobby.OptionsButton.OnPressed += _ => _userInterfaceManager.GetUIController<OptionsUIController>().ToggleWindow();
 
 
             _gameTicker.InfoBlobUpdated += UpdateLobbyUi;
             _gameTicker.LobbyStatusUpdated += LobbyStatusUpdated;
             _gameTicker.LobbyLateJoinStatusUpdated += LobbyLateJoinStatusUpdated;
-        }
-
-        private void OnOptionsPressed(BaseButton.ButtonEventArgs obj)
-        {
-            IoCManager.Resolve<IUserInterfaceManager>().GetUIController<OptionsUIController>().ToggleWindow();
         }
 
         protected override void Shutdown()
