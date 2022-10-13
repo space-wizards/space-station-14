@@ -17,7 +17,7 @@
           state: analyzer
         name: health analyzer
         doAfter: 2
-      - prototype: ProximitySensor
+      - tag: ProximitySensor
         icon:
           sprite: Objects/Misc/proximity_sensor.rsi
           state: icon

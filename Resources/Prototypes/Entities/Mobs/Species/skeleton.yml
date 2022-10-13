@@ -22,6 +22,7 @@
       types:
         Blunt: 0
   - type: Bloodstream
+    maxBleedAmount: 0
     bloodReagent: Milk
     bloodlossDamage: #no bloodloss damage. overriding base components
       types:

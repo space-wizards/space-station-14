@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
 using BenchmarkDotNet.Attributes;
+using Robust.Shared.Analyzers;
 using Robust.Shared.Utility;
 
 namespace Content.Benchmarks
 {
     [SimpleJob]
-    public sealed class ComponentFetchBenchmark
+    [Virtual]
+    public class ComponentFetchBenchmark
     {
         [Params(5000)] public int NEnt { get; set; }
 
