@@ -286,9 +286,9 @@ namespace Content.Server.Construction
             // Transfer all construction-owned containers.
             newConstruction.Containers.UnionWith(construction.Containers);
 
-            // Prevent on-map-init spawned entities from populating in the containers Some containers get added via the
-            // ChangeGraph() step, which will not be included here. But this should be fine, as long as the target
-            // entity properly declared it's managed containers.
+            // Prevent MapInitEvent spawned entities from spawning into the containers.
+            // Containers created by ChangeNode() actions do not exist until after this function is complete,
+            // but this should be fine, as long as the target entity properly declared its managed containers.
             if (TryComp(newUid, out ContainerFillComponent? containerFill) && containerFill.IgnoreConstructionSpawn)
             {
                 foreach (var id in newConstruction.Containers)
