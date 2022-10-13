@@ -12,7 +12,7 @@
   organs:
     - torso:
         - OrganAnimalLungs
-        - OrganAnimalStomach
+        - OrganStomachAnimal
         - OrganAnimalLiver
         - OrganAnimalHeart
         - OrganAnimalKidneys

@@ -1,5 +1,5 @@
 - type: entity
-  id: SentientSlimeCore
+  id: SentientCoreSlime
   parent: BaseItem
   name: sentient slime core
   description: "The source of incredible, unending gooeyness."
@@ -25,18 +25,18 @@
         - id: Narcotic
 
 - type: entity
-  id: OrganSlimeLungs
-  parent: BaseHumanOrgan
+  id: OrganLungsSlime
+  parent: BaseOrganHuman
   name: slime gas sacs
   description: "Collects nitrogen, which slime cells use for maintenance."
   components:
-  - type: Sprite
-    layers:
-      - state: lung-l
-      - state: lung-r
-  - type: Organ
-    size: 1
-    compatibility: Biological
+    - type: Sprite
+      layers:
+        - state: lung-l
+        - state: lung-r
+    - type: Organ
+      size: 1
+      compatibility: Biological
   - type: Lung
   - type: Metabolizer
     removeEmpty: true

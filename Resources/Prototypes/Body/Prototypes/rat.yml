@@ -12,8 +12,8 @@
     - feet
   organs:
   - torso:
-    - OrganRatLungs
-    - OrganRatStomach
-    - OrganAnimalLiver
-    - OrganAnimalHeart
-    - OrganAnimalKidneys
+      - OrganLungsRat
+      - OrganStomachRat
+      - OrganAnimalLiver
+      - OrganAnimalHeart
+      - OrganAnimalKidneys

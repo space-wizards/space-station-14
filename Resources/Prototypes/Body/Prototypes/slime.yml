@@ -31,8 +31,5 @@
         - OrganBrainSlime
         - OrganEyesSlime
     - torso:
-        - OrganHeartSlime
+        - SentientCoreSlime
         - OrganLungsSlime
-        - OrganStomachSlime
-        - OrganLiverSlime
-        - OrganKidneysSlime

@@ -6,15 +6,9 @@
   parent: PartAnimal
   noSpawn: true
   components:
-  - type: BodyPart
+    - type: BodyPart
     partType: Torso
     size: 7
     compatibility: Biological
-    mechanisms:
-    - OrganRatLungs
-    - OrganRatStomach
-    - OrganAnimalLiver
-    - OrganAnimalHeart
-    - OrganAnimalKidneys
-  - type: Damageable
     damageContainer: Biological
+  - type: Damageable

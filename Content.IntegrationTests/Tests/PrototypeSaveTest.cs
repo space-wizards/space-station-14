@@ -82,12 +82,12 @@ public sealed class PrototypeSaveTest
         "MopBucket",
         "JanitorialTrolley",
         "FloorDrain",
-        "OrganHumanLungs",
+        "OrganLungsHuman",
         "SprayBottle",
-        "OrganRatLungs",
-        "SentientSlimeCore",
-        "OrganSlimeLungs",
-        "OrganVoxLungs",
+        "OrganLungsRat",
+        "SentientCoreSlime",
+        "OrganLungsSlime",
+        "OrganLungsVox",
         "OrganAnimalLungs",
         "Floodlight",
         "EmergencyMedipen",
@@ -134,7 +134,8 @@ public sealed class PrototypeSaveTest
     public async Task UninitializedSaveTest()
     {
         // Apparently SpawnTest fails to clean  up properly. Due to the similarities, I'll assume this also fails.
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true, Dirty = true, Destructive = true });
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
+            {NoClient = true, Dirty = true, Destructive = true});
         var server = pairTracker.Pair.Server;
 
         var mapManager = server.ResolveDependency<IMapManager>();
@@ -208,7 +209,9 @@ public sealed class PrototypeSaveTest
                     {
                         foreach (var (compType, comp) in prototype.Components)
                         {
-                            protoData.Add(compType, seriMan.WriteValueAs<MappingDataNode>(comp.Component.GetType(), comp.Component, context: context));
+                            protoData.Add(compType,
+                                seriMan.WriteValueAs<MappingDataNode>(comp.Component.GetType(), comp.Component,
+                                    context: context));
                         }
                     }
                     catch (Exception e)
@@ -225,7 +228,8 @@ public sealed class PrototypeSaveTest
                         var compName = compFact.GetComponentName(compType);
                         compNames.Add(compName);
 
-                        if (compType == typeof(MetaDataComponent) || compType == typeof(TransformComponent) || compType == typeof(FixturesComponent))
+                        if (compType == typeof(MetaDataComponent) || compType == typeof(TransformComponent) ||
+                            compType == typeof(FixturesComponent))
                             continue;
 
                         MappingDataNode compMapping;
@@ -235,7 +239,8 @@ public sealed class PrototypeSaveTest
                         }
                         catch (Exception e)
                         {
-                            Assert.Fail($"Failed to serialize {compName} component of entity prototype {prototype.ID}. Exception: {e.Message}");
+                            Assert.Fail(
+                                $"Failed to serialize {compName} component of entity prototype {prototype.ID}. Exception: {e.Message}");
                             continue;
                         }
 
@@ -246,7 +251,8 @@ public sealed class PrototypeSaveTest
                             if (diff != null && diff.Children.Count != 0)
                             {
                                 var modComps = string.Join(",", diff.Keys.Select(x => x.ToString()));
-                                Assert.Fail($"Prototype {prototype.ID} modifies component on spawn: {compName}. Modified fields: {modComps}");
+                                Assert.Fail(
+                                    $"Prototype {prototype.ID} modifies component on spawn: {compName}. Modified fields: {modComps}");
                             }
                         }
                         else
@@ -258,7 +264,8 @@ public sealed class PrototypeSaveTest
                     // An entity may also remove components on init -> check no components are missing.
                     foreach (var (compType, comp) in prototype.Components)
                     {
-                        Assert.That(compNames.Contains(compType), $"Prototype {prototype.ID} removes component {compType} on spawn.");
+                        Assert.That(compNames.Contains(compType),
+                            $"Prototype {prototype.ID} removes component {compType} on spawn.");
                     }
 
                     if (!entityMan.Deleted(uid))
@@ -280,12 +287,12 @@ public sealed class PrototypeSaveTest
 
         public TestEntityUidContext()
         {
-            TypeReaders = new() { { (typeof(EntityUid), typeof(ValueDataNode)), this } };
-            TypeWriters = new() { { typeof(EntityUid), this } };
+            TypeReaders = new() {{(typeof(EntityUid), typeof(ValueDataNode)), this}};
+            TypeWriters = new() {{typeof(EntityUid), this}};
         }
 
         ValidationNode ITypeValidator<EntityUid, ValueDataNode>.Validate(ISerializationManager serializationManager,
-                ValueDataNode node, IDependencyCollection dependencies, ISerializationContext? context)
+            ValueDataNode node, IDependencyCollection dependencies, ISerializationContext? context)
         {
             return new ValidatedValueNode(node);
         }

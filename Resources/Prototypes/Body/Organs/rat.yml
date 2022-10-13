@@ -1,17 +1,17 @@
 - type: entity
-  id: OrganRatLungs
-  parent: OrganHumanLungs
+  id: OrganLungsRat
+  parent: OrganLungsHuman
   suffix: "rat"
   components:
-  - type: Metabolizer
-    metabolizerTypes: [ Rat ]
+    - type: Metabolizer
+      metabolizerTypes: [ Rat ]
 
 - type: entity
-  id: OrganRatStomach
-  parent: OrganAnimalStomach
+  id: OrganStomachRat
+  parent: OrganStomachAnimal
   suffix: "rat"
   components:
-  - type: Stomach
-    maxVolume: 50 # they're hungry
-  - type: Sprite
-    state: stomach
+    - type: Stomach
+      maxVolume: 50 # they're hungry
+    - type: Sprite
+      state: stomach
