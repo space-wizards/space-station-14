@@ -1,9 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Fixed blinding., type: Fix}
-  id: 1939
-  time: '2022-07-14T11:58:24.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Recoil has been added back in., type: Tweak}
@@ -2940,3 +2935,8 @@ Entries:
   - {message: The changelog button in the escape menu now functions again., type: Fix}
   id: 2438
   time: '2022-10-13T01:25:45.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: PDAs/other items can now be activated in your inventory again., type: Fix}
+  id: 2439
+  time: '2022-10-13T02:26:27.0000000+00:00'
