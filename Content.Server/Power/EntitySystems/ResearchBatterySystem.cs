@@ -2,6 +2,7 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.Power.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Timing;
+using Content.Shared.Damage;
 
 namespace Content.Server.Power.EntitySystems
 {
@@ -97,10 +98,14 @@ namespace Content.Server.Power.EntitySystems
                     }
 
                     if (!researchBattery.shieldingActive && researchBattery.analysedCharge > researchBattery.MaxAnalysisCharge * researchBattery.overloadThreshold)
-                        Console.WriteLine("WARNING OVERLOAD OF RESEARCH SMES");
+                    {
+                        EntitySystem.Get<DamageableSystem>().TryChangeDamage(researchBattery.Owner, researchBattery.Damage * (researchBattery.analysedCharge - researchBattery.MaxAnalysisCharge * researchBattery.overloadThreshold) / 10000, true);
+                    }
 
                     researchBattery.analysedCharge -= researchBattery.analysedCharge * researchBattery.AnalysisDischarge;
-                    
+
+                    researchBattery.UpdateUserInterface();
+
                 }
             }
         }
