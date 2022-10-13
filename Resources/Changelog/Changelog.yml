@@ -1,12 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Hardsuits and outer clothing are now larger and harder to fit in bags.,
-    type: Tweak}
-  - {message: Some outer clothing suits and armour will slow you down slightly now.,
-    type: Tweak}
-  id: 1941
-  time: '2022-07-14T12:43:54.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Muzzle flashes now emit a point light., type: Tweak}
@@ -2940,3 +2932,8 @@ Entries:
   - {message: Fixed inventory button hover indicators not appearing anymore., type: Fix}
   id: 2440
   time: '2022-10-13T05:07:27.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Bandaid medibots spamming speech., type: Fix}
+  id: 2441
+  time: '2022-10-13T10:36:29.0000000+00:00'
