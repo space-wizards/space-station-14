@@ -18,27 +18,32 @@ public sealed class UpgradePowerDrawSystem : EntitySystem
 
     private void OnMapInit(EntityUid uid, UpgradePowerDrawComponent component, MapInitEvent args)
     {
-        if (!TryComp<ApcPowerReceiverComponent>(uid, out var powa))
-            return;
-        component.BaseLoad = powa.Load;
+        if (TryComp<PowerConsumerComponent>(uid, out var powa))
+            component.BaseLoad = powa.DrawRate;
+        else if (TryComp<ApcPowerReceiverComponent>(uid, out var powa2))
+            component.BaseLoad = powa2.Load;
     }
 
     private void OnRefreshParts(EntityUid uid, UpgradePowerDrawComponent component, RefreshPartsEvent args)
     {
-        if (!TryComp<ApcPowerReceiverComponent>(uid, out var powa))
-            return;
+        var load = component.BaseLoad;
         var rating = args.PartRatings[component.MachinePartPowerDraw];
         switch (component.Scaling)
         {
             case PowerDrawScalingType.Linear:
-                powa.Load = component.BaseLoad + component.Modifier * (rating - 1);
+                load += component.PowerDrawMultiplier * (rating - 1);
                 break;
             case PowerDrawScalingType.Exponential:
-                powa.Load = component.BaseLoad * MathF.Pow(component.Modifier, rating - 1);
+                load *= MathF.Pow(component.PowerDrawMultiplier, rating - 1);
                 break;
             default:
                 Logger.Error($"invalid power scaling type for {ToPrettyString(uid)}.");
+                load = 0;
                 break;
         }
+        if (TryComp<ApcPowerReceiverComponent>(uid, out var powa))
+            powa.Load = load;
+        if (TryComp<PowerConsumerComponent>(uid, out var powa2))
+            powa2.DrawRate = load;
     }
 }

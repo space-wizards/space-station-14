@@ -12,6 +12,7 @@ public sealed class UpgradePowerDrawComponent : Component
 {
     /// <summary>
     /// The base power draw of the machine.
+    /// Prioritizes hv/mv draw over lv draw.
     /// Value is initializezd on map init from <see cref="ApcPowerReceiverComponent"/>
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
