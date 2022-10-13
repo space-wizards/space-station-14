@@ -112,11 +112,6 @@
     airBlocked: false
   - type: RadiationBlocker
     enabled: false
-  - type: Construction
-    graph: Shutters
-    node: Shutters
-    containers:
-    - board
 
 - type: entity
   id: ShuttersRadiation
@@ -144,11 +139,6 @@
   components:
   - type: Door
     state: Open
-  - type: Construction
-    graph: Shutters
-    node: ShuttersRadiation
-    containers:
-    - board
   - type: Occluder
     enabled: false
   - type: Physics
@@ -183,11 +173,6 @@
   components:
   - type: Door
     state: Open
-  - type: Construction
-    graph: Shutters
-    node: ShuttersWindow
-    containers:
-    - board
   - type: Physics
     canCollide: false
   - type: Airtight
