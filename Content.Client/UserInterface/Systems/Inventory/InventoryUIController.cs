@@ -199,12 +199,6 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
             return;
         }
 
-        if (args.Function == ContentKeyFunctions.ActivateItemInWorld)
-        {
-            _inventorySystem.UIInventoryStorageActivate(control.SlotName);
-            return;
-        }
-
         if (_playerInventory == null)
         {
             return;
