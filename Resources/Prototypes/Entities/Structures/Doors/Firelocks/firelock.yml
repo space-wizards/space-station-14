@@ -116,7 +116,7 @@
     containers:
     - board
   - type: ContainerFill
-    contents:
+    containers:
       board: [ FirelockElectronics ]
         
 - type: entity

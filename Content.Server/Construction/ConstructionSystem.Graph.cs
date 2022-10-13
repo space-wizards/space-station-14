@@ -293,7 +293,7 @@ namespace Content.Server.Construction
             {
                 foreach (var id in newConstruction.Containers)
                 {
-                    containerFill.Contents.Remove(id);
+                    containerFill.Containers.Remove(id);
                 }
             }
 

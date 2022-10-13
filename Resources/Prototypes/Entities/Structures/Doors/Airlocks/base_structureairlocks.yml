@@ -42,7 +42,7 @@
       layer:
       - AirlockLayer
   - type: ContainerFill
-    contents:
+    containers:
       board: [ DoorElectronics ]
   - type: Door
     crushDamage:

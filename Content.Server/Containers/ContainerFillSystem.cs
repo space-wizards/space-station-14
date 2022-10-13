@@ -22,7 +22,7 @@ public sealed class ContainerFillSystem : EntitySystem
 
         var xform = Transform(uid);
 
-        foreach (var (contaienrId, prototypes) in component.Contents)
+        foreach (var (contaienrId, prototypes) in component.Containers)
         {
             if (!_containerSystem.TryGetContainer(uid, contaienrId, out var container, containerComp))
             {

@@ -29,7 +29,7 @@
   - type: Wires
     LayoutId: Docking
   - type: ContainerFill
-    contents:
+    containers:
       board: [ DoorElectronics ]
   - type: ContainerContainer
     containers:

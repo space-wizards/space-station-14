@@ -22,8 +22,8 @@ namespace Content.Server.Containers;
 [RegisterComponent]
 public sealed class ContainerFillComponent : Component
 {
-    [DataField("contents", customTypeSerializer:typeof(ContainerFillSerializer))]
-    public readonly Dictionary<string, List<string>> Contents = new();
+    [DataField("containers", customTypeSerializer:typeof(ContainerFillSerializer))]
+    public readonly Dictionary<string, List<string>> Containers = new();
 
     /// <summary>
     ///     If true, entities spawned via the construction system will not have entities spawned into containers managed
