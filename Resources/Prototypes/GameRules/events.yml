@@ -14,6 +14,8 @@
     !type:StationEventRuleConfiguration
     id: BureaucraticError
     startAnnouncement: station-event-bureaucratic-error-announcement
+    startAudio:
+      path: /Audio/Announcements/bureaucratic.ogg
     minimumPlayers: 25
     weight: 5
     maxOccurrences: 2
@@ -70,8 +72,10 @@
     id: GasLeak
     startAnnouncement: station-event-gas-leak-start-announcement
     startAudio:
-      path: /Audio/Announcements/attention.ogg
+      path: /Audio/Announcements/gasleak_start.ogg
     endAnnouncement: station-event-gas-leak-end-announcement
+    endAudio:
+      path: /Audio/Announcements/gasleak_end.ogg
     earliestStart: 10
     minimumPlayers: 5
     weight: 5
@@ -102,7 +106,9 @@
     startAnnouncement: station-event-meteor-swarm-start-announcement
     endAnnouncement: station-event-meteor-swarm-end-announcement
     startAudio:
-      path: /Audio/Announcements/meteors.ogg
+      path: /Audio/Announcements/meteors_start.ogg
+    endAudio:
+      path: /Audio/Announcements/meteors_end.ogg
     startAfter: 30
 
 - type: gameRule
@@ -137,7 +143,7 @@
     weight: 10
     endAfter: 1
     startAudio:
-      path: /Audio/Announcements/attention.ogg
+      path: /Audio/Announcements/sentience.ogg
 
 - type: gameRule
   id: VentClog
@@ -146,7 +152,7 @@
     id: VentClog
     startAnnouncement: station-event-vent-clog-start-announcement
     startAudio:
-      path: /Audio/Announcements/attention.ogg
+      path: /Audio/Announcements/ventclog.ogg
     earliestStart: 15
     minimumPlayers: 15
     weight: 5

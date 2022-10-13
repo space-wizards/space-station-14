@@ -1,0 +1,15 @@
+ent-BaseCartridgeMagnum = патрон (.40 магнум)
+    .desc = { ent-BaseCartridge.desc }
+    .suffix = { "" }
+ent-CartridgeMagnum = патрон (.40 магнум)
+    .desc = { ent-BaseCartridgeMagnum.desc }
+    .suffix = { "" }
+ent-CartridgeMagnumHighVelocity = патрон (.40 магнум высокоскоростной)
+    .desc = { ent-BaseCartridgeMagnum.desc }
+    .suffix = { "" }
+ent-CartridgeMagnumPractice = патрон (.40 магнум учебный)
+    .desc = { ent-BaseCartridgeMagnum.desc }
+    .suffix = { "" }
+ent-CartridgeMagnumRubber = патрон (.40 магнум резиновый)
+    .desc = { ent-BaseCartridgeMagnum.desc }
+    .suffix = { "" }

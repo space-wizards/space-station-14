@@ -2,6 +2,7 @@ using System.Globalization;
 using System.Linq;
 using Content.Server.Ghost;
 using Content.Server.Ghost.Components;
+using Content.Server.Humanoid;
 using Content.Server.Players;
 using Content.Server.Spawners.Components;
 using Content.Server.Speech.Components;
@@ -9,6 +10,7 @@ using Content.Server.Station.Components;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Content.Shared.Ghost;
+using Content.Shared.Humanoid.Markings;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using JetBrains.Annotations;
@@ -178,6 +180,7 @@ namespace Content.Server.GameTicking
                     Loc.GetString(
                         "latejoin-arrival-announcement",
                     ("character", character.Name),
+                    ("gender", character.Gender),
                     ("job", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(job.Name))
                     ), Loc.GetString("latejoin-arrival-sender"),
                     playDefaultSound: false);
@@ -193,6 +196,7 @@ namespace Content.Server.GameTicking
             {
                 EntityManager.AddComponent<OwOAccentComponent>(mob);
             }
+
 
             _stationJobs.TryAssignJob(station, jobPrototype);
 

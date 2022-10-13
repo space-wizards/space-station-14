@@ -1,0 +1,9 @@
+ent-RandomPosterAny = random poster spawner
+    .desc = { ent-MarkerBase.desc }
+    .suffix = { "" }
+ent-RandomPosterContraband = random contraband poster spawner
+    .desc = { ent-MarkerBase.desc }
+    .suffix = { "" }
+ent-RandomPosterLegit = random legit poster spawner
+    .desc = { ent-MarkerBase.desc }
+    .suffix = { "" }

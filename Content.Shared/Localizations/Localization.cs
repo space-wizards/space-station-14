@@ -6,7 +6,7 @@ namespace Content.Shared.Localizations
     public static class Localization
     {
         // If you want to change your codebase's language, do it here.
-        private const string Culture = "en-US";
+        private const string Culture = "ru-RU";
 
         /// <summary>
         /// Custom format strings used for parsing and displaying minutes:seconds timespans.

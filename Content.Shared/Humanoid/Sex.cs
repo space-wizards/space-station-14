@@ -56,7 +56,16 @@ namespace Content.Shared.Humanoid
         {
             IoCManager.Resolve(ref protoManager);
             IoCManager.Resolve(ref random);
-            return random.Pick(protoManager.Index<DatasetPrototype>(speciesProto.LastNames).Values);
+
+            switch (sex)
+            {
+                case Sex.Male:
+                    return random.Pick(protoManager.Index<DatasetPrototype>(speciesProto.MaleLastNames).Values);
+                case Sex.Female:
+                    return random.Pick(protoManager.Index<DatasetPrototype>(speciesProto.FemaleLastNames).Values);
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
     }
 }

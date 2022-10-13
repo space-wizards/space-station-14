@@ -5,6 +5,7 @@ using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
 using Content.Server.Database;
 using Content.Server.Ghost;
+using Content.Server.Humanoid;
 using Content.Server.Maps;
 using Content.Server.Players.PlayTimeTracking;
 using Content.Server.Preferences.Managers;
