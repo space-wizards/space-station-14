@@ -17,6 +17,7 @@
       layers:
         - state: syringe4
           map: [ "implantFull" ]
+          color: '#1cd94e'
         - state: syringe_base0
     - type: Item
       sprite: Objects/Specific/Chemistry/syringe.rsi

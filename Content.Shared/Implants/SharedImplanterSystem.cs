@@ -46,6 +46,29 @@ public abstract class SharedImplanterSystem : EntitySystem
         Dirty(component);
     }
 
+    //Draw the implant out of the target
+    //TODO: Completely remove when surgery is in
+    public void Draw(EntityUid implanter, EntityUid target, ImplanterComponent component)
+    {
+        if (!_container.TryGetContainer(implanter, ImplanterSlotId, out var implanterContainer))
+            return;
+
+        if (_container.TryGetContainer(target, ImplantSlotId, out var implantContainer))
+        {
+            var implant = implantContainer.ContainedEntities.FirstOrDefault();
+            if (!TryComp<SubdermalImplantComponent>(implant, out var implantComp))
+                return;
+
+            implantContainer.Remove(implant);
+            implantComp.EntityUid = null;
+            implanterContainer.Insert(implant);
+
+            if (component.CurrentMode == ImplanterToggleMode.Draw && !component.ImplantOnly)
+                ImplantMode(component);
+        }
+    }
+
+    //TODO: Remove both of these when surgery is in, this should really be inject only
     private void ImplantMode(ImplanterComponent component)
     {
         component.CurrentMode = ImplanterToggleMode.Inject;

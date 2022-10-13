@@ -13,6 +13,15 @@ public sealed class ImplanterComponent : Component
     [DataField("implantTime")]
     public float ImplantTime = 5f;
 
+    //TODO: Remove when surgery is a thing
+    /// <summary>
+    /// The time it takes to extract an implant from someone
+    /// It's excessively long to deter from implant checking any antag
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("drawTime")]
+    public float DrawTime = 300f;
+
     /// <summary>
     /// Good for single-use injectors
     /// </summary>
