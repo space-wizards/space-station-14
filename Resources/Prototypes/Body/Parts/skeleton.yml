@@ -71,6 +71,7 @@
     - type: Tag
       tags:
         - MindTransferTarget
+        - Head
 
 - type: entity
   id: LeftArmSkeleton

@@ -48,6 +48,17 @@
       60: 0.9
       80: 0.7
   - type: Speech
+  - type: Fixtures
+    fixtures:
+      - shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 130
+        restitution: 0.0
+        mask:
+          - MobMask
+        layer:
+          - MobLayer
 
 - type: entity
   save: false
