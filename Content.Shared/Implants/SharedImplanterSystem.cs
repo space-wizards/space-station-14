@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using Content.Shared.Implants.Components;
-using Content.Shared.Interaction;
 using Robust.Shared.Containers;
 
 namespace Content.Shared.Implants;
@@ -17,17 +16,6 @@ public abstract class SharedImplanterSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ImplanterComponent, ComponentInit>(OnImplanterInit);
-    }
-
-    private void OnImplanterInit(EntityUid uid, ImplanterComponent component, ComponentInit args)
-    {
-        var implanterContainer = _container.GetContainer(component.Owner, ImplanterSlotId);
-
-        if (implanterContainer.ContainedEntities.Count >= 1)
-        {
-            _appearance.SetData(component.Owner, ImplanterVisuals.Full, true);
-        }
     }
 
     //Instantly implant something and add all necessary components and containers.

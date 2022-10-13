@@ -10,6 +10,7 @@ using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
 using Content.Shared.MobState.Components;
 using Robust.Server.Containers;
+using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Player;
 
@@ -19,6 +20,7 @@ public sealed class ImplanterSystem : SharedImplanterSystem
 {
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
 
     public override void Initialize()
     {
@@ -88,7 +90,10 @@ public sealed class ImplanterSystem : SharedImplanterSystem
 
     private void OnImplanterGetState(EntityUid uid, ImplanterComponent component, ref ComponentGetState args)
     {
-        args.State = new ImplanterComponentState(component.CurrentMode);
+        if (!_container.TryGetContainer(component.Owner, ImplanterSlotId, out var container))
+            return;
+
+        args.State = new ImplanterComponentState(component.CurrentMode, container.ContainedEntities.Count);
     }
 
     private void OnImplantAttemptSuccess(EntityUid uid, ImplanterComponent component, ImplanterCompleteEvent args)

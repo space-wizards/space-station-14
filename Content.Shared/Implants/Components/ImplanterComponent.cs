@@ -27,6 +27,11 @@ public sealed class ImplanterComponent : Component
     [DataField("currentMode")]
     public ImplanterToggleMode CurrentMode;
 
+    /// <summary>
+    /// Current number of implants in the implanter
+    /// </summary>
+    public int NumberOfEntities;
+
     [ViewVariables(VVAccess.ReadWrite)]
     public bool UiUpdateNeeded;
 
@@ -37,10 +42,12 @@ public sealed class ImplanterComponent : Component
 public sealed class ImplanterComponentState : ComponentState
 {
     public ImplanterToggleMode CurrentMode;
+    public int NumberOfEntities;
 
-    public ImplanterComponentState(ImplanterToggleMode currentMode)
+    public ImplanterComponentState(ImplanterToggleMode currentMode, int numberOfEntities)
     {
         CurrentMode = currentMode;
+        NumberOfEntities = numberOfEntities;
     }
 }
 
