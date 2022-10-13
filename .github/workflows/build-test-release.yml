@@ -2,7 +2,7 @@ name: Build & Test Release
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, master-ru ]
     paths:
       - '**.cs'
       - '**.csproj'
@@ -14,7 +14,7 @@ on:
       - 'RobustToolbox'
       - 'RobustToolbox/**'
   pull_request:
-    branches: [ master ]
+    branches: [ master, master-ru ]
     paths:
       - '**.cs'
       - '**.csproj'

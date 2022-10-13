@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - master-ru
   pull_request_target:
 
 jobs:
