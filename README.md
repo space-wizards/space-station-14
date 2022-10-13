@@ -4,7 +4,7 @@ Awesome Space Station 14 is a remake of SS13 that runs on [Robust Toolbox](https
 
 This is the primary repo for Awesome Space Station 14. To prevent people forking RobustToolbox, a "content" pack is loaded by the client and server. This content pack contains everything needed to play the game on one specific server.
 
-If you want to host or create content for SS14, this is the repo you need. It contains both RobustToolbox and the content pack for development of new content packs.
+If you want to host or create content for ASS14, this is the repo you need. It contains both RobustToolbox and the content pack for development of new content packs.
 
 ## Links
 
@@ -12,7 +12,7 @@ If you want to host or create content for SS14, this is the repo you need. It co
 
 ## Documentation/Wiki
 
-Our [docs site](https://docs.spacestation14.io/) has documentation on SS14s content, engine, game design and more. We also have lots of resources for new contributors to the project.
+Our [docs site](https://docs.spacestation14.io/) has documentation on ASS14s content, engine, game design and more. We also have lots of resources for new contributors to the project.
 
 ## Contributing
 
