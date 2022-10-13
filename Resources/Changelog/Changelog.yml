@@ -1,10 +1,4 @@
 Entries:
-- author: lapatison
-  changes:
-  - {message: Refining reinforced glass shards now gives metal rods instead of steel
-      sheets., type: Fix}
-  id: 1937
-  time: '2022-07-14T11:42:47.0000000+00:00'
 - author: Deahaka
   changes:
   - {message: Added hospital curtains, type: Add}
@@ -2940,3 +2934,9 @@ Entries:
       This functionality will come back later.', type: Remove}
   id: 2436
   time: '2022-10-13T00:55:42.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'The sandbox button is no longer always visible, even if you can''t
+      use it.', type: Fix}
+  id: 2437
+  time: '2022-10-13T01:21:36.0000000+00:00'
