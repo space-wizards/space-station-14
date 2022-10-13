@@ -111,25 +111,25 @@ internal sealed class ChargerSystem : EntitySystem
         {
             case CellChargerStatus.Off:
                 receiver.Load = 0;
-                _sharedAppearanceSystem.SetData(uid, CellVisual.Light, CellChargerStatus.Off);
+                _sharedAppearanceSystem.SetData(uid, CellVisual.Light, CellChargerStatus.Off, appearance);
                 break;
             case CellChargerStatus.Empty:
                 receiver.Load = 0;
-                _sharedAppearanceSystem.SetData(uid, CellVisual.Light, CellChargerStatus.Empty);
+                _sharedAppearanceSystem.SetData(uid, CellVisual.Light, CellChargerStatus.Empty, appearance);
                 break;
             case CellChargerStatus.Charging:
                 receiver.Load = component.ChargeRate;
-                _sharedAppearanceSystem.SetData(uid, CellVisual.Light, CellChargerStatus.Charging);
+                _sharedAppearanceSystem.SetData(uid, CellVisual.Light, CellChargerStatus.Charging, appearance);
                 break;
             case CellChargerStatus.Charged:
                 receiver.Load = 0;
-                _sharedAppearanceSystem.SetData(uid, CellVisual.Light, CellChargerStatus.Charged);
+                _sharedAppearanceSystem.SetData(uid, CellVisual.Light, CellChargerStatus.Charged, appearance);
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
         }
 
-        _sharedAppearanceSystem.SetData(uid, CellVisual.Occupied, slot.HasItem);
+        _sharedAppearanceSystem.SetData(uid, CellVisual.Occupied, slot.HasItem, appearance);
     }
 
     private CellChargerStatus GetStatus(EntityUid uid, ChargerComponent component)
