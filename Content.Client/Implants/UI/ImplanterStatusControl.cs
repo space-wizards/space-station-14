@@ -47,11 +47,11 @@ public sealed class ImplanterStatusControl : Control
         var entitiesStringLocalized = _parent.NumberOfEntities switch
         {
             0 => Loc.GetString("implanter-empty-text"),
-            1 => Loc.GetString("implanter-implant-text", ("implantName", _parent.ImplantData.Item1), ("implantDescription", _parent.ImplantData.Item2)),
+            1 => Loc.GetString("implanter-implant-text", ("implantName", _parent.ImplantData.Item1), ("implantDescription", _parent.ImplantData.Item2), ("lineBreak", "\n")),
             _ => Loc.GetString("injector-invalid-injector-toggle-mode")
         };
 
 
-        _label.SetMarkup(Loc.GetString("implanter-label", ("currentEntities", entitiesStringLocalized), ("modeString", modeStringLocalized)));
+        _label.SetMarkup(Loc.GetString("implanter-label", ("currentEntities", entitiesStringLocalized), ("modeString", modeStringLocalized), ("lineBreak", "\n")));
     }
 }

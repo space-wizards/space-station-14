@@ -4,7 +4,7 @@ implanter-draw-text = Draw
 implanter-inject-text = Inject
 
 implanter-empty-text = None
-implanter-implant-text = {$implantName} | {$implantDescription}
+implanter-implant-text = {$implantName}{$lineBreak}{$implantDescription}
 
-implanter-label = [color=white]Implant: {$currentEntities} | {$modeString}[/color]
+implanter-label = [color=white]Implant: {$currentEntities}{$lineBreak}Mode: {$modeString}[/color]
 
