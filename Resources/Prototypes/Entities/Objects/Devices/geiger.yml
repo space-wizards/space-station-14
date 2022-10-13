@@ -11,8 +11,18 @@
         - state: geiger_base
         - state: geiger_on_idle
           shader: unshaded
-          visible: false
     - type: Item
       sprite: Objects/Tools/geiger.rsi
     - type: RadiationReceiver
     - type: Geiger
+    - type: Appearance
+      visuals:
+        - type: GenericEnumVisualizer
+          key: enum.GeigerVisuals.DangerLevel
+          layer: 1
+          states:
+            enum.GeigerDangerLevel.None: geiger_on_idle
+            enum.GeigerDangerLevel.Low: geiger_on_low
+            enum.GeigerDangerLevel.Med: geiger_on_med
+            enum.GeigerDangerLevel.High: geiger_on_high
+            enum.GeigerDangerLevel.Extreme: geiger_on_ext

@@ -8,6 +8,8 @@ namespace Content.Server.Radiation.Systems;
 
 public sealed class GeigerSystem : SharedGeigerSystem
 {
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -21,13 +23,29 @@ public sealed class GeigerSystem : SharedGeigerSystem
         foreach (var (geiger, receiver) in query)
         {
             var rads = receiver.CurrentRadiation;
-            // ReSharper disable once CompareOfFloatsByEqualityOperator
-            if (rads == geiger.CurrentRadiation)
-                continue;
-
-            geiger.CurrentRadiation = rads;
-            Dirty(geiger);
+            SetCurrentRadiation(geiger.Owner, geiger, rads);
         }
+    }
+
+    private void SetCurrentRadiation(EntityUid uid, SharedGeigerComponent component, float rads)
+    {
+        // ReSharper disable once CompareOfFloatsByEqualityOperator
+        if (rads == component.CurrentRadiation)
+            return;
+
+        component.CurrentRadiation = rads;
+        UpdateAppearance(uid, component);
+        Dirty(component);
+    }
+
+    private void UpdateAppearance(EntityUid uid, SharedGeigerComponent? component = null,
+        AppearanceComponent? appearance = null)
+    {
+        if (!Resolve(uid, ref component, ref appearance, false))
+            return;
+
+        var dangerLevel = RadsToLevel(component.CurrentRadiation);
+        _appearance.SetData(uid, GeigerVisuals.DangerLevel, dangerLevel, appearance);
     }
 
     private void OnGetState(EntityUid uid, GeigerComponent component, ref ComponentGetState args)
