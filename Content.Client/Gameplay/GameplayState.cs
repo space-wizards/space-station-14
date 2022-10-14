@@ -4,6 +4,7 @@ using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Screens;
 using Content.Client.UserInterface.Systems.Actions;
 using Content.Client.UserInterface.Systems.Alerts;
+using Content.Client.UserInterface.Systems.Chat;
 using Content.Client.UserInterface.Systems.Ghost;
 using Content.Client.UserInterface.Systems.Hands;
 using Content.Client.UserInterface.Systems.Hotbar;
@@ -40,6 +41,7 @@ namespace Content.Client.Gameplay
         private readonly ActionUIController _actionController;
         private readonly AlertsUIController _alertsController;
         private readonly HotbarUIController _hotbarController;
+        private readonly ChatUIController _chatController;
 
         public MainViewport Viewport { get; private set; } = default!;
 
@@ -51,6 +53,7 @@ namespace Content.Client.Gameplay
             _actionController = _uiManager.GetUIController<ActionUIController>();
             _alertsController = _uiManager.GetUIController<AlertsUIController>();
             _hotbarController = _uiManager.GetUIController<HotbarUIController>();
+            _chatController = _uiManager.GetUIController<ChatUIController>();
         }
 
         protected override void Startup()
@@ -124,6 +127,9 @@ namespace Content.Client.Gameplay
             _actionController.RegisterActionContainer();
             _alertsController.SyncAlerts();
             _hotbarController.ReloadHotbar();
+
+            var viewportContainer = _uiManager.ActiveScreen!.FindControl<LayoutContainer>("ViewportContainer");
+            _chatController.SetSpeechBubbleRoot(viewportContainer);
         }
 
         public override void FrameUpdate(FrameEventArgs e)

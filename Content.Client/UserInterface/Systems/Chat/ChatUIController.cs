@@ -230,13 +230,12 @@ public sealed class ChatUIController : UIController
         }
 
         UpdateChannelPermissions();
+    }
 
-        if (_speechBubbleRoot.Parent == UIManager.StateRoot)
-            return;
-
+    public void SetSpeechBubbleRoot(LayoutContainer root)
+    {
         _speechBubbleRoot.Orphan();
-        LayoutContainer.SetAnchorPreset(_speechBubbleRoot, LayoutContainer.LayoutPreset.Wide);
-        UIManager.StateRoot.AddChild(_speechBubbleRoot);
+        root.AddChild(_speechBubbleRoot);
         _speechBubbleRoot.SetPositionFirst();
     }
 

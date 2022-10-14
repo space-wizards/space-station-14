@@ -17,7 +17,7 @@ public sealed partial class SeparatedChatGameScreen : UIScreen
         // AddWidget<MainViewport>(MainViewport);
 
         SetAnchorPreset(ScreenContainer, LayoutPreset.Wide);
-        SetAnchorPreset(MainContainer, LayoutPreset.Wide);
+        SetAnchorPreset(ViewportContainer, LayoutPreset.Wide);
         SetAnchorPreset(MainViewport, LayoutPreset.Wide);
         // SetAnchorAndMarginPreset(TopBar, LayoutPreset.TopLeft, margin: 10);
         SetAnchorAndMarginPreset(Actions, LayoutPreset.BottomLeft, margin: 10);
