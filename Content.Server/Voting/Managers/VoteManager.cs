@@ -326,6 +326,10 @@ namespace Content.Server.Voting.Managers
             if (voteType == StandardVoteType.Restart && _cfg.GetCVar(CCVars.VoteRestartNotAllowedWhenAdminOnline) && _adminMgr.ActiveAdmins.Count() != 0)
                 return false;
 
+            // If only one (or less) Preset available thats not really a vote
+            if (voteType == StandardVoteType.Preset && GetGamePresets().Count() <= 1)
+                return false;
+
             return !_voteTimeout.TryGetValue(initiator.UserId, out timeSpan);
         }
 
