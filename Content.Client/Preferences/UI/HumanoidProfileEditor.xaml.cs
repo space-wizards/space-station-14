@@ -1,5 +1,4 @@
 using System.Linq;
-using Content.Client.HUD.UI;
 using Content.Client.Humanoid;
 using Content.Client.Lobby.UI;
 using Content.Client.Message;
