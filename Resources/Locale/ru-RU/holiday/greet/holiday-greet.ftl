@@ -68,6 +68,7 @@ holiday-name-christmas = католического Рождества
 holiday-name-festive-season = наступающего Нового года
 holiday-name-boxing-day = Дня подарков
 holiday-name-friday-thirteenth = Дня неприятностей
+holiday-name-national-coming-out-day = National Coming Out Day
 
 ## Custom congrats
 
