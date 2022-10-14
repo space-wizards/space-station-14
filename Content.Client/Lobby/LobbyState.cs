@@ -4,6 +4,7 @@ using Content.Client.LateJoin;
 using Content.Client.Lobby.UI;
 using Content.Client.Preferences;
 using Content.Client.Preferences.UI;
+using Content.Client.UserInterface.Systems.Chat;
 using Content.Client.Voting;
 using Robust.Client;
 using Robust.Client.Console;
@@ -43,6 +44,8 @@ namespace Content.Client.Lobby
 
         protected override void Startup()
         {
+            var chatController = _userInterfaceManager.GetUIController<ChatUIController>();
+            chatController.SetMainChat(true);
             _gameTicker = EntitySystem.Get<ClientGameTicker>();
             _characterSetup = new CharacterSetupGui(_entityManager, _resourceCache, _preferencesManager,
                 _prototypeManager, _configurationManager);
@@ -101,6 +104,8 @@ namespace Content.Client.Lobby
 
         protected override void Shutdown()
         {
+            var chatController = _userInterfaceManager.GetUIController<ChatUIController>();
+            chatController.SetMainChat(false);
             _gameTicker.InfoBlobUpdated -= UpdateLobbyUi;
             _gameTicker.LobbyStatusUpdated -= LobbyStatusUpdated;
             _gameTicker.LobbyLateJoinStatusUpdated -= LobbyLateJoinStatusUpdated;

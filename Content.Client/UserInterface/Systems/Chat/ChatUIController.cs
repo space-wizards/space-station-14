@@ -188,10 +188,15 @@ public sealed class ChatUIController : UIController
 
     public void SetMainChat(bool setting)
     {
+        // This isn't very nice to look at.
         var widget = UIManager.ActiveScreen?.GetWidget<ChatBox>();
         if (widget == null)
         {
-            return;
+            widget = UIManager.ActiveScreen?.GetWidget<ResizableChatBox>();
+            if (widget == null)
+            {
+                return;
+            }
         }
 
         widget.Main = setting;

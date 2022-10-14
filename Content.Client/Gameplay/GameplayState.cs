@@ -78,12 +78,15 @@ namespace Content.Client.Gameplay
         {
             _overlayManager.RemoveOverlay<ShowHandItemOverlay>();
 
+            _chatController.SetMainChat(false);
+
             base.Shutdown();
             Viewport.Dispose();
             // Clear viewport to some fallback, whatever.
             _eyeManager.MainViewport = UserInterfaceManager.MainViewport;
             _fpsCounter.Dispose();
             _uiManager.ClearWindows();
+            _uiManager.UnloadScreen();
         }
 
         public void ReloadMainScreen()
@@ -93,6 +96,7 @@ namespace Content.Client.Gameplay
                 return;
             }
 
+            _chatController.SetMainChat(false);
             _uiManager.UnloadScreen();
 
             LoadMainScreen();
@@ -105,8 +109,6 @@ namespace Content.Client.Gameplay
             {
                 screenType = default;
             }
-
-            _chatController.SetMainChat(false);
 
             switch (screenType)
             {
