@@ -1,23 +1,26 @@
 ﻿- type: body
   id: Human
   name: "human"
+  root: torso
   slots:
-    head: HumanHead
-    torso: HumanTorso
-    left arm: HumanArm
-    right arm: HumanArm
-    left hand: HumanHand
-    right hand: HumanHand
-    left leg: HumanLeg
-    right leg: HumanLeg
-    left foot: HumanFoot
-    right foot: HumanFoot
+    head: HeadHuman
+    torso: TorsoHuman
+    right arm: RightArmHuman
+    left arm: LeftArmHuman
+    right hand: RightHandHuman
+    left hand: LeftHandHuman
+    right leg: RightLegHuman
+    left leg: LeftLegHuman
+    right foot: RightFootHuman
+    left foot: LeftFootHuman
   connections:
     head:
     - torso
     torso:
     - left arm
     - right arm
+    - left leg
+    - right leg
     left arm:
     - left hand
     right arm:
