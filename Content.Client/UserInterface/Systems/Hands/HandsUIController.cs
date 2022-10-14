@@ -238,9 +238,57 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
         if (!_handLookup.TryAdd(handName, button))
             throw new Exception("Tried to add hand with duplicate name to UI. Name:" + handName);
 
-        GetFirstAvailableContainer().AddButton(button);
+        if (HandsGui != null)
+        {
+            HandsGui.HandContainer.AddButton(button);
+        }
+        else
+        {
+            GetFirstAvailableContainer().AddButton(button);
+        }
 
         return button;
+    }
+
+    /// <summary>
+    ///     Reload all hands.
+    /// </summary>
+    public void ReloadHands()
+    {
+        UnloadPlayerHands();
+        _handsSystem.ReloadHandButtons();
+    }
+
+    /// <summary>
+    ///     Swap hands from one container to the other.
+    /// </summary>
+    /// <param name="other"></param>
+    /// <param name="source"></param>
+    public void SwapHands(HandsContainer other, HandsContainer? source = null)
+    {
+        if (HandsGui == null && source == null)
+        {
+            throw new ArgumentException("Cannot swap hands if no source hand container exists!");
+        }
+
+        source ??= HandsGui!.HandContainer;
+
+        var transfer = new List<Control>();
+        foreach (var child in source.Children)
+        {
+            if (child is not HandButton)
+            {
+                continue;
+            }
+
+            transfer.Add(child);
+        }
+
+        foreach (var control in transfer)
+        {
+            source.RemoveChild(control);
+            other.AddChild(control);
+        }
     }
 
     private void RemoveHand(string handName)
@@ -266,15 +314,15 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
     public string RegisterHandContainer(HandsContainer handContainer)
     {
         var name = "HandContainer_" + _backupSuffix;
-        ;
-        if (handContainer.Name == null)
+
+        if (handContainer.Indexer == null)
         {
-            handContainer.Name = name;
+            handContainer.Indexer = name;
             _backupSuffix++;
         }
         else
         {
-            name = handContainer.Name;
+            name = handContainer.Indexer;
         }
 
         _handContainerIndices.Add(name, _handsContainers.Count);

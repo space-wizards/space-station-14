@@ -34,7 +34,7 @@
             HorizontalExpand="True"/>
         <hands:HandsContainer
             Name="HandContainer"
-            Access="Protected"
+            Access="Public"
             HorizontalAlignment="Center"
             ColumnLimit="6" />
         <inventory:ItemSlotButtonContainer

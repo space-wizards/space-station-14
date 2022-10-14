@@ -7,12 +7,11 @@
     xmlns:alerts="clr-namespace:Content.Client.UserInterface.Systems.Alerts.Widgets"
     xmlns:widgets="clr-namespace:Content.Client.UserInterface.Systems.Ghost.Widgets"
     xmlns:hotbar="clr-namespace:Content.Client.UserInterface.Systems.Hotbar.Widgets"
-    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
     Name="DefaultHud"
     VerticalExpand="False"
     VerticalAlignment="Bottom"
     HorizontalAlignment="Center">
-    <controls:MainViewport Name="MainViewport" Access="Protected" />
+    <Control Name="MainViewportContainer" />
     <menuBar:GameTopMenuBar Name="TopBar" Access="Protected" />
     <widgets:GhostGui Name="Ghost" Access="Protected" />
     <hotbar:HotbarGui Name="Hotbar" Access="Protected" />

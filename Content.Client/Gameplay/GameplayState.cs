@@ -2,6 +2,8 @@ using Content.Client.Construction.UI;
 using Content.Client.Hands;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Screens;
+using Content.Client.UserInterface.Systems.Hands;
+using Content.Client.UserInterface.Systems.Hotbar.Widgets;
 using Content.Client.Viewport;
 using Content.Shared.CCVar;
 using Robust.Client.Graphics;
@@ -30,30 +32,36 @@ namespace Content.Client.Gameplay
         public static readonly Vector2i ViewportSize = (EyeManager.PixelsPerMeter * 21, EyeManager.PixelsPerMeter * 15);
         private FpsCounter _fpsCounter = default!;
 
-        public MainViewport Viewport { get; private set; } = default!;
+        private readonly HandsUIController _handsController;
+
+        public MainViewport Viewport { get; private set; } = new();
 
         public GameplayState()
         {
             IoCManager.InjectDependencies(this);
+
+            _handsController = _uiManager.GetUIController<HandsUIController>();
         }
 
         protected override void Startup()
         {
-            // On startup, the linked screen type is automatically loaded.
-            // However, at the moment, we would need to (somehow) send an event
-            // when the chat sidebar is resized in order to get the viewport
-            // (or whatever the parent control for the viewport would be) to
-            // scale down. This is because screens appear to be
             base.Startup();
 
-            Viewport = UserInterfaceManager.ActiveScreen!.FindControl<MainViewport>("MainViewport");
+            // TODO: Set active screen here. This is because we have
+            // user-selectable screen types.
+
             Viewport.Viewport.ViewportSize = ViewportSize;
 
             // ?
             Viewport.Viewport.HorizontalExpand = true;
             Viewport.Viewport.VerticalExpand = true;
 
-            // ourple
+            // These are the only ones where you can have exactly ONE
+            // of each. The rest can be duplicated across implementations.
+            UserInterfaceManager
+                .ActiveScreen!
+                .FindControl<Control>("MainViewportContainer")
+                .AddChild(Viewport);
 
             // Add the viewport to the root of the current state's primary control.
             // TODO: This might be legacy code? There's absolutely nothing stopping me
@@ -96,6 +104,24 @@ namespace Content.Client.Gameplay
             _uiManager.ClearWindows();
         }
 
+        public void SwitchScreenType()
+        {
+            if (_uiManager.ActiveScreen == null)
+            {
+                return;
+            }
+
+
+            _uiManager.ActiveScreen.RemoveChild(Viewport);
+            _uiManager.UnloadScreen();
+
+            // TODO: Screen switching logic goes here
+
+            _uiManager.LoadScreen<DefaultGameScreen>();
+            _uiManager.ActiveScreen.FindControl<Control>("MainViewportContainer").AddChild(Viewport);
+            _handsController.ReloadHands();
+        }
+
         public override void FrameUpdate(FrameEventArgs e)
         {
             base.FrameUpdate(e);
@@ -109,7 +135,7 @@ namespace Content.Client.Gameplay
                 return;
 
             _entMan.TryGetComponent(ent, out EyeComponent? eye);
-            
+
             if (eye?.Eye == _eyeManager.CurrentEye
                 && _entMan.GetComponent<TransformComponent>(ent.Value).WorldPosition == default)
                 return; // nothing to worry about, the player is just in null space... actually that is probably a problem?
