@@ -33,11 +33,11 @@
       size: 14
       compatibility: Biological
       mechanisms:
-        - OrganHeartHuman
-        - OrganLungsVox
-        - OrganStomachHuman
-        - OrganLiverHuman
-        - OrganKidneysHuman
+        - OrganHumanHeart
+        - OrganVoxLungs
+        - OrganHumanStomach
+        - OrganHumanLiver
+        - OrganHumanKidneys
       # TODO BODY DettachableDamageableComponent?
 #    criticalThreshold: 100
 #    deadThreshold: 150
@@ -60,8 +60,8 @@
       compatibility: Biological
       vital: true
       mechanisms:
-        - OrganBrainHuman
-        - OrganEyesHuman
+        - OrganHumanBrain
+        - OrganHumanEyes
     #    criticalThreshold: 50
     #    deadThreshold: 120
     - type: Input

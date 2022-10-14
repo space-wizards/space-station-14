@@ -98,7 +98,7 @@
       rateModifier: 100.0
 
 - type: entity
-  id: OrganStomachAnimal
+  id: OrganAnimalStomach
   parent: BaseAnimalOrgan
   name: stomach
   noSpawn: true

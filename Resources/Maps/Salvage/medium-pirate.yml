@@ -888,7 +888,7 @@ entities:
     parent: 52
     type: Transform
 - uid: 98
-  type: OrganEyesHuman
+  type: OrganHumanEyes
   components:
   - pos: 3.9366684,-0.6009152
     parent: 52

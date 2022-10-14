@@ -185973,7 +185973,7 @@ entities:
     parent: 82
     type: Transform
 - uid: 22327
-  type: OrganAppendixHuman
+  type: OrganHumanAppendix
   components:
   - pos: -44.49631,-51.486485
     parent: 82

@@ -4,18 +4,16 @@
   slots:
     torso: TorsoAnimal
     legs: LegsAnimal
-    hands: HandAnimal
     feet: FeetAnimal
   connections:
     torso:
       - legs
-      - hands
     legs:
       - feet
   organs:
     - torso:
         - OrganAnimalLungs
-        - OrganStomachAnimal
+        - OrganAnimalStomach
         - OrganAnimalLiver
         - OrganAnimalHeart
         - OrganAnimalKidneys

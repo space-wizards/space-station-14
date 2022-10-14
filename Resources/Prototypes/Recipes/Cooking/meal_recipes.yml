@@ -76,7 +76,7 @@
   time: 5
   solids:
     FoodBreadBun: 1
-    OrganBrainHuman: 1
+    OrganHumanBrain: 1
     FoodCheeseSlice: 1
 
 - type: microwaveMealRecipe
@@ -86,7 +86,7 @@
   time: 5
   solids:
     FoodBreadBun: 1
-    OrganAppendixHuman: 1
+    OrganHumanAppendix: 1
     FoodCheeseSlice: 1
 
 - type: microwaveMealRecipe
@@ -489,7 +489,7 @@
     Water: 10
   solids:
     FoodBowlBig: 1
-    OrganEyesHuman: 1
+    OrganHumanEyes: 1
     FoodCarrot: 1
     FoodPotato: 1
 
@@ -869,7 +869,7 @@
   time: 15
   solids:
     FoodCakePlain: 1
-    OrganBrainHuman: 1
+    OrganHumanBrain: 1
 
 - type: microwaveMealRecipe
   id: RecipeAmanitaPie

@@ -1,5 +1,5 @@
 - type: entity
-  id: BaseOrganHuman
+  id: BaseHumanOrgan
   parent: BaseItem
   abstract: true
   components:
@@ -18,18 +18,18 @@
           Quantity: 10
 
 - type: entity
-  id: OrganBrainHuman
-  parent: BaseOrganHuman
+  id: OrganHumanBrain
+  parent: BaseHumanOrgan
   name: brain
   description: "The source of incredible, unending intelligence. Honk."
   components:
-    - type: Sprite
-      state: brain
-    - type: Organ
-      size: 1
-      compatibility: Biological
-    - type: Input
-      context: "ghost"
+  - type: Sprite
+    state: brain
+  - type: Organ
+    size: 1
+    compatibility: Biological
+  - type: Input
+    context: "ghost"
   - type: InputMover
   - type: MovementSpeedModifier
     baseWalkSpeed: 0
@@ -38,70 +38,70 @@
   - type: Brain
 
 - type: entity
-  id: OrganEyesHuman
-  parent: BaseOrganHuman
+  id: OrganHumanEyes
+  parent: BaseHumanOrgan
   name: eyes
   description: "I see you!"
   components:
-    - type: Sprite
-      layers:
-        - state: eyeball-l
-        - state: eyeball-r
-    - type: Organ
-      size: 1
-      compatibility: Biological
+  - type: Sprite
+    layers:
+      - state: eyeball-l
+      - state: eyeball-r
+  - type: Organ
+    size: 1
+    compatibility: Biological
 
 - type: entity
-  id: OrganTongueHuman
-  parent: BaseOrganHuman
+  id: OrganHumanTongue
+  parent: BaseHumanOrgan
   name: tongue
   description: "A fleshy muscle mostly used for lying."
   components:
-    - type: Sprite
-      state: tongue
-    - type: Organ
-      size: 1
-      compatibility: Biological
+  - type: Sprite
+    state: tongue
+  - type: Organ
+    size: 1
+    compatibility: Biological
 
 - type: entity
-  id: OrganAppendixHuman
-  parent: BaseOrganHuman
+  id: OrganHumanAppendix
+  parent: BaseHumanOrgan
   name: appendix
   components:
-    - type: Sprite
-      layers:
-        - state: appendix
-        - state: appendix-inflamed
-          visible: false
-    - type: Organ
-      size: 1
-      compatibility: Biological
+  - type: Sprite
+    layers:
+    - state: appendix
+    - state: appendix-inflamed
+      visible: false
+  - type: Organ
+    size: 1
+    compatibility: Biological
 
 - type: entity
-  id: OrganEarsHuman
-  parent: BaseOrganHuman
+  id: OrganHumanEars
+  parent: BaseHumanOrgan
   name: ears
   description: "There are three parts to the ear. Inner, middle and outer. Only one of these parts should normally be visible."
   components:
-    - type: Sprite
-      state: ears
-    - type: Organ
-      size: 1
-      compatibility: Biological
+  - type: Sprite
+    state: ears
+  - type: Organ
+    size: 1
+    compatibility: Biological
 
 - type: entity
-  id: OrganLungsHuman
-  parent: BaseOrganHuman
+  id: OrganHumanLungs
+  parent: BaseHumanOrgan
   name: lungs
   description: "Filters oxygen from an atmosphere, which is then sent into the bloodstream to be used as an electron carrier."
   components:
-    - type: Sprite
-      layers:
-        - state: lung-l
-        - state: lung-r
-    - type: Organ
-      size: 1
-      compatibility: Biological
+  - type: Sprite
+    layers:
+      - state: lung-l
+      - state: lung-r
+  - type: Organ
+    size: 1
+    compatibility: Biological
   - type: Lung
   - type: Metabolizer
     removeEmpty: true
@@ -113,18 +113,18 @@
       rateModifier: 100.0
 
 - type: entity
-  id: OrganHeartHuman
-  parent: BaseOrganHuman
+  id: OrganHumanHeart
+  parent: BaseHumanOrgan
   name: heart
   description: "I feel bad for the heartless bastard who lost this."
   components:
-    - type: Sprite
-      state: heart-on
-    - type: Organ
-      size: 1
-      compatibility: Biological
-    # The heart 'metabolizes' medicines and poisons that aren't filtered out by other organs.
-    # This is done because these chemicals need to have some effect even if they aren't being filtered out of your body.
+  - type: Sprite
+    state: heart-on
+  - type: Organ
+    size: 1
+    compatibility: Biological
+  # The heart 'metabolizes' medicines and poisons that aren't filtered out by other organs.
+  # This is done because these chemicals need to have some effect even if they aren't being filtered out of your body.
   # You're technically 'immune to poison' without a heart, but.. uhh, you'll have bigger problems on your hands.
   - type: Metabolizer
     maxReagents: 2
@@ -135,18 +135,18 @@
     - id: Narcotic
 
 - type: entity
-  id: OrganStomachHuman
-  parent: BaseOrganHuman
+  id: OrganHumanStomach
+  parent: BaseHumanOrgan
   name: stomach
   description: "Gross. This is hard to stomach."
   components:
-    - type: Sprite
-      state: stomach
-    - type: Organ
-      size: 1
-      compatibility: Biological
-    - type: SolutionContainerManager
-      solutions:
+  - type: Sprite
+    state: stomach
+  - type: Organ
+    size: 1
+    compatibility: Biological
+  - type: SolutionContainerManager
+    solutions:
       stomach:
         maxVol: 250
   - type: Stomach
@@ -162,36 +162,36 @@
     - id: Drink
 
 - type: entity
-  id: OrganLiverHuman
-  parent: BaseOrganHuman
+  id: OrganHumanLiver
+  parent: BaseHumanOrgan
   name: liver
   description: "Pairing suggestion: chianti and fava beans."
   components:
-    - type: Sprite
-      state: liver
-    - type: Organ
-      size: 1
-      compatibility: Biological
-    - type: Metabolizer # The liver metabolizes certain chemicals only, like alcohol.
-      maxReagents: 1
+  - type: Sprite
+    state: liver
+  - type: Organ
+    size: 1
+    compatibility: Biological
+  - type: Metabolizer # The liver metabolizes certain chemicals only, like alcohol.
+    maxReagents: 1
     metabolizerTypes: [Human]
     groups:
     - id: Alcohol
       rateModifier: 0.1 # removes alcohol very slowly along with the stomach removing it as a drink
 
 - type: entity
-  id: OrganKidneysHuman
-  parent: BaseOrganHuman
+  id: OrganHumanKidneys
+  parent: BaseHumanOrgan
   name: kidneys
   description: "Filters toxins from the bloodstream."
   components:
-    - type: Sprite
-      layers:
-        - state: kidney-l
-        - state: kidney-r
-    - type: Organ
-      size: 1
-      compatibility: Biological
+  - type: Sprite
+    layers:
+      - state: kidney-l
+      - state: kidney-r
+  - type: Organ
+    size: 1
+    compatibility: Biological
   # The kidneys just remove anything that doesn't currently have any metabolisms, as a stopgap.
   - type: Metabolizer
     maxReagents: 5

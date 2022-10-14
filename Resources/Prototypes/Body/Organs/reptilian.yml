@@ -1,7 +1,7 @@
 ﻿- type: entity
-  id: OrganStomachReptilian
-  parent: OrganStomachAnimal
+  id: OrganReptilianStomach
+  parent: OrganAnimalStomach
   noSpawn: true
   components:
-    - type: Stomach
-      maxVolume: 50
+  - type: Stomach
+    maxVolume: 50

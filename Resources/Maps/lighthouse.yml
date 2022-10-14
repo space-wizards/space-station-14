@@ -46831,7 +46831,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 3413
-  type: OrganBrainHuman
+  type: OrganHumanBrain
   components:
   - pos: -10.485348,-16.322273
     parent: 100
@@ -121881,7 +121881,7 @@ entities:
     parent: 100
     type: Transform
 - uid: 13837
-  type: OrganBrainHuman
+  type: OrganHumanBrain
   components:
   - pos: 14.194904,-60.407917
     parent: 100
@@ -122966,7 +122966,7 @@ entities:
     parent: 100
     type: Transform
 - uid: 14004
-  type: OrganEyesHuman
+  type: OrganHumanEyes
   components:
   - pos: -57.40086,26.290295
     parent: 100
