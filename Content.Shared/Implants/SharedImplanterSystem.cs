@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Implants.Components;
 using Robust.Shared.Containers;
 
@@ -43,13 +44,12 @@ public abstract class SharedImplanterSystem : EntitySystem
         if (!HasComp<ImplantedComponent>(target))
             EnsureComp<ImplantedComponent>(target);
 
-        var implantContainer = _container.EnsureContainer<Container>(target, ImplantSlotId);
-        implantComp.EntityUid = target;
+        var implantContainer = _container.EnsureContainer<ContainerSlot>(target, ImplantSlotId);
         implanterContainer.Remove(implant);
         component.NumberOfEntities = implanterContainer.ContainedEntities.Count;
+        implantComp.EntityUid = target;
         implantContainer.OccludesLight = false;
         implantContainer.Insert(implant);
-
 
         if (component.CurrentMode == ImplanterToggleMode.Inject && !component.ImplantOnly)
             DrawMode(component);
@@ -61,7 +61,7 @@ public abstract class SharedImplanterSystem : EntitySystem
     }
 
     //Draw the implant out of the target
-    //TODO: Completely remove when surgery is in
+    //TODO: Rework when surgery is in so implant cases can be a thing
     public void Draw(EntityUid implanter, EntityUid target, ImplanterComponent component)
     {
         if (!_container.TryGetContainer(implanter, ImplanterSlotId, out var implanterContainer))

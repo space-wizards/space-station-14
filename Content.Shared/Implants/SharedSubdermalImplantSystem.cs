@@ -15,7 +15,6 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<SubdermalImplantComponent, GetItemActionsEvent>(GetImplantAction);
         SubscribeLocalEvent<SubdermalImplantComponent, EntGotInsertedIntoContainerMessage>(OnInsert);
     }
 
@@ -31,10 +30,5 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
         }
 
         //TODO: See if you need to put any passive or reactive implant logic in here
-    }
-
-    private void GetImplantAction(EntityUid uid, SubdermalImplantComponent component, GetItemActionsEvent args)
-    {
-        //TODO: Determine if you need this at all
     }
 }

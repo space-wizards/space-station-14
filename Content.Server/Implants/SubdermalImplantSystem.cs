@@ -1,11 +1,8 @@
-﻿using System.Linq;
-using Content.Server.Explosion.Components;
-using Content.Server.Explosion.EntitySystems;
-using Content.Shared.Body.Components;
+﻿using Content.Server.Light.Events;
+using Content.Shared.Actions;
 using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
 using Content.Shared.MobState;
-using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 
 namespace Content.Server.Implants;
@@ -13,7 +10,6 @@ namespace Content.Server.Implants;
 public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
 {
     [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly TriggerSystem _trigger = default!;
 
     public override void Initialize()
     {

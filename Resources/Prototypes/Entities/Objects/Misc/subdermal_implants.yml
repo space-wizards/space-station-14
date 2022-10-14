@@ -39,11 +39,11 @@
     - type: SubdermalImplant
       implantAction: ToggleLight
     - type: PointLight
-      netsync: false
       enabled: false
+      radius: 2.5
+      softness: 5
       mask: /Textures/Effects/LightMasks/cone.png
       autoRot: true
-      radius: 3
     - type: Tag
       tags:
         - SubdermalImplant
