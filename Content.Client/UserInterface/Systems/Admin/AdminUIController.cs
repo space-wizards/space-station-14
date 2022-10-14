@@ -1,5 +1,6 @@
 ﻿using Content.Client.Administration.Managers;
 using Content.Client.Administration.UI;
+using Content.Client.Administration.UI.Tabs.ObjectsTab;
 using Content.Client.Administration.UI.Tabs.PlayerTab;
 using Content.Client.Gameplay;
 using Content.Client.UserInterface.Controls;
@@ -34,15 +35,16 @@ public sealed class AdminUIController : UIController, IOnStateEntered<GameplaySt
     public void OnStateEntered(GameplayState state)
     {
         DebugTools.Assert(_window == null);
+
         _window = UIManager.CreateWindow<AdminMenuWindow>();
         _adminButton = UIManager.GetActiveUIWidget<MenuBar.Widgets.GameTopMenuBar>().AdminButton;
         LayoutContainer.SetAnchorPreset(_window, LayoutContainer.LayoutPreset.Center);
+
         _window.PlayerTabControl.OnEntryPressed += PlayerTabEntryPressed;
-        _window.OnOpen += () => _adminButton.Pressed = true;
-        _window.OnClose += () => _adminButton.Pressed = false;
-
+        _window.ObjectsTabControl.OnEntryPressed += ObjectsTabEntryPressed;
+        _window.OnOpen += OnWindowOpen;
+        _window.OnClose += OnWindowClosed;
         _admin.AdminStatusUpdated += AdminStatusUpdated;
-
         _adminButton.OnPressed += AdminButtonPressed;
 
         _input.SetInputCommand(ContentKeyFunctions.OpenAdminMenu,
@@ -51,10 +53,27 @@ public sealed class AdminUIController : UIController, IOnStateEntered<GameplaySt
         AdminStatusUpdated();
     }
 
+    private void OnWindowOpen()
+    {
+        if (_adminButton != null)
+            _adminButton.Pressed = true;
+    }
+
+    private void OnWindowClosed()
+    {
+        if (_adminButton != null)
+            _adminButton.Pressed = false;
+    }
+
     public void OnStateExited(GameplayState state)
     {
         if (_window != null)
         {
+            _window.PlayerTabControl.OnEntryPressed -= PlayerTabEntryPressed;
+            _window.ObjectsTabControl.OnEntryPressed -= ObjectsTabEntryPressed;
+            _window.OnOpen -= OnWindowOpen;
+            _window.OnClose -= OnWindowClosed;
+
             _window.Dispose();
             _window = null;
         }
@@ -100,6 +119,24 @@ public sealed class AdminUIController : UIController, IOnStateEntered<GameplaySt
             return;
 
         var uid = button.PlayerUid.Value;
+        var function = args.Event.Function;
+
+        if (function == EngineKeyFunctions.UIClick)
+            _conHost.ExecuteCommand($"vv {uid}");
+        else if (function == EngineKeyFunctions.UseSecondary)
+            _verbs.VerbMenu.OpenVerbMenu(uid, true);
+        else
+            return;
+
+        args.Event.Handle();
+    }
+
+    private void ObjectsTabEntryPressed(ButtonEventArgs args)
+    {
+        if (args.Button is not ObjectsTabEntry button)
+            return;
+
+        var uid = button.AssocEntity;
         var function = args.Event.Function;
 
         if (function == EngineKeyFunctions.UIClick)

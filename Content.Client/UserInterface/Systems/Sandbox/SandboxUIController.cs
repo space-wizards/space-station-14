@@ -1,4 +1,5 @@
-﻿using Content.Client.Gameplay;
+﻿using Content.Client.Administration.Managers;
+using Content.Client.Gameplay;
 using Content.Client.Markers;
 using Content.Client.Sandbox;
 using Content.Client.SubFloor;
@@ -7,6 +8,7 @@ using Content.Client.UserInterface.Systems.DecalPlacer;
 using Content.Client.UserInterface.Systems.Sandbox.Windows;
 using Content.Shared.Input;
 using JetBrains.Annotations;
+using Robust.Client.Console;
 using Robust.Client.Debugging;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
@@ -49,6 +51,8 @@ public sealed class SandboxUIController : UIController, IOnStateChanged<Gameplay
         _sandboxButton = UIManager.GetActiveUIWidget<MenuBar.Widgets.GameTopMenuBar>().SandboxButton;
         _sandboxButton.OnPressed += SandboxButtonPressed;
         EnsureWindow();
+
+        CheckSandboxVisibility();
 
         _input.SetInputCommand(ContentKeyFunctions.OpenEntitySpawnWindow,
             InputCmdHandler.FromDelegate(_ => EntitySpawningController.ToggleWindow()));
@@ -94,9 +98,12 @@ public sealed class SandboxUIController : UIController, IOnStateChanged<Gameplay
         _window.MachineLinkingButton.OnPressed += _ => _sandbox.MachineLinking();
     }
 
-    private void GameHudOnSandboxButtonToggled(bool pressed)
+    private void CheckSandboxVisibility()
     {
-        ToggleWindow();
+        if (_sandboxButton == null)
+            return;
+
+        _sandboxButton.Visible = _sandbox.SandboxAllowed;
     }
 
     public void OnStateExited(GameplayState state)
@@ -120,11 +127,15 @@ public sealed class SandboxUIController : UIController, IOnStateChanged<Gameplay
     public void OnSystemLoaded(SandboxSystem system)
     {
         system.SandboxDisabled += CloseAll;
+        system.SandboxEnabled += CheckSandboxVisibility;
+        system.SandboxDisabled += CheckSandboxVisibility;
     }
 
     public void OnSystemUnloaded(SandboxSystem system)
     {
         system.SandboxDisabled -= CloseAll;
+        system.SandboxEnabled -= CheckSandboxVisibility;
+        system.SandboxDisabled -= CheckSandboxVisibility;
     }
 
     private void SandboxButtonPressed(ButtonEventArgs args)

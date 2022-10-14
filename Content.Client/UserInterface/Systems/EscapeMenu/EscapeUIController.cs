@@ -20,6 +20,9 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
 {
     [Dependency] private readonly IClientConsoleHost _console = default!;
     [Dependency] private readonly IUriOpener _uri = default!;
+    [Dependency] private readonly ChangelogUIController _changelog = default!;
+    [Dependency] private readonly InfoUIController _info = default!;
+    [Dependency] private readonly OptionsUIController _options = default!;
 
     private Options.UI.EscapeMenu? _escapeWindow;
 
@@ -38,14 +41,13 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
         _escapeWindow.ChangelogButton.OnPressed += _ =>
         {
             CloseEscapeWindow();
-            // Put this back when changelog button no longer controls the window
-            // UIManager.GetUIController<ChangelogUIController>().ToggleWindow();
+            _changelog.ToggleWindow();
         };
 
         _escapeWindow.RulesButton.OnPressed += _ =>
         {
             CloseEscapeWindow();
-            UIManager.GetUIController<InfoUIController>().OpenWindow();
+            _info.OpenWindow();
         };
 
         _escapeWindow.DisconnectButton.OnPressed += _ =>
@@ -57,7 +59,7 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
         _escapeWindow.OptionsButton.OnPressed += _ =>
         {
             CloseEscapeWindow();
-            UIManager.GetUIController<OptionsUIController>().OpenWindow();
+            _options.OpenWindow();
         };
 
         _escapeWindow.QuitButton.OnPressed += _ =>

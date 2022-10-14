@@ -1,18 +1,6 @@
 Entries:
 - author: ElectroJr
   changes:
-  - {message: Fixed disposal junctions & other flip-able entities from becoming invisible
-      after flipping., type: Fix}
-  id: 1943
-  time: '2022-07-14T16:04:24.0000000+00:00'
-- author: themias
-  changes:
-  - {message: AMIV now has stages. The final stage has a small chance of monkefication.,
-    type: Tweak}
-  id: 1944
-  time: '2022-07-14T16:06:54.0000000+00:00'
-- author: ElectroJr
-  changes:
   - {message: Fixed a bug that sometimes made it impossible to (un)weld an entity.,
     type: Fix}
   id: 1945
@@ -2940,3 +2928,17 @@ Entries:
       light., type: Fix}
   id: 2442
   time: '2022-10-13T17:14:53.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed new actions not appearing on the action bar and window automatically.,
+    type: Fix}
+  - {message: Fixed old actions not being removed from the action bar and window automatically.,
+    type: Fix}
+  id: 2443
+  time: '2022-10-13T18:10:47.0000000+00:00'
+- author: Scribbles0
+  changes:
+  - {message: Fixed reinforced walls being easier to break than normal steel walls.,
+    type: Fix}
+  id: 2444
+  time: '2022-10-14T02:17:08.0000000+00:00'
