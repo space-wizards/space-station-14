@@ -290,7 +290,7 @@ public class SharedBodySystem : EntitySystem
         if (id == null || !Resolve(id.Value, ref part, false))
             return gibs;
 
-        foreach (var organ in part.Organs)
+        foreach (var organ in part.Organs.ToArray())
         {
             if (OrphanOrgan(organ))
             {
