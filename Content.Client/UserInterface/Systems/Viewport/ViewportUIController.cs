@@ -68,7 +68,7 @@ public sealed class ViewportUIController : UIController
             return;
         }
 
-        Viewport.Viewport.ViewportSize = ViewportSize;
+        UpdateViewportRatio();
         Viewport.Viewport.HorizontalExpand = true;
         Viewport.Viewport.VerticalExpand = true;
         _eyeManager.MainViewport = Viewport.Viewport;
