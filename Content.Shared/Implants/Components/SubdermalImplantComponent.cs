@@ -1,12 +1,11 @@
-﻿using Content.Shared.Actions.ActionTypes;
+﻿using Content.Shared.Actions;
+using Content.Shared.Actions.ActionTypes;
 
 namespace Content.Shared.Implants.Components;
 
 [RegisterComponent]
 public sealed class SubdermalImplantComponent : Component
 {
-    //TODO: Look into the implant action and see how to get it properly working.
-
     /// <summary>
     /// Used where you want the implant to grant the owner an instant action.
     /// </summary>
@@ -19,5 +18,15 @@ public sealed class SubdermalImplantComponent : Component
     /// </summary>
     public EntityUid? EntityUid;
 
-    //TODO: Add things like unremoveable implant checks
+    /// <summary>
+    /// Should this implant be removeable?
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("permanent")]
+    public bool Permanent = false;
+}
+
+public sealed class OpenStorageImplantEvent : InstantActionEvent
+{
+
 }

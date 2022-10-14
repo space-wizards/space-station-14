@@ -84,14 +84,15 @@
   parent: BaseSubdermalImplant
   id: StorageImplant
   name: storage implant
-  description: made with bluespace technology, allows the user to fit about two medium items in hidden storage
+  description: made with bluespace technology, allows the user to fit a few items in hidden storage
   noSpawn: true
   components:
     - type: SubdermalImplant
+      implantAction: OpenStorageImplant
     - type: Item
       size: 9999
     - type: Storage
-      capacity: 100
+      capacity: 20 #10-20 should be more than enough for this
     - type: ContainerContainer
       containers:
         storagebase: !type:Container
@@ -145,15 +146,3 @@
       intensitySlope: 5
       maxIntensity: 50
       canCreateVacuum: true
-
-#Admin Spawn implants
-
-- type: entity
-  parent: BaseSubdermalImplant
-  id: UndeadImplant
-  name: undead implant
-  description: a loaded zombie virus all in one implant
-  noSpawn: true
-  components:
-    - type: SubdermalImplant
-      implantAction: TurnUndead

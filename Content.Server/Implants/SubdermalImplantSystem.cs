@@ -1,6 +1,4 @@
-﻿using Content.Server.Light.Events;
-using Content.Shared.Actions;
-using Content.Shared.Implants;
+﻿using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
 using Content.Shared.MobState;
 using Robust.Shared.Containers;
@@ -15,12 +13,11 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ImplantedComponent, MobStateChangedEvent>(RelayImplantEvent);
-        //SubscribeLocalEvent<ImplantedComponent, GetVerbsEvent<ActivationVerb>>(RelayImplantEvent); //see if this can get storage working
-        //TODO: Revisit when StorageSystem is reworked or there's a way to get the storage verb onto a prototype
+        SubscribeLocalEvent<ImplantedComponent, MobStateChangedEvent>(RelayToImplantEvent);
     }
 
-    private void RelayImplantEvent<T>(EntityUid uid, ImplantedComponent component, T args) where T : EntityEventArgs
+    //Relays from the implanted to the implant
+    private void RelayToImplantEvent<T>(EntityUid uid, ImplantedComponent component, T args) where T : EntityEventArgs
     {
         if (!_container.TryGetContainer(uid, ImplantSlotId, out var implantContainer))
             return;
@@ -28,6 +25,15 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
         foreach (var implant in implantContainer.ContainedEntities)
         {
             RaiseLocalEvent(implant, args);
+        }
+    }
+
+    //Relays from the implant to the implanted
+    private void RelayToImplantedEvent<T>(EntityUid uid, SubdermalImplantComponent component, T args) where T : EntityEventArgs
+    {
+        if (component.EntityUid != null)
+        {
+            RaiseLocalEvent(component.EntityUid.Value, args);
         }
     }
 }

@@ -23,6 +23,13 @@
   event: !type:ToggleActionEvent
 
 - type: instantAction
+  id: OpenStorageImplant
+  name: action-description-toggle-light
+  description: Objects/Tools/flashlight.rsi/flashlight.png
+  icon: Interface/Actions/zombie-turn.png
+  event: !type:OpenStorageImplantEvent
+
+- type: instantAction
   id: ToggleSuitHelmet
   name: action-name-hardsuit
   description: action-description-hardsuit

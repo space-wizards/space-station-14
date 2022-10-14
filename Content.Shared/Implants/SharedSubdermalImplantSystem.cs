@@ -16,6 +16,7 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<SubdermalImplantComponent, EntGotInsertedIntoContainerMessage>(OnInsert);
+        SubscribeLocalEvent<SubdermalImplantComponent, EntGotRemovedFromContainerMessage>(OnRemove);
     }
 
     private void OnInsert(EntityUid uid, SubdermalImplantComponent component, EntGotInsertedIntoContainerMessage args)
@@ -28,7 +29,15 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
             var action = new InstantAction(_prototypeManager.Index<InstantActionPrototype>(component.ImplantAction));
             _actionsSystem.AddAction(component.EntityUid.Value, action, uid);
         }
-
-        //TODO: See if you need to put any passive or reactive implant logic in here
     }
+
+    private void OnRemove(EntityUid uid, SubdermalImplantComponent component, EntGotRemovedFromContainerMessage args)
+    {
+        if (component.EntityUid == null)
+            return;
+
+        if (component.ImplantAction != null)
+            _actionsSystem.RemoveProvidedActions(component.EntityUid.Value, uid);
+    }
+
 }
