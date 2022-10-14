@@ -33,7 +33,7 @@ namespace Content.Client.Gameplay
 
         private readonly HandsUIController _handsController;
 
-        public MainViewport Viewport { get; private set; } = new();
+        public MainViewport Viewport { get; private set; } = default!;
 
         public GameplayState()
         {
@@ -46,34 +46,7 @@ namespace Content.Client.Gameplay
         {
             base.Startup();
 
-            // TODO: Set active screen here. This is because we have
-            // user-selectable screen types.
-
-            Viewport.Viewport.ViewportSize = ViewportSize;
-
-            // ?
-            Viewport.Viewport.HorizontalExpand = true;
-            Viewport.Viewport.VerticalExpand = true;
-
             LoadMainScreen();
-
-            // Add the viewport to the root of the current state's primary control.
-            // TODO: This might be legacy code? There's absolutely nothing stopping me
-            // from just dropping MainViewport in the XAML as a UIWidget.
-            // UserInterfaceManager.StateRoot.AddChild(Viewport); nope
-
-            // Set the anchor preset (?) to 'wide'.
-            // TODO: This is where the oldchat stuff needs to start.
-            // Done in the screen.
-            // LayoutContainer.SetAnchorPreset(Viewport, LayoutContainer.LayoutPreset.Wide);
-
-            // Set the viewport to the first control to be drawn.
-            // TODO: Wrapper control around this?
-            // Done in XAML.
-            // Viewport.SetPositionFirst();
-
-            // Set the eyemanager's viewport to the viewport widget's viewport.
-            _eyeManager.MainViewport = Viewport.Viewport;
 
             // Add the hand-item overlay.
             _overlayManager.AddOverlay(new ShowHandItemOverlay());
@@ -106,7 +79,6 @@ namespace Content.Client.Gameplay
                 return;
             }
 
-            _uiManager.ActiveScreen.RemoveChild(Viewport);
             _uiManager.UnloadScreen();
 
             LoadMainScreen();
@@ -130,7 +102,12 @@ namespace Content.Client.Gameplay
                     break;
             }
 
-            _uiManager.ActiveScreen!.FindControl<Control>("MainViewportContainer").AddChild(Viewport);
+            Viewport = _uiManager.ActiveScreen!.GetWidget<MainViewport>()!;
+            Viewport.Viewport.ViewportSize = ViewportSize;
+            Viewport.Viewport.HorizontalExpand = true;
+            Viewport.Viewport.VerticalExpand = true;
+            _eyeManager.MainViewport = Viewport.Viewport;
+
             _handsController.ReloadHands();
         }
 

@@ -13,7 +13,7 @@ public sealed partial class DefaultGameScreen : UIScreen
 
         AutoscaleMaxResolution = new Vector2i(1080, 770);
 
-        SetAnchorPreset(MainViewportContainer, LayoutPreset.Wide);
+        SetAnchorPreset(MainViewport, LayoutPreset.Wide);
         SetAnchorAndMarginPreset(TopBar, LayoutPreset.TopLeft, margin: 10);
         SetAnchorAndMarginPreset(Actions, LayoutPreset.BottomLeft, margin: 10);
         SetAnchorAndMarginPreset(Ghost, LayoutPreset.BottomWide, margin: 80);
