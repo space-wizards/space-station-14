@@ -42,7 +42,7 @@ public class ActionButtonContainer : GridContainer
             if (action == null)
                 continue;
 
-            ((ActionButton) GetChild(i)).UpdateData(_entityManager, action);
+            ((ActionButton) GetChild(i)).UpdateData(action);
         }
     }
 
