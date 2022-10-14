@@ -40,16 +40,17 @@ namespace Content.Shared.Interaction
     [UsedImplicitly]
     public abstract class SharedInteractionSystem : EntitySystem
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly SharedPhysicsSystem _sharedBroadphaseSystem = default!;
-        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
-        [Dependency] private readonly SharedVerbSystem _verbSystem = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly RotateToFaceSystem _rotateToFaceSystem = default!;
+        [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+        [Dependency] private readonly SharedPhysicsSystem _sharedBroadphaseSystem = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
+        [Dependency] private readonly SharedVerbSystem _verbSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly UseDelaySystem _useDelay = default!;
-        [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
 
         private const CollisionGroup InRangeUnobstructedMask
             = CollisionGroup.Impassable | CollisionGroup.InteractImpassable;
@@ -88,13 +89,13 @@ namespace Content.Shared.Interaction
         /// </summary>
         private void OnBoundInterfaceInteractAttempt(BoundUserInterfaceMessageAttempt ev)
         {
-            if (ev.Sender.AttachedEntity is not EntityUid user || !_actionBlockerSystem.CanInteract(user, ev.Target))
+            if (ev.Sender.AttachedEntity is not { } user || !_actionBlockerSystem.CanInteract(user, ev.Target))
             {
                 ev.Cancel();
                 return;
             }
 
-            if (!ContainerSystem.IsInSameOrParentContainer(user, ev.Target) && !CanAccessViaStorage(user, ev.Target))
+            if (!_containerSystem.IsInSameOrParentContainer(user, ev.Target) && !CanAccessViaStorage(user, ev.Target))
             {
                 ev.Cancel();
                 return;
@@ -103,7 +104,6 @@ namespace Content.Shared.Interaction
             if (!InRangeUnobstructed(user, ev.Target))
             {
                 ev.Cancel();
-                return;
             }
         }
 
@@ -222,7 +222,7 @@ namespace Content.Shared.Interaction
             // Also checks if the item is accessible via some storage UI (e.g., open backpack)
             if (checkAccess
                 && target != null
-                && !ContainerSystem.IsInSameOrParentContainer(user, target.Value)
+                && !_containerSystem.IsInSameOrParentContainer(user, target.Value)
                 && !CanAccessViaStorage(user, target.Value))
                 return;
 
@@ -242,7 +242,7 @@ namespace Content.Shared.Interaction
                 : !checkAccess || InRangeUnobstructed(user, target.Value); // permits interactions with wall mounted entities
 
             // empty-hand interactions
-            if (hands.ActiveHandEntity is not EntityUid held)
+            if (hands.ActiveHandEntity is not { } held)
             {
                 if (inRangeUnobstructed && target != null)
                     InteractHand(user, target.Value);
@@ -346,13 +346,16 @@ namespace Content.Shared.Interaction
         {
             var dir = other.Position - origin.Position;
 
-            if (dir.LengthSquared.Equals(0f)) return 0f;
+            if (dir.LengthSquared.Equals(0f))
+                return 0f;
 
             predicate ??= _ => false;
             var ray = new CollisionRay(origin.Position, dir.Normalized, collisionMask);
             var rayResults = _sharedBroadphaseSystem.IntersectRayWithPredicate(origin.MapId, ray, dir.Length, predicate.Invoke, false).ToList();
 
-            if (rayResults.Count == 0) return dir.Length;
+            if (rayResults.Count == 0)
+                return dir.Length;
+
             return (rayResults[0].HitPos - origin.Position).Length;
         }
 
@@ -384,15 +387,18 @@ namespace Content.Shared.Interaction
             Ignored? predicate = null)
         {
             // Have to be on same map regardless.
-            if (other.MapId != origin.MapId) return false;
+            if (other.MapId != origin.MapId)
+                return false;
 
             var dir = other.Position - origin.Position;
             var length = dir.Length;
 
             // If range specified also check it
-            if (range > 0f && length > range) return false;
+            if (range > 0f && length > range)
+                return false;
 
-            if (MathHelper.CloseTo(length, 0)) return true;
+            if (MathHelper.CloseTo(length, 0))
+                return true;
 
             predicate ??= _ => false;
 
@@ -483,8 +489,8 @@ namespace Content.Shared.Interaction
             {
                 var (worldPosA, worldRotA) = xformA.GetWorldPositionRotation();
                 var xfA = new Robust.Shared.Physics.Transform(worldPosA, worldRotA);
-                var rotB = Transform(otherCoordinates.EntityId).WorldRotation;
-                var xfB = new Robust.Shared.Physics.Transform(targetPos.Position, rotB + otherAngle);
+                var parentRotB = _transform.GetWorldRotation(otherCoordinates.EntityId);
+                var xfB = new Robust.Shared.Physics.Transform(targetPos.Position, parentRotB + otherAngle);
 
                 // Different map or the likes.
                 if (!_sharedBroadphaseSystem.TryGetNearest(origin, other,
@@ -562,8 +568,6 @@ namespace Content.Shared.Interaction
         {
             HashSet<EntityUid> ignored = new();
 
-            bool ignoreAnchored = false;
-
             if (HasComp<ItemComponent>(target) && TryComp(target, out PhysicsComponent? physics) && physics.CanCollide)
             {
                 // If the target is an item, we ignore any colliding entities. Currently done so that if items get stuck
@@ -574,6 +578,7 @@ namespace Content.Shared.Interaction
             {
                 // wall-mount exemptions may be restricted to a specific angle range.da
 
+                bool ignoreAnchored;
                 if (wallMount.Arc >= Math.Tau)
                     ignoreAnchored = true;
                 else
@@ -685,7 +690,7 @@ namespace Content.Shared.Interaction
             bool canReach)
         {
             var ev = new BeforeRangedInteractEvent(user, used, target, clickLocation, canReach);
-            RaiseLocalEvent(used, ev, false);
+            RaiseLocalEvent(used, ev);
             return ev.Handled;
         }
 
@@ -737,7 +742,7 @@ namespace Content.Shared.Interaction
                 return;
 
             var afterInteractUsingEvent = new AfterInteractUsingEvent(user, used, target, clickLocation, canReach);
-            RaiseLocalEvent(target.Value, afterInteractUsingEvent, false);
+            RaiseLocalEvent(target.Value, afterInteractUsingEvent);
         }
 
         #region ActivateItemInWorld
@@ -784,7 +789,7 @@ namespace Content.Shared.Interaction
 
             // Check if interacted entity is in the same container, the direct child, or direct parent of the user.
             // This is bypassed IF the interaction happened through an item slot (e.g., backpack UI)
-            if (checkAccess && !ContainerSystem.IsInSameOrParentContainer(user, used) && !CanAccessViaStorage(user, used))
+            if (checkAccess && !_containerSystem.IsInSameOrParentContainer(user, used) && !CanAccessViaStorage(user, used))
                 return false;
 
             // Does the user have hands?

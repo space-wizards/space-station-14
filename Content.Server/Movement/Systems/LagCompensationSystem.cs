@@ -58,50 +58,47 @@ public sealed class LagCompensationSystem : EntitySystem
         component.Positions.Enqueue((_timing.CurTime, args.NewPosition, args.NewRotation));
     }
 
-    public Angle GetAngle(EntityUid uid, IPlayerSession pSession, TransformComponent? xform = null)
+    public (EntityCoordinates Coordinates, Angle Angle) GetCoordinatesAngle(EntityUid uid, IPlayerSession pSession,
+        TransformComponent? xform = null)
     {
-        // TODO: Common method
         if (!Resolve(uid, ref xform))
-            return Angle.Zero;
+            return (EntityCoordinates.Invalid, Angle.Zero);
 
-        var angle = xform.LocalRotation;
+        var angle = Angle.Zero;
+        var coordinates = EntityCoordinates.Invalid;
         var ping = pSession.Ping;
         var sentTime = _timing.CurTime - TimeSpan.FromMilliseconds(ping);
 
-        if (!TryComp<LagCompensationComponent>(uid, out var lag))
-            return angle;
+        if (!TryComp<LagCompensationComponent>(uid, out var lag) || lag.Positions.Count == 0)
+            return (xform.Coordinates, xform.LocalRotation);
 
         foreach (var pos in lag.Positions)
         {
+            coordinates = pos.Item2;
+            angle = pos.Item3;
+
             if (pos.Item1 >= sentTime)
                 break;
-
-            angle = pos.Item3;
         }
 
+        if (coordinates == default)
+        {
+            coordinates = xform.Coordinates;
+            angle = xform.LocalRotation;
+        }
+
+        return (coordinates, angle);
+    }
+
+    public Angle GetAngle(EntityUid uid, IPlayerSession pSession, TransformComponent? xform = null)
+    {
+        var (_, angle) = GetCoordinatesAngle(uid, pSession, xform);
         return angle;
     }
 
     public EntityCoordinates GetCoordinates(EntityUid uid, IPlayerSession pSession, TransformComponent? xform = null)
     {
-        if (!Resolve(uid, ref xform))
-            return EntityCoordinates.Invalid;
-
-        var coordinates = xform.Coordinates;
-        var ping = pSession.Ping;
-        var sentTime = _timing.CurTime - TimeSpan.FromMilliseconds(ping);
-
-        if (!TryComp<LagCompensationComponent>(uid, out var lag))
-            return coordinates;
-
-        foreach (var pos in lag.Positions)
-        {
-            if (pos.Item1 >= sentTime)
-                break;
-
-            coordinates = pos.Item2;
-        }
-
+        var (coordinates, _) = GetCoordinatesAngle(uid, pSession, xform);
         return coordinates;
     }
 }

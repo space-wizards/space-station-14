@@ -385,9 +385,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
         if (session is IPlayerSession pSession)
         {
-            var actual = Transform(target).Coordinates;
-            targetCoordinates = _lag.GetCoordinates(target, pSession);
-            targetLocalAngle = _lag.GetAngle(target, pSession);
+            (targetCoordinates, targetLocalAngle) = _lag.GetCoordinatesAngle(target, pSession);
         }
         else
         {
