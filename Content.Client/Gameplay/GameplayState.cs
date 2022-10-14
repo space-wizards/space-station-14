@@ -84,6 +84,7 @@ namespace Content.Client.Gameplay
             UserInterfaceManager.PopupRoot.AddChild(_fpsCounter);
             _fpsCounter.Visible = _configurationManager.GetCVar(CCVars.HudFpsCounterVisible);
             _configurationManager.OnValueChanged(CCVars.HudFpsCounterVisible, (show) => { _fpsCounter.Visible = show; });
+            _configurationManager.OnValueChanged(CCVars.UILayout, _ => ReloadMainScreen());
         }
 
         protected override void Shutdown()
