@@ -22,7 +22,7 @@
         </LayoutContainer>
         <BoxContainer Orientation="Vertical" MinWidth="300">
             <menuBar:GameTopMenuBar Name="TopBar" Access="Protected" />
-            <chat:ChatBox VerticalExpand="True" HorizontalExpand="True" Name="Chat" Access="Protected" Main="True" />
+            <chat:ChatBox VerticalExpand="True" HorizontalExpand="True" Name="Chat" Access="Protected" />
         </BoxContainer>
     </SplitContainer>
 </screens:SeparatedChatGameScreen>

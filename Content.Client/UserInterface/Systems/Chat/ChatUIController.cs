@@ -186,6 +186,17 @@ public sealed class ChatUIController : UIController
             InputCmdHandler.FromDelegate(_ => CycleChatChannel(false)));
     }
 
+    public void SetMainChat(bool setting)
+    {
+        var widget = UIManager.ActiveScreen?.GetWidget<ChatBox>();
+        if (widget == null)
+        {
+            return;
+        }
+
+        widget.Main = setting;
+    }
+
     private void FocusChat()
     {
         foreach (var chat in _chats)

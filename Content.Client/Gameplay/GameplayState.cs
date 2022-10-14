@@ -106,6 +106,8 @@ namespace Content.Client.Gameplay
                 screenType = default;
             }
 
+            _chatController.SetMainChat(false);
+
             switch (screenType)
             {
                 case ScreenType.Default:
@@ -115,6 +117,8 @@ namespace Content.Client.Gameplay
                     _uiManager.LoadScreen<SeparatedChatGameScreen>();
                     break;
             }
+
+            _chatController.SetMainChat(true);
 
             Viewport = _uiManager.ActiveScreen!.GetWidget<MainViewport>()!;
             Viewport.Viewport.ViewportSize = ViewportSize;
