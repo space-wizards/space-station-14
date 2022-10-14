@@ -10,6 +10,7 @@ using Content.Client.UserInterface.Systems.Hands;
 using Content.Client.UserInterface.Systems.Hotbar;
 using Content.Client.UserInterface.Systems.Hotbar.Widgets;
 using Content.Client.UserInterface.Systems.Inventory;
+using Content.Client.UserInterface.Systems.Viewport;
 using Content.Client.Viewport;
 using Content.Shared.CCVar;
 using Robust.Client.Graphics;
@@ -34,16 +35,16 @@ namespace Content.Client.Gameplay
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public static readonly Vector2i ViewportSize = (EyeManager.PixelsPerMeter * 21, EyeManager.PixelsPerMeter * 15);
         private FpsCounter _fpsCounter = default!;
+
+        public MainViewport Viewport => _uiManager.ActiveScreen!.GetWidget<MainViewport>()!;
 
         private readonly GhostUIController _ghostController;
         private readonly ActionUIController _actionController;
         private readonly AlertsUIController _alertsController;
         private readonly HotbarUIController _hotbarController;
         private readonly ChatUIController _chatController;
-
-        public MainViewport Viewport { get; private set; } = default!;
+        private readonly ViewportUIController _viewportController;
 
         public GameplayState()
         {
@@ -54,6 +55,7 @@ namespace Content.Client.Gameplay
             _alertsController = _uiManager.GetUIController<AlertsUIController>();
             _hotbarController = _uiManager.GetUIController<HotbarUIController>();
             _chatController = _uiManager.GetUIController<ChatUIController>();
+            _viewportController = _uiManager.GetUIController<ViewportUIController>();
         }
 
         protected override void Startup()
@@ -81,7 +83,6 @@ namespace Content.Client.Gameplay
             _chatController.SetMainChat(false);
 
             base.Shutdown();
-            Viewport.Dispose();
             // Clear viewport to some fallback, whatever.
             _eyeManager.MainViewport = UserInterfaceManager.MainViewport;
             _fpsCounter.Dispose();
@@ -121,12 +122,7 @@ namespace Content.Client.Gameplay
             }
 
             _chatController.SetMainChat(true);
-
-            Viewport = _uiManager.ActiveScreen!.GetWidget<MainViewport>()!;
-            Viewport.Viewport.ViewportSize = ViewportSize;
-            Viewport.Viewport.HorizontalExpand = true;
-            Viewport.Viewport.VerticalExpand = true;
-            _eyeManager.MainViewport = Viewport.Viewport;
+            _viewportController.ReloadViewport();
 
             // TODO: This could just be like, the equivalent of an event or something
             _ghostController.UpdateGui();
@@ -138,28 +134,7 @@ namespace Content.Client.Gameplay
             _chatController.SetSpeechBubbleRoot(viewportContainer);
         }
 
-        public override void FrameUpdate(FrameEventArgs e)
-        {
-            base.FrameUpdate(e);
 
-            Viewport.Viewport.Eye = _eyeManager.CurrentEye;
-
-            // verify that the current eye is not "null". Fuck IEyeManager.
-
-            var ent = _playerMan.LocalPlayer?.ControlledEntity;
-            if (_eyeManager.CurrentEye.Position != default || ent == null)
-                return;
-
-            _entMan.TryGetComponent(ent, out EyeComponent? eye);
-
-            if (eye?.Eye == _eyeManager.CurrentEye
-                && _entMan.GetComponent<TransformComponent>(ent.Value).WorldPosition == default)
-                return; // nothing to worry about, the player is just in null space... actually that is probably a problem?
-
-            // Currently, this shouldn't happen. This likely happened because the main eye was set to null. When this
-            // does happen it can create hard to troubleshoot bugs, so lets print some helpful warnings:
-            Logger.Warning($"Main viewport's eye is in nullspace (main eye is null?). Attached entity: {_entMan.ToPrettyString(ent.Value)}. Entity has eye comp: {eye != null}");
-        }
 
         protected override void OnKeyBindStateChanged(ViewportBoundKeyEventArgs args)
         {
