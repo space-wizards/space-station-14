@@ -52,7 +52,8 @@ namespace Content.Server.Fluids.EntitySystems
 
             // Opacity based on level of fullness to overflow
             // Hard-cap lower bound for visibility reasons
-            var volumeScale = CurrentVolume(puddleComponent).Float() / puddleComponent.OverflowVolume.Float() *
+            var volumeScale = CurrentVolume(puddleComponent.Owner, puddleComponent).Float() /
+                              puddleComponent.OverflowVolume.Float() *
                               puddleComponent.OpacityModifier;
             var puddleSolution = _solutionContainerSystem.EnsureSolution(uid, puddleComponent.SolutionName);
 
@@ -61,10 +62,12 @@ namespace Content.Server.Fluids.EntitySystems
                 EntityManager.TryGetComponent<EvaporationComponent>(uid, out var evaporationComponent);
             bool canEvaporate = (hasEvaporationComponent &&
                                  (evaporationComponent!.LowerLimit == 0 ||
-                                  CurrentVolume(puddleComponent) > evaporationComponent.LowerLimit));
+                                  CurrentVolume(puddleComponent.Owner, puddleComponent) >
+                                  evaporationComponent.LowerLimit));
 
             // "Does this puddle's sprite need changing to the wet floor effect sprite?"
-            bool changeToWetFloor = (CurrentVolume(puddleComponent)<= puddleComponent.WetFloorEffectThreshold
+            bool changeToWetFloor = (CurrentVolume(puddleComponent.Owner, puddleComponent) <=
+                                     puddleComponent.WetFloorEffectThreshold
                                      && canEvaporate);
 
             appearanceComponent.SetData(PuddleVisuals.VolumeScale, volumeScale);
@@ -75,12 +78,12 @@ namespace Content.Server.Fluids.EntitySystems
         private void UpdateSlip(EntityUid entityUid, PuddleComponent puddleComponent)
         {
             if ((puddleComponent.SlipThreshold == FixedPoint2.New(-1) ||
-                 CurrentVolume(puddleComponent) < puddleComponent.SlipThreshold) &&
+                 CurrentVolume(puddleComponent.Owner, puddleComponent) < puddleComponent.SlipThreshold) &&
                 TryComp(entityUid, out StepTriggerComponent? stepTrigger))
             {
                 _stepTrigger.SetActive(entityUid, false, stepTrigger);
             }
-            else if (CurrentVolume(puddleComponent) >= puddleComponent.SlipThreshold)
+            else if (CurrentVolume(puddleComponent.Owner, puddleComponent) >= puddleComponent.SlipThreshold)
             {
                 var comp = EnsureComp<StepTriggerComponent>(entityUid);
                 _stepTrigger.SetActive(entityUid, true, comp);
@@ -120,20 +123,6 @@ namespace Content.Server.Fluids.EntitySystems
                 out var solution)
                 ? solution.CurrentVolume
                 : FixedPoint2.Zero;
-        }
-
-        private FixedPoint2 CurrentVolume(PuddleComponent puddleComponent)
-        {
-            return CurrentVolume(puddleComponent.Owner, puddleComponent);
-        }
-
-        public FixedPoint2 Overflow(EntityUid uid, PuddleComponent? puddleComponent = null)
-        {
-            if (!Resolve(uid, ref puddleComponent))
-                return FixedPoint2.Zero;
-
-            return FixedPoint2.Min(FixedPoint2.Zero,
-                CurrentVolume(uid, puddleComponent) - puddleComponent.OverflowVolume);
         }
 
         /// <summary>
@@ -213,11 +202,10 @@ namespace Content.Server.Fluids.EntitySystems
                 }
             }
 
-            if (stillOverflowing != null && srcSolution.CurrentVolume> sourcePuddleComponent.OverflowVolume)
+            if (stillOverflowing != null && srcSolution.CurrentVolume > sourcePuddleComponent.OverflowVolume)
             {
                 stillOverflowing.Add(srcPuddle);
             }
-
         }
 
         /// <summary>

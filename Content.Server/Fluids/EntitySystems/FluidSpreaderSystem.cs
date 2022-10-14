@@ -15,11 +15,6 @@ namespace Content.Server.Fluids.EntitySystems;
 [UsedImplicitly]
 public sealed class FluidSpreaderSystem : EntitySystem
 {
-    /// <summary>
-    /// Minimal amount of solution that needs to be transferred.
-    /// </summary>
-    public static readonly FixedPoint2 MinimalTransfer = FixedPoint2.New(1);
-
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly PuddleSystem _puddleSystem = default!;
