@@ -1078,10 +1078,10 @@ namespace Content.Shared.CCVar
         ///     have a massive viewport ratio out of nowhere.
         /// </summary>
         public static readonly CVarDef<string> ViewportRatios =
-            CVarDef.Create("viewport.viewport_ratios", "21:15,15:15", CVar.REPLICATED | CVar.ARCHIVE);
+            CVarDef.Create("viewport.ratios", "21:15,17:15,15:15", CVar.REPLICATED | CVar.ARCHIVE);
 
         public static readonly CVarDef<int> ViewportSelectedRatio =
-            CVarDef.Create("viewport.viewport_selected_ratio", 0, CVar.CLIENTONLY | CVar.ARCHIVE);
+            CVarDef.Create("viewport.selected_ratio", 0, CVar.CLIENTONLY | CVar.ARCHIVE);
 
         /*
          * UI
