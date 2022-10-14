@@ -6,6 +6,7 @@
   description: guardian
   save: false
   components:
+    - type: LagCompensation
     - type: GhostTakeoverAvailable
       allowMovement: true
       allowSpeech: true
