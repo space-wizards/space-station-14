@@ -63,12 +63,6 @@
     partType: Torso
     size: 7
     compatibility: Biological
-    mechanisms:
-    - OrganAnimalLungs
-    - OrganAnimalStomach
-    - OrganAnimalLiver
-    - OrganAnimalHeart
-    - OrganAnimalKidneys
   - type: Damageable
     damageContainer: Biological
 

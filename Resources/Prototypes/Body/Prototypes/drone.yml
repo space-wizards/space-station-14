@@ -1,0 +1,17 @@
+﻿type: body
+  name: "drone"
+  id: Drone
+  centerSlot: torso
+  slots:
+    hand 1:
+      part: LeftArmBorg
+    hand 2:
+      part: LeftArmBorg
+    hand 3:
+      part: LeftArmBorg
+    hand 4:
+      part: LeftArmBorg
+    hand 5:
+      part: RightArmBorg
+    hand 6:
+      part: RightArmBorg

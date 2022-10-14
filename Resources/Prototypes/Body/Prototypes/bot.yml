@@ -1,0 +1,7 @@
+﻿- type: bodyPreset
+  name: "bot"
+  id: BotPreset
+  root: torso
+  slots:
+    hand 1:
+      part: LeftArmBorg
