@@ -279,6 +279,11 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
         slotGroup.RemoveButton(data.SlotName);
     }
 
+    public void ReloadSlots()
+    {
+        _inventorySystem.ReloadInventory();
+    }
+
     private void LoadSlots(ClientInventoryComponent clientInv)
     {
         UnloadSlots();

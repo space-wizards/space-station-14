@@ -3,6 +3,7 @@ using Content.Client.Hands;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Screens;
 using Content.Client.UserInterface.Systems.Actions;
+using Content.Client.UserInterface.Systems.Alerts;
 using Content.Client.UserInterface.Systems.Ghost;
 using Content.Client.UserInterface.Systems.Hands;
 using Content.Client.UserInterface.Systems.Hotbar.Widgets;
@@ -38,6 +39,7 @@ namespace Content.Client.Gameplay
         private readonly GhostUIController _ghostController;
         private readonly InventoryUIController _inventoryController;
         private readonly ActionUIController _actionController;
+        private readonly AlertsUIController _alertsController;
 
         public MainViewport Viewport { get; private set; } = default!;
 
@@ -49,6 +51,7 @@ namespace Content.Client.Gameplay
             _ghostController = _uiManager.GetUIController<GhostUIController>();
             _inventoryController = _uiManager.GetUIController<InventoryUIController>();
             _actionController = _uiManager.GetUIController<ActionUIController>();
+            _alertsController = _uiManager.GetUIController<AlertsUIController>();
         }
 
         protected override void Startup()
@@ -122,6 +125,7 @@ namespace Content.Client.Gameplay
             _ghostController.UpdateGui();
             _inventoryController.ReloadSlots();
             _actionController.RegisterActionContainer();
+            _alertsController.SyncAlerts();
         }
 
         public override void FrameUpdate(FrameEventArgs e)
