@@ -28,7 +28,6 @@ namespace Content.Client.Gameplay
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        protected override Type? LinkedScreenType => typeof(DefaultGameScreen);
         public static readonly Vector2i ViewportSize = (EyeManager.PixelsPerMeter * 21, EyeManager.PixelsPerMeter * 15);
         private FpsCounter _fpsCounter = default!;
 
@@ -56,12 +55,7 @@ namespace Content.Client.Gameplay
             Viewport.Viewport.HorizontalExpand = true;
             Viewport.Viewport.VerticalExpand = true;
 
-            // These are the only ones where you can have exactly ONE
-            // of each. The rest can be duplicated across implementations.
-            UserInterfaceManager
-                .ActiveScreen!
-                .FindControl<Control>("MainViewportContainer")
-                .AddChild(Viewport);
+            LoadMainScreen();
 
             // Add the viewport to the root of the current state's primary control.
             // TODO: This might be legacy code? There's absolutely nothing stopping me
@@ -104,21 +98,38 @@ namespace Content.Client.Gameplay
             _uiManager.ClearWindows();
         }
 
-        public void SwitchScreenType()
+        public void ReloadMainScreen()
         {
             if (_uiManager.ActiveScreen == null)
             {
                 return;
             }
 
-
             _uiManager.ActiveScreen.RemoveChild(Viewport);
             _uiManager.UnloadScreen();
 
-            // TODO: Screen switching logic goes here
+            LoadMainScreen();
+        }
 
-            _uiManager.LoadScreen<DefaultGameScreen>();
-            _uiManager.ActiveScreen.FindControl<Control>("MainViewportContainer").AddChild(Viewport);
+        private void LoadMainScreen()
+        {
+            var screenTypeString = _configurationManager.GetCVar(CCVars.UILayout);
+            if (!Enum.TryParse(screenTypeString, out ScreenType screenType))
+            {
+                screenType = default;
+            }
+
+            switch (screenType)
+            {
+                case ScreenType.Default:
+                    _uiManager.LoadScreen<DefaultGameScreen>();
+                    break;
+                case ScreenType.Separated:
+                    _uiManager.LoadScreen<SeparatedChatGameScreen>();
+                    break;
+            }
+
+            _uiManager.ActiveScreen!.FindControl<Control>("MainViewportContainer").AddChild(Viewport);
             _handsController.ReloadHands();
         }
 

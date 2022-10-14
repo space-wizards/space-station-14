@@ -1074,6 +1074,13 @@ namespace Content.Shared.CCVar
             CVarDef.Create("viewport.scale_render", true, CVar.CLIENTONLY | CVar.ARCHIVE);
 
         /*
+         * UI
+         */
+
+        public static readonly CVarDef<string> UILayout =
+            CVarDef.Create("ui.layout", "Default", CVar.CLIENTONLY | CVar.ARCHIVE);
+
+        /*
          * CHAT
          */
 
