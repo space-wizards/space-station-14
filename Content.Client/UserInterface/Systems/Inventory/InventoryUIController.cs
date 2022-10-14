@@ -327,7 +327,6 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
         if (_slotGroups.TryAdd(slotContainer.SlotGroup, slotContainer))
             return true;
 
-        Logger.Warning("Could not add container for slotgroup: " + slotContainer.SlotGroup);
         return false;
     }
 

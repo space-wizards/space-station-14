@@ -8,6 +8,7 @@
     xmlns:hotbar="clr-namespace:Content.Client.UserInterface.Systems.Hotbar.Widgets"
     xmlns:widgets="clr-namespace:Content.Client.UserInterface.Systems.Ghost.Widgets"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
     Name="SeparatedChatHud"
     VerticalExpand="False"
     VerticalAlignment="Bottom"
@@ -20,9 +21,15 @@
             <actions:ActionsBar Name="Actions" Access="Protected" />
             <alerts:AlertsUI Name="Alerts" Access="Protected" />
         </LayoutContainer>
-        <BoxContainer Orientation="Vertical" MinWidth="300">
-            <menuBar:GameTopMenuBar Name="TopBar" Access="Protected" />
-            <chat:ChatBox VerticalExpand="True" HorizontalExpand="True" Name="Chat" Access="Protected" />
-        </BoxContainer>
+        <PanelContainer HorizontalExpand="True">
+            <PanelContainer.PanelOverride>
+                <graphics:StyleBoxFlat BackgroundColor="#2B2C3B" />
+            </PanelContainer.PanelOverride>
+
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True" MinWidth="300" SeparationOverride="10" Margin="10">
+                <menuBar:GameTopMenuBar Name="TopBar" HorizontalExpand="True" Access="Protected" />
+                <chat:ChatBox VerticalExpand="True" HorizontalExpand="True" Name="Chat" Access="Protected" />
+            </BoxContainer>
+        </PanelContainer>
     </SplitContainer>
 </screens:SeparatedChatGameScreen>

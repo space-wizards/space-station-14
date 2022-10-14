@@ -13,13 +13,9 @@ public sealed partial class SeparatedChatGameScreen : UIScreen
 
         AutoscaleMaxResolution = new Vector2i(1080, 770);
 
-        // this is because the loader doesn't recurse through children
-        // AddWidget<MainViewport>(MainViewport);
-
         SetAnchorPreset(ScreenContainer, LayoutPreset.Wide);
         SetAnchorPreset(ViewportContainer, LayoutPreset.Wide);
         SetAnchorPreset(MainViewport, LayoutPreset.Wide);
-        // SetAnchorAndMarginPreset(TopBar, LayoutPreset.TopLeft, margin: 10);
         SetAnchorAndMarginPreset(Actions, LayoutPreset.BottomLeft, margin: 10);
         SetAnchorAndMarginPreset(Ghost, LayoutPreset.BottomWide, margin: 80);
         SetAnchorAndMarginPreset(Hotbar, LayoutPreset.BottomWide, margin: 5);
