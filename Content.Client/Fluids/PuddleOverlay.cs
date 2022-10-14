@@ -1,9 +1,6 @@
 ﻿using Content.Shared.FixedPoint;
-using Content.Shared.Fluids;
-using Content.Shared.Maps;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
-using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
 
@@ -15,24 +12,16 @@ public sealed class PuddleOverlay : Overlay
     [Dependency] private readonly IEyeManager _eyeManager = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
-    private readonly PuddleDebugOverlaySystem _debugOverlaySystem = default!;
+    private readonly PuddleDebugOverlaySystem _debugOverlaySystem;
 
-    private readonly Color _lightPuddle = new(0, 255, 255, 50);
+    private readonly Color _heavyPuddle = new(0, 255, 255, 50);
     private readonly Color _mediumPuddle = new(0, 150, 255, 50);
-    private readonly Color _heavyPuddle = new(0, 50, 255, 50);
-
-    public MapId MapId;
-
-    public readonly List<FixedPoint2> Intensity = new()
-    {
-        FixedPoint2.New(10f),
-        FixedPoint2.New(20f),
-    };
+    private readonly Color _lightPuddle = new(0, 50, 255, 50);
 
     private readonly Font _font;
 
     public override OverlaySpace Space => OverlaySpace.ScreenSpace | OverlaySpace.WorldSpace;
-    
+
     public PuddleOverlay()
     {
         IoCManager.InjectDependencies(this);

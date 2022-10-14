@@ -73,11 +73,11 @@ public sealed class FluidSpreaderSystem : EntitySystem
                     }
                 }
 
-                _puddleSystem.EqualizePuddles(puddle.Owner, puddles, newIteration, puddle);
+                _puddleSystem.EqualizePuddles(puddle.Owner, puddles, totalVolume, newIteration, puddle);
             }
 
             fluidMapData.Puddles = newIteration;
-            fluidMapData.UpdateGoal();
+            fluidMapData.UpdateGoal(_gameTiming.CurTime);
         }
     }
 

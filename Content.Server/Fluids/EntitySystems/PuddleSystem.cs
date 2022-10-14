@@ -184,9 +184,11 @@ namespace Content.Server.Fluids.EntitySystems
         /// </summary>
         /// <param name="srcPuddle">puddle that donates liquids to other puddles</param>
         /// <param name="destinationPuddles">List of puddles that we want to equalize, their puddle <see cref="Solution.CurrentVolume"/> should be less than sourcePuddleComponent</param>
+        /// <param name="totalVolume">Total volume of src and destination puddle</param>
         /// <param name="stillOverflowing">optional parameter, that after equalization adds all still overflowing puddles.</param>
         /// <param name="sourcePuddleComponent">puddleComponent for <paramref name="srcPuddle"/></param>
         public void EqualizePuddles(EntityUid srcPuddle, List<PuddleComponent> destinationPuddles,
+            FixedPoint2 totalVolume,
             HashSet<EntityUid>? stillOverflowing = null,
             PuddleComponent? sourcePuddleComponent = null)
         {
@@ -195,7 +197,7 @@ namespace Content.Server.Fluids.EntitySystems
                     out var srcSolution))
                 return;
 
-            var dividedVolume = CurrentVolume(sourcePuddleComponent) / (destinationPuddles.Count + 1);
+            var dividedVolume = totalVolume / (destinationPuddles.Count + 1);
 
             foreach (var destPuddle in destinationPuddles)
             {
