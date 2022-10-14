@@ -1073,12 +1073,24 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> ViewportScaleRender =
             CVarDef.Create("viewport.scale_render", true, CVar.CLIENTONLY | CVar.ARCHIVE);
 
+        /// <summary>
+        ///     Viewport ratios. This is server-controlled, because you don't want the client to just
+        ///     have a massive viewport ratio out of nowhere.
+        /// </summary>
+        public static readonly CVarDef<string> ViewportRatios =
+            CVarDef.Create("viewport.viewport_ratios", "21:15,15:15", CVar.REPLICATED | CVar.ARCHIVE);
+
+        public static readonly CVarDef<int> ViewportSelectedRatio =
+            CVarDef.Create("viewport.viewport_selected_ratio", 0, CVar.CLIENTONLY | CVar.ARCHIVE);
+
         /*
          * UI
          */
 
         public static readonly CVarDef<string> UILayout =
             CVarDef.Create("ui.layout", "Default", CVar.CLIENTONLY | CVar.ARCHIVE);
+
+
 
         /*
          * CHAT
