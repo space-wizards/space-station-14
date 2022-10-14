@@ -1,12 +1,6 @@
 Entries:
 - author: ElectroJr
   changes:
-  - {message: Fixed a bug that sometimes made it impossible to (un)weld an entity.,
-    type: Fix}
-  id: 1945
-  time: '2022-07-14T21:03:17.0000000+00:00'
-- author: ElectroJr
-  changes:
   - {message: Lockers/morgues/etc should now properly take items., type: Fix}
   id: 1946
   time: '2022-07-14T21:55:36.0000000+00:00'
@@ -2942,3 +2936,8 @@ Entries:
     type: Fix}
   id: 2444
   time: '2022-10-14T02:17:08.0000000+00:00'
+- author: Nairod
+  changes:
+  - {message: Filing cabinets are now movable., type: Tweak}
+  id: 2445
+  time: '2022-10-14T20:10:05.0000000+00:00'
