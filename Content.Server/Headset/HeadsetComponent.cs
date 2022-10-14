@@ -52,11 +52,16 @@ namespace Content.Server.Headset
             return prototype != null && Channels.Contains(prototype.ID) && RadioRequested;
         }
 
-        public void Receive(string message, RadioChannelPrototype channel, EntityUid source)
+        public void Receive(string message, RadioChannelPrototype channel, EntityUid source, bool announcement = false)
         {
-            if (!Channels.Contains(channel.ID) || !Owner.TryGetContainer(out var container)) return;
+            if (!Channels.Contains(channel.ID) || !Owner.TryGetContainerMan(out var containerMan))
+                return;
 
-            if (!_entMan.TryGetComponent(container.Owner, out ActorComponent? actor)) return;
+            if (!containerMan.TryGetContainer(Owner, out var container))
+                return;
+
+            if (!_entMan.TryGetComponent(container.Owner, out ActorComponent? actor))
+                return;
 
             var playerChannel = actor.PlayerSession.ConnectedClient;
 
@@ -71,13 +76,27 @@ namespace Content.Server.Headset
             if (message.Length == 0)
                 return;
 
-            var msg = new MsgChatMessage
+            MsgChatMessage msg;
+            if (announcement)
             {
-                Channel = ChatChannel.Radio,
-                Message = message,
-                //Square brackets are added here to avoid issues with escaping
-                MessageWrap = Loc.GetString("chat-radio-message-wrap", ("color", channel.Color), ("channel", $"\\[{channel.LocalizedName}\\]"), ("name", name))
-            };
+                msg = new MsgChatMessage
+                {
+                    Channel = ChatChannel.Radio,
+                    Message = message,
+                    //Square brackets are added here to avoid issues with escaping
+                    MessageWrap = Loc.GetString("announcement-radio-message-wrap", ("color", channel.Color), ("channel", $"\\[{channel.LocalizedName}\\]"))
+                };
+            }
+            else
+            {
+                msg = new MsgChatMessage
+                {
+                    Channel = ChatChannel.Radio,
+                    Message = message,
+                    //Square brackets are added here to avoid issues with escaping
+                    MessageWrap = Loc.GetString("chat-radio-message-wrap", ("color", channel.Color), ("channel", $"\\[{channel.LocalizedName}\\]"), ("name", name))
+                };
+            }
 
             _netManager.ServerSendMessage(msg, playerChannel);
         }

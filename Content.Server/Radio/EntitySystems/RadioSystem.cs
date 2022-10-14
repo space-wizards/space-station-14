@@ -35,7 +35,7 @@ namespace Content.Server.Radio.EntitySystems
             args.PushMarkup(Loc.GetString("handheld-radio-component-on-examine",("frequency", component.BroadcastFrequency)));
         }
 
-        public void SpreadMessage(IRadio source, EntityUid speaker, string message, RadioChannelPrototype channel)
+        public void SpreadMessage(IRadio source, EntityUid speaker, string message, RadioChannelPrototype channel, bool announcement = false)
         {
             if (_messages.Contains(message)) return;
 
@@ -43,7 +43,7 @@ namespace Content.Server.Radio.EntitySystems
 
             foreach (var radio in EntityManager.EntityQuery<IRadio>(true))
             {
-                radio.Receive(message, channel, speaker);
+                radio.Receive(message, channel, speaker, announcement);
             }
 
             _messages.Remove(message);
