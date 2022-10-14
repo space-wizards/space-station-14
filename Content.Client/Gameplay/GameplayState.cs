@@ -6,6 +6,7 @@ using Content.Client.UserInterface.Systems.Actions;
 using Content.Client.UserInterface.Systems.Alerts;
 using Content.Client.UserInterface.Systems.Ghost;
 using Content.Client.UserInterface.Systems.Hands;
+using Content.Client.UserInterface.Systems.Hotbar;
 using Content.Client.UserInterface.Systems.Hotbar.Widgets;
 using Content.Client.UserInterface.Systems.Inventory;
 using Content.Client.Viewport;
@@ -35,11 +36,10 @@ namespace Content.Client.Gameplay
         public static readonly Vector2i ViewportSize = (EyeManager.PixelsPerMeter * 21, EyeManager.PixelsPerMeter * 15);
         private FpsCounter _fpsCounter = default!;
 
-        private readonly HandsUIController _handsController;
         private readonly GhostUIController _ghostController;
-        private readonly InventoryUIController _inventoryController;
         private readonly ActionUIController _actionController;
         private readonly AlertsUIController _alertsController;
+        private readonly HotbarUIController _hotbarController;
 
         public MainViewport Viewport { get; private set; } = default!;
 
@@ -47,11 +47,10 @@ namespace Content.Client.Gameplay
         {
             IoCManager.InjectDependencies(this);
 
-            _handsController = _uiManager.GetUIController<HandsUIController>();
             _ghostController = _uiManager.GetUIController<GhostUIController>();
-            _inventoryController = _uiManager.GetUIController<InventoryUIController>();
             _actionController = _uiManager.GetUIController<ActionUIController>();
             _alertsController = _uiManager.GetUIController<AlertsUIController>();
+            _hotbarController = _uiManager.GetUIController<HotbarUIController>();
         }
 
         protected override void Startup()
@@ -121,11 +120,10 @@ namespace Content.Client.Gameplay
             _eyeManager.MainViewport = Viewport.Viewport;
 
             // TODO: This could just be like, the equivalent of an event or something
-            _handsController.ReloadHands();
             _ghostController.UpdateGui();
-            _inventoryController.ReloadSlots();
             _actionController.RegisterActionContainer();
             _alertsController.SyncAlerts();
+            _hotbarController.ReloadHotbar();
         }
 
         public override void FrameUpdate(FrameEventArgs e)
