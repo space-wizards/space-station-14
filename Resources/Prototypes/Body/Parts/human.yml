@@ -32,6 +32,12 @@
     partType: Torso
     size: 14
     compatibility: Biological
+    mechanisms:
+    - OrganHumanHeart
+    - OrganHumanLungs
+    - OrganHumanStomach
+    - OrganHumanLiver
+    - OrganHumanKidneys
 #    criticalThreshold: 100
 #    deadThreshold: 150
 
@@ -52,6 +58,9 @@
     size: 7
     compatibility: Biological
     vital: true
+    mechanisms:
+    - OrganHumanBrain
+    - OrganHumanEyes
 #    criticalThreshold: 50
 #    deadThreshold: 120
   - type: Input
