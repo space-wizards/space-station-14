@@ -2,8 +2,11 @@ using Content.Client.Construction.UI;
 using Content.Client.Hands;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Screens;
+using Content.Client.UserInterface.Systems.Actions;
+using Content.Client.UserInterface.Systems.Ghost;
 using Content.Client.UserInterface.Systems.Hands;
 using Content.Client.UserInterface.Systems.Hotbar.Widgets;
+using Content.Client.UserInterface.Systems.Inventory;
 using Content.Client.Viewport;
 using Content.Shared.CCVar;
 using Robust.Client.Graphics;
@@ -32,6 +35,9 @@ namespace Content.Client.Gameplay
         private FpsCounter _fpsCounter = default!;
 
         private readonly HandsUIController _handsController;
+        private readonly GhostUIController _ghostController;
+        private readonly InventoryUIController _inventoryController;
+        private readonly ActionUIController _actionController;
 
         public MainViewport Viewport { get; private set; } = default!;
 
@@ -40,6 +46,9 @@ namespace Content.Client.Gameplay
             IoCManager.InjectDependencies(this);
 
             _handsController = _uiManager.GetUIController<HandsUIController>();
+            _ghostController = _uiManager.GetUIController<GhostUIController>();
+            _inventoryController = _uiManager.GetUIController<InventoryUIController>();
+            _actionController = _uiManager.GetUIController<ActionUIController>();
         }
 
         protected override void Startup()
@@ -108,7 +117,11 @@ namespace Content.Client.Gameplay
             Viewport.Viewport.VerticalExpand = true;
             _eyeManager.MainViewport = Viewport.Viewport;
 
+            // TODO: This could just be like, the equivalent of an event or something
             _handsController.ReloadHands();
+            _ghostController.UpdateGui();
+            _inventoryController.ReloadSlots();
+            _actionController.RegisterActionContainer();
         }
 
         public override void FrameUpdate(FrameEventArgs e)

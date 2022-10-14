@@ -607,12 +607,37 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         _dragShadow.Visible = false;
     }
 
+    public void ReloadActionContainer()
+    {
+        RegisterActionContainer();
+    }
+
+    public void RegisterActionContainer()
+    {
+        if (UIManager.ActiveScreen == null)
+        {
+            return;
+        }
+
+        var widget = UIManager.ActiveScreen.GetWidget<ActionsBar>();
+        if (widget == null)
+        {
+            return;
+        }
+
+        _actionsSystem?.UnlinkAllActions();
+
+        RegisterActionContainer(widget.ActionsContainer);
+
+        _actionsSystem?.LinkAllActions();
+    }
+
     public void RegisterActionContainer(ActionButtonContainer container)
     {
         if (_container != null)
         {
-            Logger.Warning("Action container already defined for UI controller");
-            return;
+            _container.ActionPressed -= OnActionPressed;
+            _container.ActionUnpressed -= OnActionPressed;
         }
 
         _container = container;
