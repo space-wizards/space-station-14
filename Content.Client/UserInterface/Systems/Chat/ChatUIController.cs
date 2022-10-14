@@ -236,7 +236,8 @@ public sealed class ChatUIController : UIController
     {
         _speechBubbleRoot.Orphan();
         root.AddChild(_speechBubbleRoot);
-        _speechBubbleRoot.SetPositionFirst();
+        LayoutContainer.SetAnchorPreset(_speechBubbleRoot, LayoutContainer.LayoutPreset.Wide);
+        _speechBubbleRoot.SetPositionLast();
     }
 
     private void OnLocalPlayerChanged(LocalPlayerChangedEventArgs obj)
