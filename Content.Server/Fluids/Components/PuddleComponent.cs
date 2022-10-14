@@ -33,13 +33,6 @@ namespace Content.Server.Fluids.Components
         [DataField("slipThreshold")]
         public FixedPoint2 SlipThreshold = DefaultSlipThreshold;
 
-        /// <summary>
-        /// Puddles with volume below this threshold will have their sprite changed to a wet floor effect,
-        /// provided they can evaporate down to zero.
-        /// </summary>
-        [DataField("wetFloorEffectThreshold")]
-        public FixedPoint2 WetFloorEffectThreshold = FixedPoint2.New(5);
-
         [DataField("spillSound")]
         public SoundSpecifier SpillSound = new SoundPathSpecifier("/Audio/Effects/Fluids/splat.ogg");
 

@@ -28,9 +28,7 @@
       - SlipLayer
       hard: false
   - type: Appearance
-    visuals:
-    - type: PuddleVisualizer
-      recolor: true
+  - type: PuddleVisualizer
 
 - type: entity
   name: puddle
@@ -48,6 +46,7 @@
     state: gibblet-0
     netsync: false
   - type: Puddle
+    wetFloorEffectThreshold: 0 # No wet floor sparkles
   - type: SolutionContainerManager
     solutions:
       puddle:
@@ -55,8 +54,7 @@
         - ReagentId: Water
           Quantity: 10
   - type: Appearance
-    visuals:
-    - type: PuddleVisualizer
+  - type: PuddleVisualizer
   - type: Slippery
     launchForwardsMultiplier: 2.0
   - type: StepTrigger
@@ -74,9 +72,7 @@
   - type: Puddle
     slipThreshold: 5
   - type: Appearance
-    visuals:
-    - type: PuddleVisualizer
-      recolor: true
+  - type: PuddleVisualizer
   - type: Slippery
     launchForwardsMultiplier: 2.0
   - type: StepTrigger
@@ -94,8 +90,7 @@
   - type: Puddle
     slipThreshold: 5
   - type: Appearance
-    visuals:
-    - type: PuddleVisualizer
+  - type: PuddleVisualizer
   - type: Slippery
     launchForwardsMultiplier: 2.0
   - type: StepTrigger
@@ -113,12 +108,11 @@
   - type: Puddle
     overflowVolume: 50
     opacityModifier: 8
+    wetFloorEffectThreshold: 0 # No wet floor sparkles
   - type: Evaporation
     evaporateTime: 400 # very slow
   - type: Appearance
-    visuals:
-    - type: PuddleVisualizer
-      recolor: true
+  - type: PuddleVisualizer
 
 - type: entity
   name: vomit
@@ -158,9 +152,8 @@
     launchForwardsMultiplier: 2.0
   - type: StepTrigger
   - type: Appearance
-    visuals:
-    - type: PuddleVisualizer
-      customPuddleSprite: true
+  - type: PuddleVisualizer
+    customPuddleSprite: true
 
 - type: entity
   name: toxins vomit
@@ -182,8 +175,8 @@
         - ReagentId: Water
           Quantity: 5
   - type: Appearance
-    visuals:
-    - type: PuddleVisualizer
+  - type: PuddleVisualizer
+    customPuddleSprite: true
   - type: Slippery
     launchForwardsMultiplier: 2.0
   - type: StepTrigger
@@ -201,8 +194,7 @@
   - type: Puddle
     evaporateTime: 10
   - type: Appearance
-    visuals:
-    - type: PuddleVisualizer
+  - type: PuddleVisualizer
   - type: Slippery
     launchForwardsMultiplier: 2.0
   - type: StepTrigger

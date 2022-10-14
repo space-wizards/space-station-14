@@ -17,6 +17,7 @@ namespace Content.Server.Entry
             "HandheldGPS",
             "CableVisualizer",
             "EnsnareableVisualizer",
+            "PuddleVisualizer"
         };
     }
 }
