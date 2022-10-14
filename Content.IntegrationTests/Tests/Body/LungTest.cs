@@ -22,8 +22,7 @@ namespace Content.IntegrationTests.Tests.Body
   components:
   - type: SolutionContainerManager
   - type: Body
-    template: HumanoidTemplate
-    preset: HumanPreset
+    body: Human
     centerSlot: torso
   - type: MobState
     thresholds:
@@ -49,7 +48,8 @@ namespace Content.IntegrationTests.Tests.Body
         public async Task AirConsistencyTest()
         {
             // --- Setup
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
+                {NoClient = true, ExtraPrototypes = Prototypes});
             var server = pairTracker.Pair.Server;
 
             await server.WaitIdleAsync();
@@ -127,7 +127,8 @@ namespace Content.IntegrationTests.Tests.Body
         [Test]
         public async Task NoSuffocationTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
+                {NoClient = true, ExtraPrototypes = Prototypes});
             var server = pairTracker.Pair.Server;
 
             var mapLoader = server.ResolveDependency<IMapLoader>();
@@ -167,7 +168,8 @@ namespace Content.IntegrationTests.Tests.Body
                 await server.WaitRunTicks(increment);
                 await server.WaitAssertion(() =>
                 {
-                    Assert.False(respirator.SuffocationCycles > respirator.SuffocationCycleThreshold, $"Entity {entityManager.GetComponent<MetaDataComponent>(human).EntityName} is suffocating on tick {tick}");
+                    Assert.False(respirator.SuffocationCycles > respirator.SuffocationCycleThreshold,
+                        $"Entity {entityManager.GetComponent<MetaDataComponent>(human).EntityName} is suffocating on tick {tick}");
                 });
             }
 

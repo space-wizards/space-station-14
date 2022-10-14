@@ -88,8 +88,7 @@
   - type: InputMover
   - type: MobMover
   - type: Body
-    template: BotTemplate
-    preset: BotPreset
+    body: Bot
 
 - type: entity
   parent: MobSiliconBase

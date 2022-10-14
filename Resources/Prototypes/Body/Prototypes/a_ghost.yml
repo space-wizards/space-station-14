@@ -1,0 +1,19 @@
+﻿type: body
+  name: "aGhost"
+  id: Aghost
+  centerSlot: torso
+  slots:
+    right arm:
+      part: RightArmHuman
+      connections:
+      - right hand
+      left arm:
+        part: LeftArmHuman
+        connections:
+        - left hand
+      right hand:
+        part: RightHandHuman
+        connections:
+        - right foot
+      left hand:
+        part: LeftHandHuman

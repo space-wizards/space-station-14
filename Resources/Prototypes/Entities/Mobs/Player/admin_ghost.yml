@@ -24,8 +24,7 @@
     ignorePaused: true
     bodyType: Kinematic
   - type: Body
-    template: AGhostTemplate
-    preset: HumanPreset
+    body: Aghost
   - type: Access
     groups:
     - AllAccess

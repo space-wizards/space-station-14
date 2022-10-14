@@ -23,8 +23,7 @@ namespace Content.IntegrationTests.Tests.Body
   components:
   - type: Appearance
   - type: Body
-    template: HumanoidTemplate
-    preset: HumanPreset
+    body: Human
     centerSlot: torso
   - type: StandingState
 ";
@@ -32,7 +31,8 @@ namespace Content.IntegrationTests.Tests.Body
         [Test]
         public async Task RemoveLegsFallTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
+                {NoClient = true, ExtraPrototypes = Prototypes});
             var server = pairTracker.Pair.Server;
 
             AppearanceComponent appearance = null;
@@ -44,7 +44,8 @@ namespace Content.IntegrationTests.Tests.Body
                 var mapId = mapManager.CreateMap();
 
                 var entityManager = IoCManager.Resolve<IEntityManager>();
-                var human = entityManager.SpawnEntity("HumanBodyAndAppearanceDummy", new MapCoordinates(Vector2.Zero, mapId));
+                var human = entityManager.SpawnEntity("HumanBodyAndAppearanceDummy",
+                    new MapCoordinates(Vector2.Zero, mapId));
 
                 Assert.That(entityManager.TryGetComponent(human, out SharedBodyComponent body));
                 Assert.That(entityManager.TryGetComponent(human, out appearance));
