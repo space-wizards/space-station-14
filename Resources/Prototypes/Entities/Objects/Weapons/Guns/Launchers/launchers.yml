@@ -128,7 +128,10 @@
       tags:
         - CartridgeRocket
     proto: MeteorLarge
-      
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+
 - type: entity
   name: immovable rod launcher
   parent: WeaponLauncherAdmemeMeteorLarge
