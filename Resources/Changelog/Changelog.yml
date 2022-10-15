@@ -1,11 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Ported honkbots and robotics technology from Nyanotrasen MRP., type: Add}
-  - {message: Avionics technology now requires robotics technology., type: Tweak}
-  - {message: Modular mines now require a proximity sensor., type: Tweak}
-  id: 1960
-  time: '2022-07-15T07:54:35.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: 'Fixed some pop-ups that revealed a disguised entity''s name. If there
@@ -2946,3 +2939,9 @@ Entries:
   - {message: 'Slimes have no physical sex, only gender.', type: Tweak}
   id: 2459
   time: '2022-10-15T21:45:47.0000000+00:00'
+- author: Mervill
+  changes:
+  - {message: The PDA light and the Hardsuit light have been nerfed, type: Tweak}
+  - {message: The Blue Flashlight and the Seclite have been buffed, type: Tweak}
+  id: 2460
+  time: '2022-10-15T21:58:33.0000000+00:00'
