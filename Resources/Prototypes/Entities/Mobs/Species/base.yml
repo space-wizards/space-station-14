@@ -178,6 +178,7 @@
     preset: HumanPreset
   - type: Damageable
     damageContainer: Biological
+  - type: RadiationReceiver
   - type: ThermalRegulator
     metabolismHeat: 800
     radiatedHeat: 100
@@ -233,20 +234,18 @@
     fireStackAlternateState: 3
   - type: EnsnareableVisualizer
   - type: CombatMode
-    disarm: true
+    canDisarm: true
   - type: Climbing
   - type: Cuffable
   - type: Ensnareable
     sprite: Objects/Misc/ensnare.rsi
     state: icon
-  - type: CharacterInfo
   - type: AnimationPlayer
   - type: Buckle
   - type: MeleeWeapon
     hidden: true
     soundHit:
       collection: Punch
-    range: 1.5
     angle: 30
     animation: WeaponArcFist
     attackRate: 1
