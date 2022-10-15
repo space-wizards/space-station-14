@@ -37,14 +37,21 @@ public sealed class FaxMachineComponent : Component
     /// <summary>
     /// Should admins be notified on message receive
     /// </summary>
-    [ViewVariables]
+    [ViewVariables(VVAccess.ReadWrite)]
     [DataField("notifyAdmins")]
     public bool NotifyAdmins { get; set; } = false;
     
     /// <summary>
+    /// Should that fax receive nuke codes send by admins. Probably should be captain fax only
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("receiveNukeCodes")]
+    public bool ReceiveNukeCodes { get; set; } = false;
+    
+    /// <summary>
     /// Is fax was emaaged
     /// </summary>
-    [ViewVariables]
+    [ViewVariables(VVAccess.ReadWrite)]
     [DataField("emagged")]
     public bool Emagged { get; set; } = false;
 
