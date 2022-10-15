@@ -30,6 +30,7 @@ namespace Content.Server.AME.Components
         private PowerSupplierComponent? _powerSupplier;
         [DataField("clickSound")] private SoundSpecifier _clickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
         [DataField("injectSound")] private SoundSpecifier _injectSound = new SoundPathSpecifier("/Audio/Effects/bang.ogg");
+        [DataField("noFuelSound")] private SoundSpecifier _noFuelSound = new SoundPathSpecifier("/Audio/Machines/no_fuel.ogg");
 
         private bool Powered => !_entities.TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
@@ -80,7 +81,14 @@ namespace Content.Server.AME.Components
                 var availableInject = fuelJar.FuelAmount >= InjectionAmount ? InjectionAmount : fuelJar.FuelAmount;
                 _powerSupplier.MaxSupply = group.InjectFuel(availableInject, out var overloading);
                 fuelJar.FuelAmount -= availableInject;
-                InjectSound(overloading);
+                if (fuelJar.FuelAmount != 0)
+                {
+                    InjectSound(overloading);
+                }
+                else
+                {
+                    NoFuelSound();
+                }
                 UpdateUserInterface();
             }
 
@@ -284,6 +292,11 @@ namespace Content.Server.AME.Components
         private void InjectSound(bool overloading)
         {
             SoundSystem.Play(_injectSound.GetSound(), Filter.Pvs(Owner), Owner, AudioParams.Default.WithVolume(overloading ? 10f : 0f));
+        }
+
+        private void NoFuelSound()
+        {
+            SoundSystem.Play(_noFuelSound.GetSound(), Filter.Pvs(Owner), Owner, AudioParams.Default.WithVolume(-2f));
         }
     }
 
