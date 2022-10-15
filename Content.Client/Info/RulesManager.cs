@@ -70,10 +70,11 @@ public sealed class RulesManager : SharedRulesManager
         {
             Timer = time
         };
+
         _activePopup.OnQuitPressed += OnQuitPressed;
         _activePopup.OnAcceptPressed += OnAcceptPressed;
         _userInterfaceManager.StateRoot.AddChild(_activePopup);
-        LayoutContainer.SetAnchorAndMarginPreset(_activePopup, LayoutContainer.LayoutPreset.Wide);
+        LayoutContainer.SetAnchorPreset(_activePopup, LayoutContainer.LayoutPreset.Wide);
     }
 
     private void OnQuitPressed()

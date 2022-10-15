@@ -221,3 +221,13 @@
         - DieCondition
   conditions:
     - !type:EscapeShuttleCondition {}
+
+- type: objective
+  id: RandomTraitorProgressObjective
+  issuer: syndicate
+  requirements:
+    - !type:TraitorRequirement {}
+    - !type:MultipleTraitorsRequirement
+  conditions:
+    - !type:RandomTraitorProgressCondition {}
+  canBeDuplicate: true

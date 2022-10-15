@@ -207,6 +207,9 @@
     - type: AddAccentClothing
       accent: ReplacementAccent
       replacement: mumble
+    - type: Construction
+      graph: Muzzle
+      node: muzzle
 
 - type: entity
   parent: ClothingMaskPullableBase

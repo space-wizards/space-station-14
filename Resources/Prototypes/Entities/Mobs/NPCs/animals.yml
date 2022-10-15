@@ -55,7 +55,6 @@
     accent: mouse
   - type: MeleeWeapon
     hidden: true
-    range: 1.5
     angle: 0
     animation: WeaponArcBite
     damage:
@@ -132,7 +131,6 @@
       name: action-name-disarm
   - type: MeleeWeapon
     hidden: true
-    range: 0.3
     angle: 0
     animation: WeaponArcBite
     damage:
@@ -658,7 +656,6 @@
         Base: kangaroo-boxing-dead
   - type: MeleeWeapon
     hidden: true
-    range: 1.5
     angle: 0
     animation: WeaponArcClaw
     damage:
@@ -1186,7 +1183,6 @@
       amount: 3
   - type: MeleeWeapon
     hidden: true
-    range: 0.5
     angle: 0
     animation: WeaponArcBite
     damage:

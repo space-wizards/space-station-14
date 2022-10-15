@@ -17,7 +17,7 @@ public abstract partial class SharedGunSystem
     {
         SubscribeLocalEvent<MagazineAmmoProviderComponent, TakeAmmoEvent>(OnMagazineTakeAmmo);
         SubscribeLocalEvent<MagazineAmmoProviderComponent, GetVerbsEvent<Verb>>(OnMagazineVerb);
-        SubscribeLocalEvent<MagazineAmmoProviderComponent, ItemSlotChangedEvent>(OnMagazineSlotChange);
+        SubscribeLocalEvent<MagazineAmmoProviderComponent, EntInsertedIntoContainerMessage>(OnMagazineSlotChange);
         SubscribeLocalEvent<MagazineAmmoProviderComponent, UseInHandEvent>(OnMagazineUse);
         SubscribeLocalEvent<MagazineAmmoProviderComponent, ExaminedEvent>(OnMagazineExamine);
     }
@@ -55,7 +55,7 @@ public abstract partial class SharedGunSystem
         }
     }
 
-    private void OnMagazineSlotChange(EntityUid uid, MagazineAmmoProviderComponent component, ref ItemSlotChangedEvent args)
+    private void OnMagazineSlotChange(EntityUid uid, MagazineAmmoProviderComponent component, EntInsertedIntoContainerMessage args)
     {
         UpdateAmmoCount(uid);
         if (!TryComp<AppearanceComponent>(uid, out var appearance))
