@@ -71,7 +71,7 @@ public sealed partial class GunSystem : SharedGunSystem
                 if (_interaction.TryRollClumsy(user.Value, GunClumsyChance, clumsy))
                 {
                     // Wound them
-                    Damageable.TryChangeDamage(user, clumsy.ClumsyDamage);
+                    Damageable.TryChangeDamage(user, clumsy.ClumsyDamage, origin: user);
                     _stun.TryParalyze(user.Value, TimeSpan.FromSeconds(3f), true);
 
                     // Apply salt to the wound ("Honk!")
@@ -187,7 +187,7 @@ public sealed partial class GunSystem : SharedGunSystem
                         var dmg = hitscan.Damage;
 
                         if (dmg != null)
-                            dmg = Damageable.TryChangeDamage(hitEntity, dmg);
+                            dmg = Damageable.TryChangeDamage(hitEntity, dmg, origin: user);
 
                         if (dmg != null)
                         {

@@ -19,9 +19,9 @@ namespace Content.Server.Radio.Components
     public sealed class HandheldRadioComponent : Component, IListen, IRadio
 #pragma warning restore 618
     {
-        private ChatSystem _chatSystem = default!;
-        private RadioSystem _radioSystem = default!;
-        private IPrototypeManager _prototypeManager = default!;
+        private ChatSystem? _chatSystem;
+        private RadioSystem? _radioSystem;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         private bool _radioOn;
         [DataField("channels", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<RadioChannelPrototype>))]
@@ -54,14 +54,13 @@ namespace Content.Server.Radio.Components
 
             _radioSystem = EntitySystem.Get<RadioSystem>();
             _chatSystem = EntitySystem.Get<ChatSystem>();
-            IoCManager.Resolve(ref _prototypeManager);
 
             RadioOn = false;
         }
 
         public void Speak(string message)
         {
-            _chatSystem.TrySendInGameICMessage(Owner, message, InGameICChatType.Speak, false);
+            _chatSystem?.TrySendInGameICMessage(Owner, message, InGameICChatType.Speak, false);
         }
 
         public bool Use(EntityUid user)
@@ -109,7 +108,7 @@ namespace Content.Server.Radio.Components
 
         public void Broadcast(string message, EntityUid speaker, RadioChannelPrototype channel)
         {
-            _radioSystem.SpreadMessage(this, speaker, message, channel);
+            _radioSystem?.SpreadMessage(this, speaker, message, channel);
         }
     }
 }

@@ -145,7 +145,7 @@ namespace Content.Server.Shuttles.Systems
             UpdateState(component);
         }
 
-        private void OnConsolePowerChange(EntityUid uid, ShuttleConsoleComponent component, PowerChangedEvent args)
+        private void OnConsolePowerChange(EntityUid uid, ShuttleConsoleComponent component, ref PowerChangedEvent args)
         {
             UpdateState(component);
         }

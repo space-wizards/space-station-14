@@ -6,9 +6,9 @@
       edges:
         - to: solarassembly
           steps:
-            - prototype: SolarAssemblyPart
+            - tag: SolarAssemblyPart
               name: Solar Assembly Parts
-              icon: 
+              icon:
                 sprite: Objects/Power/solar_parts.rsi
                 state: solar_assembly_parts
               doAfter: 1
@@ -41,9 +41,9 @@
             - !type:EntityAnchored
               value: true
           steps:
-            - prototype: SolarTrackerElectronics
+            - tag: SolarTrackerElectronics
               name: Solar Tracker Electronics
-              icon: 
+              icon:
                 sprite: Objects/Misc/module.rsi
                 state: id_mod
               doAfter: 1
@@ -53,7 +53,7 @@
           completed:
             - !type:SnapToGrid
               offset: Center
-          
+
     - node: solarpanel
       entity: SolarPanel
       edges:
