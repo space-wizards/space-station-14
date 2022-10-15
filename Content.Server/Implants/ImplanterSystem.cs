@@ -8,6 +8,7 @@ using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
 using Content.Shared.MobState.Components;
+using Content.Shared.Popups;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Player;
@@ -46,10 +47,11 @@ public sealed class ImplanterSystem : SharedImplanterSystem
 
         //Simplemobs and regular mobs should be injectable, but only regular mobs have mind.
         //So just don't implant/draw anything that isn't living or is a guardian
+        //TODO: Rework a bit when surgery is in to work with implant cases
         if (!HasComp<MobStateComponent>(args.Target.Value) || HasComp<GuardianComponent>(args.Target.Value))
             return;
 
-        //TODO: Remove when surgery is in
+        //TODO: Rework when surgery is in for implant cases
         if (component.CurrentMode == ImplanterToggleMode.Draw && !component.ImplantOnly)
         {
             TryDraw(component, args.User, args.Target.Value, uid);
@@ -72,13 +74,19 @@ public sealed class ImplanterSystem : SharedImplanterSystem
         component.CancelToken = null;
     }
 
-    //Attempt to implant someone else
+    /// <summary>
+    /// Attempt to implant someone else.
+    /// </summary>
+    /// <param name="component">Implanter component</param>
+    /// <param name="user">The entity using the implanter</param>
+    /// <param name="target">The entity being implanted</param>
+    /// <param name="implanter">The implanter being used</param>
     public void TryImplant(ImplanterComponent component, EntityUid user, EntityUid target, EntityUid implanter)
     {
         _popup.PopupEntity(Loc.GetString("injector-component-injecting-user"), target, Filter.Entities(user));
 
         var userName = Identity.Entity(user, EntityManager);
-        _popup.PopupEntity(Loc.GetString("implanter-component-implanting-target", ("user", userName)), user, Filter.Entities(target));
+        _popup.PopupEntity(Loc.GetString("implanter-component-implanting-target", ("user", userName)), user, Filter.Entities(target), PopupType.LargeCaution);
 
         component.CancelToken = new CancellationTokenSource();
 
@@ -93,6 +101,13 @@ public sealed class ImplanterSystem : SharedImplanterSystem
         });
     }
 
+    /// <summary>
+    /// Try to remove an implant and store it in an implanter
+    /// </summary>
+    /// <param name="component">Implanter component</param>
+    /// <param name="user">The entity using the implanter</param>
+    /// <param name="target">The entity getting their implant removed</param>
+    /// <param name="implanter">The implanter being used</param>
     //TODO: Remove when surgery is in
     public void TryDraw(ImplanterComponent component, EntityUid user, EntityUid target, EntityUid implanter)
     {

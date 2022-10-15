@@ -11,7 +11,7 @@
         - SubdermalImplant
         - HideContextMenu
 
-#Fun Implants
+#Fun implants
 
 - type: entity
   parent: BaseSubdermalImplant
@@ -57,7 +57,7 @@
         iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
         event: !type:ToggleActionEvent
 
-#Security Implants
+#Security implants
 
 - type: entity
   parent: BaseSubdermalImplant
@@ -78,7 +78,7 @@
     - type: WirelessNetworkConnection
       range: 500
 
-#Traitor Implants
+#Traitor implants
 
 - type: entity
   parent: BaseSubdermalImplant
@@ -113,8 +113,10 @@
   components:
     - type: SubdermalImplant
       permanent: true
+      implantAction: ActivateMicroBomb
     - type: TriggerOnMobstateChange
       mobState: Dead
+    - type: TriggerOnMicroBombImplantAction
     - type: ExplodeOnTrigger
     - type: GibOnTrigger
       deleteItems: true

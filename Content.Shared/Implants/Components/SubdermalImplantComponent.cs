@@ -1,8 +1,12 @@
 ﻿using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
 
 namespace Content.Shared.Implants.Components;
 
+/// <summary>
+/// Subdermal implants get stored in a container on an entity and grant the entity special actions
+/// The actions can be activated via an action, a passive ability (ie tracking), or a reactive ability (ie on death) or some sort of combination
+/// They're added and removed with implanters
+/// </summary>
 [RegisterComponent]
 public sealed class SubdermalImplantComponent : Component
 {
@@ -26,7 +30,18 @@ public sealed class SubdermalImplantComponent : Component
     public bool Permanent = false;
 }
 
+/// <summary>
+/// Used for opening the storage implant via action.
+/// </summary>
 public sealed class OpenStorageImplantEvent : InstantActionEvent
+{
+
+}
+
+/// <summary>
+/// Used for triggering micro bombs via action
+/// </summary>
+public sealed class ActivateMicroBombImplantEvent : InstantActionEvent
 {
 
 }

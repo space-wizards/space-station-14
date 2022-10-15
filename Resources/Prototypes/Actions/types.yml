@@ -33,6 +33,16 @@
   event: !type:OpenStorageImplantEvent
 
 - type: instantAction
+  id: ActivateMicroBomb
+  name: activate-micro-bomb-action-name
+  description: activate-micro-bomb-action-description
+  itemIconStyle: BigAction
+  icon:
+    sprite: Actions/Implants/implants.rsi
+    state: explosive
+  event: !type:ActivateMicroBombImplantEvent
+
+- type: instantAction
   id: ToggleSuitHelmet
   name: action-name-hardsuit
   description: action-description-hardsuit

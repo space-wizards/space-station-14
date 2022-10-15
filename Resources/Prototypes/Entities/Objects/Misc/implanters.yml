@@ -1,4 +1,6 @@
-﻿- type: entity
+﻿# Implanters
+
+- type: entity
   name: implanter
   description: a syringe fitted to be used exclusively with implants
   id: BaseImplanter
@@ -48,6 +50,7 @@
 - type: entity
   id: BaseImplantOnlyImplanter
   parent: Implanter
+  description: a single use implanter
   abstract: true
   components:
     - type: Sprite
@@ -65,10 +68,12 @@
       currentMode: Inject
       implantOnly: true
 
+#Fun implanters
+
 - type: entity
   id: SadTromboneImplanter
   name: sad trombone implanter
-  description: HONK
+  description: a single use implanter, the implant plays a sad tune on death
   parent: BaseImplantOnlyImplanter
   components:
     - type: ItemSlots
@@ -83,7 +88,7 @@
 - type: entity
   id: LightImplanter
   name: light implanter
-  description: so bright... but why
+  description: a single use implanter, the implant emits light on activation
   parent: BaseImplantOnlyImplanter
   components:
     - type: ItemSlots
@@ -95,10 +100,12 @@
             tags:
               - SubdermalImplant
 
+#Security implanters
+
 - type: entity
   id: TrackingImplanter
   name: tracking implanter
-  description: CIA
+  description: a single use implanter, the implant tracks
   parent: BaseImplantOnlyImplanter
   components:
     - type: ItemSlots
@@ -110,10 +117,12 @@
             tags:
               - SubdermalImplant
 
+#Traitor implanters
+
 - type: entity
   id: StorageImplanter
   name: storage implanter
-  description: bag
+  description: a single use implanter, the implant grants hidden storage
   parent: BaseImplantOnlyImplanter
   components:
     - type: ItemSlots
@@ -125,10 +134,12 @@
             tags:
               - SubdermalImplant
 
+#Nuclear Operative/Special implanters
+
 - type: entity
   id: MicroBombImplanter
   name: micro bomb implanter
-  description: boom
+  description: a single use implanter, the implant is permanent and blows the user up on death
   parent: BaseImplantOnlyImplanter
   components:
     - type: ItemSlots
@@ -143,7 +154,7 @@
 - type: entity
   id: MacroBombImplanter
   name: macro bomb implanter
-  description: bigger bomb
+  description: a single use implanter, the implant creates a large explosion on death after the alloted time
   parent: BaseImplantOnlyImplanter
   components:
     - type: ItemSlots

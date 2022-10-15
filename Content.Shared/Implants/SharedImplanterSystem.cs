@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using Content.Shared.Containers.ItemSlots;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Implants.Components;
 using Content.Shared.Popups;

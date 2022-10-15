@@ -1,4 +1,5 @@
-﻿using Content.Shared.Implants;
+﻿using Content.Server.Explosion.EntitySystems;
+using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
 using Content.Shared.MobState;
 using Robust.Shared.Containers;
@@ -8,12 +9,14 @@ namespace Content.Server.Implants;
 public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
 {
     [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly TriggerSystem _trigger = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<ImplantedComponent, MobStateChangedEvent>(RelayToImplantEvent);
+        SubscribeLocalEvent<SubdermalImplantComponent, ActivateMicroBombImplantEvent>(OnMicroBombActivation);
     }
 
     //Relays from the implanted to the implant
@@ -26,6 +29,11 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
         {
             RaiseLocalEvent(implant, args);
         }
+    }
+
+    private void OnMicroBombActivation(EntityUid uid, SubdermalImplantComponent component, ActivateMicroBombImplantEvent args)
+    {
+        _trigger.Trigger(component.Owner);
     }
 
     //Relays from the implant to the implanted
