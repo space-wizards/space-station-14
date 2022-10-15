@@ -1,10 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: 'Magic staves & wands! You can find them in the fireball, polymorph,
-      death, healing, or door variety.', type: Add}
-  id: 1952
-  time: '2022-07-15T02:45:28.0000000+00:00'
 - author: Deahaka
   changes:
   - {message: Added operating table, type: Add}
@@ -2945,3 +2939,8 @@ Entries:
       to uncuff yourself., type: Add}
   id: 2451
   time: '2022-10-15T17:00:04.0000000+00:00'
+- author: Mervill
+  changes:
+  - {message: Fire Helmets and Atmos Fire Helmets require batteries again., type: Fix}
+  id: 2452
+  time: '2022-10-15T20:15:39.0000000+00:00'
