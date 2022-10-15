@@ -163,10 +163,8 @@
     sprite: Clothing/Uniforms/Jumpsuit/jester.rsi
 
 - type: entity
-  parent: ClothingUniformBase
+  parent: ClothingUniformJumpsuitJester
   id: ClothingUniformJumpsuitJesterAlt
-  name: jester suit
-  description: A jolly dress, well suited to entertain your master, nuncle.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/jester2.rsi
