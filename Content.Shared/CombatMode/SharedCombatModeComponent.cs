@@ -22,9 +22,6 @@ namespace Content.Shared.CombatMode
         [ViewVariables(VVAccess.ReadWrite), DataField("disarm")]
         public bool? CanDisarm;
 
-        [DataField("disarmFailSound")]
-        public readonly SoundSpecifier DisarmFailSound = new SoundPathSpecifier("/Audio/Weapons/punchmiss.ogg");
-
         [DataField("disarmSuccessSound")]
         public readonly SoundSpecifier DisarmSuccessSound = new SoundPathSpecifier("/Audio/Effects/thudswoosh.ogg");
 

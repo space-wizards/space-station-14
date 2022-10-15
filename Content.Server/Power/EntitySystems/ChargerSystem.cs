@@ -47,7 +47,7 @@ internal sealed class ChargerSystem : EntitySystem
         _itemSlotsSystem.RemoveItemSlot(uid, component.ChargerSlot);
     }
 
-    private void OnPowerChanged(EntityUid uid, ChargerComponent component, PowerChangedEvent args)
+    private void OnPowerChanged(EntityUid uid, ChargerComponent component, ref PowerChangedEvent args)
     {
         component.UpdateStatus();
     }

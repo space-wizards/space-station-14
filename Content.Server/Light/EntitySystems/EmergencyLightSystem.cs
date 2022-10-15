@@ -34,7 +34,7 @@ namespace Content.Server.Light.EntitySystems
             SubscribeLocalEvent<EmergencyLightComponent, PowerChangedEvent>(OnEmergencyPower);
         }
 
-        private void OnEmergencyPower(EntityUid uid, EmergencyLightComponent component, PowerChangedEvent args)
+        private void OnEmergencyPower(EntityUid uid, EmergencyLightComponent component, ref PowerChangedEvent args)
         {
             UpdateState(component);
         }
