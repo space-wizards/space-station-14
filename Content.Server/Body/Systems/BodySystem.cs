@@ -147,21 +147,5 @@ namespace Content.Server.Body.Systems
 
             return gibs;
         }
-
-        public bool Orphan(EntityUid? partId, BodyComponent? part = null)
-        {
-            if (partId == null ||
-                !Resolve(partId.Value, ref part, false))
-                return false;
-
-            Drop(partId);
-
-            foreach (var slot in part.Children.Values)
-            {
-                Drop(slot.Child);
-            }
-
-            return false;
-        }
     }
 }

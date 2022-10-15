@@ -190,7 +190,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
                 foreach (var part in headSlots)
                 {
-                    if (!_bodySystem.Orphan(part.Owner, part))
+                    if (!_bodySystem.OrphanParts(part.Owner, part))
                     {
                         continue;
                     }

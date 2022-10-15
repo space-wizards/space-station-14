@@ -287,7 +287,7 @@ public abstract partial class SharedBodySystem : EntitySystem
             if (childPart.Organ && !gibOrgans)
                 continue;
 
-            Drop(slot.Child, childPart);
+            OrphanParts(slot.Child, childPart);
         }
 
         return gibs;
@@ -464,6 +464,26 @@ public abstract partial class SharedBodySystem : EntitySystem
             transform.Coordinates = dropAt;
 
         return true;
+    }
+
+    public bool OrphanParts(EntityUid? partId, BodyComponent? part = null)
+    {
+        if (partId == null ||
+            !Resolve(partId.Value, ref part, false))
+            return false;
+
+        if (!part.Organ)
+            Drop(partId);
+
+        foreach (var slot in part.Children.Values)
+        {
+            if (!TryComp(slot.Child, out BodyComponent? body) || body.Organ)
+                continue;
+
+            Drop(slot.Child);
+        }
+
+        return false;
     }
 
     public bool Delete(EntityUid? id, BodyComponent? part = null)
