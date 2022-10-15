@@ -5,6 +5,7 @@
   name: admin observer
   noSpawn: true
   components:
+  - type: ContentEye
   - type: Tag
     tags:
     - CanPilot
