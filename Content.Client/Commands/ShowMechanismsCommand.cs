@@ -17,11 +17,11 @@ namespace Content.Client.Commands
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            var mechanisms = entityManager.EntityQuery<BodyComponent>(true);
+            var parts = entityManager.EntityQuery<BodyComponent>(true);
 
-            foreach (var mechanism in mechanisms)
+            foreach (var mechanism in parts)
             {
-                if (entityManager.TryGetComponent(mechanism.Owner, out SpriteComponent? sprite))
+                if (mechanism.Organ && entityManager.TryGetComponent(mechanism.Owner, out SpriteComponent? sprite))
                 {
                     sprite.ContainerOccluded = false;
                 }
