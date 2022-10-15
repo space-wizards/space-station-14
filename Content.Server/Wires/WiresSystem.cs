@@ -391,7 +391,7 @@ public sealed class WiresSystem : EntitySystem
     #endregion
 
     #region Event Handling
-    private void OnWiresPowered(EntityUid uid, WiresComponent component, PowerChangedEvent args)
+    private void OnWiresPowered(EntityUid uid, WiresComponent component, ref PowerChangedEvent args)
     {
         UpdateUserInterface(uid);
         foreach (var wire in component.WiresList)
