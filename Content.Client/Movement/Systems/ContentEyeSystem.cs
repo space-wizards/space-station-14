@@ -16,8 +16,7 @@ public sealed class ContentEyeSystem : SharedContentEyeSystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
 
-    private ushort _lastSubtickScroll;
-    private float _scrollAmount;
+    private int _scrollAmount;
 
     public override void Initialize()
     {
@@ -47,28 +46,37 @@ public sealed class ContentEyeSystem : SharedContentEyeSystem
         if (!_timing.IsFirstTimePredicted)
             return;
 
-        if (_scrollAmount != 0f && TryComp<ContentEyeComponent>(_playerManager.LocalPlayer?.ControlledEntity, out var eyeComp))
+        if (_scrollAmount != 0 && TryComp<ContentEyeComponent>(_playerManager.LocalPlayer?.ControlledEntity, out var eyeComp))
         {
+            Vector2 target;
+
+            if (_scrollAmount < 0f)
+            {
+                target = eyeComp.TargetZoom / ZoomChange * _scrollAmount * -1;
+            }
+            else
+            {
+                target = eyeComp.TargetZoom * ZoomChange * _scrollAmount;
+            }
+
+            target = Vector2.ComponentMax(MinZoom, target);
+            target = Vector2.ComponentMin(MaxZoom, target);
+
             RaisePredictiveEvent(new ContentEyeZoomEvent()
             {
-                Zoom = eyeComp.TargetZoom + eyeComp.TargetZoom / 2f * _scrollAmount,
+                Zoom = target,
             });
         }
 
-        _scrollAmount = 0f;
-        _lastSubtickScroll = 0;
+        _scrollAmount = 0;
     }
 
-    private void HandleInput(bool up, ushort subTick)
+    private void HandleInput(bool up)
     {
         if (!_timing.IsFirstTimePredicted)
             return;
 
-        var diff = subTick - _lastSubtickScroll;
-        _lastSubtickScroll = subTick;
-        var fraction = diff / (float) ushort.MaxValue;
-
-        _scrollAmount += fraction * (up ? 1f : -1f);
+        _scrollAmount += (up ? 1 : -1);
     }
 
     private sealed class ResetZoomInputCmdHandler : InputCmdHandler
@@ -99,10 +107,13 @@ public sealed class ContentEyeSystem : SharedContentEyeSystem
 
         public override bool HandleCmdMessage(ICommonSession? session, InputCmdMessage message)
         {
-            if (message is not FullInputCmdMessage full || session?.AttachedEntity == null)
+            if (message is not FullInputCmdMessage full || session?.AttachedEntity == null ||
+                full.State != BoundKeyState.Down)
+            {
                 return false;
+            }
 
-            _system.HandleInput(_zoomIn, full.SubTick);
+            _system.HandleInput(_zoomIn);
             return false;
         }
     }
