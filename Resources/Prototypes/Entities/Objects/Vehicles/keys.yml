@@ -83,7 +83,7 @@
     - type: Tag
       tags:
         - VehicleKey
-        - SyndicateSegwayKeys
+        - SkeletonMotorcycleKeys
     - type: Sprite
       sprite: Objects/Vehicles/motorbike.rsi
       state: keys
