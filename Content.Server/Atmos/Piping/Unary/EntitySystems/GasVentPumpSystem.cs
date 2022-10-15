@@ -173,7 +173,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             UpdateState(uid, component);
         }
 
-        private void OnPowerChanged(EntityUid uid, GasVentPumpComponent component, PowerChangedEvent args)
+        private void OnPowerChanged(EntityUid uid, GasVentPumpComponent component, ref PowerChangedEvent args)
         {
             component.Enabled = args.Powered;
             UpdateState(uid, component);
