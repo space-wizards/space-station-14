@@ -25,7 +25,6 @@ namespace Content.Server.Botany.Components
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IEntityManager _entMan = default!;
-        [Dependency] private readonly MutationSystem _mutationSystem = default!;
 
         [ViewVariables] private int _lastProduce;
 
@@ -576,7 +575,7 @@ namespace Content.Server.Botany.Components
             if (Seed != null)
             {
                 EnsureUniqueSeed();
-                _mutationSystem.MutateSeed(Seed, severity);
+                _entMan.System<MutationSystem>().MutateSeed(Seed, severity);
             }
         }
 

@@ -19,7 +19,7 @@ namespace Content.Server.Botany
     {
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly MutationSystem _mutationSystem = default!;
+        [Dependency] private readonly IEntityManager _entMan = default!;
 
         public override void Initialize()
         {
@@ -95,7 +95,7 @@ namespace Content.Server.Botany
                 var old = args.Plant.Seed; // Save old plant pollen
                 if (old == null)
                     return;
-                args.Plant.Seed = _mutationSystem.Cross(args.Swab.SeedData, old); // Cross-pollenate
+                args.Plant.Seed = _entMan.System<MutationSystem>().Cross(args.Swab.SeedData, old); // Cross-pollenate
                 args.Swab.SeedData = old; // Transfer old plant pollen to swab
                 _popupSystem.PopupEntity(Loc.GetString("botany-swab-to"), args.Target.Value, Filter.Entities(args.User));
             }
