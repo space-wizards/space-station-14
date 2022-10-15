@@ -30,7 +30,7 @@ namespace Content.Shared.Humanoid
                     return $"{GetFirstName(speciesProto, gender)}-{GetFirstName(speciesProto, gender)}";
                 case SpeciesNaming.FirstLast:
                 default:
-                    return $"{GetFirstName(speciesProto, gender)} {GetLastName(speciesProto)}";
+                    return $"{GetFirstName(speciesProto, gender)} {GetLastName(speciesProto, gender)}";
             }
         }
 
@@ -50,9 +50,20 @@ namespace Content.Shared.Humanoid
             }
         }
 
-        public string GetLastName(SpeciesPrototype speciesProto)
+        public string GetLastName(SpeciesPrototype speciesProto, Gender? gender = null)
         {
-            return _random.Pick(_prototypeManager.Index<DatasetPrototype>(speciesProto.LastNames).Values);
+            switch (gender)
+            {
+                case Gender.Male:
+                    return _random.Pick(_prototypeManager.Index<DatasetPrototype>(speciesProto.MaleLastNames).Values);
+                case Gender.Female:
+                    return _random.Pick(_prototypeManager.Index<DatasetPrototype>(speciesProto.FemaleLastNames).Values);
+                default:
+                    if (_random.Prob(0.5f))
+                        return _random.Pick(_prototypeManager.Index<DatasetPrototype>(speciesProto.MaleLastNames).Values);
+                    else
+                        return _random.Pick(_prototypeManager.Index<DatasetPrototype>(speciesProto.FemaleLastNames).Values);
+            }
         }
     }
 }
