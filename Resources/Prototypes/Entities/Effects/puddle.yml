@@ -116,7 +116,7 @@
 
 - type: entity
   name: vomit
-  id: PuddleVomit # No parent because we don't want the visualizer
+  id: PuddleVomit # No parent because we don't want the VisualizerSystem to behave in the standard way
   description: Gross.
   components:
   - type: Transform
@@ -140,6 +140,7 @@
     netsync: false
   - type: Puddle
     slipThreshold: 5
+    recolor: false
   - type: SolutionContainerManager
     solutions:
       puddle:

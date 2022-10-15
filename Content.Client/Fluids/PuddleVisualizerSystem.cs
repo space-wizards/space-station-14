@@ -3,6 +3,7 @@ using Content.Shared.Fluids;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
 using Robust.Shared.Random;
 
 namespace Content.Client.Fluids
@@ -31,34 +32,30 @@ namespace Content.Client.Fluids
                 return;
             }
 
-            // if (!appearance.TryGetData(PuddleVisuals.VisualSeed, out float visualSeed))
-            // {
-            //     return;
-            // }
-
-            var maxStates = sprite.BaseRSI?.ToArray();
-
-            if (maxStates is not { Length: > 0 }) return;
-
-            RandomizeState(sprite, maxStates);
+            puddleVisuals.OriginalRsi = sprite.BaseRSI; //Back up the original RSI upon initialization
+            RandomizeState(sprite);
             RandomizeRotation(sprite);
         }
 
-
         protected override void OnAppearanceChange(EntityUid uid, PuddleVisualizerComponent component, ref AppearanceChangeEvent args)
         {
-            bool wetFloorEffectNeeded;
-
-            if (!TryComp(uid, out SpriteComponent? sprite)
-                || !args.Component.TryGetData(PuddleVisuals.VolumeScale, out float volumeScale)
-                || !args.Component.TryGetData(PuddleVisuals.CurrentVolume, out FixedPoint2 currentVolume)
-                || !args.Component.TryGetData(PuddleVisuals.SolutionColor, out Color solutionColor)
-                || !args.Component.TryGetData(PuddleVisuals.IsSlipperyVisual, out bool isSlippery)
-                || !args.Component.TryGetData(PuddleVisuals.IsEvaporatingVisual, out bool isEvaporating)
-                )
+            if (!TryComp(uid, out SpriteComponent? sprite))
             {
                 Logger.Warning($"Missing SpriteComponent for PuddleVisualizerSystem on entityUid = {uid}");
                 return;
+            }
+
+            if (!args.Component.TryGetData(PuddleVisuals.VolumeScale, out float volumeScale)
+                || !args.Component.TryGetData(PuddleVisuals.CurrentVolume, out FixedPoint2 currentVolume)
+                || !args.Component.TryGetData(PuddleVisuals.SolutionColor, out Color solutionColor)
+                || !args.Component.TryGetData(PuddleVisuals.IsSlipperyVisual, out bool isSlippery)
+                || !args.Component.TryGetData(PuddleVisuals.IsEvaporatingVisual, out bool isEvaporating))
+            {
+                if (!component.CustomPuddleSprite) //if there is a custom sprite, it's expected that some of these will be missing, so suppress the logger (no need to warn for it)
+                {
+                    Logger.Warning($"Missing PuddleVisuals data for PuddleVisualizerSystem on entityUid = {uid}");
+                }
+                return; //regardless of custom sprite
             }
 
             // volumeScale is our opacity based on level of fullness to overflow. The lower bound is hard-capped for visibility reasons.
@@ -76,49 +73,55 @@ namespace Content.Client.Fluids
 
             sprite.LayerSetColor(0, newColor);
 
-            if (component.CustomPuddleSprite) //Don't consider wet floor effects if we're using a custom sprite.
-                return;
+            if (!component.CustomPuddleSprite) //Don't consider wet floor effects if we're using a custom sprite.
+            {
+                bool wetFloorEffectNeeded;
 
-            if (/*isSlippery
-                && */ isEvaporating
-                && currentVolume < component.WetFloorEffectThreshold)
-            {
-                wetFloorEffectNeeded = true;
-            }
-            else
-            {
-                wetFloorEffectNeeded = false;
-            }
-
-            if (wetFloorEffectNeeded)
-            {
-                if (sprite.LayerGetState(0) != "sparkles")
+                if (/*isSlippery
+                    && */ isEvaporating
+                    && currentVolume < component.WetFloorEffectThreshold)
                 {
-                    StartWetFloorEffect(sprite);
+                    wetFloorEffectNeeded = true;
                 }
-            }
-            else
-            {
-                if (sprite.LayerGetState(0) == "sparkles")
-                    EndWetFloorEffect(sprite);
+                else
+                {
+                    wetFloorEffectNeeded = false;
+                }
+
+                if (wetFloorEffectNeeded)
+                {
+                    if (sprite.LayerGetState(0) != "sparkles") // If we need the effect but don't already have it - start it
+                    {
+                        StartWetFloorEffect(sprite, component.WetFloorEffectAlpha);
+                    }
+                }
+                else
+                {
+                    if (sprite.LayerGetState(0) == "sparkles") // If we have the effect but don't need it - end it
+                        EndWetFloorEffect(sprite, component.OriginalRsi);
+                }
             }
         }
 
-        private void StartWetFloorEffect(SpriteComponent sprite)
+        private void StartWetFloorEffect(SpriteComponent sprite, float alpha)
         {
             sprite.LayerSetState(0, "sparkles", "Fluids/wet_floor_sparkles.rsi");
-            sprite.Color = sprite.Color.WithAlpha(1.00f); //should be mostly transparent.
+            sprite.Color = sprite.Color.WithAlpha(alpha);
             sprite.LayerSetAutoAnimated(0, true);
         }
 
-        private void EndWetFloorEffect(SpriteComponent sprite)
+        private void EndWetFloorEffect(SpriteComponent sprite, RSI? originalRSI)
         {
-            sprite.LayerSetState(0, "smear-0", "Fluids/smear.rsi"); // TODO: need a way to implement the random smears again when the mop creates new puddles.
+            sprite.LayerSetRSI(0, originalRSI);
+            RandomizeState(sprite);
             sprite.LayerSetAutoAnimated(0, false);
         }
 
-        private void RandomizeState(SpriteComponent sprite, Robust.Client.Graphics.RSI.State[] maxStates)
+        private void RandomizeState(SpriteComponent sprite)
         {
+            var maxStates = sprite.BaseRSI?.ToArray();
+            if (maxStates is not { Length: > 0 }) return;
+
             var selectedState = _random.Next(0, maxStates.Length - 1); //randomly select an index for which RSI state to use.
             sprite.LayerSetState(0, maxStates[selectedState].StateId); // sets the sprite's state via our randomly selected index.
         }
