@@ -174,11 +174,12 @@ namespace Content.Server.Strip
                 return;
             }
 
-            var ev = new BeforeStripEvent(slotDef.StripTime);
-            RaiseLocalEvent(user, ev);
-            var finalStripTime = ev.Time + ev.Additive;
+            var userEv = new BeforeStripEvent(slotDef.StripTime);
+            RaiseLocalEvent(user, userEv);
+            var ev = new BeforeGettingStrippedEvent(userEv.Time, userEv.Stealth);
+            RaiseLocalEvent(component.Owner, ev);
 
-            var doAfterArgs = new DoAfterEventArgs(user, finalStripTime, CancellationToken.None, component.Owner)
+            var doAfterArgs = new DoAfterEventArgs(user, ev.Time, CancellationToken.None, component.Owner)
             {
                 ExtraCheck = Check,
                 BreakOnStun = true,
@@ -298,11 +299,12 @@ namespace Content.Server.Strip
                 return;
             }
 
-            var ev = new BeforeStripEvent(slotDef.StripTime);
-            RaiseLocalEvent(user, ev);
-            var finalStripTime = ev.Time + ev.Additive;
+            var userEv = new BeforeStripEvent(slotDef.StripTime);
+            RaiseLocalEvent(user, userEv);
+            var ev = new BeforeGettingStrippedEvent(userEv.Time, userEv.Stealth);
+            RaiseLocalEvent(component.Owner, ev);
 
-            var doAfterArgs = new DoAfterEventArgs(user, finalStripTime, CancellationToken.None, component.Owner)
+            var doAfterArgs = new DoAfterEventArgs(user, ev.Time, CancellationToken.None, component.Owner)
             {
                 ExtraCheck = Check,
                 BreakOnStun = true,
@@ -365,11 +367,13 @@ namespace Content.Server.Strip
                 return true;
             }
 
-            var ev = new BeforeStripEvent(component.HandStripDelay);
-            RaiseLocalEvent(user, ev);
-            var finalStripTime = ev.Time + ev.Additive;
 
-            var doAfterArgs = new DoAfterEventArgs(user, finalStripTime, CancellationToken.None, component.Owner)
+            var userEv = new BeforeStripEvent(component.HandStripDelay);
+            RaiseLocalEvent(user, userEv);
+            var ev = new BeforeGettingStrippedEvent(userEv.Time, userEv.Stealth);
+            RaiseLocalEvent(component.Owner, ev);
+
+            var doAfterArgs = new DoAfterEventArgs(user, ev.Time, CancellationToken.None, component.Owner)
             {
                 ExtraCheck = Check,
                 BreakOnStun = true,
