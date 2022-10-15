@@ -1,6 +1,6 @@
 - type: entity
   name: filing cabinet
-  parent: BaseStructure
+  parent: BaseStructureDynamic
   id: filingCabinet
   description: A cabinet for all your filing needs.
   components:
