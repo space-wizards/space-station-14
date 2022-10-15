@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Radar zooming is now smooth, type: Tweak}
-  id: 1958
-  time: '2022-07-15T05:32:49.0000000+00:00'
 - author: Rane
   changes:
   - {message: Familiars now only spawn when a ghost requests them., type: Tweak}
@@ -2943,3 +2938,8 @@ Entries:
   - {message: Fixed not being able to deconstruct stasis beds., type: Fix}
   id: 2457
   time: '2022-10-15T21:28:12.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Stasis beds can now be upgraded with manipulators., type: Add}
+  id: 2458
+  time: '2022-10-15T21:39:30.0000000+00:00'
