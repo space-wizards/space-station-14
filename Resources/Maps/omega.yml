@@ -97270,4 +97270,10 @@ entities:
   - pos: -20.5,10.5
     parent: 0
     type: Transform
+- uid: 12386
+  type: SpawnPointServiceWorker
+  components:
+  - pos: 4.5,-0.5
+    parent: 0
+    type: Transform
 ...

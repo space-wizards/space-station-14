@@ -10,15 +10,13 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls
     [GenerateTypedNameReferences]
     public sealed partial class GhostTargetWindow : DefaultWindow
     {
-        private readonly IEntityNetworkManager _netManager;
-
         private List<(string, EntityUid)> _warps = new();
 
-        public GhostTargetWindow(IEntityNetworkManager netManager)
+        public event Action<EntityUid>? WarpClicked;
+
+        public GhostTargetWindow()
         {
             RobustXamlLoader.Load(this);
-
-            _netManager = netManager;
         }
 
         public void UpdateWarps(IEnumerable<GhostWarp> warps)
@@ -47,7 +45,7 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls
 
         private void AddButtons()
         {
-            foreach (var (name, warp) in _warps)
+            foreach (var (name, warpTarget) in _warps)
             {
                 var currentButtonRef = new Button
                 {
@@ -60,11 +58,7 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls
                     ClipText = true,
                 };
 
-                currentButtonRef.OnPressed += _ =>
-                {
-                    var msg = new GhostWarpToTargetRequestEvent(warp);
-                    _netManager.SendSystemNetworkMessage(msg);
-                };
+                currentButtonRef.OnPressed += _ => WarpClicked?.Invoke(warpTarget);
 
                 ButtonContainer.AddChild(currentButtonRef);
             }

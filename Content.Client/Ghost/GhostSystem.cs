@@ -1,21 +1,19 @@
-using Content.Client.HUD;
-using Content.Client.UserInterface.Systems.Ghost;
 using Content.Shared.Ghost;
 using JetBrains.Annotations;
+using Robust.Client.Console;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
+using Robust.Shared.GameStates;
 
 namespace Content.Client.Ghost
 {
     [UsedImplicitly]
     public sealed class GhostSystem : SharedGhostSystem
     {
+        [Dependency] private readonly IClientConsoleHost _console = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IGameHud _gameHud = default!;
 
-        // Changes to this value are manually propagated.
-        // No good way to get an event into the UI.
-        public int AvailableGhostRoleCount { get; private set; } = 0;
+        public int AvailableGhostRoleCount { get; private set; }
 
         private bool _ghostVisibility = true;
 
@@ -38,15 +36,28 @@ namespace Content.Client.Ghost
             }
         }
 
+        public GhostComponent? Player => CompOrNull<GhostComponent>(_playerManager.LocalPlayer?.ControlledEntity);
+        public bool IsGhost => Player != null;
+
+        public event Action<GhostComponent>? PlayerRemoved;
+        public event Action<GhostComponent>? PlayerUpdated;
+        public event Action<GhostComponent>? PlayerAttached;
+        public event Action? PlayerDetached;
+        public event Action<GhostWarpsResponseEvent>? GhostWarpsResponse;
+        public event Action<GhostUpdateGhostRoleCountEvent>? GhostRoleCountUpdated;
+
         public override void Initialize()
         {
             base.Initialize();
 
             SubscribeLocalEvent<GhostComponent, ComponentInit>(OnGhostInit);
             SubscribeLocalEvent<GhostComponent, ComponentRemove>(OnGhostRemove);
+            SubscribeLocalEvent<GhostComponent, ComponentHandleState>(OnGhostState);
 
             SubscribeLocalEvent<GhostComponent, PlayerAttachedEvent>(OnGhostPlayerAttach);
             SubscribeLocalEvent<GhostComponent, PlayerDetachedEvent>(OnGhostPlayerDetach);
+
+            SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttach);
 
             SubscribeNetworkEvent<GhostWarpsResponseEvent>(OnGhostWarpsResponse);
             SubscribeNetworkEvent<GhostUpdateGhostRoleCountEvent>(OnUpdateGhostRoleCount);
@@ -54,7 +65,7 @@ namespace Content.Client.Ghost
 
         private void OnGhostInit(EntityUid uid, GhostComponent component, ComponentInit args)
         {
-            if (EntityManager.TryGetComponent(component.Owner, out SpriteComponent? sprite))
+            if (TryComp(component.Owner, out SpriteComponent? sprite))
             {
                 sprite.Visible = GhostVisibility;
             }
@@ -62,55 +73,87 @@ namespace Content.Client.Ghost
 
         private void OnGhostRemove(EntityUid uid, GhostComponent component, ComponentRemove args)
         {
-            component.Gui?.Dispose();
-            component.Gui = null;
+            if (uid != _playerManager.LocalPlayer?.ControlledEntity)
+                return;
+
+            if (component.IsAttached)
+            {
+                GhostVisibility = false;
+            }
+
+            PlayerRemoved?.Invoke(component);
         }
 
         private void OnGhostPlayerAttach(EntityUid uid, GhostComponent component, PlayerAttachedEvent playerAttachedEvent)
         {
-            // I hate UI I hate UI I Hate UI
-            if (component.Gui == null)
-            {
-                component.Gui = new GhostGui(component, this, EntityManager.EntityNetManager!);
-                component.Gui.Update();
-            }
+            if (uid != _playerManager.LocalPlayer?.ControlledEntity)
+                return;
 
-            _gameHud.HandsContainer.AddChild(component.Gui);
             GhostVisibility = true;
             component.IsAttached = true;
+            PlayerAttached?.Invoke(component);
+        }
+
+        private void OnGhostState(EntityUid uid, GhostComponent component, ref ComponentHandleState args)
+        {
+            if (uid != _playerManager.LocalPlayer?.ControlledEntity)
+                return;
+
+            PlayerUpdated?.Invoke(component);
+        }
+
+        private bool PlayerDetach(EntityUid uid)
+        {
+            if (uid != _playerManager.LocalPlayer?.ControlledEntity)
+                return false;
+
+            GhostVisibility = false;
+            PlayerDetached?.Invoke();
+            return true;
         }
 
         private void OnGhostPlayerDetach(EntityUid uid, GhostComponent component, PlayerDetachedEvent args)
         {
-            component.Gui?.Parent?.RemoveChild(component.Gui);
-            GhostVisibility = false;
-            component.IsAttached = false;
+            if (PlayerDetach(uid))
+                component.IsAttached = false;
+        }
+
+        private void OnPlayerAttach(PlayerAttachedEvent ev)
+        {
+            if (!HasComp<GhostComponent>(ev.Entity))
+                PlayerDetach(ev.Entity);
         }
 
         private void OnGhostWarpsResponse(GhostWarpsResponseEvent msg)
         {
-            var entity = _playerManager.LocalPlayer?.ControlledEntity;
-
-            if (entity == null ||
-                !EntityManager.TryGetComponent(entity.Value, out GhostComponent? ghost))
+            if (!IsGhost)
             {
                 return;
             }
 
-            var window = ghost.Gui?.TargetWindow;
-
-            if (window != null)
-            {
-                window.UpdateWarps(msg.Warps);
-                window.Populate();
-            }
+            GhostWarpsResponse?.Invoke(msg);
         }
 
         private void OnUpdateGhostRoleCount(GhostUpdateGhostRoleCountEvent msg)
         {
             AvailableGhostRoleCount = msg.AvailableGhostRoles;
-            foreach (var ghost in EntityManager.EntityQuery<GhostComponent>(true))
-                ghost.Gui?.Update();
+            GhostRoleCountUpdated?.Invoke(msg);
+        }
+
+        public void RequestWarps()
+        {
+            RaiseNetworkEvent(new GhostWarpsRequestEvent());
+        }
+
+        public void ReturnToBody()
+        {
+            var msg = new GhostReturnToBodyRequest();
+            RaiseNetworkEvent(msg);
+        }
+
+        public void OpenGhostRoles()
+        {
+            _console.RemoteExecuteCommand(null, "ghostroles");
         }
     }
 }

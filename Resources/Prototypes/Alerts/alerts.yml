@@ -28,8 +28,8 @@
   icons:
   - sprite: /Textures/Interface/Alerts/breathing.rsi
     state: not_enough_oxy
-  name: "[color=red]Low Oxygen[/color]"
-  description: "There is [color=red]not enough oxygen[/color] in the air you are breathing. Put on [color=green]internals[/color]."
+  name: alerts-low-oxygen-name
+  description: alerts-low-oxygen-desc
 
 - type: alert
   id: Toxins
@@ -37,8 +37,8 @@
   icons:
   - sprite: /Textures/Interface/Alerts/breathing.rsi
     state: too_much_tox
-  name: "[color=red]High Toxin Level[/color]"
-  description: "There are [color=red]too many toxins[/color] in the air you are breathing. Put on [color=green]internals[/color] or get away."
+  name: alerts-high-toxin-name
+  description: alerts-high-toxin-desc
 
 - type: alert
   id: LowPressure
@@ -49,8 +49,8 @@
   - sprite: /Textures/Interface/Alerts/pressure.rsi
     state: lowpressure2
   maxSeverity: 2
-  name: "[color=red]Low Pressure[/color]"
-  description: "The air around you is [color=red]hazardously thin[/color]. A [color=green]space suit[/color] would protect you."
+  name: alerts-low-pressure-name
+  description: alerts-low-pressure-desc
 
 - type: alert
   id: HighPressure
@@ -61,15 +61,15 @@
   - sprite: /Textures/Interface/Alerts/pressure.rsi
     state: highpressure2
   maxSeverity: 2
-  name: "[color=red]High Pressure[/color]"
-  description: "The air around you is [color=red]hazardously thick[/color]. A [color=green]pressurized suit[/color] would be enough protect you"
+  name: alerts-high-pressure-name
+  description: alerts-high-pressure-desc
 
 - type: alert
   id: Fire
   icons: [ /Textures/Interface/Alerts/Fire/fire.png ]
   onClick: !type:ResistFire  { }
-  name: "[color=red]On Fire[/color]"
-  description: "You're [color=red]on fire[/color]. Click the alert to stop, drop and roll to put the fire out or move to a vacuum area."
+  name: alerts-on-fire-name
+  description: alerts-on-fire-desc
 
 
 - type: alert
@@ -83,8 +83,8 @@
   - sprite: /Textures/Interface/Alerts/temperature.rsi
     state: cold3
   maxSeverity: 3
-  name: "[color=cyan]Too Cold[/color]"
-  description: "You're [color=cyan]freezing cold![/color] Get somewhere warmer and take off any insulating clothing like a space suit."
+  name: alerts-too-cold-name
+  description: alerts-too-cold-desc
 
 - type: alert
   id: Hot
@@ -97,44 +97,42 @@
   - sprite: /Textures/Interface/Alerts/temperature.rsi
     state: hot3
   maxSeverity: 3
-  name: "[color=red]Too Hot[/color]"
-  description: "It's [color=red]too hot![/color] Get somewhere colder, take off any insulating clothing like a space suit, or at least get away from the flames."
+  name: alerts-too-hot-name
+  description: alerts-too-hot-desc
 
 - type: alert
   id: Weightless
   icons: [ /Textures/Interface/Alerts/Weightless/weightless.png ]
-  name: Weightless
-  description: >
-    Gravity has ceased affecting you, and you're floating around aimlessly. Find something sturdy to hold onto, or throw or shoot something in a direction opposite of you.
-    Mag-boots or jetpacks would help you move with more control
+  name: alerts-weightless-name
+  description: alerts-weightless-desc
 
 - type: alert
   id: Stun
   icons: [ /Textures/Objects/Weapons/Melee/stunbaton.rsi/stunbaton_off.png ] #Should probably draw a proper icon
-  name: "[color=yellow]Stunned[/color]"
-  description: "You're [color=yellow]stunned[/color]! Something is impairing your ability to move or interact with objects"
+  name: alerts-stunned-name
+  description: alerts-stunned-desc
 
 - type: alert
   id: Handcuffed
   onClick: !type:RemoveCuffs  { }
   icons: [ /Textures/Interface/Alerts/Handcuffed/Handcuffed.png ]
-  name: "[color=yellow]Handcuffed[/color]"
-  description: "You're [color=yellow]handcuffed[/color] and can't use your hands. If anyone drags you, you won't be able to resist."
+  name: alerts-handcuffed-name
+  description: alerts-handcuffed-desc
 
 - type: alert
   id: Ensnared
   onClick: !type:RemoveEnsnare  { }
   icons: [ /Textures/Interface/Alerts/ensnared.rsi/ensnared.png ]
-  name: "[color=yellow]Ensnared[/color]"
-  description: "You're [color=yellow]ensnared[/color] and is impairing your ability to move."
+  name: alerts-ensnared-name
+  description: alerts-ensnared-desc
 
 - type: alert
   id: Buckled
   category: Buckled
   onClick: !type:Unbuckle  { }
   icons: [ /Textures/Interface/Alerts/Buckle/buckled.png ]
-  name: "[color=yellow]Buckled[/color]"
-  description: "You've been [color=yellow]buckled[/color] to something. Click the alert to unbuckle unless you're [color=yellow]handcuffed.[/color]"
+  name: alerts-buckled-name
+  description: alerts-buckled-desc
 
 - type: alert
   id: HumanCrit
@@ -142,8 +140,8 @@
   icons:
   - sprite: /Textures/Interface/Alerts/human_health.rsi
     state: health6
-  name: "[color=red]Critical Condition[/color]"
-  description: "You're severely injured and unconscious."
+  name: alerts-crit-name
+  description: alerts-crit-desc
 
 - type: alert
   id: HumanDead
@@ -151,8 +149,8 @@
   icons:
   - sprite: /Textures/Interface/Alerts/human_health.rsi
     state: health7
-  name: Dead
-  description: You're dead, note that you can still be revived!
+  name: alerts-dead-name
+  description: alerts-dead-desc
 
 - type: alert
   id: HumanHealth
@@ -174,8 +172,8 @@
     state: health6
   - sprite: /Textures/Interface/Alerts/human_health.rsi
     state: health7
-  name: Health
-  description: "[color=green]Green[/color] good. [color=red]Red[/color] bad."
+  name: alerts-health-name
+  description: alerts-health-desc
   minSeverity: 0
   maxSeverity: 6
 
@@ -190,8 +188,8 @@
     state: internal1
   - sprite: /Textures/Interface/Alerts/internals.rsi
     state: internal2
-  name: Toggle internals
-  description: "Toggles your gas tank internals on or off."
+  name: alerts-internals-name
+  description: alerts-internals-desc
   minSeverity: 0
   maxSeverity: 2
 
@@ -200,15 +198,15 @@
   category: Piloting
   onClick: !type:StopPiloting { }
   icons: [ /Textures/Interface/Alerts/piloting.png ]
-  name: Piloting Shuttle
-  description: You are piloting a shuttle. Click the alert to stop.
+  name: alerts-piloting-name
+  description: alerts-piloting-desc
 
 - type: alert
   id: Peckish
   category: Hunger
   icons: [ /Textures/Interface/Alerts/Hunger/Peckish.png ]
-  name: "[color=yellow]Peckish[/color]"
-  description: Some food would be good right about now.
+  name: alerts-hunger-name
+  description: alerts-hunger-desc
 
 - type: alert
   id: Stamina
@@ -228,8 +226,8 @@
     state: stamina5
   - sprite: /Textures/Interface/Alerts/stamina.rsi
     state: stamina6
-  name: Stamina
-  description: "Stuns you if it is too low."
+  name: alerts-stamina-name
+  description: alerts-stamina-desc
   minSeverity: 0
   maxSeverity: 6
 
@@ -237,56 +235,56 @@
   id: Starving
   category: Hunger
   icons: [ /Textures/Interface/Alerts/Hunger/Starving.png ]
-  name: "[color=red]Starving[/color]"
-  description: You're severely malnourished. The hunger pains make moving around a chore.
+  name: alerts-starving-name
+  description: alerts-starving-desc
 
 - type: alert
   id: Thirsty
   category: Thirst
   icons: [ /Textures/Interface/Alerts/Thirst/Thirsty.png ]
-  name: "[color=yellow]Thirsty[/color]"
-  description: Something to drink would be good right about now.
+  name: alerts-thirsty-name
+  description: alerts-thirsty-desc
 
 - type: alert
   id: Parched
   category: Thirst
   icons: [ /Textures/Interface/Alerts/Thirst/Parched.png ]
-  name: "[color=red]Parched[/color]"
-  description: You're severely thirsty. The thirst makes moving around a chore.
+  name: alerts-parched-name
+  description: alerts-parched-desc
 
 - type: alert
   id: Muted
   icons: [ /Textures/Interface/Alerts/Abilities/silenced.png ]
-  name: Muted
-  description: You have lost the ability to speak.
+  name: alerts-muted-name
+  description: alerts-muted-desc
 
 - type: alert
   id: VowOfSilence
   icons: [ /Textures/Interface/Alerts/Abilities/silenced.png ]
-  name: Vow of Silence
+  name: alerts-vow-silence-name
   onClick: !type:BreakVow  { }
-  description: You have taken a vow of silence as part of initiation into the Mystiko Tagma Mimon. Click to break your vow.
+  description: alerts-vow-silence-desc
 
 - type: alert
   id: VowBroken
   icons: [ /Textures/Interface/Actions/scream.png ]
-  name: Vow Broken
+  name: alerts-vow-broken-name
   onClick: !type:RetakeVow  { }
-  description: You've broken your vows to Mimes everywhere. You can speak, but you've lost your powers for at least 5 entire minutes!!! Click to try and retake your vow.
+  description: alerts-vow-broken-desc
 
 - type: alert
   id: Pulled
   icons: [ /Textures/Interface/Alerts/Pull/pulled.png ]
   onClick: !type:StopBeingPulled  { }
-  name: Pulled
-  description: You're being pulled. Move to break free.
+  name: alerts-pulled-name
+  description: alerts-pulled-desc
 
 - type: alert
   id: Pulling
   icons: [ /Textures/Interface/Alerts/Pull/pulling.png ]
   onClick: !type:StopPulling  { }
-  name: Pulling
-  description: You're pulling something. Click the alert to stop.
+  name: alerts-pulling-name
+  description: alerts-pulling-desc
 
 - type: alert
   id: Debug1
