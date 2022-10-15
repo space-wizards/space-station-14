@@ -56,4 +56,35 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
         _container.EmptyContainer(storageImplant, moveTo: entCoords);
     }
 
+    /// <summary>
+    /// Forces an implant into a person
+    /// Good for on spawn related code or admin additions
+    /// </summary>
+    /// <param name="target">The entity to be implanted</param>
+    /// <param name="implant"> The implant</param>
+    /// <param name="component">The implant component</param>
+    public void ForceImplant(EntityUid target, EntityUid implant, SubdermalImplantComponent component)
+    {
+        //If the target doesn't have the implanted component, add it.
+        if (!HasComp<ImplantedComponent>(target))
+            EnsureComp<ImplantedComponent>(target);
+
+        var implantContainer = _container.EnsureContainer<Container>(target, ImplantSlotId);
+        component.EntityUid = target;
+        implantContainer.OccludesLight = false;
+        implantContainer.Insert(implant);
+    }
+
+    /// <summary>
+    /// Removes and deletes implants by force
+    /// </summary>
+    /// <param name="target">The entity to have implants removed</param>
+    /// <param name="component">The implant component</param>
+    public void ForceRemove(EntityUid target, SubdermalImplantComponent component)
+    {
+        if (!_container.TryGetContainer(target, ImplantSlotId, out var implantContainer))
+            return;
+
+        _container.CleanContainer(implantContainer);
+    }
 }
