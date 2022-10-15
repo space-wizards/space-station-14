@@ -51,7 +51,7 @@
     enabled: false
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
-    radius: 3
+    radius: 4.5
   - type: Appearance
     visuals:
       - type: FlashLightVisualizer
@@ -94,4 +94,4 @@
     sprite: Objects/Tools/seclite.rsi
   - type: PointLight
     enabled: false
-    radius: 4
+    radius: 6
