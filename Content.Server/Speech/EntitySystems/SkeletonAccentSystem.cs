@@ -41,7 +41,7 @@ public sealed class SkeletonAccentSystem : EntitySystem
         // Suffix
         if (_random.Prob(component.ackChance))
         {
-            msg += " ACK ACK!";
+            msg += (" " + Loc.GetString("skeleton-suffix")); // ACK ACK!
         }
         return msg;
     }
