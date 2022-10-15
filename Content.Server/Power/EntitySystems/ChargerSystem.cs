@@ -92,7 +92,10 @@ internal sealed class ChargerSystem : EntitySystem
         if (!TryComp(args.EntityUid, out PowerCellSlotComponent? cellSlot))
             return;
 
-        if (!cellSlot.FitsInCharger || !cellSlot.CellSlot.HasItem)
+        if (!_itemSlotsSystem.TryGetSlotById(args.EntityUid, cellSlot.CellSlotId, out ItemSlot? itemSlot))
+            return;
+
+        if (!cellSlot.FitsInCharger || !itemSlot.HasItem)
             args.Cancel();
     }
 }
