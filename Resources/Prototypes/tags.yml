@@ -469,6 +469,9 @@
   id: Shovel
 
 - type: Tag
+  id: SkeletonMotorcycleKeys
+
+- type: Tag
   id: Smokable
   
 - type: Tag
