@@ -236,7 +236,7 @@ namespace Content.Client.Inventory
 
         public void UIInventoryStorageActivate(string slot)
         {
-            EntityManager.RaisePredictiveEvent(new OpenSlotStorageNetworkMessage(slot));
+            EntityManager.EntityNetManager?.SendSystemNetworkMessage(new OpenSlotStorageNetworkMessage(slot));
         }
 
         public void UIInventoryExamine(string slot, EntityUid uid)
@@ -260,7 +260,7 @@ namespace Content.Client.Inventory
             if (!TryGetSlotEntity(uid, slot, out var item))
                 return;
 
-            EntityManager.EntityNetManager?.SendSystemNetworkMessage(
+            EntityManager.RaisePredictiveEvent(
                 new InteractInventorySlotEvent(item.Value, altInteract: false));
         }
 

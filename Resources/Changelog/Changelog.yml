@@ -1,56 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Hardsuits and outer clothing are now larger and harder to fit in bags.,
-    type: Tweak}
-  - {message: Some outer clothing suits and armour will slow you down slightly now.,
-    type: Tweak}
-  id: 1941
-  time: '2022-07-14T12:43:54.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Muzzle flashes now emit a point light., type: Tweak}
-  id: 1942
-  time: '2022-07-14T13:03:49.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed disposal junctions & other flip-able entities from becoming invisible
-      after flipping., type: Fix}
-  id: 1943
-  time: '2022-07-14T16:04:24.0000000+00:00'
-- author: themias
-  changes:
-  - {message: AMIV now has stages. The final stage has a small chance of monkefication.,
-    type: Tweak}
-  id: 1944
-  time: '2022-07-14T16:06:54.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed a bug that sometimes made it impossible to (un)weld an entity.,
-    type: Fix}
-  id: 1945
-  time: '2022-07-14T21:03:17.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Lockers/morgues/etc should now properly take items., type: Fix}
-  id: 1946
-  time: '2022-07-14T21:55:36.0000000+00:00'
-- author: themias
-  changes:
-  - {message: Multiple portions of the same recipe can be cooked simultaneously in
-      the microwave by multiplying the ingredients and cooking time., type: Tweak}
-  id: 1947
-  time: '2022-07-15T02:25:16.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed a bug that caused decals to sometimes disappear., type: Fix}
-  id: 1948
-  time: '2022-07-15T02:33:11.0000000+00:00'
-- author: Myctai
-  changes:
-  - {message: Pill maximum volume is back at 50 units!, type: Tweak}
-  id: 1949
-  time: '2022-07-15T02:40:47.0000000+00:00'
 - author: Level10Cybermancer
   changes:
   - {message: Nuclear Operatives now start with a pinpointer in their bag, type: Tweak}
@@ -2940,3 +2888,59 @@ Entries:
   - {message: Fixed inventory button hover indicators not appearing anymore., type: Fix}
   id: 2440
   time: '2022-10-13T05:07:27.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Bandaid medibots spamming speech., type: Fix}
+  id: 2441
+  time: '2022-10-13T10:36:29.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed some actions such as PDA and helmet lights having the same icon.,
+    type: Fix}
+  - {message: Fixed showing nothing when dragging some actions such as the helmet
+      light., type: Fix}
+  id: 2442
+  time: '2022-10-13T17:14:53.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed new actions not appearing on the action bar and window automatically.,
+    type: Fix}
+  - {message: Fixed old actions not being removed from the action bar and window automatically.,
+    type: Fix}
+  id: 2443
+  time: '2022-10-13T18:10:47.0000000+00:00'
+- author: Scribbles0
+  changes:
+  - {message: Fixed reinforced walls being easier to break than normal steel walls.,
+    type: Fix}
+  id: 2444
+  time: '2022-10-14T02:17:08.0000000+00:00'
+- author: Nairod
+  changes:
+  - {message: Filing cabinets are now movable., type: Tweak}
+  id: 2445
+  time: '2022-10-14T20:10:05.0000000+00:00'
+- author: corentt
+  changes:
+  - {message: You can no longer call a vote for gamemode if only one is available.,
+    type: Remove}
+  id: 2446
+  time: '2022-10-15T04:10:10.0000000+00:00'
+- author: Scribbles0
+  changes:
+  - {message: The Syndicate has tweaked nocturine to force people into a deep sleep.,
+    type: Tweak}
+  id: 2447
+  time: '2022-10-15T04:10:46.0000000+00:00'
+- author: Nairod
+  changes:
+  - {message: 'Added a over-ear command headset type to CE, RD and QM''s lockers.',
+    type: Add}
+  id: 2448
+  time: '2022-10-15T04:11:59.0000000+00:00'
+- author: Carbonhell
+  changes:
+  - {message: Adds a cooldown of 1 second when attempting to wake up someone else.,
+    type: Fix}
+  id: 2449
+  time: '2022-10-15T04:13:24.0000000+00:00'

@@ -1,6 +1,7 @@
 ﻿using Content.Client.Actions.UI;
 using Content.Client.Cooldown;
 using Content.Client.Stylesheets;
+using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -10,6 +11,8 @@ using Robust.Client.Utility;
 using Robust.Shared.Input;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
+using static Robust.Client.UserInterface.Controls.TextureRect;
 
 namespace Content.Client.UserInterface.Systems.Actions.Controls;
 
@@ -19,6 +22,7 @@ public sealed class ActionButton : Control
     private bool _beingHovered;
     private bool _depressed;
     private bool _toggled;
+    private bool _spriteViewDirty;
 
     public BoundKeyFunction? KeyBind
     {
@@ -36,16 +40,12 @@ public sealed class ActionButton : Control
 
     public readonly TextureRect Button;
     public readonly PanelContainer HighlightRect;
-    public readonly TextureRect Icon;
+    private readonly TextureRect _bigActionIcon;
+    private readonly TextureRect _smallActionIcon;
     public readonly Label Label;
-    public readonly SpriteView Sprite;
     public readonly CooldownGraphic Cooldown;
-
-    public Texture? IconTexture
-    {
-        get => Icon.Texture;
-        private set => Icon.Texture = value;
-    }
+    private readonly SpriteView _smallItemSpriteView;
+    private readonly SpriteView _bigItemSpriteView;
 
     public ActionType? Action { get; private set; }
     public bool Locked { get; set; }
@@ -68,12 +68,19 @@ public sealed class ActionButton : Control
             MinSize = (32, 32),
             Visible = false
         };
-        Icon = new TextureRect
+        _bigActionIcon = new TextureRect
         {
-            Name = "Icon",
-            TextureScale = new Vector2(2, 2),
-            MaxSize = (64, 64),
-            Stretch = TextureRect.StretchMode.Scale
+            HorizontalExpand = true,
+            VerticalExpand = true,
+            Stretch = StretchMode.Scale,
+            Visible = false
+        };
+        _smallActionIcon = new TextureRect
+        {
+            HorizontalAlignment = HAlignment.Right,
+            VerticalAlignment = VAlignment.Bottom,
+            Stretch = StretchMode.Scale,
+            Visible = false
         };
         Label = new Label
         {
@@ -82,24 +89,55 @@ public sealed class ActionButton : Control
             VerticalAlignment = VAlignment.Top,
             Margin = new Thickness(5, 0, 0, 0)
         };
-        Sprite = new SpriteView
+        _bigItemSpriteView = new SpriteView
         {
-            Name = "Sprite",
-            OverrideDirection = Direction.South
+            Name = "Big Sprite",
+            HorizontalExpand = true,
+            VerticalExpand = true,
+            Scale = (2, 2),
+            Visible = false,
+            OverrideDirection = Direction.South,
         };
+        _smallItemSpriteView = new SpriteView
+        {
+            Name = "Small Sprite",
+            HorizontalAlignment = HAlignment.Right,
+            VerticalAlignment = VAlignment.Bottom,
+            Visible = false,
+            OverrideDirection = Direction.South,
+        };
+        // padding to the left of the small icon
+        var paddingBoxItemIcon = new BoxContainer
+        {
+            Orientation = LayoutOrientation.Horizontal,
+            HorizontalExpand = true,
+            VerticalExpand = true,
+            MinSize = (64, 64)
+        };
+        paddingBoxItemIcon.AddChild(new Control()
+        {
+            MinSize = (32, 32),
+        });
+        paddingBoxItemIcon.AddChild(new Control
+        {
+            Children =
+            {
+                _smallActionIcon,
+                _smallItemSpriteView
+            }
+        });
         Cooldown = new CooldownGraphic {Visible = false};
 
+        AddChild(_bigActionIcon);
+        AddChild(_bigItemSpriteView);
         AddChild(Button);
         AddChild(HighlightRect);
-        AddChild(Icon);
         AddChild(Label);
-        AddChild(Sprite);
         AddChild(Cooldown);
+        AddChild(paddingBoxItemIcon);
 
         Button.Modulate = new Color(255, 255, 255, 150);
-        Icon.Modulate = new Color(255, 255, 255, 150);
 
-        OnThemeUpdated();
         OnThemeUpdated();
 
         OnKeyBindDown += args =>
@@ -149,58 +187,133 @@ public sealed class ActionButton : Control
         ActionFocusExited?.Invoke(this);
     }
 
-    public bool TryReplaceWith(IEntityManager entityManager, ActionType action)
+    private void UpdateItemIcon()
+    {
+        var entityManager = IoCManager.Resolve<IEntityManager>();
+        if (Action?.EntityIcon != null && !entityManager.EntityExists(Action.EntityIcon))
+        {
+            // This is almost certainly because a player received/processed their own actions component state before
+            // being send the entity in their inventory that enabled this action.
+
+            // Defer updating icons to the next FrameUpdate().
+            _spriteViewDirty = true;
+            return;
+        }
+
+        if (Action?.EntityIcon == null ||
+            !entityManager.TryGetComponent(Action.EntityIcon.Value, out SpriteComponent? sprite))
+        {
+            _bigItemSpriteView.Visible = false;
+            _bigItemSpriteView.Sprite = null;
+            _smallItemSpriteView.Visible = false;
+            _smallItemSpriteView.Sprite = null;
+        }
+        else
+        {
+            switch (Action.ItemIconStyle)
+            {
+                case ItemActionIconStyle.BigItem:
+                    _bigItemSpriteView.Visible = true;
+                    _bigItemSpriteView.Sprite = sprite;
+                    _smallItemSpriteView.Visible = false;
+                    _smallItemSpriteView.Sprite = null;
+                    break;
+                case ItemActionIconStyle.BigAction:
+
+                    _bigItemSpriteView.Visible = false;
+                    _bigItemSpriteView.Sprite = null;
+                    _smallItemSpriteView.Visible = true;
+                    _smallItemSpriteView.Sprite = sprite;
+                    break;
+
+                case ItemActionIconStyle.NoItem:
+
+                    _bigItemSpriteView.Visible = false;
+                    _bigItemSpriteView.Sprite = null;
+                    _smallItemSpriteView.Visible = false;
+                    _smallItemSpriteView.Sprite = null;
+                    break;
+            }
+        }
+    }
+
+    private void SetActionIcon(Texture? texture)
+    {
+        if (texture == null || Action == null)
+        {
+            _bigActionIcon.Texture = null;
+            _bigActionIcon.Visible = false;
+            _smallActionIcon.Texture = null;
+            _smallActionIcon.Visible = false;
+        }
+        else if (Action.EntityIcon != null && Action.ItemIconStyle == ItemActionIconStyle.BigItem)
+        {
+            _smallActionIcon.Texture = texture;
+            _smallActionIcon.Modulate = Action.IconColor;
+            _smallActionIcon.Visible = true;
+            _bigActionIcon.Texture = null;
+            _bigActionIcon.Visible = false;
+        }
+        else
+        {
+            _bigActionIcon.Texture = texture;
+            _bigActionIcon.Modulate = Action.IconColor;
+            _bigActionIcon.Visible = true;
+            _smallActionIcon.Texture = null;
+            _smallActionIcon.Visible = false;
+        }
+    }
+
+    public void UpdateIcons()
+    {
+        UpdateItemIcon();
+
+        if (Action == null)
+        {
+            SetActionIcon(null);
+            return;
+        }
+
+        if ((Controller.SelectingTargetFor?.Action == Action || Action.Toggled) && Action.IconOn != null)
+            SetActionIcon(Action.IconOn.Frame0());
+        else
+            SetActionIcon(Action.Icon?.Frame0());
+    }
+
+    public bool TryReplaceWith(ActionType action)
     {
         if (Locked)
         {
             return false;
         }
 
-        UpdateData(entityManager, action);
+        UpdateData(action);
         return true;
     }
 
-    public void UpdateData(IEntityManager entityManager, ActionType action)
+    public void UpdateData(ActionType action)
     {
         Action = action;
-
-        if (action.Icon != null)
-        {
-            IconTexture = GetIcon();
-            Sprite.Sprite = null;
-            return;
-        }
-
-        if (action.Provider == null ||
-            !entityManager.TryGetComponent(action.Provider.Value, out SpriteComponent? sprite))
-        {
-            return;
-        }
-
-        IconTexture = null;
-        Sprite.Sprite = sprite;
+        UpdateIcons();
     }
 
     public void ClearData()
     {
         Action = null;
-        IconTexture = null;
-        Sprite.Sprite = null;
         Cooldown.Visible = false;
         Cooldown.Progress = 1;
-    }
-
-    private Texture? GetIcon()
-    {
-        if (Action == null)
-            return null;
-
-        return _toggled ? (Action.IconOn ?? Action.Icon)?.Frame0() : Action.Icon?.Frame0();
+        UpdateIcons();
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
     {
         base.FrameUpdate(args);
+
+        if (_spriteViewDirty)
+        {
+            _spriteViewDirty = false;
+            UpdateIcons();
+        }
 
         if (Action?.Cooldown != null)
         {
@@ -210,7 +323,6 @@ public sealed class ActionButton : Control
         if (Action != null && _toggled != Action.Toggled)
         {
             _toggled = Action.Toggled;
-            IconTexture = GetIcon();
         }
     }
 

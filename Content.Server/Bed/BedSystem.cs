@@ -106,7 +106,7 @@ namespace Content.Server.Bed
             RaiseLocalEvent(args.BuckledEntity, metabolicEvent, false);
         }
 
-        private void OnPowerChanged(EntityUid uid, StasisBedComponent component, PowerChangedEvent args)
+        private void OnPowerChanged(EntityUid uid, StasisBedComponent component, ref PowerChangedEvent args)
         {
             UpdateAppearance(uid, args.Powered);
             UpdateMetabolisms(uid, component, args.Powered);

@@ -30,7 +30,7 @@ namespace Content.Server.Doors.Systems
             SubscribeLocalEvent<AirlockComponent, BeforeDoorPryEvent>(OnDoorPry);
         }
 
-        private void OnPowerChanged(EntityUid uid, AirlockComponent component, PowerChangedEvent args)
+        private void OnPowerChanged(EntityUid uid, AirlockComponent component, ref PowerChangedEvent args)
         {
             if (TryComp<AppearanceComponent>(uid, out var appearanceComponent))
             {
