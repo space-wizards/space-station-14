@@ -93,6 +93,8 @@
       fixVacuum: true
       airBlocked: false
       noAirWhenFullyAirBlocked: true
+    - type: RadiationBlocker
+      enabled: false
     - type: Occluder
       enabled: false
     - type: Construction

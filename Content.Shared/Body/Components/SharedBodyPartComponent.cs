@@ -291,7 +291,7 @@ namespace Content.Shared.Body.Components
         {
             var gibs = new HashSet<EntityUid>();
 
-            foreach (var mechanism in _mechanisms)
+            foreach (var mechanism in _mechanisms.ToArray())
             {
                 gibs.Add(mechanism.Owner);
                 RemoveMechanism(mechanism);
