@@ -63,7 +63,7 @@ public sealed class GatherableSystem : EntitySystem
 
         // Complete the gathering process
         _damageableSystem.TryChangeDamage(ev.Resource, tool.Damage, origin: ev.Player);
-        SoundSystem.Play(tool.GatheringSound.GetSound(), Filter.Pvs(ev.Resource, entityManager: EntityManager), ev.Resource);
+        _audio.PlayPvs(tool.GatheringSound, ev.Resource);
         tool.GatheringEntities.Remove(ev.Resource);
 
         // Spawn the loot!
