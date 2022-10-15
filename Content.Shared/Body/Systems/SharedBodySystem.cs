@@ -251,6 +251,11 @@ public abstract partial class SharedBodySystem : EntitySystem
         }
     }
 
+    public bool IsRoot(EntityUid? id, BodyComponent? part = null)
+    {
+        return GetRoot(id, part) == part;
+    }
+
     public BodyComponent? GetRoot(EntityUid? id, BodyComponent? part = null)
     {
         if (id == null ||
