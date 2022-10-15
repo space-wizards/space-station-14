@@ -18,4 +18,3 @@ ent-MaterialFuelTank = { ent-WeldingFuelTankFull }
 
 ent-MaterialWaterTank = { ent-WaterTankFull }
     .desc = { ent-WaterTankFull.desc }
-	
