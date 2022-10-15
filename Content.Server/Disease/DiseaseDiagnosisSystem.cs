@@ -303,7 +303,7 @@ namespace Content.Server.Disease
         /// <summary>
         /// Makes sure the machine is visually off/on.
         /// </summary>
-        private void OnPowerChanged(EntityUid uid, DiseaseMachineComponent component, PowerChangedEvent args)
+        private void OnPowerChanged(EntityUid uid, DiseaseMachineComponent component, ref PowerChangedEvent args)
         {
             UpdateAppearance(uid, args.Powered, false);
         }
