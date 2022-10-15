@@ -1,7 +1,10 @@
 ﻿using System.Linq;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Implants.Components;
+using Content.Shared.Popups;
 using Robust.Shared.Containers;
+using Robust.Shared.Player;
 
 namespace Content.Shared.Implants;
 
@@ -9,6 +12,7 @@ public abstract class SharedImplanterSystem : EntitySystem
 {
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     public const string ImplanterSlotId = "implanter_slot";
     public const string ImplantSlotId = "implantcontainer";
@@ -44,7 +48,7 @@ public abstract class SharedImplanterSystem : EntitySystem
         if (!HasComp<ImplantedComponent>(target))
             EnsureComp<ImplantedComponent>(target);
 
-        var implantContainer = _container.EnsureContainer<ContainerSlot>(target, ImplantSlotId);
+        var implantContainer = _container.EnsureContainer<Container>(target, ImplantSlotId);
         implanterContainer.Remove(implant);
         component.NumberOfEntities = implanterContainer.ContainedEntities.Count;
         implantComp.EntityUid = target;
@@ -62,24 +66,46 @@ public abstract class SharedImplanterSystem : EntitySystem
 
     //Draw the implant out of the target
     //TODO: Rework when surgery is in so implant cases can be a thing
-    public void Draw(EntityUid implanter, EntityUid target, ImplanterComponent component)
+    public void Draw(EntityUid implanter, EntityUid user, EntityUid target, ImplanterComponent component)
     {
         if (!_container.TryGetContainer(implanter, ImplanterSlotId, out var implanterContainer))
             return;
 
         if (_container.TryGetContainer(target, ImplantSlotId, out var implantContainer))
         {
-            var implant = implantContainer.ContainedEntities.FirstOrDefault();
-            if (!TryComp<SubdermalImplantComponent>(implant, out var implantComp))
-                return;
+            var implantCompQuery = GetEntityQuery<SubdermalImplantComponent>();
 
-            implantContainer.Remove(implant);
-            implantComp.EntityUid = null;
-            implanterContainer.Insert(implant);
-            component.NumberOfEntities = implanterContainer.ContainedEntities.Count;
+            foreach (var implant in implantContainer.ContainedEntities)
+            {
+                if (!implantCompQuery.TryGetComponent(implant, out var implantComp))
+                    return;
+
+                //Move to the next implant if the first one it finds is permanent
+                if (implantContainer.ContainedEntities.Count > 1 && implantComp.Permanent)
+                    continue;
+
+                //Don't remove a permanent implant
+                if (!implantContainer.CanRemove(implant))
+                {
+                    var implantName = Identity.Entity(implant, EntityManager);
+                    var targetName = Identity.Entity(target, EntityManager);
+                    var failedPermanentMessage = Loc.GetString("implanter-draw-failed-permanent", ("implant", implantName), ("target", targetName));
+                    _popup.PopupEntity(failedPermanentMessage, target, Filter.Entities(user));
+                    return;
+                }
+
+                implantContainer.Remove(implant);
+                implantComp.EntityUid = null;
+                implanterContainer.Insert(implant);
+                component.NumberOfEntities = implanterContainer.ContainedEntities.Count;
+                //Break so only one implant is drawn
+                break;
+            }
 
             if (component.CurrentMode == ImplanterToggleMode.Draw && !component.ImplantOnly)
                 ImplantMode(component);
+
+            Dirty(component);
         }
     }
 

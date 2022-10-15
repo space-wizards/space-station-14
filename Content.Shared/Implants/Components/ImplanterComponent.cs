@@ -20,7 +20,7 @@ public sealed class ImplanterComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("drawTime")]
-    public float DrawTime = 300f;
+    public float DrawTime = 3f;
 
     /// <summary>
     /// Good for single-use injectors
@@ -50,7 +50,6 @@ public sealed class ImplanterComponent : Component
     [ViewVariables]
     public int NumberOfEntities;
 
-    [ViewVariables(VVAccess.ReadWrite)]
     public bool UiUpdateNeeded;
 
     public CancellationTokenSource? CancelToken;

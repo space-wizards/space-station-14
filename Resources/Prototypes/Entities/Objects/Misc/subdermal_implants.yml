@@ -112,6 +112,7 @@
   noSpawn: true
   components:
     - type: SubdermalImplant
+      permanent: true
     - type: TriggerOnMobstateChange
       mobState: Dead
     - type: ExplodeOnTrigger

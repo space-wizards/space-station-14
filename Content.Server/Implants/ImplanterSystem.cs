@@ -44,6 +44,11 @@ public sealed class ImplanterSystem : SharedImplanterSystem
             return;
         }
 
+        //Simplemobs and regular mobs should be injectable, but only regular mobs have mind.
+        //So just don't implant/draw anything that isn't living or is a guardian
+        if (!HasComp<MobStateComponent>(args.Target.Value) || HasComp<GuardianComponent>(args.Target.Value))
+            return;
+
         //TODO: Remove when surgery is in
         if (component.CurrentMode == ImplanterToggleMode.Draw && !component.ImplantOnly)
         {
@@ -51,11 +56,6 @@ public sealed class ImplanterSystem : SharedImplanterSystem
         }
         else
         {
-            //Simplemobs and regular mobs should be injectable, but only regular mobs have mind.
-            //So just don't inject anything that isn't living or is a guardian
-            if (!HasComp<MobStateComponent>(args.Target.Value) || HasComp<GuardianComponent>(args.Target.Value))
-                return;
-
             //Implant self instantly, otherwise try to inject the target.
             if (args.User == args.Target)
                 Implant(uid, args.Target.Value, component);
@@ -96,6 +96,8 @@ public sealed class ImplanterSystem : SharedImplanterSystem
     //TODO: Remove when surgery is in
     public void TryDraw(ImplanterComponent component, EntityUid user, EntityUid target, EntityUid implanter)
     {
+        _popup.PopupEntity(Loc.GetString("injector-component-injecting-user"), target, Filter.Entities(user));
+
         component.CancelToken = new CancellationTokenSource();
 
         _doAfter.DoAfter(new DoAfterEventArgs(user, component.DrawTime, component.CancelToken.Token, implanter)
@@ -104,7 +106,7 @@ public sealed class ImplanterSystem : SharedImplanterSystem
             BreakOnTargetMove = true,
             BreakOnDamage = true,
             BreakOnStun = true,
-            TargetFinishedEvent = new ImplanterDrawCompleteEvent(implanter, target),
+            TargetFinishedEvent = new ImplanterDrawCompleteEvent(implanter, user, target),
             TargetCancelledEvent = new ImplanterCancelledEvent()
         });
     }
@@ -126,7 +128,7 @@ public sealed class ImplanterSystem : SharedImplanterSystem
     private void OnDrawAttemptSuccess(EntityUid uid, ImplanterComponent component, ImplanterDrawCompleteEvent args)
     {
         component.CancelToken = null;
-        Draw(args.Implanter, args.Target, component);
+        Draw(args.Implanter, args.User, args.Target, component);
     }
 
     private void OnImplantAttemptFail(EntityUid uid, ImplanterComponent component, ImplanterCancelledEvent args)
@@ -154,11 +156,13 @@ public sealed class ImplanterSystem : SharedImplanterSystem
     private sealed class ImplanterDrawCompleteEvent : EntityEventArgs
     {
         public EntityUid Implanter;
+        public EntityUid User;
         public EntityUid Target;
 
-        public ImplanterDrawCompleteEvent(EntityUid implanter, EntityUid target)
+        public ImplanterDrawCompleteEvent(EntityUid implanter, EntityUid user, EntityUid target)
         {
             Implanter = implanter;
+            User = user;
             Target = target;
         }
     }
