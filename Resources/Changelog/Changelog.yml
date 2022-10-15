@@ -1,9 +1,4 @@
 Entries:
-- author: Level10Cybermancer
-  changes:
-  - {message: Nuclear Operatives now start with a pinpointer in their bag, type: Tweak}
-  id: 1950
-  time: '2022-07-15T02:41:25.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: 'Disease outbreak has been nerfed: its weight is reduced to half, its
@@ -2944,3 +2939,8 @@ Entries:
     type: Fix}
   id: 2449
   time: '2022-10-15T04:13:24.0000000+00:00'
+- author: checkraze
+  changes:
+  - {message: fixes some device links, type: Fix}
+  id: 2450
+  time: '2022-10-15T14:17:22.0000000+00:00'
