@@ -92,7 +92,7 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
     }
 
     private void DeactivateButton() => _characterButton!.Pressed = false;
-    private void ActivateButton() => _characterButton!.Pressed = false;
+    private void ActivateButton() => _characterButton!.Pressed = true;
 
     private void CharacterUpdated(CharacterData data)
     {
@@ -162,6 +162,12 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
     {
         if (_window == null)
             return;
+
+        if (_characterButton != null)
+        {
+            _characterButton.Pressed = !_window.IsOpen;
+        }
+
         if (_window.IsOpen)
         {
             CloseWindow();
