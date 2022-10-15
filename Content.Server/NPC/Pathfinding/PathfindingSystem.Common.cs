@@ -58,7 +58,7 @@ public sealed partial class PathfindingSystem
 
             // TODO: Handling power + door prying
             // Door we should be able to open
-            if (isDoor && !isAccess)
+            if (isDoor && !isAccess && (request.Flags & PathFlags.Interact) != 0x0)
             {
                 modifier += 0.5f;
             }

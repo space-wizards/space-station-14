@@ -311,11 +311,12 @@ public sealed partial class CargoSystem
         double amount = 0;
         var toSell = new HashSet<EntityUid>();
         var xformQuery = GetEntityQuery<TransformComponent>();
+        var blacklistQuery = GetEntityQuery<CargoSellBlacklistComponent>();
 
         foreach (var pallet in GetCargoPallets(component))
         {
             // Containers should already get the sell price of their children so can skip those.
-            foreach (var ent in _lookup.GetEntitiesIntersecting(pallet.Owner, LookupFlags.Anchored))
+            foreach (var ent in _lookup.GetEntitiesIntersecting(pallet.Owner, LookupFlags.Anchored | LookupFlags.Approximate))
             {
                 // Don't re-sell anything, sell anything anchored (e.g. light fixtures), or anything blacklisted
                 // (e.g. players).
@@ -323,7 +324,7 @@ public sealed partial class CargoSystem
                     (xformQuery.TryGetComponent(ent, out var xform) && xform.Anchored))
                     continue;
 
-                if (HasComp<CargoSellBlacklistComponent>(ent))
+                if (blacklistQuery.HasComponent(ent))
                     continue;
 
                 var price = _pricing.GetPrice(ent);
