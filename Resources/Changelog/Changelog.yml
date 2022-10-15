@@ -1,11 +1,6 @@
 Entries:
 - author: Rane
   changes:
-  - {message: Familiars now only spawn when a ghost requests them., type: Tweak}
-  id: 1959
-  time: '2022-07-15T07:53:42.0000000+00:00'
-- author: Rane
-  changes:
   - {message: Ported honkbots and robotics technology from Nyanotrasen MRP., type: Add}
   - {message: Avionics technology now requires robotics technology., type: Tweak}
   - {message: Modular mines now require a proximity sensor., type: Tweak}
@@ -2943,3 +2938,11 @@ Entries:
   - {message: Stasis beds can now be upgraded with manipulators., type: Add}
   id: 2458
   time: '2022-10-15T21:39:30.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'Random names now select based on gender, rather than sex.', type: Fix}
+  - {message: Humanoids will no longer default to an inanimate pronoun when their
+      gender is unknown., type: Fix}
+  - {message: 'Slimes have no physical sex, only gender.', type: Tweak}
+  id: 2459
+  time: '2022-10-15T21:45:47.0000000+00:00'
