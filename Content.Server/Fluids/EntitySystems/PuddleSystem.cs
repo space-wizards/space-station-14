@@ -71,10 +71,8 @@ namespace Content.Server.Fluids.EntitySystems
             appearance.SetData(PuddleVisuals.CurrentVolume, puddle.CurrentVolume);
             appearance.SetData(PuddleVisuals.SolutionColor, puddleSolution.Color);
             appearance.SetData(PuddleVisuals.IsEvaporatingVisual, isEvaporating);
-            appearance.SetData(PuddleVisuals.IsSlipperyVisual, isSlippery);
         }
 
-        bool isSlippery = false;
         private void UpdateSlip(EntityUid entityUid, PuddleComponent puddleComponent)
         {
             if ((puddleComponent.SlipThreshold == FixedPoint2.New(-1) ||
@@ -82,13 +80,11 @@ namespace Content.Server.Fluids.EntitySystems
                 TryComp(entityUid, out StepTriggerComponent? stepTrigger))
             {
                 _stepTrigger.SetActive(entityUid, false, stepTrigger);
-                isSlippery = false;
             }
             else if (puddleComponent.CurrentVolume >= puddleComponent.SlipThreshold)
             {
                 var comp = EnsureComp<StepTriggerComponent>(entityUid);
                 _stepTrigger.SetActive(entityUid, true, comp);
-                isSlippery = true;
             }
         }
 

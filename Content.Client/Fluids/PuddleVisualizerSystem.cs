@@ -48,7 +48,6 @@ namespace Content.Client.Fluids
             if (!args.Component.TryGetData(PuddleVisuals.VolumeScale, out float volumeScale)
                 || !args.Component.TryGetData(PuddleVisuals.CurrentVolume, out FixedPoint2 currentVolume)
                 || !args.Component.TryGetData(PuddleVisuals.SolutionColor, out Color solutionColor)
-                || !args.Component.TryGetData(PuddleVisuals.IsSlipperyVisual, out bool isSlippery)
                 || !args.Component.TryGetData(PuddleVisuals.IsEvaporatingVisual, out bool isEvaporating))
             {
                 if (!component.CustomPuddleSprite) //if there is a custom sprite, it's expected that some of these will be missing, so suppress the logger (no need to warn for it)
@@ -77,8 +76,7 @@ namespace Content.Client.Fluids
             {
                 bool wetFloorEffectNeeded;
 
-                if (/*isSlippery
-                    && */isEvaporating
+                if (isEvaporating // TODO: add a check for isSlippery
                     && currentVolume < component.WetFloorEffectThreshold)
                 {
                     wetFloorEffectNeeded = true;
@@ -107,7 +105,7 @@ namespace Content.Client.Fluids
         {
             sprite.LayerSetState(0, "sparkles", "Fluids/wet_floor_sparkles.rsi");
             sprite.Color = sprite.Color.WithAlpha(alpha);
-            sprite.LayerSetAutoAnimated(0, true);
+            sprite.LayerSetAutoAnimated(0, true); //fixes a bug where the sparkle effect would sometimes freeze on a single frame.
         }
 
         private void EndWetFloorEffect(SpriteComponent sprite, RSI? originalRSI)

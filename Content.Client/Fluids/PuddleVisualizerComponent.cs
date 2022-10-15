@@ -16,8 +16,7 @@ namespace Content.Client.Fluids
         [DataField("originalRsi")] public RSI? OriginalRsi;
 
         /// <summary>
-        /// Puddles with volume below this threshold will have their sprite changed to a wet floor effect,
-        /// provided they are in the process of evaporating.
+        /// Puddles with volume below this threshold are able to have their sprite changed to a wet floor effect, though this is not the only factor.
         /// </summary>
         [DataField("wetFloorEffectThreshold")]
         public FixedPoint2 WetFloorEffectThreshold = FixedPoint2.New(5);
