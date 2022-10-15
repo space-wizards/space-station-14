@@ -43,6 +43,10 @@ public sealed class AMEControllerVisualizerSystem : VisualizerSystem<AMEControll
                     args.Sprite.LayerSetState(AMEControllerVisualLayers.Display, "control_fuck");
                     args.Sprite.LayerSetVisible(AMEControllerVisualLayers.Display, true);
                     break;
+                case "fuelless":
+                    args.Sprite.LayerSetState(AMEControllerVisualLayers.Display, "control_fuelless");
+                    args.Sprite.LayerSetVisible(AMEControllerVisualLayers.Display, true);
+                    break;
                 case "off":
                     args.Sprite.LayerSetVisible(AMEControllerVisualLayers.Display, false);
                     break;

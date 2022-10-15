@@ -34,6 +34,8 @@ namespace Content.Server.AME.Components
 
         private bool Powered => !_entities.TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
+        private bool _fueled;
+
         [ViewVariables]
         private int _stability = 100;
 
@@ -81,7 +83,8 @@ namespace Content.Server.AME.Components
                 var availableInject = fuelJar.FuelAmount >= InjectionAmount ? InjectionAmount : fuelJar.FuelAmount;
                 _powerSupplier.MaxSupply = group.InjectFuel(availableInject, out var overloading);
                 fuelJar.FuelAmount -= availableInject;
-                if (fuelJar.FuelAmount != 0)
+                _fueled = fuelJar.FuelAmount > 0 ? true : false;
+                if (_fueled)
                 {
                     InjectSound(overloading);
                 }
@@ -94,7 +97,7 @@ namespace Content.Server.AME.Components
 
             _stability = group.GetTotalStability();
 
-            UpdateDisplay(_stability);
+            UpdateDisplay(_stability, _fueled);
 
             if (_stability <= 0) { group.ExplodeCores(); }
 
@@ -231,15 +234,19 @@ namespace Content.Server.AME.Components
         }
 
 
-        private void UpdateDisplay(int stability)
+        private void UpdateDisplay(int stability, bool fueled)
         {
             if (_appearance == null) { return; }
 
             _appearance.TryGetData<string>(AMEControllerVisuals.DisplayState, out var state);
 
             var newState = "on";
-            if (stability < 50) { newState = "critical"; }
-            if (stability < 10) { newState = "fuck"; }
+            if (fueled)
+            {
+                if (stability < 50) { newState = "critical"; }
+                if (stability < 10) { newState = "fuck"; }
+            }
+            else { newState = "fuelless"; }
 
             if (state != newState)
             {
