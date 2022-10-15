@@ -633,6 +633,7 @@ namespace Content.Client.Preferences.UI
                 return;
 
             Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithMarkings(markings.GetForwardEnumerator().ToList()));
+            _needUpdatePreview = true;
             IsDirty = true;
         }
 
@@ -765,6 +766,7 @@ namespace Content.Client.Preferences.UI
             Profile = (HumanoidCharacterProfile) _preferencesManager.Preferences!.SelectedCharacter;
             CharacterSlot = _preferencesManager.Preferences.SelectedCharacterIndex;
 
+            _needUpdatePreview = true;
             UpdateControls();
         }
 
@@ -792,6 +794,7 @@ namespace Content.Client.Preferences.UI
             OnSkinColorOnValueChanged(); // Species may have special color prefs, make sure to update it.
             CMarkings.SetSpecies(newSpecies); // Repopulate the markings tab as well.
             IsDirty = true;
+            _needUpdatePreview = true;
         }
 
         private void SetName(string newName)
@@ -820,6 +823,7 @@ namespace Content.Client.Preferences.UI
             {
                 _preferencesManager.UpdateCharacter(Profile, CharacterSlot);
                 OnProfileChanged?.Invoke(Profile, CharacterSlot);
+                _needUpdatePreview = true;
             }
         }
 
