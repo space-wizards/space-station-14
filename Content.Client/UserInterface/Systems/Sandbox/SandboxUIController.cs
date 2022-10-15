@@ -43,13 +43,11 @@ public sealed class SandboxUIController : UIController, IOnStateChanged<Gameplay
     private TileSpawningUIController TileSpawningController => UIManager.GetUIController<TileSpawningUIController>();
     private DecalPlacerUIController DecalPlacerController => UIManager.GetUIController<DecalPlacerUIController>();
 
-    private MenuButton? _sandboxButton;
+    private MenuButton? _sandboxButton => UIManager.GetActiveUIWidget<MenuBar.Widgets.GameTopMenuBar>().SandboxButton;
 
     public void OnStateEntered(GameplayState state)
     {
         DebugTools.Assert(_window == null);
-        _sandboxButton = UIManager.GetActiveUIWidget<MenuBar.Widgets.GameTopMenuBar>().SandboxButton;
-        _sandboxButton.OnPressed += SandboxButtonPressed;
         EnsureWindow();
 
         CheckSandboxVisibility();
@@ -66,6 +64,26 @@ public sealed class SandboxUIController : UIController, IOnStateChanged<Gameplay
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.EditorCopyObject, new PointerInputCmdHandler(Copy))
             .Register<SandboxSystem>();
+    }
+
+    public void UnloadButton()
+    {
+        if (_sandboxButton == null)
+        {
+            return;
+        }
+
+        _sandboxButton.OnPressed -= SandboxButtonPressed;
+    }
+
+    public void LoadButton()
+    {
+        if (_sandboxButton == null)
+        {
+            return;
+        }
+
+        _sandboxButton.OnPressed += SandboxButtonPressed;
     }
 
     private void EnsureWindow()
@@ -112,13 +130,6 @@ public sealed class SandboxUIController : UIController, IOnStateChanged<Gameplay
         {
             _window.Dispose();
             _window = null;
-        }
-
-        if (_sandboxButton != null)
-        {
-            _sandboxButton.Pressed = false;
-            _sandboxButton.OnPressed -= SandboxButtonPressed;
-            _sandboxButton = null;
         }
 
         CommandBinds.Unregister<SandboxSystem>();

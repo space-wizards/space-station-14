@@ -43,6 +43,7 @@ public sealed class HotbarUIController : UIController
 
         _hands?.ReloadHands();
         _inventory?.ReloadSlots();
+        _inventory?.RegisterInventoryBarContainer(hotbar.InventoryHotbar);
     }
 
     private IEnumerable<ItemSlotButtonContainer> GetAllItemSlotContainers(Control gui)

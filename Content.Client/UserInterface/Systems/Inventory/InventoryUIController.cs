@@ -31,20 +31,18 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
 
     private StrippingWindow? _strippingWindow;
     private ItemSlotButtonContainer? _inventoryHotbar;
-    private MenuButton? _inventoryButton;
+    private MenuButton? _inventoryButton => UIManager.ActiveScreen?.GetWidget<MenuBar.Widgets.GameTopMenuBar>()?.InventoryButton;
 
     public void OnStateEntered(GameplayState state)
     {
         DebugTools.Assert(_strippingWindow == null);
         _strippingWindow = UIManager.CreateWindow<StrippingWindow>();
-        _inventoryButton = UIManager.GetActiveUIWidget<MenuBar.Widgets.GameTopMenuBar>().InventoryButton;
         LayoutContainer.SetAnchorPreset(_strippingWindow, LayoutContainer.LayoutPreset.Center);
 
         //bind open inventory key to OpenInventoryMenu;
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.OpenInventoryMenu, InputCmdHandler.FromDelegate(_ => ToggleInventoryBar()))
             .Register<ClientInventorySystem>();
-        _inventoryButton.OnPressed += InventoryButtonPressed;
     }
 
     public void OnStateExited(GameplayState state)
@@ -60,14 +58,27 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
             _inventoryHotbar.Visible = false;
         }
 
-        if (_inventoryButton != null)
+        CommandBinds.Unregister<ClientInventorySystem>();
+    }
+
+    public void UnloadButton()
+    {
+        if (_inventoryButton == null)
         {
-            _inventoryButton.OnPressed -= InventoryButtonPressed;
-            _inventoryButton.Pressed = false;
-            _inventoryButton = null;
+            return;
         }
 
-        CommandBinds.Unregister<ClientInventorySystem>();
+        _inventoryButton.OnPressed -= InventoryButtonPressed;
+    }
+
+    public void LoadButton()
+    {
+        if (_inventoryButton == null)
+        {
+            return;
+        }
+
+        _inventoryButton.OnPressed += InventoryButtonPressed;
     }
 
     private SlotButton CreateSlotButton(SlotData data)

@@ -10,6 +10,7 @@ using Content.Client.UserInterface.Systems.Hands;
 using Content.Client.UserInterface.Systems.Hotbar;
 using Content.Client.UserInterface.Systems.Hotbar.Widgets;
 using Content.Client.UserInterface.Systems.Inventory;
+using Content.Client.UserInterface.Systems.MenuBar;
 using Content.Client.UserInterface.Systems.Viewport;
 using Content.Client.Viewport;
 using Content.Shared.CCVar;
@@ -45,6 +46,7 @@ namespace Content.Client.Gameplay
         private readonly HotbarUIController _hotbarController;
         private readonly ChatUIController _chatController;
         private readonly ViewportUIController _viewportController;
+        private readonly GameTopMenuBarUIController _menuController;
 
         public GameplayState()
         {
@@ -56,6 +58,7 @@ namespace Content.Client.Gameplay
             _hotbarController = _uiManager.GetUIController<HotbarUIController>();
             _chatController = _uiManager.GetUIController<ChatUIController>();
             _viewportController = _uiManager.GetUIController<ViewportUIController>();
+            _menuController = _uiManager.GetUIController<GameTopMenuBarUIController>();
         }
 
         protected override void Startup()
@@ -80,14 +83,12 @@ namespace Content.Client.Gameplay
         {
             _overlayManager.RemoveOverlay<ShowHandItemOverlay>();
 
-            _chatController.SetMainChat(false);
-
             base.Shutdown();
             // Clear viewport to some fallback, whatever.
             _eyeManager.MainViewport = UserInterfaceManager.MainViewport;
             _fpsCounter.Dispose();
             _uiManager.ClearWindows();
-            _uiManager.UnloadScreen();
+            UnloadMainScreen();
         }
 
         public void ReloadMainScreen()
@@ -97,10 +98,15 @@ namespace Content.Client.Gameplay
                 return;
             }
 
-            _chatController.SetMainChat(false);
-            _uiManager.UnloadScreen();
-
+            UnloadMainScreen();
             LoadMainScreen();
+        }
+
+        private void UnloadMainScreen()
+        {
+            _chatController.SetMainChat(false);
+            _menuController.UnloadButtons();
+            _uiManager.UnloadScreen();
         }
 
         private void LoadMainScreen()
@@ -123,6 +129,7 @@ namespace Content.Client.Gameplay
 
             _chatController.SetMainChat(true);
             _viewportController.ReloadViewport();
+            _menuController.LoadButtons();
 
             // TODO: This could just be like, the equivalent of an event or something
             _ghostController.UpdateGui();

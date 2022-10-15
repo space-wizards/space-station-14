@@ -29,20 +29,38 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IClyde _clyde = default!;
     private BwoinkSystem? _bwoinkSystem;
-    private MenuButton? _ahelpButton;
+    private MenuButton? _ahelpButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.AHelpButton;
     private IAHelpUIHandler? _uiHelper;
 
     public void OnStateEntered(GameplayState state)
     {
         DebugTools.Assert(_uiHelper == null);
-        _ahelpButton = UIManager.GetActiveUIWidget<MenuBar.Widgets.GameTopMenuBar>().AHelpButton;
-        _ahelpButton.OnPressed += AHelpButtonPressed;
         _adminManager.AdminStatusUpdated += OnAdminStatusUpdated;
 
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.OpenAHelp,
                 InputCmdHandler.FromDelegate(_ => ToggleWindow()))
             .Register<AHelpUIController>();
+    }
+
+    public void UnloadButton()
+    {
+        if (_ahelpButton == null)
+        {
+            return;
+        }
+
+        _ahelpButton.OnPressed -= AHelpButtonPressed;
+    }
+
+    public void LoadButton()
+    {
+        if (_ahelpButton == null)
+        {
+            return;
+        }
+
+        _ahelpButton.OnPressed += AHelpButtonPressed;
     }
 
     private void OnAdminStatusUpdated()

@@ -52,7 +52,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
     private ActionsWindow? _window;
 
     private ActionsBar? _actionsBar;
-    private MenuButton? _actionButton;
+    private MenuButton? _actionButton => UIManager.GetActiveUIWidget<MenuBar.Widgets.GameTopMenuBar>().ActionButton;
     private ActionPage CurrentPage => _pages[_currentPageIndex];
 
     public bool IsDragging => _menuDragHelper.IsDragging;
@@ -88,7 +88,6 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         DebugTools.Assert(_window == null);
 
         _window = UIManager.CreateWindow<ActionsWindow>();
-        _actionButton = UIManager.GetActiveUIWidget<MenuBar.Widgets.GameTopMenuBar>().ActionButton;
         _actionsBar = UIManager.GetActiveUIWidget<ActionsBar>();
         LayoutContainer.SetAnchorPreset(_window, LayoutContainer.LayoutPreset.CenterTop);
 
@@ -97,7 +96,6 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         _window.ClearButton.OnPressed += OnClearPressed;
         _window.SearchBar.OnTextChanged += OnSearchChanged;
         _window.FilterButton.OnItemSelected += OnFilterSelected;
-        _actionButton.OnPressed += ActionButtonPressed;
         _actionsBar.PageButtons.LeftArrow.OnPressed += OnLeftArrowPressed;
         _actionsBar.PageButtons.RightArrow.OnPressed += OnRightArrowPressed;
 
@@ -146,6 +144,26 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             .Register<ActionUIController>();
     }
 
+    public void UnloadButton()
+    {
+        if (_actionButton == null)
+        {
+            return;
+        }
+
+        _actionButton.OnPressed -= ActionButtonPressed;
+    }
+
+    public void LoadButton()
+    {
+        if (_actionButton == null)
+        {
+            return;
+        }
+
+        _actionButton.OnPressed += ActionButtonPressed;
+    }
+
     private void OnWindowOpened()
     {
         if (_actionButton != null)
@@ -184,12 +202,6 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         {
             _actionsBar.PageButtons.LeftArrow.OnPressed += OnLeftArrowPressed;
             _actionsBar.PageButtons.RightArrow.OnPressed += OnRightArrowPressed;
-        }
-
-        if (_actionButton != null)
-        {
-            _actionButton.OnPressed -= ActionButtonPressed;
-            _actionButton.Pressed = false;
         }
 
         CommandBinds.Unregister<ActionUIController>();
