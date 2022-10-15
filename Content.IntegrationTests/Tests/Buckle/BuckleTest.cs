@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Content.Server.Body.Systems;
 using Content.Server.Buckle.Components;
 using Content.Server.Hands.Components;
 using Content.Shared.ActionBlocker;
@@ -29,8 +30,7 @@ namespace Content.IntegrationTests.Tests.Buckle
   - type: Buckle
   - type: Hands
   - type: Body
-    body: Human
-    centerSlot: torso
+    prototype: Human
   - type: StandingState
 
 - type: entity
@@ -219,7 +219,7 @@ namespace Content.IntegrationTests.Tests.Buckle
             EntityUid human = default;
             BuckleComponent buckle = null;
             HandsComponent hands = null;
-            SharedBodyComponent body = null;
+            BodyComponent body = null;
 
             await server.WaitIdleAsync();
 
@@ -264,12 +264,13 @@ namespace Content.IntegrationTests.Tests.Buckle
                     Assert.NotNull(hand.HeldEntity);
                 }
 
-                var legs = body.GetPartsOfType(BodyPartType.Leg);
+                var bodySystem = entityManager.System<BodySystem>();
+                var legs = bodySystem.GetChildrenOfType(body.Owner, BodyPartType.Leg, body);
 
                 // Break our guy's kneecaps
                 foreach (var leg in legs)
                 {
-                    body.RemovePart(leg);
+                    bodySystem.Drop(leg.Owner, leg);
                 }
             });
 

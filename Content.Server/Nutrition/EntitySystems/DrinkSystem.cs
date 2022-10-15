@@ -55,7 +55,7 @@ namespace Content.Server.Nutrition.EntitySystems
             SubscribeLocalEvent<DrinkComponent, GetVerbsEvent<AlternativeVerb>>(AddDrinkVerb);
             SubscribeLocalEvent<DrinkComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<DrinkComponent, SolutionTransferAttemptEvent>(OnTransferAttempt);
-            SubscribeLocalEvent<SharedBodyComponent, DrinkEvent>(OnDrink);
+            SubscribeLocalEvent<BodyComponent, DrinkEvent>(OnDrink);
             SubscribeLocalEvent<DrinkCancelledEvent>(OnDrinkCancelled);
         }
 
@@ -225,7 +225,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 return true;
             }
 
-            if (!EntityManager.HasComponent<SharedBodyComponent>(target))
+            if (!EntityManager.HasComponent<BodyComponent>(target))
                 return false;
 
             if (!drink.Opened)
@@ -286,7 +286,7 @@ namespace Content.Server.Nutrition.EntitySystems
         /// <summary>
         ///     Raised directed at a victim when someone has force fed them a drink.
         /// </summary>
-        private void OnDrink(EntityUid uid, SharedBodyComponent body, DrinkEvent args)
+        private void OnDrink(EntityUid uid, BodyComponent body, DrinkEvent args)
         {
             if (args.Drink.Deleted)
                 return;
@@ -380,7 +380,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (uid == ev.User ||
                 !ev.CanInteract ||
                 !ev.CanAccess ||
-                !EntityManager.TryGetComponent(ev.User, out SharedBodyComponent? body) ||
+                !EntityManager.TryGetComponent(ev.User, out BodyComponent? body) ||
                 !_bodySystem.TryGetComponentsOnOrgans<StomachComponent>(ev.User, out var stomachs, body))
                 return;
 

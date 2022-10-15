@@ -48,7 +48,7 @@ namespace Content.Server.Nutrition.EntitySystems
             SubscribeLocalEvent<FoodComponent, UseInHandEvent>(OnUseFoodInHand);
             SubscribeLocalEvent<FoodComponent, AfterInteractEvent>(OnFeedFood);
             SubscribeLocalEvent<FoodComponent, GetVerbsEvent<AlternativeVerb>>(AddEatVerb);
-            SubscribeLocalEvent<SharedBodyComponent, FeedEvent>(OnFeed);
+            SubscribeLocalEvent<BodyComponent, FeedEvent>(OnFeed);
             SubscribeLocalEvent<ForceFeedCancelledEvent>(OnFeedCancelled);
             SubscribeLocalEvent<InventoryComponent, IngestionAttemptEvent>(OnInventoryIngestAttempt);
         }
@@ -88,7 +88,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 return false;
 
             // Target can't be fed
-            if (!EntityManager.HasComponent<SharedBodyComponent>(target))
+            if (!EntityManager.HasComponent<BodyComponent>(target))
                 return false;
 
             if (!_solutionContainerSystem.TryGetSolution(food.Owner, food.SolutionName, out var foodSolution))
@@ -145,7 +145,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
         }
 
-        private void OnFeed(EntityUid uid, SharedBodyComponent body, FeedEvent args)
+        private void OnFeed(EntityUid uid, BodyComponent body, FeedEvent args)
         {
             if (args.Food.Deleted)
                 return;
@@ -243,7 +243,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (uid == ev.User ||
                 !ev.CanInteract ||
                 !ev.CanAccess ||
-                !EntityManager.TryGetComponent(ev.User, out SharedBodyComponent? body) ||
+                !EntityManager.TryGetComponent(ev.User, out BodyComponent? body) ||
                 !_bodySystem.TryGetComponentsOnOrgans<StomachComponent>(ev.User, out var stomachs, body))
                 return;
 

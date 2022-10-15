@@ -1,4 +1,4 @@
-﻿type: body
+﻿- type: body
   id: Vox
   name: "vox"
   root: torso
@@ -8,8 +8,8 @@
       connections:
       - torso
       organs:
-      - OrganHumanBrain
-      - OrganHumanEyes
+        brain: OrganHumanBrain
+        eyes: OrganHumanEyes
     torso:
       part: TorsoVox
       connections:
@@ -18,11 +18,11 @@
       - left leg
       - right leg
       organs:
-      - OrganHumanHeart
-      - OrganVoxLungs
-      - OrganHumanStomach
-      - OrganHumanLiver
-      - OrganHumanKidneys
+        heart: OrganHumanHeart
+        lungs: OrganVoxLungs
+        stomach: OrganHumanStomach
+        liver: OrganHumanLiver
+        kidneys: OrganHumanKidneys
     right arm:
       part: RightArmVox
       connections:

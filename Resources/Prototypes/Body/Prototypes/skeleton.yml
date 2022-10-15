@@ -1,16 +1,14 @@
 ﻿- type: body
-  name: "skeleton"
   id: Skeleton
+  name: "skeleton"
   root: torso
   slots:
     head:
       part: HeadSkeleton
       connections:
       - torso
-      organs:
     torso:
       part: TorsoSkeleton
-      organs:
       connections:
       - left arm
       - right arm

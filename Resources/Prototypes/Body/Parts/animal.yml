@@ -10,7 +10,7 @@
   components:
   - type: Damageable
     damageContainer: Biological
-  - type: BodyPart
+  - type: Body
   - type: ContainerContainer
     containers:
       bodypart: !type:Container
@@ -25,10 +25,8 @@
   parent: PartAnimal
   noSpawn: true
   components:
-  - type: BodyPart
+  - type: Body
     partType: Hand
-    size: 1
-    compatibility: Biological
     symmetry: Left
 
 - type: entity
@@ -37,10 +35,8 @@
   parent: PartAnimal
   noSpawn: true
   components:
-  - type: BodyPart
+  - type: Body
     partType: Leg
-    size: 1
-    compatibility: Biological
 
 - type: entity
   id: FeetAnimal
@@ -48,10 +44,8 @@
   parent: PartAnimal
   noSpawn: true
   components:
-  - type: BodyPart
+  - type: Body
     partType: Foot
-    size: 1
-    compatibility: Biological
 
 - type: entity
   id: TorsoAnimal
@@ -59,10 +53,8 @@
   parent: PartAnimal
   noSpawn: true
   components:
-  - type: BodyPart
+  - type: Body
     partType: Torso
-    size: 7
-    compatibility: Biological
   - type: Damageable
     damageContainer: Biological
 
@@ -71,7 +63,7 @@
   parent: BaseItem
   abstract: true
   components:
-  - type: Mechanism
+  - type: Body
   - type: Sprite
     netsync: false
     sprite: Mobs/Species/Human/organs.rsi
@@ -84,9 +76,7 @@
   name: lungs
   noSpawn: true
   components:
-  - type: Mechanism
-    size: 1
-    compatibility: Biological
+  - type: Body
   - type: Lung
   - type: Metabolizer
     removeEmpty: true
@@ -103,9 +93,7 @@
   name: stomach
   noSpawn: true
   components:
-  - type: Mechanism
-    size: 1
-    compatibility: Biological
+  - type: Body
   - type: SolutionContainerManager
     solutions:
       stomach:
@@ -125,9 +113,7 @@
   name: liver
   noSpawn: true
   components:
-  - type: Mechanism
-    size: 1
-    compatibility: Biological
+  - type: Body
   - type: Metabolizer
     maxReagents: 1
     metabolizerTypes: [Animal]
@@ -141,9 +127,7 @@
   name: heart
   noSpawn: true
   components:
-  - type: Mechanism
-    size: 1
-    compatibility: Biological
+  - type: Body
   - type: Metabolizer
     maxReagents: 2
     metabolizerTypes: [Animal]
@@ -158,9 +142,7 @@
   name: kidneys
   noSpawn: true
   components:
-  - type: Mechanism
-    size: 1
-    compatibility: Biological
+  - type: Body
   - type: Metabolizer
     maxReagents: 5
     metabolizerTypes: [Animal]

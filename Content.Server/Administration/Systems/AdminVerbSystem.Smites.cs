@@ -102,10 +102,7 @@ public sealed partial class AdminVerbSystem
                         4, 1, 2, maxTileBreak: 0), // it gibs, damage doesn't need to be high.
                     CancellationToken.None);
 
-                if (TryComp(args.Target, out SharedBodyComponent? body))
-                {
-                    body.Gib();
-                }
+                _bodySystem.Gib(args.Target);
             },
             Impact = LogImpact.Extreme,
             Message = Loc.GetString("admin-smite-explode-description")
@@ -309,13 +306,13 @@ public sealed partial class AdminVerbSystem
                     _vomitSystem.Vomit(args.Target, -1000, -1000); // You feel hollow!
                     var organs = _bodySystem.GetComponentsOnOrgans<TransformComponent>(args.Target, body);
                     var baseXform = Transform(args.Target);
-                    foreach (var (xform, mechanism) in organs)
+                    foreach (var (xform, organ) in organs)
                     {
                         if (HasComp<BrainComponent>(xform.Owner) || HasComp<EyeComponent>(xform.Owner))
                             continue;
 
-                        mechanism.Part?.RemoveMechanism(mechanism);
-                        xform.Coordinates = baseXform.Coordinates.Offset(_random.NextVector2(0.5f,0.75f));
+                        var coordinates = baseXform.Coordinates.Offset(_random.NextVector2(0.5f, 0.75f));
+                        _bodySystem.DropAt(organ.Owner, coordinates, organ);
                     }
 
                     _popupSystem.PopupEntity(Loc.GetString("admin-smite-vomit-organs-self"), args.Target,
@@ -336,10 +333,9 @@ public sealed partial class AdminVerbSystem
                 Act = () =>
                 {
                     var baseXform = Transform(args.Target);
-                    foreach (var part in body.GetPartsOfType(BodyPartType.Hand))
+                    foreach (var part in _bodySystem.GetChildrenOfType(args.Target, BodyPartType.Hand))
                     {
-                        body.RemovePart(part);
-                        Transform(part.Owner).Coordinates = baseXform.Coordinates;
+                        _bodySystem.DropAt(part.Owner, baseXform.Coordinates, part);
                     }
                     _popupSystem.PopupEntity(Loc.GetString("admin-smite-remove-hands-self"), args.Target,
                         Filter.Entities(args.Target), PopupType.LargeCaution);
@@ -359,10 +355,9 @@ public sealed partial class AdminVerbSystem
                 Act = () =>
                 {
                     var baseXform = Transform(args.Target);
-                    foreach (var part in body.GetPartsOfType(BodyPartType.Hand))
+                    foreach (var part in _bodySystem.GetChildrenOfType(body.Owner, BodyPartType.Hand, body))
                     {
-                        body.RemovePart(part);
-                        Transform(part.Owner).Coordinates = baseXform.Coordinates;
+                        _bodySystem.DropAt(part.Owner, baseXform.Coordinates, part);
                         break;
                     }
                     _popupSystem.PopupEntity(Loc.GetString("admin-smite-remove-hands-self"), args.Target,
@@ -382,13 +377,9 @@ public sealed partial class AdminVerbSystem
                 IconTexture = "/Textures/Mobs/Species/Human/organs.rsi/stomach.png",
                 Act = () =>
                 {
-                    foreach (var part in body.Parts)
+                    foreach (var (component, _) in _bodySystem.GetComponentsOnOrgans<StomachComponent>(args.Target, body))
                     {
-                        foreach (var mechanism in part.Key.Mechanisms)
-                        {
-                            if (HasComp<StomachComponent>(mechanism.Owner))
-                                QueueDel(mechanism.Owner);
-                        }
+                        QueueDel(component.Owner);
                     }
 
                     _popupSystem.PopupEntity(Loc.GetString("admin-smite-stomach-removal-self"), args.Target,
@@ -406,13 +397,9 @@ public sealed partial class AdminVerbSystem
                 IconTexture = "/Textures/Mobs/Species/Human/organs.rsi/lung-r.png",
                 Act = () =>
                 {
-                    foreach (var part in body.Parts)
+                    foreach (var (component, _) in _bodySystem.GetComponentsOnOrgans<LungComponent>(args.Target, body))
                     {
-                        foreach (var mechanism in part.Key.Mechanisms)
-                        {
-                            if (HasComp<LungComponent>(mechanism.Owner))
-                                QueueDel(mechanism.Owner);
-                        }
+                        QueueDel(component.Owner);
                     }
 
                     _popupSystem.PopupEntity(Loc.GetString("admin-smite-lung-removal-self"), args.Target,

@@ -13,7 +13,7 @@
     sprite: Mobs/Species/Reptilian/parts.rsi
     state: full
   - type: Body
-    body: Reptilian
+    prototype: Reptilian
   - type: LizardAccent
   - type: Speech
     speechSounds: Lizard

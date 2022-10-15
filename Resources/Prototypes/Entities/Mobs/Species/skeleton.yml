@@ -12,7 +12,7 @@
     state: full
   # Other
   - type: Body
-    body: Skeleton
+    prototype: Skeleton
     gibSound: /Audio/Effects/bone_rattle.ogg
   - type: Damageable
     damageContainer: Biological

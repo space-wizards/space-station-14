@@ -88,7 +88,7 @@
   - type: InputMover
   - type: MobMover
   - type: Body
-    body: Bot
+    prototype: Bot
 
 - type: entity
   parent: MobSiliconBase

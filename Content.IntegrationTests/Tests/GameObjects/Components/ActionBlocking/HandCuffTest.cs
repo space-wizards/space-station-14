@@ -26,8 +26,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
   - type: Cuffable
   - type: Hands
   - type: Body
-    body: Human
-    centerSlot: torso
+    prototype: Human
 
 - type: entity
   name: HandcuffsDummy
@@ -71,12 +70,9 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
                 Assert.True(entityManager.TryGetComponent(human, out cuffed!),
                     $"Human has no {nameof(CuffableComponent)}");
                 Assert.True(entityManager.TryGetComponent(human, out hands!), $"Human has no {nameof(HandsComponent)}");
-                Assert.True(entityManager.TryGetComponent(human, out SharedBodyComponent? _),
-                    $"Human has no {nameof(SharedBodyComponent)}");
-                Assert.True(entityManager.TryGetComponent(cuffs, out HandcuffComponent? _),
-                    $"Handcuff has no {nameof(HandcuffComponent)}");
-                Assert.True(entityManager.TryGetComponent(secondCuffs, out HandcuffComponent? _),
-                    $"Second handcuffs has no {nameof(HandcuffComponent)}");
+                Assert.True(entityManager.TryGetComponent(human, out BodyComponent? _), $"Human has no {nameof(BodyComponent)}");
+                Assert.True(entityManager.TryGetComponent(cuffs, out HandcuffComponent? _), $"Handcuff has no {nameof(HandcuffComponent)}");
+                Assert.True(entityManager.TryGetComponent(secondCuffs, out HandcuffComponent? _), $"Second handcuffs has no {nameof(HandcuffComponent)}");
 
                 // Test to ensure cuffed players register the handcuffs
                 cuffed.TryAddNewCuffs(human, cuffs);

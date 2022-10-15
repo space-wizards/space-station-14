@@ -708,7 +708,7 @@
   - type: Speech
     speechSounds: Monkey
   - type: Body
-    body: Primate
+    prototype: Primate
   - type: DamageStateVisuals
     states:
       Alive:

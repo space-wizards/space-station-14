@@ -17,7 +17,7 @@ namespace Content.Client.Commands
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            var mechanisms = entityManager.EntityQuery<OrganComponent>(true);
+            var mechanisms = entityManager.EntityQuery<BodyComponent>(true);
 
             foreach (var mechanism in mechanisms)
             {

@@ -1,6 +1,6 @@
 ﻿- type: body
-  name: "primate"
   id: Primate
+  name: "primate"
   root: torso
   slots:
     torso:
@@ -9,16 +9,16 @@
       - hands
       - legs
       organs:
-      - OrganAnimalLungs
-      - OrganAnimalStomach
-      - OrganAnimalLiver
-      - OrganAnimalHeart
-      - OrganAnimalKidneys
+        lungs: OrganAnimalLungs
+        stomach: OrganAnimalStomach
+        liver: OrganAnimalLiver
+        heart: OrganAnimalHeart
+        kidneys: OrganAnimalKidneys
     hands:
       part: HandsAnimal
     legs:
       part: LegsAnimal
       connections:
       - feet
-      feet:
-        part: FeetAnimal
+    feet:
+      part: FeetAnimal

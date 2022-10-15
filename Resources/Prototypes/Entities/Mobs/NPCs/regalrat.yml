@@ -49,7 +49,7 @@
         Slash: 12
         Piercing: 8
   - type: Body
-    body: Rat
+    prototype: Rat
   - type: Appearance
   - type: DamageStateVisuals
     rotate: true
@@ -206,7 +206,7 @@
         Slash: 5
         Piercing: 3
   - type: Body
-    body: Rat
+    prototype: Rat
   - type: Appearance
   - type: DamageStateVisuals
     rotate: true

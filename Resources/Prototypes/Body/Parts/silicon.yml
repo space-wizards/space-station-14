@@ -6,7 +6,7 @@
   components:
   - type: Damageable
     damageContainer: Inorganic
-  - type: BodyPart
+  - type: Body
   - type: ContainerContainer
     containers:
       bodypart: !type:Container
@@ -26,10 +26,8 @@
   - type: Icon
     sprite: Mobs/Silicon/drone.rsi
     state: "l_hand"
-  - type: BodyPart
+  - type: Body
     partType: Hand
-    size: 3
-    compatibility: Biological ##Does this do anything? Revisit when surgery is in
     symmetry: Left
   - type: Tag
     tags:
@@ -49,10 +47,8 @@
   - type: Icon
     sprite: Mobs/Silicon/drone.rsi
     state: "r_hand"
-  - type: BodyPart
+  - type: Body
     partType: Hand
-    size: 3
-    compatibility: Biological
     symmetry: Right
   - type: Tag
     tags:

@@ -23,7 +23,7 @@
     drawdepth: Mobs
     scale: 1, 0.8
   - type: Body
-    body: Human
+    prototype: Human
 
 - type: entity
   save: false

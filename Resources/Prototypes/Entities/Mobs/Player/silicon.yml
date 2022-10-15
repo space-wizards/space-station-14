@@ -51,7 +51,7 @@
   - type: Hands
     showInHands: false
   - type: Body
-    body: Drone
+    prototype: Drone
   - type: DoAfter
   - type: Pullable
   - type: Examiner

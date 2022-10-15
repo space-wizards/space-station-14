@@ -113,7 +113,7 @@
     - TemporaryBlindness
     - Pacified
   - type: Body
-    body: Animal
+    prototype: Animal
   - type: Examiner
   - type: MeleeWeapon
     hidden: true

@@ -22,8 +22,7 @@ namespace Content.IntegrationTests.Tests.Body
   components:
   - type: SolutionContainerManager
   - type: Body
-    body: Human
-    centerSlot: torso
+    prototype: Human
   - type: MobState
     thresholds:
       0: Alive
@@ -62,7 +61,7 @@ namespace Content.IntegrationTests.Tests.Body
 
             MapId mapId;
             EntityUid? grid = null;
-            SharedBodyComponent body = default;
+            BodyComponent body = default;
             EntityUid human = default;
             GridAtmosphereComponent relevantAtmos = default;
             float startingMoles = 0.0f;
@@ -156,7 +155,7 @@ namespace Content.IntegrationTests.Tests.Body
                 var coordinates = new EntityCoordinates(grid.Value, center);
                 human = entityManager.SpawnEntity("HumanBodyDummy", coordinates);
 
-                Assert.True(entityManager.HasComponent<SharedBodyComponent>(human));
+                Assert.True(entityManager.HasComponent<BodyComponent>(human));
                 Assert.True(entityManager.TryGetComponent(human, out respirator));
                 Assert.False(respirator.SuffocationCycles > respirator.SuffocationCycleThreshold);
             });

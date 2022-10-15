@@ -1,7 +1,7 @@
 using Content.Server.Morgue.Components;
-using Content.Shared.Standing;
 using Content.Server.Storage.Components;
 using Content.Shared.Body.Components;
+using Content.Shared.Standing;
 
 namespace Content.Server.Morgue;
 
@@ -19,7 +19,7 @@ public sealed class EntityStorageLayingDownOverrideSystem : EntitySystem
     private void OnBeforeClose(EntityUid uid, EntityStorageLayingDownOverrideComponent component, StorageBeforeCloseEvent args)
     {
         foreach (var ent in args.Contents)
-            if (HasComp<SharedBodyComponent>(ent) && !_standing.IsDown(ent))
+            if (HasComp<BodyComponent>(ent) && !_standing.IsDown(ent))
                 args.Contents.Remove(ent);
     }
 }

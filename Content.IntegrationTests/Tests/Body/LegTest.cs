@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Content.Server.Body.Components;
+using Content.Server.Body.Systems;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Rotation;
@@ -12,7 +12,6 @@ using Robust.Shared.Maths;
 namespace Content.IntegrationTests.Tests.Body
 {
     [TestFixture]
-    [TestOf(typeof(SharedBodyComponent))]
     [TestOf(typeof(BodyComponent))]
     public sealed class LegTest
     {
@@ -23,8 +22,7 @@ namespace Content.IntegrationTests.Tests.Body
   components:
   - type: Appearance
   - type: Body
-    body: Human
-    centerSlot: torso
+    prototype: Human
   - type: StandingState
 ";
 
@@ -47,16 +45,17 @@ namespace Content.IntegrationTests.Tests.Body
                 var human = entityManager.SpawnEntity("HumanBodyAndAppearanceDummy",
                     new MapCoordinates(Vector2.Zero, mapId));
 
-                Assert.That(entityManager.TryGetComponent(human, out SharedBodyComponent body));
+                Assert.That(entityManager.TryGetComponent(human, out BodyComponent body));
                 Assert.That(entityManager.TryGetComponent(human, out appearance));
 
                 Assert.That(!appearance.TryGetData(RotationVisuals.RotationState, out RotationState _));
 
-                var legs = body.GetPartsOfType(BodyPartType.Leg);
+                var bodySystem = entityManager.System<BodySystem>();
+                var legs = bodySystem.GetChildrenOfType(body.Owner, BodyPartType.Leg, body);
 
                 foreach (var leg in legs)
                 {
-                    body.RemovePart(leg);
+                    bodySystem.Drop(leg.Owner, leg);
                 }
             });
 

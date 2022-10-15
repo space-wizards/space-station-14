@@ -77,8 +77,7 @@ namespace Content.IntegrationTests.Tests.Disposal
   id: HumanDummy
   components:
   - type: Body
-    body: Human
-    centerSlot: torso
+    prototype: Human
   - type: MobState
   - type: Damageable
     damageContainer: Biological

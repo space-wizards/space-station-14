@@ -9,6 +9,7 @@ namespace Content.Server.Body.Systems
 {
     public sealed class StomachSystem : EntitySystem
     {
+        [Dependency] private readonly BodySystem _bodySystem = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
 
         public const string DefaultSolutionName = "stomach";
@@ -21,12 +22,11 @@ namespace Content.Server.Body.Systems
 
         public override void Update(float frameTime)
         {
-            foreach (var (stomach, mech, sol)
-                in EntityManager.EntityQuery<StomachComponent, OrganComponent, SolutionContainerManagerComponent>(false))
+            foreach (var (stomach, part, sol)
+                     in EntityManager
+                         .EntityQuery<StomachComponent, BodyComponent, SolutionContainerManagerComponent>(
+                             false))
             {
-                if (mech.Body == null)
-                    continue;
-
                 stomach.AccumulatedFrameTime += frameTime;
 
                 if (stomach.AccumulatedFrameTime < stomach.UpdateInterval)
@@ -35,12 +35,14 @@ namespace Content.Server.Body.Systems
                 stomach.AccumulatedFrameTime -= stomach.UpdateInterval;
 
                 // Get our solutions
-                if (!_solutionContainerSystem.TryGetSolution((stomach).Owner, DefaultSolutionName,
-                    out var stomachSolution, sol))
+                if (!_solutionContainerSystem.TryGetSolution(stomach.Owner, DefaultSolutionName,
+                        out var stomachSolution, sol))
                     continue;
 
-                if (!_solutionContainerSystem.TryGetSolution((mech.Body).Owner, stomach.BodySolutionName,
-                    out var bodySolution))
+                var body = _bodySystem.GetRoot(part.Owner, part);
+                if (body == null ||
+                    !_solutionContainerSystem.TryGetSolution(body.Owner, stomach.BodySolutionName,
+                        out var bodySolution))
                     continue;
 
                 var transferSolution = new Solution();
@@ -71,23 +73,25 @@ namespace Content.Server.Body.Systems
                 }
 
                 // Transfer everything to the body solution!
-                _solutionContainerSystem.TryAddSolution((mech.Body).Owner, bodySolution, transferSolution);
+                _solutionContainerSystem.TryAddSolution(body.Owner, bodySolution, transferSolution);
             }
         }
 
-    private void OnApplyMetabolicMultiplier(EntityUid uid, StomachComponent component, ApplyMetabolicMultiplierEvent args)
-    {
-        if (args.Apply)
+        private void OnApplyMetabolicMultiplier(EntityUid uid, StomachComponent component,
+            ApplyMetabolicMultiplierEvent args)
         {
-            component.UpdateInterval *= args.Multiplier;
-            return;
+            if (args.Apply)
+            {
+                component.UpdateInterval *= args.Multiplier;
+                return;
+            }
+
+            // This way we don't have to worry about it breaking if the stasis bed component is destroyed
+            component.UpdateInterval /= args.Multiplier;
+            // Reset the accumulator properly
+            if (component.AccumulatedFrameTime >= component.UpdateInterval)
+                component.AccumulatedFrameTime = component.UpdateInterval;
         }
-        // This way we don't have to worry about it breaking if the stasis bed component is destroyed
-        component.UpdateInterval /= args.Multiplier;
-        // Reset the accumulator properly
-        if (component.AccumulatedFrameTime >= component.UpdateInterval)
-            component.AccumulatedFrameTime = component.UpdateInterval;
-    }
 
         private void OnComponentInit(EntityUid uid, StomachComponent component, ComponentInit args)
         {
@@ -96,7 +100,7 @@ namespace Content.Server.Body.Systems
         }
 
         public bool CanTransferSolution(EntityUid uid, Solution solution,
-            SolutionContainerManagerComponent? solutions=null)
+            SolutionContainerManagerComponent? solutions = null)
         {
             if (!Resolve(uid, ref solutions, false))
                 return false;
@@ -112,8 +116,8 @@ namespace Content.Server.Body.Systems
         }
 
         public bool TryTransferSolution(EntityUid uid, Solution solution,
-            StomachComponent? stomach=null,
-            SolutionContainerManagerComponent? solutions=null)
+            StomachComponent? stomach = null,
+            SolutionContainerManagerComponent? solutions = null)
         {
             if (!Resolve(uid, ref stomach, ref solutions, false))
                 return false;

@@ -1,5 +1,4 @@
 ﻿using Content.Shared.Body.Components;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.Body.Part
 {
@@ -10,17 +9,16 @@ namespace Content.Shared.Body.Part
     public interface IBodyPartRemoved
     {
         /// <summary>
-        ///     Called when a <see cref="SharedBodyPartComponent"/> is removed from the
+        ///     Called when a <see cref="BodyComponent"/> is removed from the
         ///     entity owning this component.
         /// </summary>
         /// <param name="args">Information about the part that was removed.</param>
         void BodyPartRemoved(BodyPartRemovedEventArgs args);
     }
 
-    [Serializable, NetSerializable]
     public sealed class BodyPartRemovedEventArgs : EventArgs
     {
-        public BodyPartRemovedEventArgs(string slot, SharedBodyPartComponent part)
+        public BodyPartRemovedEventArgs(string slot, BodyComponent part)
         {
             Slot = slot;
             Part = part;
@@ -34,6 +32,6 @@ namespace Content.Shared.Body.Part
         /// <summary>
         ///     The part that was removed.
         /// </summary>
-        public SharedBodyPartComponent Part { get; }
+        public BodyComponent Part { get; }
     }
 }

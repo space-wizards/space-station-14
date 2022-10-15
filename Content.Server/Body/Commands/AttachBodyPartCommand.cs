@@ -1,4 +1,5 @@
 using Content.Server.Administration;
+using Content.Server.Body.Systems;
 using Content.Shared.Administration;
 using Content.Shared.Body.Components;
 using Robust.Server.Player;
@@ -71,9 +72,9 @@ namespace Content.Server.Body.Commands
                     return;
             }
 
-            if (!entityManager.TryGetComponent(entity, out SharedBodyComponent? body))
+            if (!entityManager.TryGetComponent(entity, out BodyComponent? body))
             {
-                shell.WriteLine($"Entity {entityManager.GetComponent<MetaDataComponent>(entity).EntityName} with uid {entity} does not have a {nameof(SharedBodyComponent)} component.");
+                shell.WriteLine($"Entity {entityManager.GetComponent<MetaDataComponent>(entity).EntityName} with uid {entity} does not have a {nameof(BodyComponent)} component.");
                 return;
             }
 
@@ -83,19 +84,27 @@ namespace Content.Server.Body.Commands
                 return;
             }
 
-            if (!entityManager.TryGetComponent(partUid, out SharedBodyPartComponent? part))
+            if (!entityManager.TryGetComponent(partUid, out BodyComponent? part))
             {
-                shell.WriteLine($"Entity {entityManager.GetComponent<MetaDataComponent>(partUid).EntityName} with uid {args[0]} does not have a {nameof(SharedBodyPartComponent)} component.");
+                shell.WriteLine($"Entity {entityManager.GetComponent<MetaDataComponent>(partUid).EntityName} with uid {args[0]} does not have a {nameof(BodyComponent)} component.");
                 return;
             }
 
-            if (body.HasPart(part))
+            var bodySystem = entityManager.System<BodySystem>();
+            if (bodySystem.HasChild(entity, partUid, body, part))
             {
                 shell.WriteLine($"Body part {entityManager.GetComponent<MetaDataComponent>(partUid).EntityName} with uid {partUid} is already attached to entity {entityManager.GetComponent<MetaDataComponent>(entity).EntityName} with uid {entity}");
                 return;
             }
 
-            body.SetPart($"AttachBodyPartVerb-{partUid}", part);
+            var slotName = $"AttachBodyPartVerb-{partUid}";
+            if (!bodySystem.TryCreateAndAttach(entity, slotName, partUid, body, part))
+            {
+                shell.WriteError($"Could not create slot {slotName} on entity {entityManager.ToPrettyString(entity)}");
+                return;
+            }
+
+            shell.WriteLine($"Attached part {entityManager.ToPrettyString(partUid)} to {entityManager.ToPrettyString(entity)}");
         }
     }
 }

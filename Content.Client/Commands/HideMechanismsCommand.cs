@@ -15,18 +15,18 @@ namespace Content.Client.Commands
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            var mechanisms = entityManager.EntityQuery<OrganComponent>(true);
+            var parts = entityManager.EntityQuery<BodyComponent>(true);
 
-            foreach (var mechanism in mechanisms)
+            foreach (var part in parts)
             {
-                if (!entityManager.TryGetComponent(mechanism.Owner, out SpriteComponent? sprite))
+                if (!part.Organ || !entityManager.TryGetComponent(part.Owner, out SpriteComponent? sprite))
                 {
                     continue;
                 }
 
                 sprite.ContainerOccluded = false;
 
-                var tempParent = mechanism.Owner;
+                var tempParent = part.Owner;
                 while (tempParent.TryGetContainer(out var container))
                 {
                     if (!container.ShowContents)

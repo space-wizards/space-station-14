@@ -1,3 +1,4 @@
+using Content.Server.Body.Systems;
 using Content.Server.Buckle.Components;
 using Content.Server.Buckle.Systems;
 using Content.Server.Popups;
@@ -23,6 +24,7 @@ namespace Content.Server.Toilet
     public sealed class ToiletSystem : EntitySystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly BodySystem _bodySystem = default!;
         [Dependency] private readonly SecretStashSystem _secretStash = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly ToolSystem _toolSystem = default!;
@@ -45,8 +47,8 @@ namespace Content.Server.Toilet
             if (args.Handled) return;
 
             // Check that victim has a head
-            if (EntityManager.TryGetComponent<SharedBodyComponent>(args.Victim, out var body) &&
-                body.HasPartOfType(BodyPartType.Head))
+            if (EntityManager.TryGetComponent<BodyComponent>(args.Victim, out var body) &&
+                _bodySystem.HasChildOfType(args.Victim, BodyPartType.Head, body))
             {
                 var othersMessage = Loc.GetString("toilet-component-suicide-head-message-others",
                     ("victim", Identity.Entity(args.Victim, EntityManager)), ("owner", uid));

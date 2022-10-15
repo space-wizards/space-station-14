@@ -60,7 +60,7 @@ namespace Content.Shared.Humanoid
             }
         }
 
-        public static HumanoidVisualLayers? ToHumanoidLayers(this SharedBodyPartComponent part)
+        public static HumanoidVisualLayers? ToHumanoidLayers(this BodyComponent part)
         {
             switch (part.PartType)
             {

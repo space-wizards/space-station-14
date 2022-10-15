@@ -1,6 +1,6 @@
 ﻿- type: body
-  name: "slime"
   id: Slime
+  name: "slime"
   root: torso
   slots:
     head:
@@ -15,8 +15,8 @@
       - left leg
       - right leg
       organs:
-      - SentientSlimeCore
-      - OrganSlimeLungs
+        core: SentientSlimeCore
+        lungs: OrganSlimeLungs
     right arm:
       part: RightArmSlime
       connections:

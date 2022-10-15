@@ -24,10 +24,11 @@ namespace Content.Server.Body.Systems
         private void OnRemovedFromBody(EntityUid uid, BrainComponent component, RemovedFromBodyEvent args)
         {
             // This one needs to be special, okay?
-            if (!EntityManager.TryGetComponent(uid, out OrganComponent? mech))
+            if (!EntityManager.TryGetComponent(uid, out BodyComponent? organ) ||
+                organ.ParentSlot is not { Parent: var parent })
                 return;
 
-            HandleMind((mech.Part!).Owner, (args.Old).Owner);
+            HandleMind(parent, args.Old.Owner);
         }
 
         private void HandleMind(EntityUid newEntity, EntityUid oldEntity)

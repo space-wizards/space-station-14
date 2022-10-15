@@ -11,9 +11,9 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
 
         public void Execute(EntityUid owner, DestructibleSystem system)
         {
-            if (system.EntityManager.TryGetComponent(owner, out SharedBodyComponent? body))
+            if (system.EntityManager.TryGetComponent(owner, out BodyComponent? body))
             {
-                body.Gib(_recursive);
+                system.BodySystem.Gib(owner, _recursive, body);
             }
         }
     }
