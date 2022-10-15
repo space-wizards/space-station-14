@@ -16,3 +16,6 @@ ent-VehicleATV = квадроцикл
 ent-VehicleSyndicateSegway = сегвей синдиката
     .desc = Будьте врагом корпорации, в стиле.
     .suffix = { "" }
+ent-VehicleSkeletonMotorcycle = skeleton motorcycle
+    .desc = Bad to the Bone.
+    .suffix = { "" }

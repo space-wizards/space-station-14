@@ -13,3 +13,6 @@ ent-VehicleKeySkeleton = vehicle skeleton keys
 ent-VehicleKeySyndicateSegway = syndicate segway keys
     .desc = Patterned after the iconic EMAG design.
     .suffix = { "" }
+ent-VehicleKeySkeletonMotorcycle = skeleton motorcycle keys
+    .desc = A beautiful set of keys adorned with a skull.
+    .suffix = { "" }
