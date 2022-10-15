@@ -25,7 +25,6 @@ namespace Content.Server.AME.Components
         private bool _injecting;
         private bool _fueled;
         [ViewVariables] public bool Injecting => _injecting;
-        [ViewVariables] public bool Fueled => _fueled;
         [ViewVariables] public int InjectionAmount;
 
         private AppearanceComponent? _appearance;

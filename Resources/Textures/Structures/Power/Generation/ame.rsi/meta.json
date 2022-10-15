@@ -72,19 +72,6 @@
       ]
     },
     {
-      "name": "core_weaker",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1
-        ]
-      ]
-    },
-    {
       "name": "core_strong",
       "delays": [
         [

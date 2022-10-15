@@ -34,10 +34,10 @@ namespace Content.Server.AME.Components
         {
             _isCore = false;
             _appearance?.SetData(AMEShieldVisuals.Core, "isNotCore");
-            UpdateCoreVisuals(0, false, true);
+            UpdateCoreVisuals(0, false);
         }
 
-        public void UpdateCoreVisuals(int injectionStrength, bool injecting, bool fueled)
+        public void UpdateCoreVisuals(int injectionStrength, bool injecting)
         {
             if (!injecting)
             {
@@ -55,12 +55,6 @@ namespace Content.Server.AME.Components
             if (injectionStrength > 2)
             {
                 _appearance?.SetData(AMEShieldVisuals.CoreState, "strong");
-                return;
-            }
-
-            if (!fueled)
-            {
-                _appearance?.SetData(AMEShieldVisuals.CoreState, "weaker");
                 return;
             }
 

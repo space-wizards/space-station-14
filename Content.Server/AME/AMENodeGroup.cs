@@ -95,14 +95,13 @@ namespace Content.Server.AME
             {
                 injectionAmount = _masterController.InjectionAmount;
                 injecting = _masterController.Injecting;
-                fueled = _masterController.Fueled;
             }
 
             var injectionStrength = CoreCount > 0 ? injectionAmount / CoreCount : 0;
 
             foreach (AMEShieldComponent core in _cores)
             {
-                core.UpdateCoreVisuals(injectionStrength, injecting, fueled);
+                core.UpdateCoreVisuals(injectionStrength, injecting);
             }
         }
 

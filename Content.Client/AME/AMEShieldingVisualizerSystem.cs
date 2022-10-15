@@ -51,10 +51,6 @@ public sealed class AMEShieldingVisualizerSystem : VisualizerSystem<AMEShielding
                     args.Sprite.LayerSetState(AMEShieldingVisualsLayer.CoreState, "core_weak");
                     args.Sprite.LayerSetVisible(AMEShieldingVisualsLayer.CoreState, true);
                     break;
-                case "weaker":
-                    args.Sprite.LayerSetState(AMEShieldingVisualsLayer.CoreState, "core_weaker");
-                    args.Sprite.LayerSetVisible(AMEShieldingVisualsLayer.CoreState, true);
-                    break;
                 case "strong":
                     args.Sprite.LayerSetState(AMEShieldingVisualsLayer.CoreState, "core_strong");
                     args.Sprite.LayerSetVisible(AMEShieldingVisualsLayer.CoreState, true);
