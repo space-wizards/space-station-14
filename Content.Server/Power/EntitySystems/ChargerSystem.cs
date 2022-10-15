@@ -47,7 +47,7 @@ internal sealed class ChargerSystem : EntitySystem
         _itemSlotsSystem.RemoveItemSlot(uid, component.ChargerSlot);
     }
 
-    private void OnPowerChanged(EntityUid uid, ChargerComponent component, PowerChangedEvent args)
+    private void OnPowerChanged(EntityUid uid, ChargerComponent component, ref PowerChangedEvent args)
     {
         component.UpdateStatus();
     }
@@ -92,7 +92,10 @@ internal sealed class ChargerSystem : EntitySystem
         if (!TryComp(args.EntityUid, out PowerCellSlotComponent? cellSlot))
             return;
 
-        if (!cellSlot.FitsInCharger || !cellSlot.CellSlot.HasItem)
+        if (!_itemSlotsSystem.TryGetSlotById(args.EntityUid, cellSlot.CellSlotId, out ItemSlot? itemSlot))
+            return;
+
+        if (!cellSlot.FitsInCharger || !itemSlot.HasItem)
             args.Cancel();
     }
 }

@@ -79,6 +79,8 @@
   - type: Airtight
     fixVacuum: true
     noAirWhenFullyAirBlocked: false
+  - type: RadiationBlocker
+    resistance: 3
   - type: Occluder
   - type: Damageable
     damageContainer: Inorganic

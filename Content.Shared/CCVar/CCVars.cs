@@ -33,6 +33,10 @@ namespace Content.Shared.CCVar
         /*
          * Ambience
          */
+        //TODO: This is so that this compiles, yell at me if this is still in
+        public static readonly CVarDef<bool> AmbienceBasicEnabled =
+            CVarDef.Create("ambiance.basic_enabled", true, CVar.CLIENTONLY | CVar.ARCHIVE);
+
 
         /// <summary>
         /// How long we'll wait until re-sampling nearby objects for ambience. Should be pretty fast, but doesn't have to match the tick rate.
@@ -624,6 +628,36 @@ namespace Content.Shared.CCVar
             CVarDef.Create("explosion.single_tick_area_limit", 400, CVar.SERVERONLY);
 
         /*
+         * Radiation
+         */
+
+        /// <summary>
+        ///     What is the smallest radiation dose in rads that can be received by object.
+        ///     Extremely small values may impact performance.
+        /// </summary>
+        public static readonly CVarDef<float> RadiationMinIntensity =
+            CVarDef.Create("radiation.min_intensity", 0.1f, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Rate of radiation system update in seconds.
+        /// </summary>
+        public static readonly CVarDef<float> RadiationGridcastUpdateRate =
+            CVarDef.Create("radiation.gridcast.update_rate", 1.0f, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     If both radiation source and receiver are placed on same grid, ignore grids between them.
+        ///     May get inaccurate result in some cases, but greatly boost performance in general.
+        /// </summary>
+        public static readonly CVarDef<bool> RadiationGridcastSimplifiedSameGrid =
+            CVarDef.Create("radiation.gridcast.simplified_same_grid", true, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Max distance that radiation ray can travel in meters.
+        /// </summary>
+        public static readonly CVarDef<float> RadiationGridcastMaxDistance =
+            CVarDef.Create("radiation.gridcast.max_distance", 50f, CVar.SERVERONLY);
+
+        /*
          * Admin logs
          */
 
@@ -840,11 +874,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> VoteEnabled =
             CVarDef.Create("vote.enabled", true, CVar.SERVERONLY);
 
+        // TODO HUD REFACTOR REENABLE
         /// <summary>
         ///     See vote.enabled, but specific to restart votes
         /// </summary>
         public static readonly CVarDef<bool> VoteRestartEnabled =
-            CVarDef.Create("vote.restart_enabled", true, CVar.SERVERONLY);
+            CVarDef.Create("vote.restart_enabled", false, CVar.SERVERONLY);
 
         /// <summary>
         ///     See vote.enabled, but specific to preset votes

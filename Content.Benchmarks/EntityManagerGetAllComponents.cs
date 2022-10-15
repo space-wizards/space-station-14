@@ -1,5 +1,6 @@
 using BenchmarkDotNet.Attributes;
 using Moq;
+using Robust.Shared.Analyzers;
 using Robust.Shared.Exceptions;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -9,7 +10,8 @@ using Robust.Shared.Reflection;
 
 namespace Content.Benchmarks
 {
-    public sealed class EntityManagerGetAllComponents
+    [Virtual]
+    public class EntityManagerGetAllComponents
     {
         private IEntityManager _entityManager;
 

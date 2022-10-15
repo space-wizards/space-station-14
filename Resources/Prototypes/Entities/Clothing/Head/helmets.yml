@@ -207,9 +207,6 @@
     sprite: Clothing/Head/Helmets/firehelmet.rsi
     quickEquip: true
   - type: IngestionBlocker
-  - type: PowerCellSlot
-    cellSlot:
-      startingItem: PowerCellMedium
   - type: TemperatureProtection
     coefficient: 0.01
   - type: Armor
@@ -221,10 +218,10 @@
         Heat: 0.65
         Radiation: 1
   - type: IdentityBlocker
-  - type: ItemSlots
-  - type: ContainerContainer
-    containers:
-      cell_slot: !type:ContainerSlot {}
+  - type: Tag
+    tags:
+    - HidesHair
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingHeadLightBase
