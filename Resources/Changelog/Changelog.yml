@@ -1,9 +1,4 @@
 Entries:
-- author: Deahaka
-  changes:
-  - {message: Added operating table, type: Add}
-  id: 1953
-  time: '2022-07-15T02:50:59.0000000+00:00'
 - author: Rane
   changes:
   - {message: Steal objectives now tell you who or what to steal from., type: Add}
@@ -2944,3 +2939,8 @@ Entries:
   - {message: Fire Helmets and Atmos Fire Helmets require batteries again., type: Fix}
   id: 2452
   time: '2022-10-15T20:15:39.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fixed gloves slot being used for melee., type: Fix}
+  id: 2453
+  time: '2022-10-15T20:20:05.0000000+00:00'
