@@ -43,7 +43,6 @@ namespace Content.Client.Inventory
             SubscribeLocalEvent<ClientInventoryComponent, PlayerAttachedEvent>(OnPlayerAttached);
             SubscribeLocalEvent<ClientInventoryComponent, PlayerDetachedEvent>(OnPlayerDetached);
 
-            SubscribeLocalEvent<ClientInventoryComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<ClientInventoryComponent, ComponentShutdown>(OnShutdown);
 
             SubscribeLocalEvent<ClientInventoryComponent, DidEquipEvent>((_, comp, args) =>
@@ -145,16 +144,17 @@ namespace Content.Client.Inventory
             base.Shutdown();
         }
 
-        private void OnInit(EntityUid uid, ClientInventoryComponent component, ComponentInit args)
+        protected override void OnInit(EntityUid uid, InventoryComponent component, ComponentInit args)
         {
-            _clothingVisualsSystem.InitClothing(uid, component);
+            base.OnInit(uid, component, args);
+            _clothingVisualsSystem.InitClothing(uid, (ClientInventoryComponent) component);
 
             if (!_prototypeManager.TryIndex(component.TemplateId, out InventoryTemplatePrototype? invTemplate))
                 return;
 
             foreach (var slot in invTemplate.Slots)
             {
-                TryAddSlotDef(uid, component, slot);
+                TryAddSlotDef(uid, (ClientInventoryComponent)component, slot);
             }
         }
 
@@ -190,7 +190,6 @@ namespace Content.Client.Inventory
             SlotData newSlotData = newSlotDef; //convert to slotData
             if (!component.SlotData.TryAdd(newSlotDef.Name, newSlotData))
                 return false;
-
 
             if (owner == _playerManager.LocalPlayer?.ControlledEntity)
                 OnSlotAdded?.Invoke(newSlotData);
@@ -283,6 +282,8 @@ namespace Content.Client.Inventory
             public EntityUid? HeldEntity => Container?.ContainedEntity;
             public bool Blocked;
             public bool Highlighted;
+
+            [ViewVariables]
             public ContainerSlot? Container;
             public bool HasSlotGroup => SlotDef.SlotGroup != "Default";
             public Vector2i ButtonOffset => SlotDef.UIWindowPosition;
