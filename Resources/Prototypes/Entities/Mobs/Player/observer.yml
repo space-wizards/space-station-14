@@ -27,7 +27,7 @@
   - type: Input
     context: "ghost"
   - type: Examiner
-    DoRangeCheck: false
+    skipChecks: true
   - type: Ghost
   - type: IntrinsicRadio
     channels:
