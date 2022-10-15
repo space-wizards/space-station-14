@@ -44,7 +44,7 @@ internal sealed class ChargerSystem : EntitySystem
         }
     }
     
-    private void OnPowerChanged(EntityUid uid, ChargerComponent component, PowerChangedEvent args)
+    private void OnPowerChanged(EntityUid uid, ChargerComponent component, ref PowerChangedEvent args)
     {
         UpdateStatus(uid, component);
     }
