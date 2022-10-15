@@ -50,10 +50,10 @@ namespace Content.Client.Fluids
                 || !args.Component.TryGetData(PuddleVisuals.SolutionColor, out Color solutionColor)
                 || !args.Component.TryGetData(PuddleVisuals.IsEvaporatingVisual, out bool isEvaporating))
             {
-                if (!component.CustomPuddleSprite) //if there is a custom sprite, it's expected that some of these will be missing, so suppress the logger (no need to warn for it)
-                {
-                    Logger.Warning($"Missing PuddleVisuals data for PuddleVisualizerSystem on entityUid = {uid}");
-                }
+                // if (!component.CustomPuddleSprite) //if there is a custom sprite, it's expected that some of these will be missing, so suppress the logger (no need to warn for it)
+                // {
+                //     //Logger.Warning($"Missing PuddleVisuals data for PuddleVisualizerSystem on entityUid = {uid}");
+                // }
                 return; //regardless of custom sprite
             }
 
