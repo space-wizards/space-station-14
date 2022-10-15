@@ -57,7 +57,7 @@ public sealed class FluidSpreaderSystem : EntitySystem
                 var prototypeName = metaData.EntityPrototype!.ID;
                 var puddles = new List<PuddleComponent>(4);
                 var totalVolume = _puddleSystem.CurrentVolume(puddle.Owner, puddle);
-                foreach (var direction in SharedDirectionExtensions.RandomCardinalDirection().ToArray())
+                foreach (var direction in DirectionRandomizer.RandomCardinal())
                 {
                     var newPos = pos.Offset(direction);
                     if (CheckTile(_puddleSystem.CurrentVolume(puddle.Owner, puddle), prototypeName, newPos, mapGrid,

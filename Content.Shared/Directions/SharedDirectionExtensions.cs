@@ -1,117 +1,112 @@
-﻿using Content.Shared.Maps;
+﻿using System.Collections;
+using System.Linq;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
 
-namespace Content.Shared.Directions
+namespace Content.Shared.Directions;
+
+public static class SharedDirectionExtensions
 {
-    public static class SharedDirectionExtensions
+    public static EntityCoordinates Offset(this EntityCoordinates coordinates, Direction direction)
     {
-        /// <summary>
-        ///     Gets random directions until none are left
-        /// </summary>
-        /// <returns>An enumerable of the directions.</returns>
-        public static IEnumerable<Direction> RandomDirections()
+        return coordinates.Offset(direction.ToVec());
+    }
+}
+
+public readonly struct DirectionRandomizer : IEnumerable<Direction>
+{
+    private readonly Direction[]? _directions;
+
+    public static DirectionRandomizer RandomCardinal()
+    {
+        return new DirectionRandomizer(new[]
         {
-            var directions = new[]
-            {
-                Direction.East,
-                Direction.SouthEast,
-                Direction.South,
-                Direction.SouthWest,
-                Direction.West,
-                Direction.NorthWest,
-                Direction.North,
-                Direction.NorthEast,
-            };
+            Direction.East,
+            Direction.West,
+            Direction.South,
+            Direction.North,
+        });
+    }
+
+    public static DirectionRandomizer RandomDirection()
+    {
+        return new DirectionRandomizer(new[]
+        {
+            Direction.East,
+            Direction.NorthEast,
+            Direction.West,
+            Direction.NorthWest,
+            Direction.South,
+            Direction.SouthWest,
+            Direction.North,
+            Direction.SouthEast,
+        });
+    }
+
+    public DirectionRandomizer(IEnumerable<Direction> directions)
+    {
+        _directions = directions.ToArray();
+        Count = _directions.Length;
+    }
+
+    private DirectionRandomizer(Direction[] directions)
+    {
+        _directions = directions;
+        Count = _directions.Length;
+    }
+
+    public void Dispose()
+    {
+    }
+
+    public int Count { get; }
+
+    public readonly Span<Direction> Span => new(_directions, 0, Count);
+
+    public struct Enumerator : IEnumerator<Direction>
+    {
+        private readonly DirectionRandomizer _randomizer;
+        private int _index;
+
+        internal Enumerator(DirectionRandomizer randomizer)
+        {
+            _index = -1;
+            _randomizer = randomizer;
+            if (_randomizer._directions == null)
+                return;
 
             var robustRandom = IoCManager.Resolve<IRobustRandom>();
-            var n = directions.Length;
+            var n = _randomizer._directions.Length;
 
             while (n > 1)
             {
                 n--;
                 var k = robustRandom.Next(n + 1);
-                var value = directions[k];
-                directions[k] = directions[n];
-                directions[n] = value;
-            }
-
-            foreach (var direction in directions)
-            {
-                yield return direction;
+                (_randomizer._directions[k], _randomizer._directions[n]) =
+                    (_randomizer._directions[n], _randomizer._directions[k]);
             }
         }
 
-        /// <summary>
-        ///     Gets random directions until none are left. Only
-        /// returns the four cardinal direction (north, east, south, west)
-        /// </summary>
-        /// <returns>An enumerable of the directions.</returns>
-        public static IEnumerable<Direction> RandomCardinalDirection()
+        public bool MoveNext()
         {
-            var directions = new[]
-            {
-                Direction.North,
-                Direction.East,
-                Direction.South,
-                Direction.West,
-            };
-
-            var robustRandom = IoCManager.Resolve<IRobustRandom>();
-            var n = directions.Length;
-
-            while (n > 1)
-            {
-                n--;
-                var k = robustRandom.Next(n + 1);
-                var value = directions[k];
-                directions[k] = directions[n];
-                directions[n] = value;
-            }
-
-            foreach (var direction in directions)
-            {
-                yield return direction;
-            }
+            return ++_index < _randomizer.Count;
         }
 
-        /// <summary>
-        ///     Gets tiles in random directions from the given one.
-        /// </summary>
-        /// <returns>An enumerable of the adjacent tiles.</returns>
-        public static IEnumerable<TileRef> AdjacentTilesRandom(this TileRef tile, bool ignoreSpace = false)
+        public void Reset()
         {
-            return tile.GridPosition().AdjacentTilesRandom(ignoreSpace);
+            _index = -1;
         }
 
-        /// <summary>
-        ///     Gets tiles in random directions from the given one.
-        /// </summary>
-        /// <returns>An enumerable of the adjacent tiles.</returns>
-        public static IEnumerable<TileRef> AdjacentTilesRandom(this EntityCoordinates coordinates,
-            bool ignoreSpace = false)
+        public Direction Current => _randomizer._directions![_index];
+
+        object IEnumerator.Current => Current;
+
+        public void Dispose()
         {
-            foreach (var direction in RandomDirections())
-            {
-                var adjacent = coordinates.Offset(direction).GetTileRef();
-
-                if (adjacent == null)
-                {
-                    continue;
-                }
-
-                if (ignoreSpace && adjacent.Value.Tile.IsEmpty)
-                {
-                    continue;
-                }
-
-                yield return adjacent.Value;
-            }
-        }
-
-        public static EntityCoordinates Offset(this EntityCoordinates coordinates, Direction direction)
-        {
-            return coordinates.Offset(direction.ToVec());
         }
     }
+
+    public IEnumerator<Direction> GetEnumerator() => new Enumerator(this);
+
+    IEnumerator IEnumerable.GetEnumerator() => new Enumerator(this);
 }
