@@ -1,9 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed a bug that caused decals to sometimes disappear., type: Fix}
-  id: 1948
-  time: '2022-07-15T02:33:11.0000000+00:00'
 - author: Myctai
   changes:
   - {message: Pill maximum volume is back at 50 units!, type: Tweak}
@@ -2942,3 +2937,9 @@ Entries:
     type: Tweak}
   id: 2447
   time: '2022-10-15T04:10:46.0000000+00:00'
+- author: Nairod
+  changes:
+  - {message: 'Added a over-ear command headset type to CE, RD and QM''s lockers.',
+    type: Add}
+  id: 2448
+  time: '2022-10-15T04:11:59.0000000+00:00'
