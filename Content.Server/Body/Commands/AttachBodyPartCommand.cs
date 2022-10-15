@@ -98,7 +98,7 @@ namespace Content.Server.Body.Commands
             }
 
             var slotName = $"AttachBodyPartVerb-{partUid}";
-            if (!bodySystem.TryCreateAndAttach(entity, slotName, partUid, body, part))
+            if (!bodySystem.TryCreateSlotAndAttach(entity, slotName, partUid, body, part))
             {
                 shell.WriteError($"Could not create slot {slotName} on entity {entityManager.ToPrettyString(entity)}");
                 return;

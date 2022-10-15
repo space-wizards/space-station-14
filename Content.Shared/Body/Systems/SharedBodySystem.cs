@@ -55,7 +55,7 @@ public abstract partial class SharedBodySystem : EntitySystem
         var root = prototype.Slots[prototype.Root];
         var partId = Spawn(root.Part, body.Owner.ToCoordinates());
         var partComponent = Comp<BodyComponent>(partId);
-        var slot = new BodyPartSlot(root.Part, body.Owner, partComponent.PartType);
+        var slot = CreateSlot(root.Part, body, partComponent.PartType);
 
         _containers.EnsureContainer<Container>(body.Owner, BodyContainerId);
 
@@ -76,7 +76,7 @@ public abstract partial class SharedBodySystem : EntitySystem
             var childSlot = prototype.Slots[connection];
             var childPart = Spawn(childSlot.Part, coordinates);
             var childPartComponent = Comp<BodyComponent>(childPart);
-            var slot = new BodyPartSlot(connection, parent.Owner, childPartComponent.PartType);
+            var slot = CreateSlot(connection, parent, childPartComponent.PartType);
 
             Attach(childPart, slot, childPartComponent);
             subConnections.Add((childPartComponent, connection));
@@ -90,7 +90,7 @@ public abstract partial class SharedBodySystem : EntitySystem
             organComponent.Attachable = false;
             organComponent.Organ = true;
 
-            var slot = new BodyPartSlot(organSlotId, parent.Owner, organComponent.PartType);
+            var slot = CreateSlot(organSlotId, parent, organComponent.PartType);
 
             Attach(organ, slot, organComponent);
         }
@@ -99,6 +99,13 @@ public abstract partial class SharedBodySystem : EntitySystem
         {
             InitPart(connection.child, prototype, connection.slotId);
         }
+    }
+
+    private BodyPartSlot CreateSlot(string slotId, BodyComponent parent, BodyPartType partType)
+    {
+        var slot = new BodyPartSlot(slotId, parent.Owner, partType);
+        parent.Children.Add(slotId, slot);
+        return slot;
     }
 
     private void OnPartRemoved(EntityUid uid, BodyComponent part, ComponentRemove args)
@@ -166,7 +173,7 @@ public abstract partial class SharedBodySystem : EntitySystem
         return true;
     }
 
-    public bool TryCreateAndAttach(
+    public bool TryCreateSlotAndAttach(
         EntityUid? parentId,
         string id,
         EntityUid? childId,

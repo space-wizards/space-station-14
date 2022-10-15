@@ -137,7 +137,7 @@ namespace Content.Server.Body.Commands
             var bodySystem = entityManager.System<BodySystem>();
 
             var slotId = part.GetHashCode().ToString();
-            if (!bodySystem.TryCreateAndAttach(entity, slotId, hand, body, part))
+            if (!bodySystem.TryCreateSlotAndAttach(entity, slotId, hand, body, part))
             {
                 shell.WriteError($"Couldn't create a slot with id {slotId} on entity {entityManager.ToPrettyString(entity)}");
                 return;
