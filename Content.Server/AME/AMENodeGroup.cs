@@ -89,7 +89,6 @@ namespace Content.Server.AME
         {
             var injectionAmount = 0;
             var injecting = false;
-            var fueled = false;
 
             if (_masterController != null)
             {
