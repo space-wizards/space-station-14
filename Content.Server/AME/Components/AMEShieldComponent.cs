@@ -1,4 +1,4 @@
-﻿using Content.Shared.AME;
+using Content.Shared.AME;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.AME.Components
@@ -34,10 +34,10 @@ namespace Content.Server.AME.Components
         {
             _isCore = false;
             _appearance?.SetData(AMEShieldVisuals.Core, "isNotCore");
-            UpdateCoreVisuals(0, false);
+            UpdateCoreVisuals(0, false, true);
         }
 
-        public void UpdateCoreVisuals(int injectionStrength, bool injecting)
+        public void UpdateCoreVisuals(int injectionStrength, bool injecting, bool fueled)
         {
             if (!injecting)
             {
@@ -55,6 +55,12 @@ namespace Content.Server.AME.Components
             if (injectionStrength > 2)
             {
                 _appearance?.SetData(AMEShieldVisuals.CoreState, "strong");
+                return;
+            }
+
+            if (!fueled)
+            {
+                _appearance?.SetData(AMEShieldVisuals.CoreState, "weaker");
                 return;
             }
 

@@ -23,7 +23,9 @@ namespace Content.Server.AME.Components
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(AMEControllerUiKey.Key);
         private bool _injecting;
+        private bool _fueled;
         [ViewVariables] public bool Injecting => _injecting;
+        [ViewVariables] public bool Fueled => _fueled;
         [ViewVariables] public int InjectionAmount;
 
         private AppearanceComponent? _appearance;
@@ -33,8 +35,6 @@ namespace Content.Server.AME.Components
         [DataField("noFuelSound")] private SoundSpecifier _noFuelSound = new SoundPathSpecifier("/Audio/Machines/no_fuel.ogg");
 
         private bool Powered => !_entities.TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
-
-        private bool _fueled;
 
         [ViewVariables]
         private int _stability = 100;
