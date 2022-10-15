@@ -15,7 +15,11 @@ public sealed class SkeletonAccentSystem : EntitySystem
         { "shit", "rattle rattle" },
         { "definitely", "make no bones about it" },
         { "absolutely", "make no bones about it" },
-        { "lonely", "bonely"}
+        { "lonely", "bonely"},
+        { "afraid", "rattled"},
+        { "scared", "rattled"},
+        { "spooked", "rattled"},
+        { "shocked", "rattled"}
     };
 
     public override void Initialize()
