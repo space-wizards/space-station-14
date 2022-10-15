@@ -1,9 +1,4 @@
 Entries:
-- author: Myctai
-  changes:
-  - {message: Pill maximum volume is back at 50 units!, type: Tweak}
-  id: 1949
-  time: '2022-07-15T02:40:47.0000000+00:00'
 - author: Level10Cybermancer
   changes:
   - {message: Nuclear Operatives now start with a pinpointer in their bag, type: Tweak}
@@ -2943,3 +2938,9 @@ Entries:
     type: Add}
   id: 2448
   time: '2022-10-15T04:11:59.0000000+00:00'
+- author: Carbonhell
+  changes:
+  - {message: Adds a cooldown of 1 second when attempting to wake up someone else.,
+    type: Fix}
+  id: 2449
+  time: '2022-10-15T04:13:24.0000000+00:00'
