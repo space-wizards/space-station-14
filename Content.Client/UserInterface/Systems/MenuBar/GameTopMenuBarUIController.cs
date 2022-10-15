@@ -12,7 +12,7 @@ using Robust.Client.UserInterface.Controllers;
 
 namespace Content.Client.UserInterface.Systems.MenuBar;
 
-public sealed class GameTopMenuBarUIController : UIController, IOnStateExited<GameplayState>
+public sealed class GameTopMenuBarUIController : UIController
 {
     [Dependency] private readonly EscapeUIController _escape = default!;
     [Dependency] private readonly InventoryUIController _inventory = default!;
@@ -47,10 +47,5 @@ public sealed class GameTopMenuBarUIController : UIController, IOnStateExited<Ga
         _ahelp.LoadButton();
         _action.LoadButton();
         _sandbox.LoadButton();
-    }
-
-    public void OnStateExited(GameplayState state)
-    {
-        UnloadButtons();
     }
 }
