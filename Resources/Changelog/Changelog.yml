@@ -1,11 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Space carp and space ticks now only have a 33% chance to be inhabitable
-      by a ghost., type: Tweak}
-  - {message: Space bears now have a 5% chance to be inhabitable by a ghost., type: Tweak}
-  id: 1957
-  time: '2022-07-15T05:20:38.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Radar zooming is now smooth, type: Tweak}
@@ -2943,3 +2936,10 @@ Entries:
   - {message: Librarian & Lawyer now spawn with briefcase in hand, type: Tweak}
   id: 2456
   time: '2022-10-15T21:22:27.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Certain machines can now have their power load reduced via machine part
+      upgrading. Experiment and find out., type: Add}
+  - {message: Fixed not being able to deconstruct stasis beds., type: Fix}
+  id: 2457
+  time: '2022-10-15T21:28:12.0000000+00:00'
