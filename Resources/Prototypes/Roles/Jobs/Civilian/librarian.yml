@@ -13,10 +13,12 @@
   id: LibrarianGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitLibrarian
-    back: ClothingBackpackBriefcaseFilled
+    back: ClothingBackpackFilled
     shoes: ClothingShoesBootsLaceup
     id: LibrarianPDA
     ears: ClothingHeadsetService
     pocket1: d10Dice
+  inhand:
+    right hand: BriefcaseBrownFilled
   innerclothingskirt: ClothingUniformJumpskirtLibrarian # Corvax
 
