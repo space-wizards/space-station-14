@@ -103,21 +103,7 @@ namespace Content.Server.Voting.Managers
 
         private void CreatePresetVote(IPlayerSession? initiator)
         {
-            var presets = new Dictionary<string, string>();
-
-            foreach (var preset in _prototypeManager.EnumeratePrototypes<GamePresetPrototype>())
-            {
-                if(!preset.ShowInVote)
-                    continue;
-
-                if(_playerManager.PlayerCount < (preset.MinPlayers ?? int.MinValue))
-                    continue;
-
-                if(_playerManager.PlayerCount > (preset.MaxPlayers ?? int.MaxValue))
-                    continue;
-
-                presets[preset.ID] = preset.ModeTitle;
-            }
+            var presets = GetGamePresets();
 
             var alone = _playerManager.PlayerCount == 1 && initiator != null;
             var options = new VoteOptions
@@ -210,6 +196,26 @@ namespace Content.Server.Voting.Managers
             var timeout = TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteSameTypeTimeout));
             _standardVoteTimeout[type] = _timing.RealTime + timeout;
             DirtyCanCallVoteAll();
+        }
+
+        private Dictionary<string, string> GetGamePresets()
+        {
+            var presets = new Dictionary<string, string>();
+
+            foreach (var preset in _prototypeManager.EnumeratePrototypes<GamePresetPrototype>())
+            {
+                if(!preset.ShowInVote)
+                    continue;
+
+                if(_playerManager.PlayerCount < (preset.MinPlayers ?? int.MinValue))
+                    continue;
+
+                if(_playerManager.PlayerCount > (preset.MaxPlayers ?? int.MaxValue))
+                    continue;
+
+                presets[preset.ID] = preset.ModeTitle;
+            }
+            return presets;
         }
     }
 }

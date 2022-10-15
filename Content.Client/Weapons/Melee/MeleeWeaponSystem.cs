@@ -202,8 +202,11 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         if (!base.DoDisarm(user, ev, component))
             return false;
 
-        if (!HasComp<CombatModeComponent>(user))
+        if (!TryComp<CombatModeComponent>(user, out var combatMode) ||
+            combatMode.CanDisarm != true)
+        {
             return false;
+        }
 
         // If target doesn't have hands then we can't disarm so will let the player know it's pointless.
         if (!HasComp<HandsComponent>(ev.Target!.Value))
@@ -227,7 +230,9 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
     private void OnMeleeLunge(MeleeLungeEvent ev)
     {
-        DoLunge(ev.Entity, ev.Angle, ev.LocalPos, ev.Animation);
+        // Entity might not have been sent by PVS.
+        if (Exists(ev.Entity))
+            DoLunge(ev.Entity, ev.Angle, ev.LocalPos, ev.Animation);
     }
 
     /// <summary>
