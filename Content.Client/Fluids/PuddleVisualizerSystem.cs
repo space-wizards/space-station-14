@@ -33,7 +33,7 @@ namespace Content.Client.Fluids
             }
 
             puddleVisuals.OriginalRsi = sprite.BaseRSI; //Back up the original RSI upon initialization
-            RandomizeState(sprite);
+            RandomizeState(sprite, puddleVisuals.OriginalRsi);
             RandomizeRotation(sprite);
         }
 
@@ -78,7 +78,7 @@ namespace Content.Client.Fluids
                 bool wetFloorEffectNeeded;
 
                 if (/*isSlippery
-                    && */ isEvaporating
+                    && */isEvaporating
                     && currentVolume < component.WetFloorEffectThreshold)
                 {
                     wetFloorEffectNeeded = true;
@@ -112,18 +112,17 @@ namespace Content.Client.Fluids
 
         private void EndWetFloorEffect(SpriteComponent sprite, RSI? originalRSI)
         {
-            sprite.LayerSetRSI(0, originalRSI);
-            RandomizeState(sprite);
+            RandomizeState(sprite, originalRSI);
             sprite.LayerSetAutoAnimated(0, false);
         }
 
-        private void RandomizeState(SpriteComponent sprite)
+        private void RandomizeState(SpriteComponent sprite, RSI? rsi)
         {
-            var maxStates = sprite.BaseRSI?.ToArray();
+            var maxStates = rsi?.ToArray();
             if (maxStates is not { Length: > 0 }) return;
 
             var selectedState = _random.Next(0, maxStates.Length - 1); //randomly select an index for which RSI state to use.
-            sprite.LayerSetState(0, maxStates[selectedState].StateId); // sets the sprite's state via our randomly selected index.
+            sprite.LayerSetState(0, maxStates[selectedState].StateId, rsi); // sets the sprite's state via our randomly selected index.
         }
 
         private void RandomizeRotation(SpriteComponent sprite)
