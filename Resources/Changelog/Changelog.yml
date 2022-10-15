@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: The Necronomicon can now be purchased by Traitor Chaplains in the uplink.,
-    type: Tweak}
-  id: 1955
-  time: '2022-07-15T04:26:06.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: 'Proto-kinetic accelerators are now available. These are recharging
@@ -2945,3 +2939,9 @@ Entries:
       rock and stone!', type: Tweak}
   id: 2454
   time: '2022-10-15T20:40:40.0000000+00:00'
+- author: corentt
+  changes:
+  - {message: 'Selling prices of SMES, substations and power-cells now depends on
+      their filling level', type: Add}
+  id: 2455
+  time: '2022-10-15T21:10:48.0000000+00:00'
