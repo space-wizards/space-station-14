@@ -56,7 +56,7 @@ public sealed class AtmosAlarmableSystem : EntitySystem
             false);
     }
 
-    private void OnPowerChange(EntityUid uid, AtmosAlarmableComponent component, PowerChangedEvent args)
+    private void OnPowerChange(EntityUid uid, AtmosAlarmableComponent component, ref PowerChangedEvent args)
     {
         if (!args.Powered)
         {

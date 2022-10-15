@@ -136,7 +136,7 @@
   name: ""
   icon: "empbarsign"
   description: barsign-prototype-description-empbarsign
-  rename_area: false
+  renameArea: false
   hidden: true
 
 - type: barSign
@@ -144,5 +144,5 @@
   name: ""
   icon: "empty"
   description: barsign-prototype-description-sign-off
-  rename_area: false
+  renameArea: false
   hidden: true

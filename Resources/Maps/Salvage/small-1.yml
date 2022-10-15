@@ -73,7 +73,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 12
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -86,7 +85,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 4
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -99,7 +97,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 8
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -112,7 +109,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 12
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -125,7 +121,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 8
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -138,7 +133,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 12
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -151,7 +145,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 8
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -164,7 +157,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 8
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -177,7 +169,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 8
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -190,7 +181,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 4
       restitution: 0.1
     type: Fixtures
   - gravityShakeSound: !type:SoundPathSpecifier

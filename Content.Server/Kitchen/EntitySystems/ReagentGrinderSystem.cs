@@ -34,13 +34,18 @@ namespace Content.Server.Kitchen.EntitySystems
             SubscribeLocalEvent<ReagentGrinderComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<ReagentGrinderComponent, ComponentRemove>(OnComponentRemove);
 
-            SubscribeLocalEvent<ReagentGrinderComponent, PowerChangedEvent>((_, component, _) => EnqueueUiUpdate(component));
+            SubscribeLocalEvent<ReagentGrinderComponent, PowerChangedEvent>(OnPowerChange);
             SubscribeLocalEvent<ReagentGrinderComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<StackComponent, ExtractableScalingEvent>(ExtractableScaling);
 
             SubscribeLocalEvent<ReagentGrinderComponent, EntInsertedIntoContainerMessage>(OnContainerModified);
             SubscribeLocalEvent<ReagentGrinderComponent, EntRemovedFromContainerMessage>(OnContainerModified);
             SubscribeLocalEvent<ReagentGrinderComponent, ContainerIsRemovingAttemptEvent>(OnEntRemoveAttempt);
+        }
+
+        private void OnPowerChange(EntityUid uid, ReagentGrinderComponent component, ref PowerChangedEvent args)
+        {
+            EnqueueUiUpdate(component);
         }
 
         private void OnEntRemoveAttempt(EntityUid uid, ReagentGrinderComponent component, ContainerIsRemovingAttemptEvent args)

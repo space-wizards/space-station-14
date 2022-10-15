@@ -4,6 +4,7 @@ using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.Interaction;
 using Content.Server.DoAfter;
+using Content.Server.GameTicking;
 using Content.Shared.Stunnable;
 using Content.Shared.Revenant;
 using Robust.Server.GameObjects;
@@ -15,14 +16,13 @@ using Content.Shared.Examine;
 using Robust.Shared.Prototypes;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Tag;
-using Content.Server.Polymorph.Systems;
 using Content.Server.Store.Components;
 using Content.Server.Store.Systems;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Player;
-using Content.Shared.Movement.Systems;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
+using Content.Shared.Revenant.Components;
 
 namespace Content.Server.Revenant.EntitySystems;
 
@@ -36,15 +36,15 @@ public sealed partial class RevenantSystem : EntitySystem
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly PolymorphableSystem _polymorphable = default!;
     [Dependency] private readonly PhysicsSystem _physics = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
     [Dependency] private readonly SharedInteractionSystem _interact = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
     [Dependency] private readonly TagSystem _tag = default!;
-    [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
     [Dependency] private readonly StoreSystem _store = default!;
+    [Dependency] private readonly VisibilitySystem _visibility = default!;
+    [Dependency] private readonly GameTicker _ticker = default!;
 
     public override void Initialize()
     {
@@ -57,6 +57,7 @@ public sealed partial class RevenantSystem : EntitySystem
         SubscribeLocalEvent<RevenantComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<RevenantComponent, StatusEffectAddedEvent>(OnStatusAdded);
         SubscribeLocalEvent<RevenantComponent, StatusEffectEndedEvent>(OnStatusEnded);
+        SubscribeLocalEvent<RoundEndTextAppendEvent>(_ => MakeVisible(true));
 
         InitializeAbilities();
     }
@@ -70,6 +71,13 @@ public sealed partial class RevenantSystem : EntitySystem
         _appearance.SetData(uid, RevenantVisuals.Corporeal, false);
         _appearance.SetData(uid, RevenantVisuals.Harvesting, false);
         _appearance.SetData(uid, RevenantVisuals.Stunned, false);
+
+        if (_ticker.RunLevel == GameRunLevel.PostRound && TryComp<VisibilityComponent>(uid, out var visibility))
+        {
+            _visibility.AddLayer(visibility, (int) VisibilityFlags.Ghost, false);
+            _visibility.RemoveLayer(visibility, (int) VisibilityFlags.Normal, false);
+            _visibility.RefreshVisibility(visibility);
+        }
 
         //ghost vision
         if (TryComp(component.Owner, out EyeComponent? eye))
@@ -89,8 +97,6 @@ public sealed partial class RevenantSystem : EntitySystem
     {
         if (args.Key == "Stun")
             _appearance.SetData(uid, RevenantVisuals.Stunned, false);
-        else if (args.Key == "Corporeal")
-            _movement.RefreshMovementSpeedModifiers(uid);
     }
 
     private void OnExamine(EntityUid uid, RevenantComponent component, ExaminedEvent args)
@@ -124,16 +130,15 @@ public sealed partial class RevenantSystem : EntitySystem
         if (regenCap)
             FixedPoint2.Min(component.Essence, component.EssenceRegenCap);
 
+        if (TryComp<StoreComponent>(uid, out var store))
+            _store.UpdateUserInterface(uid, store);
+
         _alerts.ShowAlert(uid, AlertType.Essence, (short) Math.Clamp(Math.Round(component.Essence.Float() / 10f), 0, 16));
 
         if (component.Essence <= 0)
         {
-            component.Essence = component.EssenceRegenCap;
-            _polymorphable.PolymorphEntity(uid, "Ectoplasm");
+            QueueDel(uid);
         }
-
-        if (TryComp<StoreComponent>(uid, out var store))
-            _store.UpdateUserInterface(uid, store);
         return true;
     }
 
@@ -168,6 +173,24 @@ public sealed partial class RevenantSystem : EntitySystem
         if (!TryComp<StoreComponent>(uid, out var store))
             return;
         _store.ToggleUi(uid, store);
+    }
+
+    public void MakeVisible(bool visible)
+    {
+        foreach (var (_, vis) in EntityQuery<RevenantComponent, VisibilityComponent>())
+        {
+            if (visible)
+            {
+                _visibility.AddLayer(vis, (int) VisibilityFlags.Normal, false);
+                _visibility.RemoveLayer(vis, (int) VisibilityFlags.Ghost, false);
+            }
+            else
+            {
+                _visibility.AddLayer(vis, (int) VisibilityFlags.Ghost, false);
+                _visibility.RemoveLayer(vis, (int) VisibilityFlags.Normal, false);
+            }
+            _visibility.RefreshVisibility(vis);
+        }
     }
 
     public override void Update(float frameTime)

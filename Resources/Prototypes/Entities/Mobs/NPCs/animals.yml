@@ -24,7 +24,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.25
-      mass: 2
+      density: 10
       mask:
       - FlyingMobMask
       layer:
@@ -55,9 +55,8 @@
     accent: mouse
   - type: MeleeWeapon
     hidden: true
-    range: 1.5
-    arcwidth: 0
-    arc: bite
+    angle: 0
+    animation: WeaponArcBite
     damage:
       types:
         Piercing: 5
@@ -89,7 +88,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.1
-      mass: 1
+      density: 30
       mask:
       - FlyingMobMask
       layer:
@@ -132,9 +131,8 @@
       name: action-name-disarm
   - type: MeleeWeapon
     hidden: true
-    range: 0.3
-    arcwidth: 0
-    arc: bite
+    angle: 0
+    animation: WeaponArcBite
     damage:
       types:
         Poison: 2
@@ -167,7 +165,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 3
+      density: 8
       mask:
       - MobMask
       layer:
@@ -218,7 +216,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 2 #They actually are pretty light, I looked it up
+      density: 5 #They actually are pretty light, I looked it up
       mask:
       - MobMask
       layer:
@@ -318,7 +316,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.2
-      mass: 1
+      density: 7.5
       mask:
       - FlyingMobMask
       layer:
@@ -365,7 +363,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.40
-      mass: 700
+      density: 1400
       mask:
       - MobMask
       layer:
@@ -427,7 +425,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 2
+      density: 5
       mask:
       - MobMask
       layer:
@@ -469,7 +467,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 60
+      density: 150
       mask:
       - MobMask
       layer:
@@ -528,7 +526,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 10
+      density: 25
       mask:
       - MobMask
       layer:
@@ -573,7 +571,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.48
-      mass: 150
+      density: 200
       mask:
       - MobMask
       layer:
@@ -615,7 +613,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 50
+      density: 130
       mask:
       - MobMask
       layer:
@@ -640,7 +638,7 @@
   description: A large marsupial herbivore. It has powerful hind legs and... boxing gloves?
   components:
   - type: CombatMode
-    canDisarm: true
+    disarm: null
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -658,9 +656,8 @@
         Base: kangaroo-boxing-dead
   - type: MeleeWeapon
     hidden: true
-    range: 1.5
-    arcwidth: 0
-    arc: claw
+    angle: 0
+    animation: WeaponArcClaw
     damage:
       types:
         Blunt: 10
@@ -679,7 +676,7 @@
   description: New church of neo-darwinists actually believe that EVERY animal evolved from a monkey. Tastes like pork, and killing them is both fun and relaxing.
   components:
   - type: CombatMode
-    canDisarm: true
+    disarm: null
   - type: NameIdentifier
     group: Monkey
   - type: SentienceTarget
@@ -691,7 +688,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 30
+      density: 80
       mask:
       - MobMask
       layer:
@@ -767,7 +764,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.2
-      mass: 10
+      density: 100
       mask:
       - SmallMobMask
       layer:
@@ -921,7 +918,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.2
-      mass: 5
+      density: 50
       mask:
       - MobMask
       layer:
@@ -972,7 +969,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.2
-      mass: 1
+      density: 5
       mask:
       - MobMask
       layer:
@@ -1018,7 +1015,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.2
-      mass: 1
+      density: 5
       mask:
       - SmallMobMask
       layer:
@@ -1067,7 +1064,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.25
-      mass: 2
+      density: 10
       mask:
       - FlyingMobMask
       layer:
@@ -1113,7 +1110,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.25
-      mass: 20
+      density: 100
       mask:
       - MobMask
       layer:
@@ -1166,7 +1163,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.25
-      mass: 5
+      density: 25
       mask:
       - MobMask
       layer:
@@ -1186,9 +1183,8 @@
       amount: 3
   - type: MeleeWeapon
     hidden: true
-    range: 0.5
-    arcwidth: 0
-    arc: bite
+    angle: 0
+    animation: WeaponArcBite
     damage:
       groups:
         Brute: 5
@@ -1225,7 +1221,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.25
-      mass: 2
+      density: 10
       mask:
       - SmallMobMask
       layer:
@@ -1272,7 +1268,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 50
+      density: 130
       mask:
       - MobMask
       layer:
@@ -1339,7 +1335,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 20
+      density: 50
       mask:
       - MobMask
       layer:
@@ -1398,7 +1394,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 20
+      density: 50
       mask:
       - MobMask
       layer:
@@ -1457,7 +1453,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 20 #They actually are pretty light, I looked it up
+      density: 50 #They actually are pretty light, I looked it up
       mask:
       - MobMask
       layer:

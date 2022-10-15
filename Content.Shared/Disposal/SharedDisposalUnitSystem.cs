@@ -3,9 +3,11 @@ using Content.Shared.Disposal.Components;
 using Content.Shared.DragDrop;
 using Content.Shared.Item;
 using Content.Shared.MobState.Components;
+using Content.Shared.MobState.EntitySystems;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Timing;
@@ -16,6 +18,7 @@ namespace Content.Shared.Disposal
     public abstract class SharedDisposalUnitSystem : EntitySystem
     {
         [Dependency] protected readonly IGameTiming GameTiming = default!;
+        [Dependency] private readonly SharedMobStateSystem _mobState = default!;
 
         protected static TimeSpan ExitAttemptDelay = TimeSpan.FromSeconds(0.5);
 
@@ -68,20 +71,16 @@ namespace Content.Shared.Disposal
             }
 
             //Check if the entity is a mob and if mobs can be inserted
-            if (EntityManager.HasComponent<MobStateComponent>(entity) && !component.MobsCanEnter)
+            if (TryComp<MobStateComponent>(entity, out var damageState) && !component.MobsCanEnter)
                 return false;
 
-            if (!EntityManager.TryGetComponent(entity, out IPhysBody? physics) ||
-                !physics.CanCollide && storable == null)
+            if (EntityManager.TryGetComponent(entity, out PhysicsComponent? physics) &&
+                (physics.CanCollide || storable != null))
             {
-                if (!(EntityManager.TryGetComponent(entity, out MobStateComponent? damageState) &&
-                      (!component.MobsCanEnter || damageState.IsDead())))
-                {
-                    return false;
-                }
+                return true;
             }
 
-            return true;
+            return damageState != null && (!component.MobsCanEnter || _mobState.IsDead(entity, damageState));
         }
     }
 }

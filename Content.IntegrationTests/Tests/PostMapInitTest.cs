@@ -10,6 +10,8 @@ using Content.Server.Maps;
 using Content.Server.Shuttles.Components;
 using Content.Server.Spawners.Components;
 using Content.Server.Station.Components;
+using Content.Server.Station.Systems;
+using Content.Shared.Roles;
 using NUnit.Framework;
 using Robust.Server.Maps;
 using Robust.Shared.ContentPack;
@@ -98,9 +100,9 @@ namespace Content.IntegrationTests.Tests
                     var mapNames = new List<string>();
                     var naughty = new HashSet<string>()
                     {
-                        "empty",
-                        "infiltrator",
-                        "pirate",
+                        "Empty",
+                        "Infiltrator",
+                        "Pirate",
                     };
 
                     foreach (var map in maps)
@@ -135,6 +137,7 @@ namespace Content.IntegrationTests.Tests
             var ticker = entManager.EntitySysManager.GetEntitySystem<GameTicker>();
             var shuttleSystem = entManager.EntitySysManager.GetEntitySystem<ShuttleSystem>();
             var xformQuery = entManager.GetEntityQuery<TransformComponent>();
+            var stationJobsSystem = entManager.EntitySysManager.GetEntitySystem<StationJobsSystem>();
 
             await server.WaitPost(() =>
             {
@@ -201,6 +204,22 @@ namespace Content.IntegrationTests.Tests
 
                     Assert.That(lateSpawns, Is.GreaterThan(0), $"Found no latejoin spawn points on {mapProto}");
                 }
+                // Test all availableJobs have spawnPoints
+                // This is done inside gamemap test because loading the map takes ages and we already have it.
+                var jobList = entManager.GetComponent<StationJobsComponent>(station).RoundStartJobList
+                    .Where(x => x.Value != 0)
+                    .Select(x => x.Key);
+                var spawnPoints = entManager.EntityQuery<SpawnPointComponent>()
+                    .Where(spawnpoint => spawnpoint.SpawnType == SpawnPointType.Job)
+                    .Select(spawnpoint => spawnpoint.Job.ID)
+                    .Distinct();
+                List<string> missingSpawnPoints = new() { };
+                foreach (var spawnpoint in jobList.Except(spawnPoints))
+                {
+                    if (protoManager.Index<JobPrototype>(spawnpoint).SetPreference)
+                        missingSpawnPoints.Add(spawnpoint);
+                }
+                Assert.That(missingSpawnPoints.Count() == 0, $"There is no spawnpoint for {String.Join(", ", missingSpawnPoints)} on {mapProto}.");
 
                 try
                 {
