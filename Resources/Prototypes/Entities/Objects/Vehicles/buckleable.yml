@@ -320,7 +320,7 @@
 - type: entity
   parent: BaseVehicle
   id: VehicleSkeletonMotorcycle
-  name: Skeleton Motorcycle
+  name: skeleton motorcycle
   description: Bad to the Bone.
   components:
     - type: Vehicle
