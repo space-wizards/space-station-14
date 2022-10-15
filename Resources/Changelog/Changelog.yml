@@ -1,13 +1,6 @@
 Entries:
 - author: mirrorcult
   changes:
-  - {message: 'Proto-kinetic accelerators are now available. These are recharging
-      ranged weapons for salvage specialists, but with the cost of doing low damage,
-      having very low range, and a low recharge rate.', type: Add}
-  id: 1956
-  time: '2022-07-15T04:28:14.0000000+00:00'
-- author: mirrorcult
-  changes:
   - {message: Space carp and space ticks now only have a 33% chance to be inhabitable
       by a ghost., type: Tweak}
   - {message: Space bears now have a 5% chance to be inhabitable by a ghost., type: Tweak}
@@ -2945,3 +2938,8 @@ Entries:
       their filling level', type: Add}
   id: 2455
   time: '2022-10-15T21:10:48.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: Librarian & Lawyer now spawn with briefcase in hand, type: Tweak}
+  id: 2456
+  time: '2022-10-15T21:22:27.0000000+00:00'
