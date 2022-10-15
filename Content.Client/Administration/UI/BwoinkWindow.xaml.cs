@@ -57,7 +57,12 @@ namespace Content.Client.Administration.UI
             ChannelSelector.OverrideText += (info, text) =>
             {
                 var sb = new StringBuilder();
-                sb.Append(info.Connected ? '●' : '○');
+
+                if (info.Connected)
+                    sb.Append('●');
+                else
+                    sb.Append(info.ActiveThisRound ? '○' : '·');
+                
                 sb.Append(' ');
                 if (_adminAHelpHelper.TryGetChannel(info.SessionId, out var panel) && panel.Unread > 0)
                 {
@@ -68,7 +73,7 @@ namespace Content.Client.Administration.UI
                     sb.Append(' ');
                 }
 
-                if (info.Antag)
+                if (info.Antag && info.ActiveThisRound)
                     sb.Append(new Rune(0x1F5E1)); // 🗡
 
                 sb.AppendFormat("\"{0}\"", text);
@@ -89,6 +94,23 @@ namespace Content.Client.Administration.UI
                 if (!bChannelExists)
                     return -1;
 
+                // First, sort by unread. Any chat with unread messages appears first. We just sort based on unread
+                // status, not number of unread messages, so that more recent unread messages take priority.
+                var aUnread = ach!.Unread > 0;
+                var bUnread = bch!.Unread > 0;
+                if (aUnread != bUnread)
+                    return aUnread ? -1 : 1;
+
+                // Next, sort by connection status. Any disconnected players are grouped towards the end.
+                if (a.Connected != b.Connected)
+                    return a.Connected ? -1 : 1;
+
+                // Next, group by whether or not the players have participated in this round.
+                // The ahelp window shows all players that have connected since server restart, this groups them all towards the bottom.
+                if (a.ActiveThisRound != b.ActiveThisRound)
+                    return a.ActiveThisRound ? -1 : 1;
+
+                // Finally, sort by the most recent message.
                 return bch!.LastMessage.CompareTo(ach!.LastMessage);
             };
 
