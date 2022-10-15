@@ -218,9 +218,6 @@ namespace Content.Shared.Containers.ItemSlots
             // ContainerSlot automatically raises a directed EntInsertedIntoContainerMessage
 
             _audioSystem.PlayPredicted(slot.InsertSound, uid, excludeUserAudio ? user : null);
-
-            var ev = new ItemSlotChangedEvent();
-            RaiseLocalEvent(uid, ref ev, true);
         }
 
         /// <summary>
@@ -324,8 +321,6 @@ namespace Content.Shared.Containers.ItemSlots
             // ContainerSlot automatically raises a directed EntRemovedFromContainerMessage
 
             _audioSystem.PlayPredicted(slot.EjectSound, uid, excludeUserAudio ? user : null, slot.SoundOptions);
-            var ev = new ItemSlotChangedEvent();
-            RaiseLocalEvent(uid, ref ev, true);
         }
 
         /// <summary>
@@ -606,10 +601,4 @@ namespace Content.Shared.Containers.ItemSlots
             args.State = new ItemSlotsComponentState(component.Slots);
         }
     }
-
-    /// <summary>
-    /// Raised directed on an entity when one of its item slots changes.
-    /// </summary>
-    [ByRefEvent]
-    public readonly struct ItemSlotChangedEvent {}
 }
