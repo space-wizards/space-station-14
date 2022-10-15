@@ -347,7 +347,7 @@ namespace Content.Server.Light.EntitySystems
             args.Handled = true;
         }
 
-        private void OnPowerChanged(EntityUid uid, PoweredLightComponent component, PowerChangedEvent args)
+        private void OnPowerChanged(EntityUid uid, PoweredLightComponent component, ref PowerChangedEvent args)
         {
             UpdateLight(uid, component);
         }

@@ -1,11 +1,14 @@
 using Content.Server.Power.Components;
 using Content.Shared.Examine;
 using Content.Shared.Power;
+using Robust.Server.GameObjects;
 
 namespace Content.Server.Power.EntitySystems
 {
     public sealed class PowerReceiverSystem : EntitySystem
     {
+        [Dependency] private readonly AppearanceSystem _appearance = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -25,8 +28,9 @@ namespace Content.Server.Power.EntitySystems
         private void OnExamined(EntityUid uid, ApcPowerReceiverComponent component, ExaminedEvent args)
         {
             args.PushMarkup(Loc.GetString("power-receiver-component-on-examine-main",
-                                            ("stateText", Loc.GetString( component.Powered ? "power-receiver-component-on-examine-powered" :
-                                                                                   "power-receiver-component-on-examine-unpowered"))));
+                                            ("stateText", Loc.GetString( component.Powered
+                                                ? "power-receiver-component-on-examine-powered"
+                                                : "power-receiver-component-on-examine-unpowered"))));
         }
 
         private void OnProviderShutdown(EntityUid uid, ApcPowerProviderComponent component, ComponentShutdown args)
@@ -77,11 +81,10 @@ namespace Content.Server.Power.EntitySystems
         private void ProviderChanged(ApcPowerReceiverComponent receiver)
         {
             receiver.NetworkLoad.LinkedNetwork = default;
+            var ev = new PowerChangedEvent(receiver.Powered, receiver.NetworkLoad.ReceivingPower);
 
-            RaiseLocalEvent(receiver.Owner, new PowerChangedEvent(receiver.Powered, receiver.NetworkLoad.ReceivingPower), true);
-
-            if (TryComp(receiver.Owner, out AppearanceComponent? appearance))
-                appearance.SetData(PowerDeviceVisuals.Powered, receiver.Powered);
+            RaiseLocalEvent(receiver.Owner, ref ev);
+            _appearance.SetData(receiver.Owner, PowerDeviceVisuals.Powered, receiver.Powered);
         }
 
         /// <summary>

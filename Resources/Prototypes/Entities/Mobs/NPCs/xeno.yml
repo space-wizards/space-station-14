@@ -15,6 +15,8 @@
   - type: HTN
     rootTask: XenoCompound
     blackboard:
+      NavInteract: !type:Bool
+        true
       NavPry: !type:Bool
         true
       NavSmash: !type:Bool
@@ -67,7 +69,6 @@
           -0.25
   - type: MeleeWeapon
     hidden: true
-    range: 1.5
     angle: 0
     soundHit:
      collection: AlienClaw
@@ -364,7 +365,6 @@
     - Xeno
   - type: MeleeWeapon
     hidden: true
-    range: 1.5
     angle: 0
     animation: WeaponArcBite
     damage:

@@ -87,7 +87,7 @@ namespace Content.Server.Physics.Controllers
             }
         }
 
-        private void OnPowerChanged(EntityUid uid, ConveyorComponent component, PowerChangedEvent args)
+        private void OnPowerChanged(EntityUid uid, ConveyorComponent component, ref PowerChangedEvent args)
         {
             UpdateAppearance(component);
         }
@@ -153,7 +153,10 @@ namespace Content.Server.Physics.Controllers
                     if (!bodyQuery.TryGetComponent(entity, out var physics))
                         continue;
 
-                    _physics.WakeBody(physics);
+                    if (physics.BodyType != BodyType.Static)
+                    {
+                        _physics.WakeBody(physics);
+                    }
                 }
             }
         }
