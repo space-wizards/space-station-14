@@ -1,11 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: 'Disease outbreak has been nerfed: its weight is reduced to half, its
-      earliest start is now 15 minutes, and it can no longer occur more than 3 times.',
-    type: Tweak}
-  id: 1951
-  time: '2022-07-15T02:42:00.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: 'Magic staves & wands! You can find them in the fireball, polymorph,
@@ -2944,3 +2937,11 @@ Entries:
   - {message: fixes some device links, type: Fix}
   id: 2450
   time: '2022-10-15T14:17:22.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Stripping UI has been updated. You can now visually see and examine
+      items., type: Tweak}
+  - {message: Handcuffs now show up in the hands UI. You still need to use the alert
+      to uncuff yourself., type: Add}
+  id: 2451
+  time: '2022-10-15T17:00:04.0000000+00:00'
