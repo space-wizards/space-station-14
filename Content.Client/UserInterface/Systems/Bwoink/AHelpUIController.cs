@@ -78,9 +78,7 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
 
     public void OnStateExited(GameplayState state)
     {
-        DebugTools.Assert(_ahelpButton != null);
         SetAHelpPressed(false);
-        _ahelpButton!.OnPressed -= AHelpButtonPressed;
         _adminManager.AdminStatusUpdated -= OnAdminStatusUpdated;
         _uiHelper?.Dispose();
         _uiHelper = null;
