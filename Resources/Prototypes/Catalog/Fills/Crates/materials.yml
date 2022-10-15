@@ -52,6 +52,16 @@
       - id: SheetPlasma
         amount: 3
 
+- type: entity
+  id: CrateMaterialPaper
+  parent: CrateGenericSteel
+  name: paper crate
+  components:
+  - type: StorageFill
+    contents:
+    - id: SheetPaper
+      amount: 3
+
 #- type: entity
 #  id: CrateMaterialHFuelTank
 #  name:  fueltank crate

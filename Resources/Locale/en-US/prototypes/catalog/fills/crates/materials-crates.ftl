@@ -15,3 +15,6 @@ ent-CrateMaterialPlasteel = Plasteel crate
 
 ent-CrateMaterialPlasma = Solid plasma crate
     .desc = 90 sheets of plasma.
+
+ent-CrateMaterialPaper = Paper crate
+    .desc = 90 sheets of paper material, not for writing.
