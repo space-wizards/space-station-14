@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: 'Fixed some pop-ups that revealed a disguised entity''s name. If there
-      are more, report them.', type: Fix}
-  id: 1961
-  time: '2022-07-15T08:10:52.0000000+00:00'
 - author: ZeroDayDaemon
   changes:
   - {message: Added craftable Sawn Off shotgun., type: Add}
@@ -2945,3 +2939,8 @@ Entries:
   - {message: The Blue Flashlight and the Seclite have been buffed, type: Tweak}
   id: 2460
   time: '2022-10-15T21:58:33.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Dying as a skeleton now makes you a skull again., type: Fix}
+  id: 2461
+  time: '2022-10-15T22:06:01.0000000+00:00'
