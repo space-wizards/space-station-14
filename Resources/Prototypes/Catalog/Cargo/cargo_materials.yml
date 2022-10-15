@@ -67,13 +67,3 @@
   cost: 2000
   category: Materials
   group: market
-
-- type: cargoProduct
-  id: MaterialPaper
-  icon: 
-    sprite: Objects/Materials/Sheets/other.rsi
-    state: paper_3
-  product: CrateMaterialPaper
-  cost: 500
-  category: Materials
-  group: market
