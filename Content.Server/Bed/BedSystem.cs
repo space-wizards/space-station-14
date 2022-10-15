@@ -9,7 +9,6 @@ using Content.Server.Power.EntitySystems;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Bed;
 using Content.Shared.Bed.Sleep;
-using Content.Shared.Body.Components;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Damage;
 using Content.Shared.Emag.Systems;
@@ -19,11 +18,13 @@ namespace Content.Server.Bed
 {
     public sealed class BedSystem : EntitySystem
     {
+        [Dependency] private readonly BodySystem _bodySystem = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly ActionsSystem _actionsSystem = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly SleepingSystem _sleepingSystem = default!;
         [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -56,7 +57,8 @@ namespace Content.Server.Bed
         {
             base.Update(frameTime);
 
-            foreach (var (_, bedComponent, strapComponent) in EntityQuery<HealOnBuckleHealingComponent, HealOnBuckleComponent, StrapComponent>())
+            foreach (var (_, bedComponent, strapComponent) in
+                     EntityQuery<HealOnBuckleHealingComponent, HealOnBuckleComponent, StrapComponent>())
             {
                 bedComponent.Accumulator += frameTime;
 
@@ -65,7 +67,8 @@ namespace Content.Server.Bed
 
                 bedComponent.Accumulator -= bedComponent.HealTime;
 
-                if (strapComponent.BuckledEntities.Count == 0) continue;
+                if (strapComponent.BuckledEntities.Count == 0)
+                    continue;
 
                 foreach (var healedEntity in strapComponent.BuckledEntities)
                 {
@@ -94,15 +97,20 @@ namespace Content.Server.Bed
         {
             // In testing this also received an unbuckle event when the bed is destroyed
             // So don't worry about that
-            if (!HasComp<BodyComponent>(args.BuckledEntity))
+            if (!_bodySystem.TryGetRoot(args.BuckledEntity, out var body))
                 return;
 
             if (!this.IsPowered(uid, EntityManager))
                 return;
 
-            var metabolicEvent = new ApplyMetabolicMultiplierEvent()
-                {Uid = args.BuckledEntity, Multiplier = component.Multiplier, Apply = args.Buckling};
-            RaiseLocalEvent(args.BuckledEntity, metabolicEvent, false);
+            var metabolicEvent = new ApplyMetabolicMultiplierEvent
+            {
+                Uid = body.Owner,
+                Multiplier = component.Multiplier,
+                Apply = args.Buckling
+            };
+
+            RaiseLocalEvent(body.Owner, metabolicEvent);
         }
 
         private void OnPowerChanged(EntityUid uid, StasisBedComponent component, PowerChangedEvent args)
@@ -128,11 +136,17 @@ namespace Content.Server.Bed
 
             foreach (var buckledEntity in strap.BuckledEntities)
             {
-                var metabolicEvent = new ApplyMetabolicMultiplierEvent()
-                    {Uid = buckledEntity, Multiplier = component.Multiplier, Apply = shouldApply};
-                RaiseLocalEvent(buckledEntity, metabolicEvent, false);
+                if (!_bodySystem.TryGetRoot(buckledEntity, out var body))
+                    continue;
+
+                var metabolicEvent = new ApplyMetabolicMultiplierEvent
+                {
+                    Uid = buckledEntity,
+                    Multiplier = component.Multiplier,
+                    Apply = shouldApply
+                };
+                RaiseLocalEvent(buckledEntity, metabolicEvent);
             }
         }
     }
 }
-

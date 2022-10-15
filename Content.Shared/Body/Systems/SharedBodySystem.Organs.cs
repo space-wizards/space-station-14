@@ -12,7 +12,7 @@ public partial class SharedBodySystem
     /// <param name="uid">The entity to check for the component on.</param>
     /// <param name="body">The body to check for organs on.</param>
     /// <typeparam name="T">The component to check for.</typeparam>
-    public List<(T Comp, BodyComponent Organ)> GetComponentsOnOrgans<T>(
+    public List<(T Comp, BodyComponent Organ)> GetOrganComponents<T>(
         EntityUid uid,
         BodyComponent? body = null)
         where T : Component
@@ -40,7 +40,7 @@ public partial class SharedBodySystem
     /// <param name="body">The body to check for organs on.</param>
     /// <typeparam name="T">The component to check for.</typeparam>
     /// <returns>Whether any were found.</returns>
-    public bool TryGetComponentsOnOrgans<T>(
+    public bool TryGetOrganComponents<T>(
         EntityUid uid,
         [NotNullWhen(true)] out List<(T Comp, BodyComponent Organ)>? comps,
         BodyComponent? body = null)
@@ -52,7 +52,7 @@ public partial class SharedBodySystem
             return false;
         }
 
-        comps = GetComponentsOnOrgans<T>(uid, body);
+        comps = GetOrganComponents<T>(uid, body);
 
         if (comps.Count == 0)
         {

@@ -304,7 +304,7 @@ public sealed partial class AdminVerbSystem
                 Act = () =>
                 {
                     _vomitSystem.Vomit(args.Target, -1000, -1000); // You feel hollow!
-                    var organs = _bodySystem.GetComponentsOnOrgans<TransformComponent>(args.Target, body);
+                    var organs = _bodySystem.GetOrganComponents<TransformComponent>(args.Target, body);
                     var baseXform = Transform(args.Target);
                     foreach (var (xform, organ) in organs)
                     {
@@ -377,7 +377,7 @@ public sealed partial class AdminVerbSystem
                 IconTexture = "/Textures/Mobs/Species/Human/organs.rsi/stomach.png",
                 Act = () =>
                 {
-                    foreach (var (component, _) in _bodySystem.GetComponentsOnOrgans<StomachComponent>(args.Target, body))
+                    foreach (var (component, _) in _bodySystem.GetOrganComponents<StomachComponent>(args.Target, body))
                     {
                         QueueDel(component.Owner);
                     }
@@ -397,7 +397,7 @@ public sealed partial class AdminVerbSystem
                 IconTexture = "/Textures/Mobs/Species/Human/organs.rsi/lung-r.png",
                 Act = () =>
                 {
-                    foreach (var (component, _) in _bodySystem.GetComponentsOnOrgans<LungComponent>(args.Target, body))
+                    foreach (var (component, _) in _bodySystem.GetOrganComponents<LungComponent>(args.Target, body))
                     {
                         QueueDel(component.Owner);
                     }

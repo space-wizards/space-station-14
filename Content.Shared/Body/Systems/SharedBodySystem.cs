@@ -34,66 +34,71 @@ public abstract partial class SharedBodySystem : EntitySystem
 
     private void OnBodyMapInit(EntityUid bodyId, BodyComponent body, MapInitEvent args)
     {
-        if (body.Prototype == null)
-            return;
-
-        var prototype = _prototypes.Index<BodyPrototype>(body.Prototype);
-        var part = InitPart(body, prototype, prototype.Root);
-        part.Component.Attachable = false;
-    }
-
-    private void OnBodyInit(EntityUid bodyId, BodyComponent body, ComponentInit args)
-    {
-        // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
         if (body.Prototype == null || body.Children.Count > 0)
             return;
 
         var prototype = _prototypes.Index<BodyPrototype>(body.Prototype);
-        var part = InitPart(body, prototype, prototype.Root);
-        part.Component.Attachable = false;
+        InitBody(body, prototype);
     }
 
-    private (EntityUid Part, BodyComponent Component) InitPart(BodyComponent body,
-        BodyPrototype prototype,
-        string slotId)
+    private void OnBodyInit(EntityUid bodyId, BodyComponent body, ComponentInit args)
     {
-        var (partId, connections, organs) = prototype.Slots[slotId];
-        var coordinates = body.Owner.ToCoordinates();
+        if (body.Prototype == null || body.Children.Count > 0)
+            return;
 
-        var part = Spawn(partId, coordinates);
-        var partComponent = Comp<BodyComponent>(part);
+        var prototype = _prototypes.Index<BodyPrototype>(body.Prototype);
+        InitBody(body, prototype);
+    }
 
-        var container = _containers.EnsureContainer<Container>(part, BodyContainerId);
+    private void InitBody(BodyComponent body, BodyPrototype prototype)
+    {
+        var root = prototype.Slots[prototype.Root];
+        var partId = Spawn(root.Part, body.Owner.ToCoordinates());
+        var partComponent = Comp<BodyComponent>(partId);
+        var slot = new BodyPartSlot(root.Part, body.Owner, partComponent.PartType);
+
+        _containers.EnsureContainer<Container>(body.Owner, BodyContainerId);
+
+        Attach(partId, slot, partComponent);
+        InitPart(partComponent, prototype, prototype.Root);
+    }
+
+    private void InitPart(BodyComponent parent, BodyPrototype prototype, string slotId)
+    {
+        var (_, connections, organs) = prototype.Slots[slotId];
+        var coordinates = parent.Owner.ToCoordinates();
+        var subConnections = new List<(BodyComponent child, string slotId)>();
+
+        _containers.EnsureContainer<Container>(parent.Owner, BodyContainerId);
 
         foreach (var connection in connections)
         {
-            var (childPart, childPartComponent) = InitPart(body, prototype, connection);
-            if (!container.Insert(childPart))
-            {
-                Logger.Error(
-                    $"Couldn't insert part {EntityManager.ToPrettyString(childPart)} into container of body {EntityManager.ToPrettyString(part)}");
-                continue;
-            }
+            var childSlot = prototype.Slots[connection];
+            var childPart = Spawn(childSlot.Part, coordinates);
+            var childPartComponent = Comp<BodyComponent>(childPart);
+            var slot = new BodyPartSlot(connection, parent.Owner, childPartComponent.PartType);
 
-            var slot = new BodyPartSlot(connection, part, childPartComponent.PartType);
-            partComponent.Children[slot.Id] = slot;
-            childPartComponent.ParentSlot = slot;
             Attach(childPart, slot, childPartComponent);
+            subConnections.Add((childPartComponent, connection));
         }
 
         foreach (var (organSlotId, organId) in organs)
         {
             var organ = Spawn(organId, coordinates);
             var organComponent = Comp<BodyComponent>(organ);
+            // TODO BODY BEFORE MERGE move to prototype, and make all bodies non attachable and non organs
             organComponent.Attachable = false;
             organComponent.Organ = true;
 
-            var slot = new BodyPartSlot(organSlotId, organ, BodyPartType.Other);
-            partComponent.Children[slot.Id] = slot;
+            var slot = new BodyPartSlot(organSlotId, parent.Owner, organComponent.PartType);
+
             Attach(organ, slot, organComponent);
         }
 
-        return (part, partComponent);
+        foreach (var connection in subConnections)
+        {
+            InitPart(connection.child, prototype, connection.slotId);
+        }
     }
 
     private void OnPartRemoved(EntityUid uid, BodyComponent part, ComponentRemove args)

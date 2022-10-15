@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Client.Body.Systems;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Systems;
@@ -119,14 +120,13 @@ namespace Content.Client.Body.UI
 
         public void BodyPartOnItemSelected(ItemListSelectedEventArgs args)
         {
-            var entities = IoCManager.Resolve<IEntityManager>();
-            if (!entities.HasComponent<BodyComponent>(_currentEntity))
+            var bodySystem = IoCManager.Resolve<IEntityManager>().System<BodySystem>();
+            if (!bodySystem.TryGetRoot(_currentEntity, out var body))
             {
                 return;
             }
 
-            _currentBodyPart =
-                entities.GetComponentOrNull<BodyComponent>(_bodyPartsList[args.ItemIndex].Child);
+            _currentBodyPart = bodySystem.GetRoot(_bodyPartsList[args.ItemIndex].Child);
 
             if (_currentBodyPart is {ParentSlot.Id: var slotId} part)
             {

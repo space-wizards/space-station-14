@@ -152,7 +152,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             args.Food.CancelToken = null;
 
-            if (!_bodySystem.TryGetComponentsOnOrgans<StomachComponent>(uid, out var stomachs, body))
+            if (!_bodySystem.TryGetOrganComponents<StomachComponent>(uid, out var stomachs, body))
                 return;
 
             var transferAmount = args.Food.TransferAmount != null
@@ -244,7 +244,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 !ev.CanInteract ||
                 !ev.CanAccess ||
                 !EntityManager.TryGetComponent(ev.User, out BodyComponent? body) ||
-                !_bodySystem.TryGetComponentsOnOrgans<StomachComponent>(ev.User, out var stomachs, body))
+                !_bodySystem.TryGetOrganComponents<StomachComponent>(ev.User, out var stomachs, body))
                 return;
 
             if (EntityManager.TryGetComponent<MobStateComponent>(uid, out var mobState) && mobState.IsAlive())
@@ -279,7 +279,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!_solutionContainerSystem.TryGetSolution(uid, food.SolutionName, out var foodSolution))
                 return;
 
-            if (!_bodySystem.TryGetComponentsOnOrgans<StomachComponent>(target, out var stomachs, body))
+            if (!_bodySystem.TryGetOrganComponents<StomachComponent>(target, out var stomachs, body))
                 return;
 
             if (food.UsesRemaining <= 0)
