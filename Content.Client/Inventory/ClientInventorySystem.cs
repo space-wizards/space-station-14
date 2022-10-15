@@ -41,6 +41,7 @@ namespace Content.Client.Inventory
             base.Initialize();
 
             SubscribeLocalEvent<ClientInventoryComponent, PlayerAttachedEvent>(OnPlayerAttached);
+            SubscribeLocalEvent<ClientInventoryComponent, PlayerDetachedEvent>(OnPlayerDetached);
 
             SubscribeLocalEvent<ClientInventoryComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<ClientInventoryComponent, ComponentShutdown>(OnShutdown);
@@ -111,6 +112,11 @@ namespace Content.Client.Inventory
             OnUnlinkInventory?.Invoke();
         }
 
+        private void OnPlayerDetached(EntityUid uid, ClientInventoryComponent component, PlayerDetachedEvent args)
+        {
+            OnUnlinkInventory?.Invoke();
+        }
+
         private void OnPlayerAttached(EntityUid uid, ClientInventoryComponent component, PlayerAttachedEvent args)
         {
             if (TryGetSlots(uid, out var definitions))
@@ -130,8 +136,7 @@ namespace Content.Client.Inventory
                 }
             }
 
-            if (uid == _playerManager.LocalPlayer?.ControlledEntity)
-                OnLinkInventory?.Invoke(component);
+            OnLinkInventory?.Invoke(component);
         }
 
         public override void Shutdown()
