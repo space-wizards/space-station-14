@@ -195,7 +195,7 @@ public sealed class AirAlarmSystem : EntitySystem
         UpdateUI(uid, component);
     }
 
-    private void OnPowerChanged(EntityUid uid, AirAlarmComponent component, PowerChangedEvent args)
+    private void OnPowerChanged(EntityUid uid, AirAlarmComponent component, ref PowerChangedEvent args)
     {
         if (args.Powered)
         {

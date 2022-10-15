@@ -146,5 +146,5 @@
   - type: MagazineVisuals
     magState: mag
     steps: 1
-    zeroVisible: true
+    zeroVisible: false
   - type: Appearance
