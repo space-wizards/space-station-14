@@ -1,9 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Steal objectives now tell you who or what to steal from., type: Add}
-  id: 1954
-  time: '2022-07-15T03:09:11.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: The Necronomicon can now be purchased by Traitor Chaplains in the uplink.,
@@ -2944,3 +2939,9 @@ Entries:
   - {message: Fixed gloves slot being used for melee., type: Fix}
   id: 2453
   time: '2022-10-15T20:20:05.0000000+00:00'
+- author: BurninDreamer
+  changes:
+  - {message: 'Nanotrasen has finally invested into better drills for their miners,
+      rock and stone!', type: Tweak}
+  id: 2454
+  time: '2022-10-15T20:40:40.0000000+00:00'
