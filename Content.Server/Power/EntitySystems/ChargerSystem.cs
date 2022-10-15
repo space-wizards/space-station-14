@@ -57,13 +57,6 @@ internal sealed class ChargerSystem : EntitySystem
         if (args.Container.ID != component.SlotId)
             return;
 
-        // try get a battery directly on the inserted entity
-        if (!TryComp(args.Entity, out component.HeldBattery))
-        {
-            // or by checking for a power cell slot on the inserted entity
-            _cellSystem.TryGetBatteryFromSlot(args.Entity, out component.HeldBattery);
-        }
-
         UpdateStatus(uid, component);
     }
 
@@ -149,10 +142,13 @@ internal sealed class ChargerSystem : EntitySystem
         if (!_itemSlotsSystem.TryGetSlotById(uid, component.SlotId, out ItemSlot? slot))
             return CellChargerStatus.Off;
 
+        if (!_cellSystem.TryGetBatteryFromSlot(uid, out BatteryComponent? heldBattery))
+            return CellChargerStatus.Off;
+
         if (!slot.HasItem)
             return CellChargerStatus.Empty;
 
-        if (component.HeldBattery != null && Math.Abs(component.HeldBattery.MaxCharge - component.HeldBattery.CurrentCharge) < 0.01)
+        if (heldBattery != null && Math.Abs(heldBattery.MaxCharge - heldBattery.CurrentCharge) < 0.01)
             return CellChargerStatus.Charged;
 
         return CellChargerStatus.Charging;
@@ -160,20 +156,20 @@ internal sealed class ChargerSystem : EntitySystem
 
     private void TransferPower(EntityUid uid, ChargerComponent component, float frameTime)
     {
-        if (component.HeldBattery == null)
-            return;
-
         if (!TryComp(uid, out ApcPowerReceiverComponent? receiverComponent))
             return;
 
         if (!receiverComponent.Powered)
             return;
 
-        component.HeldBattery.CurrentCharge += component.ChargeRate * frameTime;
+        if (!_cellSystem.TryGetBatteryFromSlot(uid, out BatteryComponent? heldBattery))
+            return;
+
+        heldBattery.CurrentCharge += component.ChargeRate * frameTime;
         // Just so the sprite won't be set to 99.99999% visibility
-        if (component.HeldBattery.MaxCharge - component.HeldBattery.CurrentCharge < 0.01)
+        if (heldBattery.MaxCharge - heldBattery.CurrentCharge < 0.01)
         {
-            component.HeldBattery.CurrentCharge = component.HeldBattery.MaxCharge;
+            heldBattery.CurrentCharge = heldBattery.MaxCharge;
         }
 
         UpdateStatus(uid, component);

@@ -7,9 +7,6 @@ namespace Content.Server.Power.Components
     public sealed class ChargerComponent : Component
     {
         [ViewVariables]
-        public BatteryComponent? HeldBattery;
-
-        [ViewVariables]
         public CellChargerStatus Status;
 
         [ViewVariables]
