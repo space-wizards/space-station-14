@@ -31,7 +31,7 @@ public sealed class PricingSystem : EntitySystem
         SubscribeLocalEvent<StaticPriceComponent, PriceCalculationEvent>(CalculateStaticPrice);
         SubscribeLocalEvent<StackPriceComponent, PriceCalculationEvent>(CalculateStackPrice);
         SubscribeLocalEvent<MobPriceComponent, PriceCalculationEvent>(CalculateMobPrice);
-        SubscribeLocalEvent<SolutionPriceComponent, PriceCalculationEvent>(CalculateSolutionPrice);
+        SubscribeLocalEvent<SolutionContainerManagerComponent, PriceCalculationEvent>(CalculateSolutionPrice);
 
         _consoleHost.RegisterCommand("appraisegrid",
             "Calculates the total value of the given grids.",
@@ -111,23 +111,22 @@ public sealed class PricingSystem : EntitySystem
         args.Price += stack.Count * component.Price;
     }
 
-    private void CalculateSolutionPrice(EntityUid uid, SolutionPriceComponent component, ref PriceCalculationEvent args)
+    private void CalculateSolutionPrice(EntityUid uid, SolutionContainerManagerComponent component, ref PriceCalculationEvent args)
     {
-        SolutionContainerManagerComponent? solutionsManager = null;
-        if (!Resolve(uid, ref solutionsManager)
-            || !solutionsManager.Solutions.TryGetValue(component.Solution, out var solution)
-            || solution.Contents.Count == 0)
-            return;
-
         var price = 0f;
 
-        foreach(var reagent in solution.Contents)
+        foreach( ( _ ,var solution) in component.Solutions)
         {
-            if (!_prototypeManager.TryIndex<ReagentPrototype>(reagent.ReagentId, out var reagentProto))
+            if (!solution.Contents.Count())
                 continue;
-            price += (float) reagent.Quantity * reagentProto.PricePerUnit;
-        }
 
+            foreach(var reagent in solution.Contents)
+            {
+                if (!_prototypeManager.TryIndex<ReagentPrototype>(reagent.ReagentId, out var reagentProto))
+                    continue;
+                price += (float) reagent.Quantity * reagentProto.PricePerUnit;
+            }
+        }
         args.Price += price;
     }
 
