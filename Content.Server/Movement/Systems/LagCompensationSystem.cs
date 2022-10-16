@@ -13,11 +13,16 @@ public sealed class LagCompensationSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
 
-    public static readonly TimeSpan BufferTime = TimeSpan.FromMilliseconds(500);
+    // I figured 500 ping is max, so 1.5 is 750.
+    // Max ping I've had is 350ms from aus to spain.
+    public static readonly TimeSpan BufferTime = TimeSpan.FromMilliseconds(750);
+
+    private ISawmill _sawmill = Logger.GetSawmill("lagcomp");
 
     public override void Initialize()
     {
         base.Initialize();
+        _sawmill.Level = LogLevel.Info;
         SubscribeLocalEvent<LagCompensationComponent, MoveEvent>(OnLagMove);
     }
 
@@ -64,13 +69,14 @@ public sealed class LagCompensationSystem : EntitySystem
         if (!Resolve(uid, ref xform))
             return (EntityCoordinates.Invalid, Angle.Zero);
 
+        if (!TryComp<LagCompensationComponent>(uid, out var lag) || lag.Positions.Count == 0)
+            return (xform.Coordinates, xform.LocalRotation);
+
         var angle = Angle.Zero;
         var coordinates = EntityCoordinates.Invalid;
         var ping = pSession.Ping;
-        var sentTime = _timing.CurTime - TimeSpan.FromMilliseconds(ping);
-
-        if (!TryComp<LagCompensationComponent>(uid, out var lag) || lag.Positions.Count == 0)
-            return (xform.Coordinates, xform.LocalRotation);
+        // Use 1.5 due to the trip buffer.
+        var sentTime = _timing.CurTime - TimeSpan.FromMilliseconds(ping * 1.5);
 
         foreach (var pos in lag.Positions)
         {
@@ -83,8 +89,13 @@ public sealed class LagCompensationSystem : EntitySystem
 
         if (coordinates == default)
         {
+            _sawmill.Debug($"No long comp coords found, using {xform.Coordinates}");
             coordinates = xform.Coordinates;
             angle = xform.LocalRotation;
+        }
+        else
+        {
+            _sawmill.Debug($"Actual coords is {xform.Coordinates} and got {coordinates}");
         }
 
         return (coordinates, angle);
