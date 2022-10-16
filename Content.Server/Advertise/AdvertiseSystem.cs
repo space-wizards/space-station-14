@@ -34,7 +34,7 @@ namespace Content.Server.Advertise
             RefreshTimer(uid, true, advertise);
         }
 
-        private void OnPowerChanged(EntityUid uid, AdvertiseComponent advertise, PowerChangedEvent args)
+        private void OnPowerChanged(EntityUid uid, AdvertiseComponent advertise, ref PowerChangedEvent args)
         {
             SetEnabled(uid, args.Powered, advertise);
         }

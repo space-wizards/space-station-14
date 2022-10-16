@@ -366,6 +366,9 @@
   id: MicrowaveSelfUnsafe
 
 - type: Tag
+  id: MindTransferTarget
+
+- type: Tag
   id: MonkeyCube
 
 - type: Tag
@@ -473,6 +476,9 @@
 
 - type: Tag
   id: Shovel
+
+- type: Tag
+  id: SkeletonMotorcycleKeys
 
 - type: Tag
   id: Smokable

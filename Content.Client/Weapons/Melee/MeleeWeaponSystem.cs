@@ -165,6 +165,14 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
             }
 
             var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
+            var attackerPos = Transform(entity).MapPosition;
+
+            if (mousePos.MapId != attackerPos.MapId ||
+                (attackerPos.Position - mousePos.Position).Length > weapon.Range)
+            {
+                return;
+            }
+
             EntityCoordinates coordinates;
 
             // Bro why would I want a ternary here
@@ -202,8 +210,11 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         if (!base.DoDisarm(user, ev, component))
             return false;
 
-        if (!HasComp<CombatModeComponent>(user))
+        if (!TryComp<CombatModeComponent>(user, out var combatMode) ||
+            combatMode.CanDisarm != true)
+        {
             return false;
+        }
 
         // If target doesn't have hands then we can't disarm so will let the player know it's pointless.
         if (!HasComp<HandsComponent>(ev.Target!.Value))

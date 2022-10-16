@@ -218,6 +218,7 @@
       - FlashPayload
       - Signaller
       - SignalTrigger
+      - VoiceTrigger
       - PowerCellSmall
       - PowerCellMedium
       - PowerCellHigh

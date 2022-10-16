@@ -141,7 +141,15 @@ namespace Content.Server.Bed.Sleep
         private void OnInteractHand(EntityUid uid, SleepingComponent component, InteractHandEvent args)
         {
             args.Handled = true;
+
+            var curTime = _gameTiming.CurTime;
+            if (curTime < component.CoolDownEnd)
+            {
+                return;
+            }
+
             TryWaking(args.Target, user: args.User);
+            component.CoolDownEnd = curTime + component.Cooldown;
         }
 
         private void OnExamined(EntityUid uid, SleepingComponent component, ExaminedEvent args)
