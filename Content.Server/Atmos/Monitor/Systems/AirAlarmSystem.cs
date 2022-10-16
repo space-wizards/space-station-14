@@ -318,7 +318,6 @@ public sealed class AirAlarmSystem : EntitySystem
     /// </summary>
     /// <param name="origin">The origin address of this mode set. Used for network sync.</param>
     /// <param name="mode">The mode to set the alarm to.</param>
-    /// <param name="sync">Whether to sync this mode change to the network or not. Defaults to false.</param>
     /// <param name="uiOnly">Whether this change is for the UI only, or if it changes the air alarm's operating mode. Defaults to true.</param>
     public void SetMode(EntityUid uid, string origin, AirAlarmMode mode, bool uiOnly = true, AirAlarmComponent? controller = null)
     {
