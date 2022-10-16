@@ -232,7 +232,6 @@
     normalState: Generic_mob_burning
     alternateState: Standing
     fireStackAlternateState: 3
-  - type: EnsnareableVisualizer
   - type: CombatMode
     canDisarm: true
   - type: Climbing

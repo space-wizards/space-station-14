@@ -1,6 +1,7 @@
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Content.Server.Administration.Logs;
 using Content.Server.Construction.Components;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
@@ -10,6 +11,7 @@ using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Construction.Steps;
 using Content.Shared.Coordinates;
+using Content.Shared.Database;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
@@ -481,7 +483,7 @@ namespace Content.Server.Construction
             EntityManager.GetComponent<TransformComponent>(structure).Anchored = wasAnchored;
 
             RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack));
-
+            _adminLogger.Add(LogType.Construction, LogImpact.Low, $"{ToPrettyString(user):player} has started construction on the ghost of a {ev.PrototypeName}");
             Cleanup();
         }
     }
