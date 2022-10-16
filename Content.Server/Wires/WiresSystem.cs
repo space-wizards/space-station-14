@@ -484,7 +484,10 @@ public sealed class WiresSystem : EntitySystem
         {
             _audio.PlayPvs(component.ScrewdriverCloseSound, args.Target);
             var ui = _uiSystem.GetUiOrNull(args.Target, WiresUiKey.Key);
-            _uiSystem.CloseAll(ui);
+            if (ui != null)
+            {
+                _uiSystem.CloseAll(ui);
+            }
         }
     }
 
