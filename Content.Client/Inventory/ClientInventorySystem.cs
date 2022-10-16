@@ -41,6 +41,7 @@ namespace Content.Client.Inventory
             base.Initialize();
 
             SubscribeLocalEvent<ClientInventoryComponent, PlayerAttachedEvent>(OnPlayerAttached);
+            SubscribeLocalEvent<ClientInventoryComponent, PlayerDetachedEvent>(OnPlayerDetached);
 
             SubscribeLocalEvent<ClientInventoryComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<ClientInventoryComponent, ComponentShutdown>(OnShutdown);
@@ -111,6 +112,11 @@ namespace Content.Client.Inventory
             OnUnlinkInventory?.Invoke();
         }
 
+        private void OnPlayerDetached(EntityUid uid, ClientInventoryComponent component, PlayerDetachedEvent args)
+        {
+            OnUnlinkInventory?.Invoke();
+        }
+
         private void OnPlayerAttached(EntityUid uid, ClientInventoryComponent component, PlayerAttachedEvent args)
         {
             if (TryGetSlots(uid, out var definitions))
@@ -130,8 +136,7 @@ namespace Content.Client.Inventory
                 }
             }
 
-            if (uid == _playerManager.LocalPlayer?.ControlledEntity)
-                OnLinkInventory?.Invoke(component);
+            OnLinkInventory?.Invoke(component);
         }
 
         public override void Shutdown()
@@ -236,7 +241,7 @@ namespace Content.Client.Inventory
 
         public void UIInventoryStorageActivate(string slot)
         {
-            EntityManager.RaisePredictiveEvent(new OpenSlotStorageNetworkMessage(slot));
+            EntityManager.EntityNetManager?.SendSystemNetworkMessage(new OpenSlotStorageNetworkMessage(slot));
         }
 
         public void UIInventoryExamine(string slot, EntityUid uid)
@@ -260,7 +265,7 @@ namespace Content.Client.Inventory
             if (!TryGetSlotEntity(uid, slot, out var item))
                 return;
 
-            EntityManager.EntityNetManager?.SendSystemNetworkMessage(
+            EntityManager.RaisePredictiveEvent(
                 new InteractInventorySlotEvent(item.Value, altInteract: false));
         }
 
