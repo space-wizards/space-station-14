@@ -34,6 +34,7 @@ public sealed class RadioDeviceSystem : EntitySystem
         SubscribeLocalEvent<RadioSpeakerComponent, RadioReceiveEvent>(OnReceiveRadio);
     }
 
+    #region Component Init
     private void OnMicrophoneInit(EntityUid uid, RadioMicrophoneComponent component, ComponentInit args)
     {
         if (component.Enabled)
@@ -49,12 +50,9 @@ public sealed class RadioDeviceSystem : EntitySystem
         else
             RemCompDeferred<ActiveRadioComponent>(uid);
     }
+    #endregion
 
-    private void OnListen(EntityUid uid, RadioMicrophoneComponent component, ListenEvent args)
-    {
-        _radio.SendRadioMessage(args.Source, args.Message, _protoMan.Index<RadioChannelPrototype>(component.BroadcastChannel));
-    }
-
+    #region Toggling
     private void OnActivateMicrophone(EntityUid uid, RadioMicrophoneComponent component, ActivateInWorldEvent args)
     {
         ToggleRadioMicrophone(uid, args.User, args.Handled, component);
@@ -106,6 +104,7 @@ public sealed class RadioDeviceSystem : EntitySystem
         else
             RemCompDeferred<ActiveRadioComponent>(uid);
     }
+    #endregion
 
     private void OnExamine(EntityUid uid, RadioMicrophoneComponent component, ExaminedEvent args)
     {
@@ -114,6 +113,14 @@ public sealed class RadioDeviceSystem : EntitySystem
 
         var freq = _protoMan.Index<RadioChannelPrototype>(component.BroadcastChannel).Frequency;
         args.PushMarkup(Loc.GetString("handheld-radio-component-on-examine", ("frequency", freq)));
+    }
+
+    private void OnListen(EntityUid uid, RadioMicrophoneComponent component, ListenEvent args)
+    {
+        if (HasComp<RadioSpeakerComponent>(args.Source))
+            return; // no feedback loops please.
+
+        _radio.SendRadioMessage(args.Source, args.Message, _protoMan.Index<RadioChannelPrototype>(component.BroadcastChannel));
     }
 
     private void OnReceiveRadio(EntityUid uid, RadioSpeakerComponent component, RadioReceiveEvent args)
