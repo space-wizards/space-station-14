@@ -300,6 +300,7 @@
       - GasRecyclerMachineCircuitboard
       - MedicalResearchBedCircuitboard
       - ChemicalAnalysisCircuitboard
+      - ResearchSMESMachineCircuitboard
       - SeedExtractorMachineCircuitboard
   - type: MaterialStorage
     whitelist:

@@ -605,3 +605,21 @@
       materialRequirements:
         Glass: 1
         Cable: 1
+
+- type: entity
+  id: ResearchSMESMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: research SMES machine board
+  description: A machine printed circuit board for a Research SMES
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/module.rsi
+      state: power_mod
+    - type: MachineBoard
+      prototype: ResearchSMES
+      requirements:
+        Capacitor: 10
+        ScanningModule: 1
+      materialRequirements:
+        Glass: 1
+        Cable: 1

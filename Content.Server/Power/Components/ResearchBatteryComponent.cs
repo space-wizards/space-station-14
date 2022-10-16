@@ -4,6 +4,8 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Content.Shared.Damage;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Power.Components
 {
@@ -65,10 +67,15 @@ namespace Content.Server.Power.Components
         /// </summary>
         public float MaxChargeCeiling = 100000000f;
 
+        /// <summary>
+        ///     The research battery component can produce a disk at a set goal.
+        /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public float researchGoal = 20000000f;
+        public float ResearchGoal = 20000000f;
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool researchAchieved = false;
+        public bool ResearchAchieved = false;
+        [DataField("researchDiskReward", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>), required: false)]
+        public string ResearchDiskReward = string.Empty;
 
         /// <summary>
         ///     The amount of analysis charge discharged per analysis cycle. Relative to the analysis charge itself.
@@ -128,7 +135,7 @@ namespace Content.Server.Power.Components
             var currentCharge = _battery is not null ? _battery.CurrentCharge : 0f;
             var analysisIncrease = (currentCharge - lastRecordedCharge) * analysisSiphon;
 
-            return new ResearchSMESBoundUserInterfaceState(Powered,analysedCharge,shieldingActive,shieldingCost,analysisSiphon,MaxCapReached,overloadThreshold,researchMode,analysisIncrease,MaxAnalysisCharge,AnalysisDischarge,researchAchieved, maxCharge);
+            return new ResearchSMESBoundUserInterfaceState(Powered,analysedCharge,shieldingActive,shieldingCost,analysisSiphon,MaxCapReached,overloadThreshold,researchMode,analysisIncrease,MaxAnalysisCharge,AnalysisDischarge,ResearchAchieved, maxCharge);
         }
 
         private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)

@@ -66,6 +66,16 @@
     technology: MedTechResults
     points: 0
 
+- type: entity
+  parent: ResearchDiskBase
+  id: PowerTechResultsDisk
+  name: research SMES results disk
+  description: The results from the research SMES. Use on the R&D server to unlock more technologies.
+  components:
+  - type: ResearchDisk
+    technology: PowerTechResults
+    points: 0
+
 #- type: entity
 #  parent: ResearchDiskBase
 #  id: TestHiddenTechDisk

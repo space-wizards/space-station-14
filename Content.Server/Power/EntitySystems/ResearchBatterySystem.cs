@@ -77,17 +77,23 @@ namespace Content.Server.Power.EntitySystems
                     if (!TryComp<BatteryComponent>(researchBattery.Owner, out var batteryComponent))
                         return;
 
-                    if ((batteryComponent.MaxCharge + (researchBattery.analysedCharge * researchBattery.CapIncrease)) <= researchBattery.MaxChargeCeiling)
+                    if (!researchBattery.MaxCapReached && (batteryComponent.MaxCharge + (researchBattery.analysedCharge * researchBattery.CapIncrease)) <= researchBattery.MaxChargeCeiling)
                     {
                         batteryComponent.MaxCharge += researchBattery.analysedCharge * researchBattery.CapIncrease;
-                        //Console.WriteLine("max charge added");
                     }
-                    else if ((batteryComponent.MaxCharge + (researchBattery.analysedCharge * researchBattery.CapIncrease)) > researchBattery.MaxChargeCeiling
+                    else if (!researchBattery.MaxCapReached && (batteryComponent.MaxCharge + (researchBattery.analysedCharge * researchBattery.CapIncrease)) > researchBattery.MaxChargeCeiling
                         && batteryComponent.MaxCharge < researchBattery.MaxChargeCeiling)
                     {
                         batteryComponent.MaxCharge = 100000000f;
-                        //Console.WriteLine("max charge reached");
+                        researchBattery.MaxCapReached = true;
                     }
+
+                    if (batteryComponent.MaxCharge >= researchBattery.ResearchGoal && !researchBattery.ResearchAchieved)
+                    {
+                        researchBattery.ResearchAchieved = true;
+                        Spawn(researchBattery.ResearchDiskReward, Transform(researchBattery.Owner).Coordinates);
+                    }
+
 
                     if (researchBattery.shieldingActive && researchBattery.analysedCharge >= researchBattery.MaxAnalysisCharge * researchBattery.shieldingCost)
                         researchBattery.analysedCharge -= researchBattery.MaxAnalysisCharge * researchBattery.shieldingCost;
