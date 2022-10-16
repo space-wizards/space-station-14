@@ -371,7 +371,7 @@
   category: construction-category-structures
   description: This is a firelock - it locks an area when a fire alarm in the area is triggered. Don't get squished!
   icon:
-    sprite: Structures/Doors/Airlocks/Glass/firelock.rsi
+    sprite: Structures/Doors/Airlocks/Standard/firelock.rsi
     state: closed
   objectType: Structure
   placementMode: SnapgridCenter
@@ -388,7 +388,7 @@
   category: construction-category-structures
   description: This is a firelock - it locks an area when a fire alarm in the area is triggered. Don't get squished!
   icon:
-    sprite: Structures/Doors/Airlocks/Standard/firelock.rsi
+    sprite: Structures/Doors/Airlocks/Glass/firelock.rsi
     state: closed
   objectType: Structure
   placementMode: SnapgridCenter
