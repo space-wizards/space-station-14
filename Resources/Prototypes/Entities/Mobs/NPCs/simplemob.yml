@@ -206,4 +206,6 @@
     bloodMaxVolume: 150
   - type: MobPrice
     price: 150
+  - type: DiseaseProtection
+    protection: 1
 

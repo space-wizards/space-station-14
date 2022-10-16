@@ -149,6 +149,8 @@
       - state: headset
   - type: Storage
     capacity: 60
+  - type: Item
+    size: 60
 
 - type: entity
   name: meson box
