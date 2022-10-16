@@ -1,12 +1,4 @@
 Entries:
-- author: ZeroDayDaemon
-  changes:
-  - {message: Added craftable Sawn Off shotgun., type: Add}
-  - {message: Tweaked bartender to spawn with regular double barreled shotgun., type: Tweak}
-  - {message: Tweaked bardrobe to have enough items for maps with two bartenders.,
-    type: Tweak}
-  id: 1962
-  time: '2022-07-15T09:01:55.0000000+00:00'
 - author: Morb0
   changes:
   - {message: Added nuke ops sound declaration of war, type: Add}
@@ -2944,3 +2936,9 @@ Entries:
   - {message: Dying as a skeleton now makes you a skull again., type: Fix}
   id: 2461
   time: '2022-10-15T22:06:01.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed crew monitor directional icons sometimes pointing in the wrong
+      direction., type: Fix}
+  id: 2462
+  time: '2022-10-16T00:07:43.0000000+00:00'
