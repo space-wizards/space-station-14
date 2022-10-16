@@ -62,6 +62,8 @@ namespace Content.Shared.Humanoid
 
         public static HumanoidVisualLayers? ToHumanoidLayers(this BodyComponent part)
         {
+            if (part.Organ)
+                return null;
             switch (part.PartType)
             {
                 case BodyPartType.Other:
@@ -85,6 +87,7 @@ namespace Content.Shared.Humanoid
                         case BodyPartSymmetry.Right:
                             return HumanoidVisualLayers.RArm;
                     }
+
                     break;
                 case BodyPartType.Hand:
                     switch (part.Symmetry)
@@ -96,6 +99,7 @@ namespace Content.Shared.Humanoid
                         case BodyPartSymmetry.Right:
                             return HumanoidVisualLayers.RHand;
                     }
+
                     break;
                 case BodyPartType.Leg:
                     switch (part.Symmetry)
@@ -107,6 +111,7 @@ namespace Content.Shared.Humanoid
                         case BodyPartSymmetry.Right:
                             return HumanoidVisualLayers.RLeg;
                     }
+
                     break;
                 case BodyPartType.Foot:
                     switch (part.Symmetry)
@@ -118,6 +123,7 @@ namespace Content.Shared.Humanoid
                         case BodyPartSymmetry.Right:
                             return HumanoidVisualLayers.RFoot;
                     }
+
                     break;
             }
 
