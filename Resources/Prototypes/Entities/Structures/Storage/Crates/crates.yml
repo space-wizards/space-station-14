@@ -234,29 +234,19 @@
     access: [["Command"]]
 
 - type: entity
+  parent: CrateGeneric
   id: CrateLivestock
   name: livestock crate
-  parent: CrateBaseResistible
   components:
-  - type: EntityStorage
-    capacity: 500
   - type: Sprite
     sprite: Structures/Storage/Crates/livestock.rsi
     layers:
-    - state: livestockcrate
-    - state: livestockcrate_door
+    - state: base
+    - state: closed
       map: ["enum.StorageVisualLayers.Door"]
   - type: Icon
     sprite: Structures/Storage/Crates/livestock.rsi
-    state: livestockcrate
-  - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state_open: livestockcrate_open
-      state_closed: livestockcrate_door
-  - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
+    state: base
   - type: Destructible
     thresholds:
     - trigger:
