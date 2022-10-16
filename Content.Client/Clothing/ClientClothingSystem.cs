@@ -17,7 +17,7 @@ using static Robust.Shared.GameObjects.SharedSpriteComponent;
 
 namespace Content.Client.Clothing;
 
-public sealed class ClothingVisualsSystem : ClothingSystem
+public sealed class ClientClothingSystem : ClothingSystem
 {
     /// <summary>
     /// This is a shitty hotfix written by me (Paul) to save me from renaming all files.
