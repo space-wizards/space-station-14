@@ -95,11 +95,10 @@ internal sealed class ChargerSystem : EntitySystem
         if (component.Status == status || !TryComp(uid, out ApcPowerReceiverComponent? receiver))
             return;
 
-        if (!TryComp(uid, out AppearanceComponent? appearance))
-            return;
-
         if (!_itemSlotsSystem.TryGetSlotById(uid, component.SlotId, out ItemSlot? slot))
             return;
+
+        TryComp(uid, out AppearanceComponent? appearance);
 
         component.Status = status;
         
