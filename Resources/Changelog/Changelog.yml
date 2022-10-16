@@ -1,9 +1,4 @@
 Entries:
-- author: TimrodDX
-  changes:
-  - {message: Delta Station's atmos mix chamber should work now., type: Tweak}
-  id: 1968
-  time: '2022-07-16T00:46:20.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Mobs are now properly throwable, type: Tweak}
@@ -2945,3 +2940,8 @@ Entries:
     type: Add}
   id: 2467
   time: '2022-10-16T06:25:42.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Buckle teleporting should be fixed for now., type: Fix}
+  id: 2468
+  time: '2022-10-16T06:38:05.0000000+00:00'
