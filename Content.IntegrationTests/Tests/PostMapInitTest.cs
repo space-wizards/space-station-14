@@ -30,6 +30,52 @@ namespace Content.IntegrationTests.Tests
         private const bool SkipTestMaps = true;
         private const string TestMapsPath = "/Maps/Test/";
 
+        private static string[] Grids =
+        {
+            "/Maps/centcomm.yml",
+            "/Maps/Shuttles/cargo.yml",
+            "/Maps/Shuttles/emergency.yml",
+            "/Maps/infiltrator.yml",
+        };
+
+        /// <summary>
+        /// Asserts that specific files have been saved as grids and not maps.
+        /// </summary>
+        [Test, TestCaseSource(nameof(Grids))]
+        public async Task GridsLoadableTest(string mapFile)
+        {
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
+            var server = pairTracker.Pair.Server;
+
+            var mapLoader = server.ResolveDependency<IMapLoader>();
+            var mapManager = server.ResolveDependency<IMapManager>();
+
+            await server.WaitPost(() =>
+            {
+                var mapId = mapManager.CreateMap();
+                try
+                {
+                    mapLoader.LoadGrid(mapId, mapFile);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Failed to load map {mapFile}, was it saved as a map instead of a grid?", ex);
+                }
+
+                try
+                {
+                    mapManager.DeleteMap(mapId);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Failed to delete map {mapFile}", ex);
+                }
+            });
+            await server.WaitRunTicks(1);
+
+            await pairTracker.CleanReturnAsync();
+        }
+
         [Test]
         public async Task NoSavedPostMapInitTest()
         {
