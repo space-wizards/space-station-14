@@ -1,15 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: Fixed the makeshift laser recipe not accepting certain diamonds sometimes.,
-    type: Fix}
-  id: 1971
-  time: '2022-07-16T17:43:24.0000000+00:00'
-- author: SunbearDev
-  changes:
-  - {message: added an error as an object!, type: Add}
-  id: 1972
-  time: '2022-07-16T22:33:30.0000000+00:00'
 - author: 13spacemen
   changes:
   - {message: 'Added purple research airlocks, green virology airlocks, (not mapped
@@ -2938,3 +2927,15 @@ Entries:
   - {message: The action bar no longer shows the keybind for empty slots., type: Tweak}
   id: 2470
   time: '2022-10-16T16:42:19.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: 'NanoTrasen has given some of your television cameras microphones. Now
+      you can actually hear the news, instead of having to either lip read the newscasters,
+      or have them ring in your headset all the events of the station!', type: Add}
+  id: 2471
+  time: '2022-10-16T17:44:14.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Added voice trigger for modular grenades, type: Add}
+  id: 2472
+  time: '2022-10-16T17:44:51.0000000+00:00'
