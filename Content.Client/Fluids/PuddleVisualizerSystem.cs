@@ -39,41 +39,37 @@ namespace Content.Client.Fluids
 
         protected override void OnAppearanceChange(EntityUid uid, PuddleVisualizerComponent component, ref AppearanceChangeEvent args)
         {
-            if (!TryComp(uid, out SpriteComponent? sprite))
+            if (args.Sprite == null)
             {
                 Logger.Warning($"Missing SpriteComponent for PuddleVisualizerSystem on entityUid = {uid}");
                 return;
             }
 
-            if (!args.Component.TryGetData(PuddleVisuals.VolumeScale, out float volumeScale)
-                || !args.Component.TryGetData(PuddleVisuals.CurrentVolume, out FixedPoint2 currentVolume)
-                || !args.Component.TryGetData(PuddleVisuals.SolutionColor, out Color solutionColor)
-                || !args.Component.TryGetData(PuddleVisuals.IsEvaporatingVisual, out bool isEvaporating))
+            if  (args.Component.TryGetData(PuddleVisuals.VolumeScale, out float volumeScale)
+                && args.Component.TryGetData(PuddleVisuals.CurrentVolume, out FixedPoint2 currentVolume)
+                && args.Component.TryGetData(PuddleVisuals.SolutionColor, out Color solutionColor)
+                && args.Component.TryGetData(PuddleVisuals.IsEvaporatingVisual, out bool isEvaporating))
             {
-                // if (!component.CustomPuddleSprite) //if there is a custom sprite, it's expected that some of these will be missing, so suppress the logger (no need to warn for it)
-                // {
-                //     //Logger.Warning($"Missing PuddleVisuals data for PuddleVisualizerSystem on entityUid = {uid}");
-                // }
-                return; //regardless of custom sprite
-            }
+                // volumeScale is our opacity based on level of fullness to overflow. The lower bound is hard-capped for visibility reasons.
+                var cappedScale = Math.Min(1.0f, volumeScale * 0.75f + 0.25f);
 
-            // volumeScale is our opacity based on level of fullness to overflow. The lower bound is hard-capped for visibility reasons.
-            var cappedScale = Math.Min(1.0f, volumeScale * 0.75f + 0.25f);
+                Color newColor;
+                if (component.Recolor)
+                {
+                    newColor = solutionColor.WithAlpha(cappedScale);
+                }
+                else
+                {
+                    newColor = args.Sprite.Color.WithAlpha(cappedScale);
+                }
 
-            Color newColor;
-            if (component.Recolor)
-            {
-                newColor = solutionColor.WithAlpha(cappedScale);
-            }
-            else
-            {
-                newColor = sprite.Color.WithAlpha(cappedScale);
-            }
+                args.Sprite.LayerSetColor(0, newColor);
 
-            sprite.LayerSetColor(0, newColor);
+                if (component.CustomPuddleSprite) //Don't consider wet floor effects if we're using a custom sprite.
+                {
+                    return;
+                }
 
-            if (!component.CustomPuddleSprite) //Don't consider wet floor effects if we're using a custom sprite.
-            {
                 bool wetFloorEffectNeeded;
 
                 if (isEvaporating // TODO: add a check for isSlippery
@@ -88,16 +84,23 @@ namespace Content.Client.Fluids
 
                 if (wetFloorEffectNeeded)
                 {
-                    if (sprite.LayerGetState(0) != "sparkles") // If we need the effect but don't already have it - start it
+                    if (args.Sprite.LayerGetState(0) != "sparkles") // If we need the effect but don't already have it - start it
                     {
-                        StartWetFloorEffect(sprite, component.WetFloorEffectAlpha);
+                        StartWetFloorEffect(args.Sprite, component.WetFloorEffectAlpha);
                     }
                 }
                 else
                 {
-                    if (sprite.LayerGetState(0) == "sparkles") // If we have the effect but don't need it - end it
-                        EndWetFloorEffect(sprite, component.OriginalRsi);
+                    if (args.Sprite.LayerGetState(0) == "sparkles") // If we have the effect but don't need it - end it
+                        EndWetFloorEffect(args.Sprite, component.OriginalRsi);
                 }
+
+            }
+            else
+            {
+                if (!component.CustomPuddleSprite) // if there is a custom sprite, it's expected that some of the PuddleVisuals data may be missing, so suppress the logger message.
+                    Logger.Warning($"Missing PuddleVisuals data for PuddleVisualizerSystem on entityUid = {uid}");
+                return;
             }
         }
 
