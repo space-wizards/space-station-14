@@ -15,6 +15,7 @@ using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
@@ -27,6 +28,11 @@ namespace Content.Server.Singularity.EntitySystems
     {
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly SharedPopupSystem _popup = default!;
+        [Dependency] private readonly ProjectileSystem _projectiles = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly SharedAppearanceSystem _visualizer = default!;
 
         public override void Initialize()
         {
@@ -41,7 +47,7 @@ namespace Content.Server.Singularity.EntitySystems
             args.Handled = true;
             if (EntityManager.TryGetComponent(uid, out LockComponent? lockComp) && lockComp.Locked)
             {
-                component.Owner.PopupMessage(args.User, Loc.GetString("comp-emitter-access-locked", ("target", component.Owner)));
+                _popup.PopupEntity(Loc.GetString("comp-emitter-access-locked", ("target", component.Owner)), component.Owner, Filter.Entities(args.User));
                 return;
             }
 
@@ -50,12 +56,12 @@ namespace Content.Server.Singularity.EntitySystems
                 if (!component.IsOn)
                 {
                     SwitchOn(component);
-                    component.Owner.PopupMessage(args.User, Loc.GetString("comp-emitter-turned-on", ("target", component.Owner)));
+                    _popup.PopupEntity(Loc.GetString("comp-emitter-turned-on", ("target", component.Owner)), component.Owner, Filter.Entities(args.User));
                 }
                 else
                 {
                     SwitchOff(component);
-                    component.Owner.PopupMessage(args.User, Loc.GetString("comp-emitter-turned-off", ("target", component.Owner)));
+                    _popup.PopupEntity(Loc.GetString("comp-emitter-turned-off", ("target", component.Owner)), component.Owner, Filter.Entities(args.User));
                 }
 
                 _adminLogger.Add(LogType.Emitter,
@@ -64,7 +70,7 @@ namespace Content.Server.Singularity.EntitySystems
             }
             else
             {
-                component.Owner.PopupMessage(args.User, Loc.GetString("comp-emitter-not-anchored", ("target", component.Owner)));
+                _popup.PopupEntity(Loc.GetString("comp-emitter-not-anchored", ("target", component.Owner)), component.Owner, Filter.Entities(args.User));
             }
         }
 
@@ -173,7 +179,8 @@ namespace Content.Server.Singularity.EntitySystems
 
         private void Fire(EmitterComponent component)
         {
-            var projectile = EntityManager.SpawnEntity(component.BoltType, EntityManager.GetComponent<TransformComponent>(component.Owner).Coordinates);
+            var uid = component.Owner;
+            var projectile = EntityManager.SpawnEntity(component.BoltType, EntityManager.GetComponent<TransformComponent>(uid).Coordinates);
 
             if (!EntityManager.TryGetComponent<PhysicsComponent?>(projectile, out var physicsComponent))
             {
@@ -189,17 +196,19 @@ namespace Content.Server.Singularity.EntitySystems
                 return;
             }
 
-            Get<ProjectileSystem>().SetShooter(projectileComponent, component.Owner);
+            _projectiles.SetShooter(projectileComponent, uid);
 
-            physicsComponent
-                .LinearVelocity = EntityManager.GetComponent<TransformComponent>(component.Owner).WorldRotation.ToWorldVec() * 20f;
-            EntityManager.GetComponent<TransformComponent>(projectile).WorldRotation = EntityManager.GetComponent<TransformComponent>(component.Owner).WorldRotation;
+            var worldRotation = Transform(uid).WorldRotation;
+            _physics.SetLinearVelocity(physicsComponent, worldRotation.ToWorldVec() * 20f);
+            Transform(projectile).WorldRotation = worldRotation;
 
             // TODO: Move to projectile's code.
             Timer.Spawn(3000, () => EntityManager.DeleteEntity(projectile));
 
-            SoundSystem.Play(component.FireSound.GetSound(), Filter.Pvs(component.Owner),
-                component.Owner, AudioHelpers.WithVariation(EmitterComponent.Variation).WithVolume(EmitterComponent.Volume).WithMaxDistance(EmitterComponent.Distance));
+            _audio.Play(
+                component.FireSound, Filter.Pvs(uid), uid,
+                AudioParams.Default.WithVariation(EmitterComponent.Variation).WithVolume(EmitterComponent.Volume).WithMaxDistance(EmitterComponent.Distance)
+            );
         }
 
         private void UpdateAppearance(EmitterComponent component)
@@ -223,7 +232,7 @@ namespace Content.Server.Singularity.EntitySystems
                 state = EmitterVisualState.Off;
             }
 
-            appearanceComponent.SetData(EmitterVisuals.VisualState, state);
+            _visualizer.SetData(component.Owner, EmitterVisuals.VisualState, state, appearanceComponent);
         }
     }
 }

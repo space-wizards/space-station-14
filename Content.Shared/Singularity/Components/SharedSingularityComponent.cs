@@ -1,40 +1,39 @@
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Singularity.Components
+using Content.Shared.Singularity.EntitySystems;
+
+namespace Content.Shared.Singularity.Components;
+
+[NetworkedComponent]
+public abstract class SharedSingularityComponent : Component
 {
-    [NetworkedComponent]
-    public abstract class SharedSingularityComponent : Component
+    // Shared
+    [Access(friends:typeof(SharedSingularitySystem))]
+    public ulong _level = 1;
+
+    [DataField("level")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public ulong Level
     {
-        /// <summary>
-        ///     The radiation pulse component's radsPerSecond is set to the singularity's level multiplied by this number.
-        /// </summary>
-        [DataField("radsPerLevel")]
-        public float RadsPerLevel = 1;
-
-        /// <summary>
-        ///     Changed by <see cref="SharedSingularitySystem.ChangeSingularityLevel"/>
-        /// </summary>
-        [ViewVariables]
-        public int Level { get; set; }
-
-        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
-        {
-            if (curState is not SingularityComponentState state)
-            {
-                return;
-            }
-
-            EntitySystem.Get<SharedSingularitySystem>().ChangeSingularityLevel(this, state.Level);
-        }
+        get => _level;
+        set { IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedSingularitySystem>().SetSingularityLevel(this, value); }
     }
+
+    /// <summary>
+    ///     The amount of radiation this singularity emits per its level.
+    ///     Has to be on shared in case someone attaches a RadiationPulseComponent to the singularity.
+    /// </summary>
+    [DataField("radsPerLevel")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public float RadsPerLevel = 1f;
 
     [Serializable, NetSerializable]
     public sealed class SingularityComponentState : ComponentState
     {
-        public int Level { get; }
+        public readonly ulong Level;
 
-        public SingularityComponentState(int level)
+        public SingularityComponentState(ulong level)
         {
             Level = level;
         }

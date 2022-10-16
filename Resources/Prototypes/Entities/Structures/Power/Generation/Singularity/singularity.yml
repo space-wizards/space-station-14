@@ -24,7 +24,11 @@
       layer:
       - AllMask
   - type: Singularity
+    energy: 180
+    level: 1
     radsPerLevel: 2
+  - type: GravityWell # To make the singularity attract things.
+  - type: EventHorizon # To make the singularity consume things.
   - type: SingularityDistortion
   - type: RadiationSource
     slope: 0.2 # its emit really far away
