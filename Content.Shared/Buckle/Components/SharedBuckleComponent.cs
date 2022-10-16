@@ -49,7 +49,7 @@ namespace Content.Shared.Buckle.Components
             var ownTransform = EntMan.GetComponent<TransformComponent>(Owner);
             var strapTransform = EntMan.GetComponent<TransformComponent>(strap.Owner);
 
-            ownTransform.Coordinates = new EntityCoordinates(strapTransform.Owner, strapTransform.LocalPosition);
+            ownTransform.Coordinates = new EntityCoordinates(strapTransform.Owner, Vector2.Zero);
 
             // Buckle subscribes to move for <reasons> so this might fail.
             // TODO: Make buckle not do that.
