@@ -1,9 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Added portable scrubbers., type: Add}
-  id: 1966
-  time: '2022-07-15T12:46:31.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Nukie uplinks now purchase items correctly., type: Fix}
@@ -2945,3 +2940,8 @@ Entries:
       respectively.', type: Tweak}
   id: 2465
   time: '2022-10-16T05:26:28.0000000+00:00'
+- author: Stealthbomber16
+  changes:
+  - {message: OOOOK!, type: Add}
+  id: 2466
+  time: '2022-10-16T06:13:15.0000000+00:00'
