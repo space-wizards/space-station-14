@@ -1,10 +1,12 @@
 - type: species
   id: Skeleton
   name: Skeleton
-  roundStart: false #unspooky, change it in october
+  roundStart: false
   prototype: MobSkeletonPerson
   sprites: MobSkeletonSprites
   markingLimits: MobHumanMarkingLimits
+  maleFirstNames: skeletonNamesFirst
+  femaleFirstNames: skeletonNamesFirst
   dollPrototype: MobSkeletonPersonDummy
   skinColoration: TintedHues
 
@@ -15,7 +17,6 @@
     Hair: MobHumanoidAnyMarking
     FacialHair: MobHumanoidAnyMarking
     Chest: MobSkeletonTorso
-    Eyes: MobHumanoidEyes
     LArm: MobSkeletonLArm
     RArm: MobSkeletonRArm
     LHand: MobSkeletonLHand

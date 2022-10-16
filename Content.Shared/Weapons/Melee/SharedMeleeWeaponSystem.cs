@@ -1,8 +1,10 @@
 using Content.Shared.ActionBlocker;
+using Content.Shared.Clothing.Components;
 using Content.Shared.CombatMode;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Popups;
 using Content.Shared.Weapons.Melee.Events;
@@ -21,6 +23,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
     [Dependency] protected readonly ActionBlockerSystem Blocker = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] protected readonly SharedCombatModeSystem CombatMode = default!;
+    [Dependency] protected readonly InventorySystem Inventory = default!;
     [Dependency] protected readonly SharedPopupSystem PopupSystem = default!;
 
     protected ISawmill Sawmill = default!;
@@ -195,6 +198,14 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             return null;
         }
 
+        // Use hands clothing if applicable.
+        if (Inventory.TryGetSlotEntity(entity, "gloves", out var gloves) &&
+            TryComp<MeleeWeaponComponent>(gloves, out var glovesMelee))
+        {
+            return glovesMelee;
+        }
+
+        // Use our own melee
         if (TryComp(entity, out melee))
         {
             return melee;

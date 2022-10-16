@@ -227,6 +227,10 @@ namespace Content.Client.Verbs
                 RaiseNetworkEvent(new RequestServerVerbsEvent(target, verbTypes, adminRequest: force));
             }
 
+            // Some admin menu interactions will try get verbs for entities that have not yet been sent to the player.
+            if (!Exists(target))
+                return new();
+
             return GetLocalVerbs(target, user, verbTypes, force);
         }
 
