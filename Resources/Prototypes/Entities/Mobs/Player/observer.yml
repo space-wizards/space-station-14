@@ -30,6 +30,7 @@
     skipChecks: true
   - type: Ghost
   - type: IntrinsicRadio
+  - type: ActiveRadio
     channels:
     - Common
     - Command

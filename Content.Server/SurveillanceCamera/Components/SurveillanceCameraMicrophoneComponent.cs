@@ -1,6 +1,3 @@
-using Content.Server.Radio.Components;
-using Content.Shared.Interaction;
-using Content.Shared.Radio;
 using Content.Shared.Whitelist;
 
 namespace Content.Server.SurveillanceCamera;
@@ -10,9 +7,9 @@ namespace Content.Server.SurveillanceCamera;
 ///     environment. All surveillance camera monitors have speakers for this.
 /// </summary>
 [RegisterComponent]
-[ComponentReference(typeof(IListen))]
-public sealed class SurveillanceCameraMicrophoneComponent : Component, IListen
+public sealed class SurveillanceCameraMicrophoneComponent : Component
 {
+    [DataField("enabled")]
     public bool Enabled { get; set; } = true;
 
     /// <summary>
@@ -23,25 +20,6 @@ public sealed class SurveillanceCameraMicrophoneComponent : Component, IListen
     [DataField("blacklist")]
     public EntityWhitelist BlacklistedComponents { get; } = new();
 
-    // TODO: Once IListen is removed, **REMOVE THIS**
-
-    private SurveillanceCameraMicrophoneSystem? _microphoneSystem;
-    protected override void Initialize()
-    {
-        base.Initialize();
-
-        _microphoneSystem = EntitySystem.Get<SurveillanceCameraMicrophoneSystem>();
-    }
-
+    [DataField("range")]
     public int ListenRange { get; } = 10;
-    public bool CanListen(string message, EntityUid source, RadioChannelPrototype? channelPrototype)
-    {
-        return _microphoneSystem != null
-            && _microphoneSystem.CanListen(Owner, source, this);
-    }
-
-    public void Listen(string message, EntityUid speaker, RadioChannelPrototype? channel)
-    {
-        _microphoneSystem?.RelayEntityMessage(Owner, speaker, message);
-    }
 }

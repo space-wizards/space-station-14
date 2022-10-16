@@ -30,6 +30,8 @@ using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using Content.Server.Speech.EntitySystems;
+using Content.Shared.Radio;
 
 namespace Content.Server.Chat.Systems;
 
@@ -252,31 +254,29 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         var (message, channel) = GetRadioPrefix(source, originalMessage);
 
+        message = TransformSpeech(source, message);
+        if (message.Length == 0)
+            return;
+
         if (channel != null)
         {
-            _listener.PingListeners(source, message, channel);
-            SendEntityWhisper(source, message, hideChat);
+            SendEntityWhisper(source, message, hideChat, channel);
             return;
         }
 
         var nameEv = new TransformSpeakerNameEvent(source, Name(source));
         RaiseLocalEvent(source, nameEv);
 
-        message = TransformSpeech(source, message);
-        if (message.Length == 0)
-            return;
-
         var messageWrap = Loc.GetString("chat-manager-entity-say-wrap-message",
             ("entityName", nameEv.Name));
 
         SendInVoiceRange(ChatChannel.Local, message, messageWrap, source, hideChat);
-        _listener.PingListeners(source, message, null);
 
-        var ev = new EntitySpokeEvent(message);
-        RaiseLocalEvent(source, ev);
+        var ev = new EntitySpokeEvent(source, message, channel, false);
+        RaiseLocalEvent(source, ev, true);
 
         // To avoid logging any messages sent by entities that are not players, like vendors, cloning, etc.
-        if (!TryComp(source, out ActorComponent? mind))
+        if (!HasComp<ActorComponent>(source))
             return;
 
         if (originalMessage == message)
@@ -285,7 +285,7 @@ public sealed partial class ChatSystem : SharedChatSystem
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Say from {ToPrettyString(source):user}, original: {originalMessage}, transformed: {message}.");
     }
 
-    private void SendEntityWhisper(EntityUid source, string originalMessage, bool hideChat = false)
+    private void SendEntityWhisper(EntityUid source, string originalMessage, bool hideChat = false, RadioChannelPrototype? channel = null)
     {
         if (!_actionBlocker.CanSpeak(source))
             return;
@@ -331,8 +331,7 @@ public sealed partial class ChatSystem : SharedChatSystem
             }
         }
 
-        var ev = new EntitySpokeEvent(message);
-        RaiseLocalEvent(source, ev, false);
+        RaiseLocalEvent(source, new EntitySpokeEvent(source, message, channel, true), true);
 
         if (originalMessage == message)
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Whisper from {ToPrettyString(source):user}: {originalMessage}.");
@@ -569,11 +568,21 @@ public sealed class TransformSpeechEvent : EntityEventArgs
 /// </summary>
 public sealed class EntitySpokeEvent : EntityEventArgs
 {
-    public string Message;
+    public readonly EntityUid Source;
+    public readonly string Message;
+    public readonly bool Whisper;
 
-    public EntitySpokeEvent(string message)
+    /// <summary>
+    ///     If the entity was trying to speak into a radio, this was the channel they were trying to access.
+    /// </summary>
+    public readonly RadioChannelPrototype? Channel;
+
+    public EntitySpokeEvent(EntityUid source, string message, RadioChannelPrototype? channel, bool whisper)
     {
+        Source = source;
         Message = message;
+        Channel = channel;
+        Whisper = whisper;
     }
 }
 

@@ -13,6 +13,7 @@
   - type: Transform
     noRot: false
   - type: IntrinsicRadio
+  - type: ActiveRadio
     channels:
     - Supply
   - type: SalvageMagnet
