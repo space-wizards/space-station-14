@@ -165,6 +165,14 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
             }
 
             var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
+            var attackerPos = Transform(entity).MapPosition;
+
+            if (mousePos.MapId != attackerPos.MapId ||
+                (attackerPos.Position - mousePos.Position).Length > weapon.Range)
+            {
+                return;
+            }
+
             EntityCoordinates coordinates;
 
             // Bro why would I want a ternary here
