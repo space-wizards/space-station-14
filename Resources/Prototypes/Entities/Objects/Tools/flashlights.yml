@@ -9,7 +9,7 @@
     - Flashlight
     - DroneUsable
   - type: HandheldLight
-    addPrefix: true
+    addPrefix: false
     blinkingBehaviourID: blinking
     radiatingBehaviourID: radiating
   - type: LightBehaviour

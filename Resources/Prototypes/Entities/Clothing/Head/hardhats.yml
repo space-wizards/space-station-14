@@ -21,7 +21,7 @@
     radius: 3
   - type: Appearance
   - type: HandheldLight
-    addPrefix: true
+    addPrefix: false
     blinkingBehaviourID: blinking
     radiatingBehaviourID: radiating
   - type: LightBehaviour
