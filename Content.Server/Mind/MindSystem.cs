@@ -6,6 +6,7 @@ using Content.Server.Mind.Components;
 using Content.Shared.Examine;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Interaction.Events;
+using Robust.Server.Player;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
@@ -201,26 +202,26 @@ public sealed class MindSystem : EntitySystem
         mind.TransferTo(target);
     }
 
-    public Mind CreateMind(NetUserId userId)
+    public Mind CreateMind(NetUserId userId, IPlayerManager? playerManager = null)
     {
         var mind = new Mind(userId);
-        ChangeOwningPlayer(mind, userId);
+        ChangeOwningPlayer(mind, userId, playerManager);
         return mind;
     }
 
-    public bool TryCreateMind(NetUserId userId, [NotNullWhen(true)]out Mind? mind)
+    public bool TryCreateMind(NetUserId? userId, [NotNullWhen(true)]out Mind? mind, IPlayerManager? playerManager = null)
     {
         mind = new Mind(userId);
-        ChangeOwningPlayer(mind, userId);
+        ChangeOwningPlayer(mind, userId, playerManager);
         return true;
     }
 
-    public void ChangeOwningPlayer(Mind mind, NetUserId? netUserId)
+    public void ChangeOwningPlayer(Mind mind, NetUserId? netUserId, IPlayerManager? playerManager = null)
     {
-        mind.ChangeOwningPlayer(netUserId);
+        mind.ChangeOwningPlayer(netUserId, playerManager);
     }
 
-    public void ChangeOwningPlayer(EntityUid uid, NetUserId? netUserId, MindComponent? mindComp = null)
+    public void ChangeOwningPlayer(EntityUid uid, NetUserId? netUserId, MindComponent? mindComp = null, IPlayerManager? playerManager = null)
     {
         if (!Resolve(uid, ref mindComp))
             return;
@@ -229,6 +230,6 @@ public sealed class MindSystem : EntitySystem
             return;
 
         var mind = mindComp.Mind;
-        mind!.ChangeOwningPlayer(netUserId);
+        mind!.ChangeOwningPlayer(netUserId, playerManager);
     }
 }
