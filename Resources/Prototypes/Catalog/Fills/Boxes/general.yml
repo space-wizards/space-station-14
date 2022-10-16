@@ -136,7 +136,7 @@
 - type: entity
   name: headset box
   parent: BoxCardboard
-  id: BoxID
+  id: BoxHeadset
   description: A box of spare passenger headsets.
   components:
   - type: StorageFill
