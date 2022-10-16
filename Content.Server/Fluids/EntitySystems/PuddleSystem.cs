@@ -22,6 +22,7 @@ namespace Content.Server.Fluids.EntitySystems
         [Dependency] private readonly FluidSpreaderSystem _fluidSpreaderSystem = default!;
         [Dependency] private readonly StepTriggerSystem _stepTrigger = default!;
 
+        bool isSlippery;
         public override void Initialize()
         {
             base.Initialize();
@@ -71,6 +72,7 @@ namespace Content.Server.Fluids.EntitySystems
             appearance.SetData(PuddleVisuals.CurrentVolume, puddle.CurrentVolume);
             appearance.SetData(PuddleVisuals.SolutionColor, puddleSolution.Color);
             appearance.SetData(PuddleVisuals.IsEvaporatingVisual, isEvaporating);
+            appearance.SetData(PuddleVisuals.IsSlipperyVisual, isSlippery);
         }
 
         private void UpdateSlip(EntityUid entityUid, PuddleComponent puddleComponent)
@@ -80,11 +82,13 @@ namespace Content.Server.Fluids.EntitySystems
                 TryComp(entityUid, out StepTriggerComponent? stepTrigger))
             {
                 _stepTrigger.SetActive(entityUid, false, stepTrigger);
+                isSlippery = false;
             }
             else if (puddleComponent.CurrentVolume >= puddleComponent.SlipThreshold)
             {
                 var comp = EnsureComp<StepTriggerComponent>(entityUid);
                 _stepTrigger.SetActive(entityUid, true, comp);
+                isSlippery = true;
             }
         }
 

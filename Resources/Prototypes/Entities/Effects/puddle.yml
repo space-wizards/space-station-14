@@ -65,7 +65,7 @@
     state: smear-0
     netsync: false
   - type: Puddle
-    slipThreshold: 5
+    slipThreshold: 3
   - type: Appearance
   - type: PuddleVisualizer
   - type: Slippery
@@ -83,7 +83,7 @@
     state: splatter-0
     netsync: false
   - type: Puddle
-    slipThreshold: 5
+    slipThreshold: 3
   - type: Appearance
   - type: PuddleVisualizer
   - type: Slippery
