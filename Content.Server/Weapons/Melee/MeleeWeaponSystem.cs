@@ -312,8 +312,11 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         if (!base.DoDisarm(user, ev, component, session))
             return false;
 
-        if (!TryComp<CombatModeComponent>(user, out var combatMode))
+        if (!TryComp<CombatModeComponent>(user, out var combatMode) ||
+            combatMode.CanDisarm != true)
+        {
             return false;
+        }
 
         var target = ev.Target!.Value;
 
