@@ -1,7 +1,6 @@
-using Content.Shared.Kitchen.Components;
+using Content.Shared.Kitchen;
 using Content.Server.Kitchen.EntitySystems;
 using Robust.Shared.Audio;
-using Robust.Shared.Containers;
 
 namespace Content.Server.Kitchen.Components
 {
@@ -14,17 +13,12 @@ namespace Content.Server.Kitchen.Components
     [Access(typeof(ReagentGrinderSystem)), RegisterComponent]
     public sealed class ReagentGrinderComponent : Component
     {
-        /// <summary>
-        /// Is the machine actively doing something and can't be used right now?
-        /// </summary>
-        public bool Busy;
-
         //YAML serialization vars
         [DataField("chamberCapacity"), ViewVariables(VVAccess.ReadWrite)]
         public int StorageCap = 16;
 
         [DataField("workTime"), ViewVariables(VVAccess.ReadWrite)]
-        public int WorkTime = 3500; //3.5 seconds, completely arbitrary for now.
+        public TimeSpan WorkTime = TimeSpan.FromSeconds(3.5); // Roughly matches the grind/juice sounds.
 
         [DataField("clickSound"), ViewVariables(VVAccess.ReadWrite)]
         public SoundSpecifier ClickSound { get; set; } = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
@@ -34,5 +28,18 @@ namespace Content.Server.Kitchen.Components
 
         [DataField("juiceSound"), ViewVariables(VVAccess.ReadWrite)]
         public SoundSpecifier JuiceSound { get; set; } = new SoundPathSpecifier("/Audio/Machines/juicer.ogg");
+    }
+
+    [Access(typeof(ReagentGrinderSystem)), RegisterComponent]
+    public sealed class ActiveReagentGrinderComponent : Component
+    {
+        /// <summary>
+        /// Remaining time until the grinder finishes grinding/juicing.
+        /// </summary>
+        [ViewVariables]
+        public float WorkTimer;
+
+        [ViewVariables]
+        public GrinderProgram Program;
     }
 }
