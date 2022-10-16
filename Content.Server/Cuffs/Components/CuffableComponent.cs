@@ -264,7 +264,7 @@ namespace Content.Server.Cuffs.Components
         }
 
         //Lord forgive me for putting this here
-        //Cuff ECS when
+        //Cuff ECS whe
         public void Uncuff(EntityUid user, EntityUid cuffsToRemove, HandcuffComponent cuff, bool isOwner)
         {
             SoundSystem.Play(cuff.EndUncuffSound.GetSound(), Filter.Pvs(Owner), Owner);
