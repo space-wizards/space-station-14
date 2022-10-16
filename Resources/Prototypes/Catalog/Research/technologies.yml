@@ -34,6 +34,7 @@
     - MicroLaserStockPart
     - MicroManipulatorStockPart
     - ScanningModuleStockPart
+    - ProtolatheMachineCircuitboard
 
 # test technology
 
@@ -286,6 +287,59 @@
     - MedicalScannerMachineCircuitboard
     - StasisBedMachineCircuitboard
 
+- type: technology
+  name: Engineering Fundamentals
+  id: EngineeringTech
+  description: Engineering basics - power and machinery.
+  icon:
+    sprite: Structures/Machines/protolathe.rsi
+    state: icon
+  requiredPoints: 500
+  unlockedRecipes:
+    - CableStack
+    - CableMVStack
+    - CableHVStack
+    - LightBulb
+    - LightTube
+    - FirelockElectronics
+    - DoorElectronics
+    - APCElectronics
+    - SMESMachineCircuitboard
+    - SubstationMachineCircuitboard
+    - SolarControlComputerCircuitboard
+    - GeneratorPlasmaMachineCircuitboard
+    - Signaller
+    - SignalTrigger
+    - AppraisalTool
+    - ConveyorBeltAssembly
+    - FlashlightLantern
+    - FireExtinguisher
+    - AutolatheMachineCircuitboard
+    - OreProcessorMachineCircuitboard
+    - CircuitImprinterMachineCircuitboard
+    - UniformPrinterMachineCircuitboard
+    - SurveillanceCameraRouterCircuitboard
+    - SurveillanceCameraWirelessRouterCircuitboard
+    - SurveillanceWirelessCameraMovableCircuitboard
+    - SurveillanceWirelessCameraAnchoredCircuitboard
+    - SurveillanceCameraMonitorCircuitboard
+    - SurveillanceWirelessCameraMonitorCircuitboard
+    - ComputerTelevisionCircuitboard
+    - AirAlarmElectronics
+    - FireAlarmElectronics
+    - MailingUnitElectronics
+
+- type: technology
+  name: Power storage analysis results
+  id: PowerTechResults
+  description: Discoveries towards high capacity power storage.
+  requiredTechnologies:
+   - EngineeringTech
+  icon:
+    sprite: Objects/Specific/Research/researchdisk.rsi
+    state: icon
+  hidden: true
+
 # Engineering Tech Tree
 # anything not covered by other trees will come here - but this tree will primarily focus on power and utility
 # (for example AppliedMusicology and Avionics would fall under here for now)
@@ -342,13 +396,14 @@
   icon:
     sprite: Structures/Furniture/potted_plants.rsi
     state: applebush
-  requiredPoints: 10000
+  requiredPoints: 5000
   requiredTechnologies:
     - BasicResearch
   unlockedRecipes:
     - HydroponicsToolScythe
     - HydroponicsToolHatchet
     - KitchenKnife
+    - HydroponicsTrayMachineCircuitboard
  #    - HandheldHealthAnalyzer
  #   - ClothingHandsGlovesLatex
  #   - ClothingHandsGlovesNitrile
@@ -362,7 +417,7 @@
   icon:
     sprite: Objects/Specific/Hydroponics/potato.rsi
     state: seed
-  requiredPoints: 15000
+  requiredPoints: 5000
   requiredTechnologies:
     - BiologicalTechnology
   unlockedRecipes:
@@ -514,49 +569,26 @@
 
 # Industrial Engineering Technology Tree
 
-- type: technology
-  name: technologies-industrial-engineering
-  id: IndustrialEngineering
-  description: technologies-industrial-engineering-description
-  icon:
-    sprite: Structures/Machines/protolathe.rsi
-    state: icon
-  requiredPoints: 10000
-  requiredTechnologies:
-    - BasicResearch
-  unlockedRecipes:
-    - AppraisalTool
-    - ConveyorBeltAssembly
-    - RCD
-    - RCDAmmo
-    - FlashlightLantern
-    - FireExtinguisher
-    - AutolatheMachineCircuitboard
-    - EmitterCircuitboard
-    - ProtolatheMachineCircuitboard
-    - OreProcessorMachineCircuitboard
-    - CircuitImprinterMachineCircuitboard
-    - UniformPrinterMachineCircuitboard
-    - SurveillanceCameraRouterCircuitboard
-    - SurveillanceCameraWirelessRouterCircuitboard
-    - SurveillanceWirelessCameraMovableCircuitboard
-    - SurveillanceWirelessCameraAnchoredCircuitboard
-    - SurveillanceCameraMonitorCircuitboard
-    - SurveillanceWirelessCameraMonitorCircuitboard
-    - ComputerTelevisionCircuitboard
-    - AirAlarmElectronics
-    - FireAlarmElectronics
-    - MailingUnitElectronics
-    - HolofanProjector
+#- type: technology
+#  name: technologies-industrial-engineering
+#  id: IndustrialEngineering
+#  description: technologies-industrial-engineering-description
+#  icon:
+#    sprite: Structures/Machines/protolathe.rsi
+#    state: icon
+#  requiredPoints: 10000
+#  requiredTechnologies:
+#    - BasicResearch
+#  unlockedRecipes:
 
 - type: technology
   name: technologies-material-sheet-printing
   id: Sheets
   description: technologies-material-sheet-printing-description
   icon: Objects/Materials/Sheets/researchicon.png
-  requiredPoints: 2500
+  requiredPoints: 1500
   requiredTechnologies:
-    - IndustrialEngineering
+    - BasicResearch
   unlockedRecipes:
     - SheetSteel
     - SheetPlastic
@@ -570,9 +602,9 @@
   icon:
     sprite: Structures/Piping/Atmospherics/thermomachine.rsi
     state: freezer_off
-  requiredPoints: 3000
+  requiredPoints: 1000
   requiredTechnologies:
-  - IndustrialEngineering
+  - PowerTechResults
   unlockedRecipes:
   - ThermomachineFreezerMachineCircuitBoard
   - PortableScrubberMachineCircuitBoard
@@ -587,9 +619,9 @@
   icon:
     sprite: Structures/Machines/computers.rsi
     state: avionics-systems
-  requiredPoints: 10000
+  requiredPoints: 1000
   requiredTechnologies:
-    - IndustrialEngineering
+    - PowerTechResults
     - RoboticsTechnology
   unlockedRecipes:
     - ShuttleConsoleCircuitboard
@@ -632,14 +664,18 @@
   icon:
     sprite: Structures/Power/apc.rsi
     state: apc0
-  requiredPoints: 5000
+  requiredPoints: 1000
   requiredTechnologies:
-    - ElectromagneticTheory
+    - PowerTechResults
   unlockedRecipes:
     - WallmountSubstationElectronics
     - WallmountGeneratorElectronics
     - WallmountGeneratorAPUElectronics
     - GeneratorUraniumMachineCircuitboard
+    - RCD
+    - RCDAmmo
+    - EmitterCircuitboard
+    - HolofanProjector
 
 - type: technology
   name: technologies-applied-musicology
@@ -648,9 +684,9 @@
   icon:
     sprite: Objects/Fun/Instruments/guitar.rsi
     state: icon
-  requiredPoints: 10000
+  requiredPoints: 1000
   requiredTechnologies:
-    - ElectromagneticTheory
+    - PowerTechResults
   unlockedRecipes:
     - SynthesizerInstrument
     - DawInstrumentMachineCircuitboard
@@ -662,9 +698,9 @@
   icon:
     sprite: Objects/Power/power_cells.rsi
     state: small
-  requiredPoints: 2500
+  requiredPoints: 1000
   requiredTechnologies:
-    - ElectromagneticTheory
+    - PowerTechResults
   unlockedRecipes:
     - PowerCellSmall
 
@@ -701,7 +737,7 @@
   icon:
     sprite: Mobs/Silicon/Bots/honkbot.rsi
     state: honkbot
-  requiredPoints: 10000
+  requiredPoints: 1000
   requiredTechnologies:
     - CompactPowerTechnology
   unlockedRecipes:
@@ -719,7 +755,7 @@
   requiredPoints: 8000
   requiredTechnologies:
     - BasicPartsTechnology
-    - IndustrialEngineering
+    - PowerTechResults
     - PowerCellBasic
   unlockedRecipes:
     - AdvancedCapacitorStockPart
