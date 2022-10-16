@@ -48,6 +48,11 @@ public sealed partial class DragonSystem
         if (!RuleAdded)
             return;
 
+        var dragons = EntityQuery<DragonComponent>(true).ToList();
+
+        if (dragons.Count == 0)
+            return;
+
         args.AddLine(Loc.GetString("dragon-round-end-summary"));
 
         foreach (var dragon in EntityQuery<DragonComponent>(true))
