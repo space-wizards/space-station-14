@@ -1,9 +1,4 @@
 Entries:
-- author: Deahaka
-  changes:
-  - {message: Altars added, type: Add}
-  id: 1964
-  time: '2022-07-15T09:17:26.0000000+00:00'
 - author: Kimpes
   changes:
   - {message: Updated alarm sound effect, type: Tweak}
@@ -2943,3 +2938,9 @@ Entries:
   - {message: Removed Packed, type: Remove}
   id: 2463
   time: '2022-10-16T00:28:22.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a bug that was preventing the inventory UI from properly updating
+      in some situations., type: Fix}
+  id: 2464
+  time: '2022-10-16T04:16:28.0000000+00:00'
