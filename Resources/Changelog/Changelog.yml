@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Nukie uplinks now purchase items correctly., type: Fix}
-  - {message: Nukie uplinks can no longer access job-specific items., type: Fix}
-  id: 1967
-  time: '2022-07-15T19:06:05.0000000+00:00'
 - author: TimrodDX
   changes:
   - {message: Delta Station's atmos mix chamber should work now., type: Tweak}
@@ -2945,3 +2939,9 @@ Entries:
   - {message: OOOOK!, type: Add}
   id: 2466
   time: '2022-10-16T06:13:15.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: Plants can now be mutated using unstable mutagen and cross-pollinated.,
+    type: Add}
+  id: 2467
+  time: '2022-10-16T06:25:42.0000000+00:00'
