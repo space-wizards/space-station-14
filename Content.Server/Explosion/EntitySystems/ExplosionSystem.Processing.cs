@@ -5,6 +5,7 @@ using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -362,6 +363,7 @@ public sealed partial class ExplosionSystem : EntitySystem
 
             ev.DamageCoefficient = Math.Max(0, ev.DamageCoefficient);
 
+            //todo need a way to track origin of explosion
             if (ev.DamageCoefficient == 1)
             {
                 // no damage-dict multiplication required.

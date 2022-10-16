@@ -18,7 +18,7 @@
         - tool: Welding
           doAfter: 4
         completed:
-        - !type:SpawnPrototype
+        - !type:GivePrototype
           prototype: SheetSteel1
           amount: 5
       - to: parts
@@ -31,9 +31,9 @@
 
     - node: parts
       edges:
-      - to: electronics 
+      - to: electronics
         steps:
-        - prototype: WallmountSubstationElectronics
+        - tag: WallmountSubstationElectronics
           store: board
           name: "wallmount substation circuit board"
           icon:
@@ -42,13 +42,13 @@
           doAfter: 1
       - to: frame
         completed:
-        - !type:SpawnPrototype
+        - !type:GivePrototype
           prototype: CableHVStack1
           amount: 5
         steps:
         - tool: Cutting
-          doAfter: 1      
-        
+          doAfter: 1
+
 
     - node: electronics
       edges:
@@ -56,7 +56,7 @@
         steps:
         - tool: Screwing
           doAfter: 2
-      
+
     - node: substation
       entity: BaseSubstationWall
       edges:

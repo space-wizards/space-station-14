@@ -1,6 +1,7 @@
 using Content.Client.GameTicking.Managers;
+using System.Threading;
+using Content.Client.Gameplay;
 using Content.Client.Lobby;
-using Content.Client.Viewport;
 using Content.Shared.CCVar;
 using JetBrains.Annotations;
 using Robust.Client;
@@ -8,12 +9,10 @@ using Robust.Client.Player;
 using Robust.Client.State;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
-using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using System.Threading;
 using Robust.Client.GameObjects;
 using Robust.Client.ResourceManagement;
 using Timer = Robust.Shared.Timing.Timer;
@@ -31,6 +30,7 @@ namespace Content.Client.Audio
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly IStateManager _stateManager = default!;
         [Dependency] private readonly ClientGameTicker _gameTicker = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
 
         private readonly AudioParams _ambientParams = new(-10f, 1, "Master", 0, 0, 0, true, 0f);
         private readonly AudioParams _lobbyParams = new(-5f, 1, "Master", 0, 0, 0, true, 0f);
@@ -165,7 +165,7 @@ namespace Content.Client.Audio
                 StartLobbyMusic();
                 return;
             }
-            else if (args.NewState is GameScreen)
+            else if (args.NewState is GameplayState)
             {
                 StartAmbience();
             }
@@ -195,7 +195,7 @@ namespace Content.Client.Audio
 
         private void AmbienceCVarChanged(float volume)
         {
-            if (_stateManager.CurrentState is GameScreen)
+            if (_stateManager.CurrentState is GameplayState)
             {
                 StartAmbience();
             }
@@ -212,7 +212,8 @@ namespace Content.Client.Audio
                 return;
             _playingCollection = _currentCollection;
             var file = _robustRandom.Pick(_currentCollection.PickFiles).ToString();
-            _ambientStream = SoundSystem.Play(file, Filter.Local(), _ambientParams.WithVolume(_ambientParams.Volume + _configManager.GetCVar(CCVars.AmbienceVolume)));
+            _ambientStream = _audio.PlayGlobal(file, Filter.Local(),
+                _ambientParams.WithVolume(_ambientParams.Volume + _configManager.GetCVar(CCVars.AmbienceVolume)));
         }
 
         private void EndAmbience()
@@ -237,7 +238,7 @@ namespace Content.Client.Audio
             if (_currentCollection == null)
                 return;
 
-            if (enabled && _stateManager.CurrentState is GameScreen && _currentCollection.ID == _stationAmbience.ID)
+            if (enabled && _stateManager.CurrentState is GameplayState && _currentCollection.ID == _stationAmbience.ID)
             {
                 StartAmbience();
             }
@@ -252,7 +253,7 @@ namespace Content.Client.Audio
             if (_currentCollection == null)
                 return;
 
-            if (enabled && _stateManager.CurrentState is GameScreen && _currentCollection.ID == _spaceAmbience.ID)
+            if (enabled && _stateManager.CurrentState is GameplayState && _currentCollection.ID == _spaceAmbience.ID)
             {
                 StartAmbience();
             }
@@ -305,7 +306,8 @@ namespace Content.Client.Audio
             {
                 return;
             }
-            _lobbyStream = SoundSystem.Play(file, Filter.Local(), _lobbyParams);
+
+            _lobbyStream = _audio.PlayGlobal(file, Filter.Local(), _lobbyParams);
         }
 
         private void EndLobbyMusic()

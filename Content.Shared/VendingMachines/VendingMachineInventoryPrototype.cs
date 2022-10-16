@@ -7,18 +7,8 @@ namespace Content.Shared.VendingMachines
     public sealed class VendingMachineInventoryPrototype : IPrototype
     {
         [ViewVariables]
-        [IdDataFieldAttribute]
+        [IdDataField]
         public string ID { get; } = default!;
-
-        [DataField("name")]
-        public string Name { get; } = string.Empty;
-
-        [DataField("animationDuration")]
-        public double AnimationDuration { get; }
-
-        // TODO make this a proper sprite specifier for yaml linting.
-        [DataField("spriteName")]
-        public string SpriteName { get; } = string.Empty;
 
         [DataField("startingInventory")]
         public Dictionary<string, uint> StartingInventory { get; } = new();

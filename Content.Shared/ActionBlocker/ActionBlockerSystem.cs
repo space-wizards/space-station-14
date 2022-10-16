@@ -10,6 +10,7 @@ using Content.Shared.Movement.Events;
 using Content.Shared.Speech;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
+using Robust.Shared.Containers;
 
 namespace Content.Shared.ActionBlocker
 {
@@ -19,6 +20,8 @@ namespace Content.Shared.ActionBlocker
     [UsedImplicitly]
     public sealed class ActionBlockerSystem : EntitySystem
     {
+        [Dependency] private readonly SharedContainerSystem _container = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -41,10 +44,10 @@ namespace Content.Shared.ActionBlocker
                 return false;
 
             var ev = new UpdateCanMoveEvent(uid);
-            RaiseLocalEvent(uid, ev, true);
+            RaiseLocalEvent(uid, ev);
 
-            if (component.CanMove == ev.Cancelled && component is Component comp)
-                Dirty(comp);
+            if (component.CanMove == ev.Cancelled)
+                Dirty(component);
 
             component.CanMove = !ev.Cancelled;
             return !ev.Cancelled;
@@ -64,7 +67,7 @@ namespace Content.Shared.ActionBlocker
         public bool CanInteract(EntityUid user, EntityUid? target)
         {
             var ev = new InteractionAttemptEvent(user, target);
-            RaiseLocalEvent(user, ev, true);
+            RaiseLocalEvent(user, ev);
 
             if (ev.Cancelled)
                 return false;
@@ -73,7 +76,7 @@ namespace Content.Shared.ActionBlocker
                 return true;
 
             var targetEv = new GettingInteractedWithAttemptEvent(user, target);
-            RaiseLocalEvent(target.Value, targetEv, true);
+            RaiseLocalEvent(target.Value, targetEv);
 
             if (!targetEv.Cancelled)
                 InteractWithItem(user, target.Value);
@@ -92,7 +95,7 @@ namespace Content.Shared.ActionBlocker
         public bool CanUseHeldEntity(EntityUid user)
         {
             var ev = new UseAttemptEvent(user);
-            RaiseLocalEvent(user, ev, true);
+            RaiseLocalEvent(user, ev);
 
             return !ev.Cancelled;
         }
@@ -100,13 +103,14 @@ namespace Content.Shared.ActionBlocker
         public bool CanThrow(EntityUid user, EntityUid itemUid)
         {
             var ev = new ThrowAttemptEvent(user, itemUid);
-            RaiseLocalEvent(user, ev, true);
+            RaiseLocalEvent(user, ev);
 
             return !ev.Cancelled;
         }
 
         public bool CanSpeak(EntityUid uid)
         {
+            // This one is used as broadcast
             var ev = new SpeakAttemptEvent(uid);
             RaiseLocalEvent(uid, ev, true);
 
@@ -116,7 +120,7 @@ namespace Content.Shared.ActionBlocker
         public bool CanDrop(EntityUid uid)
         {
             var ev = new DropAttemptEvent(uid);
-            RaiseLocalEvent(uid, ev, true);
+            RaiseLocalEvent(uid, ev);
 
             return !ev.Cancelled;
         }
@@ -124,13 +128,13 @@ namespace Content.Shared.ActionBlocker
         public bool CanPickup(EntityUid user, EntityUid item)
         {
             var userEv = new PickupAttemptEvent(user, item);
-            RaiseLocalEvent(user, userEv, false);
+            RaiseLocalEvent(user, userEv);
 
             if (userEv.Cancelled)
                 return false;
 
             var itemEv = new GettingPickedUpAttemptEvent(user, item);
-            RaiseLocalEvent(item, itemEv, false);
+            RaiseLocalEvent(item, itemEv);
 
             if (!itemEv.Cancelled)
                 InteractWithItem(user, item);
@@ -141,6 +145,7 @@ namespace Content.Shared.ActionBlocker
 
         public bool CanEmote(EntityUid uid)
         {
+            // This one is used as broadcast
             var ev = new EmoteAttemptEvent(uid);
             RaiseLocalEvent(uid, ev, true);
 
@@ -149,8 +154,11 @@ namespace Content.Shared.ActionBlocker
 
         public bool CanAttack(EntityUid uid, EntityUid? target = null)
         {
+            if (_container.IsEntityInContainer(uid))
+                return false;
+
             var ev = new AttackAttemptEvent(uid, target);
-            RaiseLocalEvent(uid, ev, true);
+            RaiseLocalEvent(uid, ev);
 
             return !ev.Cancelled;
         }
@@ -158,7 +166,7 @@ namespace Content.Shared.ActionBlocker
         public bool CanChangeDirection(EntityUid uid)
         {
             var ev = new ChangeDirectionAttemptEvent(uid);
-            RaiseLocalEvent(uid, ev, true);
+            RaiseLocalEvent(uid, ev);
 
             return !ev.Cancelled;
         }
@@ -166,7 +174,7 @@ namespace Content.Shared.ActionBlocker
         public bool CanShiver(EntityUid uid)
         {
             var ev = new ShiverAttemptEvent(uid);
-            RaiseLocalEvent(uid, ev, true);
+            RaiseLocalEvent(uid, ev);
 
             return !ev.Cancelled;
         }
@@ -174,7 +182,7 @@ namespace Content.Shared.ActionBlocker
         public bool CanSweat(EntityUid uid)
         {
             var ev = new SweatAttemptEvent(uid);
-            RaiseLocalEvent(uid, ev, true);
+            RaiseLocalEvent(uid, ev);
 
             return !ev.Cancelled;
         }

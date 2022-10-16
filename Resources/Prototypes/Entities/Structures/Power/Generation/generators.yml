@@ -21,7 +21,7 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.4,-0.5,0.4,0.3"
-      mass: 25
+      density: 190
       mask:
       - MachineMask
       layer:
@@ -67,6 +67,8 @@
     maxIntensity: 100
     intensitySlope: 2
     totalIntensity: 200
+  - type: StaticPrice
+    price: 500
 
 # Base Wallmount Generator
 
@@ -243,8 +245,5 @@
     layers:
       - state: rtg_damaged
       - state: rtg_glow
-  - type: RadiationPulse # ideally only when opened.
-    range: 2
-    decay: false
-    minPulseLifespan: 1
-    maxPulseLifespan: 1
+  - type: RadiationSource # ideally only when opened.
+    intensity: 2

@@ -1,14 +1,12 @@
 - type: vendingMachineInventory
   id: CigaretteMachineInventory
-  name: cigarette machine
-  animationDuration: 2.1
-  spriteName: cigs
   startingInventory:
     CigPackGreen: 2
     CigPackRed: 2
     CigPackBlue: 2
     CigPackBlack: 2
     CigarCase: 1
+    SmokingPipeFilledTobacco: 1
     Matchbox: 5
     PackPaperRollingFilters: 3
     CheapLighter: 4

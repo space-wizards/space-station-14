@@ -1,9 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
+using Content.Client.CombatMode;
 using Content.Client.Examine;
+using Content.Client.Gameplay;
 using Content.Client.Verbs;
 using Content.Client.Viewport;
 using Content.Shared.CCVar;
+using Content.Shared.CombatMode;
+using Content.Shared.Examine;
 using Content.Shared.Input;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -17,6 +21,7 @@ using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 
@@ -44,6 +49,8 @@ namespace Content.Client.ContextMenu.UI
 
         private readonly VerbSystem _verbSystem;
         private readonly ExamineSystem _examineSystem;
+        private readonly TransformSystem _xform;
+        private readonly SharedCombatModeSystem _combatMode;
 
         /// <summary>
         ///     This maps the currently displayed entities to the actual GUI elements.
@@ -58,12 +65,14 @@ namespace Content.Client.ContextMenu.UI
             IoCManager.InjectDependencies(this);
 
             _verbSystem = verbSystem;
-            _examineSystem = EntitySystem.Get<ExamineSystem>();
+            _examineSystem = _entityManager.EntitySysManager.GetEntitySystem<ExamineSystem>();
+            _combatMode = _entityManager.EntitySysManager.GetEntitySystem<CombatModeSystem>();
+            _xform = _entityManager.EntitySysManager.GetEntitySystem<TransformSystem>();
 
             _cfg.OnValueChanged(CCVars.EntityMenuGroupingType, OnGroupingChanged, true);
 
             CommandBinds.Builder
-                .Bind(ContentKeyFunctions.OpenContextMenu,  new PointerInputCmdHandler(HandleOpenEntityMenu, outsidePrediction: true))
+                .Bind(EngineKeyFunctions.UseSecondary,  new PointerInputCmdHandler(HandleOpenEntityMenu, outsidePrediction: true))
                 .Register<EntityMenuPresenter>();
         }
 
@@ -108,7 +117,7 @@ namespace Content.Client.ContextMenu.UI
                 return;
 
             // open verb menu?
-            if (args.Function == ContentKeyFunctions.OpenContextMenu)
+            if (args.Function == EngineKeyFunctions.UseSecondary)
             {
                 _verbSystem.VerbMenu.OpenVerbMenu(entity.Value);
                 args.Handle();
@@ -156,7 +165,10 @@ namespace Content.Client.ContextMenu.UI
             if (args.State != BoundKeyState.Down)
                 return false;
 
-            if (_stateManager.CurrentState is not GameScreenBase)
+            if (_stateManager.CurrentState is not GameplayStateBase)
+                return false;
+
+            if (_combatMode.IsInCombatMode(args.Session?.AttachedEntity))
                 return false;
 
             var coords = args.Coordinates.ToMap(_entityManager);
@@ -183,9 +195,24 @@ namespace Content.Client.ContextMenu.UI
             var ignoreFov = !_eyeManager.CurrentEye.DrawFov ||
                 (_verbSystem.Visibility & MenuVisibility.NoFov) == MenuVisibility.NoFov;
 
+            _entityManager.TryGetComponent(player, out ExaminerComponent? examiner);
+            var xformQuery = _entityManager.GetEntityQuery<TransformComponent>();
+
             foreach (var entity in Elements.Keys.ToList())
             {
-                if (_entityManager.Deleted(entity) || !ignoreFov && !_examineSystem.CanExamine(player, entity))
+                if (!xformQuery.TryGetComponent(entity, out var xform))
+                {
+                    // entity was deleted
+                    RemoveEntity(entity);
+                    continue;
+                }
+
+                if (ignoreFov)
+                    continue;
+
+                var pos = new MapCoordinates(_xform.GetWorldPosition(xform, xformQuery), xform.MapID);
+
+                if (!_examineSystem.CanExamine(player, pos, e => e == player || e == entity, entity, examiner))
                     RemoveEntity(entity);
             }
         }

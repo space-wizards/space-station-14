@@ -467,3 +467,14 @@
     sprite: Clothing/Head/Hats/nursehat.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/nursehat.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadRastaHat
+  name: rasta hat
+  description: Right near da beach, boyee.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/rasta.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/rasta.rsi

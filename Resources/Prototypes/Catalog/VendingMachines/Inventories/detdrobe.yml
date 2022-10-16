@@ -1,7 +1,5 @@
 - type: vendingMachineInventory
   id: DetDrobeInventory
-  name: DetDrobe
-  spriteName: detdrobe
   startingInventory:
     ClothingUniformJumpsuitDetective: 2
     ClothingUniformJumpskirtDetective: 2
@@ -15,5 +13,4 @@
     ClothingHeadHatFedoraGrey: 2
     ClothingHandsGlovesColorBlack: 2
     ClothingHandsGlovesLatex: 2
-    DrinkDetFlask: 2
     ClothingHeadsetSecurity: 2

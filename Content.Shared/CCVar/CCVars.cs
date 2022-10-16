@@ -33,6 +33,10 @@ namespace Content.Shared.CCVar
         /*
          * Ambience
          */
+        //TODO: This is so that this compiles, yell at me if this is still in
+        public static readonly CVarDef<bool> AmbienceBasicEnabled =
+            CVarDef.Create("ambiance.basic_enabled", true, CVar.CLIENTONLY | CVar.ARCHIVE);
+
 
         /// <summary>
         /// How long we'll wait until re-sampling nearby objects for ambience. Should be pretty fast, but doesn't have to match the tick rate.
@@ -143,7 +147,7 @@ namespace Content.Shared.CCVar
         ///     The preset for the game to fall back to if the selected preset could not be used, and fallback is enabled.
         /// </summary>
         public static readonly CVarDef<string>
-            GameLobbyFallbackPreset = CVarDef.Create("game.fallbackpreset", "sandbox", CVar.ARCHIVE);
+            GameLobbyFallbackPreset = CVarDef.Create("game.fallbackpreset", "extended", CVar.ARCHIVE);
 
         /// <summary>
         ///     Controls if people can win the game in Suspicion or Deathmatch.
@@ -161,7 +165,7 @@ namespace Content.Shared.CCVar
         ///     Controls the game map prototype to load. SS14 stores these prototypes in Prototypes/Maps.
         /// </summary>
         public static readonly CVarDef<string>
-            GameMap = CVarDef.Create("game.map", "saltern", CVar.SERVERONLY);
+            GameMap = CVarDef.Create("game.map", "Saltern", CVar.SERVERONLY);
 
         /// <summary>
         ///     Controls if the game should obey map criteria or not. Overriden if a map vote or similar occurs.
@@ -250,8 +254,24 @@ namespace Content.Shared.CCVar
          * Discord
          */
 
+        /// <summary>
+        /// URL of the Discord webhook which will relay all ahelp messages.
+        /// </summary>
         public static readonly CVarDef<string> DiscordAHelpWebhook =
             CVarDef.Create("discord.ahelp_webhook", string.Empty, CVar.SERVERONLY);
+
+        /// <summary>
+        /// The server icon to use in the Discord ahelp embed footer.
+        /// Valid values are specified at https://discord.com/developers/docs/resources/channel#embed-object-embed-footer-structure.
+        /// </summary>
+        public static readonly CVarDef<string> DiscordAHelpFooterIcon =
+            CVarDef.Create("discord.ahelp_footer_icon", string.Empty, CVar.SERVERONLY);
+
+        /// <summary>
+        /// The avatar to use for the webhook. Should be an URL.
+        /// </summary>
+        public static readonly CVarDef<string> DiscordAHelpAvatar =
+            CVarDef.Create("discord.ahelp_avatar", string.Empty, CVar.SERVERONLY);
 
         /*
          * Suspicion
@@ -303,19 +323,6 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<int> TraitorDeathMatchStartingBalance =
             CVarDef.Create("traitordm.starting_balance", 20);
-
-        /*
-         * Nukeops
-         */
-
-        public static readonly CVarDef<int> NukeopsMinPlayers =
-            CVarDef.Create("nukeops.min_players", 15);
-
-        public static readonly CVarDef<int> NukeopsMaxOps =
-            CVarDef.Create("nukeops.max_ops", 5);
-
-        public static readonly CVarDef<int> NukeopsPlayersPerOp =
-            CVarDef.Create("nukeops.players_per_op", 5);
 
         /*
          * Zombie
@@ -389,7 +396,7 @@ namespace Content.Shared.CCVar
             CVarDef.Create("database.pg_database", "ss14", CVar.SERVERONLY);
 
         public static readonly CVarDef<string> DatabasePgUsername =
-            CVarDef.Create("database.pg_username", "", CVar.SERVERONLY);
+            CVarDef.Create("database.pg_username", "postgres", CVar.SERVERONLY);
 
         public static readonly CVarDef<string> DatabasePgPassword =
             CVarDef.Create("database.pg_password", "", CVar.SERVERONLY | CVar.CONFIDENTIAL);
@@ -491,9 +498,11 @@ namespace Content.Shared.CCVar
          */
 
         public static readonly CVarDef<int> NPCMaxUpdates =
-            CVarDef.Create("npc.max_updates", 64);
+            CVarDef.Create("npc.max_updates", 128);
 
         public static readonly CVarDef<bool> NPCEnabled = CVarDef.Create("npc.enabled", true);
+
+        public static readonly CVarDef<bool> NPCCollisionAvoidance = CVarDef.Create("npc.collision_avoidance", true);
 
         /*
          * Net
@@ -617,6 +626,36 @@ namespace Content.Shared.CCVar
         /// </remarks>
         public static readonly CVarDef<int> ExplosionSingleTickAreaLimit =
             CVarDef.Create("explosion.single_tick_area_limit", 400, CVar.SERVERONLY);
+
+        /*
+         * Radiation
+         */
+
+        /// <summary>
+        ///     What is the smallest radiation dose in rads that can be received by object.
+        ///     Extremely small values may impact performance.
+        /// </summary>
+        public static readonly CVarDef<float> RadiationMinIntensity =
+            CVarDef.Create("radiation.min_intensity", 0.1f, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Rate of radiation system update in seconds.
+        /// </summary>
+        public static readonly CVarDef<float> RadiationGridcastUpdateRate =
+            CVarDef.Create("radiation.gridcast.update_rate", 1.0f, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     If both radiation source and receiver are placed on same grid, ignore grids between them.
+        ///     May get inaccurate result in some cases, but greatly boost performance in general.
+        /// </summary>
+        public static readonly CVarDef<bool> RadiationGridcastSimplifiedSameGrid =
+            CVarDef.Create("radiation.gridcast.simplified_same_grid", true, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Max distance that radiation ray can travel in meters.
+        /// </summary>
+        public static readonly CVarDef<float> RadiationGridcastMaxDistance =
+            CVarDef.Create("radiation.gridcast.max_distance", 50f, CVar.SERVERONLY);
 
         /*
          * Admin logs
@@ -835,11 +874,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> VoteEnabled =
             CVarDef.Create("vote.enabled", true, CVar.SERVERONLY);
 
+        // TODO HUD REFACTOR REENABLE
         /// <summary>
         ///     See vote.enabled, but specific to restart votes
         /// </summary>
         public static readonly CVarDef<bool> VoteRestartEnabled =
-            CVarDef.Create("vote.restart_enabled", true, CVar.SERVERONLY);
+            CVarDef.Create("vote.restart_enabled", false, CVar.SERVERONLY);
 
         /// <summary>
         ///     See vote.enabled, but specific to preset votes
@@ -1072,6 +1112,18 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> FlavorText =
             CVarDef.Create("ic.flavor_text", false, CVar.SERVER | CVar.REPLICATED);
 
+        /// <summary>
+        /// Adds a period at the end of a sentence if the sentence ends in a letter.
+        /// </summary>
+        public static readonly CVarDef<bool> ChatPunctuation =
+            CVarDef.Create("ic.punctuation", false, CVar.SERVER);
+
+        /// <summary>
+        /// Enables automatically forcing IC name rules. Uppercases the first letter of the first and last words of the name
+        /// </summary>
+        public static readonly CVarDef<bool> ICNameCase =
+            CVarDef.Create("ic.name_case", true, CVar.SERVER | CVar.REPLICATED);
+
         /*
          * Salvage
          */
@@ -1081,6 +1133,41 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<string>
             SalvageForced = CVarDef.Create("salvage.forced", "", CVar.SERVERONLY);
+
+        /*
+
+         * Flavor
+         */
+
+        /// <summary>
+        ///     Flavor limit. This is to ensure that having a large mass of flavors in
+        ///     some food object won't spam a user with flavors.
+        /// </summary>
+        public static readonly CVarDef<int>
+            FlavorLimit = CVarDef.Create("flavor.limit", 10, CVar.SERVERONLY);
+
+        /*
+         * Mapping
+         */
+
+        /// <summary>
+        ///     Will mapping mode enable autosaves when it's activated?
+        /// </summary>
+        public static readonly CVarDef<bool>
+            AutosaveEnabled = CVarDef.Create("mapping.autosave", true, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Autosave interval in seconds.
+        /// </summary>
+        public static readonly CVarDef<float>
+            AutosaveInterval = CVarDef.Create("mapping.autosave_interval", 600f, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Directory in server user data to save to. Saves will be inside folders in this directory.
+        /// </summary>
+        public static readonly CVarDef<string>
+            AutosaveDirectory = CVarDef.Create("mapping.autosave_dir", "Autosaves", CVar.SERVERONLY);
+
 
         /*
          * Rules
@@ -1167,6 +1254,18 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<float> GhostRoleTime =
             CVarDef.Create("ghost.role_time", 3f, CVar.REPLICATED);
+
+        /*
+         * Fire alarm
+         */
+
+        /// <summary>
+        ///     If fire alarms should have all access, or if activating/resetting these
+        ///     should be restricted to what is dictated on a player's access card.
+        ///     Defaults to true.
+        /// </summary>
+        public static readonly CVarDef<bool> FireAlarmAllAccess =
+            CVarDef.Create("firealarm.allaccess", true, CVar.SERVERONLY);
 
         /*
          * PLAYTIME

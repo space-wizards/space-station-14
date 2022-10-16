@@ -50,6 +50,9 @@ namespace Content.Shared.Chemistry.Reagent
         [ViewVariables(VVAccess.ReadOnly)]
         public string LocalizedPhysicalDescription => Loc.GetString(PhysicalDescription);
 
+        [DataField("flavor")]
+        public string Flavor { get; } = default!;
+
         [DataField("color")]
         public Color SubstanceColor { get; } = Color.White;
 
@@ -127,7 +130,7 @@ namespace Content.Shared.Chemistry.Reagent
 
             var entMan = IoCManager.Resolve<IEntityManager>();
             var random = IoCManager.Resolve<IRobustRandom>();
-            var args = new ReagentEffectArgs(plantHolder.Value, null, solution, this, amount.Quantity, entMan, null);
+            var args = new ReagentEffectArgs(plantHolder.Value, null, solution, this, amount.Quantity, entMan, null, null);
             foreach (var plantMetabolizable in PlantMetabolisms)
             {
                 if (!plantMetabolizable.ShouldApply(args, random))

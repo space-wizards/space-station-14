@@ -14,6 +14,7 @@ namespace Content.Shared.Maps
     public sealed class ContentTileDefinition : IPrototype, IInheritingPrototype, ITileDefinition
     {
         public const string SpaceID = "Space";
+        private string _name = string.Empty;
 
         [ParentDataFieldAttribute(typeof(AbstractPrototypeIdArraySerializer<ContentTileDefinition>))]
         public string[]? Parents { get; private set; }
@@ -26,7 +27,12 @@ namespace Content.Shared.Maps
 
         public ushort TileId { get; private set; }
 
-        [DataField("name")] public string Name { get; } = string.Empty;
+        [DataField("name")]
+        public string Name
+        {
+            get => _name;
+            private set => _name = Loc.GetString(value);
+        }
 
         [DataField("sprite")] public ResourcePath? Sprite { get; }
 
@@ -35,6 +41,8 @@ namespace Content.Shared.Maps
         [DataField("baseTurfs")] public List<string> BaseTurfs { get; } = new();
 
         [DataField("canCrowbar")] public bool CanCrowbar { get; private set; }
+
+        [DataField("canWirecutter")] public bool CanWirecutter { get; private set; }
 
         /// <summary>
         /// These play when the mob has shoes on.

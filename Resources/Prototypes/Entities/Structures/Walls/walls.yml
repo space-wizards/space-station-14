@@ -40,10 +40,15 @@
       - FullTileMask
       layer:
       - WallLayer
+      density: 1000
   - type: Occluder
     sizeX: 32
     sizeY: 32
   - type: Airtight
+  - type: StaticPrice
+    price: 75
+  - type: RadiationBlocker
+    resistance: 2
 
 - type: entity
   parent: BaseWall
@@ -447,7 +452,9 @@
     visuals:
       - type: ReinforcedWallVisualizer
   - type: StaticPrice
-    price: 41.5 # total material cost. If you change the recipe for the wall you should recalculate this.
+    price: 150
+  - type: RadiationBlocker
+    resistance: 5
 
 # Riveting
 - type: entity
@@ -479,6 +486,8 @@
   - type: IconSmooth
     key: walls
     base: riveted
+  - type: StaticPrice
+    price: 150
 
 - type: entity
   parent: BaseWall
@@ -582,6 +591,11 @@
   - type: Physics
     bodyType: Static
   - type: Pullable
+  - type: Airtight
+    noAirWhenFullyAirBlocked: false
+    airBlockedDirection:
+    - South
+    - East
   - type: Fixtures
     fixtures:
     - shape:
@@ -678,8 +692,6 @@
   - type: IconSmooth
     key: walls
     base: solid
-  - type: StaticPrice
-    price: 1 # total material cost. If you change the recipe for the wall you should recalculate this.
 
 - type: entity
   parent: BaseWall

@@ -4,7 +4,9 @@ using Content.Shared.Examine;
 using Content.Shared.Popups;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
@@ -25,7 +27,7 @@ public sealed class ImmovableRodSystem : EntitySystem
         {
             if (!rod.DestroyTiles)
                 continue;
-            if (!_map.TryGetGrid(trans.GridID, out var grid))
+            if (!_map.TryGetGrid(trans.GridUid, out var grid))
                 continue;
 
             grid.SetTile(trans.Coordinates, Tile.Empty);
@@ -64,7 +66,7 @@ public sealed class ImmovableRodSystem : EntitySystem
         }
     }
 
-    private void OnCollide(EntityUid uid, ImmovableRodComponent component, StartCollideEvent args)
+    private void OnCollide(EntityUid uid, ImmovableRodComponent component, ref StartCollideEvent args)
     {
         var ent = args.OtherFixture.Body.Owner;
 
