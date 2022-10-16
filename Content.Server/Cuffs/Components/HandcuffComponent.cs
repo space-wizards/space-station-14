@@ -179,6 +179,8 @@ namespace Content.Server.Cuffs.Components
 
             Cuffing = false;
 
+            // TODO these pop-ups need third-person variants (i.e. {$user} is cuffing {$target}!
+
             if (result != DoAfterStatus.Cancelled)
             {
                 if (cuffs.TryAddNewCuffs(user, Owner))

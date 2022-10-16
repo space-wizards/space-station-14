@@ -11,7 +11,6 @@ using Content.Server.EUI;
 using Content.Server.GhostKick;
 using Content.Server.Info;
 using Content.Server.Maps;
-using Content.Server.Module;
 using Content.Server.MoMMI;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.Objectives;
@@ -34,7 +33,6 @@ namespace Content.Server.IoC
             IoCManager.Register<IChatManager, ChatManager>();
             IoCManager.Register<IChatSanitizationManager, ChatSanitizationManager>();
             IoCManager.Register<IMoMMILink, MoMMILink>();
-            IoCManager.Register<IModuleManager, ServerModuleManager>();
             IoCManager.Register<IServerPreferencesManager, ServerPreferencesManager>();
             IoCManager.Register<IServerDbManager, ServerDbManager>();
             IoCManager.Register<RecipeManager, RecipeManager>();

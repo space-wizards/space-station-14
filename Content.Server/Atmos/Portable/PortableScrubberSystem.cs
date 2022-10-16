@@ -104,7 +104,7 @@ namespace Content.Server.Atmos.Portable
 
             UpdateDrainingAppearance(uid, portableNode.ConnectionsEnabled);
         }
-        private void OnPowerChanged(EntityUid uid, PortableScrubberComponent component, PowerChangedEvent args)
+        private void OnPowerChanged(EntityUid uid, PortableScrubberComponent component, ref PowerChangedEvent args)
         {
             UpdateAppearance(uid, component.Full, args.Powered);
             component.Enabled = args.Powered;

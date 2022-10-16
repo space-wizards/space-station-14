@@ -16,3 +16,6 @@ ent-VehicleATV = ATV
 ent-VehicleSyndicateSegway = syndicate segway
     .desc = Be an enemy of the corporation, in style.
     .suffix = { "" }
+ent-VehicleSkeletonMotorcycle = skeleton motorcycle
+    .desc = Bad to the Bone.
+    .suffix = { "" }

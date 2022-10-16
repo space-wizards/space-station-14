@@ -171,10 +171,15 @@ namespace Content.Shared.Preferences
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             var random = IoCManager.Resolve<IRobustRandom>();
 
-            var sex = random.Prob(0.5f) ? Sex.Male : Sex.Female;
+            var sex = Sex.Unsexed;
+            if (prototypeManager.TryIndex<SpeciesPrototype>(species, out var speciesPrototype))
+            {
+                sex = random.Pick(speciesPrototype.Sexes);
+            }
+
             var gender = sex == Sex.Male ? Gender.Male : Gender.Female;
 
-            var name = sex.GetName(species, prototypeManager, random);
+            var name = GetName(species, gender);
             var age = random.Next(MinimumAge, MaximumAge);
 
             return new HumanoidCharacterProfile(name, "", species, age, sex, gender, HumanoidCharacterAppearance.Random(species, sex), ClothingPreference.Jumpsuit, BackpackPreference.Backpack,
@@ -351,12 +356,26 @@ namespace Content.Shared.Preferences
         {
             var age = Math.Clamp(Age, MinimumAge, MaximumAge);
 
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+
+            prototypeManager.TryIndex<SpeciesPrototype>(Species, out var speciesPrototype);
+
             var sex = Sex switch
             {
                 Sex.Male => Sex.Male,
                 Sex.Female => Sex.Female,
+                Sex.Unsexed => Sex.Unsexed,
                 _ => Sex.Male // Invalid enum values.
             };
+
+            // ensure the species can be that sex
+            if (speciesPrototype != null)
+            {
+                if (!speciesPrototype.Sexes.Contains(sex))
+                {
+                    sex = speciesPrototype.Sexes[0];
+                }
+            }
 
             var gender = Gender switch
             {
@@ -370,7 +389,7 @@ namespace Content.Shared.Preferences
             string name;
             if (string.IsNullOrEmpty(Name))
             {
-                name = Sex.GetName(Species);
+                name = GetName(Species, gender);
             }
             else if (Name.Length > MaxNameLength)
             {
@@ -399,7 +418,7 @@ namespace Content.Shared.Preferences
 
             if (string.IsNullOrEmpty(name))
             {
-                name = Sex.GetName(Species);
+                name = GetName(Species, gender);
             }
 
             string flavortext;
@@ -435,8 +454,6 @@ namespace Content.Shared.Preferences
                 BackpackPreference.Duffelbag => BackpackPreference.Duffelbag,
                 _ => BackpackPreference.Backpack // Invalid enum values.
             };
-
-            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
 
             var priorities = new Dictionary<string, JobPriority>(JobPriorities
                 .Where(p => prototypeManager.HasIndex<JobPrototype>(p.Key) && p.Value switch
@@ -479,6 +496,14 @@ namespace Content.Shared.Preferences
 
             _traitPreferences.Clear();
             _traitPreferences.AddRange(traits);
+        }
+
+        // sorry this is kind of weird and duplicated,
+        /// working inside these non entity systems is a bit wack
+        public static string GetName(string species, Gender gender)
+        {
+            var namingSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<NamingSystem>();
+            return namingSystem.GetName(species, gender);
         }
 
         public override bool Equals(object? obj)

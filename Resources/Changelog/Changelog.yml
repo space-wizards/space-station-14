@@ -1,102 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed a bug that sometimes made it impossible to (un)weld an entity.,
-    type: Fix}
-  id: 1945
-  time: '2022-07-14T21:03:17.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Lockers/morgues/etc should now properly take items., type: Fix}
-  id: 1946
-  time: '2022-07-14T21:55:36.0000000+00:00'
-- author: themias
-  changes:
-  - {message: Multiple portions of the same recipe can be cooked simultaneously in
-      the microwave by multiplying the ingredients and cooking time., type: Tweak}
-  id: 1947
-  time: '2022-07-15T02:25:16.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed a bug that caused decals to sometimes disappear., type: Fix}
-  id: 1948
-  time: '2022-07-15T02:33:11.0000000+00:00'
-- author: Myctai
-  changes:
-  - {message: Pill maximum volume is back at 50 units!, type: Tweak}
-  id: 1949
-  time: '2022-07-15T02:40:47.0000000+00:00'
-- author: Level10Cybermancer
-  changes:
-  - {message: Nuclear Operatives now start with a pinpointer in their bag, type: Tweak}
-  id: 1950
-  time: '2022-07-15T02:41:25.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: 'Disease outbreak has been nerfed: its weight is reduced to half, its
-      earliest start is now 15 minutes, and it can no longer occur more than 3 times.',
-    type: Tweak}
-  id: 1951
-  time: '2022-07-15T02:42:00.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Magic staves & wands! You can find them in the fireball, polymorph,
-      death, healing, or door variety.', type: Add}
-  id: 1952
-  time: '2022-07-15T02:45:28.0000000+00:00'
-- author: Deahaka
-  changes:
-  - {message: Added operating table, type: Add}
-  id: 1953
-  time: '2022-07-15T02:50:59.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Steal objectives now tell you who or what to steal from., type: Add}
-  id: 1954
-  time: '2022-07-15T03:09:11.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: The Necronomicon can now be purchased by Traitor Chaplains in the uplink.,
-    type: Tweak}
-  id: 1955
-  time: '2022-07-15T04:26:06.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Proto-kinetic accelerators are now available. These are recharging
-      ranged weapons for salvage specialists, but with the cost of doing low damage,
-      having very low range, and a low recharge rate.', type: Add}
-  id: 1956
-  time: '2022-07-15T04:28:14.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Space carp and space ticks now only have a 33% chance to be inhabitable
-      by a ghost., type: Tweak}
-  - {message: Space bears now have a 5% chance to be inhabitable by a ghost., type: Tweak}
-  id: 1957
-  time: '2022-07-15T05:20:38.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Radar zooming is now smooth, type: Tweak}
-  id: 1958
-  time: '2022-07-15T05:32:49.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Familiars now only spawn when a ghost requests them., type: Tweak}
-  id: 1959
-  time: '2022-07-15T07:53:42.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Ported honkbots and robotics technology from Nyanotrasen MRP., type: Add}
-  - {message: Avionics technology now requires robotics technology., type: Tweak}
-  - {message: Modular mines now require a proximity sensor., type: Tweak}
-  id: 1960
-  time: '2022-07-15T07:54:35.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: 'Fixed some pop-ups that revealed a disguised entity''s name. If there
-      are more, report them.', type: Fix}
-  id: 1961
-  time: '2022-07-15T08:10:52.0000000+00:00'
 - author: ZeroDayDaemon
   changes:
   - {message: Added craftable Sawn Off shotgun., type: Add}
@@ -2942,3 +2844,103 @@ Entries:
     type: Fix}
   id: 2444
   time: '2022-10-14T02:17:08.0000000+00:00'
+- author: Nairod
+  changes:
+  - {message: Filing cabinets are now movable., type: Tweak}
+  id: 2445
+  time: '2022-10-14T20:10:05.0000000+00:00'
+- author: corentt
+  changes:
+  - {message: You can no longer call a vote for gamemode if only one is available.,
+    type: Remove}
+  id: 2446
+  time: '2022-10-15T04:10:10.0000000+00:00'
+- author: Scribbles0
+  changes:
+  - {message: The Syndicate has tweaked nocturine to force people into a deep sleep.,
+    type: Tweak}
+  id: 2447
+  time: '2022-10-15T04:10:46.0000000+00:00'
+- author: Nairod
+  changes:
+  - {message: 'Added a over-ear command headset type to CE, RD and QM''s lockers.',
+    type: Add}
+  id: 2448
+  time: '2022-10-15T04:11:59.0000000+00:00'
+- author: Carbonhell
+  changes:
+  - {message: Adds a cooldown of 1 second when attempting to wake up someone else.,
+    type: Fix}
+  id: 2449
+  time: '2022-10-15T04:13:24.0000000+00:00'
+- author: checkraze
+  changes:
+  - {message: fixes some device links, type: Fix}
+  id: 2450
+  time: '2022-10-15T14:17:22.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Stripping UI has been updated. You can now visually see and examine
+      items., type: Tweak}
+  - {message: Handcuffs now show up in the hands UI. You still need to use the alert
+      to uncuff yourself., type: Add}
+  id: 2451
+  time: '2022-10-15T17:00:04.0000000+00:00'
+- author: Mervill
+  changes:
+  - {message: Fire Helmets and Atmos Fire Helmets require batteries again., type: Fix}
+  id: 2452
+  time: '2022-10-15T20:15:39.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fixed gloves slot being used for melee., type: Fix}
+  id: 2453
+  time: '2022-10-15T20:20:05.0000000+00:00'
+- author: BurninDreamer
+  changes:
+  - {message: 'Nanotrasen has finally invested into better drills for their miners,
+      rock and stone!', type: Tweak}
+  id: 2454
+  time: '2022-10-15T20:40:40.0000000+00:00'
+- author: corentt
+  changes:
+  - {message: 'Selling prices of SMES, substations and power-cells now depends on
+      their filling level', type: Add}
+  id: 2455
+  time: '2022-10-15T21:10:48.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: Librarian & Lawyer now spawn with briefcase in hand, type: Tweak}
+  id: 2456
+  time: '2022-10-15T21:22:27.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Certain machines can now have their power load reduced via machine part
+      upgrading. Experiment and find out., type: Add}
+  - {message: Fixed not being able to deconstruct stasis beds., type: Fix}
+  id: 2457
+  time: '2022-10-15T21:28:12.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Stasis beds can now be upgraded with manipulators., type: Add}
+  id: 2458
+  time: '2022-10-15T21:39:30.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'Random names now select based on gender, rather than sex.', type: Fix}
+  - {message: Humanoids will no longer default to an inanimate pronoun when their
+      gender is unknown., type: Fix}
+  - {message: 'Slimes have no physical sex, only gender.', type: Tweak}
+  id: 2459
+  time: '2022-10-15T21:45:47.0000000+00:00'
+- author: Mervill
+  changes:
+  - {message: The PDA light and the Hardsuit light have been nerfed, type: Tweak}
+  - {message: The Blue Flashlight and the Seclite have been buffed, type: Tweak}
+  id: 2460
+  time: '2022-10-15T21:58:33.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Dying as a skeleton now makes you a skull again., type: Fix}
+  id: 2461
+  time: '2022-10-15T22:06:01.0000000+00:00'
