@@ -34,7 +34,7 @@ internal sealed class ChargerSystem : EntitySystem
     {
         foreach (var comp in EntityManager.EntityQuery<ChargerComponent>())
         {
-            if (!_itemSlotsSystem.TryGetSlotById(comp.Owner, comp.SlotId, out ItemSlot? slot))
+            if (!_itemSlotsSystem.TryGetSlot(comp.Owner, comp.SlotId, out ItemSlot? slot))
                 continue;
 
             if (comp.Status == CellChargerStatus.Empty || comp.Status == CellChargerStatus.Charged || !slot.HasItem)
@@ -82,7 +82,7 @@ internal sealed class ChargerSystem : EntitySystem
         if (!TryComp(args.EntityUid, out PowerCellSlotComponent? cellSlot))
             return;
 
-        if (!_itemSlotsSystem.TryGetSlotById(args.EntityUid, cellSlot.CellSlotId, out ItemSlot? itemSlot))
+        if (!_itemSlotsSystem.TryGetSlot(args.EntityUid, cellSlot.CellSlotId, out ItemSlot? itemSlot))
             return;
 
         if (!cellSlot.FitsInCharger || !itemSlot.HasItem)
@@ -95,7 +95,7 @@ internal sealed class ChargerSystem : EntitySystem
         if (component.Status == status || !TryComp(uid, out ApcPowerReceiverComponent? receiver))
             return;
 
-        if (!_itemSlotsSystem.TryGetSlotById(uid, component.SlotId, out ItemSlot? slot))
+        if (!_itemSlotsSystem.TryGetSlot(uid, component.SlotId, out ItemSlot? slot))
             return;
 
         TryComp(uid, out AppearanceComponent? appearance);
@@ -141,7 +141,7 @@ internal sealed class ChargerSystem : EntitySystem
         if (!apcPowerReceiverComponent.Powered)
             return CellChargerStatus.Off;
 
-        if (!_itemSlotsSystem.TryGetSlotById(uid, component.SlotId, out ItemSlot? slot))
+        if (!_itemSlotsSystem.TryGetSlot(uid, component.SlotId, out ItemSlot? slot))
             return CellChargerStatus.Off;
 
         if (!_cellSystem.TryGetBatteryFromSlot(uid, out BatteryComponent? heldBattery))
