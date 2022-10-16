@@ -18,11 +18,17 @@ internal sealed class ChargerSystem : EntitySystem
 
     public override void Initialize()
     {
+        SubscribeLocalEvent<ChargerComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<ChargerComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<ChargerComponent, EntInsertedIntoContainerMessage>(OnInserted);
         SubscribeLocalEvent<ChargerComponent, EntRemovedFromContainerMessage>(OnRemoved);
         SubscribeLocalEvent<ChargerComponent, ContainerIsInsertingAttemptEvent>(OnInsertAttempt);
         SubscribeLocalEvent<ChargerComponent, ExaminedEvent>(OnChargerExamine);
+    }
+
+    private void OnStartup(EntityUid uid, ChargerComponent component, ComponentStartup args)
+    {
+        UpdateStatus(uid, component);
     }
 
     private void OnChargerExamine(EntityUid uid, ChargerComponent component, ExaminedEvent args)
@@ -32,15 +38,18 @@ internal sealed class ChargerSystem : EntitySystem
 
     public override void Update(float frameTime)
     {
-        foreach (var comp in EntityManager.EntityQuery<ChargerComponent>())
+        foreach (var comp in EntityManager.EntityQuery<ChargerActiveComponent>())
         {
-            if (!_itemSlotsSystem.TryGetSlot(comp.Owner, comp.SlotId, out ItemSlot? slot))
+            if (!TryComp(comp.Owner, out ChargerComponent? charger))
+                return;
+
+            if (!_itemSlotsSystem.TryGetSlot(comp.Owner, charger.SlotId, out ItemSlot? slot))
                 continue;
 
-            if (comp.Status == CellChargerStatus.Empty || comp.Status == CellChargerStatus.Charged || !slot.HasItem)
+            if (charger.Status == CellChargerStatus.Empty || charger.Status == CellChargerStatus.Charged || !slot.HasItem)
                 continue;
 
-            TransferPower(comp.Owner, comp, frameTime);
+            TransferPower(comp.Owner, charger, frameTime);
         }
     }
     
@@ -57,6 +66,7 @@ internal sealed class ChargerSystem : EntitySystem
         if (args.Container.ID != component.SlotId)
             return;
 
+        AddComp<ChargerActiveComponent>(uid);
         UpdateStatus(uid, component);
     }
 
@@ -65,6 +75,7 @@ internal sealed class ChargerSystem : EntitySystem
         if (args.Container.ID != component.SlotId)
             return;
 
+        RemComp<ChargerActiveComponent>(uid);
         UpdateStatus(uid, component);
     }
 
@@ -81,7 +92,7 @@ internal sealed class ChargerSystem : EntitySystem
 
         if (!TryComp(args.EntityUid, out PowerCellSlotComponent? cellSlot))
             return;
-
+        
         if (!_itemSlotsSystem.TryGetSlot(args.EntityUid, cellSlot.CellSlotId, out ItemSlot? itemSlot))
             return;
 
