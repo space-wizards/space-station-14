@@ -172,7 +172,8 @@ public sealed class ClothingVisualsSystem : EntitySystem
 
     public void InitClothing(EntityUid uid, ClientInventoryComponent? component = null, SpriteComponent? sprite = null)
     {
-        if (!_inventorySystem.TryGetSlots(uid, out var slots, component) || !Resolve(uid, ref sprite, ref component)) return;
+        if (!Resolve(uid, ref sprite, ref component) || !_inventorySystem.TryGetSlots(uid, out var slots, component))
+            return;
 
         foreach (var slot in slots)
         {
