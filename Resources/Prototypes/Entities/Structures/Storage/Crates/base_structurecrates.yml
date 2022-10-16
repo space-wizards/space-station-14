@@ -5,7 +5,6 @@
   name: crate
   description: A large container for items.
   components:
-  - type: ResistLocker
   - type: Transform
     noRot: true
   - type: Icon
@@ -72,6 +71,12 @@
     node: crategenericsteel
     containers:
       - entity_storage
+
+- type: entity
+  parent: CrateGeneric
+  id: CrateBaseResistible
+  components:
+  - type: ResistLocker
 
 - type: entity
   id: CrateBaseSecure
