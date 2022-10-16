@@ -17,7 +17,7 @@ public sealed class SurveillanceCameraMicrophoneSystem : EntitySystem
     private void OnInit(EntityUid uid, SurveillanceCameraMicrophoneComponent component, ComponentInit args)
     {
         if (component.Enabled)
-            EnsureComp<ActiveListenerComponent>(uid).Range = component.ListenRange;
+            EnsureComp<ActiveListenerComponent>(uid).Range = component.Range;
         else
             RemCompDeferred<ActiveListenerComponent>(uid);
     }
@@ -25,7 +25,7 @@ public sealed class SurveillanceCameraMicrophoneSystem : EntitySystem
     public void CanListen(EntityUid uid, SurveillanceCameraMicrophoneComponent microphone, ListenAttemptEvent args)
     {
         // TODO maybe just make this a part of ActiveListenerComponent?
-        if (microphone.BlacklistedComponents.IsValid(args.Source))
+        if (microphone.Blacklist.IsValid(args.Source))
             args.Cancel();
     }
 
@@ -53,7 +53,7 @@ public sealed class SurveillanceCameraMicrophoneSystem : EntitySystem
         microphone.Enabled = value;
 
         if (value)
-            EnsureComp<ActiveListenerComponent>(uid).Range = microphone.ListenRange;
+            EnsureComp<ActiveListenerComponent>(uid).Range = microphone.Range;
         else
             RemCompDeferred<ActiveListenerComponent>(uid);
     }

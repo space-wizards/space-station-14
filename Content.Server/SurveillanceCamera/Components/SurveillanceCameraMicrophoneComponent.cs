@@ -18,8 +18,8 @@ public sealed class SurveillanceCameraMicrophoneComponent : Component
     ///     Used to avoid things like feedback loops, or radio spam.
     /// </summary>
     [DataField("blacklist")]
-    public EntityWhitelist BlacklistedComponents { get; } = new();
+    public EntityWhitelist Blacklist { get; } = new();
 
     [DataField("range")]
-    public int ListenRange { get; } = 10;
+    public int Range { get; } = 10;
 }
