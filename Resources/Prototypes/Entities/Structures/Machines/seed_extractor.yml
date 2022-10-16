@@ -1,7 +1,7 @@
 ﻿- type: entity
   id: SeedExtractor
   name: seed extractor
-  parent: BaseMachinePowered
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
   description: Extracts seeds from produce.
   components:
   - type: Sprite
@@ -25,3 +25,5 @@
       layer:
       - MachineLayer
   - type: SeedExtractor
+  - type: Machine
+    board: SeedExtractorMachineCircuitboard
