@@ -21,6 +21,7 @@ using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
 using Content.Shared.Tag;
 using Content.Shared.Weapons.Melee;
+using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Audio;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
@@ -104,7 +105,7 @@ namespace Content.Server.Electrocution
                         _prototypeManager.Index<DamageTypePrototype>(DamageType),
                         (int) finished.AccumulatedDamage);
 
-                    var actual = _damageableSystem.TryChangeDamage(finished.Electrocuting, damage);
+                    var actual = _damageableSystem.TryChangeDamage(finished.Electrocuting, damage, origin: finished.Source);
                     if (actual != null)
                     {
                         _adminLogger.Add(LogType.Electrocution,
@@ -314,6 +315,7 @@ namespace Content.Server.Electrocution
 
             electrocutionComponent.TimeLeft = 1f;
             electrocutionComponent.Electrocuting = uid;
+            electrocutionComponent.Source = sourceUid;
 
             RaiseLocalEvent(uid, new ElectrocutedEvent(uid, sourceUid, siemensCoefficient), true);
 
@@ -368,7 +370,7 @@ namespace Content.Server.Electrocution
             if(shockDamage is {} dmg)
             {
                 var actual = _damageableSystem.TryChangeDamage(uid,
-                    new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>(DamageType), dmg));
+                    new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>(DamageType), dmg), origin: sourceUid);
 
                 if (actual != null)
                 {

@@ -266,7 +266,7 @@ namespace Content.Server.Kitchen.EntitySystems
             UpdateUserInterfaceState(uid, component);
         }
 
-        private void OnPowerChanged(EntityUid uid, MicrowaveComponent component, PowerChangedEvent args)
+        private void OnPowerChanged(EntityUid uid, MicrowaveComponent component, ref PowerChangedEvent args)
         {
             if (!args.Powered)
             {

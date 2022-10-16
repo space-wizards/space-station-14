@@ -7,11 +7,13 @@ namespace Content.Shared.MobState
         public MobStateChangedEvent(
             MobStateComponent component,
             DamageState? oldMobState,
-            DamageState currentMobState)
+            DamageState currentMobState, 
+            EntityUid? origin)
         {
             Component = component;
             OldMobState = oldMobState;
             CurrentMobState = currentMobState;
+            Origin = origin;
         }
 
         public EntityUid Entity => Component.Owner;
@@ -21,6 +23,8 @@ namespace Content.Shared.MobState
         public DamageState? OldMobState { get; }
 
         public DamageState CurrentMobState { get; }
+
+        public EntityUid? Origin { get; }
     }
 
     public static class A

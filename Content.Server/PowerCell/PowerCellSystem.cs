@@ -10,6 +10,7 @@ using Content.Shared.Rounding;
 using Robust.Shared.Containers;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Kitchen.Components;
+using Content.Shared.Containers.ItemSlots;
 
 namespace Content.Server.PowerCell;
 
@@ -17,8 +18,10 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
 {
     [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
     [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogger= default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+    [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
+    [Dependency] private readonly SharedAppearanceSystem _sharedAppearanceSystem = default!;
 
     public override void Initialize()
     {
@@ -36,10 +39,13 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
 
     private void OnSlotMicrowaved(EntityUid uid, PowerCellSlotComponent component, BeingMicrowavedEvent args)
     {
-        if (component.CellSlot.Item == null)
-            return;
+        if (_itemSlotsSystem.TryGetSlotById(uid, component.CellSlotId, out ItemSlot? slot))
+        {
+            if (slot.Item == null)
+                return;
 
-        RaiseLocalEvent(component.CellSlot.Item.Value, args, false);
+            RaiseLocalEvent(slot.Item.Value, args, false);
+        }
     }
 
     private void OnMicrowaved(EntityUid uid, BatteryComponent component, BeingMicrowavedEvent args)
@@ -69,14 +75,15 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
 
         var frac = battery.CurrentCharge / battery.MaxCharge;
         var level = (byte) ContentHelpers.RoundToNearestLevels(frac, 1, PowerCellComponent.PowerCellVisualsLevels);
-        appearance.SetData(PowerCellVisuals.ChargeLevel, level);
+        _sharedAppearanceSystem.SetData(uid, PowerCellVisuals.ChargeLevel, level, appearance);
 
         // If this power cell is inside a cell-slot, inform that entity that the power has changed (for updating visuals n such).
         if (_containerSystem.TryGetContainingContainer(uid, out var container)
             && TryComp(container.Owner, out PowerCellSlotComponent? slot)
-            && slot.CellSlot.Item == uid)
+            && _itemSlotsSystem.TryGetSlotById(container.Owner, slot.CellSlotId, out ItemSlot? itemSlot))
         {
-            RaiseLocalEvent(container.Owner, new PowerCellChangedEvent(false), false);
+            if (itemSlot.Item == uid)
+                RaiseLocalEvent(container.Owner, new PowerCellChangedEvent(false), false);
         }
     }
 
@@ -101,7 +108,13 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
             return false;
         }
 
-        return TryComp(component.CellSlot.Item, out battery);
+        if (_itemSlotsSystem.TryGetSlotById(uid, component.CellSlotId, out ItemSlot? slot))
+        {
+            return TryComp(slot.Item, out battery);
+        }
+
+        battery = null;
+        return false;
     }
 
     private void OnSolutionChange(EntityUid uid, PowerCellComponent component, SolutionChangedEvent args)

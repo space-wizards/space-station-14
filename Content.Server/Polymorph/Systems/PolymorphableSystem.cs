@@ -1,13 +1,12 @@
 using Content.Server.Actions;
 using Content.Server.Buckle.Components;
+using Content.Server.Humanoid;
 using Content.Server.Inventory;
 using Content.Server.Mind.Commands;
 using Content.Server.Mind.Components;
 using Content.Server.Polymorph.Components;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
-using Content.Shared.CharacterAppearance.Components;
-using Content.Shared.CharacterAppearance.Systems;
 using Content.Shared.Damage;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Polymorph;
@@ -25,11 +24,12 @@ namespace Content.Server.Polymorph.Systems
 
         [Dependency] private readonly ActionsSystem _actions = default!;
         [Dependency] private readonly IPrototypeManager _proto = default!;
+        [Dependency] private readonly IComponentFactory _compFact = default!;
         [Dependency] private readonly ServerInventorySystem _inventory = default!;
         [Dependency] private readonly SharedHandsSystem _sharedHands = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly SharedHumanoidAppearanceSystem _sharedHuApp = default!;
+        [Dependency] private readonly HumanoidSystem _humanoid = default!;
         [Dependency] private readonly ContainerSystem _container = default!;
 
         public override void Initialize()
@@ -99,10 +99,11 @@ namespace Content.Server.Polymorph.Systems
             var child = Spawn(proto.Entity, targetTransformComp.Coordinates);
             MakeSentientCommand.MakeSentient(child, EntityManager);
 
-            var comp = EnsureComp<PolymorphedEntityComponent>(child);
+            var comp = _compFact.GetComponent<PolymorphedEntityComponent>();
+            comp.Owner = child;
             comp.Parent = target;
-            comp.Prototype = proto;
-            RaiseLocalEvent(child, new PolymorphComponentSetupEvent(), true);
+            comp.Prototype = proto.ID;
+            EntityManager.AddComponent(child, comp);
 
             var childXform = Transform(child);
             childXform.LocalRotation = targetTransformComp.LocalRotation;
@@ -145,12 +146,9 @@ namespace Content.Server.Polymorph.Systems
                 childMeta.EntityName = targetMeta.EntityName;
             }
 
-            if (proto.TransferHumanoidAppearance &&
-                TryComp<HumanoidAppearanceComponent>(target, out var targetHuApp) &&
-                TryComp<HumanoidAppearanceComponent>(child, out var childHuApp))
+            if (proto.TransferHumanoidAppearance)
             {
-                _sharedHuApp.UpdateAppearance(child, targetHuApp.Appearance);
-                _sharedHuApp.ForceAppearanceUpdate(child);
+                _humanoid.CloneAppearance(target, child);
             }
 
             if (TryComp<MindComponent>(target, out var mind) && mind.Mind != null)
@@ -215,11 +213,6 @@ namespace Content.Server.Polymorph.Systems
                 _actions.RemoveAction(target, val);
         }
     }
-
-    /// <summary>
-    /// Used after the polymorphedEntity component has it's data set up.
-    /// </summary>
-    public sealed class PolymorphComponentSetupEvent : InstantActionEvent { };
 
     public sealed class PolymorphActionEvent : InstantActionEvent
     {

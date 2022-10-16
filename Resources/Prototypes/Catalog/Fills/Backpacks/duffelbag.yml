@@ -256,7 +256,6 @@
   - type: StorageFill
     contents:
       - id: BoxSurvivalSyndicate
-      - id: SurvivalKnife
       - id: WeaponPistolViper
       - id: PinpointerNuclear
 
@@ -276,7 +275,7 @@
       - id: Retractor
       - id: ScalpelAdvanced
       - id: BoxSurvivalSyndicate
-      - id: SurvivalKnife
+      - id: CombatKnife
       - id: WeaponPistolViper
       - id: PinpointerNuclear
       - id: HandheldHealthAnalyzer

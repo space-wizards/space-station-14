@@ -20,11 +20,6 @@ namespace Content.Shared.Construction.Steps
                 return typeof(ToolConstructionGraphStep);
             }
 
-            if (node.Has("prototype"))
-            {
-                return typeof(PrototypeConstructionGraphStep);
-            }
-
             if (node.Has("component"))
             {
                 return typeof(ComponentConstructionGraphStep);
