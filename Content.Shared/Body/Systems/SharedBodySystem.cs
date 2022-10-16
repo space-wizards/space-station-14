@@ -63,9 +63,19 @@ public abstract partial class SharedBodySystem : EntitySystem
         InitPart(partComponent, prototype, prototype.Root);
     }
 
-    private void InitPart(BodyComponent parent, BodyPrototype prototype, string slotId)
+    private void InitPart(BodyComponent parent, BodyPrototype prototype, string slotId, HashSet<string>? initialized = null)
     {
+        initialized ??= new HashSet<string>();
+
+        if (initialized.Contains(slotId))
+            return;
+
+        initialized.Add(slotId);
+
         var (_, connections, organs) = prototype.Slots[slotId];
+        connections = new HashSet<string>(connections);
+        connections.ExceptWith(initialized);
+
         var coordinates = parent.Owner.ToCoordinates();
         var subConnections = new List<(BodyComponent child, string slotId)>();
 
@@ -97,7 +107,7 @@ public abstract partial class SharedBodySystem : EntitySystem
 
         foreach (var connection in subConnections)
         {
-            InitPart(connection.child, prototype, connection.slotId);
+            InitPart(connection.child, prototype, connection.slotId, initialized);
         }
     }
 
@@ -284,15 +294,15 @@ public abstract partial class SharedBodySystem : EntitySystem
 
         var gibs = (gibOrgans ? GetChildIds(partId, part) : GetChildIds(partId, part, organs: false)).ToHashSet();
 
-        foreach (var slot in part.Children.Values.ToArray())
+        foreach (var gib in gibs)
         {
-            if (!TryComp(slot.Child, out BodyComponent? childPart))
+            if (!TryComp(gib, out BodyComponent? childPart))
                 continue;
 
             if (childPart.Organ && !gibOrgans)
                 continue;
 
-            OrphanParts(slot.Child, childPart);
+            OrphanParts(gib, childPart);
         }
 
         return gibs;

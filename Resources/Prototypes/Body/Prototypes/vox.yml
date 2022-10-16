@@ -33,8 +33,6 @@
       - left hand
     right hand:
       part: RightHandVox
-      connections:
-      - right foot
     left hand:
       part: LeftHandVox
     right leg:

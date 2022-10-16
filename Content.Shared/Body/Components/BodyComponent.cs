@@ -1,7 +1,9 @@
 using Content.Shared.Body.Part;
+using Content.Shared.Body.Prototypes;
 using Content.Shared.DragDrop;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Body.Components;
 
@@ -9,7 +11,7 @@ namespace Content.Shared.Body.Components;
 public sealed class BodyComponent : Component, IDraggable
 {
     [ViewVariables]
-    [DataField("prototype")]
+    [DataField("prototype", customTypeSerializer: typeof(PrototypeIdSerializer<BodyPrototype>))]
     public readonly string? Prototype;
 
     [ViewVariables]

@@ -18,7 +18,5 @@
       - left hand
     right hand:
       part: RightHandHuman
-      connections:
-      - right foot
     left hand:
       part: LeftHandHuman
