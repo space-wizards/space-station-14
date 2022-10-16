@@ -1,3 +1,4 @@
+using System.Text;
 using Content.Server.AlertLevel;
 using Content.Server.Audio;
 using Content.Server.Chat;
@@ -17,13 +18,13 @@ using Content.Shared.Popups;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Nuke
 {
     public sealed class NukeSystem : EntitySystem
     {
-        [Dependency] private readonly NukeCodeSystem _codes = default!;
         [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
         [Dependency] private readonly PopupSystem _popups = default!;
         [Dependency] private readonly ExplosionSystem _explosions = default!;
@@ -32,6 +33,7 @@ namespace Content.Server.Nuke
         [Dependency] private readonly ServerGlobalSoundSystem _soundSystem = default!;
         [Dependency] private readonly ChatSystem _chatSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         /// <summary>
         ///     Used to calculate when the nuke song should start playing for maximum kino with the nuke sfx
@@ -48,6 +50,7 @@ namespace Content.Server.Nuke
             base.Initialize();
             SubscribeLocalEvent<NukeComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<NukeComponent, ComponentRemove>(OnRemove);
+            SubscribeLocalEvent<NukeComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<NukeComponent, EntInsertedIntoContainerMessage>(OnItemSlotChanged);
             SubscribeLocalEvent<NukeComponent, EntRemovedFromContainerMessage>(OnItemSlotChanged);
 
@@ -95,6 +98,23 @@ namespace Content.Server.Nuke
                         break;
                 }
             }
+        }
+
+        private void OnMapInit(EntityUid uid, NukeComponent nuke, MapInitEvent args)
+        {
+            var originStation = _stationSystem.GetOwningStation(uid);
+
+            if (originStation != null)
+            {
+                nuke.OriginStation = originStation;
+            }
+            else
+            {
+                var transform = Transform(uid);
+                nuke.OriginMapGrid = (transform.MapID, transform.GridUid);
+            }
+
+            nuke.Code = GenerateRandomNumberString(nuke.CodeLength);
         }
 
         private void OnRemove(EntityUid uid, NukeComponent component, ComponentRemove args)
@@ -185,7 +205,7 @@ namespace Content.Server.Nuke
             if (component.Status != NukeStatus.AWAIT_CODE)
                 return;
 
-            if (component.EnteredCode.Length >= _codes.Code.Length)
+            if (component.EnteredCode.Length >= component.CodeLength)
                 return;
 
             component.EnteredCode += args.Value.ToString();
@@ -309,8 +329,8 @@ namespace Content.Server.Nuke
                         break;
                     }
 
-                    var isValid = _codes.IsCodeValid(component.EnteredCode);
-                    if (isValid)
+                    // var isValid = _codes.IsCodeValid(uid, component.EnteredCode);
+                    if (component.EnteredCode == component.Code)
                     {
                         component.Status = NukeStatus.AWAIT_ARM;
                         component.RemainingTime = component.Timer;
@@ -358,7 +378,7 @@ namespace Content.Server.Nuke
                 IsAnchored = anchored,
                 AllowArm = allowArm,
                 EnteredCodeLength = component.EnteredCode.Length,
-                MaxCodeLength = _codes.Code.Length,
+                MaxCodeLength = component.CodeLength,
                 CooldownTime = (int) component.CooldownTime
             };
 
@@ -404,6 +424,18 @@ namespace Content.Server.Nuke
 
             SoundSystem.Play(sound.GetSound(),
                 Filter.Pvs(uid), uid, AudioHelpers.WithVariation(varyPitch).WithVolume(-5f));
+        }
+
+        public string GenerateRandomNumberString(int length)
+        {
+            var ret = "";
+            for (var i = 0; i < length; i++)
+            {
+                var c = (char) _random.Next('0', '9' + 1);
+                ret += c;
+            }
+
+            return ret;
         }
 
         #region Public API

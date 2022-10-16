@@ -66,17 +66,36 @@ namespace Content.Shared.Examine
         [Pure]
         public bool CanExamine(EntityUid examiner, EntityUid examined)
         {
+            // special check for client-side entities stored in null-space for some UI guff.
+            if (examined.IsClientSide())
+                return true;
+
             return !Deleted(examined) && CanExamine(examiner, EntityManager.GetComponent<TransformComponent>(examined).MapPosition,
-                entity => entity == examiner || entity == examined);
+                entity => entity == examiner || entity == examined, examined);
         }
 
         [Pure]
-        public virtual bool CanExamine(EntityUid examiner, MapCoordinates target, Ignored? predicate = null)
+        public virtual bool CanExamine(EntityUid examiner, MapCoordinates target, Ignored? predicate = null, EntityUid? examined = null, ExaminerComponent? examinerComp = null)
         {
-            if (!EntityManager.TryGetComponent(examiner, out ExaminerComponent? examinerComponent))
+            // TODO occluded container checks
+            // also requires checking if the examiner has either a storage or stripping UI open, as the item may be accessible via that UI
+
+            if (!Resolve(examiner, ref examinerComp, false))
                 return false;
 
-            if (!examinerComponent.DoRangeCheck)
+            // Ghosts and admins skip examine checks.
+            if (examinerComp.SkipChecks)
+                return true;
+
+            if (examined != null)
+            {
+                var ev = new ExamineAttemptEvent(examiner);
+                RaiseLocalEvent(examined.Value, ev);
+                if (ev.Cancelled)
+                    return false;
+            }
+
+            if (!examinerComp.CheckInRangeUnOccluded)
                 return true;
 
             if (EntityManager.GetComponent<TransformComponent>(examiner).MapID != target.MapId)
@@ -324,6 +343,19 @@ namespace Content.Shared.Examine
             var msg = new FormattedMessage();
             msg.AddText(text);
             PushMessage(msg);
+        }
+    }
+
+    /// <summary>
+    ///     Event raised directed at an entity that someone is attempting to examine
+    /// </summary>
+    public sealed class ExamineAttemptEvent : CancellableEntityEventArgs
+    {
+        public readonly EntityUid Examiner;
+
+        public ExamineAttemptEvent(EntityUid examiner)
+        {
+            Examiner = examiner;
         }
     }
 }

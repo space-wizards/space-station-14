@@ -49,12 +49,15 @@
       - state: inhand-right-light
         shader: unshaded
   - type: PowerCellSlot
-    cellSlot:
-      startingItem: PowerCellMedium
+    cellSlotId: cell_slot
   - type: ContainerContainer
     containers:
       cell_slot: !type:ContainerSlot
   - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMedium
   - type: Sprite
     sprite: Objects/Tools/flashlight.rsi
     netsync: false
@@ -71,7 +74,7 @@
     enabled: false
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
-    radius: 3
+    radius: 4.5
   - type: Appearance
   - type: StaticPrice
     price: 40
@@ -85,9 +88,13 @@
   - type: Tag
     tags:
       - SecBeltEquip
-  - type: PowerCellSlot
-    cellSlot:
-      startingItem: PowerCellHigh
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHigh
+  - type: HandheldLight
+    addPrefix: false
   - type: ToggleableLightVisuals
     inhandVisuals:
       left:
@@ -108,4 +115,4 @@
     sprite: Objects/Tools/seclite.rsi
   - type: PointLight
     enabled: false
-    radius: 4
+    radius: 6

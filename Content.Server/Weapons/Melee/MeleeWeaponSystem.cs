@@ -121,7 +121,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         {
             return;
         }
-        
+
         if (!_interaction.InRangeUnobstructed(user, ev.Target.Value, component.Range))
             return;
 
@@ -308,8 +308,11 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         if (!base.DoDisarm(user, ev, component))
             return false;
 
-        if (!TryComp<CombatModeComponent>(user, out var combatMode))
+        if (!TryComp<CombatModeComponent>(user, out var combatMode) ||
+            combatMode.CanDisarm != true)
+        {
             return false;
+        }
 
         var target = ev.Target!.Value;
 

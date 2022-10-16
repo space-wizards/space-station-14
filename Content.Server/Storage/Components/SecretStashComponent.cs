@@ -15,6 +15,8 @@ namespace Content.Server.Storage.Components
     [Access(typeof(SecretStashSystem))]
     public sealed class SecretStashComponent : Component
     {
+        private string _secretPartName = string.Empty;
+        
         /// <summary>
         ///     Max item size that can be fitted into secret stash.
         /// </summary>
@@ -26,7 +28,11 @@ namespace Content.Server.Storage.Components
         ///     If empty string, will replace it with entity name in init.
         /// </summary>
         [ViewVariables] [DataField("secretPartName")]
-        public string SecretPartName = "";
+        public string SecretPartName
+        {
+            get => _secretPartName;
+            set => _secretPartName = Loc.GetString(value);
+        }
 
         /// <summary>
         ///     Container used to keep secret stash item.
