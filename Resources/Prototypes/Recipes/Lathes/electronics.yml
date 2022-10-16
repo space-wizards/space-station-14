@@ -431,3 +431,12 @@
   materials:
      Steel: 100
      Glass: 900
+
+- type: latheRecipe
+  id: ResearchSMESMachineCircuitboard
+  icon: Objects/Misc/module.rsi/power_mod.png
+  result: ResearchSMESMachineCircuitboard
+  completetime: 4
+  materials:
+     Steel: 100
+     Glass: 900

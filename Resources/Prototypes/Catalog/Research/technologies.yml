@@ -328,6 +328,7 @@
     - AirAlarmElectronics
     - FireAlarmElectronics
     - MailingUnitElectronics
+    - ResearchSMESMachineCircuitboard
 
 - type: technology
   name: Power storage analysis results

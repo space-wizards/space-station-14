@@ -87,7 +87,7 @@
   parent: [ BaseMachine, ConstructibleMachine ]
   name: Research SMES
   id: ResearchSMES
-  description: A high-capacity superconducting magnetic energy storage (SMES) unit.
+  description: A specialised research SMES unit designed to analyse power and maximise storage capacity.
   placement:
     mode: SnapgridCenter
   components:
@@ -104,7 +104,8 @@
         - state: research_smes
     - type: Smes
     - type: ResearchBattery
-      damage:
+      researchDiskReward: PowerTechResultsDisk
+      damage: #the damage the battery does to itself should it be allowed to overload
         types:
           Blunt: 3
     - type: Battery
@@ -140,7 +141,7 @@
       BoardName: "SMES"
       LayoutId: SMES
     - type: Machine
-      board: SMESMachineCircuitboard
+      board: ResearchSMESMachineCircuitboard
     - type: StationInfiniteBatteryTarget
     - type: StaticPrice
       price: 750

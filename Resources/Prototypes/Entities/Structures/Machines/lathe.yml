@@ -293,6 +293,7 @@
       - GasRecyclerMachineCircuitboard
       - MedicalResearchBedCircuitboard
       - ChemicalAnalysisCircuitboard
+      - ResearchSMESMachineCircuitboard
   - type: MaterialStorage
     whitelist:
       tags:
