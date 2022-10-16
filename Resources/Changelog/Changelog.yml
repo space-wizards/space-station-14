@@ -1,9 +1,4 @@
 Entries:
-- author: Morb0
-  changes:
-  - {message: Added nuke ops sound declaration of war, type: Add}
-  id: 1963
-  time: '2022-07-15T09:16:41.0000000+00:00'
 - author: Deahaka
   changes:
   - {message: Altars added, type: Add}
@@ -2942,3 +2937,9 @@ Entries:
       direction., type: Fix}
   id: 2462
   time: '2022-10-16T00:07:43.0000000+00:00'
+- author: Scribbles0
+  changes:
+  - {message: 'Added Cluster, a new low-pop station!', type: Add}
+  - {message: Removed Packed, type: Remove}
+  id: 2463
+  time: '2022-10-16T00:28:22.0000000+00:00'
