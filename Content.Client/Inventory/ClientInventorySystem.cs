@@ -3,6 +3,7 @@ using Content.Client.Examine;
 using Content.Client.Storage;
 using Content.Client.UserInterface.Controls;
 using Content.Client.Verbs;
+using Content.Shared.Clothing.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
