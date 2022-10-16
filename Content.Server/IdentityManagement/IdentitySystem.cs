@@ -122,7 +122,7 @@ public class IdentitySystem : SharedIdentitySystem
         HumanoidComponent? appearance=null)
     {
         int age = HumanoidCharacterProfile.MinimumAge;
-        Gender gender = Gender.Neuter;
+        Gender gender = Gender.Epicene;
 
         // Always use their actual age and gender, since that can't really be changed by an ID.
         if (Resolve(target, ref appearance, false))

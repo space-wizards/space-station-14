@@ -2,9 +2,7 @@ using System.Linq;
 using Content.Server.Administration.Commands;
 using Content.Server.Cargo.Systems;
 using Content.Server.Chat.Managers;
-using Content.Server.GameTicking.Rules.Configurations;
 using Content.Server.Preferences.Managers;
-using Content.Server.RoundEnd;
 using Content.Server.Spawners.Components;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
@@ -19,6 +17,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using Robust.Shared.Enums;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -37,6 +36,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem
     [Dependency] private readonly StationSpawningSystem _stationSpawningSystem = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly PricingSystem _pricingSystem = default!;
+    [Dependency] private readonly NamingSystem _namingSystem = default!;
 
     [ViewVariables]
     private List<Mind.Mind> _pirates = new();
@@ -198,8 +198,9 @@ public sealed class PiratesRuleSystem : GameRuleSystem
         for (var i = 0; i < ops.Length; i++)
         {
             var sex = _random.Prob(0.5f) ? Sex.Male : Sex.Female;
+            var gender = sex == Sex.Male ? Gender.Male : Gender.Female;
 
-            var name = sex.GetName("Human", _prototypeManager, _random);
+            var name = _namingSystem.GetName("Human", gender);
 
             var session = ops[i];
             var newMind = new Mind.Mind(session.UserId)

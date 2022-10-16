@@ -6,5 +6,6 @@
     slotFlags: HEAD
     slotGroup: MainHotbar
     uiWindowPos: 0,0
+    strippingWindowPos: 0,0
     displayName: Head
     offset: 0, -0.45
