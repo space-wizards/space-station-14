@@ -266,7 +266,7 @@ public sealed class AirAlarmSystem : EntitySystem
         var addr = string.Empty;
         if (EntityManager.TryGetComponent(uid, out DeviceNetworkComponent? netConn)) addr = netConn.Address;
         if (AccessCheck(uid, args.Session.AttachedEntity, component))
-            SetMode(uid, addr, args.Mode, true, false);
+            SetMode(uid, addr, args.Mode, false);
         else
             UpdateUI(uid, component);
     }
@@ -317,11 +317,11 @@ public sealed class AirAlarmSystem : EntitySystem
 
         if (args.AlarmType == AtmosAlarmType.Danger)
         {
-            SetMode(uid, addr, AirAlarmMode.WideFiltering, true, false);
+            SetMode(uid, addr, AirAlarmMode.WideFiltering, false);
         }
         else if (args.AlarmType == AtmosAlarmType.Normal || args.AlarmType == AtmosAlarmType.Warning)
         {
-            SetMode(uid, addr, AirAlarmMode.Filtering, true, false);
+            SetMode(uid, addr, AirAlarmMode.Filtering, false);
         }
 
         UpdateUI(uid, component);
@@ -336,11 +336,14 @@ public sealed class AirAlarmSystem : EntitySystem
     /// </summary>
     /// <param name="origin">The origin address of this mode set. Used for network sync.</param>
     /// <param name="mode">The mode to set the alarm to.</param>
-    /// <param name="sync">Whether to sync this mode change to the network or not. Defaults to false.</param>
     /// <param name="uiOnly">Whether this change is for the UI only, or if it changes the air alarm's operating mode. Defaults to true.</param>
-    public void SetMode(EntityUid uid, string origin, AirAlarmMode mode, bool sync = false, bool uiOnly = true, AirAlarmComponent? controller = null)
+    public void SetMode(EntityUid uid, string origin, AirAlarmMode mode, bool uiOnly = true, AirAlarmComponent? controller = null)
     {
-        if (!Resolve(uid, ref controller)) return;
+        if (!Resolve(uid, ref controller) || controller.CurrentMode == mode)
+        {
+            return;
+        }
+
         controller.CurrentMode = mode;
 
         // setting it to UI only means we don't have
@@ -377,7 +380,7 @@ public sealed class AirAlarmSystem : EntitySystem
         // setting sync deals with the issue of air alarms
         // in the same network needing to have the same mode
         // as other alarms
-        if (sync) SyncMode(uid, mode);
+        SyncMode(uid, mode);
     }
 
     /// <summary>
@@ -432,7 +435,8 @@ public sealed class AirAlarmSystem : EntitySystem
 
                 return;
             case AirAlarmSetMode:
-                if (!args.Data.TryGetValue(AirAlarmSetMode, out AirAlarmMode alarmMode)) break;
+                if (!args.Data.TryGetValue(AirAlarmSetMode, out AirAlarmMode alarmMode))
+                    break;
 
                 SetMode(uid, args.SenderAddress, alarmMode, uiOnly: false);
 
