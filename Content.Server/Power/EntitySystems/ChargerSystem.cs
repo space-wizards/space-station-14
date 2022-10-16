@@ -38,18 +38,15 @@ internal sealed class ChargerSystem : EntitySystem
 
     public override void Update(float frameTime)
     {
-        foreach (var comp in EntityManager.EntityQuery<ChargerActiveComponent>())
+        foreach (var (_, charger, slotComp) in EntityManager.EntityQuery<ActiveChargerComponent, ChargerComponent, ItemSlotsComponent>())
         {
-            if (!TryComp(comp.Owner, out ChargerComponent? charger))
-                return;
-
-            if (!_itemSlotsSystem.TryGetSlot(comp.Owner, charger.SlotId, out ItemSlot? slot))
+            if (!_itemSlotsSystem.TryGetSlot(charger.Owner, charger.SlotId, out ItemSlot? slot, slotComp))
                 continue;
 
             if (charger.Status == CellChargerStatus.Empty || charger.Status == CellChargerStatus.Charged || !slot.HasItem)
                 continue;
 
-            TransferPower(comp.Owner, charger, frameTime);
+            TransferPower(charger.Owner, charger, frameTime);
         }
     }
     
@@ -65,8 +62,7 @@ internal sealed class ChargerSystem : EntitySystem
 
         if (args.Container.ID != component.SlotId)
             return;
-
-        AddComp<ChargerActiveComponent>(uid);
+        
         UpdateStatus(uid, component);
     }
 
@@ -75,7 +71,6 @@ internal sealed class ChargerSystem : EntitySystem
         if (args.Container.ID != component.SlotId)
             return;
 
-        RemComp<ChargerActiveComponent>(uid);
         UpdateStatus(uid, component);
     }
 
@@ -112,7 +107,16 @@ internal sealed class ChargerSystem : EntitySystem
         TryComp(uid, out AppearanceComponent? appearance);
 
         component.Status = status;
-        
+
+        if (component.Status == CellChargerStatus.Charging)
+        {
+            AddComp<ActiveChargerComponent>(uid);
+        }
+        else
+        {
+            RemComp<ActiveChargerComponent>(uid);
+        }
+
         switch (component.Status)
         {
             case CellChargerStatus.Off:

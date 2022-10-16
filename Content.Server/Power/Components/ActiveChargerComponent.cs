@@ -4,7 +4,7 @@ using Content.Shared.Power;
 namespace Content.Server.Power.Components
 {
     [RegisterComponent]
-    public sealed class ChargerActiveComponent : Component
+    public sealed class ActiveChargerComponent : Component
     {
     }
 }
