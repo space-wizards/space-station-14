@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Mobs are now properly throwable, type: Tweak}
-  id: 1969
-  time: '2022-07-16T03:04:14.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Throwing pushback reduced to half when weightless., type: Tweak}
   - {message: Weightless distance for touching upped to 1m as 0.6m to be more forgiving
       when weightless., type: Tweak}
@@ -2945,3 +2940,9 @@ Entries:
   - {message: Buckle teleporting should be fixed for now., type: Fix}
   id: 2468
   time: '2022-10-16T06:38:05.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: If you try to swing melee out of range it doesn't waste the swing.,
+    type: Tweak}
+  id: 2469
+  time: '2022-10-16T15:54:43.0000000+00:00'
