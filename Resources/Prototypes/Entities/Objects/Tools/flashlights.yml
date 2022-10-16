@@ -9,7 +9,30 @@
     - Flashlight
     - DroneUsable
   - type: HandheldLight
-    addPrefix: false
+    addPrefix: true
+    blinkingBehaviourID: blinking
+    radiatingBehaviourID: radiating
+  - type: LightBehaviour
+    behaviours:
+      - !type:FadeBehaviour
+        id: radiating
+        interpolate: Linear
+        maxDuration: 2.0
+        startValue: 3.0
+        endValue: 2.0
+        isLooped: true
+        property: Radius
+        enabled: false
+        reverseWhenFinished: true
+      - !type:PulseBehaviour
+        id: blinking
+        interpolate: Nearest
+        maxDuration: 1.0
+        minValue: 0.1
+        maxValue: 2.0
+        isLooped: true
+        property: Radius
+        enabled: false
     toggleAction:
       name: action-name-toggle-light
       description: action-description-toggle-light
@@ -65,8 +88,6 @@
   - type: PowerCellSlot
     cellSlot:
       startingItem: PowerCellHigh
-  - type: HandheldLight
-    addPrefix: false
   - type: ToggleableLightVisuals
     inhandVisuals:
       left:
