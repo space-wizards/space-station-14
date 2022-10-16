@@ -6,6 +6,7 @@ using Content.Shared.PowerCell.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Content.Shared.Power;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Server.Power.EntitySystems;
 
@@ -46,7 +47,7 @@ internal sealed class ChargerSystem : EntitySystem
             if (charger.Status == CellChargerStatus.Empty || charger.Status == CellChargerStatus.Charged || !slot.HasItem)
                 continue;
 
-            TransferPower(charger.Owner, charger, frameTime);
+            TransferPower(charger.Owner, slot.Item!.Value, charger, frameTime);
         }
     }
     
@@ -87,7 +88,7 @@ internal sealed class ChargerSystem : EntitySystem
 
         if (!TryComp(args.EntityUid, out PowerCellSlotComponent? cellSlot))
             return;
-        
+
         if (!_itemSlotsSystem.TryGetSlot(args.EntityUid, cellSlot.CellSlotId, out ItemSlot? itemSlot))
             return;
 
@@ -159,11 +160,11 @@ internal sealed class ChargerSystem : EntitySystem
         if (!_itemSlotsSystem.TryGetSlot(uid, component.SlotId, out ItemSlot? slot))
             return CellChargerStatus.Off;
 
-        if (!_cellSystem.TryGetBatteryFromSlot(uid, out BatteryComponent? heldBattery))
-            return CellChargerStatus.Off;
-
         if (!slot.HasItem)
             return CellChargerStatus.Empty;
+
+        if (!SearchForBattery(slot.Item!.Value, out BatteryComponent? heldBattery))
+            return CellChargerStatus.Off;
 
         if (heldBattery != null && Math.Abs(heldBattery.MaxCharge - heldBattery.CurrentCharge) < 0.01)
             return CellChargerStatus.Charged;
@@ -171,7 +172,7 @@ internal sealed class ChargerSystem : EntitySystem
         return CellChargerStatus.Charging;
     }
 
-    private void TransferPower(EntityUid uid, ChargerComponent component, float frameTime)
+    private void TransferPower(EntityUid uid, EntityUid targetEntity, ChargerComponent component, float frameTime)
     {
         if (!TryComp(uid, out ApcPowerReceiverComponent? receiverComponent))
             return;
@@ -179,7 +180,7 @@ internal sealed class ChargerSystem : EntitySystem
         if (!receiverComponent.Powered)
             return;
 
-        if (!_cellSystem.TryGetBatteryFromSlot(uid, out BatteryComponent? heldBattery))
+        if (!SearchForBattery(targetEntity, out BatteryComponent? heldBattery))
             return;
 
         heldBattery.CurrentCharge += component.ChargeRate * frameTime;
@@ -190,5 +191,16 @@ internal sealed class ChargerSystem : EntitySystem
         }
 
         UpdateStatus(uid, component);
+    }
+
+    private bool SearchForBattery(EntityUid uid, [NotNullWhen(true)] out BatteryComponent? component)
+    {
+        // try get a battery directly on the inserted entity
+        if (!TryComp(uid, out component))
+        {
+            // or by checking for a power cell slot on the inserted entity
+            return _cellSystem.TryGetBatteryFromSlot(uid, out component);
+        }
+        return true;
     }
 }
