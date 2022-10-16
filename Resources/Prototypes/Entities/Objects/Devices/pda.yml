@@ -36,7 +36,7 @@
       event: !type:ToggleActionEvent
   - type: PointLight
     enabled: false
-    radius: 2.5
+    radius: 1.5
     softness: 5
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true

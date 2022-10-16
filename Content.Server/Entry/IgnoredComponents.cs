@@ -15,7 +15,6 @@ namespace Content.Server.Entry
             "ClientEntitySpawner",
             "HandheldGPS",
             "CableVisualizer",
-            "EnsnareableVisualizer",
         };
     }
 }

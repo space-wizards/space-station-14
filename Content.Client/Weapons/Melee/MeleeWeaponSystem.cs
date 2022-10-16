@@ -202,8 +202,11 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         if (!base.DoDisarm(user, ev, component))
             return false;
 
-        if (!HasComp<CombatModeComponent>(user))
+        if (!TryComp<CombatModeComponent>(user, out var combatMode) ||
+            combatMode.CanDisarm != true)
+        {
             return false;
+        }
 
         // If target doesn't have hands then we can't disarm so will let the player know it's pointless.
         if (!HasComp<HandsComponent>(ev.Target!.Value))

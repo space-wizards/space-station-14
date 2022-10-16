@@ -106,23 +106,6 @@ namespace Content.Server.Hands.Systems
         }
 
         #region EntityInsertRemove
-        public override void DoDrop(EntityUid uid, Hand hand, bool doDropInteraction = true, SharedHandsComponent? hands = null)
-        {
-            base.DoDrop(uid, hand,doDropInteraction, hands);
-
-            // update gui of anyone stripping this entity.
-            _strippableSystem.SendUpdate(uid);
-        }
-
-        public override void DoPickup(EntityUid uid, Hand hand, EntityUid entity, SharedHandsComponent? hands = null)
-        {
-            base.DoPickup(uid, hand, entity, hands);
-
-            // update gui of anyone stripping this entity.
-            _strippableSystem.SendUpdate(uid);
-        }
-
-
         public override void PickupAnimation(EntityUid item, EntityCoordinates initialPosition, Vector2 finalPosition,
             EntityUid? exclude)
         {
