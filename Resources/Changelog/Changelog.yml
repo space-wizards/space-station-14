@@ -1,17 +1,4 @@
 Entries:
-- author: metalgearsloth and DogZeroX
-  changes:
-  - {message: 'FTL mechanics have been added allowing you to go (for now, limited)
-      other destinations, ported from Vilous Station 14.', type: Add}
-  - {message: Nukies now start on a nukie planet and have to FTL to the station. No
-      more seeking out their shuttle at roundstart., type: Add}
-  - {message: Additional shuttles can now travel to Centcomm after the emergency shuttle
-      departs (e.g. cargo), type: Add}
-  - {message: Fix autodocking when only 1 port was blocked (woops)., type: Fix}
-  - {message: 'IFF labels now show much further away, at the edge of the radar (no
-      more cargo shuttle getting lost).', type: Tweak}
-  id: 1975
-  time: '2022-07-17T10:22:09.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Nuclear Operatives are now internally (i.e. badmins) recognized as antags.
@@ -2939,3 +2926,9 @@ Entries:
     type: Add}
   id: 2474
   time: '2022-10-16T18:21:02.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed seed extractor and chem master having lit screens when unpowered.,
+    type: Fix}
+  id: 2475
+  time: '2022-10-16T21:00:18.0000000+00:00'
