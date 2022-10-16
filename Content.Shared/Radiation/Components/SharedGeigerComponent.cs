@@ -11,12 +11,16 @@ public abstract class SharedGeigerComponent : Component
 
     [ViewVariables(VVAccess.ReadOnly)]
     public float CurrentRadiation;
+
+    [ViewVariables(VVAccess.ReadOnly)]
+    public GeigerDangerLevel DangerLevel = GeigerDangerLevel.None;
 }
 
 [Serializable, NetSerializable]
 public sealed class GeigerComponentState : ComponentState
 {
     public float CurrentRadiation;
+    public GeigerDangerLevel DangerLevel;
 }
 
 [Serializable, NetSerializable]

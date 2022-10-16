@@ -7,12 +7,16 @@ using Robust.Client.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Client.Radiation.Systems;
 
 public sealed class GeigerSystem : SharedGeigerSystem
 {
     [Dependency] private readonly AudioSystem _audio = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
 
     public override void Initialize()
     {
@@ -25,8 +29,25 @@ public sealed class GeigerSystem : SharedGeigerSystem
 
     private void OnGeigerSoundDone(OnGeigerSoundDoneEvent ev)
     {
-        //var param = AudioParams.Default.WithDoneEvent(ev);
-        //_audio.Play("/Audio/Items/Geiger/ext1.ogg", Filter.Local(), ev.GeigerUid, param);
+        PlayGeigerSound(ev.GeigerUid);
+    }
+
+    private void PlayGeigerSound(EntityUid uid, GeigerComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        if (!component.Sounds.TryGetValue(component.DangerLevel, out var sounds))
+        {
+            component.Stream = null;
+            return;
+        }
+
+        var sound = sounds.GetSound(_random, _proto);
+        var ev = new OnGeigerSoundDoneEvent(uid);
+        var param = sounds.Params.WithDoneEvent(ev);
+
+        component.Stream = _audio.Play(sound, Filter.Local(), uid, param);
     }
 
     private void OnHandleState(EntityUid uid, GeigerComponent component, ref ComponentHandleState args)
@@ -34,24 +55,21 @@ public sealed class GeigerSystem : SharedGeigerSystem
         if (args.Current is not GeigerComponentState state)
             return;
 
-        var curLevel = RadsToLevel(component.CurrentRadiation);
-        var newLevel = RadsToLevel(state.CurrentRadiation);
+        var curLevel = component.DangerLevel;
+        var newLevel = state.DangerLevel;
+        component.DangerLevel = state.DangerLevel;
 
         if (curLevel != newLevel)
         {
+            component.Stream?.Stop();
             if (component.Stream == null)
             {
-                var ev = new OnGeigerSoundDoneEvent(uid);
-                var param = AudioParams.Default.WithDoneEvent(ev).WithLoop(true);
-                component.Stream = _audio.Play("/Audio/Items/Geiger/ext1.ogg", Filter.Local(), uid, param);
-            }
-            else
-            {
-                //component.Stream.Stop();
+                PlayGeigerSound(uid, component);
             }
         }
 
         component.CurrentRadiation = state.CurrentRadiation;
+        component.DangerLevel = state.DangerLevel;
         component.UiUpdateNeeded = true;
 
 

@@ -34,6 +34,7 @@ public sealed class GeigerSystem : SharedGeigerSystem
             return;
 
         component.CurrentRadiation = rads;
+        component.DangerLevel = RadsToLevel(rads);
         UpdateAppearance(uid, component);
         Dirty(component);
     }
@@ -44,15 +45,27 @@ public sealed class GeigerSystem : SharedGeigerSystem
         if (!Resolve(uid, ref component, ref appearance, false))
             return;
 
-        var dangerLevel = RadsToLevel(component.CurrentRadiation);
-        _appearance.SetData(uid, GeigerVisuals.DangerLevel, dangerLevel, appearance);
+        _appearance.SetData(uid, GeigerVisuals.DangerLevel, component.DangerLevel, appearance);
     }
 
     private void OnGetState(EntityUid uid, GeigerComponent component, ref ComponentGetState args)
     {
         args.State = new GeigerComponentState
         {
-            CurrentRadiation = component.CurrentRadiation
+            CurrentRadiation = component.CurrentRadiation,
+            DangerLevel = component.DangerLevel
+        };
+    }
+
+    public static GeigerDangerLevel RadsToLevel(float rads)
+    {
+        return rads switch
+        {
+            < 0.2f => GeigerDangerLevel.None,
+            < 1f => GeigerDangerLevel.Low,
+            < 3f => GeigerDangerLevel.Med,
+            < 6f => GeigerDangerLevel.High,
+            _ => GeigerDangerLevel.Extreme
         };
     }
 }

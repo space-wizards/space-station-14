@@ -17,22 +17,10 @@ public abstract class SharedGeigerSystem : EntitySystem
             return;
 
         var rads = component.CurrentRadiation.ToString("N1");
-        var color = RadsToColor(component.CurrentRadiation);
+        var color = LevelToColor(component.DangerLevel);
         var msg = Loc.GetString("geiger-component-examine",
             ("rads", rads), ("color", color));
         args.PushMarkup(msg);
-    }
-
-    public static GeigerDangerLevel RadsToLevel(float rads)
-    {
-        return rads switch
-        {
-            < 0.2f => GeigerDangerLevel.None,
-            < 1f => GeigerDangerLevel.Low,
-            < 3f => GeigerDangerLevel.Med,
-            < 6f => GeigerDangerLevel.High,
-            _ => GeigerDangerLevel.Extreme
-        };
     }
 
     public static Color LevelToColor(GeigerDangerLevel level)
@@ -51,11 +39,5 @@ public abstract class SharedGeigerSystem : EntitySystem
             default:
                 return Color.White;
         }
-    }
-
-    public static Color RadsToColor(float rads)
-    {
-        var level = RadsToLevel(rads);
-        return LevelToColor(level);
     }
 }
