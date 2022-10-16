@@ -74,7 +74,7 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/musket.rsi
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Snipers/musket.rsi
+    icon: Objects/Weapons/Guns/Snipers/musket.rsi
   - type: Gun
     selectedMode: SemiAuto
     availableModes:

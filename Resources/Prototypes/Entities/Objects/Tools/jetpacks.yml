@@ -44,7 +44,8 @@
           type: GasTankBoundUserInterface
     - type: Clothing
       sprite: Objects/Tanks/Jetpacks/blue.rsi
-      quickEquip: false
+      QuickEquip: false
+      size: 100
       slots:
         - Back
     - type: GasTank
