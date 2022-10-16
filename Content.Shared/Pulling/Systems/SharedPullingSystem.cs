@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Alert;
 using Content.Shared.GameTicking;
+using Content.Shared.Gravity;
 using Content.Shared.Input;
 using Content.Shared.Movement.Components;
 using Content.Shared.Physics.Pull;
@@ -19,6 +20,7 @@ namespace Content.Shared.Pulling
     public abstract partial class SharedPullingSystem : EntitySystem
     {
         [Dependency] private readonly SharedPullingStateManagementSystem _pullSm = default!;
+        [Dependency] private readonly SharedGravitySystem _gravity = default!;
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
 
         /// <summary>
@@ -197,7 +199,7 @@ namespace Content.Shared.Pulling
             }
 
             if (_containerSystem.IsEntityInContainer(player) ||
-                player.IsWeightless(entityManager: EntityManager))
+                _gravity.IsWeightless(player))
                 return false;
 
             TryMoveTo(pullable, coords);
