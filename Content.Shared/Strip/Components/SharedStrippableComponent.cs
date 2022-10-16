@@ -1,4 +1,4 @@
-﻿using Content.Shared.ActionBlocker;
+using Content.Shared.ActionBlocker;
 using Content.Shared.DragDrop;
 using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
@@ -8,18 +8,14 @@ namespace Content.Shared.Strip.Components
 {
     public abstract class SharedStrippableComponent : Component, IDraggable
     {
-        public bool CanBeStripped(EntityUid by)
-        {
-            return by != Owner
-                   && IoCManager.Resolve<IEntityManager>().HasComponent<SharedHandsComponent>(@by)
-                   && EntitySystem.Get<ActionBlockerSystem>().CanInteract(@by, Owner);
-        }
-
         bool IDraggable.CanDrop(CanDropEvent args)
         {
-            return args.Target != args.Dragged
-                   && args.Target == args.User
-                   && CanBeStripped(args.User);
+            var ent = IoCManager.Resolve<IEntityManager>();
+            return args.Target != args.Dragged &&
+                args.Target == args.User &&
+                ent.HasComponent<SharedStrippingComponent>(args.User) &&
+                ent.HasComponent<SharedHandsComponent>(args.User) &&
+                ent.EntitySysManager.GetEntitySystem<ActionBlockerSystem>().CanInteract(args.User, args.Dragged);
         }
 
         public abstract bool Drop(DragDropEvent args);
@@ -32,64 +28,24 @@ namespace Content.Shared.Strip.Components
     }
 
     [NetSerializable, Serializable]
-    public sealed class StrippingInventoryButtonPressed : BoundUserInterfaceMessage
+    public sealed class StrippingSlotButtonPressed : BoundUserInterfaceMessage
     {
-        public string Slot { get; }
+        public readonly string Slot;
 
-        public StrippingInventoryButtonPressed(string slot)
+        public readonly bool IsHand;
+
+        public StrippingSlotButtonPressed(string slot, bool isHand)
         {
             Slot = slot;
-        }
-    }
-
-    [NetSerializable, Serializable]
-    public sealed class StrippingHandButtonPressed : BoundUserInterfaceMessage
-    {
-        public string Hand { get; }
-
-        public StrippingHandButtonPressed(string hand)
-        {
-            Hand = hand;
-        }
-    }
-
-    [NetSerializable, Serializable]
-    public sealed class StrippingHandcuffButtonPressed : BoundUserInterfaceMessage
-    {
-        public EntityUid Handcuff { get; }
-
-        public StrippingHandcuffButtonPressed(EntityUid handcuff)
-        {
-            Handcuff = handcuff;
+            IsHand = isHand;
         }
     }
 
     [NetSerializable, Serializable]
     public sealed class StrippingEnsnareButtonPressed : BoundUserInterfaceMessage
     {
-        public EntityUid Ensnare { get; }
-
-        public StrippingEnsnareButtonPressed(EntityUid ensnare)
+        public StrippingEnsnareButtonPressed()
         {
-            Ensnare = ensnare;
-        }
-    }
-
-    [NetSerializable, Serializable]
-    public sealed class StrippingBoundUserInterfaceState : BoundUserInterfaceState
-    {
-        public Dictionary<(string ID, string Name), string> Inventory { get; }
-        public Dictionary<string, string> Hands { get; }
-        public Dictionary<EntityUid, string> Handcuffs { get; }
-        public Dictionary<EntityUid, string> Ensnare { get; }
-
-        public StrippingBoundUserInterfaceState(Dictionary<(string ID, string Name), string> inventory, Dictionary<string, string> hands, Dictionary<EntityUid, string> handcuffs,
-            Dictionary<EntityUid, string> ensnare)
-        {
-            Inventory = inventory;
-            Hands = hands;
-            Handcuffs = handcuffs;
-            Ensnare = ensnare;
         }
     }
 

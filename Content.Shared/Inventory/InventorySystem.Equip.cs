@@ -242,9 +242,10 @@ public abstract partial class InventorySystem
         // Is the actor currently stripping the target? Here we could check if the actor has the stripping UI open, but
         // that requires server/client specific code. so lets just check if they **could** open the stripping UI.
         // Note that this doesn't check that the item is equipped by the target, as this is done elsewhere.
-        return actor != target
-            && TryComp(target, out SharedStrippableComponent? strip)
-            && strip.CanBeStripped(actor);
+        return actor != target &&
+            HasComp<SharedStrippableComponent>(target) &&
+            HasComp<SharedStrippingComponent>(actor) &&
+            HasComp<SharedHandsComponent>(actor);
     }
 
     public bool CanEquip(EntityUid uid, EntityUid itemUid, string slot, [NotNullWhen(false)] out string? reason,
