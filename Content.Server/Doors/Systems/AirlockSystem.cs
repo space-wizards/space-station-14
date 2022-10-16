@@ -26,6 +26,7 @@ namespace Content.Server.Doors.Systems
 
             SubscribeLocalEvent<AirlockComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<AirlockComponent, SignalReceivedEvent>(OnSignalReceived);
+
             SubscribeLocalEvent<AirlockComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<AirlockComponent, DoorStateChangedEvent>(OnStateChanged);
             SubscribeLocalEvent<AirlockComponent, BeforeDoorOpenedEvent>(OnBeforeDoorOpened);
@@ -33,6 +34,7 @@ namespace Content.Server.Doors.Systems
             SubscribeLocalEvent<AirlockComponent, ActivateInWorldEvent>(OnActivate, before: new [] {typeof(DoorSystem)});
             SubscribeLocalEvent<AirlockComponent, DoorGetPryTimeModifierEvent>(OnGetPryMod);
             SubscribeLocalEvent<AirlockComponent, BeforeDoorPryEvent>(OnDoorPry);
+
         }
 
         private void OnInit(EntityUid uid, AirlockComponent component, ComponentInit args)

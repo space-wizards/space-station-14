@@ -133,6 +133,10 @@ namespace Content.Server.Doors.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public float AutoCloseDelayModifier = 1.0f;
 
+        /// <summary>
+        ///     The receiver port for turning off automatic closing.
+        ///     Needed for brig timers.
+        /// </summary>
         [DataField("autoClosePort", customTypeSerializer: typeof(PrototypeIdSerializer<ReceiverPortPrototype>))]
         public string AutoClosePort = "AutoClose";
 

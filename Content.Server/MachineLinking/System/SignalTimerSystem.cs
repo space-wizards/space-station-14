@@ -10,7 +10,6 @@ using Content.Server.Interaction;
 
 namespace Content.Server.MachineLinking.System
 {
-
     public sealed partial class SignalTimerSystem : EntitySystem
     {
         [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -41,13 +40,19 @@ namespace Content.Server.MachineLinking.System
                 comp.Outputs.TryAdd(component.StartPort, new());
             }
 
-            _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, component.Text);
+            _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, component.Label);
         }
 
         private void OnAfterActivatableUIOpen(EntityUid uid, SignalTimerComponent component, AfterActivatableUIOpenEvent args)
         {
             if (_ui.TryGetUi(component.Owner, SignalTimerUiKey.Key, out var bui))
-                _ui.SetUiState(bui, new SignalTimerBoundUserInterfaceState(component.Text, TimeSpan.FromSeconds(component.Delay).Minutes.ToString("D2"), TimeSpan.FromSeconds(component.Delay).Seconds.ToString("D2"), component.CanEditText, component.TriggerTime, component.Activated, _accessReader.IsAllowed(args.User, uid)));
+                _ui.SetUiState(bui, new SignalTimerBoundUserInterfaceState(component.Label,
+                    TimeSpan.FromSeconds(component.Delay).Minutes.ToString("D2"),
+                    TimeSpan.FromSeconds(component.Delay).Seconds.ToString("D2"),
+                    component.CanEditText,
+                    component.TriggerTime,
+                    component.Activated,
+                    _accessReader.IsAllowed(args.User, uid)));
         }
 
         public bool Trigger(EntityUid uid, SignalTimerComponent signalTimer)
@@ -59,7 +64,13 @@ namespace Content.Server.MachineLinking.System
             _appearanceSystem.SetData(uid, TextScreenVisuals.Mode, TextScreenMode.Text);
 
             if (_ui.TryGetUi(uid, SignalTimerUiKey.Key, out var bui))
-                _ui.SetUiState(bui, new SignalTimerBoundUserInterfaceState(signalTimer.Text, TimeSpan.FromSeconds(signalTimer.Delay).Minutes.ToString("D2"), TimeSpan.FromSeconds(signalTimer.Delay).Seconds.ToString("D2"), signalTimer.CanEditText, signalTimer.TriggerTime, signalTimer.Activated, null));
+                _ui.SetUiState(bui, new SignalTimerBoundUserInterfaceState(signalTimer.Label,
+                                TimeSpan.FromSeconds(signalTimer.Delay).Minutes.ToString("D2"),
+                                TimeSpan.FromSeconds(signalTimer.Delay).Seconds.ToString("D2"),
+                                signalTimer.CanEditText,
+                                signalTimer.TriggerTime,
+                                signalTimer.Activated,
+                                null));
 
             return true;
         }
@@ -90,30 +101,36 @@ namespace Content.Server.MachineLinking.System
             }
         }
 
-        private void OnTextChangedMessage(EntityUid uid, SignalTimerComponent component, SignalTimerTextChangedMessage args)
+        /// <summary>
+        ///     Checks if a UI <paramref name="message"/> is allowed to be sent by the user.
+        /// </summary>
+        /// <param name="uid">The entity that is interacted with.</param>
+        private bool IsMessageValid(EntityUid uid, BoundUserInterfaceMessage message)
         {
-            if (args.Session.AttachedEntity is not { Valid: true } mob)
-                return;
+            if (message.Session.AttachedEntity is not { Valid: true } mob)
+                return false;
 
             if (!_interaction.InRangeUnobstructed(mob, uid))
-                return;
+                return false;
 
             if (!_accessReader.IsAllowed(mob, uid))
+                return false;
+
+            return true;
+        }
+
+        private void OnTextChangedMessage(EntityUid uid, SignalTimerComponent component, SignalTimerTextChangedMessage args)
+        {
+            if (!IsMessageValid(uid, args))
                 return;
 
-            component.Text = args.Text[..Math.Min(5,args.Text.Length)];
-            _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, component.Text);
+            component.Label = args.Text[..Math.Min(5,args.Text.Length)];
+            _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, component.Label);
         }
 
         private void OnDelayChangedMessage(EntityUid uid, SignalTimerComponent component, SignalTimerDelayChangedMessage args)
         {
-            if (args.Session.AttachedEntity is not { Valid: true } mob)
-                return;
-
-            if (!_interaction.InRangeUnobstructed(mob, uid))
-                return;
-
-            if (!_accessReader.IsAllowed(mob,uid))
+            if (!IsMessageValid(uid, args))
                 return;
 
             component.Delay = args.Delay.TotalSeconds;
@@ -121,13 +138,7 @@ namespace Content.Server.MachineLinking.System
 
         private void OnTimerStartMessage(EntityUid uid, SignalTimerComponent component, SignalTimerStartMessage args)
         {
-            if (args.Session.AttachedEntity is not { Valid: true } mob)
-                return;
-
-            if (!_interaction.InRangeUnobstructed(mob, uid))
-                return;
-
-            if (!_accessReader.IsAllowed(mob, uid))
+            if (!IsMessageValid(uid, args))
                 return;
 
             if (!component.Activated)
@@ -138,7 +149,7 @@ namespace Content.Server.MachineLinking.System
 
                 _appearanceSystem.SetData(uid, TextScreenVisuals.Mode, TextScreenMode.Timer);
                 _appearanceSystem.SetData(uid, TextScreenVisuals.TargetTime, component.TriggerTime);
-                _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, component.Text);
+                _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, component.Label);
 
                 _signalSystem.InvokePort(uid, component.StartPort);
             }
@@ -148,7 +159,7 @@ namespace Content.Server.MachineLinking.System
                 component.Activated = false;
 
                 _appearanceSystem.SetData(uid, TextScreenVisuals.Mode, TextScreenMode.Text);
-                _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, component.Text);
+                _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, component.Label);
             }
         }
     }

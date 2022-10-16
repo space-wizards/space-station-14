@@ -1,15 +1,21 @@
-using Robust.Shared.Timing;
-using Robust.Client.GameObjects;
-using Robust.Shared.Utility;
 using Content.Shared.TextScreen;
+using Robust.Client.GameObjects;
+using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Client.TextScreen
 {
-
+    /// <summary>
+    ///     The TextScreenSystem draws text in the game world using 3x5 sprite states for each character.
+    /// </summary>
     public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisualsComponent>
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
+        /// <summary>
+        ///     Contains char/state Key/Value pairs. <br/>
+        ///     The states in Textures/Effects/text.rsi that special character should be replaced with.
+        /// </summary>
         private static readonly Dictionary<char, string> CharStatePairs = new()
             {
                 { ':', "colon" },
@@ -21,6 +27,11 @@ namespace Content.Client.TextScreen
                 { ' ', "blank" }
             };
 
+        private const string DefaultState = "blank";
+
+        /// <summary>
+        ///     A string prefix for all text layers.
+        /// </summary>
         private const string TextScreenLayerMapKey = "textScreenLayerMapKey";
 
         public override void Initialize()
@@ -36,22 +47,22 @@ namespace Content.Client.TextScreen
                 return;
 
             ResetTextLength(component, sprite);
-            PrepareTextLayers(component, sprite);
-            UpdateLayersToText(component, sprite);
+            PrepareLayerStatesToDraw(component, sprite);
+            UpdateLayersToDraw(component, sprite);
         }
 
         /// <summary>
-        ///     Resets all sprite layers, through removing them and then creating new ones.
+        ///     Resets all TextScreenComponent sprite layers, through removing them and then creating new ones.
         /// </summary>
         public void ResetTextLength(TextScreenVisualsComponent component, SpriteComponent? sprite = null)
         {
             if (!Resolve(component.Owner, ref sprite))
                 return;
 
-            foreach (var (key, _) in component.TextLayers)
+            foreach (var (key, _) in component.LayerStatesToDraw)
                 sprite.RemoveLayer(key);
 
-            component.TextLayers.Clear();
+            component.LayerStatesToDraw.Clear();
 
             var length = component.TextLength;
             component.TextLength = 0;
@@ -59,7 +70,7 @@ namespace Content.Client.TextScreen
         }
 
         /// <summary>
-        ///     Sets the text length, updating the sprite layers if necessary.
+        ///     Sets <see cref="TextScreenVisualsComponent.TextLength"/>, adding or removing sprite layers if necessary.
         /// </summary>
         public void SetTextLength(TextScreenVisualsComponent component, int newLength, SpriteComponent? sprite = null)
         {
@@ -69,25 +80,23 @@ namespace Content.Client.TextScreen
             if (!Resolve(component.Owner, ref sprite))
                 return;
 
-            var oldLength = component.TextLength;
-
-            if (newLength > oldLength)
+            if (newLength > component.TextLength)
             {
-                for (var i = oldLength; i < newLength; i++)
+                for (var i = component.TextLength; i < newLength; i++)
                 {
                     sprite.LayerMapReserveBlank(TextScreenLayerMapKey + i);
-                    component.TextLayers.Add(TextScreenLayerMapKey + i, null);
+                    component.LayerStatesToDraw.Add(TextScreenLayerMapKey + i, null);
                     sprite.LayerSetRSI(TextScreenLayerMapKey + i, new ResourcePath("Effects/text.rsi"));
                     sprite.LayerSetColor(TextScreenLayerMapKey + i, component.Color);
-                    sprite.LayerSetState(TextScreenLayerMapKey + i, "blank"); //set a default? maybe
+                    sprite.LayerSetState(TextScreenLayerMapKey + i, DefaultState);
                 }
             }
             else
             {
-                for (var i = oldLength; i > newLength; i--)
+                for (var i = component.TextLength; i > newLength; i--)
                 {
                     sprite.LayerMapGet(TextScreenLayerMapKey + (i - 1));
-                    component.TextLayers.Remove(TextScreenLayerMapKey + (i - 1));
+                    component.LayerStatesToDraw.Remove(TextScreenLayerMapKey + (i - 1));
                     sprite.RemoveLayer(TextScreenLayerMapKey + (i - 1));
                 }
             }
@@ -105,9 +114,9 @@ namespace Content.Client.TextScreen
             if (!Resolve(component.Owner, ref sprite))
                 return;
 
-            for (var i = 0; i < component.TextLayers.Count; i++)
+            for (var i = 0; i < component.LayerStatesToDraw.Count; i++)
             {
-                var offset = i - (component.TextLayers.Count - 1) / 2.0f;
+                var offset = i - (component.LayerStatesToDraw.Count - 1) / 2.0f;
                 sprite.LayerSetOffset(TextScreenLayerMapKey + i, new Vector2(offset * TextScreenVisualsComponent.PixelSize * 4.0f, 0.0f) + component.TextOffset);
             }
         }
@@ -145,67 +154,65 @@ namespace Content.Client.TextScreen
                 UpdateText(component);
             }
 
-            PrepareTextLayers(component, sprite);
-            UpdateLayersToText(component, sprite);
+            PrepareLayerStatesToDraw(component, sprite);
+            UpdateLayersToDraw(component, sprite);
         }
 
         /// <summary>
         ///     If currently in <see cref="TextScreenMode.Text"/> mode: <br/>
-        ///     Sets <see cref="TextScreenVisualsComponent.ShowText"/> to the value of <see cref="TextScreenVisualsComponent.Text"/>
+        ///     Sets <see cref="TextScreenVisualsComponent.TextToDraw"/> to the value of <see cref="TextScreenVisualsComponent.Text"/>
         /// </summary>
         public static void UpdateText(TextScreenVisualsComponent component)
         {
             if (component.CurrentMode == TextScreenMode.Text)
-                component.ShowText = component.Text;
+                component.TextToDraw = component.Text;
         }
 
         /// <summary>
-        ///     Updates visibility of text if the component is activated.
+        ///     Sets visibility of text to <see cref="TextScreenVisualsComponent.Activated"/>.
         /// </summary>
         public void UpdateVisibility(TextScreenVisualsComponent component, SpriteComponent? sprite = null)
         {
             if (!Resolve(component.Owner, ref sprite))
                 return;
 
-            foreach (var (key, _) in component.TextLayers)
+            foreach (var (key, _) in component.LayerStatesToDraw)
             {
                 sprite.LayerSetVisible(key, component.Activated);
             }
         }
 
         /// <summary>
-        ///     Sets the text in the TextLayers to match the component ShowText string.
+        ///     Sets the states in the <see cref="TextScreenVisualsComponent.LayerStatesToDraw"/> to match the component <see cref="TextScreenVisualsComponent.TextToDraw"/> string.
         /// </summary>
         /// <remarks>
-        ///     Remember to set component.Text to a string first.
-        ///     
-        ///     Invalid characters turn into null, only the beginning of the string is handled.
+        ///     Remember to set <see cref="TextScreenVisualsComponent.TextToDraw"/> to a string first.
         /// </remarks>
-        public void PrepareTextLayers(TextScreenVisualsComponent component, SpriteComponent? sprite = null)
+        public void PrepareLayerStatesToDraw(TextScreenVisualsComponent component, SpriteComponent? sprite = null)
         {
             if (!Resolve(component.Owner, ref sprite))
                 return;
 
-            for (var i=0; (i<component.TextLength); i++)
+            for (var i = 0; (i < component.TextLength); i++)
             {
-                if (i>=component.ShowText.Length)
+                if (i >= component.TextToDraw.Length)
                 {
-                    component.TextLayers[TextScreenLayerMapKey + i] = "blank";
+                    component.LayerStatesToDraw[TextScreenLayerMapKey + i] = DefaultState;
                     continue;
                 }
-                component.TextLayers[TextScreenLayerMapKey + i] = GetStateFromChar(component.ShowText[i]);
+                component.LayerStatesToDraw[TextScreenLayerMapKey + i] = GetStateFromChar(component.TextToDraw[i]);
             }
         }
 
         /// <summary>
-        ///     Updates sprite layers to match text in the LayerText
+        ///     Iterates through <see cref="TextScreenVisualsComponent.LayerStatesToDraw"/>, setting sprite states to the appropriate layers.
         /// </summary>
-        public void UpdateLayersToText(TextScreenVisualsComponent component, SpriteComponent? sprite = null)
+        public void UpdateLayersToDraw(TextScreenVisualsComponent component, SpriteComponent? sprite = null)
         {
             if (!Resolve(component.Owner, ref sprite))
                 return;
 
-            foreach (var (key, state) in component.TextLayers)
+            foreach (var (key, state) in component.LayerStatesToDraw)
             {
                 if (state == null)
                     continue;
@@ -219,20 +226,23 @@ namespace Content.Client.TextScreen
 
             foreach (var comp in EntityQuery<TextScreenVisualsComponent>())
             {
+                // If this is in timing mode, update it regularly.
                 if (comp.CurrentMode == TextScreenMode.Timer)
                 {
                     // Basically Abs(TimeSpan, TimeSpan) -> Gives the difference between the current time and the target time.
                     var timeToShow = _gameTiming.CurTime > comp.TargetTime ? _gameTiming.CurTime - comp.TargetTime : comp.TargetTime - _gameTiming.CurTime;
-                    comp.ShowText = TimeToString(timeToShow, false);
-                    PrepareTextLayers(comp);
-                    UpdateLayersToText(comp);
+                    comp.TextToDraw = TimeToString(timeToShow, false);
+                    PrepareLayerStatesToDraw(comp);
+                    UpdateLayersToDraw(comp);
                 }
             }
         }
 
+        /// <summary>
+        ///     Returns the <paramref name="timeSpan"/> converted to a string in either HH:MM, MM:SS or potentially SS:mm format.
+        /// </summary>
         /// <param name="timeSpan">TimeSpan to convert into string.</param>
         /// <param name="getMilliseconds">Should the string be ss:ms if minutes are less than 1?</param>
-        /// <returns>Returns either HH:MM, MM:SS or potentially SS:MS based on the <paramref name="timeSpan"/>.</returns>
         public static string TimeToString(TimeSpan timeSpan, bool getMilliseconds = true)
         {
             string firstString;
@@ -246,8 +256,8 @@ namespace Content.Client.TextScreen
             else if (timeSpan.TotalMinutes >= 1 || !getMilliseconds)
             {
                 firstString = timeSpan.Minutes.ToString("D2");
-                // It's nicer to see a timer set at 5 seconds actually start at 00:05 instead of 00:04, and when the timer reaches 0, it should be set off almost immediately.
-                var seconds = timeSpan.Seconds + (timeSpan.Milliseconds > 200 ? 1 : 0);
+                // It's nicer to see a timer set at 5 seconds actually start at 00:05 instead of 00:04.
+                var seconds = timeSpan.Seconds + (timeSpan.Milliseconds > 500 ? 1 : 0);
                 lastString = seconds.ToString("D2");
             }
             else
@@ -260,21 +270,28 @@ namespace Content.Client.TextScreen
             return firstString + ':' + lastString;
         }
 
-        /// <returns>Layer state string from <paramref name="character"/>, or null if none available</returns>
+        /// <summary>
+        ///     Returns the Effects/text.rsi state string based on <paramref name="character"/>, or null if none available.
+        /// </summary>
         public static string? GetStateFromChar(char? character)
         {
             if (character == null)
                 return null;
 
+            // First checks if its one of our special characters
             if (CharStatePairs.ContainsKey(character.Value))
                 return CharStatePairs[character.Value];
 
+            // Or else it checks if its a normal letter or digit
             if (char.IsLetterOrDigit(character.Value))
                 return character.Value.ToString().ToLower();
 
             return null;
         }
-
     }
-
 }
+
+// TODO: Fix copyright in textscreen.rsi and text.rsi
+// TODO: Prototype should not rotate.
+// TODO: Doublecheck transmitter component/signal component, do they have all keys they should have etc?
+// TODO: Check EmbeddedResource Include="TextScreen...

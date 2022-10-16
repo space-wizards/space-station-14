@@ -1,20 +1,7 @@
-using Content.Shared.Disposal.Components;
-using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.SymbolStore;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Content.Shared.MachineLinking
 {
-    public abstract class SharedSignalTimerComponent : Component
-    {
-
-    }
-
     [Serializable, NetSerializable]
     public enum SignalTimerUiKey
     {
@@ -32,7 +19,7 @@ namespace Content.Shared.MachineLinking
         public string CurrentDelaySeconds { get; }
         public bool ShowText { get; }
         public TimeSpan TriggerTime { get; }
-        public bool TimerStarted { get;  }
+        public bool TimerStarted { get; }
         public bool? HasAccess { get; }
         public SignalTimerBoundUserInterfaceState(string currentText, string currentDelayMinutes, string currentDelaySeconds, bool showText, TimeSpan triggerTime, bool timerStarted, bool? hasAccess)
         {

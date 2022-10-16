@@ -1,0 +1,9 @@
+diff a/Content.Shared/Content.Shared.csproj b/Content.Shared/Content.Shared.csproj	(rejected hunks)
+@@ -28,6 +28,7 @@
+     </ProjectReference>
+   </ItemGroup>
+   <ItemGroup>
++    <EmbeddedResource Include="TextScreen\Names\*.txt" />
+   </ItemGroup>
+   <Import Project="..\RobustToolbox\MSBuild\Robust.Analyzers.targets" />
+ 

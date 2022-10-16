@@ -1,27 +1,43 @@
-using Content.Shared.MachineLinking;
 using Content.Shared.TextScreen;
-using Robust.Shared.Audio;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Client.TextScreen
 {
     [RegisterComponent]
     public sealed class TextScreenVisualsComponent : Component
     {
+        /// <summary>
+        ///     1/32 - the size of a pixel
+        /// </summary>
         public const float PixelSize = 0.03125f;
 
+        /// <summary>
+        ///     The color of the text drawn.
+        /// </summary>
         [DataField("color")]
-        public Color Color { get; set; } = Color.White;
+        public Color Color { get; set; } = Color.Red;
 
+        /// <summary>
+        ///     Whether the screen is on.
+        /// </summary>
         [DataField("activated")]
         public bool Activated = false;
 
+        /// <summary>
+        ///     The current mode of the screen - is it showing text, or currently counting?
+        /// </summary>
         [DataField("currentMode")]
         public TextScreenMode CurrentMode = TextScreenMode.Text;
 
+        /// <summary>
+        ///     The time it is counting to or from.
+        /// </summary>
         [DataField("targetTime")]
         public TimeSpan TargetTime = TimeSpan.Zero;
 
+        /// <summary>
+        ///     Offset for drawing the text. <br/>
+        ///     (0, 8) pixels is the default for the Structures\Wallmounts\textscreen.rsi
+        /// </summary>
         [DataField("textOffset"), ViewVariables(VVAccess.ReadWrite)]
         public Vector2 TextOffset = new(0f, PixelSize*8);
 
@@ -32,20 +48,17 @@ namespace Content.Client.TextScreen
         public int TextLength = 5;
 
         /// <summary>
-        ///     The text to update from
-        /// </summary>
-        public string ShowText = "";
-
-        /// <summary>
-        ///     The text to show
+        ///     Text the screen should show when it's not counting.
         /// </summary>
         [DataField("text"), ViewVariables(VVAccess.ReadWrite)]
         public string Text = "";
 
+        public string TextToDraw = "";
+
         /// <summary>
-        ///     The different layers for each character.
+        ///     The different layers for each character - this is the currently drawn states.
         /// </summary>
-        [DataField("textLayers")]
-        public Dictionary<string, string?> TextLayers = new();
+        [DataField("layerStatesToDraw")]
+        public Dictionary<string, string?> LayerStatesToDraw = new();
     }
 }

@@ -1,11 +1,6 @@
 using Content.Shared.MachineLinking;
 using Robust.Client.GameObjects;
 using Robust.Shared.Timing;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Content.Client.MachineLinking.UI
 {
@@ -14,7 +9,6 @@ namespace Content.Client.MachineLinking.UI
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         private SignalTimerWindow? _window;
-
 
         public SignalTimerBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
@@ -36,14 +30,6 @@ namespace Content.Client.MachineLinking.UI
             _window.OnCurrentDelaySecondsChanged += OnDelayChanged;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public TimeSpan GetCurrentTime()
-        {
-            return _gameTiming.CurTime;
-        }
-
         public void OnStartTimer()
         {
             SendMessage(new SignalTimerStartMessage(Owner.Owner));
@@ -59,6 +45,11 @@ namespace Content.Client.MachineLinking.UI
             if (_window == null)
                 return;
             SendMessage(new SignalTimerDelayChangedMessage(_window.GetDelay()));
+        }
+
+        public TimeSpan GetCurrentTime()
+        {
+            return _gameTiming.CurTime;
         }
 
         /// <summary>

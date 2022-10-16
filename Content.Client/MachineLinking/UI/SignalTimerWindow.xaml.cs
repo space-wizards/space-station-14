@@ -163,6 +163,9 @@ namespace Content.Client.MachineLinking.UI
                 StartTimer.Text = Loc.GetString("signal-timer-menu-start");
         }
 
+        /// <summary>
+        ///     Disables fields and buttons if you don't have the access.
+        /// </summary>
         public void SetHasAccess(bool? hasAccess)
         {
             if (hasAccess != null)
@@ -174,6 +177,9 @@ namespace Content.Client.MachineLinking.UI
             }
         }
 
+        /// <summary>
+        ///     Returns a TimeSpan from the currently entered delay.
+        /// </summary>
         public TimeSpan GetDelay()
         {
             if (!double.TryParse(CurrentDelayEditMinutes.Text, out var minutes))

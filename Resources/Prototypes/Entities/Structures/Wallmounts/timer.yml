@@ -16,14 +16,10 @@
     sprite: Structures/Wallmounts/switch.rsi
     state: on
   - type: Appearance
-  - type: UseDelay
-    delay: 0.5 # prevent light-toggling auto-clickers.
   - type: Rotatable
-  - type: Construction
-    graph: SignalSwitchGraph
-    node: SignalSwitchNode
   - type: Fixtures
   - type: SignalTimer
+    canEditText: false
   - type: SignalTransmitter
   - type: ActivatableUI
     key: enum.SignalTimerUiKey.Key
@@ -38,6 +34,8 @@
   name: screen timer
   description: It's a timer for sending timed signals to things, with a built-in screen.
   components:
+  - type: SignalTimer
+    canEditText: true
   - type: TextScreenVisuals
   - type: Sprite
     sprite: Structures/Wallmounts/textscreen.rsi

@@ -1,5 +1,4 @@
 <DefaultWindow xmlns="https://spacestation14.io"
-            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             Title="{Loc signal-timer-menu-title}">
     <BoxContainer Orientation="Vertical" SeparationOverride="4" MinWidth="150">
         <BoxContainer Name="TextEdit" Orientation="Horizontal">

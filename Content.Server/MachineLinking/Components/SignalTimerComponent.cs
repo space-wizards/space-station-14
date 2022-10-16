@@ -1,15 +1,13 @@
 using Content.Shared.MachineLinking;
 using Robust.Shared.Audio;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.MachineLinking.Components
 {
     [RegisterComponent]
-    [ComponentReference(typeof(SharedSignalTimerComponent))]
-    public sealed class SignalTimerComponent : SharedSignalTimerComponent
+    public sealed class SignalTimerComponent : Component
     {
-        //public SignalTimerBoundUserInterfaceState? UiState;
-
         [DataField("delay")]
         [ViewVariables(VVAccess.ReadWrite)]
         public double Delay = 5;
@@ -26,12 +24,18 @@ namespace Content.Server.MachineLinking.Components
         [DataField("user")]
         public EntityUid? User;
 
+        /// <summary>
+        ///     This shows the Label: text box in the UI.
+        /// </summary>
         [DataField("canEditText")]
         [ViewVariables(VVAccess.ReadWrite)]
         public bool CanEditText = true;
 
-        [DataField("text")]
-        public string Text = "";
+        /// <summary>
+        ///     The label, used for TextScreen visuals currently.
+        /// </summary>
+        [DataField("label")]
+        public string Label = "";
 
         /// <summary>
         ///     The port that gets signaled when the timer triggers.
