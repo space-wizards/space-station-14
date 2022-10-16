@@ -98,8 +98,6 @@ namespace Content.Client.Fluids
             }
             else
             {
-                if (!component.CustomPuddleSprite) // if there is a custom sprite, it's expected that some of the PuddleVisuals data may be missing, so suppress the logger message.
-                    Logger.Debug($"Missing PuddleVisuals data for PuddleVisualizerSystem on entityUid = {uid}");
                 return;
             }
         }
