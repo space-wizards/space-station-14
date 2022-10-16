@@ -269,7 +269,7 @@ namespace Content.Server.Cuffs.Components
         {
             SoundSystem.Play(cuff.EndUncuffSound.GetSound(), Filter.Pvs(Owner), Owner);
 
-            Container.ForceRemove(cuffsToRemove);
+            _entMan.EntitySysManager.GetEntitySystem<HandVirtualItemSystem>().DeleteInHandsMatching(user, cuffsToRemove);
             _entMan.EntitySysManager.GetEntitySystem<SharedHandsSystem>().PickupOrDrop(user, cuffsToRemove);
 
             if (cuff.BreakOnRemove)
@@ -286,12 +286,9 @@ namespace Content.Server.Cuffs.Components
                 }
             }
 
-            if (_entMan.TryGetComponent(Owner, out HandsComponent? handsComponent))
-                CanStillInteract = handsComponent.SortedHands.Count() > CuffedHandCount;
-            else
-                CanStillInteract = true;
+            CanStillInteract = _entMan.TryGetComponent(Owner, out HandsComponent? handsComponent) && handsComponent.SortedHands.Count() > CuffedHandCount;
+            _entMan.EntitySysManager.GetEntitySystem<ActionBlockerSystem>().UpdateCanMove(Owner);
 
-            _sysMan.GetEntitySystem<ActionBlockerSystem>().UpdateCanMove(Owner);
             var ev = new CuffedStateChangeEvent();
             _entMan.EventBus.RaiseLocalEvent(Owner, ref ev, true);
             UpdateAlert();
