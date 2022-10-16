@@ -10,12 +10,6 @@
   - type: Hunger
   - type: Thirst
     baseDecayRate: 0.3
-  - type: Tag
-    tags:
-    - CanPilot
-    - FootstepSound
-    - DoorBumpOpener
-    - ShoesRequiredStepTriggerImmune
   - type: Icon
     sprite: Mobs/Species/Diona/parts.rsi
     state: full
