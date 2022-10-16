@@ -8,13 +8,16 @@
   - type: ResistLocker
   - type: Transform
     noRot: true
+  - type: Icon
+    sprite: Structures/Storage/Crates/generic.rsi
+    state: icon
   - type: Sprite
     netsync: false
     noRot: true
     sprite: Structures/Storage/Crates/generic.rsi
     layers:
-    - state: crate
-    - state: crate_door
+    - state: base
+    - state: closed
       map: ["enum.StorageVisualLayers.Door"]
     - state: welded
       visible: false
@@ -50,8 +53,8 @@
   - type: Appearance
     visuals:
     - type: StorageVisualizer
-      state_open: crate_open
-      state_closed: crate_door
+      state_open: open
+      state_closed: closed
   - type: PaperLabel
     labelSlot:
       insertVerbText: Attach Label
@@ -64,6 +67,11 @@
       entity_storage: !type:Container
       paper_label: !type:ContainerSlot
   - type: ItemSlots
+  - type: Construction
+    graph: CrateGenericSteel
+    node: crategenericsteel
+    containers:
+      - entity_storage
 
 - type: entity
   id: CrateBaseSecure
