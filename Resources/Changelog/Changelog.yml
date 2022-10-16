@@ -1,15 +1,4 @@
 Entries:
-- author: 13spacemen
-  changes:
-  - {message: 'Added purple research airlocks, green virology airlocks, (not mapped
-      in yet)', type: Add}
-  id: 1973
-  time: '2022-07-16T22:35:39.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Shuttle braking now uses thrusters., type: Tweak}
-  id: 1974
-  time: '2022-07-17T09:36:09.0000000+00:00'
 - author: metalgearsloth and DogZeroX
   changes:
   - {message: 'FTL mechanics have been added allowing you to go (for now, limited)
@@ -2939,3 +2928,14 @@ Entries:
   - {message: Added voice trigger for modular grenades, type: Add}
   id: 2472
   time: '2022-10-16T17:44:51.0000000+00:00'
+- author: Scribbles0
+  changes:
+  - {message: 'Fixed, removed, and changed some of Cluster''s lights around.', type: Tweak}
+  id: 2473
+  time: '2022-10-16T18:20:22.0000000+00:00'
+- author: Nairod
+  changes:
+  - {message: Added spare passenger headsets for the HoP in their locker and vendor,
+    type: Add}
+  id: 2474
+  time: '2022-10-16T18:21:02.0000000+00:00'
