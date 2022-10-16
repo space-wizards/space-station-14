@@ -149,6 +149,9 @@
       - state: headset
   - type: Storage
     capacity: 60
+    whitelist:
+      components:
+      - Headset
 
 - type: entity
   name: meson box
