@@ -1,17 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Throwing pushback reduced to half when weightless., type: Tweak}
-  - {message: Weightless distance for touching upped to 1m as 0.6m to be more forgiving
-      when weightless., type: Tweak}
-  - {message: Vehicles are now predicted. Vehicles are also now generally higher speed
-      but lower acceleration than mobs. ATVs are fastest but have lowest acceleration.,
-    type: Tweak}
-  - {message: Changed mobs back to 4.5 speed., type: Tweak}
-  - {message: Shuttle strafing and rotation now have their own keybinds. Shuttle braking
-      has been implemented on spacebar., type: Tweak}
-  id: 1970
-  time: '2022-07-16T03:51:52.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Fixed the makeshift laser recipe not accepting certain diamonds sometimes.,
@@ -2946,3 +2933,8 @@ Entries:
     type: Tweak}
   id: 2469
   time: '2022-10-16T15:54:43.0000000+00:00'
+- author: moony
+  changes:
+  - {message: The action bar no longer shows the keybind for empty slots., type: Tweak}
+  id: 2470
+  time: '2022-10-16T16:42:19.0000000+00:00'
