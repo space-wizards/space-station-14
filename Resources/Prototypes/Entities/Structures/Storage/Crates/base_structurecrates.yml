@@ -35,7 +35,6 @@
       - MachineLayer
   - type: EntityStorage
     capacity: 500
-  - type: Weldable
   - type: PlaceableSurface
     isPlaceable: false # defaults to closed.
   - type: Damageable
@@ -74,8 +73,9 @@
 
 - type: entity
   parent: CrateGeneric
-  id: CrateBaseResistible
+  id: CrateBaseWeldable
   components:
+  - type: Weldable
   - type: ResistLocker
 
 - type: entity

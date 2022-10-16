@@ -1,5 +1,5 @@
 - type: entity
-  parent: CrateBaseResistible
+  parent: CrateBaseWeldable
   id: CrateGenericSteel
   name: crate
   components:
@@ -9,7 +9,7 @@
     sprite: Structures/Storage/Crates/generic.rsi
 
 - type: entity
-  parent: CrateBaseResistible
+  parent: CrateBaseWeldable
   id: CratePlastic
   name: plastic crate
   components:
@@ -24,7 +24,7 @@
     - entity_storage
 
 - type: entity
-  parent: CrateBaseResistible
+  parent: CrateBaseWeldable
   id: CrateFreezer
   name: freezer
   components:
@@ -37,7 +37,7 @@
 - type: entity
   id: CrateHydroponics
   name: hydroponics crate
-  parent: CrateBaseResistible
+  parent: CrateBaseWeldable
   components:
   - type: Icon
     sprite: Structures/Storage/Crates/hydroponics.rsi
@@ -45,7 +45,7 @@
     sprite: Structures/Storage/Crates/hydroponics.rsi
 
 - type: entity
-  parent: CrateBaseResistible
+  parent: CrateBaseWeldable
   id: CrateMedical
   name: medical crate
   components:
@@ -55,7 +55,7 @@
     sprite: Structures/Storage/Crates/medical.rsi
 
 - type: entity
-  parent: CrateBaseResistible
+  parent: CrateBaseWeldable
   id: CrateRadiation
   name: radiation gear crate
   description: Is not actually lead lined. Do not store your plutonium in this.
@@ -66,7 +66,7 @@
     sprite: Structures/Storage/Crates/radiation.rsi
 
 - type: entity
-  parent: CrateBaseResistible
+  parent: CrateBaseWeldable
   id: CrateInternals
   name: oxygen crate
   components:
@@ -76,7 +76,7 @@
     sprite: Structures/Storage/Crates/o2.rsi
 
 - type: entity
-  parent: CrateBaseResistible
+  parent: CrateBaseWeldable
   id: CrateElectrical
   name: electrical crate
   components:
@@ -86,7 +86,7 @@
     sprite: Structures/Storage/Crates/electrical.rsi
 
 - type: entity
-  parent: CrateBaseResistible
+  parent: CrateBaseWeldable
   id: CrateEngineering
   name: engineering crate
   components:
@@ -96,7 +96,7 @@
     sprite: Structures/Storage/Crates/engineering.rsi
 
 - type: entity
-  parent: CrateBaseResistible
+  parent: CrateBaseWeldable
   id: CrateScience
   name: science crate
   components:
@@ -106,7 +106,7 @@
     sprite: Structures/Storage/Crates/science.rsi
 
 - type: entity
-  parent: CrateBaseResistible
+  parent: CrateBaseWeldable
   id: CrateSurgery
   name: surgery crate
   components:
