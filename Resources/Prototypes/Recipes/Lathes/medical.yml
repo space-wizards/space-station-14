@@ -107,3 +107,12 @@
   materials:
     Cloth: 20
     Plastic: 20
+
+- type: latheRecipe
+  id: Implanter
+  icon: Objects/Specific/Chemistry/syringe.rsi/syringe_base0.png
+  result: Implanter
+  completetime: 1
+  materials:
+    Glass: 500
+    Steel: 500

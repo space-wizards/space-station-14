@@ -3,3 +3,6 @@ ent-CrateArmorySMG = SMG crate
 
 ent-CrateArmoryShotgun = Shotgun crate
     .desc = For when the enemy absolutely needs to be replaced with lead. Contains two Enforcer Combat Shotguns, and some standard shotgun shells. Requires Armory access to open.
+
+ent-CrateTrackingImplants = Tracking implants
+    .desc = Contains a handful of tracking implanters. Good for prisoners you'd like to release but still keep track of.

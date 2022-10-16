@@ -136,6 +136,12 @@
       intensitySlope: 5
       maxIntensity: 30
       canCreateVacuum: false
+    - type: Tag
+      tags:
+        - SubdermalImplant
+        - HideContextMenu
+        - MicroBomb
+
 
 - type: entity
   parent: BaseSubdermalImplant
@@ -145,6 +151,7 @@
   noSpawn: true
   components:
     - type: SubdermalImplant
+      permanent: true
     - type: OnUseTimerTrigger
       delay: 5
       initialBeepDelay: 0
@@ -159,3 +166,8 @@
       intensitySlope: 5
       maxIntensity: 50
       canCreateVacuum: true
+    - type: Tag
+      tags:
+        - SubdermalImplant
+        - HideContextMenu
+        - MacroBomb

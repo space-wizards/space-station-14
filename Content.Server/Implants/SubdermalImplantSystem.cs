@@ -1,4 +1,5 @@
-﻿using Content.Server.Cuffs.Components;
+﻿using System.Linq;
+using Content.Server.Cuffs.Components;
 using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
 using Content.Shared.MobState;
@@ -21,10 +22,10 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
 
     private void OnFreedomImplant(EntityUid uid, SubdermalImplantComponent component, UseFreedomImplantEvent args)
     {
-        if (!TryComp<CuffableComponent>(component.EntityUid, out var cuffs))
+        if (!TryComp<CuffableComponent>(component.EntityUid, out var cuffs) || cuffs.Container.ContainedEntities.Count < 1)
             return;
 
-        if (cuffs.Container.ContainedEntities.Count >= 1 && TryComp<HandcuffComponent>(cuffs.LastAddedCuffs, out var cuff))
+        if (TryComp<HandcuffComponent>(cuffs.LastAddedCuffs, out var cuff))
         {
             cuffs.Uncuff(component.EntityUid.Value, cuffs.LastAddedCuffs, cuff, true);
         }

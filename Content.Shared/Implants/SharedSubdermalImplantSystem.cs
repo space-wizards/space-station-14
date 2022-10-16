@@ -1,6 +1,8 @@
-﻿using Content.Shared.Actions;
+﻿using System.Linq;
+using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Implants.Components;
+using Content.Shared.Tag;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 
@@ -11,6 +13,7 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly TagSystem _tag = default!;
 
     public const string ImplantSlotId = "implantcontainer";
     public const string BaseStorageId = "storagebase";
@@ -31,6 +34,19 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
         {
             var action = new InstantAction(_prototypeManager.Index<InstantActionPrototype>(component.ImplantAction));
             _actionsSystem.AddAction(component.EntityUid.Value, action, uid);
+        }
+
+        //replace micro bomb with macro bomb
+        if (_container.TryGetContainer(component.EntityUid.Value, ImplantSlotId, out var implantContainer) && _tag.HasTag(uid, "MacroBomb"))
+        {
+            foreach (var implant in implantContainer.ContainedEntities)
+            {
+                if (_tag.HasTag(implant, "MicroBomb"))
+                {
+                    implantContainer.Remove(implant);
+                    QueueDel(implant);
+                }
+            }
         }
     }
 

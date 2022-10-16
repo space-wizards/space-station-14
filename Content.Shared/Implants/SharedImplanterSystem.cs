@@ -70,6 +70,8 @@ public abstract class SharedImplanterSystem : EntitySystem
         if (!_container.TryGetContainer(implanter, ImplanterSlotId, out var implanterContainer))
             return;
 
+        var permanentFound = false;
+
         if (_container.TryGetContainer(target, ImplantSlotId, out var implantContainer))
         {
             var implantCompQuery = GetEntityQuery<SubdermalImplantComponent>();
@@ -79,29 +81,27 @@ public abstract class SharedImplanterSystem : EntitySystem
                 if (!implantCompQuery.TryGetComponent(implant, out var implantComp))
                     return;
 
-                //Move to the next implant if the first one it finds is permanent
-                if (implantContainer.ContainedEntities.Count > 1 && implantComp.Permanent)
-                    continue;
-
-                //Don't remove a permanent implant
+                //Don't remove a permanent implant and look for the next that can be drawn
                 if (!implantContainer.CanRemove(implant))
                 {
                     var implantName = Identity.Entity(implant, EntityManager);
                     var targetName = Identity.Entity(target, EntityManager);
                     var failedPermanentMessage = Loc.GetString("implanter-draw-failed-permanent", ("implant", implantName), ("target", targetName));
                     _popup.PopupEntity(failedPermanentMessage, target, Filter.Entities(user));
-                    return;
+                    permanentFound = implantComp.Permanent;
+                    continue;
                 }
 
                 implantContainer.Remove(implant);
                 implantComp.EntityUid = null;
                 implanterContainer.Insert(implant);
                 component.NumberOfEntities = implanterContainer.ContainedEntities.Count;
+                permanentFound = implantComp.Permanent;
                 //Break so only one implant is drawn
                 break;
             }
 
-            if (component.CurrentMode == ImplanterToggleMode.Draw && !component.ImplantOnly)
+            if (component.CurrentMode == ImplanterToggleMode.Draw && !component.ImplantOnly && !permanentFound)
                 ImplantMode(component);
 
             Dirty(component);
