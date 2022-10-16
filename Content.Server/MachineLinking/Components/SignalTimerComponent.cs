@@ -1,8 +1,6 @@
-using Content.Shared.Disposal.Components;
 using Content.Shared.MachineLinking;
 using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using static Content.Shared.Disposal.Components.SharedDisposalUnitComponent;
 
 namespace Content.Server.MachineLinking.Components
 {
@@ -28,8 +26,12 @@ namespace Content.Server.MachineLinking.Components
         [DataField("user")]
         public EntityUid? User;
 
+        [DataField("canEditText")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool CanEditText = true;
+
         [DataField("text")]
-        public string Text = "Cell1";
+        public string Text = "";
 
         /// <summary>
         ///     The port that gets signaled when the timer triggers.
@@ -49,8 +51,7 @@ namespace Content.Server.MachineLinking.Components
         [DataField("doneSound")]
         public SoundSpecifier? DoneSound;
 
-        // TODO: Is this needed?
-        [DataField("beepParams")]
-        public AudioParams BeepParams = AudioParams.Default.WithVolume(-2f);
+        [DataField("soundParams")]
+        public AudioParams SoundParams = AudioParams.Default.WithVolume(-2f);
     }
 }

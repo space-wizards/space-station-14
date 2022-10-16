@@ -29,41 +29,6 @@
       Off: []
 
 - type: entity
-  id: SignalTimer
-  name: signal timer
-  description: It's a timer for sending timed signals to things.
-  placement:
-    mode: SnapgridCenter
-    snap:
-    - Wallmount
-  components:
-  - type: WallMount
-    arc: 360
-  - type: Clickable
-  - type: InteractionOutline
-  - type: Physics
-  - type: Sprite
-    sprite: Structures/Wallmounts/switch.rsi
-    state: on
-  - type: Appearance
-  - type: TextScreenVisuals
-  - type: UseDelay
-    delay: 0.5 # prevent light-toggling auto-clickers.
-  - type: Rotatable
-  - type: Construction
-    graph: SignalSwitchGraph
-    node: SignalSwitchNode
-  - type: Fixtures
-  - type: SignalTimer
-  - type: SignalTransmitter
-  - type: ActivatableUI
-    key: enum.SignalTimerUiKey.Key
-  - type: UserInterface
-    interfaces:
-    - key: enum.SignalTimerUiKey.Key
-      type: SignalTimerBoundUserInterface
-
-- type: entity
   id: SignalButton
   name: signal button
   description: It's a button for activating something.

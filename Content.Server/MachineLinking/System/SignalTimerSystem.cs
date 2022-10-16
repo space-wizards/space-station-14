@@ -1,70 +1,36 @@
-using System.Linq;
-using Content.Server.Administration.Logs;
-using Content.Server.Chemistry.Components.SolutionManager;
-using Content.Server.Explosion.Components;
-using Content.Server.Flash;
-using Content.Server.Flash.Components;
-using Content.Server.Sticky.Events;
-using Content.Shared.Actions;
-using JetBrains.Annotations;
-using Robust.Shared.Audio;
-using Robust.Shared.Physics;
-using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
-using Content.Shared.Trigger;
-using Content.Shared.Database;
-using Content.Shared.Explosion;
-using Content.Shared.Interaction;
-using Content.Shared.Payload.Components;
-using Content.Shared.StepTrigger.Systems;
-using Robust.Server.Containers;
-using Robust.Shared.Containers;
-using Robust.Shared.Physics.Events;
-using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
 using Content.Server.MachineLinking.Components;
 using Content.Shared.TextScreen;
 using Robust.Server.GameObjects;
 using Content.Shared.MachineLinking;
-using Content.Shared.Disposal.Components;
 using Content.Server.UserInterface;
-using Content.Server.Access.Components;
-using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
+using Content.Server.Interaction;
 
 namespace Content.Server.MachineLinking.System
 {
 
     public sealed partial class SignalTimerSystem : EntitySystem
     {
-        [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
-        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly SharedContainerSystem _container = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _ui = default!;
+        [Dependency] private readonly AccessReaderSystem _accessReader = default!;
+        [Dependency] private readonly InteractionSystem _interaction = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
             SubscribeLocalEvent<SignalTimerComponent, ComponentInit>(OnInit);
-            SubscribeLocalEvent<SignalTimerComponent, ActivateInWorldEvent>(OnActivate); //TODO: Remove
+            SubscribeLocalEvent<SignalTimerComponent, AfterActivatableUIOpenEvent>(OnAfterActivatableUIOpen);
 
             SubscribeLocalEvent<SignalTimerComponent, SignalTimerTextChangedMessage>(OnTextChangedMessage);
             SubscribeLocalEvent<SignalTimerComponent, SignalTimerDelayChangedMessage>(OnDelayChangedMessage);
             SubscribeLocalEvent<SignalTimerComponent, SignalTimerStartMessage>(OnTimerStartMessage);
-            SubscribeLocalEvent<SignalTimerComponent, AfterActivatableUIOpenEvent>(AfterUIOpen);
-        }
-
-        private void AfterUIOpen(EntityUid uid, SignalTimerComponent component, AfterActivatableUIOpenEvent args)
-        {
-            if (!_ui.TryGetUi(component.Owner, SignalTimerUiKey.Key, out var ui))
-                return;
-
-            _ui.SetUiState(ui, new SignalTimerBoundUserInterfaceState(component.Text, TimeSpan.FromSeconds(component.Delay).Minutes.ToString("D2"), TimeSpan.FromSeconds(component.Delay).Seconds.ToString("D2")), args.Session);
         }
 
         private void OnInit(EntityUid uid, SignalTimerComponent component, ComponentInit args)
@@ -74,19 +40,14 @@ namespace Content.Server.MachineLinking.System
                 comp.Outputs.TryAdd(component.TriggerPort, new());
                 comp.Outputs.TryAdd(component.StartPort, new());
             }
+
+            _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, component.Text);
         }
 
-        private void OnActivate(EntityUid uid, SignalTimerComponent component, ActivateInWorldEvent args)
+        private void OnAfterActivatableUIOpen(EntityUid uid, SignalTimerComponent component, AfterActivatableUIOpenEvent args)
         {
-            if (!TryComp(uid, out ActorComponent? actor))
-                return;
-
-
-            if (!_ui.TrySetUiState(component.Owner, SignalTimerUiKey.Key, new SignalTimerBoundUserInterfaceState(component.Text, TimeSpan.FromSeconds(component.Delay).Minutes.ToString("D2"), TimeSpan.FromSeconds(component.Delay).Seconds.ToString("D2"))))
-                Logger.DebugS("UIST", "Set UI state failed.");
-
-
-            args.Handled = true;
+            if (_ui.TryGetUi(component.Owner, SignalTimerUiKey.Key, out var bui))
+                _ui.SetUiState(bui, new SignalTimerBoundUserInterfaceState(component.Text, TimeSpan.FromSeconds(component.Delay).Minutes.ToString("D2"), TimeSpan.FromSeconds(component.Delay).Seconds.ToString("D2"), component.CanEditText, component.TriggerTime, component.Activated, _accessReader.IsAllowed(args.User, uid)));
         }
 
         public bool Trigger(EntityUid uid, SignalTimerComponent signalTimer)
@@ -96,6 +57,9 @@ namespace Content.Server.MachineLinking.System
             _signalSystem.InvokePort(uid, signalTimer.TriggerPort);
 
             _appearanceSystem.SetData(uid, TextScreenVisuals.Mode, TextScreenMode.Text);
+
+            if (_ui.TryGetUi(uid, SignalTimerUiKey.Key, out var bui))
+                _ui.SetUiState(bui, new SignalTimerBoundUserInterfaceState(signalTimer.Text, TimeSpan.FromSeconds(signalTimer.Delay).Minutes.ToString("D2"), TimeSpan.FromSeconds(signalTimer.Delay).Seconds.ToString("D2"), signalTimer.CanEditText, signalTimer.TriggerTime, signalTimer.Activated, null));
 
             return true;
         }
@@ -120,7 +84,7 @@ namespace Content.Server.MachineLinking.System
                     if (timer.DoneSound != null)
                     {
                         var filter = Filter.Pvs(timer.Owner, entityManager: EntityManager);
-                        _audio.Play(timer.DoneSound, filter, timer.Owner, timer.BeepParams);
+                        _audio.Play(timer.DoneSound, filter, timer.Owner, timer.SoundParams);
                     }
                 }
             }
@@ -128,26 +92,64 @@ namespace Content.Server.MachineLinking.System
 
         private void OnTextChangedMessage(EntityUid uid, SignalTimerComponent component, SignalTimerTextChangedMessage args)
         {
+            if (args.Session.AttachedEntity is not { Valid: true } mob)
+                return;
+
+            if (!_interaction.InRangeUnobstructed(mob, uid))
+                return;
+
+            if (!_accessReader.IsAllowed(mob, uid))
+                return;
+
             component.Text = args.Text[..Math.Min(5,args.Text.Length)];
             _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, component.Text);
         }
 
         private void OnDelayChangedMessage(EntityUid uid, SignalTimerComponent component, SignalTimerDelayChangedMessage args)
         {
+            if (args.Session.AttachedEntity is not { Valid: true } mob)
+                return;
+
+            if (!_interaction.InRangeUnobstructed(mob, uid))
+                return;
+
+            if (!_accessReader.IsAllowed(mob,uid))
+                return;
+
             component.Delay = args.Delay.TotalSeconds;
         }
 
         private void OnTimerStartMessage(EntityUid uid, SignalTimerComponent component, SignalTimerStartMessage args)
         {
-            component.TriggerTime = _gameTiming.CurTime + TimeSpan.FromSeconds(component.Delay);
-            component.User = args.User;
-            component.Activated = true;
+            if (args.Session.AttachedEntity is not { Valid: true } mob)
+                return;
 
-            _appearanceSystem.SetData(uid, TextScreenVisuals.Mode, TextScreenMode.Timer);
-            _appearanceSystem.SetData(uid, TextScreenVisuals.TargetTime, component.TriggerTime);
-            _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, component.Text);
+            if (!_interaction.InRangeUnobstructed(mob, uid))
+                return;
 
-            _signalSystem.InvokePort(uid, component.StartPort);
+            if (!_accessReader.IsAllowed(mob, uid))
+                return;
+
+            if (!component.Activated)
+            {
+                component.TriggerTime = _gameTiming.CurTime + TimeSpan.FromSeconds(component.Delay);
+                component.User = args.User;
+                component.Activated = true;
+
+                _appearanceSystem.SetData(uid, TextScreenVisuals.Mode, TextScreenMode.Timer);
+                _appearanceSystem.SetData(uid, TextScreenVisuals.TargetTime, component.TriggerTime);
+                _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, component.Text);
+
+                _signalSystem.InvokePort(uid, component.StartPort);
+            }
+            else
+            {
+                component.User = args.User;
+                component.Activated = false;
+
+                _appearanceSystem.SetData(uid, TextScreenVisuals.Mode, TextScreenMode.Text);
+                _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, component.Text);
+            }
         }
     }
 }

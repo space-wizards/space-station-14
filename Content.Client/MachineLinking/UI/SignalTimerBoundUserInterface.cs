@@ -1,5 +1,6 @@
 using Content.Shared.MachineLinking;
 using Robust.Client.GameObjects;
+using Robust.Shared.Timing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,10 @@ namespace Content.Client.MachineLinking.UI
 {
     public sealed class SignalTimerBoundUserInterface : BoundUserInterface
     {
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+
         private SignalTimerWindow? _window;
+
 
         public SignalTimerBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
@@ -21,19 +25,25 @@ namespace Content.Client.MachineLinking.UI
             base.Open();
 
             _window = new SignalTimerWindow(this);
+
             if (State != null)
                 UpdateState(State);
 
-            Logger.DebugS("UIST", "STBUI Opened.");
-
             _window.OpenCentered();
-
             _window.OnClose += Close;
-            _window.OnCurrentTextEntered += OnTextChanged;
-            _window.OnCurrentDelayMinutesEntered += OnDelayChanged;
-            _window.OnCurrentDelaySecondsEntered += OnDelayChanged;
-
+            _window.OnCurrentTextChanged += OnTextChanged;
+            _window.OnCurrentDelayMinutesChanged += OnDelayChanged;
+            _window.OnCurrentDelaySecondsChanged += OnDelayChanged;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public TimeSpan GetCurrentTime()
+        {
+            return _gameTiming.CurTime;
+        }
+
         public void OnStartTimer()
         {
             SendMessage(new SignalTimerStartMessage(Owner.Owner));
@@ -57,18 +67,18 @@ namespace Content.Client.MachineLinking.UI
         /// <param name="state"></param>
         protected override void UpdateState(BoundUserInterfaceState state)
         {
-            Logger.DebugS("UIST", "STBUI UpdateState called.");
-
             base.UpdateState(state);
 
             if (_window == null || state is not SignalTimerBoundUserInterfaceState cast)
                 return;
 
-            Logger.DebugS("UIST", "STBUI updatestate setting text to "+cast.CurrentText+", and time to "+cast.CurrentDelayMinutes+":"+cast.CurrentDelaySeconds);
-
             _window.SetCurrentText(cast.CurrentText);
             _window.SetCurrentDelayMinutes(cast.CurrentDelayMinutes);
             _window.SetCurrentDelaySeconds(cast.CurrentDelaySeconds);
+            _window.SetShowText(cast.ShowText);
+            _window.SetTriggerTime(cast.TriggerTime);
+            _window.SetTimerStarted(cast.TimerStarted);
+            _window.SetHasAccess(cast.HasAccess);
         }
 
         protected override void Dispose(bool disposing)

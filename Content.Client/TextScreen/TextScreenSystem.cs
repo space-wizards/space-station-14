@@ -1,30 +1,6 @@
-using System.Linq;
-using Content.Shared.Actions;
-using JetBrains.Annotations;
-using Robust.Shared.Audio;
-using Robust.Shared.Physics;
-using Robust.Shared.Physics.Dynamics;
-using Robust.Shared.Player;
-using Content.Shared.Trigger;
-using Content.Shared.Database;
-using Content.Shared.Explosion;
-using Content.Shared.Interaction;
-using Content.Shared.Payload.Components;
-using Content.Shared.StepTrigger.Systems;
-using Robust.Shared.Containers;
-using Robust.Shared.Physics.Events;
-using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
 using Robust.Client.GameObjects;
-using Content.Shared.MachineLinking;
 using Robust.Shared.Utility;
-using Robust.Client.Utility;
-using Robust.Client.Graphics;
-using Robust.Client.ResourceManagement;
-using System;
-using TerraFX.Interop.Windows;
-using Prometheus;
-using Content.Client.MachineLinking;
 using Content.Shared.TextScreen;
 
 namespace Content.Client.TextScreen
@@ -32,13 +8,20 @@ namespace Content.Client.TextScreen
 
     public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisualsComponent>
     {
-        [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
-        [Dependency] private readonly SharedContainerSystem _container = default!;
-        [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
-        private const string LayerMapPrefix = "textScreen";
+        private static readonly Dictionary<char, string> CharStatePairs = new()
+            {
+                { ':', "colon" },
+                { '!', "exclamation" },
+                { '?', "question" },
+                { '*', "star" },
+                { '+', "plus" },
+                { '-', "dash" },
+                { ' ', "blank" }
+            };
+
+        private const string TextScreenLayerMapKey = "textScreenLayerMapKey";
 
         public override void Initialize()
         {
@@ -52,17 +35,13 @@ namespace Content.Client.TextScreen
             if (!TryComp(uid, out SpriteComponent? sprite))
                 return;
 
-            sprite.LayerMapReserveBlank(TextScreenVisualLayers.Screen);
-            sprite.LayerSetRSI(TextScreenVisualLayers.Screen, new ResourcePath("Effects/text.rsi"));
-            sprite.LayerSetState(TextScreenVisualLayers.Screen, "screen");
-
             ResetTextLength(component, sprite);
             PrepareTextLayers(component, sprite);
             UpdateLayersToText(component, sprite);
         }
 
         /// <summary>
-        ///     Resets all sprite layers, and sets them back again
+        ///     Resets all sprite layers, through removing them and then creating new ones.
         /// </summary>
         public void ResetTextLength(TextScreenVisualsComponent component, SpriteComponent? sprite = null)
         {
@@ -96,20 +75,20 @@ namespace Content.Client.TextScreen
             {
                 for (var i = oldLength; i < newLength; i++)
                 {
-                    sprite.LayerMapReserveBlank(LayerMapPrefix + i);
-                    component.TextLayers.Add(LayerMapPrefix + i, null);
-                    sprite.LayerSetRSI(LayerMapPrefix + i, new ResourcePath("Effects/text.rsi"));
-                    sprite.LayerSetColor(LayerMapPrefix + i, component.Color);
-                    sprite.LayerSetState(LayerMapPrefix + i, "blank");
+                    sprite.LayerMapReserveBlank(TextScreenLayerMapKey + i);
+                    component.TextLayers.Add(TextScreenLayerMapKey + i, null);
+                    sprite.LayerSetRSI(TextScreenLayerMapKey + i, new ResourcePath("Effects/text.rsi"));
+                    sprite.LayerSetColor(TextScreenLayerMapKey + i, component.Color);
+                    sprite.LayerSetState(TextScreenLayerMapKey + i, "blank"); //set a default? maybe
                 }
             }
             else
             {
                 for (var i = oldLength; i > newLength; i--)
                 {
-                    sprite.LayerMapGet(LayerMapPrefix + (i - 1));
-                    component.TextLayers.Remove(LayerMapPrefix + (i - 1));
-                    sprite.RemoveLayer(LayerMapPrefix + (i - 1));
+                    sprite.LayerMapGet(TextScreenLayerMapKey + (i - 1));
+                    component.TextLayers.Remove(TextScreenLayerMapKey + (i - 1));
+                    sprite.RemoveLayer(TextScreenLayerMapKey + (i - 1));
                 }
             }
 
@@ -129,23 +108,15 @@ namespace Content.Client.TextScreen
             for (var i = 0; i < component.TextLayers.Count; i++)
             {
                 var offset = i - (component.TextLayers.Count - 1) / 2.0f;
-                sprite.LayerSetOffset(LayerMapPrefix + i, new Vector2(offset * TextScreenVisualsComponent.PixelSize * 4.0f, 0.0f));
+                sprite.LayerSetOffset(TextScreenLayerMapKey + i, new Vector2(offset * TextScreenVisualsComponent.PixelSize * 4.0f, 0.0f) + component.TextOffset);
             }
         }
 
-        // TODO: cleanup needed
         protected override void OnAppearanceChange(EntityUid uid, TextScreenVisualsComponent component, ref AppearanceChangeEvent args)
         {
             UpdateAppearance(component, args.Component, args.Sprite);
         }
 
-        public void UpdateText(TextScreenVisualsComponent component)
-        {
-            if (component.CurrentMode == TextScreenMode.Text)
-                component.ShowText = component.Text;
-        }
-
-        // TODO: cleanup needed
         public void UpdateAppearance(TextScreenVisualsComponent component, AppearanceComponent? appearance = null, SpriteComponent? sprite = null)
         {
             if (!Resolve(component.Owner, ref appearance, ref sprite))
@@ -154,7 +125,7 @@ namespace Content.Client.TextScreen
             if (appearance.TryGetData(TextScreenVisuals.On, out bool on))
             {
                 component.Activated = on;
-                UpdateVisibility(component, sprite); // needs to based on activated let text be visible or not
+                UpdateVisibility(component, sprite);
             }
 
             if (appearance.TryGetData(TextScreenVisuals.Mode, out TextScreenMode mode))
@@ -176,6 +147,16 @@ namespace Content.Client.TextScreen
 
             PrepareTextLayers(component, sprite);
             UpdateLayersToText(component, sprite);
+        }
+
+        /// <summary>
+        ///     If currently in <see cref="TextScreenMode.Text"/> mode: <br/>
+        ///     Sets <see cref="TextScreenVisualsComponent.ShowText"/> to the value of <see cref="TextScreenVisualsComponent.Text"/>
+        /// </summary>
+        public static void UpdateText(TextScreenVisualsComponent component)
+        {
+            if (component.CurrentMode == TextScreenMode.Text)
+                component.ShowText = component.Text;
         }
 
         /// <summary>
@@ -205,19 +186,14 @@ namespace Content.Client.TextScreen
             if (!Resolve(component.Owner, ref sprite))
                 return;
 
-            var rsi = sprite.LayerGetActualRSI(TextScreenVisualLayers.Screen);
-
-            if (rsi == null)
-                return;
-
             for (var i=0; (i<component.TextLength); i++)
             {
                 if (i>=component.ShowText.Length)
                 {
-                    component.TextLayers[LayerMapPrefix + i] = "blank";
+                    component.TextLayers[TextScreenLayerMapKey + i] = "blank";
                     continue;
                 }
-                component.TextLayers[LayerMapPrefix + i] = GetLayerStateFromChar(component.ShowText[i], rsi);
+                component.TextLayers[TextScreenLayerMapKey + i] = GetStateFromChar(component.ShowText[i]);
             }
         }
 
@@ -245,15 +221,19 @@ namespace Content.Client.TextScreen
             {
                 if (comp.CurrentMode == TextScreenMode.Timer)
                 {
-                    TimeSpan timeToShow = _gameTiming.CurTime > comp.TargetTime ? _gameTiming.CurTime - comp.TargetTime : comp.TargetTime - _gameTiming.CurTime;
-                    comp.ShowText = TimeToString(timeToShow);
+                    // Basically Abs(TimeSpan, TimeSpan) -> Gives the difference between the current time and the target time.
+                    var timeToShow = _gameTiming.CurTime > comp.TargetTime ? _gameTiming.CurTime - comp.TargetTime : comp.TargetTime - _gameTiming.CurTime;
+                    comp.ShowText = TimeToString(timeToShow, false);
                     PrepareTextLayers(comp);
                     UpdateLayersToText(comp);
                 }
             }
         }
 
-        public static string TimeToString(TimeSpan timeSpan)
+        /// <param name="timeSpan">TimeSpan to convert into string.</param>
+        /// <param name="getMilliseconds">Should the string be ss:ms if minutes are less than 1?</param>
+        /// <returns>Returns either HH:MM, MM:SS or potentially SS:MS based on the <paramref name="timeSpan"/>.</returns>
+        public static string TimeToString(TimeSpan timeSpan, bool getMilliseconds = true)
         {
             string firstString;
             string lastString;
@@ -263,77 +243,38 @@ namespace Content.Client.TextScreen
                 firstString = timeSpan.Hours.ToString("D2");
                 lastString = timeSpan.Minutes.ToString("D2");
             }
-            else if (timeSpan.TotalMinutes >= 1)
+            else if (timeSpan.TotalMinutes >= 1 || !getMilliseconds)
             {
                 firstString = timeSpan.Minutes.ToString("D2");
-                lastString = timeSpan.Seconds.ToString("D2");
+                // It's nicer to see a timer set at 5 seconds actually start at 00:05 instead of 00:04, and when the timer reaches 0, it should be set off almost immediately.
+                var seconds = timeSpan.Seconds + (timeSpan.Milliseconds > 200 ? 1 : 0);
+                lastString = seconds.ToString("D2");
             }
             else
             {
                 firstString = timeSpan.Seconds.ToString("D2");
-                lastString = timeSpan.Milliseconds.ToString("D2");
+                var centiseconds = timeSpan.Milliseconds / 10;
+                lastString = centiseconds.ToString("D2");
             }
 
-            return firstString + ":" + lastString;
+            return firstString + ':' + lastString;
         }
 
-        public string? GetLayerStateFromChar(char? character, RSI rsi)
+        /// <returns>Layer state string from <paramref name="character"/>, or null if none available</returns>
+        public static string? GetStateFromChar(char? character)
         {
             if (character == null)
                 return null;
 
-            //TODO: change to dictionary lookup
-            switch (character)
-            {
-                case ':':
-                    return "colon";
-                case '!':
-                    return "exclamation";
-                case '?':
-                    return "question";
-                case '*':
-                    return "star";
-                case '+':
-                    return "plus";
-                case ' ':
-                    return "blank";
-            }
-            var stringChar = character.ToString();
+            if (CharStatePairs.ContainsKey(character.Value))
+                return CharStatePairs[character.Value];
 
-            if (stringChar != null)
-                stringChar = stringChar.ToLower();
-
-            if (rsi.TryGetState(stringChar, out _))
-                return stringChar;
+            if (char.IsLetterOrDigit(character.Value))
+                return character.Value.ToString().ToLower();
 
             return null;
         }
 
-        /*
-        private void UpdateTimer()
-        {
-            foreach (var timer in EntityQuery<SignalTimerVisualsComponent>())
-            {
-                if (!timer.Activated)
-                    continue;
-
-                if (timer.TriggerTime <= _gameTiming.CurTime)
-                {
-                    Trigger(timer.Owner, timer);
-
-                    if (timer.DoneSound != null)
-                    {
-                        var filter = Filter.Pvs(timer.Owner, entityManager: EntityManager);
-                        _audio.Play(timer.DoneSound, filter, timer.Owner, timer.BeepParams);
-                    }
-                }
-            }
-        }
-        */
     }
 
-    public enum TextScreenVisualLayers : byte
-    {
-        Screen,
-    }
 }

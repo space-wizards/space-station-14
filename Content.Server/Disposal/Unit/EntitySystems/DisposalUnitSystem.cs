@@ -254,6 +254,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             }
 
             args.Handled = true;
+
             _ui.TryOpen(component.Owner, SharedDisposalUnitComponent.DisposalUnitUiKey.Key, actor.PlayerSession);
         }
 

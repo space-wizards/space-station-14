@@ -22,6 +22,9 @@ namespace Content.Client.TextScreen
         [DataField("targetTime")]
         public TimeSpan TargetTime = TimeSpan.Zero;
 
+        [DataField("textOffset"), ViewVariables(VVAccess.ReadWrite)]
+        public Vector2 TextOffset = new(0f, PixelSize*8);
+
         /// <summary>
         ///     The amount of characters this component can show.
         /// </summary>
