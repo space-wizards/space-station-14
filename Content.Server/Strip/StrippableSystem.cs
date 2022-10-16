@@ -206,7 +206,7 @@ namespace Content.Server.Strip
             {
                 _inventorySystem.TryEquip(user, component.Owner, held, slot);
 
-                _adminLogger.Add(LogType.Stripping, LogImpact.Medium, $"{ToPrettyString(user):player} has placed the item {ToPrettyString(held):item} in {ToPrettyString(component.Owner):player}'s {slot} slot");
+                _adminLogger.Add(LogType.Stripping, LogImpact.Medium, $"{ToPrettyString(user):user} has placed the item {ToPrettyString(held):item} in {ToPrettyString(component.Owner):target}'s {slot} slot");
             }
 
 
@@ -271,7 +271,7 @@ namespace Content.Server.Strip
 
             _handsSystem.TryDrop(user, checkActionBlocker: false, handsComp: userHands);
             _handsSystem.TryPickup(component.Owner, held, handName, checkActionBlocker: false, animateUser: true, handsComp: hands);
-            _adminLogger.Add(LogType.Stripping, LogImpact.Medium, $"{ToPrettyString(user):player} has placed the item {ToPrettyString(held):item} in {ToPrettyString(component.Owner):player}'s hands");
+            _adminLogger.Add(LogType.Stripping, LogImpact.Medium, $"{ToPrettyString(user):user} has placed the item {ToPrettyString(held):item} in {ToPrettyString(component.Owner):target}'s hands");
             // hand update will trigger strippable update
         }
 
@@ -342,7 +342,7 @@ namespace Content.Server.Strip
                 RaiseLocalEvent(item.Value, new DroppedEvent(user), true);
 
                 _handsSystem.PickupOrDrop(user, item.Value);
-                _adminLogger.Add(LogType.Stripping, LogImpact.Medium, $"{ToPrettyString(user):player} has stripped the item {ToPrettyString(item.Value):item} from {ToPrettyString(component.Owner):player}");
+                _adminLogger.Add(LogType.Stripping, LogImpact.Medium, $"{ToPrettyString(user):user} has stripped the item {ToPrettyString(item.Value):item} from {ToPrettyString(component.Owner):target}");
             }
         }
 
@@ -404,7 +404,7 @@ namespace Content.Server.Strip
             _handsSystem.TryDrop(component.Owner, hand, checkActionBlocker: false, handsComp: hands);
             _handsSystem.PickupOrDrop(user, held, handsComp: userHands);
             // hand update will trigger strippable update
-            _adminLogger.Add(LogType.Stripping, LogImpact.Medium, $"{ToPrettyString(user):player} has stripped the item {ToPrettyString(held):item} from {ToPrettyString(component.Owner):player}");
+            _adminLogger.Add(LogType.Stripping, LogImpact.Medium, $"{ToPrettyString(user):user} has stripped the item {ToPrettyString(held):item} from {ToPrettyString(component.Owner):target}");
         }
 
         private sealed class OpenStrippingCompleteEvent
