@@ -125,6 +125,16 @@ namespace Content.Shared.Containers.ItemSlots
             else
                 Dirty(itemSlots);
         }
+
+        public bool TryGetSlotById(EntityUid uid, string slotId, [NotNullWhen(true)] out ItemSlot? itemSlot, ItemSlotsComponent? component = null)
+        {
+            itemSlot = null;
+
+            if (!Resolve(uid, ref component))
+                return false;
+
+            return component.Slots.TryGetValue(slotId, out itemSlot);
+        }
         #endregion
 
         #region Interactions
@@ -218,9 +228,6 @@ namespace Content.Shared.Containers.ItemSlots
             // ContainerSlot automatically raises a directed EntInsertedIntoContainerMessage
 
             _audioSystem.PlayPredicted(slot.InsertSound, uid, excludeUserAudio ? user : null);
-
-            var ev = new ItemSlotChangedEvent();
-            RaiseLocalEvent(uid, ref ev, true);
         }
 
         /// <summary>
@@ -324,8 +331,6 @@ namespace Content.Shared.Containers.ItemSlots
             // ContainerSlot automatically raises a directed EntRemovedFromContainerMessage
 
             _audioSystem.PlayPredicted(slot.EjectSound, uid, excludeUserAudio ? user : null, slot.SoundOptions);
-            var ev = new ItemSlotChangedEvent();
-            RaiseLocalEvent(uid, ref ev, true);
         }
 
         /// <summary>
@@ -606,10 +611,4 @@ namespace Content.Shared.Containers.ItemSlots
             args.State = new ItemSlotsComponentState(component.Slots);
         }
     }
-
-    /// <summary>
-    /// Raised directed on an entity when one of its item slots changes.
-    /// </summary>
-    [ByRefEvent]
-    public readonly struct ItemSlotChangedEvent {}
 }
