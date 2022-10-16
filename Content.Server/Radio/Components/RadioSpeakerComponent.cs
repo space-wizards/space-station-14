@@ -12,7 +12,7 @@ namespace Content.Server.Radio.Components;
 public sealed class RadioSpeakerComponent : Component
 {
     [DataField("channels", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<RadioChannelPrototype>))]
-    public IReadOnlyCollection<string> Channels = new HashSet<string>() { "Common" };
+    public HashSet<string> Channels = new () { "Common" };
 
     [DataField("enabled")]
     public bool Enabled;
