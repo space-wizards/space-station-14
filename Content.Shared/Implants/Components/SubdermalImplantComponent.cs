@@ -38,10 +38,15 @@ public sealed class OpenStorageImplantEvent : InstantActionEvent
 
 }
 
+public sealed class UseFreedomImplantEvent : InstantActionEvent
+{
+
+}
+
 /// <summary>
-/// Used for triggering micro bombs via action
+/// Used for triggering trigger events on the implant via action
 /// </summary>
-public sealed class ActivateMicroBombImplantEvent : InstantActionEvent
+public sealed class ActivateImplantEvent : InstantActionEvent
 {
 
 }

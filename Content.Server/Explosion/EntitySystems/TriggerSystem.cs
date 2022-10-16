@@ -63,6 +63,7 @@ namespace Content.Server.Explosion.EntitySystems
 
             SubscribeLocalEvent<TriggerOnCollideComponent, StartCollideEvent>(OnTriggerCollide);
             SubscribeLocalEvent<TriggerOnActivateComponent, ActivateInWorldEvent>(OnActivate);
+            SubscribeLocalEvent<TriggerImplantActionComponent, ActivateImplantEvent>(OnImplantTrigger);
             SubscribeLocalEvent<TriggerOnStepTriggerComponent, StepTriggeredEvent>(OnStepTriggered);
             SubscribeLocalEvent<TriggerOnMobstateChangeComponent, MobStateChangedEvent>(OnStateChanged);
 
@@ -122,6 +123,11 @@ namespace Content.Server.Explosion.EntitySystems
         {
             Trigger(component.Owner, args.User);
             args.Handled = true;
+        }
+
+        private void OnImplantTrigger(EntityUid uid, TriggerImplantActionComponent component, ActivateImplantEvent args)
+        {
+            Trigger(component.Owner);
         }
 
         private void OnStepTriggered(EntityUid uid, TriggerOnStepTriggerComponent component, ref StepTriggeredEvent args)

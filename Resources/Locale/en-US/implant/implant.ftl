@@ -20,3 +20,6 @@ open-storage-implant-action-description = opens the storage implant embedded und
 
 activate-micro-bomb-action-name = activate micro bomb
 activate-micro-bomb-action-description = activates your internal microbomb, completely destroying you and your equipment
+
+use-freedom-implant-action-name = use freedom implant
+use-freedom-implant-action-description = activating the implant will free you from any hand restraints

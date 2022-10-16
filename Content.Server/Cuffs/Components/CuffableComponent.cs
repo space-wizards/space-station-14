@@ -35,7 +35,7 @@ namespace Content.Server.Cuffs.Components
         [ViewVariables]
         public int CuffedHandCount => Container.ContainedEntities.Count * 2;
 
-        private EntityUid LastAddedCuffs => Container.ContainedEntities[^1];
+        public EntityUid LastAddedCuffs => Container.ContainedEntities[^1];
 
         public IReadOnlyList<EntityUid> StoredEntities => Container.ContainedEntities;
 
@@ -245,71 +245,7 @@ namespace Content.Server.Cuffs.Components
 
             if (result != DoAfterStatus.Cancelled)
             {
-                SoundSystem.Play(cuff.EndUncuffSound.GetSound(), Filter.Pvs(Owner), Owner);
-
-                Container.ForceRemove(cuffsToRemove.Value);
-                _entMan.EntitySysManager.GetEntitySystem<SharedHandsSystem>().PickupOrDrop(user, cuffsToRemove.Value);
-
-                if (cuff.BreakOnRemove)
-                {
-                    cuff.Broken = true;
-
-                    var meta = _entMan.GetComponent<MetaDataComponent>(cuffsToRemove.Value);
-                    meta.EntityName = cuff.BrokenName;
-                    meta.EntityDescription = cuff.BrokenDesc;
-
-                    if (_entMan.TryGetComponent<SpriteComponent?>(cuffsToRemove, out var sprite) && cuff.BrokenState != null)
-                    {
-                        sprite.LayerSetState(0, cuff.BrokenState); // TODO: safety check to see if RSI contains the state?
-                    }
-                }
-
-                if (_entMan.TryGetComponent(Owner, out HandsComponent? handsComponent))
-                    CanStillInteract = handsComponent.SortedHands.Count() > CuffedHandCount;
-                else
-                    CanStillInteract = true;
-
-                _sysMan.GetEntitySystem<ActionBlockerSystem>().UpdateCanMove(Owner);
-                var ev = new CuffedStateChangeEvent();
-                _entMan.EventBus.RaiseLocalEvent(Owner, ref ev, true);
-                UpdateAlert();
-                Dirty(_entMan);
-
-                if (CuffedHandCount == 0)
-                {
-                    user.PopupMessage(Loc.GetString("cuffable-component-remove-cuffs-success-message"));
-
-                    if (!isOwner)
-                    {
-                        user.PopupMessage(Owner, Loc.GetString("cuffable-component-remove-cuffs-by-other-success-message", ("otherName", user)));
-                    }
-
-                    if (user == Owner)
-                    {
-                        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{_entMan.ToPrettyString(user):player} has successfully uncuffed themselves");
-                    }
-                    else
-                    {
-                        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{_entMan.ToPrettyString(user):player} has successfully uncuffed {_entMan.ToPrettyString(Owner):player}");
-                    }
-
-                }
-                else
-                {
-                    if (!isOwner)
-                    {
-                        user.PopupMessage(Loc.GetString("cuffable-component-remove-cuffs-partial-success-message",
-                                                        ("cuffedHandCount", CuffedHandCount),
-                                                        ("otherName", user)));
-                        user.PopupMessage(Owner, Loc.GetString("cuffable-component-remove-cuffs-by-other-partial-success-message",
-                                                               ("otherName", user),
-                                                               ("cuffedHandCount", CuffedHandCount)));
-                    }
-                    else
-                    {
-                        user.PopupMessage(Loc.GetString("cuffable-component-remove-cuffs-partial-success-message", ("cuffedHandCount", CuffedHandCount)));
-                    }
-                }
+                Uncuff(user, cuffsToRemove.Value, cuff, isOwner);
             }
             else
             {
@@ -317,6 +253,73 @@ namespace Content.Server.Cuffs.Components
             }
 
             return;
+        }
+
+        //Lord forgive me for putting this here
+        //Cuff ECS when
+        public void Uncuff(EntityUid user, EntityUid cuffsToRemove, HandcuffComponent cuff, bool isOwner)
+        {
+            SoundSystem.Play(cuff.EndUncuffSound.GetSound(), Filter.Pvs(Owner), Owner);
+
+            Container.ForceRemove(cuffsToRemove);
+            _entMan.EntitySysManager.GetEntitySystem<SharedHandsSystem>().PickupOrDrop(user, cuffsToRemove);
+
+            if (cuff.BreakOnRemove)
+            {
+                cuff.Broken = true;
+
+                var meta = _entMan.GetComponent<MetaDataComponent>(cuffsToRemove);
+                meta.EntityName = cuff.BrokenName;
+                meta.EntityDescription = cuff.BrokenDesc;
+
+                if (_entMan.TryGetComponent<SpriteComponent?>(cuffsToRemove, out var sprite) && cuff.BrokenState != null)
+                {
+                    sprite.LayerSetState(0, cuff.BrokenState); // TODO: safety check to see if RSI contains the state?
+                }
+            }
+
+            if (_entMan.TryGetComponent(Owner, out HandsComponent? handsComponent))
+                CanStillInteract = handsComponent.SortedHands.Count() > CuffedHandCount;
+            else
+                CanStillInteract = true;
+
+            _sysMan.GetEntitySystem<ActionBlockerSystem>().UpdateCanMove(Owner);
+            var ev = new CuffedStateChangeEvent();
+            _entMan.EventBus.RaiseLocalEvent(Owner, ref ev, true);
+            UpdateAlert();
+            Dirty(_entMan);
+
+            if (CuffedHandCount == 0)
+            {
+                user.PopupMessage(Loc.GetString("cuffable-component-remove-cuffs-success-message"));
+
+                if (!isOwner)
+                {
+                    user.PopupMessage(Owner, Loc.GetString("cuffable-component-remove-cuffs-by-other-success-message", ("otherName", user)));
+                }
+
+                if (user == Owner)
+                {
+                    _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{_entMan.ToPrettyString(user):player} has successfully uncuffed themselves");
+                }
+                else
+                {
+                    _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{_entMan.ToPrettyString(user):player} has successfully uncuffed {_entMan.ToPrettyString(Owner):player}");
+                }
+
+            }
+            else
+            {
+                if (!isOwner)
+                {
+                    user.PopupMessage(Loc.GetString("cuffable-component-remove-cuffs-partial-success-message", ("cuffedHandCount", CuffedHandCount), ("otherName", user)));
+                    user.PopupMessage(Owner, Loc.GetString("cuffable-component-remove-cuffs-by-other-partial-success-message", ("otherName", user), ("cuffedHandCount", CuffedHandCount)));
+                }
+                else
+                {
+                    user.PopupMessage(Loc.GetString("cuffable-component-remove-cuffs-partial-success-message", ("cuffedHandCount", CuffedHandCount)));
+                }
+            }
         }
     }
 }

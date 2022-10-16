@@ -134,6 +134,21 @@
             tags:
               - SubdermalImplant
 
+- type: entity
+  id: FreedomImplanter
+  name: freedom implanter
+  description: a single use implanter, the implant lets the user break out of hand restraints three times
+  parent: BaseImplantOnlyImplanter
+  components:
+    - type: ItemSlots
+      slots:
+        implanter_slot:
+          startingItem: FreedomImplant
+          priority: 0
+          whitelist:
+            tags:
+              - SubdermalImplant
+
 #Nuclear Operative/Special implanters
 
 - type: entity

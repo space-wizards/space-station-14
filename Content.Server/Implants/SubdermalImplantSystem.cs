@@ -1,4 +1,4 @@
-﻿using Content.Server.Explosion.EntitySystems;
+﻿using Content.Server.Cuffs.Components;
 using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
 using Content.Shared.MobState;
@@ -9,15 +9,29 @@ namespace Content.Server.Implants;
 public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
 {
     [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly TriggerSystem _trigger = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
+        SubscribeLocalEvent<SubdermalImplantComponent, UseFreedomImplantEvent>(OnFreedomImplant);
+
         SubscribeLocalEvent<ImplantedComponent, MobStateChangedEvent>(RelayToImplantEvent);
-        SubscribeLocalEvent<SubdermalImplantComponent, ActivateMicroBombImplantEvent>(OnMicroBombActivation);
     }
+
+    private void OnFreedomImplant(EntityUid uid, SubdermalImplantComponent component, UseFreedomImplantEvent args)
+    {
+        if (!TryComp<CuffableComponent>(component.EntityUid, out var cuffs))
+            return;
+
+        if (cuffs.Container.ContainedEntities.Count >= 1 && TryComp<HandcuffComponent>(cuffs.LastAddedCuffs, out var cuff))
+        {
+            cuffs.Uncuff(component.EntityUid.Value, cuffs.LastAddedCuffs, cuff, true);
+        }
+    }
+
+    #region Relays
+
 
     //Relays from the implanted to the implant
     private void RelayToImplantEvent<T>(EntityUid uid, ImplantedComponent component, T args) where T : EntityEventArgs
@@ -31,11 +45,6 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
         }
     }
 
-    private void OnMicroBombActivation(EntityUid uid, SubdermalImplantComponent component, ActivateMicroBombImplantEvent args)
-    {
-        _trigger.Trigger(component.Owner);
-    }
-
     //Relays from the implant to the implanted
     private void RelayToImplantedEvent<T>(EntityUid uid, SubdermalImplantComponent component, T args) where T : EntityEventArgs
     {
@@ -44,4 +53,6 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
             RaiseLocalEvent(component.EntityUid.Value, args);
         }
     }
+
+    #endregion
 }

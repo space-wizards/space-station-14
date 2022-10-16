@@ -102,7 +102,17 @@
         - key: enum.StorageUiKey.Key
           type: StorageBoundUserInterface
 
-#Nuclear Operative/Special implants
+- type: entity
+  parent: BaseSubdermalImplant
+  id: FreedomImplant
+  name: freedom implant
+  description: you can break these cuffs
+  noSpawn: true
+  components:
+    - type: SubdermalImplant
+      implantAction: ActivateFreedomImplant
+
+#Nuclear Operative/Special Exclusive implants
 
 - type: entity
   parent: BaseSubdermalImplant
@@ -116,7 +126,7 @@
       implantAction: ActivateMicroBomb
     - type: TriggerOnMobstateChange
       mobState: Dead
-    - type: TriggerOnMicroBombImplantAction
+    - type: TriggerImplantAction
     - type: ExplodeOnTrigger
     - type: GibOnTrigger
       deleteItems: true
