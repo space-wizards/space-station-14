@@ -1,9 +1,4 @@
 Entries:
-- author: Kimpes
-  changes:
-  - {message: Updated alarm sound effect, type: Tweak}
-  id: 1965
-  time: '2022-07-15T10:20:04.0000000+00:00'
 - author: Rane
   changes:
   - {message: Added portable scrubbers., type: Add}
@@ -2944,3 +2939,9 @@ Entries:
       in some situations., type: Fix}
   id: 2464
   time: '2022-10-16T04:16:28.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Stripping dead or incapacitated entities is now 3 or 2 times as fast,
+      respectively.', type: Tweak}
+  id: 2465
+  time: '2022-10-16T05:26:28.0000000+00:00'
