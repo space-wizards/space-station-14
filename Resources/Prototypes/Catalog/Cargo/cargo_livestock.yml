@@ -4,7 +4,7 @@
     sprite: Mobs/Animals/bee.rsi
     state: 0
   product: CrateNPCBee
-  cost: 2000
+  cost: 4000
   category: Livestock
   group: market
 
