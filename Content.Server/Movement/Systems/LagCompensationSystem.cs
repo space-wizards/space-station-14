@@ -37,8 +37,6 @@ public sealed class LagCompensationSystem : EntitySystem
         // Probably fine to include ignored.
         foreach (var (_, comp) in EntityQuery<ActiveLagCompensationComponent, LagCompensationComponent>(true))
         {
-            var invalid = true;
-
             while (comp.Positions.TryPeek(out var pos))
             {
                 if (pos.Item1 < earliestTime)
