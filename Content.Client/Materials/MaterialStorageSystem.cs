@@ -1,4 +1,4 @@
-﻿using Content.Shared.Materials;
+using Content.Shared.Materials;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Materials;
@@ -10,7 +10,7 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
 {
     [Dependency] private readonly TransformSystem _transform = default!;
 
-    public override bool TryInsertMaterialEntity(EntityUid user, EntityUid toInsert, EntityUid receiver, MaterialStorageComponent? component = null)
+    public override bool TryInsertMaterialEntity(EntityUid user, EntityUid toInsert, EntityUid receiver, MaterialStorageComponent? component = null, bool popup = true)
     {
         if (!base.TryInsertMaterialEntity(user, toInsert, receiver, component))
             return false;

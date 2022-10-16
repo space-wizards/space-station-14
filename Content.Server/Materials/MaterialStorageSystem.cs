@@ -1,4 +1,4 @@
-﻿using Content.Shared.Materials;
+using Content.Shared.Materials;
 using Content.Shared.Popups;
 using Robust.Shared.Player;
 
@@ -12,15 +12,16 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
 
-    public override bool TryInsertMaterialEntity(EntityUid user, EntityUid toInsert, EntityUid receiver, MaterialStorageComponent? component = null)
+    public override bool TryInsertMaterialEntity(EntityUid user, EntityUid toInsert, EntityUid receiver, MaterialStorageComponent? component = null, bool popup = true)
     {
         if (!Resolve(receiver, ref component))
             return false;
         if (!base.TryInsertMaterialEntity(user, toInsert, receiver, component))
             return false;
         _audio.PlayPvs(component.InsertingSound, component.Owner);
-        _popup.PopupEntity(Loc.GetString("machine-insert-item", ("user", user), ("machine", component.Owner),
-            ("item", toInsert)), component.Owner, Filter.Pvs(component.Owner));
+        if (popup)
+            _popup.PopupEntity(Loc.GetString("machine-insert-item", ("user", user), ("machine", component.Owner),
+                ("item", toInsert)), component.Owner, Filter.Pvs(component.Owner));
         QueueDel(toInsert);
         return true;
     }

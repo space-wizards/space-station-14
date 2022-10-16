@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Interaction;
 using Content.Shared.Stacks;
 using JetBrains.Annotations;
@@ -141,7 +141,7 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
     /// <param name="receiver"></param>
     /// <param name="component"></param>
     /// <returns>If it was successful</returns>
-    public virtual bool TryInsertMaterialEntity(EntityUid user, EntityUid toInsert, EntityUid receiver, MaterialStorageComponent? component = null)
+    public virtual bool TryInsertMaterialEntity(EntityUid user, EntityUid toInsert, EntityUid receiver, MaterialStorageComponent? component = null, bool popup = true)
     {
         if (!Resolve(receiver, ref component))
             return false;

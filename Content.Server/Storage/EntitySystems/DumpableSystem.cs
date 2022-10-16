@@ -1,21 +1,27 @@
 using System.Threading;
 using Content.Shared.Interaction;
+using Content.Shared.Materials;
 using Content.Server.Storage.Components;
 using Content.Shared.Storage.Components;
 using Content.Shared.Verbs;
+using Content.Shared.Popups;
 using Content.Server.Disposal.Unit.Components;
 using Content.Server.Disposal.Unit.EntitySystems;
 using Content.Server.DoAfter;
 using Content.Shared.Placeable;
+using Content.Server.Materials;
 using Robust.Shared.Containers;
 using Robust.Shared.Random;
+using Robust.Shared.Player;
 
 namespace Content.Server.Storage.EntitySystems
 {
     public sealed class DumpableSystem : EntitySystem
     {
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly MaterialStorageSystem _materialStorageSystem = default!;
         [Dependency] private readonly DisposalUnitSystem _disposalUnitSystem = default!;
+        [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
         public override void Initialize()
@@ -39,7 +45,7 @@ namespace Content.Server.Storage.EntitySystems
             if (storage.StoredEntities == null || storage.StoredEntities.Count == 0)
                 return;
 
-            if (HasComp<DisposalUnitComponent>(args.Target) || HasComp<PlaceableSurfaceComponent>(args.Target))
+            if (HasComp<MaterialStorageComponent>(args.Target) || HasComp<DisposalUnitComponent>(args.Target) || HasComp<PlaceableSurfaceComponent>(args.Target))
             {
                 StartDoAfter(uid, args.Target.Value, args.User, component, storage);
             }
@@ -73,7 +79,7 @@ namespace Content.Server.Storage.EntitySystems
             if (!TryComp<ServerStorageComponent>(uid, out var storage) || storage.StoredEntities == null || storage.StoredEntities.Count == 0)
                 return;
 
-            if (HasComp<DisposalUnitComponent>(args.Target))
+            if (HasComp<MaterialStorageComponent>(args.Target) || HasComp<DisposalUnitComponent>(args.Target))
             {
                 UtilityVerb verb = new()
                 {
@@ -81,7 +87,7 @@ namespace Content.Server.Storage.EntitySystems
                     {
                         StartDoAfter(uid, args.Target, args.User, dumpable, storage);
                     },
-                    Text = Loc.GetString("dump-disposal-verb-name", ("unit", args.Target)),
+                    Text = Loc.GetString("dump-storage-verb-name", ("storage", args.Target)),
                     IconEntity = uid
                 };
                 args.Verbs.Add(verb);
@@ -133,6 +139,17 @@ namespace Content.Server.Storage.EntitySystems
             foreach (var entity in args.StoredEntities)
             {
                 dumpQueue.Enqueue(entity);
+            }
+
+            if (TryComp<MaterialStorageComponent>(args.Target, out var storage))
+            {
+                foreach (var entity in dumpQueue)
+                {
+                    _materialStorageSystem.TryInsertMaterialEntity(args.User, entity, args.Target.Value, storage,false);
+                }
+                _popup.PopupEntity(Loc.GetString("dump-storage-complete", ("user", args.User), ("storage", storage.Owner)),
+                    storage.Owner, Filter.Pvs(storage.Owner));
+                return;
             }
 
             if (TryComp<DisposalUnitComponent>(args.Target, out var disposal))
