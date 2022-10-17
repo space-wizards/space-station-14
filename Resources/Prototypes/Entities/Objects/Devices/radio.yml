@@ -6,6 +6,7 @@
   components:
   - type: RadioMicrophone
   - type: RadioSpeaker
+  - type: Speech
   - type: Sprite
     sprite: Objects/Devices/communication.rsi
     layers:

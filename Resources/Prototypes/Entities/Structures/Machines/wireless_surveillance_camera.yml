@@ -27,7 +27,7 @@
         components:
           - SurveillanceCamera
           - SurveillanceCameraMonitor
-          - RadioSpeakerComponent
+          - RadioSpeaker
     - type: ActiveListener
       range: 10
     - type: UserInterface
