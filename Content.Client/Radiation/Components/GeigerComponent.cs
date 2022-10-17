@@ -11,12 +11,12 @@ public sealed class GeigerComponent : SharedGeigerComponent
     public bool ShowControl = true;
 
     [DataField("sounds")]
-    public Dictionary<GeigerDangerLevel, SoundCollectionSpecifier> Sounds = new()
+    public Dictionary<GeigerDangerLevel, SoundSpecifier> Sounds = new()
     {
-        {GeigerDangerLevel.Low, new SoundCollectionSpecifier("GeigerLow")},
-        {GeigerDangerLevel.Med, new SoundCollectionSpecifier("GeigerMed")},
-        {GeigerDangerLevel.High, new SoundCollectionSpecifier("GeigerHigh")},
-        {GeigerDangerLevel.Extreme, new SoundCollectionSpecifier("GeigerExt")}
+        {GeigerDangerLevel.Low, new SoundPathSpecifier("/Audio/Items/Geiger/low.ogg")},
+        {GeigerDangerLevel.Med, new SoundPathSpecifier("/Audio/Items/Geiger/med.ogg")},
+        {GeigerDangerLevel.High, new SoundPathSpecifier("/Audio/Items/Geiger/high.ogg")},
+        {GeigerDangerLevel.Extreme, new SoundPathSpecifier("/Audio/Items/Geiger/ext.ogg")}
     };
 
 
