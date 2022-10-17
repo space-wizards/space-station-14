@@ -22,6 +22,7 @@ namespace Content.Client.Lobby.UI
         {
             RobustXamlLoader.Load(this);
             SetAnchorPreset(MainContainer, LayoutPreset.Wide);
+            SetAnchorPreset(Background, LayoutPreset.Wide);
         }
 
         public void SwitchState(LobbyGuiState state)
