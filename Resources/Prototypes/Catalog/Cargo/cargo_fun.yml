@@ -57,3 +57,23 @@
   cost: 1500
   category: Fun
   group: market
+
+- type: cargoProduct
+  id: FunSadTromboneImplants
+  icon:
+    sprite: Objects/Specific/Chemistry/syringe.rsi
+    state: syringe_base0
+  product: CrateFunSadTromboneImplants
+  cost: 1000
+  category: Fun
+  group: market
+
+- type: cargoProduct
+  id: FunLightImplants
+  icon:
+    sprite: Objects/Specific/Chemistry/syringe.rsi
+    state: syringe_base0
+  product: CrateFunLightImplants
+  cost: 1000
+  category: Fun
+  group: market
