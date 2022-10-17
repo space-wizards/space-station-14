@@ -641,7 +641,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         ActionsBar.PageButtons.RightArrow.OnPressed += OnRightArrowPressed;
 
 
-        RegisterActionContainer(widget.ActionsContainer);
+        RegisterActionContainer(ActionsBar.ActionsContainer);
 
         _actionsSystem?.LinkAllActions();
     }
