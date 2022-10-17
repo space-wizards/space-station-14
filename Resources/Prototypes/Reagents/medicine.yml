@@ -410,8 +410,6 @@
         damage:
           types:
             Poison: 3
-      - !type:ChemVomit
-        probability: 0.15
         conditions:
           - !type:ReagentThreshold
             min: 30
@@ -422,8 +420,6 @@
         key: Stutter
         component: StutteringAccent
       - !type:Jitter
-      - !type:Scream
-        probability: 0.2
       - !type:PopupMessage
         type: Local
         visualType: Large
