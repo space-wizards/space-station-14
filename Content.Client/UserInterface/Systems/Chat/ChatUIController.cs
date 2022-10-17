@@ -717,6 +717,11 @@ public sealed class ChatUIController : UIController
         return MapLocalIfGhost(PreferredChannel);
     }
 
+    public void NotifyChatTextChange()
+    {
+        _typingIndicator?.ClientChangedChatText();
+    }
+
     private readonly record struct SpeechBubbleData(string Message, SpeechBubble.SpeechType Type);
 
     private sealed class SpeechBubbleQueueData

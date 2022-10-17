@@ -198,7 +198,7 @@ public partial class ChatBox : UIWidget
         UpdateSelectedChannel();
 
         // Warn typing indicator about change
-        EntitySystem.Get<TypingIndicatorSystem>().ClientChangedChatText();
+        _controller.NotifyChatTextChange();
     }
 
     protected override void Dispose(bool disposing)
