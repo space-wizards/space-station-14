@@ -109,7 +109,7 @@ public sealed class SharpSystem : EntitySystem
 
         if (hasBody)
         {
-            _bodySystem.Gib(body!.Owner, body: body);
+            _bodySystem.GibBody(body!.Owner, body: body);
         }
         else
         {

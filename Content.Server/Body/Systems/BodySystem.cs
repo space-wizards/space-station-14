@@ -67,7 +67,7 @@ public sealed class BodySystem : SharedBodySystem
 
         // Don't microwave animals, kids
         Transform(uid).AttachToGridOrMap();
-        Gib(uid, false, component);
+        GibBody(uid, false, component);
 
         args.Handled = true;
     }
@@ -113,12 +113,12 @@ public sealed class BodySystem : SharedBodySystem
         return true;
     }
 
-    public override HashSet<EntityUid> Gib(EntityUid? bodyId, bool gibOrgans = false, BodyComponent? body = null)
+    public override HashSet<EntityUid> GibBody(EntityUid? bodyId, bool gibOrgans = false, BodyComponent? body = null)
     {
         if (bodyId == null || !Resolve(bodyId.Value, ref body, false))
             return new HashSet<EntityUid>();
 
-        var gibs = base.Gib(bodyId, gibOrgans, body);
+        var gibs = base.GibBody(bodyId, gibOrgans, body);
 
         var xform = Transform(bodyId.Value);
         var coordinates = xform.Coordinates;

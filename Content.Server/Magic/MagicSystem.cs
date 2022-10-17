@@ -280,7 +280,7 @@ public sealed class MagicSystem : EntitySystem
         if (!TryComp<BodyComponent>(ev.Target, out var body))
             return;
 
-        var ents = _bodySystem.Gib(ev.Target, true, body);
+        var ents = _bodySystem.GibBody(ev.Target, true, body);
 
         if (!ev.DeleteNonBrainParts)
             return;

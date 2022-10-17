@@ -1,8 +1,8 @@
-﻿using Content.Shared.Body.Organ;
-using Content.Shared.Body.Part;
+﻿using Content.Shared.Body.Components;
+using Content.Shared.Body.Organ;
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Body.Components;
+namespace Content.Shared.Body.Part;
 
 [RegisterComponent, NetworkedComponent]
 public sealed class BodyPartComponent : Component

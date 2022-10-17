@@ -59,7 +59,7 @@ namespace Content.Server.Recycling
 
             if (TryComp<BodyComponent?>(victim, out var body))
             {
-                _bodySystem.Gib(victim, true, body);
+                _bodySystem.GibBody(victim, true, body);
             }
 
             Bloodstain(component);
@@ -104,7 +104,7 @@ namespace Content.Server.Recycling
             // Mobs are a special case!
             if (CanGib(component, entity))
             {
-                _bodySystem.Gib(entity, true, Comp<BodyComponent>(entity));
+                _bodySystem.GibBody(entity, true, Comp<BodyComponent>(entity));
                 Bloodstain(component);
                 return;
             }

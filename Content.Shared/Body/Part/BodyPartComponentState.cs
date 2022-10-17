@@ -1,8 +1,7 @@
 ﻿using Content.Shared.Body.Organ;
-using Content.Shared.Body.Part;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Body.Components;
+namespace Content.Shared.Body.Part;
 
 [Serializable, NetSerializable]
 public sealed class BodyPartComponentState : ComponentState

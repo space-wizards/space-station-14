@@ -86,7 +86,7 @@ namespace Content.Server.Drone
                     _innateToolSystem.Cleanup(uid, innate);
 
                 if (TryComp<BodyComponent>(uid, out var body))
-                    _bodySystem.Gib(uid, body: body);
+                    _bodySystem.GibBody(uid, body: body);
                 Del(uid);
             }
         }

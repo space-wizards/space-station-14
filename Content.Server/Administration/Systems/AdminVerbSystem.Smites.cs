@@ -102,7 +102,7 @@ public sealed partial class AdminVerbSystem
                         4, 1, 2, maxTileBreak: 0), // it gibs, damage doesn't need to be high.
                     CancellationToken.None);
 
-                _bodySystem.Gib(args.Target);
+                _bodySystem.GibBody(args.Target);
             },
             Impact = LogImpact.Extreme,
             Message = Loc.GetString("admin-smite-explode-description")

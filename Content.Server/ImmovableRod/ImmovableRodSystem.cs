@@ -98,7 +98,7 @@ public sealed class ImmovableRodSystem : EntitySystem
 
             _popup.PopupEntity(Loc.GetString("immovable-rod-penetrated-mob", ("rod", uid), ("mob", ent)), uid,
                 Filter.Pvs(uid), PopupType.LargeCaution);
-            _bodySystem.Gib(ent, body: body);
+            _bodySystem.GibBody(ent, body: body);
         }
 
         QueueDel(ent);

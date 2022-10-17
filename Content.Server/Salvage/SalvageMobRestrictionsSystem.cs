@@ -58,7 +58,7 @@ public sealed class SalvageMobRestrictionsSystem : EntitySystem
             if (bodyQuery.TryGetComponent(target, out var body))
             {
                 // Just because.
-                _bodySystem.Gib(target, body: body);
+                _bodySystem.GibBody(target, body: body);
             }
             else if (damageQuery.TryGetComponent(target, out var damageableComponent))
             {
