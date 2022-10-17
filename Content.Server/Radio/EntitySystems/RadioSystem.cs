@@ -1,3 +1,4 @@
+using Content.Server.Chat.Systems;
 using Content.Server.Radio.Components;
 using Content.Server.Speech;
 using Content.Server.VoiceMask;
@@ -23,8 +24,17 @@ public sealed class RadioSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<IntrinsicRadioReceiverComponent, RadioReceiveEvent>(OnIntrinsicReceive);
+        SubscribeLocalEvent<IntrinsicRadioTransmitterComponent, EntitySpokeEvent>(OnIntrinsicSpeak);
     }
-    
+
+    private void OnIntrinsicSpeak(EntityUid uid, IntrinsicRadioTransmitterComponent component, EntitySpokeEvent args)
+    {
+        if (args.Channel != null && component.Channels.Contains(args.Channel.ID))
+        {
+            SendRadioMessage(uid, args.Message, args.Channel);
+        }
+    }
+
     private void OnIntrinsicReceive(EntityUid uid, IntrinsicRadioReceiverComponent component, RadioReceiveEvent args)
     {
         if (TryComp(uid, out ActorComponent? actor))
