@@ -11,6 +11,7 @@ using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Content.Server.MachineLinking.Events;
 using Content.Server.MachineLinking.System;
+using Content.Server.MachineLinking.Components;
 
 namespace Content.Server.Doors.Systems
 {
@@ -39,6 +40,9 @@ namespace Content.Server.Doors.Systems
 
         private void OnInit(EntityUid uid, AirlockComponent component, ComponentInit args)
         {
+            if (!HasComp<SignalReceiverComponent>(uid))
+                return;
+
             _signalSystem.EnsureReceiverPorts(uid, component.AutoClosePort);
         }
 

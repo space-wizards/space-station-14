@@ -10,12 +10,6 @@
         path:
           "/Audio/Weapons/smash.ogg"
   - type: InteractionOutline
-  - type: DoorSignalControl
-  - type: SignalReceiver
-    inputs:
-      Open: []
-      Close: []
-      Toggle: []
   - type: Sprite
     netsync: false
     sprite: Structures/Doors/Airlocks/Standard/basic.rsi
@@ -82,6 +76,10 @@
     interfaces:
     - key: enum.WiresUiKey.Key
       type: WiresBoundUserInterface
+  - type: DoorSignalControl
+  - type: SignalReceiver
+    inputs:
+      AutoClose: []
   - type: Airtight
     fixVacuum: true
     noAirWhenFullyAirBlocked: false
