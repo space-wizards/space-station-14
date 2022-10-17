@@ -3,6 +3,7 @@
   abstract: true
   id: MobSiliconBase
   components:
+  - type: LagCompensation
   - type: Reactive
     groups:
       Acidic: [Touch]

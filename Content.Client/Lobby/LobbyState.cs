@@ -24,10 +24,7 @@ namespace Content.Client.Lobby
     {
         [Dependency] private readonly IBaseClient _baseClient = default!;
         [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
-        [Dependency] private readonly IChatManager _chatManager = default!;
-        [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
@@ -43,7 +40,7 @@ namespace Content.Client.Lobby
 
         protected override void Startup()
         {
-            _gameTicker = EntitySystem.Get<ClientGameTicker>();
+            _gameTicker = _entityManager.System<ClientGameTicker>();
             _characterSetup = new CharacterSetupGui(_entityManager, _resourceCache, _preferencesManager,
                 _prototypeManager, _configurationManager);
             LayoutContainer.SetAnchorPreset(_characterSetup, LayoutContainer.LayoutPreset.Wide);
@@ -113,10 +110,10 @@ namespace Content.Client.Lobby
 
         public override void FrameUpdate(FrameEventArgs e)
         {
-            if (_lobby == null) return;
+            if (_lobby == null)
+                return;
 
-            var gameTicker = EntitySystem.Get<ClientGameTicker>();
-            if (gameTicker.IsGameStarted)
+            if (_gameTicker.IsGameStarted)
             {
                 _lobby.StartTime.Text = string.Empty;
                 _lobby.StationTime.Text = Loc.GetString("lobby-state-player-status-station-time", ("stationTime", _gameTiming.CurTime.Subtract(_gameTicker.RoundStartTimeSpan).ToString("hh\\:mm")));
@@ -125,13 +122,13 @@ namespace Content.Client.Lobby
 
             string text;
 
-            if (gameTicker.Paused)
+            if (_gameTicker.Paused)
             {
                 text = Loc.GetString("lobby-state-paused");
             }
             else
             {
-                var difference = gameTicker.StartTime - _gameTiming.CurTime;
+                var difference = _gameTicker.StartTime - _gameTiming.CurTime;
                 var seconds = difference.TotalSeconds;
                 if (seconds < 0)
                 {
@@ -156,16 +153,15 @@ namespace Content.Client.Lobby
         private void LobbyLateJoinStatusUpdated()
         {
             if (_lobby == null) return;
-            _lobby.ReadyButton.Disabled = EntitySystem.Get<ClientGameTicker>().DisallowedLateJoin;
+            _lobby.ReadyButton.Disabled = _gameTicker.DisallowedLateJoin;
         }
 
         private void UpdateLobbyUi()
         {
-            if (_lobby == null) return;
+            if (_lobby == null)
+                return;
 
-            var gameTicker = EntitySystem.Get<ClientGameTicker>();
-
-            if (gameTicker.IsGameStarted)
+            if (_gameTicker.IsGameStarted)
             {
                 _lobby.ReadyButton.Text = Loc.GetString("lobby-state-ready-button-join-state");
                 _lobby.ReadyButton.ToggleMode = false;
@@ -178,19 +174,21 @@ namespace Content.Client.Lobby
                 _lobby.ReadyButton.Text = Loc.GetString("lobby-state-ready-button-ready-up-state");
                 _lobby.ReadyButton.ToggleMode = true;
                 _lobby.ReadyButton.Disabled = false;
-                _lobby.ReadyButton.Pressed = gameTicker.AreWeReady;
+                _lobby.ReadyButton.Pressed = _gameTicker.AreWeReady;
                 _lobby.ObserveButton.Disabled = true;
             }
 
-            if (gameTicker.ServerInfoBlob != null)
+            if (_gameTicker.ServerInfoBlob != null)
             {
-                _lobby.ServerInfo.SetInfoBlob(gameTicker.ServerInfoBlob);
+                _lobby.ServerInfo.SetInfoBlob(_gameTicker.ServerInfoBlob);
             }
         }
 
         private void UpdateLobbyBackground()
         {
-            if (_lobby == null) return;
+            if (_lobby == null)
+                return;
+
             if (_gameTicker.LobbyBackground != null)
             {
                 _lobby.Background.Texture = _resourceCache.GetResource<TextureResource>(_gameTicker.LobbyBackground );
@@ -204,7 +202,7 @@ namespace Content.Client.Lobby
 
         private void SetReady(bool newReady)
         {
-            if (EntitySystem.Get<ClientGameTicker>().IsGameStarted)
+            if (_gameTicker.IsGameStarted)
             {
                 return;
             }

@@ -47,25 +47,26 @@
       partType: Head
     - type: Input
       context: "human"
+    - type: MovementSpeedModifier
+      baseWalkSpeed: 0
+      baseSprintSpeed: 0
     - type: Speech
     - type: Vocal
+      maleScream: /Audio/Voice/Skeleton/skeleton_scream.ogg
+      femaleScream: /Audio/Voice/Skeleton/skeleton_scream.ogg
     - type: Emoting
     - type: Grammar
       attributes:
         proper: true
     - type: Examiner
-    - type: IntrinsicRadio
-      channels:
-      - Common
     - type: DoAfter
     - type: Actions
     - type: MobState
       thresholds:
         0: Alive
-    #    criticalThreshold: 50
-    #    deadThreshold: 120
     - type: Tag
       tags:
+        - MindTransferTarget
         - Head
 
 - type: entity

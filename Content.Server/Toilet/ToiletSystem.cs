@@ -24,7 +24,9 @@ namespace Content.Server.Toilet
     public sealed class ToiletSystem : EntitySystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly BodySystem _bodySystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SecretStashSystem _secretStash = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly ToolSystem _toolSystem = default!;
@@ -44,7 +46,8 @@ namespace Content.Server.Toilet
 
         private void OnSuicide(EntityUid uid, ToiletComponent component, SuicideEvent args)
         {
-            if (args.Handled) return;
+            if (args.Handled)
+                return;
 
             // Check that victim has a head
             if (EntityManager.TryGetComponent<BodyComponent>(args.Victim, out var body) &&
@@ -182,19 +185,17 @@ namespace Content.Server.Toilet
                 return;
 
             component.IsSeatUp = !component.IsSeatUp;
-            SoundSystem.Play(component.ToggleSound.GetSound(), Filter.Pvs(uid),
-                uid, AudioHelpers.WithVariation(0.05f));
-
+            _audio.PlayPvs(component.ToggleSound, uid, AudioParams.Default.WithVariation(0.05f));
             UpdateSprite(uid, component);
         }
 
         private void UpdateSprite(EntityUid uid, ToiletComponent component)
         {
-            if (!EntityManager.TryGetComponent(uid,out AppearanceComponent? appearance))
+            if (!EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
                 return;
 
-            appearance.SetData(ToiletVisuals.LidOpen, component.LidOpen);
-            appearance.SetData(ToiletVisuals.SeatUp, component.IsSeatUp);
+            _appearance.SetData(uid, ToiletVisuals.LidOpen, component.LidOpen, appearance);
+            _appearance.SetData(uid, ToiletVisuals.SeatUp, component.IsSeatUp, appearance);
         }
     }
 

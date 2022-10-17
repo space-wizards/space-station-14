@@ -319,7 +319,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             RemComp<ActiveDisposalUnitComponent>(uid);
         }
 
-        private void HandlePowerChange(EntityUid uid, DisposalUnitComponent component, PowerChangedEvent args)
+        private void HandlePowerChange(EntityUid uid, DisposalUnitComponent component, ref PowerChangedEvent args)
         {
             if (!component.Running)
                 return;

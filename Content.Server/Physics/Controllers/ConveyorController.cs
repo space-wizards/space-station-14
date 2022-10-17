@@ -87,7 +87,7 @@ namespace Content.Server.Physics.Controllers
             }
         }
 
-        private void OnPowerChanged(EntityUid uid, ConveyorComponent component, PowerChangedEvent args)
+        private void OnPowerChanged(EntityUid uid, ConveyorComponent component, ref PowerChangedEvent args)
         {
             UpdateAppearance(component);
         }

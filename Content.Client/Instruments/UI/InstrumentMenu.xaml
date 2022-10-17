@@ -2,17 +2,17 @@
             xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client">
     <BoxContainer Orientation="Vertical" SeparationOverride="5">
         <BoxContainer Orientation="Horizontal" VerticalExpand="True">
-            <Button Name="InputButton" ToggleMode="True" Text="MIDI Input" TextAlign="Center"
+            <Button Name="InputButton" ToggleMode="True" Text="{Loc 'instruments-component-menu-input-button'}" TextAlign="Center"
                     HorizontalExpand="True" SizeFlagsStretchRatio="1" />
             <Control HorizontalExpand="True" SizeFlagsStretchRatio="2" />
-            <Button Name="FileButton" Text="Play MIDI File" TextAlign="Center" HorizontalExpand="True"
+            <Button Name="FileButton" Text="{Loc 'instruments-component-menu-play-button'}" TextAlign="Center" HorizontalExpand="True"
                     SizeFlagsStretchRatio="1" />
         </BoxContainer>
         <BoxContainer Orientation="Horizontal" VerticalExpand="True">
-            <Button Name="LoopButton" ToggleMode="True" Text="Loop" TextAlign="Center" HorizontalExpand="True"
+            <Button Name="LoopButton" ToggleMode="True" Text="{Loc 'instruments-component-menu-loop-button'}" TextAlign="Center" HorizontalExpand="True"
                     SizeFlagsStretchRatio="1" />
             <Control HorizontalExpand="True" SizeFlagsStretchRatio="2" />
-            <Button Name="StopButton" Text="Stop" TextAlign="Center" HorizontalExpand="True"
+            <Button Name="StopButton" Text="{Loc 'instruments-component-menu-stop-button'}" TextAlign="Center" HorizontalExpand="True"
                     SizeFlagsStretchRatio="1" />
         </BoxContainer>
         <BoxContainer Orientation="Horizontal" VerticalExpand="True">
