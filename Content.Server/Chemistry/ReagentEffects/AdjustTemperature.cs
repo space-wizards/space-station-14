@@ -11,7 +11,6 @@ namespace Content.Server.Chemistry.ReagentEffects
 
         public override void Effect(ReagentEffectArgs args)
         {
-
             if (args.EntityManager.TryGetComponent(args.SolutionEntity, out TemperatureComponent? temp))
             {
                 var sys = args.EntityManager.EntitySysManager.GetEntitySystem<TemperatureSystem>();
