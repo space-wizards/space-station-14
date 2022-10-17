@@ -1,11 +1,14 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Botany.Components;
+using Content.Server.Mind.Commands;
 using Content.Server.Kitchen.Components;
 using Content.Shared.Botany;
 using Content.Shared.Examine;
 using Content.Shared.Popups;
 using Content.Shared.Random.Helpers;
+using Content.Shared.Slippery;
+using Content.Shared.StepTrigger.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
@@ -157,6 +160,20 @@ public sealed partial class BotanySystem
                 var metaData = MetaData(entity);
                 metaData.EntityName += "?";
                 metaData.EntityDescription += " " + Loc.GetString("botany-mysterious-description-addon");
+            }
+
+            if (proto.Bioluminescent)
+            {
+                var light = EnsureComp<PointLightComponent>(entity);
+                light.Radius = proto.BioluminescentRadius;
+                light.Color = proto.BioluminescentColor;
+            }
+
+            if (proto.Slip)
+            {
+                var slippery = EnsureComp<SlipperyComponent>(entity);
+                EntityManager.Dirty(slippery);
+                EnsureComp<StepTriggerComponent>(entity);
             }
         }
 

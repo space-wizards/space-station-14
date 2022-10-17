@@ -74,6 +74,7 @@
       - id: ClothingHeadsetCommand
       - id: BoxPDA
       - id: BoxID
+      - id: BoxHeadset
       - id: IDComputerCircuitboard
       - id: WeaponDisabler
       - id: ClothingShoesColorBlack
