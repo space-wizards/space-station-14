@@ -1,5 +1,4 @@
 using System.Linq;
-using Content.Client.Body.Systems;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Systems;
@@ -121,11 +120,6 @@ namespace Content.Client.Body.UI
         public void BodyPartOnItemSelected(ItemListSelectedEventArgs args)
         {
             var entMan = IoCManager.Resolve<IEntityManager>();
-            var bodySystem = entMan.System<BodySystem>();
-            if (!bodySystem.TryGetPartBody(_currentEntity, out var body))
-            {
-                return;
-            }
 
             _currentBodyPart = entMan.GetComponentOrNull<BodyPartComponent>(_bodyPartsList[args.ItemIndex].Child);
 

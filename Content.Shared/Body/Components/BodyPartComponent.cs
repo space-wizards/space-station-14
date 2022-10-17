@@ -7,6 +7,8 @@ namespace Content.Shared.Body.Components;
 [RegisterComponent, NetworkedComponent]
 public sealed class BodyPartComponent : Component
 {
+    [ViewVariables] public EntityUid? Body;
+
     [ViewVariables]
     [DataField("parent")]
     public BodyPartSlot? ParentSlot;

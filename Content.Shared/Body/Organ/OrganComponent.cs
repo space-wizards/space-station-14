@@ -5,6 +5,8 @@ namespace Content.Shared.Body.Organ;
 [RegisterComponent, NetworkedComponent]
 public sealed class OrganComponent : Component
 {
+    [ViewVariables] public EntityUid? Body;
+
     [ViewVariables]
     [DataField("parent")]
     public OrganSlot? ParentSlot;

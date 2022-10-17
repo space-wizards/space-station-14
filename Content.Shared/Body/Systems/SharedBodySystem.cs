@@ -59,6 +59,7 @@ public abstract partial class SharedBodySystem : EntitySystem
         var partComponent = Comp<BodyPartComponent>(bodyId);
         var slot = new BodyPartSlot(root.Part, body.Owner, partComponent.PartType);
         body.Root = slot;
+        partComponent.Body = bodyId;
 
         _containers.EnsureContainer<Container>(body.Owner, BodyContainerId);
 
@@ -255,17 +256,18 @@ public abstract partial class SharedBodySystem : EntitySystem
         }
     }
 
-    public IEnumerable<BodyPartSlot> GetBodySlots(EntityUid? bodyId, BodyComponent? body = null)
+    public IEnumerable<BodyPartSlot> GetBodyAllSlots(EntityUid? bodyId, BodyComponent? body = null)
     {
         if (bodyId == null || !Resolve(bodyId.Value, ref body, false))
             yield break;
 
-        foreach (var slot in GetPartSlots(body.Root.Child))
+        foreach (var slot in GetPartAllSlots(body.Root.Child))
         {
             yield return slot;
         }
     }
-    public IEnumerable<BodyPartSlot> GetPartSlots(EntityUid? partId, BodyPartComponent? part = null)
+
+    public IEnumerable<BodyPartSlot> GetPartAllSlots(EntityUid? partId, BodyPartComponent? part = null)
     {
         if (partId == null ||
             !Resolve(partId.Value, ref part, false))
@@ -278,53 +280,11 @@ public abstract partial class SharedBodySystem : EntitySystem
             if (!TryComp(slot.Child, out BodyComponent? childPart))
                 continue;
 
-            foreach (var subChild in GetBodySlots(slot.Child, childPart))
+            foreach (var subChild in GetBodyAllSlots(slot.Child, childPart))
             {
                 yield return subChild;
             }
         }
-    }
-
-    public (EntityUid Id, BodyComponent Component)? GetPartBody(EntityUid? partId, BodyPartComponent? part = null)
-    {
-        if (partId == null ||
-            !Resolve(partId.Value, ref part, false) ||
-            part.ParentSlot?.Parent is not { } parent)
-            return null;
-
-        if (TryComp(parent, out BodyComponent? body))
-            return (parent, body);
-
-        return GetPartBody(parent);
-    }
-
-    public bool TryGetPartBody(
-        EntityUid? partId,
-        [NotNullWhen(true)] out (EntityUid Id, BodyComponent Component)? body,
-        BodyPartComponent? part = null)
-    {
-        return (body = GetPartBody(partId, part)) != null;
-    }
-
-    public (EntityUid Id, BodyComponent Component)? GetOrganBody(EntityUid? id, OrganComponent? organ = null)
-    {
-        if (id == null ||
-            !Resolve(id.Value, ref organ, false) ||
-            organ.ParentSlot?.Parent is not { } parent)
-            return null;
-
-        if (TryComp(parent, out BodyComponent? body))
-            return (parent, body);
-
-        return GetPartBody(parent);
-    }
-
-    public bool TryGetOrganBody(
-        EntityUid? organId,
-        [NotNullWhen(true)] out (EntityUid Id, BodyComponent Component)? body,
-        OrganComponent? organ = null)
-    {
-        return (body = GetOrganBody(organId, organ)) != null;
     }
 
     public virtual HashSet<EntityUid> Gib(EntityUid? partId, bool gibOrgans = false,
@@ -381,26 +341,39 @@ public abstract partial class SharedBodySystem : EntitySystem
         slot.Child = partId;
         part.ParentSlot = slot;
 
+        if (TryComp(slot.Parent, out BodyPartComponent? parentPart))
+        {
+            part.Body = parentPart.Body;
+        }
+        else if (TryComp(slot.Parent, out BodyComponent? parentBody))
+        {
+            part.Body = parentBody.Owner;
+        }
+        else
+        {
+            part.Body = null;
+        }
+
         Dirty(slot.Parent);
         Dirty(partId.Value);
 
-        if (TryGetPartBody(partId, out var body, part))
+        if (part.Body is { } newBody)
         {
             var argsAdded = new BodyPartAddedEventArgs(slot.Id, part);
 
             // TODO: Body refactor. Somebody is doing it
             // EntitySystem.Get<SharedHumanoidAppearanceSystem>().BodyPartAdded(Owner, argsAdded);
-            foreach (var component in AllComps<IBodyPartAdded>(body.Value.Id).ToArray())
+            foreach (var component in AllComps<IBodyPartAdded>(newBody).ToArray())
             {
                 component.BodyPartAdded(argsAdded);
             }
 
             foreach (var organ in GetPartOrgans(partId, part))
             {
-                RaiseLocalEvent(organ.Id, new AddedToBodyEvent(body.Value.Component), true);
+                RaiseLocalEvent(organ.Id, new AddedToBodyEvent(newBody), true);
             }
 
-            Dirty(body.Value.Id);
+            Dirty(newBody);
         }
 
         return true;
@@ -431,20 +404,18 @@ public abstract partial class SharedBodySystem : EntitySystem
 
         slot.Child = organId;
         organ.ParentSlot = slot;
+        organ.Body = CompOrNull<BodyPartComponent>(slot.Parent)?.Body;
 
         Dirty(slot.Parent);
         Dirty(organId.Value);
 
-        if (TryComp(slot.Parent, out BodyPartComponent? part))
+        if (organ.Body == null)
         {
-            if (TryGetOrganBody(organId, out var body, organ))
-            {
-                RaiseLocalEvent(organId.Value, new AddedToPartInBodyEvent(body.Value.Component, part));
-            }
-            else
-            {
-                RaiseLocalEvent(organId.Value, new AddedToPartEvent(part));
-            }
+            RaiseLocalEvent(organId.Value, new AddedToPartEvent(slot.Parent));
+        }
+        else
+        {
+            RaiseLocalEvent(organId.Value, new AddedToPartInBodyEvent(organ.Body.Value, slot.Parent));
         }
 
         return true;
@@ -481,10 +452,11 @@ public abstract partial class SharedBodySystem : EntitySystem
             part.ParentSlot is not { } slot)
             return false;
 
-        var root = GetPartBody(partId, part);
+        var oldBody = part.Body;
 
         slot.Child = null;
         part.ParentSlot = null;
+        part.Body = null;
 
         if (_containers.TryGetContainer(slot.Parent, BodyContainerId, out var container))
             container.Remove(partId.Value);
@@ -494,22 +466,21 @@ public abstract partial class SharedBodySystem : EntitySystem
 
         part.Owner.RandomOffset(0.25f);
 
-        if (root != null)
+        if (oldBody != null)
         {
-            var (bodyId, bodyComponent) = root.Value;
             var args = new BodyPartRemovedEventArgs(slot.Id, part);
-            foreach (var component in AllComps<IBodyPartRemoved>(bodyId))
+            foreach (var component in AllComps<IBodyPartRemoved>(oldBody.Value))
             {
                 component.BodyPartRemoved(args);
             }
 
             if (part.PartType == BodyPartType.Leg &&
-                !GetBodyChildrenOfType(bodyId, BodyPartType.Leg, bodyComponent).Any())
+                !GetBodyChildrenOfType(oldBody, BodyPartType.Leg).Any())
             {
-                _standing.Down(bodyId);
+                _standing.Down(oldBody.Value);
             }
 
-            if (part.IsVital && !GetBodyChildrenOfType(bodyId, part.PartType, bodyComponent).Any())
+            if (part.IsVital && !GetBodyChildrenOfType(oldBody, part.PartType).Any())
             {
                 // TODO BODY SYSTEM KILL : Find a more elegant way of killing em than just dumping bloodloss damage.
                 var damage = new DamageSpecifier(_prototypes.Index<DamageTypePrototype>("Bloodloss"), 300);
@@ -521,7 +492,7 @@ public abstract partial class SharedBodySystem : EntitySystem
                 if (organSlot.Child is not { } child)
                     continue;
 
-                RaiseLocalEvent(child, new RemovedFromBodyEvent(bodyComponent), true);
+                RaiseLocalEvent(child, new RemovedFromBodyEvent(oldBody.Value), true);
             }
         }
 
@@ -542,6 +513,7 @@ public abstract partial class SharedBodySystem : EntitySystem
 
         slot.Child = null;
         organ.ParentSlot = null;
+        organ.Body = null;
 
         if (_containers.TryGetContainer(slot.Parent, BodyContainerId, out var container))
             container.Remove(organId.Value);
@@ -551,16 +523,16 @@ public abstract partial class SharedBodySystem : EntitySystem
 
         organ.Owner.RandomOffset(0.25f);
 
-        if (oldParent != null)
+        if (oldParent == null)
+            return true;
+
+        if (oldParent.Body != null)
         {
-            if (TryGetOrganBody(organId, out var body, organ))
-            {
-                RaiseLocalEvent(organId.Value, new RemovedFromPartInBodyEvent(body.Value.Component, oldParent));
-            }
-            else
-            {
-                RaiseLocalEvent(organId.Value, new RemovedFromPartEvent(oldParent));
-            }
+            RaiseLocalEvent(organId.Value, new RemovedFromPartInBodyEvent(oldParent.Body.Value, oldParent.Owner));
+        }
+        else
+        {
+            RaiseLocalEvent(organId.Value, new RemovedFromPartEvent(oldParent.Owner));
         }
 
         return true;

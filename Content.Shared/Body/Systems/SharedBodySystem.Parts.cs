@@ -23,7 +23,7 @@ public partial class SharedBodySystem
         }
     }
 
-    public bool HasChildOfType(EntityUid? bodyId, BodyPartType type, BodyComponent? body = null)
+    public bool BodyHasChildOfType(EntityUid? bodyId, BodyPartType type, BodyComponent? body = null)
     {
         return GetBodyChildrenOfType(bodyId, type, body).Any();
     }

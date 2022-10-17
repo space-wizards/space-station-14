@@ -14,15 +14,12 @@ namespace Content.Server.Body.Systems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<BrainComponent, AddedToBodyEvent>((uid, _, args) => HandleMind((args.Body).Owner, uid));
-            SubscribeLocalEvent<BrainComponent, AddedToPartEvent>((uid, _, args) => HandleMind((args.Part).Owner, uid));
-            SubscribeLocalEvent<BrainComponent, AddedToPartInBodyEvent>((uid, _, args) =>
-                HandleMind((args.Body).Owner, uid));
+            SubscribeLocalEvent<BrainComponent, AddedToBodyEvent>((uid, _, args) => HandleMind(args.Body, uid));
+            SubscribeLocalEvent<BrainComponent, AddedToPartEvent>((uid, _, args) => HandleMind(args.Part, uid));
+            SubscribeLocalEvent<BrainComponent, AddedToPartInBodyEvent>((uid, _, args) => HandleMind(args.Body, uid));
             SubscribeLocalEvent<BrainComponent, RemovedFromBodyEvent>(OnRemovedFromBody);
-            SubscribeLocalEvent<BrainComponent, RemovedFromPartEvent>((uid, _, args) =>
-                HandleMind(uid, (args.Old).Owner));
-            SubscribeLocalEvent<BrainComponent, RemovedFromPartInBodyEvent>((uid, _, args) =>
-                HandleMind((args.OldBody).Owner, uid));
+            SubscribeLocalEvent<BrainComponent, RemovedFromPartEvent>((uid, _, args) => HandleMind(uid, args.Old));
+            SubscribeLocalEvent<BrainComponent, RemovedFromPartInBodyEvent>((uid, _, args) => HandleMind(args.OldBody, uid));
         }
 
         private void OnRemovedFromBody(EntityUid uid, BrainComponent component, RemovedFromBodyEvent args)
@@ -32,7 +29,7 @@ namespace Content.Server.Body.Systems
                 organ.ParentSlot is not {Parent: var parent})
                 return;
 
-            HandleMind(parent, args.Old.Owner);
+            HandleMind(parent, args.Old);
         }
 
         private void HandleMind(EntityUid newEntity, EntityUid oldEntity)

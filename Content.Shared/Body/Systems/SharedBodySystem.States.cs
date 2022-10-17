@@ -35,6 +35,7 @@ public partial class SharedBodySystem
     private void OnPartGetState(EntityUid uid, BodyPartComponent part, ref ComponentGetState args)
     {
         args.State = new BodyPartComponentState(
+            part.Body,
             part.ParentSlot,
             part.Children,
             part.Organs,
@@ -49,6 +50,7 @@ public partial class SharedBodySystem
         if (args.Current is not BodyPartComponentState state)
             return;
 
+        part.Body = state.Body;
         part.ParentSlot = state.ParentSlot;
         part.Children = state.Children;
         part.Organs = state.Organs;
@@ -59,7 +61,7 @@ public partial class SharedBodySystem
 
     private void OnOrganGetState(EntityUid uid, OrganComponent organ, ref ComponentGetState args)
     {
-        args.State = new OrganComponentState(organ.ParentSlot);
+        args.State = new OrganComponentState(organ.Body, organ.ParentSlot);
     }
 
     private void OnOrganHandleState(EntityUid uid, OrganComponent organ, ref ComponentHandleState args)
@@ -67,7 +69,7 @@ public partial class SharedBodySystem
         if (args.Current is not OrganComponentState state)
             return;
 
+        organ.Body = state.Body;
         organ.ParentSlot = state.Parent;
-
     }
 }

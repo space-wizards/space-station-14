@@ -36,8 +36,7 @@ namespace Content.Server.Body.Systems
                         out var stomachSolution, sol))
                     continue;
 
-                var body = _bodySystem.GetOrganBody(organ.Owner, organ);
-                if (body == null || !_solutionContainerSystem.TryGetSolution(body.Value.Id, stomach.BodySolutionName, out var bodySolution))
+                if (organ.Body is not { } body || !_solutionContainerSystem.TryGetSolution(body, stomach.BodySolutionName, out var bodySolution))
                     continue;
 
                 var transferSolution = new Solution();
@@ -68,7 +67,7 @@ namespace Content.Server.Body.Systems
                 }
 
                 // Transfer everything to the body solution!
-                _solutionContainerSystem.TryAddSolution(body.Value.Id, bodySolution, transferSolution);
+                _solutionContainerSystem.TryAddSolution(body, bodySolution, transferSolution);
             }
         }
 

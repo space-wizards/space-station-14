@@ -38,9 +38,9 @@ namespace Content.Server.Body.Systems
             {
                 _solutionContainerSystem.EnsureSolution(uid, component.SolutionName);
             }
-            else if (_bodySystem.TryGetOrganBody(uid, out var body))
+            else if (CompOrNull<OrganComponent>(uid)?.Body is { } body)
             {
-                _solutionContainerSystem.EnsureSolution(body.Value.Id, component.SolutionName);
+                _solutionContainerSystem.EnsureSolution(body, component.SolutionName);
             }
         }
 
@@ -86,21 +86,17 @@ namespace Content.Server.Body.Systems
             // First step is get the solution we actually care about
             Solution? solution = null;
             EntityUid? solutionEntityUid = null;
-            var body = _bodySystem.GetOrganBody(uid, organ);
 
             SolutionContainerManagerComponent? manager = null;
 
             if (meta.SolutionOnBody)
             {
-                if (organ != null)
+                if (organ?.Body is { } body)
                 {
-                    if (body != null)
-                    {
-                        if (!Resolve(body.Value.Id, ref manager, false))
-                            return;
-                        _solutionContainerSystem.TryGetSolution(body.Value.Id, meta.SolutionName, out solution, manager);
-                        solutionEntityUid = body.Value.Id;
-                    }
+                    if (!Resolve(body, ref manager, false))
+                        return;
+                    _solutionContainerSystem.TryGetSolution(body, meta.SolutionName, out solution, manager);
+                    solutionEntityUid = body;
                 }
             }
             else
@@ -167,7 +163,7 @@ namespace Content.Server.Body.Systems
                             continue;
                     }
 
-                    var actualEntity = body?.Id ?? solutionEntityUid.Value;
+                    var actualEntity = organ?.Body ?? solutionEntityUid.Value;
                     var args = new ReagentEffectArgs(actualEntity, (meta).Owner, solution, proto, mostToRemove,
                         EntityManager, null, entry);
 

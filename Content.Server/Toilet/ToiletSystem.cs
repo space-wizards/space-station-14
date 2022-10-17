@@ -48,7 +48,7 @@ namespace Content.Server.Toilet
 
             // Check that victim has a head
             if (EntityManager.TryGetComponent<BodyComponent>(args.Victim, out var body) &&
-                _bodySystem.HasChildOfType(args.Victim, BodyPartType.Head, body))
+                _bodySystem.BodyHasChildOfType(args.Victim, BodyPartType.Head, body))
             {
                 var othersMessage = Loc.GetString("toilet-component-suicide-head-message-others",
                     ("victim", Identity.Entity(args.Victim, EntityManager)), ("owner", uid));

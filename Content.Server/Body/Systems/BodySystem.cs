@@ -80,14 +80,14 @@ public sealed class BodySystem : SharedBodySystem
         if (!base.AttachPart(partId, slot, part))
             return false;
 
-        if (TryGetPartBody(partId, out var body, part) &&
-            TryComp<HumanoidComponent>(body.Value.Id, out var humanoid))
+        if (part.Body is { } body &&
+            TryComp<HumanoidComponent>(body, out var humanoid))
         {
             var layer = part.ToHumanoidLayers();
             if (layer != null)
             {
                 var layers = HumanoidVisualLayersExtension.Sublayers(layer.Value);
-                _humanoidSystem.SetLayersVisibility(body.Value.Id, layers, true, true, humanoid);
+                _humanoidSystem.SetLayersVisibility(body, layers, true, true, humanoid);
             }
         }
 
@@ -96,21 +96,20 @@ public sealed class BodySystem : SharedBodySystem
 
     public override bool DropPart(EntityUid? partId, BodyPartComponent? part = null)
     {
-        var body = GetPartBody(partId, part);
+        var oldBody = CompOrNull<BodyPartComponent>(partId)?.Body;
 
         if (!base.DropPart(partId, part))
             return false;
 
-        if (body != null && TryComp<HumanoidComponent>(body.Value.Id, out var humanoid))
-        {
-            var layer = part.ToHumanoidLayers();
-            if (layer != null)
-            {
-                var layers = HumanoidVisualLayersExtension.Sublayers(layer.Value);
-                _humanoidSystem.SetLayersVisibility(body.Value.Id, layers, false, true, humanoid);
-            }
-        }
+        if (oldBody == null || !TryComp<HumanoidComponent>(oldBody, out var humanoid))
+            return true;
 
+        var layer = part.ToHumanoidLayers();
+        if (layer == null)
+            return true;
+
+        var layers = HumanoidVisualLayersExtension.Sublayers(layer.Value);
+        _humanoidSystem.SetLayersVisibility(oldBody.Value, layers, false, true, humanoid);
         return true;
     }
 
