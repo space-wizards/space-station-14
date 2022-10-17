@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: If the shuttle can't dock it will announce its direction from the station.,
-    type: Tweak}
-  id: 1981
-  time: '2022-07-19T11:47:49.0000000+00:00'
 - author: moony
   changes:
   - {message: The nuclear fission explosive MUST be anchored to arm it., type: Tweak}
@@ -2938,3 +2932,11 @@ Entries:
   - {message: Ambience no longer plays in the lobby., type: Fix}
   id: 2480
   time: '2022-10-17T04:56:10.0000000+00:00'
+- author: ashtronaut
+  changes:
+  - {message: 'You can now continue to read books, the handheld crew monitor, health
+      analyzer readouts, papers, and your PDA screen after swapping your active hand
+      as long as they remain in your one of your hands. Remember, multitasking is
+      an efficient use of company time.', type: Tweak}
+  id: 2481
+  time: '2022-10-17T20:55:24.0000000+00:00'
