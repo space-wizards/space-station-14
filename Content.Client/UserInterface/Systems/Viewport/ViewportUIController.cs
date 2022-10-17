@@ -17,48 +17,33 @@ public sealed class ViewportUIController : UIController
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
 
     public static readonly Vector2i ViewportSize = (EyeManager.PixelsPerMeter * 21, EyeManager.PixelsPerMeter * 15);
+    public const int ViewportHeight = 15;
     private MainViewport? Viewport => UIManager.ActiveScreen?.GetWidget<MainViewport>();
 
     public override void Initialize()
     {
-        _configurationManager.OnValueChanged(CCVars.ViewportRatios, _ => UpdateViewportRatio());
-        _configurationManager.OnValueChanged(CCVars.ViewportSelectedRatio, _ => UpdateViewportRatio());
+        _configurationManager.OnValueChanged(CCVars.ViewportMinimumWidth, _ => UpdateViewportRatio());
+        _configurationManager.OnValueChanged(CCVars.ViewportMaximumWidth, _ => UpdateViewportRatio());
+        _configurationManager.OnValueChanged(CCVars.ViewportWidth, _ => UpdateViewportRatio());
     }
 
     private void UpdateViewportRatio()
     {
-        var ratios = _configurationManager.GetCVar(CCVars.ViewportRatios);
-        var index = _configurationManager.GetCVar(CCVars.ViewportSelectedRatio);
-
-        SetViewportRatio(ratios, index);
-    }
-
-    private void SetViewportRatio(string ratios, int index)
-    {
-        if (Viewport == null || index < 0)
+        if (Viewport == null)
         {
             return;
         }
 
-        var split = ratios.Split(",");
+        var min = _configurationManager.GetCVar(CCVars.ViewportMinimumWidth);
+        var max = _configurationManager.GetCVar(CCVars.ViewportMaximumWidth);
+        var width = _configurationManager.GetCVar(CCVars.ViewportWidth);
 
-        if (split.Length == 0 || index > split.Length)
+        if (width < min || width > max)
         {
-            return;
+            width = CCVars.ViewportWidth.DefaultValue;
         }
 
-        var parts = split[index].Split(":");
-        if (parts.Length != 2)
-        {
-            return;
-        }
-
-        if (!int.TryParse(parts[0], out var width) || !int.TryParse(parts[1], out var height))
-        {
-            return;
-        }
-
-        Viewport.Viewport.ViewportSize = (EyeManager.PixelsPerMeter * width, EyeManager.PixelsPerMeter * height);
+        Viewport.Viewport.ViewportSize = (EyeManager.PixelsPerMeter * width, EyeManager.PixelsPerMeter * ViewportHeight);
     }
 
     public void ReloadViewport()
