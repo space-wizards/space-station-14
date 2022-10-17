@@ -1,14 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Ported cleanbots from Nyanotrasen MRP., type: Add}
-  id: 1978
-  time: '2022-07-18T03:48:36.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Overfeeding and overhydration no longer show alerts., type: Remove}
-  id: 1979
-  time: '2022-07-18T04:41:55.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Damage overlay won't show up when returning to body anymore., type: Fix}
@@ -2937,3 +2927,14 @@ Entries:
   - {message: Fix chat/speech pop-ups not rendering properly, type: Fix}
   id: 2477
   time: '2022-10-17T04:33:29.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Melee now has lag compensation so the server considers your target's
+      position from when you attacked., type: Add}
+  id: 2478
+  time: '2022-10-17T04:54:32.0000000+00:00'
+- author: router
+  changes:
+  - {message: Saying "^^" or "^-^" will now make you smile instead., type: Add}
+  id: 2479
+  time: '2022-10-17T04:54:52.0000000+00:00'
