@@ -343,3 +343,25 @@
       amount: 1
   products:
     Spaceacillin: 2
+
+- type: reaction
+  id: Conscizine
+  reactants:
+    Carpotoxin:
+      amount: 1
+    Siderlac:
+      amount: 1
+    UnstableMutagen:
+      amount: 1
+  products:
+    Conscizine: 1
+
+- type: reaction #for testing
+  id: Conscizine
+  reactants:
+    Oxygen:
+      amount: 1
+    Hydrogen:
+      amount: 1
+  products:
+    Conscizine: 100
