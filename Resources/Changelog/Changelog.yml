@@ -1,9 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: The nuclear fission explosive MUST be anchored to arm it., type: Tweak}
-  id: 1982
-  time: '2022-07-20T03:57:05.0000000+00:00'
 - author: Myctai
   changes:
   - {message: 'It''s CentCom. Not Centcom, centcom, CentComm, Centcomm or centcomm.',
@@ -2940,3 +2935,10 @@ Entries:
       an efficient use of company time.', type: Tweak}
   id: 2481
   time: '2022-10-17T20:55:24.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: The classic Space Station 13 style HUD layout has been ported to Space
+      Station 14! Enjoy having your chat in its own separate section of game HUD!,
+    type: Add}
+  id: 2482
+  time: '2022-10-17T22:13:41.0000000+00:00'
