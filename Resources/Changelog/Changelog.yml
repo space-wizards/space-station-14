@@ -1,48 +1,4 @@
 Entries:
-- author: ZeroDayDaemon
-  changes:
-  - {message: Added craftable Sawn Off shotgun., type: Add}
-  - {message: Tweaked bartender to spawn with regular double barreled shotgun., type: Tweak}
-  - {message: Tweaked bardrobe to have enough items for maps with two bartenders.,
-    type: Tweak}
-  id: 1962
-  time: '2022-07-15T09:01:55.0000000+00:00'
-- author: Morb0
-  changes:
-  - {message: Added nuke ops sound declaration of war, type: Add}
-  id: 1963
-  time: '2022-07-15T09:16:41.0000000+00:00'
-- author: Deahaka
-  changes:
-  - {message: Altars added, type: Add}
-  id: 1964
-  time: '2022-07-15T09:17:26.0000000+00:00'
-- author: Kimpes
-  changes:
-  - {message: Updated alarm sound effect, type: Tweak}
-  id: 1965
-  time: '2022-07-15T10:20:04.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Added portable scrubbers., type: Add}
-  id: 1966
-  time: '2022-07-15T12:46:31.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Nukie uplinks now purchase items correctly., type: Fix}
-  - {message: Nukie uplinks can no longer access job-specific items., type: Fix}
-  id: 1967
-  time: '2022-07-15T19:06:05.0000000+00:00'
-- author: TimrodDX
-  changes:
-  - {message: Delta Station's atmos mix chamber should work now., type: Tweak}
-  id: 1968
-  time: '2022-07-16T00:46:20.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Mobs are now properly throwable, type: Tweak}
-  id: 1969
-  time: '2022-07-16T03:04:14.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Throwing pushback reduced to half when weightless., type: Tweak}
@@ -2944,3 +2900,49 @@ Entries:
   - {message: Dying as a skeleton now makes you a skull again., type: Fix}
   id: 2461
   time: '2022-10-15T22:06:01.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed crew monitor directional icons sometimes pointing in the wrong
+      direction., type: Fix}
+  id: 2462
+  time: '2022-10-16T00:07:43.0000000+00:00'
+- author: Scribbles0
+  changes:
+  - {message: 'Added Cluster, a new low-pop station!', type: Add}
+  - {message: Removed Packed, type: Remove}
+  id: 2463
+  time: '2022-10-16T00:28:22.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a bug that was preventing the inventory UI from properly updating
+      in some situations., type: Fix}
+  id: 2464
+  time: '2022-10-16T04:16:28.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Stripping dead or incapacitated entities is now 3 or 2 times as fast,
+      respectively.', type: Tweak}
+  id: 2465
+  time: '2022-10-16T05:26:28.0000000+00:00'
+- author: Stealthbomber16
+  changes:
+  - {message: OOOOK!, type: Add}
+  id: 2466
+  time: '2022-10-16T06:13:15.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: Plants can now be mutated using unstable mutagen and cross-pollinated.,
+    type: Add}
+  id: 2467
+  time: '2022-10-16T06:25:42.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Buckle teleporting should be fixed for now., type: Fix}
+  id: 2468
+  time: '2022-10-16T06:38:05.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: If you try to swing melee out of range it doesn't waste the swing.,
+    type: Tweak}
+  id: 2469
+  time: '2022-10-16T15:54:43.0000000+00:00'

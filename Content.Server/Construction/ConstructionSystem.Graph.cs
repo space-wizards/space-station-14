@@ -268,7 +268,11 @@ namespace Content.Server.Construction
             ContainerManagerComponent? containerManager = null)
         {
             if (!Resolve(uid, ref construction, ref metaData, ref transform))
-                return null;
+            {
+                // Failed resolve logs an error, but we want to actually log information about the failed construction
+                // graph. So lets let the UpdateInteractions() try-catch log that info for us.
+                throw new Exception("Missing construction components");
+            }
 
             if (newEntity == metaData.EntityPrototype?.ID || !_prototypeManager.HasIndex<EntityPrototype>(newEntity))
                 return null;
