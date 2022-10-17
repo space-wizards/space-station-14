@@ -290,6 +290,3 @@ namespace Content.Client.TextScreen
         }
     }
 }
-
-// TODO: Fix copyright in textscreen.rsi and text.rsi
-// TODO: Check EmbeddedResource Include="TextScreen...
