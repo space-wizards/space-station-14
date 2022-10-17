@@ -159,7 +159,7 @@ namespace Content.Server.Disease
                 _popupSystem.PopupEntity(Loc.GetString("diagnoser-cant-use-swab", ("machine", uid), ("swab", args.Used)), uid, Filter.Entities(args.User));
                 return;
             }
-            _popupSystem.PopupEntity(Loc.GetString("machine-insert-item", ("machine", uid), ("item", args.Used)), uid, Filter.Entities(args.User));
+            _popupSystem.PopupEntity(Loc.GetString("machine-insert-item", ("machine", uid), ("item", args.Used), ("user", args.User)), uid, Filter.Entities(args.User));
 
 
             machine.Disease = swab.Disease;
@@ -191,7 +191,7 @@ namespace Content.Server.Disease
                 _popupSystem.PopupEntity(Loc.GetString("diagnoser-cant-use-swab", ("machine", uid), ("swab", args.Used)), uid, Filter.Entities(args.User));
                 return;
             }
-            _popupSystem.PopupEntity(Loc.GetString("machine-insert-item", ("machine", uid), ("item", args.Used)), uid, Filter.Entities(args.User));
+            _popupSystem.PopupEntity(Loc.GetString("machine-insert-item", ("machine", uid), ("item", args.Used), ("user", args.User)), uid, Filter.Entities(args.User));
             var machine = Comp<DiseaseMachineComponent>(uid);
             machine.Disease = swab.Disease;
             EntityManager.DeleteEntity(args.Used);

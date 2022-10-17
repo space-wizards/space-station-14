@@ -70,6 +70,9 @@
 #  - type: ExtensionCableReceiver
   - type: PowerSupplier
     supplyRate: 0
+  - type: ContainerContainer
+    containers:
+      AMEController-fuelJarContainer: !type:ContainerSlot {}
 
 - type: entity
   noSpawn: true
