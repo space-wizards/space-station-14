@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Damage overlay won't show up when returning to body anymore., type: Fix}
-  id: 1980
-  time: '2022-07-19T07:09:27.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: If the shuttle can't dock it will announce its direction from the station.,
     type: Tweak}
   id: 1981
@@ -2938,3 +2933,8 @@ Entries:
   - {message: Saying "^^" or "^-^" will now make you smile instead., type: Add}
   id: 2479
   time: '2022-10-17T04:54:52.0000000+00:00'
+- author: Sheppard
+  changes:
+  - {message: Ambience no longer plays in the lobby., type: Fix}
+  id: 2480
+  time: '2022-10-17T04:56:10.0000000+00:00'
