@@ -410,6 +410,7 @@
         damage:
           types:
             Poison: 3
+       effects:
           - !type:ChemVomit
             probability: 0.1
         conditions:
