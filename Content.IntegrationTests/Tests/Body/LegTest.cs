@@ -12,6 +12,7 @@ using Robust.Shared.Maths;
 namespace Content.IntegrationTests.Tests.Body
 {
     [TestFixture]
+    [TestOf(typeof(BodyPartComponent))]
     [TestOf(typeof(BodyComponent))]
     public sealed class LegTest
     {
