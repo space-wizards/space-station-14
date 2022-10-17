@@ -55,3 +55,4 @@
         ents: []
   - type: StaticPrice
     price: 400
+  - type: PowerSwitch

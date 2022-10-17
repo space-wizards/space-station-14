@@ -96,6 +96,7 @@ namespace Content.Server.Power.EntitySystems
                 {
                     TogglePower(uid);
                 },
+                IconTexture = "/Textures/Interface/VerbIcons/Spare/poweronoff.svg.192dpi.png",
                 Text = Loc.GetString("power-switch-component-toggle-verb"),
                 Priority = 2
             };
