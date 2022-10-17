@@ -1,8 +1,8 @@
 alerts-low-oxygen-name = [color=red]Низкий уровень кислорода[/color]
-alerts-low-oxygen-desc = В воздухе, которым вы дышите, [color=red]недостаточно кислорода[/color]. Наденьте [color=green]маску[/color].
+alerts-low-oxygen-desc = В воздухе, которым вы дышите, [color=red]недостаточно кислорода[/color]. Наденьте [color=green]баллон для дыхания[/color].
 
 alerts-high-toxin-name = [color=red]Высокий уровень токсинов[/color]
-alerts-high-toxin-desc = В воздухе, которым вы дышите, [color=red]слишком много токсинов[/color]. Наденьте [color=green]маску[/color] или уходите.
+alerts-high-toxin-desc = В воздухе, которым вы дышите, [color=red]слишком много токсинов[/color]. Наденьте [color=green]баллон для дыхания[/color] или уходите.
 
 alerts-low-pressure-name = [color=red]Низкое давление[/color]
 alerts-low-pressure-desc = Воздух вокруг вас [color=red]опасно разрежен[/color]. [color=green]Скафандр[/color] защитит вас.
@@ -24,7 +24,7 @@ alerts-weightless-name = Невесомость
     Гравитация перестала воздействовать на вас, и вы бесцельно парите. Найдите что-нибудь крепкое, за что можно ухватиться, или бросьте или выстрелите чем-нибудь в направлении, противоположном вам.
     Магнитные ботинки или реактивные ранцы помогут вам двигаться с большим контролем.
 
-alerts-stunned-name = [color=yellow]Оглушен[/color]
+alerts-stunned-name = [color=yellow]Оглушены[/color]
 alerts-stunned-desc = Вы [color=yellow]оглушены[/color]! Что-то мешает вашей способности двигаться или взаимодействовать с объектами.
 
 alerts-handcuffed-name = [color=yellow]В наручниках[/color]
@@ -34,7 +34,7 @@ alerts-ensnared-name = [color=yellow]Захваченный[/color]
 alerts-ensnared-desc = Вы [color=yellow]попали в ловушку[/color], и это мешает вам двигаться.
 
 alerts-buckled-name = [color=yellow]Пристегнут[/color]
-alerts-buckled-desc = Вы были [color=yellow]пристегнуты[/color] к чему-то. Нажмите на оповещение, чтобы отстегнуть ремень, если на вас [color=yellow]не надеты наручники.[/color]
+alerts-buckled-desc = Вы [color=yellow]пристегнуты[/color] к чему-то. Нажмите на оповещение, чтобы отстегнуть ремень, если на вас [color=yellow]не надеты наручники.[/color]
 
 alerts-crit-name = [color=red]Критическое состояние[/color]
 alerts-crit-desc = Вы серьезно ранены и без сознания.
@@ -43,7 +43,7 @@ alerts-dead-name = Мертвый
 alerts-dead-desc = Вы мертвы, учтите, что вас еще можно оживить!
 
 alerts-health-name = Здоровье
-alerts-health-desc = [color=green]Зеленый[/color] хорошо. [color=red]Красный[/color] плохой.
+alerts-health-desc = [color=green]Зеленый[/color] хорошо. [color=red]Красный[/color] плохо.
 
 alerts-internals-name = Переключить баллон
 alerts-internals-desc = Включает или выключает газовый баллон.
@@ -60,10 +60,10 @@ alerts-stamina-desc = Оглушает вас, если оно слишком н
 alerts-starving-name = [color=red]Голодание[/color]
 alerts-starving-desc = Вы сильно истощены. Голодание делает передвижение сложным.
 
-alerts-thirsty-name = [color=yellow]Жажду[/color]
+alerts-thirsty-name = [color=yellow]Жажда[/color]
 alerts-thirsty-desc = Прямо сейчас было бы неплохо что-нибудь выпить.
 
-alerts-parched-name = [color=red]Parched[/color]
+alerts-parched-name = [color=red]Мучение жаждой[/color]
 alerts-parched-desc = Вы очень хотите пить. Жажда делает передвижение сложным.
 
 alerts-muted-name = Приглушены
