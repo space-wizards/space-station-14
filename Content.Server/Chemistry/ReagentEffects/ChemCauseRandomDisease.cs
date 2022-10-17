@@ -24,6 +24,9 @@ namespace Content.Server.Chemistry.ReagentEffects
             if (args.EntityManager.TryGetComponent<DiseasedComponent>(args.SolutionEntity, out var diseased))
                 return;
 
+            if (args.MetabolismEffects != null && args.Quantity < args.MetabolismEffects.MetabolismRate)
+                return; // the metabolism rate is the minimum needed to add a disease.
+
             var random = IoCManager.Resolve<IRobustRandom>();
 
             EntitySystem.Get<DiseaseSystem>().TryAddDisease(args.SolutionEntity, random.Pick(Diseases));

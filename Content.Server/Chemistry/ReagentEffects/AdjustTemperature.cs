@@ -11,10 +11,16 @@ namespace Content.Server.Chemistry.ReagentEffects
 
         public override void Effect(ReagentEffectArgs args)
         {
+
             if (args.EntityManager.TryGetComponent(args.SolutionEntity, out TemperatureComponent? temp))
             {
                 var sys = args.EntityManager.EntitySysManager.GetEntitySystem<TemperatureSystem>();
-                sys.ChangeHeat(args.SolutionEntity, Amount, true, temp);
+                var amount = Amount;
+
+                if (args.MetabolismEffects != null)
+                    amount *= (float) (args.Quantity / args.MetabolismEffects.MetabolismRate);
+
+                sys.ChangeHeat(args.SolutionEntity, amount, true, temp);
             }
         }
     }

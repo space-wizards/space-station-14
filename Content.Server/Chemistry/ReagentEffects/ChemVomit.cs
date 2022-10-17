@@ -19,6 +19,9 @@ namespace Content.Server.Chemistry.ReagentEffects
 
         public override void Effect(ReagentEffectArgs args)
         {
+            if (args.MetabolismEffects != null && args.Quantity < args.MetabolismEffects.MetabolismRate)
+                return; // this one is better just not scaling imo
+
             var vomitSys = args.EntityManager.EntitySysManager.GetEntitySystem<VomitSystem>();
 
             vomitSys.Vomit(args.SolutionEntity, ThirstAmount, HungerAmount);

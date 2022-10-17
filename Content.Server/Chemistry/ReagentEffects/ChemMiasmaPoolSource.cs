@@ -15,6 +15,9 @@ namespace Content.Server.Chemistry.ReagentEffects
     {
         public override void Effect(ReagentEffectArgs args)
         {
+            if (args.MetabolismEffects != null && args.Quantity < args.MetabolismEffects.MetabolismRate)
+                return; // the metabolism rate is the minimum needed to add a disease.
+
             string disease = EntitySystem.Get<MiasmaSystem>().RequestPoolDisease();
 
             EntitySystem.Get<DiseaseSystem>().TryAddDisease(args.SolutionEntity, disease);
