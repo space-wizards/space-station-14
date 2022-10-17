@@ -118,7 +118,7 @@
   name: space medipen
   parent: ChemicalMedipen
   id: SpaceMedipen
-  description: Contains a mix of chemicals that protect you from the deadly effects of space.
+  description: Contains a mix of chemicals that protect you from the deadly effects of space. You'll only have 20 seconds before the effects wear off, so use it wisely.
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi
