@@ -345,7 +345,7 @@
     Spaceacillin: 2
 
 - type: reaction
-  id: Conscizine
+  id: Cognizine
   reactants:
     CarpoToxin:
       amount: 1
@@ -354,4 +354,4 @@
     UnstableMutagen:
       amount: 1
   products:
-    Conscizine: 1
+    Cognizine: 1

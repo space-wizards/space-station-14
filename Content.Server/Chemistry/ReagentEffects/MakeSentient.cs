@@ -53,7 +53,7 @@ public sealed class MakeSentient : ReagentEffect
 
         var entityData = entityManager.GetComponent<MetaDataComponent>(uid);
         takeOver.RoleName = entityData.EntityName;
-        takeOver.RoleDescription = Loc.GetString("ghost-role-component-made-with-conscizine");
+        takeOver.RoleDescription = Loc.GetString("ghost-role-information-cognizine-description");
     }
 }
 

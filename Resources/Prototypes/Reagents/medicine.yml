@@ -692,11 +692,11 @@
       - !type:ChemHealEyeDamage
 
 - type: reagent
-  id: Conscizine
-  name: conscizine
+  id: Cognizine
+  name: reagent-name-cognizine
+  desc: reagent-desc-cognizine
   group: Medicine
-  desc: A mysterious chemical which is able to make an entity sentient.
-  physicalDesc: enigmatic
+  physicalDesc: reagent-physical-desc-enigmatic
   color: "#b50ee8"
   metabolisms:
     Medicine:
