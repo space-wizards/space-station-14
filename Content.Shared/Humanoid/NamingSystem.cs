@@ -50,7 +50,7 @@ namespace Content.Shared.Humanoid
             }
         }
 
-        public string GetLastName(SpeciesPrototype speciesProto)
+        public string GetLastName(SpeciesPrototype speciesProto, Gender? gender = null)
         {
             switch (gender)
             {
