@@ -410,6 +410,8 @@
         damage:
           types:
             Poison: 3
+          - !type:ChemVomit
+            probability: 0.1
         conditions:
           - !type:ReagentThreshold
             min: 30
