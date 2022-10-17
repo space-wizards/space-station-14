@@ -1,12 +1,6 @@
 Entries:
 - author: Rane
   changes:
-  - {message: Pneumatic cannons and cream pies no longer can be used to instakill
-      people with hyperoptimized poison mixes., type: Remove}
-  id: 1977
-  time: '2022-07-17T22:25:42.0000000+00:00'
-- author: Rane
-  changes:
   - {message: Ported cleanbots from Nyanotrasen MRP., type: Add}
   id: 1978
   time: '2022-07-18T03:48:36.0000000+00:00'
@@ -2938,3 +2932,8 @@ Entries:
       after cutting the wires., type: Fix}
   id: 2476
   time: '2022-10-17T00:44:05.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fix chat/speech pop-ups not rendering properly, type: Fix}
+  id: 2477
+  time: '2022-10-17T04:33:29.0000000+00:00'
