@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Content.Client.Shuttles.Systems;
 using Content.Server.GameTicking;
 using Content.Server.Maps;
 using Content.Server.Shuttles.Components;
@@ -30,9 +29,9 @@ namespace Content.IntegrationTests.Tests
         private const bool SkipTestMaps = true;
         private const string TestMapsPath = "/Maps/Test/";
 
-        private static readonly string[] NoSpawnMaps = new string[]
+        private static readonly string[] NoSpawnMaps =
         {
-            "centcomm",
+            "CentComm",
             "Dart",
         };
 
@@ -183,7 +182,6 @@ namespace Content.IntegrationTests.Tests
             var ticker = entManager.EntitySysManager.GetEntitySystem<GameTicker>();
             var shuttleSystem = entManager.EntitySysManager.GetEntitySystem<ShuttleSystem>();
             var xformQuery = entManager.GetEntityQuery<TransformComponent>();
-            var stationJobsSystem = entManager.EntitySysManager.GetEntitySystem<StationJobsSystem>();
 
             await server.WaitPost(() =>
             {
