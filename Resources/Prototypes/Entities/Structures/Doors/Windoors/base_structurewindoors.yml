@@ -76,9 +76,14 @@
     openPanelVisible: true
     # needed so that windoors will close regardless of whether there are people in it; it doesn't crush after all
     safety: false
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronics ]
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
   - type: Door
     canCrush: false
-    board: DoorElectronics
     openSound:
       path: /Audio/Machines/windoor_open.ogg
     closeSound:
@@ -111,6 +116,8 @@
   - type: Construction
     graph: Windoor
     node: windoor
+    containers:
+    - board
   - type: StaticPrice
     price: 100
 

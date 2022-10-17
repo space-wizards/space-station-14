@@ -5,6 +5,7 @@
   id: BaseMobOrganic
   noSpawn: true
   components:
+  - type: LagCompensation
   - type: RangedDamageSound
     soundGroups:
       Brute:
@@ -232,7 +233,6 @@
     normalState: Generic_mob_burning
     alternateState: Standing
     fireStackAlternateState: 3
-  - type: EnsnareableVisualizer
   - type: CombatMode
     canDisarm: true
   - type: Climbing

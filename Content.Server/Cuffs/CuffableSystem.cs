@@ -8,6 +8,9 @@ using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.Player;
 using Content.Shared.Interaction;
+using Robust.Shared.Audio;
+using Robust.Shared.Containers;
+using Content.Server.Hands.Systems;
 using Content.Shared.MobState.EntitySystems;
 
 namespace Content.Server.Cuffs
@@ -16,6 +19,7 @@ namespace Content.Server.Cuffs
     public sealed class CuffableSystem : SharedCuffableSystem
     {
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+        [Dependency] private readonly HandVirtualItemSystem _virtualSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedMobStateSystem _mobState = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -28,6 +32,13 @@ namespace Content.Server.Cuffs
             SubscribeLocalEvent<UncuffAttemptEvent>(OnUncuffAttempt);
             SubscribeLocalEvent<CuffableComponent, GetVerbsEvent<Verb>>(AddUncuffVerb);
             SubscribeLocalEvent<HandcuffComponent, AfterInteractEvent>(OnCuffAfterInteract);
+            SubscribeLocalEvent<CuffableComponent, EntRemovedFromContainerMessage>(OnCuffsRemoved);
+        }
+
+        private void OnCuffsRemoved(EntityUid uid, CuffableComponent component, EntRemovedFromContainerMessage args)
+        {
+            if (args.Container.ID == component.Container.ID)
+                _virtualSystem.DeleteInHandsMatching(uid, args.Entity);
         }
 
         private void AddUncuffVerb(EntityUid uid, CuffableComponent component, GetVerbsEvent<Verb> args)
@@ -62,6 +73,8 @@ namespace Content.Server.Cuffs
                 return;
             }
 
+            // TODO these messages really need third-party variants. I.e., "{$user} starts cuffing {$target}!"
+
             if (component.Broken)
             {
                 _popup.PopupEntity(Loc.GetString("handcuff-component-cuffs-broken-error"), args.User, Filter.Entities(args.User));
@@ -93,7 +106,7 @@ namespace Content.Server.Cuffs
             else
             {
                 _popup.PopupEntity(Loc.GetString("handcuff-component-start-cuffing-target-message",("targetName", args.Target)), args.User, Filter.Entities(args.User));
-                _popup.PopupEntity(Loc.GetString("handcuff-component-start-cuffing-by-other-message",("otherName", args.User)), target, Filter.Entities(args.User));
+                _popup.PopupEntity(Loc.GetString("handcuff-component-start-cuffing-by-other-message",("otherName", args.User)), target, Filter.Entities(args.Target.Value));
             }
 
             _audio.PlayPvs(component.StartCuffSound, uid);

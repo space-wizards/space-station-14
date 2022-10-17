@@ -66,6 +66,10 @@ namespace Content.Shared.Examine
         [Pure]
         public bool CanExamine(EntityUid examiner, EntityUid examined)
         {
+            // special check for client-side entities stored in null-space for some UI guff.
+            if (examined.IsClientSide())
+                return true;
+
             return !Deleted(examined) && CanExamine(examiner, EntityManager.GetComponent<TransformComponent>(examined).MapPosition,
                 entity => entity == examiner || entity == examined, examined);
         }
@@ -73,6 +77,9 @@ namespace Content.Shared.Examine
         [Pure]
         public virtual bool CanExamine(EntityUid examiner, MapCoordinates target, Ignored? predicate = null, EntityUid? examined = null, ExaminerComponent? examinerComp = null)
         {
+            // TODO occluded container checks
+            // also requires checking if the examiner has either a storage or stripping UI open, as the item may be accessible via that UI
+
             if (!Resolve(examiner, ref examinerComp, false))
                 return false;
 
