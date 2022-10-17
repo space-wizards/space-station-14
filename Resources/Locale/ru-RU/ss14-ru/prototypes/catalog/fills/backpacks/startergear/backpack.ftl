@@ -1,9 +1,6 @@
 ent-ClothingBackpackFilled = { ent-ClothingBackpack }
     .desc = { ent-ClothingBackpack.desc }
     .suffix = { "" }
-ent-ClothingBackpackBriefcaseFilled = { ent-ClothingBackpack }
-    .desc = { ent-ClothingBackpack.desc }
-    .suffix = { "" }
 ent-ClothingBackpackClownFilled = { ent-ClothingBackpackClown }
     .desc = { ent-ClothingBackpackClown.desc }
     .suffix = { "" }
