@@ -34,6 +34,14 @@ namespace Content.Shared.Stacks
                 .AddPath(nameof(SharedStackComponent.Count), (_, comp) => comp.Count, SetCount);
         }
 
+        public override void Shutdown()
+        {
+            base.Shutdown();
+
+            _vvm.GetTypeHandler<SharedStackComponent>()
+                .RemovePath(nameof(SharedStackComponent.Count));
+        }
+
         private void OnStackInteractUsing(EntityUid uid, SharedStackComponent stack, InteractUsingEvent args)
         {
             if (args.Handled)
