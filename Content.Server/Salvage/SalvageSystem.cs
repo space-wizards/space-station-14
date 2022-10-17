@@ -1,5 +1,4 @@
 using Content.Server.GameTicking;
-using Content.Server.Ghost.Components;
 using Content.Server.Radio.EntitySystems;
 using Content.Shared.CCVar;
 using Content.Shared.Examine;
@@ -312,7 +311,7 @@ namespace Content.Server.Salvage
 
         private void Report(EntityUid source, string channelName, string messageKey, params (string, object)[] args)
         {
-            if (!TryComp<IntrinsicRadioComponent>(source, out var radio)) return;
+            if (!TryComp<IntrinsicRadioReceiverComponent>(source, out var radio)) return;
 
             var message = args.Length == 0 ? Loc.GetString(messageKey) : Loc.GetString(messageKey, args);
             var channel = _prototypeManager.Index<RadioChannelPrototype>(channelName);

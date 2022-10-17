@@ -1,4 +1,3 @@
-using Content.Server.Ghost.Components;
 using Content.Server.Radio.Components;
 using Content.Server.Speech;
 using Content.Server.VoiceMask;
@@ -23,10 +22,10 @@ public sealed class RadioSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<IntrinsicRadioComponent, RadioReceiveEvent>(OnIntrinsicReceive);
+        SubscribeLocalEvent<IntrinsicRadioReceiverComponent, RadioReceiveEvent>(OnIntrinsicReceive);
     }
     
-    private void OnIntrinsicReceive(EntityUid uid, IntrinsicRadioComponent component, RadioReceiveEvent args)
+    private void OnIntrinsicReceive(EntityUid uid, IntrinsicRadioReceiverComponent component, RadioReceiveEvent args)
     {
         if (TryComp(uid, out ActorComponent? actor))
             _netMan.ServerSendMessage(args.ChatMsg, actor.PlayerSession.ConnectedClient);
