@@ -709,3 +709,6 @@
             Airloss: -1
             Brute: -1
       - !type:MakeSentient
+        conditions:
+        - !type:ReagentThreshold
+          min: 5
