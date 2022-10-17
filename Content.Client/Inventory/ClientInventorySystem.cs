@@ -158,6 +158,18 @@ namespace Content.Client.Inventory
             }
         }
 
+        public void ReloadInventory(ClientInventoryComponent? component = null)
+        {
+            var player = _playerManager.LocalPlayer?.ControlledEntity;
+            if (player == null || !Resolve(player.Value, ref component))
+            {
+                return;
+            }
+
+            OnUnlinkInventory?.Invoke();
+            OnLinkInventory?.Invoke(component);
+        }
+
         public void SetSlotHighlight(EntityUid owner, ClientInventoryComponent component, string slotName, bool state)
         {
             var oldData = component.SlotData[slotName];

@@ -2,6 +2,16 @@ using Content.Client.Construction.UI;
 using Content.Client.Hands;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Screens;
+using Content.Client.UserInterface.Systems.Actions;
+using Content.Client.UserInterface.Systems.Alerts;
+using Content.Client.UserInterface.Systems.Chat;
+using Content.Client.UserInterface.Systems.Ghost;
+using Content.Client.UserInterface.Systems.Hands;
+using Content.Client.UserInterface.Systems.Hotbar;
+using Content.Client.UserInterface.Systems.Hotbar.Widgets;
+using Content.Client.UserInterface.Systems.Inventory;
+using Content.Client.UserInterface.Systems.MenuBar;
+using Content.Client.UserInterface.Systems.Viewport;
 using Content.Client.Viewport;
 using Content.Shared.CCVar;
 using Robust.Client.Graphics;
@@ -26,36 +36,47 @@ namespace Content.Client.Gameplay
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        protected override Type? LinkedScreenType => typeof(DefaultGameScreen);
-        public static readonly Vector2i ViewportSize = (EyeManager.PixelsPerMeter * 21, EyeManager.PixelsPerMeter * 15);
         private FpsCounter _fpsCounter = default!;
 
-        public MainViewport Viewport { get; private set; } = default!;
+        public MainViewport Viewport => _uiManager.ActiveScreen!.GetWidget<MainViewport>()!;
+
+        private readonly GhostUIController _ghostController;
+        private readonly ActionUIController _actionController;
+        private readonly AlertsUIController _alertsController;
+        private readonly HotbarUIController _hotbarController;
+        private readonly ChatUIController _chatController;
+        private readonly ViewportUIController _viewportController;
+        private readonly GameTopMenuBarUIController _menuController;
 
         public GameplayState()
         {
             IoCManager.InjectDependencies(this);
+
+            _ghostController = _uiManager.GetUIController<GhostUIController>();
+            _actionController = _uiManager.GetUIController<ActionUIController>();
+            _alertsController = _uiManager.GetUIController<AlertsUIController>();
+            _hotbarController = _uiManager.GetUIController<HotbarUIController>();
+            _chatController = _uiManager.GetUIController<ChatUIController>();
+            _viewportController = _uiManager.GetUIController<ViewportUIController>();
+            _menuController = _uiManager.GetUIController<GameTopMenuBarUIController>();
         }
 
         protected override void Startup()
         {
             base.Startup();
-            Viewport = new MainViewport
-            {
-                Viewport =
-                {
-                    ViewportSize = ViewportSize
-                }
-            };
-            UserInterfaceManager.StateRoot.AddChild(Viewport);
-            LayoutContainer.SetAnchorPreset(Viewport, LayoutContainer.LayoutPreset.Wide);
-            Viewport.SetPositionFirst();
-            _eyeManager.MainViewport = Viewport.Viewport;
+
+            LoadMainScreen();
+
+            // Add the hand-item overlay.
             _overlayManager.AddOverlay(new ShowHandItemOverlay());
+
+            // FPS counter.
+            // yeah this can just stay here, whatever
             _fpsCounter = new FpsCounter(_gameTiming);
             UserInterfaceManager.PopupRoot.AddChild(_fpsCounter);
             _fpsCounter.Visible = _configurationManager.GetCVar(CCVars.HudFpsCounterVisible);
             _configurationManager.OnValueChanged(CCVars.HudFpsCounterVisible, (show) => { _fpsCounter.Visible = show; });
+            _configurationManager.OnValueChanged(CCVars.UILayout, _ => ReloadMainScreen());
         }
 
         protected override void Shutdown()
@@ -63,35 +84,64 @@ namespace Content.Client.Gameplay
             _overlayManager.RemoveOverlay<ShowHandItemOverlay>();
 
             base.Shutdown();
-            Viewport.Dispose();
             // Clear viewport to some fallback, whatever.
             _eyeManager.MainViewport = UserInterfaceManager.MainViewport;
             _fpsCounter.Dispose();
             _uiManager.ClearWindows();
+            UnloadMainScreen();
         }
 
-        public override void FrameUpdate(FrameEventArgs e)
+        public void ReloadMainScreen()
         {
-            base.FrameUpdate(e);
-
-            Viewport.Viewport.Eye = _eyeManager.CurrentEye;
-
-            // verify that the current eye is not "null". Fuck IEyeManager.
-
-            var ent = _playerMan.LocalPlayer?.ControlledEntity;
-            if (_eyeManager.CurrentEye.Position != default || ent == null)
+            if (_uiManager.ActiveScreen == null)
+            {
                 return;
+            }
 
-            _entMan.TryGetComponent(ent, out EyeComponent? eye);
-            
-            if (eye?.Eye == _eyeManager.CurrentEye
-                && _entMan.GetComponent<TransformComponent>(ent.Value).WorldPosition == default)
-                return; // nothing to worry about, the player is just in null space... actually that is probably a problem?
-
-            // Currently, this shouldn't happen. This likely happened because the main eye was set to null. When this
-            // does happen it can create hard to troubleshoot bugs, so lets print some helpful warnings:
-            Logger.Warning($"Main viewport's eye is in nullspace (main eye is null?). Attached entity: {_entMan.ToPrettyString(ent.Value)}. Entity has eye comp: {eye != null}");
+            UnloadMainScreen();
+            LoadMainScreen();
         }
+
+        private void UnloadMainScreen()
+        {
+            _chatController.SetMainChat(false);
+            _menuController.UnloadButtons();
+            _uiManager.UnloadScreen();
+        }
+
+        private void LoadMainScreen()
+        {
+            var screenTypeString = _configurationManager.GetCVar(CCVars.UILayout);
+            if (!Enum.TryParse(screenTypeString, out ScreenType screenType))
+            {
+                screenType = default;
+            }
+
+            switch (screenType)
+            {
+                case ScreenType.Default:
+                    _uiManager.LoadScreen<DefaultGameScreen>();
+                    break;
+                case ScreenType.Separated:
+                    _uiManager.LoadScreen<SeparatedChatGameScreen>();
+                    break;
+            }
+
+            _chatController.SetMainChat(true);
+            _viewportController.ReloadViewport();
+            _menuController.LoadButtons();
+
+            // TODO: This could just be like, the equivalent of an event or something
+            _ghostController.UpdateGui();
+            _actionController.RegisterActionContainer();
+            _alertsController.SyncAlerts();
+            _hotbarController.ReloadHotbar();
+
+            var viewportContainer = _uiManager.ActiveScreen!.FindControl<LayoutContainer>("ViewportContainer");
+            _chatController.SetSpeechBubbleRoot(viewportContainer);
+        }
+
+
 
         protected override void OnKeyBindStateChanged(ViewportBoundKeyEventArgs args)
         {
