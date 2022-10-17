@@ -1,10 +1,4 @@
 Entries:
-- author: Myctai
-  changes:
-  - {message: 'It''s CentCom. Not Centcom, centcom, CentComm, Centcomm or centcomm.',
-    type: Fix}
-  id: 1983
-  time: '2022-07-20T04:08:24.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Gatfruit is now available to botanists in the uplink for 4 TC. What
@@ -2942,3 +2936,9 @@ Entries:
     type: Add}
   id: 2482
   time: '2022-10-17T22:13:41.0000000+00:00'
+- author: Scribbles0
+  changes:
+  - {message: Cluster's security layout has changed. New south-eastern maintenance
+      halls have been added as well., type: Tweak}
+  id: 2483
+  time: '2022-10-17T22:23:41.0000000+00:00'
