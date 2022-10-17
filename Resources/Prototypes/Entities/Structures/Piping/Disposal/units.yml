@@ -76,6 +76,7 @@
       DisposalUnit: !type:Container
   - type: StaticPrice
     price: 100
+  - type: PowerSwitch
 
 - type: entity
   id: DisposalUnit
@@ -91,7 +92,6 @@
     interfaces:
     - key: enum.DisposalUnitUiKey.Key
       type: DisposalUnitBoundUserInterface
-
 
 - type: entity
   id: MailingUnit

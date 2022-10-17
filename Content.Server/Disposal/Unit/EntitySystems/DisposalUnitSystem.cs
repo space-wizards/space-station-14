@@ -7,6 +7,7 @@ using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Atmos;
 using Content.Shared.Construction.Components;
@@ -23,9 +24,7 @@ using Content.Shared.Popups;
 using Content.Shared.Throwing;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -46,6 +45,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _ui = default!;
+        [Dependency] private readonly PowerReceiverSystem _power = default!;
 
         public override void Initialize()
         {
@@ -210,9 +210,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                     ToggleEngage(component);
                     break;
                 case SharedDisposalUnitComponent.UiButton.Power:
-                    TogglePower(component);
-                    _audio.PlayPvs(new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg"), component.Owner,
-                        AudioParams.Default.WithVolume(-2f));
+                    _power.TogglePower(uid);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -231,17 +229,6 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             {
                 Disengage(component);
             }
-        }
-
-        public void TogglePower(DisposalUnitComponent component)
-        {
-            if (!EntityManager.TryGetComponent(component.Owner, out ApcPowerReceiverComponent? receiver))
-            {
-                return;
-            }
-
-            receiver.PowerDisabled = !receiver.PowerDisabled;
-            UpdateInterface(component, receiver.Powered);
         }
         #endregion
 

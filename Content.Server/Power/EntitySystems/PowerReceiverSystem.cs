@@ -1,14 +1,16 @@
 using Content.Server.Power.Components;
 using Content.Shared.Examine;
 using Content.Shared.Power;
+using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Power.EntitySystems
 {
     public sealed class PowerReceiverSystem : EntitySystem
     {
         [Dependency] private readonly AppearanceSystem _appearance = default!;
-
+        [Dependency] private readonly AudioSystem _audio = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -20,6 +22,8 @@ namespace Content.Server.Power.EntitySystems
             SubscribeLocalEvent<ApcPowerProviderComponent, ComponentShutdown>(OnProviderShutdown);
             SubscribeLocalEvent<ApcPowerProviderComponent, ExtensionCableSystem.ReceiverConnectedEvent>(OnReceiverConnected);
             SubscribeLocalEvent<ApcPowerProviderComponent, ExtensionCableSystem.ReceiverDisconnectedEvent>(OnReceiverDisconnected);
+
+            SubscribeLocalEvent<PowerSwitchComponent, GetVerbsEvent<AlternativeVerb>>(AddSwitchPowerVerb);
         }
 
         ///<summary>
@@ -78,6 +82,26 @@ namespace Content.Server.Power.EntitySystems
             }
         }
 
+        private void AddSwitchPowerVerb(EntityUid uid, PowerSwitchComponent component, GetVerbsEvent<AlternativeVerb> args)
+        {
+            if(!args.CanAccess || !args.CanInteract)
+                return;
+
+            if (!TryComp<ApcPowerReceiverComponent>(uid, out var receiver))
+                return;
+
+            AlternativeVerb verb = new()
+            {
+                Act = () =>
+                {
+                    TogglePower(uid);
+                },
+                Text = Loc.GetString("power-switch-component-toggle-verb"),
+                Priority = 2
+            };
+            args.Verbs.Add(verb);
+        }
+
         private void ProviderChanged(ApcPowerReceiverComponent receiver)
         {
             receiver.NetworkLoad.LinkedNetwork = default;
@@ -98,6 +122,26 @@ namespace Content.Server.Power.EntitySystems
                 return true;
 
             return receiver.Powered;
+        }
+
+        /// <summary>
+        /// Turn this machine on or off.
+        /// Returns true if we turned it on, false if we turned it off.
+        /// </summary>
+        public bool TogglePower(EntityUid uid, bool playSwitchSound = true, ApcPowerReceiverComponent? receiver = null)
+        {
+            if (!Resolve(uid, ref receiver, false))
+                return true;
+
+            receiver.PowerDisabled = !receiver.PowerDisabled;
+
+            if (playSwitchSound)
+            {
+                _audio.PlayPvs(new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg"), uid,
+                    AudioParams.Default.WithVolume(-2f));
+            }
+
+            return !receiver.Powered;
         }
     }
 }
