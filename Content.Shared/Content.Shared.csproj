@@ -29,7 +29,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Text\Names\*.txt" />
-    <EmbeddedResource Include="TextScreen\Names\*.txt" />
   </ItemGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.Analyzers.targets" />
 
