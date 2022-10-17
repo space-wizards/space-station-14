@@ -5847,7 +5847,7 @@ entities:
       16,-13: 0
       16,-12: 2
       16,-11: 0
-      16,-10: 2
+      16,-10: 11
       16,-9: 0
       16,-8: 2
       16,-7: 0
@@ -5916,7 +5916,7 @@ entities:
       31,-15: 0
       31,-14: 2
       32,-15: 0
-      32,-14: 11
+      32,-14: 12
       -9,-16: 0
       -9,-15: 0
       -9,-12: 2
@@ -7536,8 +7536,8 @@ entities:
       47,-29: 0
       47,-28: 0
       47,-26: 2
-      47,-24: 12
-      47,-23: 11
+      47,-24: 13
+      47,-23: 12
       48,-31: 0
       48,-29: 0
       48,-28: 0
@@ -7570,10 +7570,10 @@ entities:
       52,-29: 0
       52,-28: 0
       52,-27: 0
-      52,-26: 13
-      52,-25: 14
-      52,-24: 15
-      52,-23: 16
+      52,-26: 14
+      52,-25: 15
+      52,-24: 16
+      52,-23: 17
       52,-22: 0
       -17,9: 0
       -17,10: 0
@@ -8375,8 +8375,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 18.935778
-      - 71.2346
+      - 18.405577
+      - 69.24003
       - 0
       - 0
       - 0
@@ -8390,128 +8390,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 16.429127
-      - 61.804813
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.15
-      moles:
-      - 21.671135
-      - 81.52475
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.15
-      moles:
-      - 20.61603
-      - 77.55555
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.15
-      moles:
-      - 6666.982
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.15
-      moles:
-      - 0
-      - 6666.982
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.15
-      moles:
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.15
-      moles:
-      - 0
-      - 0
-      - 0
-      - 6666.982
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.15
-      moles:
-      - 21.102604
-      - 79.38599
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.15
-      moles:
-      - 21.064167
-      - 79.241394
+      - 15.521976
+      - 58.3922
       - 0
       - 0
       - 0
@@ -8538,10 +8418,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 286.20236
+      temperature: 293.15
       moles:
-      - 21.302822
-      - 80.13919
+      - 20.474371
+      - 77.02264
       - 0
       - 0
       - 0
@@ -8553,10 +8433,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 265.35947
+      temperature: 293.15
       moles:
-      - 19.736652
-      - 74.24741
+      - 6666.982
+      - 0
       - 0
       - 0
       - 0
@@ -8568,10 +8448,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 188.93074
+      temperature: 293.15
       moles:
-      - 13.993676
-      - 52.64288
+      - 0
+      - 6666.982
       - 0
       - 0
       - 0
@@ -8583,10 +8463,145 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 194.49445
+      temperature: 293.15
       moles:
-      - 14.411743
-      - 54.215607
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.15
+      moles:
+      - 0
+      - 0
+      - 0
+      - 6666.982
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.15
+      moles:
+      - 20.970053
+      - 78.887344
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.15
+      moles:
+      - 17.89022
+      - 67.30131
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.15
+      moles:
+      - 20.922508
+      - 78.70849
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.15
+      moles:
+      - 21.599285
+      - 81.25446
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 286.2016
+      moles:
+      - 21.302765
+      - 80.13898
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 265.35635
+      moles:
+      - 19.73642
+      - 74.24654
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 188.92303
+      moles:
+      - 13.993097
+      - 52.6407
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 194.4827
+      moles:
+      - 14.410858
+      - 54.21228
       - 0
       - 0
       - 0
@@ -25403,17 +25418,11 @@ entities:
     parent: 127
     type: Transform
 - uid: 2696
-  type: CrateNPCCow
+  type: Paper
   components:
-  - pos: 16.5,-9.5
+  - pos: 2.5,-11.5
     parent: 127
     type: Transform
-  - containers:
-      entity_storage: !type:Container
-        ents:
-        - null
-      paper_label: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 2697
   type: SpawnPointChef
   components:
@@ -32040,6 +32049,12 @@ entities:
   type: Grille
   components:
   - pos: 63.5,-35.5
+    parent: 127
+    type: Transform
+- uid: 3743
+  type: CrateNPCCow
+  components:
+  - pos: 16.5,-9.5
     parent: 127
     type: Transform
 - uid: 3744
@@ -52236,7 +52251,7 @@ entities:
   - pos: 24.5,-5.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -30374.744
+  - SecondsUntilStateChange: -30407.87
     state: Opening
     type: Door
   - inputs:
@@ -52252,7 +52267,7 @@ entities:
   - pos: 24.5,-4.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -30374.744
+  - SecondsUntilStateChange: -30407.87
     state: Opening
     type: Door
   - inputs:
@@ -52268,7 +52283,7 @@ entities:
   - pos: 24.5,-7.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -30374.744
+  - SecondsUntilStateChange: -30407.87
     state: Opening
     type: Door
   - inputs:
@@ -52284,7 +52299,7 @@ entities:
   - pos: 24.5,-6.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -30374.744
+  - SecondsUntilStateChange: -30407.87
     state: Opening
     type: Door
   - inputs:
@@ -52334,7 +52349,7 @@ entities:
   - pos: 13.5,-5.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -31425.615
+  - SecondsUntilStateChange: -31458.74
     state: Opening
     type: Door
   - inputs:
@@ -52350,7 +52365,7 @@ entities:
   - pos: 14.5,-5.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -31425.615
+  - SecondsUntilStateChange: -31458.74
     state: Opening
     type: Door
   - inputs:
@@ -52366,7 +52381,7 @@ entities:
   - pos: 15.5,-5.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -31425.615
+  - SecondsUntilStateChange: -31458.74
     state: Opening
     type: Door
   - inputs:
@@ -52382,7 +52397,7 @@ entities:
   - pos: 16.5,-5.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -31425.615
+  - SecondsUntilStateChange: -31458.74
     state: Opening
     type: Door
   - inputs:
@@ -52398,7 +52413,7 @@ entities:
   - pos: 17.5,-5.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -31425.615
+  - SecondsUntilStateChange: -31458.74
     state: Opening
     type: Door
   - inputs:
@@ -52414,7 +52429,7 @@ entities:
   - pos: 18.5,-5.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -31425.615
+  - SecondsUntilStateChange: -31458.74
     state: Opening
     type: Door
   - inputs:
@@ -52430,7 +52445,7 @@ entities:
   - pos: 12.5,-5.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -31425.615
+  - SecondsUntilStateChange: -31458.74
     state: Opening
     type: Door
   - inputs:
@@ -52446,7 +52461,7 @@ entities:
   - pos: 19.5,-5.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -31425.615
+  - SecondsUntilStateChange: -31458.74
     state: Opening
     type: Door
   - inputs:
@@ -52462,7 +52477,7 @@ entities:
   - pos: 11.5,-6.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -31425.615
+  - SecondsUntilStateChange: -31458.74
     state: Opening
     type: Door
   - inputs:
@@ -52478,7 +52493,7 @@ entities:
   - pos: 11.5,-7.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -31425.615
+  - SecondsUntilStateChange: -31458.74
     state: Opening
     type: Door
   - inputs:
@@ -52494,7 +52509,7 @@ entities:
   - pos: 20.5,-6.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -31425.615
+  - SecondsUntilStateChange: -31458.74
     state: Opening
     type: Door
   - inputs:
@@ -52510,7 +52525,7 @@ entities:
   - pos: 20.5,-7.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -31425.615
+  - SecondsUntilStateChange: -31458.74
     state: Opening
     type: Door
   - inputs:
@@ -52526,7 +52541,7 @@ entities:
   - pos: 20.5,-9.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -31341.014
+  - SecondsUntilStateChange: -31374.139
     state: Opening
     type: Door
   - inputs:
@@ -52542,7 +52557,7 @@ entities:
   - pos: 20.5,-11.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -31341.014
+  - SecondsUntilStateChange: -31374.139
     state: Opening
     type: Door
   - inputs:
@@ -60767,6 +60782,18 @@ entities:
   - pos: 32.5,-18.5
     parent: 127
     type: Transform
+- uid: 7727
+  type: Paper
+  components:
+  - pos: 2.5,-11.5
+    parent: 127
+    type: Transform
+- uid: 7728
+  type: Paper
+  components:
+  - pos: 2.5,-11.5
+    parent: 127
+    type: Transform
 - uid: 7729
   type: ClothingOuterWinterCap
   components:
@@ -60809,4 +60836,76 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+- uid: 7735
+  type: Paper
+  components:
+  - pos: 2.5,-11.5
+    parent: 127
+    type: Transform
+- uid: 7736
+  type: Paper
+  components:
+  - pos: 2.5,-11.5
+    parent: 127
+    type: Transform
+- uid: 7737
+  type: Paper
+  components:
+  - pos: 2.5,-11.5
+    parent: 127
+    type: Transform
+- uid: 7738
+  type: Paper
+  components:
+  - pos: 2.5,-11.5
+    parent: 127
+    type: Transform
+- uid: 7739
+  type: Paper
+  components:
+  - pos: 2.5,-11.5
+    parent: 127
+    type: Transform
+- uid: 7740
+  type: Paper
+  components:
+  - pos: 2.5,-11.5
+    parent: 127
+    type: Transform
+- uid: 7741
+  type: Paper
+  components:
+  - pos: 2.5,-11.5
+    parent: 127
+    type: Transform
+- uid: 7742
+  type: Paper
+  components:
+  - pos: 2.5,-11.5
+    parent: 127
+    type: Transform
+- uid: 7743
+  type: Paper
+  components:
+  - pos: 2.5,-11.5
+    parent: 127
+    type: Transform
+- uid: 7744
+  type: Paper
+  components:
+  - pos: 2.5,-11.5
+    parent: 127
+    type: Transform
+- uid: 7745
+  type: Paper
+  components:
+  - pos: 2.5,-11.5
+    parent: 127
+    type: Transform
+- uid: 7746
+  type: Paper
+  components:
+  - pos: 2.5,-11.5
+    parent: 127
+    type: Transform
 ...
