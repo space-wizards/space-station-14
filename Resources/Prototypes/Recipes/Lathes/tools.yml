@@ -189,3 +189,15 @@
     Glass: 350
     Plastic: 150
     Gold: 10
+
+- type: latheRecipe
+  id: RPED
+  icon:
+    sprite: Objects/Specific/Research/rped.rsi
+    state: icon
+  result: RPED
+  completetime: 10
+  materials:
+    Steel: 650
+    Plastic: 150
+    Gold: 50
