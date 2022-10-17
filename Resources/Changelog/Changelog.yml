@@ -1,31 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Nuclear Operatives are now internally (i.e. badmins) recognized as antags.
-      You have been legitimized., type: Fix}
-  id: 1976
-  time: '2022-07-17T21:57:52.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Pneumatic cannons and cream pies no longer can be used to instakill
-      people with hyperoptimized poison mixes., type: Remove}
-  id: 1977
-  time: '2022-07-17T22:25:42.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Ported cleanbots from Nyanotrasen MRP., type: Add}
-  id: 1978
-  time: '2022-07-18T03:48:36.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Overfeeding and overhydration no longer show alerts., type: Remove}
-  id: 1979
-  time: '2022-07-18T04:41:55.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Damage overlay won't show up when returning to body anymore., type: Fix}
-  id: 1980
-  time: '2022-07-19T07:09:27.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: If the shuttle can't dock it will announce its direction from the station.,
@@ -2932,3 +2905,36 @@ Entries:
     type: Fix}
   id: 2475
   time: '2022-10-16T21:00:18.0000000+00:00'
+- author: 25203
+  changes:
+  - {message: Door remotes can no longer unbolt airlocks if the bolt wire is cut.,
+    type: Fix}
+  - {message: Airlocks will no longer bolt if the bolt wire is cut while it has no
+      power., type: Tweak}
+  - {message: 'All wires, including the bolt wire, now have to be cut to remove the
+      door electronics from an airlock.', type: Tweak}
+  - {message: Fix a bug where airlock deconstruction examine text wouldn't update
+      after cutting the wires., type: Fix}
+  id: 2476
+  time: '2022-10-17T00:44:05.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fix chat/speech pop-ups not rendering properly, type: Fix}
+  id: 2477
+  time: '2022-10-17T04:33:29.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Melee now has lag compensation so the server considers your target's
+      position from when you attacked., type: Add}
+  id: 2478
+  time: '2022-10-17T04:54:32.0000000+00:00'
+- author: router
+  changes:
+  - {message: Saying "^^" or "^-^" will now make you smile instead., type: Add}
+  id: 2479
+  time: '2022-10-17T04:54:52.0000000+00:00'
+- author: Sheppard
+  changes:
+  - {message: Ambience no longer plays in the lobby., type: Fix}
+  id: 2480
+  time: '2022-10-17T04:56:10.0000000+00:00'

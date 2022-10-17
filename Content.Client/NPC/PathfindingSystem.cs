@@ -308,7 +308,6 @@ namespace Content.Client.NPC
                     break;
                     */
                 }
-
             }
         }
 
