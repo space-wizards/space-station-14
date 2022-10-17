@@ -125,6 +125,6 @@ public sealed class RadioDeviceSystem : EntitySystem
 
     private void OnReceiveRadio(EntityUid uid, RadioSpeakerComponent component, RadioReceiveEvent args)
     {
-        _chat.TrySendInGameICMessage(uid, args.Message, InGameICChatType.Speak, false);
+        _chat.TrySendInGameICMessage(args.Source, args.Message, InGameICChatType.Speak, false);
     }
 }
