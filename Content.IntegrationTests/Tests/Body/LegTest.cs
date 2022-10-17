@@ -51,11 +51,11 @@ namespace Content.IntegrationTests.Tests.Body
                 Assert.That(!appearance.TryGetData(RotationVisuals.RotationState, out RotationState _));
 
                 var bodySystem = entityManager.System<BodySystem>();
-                var legs = bodySystem.GetChildrenOfType(body.Owner, BodyPartType.Leg, body);
+                var legs = bodySystem.GetBodyChildrenOfType(body.Owner, BodyPartType.Leg, body);
 
                 foreach (var leg in legs)
                 {
-                    bodySystem.Drop(leg.Owner, leg);
+                    bodySystem.DropPart(leg.Id, leg.Component);
                 }
             });
 

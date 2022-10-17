@@ -41,11 +41,8 @@ namespace Content.Server.Body.Systems
         {
             base.Update(frameTime);
 
-            foreach (var (respirator, part) in EntityManager.EntityQuery<RespiratorComponent, BodyComponent>())
+            foreach (var (respirator, body) in EntityManager.EntityQuery<RespiratorComponent, BodyComponent>())
             {
-                if (!_bodySystem.TryGetRoot(part.Owner, out var body, part))
-                    continue;
-
                 var uid = respirator.Owner;
 
                 if (_mobState.IsDead(uid))
@@ -98,7 +95,7 @@ namespace Content.Server.Body.Systems
             if (!Resolve(uid, ref body, false))
                 return;
 
-            var organs = _bodySystem.GetOrganComponents<LungComponent>(uid, body);
+            var organs = _bodySystem.GetBodyOrganComponents<LungComponent>(uid, body);
 
             // Inhale gas
             var ev = new InhaleLocationEvent();
@@ -128,7 +125,7 @@ namespace Content.Server.Body.Systems
             if (!Resolve(uid, ref body, false))
                 return;
 
-            var organs = _bodySystem.GetOrganComponents<LungComponent>(uid, body);
+            var organs = _bodySystem.GetBodyOrganComponents<LungComponent>(uid, body);
 
             // exhale gas
 

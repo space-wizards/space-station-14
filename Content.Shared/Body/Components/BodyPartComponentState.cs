@@ -1,5 +1,5 @@
-﻿using Content.Shared.Body.Part;
-using Robust.Shared.Audio;
+﻿using Content.Shared.Body.Organ;
+using Content.Shared.Body.Part;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Body.Components;
@@ -9,30 +9,24 @@ public sealed class BodyPartComponentState : ComponentState
 {
     public readonly BodyPartSlot? ParentSlot;
     public readonly Dictionary<string, BodyPartSlot> Children;
+    public readonly Dictionary<string, OrganSlot> Organs;
     public readonly BodyPartType PartType;
     public readonly bool IsVital;
     public readonly BodyPartSymmetry Symmetry;
-    public readonly bool Attachable;
-    public readonly bool Organ;
-    public readonly SoundSpecifier GibSound;
 
     public BodyPartComponentState(
         BodyPartSlot? parentSlot,
         Dictionary<string, BodyPartSlot> children,
+        Dictionary<string, OrganSlot> organs,
         BodyPartType partType,
         bool isVital,
-        BodyPartSymmetry symmetry,
-        bool attachable,
-        bool organ,
-        SoundSpecifier gibSound)
+        BodyPartSymmetry symmetry)
     {
         ParentSlot = parentSlot;
         Children = children;
+        Organs = organs;
         PartType = partType;
         IsVital = isVital;
         Symmetry = symmetry;
-        Attachable = attachable;
-        Organ = organ;
-        GibSound = gibSound;
     }
 }

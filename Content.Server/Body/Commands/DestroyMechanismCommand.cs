@@ -49,11 +49,11 @@ namespace Content.Server.Body.Commands
             var mechanismName = string.Join(" ", args).ToLowerInvariant();
             var bodySystem = entityManager.System<BodySystem>();
 
-            foreach (var organ in bodySystem.GetChildOrgans(body.Owner, body))
+            foreach (var organ in bodySystem.GetBodyOrgans(body.Owner, body))
             {
-                if (organ.Name.ToLowerInvariant() == mechanismName)
+                if (organ.Component.Name.ToLowerInvariant() == mechanismName)
                 {
-                    bodySystem.Delete(organ.Owner, organ);
+                    bodySystem.DeleteOrgan(organ.Id, organ.Component);
                     shell.WriteLine($"Mechanism with name {mechanismName} has been destroyed.");
                     return;
                 }

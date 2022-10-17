@@ -14,25 +14,25 @@ public partial class SharedBodySystem
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly StandingStateSystem _standing = default!;
 
-    public IEnumerable<BodyComponent> GetChildrenOfType(EntityUid? bodyId, BodyPartType type, BodyComponent? body = null)
+    public IEnumerable<(EntityUid Id, BodyPartComponent Component)> GetBodyChildrenOfType(EntityUid? bodyId, BodyPartType type, BodyComponent? body = null)
     {
-        foreach (var part in GetChildParts(bodyId, body))
+        foreach (var part in GetBodyChildren(bodyId, body))
         {
-            if (part.PartType == type)
+            if (part.Component.PartType == type)
                 yield return part;
         }
     }
 
     public bool HasChildOfType(EntityUid? bodyId, BodyPartType type, BodyComponent? body = null)
     {
-        return GetChildrenOfType(bodyId, type, body).Any();
+        return GetBodyChildrenOfType(bodyId, type, body).Any();
     }
 
-    public bool HasChild(
+    public bool BodyHasChild(
         EntityUid? parentId,
         EntityUid? childId,
         BodyComponent? parent = null,
-        BodyComponent? child = null)
+        BodyPartComponent? child = null)
     {
         if (parentId == null ||
             !Resolve(parentId.Value, ref parent, false) ||

@@ -9,6 +9,7 @@ using Content.Server.Power.EntitySystems;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Bed;
 using Content.Shared.Bed.Sleep;
+using Content.Shared.Body.Components;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Damage;
 using Content.Shared.Emag.Systems;
@@ -18,7 +19,6 @@ namespace Content.Server.Bed
 {
     public sealed class BedSystem : EntitySystem
     {
-        [Dependency] private readonly BodySystem _bodySystem = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly ActionsSystem _actionsSystem = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -97,7 +97,7 @@ namespace Content.Server.Bed
         {
             // In testing this also received an unbuckle event when the bed is destroyed
             // So don't worry about that
-            if (!_bodySystem.TryGetRoot(args.BuckledEntity, out var body))
+            if (!TryComp(args.BuckledEntity, out BodyComponent? body))
                 return;
 
             if (!this.IsPowered(uid, EntityManager))
@@ -136,9 +136,6 @@ namespace Content.Server.Bed
 
             foreach (var buckledEntity in strap.BuckledEntities)
             {
-                if (!_bodySystem.TryGetRoot(buckledEntity, out var body))
-                    continue;
-
                 var metabolicEvent = new ApplyMetabolicMultiplierEvent
                 {
                     Uid = buckledEntity,

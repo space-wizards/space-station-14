@@ -265,12 +265,12 @@ namespace Content.IntegrationTests.Tests.Buckle
                 }
 
                 var bodySystem = entityManager.System<BodySystem>();
-                var legs = bodySystem.GetChildrenOfType(body.Owner, BodyPartType.Leg, body);
+                var legs = bodySystem.GetBodyChildrenOfType(body.Owner, BodyPartType.Leg, body);
 
                 // Break our guy's kneecaps
                 foreach (var leg in legs)
                 {
-                    bodySystem.Drop(leg.Owner, leg);
+                    bodySystem.DropPart(leg.Id, leg.Component);
                 }
             });
 

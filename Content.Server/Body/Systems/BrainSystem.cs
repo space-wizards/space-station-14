@@ -3,6 +3,7 @@ using Content.Server.Ghost.Components;
 using Content.Server.Mind.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Events;
+using Content.Shared.Body.Organ;
 using Content.Shared.Movement.Components;
 
 namespace Content.Server.Body.Systems
@@ -27,8 +28,8 @@ namespace Content.Server.Body.Systems
         private void OnRemovedFromBody(EntityUid uid, BrainComponent component, RemovedFromBodyEvent args)
         {
             // This one needs to be special, okay?
-            if (!EntityManager.TryGetComponent(uid, out BodyComponent? organ) ||
-                organ.ParentSlot is not {Parent: var parent} || !organ.Organ)
+            if (!EntityManager.TryGetComponent(uid, out OrganComponent? organ) ||
+                organ.ParentSlot is not {Parent: var parent})
                 return;
 
             HandleMind(parent, args.Old.Owner);

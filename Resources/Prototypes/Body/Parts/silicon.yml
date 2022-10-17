@@ -6,7 +6,7 @@
   components:
   - type: Damageable
     damageContainer: Inorganic
-  - type: Body
+  - type: BodyPart
   - type: ContainerContainer
     containers:
       bodypart: !type:Container
@@ -26,7 +26,7 @@
   - type: Icon
     sprite: Mobs/Silicon/drone.rsi
     state: "l_hand"
-  - type: Body
+  - type: BodyPart
     partType: Hand
     symmetry: Left
   - type: Tag
@@ -47,7 +47,7 @@
   - type: Icon
     sprite: Mobs/Silicon/drone.rsi
     state: "r_hand"
-  - type: Body
+  - type: BodyPart
     partType: Hand
     symmetry: Right
   - type: Tag

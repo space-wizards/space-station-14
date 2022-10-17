@@ -23,9 +23,9 @@ namespace Content.Shared.Body.Events
     /// </summary>
     public sealed class AddedToPartEvent : EntityEventArgs
     {
-        public BodyComponent Part;
+        public BodyPartComponent Part;
 
-        public AddedToPartEvent(BodyComponent part)
+        public AddedToPartEvent(BodyPartComponent part)
         {
             Part = part;
         }
@@ -37,9 +37,9 @@ namespace Content.Shared.Body.Events
     public sealed class AddedToPartInBodyEvent : EntityEventArgs
     {
         public BodyComponent Body;
-        public BodyComponent Part;
+        public BodyPartComponent Part;
 
-        public AddedToPartInBodyEvent(BodyComponent body, BodyComponent part)
+        public AddedToPartInBodyEvent(BodyComponent body, BodyPartComponent part)
         {
             Body = body;
             Part = part;
@@ -64,9 +64,9 @@ namespace Content.Shared.Body.Events
     /// </summary>
     public sealed class RemovedFromPartEvent : EntityEventArgs
     {
-        public BodyComponent Old;
+        public BodyPartComponent Old;
 
-        public RemovedFromPartEvent(BodyComponent old)
+        public RemovedFromPartEvent(BodyPartComponent old)
         {
             Old = old;
         }
@@ -78,9 +78,9 @@ namespace Content.Shared.Body.Events
     public sealed class RemovedFromPartInBodyEvent : EntityEventArgs
     {
         public BodyComponent OldBody;
-        public BodyComponent OldPart;
+        public BodyPartComponent OldPart;
 
-        public RemovedFromPartInBodyEvent(BodyComponent oldBody, BodyComponent oldPart)
+        public RemovedFromPartInBodyEvent(BodyComponent oldBody, BodyPartComponent oldPart)
         {
             OldBody = oldBody;
             OldPart = oldPart;

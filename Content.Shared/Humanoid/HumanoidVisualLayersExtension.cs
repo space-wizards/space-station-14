@@ -60,10 +60,8 @@ namespace Content.Shared.Humanoid
             }
         }
 
-        public static HumanoidVisualLayers? ToHumanoidLayers(this BodyComponent part)
+        public static HumanoidVisualLayers? ToHumanoidLayers(this BodyPartComponent part)
         {
-            if (part.Organ)
-                return null;
             switch (part.PartType)
             {
                 case BodyPartType.Other:

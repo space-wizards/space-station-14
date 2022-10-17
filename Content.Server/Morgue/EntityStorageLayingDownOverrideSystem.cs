@@ -22,7 +22,7 @@ public sealed class EntityStorageLayingDownOverrideSystem : EntitySystem
         StorageBeforeCloseEvent args)
     {
         foreach (var ent in args.Contents)
-            if (HasComp<BodyComponent>(ent) && _body.IsRoot(ent) && !_standing.IsDown(ent))
+            if (HasComp<BodyComponent>(ent) && !_standing.IsDown(ent))
                 args.Contents.Remove(ent);
     }
 }

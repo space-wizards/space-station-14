@@ -304,7 +304,7 @@ public sealed partial class AdminVerbSystem
                 Act = () =>
                 {
                     _vomitSystem.Vomit(args.Target, -1000, -1000); // You feel hollow!
-                    var organs = _bodySystem.GetOrganComponents<TransformComponent>(args.Target, body);
+                    var organs = _bodySystem.GetBodyOrganComponents<TransformComponent>(args.Target, body);
                     var baseXform = Transform(args.Target);
                     foreach (var (xform, organ) in organs)
                     {
@@ -312,7 +312,7 @@ public sealed partial class AdminVerbSystem
                             continue;
 
                         var coordinates = baseXform.Coordinates.Offset(_random.NextVector2(0.5f, 0.75f));
-                        _bodySystem.DropAt(organ.Owner, coordinates, organ);
+                        _bodySystem.DropOrganAt(organ.Owner, coordinates, organ);
                     }
 
                     _popupSystem.PopupEntity(Loc.GetString("admin-smite-vomit-organs-self"), args.Target,
@@ -333,9 +333,9 @@ public sealed partial class AdminVerbSystem
                 Act = () =>
                 {
                     var baseXform = Transform(args.Target);
-                    foreach (var part in _bodySystem.GetChildrenOfType(args.Target, BodyPartType.Hand))
+                    foreach (var part in _bodySystem.GetBodyChildrenOfType(args.Target, BodyPartType.Hand))
                     {
-                        _bodySystem.DropAt(part.Owner, baseXform.Coordinates, part);
+                        _bodySystem.DropPartAt(part.Id, baseXform.Coordinates, part.Component);
                     }
                     _popupSystem.PopupEntity(Loc.GetString("admin-smite-remove-hands-self"), args.Target,
                         Filter.Entities(args.Target), PopupType.LargeCaution);
@@ -355,9 +355,9 @@ public sealed partial class AdminVerbSystem
                 Act = () =>
                 {
                     var baseXform = Transform(args.Target);
-                    foreach (var part in _bodySystem.GetChildrenOfType(body.Owner, BodyPartType.Hand, body))
+                    foreach (var part in _bodySystem.GetBodyChildrenOfType(body.Owner, BodyPartType.Hand, body))
                     {
-                        _bodySystem.DropAt(part.Owner, baseXform.Coordinates, part);
+                        _bodySystem.DropPartAt(part.Id, baseXform.Coordinates, part.Component);
                         break;
                     }
                     _popupSystem.PopupEntity(Loc.GetString("admin-smite-remove-hands-self"), args.Target,
@@ -377,7 +377,7 @@ public sealed partial class AdminVerbSystem
                 IconTexture = "/Textures/Mobs/Species/Human/organs.rsi/stomach.png",
                 Act = () =>
                 {
-                    foreach (var (component, _) in _bodySystem.GetOrganComponents<StomachComponent>(args.Target, body))
+                    foreach (var (component, _) in _bodySystem.GetBodyOrganComponents<StomachComponent>(args.Target, body))
                     {
                         QueueDel(component.Owner);
                     }
@@ -397,7 +397,7 @@ public sealed partial class AdminVerbSystem
                 IconTexture = "/Textures/Mobs/Species/Human/organs.rsi/lung-r.png",
                 Act = () =>
                 {
-                    foreach (var (component, _) in _bodySystem.GetOrganComponents<LungComponent>(args.Target, body))
+                    foreach (var (component, _) in _bodySystem.GetBodyOrganComponents<LungComponent>(args.Target, body))
                     {
                         QueueDel(component.Owner);
                     }

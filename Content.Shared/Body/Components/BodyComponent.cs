@@ -15,37 +15,8 @@ public sealed class BodyComponent : Component, IDraggable
     public readonly string? Prototype;
 
     [ViewVariables]
-    [DataField("parent")]
-    public BodyPartSlot? ParentSlot;
-
-    [ViewVariables]
-    [DataField("children")]
-    public Dictionary<string, BodyPartSlot> Children = new();
-
-    [ViewVariables]
-    [DataField("partType")]
-    public BodyPartType PartType = BodyPartType.Other;
-
-    // TODO BODY Replace with a simulation of organs
-    /// <summary>
-    ///     Whether or not the owning <see cref="Body"/> will die if all
-    ///     <see cref="BodyComponent"/>s of this type are removed from it.
-    /// </summary>
-    [ViewVariables]
-    [DataField("vital")]
-    public bool IsVital;
-
-    [ViewVariables]
-    [DataField("symmetry")]
-    public BodyPartSymmetry Symmetry = BodyPartSymmetry.None;
-
-    [ViewVariables]
-    [DataField("attachable")]
-    public bool Attachable = true;
-
-    [ViewVariables]
-    [DataField("organ")]
-    public bool Organ;
+    [DataField("root")]
+    public BodyPartSlot Root = default!;
 
     [ViewVariables]
     [DataField("gibSound")]

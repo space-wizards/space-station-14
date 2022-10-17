@@ -8,7 +8,7 @@
       netsync: false
       sprite: Mobs/Species/Human/organs.rsi
       state: brain
-    - type: Body
+    - type: Organ
     - type: Brain
     - type: Stomach
     - type: Metabolizer
@@ -32,7 +32,7 @@
     layers:
       - state: lung-l
       - state: lung-r
-  - type: Body
+  - type: Organ
   - type: Lung
   - type: Metabolizer
     removeEmpty: true

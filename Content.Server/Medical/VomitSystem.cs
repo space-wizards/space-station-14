@@ -29,7 +29,7 @@ namespace Content.Server.Medical
         public void Vomit(EntityUid uid, float thirstAdded = -40f, float hungerAdded = -40f)
         {
             /// Main requirement: You have a stomach
-            var stomachList = _bodySystem.GetOrganComponents<StomachComponent>(uid);
+            var stomachList = _bodySystem.GetBodyOrganComponents<StomachComponent>(uid);
             if (stomachList.Count == 0)
             {
                 return;

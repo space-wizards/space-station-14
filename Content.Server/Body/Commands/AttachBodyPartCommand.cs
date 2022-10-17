@@ -1,7 +1,9 @@
+using System.Linq;
 using Content.Server.Administration;
 using Content.Server.Body.Systems;
 using Content.Shared.Administration;
 using Content.Shared.Body.Components;
+using Content.Shared.Body.Part;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 
@@ -74,7 +76,7 @@ namespace Content.Server.Body.Commands
 
             if (!entityManager.TryGetComponent(entity, out BodyComponent? body))
             {
-                shell.WriteLine($"Entity {entityManager.GetComponent<MetaDataComponent>(entity).EntityName} with uid {entity} does not have a {nameof(BodyComponent)} component.");
+                shell.WriteLine($"Entity {entityManager.GetComponent<MetaDataComponent>(entity).EntityName} with uid {entity} does not have a {nameof(BodyComponent)}.");
                 return;
             }
 
@@ -84,23 +86,38 @@ namespace Content.Server.Body.Commands
                 return;
             }
 
-            if (!entityManager.TryGetComponent(partUid, out BodyComponent? part))
+            if (!entityManager.TryGetComponent(partUid, out BodyPartComponent? part))
             {
-                shell.WriteLine($"Entity {entityManager.GetComponent<MetaDataComponent>(partUid).EntityName} with uid {args[0]} does not have a {nameof(BodyComponent)} component.");
+                shell.WriteLine($"Entity {entityManager.GetComponent<MetaDataComponent>(partUid).EntityName} with uid {args[0]} does not have a {nameof(BodyPartComponent)}.");
                 return;
             }
 
             var bodySystem = entityManager.System<BodySystem>();
-            if (bodySystem.HasChild(entity, partUid, body, part))
+            if (bodySystem.BodyHasChild(entity, partUid, body, part))
             {
                 shell.WriteLine($"Body part {entityManager.GetComponent<MetaDataComponent>(partUid).EntityName} with uid {partUid} is already attached to entity {entityManager.GetComponent<MetaDataComponent>(entity).EntityName} with uid {entity}");
                 return;
             }
 
-            var slotName = $"AttachBodyPartVerb-{partUid}";
-            if (!bodySystem.TryCreateSlotAndAttach(entity, slotName, partUid, body, part))
+            var slotId = $"AttachBodyPartVerb-{partUid}";
+
+            // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
+            if (body.Root == null)
             {
-                shell.WriteError($"Could not create slot {slotName} on entity {entityManager.ToPrettyString(entity)}");
+                bodySystem.DropPart(partUid, part);
+
+                body.Root = new BodyPartSlot(slotId, body.Owner, null) {Child = partUid};
+                part.ParentSlot = body.Root;
+
+                entityManager.Dirty(body);
+                entityManager.Dirty(part);
+            }
+
+            var attachAt = bodySystem.GetBodyChildren(entity, body).First();
+
+            if (!bodySystem.TryCreatePartSlotAndAttach(attachAt.Id, slotId, partUid, attachAt.Component, part))
+            {
+                shell.WriteError($"Could not create slot {slotId} on entity {entityManager.ToPrettyString(entity)}");
                 return;
             }
 

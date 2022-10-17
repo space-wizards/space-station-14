@@ -1,5 +1,6 @@
 ﻿using System.Linq;
-using Content.Shared.Body.Components;
+using Content.Shared.Body.Organ;
+using Content.Shared.Prototypes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Markdown.Mapping;
@@ -63,15 +64,9 @@ public sealed class BodyPrototypeSerializer : ITypeReader<BodyPrototype, Mapping
                     continue;
                 }
 
-                if (!organPrototype.TryGetComponent("Body", out BodyComponent? body))
+                if (!organPrototype.HasComponent<OrganComponent>())
                 {
                     nodes.Add(new ErrorNode(value, $"Organ {organ.Value} does not have a body component"));
-                    continue;
-                }
-
-                if (!body.Organ)
-                {
-                    nodes.Add(new ErrorNode(value, $"Organ {organ.Value} does not have Organ set to true in its body component"));
                 }
             }
         }
@@ -94,9 +89,13 @@ public sealed class BodyPrototypeSerializer : ITypeReader<BodyPrototype, Mapping
         {
             nodes.Add(new ErrorNode(node, $"No slots mapping data node found"));
         }
-        else if (root != null && !slots.TryGet(root.Value, out MappingDataNode? _))
+        else if (root != null)
         {
-            nodes.Add(new ErrorNode(slots, $"No slot found with id {root.Value}"));
+            if (!slots.TryGet(root.Value, out MappingDataNode? _))
+            {
+                nodes.Add(new ErrorNode(slots, $"No slot found with id {root.Value}"));
+                return new ValidatedSequenceNode(nodes);
+            }
 
             foreach (var (key, value) in slots)
             {
@@ -166,7 +165,7 @@ public sealed class BodyPrototypeSerializer : ITypeReader<BodyPrototype, Mapping
             allConnections.Add(slotId, (part, connections, organs));
         }
 
-        foreach (var (slotId, (_, connections, organs)) in allConnections)
+        foreach (var (slotId, (_, connections, _)) in allConnections)
         {
             if (connections == null)
                 continue;

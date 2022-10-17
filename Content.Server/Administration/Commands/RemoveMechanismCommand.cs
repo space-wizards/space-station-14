@@ -28,7 +28,7 @@ namespace Content.Server.Administration.Commands
             var entityManager = IoCManager.Resolve<IEntityManager>();
             var bodySystem = entityManager.System<BodySystem>();
 
-            if (bodySystem.Drop(entityUid))
+            if (bodySystem.DropOrgan(entityUid))
             {
                 shell.WriteLine($"Removed organ {entityManager.ToPrettyString(entityUid)}");
             }

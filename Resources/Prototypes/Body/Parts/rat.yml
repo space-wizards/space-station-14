@@ -6,7 +6,7 @@
   parent: PartAnimal
   noSpawn: true
   components:
-  - type: Body
+  - type: BodyPart
     partType: Torso
   - type: Damageable
     damageContainer: Biological

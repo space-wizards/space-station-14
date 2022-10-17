@@ -186,16 +186,16 @@ namespace Content.Server.Kitchen.EntitySystems
 
             if (TryComp<BodyComponent>(victim, out var body))
             {
-                var headSlots = _bodySystem.GetChildrenOfType(victim, BodyPartType.Head, body);
+                var headSlots = _bodySystem.GetBodyChildrenOfType(victim, BodyPartType.Head, body);
 
                 foreach (var part in headSlots)
                 {
-                    if (!_bodySystem.OrphanParts(part.Owner, part))
+                    if (!_bodySystem.OrphanPart(part.Id, part.Component))
                     {
                         continue;
                     }
 
-                    component.Storage.Insert(part.Owner);
+                    component.Storage.Insert(part.Id);
                     headCount++;
                 }
             }

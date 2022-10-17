@@ -3,7 +3,7 @@ using Content.Server.Body.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Administration.Logs;
-using Content.Shared.Body.Components;
+using Content.Shared.Body.Organ;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
@@ -38,12 +38,9 @@ namespace Content.Server.Body.Systems
             {
                 _solutionContainerSystem.EnsureSolution(uid, component.SolutionName);
             }
-            else
+            else if (_bodySystem.TryGetOrganBody(uid, out var body))
             {
-                if (_bodySystem.TryGetRoot(uid, out var body))
-                {
-                    _solutionContainerSystem.EnsureSolution(body.Owner, component.SolutionName);
-                }
+                _solutionContainerSystem.EnsureSolution(body.Value.Id, component.SolutionName);
             }
         }
 
@@ -79,30 +76,30 @@ namespace Content.Server.Body.Systems
             }
         }
 
-        private void TryMetabolize(EntityUid uid, MetabolizerComponent? meta = null, BodyComponent? part = null)
+        private void TryMetabolize(EntityUid uid, MetabolizerComponent? meta = null, OrganComponent? organ = null)
         {
             if (!Resolve(uid, ref meta))
                 return;
 
-            Resolve(uid, ref part, false);
+            Resolve(uid, ref organ, false);
 
             // First step is get the solution we actually care about
             Solution? solution = null;
             EntityUid? solutionEntityUid = null;
-            var body = _bodySystem.GetRoot(uid, part)?.Owner;
+            var body = _bodySystem.GetOrganBody(uid, organ);
 
             SolutionContainerManagerComponent? manager = null;
 
             if (meta.SolutionOnBody)
             {
-                if (part != null)
+                if (organ != null)
                 {
                     if (body != null)
                     {
-                        if (!Resolve(body.Value, ref manager, false))
+                        if (!Resolve(body.Value.Id, ref manager, false))
                             return;
-                        _solutionContainerSystem.TryGetSolution(body.Value, meta.SolutionName, out solution, manager);
-                        solutionEntityUid = body.Value;
+                        _solutionContainerSystem.TryGetSolution(body.Value.Id, meta.SolutionName, out solution, manager);
+                        solutionEntityUid = body.Value.Id;
                     }
                 }
             }
@@ -170,7 +167,7 @@ namespace Content.Server.Body.Systems
                             continue;
                     }
 
-                    var actualEntity = body != null ? body.Value : solutionEntityUid.Value;
+                    var actualEntity = body?.Id ?? solutionEntityUid.Value;
                     var args = new ReagentEffectArgs(actualEntity, (meta).Owner, solution, proto, mostToRemove,
                         EntityManager, null, entry);
 

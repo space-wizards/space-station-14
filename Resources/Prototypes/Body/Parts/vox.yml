@@ -8,7 +8,7 @@
   components:
   - type: Damageable
     damageContainer: Biological
-  - type: Body
+  - type: BodyPart
   - type: ContainerContainer
     containers:
       bodypart: !type:Container
@@ -28,7 +28,7 @@
     - type: Icon
       sprite: Mobs/Species/Vox/parts.rsi
       state: "torso_m"
-    - type: Body
+    - type: BodyPart
       partType: Torso
 
 - type: entity
@@ -43,7 +43,7 @@
     - type: Icon
       sprite: Mobs/Species/Vox/parts.rsi
       state: "head_m"
-    - type: Body
+    - type: BodyPart
       partType: Head
       vital: true
     - type: Input
@@ -69,7 +69,7 @@
     - type: Icon
       sprite: Mobs/Species/Vox/parts.rsi
       state: "l_arm"
-    - type: Body
+    - type: BodyPart
       partType: Arm
       symmetry: Left
 
@@ -85,7 +85,7 @@
     - type: Icon
       sprite: Mobs/Species/Vox/parts.rsi
       state: "r_arm"
-    - type: Body
+    - type: BodyPart
       partType: Arm
       symmetry: Right
 
@@ -101,7 +101,7 @@
     - type: Icon
       sprite: Mobs/Species/Vox/parts.rsi
       state: "l_hand"
-    - type: Body
+    - type: BodyPart
       partType: Hand
       symmetry: Left
 
@@ -117,7 +117,7 @@
     - type: Icon
       sprite: Mobs/Species/Vox/parts.rsi
       state: "r_hand"
-    - type: Body
+    - type: BodyPart
       partType: Hand
       symmetry: Right
 
@@ -133,7 +133,7 @@
     - type: Icon
       sprite: Mobs/Species/Vox/parts.rsi
       state: "l_leg"
-    - type: Body
+    - type: BodyPart
       partType: Leg
       symmetry: Left
 
@@ -149,7 +149,7 @@
     - type: Icon
       sprite: Mobs/Species/Vox/parts.rsi
       state: "r_leg"
-    - type: Body
+    - type: BodyPart
       partType: Leg
       symmetry: Right
 
@@ -165,7 +165,7 @@
     - type: Icon
       sprite: Mobs/Species/Vox/parts.rsi
       state: "l_foot"
-    - type: Body
+    - type: BodyPart
       partType: Foot
       symmetry: Left
 
@@ -181,6 +181,6 @@
     - type: Icon
       sprite: Mobs/Species/Vox/parts.rsi
       state: "r_foot"
-    - type: Body
+    - type: BodyPart
       partType: Foot
       symmetry: Right

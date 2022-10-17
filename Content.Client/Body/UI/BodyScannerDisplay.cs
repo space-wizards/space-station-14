@@ -14,7 +14,7 @@ namespace Content.Client.Body.UI
     public sealed class BodyScannerDisplay : DefaultWindow
     {
         private EntityUid? _currentEntity;
-        private BodyComponent? _currentBodyPart;
+        private BodyPartComponent? _currentBodyPart;
         private readonly Dictionary<int, BodyPartSlot> _bodyPartsList = new();
 
         public BodyScannerDisplay(BodyScannerBoundUserInterface owner)
@@ -111,22 +111,23 @@ namespace Content.Client.Body.UI
 
             var bodySystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedBodySystem>();
             var i = 0;
-            foreach (var part in bodySystem.GetChildParts(_currentEntity))
+            foreach (var part in bodySystem.GetBodyChildren(_currentEntity))
             {
-                _bodyPartsList[i++] = part.ParentSlot!;
-                BodyPartList.AddItem(Loc.GetString(part.Name));
+                _bodyPartsList[i++] = part.Component.ParentSlot!;
+                BodyPartList.AddItem(Loc.GetString(part.Component.Name));
             }
         }
 
         public void BodyPartOnItemSelected(ItemListSelectedEventArgs args)
         {
-            var bodySystem = IoCManager.Resolve<IEntityManager>().System<BodySystem>();
-            if (!bodySystem.TryGetRoot(_currentEntity, out var body))
+            var entMan = IoCManager.Resolve<IEntityManager>();
+            var bodySystem = entMan.System<BodySystem>();
+            if (!bodySystem.TryGetPartBody(_currentEntity, out var body))
             {
                 return;
             }
 
-            _currentBodyPart = bodySystem.GetRoot(_bodyPartsList[args.ItemIndex].Child);
+            _currentBodyPart = entMan.GetComponentOrNull<BodyPartComponent>(_bodyPartsList[args.ItemIndex].Child);
 
             if (_currentBodyPart is {ParentSlot.Id: var slotId} part)
             {
@@ -134,7 +135,7 @@ namespace Content.Client.Body.UI
             }
         }
 
-        private void UpdateBodyPartBox(BodyComponent part, string slotName)
+        private void UpdateBodyPartBox(BodyPartComponent part, string slotName)
         {
             var entMan = IoCManager.Resolve<IEntityManager>();
             BodyPartLabel.Text =
@@ -150,9 +151,9 @@ namespace Content.Client.Body.UI
             MechanismList.Clear();
 
             var bodySystem = entMan.System<SharedBodySystem>();
-            foreach (var organ in bodySystem.GetChildOrgans(part.Owner, part))
+            foreach (var organ in bodySystem.GetPartOrgans(part.Owner, part))
             {
-                var organName = entMan.GetComponent<MetaDataComponent>(organ.Owner).EntityName;
+                var organName = entMan.GetComponent<MetaDataComponent>(organ.Id).EntityName;
                 MechanismList.AddItem(organName);
             }
         }
@@ -167,8 +168,8 @@ namespace Content.Client.Body.UI
             }
 
             var bodySystem = IoCManager.Resolve<IEntityManager>().System<SharedBodySystem>();
-            var organ = bodySystem.GetChildOrgans(_currentBodyPart.Owner, _currentBodyPart).ElementAt(args.ItemIndex);
-            UpdateMechanismBox(organ.Owner);
+            var organ = bodySystem.GetPartOrgans(_currentBodyPart.Owner, _currentBodyPart).ElementAt(args.ItemIndex);
+            UpdateMechanismBox(organ.Id);
         }
 
         private void UpdateMechanismBox(EntityUid? organ)

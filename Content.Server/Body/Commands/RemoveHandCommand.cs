@@ -43,15 +43,15 @@ namespace Content.Server.Body.Commands
             }
 
             var bodySystem = entityManager.System<BodySystem>();
-            var hand = bodySystem.GetChildrenOfType(player.AttachedEntity, BodyPartType.Hand, body).FirstOrDefault();
+            var hand = bodySystem.GetBodyChildrenOfType(player.AttachedEntity, BodyPartType.Hand, body).FirstOrDefault();
 
-            if (hand == null)
+            if (hand == default)
             {
                 shell.WriteLine("You have no hands.");
             }
             else
             {
-                bodySystem.Drop(hand.Owner, hand);
+                bodySystem.DropPart(hand.Id, hand.Component);
             }
         }
     }

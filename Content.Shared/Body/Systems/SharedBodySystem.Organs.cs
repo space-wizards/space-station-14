@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Body.Components;
+using Content.Shared.Body.Organ;
 
 namespace Content.Shared.Body.Systems;
 
@@ -12,20 +13,20 @@ public partial class SharedBodySystem
     /// <param name="uid">The entity to check for the component on.</param>
     /// <param name="body">The body to check for organs on.</param>
     /// <typeparam name="T">The component to check for.</typeparam>
-    public List<(T Comp, BodyComponent Organ)> GetOrganComponents<T>(
+    public List<(T Comp, OrganComponent Organ)> GetBodyOrganComponents<T>(
         EntityUid uid,
         BodyComponent? body = null)
         where T : Component
     {
         if (!Resolve(uid, ref body))
-            return new List<(T Comp, BodyComponent Organ)>();
+            return new List<(T Comp, OrganComponent Organ)>();
 
         var query = EntityManager.GetEntityQuery<T>();
-        var list = new List<(T Comp, BodyComponent Organ)>(3);
-        foreach (var organ in GetChildOrgans(uid, body))
+        var list = new List<(T Comp, OrganComponent Organ)>(3);
+        foreach (var organ in GetBodyOrgans(uid, body))
         {
-            if (query.TryGetComponent(organ.Owner, out var comp))
-                list.Add((comp, organ));
+            if (query.TryGetComponent(organ.Id, out var comp))
+                list.Add((comp, organ.Component));
         }
 
         return list;
@@ -40,9 +41,9 @@ public partial class SharedBodySystem
     /// <param name="body">The body to check for organs on.</param>
     /// <typeparam name="T">The component to check for.</typeparam>
     /// <returns>Whether any were found.</returns>
-    public bool TryGetOrganComponents<T>(
+    public bool TryGetBodyOrganComponents<T>(
         EntityUid uid,
-        [NotNullWhen(true)] out List<(T Comp, BodyComponent Organ)>? comps,
+        [NotNullWhen(true)] out List<(T Comp, OrganComponent Organ)>? comps,
         BodyComponent? body = null)
         where T : Component
     {
@@ -52,7 +53,7 @@ public partial class SharedBodySystem
             return false;
         }
 
-        comps = GetOrganComponents<T>(uid, body);
+        comps = GetBodyOrganComponents<T>(uid, body);
 
         if (comps.Count == 0)
         {

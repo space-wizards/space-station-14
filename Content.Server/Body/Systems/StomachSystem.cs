@@ -1,7 +1,7 @@
 ﻿using Content.Server.Body.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
-using Content.Shared.Body.Components;
+using Content.Shared.Body.Organ;
 using Content.Shared.Chemistry.Components;
 using Robust.Shared.Utility;
 
@@ -22,10 +22,7 @@ namespace Content.Server.Body.Systems
 
         public override void Update(float frameTime)
         {
-            foreach (var (stomach, part, sol)
-                     in EntityManager
-                         .EntityQuery<StomachComponent, BodyComponent, SolutionContainerManagerComponent>(
-                             false))
+            foreach (var (stomach, organ, sol)in EntityManager.EntityQuery<StomachComponent, OrganComponent, SolutionContainerManagerComponent>())
             {
                 stomach.AccumulatedFrameTime += frameTime;
 
@@ -39,10 +36,8 @@ namespace Content.Server.Body.Systems
                         out var stomachSolution, sol))
                     continue;
 
-                var body = _bodySystem.GetRoot(part.Owner, part);
-                if (body == null ||
-                    !_solutionContainerSystem.TryGetSolution(body.Owner, stomach.BodySolutionName,
-                        out var bodySolution))
+                var body = _bodySystem.GetOrganBody(organ.Owner, organ);
+                if (body == null || !_solutionContainerSystem.TryGetSolution(body.Value.Id, stomach.BodySolutionName, out var bodySolution))
                     continue;
 
                 var transferSolution = new Solution();
@@ -73,7 +68,7 @@ namespace Content.Server.Body.Systems
                 }
 
                 // Transfer everything to the body solution!
-                _solutionContainerSystem.TryAddSolution(body.Owner, bodySolution, transferSolution);
+                _solutionContainerSystem.TryAddSolution(body.Value.Id, bodySolution, transferSolution);
             }
         }
 

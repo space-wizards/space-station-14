@@ -34,7 +34,7 @@ namespace Content.Server.Administration.Commands
             var entityManager = IoCManager.Resolve<IEntityManager>();
             var bodySystem = entityManager.System<BodySystem>();
 
-            if (bodySystem.AddToFirstValidSlot(organId, partId))
+            if (bodySystem.AddOrganToFirstValidSlot(organId, partId))
             {
                 shell.WriteLine($@"Added {organId} to {partId}.");
             }

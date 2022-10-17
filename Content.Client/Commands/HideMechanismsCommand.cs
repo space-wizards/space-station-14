@@ -1,4 +1,4 @@
-﻿using Content.Shared.Body.Components;
+﻿using Content.Shared.Body.Organ;
 using Robust.Client.Console;
 using Robust.Client.GameObjects;
 using Robust.Shared.Console;
@@ -15,11 +15,11 @@ namespace Content.Client.Commands
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            var parts = entityManager.EntityQuery<BodyComponent>(true);
+            var organs = entityManager.EntityQuery<OrganComponent>(true);
 
-            foreach (var part in parts)
+            foreach (var part in organs)
             {
-                if (!part.Organ || !entityManager.TryGetComponent(part.Owner, out SpriteComponent? sprite))
+                if (!entityManager.TryGetComponent(part.Owner, out SpriteComponent? sprite))
                 {
                     continue;
                 }

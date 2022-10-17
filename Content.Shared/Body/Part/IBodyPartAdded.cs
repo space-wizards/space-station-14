@@ -18,7 +18,7 @@ namespace Content.Shared.Body.Part
 
     public sealed class BodyPartAddedEventArgs : EventArgs
     {
-        public BodyPartAddedEventArgs(string slot, BodyComponent part)
+        public BodyPartAddedEventArgs(string slot, BodyPartComponent part)
         {
             Slot = slot;
             Part = part;
@@ -32,6 +32,6 @@ namespace Content.Shared.Body.Part
         /// <summary>
         ///     The part that was added.
         /// </summary>
-        public BodyComponent Part { get; }
+        public BodyPartComponent Part { get; }
     }
 }

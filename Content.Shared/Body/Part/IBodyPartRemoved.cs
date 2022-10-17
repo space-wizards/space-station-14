@@ -18,7 +18,7 @@ namespace Content.Shared.Body.Part
 
     public sealed class BodyPartRemovedEventArgs : EventArgs
     {
-        public BodyPartRemovedEventArgs(string slot, BodyComponent part)
+        public BodyPartRemovedEventArgs(string slot, BodyPartComponent part)
         {
             Slot = slot;
             Part = part;
@@ -32,6 +32,6 @@ namespace Content.Shared.Body.Part
         /// <summary>
         ///     The part that was removed.
         /// </summary>
-        public BodyComponent Part { get; }
+        public BodyPartComponent Part { get; }
     }
 }
