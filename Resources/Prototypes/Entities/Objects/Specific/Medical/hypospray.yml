@@ -142,7 +142,9 @@
           - ReagentId: Leporazine
             Quantity: 10
           - ReagentId: Barozine
-            Quantity: 20
+            Quantity: 10
+          - ReagentId: DexalinPlus
+            Quantity: 10
 
 - type: entity
   name: pen
