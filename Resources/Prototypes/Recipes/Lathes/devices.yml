@@ -21,6 +21,17 @@
     Plastic: 200
 
 - type: latheRecipe
+  id: VoiceTrigger
+  icon:
+    sprite: Objects/Devices/voice.rsi
+    state: voice
+  result: VoiceTrigger
+  completetime: 2
+  materials:
+    Steel: 300
+    Plastic: 200
+
+- type: latheRecipe
   id: ChemicalPayload
   icon:
     sprite: Objects/Devices/payload.rsi

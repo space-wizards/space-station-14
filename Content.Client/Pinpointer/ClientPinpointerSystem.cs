@@ -11,6 +11,7 @@ namespace Content.Client.Pinpointer
     public sealed class ClientPinpointerSystem : SharedPinpointerSystem
     {
         [Dependency] private readonly IEyeManager _eyeManager = default!;
+        [Dependency] private readonly AppearanceSystem _appearance = default!;
 
         public override void Initialize()
         {
@@ -36,7 +37,9 @@ namespace Content.Client.Pinpointer
 
         private void HandleCompState(EntityUid uid, PinpointerComponent pinpointer, ref ComponentHandleState args)
         {
-            if (args.Current is not PinpointerComponentState state) return;
+            if (args.Current is not PinpointerComponentState state)
+                return;
+
             SetActive(uid, state.IsActive, pinpointer);
             SetDirection(uid, state.DirectionToTarget, pinpointer);
             SetDistance(uid, state.DistanceToTarget, pinpointer);
@@ -48,8 +51,8 @@ namespace Content.Client.Pinpointer
             if (!Resolve(uid, ref pinpointer, ref appearance))
                 return;
 
-            appearance.SetData(PinpointerVisuals.IsActive, pinpointer.IsActive);
-            appearance.SetData(PinpointerVisuals.TargetDistance, pinpointer.DistanceToTarget);
+            _appearance.SetData(uid, PinpointerVisuals.IsActive, pinpointer.IsActive, appearance);
+            _appearance.SetData(uid, PinpointerVisuals.TargetDistance, pinpointer.DistanceToTarget, appearance);
         }
 
         private void UpdateDirAppearance(EntityUid uid, Direction dir,PinpointerComponent? pinpointer = null,
@@ -58,7 +61,7 @@ namespace Content.Client.Pinpointer
             if (!Resolve(uid, ref pinpointer, ref appearance))
                 return;
 
-            appearance.SetData(PinpointerVisuals.TargetDirection, dir);
+            _appearance.SetData(uid, PinpointerVisuals.TargetDirection, dir, appearance);
         }
 
         /// <summary>

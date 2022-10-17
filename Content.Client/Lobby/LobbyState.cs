@@ -25,10 +25,7 @@ namespace Content.Client.Lobby
     {
         [Dependency] private readonly IBaseClient _baseClient = default!;
         [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
-        [Dependency] private readonly IChatManager _chatManager = default!;
-        [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
@@ -47,7 +44,7 @@ namespace Content.Client.Lobby
         protected override void Startup()
         {
             var chatController = _userInterfaceManager.GetUIController<ChatUIController>();
-            _gameTicker = EntitySystem.Get<ClientGameTicker>();
+            _gameTicker = _entityManager.System<ClientGameTicker>();
             _characterSetup = new CharacterSetupGui(_entityManager, _resourceCache, _preferencesManager,
                 _prototypeManager, _configurationManager);
             LayoutContainer.SetAnchorPreset(_characterSetup, LayoutContainer.LayoutPreset.Wide);
@@ -116,8 +113,7 @@ namespace Content.Client.Lobby
 
         public override void FrameUpdate(FrameEventArgs e)
         {
-            var gameTicker = EntitySystem.Get<ClientGameTicker>();
-            if (gameTicker.IsGameStarted)
+            if (_gameTicker.IsGameStarted)
             {
                 Lobby.StartTime.Text = string.Empty;
                 Lobby.StationTime.Text = Loc.GetString("lobby-state-player-status-station-time", ("stationTime", _gameTiming.CurTime.Subtract(_gameTicker.RoundStartTimeSpan).ToString("hh\\:mm")));
@@ -126,13 +122,13 @@ namespace Content.Client.Lobby
 
             string text;
 
-            if (gameTicker.Paused)
+            if (_gameTicker.Paused)
             {
                 text = Loc.GetString("lobby-state-paused");
             }
             else
             {
-                var difference = gameTicker.StartTime - _gameTiming.CurTime;
+                var difference = _gameTicker.StartTime - _gameTiming.CurTime;
                 var seconds = difference.TotalSeconds;
                 if (seconds < 0)
                 {
@@ -156,14 +152,12 @@ namespace Content.Client.Lobby
 
         private void LobbyLateJoinStatusUpdated()
         {
-            Lobby.ReadyButton.Disabled = EntitySystem.Get<ClientGameTicker>().DisallowedLateJoin;
+            Lobby.ReadyButton.Disabled = _gameTicker.DisallowedLateJoin;
         }
 
         private void UpdateLobbyUi()
         {
-            var gameTicker = EntitySystem.Get<ClientGameTicker>();
-
-            if (gameTicker.IsGameStarted)
+            if (_gameTicker.IsGameStarted)
             {
                 Lobby.ReadyButton.Text = Loc.GetString("lobby-state-ready-button-join-state");
                 Lobby.ReadyButton.ToggleMode = false;
@@ -176,13 +170,13 @@ namespace Content.Client.Lobby
                 Lobby.ReadyButton.Text = Loc.GetString("lobby-state-ready-button-ready-up-state");
                 Lobby.ReadyButton.ToggleMode = true;
                 Lobby.ReadyButton.Disabled = false;
-                Lobby.ReadyButton.Pressed = gameTicker.AreWeReady;
+                Lobby.ReadyButton.Pressed = _gameTicker.AreWeReady;
                 Lobby.ObserveButton.Disabled = true;
             }
 
-            if (gameTicker.ServerInfoBlob != null)
+            if (_gameTicker.ServerInfoBlob != null)
             {
-                Lobby.ServerInfo.SetInfoBlob(gameTicker.ServerInfoBlob);
+                Lobby.ServerInfo.SetInfoBlob(_gameTicker.ServerInfoBlob);
             }
         }
 
@@ -201,7 +195,7 @@ namespace Content.Client.Lobby
 
         private void SetReady(bool newReady)
         {
-            if (EntitySystem.Get<ClientGameTicker>().IsGameStarted)
+            if (_gameTicker.IsGameStarted)
             {
                 return;
             }
