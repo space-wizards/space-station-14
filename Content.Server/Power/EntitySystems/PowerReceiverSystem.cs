@@ -142,7 +142,7 @@ namespace Content.Server.Power.EntitySystems
                     AudioParams.Default.WithVolume(-2f));
             }
 
-            return !receiver.Powered;
+            return !receiver.PowerDisabled; // i.e. PowerEnabled
         }
     }
 }
