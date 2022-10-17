@@ -627,6 +627,11 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
     {
         _actionsSystem?.UnlinkAllActions();
 
+        if (ActionsBar == null)
+        {
+            return;
+        }
+
         ActionsBar.PageButtons.LeftArrow.OnPressed -= OnLeftArrowPressed;
         ActionsBar.PageButtons.RightArrow.OnPressed -= OnRightArrowPressed;
     }
