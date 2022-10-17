@@ -58,6 +58,7 @@
     - SecwayKeys
     - ATVKeys
     - SyndicateSegwayKeys
+    - SkeletonMotorcycleKeys
 
 - type: entity
   parent: VehicleKeyPussyWagon

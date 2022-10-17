@@ -135,7 +135,8 @@ namespace Content.Client.Audio
         private void EntParentChanged(ref EntParentChangedMessage message)
         {
             if(_playMan.LocalPlayer is null || _playMan.LocalPlayer.ControlledEntity != message.Entity ||
-               !_timing.IsFirstTimePredicted) return;
+               !_timing.IsFirstTimePredicted)
+                return;
 
             // Check if we traversed to grid.
             CheckAmbience(message.Transform);
@@ -143,15 +144,17 @@ namespace Content.Client.Audio
 
         private void ChangeAmbience(SoundCollectionPrototype newAmbience)
         {
-            if (_currentCollection == newAmbience) return;
+            if (_currentCollection == newAmbience)
+                return;
             _timerCancelTokenSource.Cancel();
             _currentCollection = newAmbience;
             _timerCancelTokenSource = new();
             Timer.Spawn(1500, () =>
             {
                 // If we traverse a few times then don't interrupt an existing song.
-                if (_playingCollection == _currentCollection) return;
-                EndAmbience();
+                // If we are not in gameplay, don't call StartAmbience because of player movement
+                if (_playingCollection == _currentCollection || _stateManager.CurrentState is not GameplayState)
+                    return;
                 StartAmbience();
             }, _timerCancelTokenSource.Token);
         }
@@ -299,7 +302,8 @@ namespace Content.Client.Audio
 
         public void StartLobbyMusic()
         {
-            if (_lobbyStream != null || !_configManager.GetCVar(CCVars.LobbyMusicEnabled)) return;
+            if (_lobbyStream != null || !_configManager.GetCVar(CCVars.LobbyMusicEnabled))
+                return;
 
             var file = _gameTicker.LobbySong;
             if (file == null) // We have not received the lobby song yet.

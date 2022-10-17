@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Client.Administration.Managers;
 using Content.Client.Chat;
 using Content.Client.Chat.Managers;
@@ -237,7 +237,7 @@ public sealed class ChatUIController : UIController
         _speechBubbleRoot.Orphan();
         LayoutContainer.SetAnchorPreset(_speechBubbleRoot, LayoutContainer.LayoutPreset.Wide);
         UIManager.StateRoot.AddChild(_speechBubbleRoot);
-        _speechBubbleRoot.SetPositionFirst();
+        _speechBubbleRoot.SetPositionLast();
     }
 
     private void OnLocalPlayerChanged(LocalPlayerChangedEventArgs obj)
