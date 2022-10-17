@@ -1,11 +1,7 @@
-using Content.Client.HUD;
 using Content.Client.Verbs;
 using Content.Shared.CombatMode;
 using Content.Shared.Targeting;
-using Robust.Client.GameObjects;
 using Robust.Client.Player;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Client.CombatMode
 {
@@ -14,7 +10,6 @@ namespace Content.Client.CombatMode
     public sealed class CombatModeComponent : SharedCombatModeComponent
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IGameHud _gameHud = default!;
 
         public override bool IsInCombatMode
         {
@@ -36,14 +31,6 @@ namespace Content.Client.CombatMode
             }
         }
 
-        public void PlayerDetached() { _gameHud.CombatPanelVisible = false; }
-
-        public void PlayerAttached()
-        {
-            _gameHud.CombatPanelVisible = false; // TODO BOBBY SYSTEM Make the targeting doll actually do something.
-            UpdateHud();
-        }
-
         private void UpdateHud()
         {
             if (Owner != _playerManager.LocalPlayer?.ControlledEntity)
@@ -53,7 +40,6 @@ namespace Content.Client.CombatMode
 
             var verbs = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<VerbSystem>();
             verbs.CloseAllMenus();
-            _gameHud.TargetingZone = ActiveZone;
         }
     }
 }

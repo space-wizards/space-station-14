@@ -243,7 +243,7 @@ namespace Content.Server.Lathe
                 _appearance.SetData(uid, LatheVisuals.InsertingColor, color);
         }
 
-        private void OnPowerChanged(EntityUid uid, LatheComponent component, PowerChangedEvent args)
+        private void OnPowerChanged(EntityUid uid, LatheComponent component, ref PowerChangedEvent args)
         {
             if (!args.Powered)
             {

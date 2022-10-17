@@ -729,6 +729,7 @@
       amount: 3
   - type: MonkeyAccent
   - type: Puller
+  - type: CanHostGuardian
 
 - type: entity
   name: mouse

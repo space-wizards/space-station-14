@@ -5,6 +5,7 @@
   id: BaseMobOrganic
   noSpawn: true
   components:
+  - type: LagCompensation
   - type: RangedDamageSound
     soundGroups:
       Brute:
@@ -232,15 +233,13 @@
     normalState: Generic_mob_burning
     alternateState: Standing
     fireStackAlternateState: 3
-  - type: EnsnareableVisualizer
   - type: CombatMode
-    disarm: true
+    canDisarm: true
   - type: Climbing
   - type: Cuffable
   - type: Ensnareable
     sprite: Objects/Misc/ensnare.rsi
     state: icon
-  - type: CharacterInfo
   - type: AnimationPlayer
   - type: Buckle
   - type: MeleeWeapon
