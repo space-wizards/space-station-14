@@ -275,7 +275,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         // Play a sound to give instant feedback; same with playing the animations
         Audio.PlayPredicted(weapon.SwingSound, weapon.Owner, user);
 
-        DoLungeAnimation(user, weapon.Angle, attack.Coordinates.ToMap(EntityManager), weapon.Animation);
+        DoLungeAnimation(user, weapon.Angle, attack.Coordinates.ToMap(EntityManager), weapon.Range, weapon.Animation);
         weapon.Attacking = true;
         Dirty(weapon);
     }
