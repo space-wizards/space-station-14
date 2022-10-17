@@ -292,6 +292,4 @@ namespace Content.Client.TextScreen
 }
 
 // TODO: Fix copyright in textscreen.rsi and text.rsi
-// TODO: Prototype should not rotate.
-// TODO: Doublecheck transmitter component/signal component, do they have all keys they should have etc?
 // TODO: Check EmbeddedResource Include="TextScreen...

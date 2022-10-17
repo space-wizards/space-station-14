@@ -14,7 +14,7 @@ namespace Content.Client.TextScreen
         ///     The color of the text drawn.
         /// </summary>
         [DataField("color")]
-        public Color Color { get; set; } = Color.Red;
+        public Color Color { get; set; } = Color.FloralWhite;
 
         /// <summary>
         ///     Whether the screen is on.

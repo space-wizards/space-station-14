@@ -49,7 +49,7 @@ namespace Content.Server.MachineLinking.System
                 _ui.SetUiState(bui, new SignalTimerBoundUserInterfaceState(component.Label,
                     TimeSpan.FromSeconds(component.Delay).Minutes.ToString("D2"),
                     TimeSpan.FromSeconds(component.Delay).Seconds.ToString("D2"),
-                    component.CanEditText,
+                    component.CanEditLabel,
                     component.TriggerTime,
                     component.Activated,
                     _accessReader.IsAllowed(args.User, uid)));
@@ -67,7 +67,7 @@ namespace Content.Server.MachineLinking.System
                 _ui.SetUiState(bui, new SignalTimerBoundUserInterfaceState(signalTimer.Label,
                                 TimeSpan.FromSeconds(signalTimer.Delay).Minutes.ToString("D2"),
                                 TimeSpan.FromSeconds(signalTimer.Delay).Seconds.ToString("D2"),
-                                signalTimer.CanEditText,
+                                signalTimer.CanEditLabel,
                                 signalTimer.TriggerTime,
                                 signalTimer.Activated,
                                 null));

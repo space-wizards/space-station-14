@@ -27,9 +27,9 @@ namespace Content.Server.MachineLinking.Components
         /// <summary>
         ///     This shows the Label: text box in the UI.
         /// </summary>
-        [DataField("canEditText")]
+        [DataField("canEditLabel")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool CanEditText = true;
+        public bool CanEditLabel = true;
 
         /// <summary>
         ///     The label, used for TextScreen visuals currently.
