@@ -573,9 +573,10 @@ public sealed class EntitySpokeEvent : EntityEventArgs
     public readonly bool Whisper;
 
     /// <summary>
-    ///     If the entity was trying to speak into a radio, this was the channel they were trying to access.
+    ///     If the entity was trying to speak into a radio, this was the channel they were trying to access. If a radio
+    ///     message gets sent on this channel, this should be set to null to prevent duplicate messages.
     /// </summary>
-    public readonly RadioChannelPrototype? Channel;
+    public RadioChannelPrototype? Channel;
 
     public EntitySpokeEvent(EntityUid source, string message, RadioChannelPrototype? channel, bool whisper)
     {

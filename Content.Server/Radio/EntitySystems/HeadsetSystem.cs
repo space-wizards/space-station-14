@@ -1,8 +1,6 @@
 using Content.Server.Chat.Systems;
-using Content.Server.Radio;
 using Content.Server.Radio.Components;
 using Content.Shared.Examine;
-using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Radio;
 using Robust.Server.GameObjects;
@@ -34,6 +32,7 @@ public sealed class HeadsetSystem : EntitySystem
             && headset.Channels.Contains(args.Channel.ID))
         {
             _radio.SendRadioMessage(uid, args.Message, args.Channel);
+            args.Channel = null; // prevent duplicate messages from other listeners.
         }
     }
 
