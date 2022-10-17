@@ -23,7 +23,7 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
     [UISystemDependency] private readonly CharacterInfoSystem _characterInfo = default!;
 
     private CharacterWindow? _window;
-    private MenuButton? _characterButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.CharacterButton;
+    private MenuButton? CharacterButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.CharacterButton;
 
     public void OnStateEntered(GameplayState state)
     {
@@ -65,22 +65,22 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
 
     public void UnloadButton()
     {
-        if (_characterButton == null)
+        if (CharacterButton == null)
         {
             return;
         }
 
-        _characterButton.OnPressed -= CharacterButtonPressed;
+        CharacterButton.OnPressed -= CharacterButtonPressed;
     }
 
     public void LoadButton()
     {
-        if (_characterButton == null)
+        if (CharacterButton == null)
         {
             return;
         }
 
-        _characterButton.OnPressed += CharacterButtonPressed;
+        CharacterButton.OnPressed += CharacterButtonPressed;
 
         if (_window == null)
         {
@@ -91,8 +91,8 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
         _window.OnOpen += ActivateButton;
     }
 
-    private void DeactivateButton() => _characterButton!.Pressed = false;
-    private void ActivateButton() => _characterButton!.Pressed = true;
+    private void DeactivateButton() => CharacterButton!.Pressed = false;
+    private void ActivateButton() => CharacterButton!.Pressed = true;
 
     private void CharacterUpdated(CharacterData data)
     {
@@ -163,9 +163,9 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
         if (_window == null)
             return;
 
-        if (_characterButton != null)
+        if (CharacterButton != null)
         {
-            _characterButton.Pressed = !_window.IsOpen;
+            CharacterButton.Pressed = !_window.IsOpen;
         }
 
         if (_window.IsOpen)

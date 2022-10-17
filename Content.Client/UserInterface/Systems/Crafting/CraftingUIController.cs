@@ -11,7 +11,7 @@ namespace Content.Client.UserInterface.Systems.Crafting;
 public sealed class CraftingUIController : UIController, IOnStateChanged<GameplayState>
 {
     private ConstructionMenuPresenter? _presenter;
-    private MenuButton? _craftingButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.CraftingButton;
+    private MenuButton? CraftingButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.CraftingButton;
 
     public void OnStateEntered(GameplayState state)
     {
@@ -30,7 +30,7 @@ public sealed class CraftingUIController : UIController, IOnStateChanged<Gamepla
 
     internal void UnloadButton(ConstructionMenuPresenter? presenter = null)
     {
-        if (_craftingButton == null)
+        if (CraftingButton == null)
         {
             return;
         }
@@ -44,17 +44,17 @@ public sealed class CraftingUIController : UIController, IOnStateChanged<Gamepla
             }
         }
 
-        _craftingButton.Pressed = false;
-        _craftingButton.OnToggled -= presenter.OnHudCraftingButtonToggled;
+        CraftingButton.Pressed = false;
+        CraftingButton.OnToggled -= presenter.OnHudCraftingButtonToggled;
     }
 
     public void LoadButton()
     {
-        if (_craftingButton == null || _presenter == null)
+        if (CraftingButton == null || _presenter == null)
         {
             return;
         }
 
-        _craftingButton.OnToggled += _presenter.OnHudCraftingButtonToggled;
+        CraftingButton.OnToggled += _presenter.OnHudCraftingButtonToggled;
     }
 }

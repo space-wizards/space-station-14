@@ -31,7 +31,7 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
 
     private StrippingWindow? _strippingWindow;
     private ItemSlotButtonContainer? _inventoryHotbar;
-    private MenuButton? _inventoryButton => UIManager.ActiveScreen?.GetWidget<MenuBar.Widgets.GameTopMenuBar>()?.InventoryButton;
+    private MenuButton? InventoryButton => UIManager.ActiveScreen?.GetWidget<MenuBar.Widgets.GameTopMenuBar>()?.InventoryButton;
 
     public void OnStateEntered(GameplayState state)
     {
@@ -63,22 +63,22 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
 
     public void UnloadButton()
     {
-        if (_inventoryButton == null)
+        if (InventoryButton == null)
         {
             return;
         }
 
-        _inventoryButton.OnPressed -= InventoryButtonPressed;
+        InventoryButton.OnPressed -= InventoryButtonPressed;
     }
 
     public void LoadButton()
     {
-        if (_inventoryButton == null)
+        if (InventoryButton == null)
         {
             return;
         }
 
-        _inventoryButton.OnPressed += InventoryButtonPressed;
+        InventoryButton.OnPressed += InventoryButtonPressed;
     }
 
     private SlotButton CreateSlotButton(SlotData data)
@@ -177,14 +177,14 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
         if (_inventoryHotbar.Visible)
         {
             _inventoryHotbar.Visible = false;
-            if (_inventoryButton != null)
-                _inventoryButton.Pressed = false;
+            if (InventoryButton != null)
+                InventoryButton.Pressed = false;
         }
         else
         {
             _inventoryHotbar.Visible = true;
-            if (_inventoryButton != null)
-                _inventoryButton.Pressed = true;
+            if (InventoryButton != null)
+                InventoryButton.Pressed = true;
         }
     }
 

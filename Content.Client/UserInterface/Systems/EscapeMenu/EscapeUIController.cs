@@ -26,7 +26,7 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
 
     private Options.UI.EscapeMenu? _escapeWindow;
 
-    private MenuButton? EscapeButton => UIManager.GetActiveUIWidget<MenuBar.Widgets.GameTopMenuBar>().EscapeButton;
+    private MenuButton? EscapeButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.EscapeButton;
 
     public void UnloadButton()
     {

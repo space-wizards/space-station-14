@@ -29,7 +29,7 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IClyde _clyde = default!;
     private BwoinkSystem? _bwoinkSystem;
-    private MenuButton? _ahelpButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.AHelpButton;
+    private MenuButton? AhelpButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.AHelpButton;
     private IAHelpUIHandler? _uiHelper;
 
     public void OnStateEntered(GameplayState state)
@@ -45,22 +45,22 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
 
     public void UnloadButton()
     {
-        if (_ahelpButton == null)
+        if (AhelpButton == null)
         {
             return;
         }
 
-        _ahelpButton.OnPressed -= AHelpButtonPressed;
+        AhelpButton.OnPressed -= AHelpButtonPressed;
     }
 
     public void LoadButton()
     {
-        if (_ahelpButton == null)
+        if (AhelpButton == null)
         {
             return;
         }
 
-        _ahelpButton.OnPressed += AHelpButtonPressed;
+        AhelpButton.OnPressed += AHelpButtonPressed;
     }
 
     private void OnAdminStatusUpdated()
@@ -99,10 +99,10 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
 
     private void SetAHelpPressed(bool pressed)
     {
-        if (_ahelpButton == null || _ahelpButton.Pressed == pressed)
+        if (AhelpButton == null || AhelpButton.Pressed == pressed)
             return;
-        _ahelpButton.StyleClasses.Remove(MenuButton.StyleClassRedTopButton);
-        _ahelpButton.Pressed = pressed;
+        AhelpButton.StyleClasses.Remove(MenuButton.StyleClassRedTopButton);
+        AhelpButton.Pressed = pressed;
     }
 
     private void RecievedBwoink(object? sender, SharedBwoinkSystem.BwoinkTextMessage message)
@@ -122,7 +122,7 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
         EnsureUIHelper();
         if (!_uiHelper!.IsOpen)
         {
-            _ahelpButton?.StyleClasses.Add(MenuButton.StyleClassRedTopButton);
+            AhelpButton?.StyleClasses.Add(MenuButton.StyleClassRedTopButton);
         }
         _uiHelper!.Receive(message);
     }

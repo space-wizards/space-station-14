@@ -43,7 +43,7 @@ public sealed class SandboxUIController : UIController, IOnStateChanged<Gameplay
     private TileSpawningUIController TileSpawningController => UIManager.GetUIController<TileSpawningUIController>();
     private DecalPlacerUIController DecalPlacerController => UIManager.GetUIController<DecalPlacerUIController>();
 
-    private MenuButton? _sandboxButton => UIManager.GetActiveUIWidget<MenuBar.Widgets.GameTopMenuBar>().SandboxButton;
+    private MenuButton? SandboxButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.SandboxButton;
 
     public void OnStateEntered(GameplayState state)
     {
@@ -68,22 +68,22 @@ public sealed class SandboxUIController : UIController, IOnStateChanged<Gameplay
 
     public void UnloadButton()
     {
-        if (_sandboxButton == null)
+        if (SandboxButton == null)
         {
             return;
         }
 
-        _sandboxButton.OnPressed -= SandboxButtonPressed;
+        SandboxButton.OnPressed -= SandboxButtonPressed;
     }
 
     public void LoadButton()
     {
-        if (_sandboxButton == null)
+        if (SandboxButton == null)
         {
             return;
         }
 
-        _sandboxButton.OnPressed += SandboxButtonPressed;
+        SandboxButton.OnPressed += SandboxButtonPressed;
     }
 
     private void EnsureWindow()
@@ -91,8 +91,8 @@ public sealed class SandboxUIController : UIController, IOnStateChanged<Gameplay
         if(_window is { Disposed: false })
             return;
         _window = UIManager.CreateWindow<SandboxWindow>();
-        _window.OnOpen += () => { _sandboxButton!.Pressed = true; };
-        _window.OnClose += () => { _sandboxButton!.Pressed = false; };
+        _window.OnOpen += () => { SandboxButton!.Pressed = true; };
+        _window.OnClose += () => { SandboxButton!.Pressed = false; };
         _window.ToggleLightButton.Pressed = !_light.Enabled;
         _window.ToggleFovButton.Pressed = !_eye.CurrentEye.DrawFov;
         _window.ToggleShadowsButton.Pressed = !_light.DrawShadows;
@@ -118,10 +118,10 @@ public sealed class SandboxUIController : UIController, IOnStateChanged<Gameplay
 
     private void CheckSandboxVisibility()
     {
-        if (_sandboxButton == null)
+        if (SandboxButton == null)
             return;
 
-        _sandboxButton.Visible = _sandbox.SandboxAllowed;
+        SandboxButton.Visible = _sandbox.SandboxAllowed;
     }
 
     public void OnStateExited(GameplayState state)
