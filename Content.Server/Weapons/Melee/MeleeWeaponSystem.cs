@@ -12,6 +12,7 @@ using Content.Server.Contests;
 using Content.Server.Damage.Systems;
 using Content.Server.Examine;
 using Content.Server.Hands.Components;
+using Content.Server.Movement.Systems;
 using Content.Server.Weapons.Melee.Components;
 using Content.Server.Weapons.Melee.Events;
 using Content.Shared.CombatMode;
@@ -24,11 +25,13 @@ using Content.Shared.Physics;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
+using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
+using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -43,6 +46,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
     [Dependency] private readonly ContestsSystem _contests = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly ExamineSystem _examine = default!;
+    [Dependency] private readonly LagCompensationSystem _lag = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SolutionContainerSystem _solutions = default!;
@@ -106,9 +110,9 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         PopupSystem.PopupEntity(message, uid.Value, Filter.Pvs(uid.Value, entityManager: EntityManager).RemoveWhereAttachedEntity(e => e == user));
     }
 
-    protected override void DoLightAttack(EntityUid user, LightAttackEvent ev, MeleeWeaponComponent component)
+    protected override void DoLightAttack(EntityUid user, LightAttackEvent ev, MeleeWeaponComponent component, ICommonSession? session)
     {
-        base.DoLightAttack(user, ev, component);
+        base.DoLightAttack(user, ev, component, session);
 
         // Can't attack yourself
         // Not in LOS.
@@ -122,7 +126,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
             return;
         }
 
-        if (!_interaction.InRangeUnobstructed(user, ev.Target.Value, component.Range))
+        if (!InRange(user, ev.Target.Value, component.Range, session))
             return;
 
         var damage = component.Damage * GetModifier(component, true);
@@ -191,9 +195,9 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         }
     }
 
-    protected override void DoHeavyAttack(EntityUid user, HeavyAttackEvent ev, MeleeWeaponComponent component)
+    protected override void DoHeavyAttack(EntityUid user, HeavyAttackEvent ev, MeleeWeaponComponent component, ICommonSession? session)
     {
-        base.DoHeavyAttack(user, ev, component);
+        base.DoHeavyAttack(user, ev, component, session);
 
         // TODO: This is copy-paste as fuck with DoPreciseAttack
         if (!TryComp<TransformComponent>(user, out var userXform))
@@ -303,9 +307,9 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         }
     }
 
-    protected override bool DoDisarm(EntityUid user, DisarmAttackEvent ev, MeleeWeaponComponent component)
+    protected override bool DoDisarm(EntityUid user, DisarmAttackEvent ev, MeleeWeaponComponent component, ICommonSession? session)
     {
-        if (!base.DoDisarm(user, ev, component))
+        if (!base.DoDisarm(user, ev, component, session))
             return false;
 
         if (!TryComp<CombatModeComponent>(user, out var combatMode) ||
@@ -322,7 +326,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
             return false;
         }
 
-        if (!_interaction.InRangeUnobstructed(user, ev.Target.Value, component.Range + 0.1f))
+        if (!InRange(user, ev.Target.Value, component.Range, session))
         {
             return false;
         }
@@ -375,6 +379,25 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
         RaiseNetworkEvent(new DamageEffectEvent(Color.Aqua, new List<EntityUid>() {target}));
         return true;
+    }
+
+    private bool InRange(EntityUid user, EntityUid target, float range, ICommonSession? session)
+    {
+        EntityCoordinates targetCoordinates;
+        Angle targetLocalAngle;
+
+        if (session is IPlayerSession pSession)
+        {
+            (targetCoordinates, targetLocalAngle) = _lag.GetCoordinatesAngle(target, pSession);
+        }
+        else
+        {
+            var xform = Transform(target);
+            targetCoordinates = xform.Coordinates;
+            targetLocalAngle = xform.LocalRotation;
+        }
+
+        return _interaction.InRangeUnobstructed(user, target, targetCoordinates, targetLocalAngle, range);
     }
 
     private float CalculateDisarmChance(EntityUid disarmer, EntityUid disarmed, EntityUid? inTargetHand, SharedCombatModeComponent disarmerComp)

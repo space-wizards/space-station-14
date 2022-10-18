@@ -41,8 +41,10 @@
       - FullTileMask
       layer:
       - AirlockLayer
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronics ]
   - type: Door
-    board: DoorElectronics
     crushDamage:
       types:
         Blunt: 15
@@ -97,6 +99,8 @@
   - type: Construction
     graph: Airlock
     node: airlock
+    containers:
+    - board
   - type: IconSmooth
     key: walls
     mode: NoSprite

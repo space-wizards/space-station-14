@@ -18,6 +18,7 @@ namespace Content.Shared.Stacks
         [Dependency] protected readonly SharedHandsSystem HandsSystem = default!;
         [Dependency] protected readonly SharedTransformSystem Xform = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IViewVariablesManager _vvm = default!;
 
         public override void Initialize()
         {
@@ -28,6 +29,17 @@ namespace Content.Shared.Stacks
             SubscribeLocalEvent<SharedStackComponent, ComponentStartup>(OnStackStarted);
             SubscribeLocalEvent<SharedStackComponent, ExaminedEvent>(OnStackExamined);
             SubscribeLocalEvent<SharedStackComponent, InteractUsingEvent>(OnStackInteractUsing);
+
+            _vvm.GetTypeHandler<SharedStackComponent>()
+                .AddPath(nameof(SharedStackComponent.Count), (_, comp) => comp.Count, SetCount);
+        }
+
+        public override void Shutdown()
+        {
+            base.Shutdown();
+
+            _vvm.GetTypeHandler<SharedStackComponent>()
+                .RemovePath(nameof(SharedStackComponent.Count));
         }
 
         private void OnStackInteractUsing(EntityUid uid, SharedStackComponent stack, InteractUsingEvent args)

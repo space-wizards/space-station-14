@@ -113,6 +113,12 @@ namespace Content.Server.Doors.Components
         }
 
         /// <summary>
+        /// True if the bolt wire is cut, which will force the airlock to always be bolted as long as it has power.
+        /// </summary>
+        [ViewVariables]
+        public bool BoltWireCut;
+
+        /// <summary>
         /// Whether the airlock should auto close. This value is reset every time the airlock closes.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]

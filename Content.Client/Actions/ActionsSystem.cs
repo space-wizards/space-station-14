@@ -183,8 +183,7 @@ namespace Content.Client.Actions
             if (uid != _playerManager.LocalPlayer?.ControlledEntity)
                 return;
 
-            LinkActions?.Invoke(component);
-            PlayerActions = component;
+            LinkAllActions(component);
         }
 
         private void OnPlayerDetached(EntityUid uid, ActionsComponent component, PlayerDetachedEvent? args = null)
@@ -192,8 +191,25 @@ namespace Content.Client.Actions
             if (uid != _playerManager.LocalPlayer?.ControlledEntity)
                 return;
 
+            UnlinkAllActions();
+        }
+
+        public void UnlinkAllActions()
+        {
             UnlinkActions?.Invoke();
             PlayerActions = null;
+        }
+
+        public void LinkAllActions(ActionsComponent? actions = null)
+        {
+             var player = _playerManager.LocalPlayer?.ControlledEntity;
+             if (player == null || !Resolve(player.Value, ref actions))
+             {
+                 return;
+             }
+
+             LinkActions?.Invoke(actions);
+             PlayerActions = actions;
         }
 
         public override void Shutdown()

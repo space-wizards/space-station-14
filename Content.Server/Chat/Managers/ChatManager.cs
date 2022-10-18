@@ -79,8 +79,8 @@ namespace Content.Server.Chat.Managers
 
         public void DispatchServerAnnouncement(string message, Color? colorOverride = null)
         {
-            var messageWrap = Loc.GetString("chat-manager-server-wrap-message");
-            ChatMessageToAll(ChatChannel.Server, message, messageWrap, colorOverride);
+            var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", FormattedMessage.EscapeText(message)));
+            ChatMessageToAll(ChatChannel.Server, message, wrappedMessage, colorOverride);
             Logger.InfoS("SERVER", message);
 
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Server announcement: {message}");
@@ -88,8 +88,8 @@ namespace Content.Server.Chat.Managers
 
         public void DispatchServerMessage(IPlayerSession player, string message)
         {
-            var messageWrap = Loc.GetString("chat-manager-server-wrap-message");
-            ChatMessageToOne(ChatChannel.Server, message, messageWrap, default, false, player.ConnectedClient);
+            var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", FormattedMessage.EscapeText(message)));
+            ChatMessageToOne(ChatChannel.Server, message, wrappedMessage, default, false, player.ConnectedClient);
 
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Server message to {player:Player}: {message}");
         }
@@ -97,12 +97,11 @@ namespace Content.Server.Chat.Managers
         public void SendAdminAnnouncement(string message)
         {
             var clients = _adminManager.ActiveAdmins.Select(p => p.ConnectedClient);
-            message = FormattedMessage.EscapeText(message);
 
-            var messageWrap = Loc.GetString("chat-manager-send-admin-announcement-wrap-message",
-                ("adminChannelName", Loc.GetString("chat-manager-admin-channel-name")));
+            var wrappedMessage = Loc.GetString("chat-manager-send-admin-announcement-wrap-message",
+                ("adminChannelName", Loc.GetString("chat-manager-admin-channel-name")), ("message", FormattedMessage.EscapeText(message)));
 
-            ChatMessageToMany(ChatChannel.Admin, message, messageWrap, default, false, clients.ToList());
+            ChatMessageToMany(ChatChannel.Admin, message, wrappedMessage, default, false, clients.ToList());
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Admin announcement from {message}: {message}");
         }
 
@@ -112,9 +111,8 @@ namespace Content.Server.Chat.Managers
             {
                 return;
             }
-            message = FormattedMessage.EscapeText(message);
-            var messageWrap = Loc.GetString("chat-manager-send-hook-ooc-wrap-message", ("senderName", sender));
-            ChatMessageToAll(ChatChannel.OOC, message, messageWrap);
+            var wrappedMessage = Loc.GetString("chat-manager-send-hook-ooc-wrap-message", ("senderName", sender), ("message", FormattedMessage.EscapeText(message)));
+            ChatMessageToAll(ChatChannel.OOC, message, wrappedMessage);
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Hook OOC from {sender}: {message}");
         }
 
@@ -136,8 +134,6 @@ namespace Content.Server.Chat.Managers
                 DispatchServerMessage(player, Loc.GetString("chat-manager-max-message-length-exceeded-message", ("limit", MaxMessageLength)));
                 return;
             }
-
-            message = FormattedMessage.EscapeText(message);
 
             switch (type)
             {
@@ -169,7 +165,7 @@ namespace Content.Server.Chat.Managers
             }
 
             Color? colorOverride = null;
-            var messageWrap = Loc.GetString("chat-manager-send-ooc-wrap-message", ("playerName",player.Name));
+            var wrappedMessage = Loc.GetString("chat-manager-send-ooc-wrap-message", ("playerName",player.Name), ("message", FormattedMessage.EscapeText(message)));
             if (_adminManager.HasAdminFlag(player, AdminFlags.Admin))
             {
                 var prefs = _preferencesManager.GetPreferences(player.UserId);
@@ -178,7 +174,7 @@ namespace Content.Server.Chat.Managers
             if (player.ConnectedClient.UserData.PatronTier is { } patron &&
                      PatronOocColors.TryGetValue(patron, out var patronColor))
             {
-                messageWrap = Loc.GetString("chat-manager-send-ooc-patron-wrap-message", ("patronColor", patronColor),("playerName", player.Name));
+                wrappedMessage = Loc.GetString("chat-manager-send-ooc-patron-wrap-message", ("patronColor", patronColor),("playerName", player.Name), ("message", FormattedMessage.EscapeText(message)));
             }
 
             var sponsorData = _sponsorsManager.GetSponsorInfo(player.UserId);
@@ -188,7 +184,7 @@ namespace Content.Server.Chat.Managers
             }
 
             //TODO: player.Name color, this will need to change the structure of the MsgChatMessage
-            ChatMessageToAll(ChatChannel.OOC, message, messageWrap, colorOverride);
+            ChatMessageToAll(ChatChannel.OOC, message, wrappedMessage, colorOverride);
             _mommiLink.SendOOCMessage(player.Name, message);
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"OOC from {player:Player}: {message}");
         }
@@ -202,10 +198,10 @@ namespace Content.Server.Chat.Managers
             }
 
             var clients = _adminManager.ActiveAdmins.Select(p => p.ConnectedClient);
-            var messageWrap = Loc.GetString("chat-manager-send-admin-chat-wrap-message",
+            var wrappedMessage = Loc.GetString("chat-manager-send-admin-chat-wrap-message",
                                             ("adminChannelName", Loc.GetString("chat-manager-admin-channel-name")),
-                                            ("playerName", player.Name));
-            ChatMessageToMany(ChatChannel.Admin, message, messageWrap, default, false, clients.ToList());
+                                            ("playerName", player.Name), ("message", FormattedMessage.EscapeText(message)));
+            ChatMessageToMany(ChatChannel.Admin, message, wrappedMessage, default, false, clients.ToList());
 
             _adminLogger.Add(LogType.Chat, $"Admin chat from {player:Player}: {message}");
         }
@@ -214,12 +210,12 @@ namespace Content.Server.Chat.Managers
 
         #region Utility
 
-        public void ChatMessageToOne(ChatChannel channel, string message, string messageWrap, EntityUid source, bool hideChat, INetChannel client, Color? colorOverride = null)
+        public void ChatMessageToOne(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, INetChannel client, Color? colorOverride = null)
         {
             var msg = new MsgChatMessage();
             msg.Channel = channel;
             msg.Message = message;
-            msg.MessageWrap = messageWrap;
+            msg.WrappedMessage = wrappedMessage;
             msg.SenderEntity = source;
             msg.HideChat = hideChat;
             if (colorOverride != null)
@@ -229,12 +225,12 @@ namespace Content.Server.Chat.Managers
             _netManager.ServerSendMessage(msg, client);
         }
 
-        public void ChatMessageToMany(ChatChannel channel, string message, string messageWrap, EntityUid source, bool hideChat, List<INetChannel> clients, Color? colorOverride = null)
+        public void ChatMessageToMany(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, List<INetChannel> clients, Color? colorOverride = null)
         {
             var msg = new MsgChatMessage();
             msg.Channel = channel;
             msg.Message = message;
-            msg.MessageWrap = messageWrap;
+            msg.WrappedMessage = wrappedMessage;
             msg.SenderEntity = source;
             msg.HideChat = hideChat;
             if (colorOverride != null)
@@ -244,7 +240,7 @@ namespace Content.Server.Chat.Managers
             _netManager.ServerSendToMany(msg, clients);
         }
 
-        public void ChatMessageToManyFiltered(Filter filter, ChatChannel channel, string message, string messageWrap, EntityUid source,
+        public void ChatMessageToManyFiltered(Filter filter, ChatChannel channel, string message, string wrappedMessage, EntityUid source,
             bool hideChat, Color? colorOverride = null)
         {
             if (!filter.Recipients.Any()) return;
@@ -255,15 +251,15 @@ namespace Content.Server.Chat.Managers
                 clients.Add(recipient.ConnectedClient);
             }
 
-            ChatMessageToMany(channel, message, messageWrap, source, hideChat, clients, colorOverride);
+            ChatMessageToMany(channel, message, wrappedMessage, source, hideChat, clients, colorOverride);
         }
 
-        public void ChatMessageToAll(ChatChannel channel, string message, string messageWrap, Color? colorOverride = null)
+        public void ChatMessageToAll(ChatChannel channel, string message, string wrappedMessage, Color? colorOverride = null)
         {
             var msg = new MsgChatMessage();
             msg.Channel = channel;
             msg.Message = message;
-            msg.MessageWrap = messageWrap;
+            msg.WrappedMessage = wrappedMessage;
             if (colorOverride != null)
             {
                 msg.MessageColorOverride = colorOverride.Value;

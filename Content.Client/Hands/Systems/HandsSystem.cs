@@ -130,6 +130,16 @@ namespace Content.Client.Hands.Systems
         }
         #endregion
 
+        public void ReloadHandButtons()
+        {
+            if (!TryGetPlayerHands(out var hands))
+            {
+                return;
+            }
+
+            OnPlayerHandsAdded?.Invoke(hands);
+        }
+
         public override void DoDrop(EntityUid uid, Hand hand, bool doDropInteraction = true, SharedHandsComponent? hands = null)
         {
             base.DoDrop(uid, hand, doDropInteraction, hands);

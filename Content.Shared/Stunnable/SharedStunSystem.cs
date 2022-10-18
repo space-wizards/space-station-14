@@ -25,6 +25,7 @@ namespace Content.Shared.Stunnable
         [Dependency] private readonly StandingStateSystem _standingStateSystem = default!;
         [Dependency] private readonly StatusEffectsSystem _statusEffectSystem = default!;
         [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifierSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
 
         /// <summary>
         /// Friction modifier for knocked down players.
@@ -221,9 +222,7 @@ namespace Content.Shared.Stunnable
             knocked.HelpTimer = knocked.HelpInterval/2f;
 
             _statusEffectSystem.TryRemoveTime(uid, "KnockedDown", TimeSpan.FromSeconds(knocked.HelpInterval));
-
-            SoundSystem.Play(knocked.StunAttemptSound.GetSound(), Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.05f));
-
+            _audio.PlayPredicted(knocked.StunAttemptSound, uid, args.User);
             Dirty(knocked);
 
             args.Handled = true;
