@@ -29,7 +29,6 @@ namespace Content.Client.Lobby.UI
             RobustXamlLoader.Load(this);
             SetAnchorPreset(MainContainer, LayoutPreset.Wide);
             SetAnchorPreset(Background, LayoutPreset.Wide);
-            SetAnchorPreset(Layout, LayoutPreset.Wide);
 
             LeaveButton.OnPressed += _ => _consoleHost.ExecuteCommand("disconnect");
             OptionsButton.OnPressed += _ => _userInterfaceManager.GetUIController<OptionsUIController>().ToggleWindow();
