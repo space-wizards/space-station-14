@@ -14,6 +14,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitSafari
     back: ClothingBackpackFilled
+    head: ClothingHeadHatsSafarihat
     shoes: ClothingShoesColorWhite
     id: ZookeeperPDA
     ears: ClothingHeadsetService
