@@ -70,7 +70,7 @@ public sealed class EntityStorageComponent : Component, IGasMixtureHolder
     /// <summary>
     /// Whether or not the container is sealed and traps air inside of it
     /// </summary>
-    [DataField("airTight"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("airtight"), ViewVariables(VVAccess.ReadWrite)]
     public bool AirTight = true;
 
     [DataField("open")]
