@@ -11,15 +11,21 @@ public sealed class SkeletonAccentSystem : EntitySystem
     private static readonly Dictionary<string, string> DirectReplacements = new()
     {
         { "fuck you", "I've got a BONE to pick with you" },
-        { "fuck", "rattle rattle" },
-        { "shit", "rattle rattle" },
+        { "fucked", "boned"},
+        { "fuck", "RATTLE RATTLE" },
+        { "fck", "RATTLE RATTLE" },
+        { "shit", "RATTLE RATTLE" }, // Capitalize RATTLE RATTLE regardless of original message case.
         { "definitely", "make no bones about it" },
         { "absolutely", "make no bones about it" },
         { "lonely", "bonely"},
         { "afraid", "rattled"},
         { "scared", "rattled"},
         { "spooked", "rattled"},
-        { "shocked", "rattled"}
+        { "shocked", "rattled"},
+        { "killed", "skeletonized"},
+        { "humorous", "humerus"},
+        { "to be a", "tibia"},
+        { "under", "ulna"}
     };
 
     public override void Initialize()
@@ -32,20 +38,26 @@ public sealed class SkeletonAccentSystem : EntitySystem
     public string Accentuate(string message, SkeletonAccentComponent component)
     {
         // Order:
-        // Do replacements first
+        // Do character manipulations first
+        // Then direct word/phrase replacements
         // Then prefix/suffix
 
         var msg = message;
 
+        // Character manipulations:
+        // At the start of words, any non-vowel + "one" becomes "bone", e.g. tone -> bone ; lonely -> bonely; clone -> clone (remains unchanged).
+        msg = Regex.Replace(msg, @"(?<!\w)[^aeiou]one", "bone", RegexOptions.IgnoreCase);
+
+        // Direct word/phrase replacements:
         foreach (var (first, replace) in DirectReplacements)
         {
             msg = Regex.Replace(msg, $@"(?<!\w){first}(?!\w)", replace, RegexOptions.IgnoreCase);
         }
 
-        // Suffix
+        // Suffix:
         if (_random.Prob(component.ackChance))
         {
-            msg += (" " + Loc.GetString("skeleton-suffix")); // ACK ACK!
+            msg += (" " + Loc.GetString("skeleton-suffix")); // e.g. "We only want to socialize. ACK ACK!"
         }
         return msg;
     }
