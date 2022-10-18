@@ -438,11 +438,11 @@ public sealed partial class CargoSystem
             {
                 orders.RemoveSwap(i);
                 orderDatabase.Orders.Remove(order.OrderNumber);
-                i--;
             }
             else
             {
                 orderDatabase.Orders[order.OrderNumber] = order;
+                i--;
             }
         }
     }
