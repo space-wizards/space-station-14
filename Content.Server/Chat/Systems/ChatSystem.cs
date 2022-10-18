@@ -110,7 +110,7 @@ public sealed partial class ChatSystem : SharedChatSystem
 
     // ReSharper disable once InconsistentNaming
     public void TrySendInGameICMessage(EntityUid source, string message, InGameICChatType desiredType, bool hideChat,
-        IConsoleShell? shell = null, IPlayerSession? player = null)
+        IConsoleShell? shell = null, IPlayerSession? player = null, string? nameOverride = null)
     {
         if (HasComp<GhostComponent>(source))
         {
@@ -147,13 +147,13 @@ public sealed partial class ChatSystem : SharedChatSystem
         switch (desiredType)
         {
             case InGameICChatType.Speak:
-                SendEntitySpeak(source, message, hideChat);
+                SendEntitySpeak(source, message, hideChat, nameOverride);
                 break;
             case InGameICChatType.Whisper:
-                SendEntityWhisper(source, message, hideChat);
+                SendEntityWhisper(source, message, hideChat, nameOverride:nameOverride);
                 break;
             case InGameICChatType.Emote:
-                SendEntityEmote(source, message, hideChat);
+                SendEntityEmote(source, message, hideChat, nameOverride);
                 break;
         }
     }
@@ -247,7 +247,7 @@ public sealed partial class ChatSystem : SharedChatSystem
 
     #region Private API
 
-    private void SendEntitySpeak(EntityUid source, string originalMessage, bool hideChat = false)
+    private void SendEntitySpeak(EntityUid source, string originalMessage, bool hideChat = false, string? nameOverride = null)
     {
         if (!_actionBlocker.CanSpeak(source))
             return;
@@ -260,15 +260,25 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         if (channel != null)
         {
-            SendEntityWhisper(source, message, hideChat, channel);
+            SendEntityWhisper(source, message, hideChat, channel, nameOverride);
             return;
         }
 
-        var nameEv = new TransformSpeakerNameEvent(source, Name(source));
-        RaiseLocalEvent(source, nameEv);
+        // get the entity's apparent name (if no override provided).
+        string name;
+        if (nameOverride != null)
+        {
+            name = nameOverride;
+        }
+        else
+        {
+            var nameEv = new TransformSpeakerNameEvent(source, Name(source));
+            RaiseLocalEvent(source, nameEv);
+            name = nameEv.Name;
+        }
 
         var messageWrap = Loc.GetString("chat-manager-entity-say-wrap-message",
-            ("entityName", nameEv.Name));
+            ("entityName", name));
 
         SendInVoiceRange(ChatChannel.Local, message, messageWrap, source, hideChat);
 
@@ -285,7 +295,7 @@ public sealed partial class ChatSystem : SharedChatSystem
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Say from {ToPrettyString(source):user}, original: {originalMessage}, transformed: {message}.");
     }
 
-    private void SendEntityWhisper(EntityUid source, string originalMessage, bool hideChat = false, RadioChannelPrototype? channel = null)
+    private void SendEntityWhisper(EntityUid source, string originalMessage, bool hideChat = false, RadioChannelPrototype? channel = null, string? nameOverride = null)
     {
         if (!_actionBlocker.CanSpeak(source))
             return;
@@ -299,11 +309,21 @@ public sealed partial class ChatSystem : SharedChatSystem
         var transformSource = Transform(source);
         var sourceCoords = transformSource.Coordinates;
 
-        var nameEv = new TransformSpeakerNameEvent(source, Name(source));
-        RaiseLocalEvent(source, nameEv);
+        // get the entity's apparent name (if no override provided).
+        string name;
+        if (nameOverride != null)
+        {
+            name = nameOverride;
+        }
+        else
+        {
+            var nameEv = new TransformSpeakerNameEvent(source, Name(source));
+            RaiseLocalEvent(source, nameEv);
+            name = nameEv.Name;
+        }
 
         var messageWrap = Loc.GetString("chat-manager-entity-whisper-wrap-message",
-            ("entityName", nameEv.Name));
+            ("entityName", name));
 
         var xforms = GetEntityQuery<TransformComponent>();
         var ghosts = GetEntityQuery<GhostComponent>();
@@ -339,13 +359,16 @@ public sealed partial class ChatSystem : SharedChatSystem
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Whisper from {ToPrettyString(source):user}, original: {originalMessage}, transformed: {message}.");
     }
 
-    private void SendEntityEmote(EntityUid source, string action, bool hideChat)
+    private void SendEntityEmote(EntityUid source, string action, bool hideChat, string? nameOverride = null)
     {
         if (!_actionBlocker.CanEmote(source)) return;
 
+        // get the entity's apparent name (if no override provided).
+        string name = nameOverride ?? Identity.Name(source, EntityManager);
+
         // Emotes use Identity.Name, since it doesn't actually involve your voice at all.
         var messageWrap = Loc.GetString("chat-manager-entity-me-wrap-message",
-            ("entityName", Identity.Name(source, EntityManager)));
+            ("entityName", name));
 
         SendInVoiceRange(ChatChannel.Emotes, action, messageWrap, source, hideChat);
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Emote from {ToPrettyString(source):user}: {action}");

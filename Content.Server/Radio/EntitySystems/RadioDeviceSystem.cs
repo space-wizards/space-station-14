@@ -21,6 +21,9 @@ public sealed class RadioDeviceSystem : EntitySystem
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly RadioSystem _radio = default!;
 
+    // Used to prevent a shitter from using a bunch of radios to spam chat.
+    private HashSet<(string, EntityUid)> _recentlySent = new();
+
     public override void Initialize()
     {
         base.Initialize();
@@ -33,6 +36,13 @@ public sealed class RadioDeviceSystem : EntitySystem
         SubscribeLocalEvent<RadioSpeakerComponent, ActivateInWorldEvent>(OnActivateSpeaker);
         SubscribeLocalEvent<RadioSpeakerComponent, RadioReceiveEvent>(OnReceiveRadio);
     }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+        _recentlySent.Clear();
+    }
+
 
     #region Component Init
     private void OnMicrophoneInit(EntityUid uid, RadioMicrophoneComponent component, ComponentInit args)
@@ -120,11 +130,18 @@ public sealed class RadioDeviceSystem : EntitySystem
         if (HasComp<RadioSpeakerComponent>(args.Source))
             return; // no feedback loops please.
 
-        _radio.SendRadioMessage(args.Source, args.Message, _protoMan.Index<RadioChannelPrototype>(component.BroadcastChannel));
+        if (_recentlySent.Add((args.Message, args.Source)))
+            _radio.SendRadioMessage(args.Source, args.Message, _protoMan.Index<RadioChannelPrototype>(component.BroadcastChannel));
     }
 
     private void OnReceiveRadio(EntityUid uid, RadioSpeakerComponent component, RadioReceiveEvent args)
     {
-        _chat.TrySendInGameICMessage(uid, args.Message, InGameICChatType.Speak, false);
+        var nameEv = new TransformSpeakerNameEvent(args.Source, Name(args.Source));
+        RaiseLocalEvent(args.Source, nameEv);
+
+        var name = Loc.GetString("speech-name-relay", ("speaker", Name(uid)),
+            ("originalName", nameEv.Name)); ;
+
+        _chat.TrySendInGameICMessage(uid, args.Message, InGameICChatType.Speak, false, nameOverride: name);
     }
 }
