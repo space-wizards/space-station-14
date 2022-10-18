@@ -6,5 +6,17 @@ namespace Content.Server.Radiation.Components;
 [RegisterComponent]
 public sealed class GeigerComponent : SharedGeigerComponent
 {
+    [DataField("sounds")]
+    public Dictionary<GeigerDangerLevel, SoundSpecifier> Sounds = new()
+    {
+        {GeigerDangerLevel.Low, new SoundPathSpecifier("/Audio/Items/Geiger/low.ogg")},
+        {GeigerDangerLevel.Med, new SoundPathSpecifier("/Audio/Items/Geiger/med.ogg")},
+        {GeigerDangerLevel.High, new SoundPathSpecifier("/Audio/Items/Geiger/high.ogg")},
+        {GeigerDangerLevel.Extreme, new SoundPathSpecifier("/Audio/Items/Geiger/ext.ogg")}
+    };
 
+    [ViewVariables(VVAccess.ReadOnly)]
+    public EntityUid? User;
+
+    public IPlayingAudioStream? Stream;
 }

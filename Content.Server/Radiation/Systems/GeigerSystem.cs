@@ -61,7 +61,7 @@ public sealed class GeigerSystem : SharedGeigerSystem
         }
     }
 
-    private void SetCurrentRadiation(EntityUid uid, SharedGeigerComponent component, float rads)
+    private void SetCurrentRadiation(EntityUid uid, GeigerComponent component, float rads)
     {
         // check that it's approx equal
         if (MathF.Abs(component.CurrentRadiation - rads) < ApproxEqual)
@@ -82,7 +82,7 @@ public sealed class GeigerSystem : SharedGeigerSystem
         Dirty(component);
     }
 
-    private void SetUser(EntityUid uid, SharedGeigerComponent component, EntityUid? user)
+    private void SetUser(EntityUid uid, GeigerComponent component, EntityUid? user)
     {
         if (component.User == user)
             return;
@@ -92,17 +92,16 @@ public sealed class GeigerSystem : SharedGeigerSystem
         Dirty(component);
     }
 
-    private void OnGetState(EntityUid uid, SharedGeigerComponent component, ref ComponentGetState args)
+    private void OnGetState(EntityUid uid, GeigerComponent component, ref ComponentGetState args)
     {
         args.State = new GeigerComponentState
         {
             CurrentRadiation = component.CurrentRadiation,
-            DangerLevel = component.DangerLevel,
-            Equipee = component.User
+            DangerLevel = component.DangerLevel
         };
     }
 
-    private void UpdateAppearance(EntityUid uid, SharedGeigerComponent? component = null,
+    private void UpdateAppearance(EntityUid uid, GeigerComponent? component = null,
         AppearanceComponent? appearance = null)
     {
         if (!Resolve(uid, ref component, ref appearance, false))
@@ -111,7 +110,7 @@ public sealed class GeigerSystem : SharedGeigerSystem
         _appearance.SetData(uid, GeigerVisuals.DangerLevel, component.DangerLevel, appearance);
     }
 
-    private void UpdateGeigerSound(EntityUid uid, SharedGeigerComponent? component = null)
+    private void UpdateGeigerSound(EntityUid uid, GeigerComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;

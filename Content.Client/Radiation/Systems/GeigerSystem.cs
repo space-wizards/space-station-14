@@ -9,7 +9,6 @@ namespace Content.Client.Radiation.Systems;
 
 public sealed class GeigerSystem : SharedGeigerSystem
 {
-
     public override void Initialize()
     {
         base.Initialize();
