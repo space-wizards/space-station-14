@@ -1,13 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Gatfruit is now available to botanists in the uplink for 4 TC. What
-      a steal!, type: Add}
-  - {message: 'Added the Medicinal Seed Crate, containing all those plants which keep
-      you living.', type: Add}
-  - {message: Reduced amount of medicinal seeds per seed servitor from 5 to 3., type: Tweak}
-  id: 1984
-  time: '2022-07-20T04:16:35.0000000+00:00'
 - author: notafet
   changes:
   - {message: Air vents are now more resilient to spacing, type: Add}
@@ -2942,3 +2933,9 @@ Entries:
       halls have been added as well., type: Tweak}
   id: 2483
   time: '2022-10-17T22:23:41.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: 'The lobby''s character setup screen now sits in the lobby, instead
+      of it being its own screen.', type: Tweak}
+  id: 2484
+  time: '2022-10-18T06:45:32.0000000+00:00'

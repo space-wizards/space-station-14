@@ -76,7 +76,7 @@ namespace Content.Client.Gameplay
             UserInterfaceManager.PopupRoot.AddChild(_fpsCounter);
             _fpsCounter.Visible = _configurationManager.GetCVar(CCVars.HudFpsCounterVisible);
             _configurationManager.OnValueChanged(CCVars.HudFpsCounterVisible, (show) => { _fpsCounter.Visible = show; });
-            _configurationManager.OnValueChanged(CCVars.UILayout, _ => ReloadMainScreen());
+            _configurationManager.OnValueChanged(CCVars.UILayout, ReloadMainScreenValueChange);
         }
 
         protected override void Shutdown()
@@ -88,12 +88,18 @@ namespace Content.Client.Gameplay
             _eyeManager.MainViewport = UserInterfaceManager.MainViewport;
             _fpsCounter.Dispose();
             _uiManager.ClearWindows();
+            _configurationManager.UnsubValueChanged(CCVars.UILayout, ReloadMainScreenValueChange);
             UnloadMainScreen();
+        }
+
+        private void ReloadMainScreenValueChange(string _)
+        {
+            ReloadMainScreen();
         }
 
         public void ReloadMainScreen()
         {
-            if (_uiManager.ActiveScreen == null)
+            if (_uiManager.ActiveScreen?.GetWidget<MainViewport>() == null)
             {
                 return;
             }
