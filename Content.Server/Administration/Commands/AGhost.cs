@@ -1,4 +1,4 @@
-﻿using Content.Server.GameTicking;
+using Content.Server.GameTicking;
 using Content.Server.Ghost.Components;
 using Content.Server.Players;
 using Content.Shared.Administration;
@@ -45,6 +45,7 @@ namespace Content.Server.Administration.Commands
                 ? _entities.GetComponent<TransformComponent>(player.AttachedEntity.Value).Coordinates
                 : EntitySystem.Get<GameTicker>().GetObserverSpawnPoint();
             var ghost = _entities.SpawnEntity("AdminObserver", coordinates);
+            _entities.GetComponent<TransformComponent>(ghost).AttachToGridOrMap();
 
             if (canReturn)
             {

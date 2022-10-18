@@ -15,7 +15,6 @@ namespace Content.Shared.Stacks
         ///     Current stack count.
         ///     Do NOT set this directly, use the <see cref="SharedStackSystem.SetCount"/> method instead.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
         [DataField("count")]
         public int Count { get; set; } = 30;
 
@@ -24,7 +23,7 @@ namespace Content.Shared.Stacks
         /// </summary>
         [ViewVariables(VVAccess.ReadOnly)]
         [DataField("max")]
-        public int MaxCount  { get; set; } = 30;
+        public int MaxCount { get; set; } = 30;
 
         /// <summary>
         ///     Set to true to not reduce the count when used.

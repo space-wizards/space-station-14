@@ -15,6 +15,8 @@ using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using System.Threading;
+using Content.Server.Administration.Logs;
+using Content.Shared.Database;
 
 namespace Content.Server.Strip
 {
@@ -26,6 +28,7 @@ namespace Content.Server.Strip
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly EnsnareableSystem _ensnaring = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
         // TODO: ECS popups. Not all of these have ECS equivalents yet.
 
@@ -174,11 +177,12 @@ namespace Content.Server.Strip
                 return;
             }
 
-            var ev = new BeforeStripEvent(slotDef.StripTime);
-            RaiseLocalEvent(user, ev);
-            var finalStripTime = ev.Time + ev.Additive;
+            var userEv = new BeforeStripEvent(slotDef.StripTime);
+            RaiseLocalEvent(user, userEv);
+            var ev = new BeforeGettingStrippedEvent(userEv.Time, userEv.Stealth);
+            RaiseLocalEvent(component.Owner, ev);
 
-            var doAfterArgs = new DoAfterEventArgs(user, finalStripTime, CancellationToken.None, component.Owner)
+            var doAfterArgs = new DoAfterEventArgs(user, ev.Time, CancellationToken.None, component.Owner)
             {
                 ExtraCheck = Check,
                 BreakOnStun = true,
@@ -202,7 +206,11 @@ namespace Content.Server.Strip
                 && _handsSystem.TryDrop(user, userHands.ActiveHand, handsComp: userHands))
             {
                 _inventorySystem.TryEquip(user, component.Owner, held, slot);
+
+                _adminLogger.Add(LogType.Stripping, LogImpact.Medium, $"{ToPrettyString(user):user} has placed the item {ToPrettyString(held):item} in {ToPrettyString(component.Owner):target}'s {slot} slot");
             }
+
+
         }
 
         /// <summary>
@@ -264,6 +272,7 @@ namespace Content.Server.Strip
 
             _handsSystem.TryDrop(user, checkActionBlocker: false, handsComp: userHands);
             _handsSystem.TryPickup(component.Owner, held, handName, checkActionBlocker: false, animateUser: true, handsComp: hands);
+            _adminLogger.Add(LogType.Stripping, LogImpact.Medium, $"{ToPrettyString(user):user} has placed the item {ToPrettyString(held):item} in {ToPrettyString(component.Owner):target}'s hands");
             // hand update will trigger strippable update
         }
 
@@ -298,11 +307,12 @@ namespace Content.Server.Strip
                 return;
             }
 
-            var ev = new BeforeStripEvent(slotDef.StripTime);
-            RaiseLocalEvent(user, ev);
-            var finalStripTime = ev.Time + ev.Additive;
+            var userEv = new BeforeStripEvent(slotDef.StripTime);
+            RaiseLocalEvent(user, userEv);
+            var ev = new BeforeGettingStrippedEvent(userEv.Time, userEv.Stealth);
+            RaiseLocalEvent(component.Owner, ev);
 
-            var doAfterArgs = new DoAfterEventArgs(user, finalStripTime, CancellationToken.None, component.Owner)
+            var doAfterArgs = new DoAfterEventArgs(user, ev.Time, CancellationToken.None, component.Owner)
             {
                 ExtraCheck = Check,
                 BreakOnStun = true,
@@ -334,6 +344,7 @@ namespace Content.Server.Strip
                 RaiseLocalEvent(item.Value, new DroppedEvent(user), true);
 
                 _handsSystem.PickupOrDrop(user, item.Value);
+                _adminLogger.Add(LogType.Stripping, LogImpact.Medium, $"{ToPrettyString(user):user} has stripped the item {ToPrettyString(item.Value):item} from {ToPrettyString(component.Owner):target}");
             }
         }
 
@@ -365,11 +376,13 @@ namespace Content.Server.Strip
                 return true;
             }
 
-            var ev = new BeforeStripEvent(component.HandStripDelay);
-            RaiseLocalEvent(user, ev);
-            var finalStripTime = ev.Time + ev.Additive;
 
-            var doAfterArgs = new DoAfterEventArgs(user, finalStripTime, CancellationToken.None, component.Owner)
+            var userEv = new BeforeStripEvent(component.HandStripDelay);
+            RaiseLocalEvent(user, userEv);
+            var ev = new BeforeGettingStrippedEvent(userEv.Time, userEv.Stealth);
+            RaiseLocalEvent(component.Owner, ev);
+
+            var doAfterArgs = new DoAfterEventArgs(user, ev.Time, CancellationToken.None, component.Owner)
             {
                 ExtraCheck = Check,
                 BreakOnStun = true,
@@ -395,6 +408,7 @@ namespace Content.Server.Strip
             _handsSystem.TryDrop(component.Owner, hand, checkActionBlocker: false, handsComp: hands);
             _handsSystem.PickupOrDrop(user, held, handsComp: userHands);
             // hand update will trigger strippable update
+            _adminLogger.Add(LogType.Stripping, LogImpact.Medium, $"{ToPrettyString(user):user} has stripped the item {ToPrettyString(held):item} from {ToPrettyString(component.Owner):target}");
         }
 
         private sealed class OpenStrippingCompleteEvent
