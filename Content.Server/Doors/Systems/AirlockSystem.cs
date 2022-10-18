@@ -25,7 +25,6 @@ namespace Content.Server.Doors.Systems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<AirlockComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<AirlockComponent, SignalReceivedEvent>(OnSignalReceived);
 
             SubscribeLocalEvent<AirlockComponent, PowerChangedEvent>(OnPowerChanged);
@@ -36,14 +35,6 @@ namespace Content.Server.Doors.Systems
             SubscribeLocalEvent<AirlockComponent, DoorGetPryTimeModifierEvent>(OnGetPryMod);
             SubscribeLocalEvent<AirlockComponent, BeforeDoorPryEvent>(OnDoorPry);
 
-        }
-
-        private void OnInit(EntityUid uid, AirlockComponent component, ComponentInit args)
-        {
-            if (!HasComp<SignalReceiverComponent>(uid))
-                return;
-
-            _signalSystem.EnsureReceiverPorts(uid, component.AutoClosePort);
         }
 
         private void OnSignalReceived(EntityUid uid, AirlockComponent component, SignalReceivedEvent args)

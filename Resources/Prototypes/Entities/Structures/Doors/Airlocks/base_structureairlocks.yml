@@ -76,7 +76,6 @@
     interfaces:
     - key: enum.WiresUiKey.Key
       type: WiresBoundUserInterface
-  - type: DoorSignalControl
   - type: SignalReceiver
     inputs:
       AutoClose: []
