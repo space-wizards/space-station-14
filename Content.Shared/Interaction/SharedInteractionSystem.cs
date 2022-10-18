@@ -516,9 +516,11 @@ namespace Content.Shared.Interaction
                     range = (originPos.Position - targetPos.Position).Length;
                 }
             }
+            // No fixtures, e.g. wallmounts.
             else
             {
                 originPos = Transform(origin).MapPosition;
+                targetRot = Transform(Transform(other).ParentUid).LocalRotation + otherAngle;
             }
 
             // Do a raycast to check if relevant
