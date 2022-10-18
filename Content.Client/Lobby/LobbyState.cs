@@ -141,7 +141,7 @@ namespace Content.Client.Lobby
                 }
             }
 
-            Lobby.StationTime.Text =  Loc.GetString("lobby-state-player-status-staround-not-started");
+            Lobby.StationTime.Text =  Loc.GetString("lobby-state-player-status-round-not-started");
             Lobby.StartTime.Text = Loc.GetString("lobby-state-round-start-countdown-text", ("timeLeft", text));
         }
 
