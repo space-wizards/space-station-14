@@ -42,18 +42,7 @@ namespace Content.Shared.Interaction
     [UsedImplicitly]
     public abstract class SharedInteractionSystem : EntitySystem
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
-        [Dependency] private readonly RotateToFaceSystem _rotateToFaceSystem = default!;
-        [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
-        [Dependency] private readonly SharedPhysicsSystem _sharedBroadphaseSystem = default!;
-        [Dependency] private readonly SharedTransformSystem _transform = default!;
-        [Dependency] private readonly SharedVerbSystem _verbSystem = default!;
-        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-        [Dependency] private readonly UseDelaySystem _useDelay = default!;
-        [Dependency] private readonly SharedPullingSystem _pullSystem = default!;
+        public delegate bool Ignored(EntityUid entity);
 
         private const CollisionGroup InRangeUnobstructedMask
             = CollisionGroup.Impassable | CollisionGroup.InteractImpassable;
@@ -62,8 +51,18 @@ namespace Content.Shared.Interaction
         public const float InteractionRangeSquared = InteractionRange * InteractionRange;
 
         public const float MaxRaycastRange = 100f;
-
-        public delegate bool Ignored(EntityUid entity);
+        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+        [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+        [Dependency] private readonly SharedPullingSystem _pullSystem = default!;
+        [Dependency] private readonly RotateToFaceSystem _rotateToFaceSystem = default!;
+        [Dependency] private readonly SharedPhysicsSystem _sharedBroadphaseSystem = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
+        [Dependency] private readonly UseDelaySystem _useDelay = default!;
+        [Dependency] private readonly SharedVerbSystem _verbSystem = default!;
 
         public override void Initialize()
         {
@@ -115,7 +114,8 @@ namespace Content.Shared.Interaction
         /// <summary>
         ///     Prevents an item with the Unremovable component from being removed from a container by almost any means
         /// </summary>
-        private void OnRemoveAttempt(EntityUid uid, UnremoveableComponent item, ContainerGettingRemovedAttemptEvent args)
+        private void OnRemoveAttempt(EntityUid uid, UnremoveableComponent item,
+            ContainerGettingRemovedAttemptEvent args)
         {
             args.Cancel();
         }
@@ -128,6 +128,7 @@ namespace Content.Shared.Interaction
                 return true;
             }
 
+            //is this user trying to pull themself?
             if (userEntity.Value == uid)
                 return false;
 
@@ -151,9 +152,11 @@ namespace Content.Shared.Interaction
         private void HandleInteractInventorySlotEvent(InteractInventorySlotEvent msg, EntitySessionEventArgs args)
         {
             // client sanitization
-            if (!TryComp(msg.ItemUid, out TransformComponent? itemXform) || !ValidateClientInput(args.SenderSession, itemXform.Coordinates, msg.ItemUid, out var user))
+            if (!TryComp(msg.ItemUid, out TransformComponent? itemXform) || !ValidateClientInput(args.SenderSession,
+                    itemXform.Coordinates, msg.ItemUid, out var user))
             {
-                Logger.InfoS("system.interaction", $"Inventory interaction validation failed.  Session={args.SenderSession}");
+                Logger.InfoS("system.interaction",
+                    $"Inventory interaction validation failed.  Session={args.SenderSession}");
                 return;
             }
 
@@ -193,7 +196,8 @@ namespace Content.Shared.Interaction
                 return true;
             }
 
-            UserInteraction(userEntity.Value, coords, !Deleted(uid) ? uid : null, checkAccess: ShouldCheckAccess(userEntity.Value));
+            UserInteraction(userEntity.Value, coords, !Deleted(uid) ? uid : null,
+                checkAccess: ShouldCheckAccess(userEntity.Value));
 
             return false;
         }
@@ -262,12 +266,14 @@ namespace Content.Shared.Interaction
                     var ev = new InteractNoHandEvent(user, target.Value);
                     RaiseLocalEvent(user, ev, true);
                 }
+
                 return;
             }
 
             var inRangeUnobstructed = target == null
                 ? !checkAccess || InRangeUnobstructed(user, coordinates)
-                : !checkAccess || InRangeUnobstructed(user, target.Value); // permits interactions with wall mounted entities
+                : !checkAccess ||
+                  InRangeUnobstructed(user, target.Value); // permits interactions with wall mounted entities
 
             // empty-hand interactions
             if (hands.ActiveHandEntity is not { } held)
@@ -314,7 +320,8 @@ namespace Content.Shared.Interaction
             // all interactions should only happen when in range / unobstructed, so no range check is needed
             var message = new InteractHandEvent(user, target);
             RaiseLocalEvent(target, message, true);
-            _adminLogger.Add(LogType.InteractHand, LogImpact.Low, $"{ToPrettyString(user):user} interacted with {ToPrettyString(target):target}");
+            _adminLogger.Add(LogType.InteractHand, LogImpact.Low,
+                $"{ToPrettyString(user):user} interacted with {ToPrettyString(target):target}");
             if (message.Handled)
                 return;
 
@@ -379,7 +386,8 @@ namespace Content.Shared.Interaction
 
             predicate ??= _ => false;
             var ray = new CollisionRay(origin.Position, dir.Normalized, collisionMask);
-            var rayResults = _sharedBroadphaseSystem.IntersectRayWithPredicate(origin.MapId, ray, dir.Length, predicate.Invoke, false).ToList();
+            var rayResults = _sharedBroadphaseSystem
+                .IntersectRayWithPredicate(origin.MapId, ray, dir.Length, predicate.Invoke, false).ToList();
 
             if (rayResults.Count == 0)
                 return dir.Length;
@@ -437,7 +445,8 @@ namespace Content.Shared.Interaction
             }
 
             var ray = new CollisionRay(origin.Position, dir.Normalized, (int) collisionMask);
-            var rayResults = _sharedBroadphaseSystem.IntersectRayWithPredicate(origin.MapId, ray, length, predicate.Invoke, false).ToList();
+            var rayResults = _sharedBroadphaseSystem
+                .IntersectRayWithPredicate(origin.MapId, ray, length, predicate.Invoke, false).ToList();
 
             return rayResults.Count == 0;
         }
@@ -453,7 +462,8 @@ namespace Content.Shared.Interaction
             if (!TryComp<TransformComponent>(other, out var otherXform))
                 return false;
 
-            return InRangeUnobstructed(origin, other, otherXform.Coordinates, otherXform.LocalRotation, range, collisionMask, predicate,
+            return InRangeUnobstructed(origin, other, otherXform.Coordinates, otherXform.LocalRotation, range,
+                collisionMask, predicate,
                 popup);
         }
 
@@ -552,7 +562,8 @@ namespace Content.Shared.Interaction
             // Do a raycast to check if relevant
             if (inRange)
             {
-                var rayPredicate = GetPredicate(originPos, other, targetPos, targetRot, collisionMask, combinedPredicate);
+                var rayPredicate = GetPredicate(originPos, other, targetPos, targetRot, collisionMask,
+                    combinedPredicate);
                 inRange = InRangeUnobstructed(originPos, targetPos, range, collisionMask, rayPredicate);
             }
 
@@ -600,7 +611,8 @@ namespace Content.Shared.Interaction
             {
                 // If the target is an item, we ignore any colliding entities. Currently done so that if items get stuck
                 // inside of walls, users can still pick them up.
-                ignored.UnionWith(_sharedBroadphaseSystem.GetEntitiesIntersectingBody(target, (int) collisionMask, false, physics));
+                ignored.UnionWith(
+                    _sharedBroadphaseSystem.GetEntitiesIntersectingBody(target, (int) collisionMask, false, physics));
             }
             else if (TryComp(target, out WallMountComponent? wallMount))
             {
@@ -756,9 +768,10 @@ namespace Content.Shared.Interaction
         /// <summary>
         ///     Used when clicking on an entity resulted in no other interaction. Used for low-priority interactions.
         /// </summary>
-        public void InteractDoAfter(EntityUid user, EntityUid used, EntityUid? target, EntityCoordinates clickLocation, bool canReach)
+        public void InteractDoAfter(EntityUid user, EntityUid used, EntityUid? target, EntityCoordinates clickLocation,
+            bool canReach)
         {
-            if (target is {Valid: false})
+            if (target is { Valid: false })
                 target = null;
 
             var afterInteractEvent = new AfterInteractEvent(user, used, target, clickLocation, canReach);
@@ -773,7 +786,51 @@ namespace Content.Shared.Interaction
             RaiseLocalEvent(target.Value, afterInteractUsingEvent);
         }
 
+        /// <summary>
+        ///     If a target is in range, but not in the same container as the user, it may be inside of a backpack. This
+        ///     checks if the user can access the item in these situations.
+        /// </summary>
+        public abstract bool CanAccessViaStorage(EntityUid user, EntityUid target);
+
+        protected bool ValidateClientInput(ICommonSession? session, EntityCoordinates coords,
+            EntityUid uid, [NotNullWhen(true)] out EntityUid? userEntity)
+        {
+            userEntity = null;
+
+            if (!coords.IsValid(EntityManager))
+            {
+                Logger.InfoS("system.interaction", $"Invalid Coordinates: client={session}, coords={coords}");
+                return false;
+            }
+
+            if (uid.IsClientSide())
+            {
+                Logger.WarningS("system.interaction",
+                    $"Client sent interaction with client-side entity. Session={session}, Uid={uid}");
+                return false;
+            }
+
+            userEntity = session?.AttachedEntity;
+
+            if (userEntity == null || !userEntity.Value.Valid)
+            {
+                Logger.WarningS("system.interaction",
+                    $"Client sent interaction with no attached entity. Session={session}");
+                return false;
+            }
+
+            if (!Exists(userEntity))
+            {
+                Logger.WarningS("system.interaction",
+                    $"Client attempted interaction with a non-existent attached entity. Session={session},  entity={userEntity}");
+                return false;
+            }
+
+            return true;
+        }
+
         #region ActivateItemInWorld
+
         private bool HandleActivateItemInWorld(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
             if (!ValidateClientInput(session, coords, uid, out var user))
@@ -817,7 +874,8 @@ namespace Content.Shared.Interaction
 
             // Check if interacted entity is in the same container, the direct child, or direct parent of the user.
             // This is bypassed IF the interaction happened through an item slot (e.g., backpack UI)
-            if (checkAccess && !_containerSystem.IsInSameOrParentContainer(user, used) && !CanAccessViaStorage(user, used))
+            if (checkAccess && !_containerSystem.IsInSameOrParentContainer(user, used) &&
+                !CanAccessViaStorage(user, used))
                 return false;
 
             // Does the user have hands?
@@ -830,13 +888,17 @@ namespace Content.Shared.Interaction
                 return false;
 
             _useDelay.BeginDelay(used, delayComponent);
-            _adminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}");
+            _adminLogger.Add(LogType.InteractActivate, LogImpact.Low,
+                $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}");
             return true;
         }
+
         #endregion
 
         #region Hands
+
         #region Use
+
         /// <summary>
         /// Raises UseInHandEvents and activates the IUse behaviors of an entity
         /// Does not check accessibility or range, for obvious reasons
@@ -892,9 +954,11 @@ namespace Content.Shared.Interaction
             _verbSystem.ExecuteVerb(verbs.First(), user, target);
             return true;
         }
+
         #endregion
 
         #region Throw
+
         /// <summary>
         ///     Calls Thrown on all components that implement the IThrown interface
         ///     on an entity that has been thrown.
@@ -905,12 +969,15 @@ namespace Content.Shared.Interaction
             RaiseLocalEvent(thrown, throwMsg, true);
             if (throwMsg.Handled)
             {
-                _adminLogger.Add(LogType.Throw, LogImpact.Low,$"{ToPrettyString(user):user} threw {ToPrettyString(thrown):entity}");
+                _adminLogger.Add(LogType.Throw, LogImpact.Low,
+                    $"{ToPrettyString(user):user} threw {ToPrettyString(thrown):entity}");
                 return;
             }
 
-            _adminLogger.Add(LogType.Throw, LogImpact.Low,$"{ToPrettyString(user):user} threw {ToPrettyString(thrown):entity}");
+            _adminLogger.Add(LogType.Throw, LogImpact.Low,
+                $"{ToPrettyString(user):user} threw {ToPrettyString(thrown):entity}");
         }
+
         #endregion
 
         public void DroppedInteraction(EntityUid user, EntityUid item)
@@ -918,7 +985,8 @@ namespace Content.Shared.Interaction
             var dropMsg = new DroppedEvent(user);
             RaiseLocalEvent(item, dropMsg, true);
             if (dropMsg.Handled)
-                _adminLogger.Add(LogType.Drop, LogImpact.Low, $"{ToPrettyString(user):user} dropped {ToPrettyString(item):entity}");
+                _adminLogger.Add(LogType.Drop, LogImpact.Low,
+                    $"{ToPrettyString(user):user} dropped {ToPrettyString(item):entity}");
 
             // If the dropper is rotated then use their targetrelativerotation as the drop rotation
             var rotation = Angle.Zero;
@@ -930,50 +998,8 @@ namespace Content.Shared.Interaction
 
             Transform(item).LocalRotation = rotation;
         }
+
         #endregion
-
-        /// <summary>
-        ///     If a target is in range, but not in the same container as the user, it may be inside of a backpack. This
-        ///     checks if the user can access the item in these situations.
-        /// </summary>
-        public abstract bool CanAccessViaStorage(EntityUid user, EntityUid target);
-
-        protected bool ValidateClientInput(ICommonSession? session, EntityCoordinates coords,
-            EntityUid uid, [NotNullWhen(true)] out EntityUid? userEntity)
-        {
-            userEntity = null;
-
-            if (!coords.IsValid(EntityManager))
-            {
-                Logger.InfoS("system.interaction", $"Invalid Coordinates: client={session}, coords={coords}");
-                return false;
-            }
-
-            if (uid.IsClientSide())
-            {
-                Logger.WarningS("system.interaction",
-                    $"Client sent interaction with client-side entity. Session={session}, Uid={uid}");
-                return false;
-            }
-
-            userEntity = session?.AttachedEntity;
-
-            if (userEntity == null || !userEntity.Value.Valid)
-            {
-                Logger.WarningS("system.interaction",
-                    $"Client sent interaction with no attached entity. Session={session}");
-                return false;
-            }
-
-            if (!Exists(userEntity))
-            {
-                Logger.WarningS("system.interaction",
-                    $"Client attempted interaction with a non-existent attached entity. Session={session},  entity={userEntity}");
-                return false;
-            }
-
-            return true;
-        }
     }
 
     /// <summary>
@@ -982,6 +1008,12 @@ namespace Content.Shared.Interaction
     [Serializable, NetSerializable]
     public sealed class InteractInventorySlotEvent : EntityEventArgs
     {
+        public InteractInventorySlotEvent(EntityUid itemUid, bool altInteract = false)
+        {
+            ItemUid = itemUid;
+            AltInteract = altInteract;
+        }
+
         /// <summary>
         ///     Entity that was interacted with.
         /// </summary>
@@ -991,11 +1023,5 @@ namespace Content.Shared.Interaction
         ///     Whether the interaction used the alt-modifier to trigger alternative interactions.
         /// </summary>
         public bool AltInteract { get; }
-
-        public InteractInventorySlotEvent(EntityUid itemUid, bool altInteract = false)
-        {
-            ItemUid = itemUid;
-            AltInteract = altInteract;
-        }
     }
 }
