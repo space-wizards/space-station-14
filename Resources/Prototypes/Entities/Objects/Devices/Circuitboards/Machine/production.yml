@@ -94,8 +94,7 @@
     prototype: UniformPrinter
     requirements:
       MatterBin: 1
-      Manipulator: 1
-      Laser: 1
+      Laser: 2
 
 - type: entity
   id: VaccinatorMachineCircuitboard

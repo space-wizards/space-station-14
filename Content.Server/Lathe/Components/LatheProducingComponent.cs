@@ -11,5 +11,11 @@ public sealed class LatheProducingComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     public float AccumulatedTime;
+
+    /// <summary>
+    /// How long it takes to produce the recipe.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    public float ProductionLength;
 }
 
