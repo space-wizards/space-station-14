@@ -142,8 +142,9 @@ namespace Content.Client.Gameplay
                 var mousePosWorld = vp.ScreenToMap(kArgs.PointerLocation.Position);
                 entityToClick = GetEntityUnderPosition(mousePosWorld);
 
-                coordinates = _mapManager.TryFindGridAt(mousePosWorld, out var grid) ? grid.MapToGrid(mousePosWorld) :
-                    EntityCoordinates.FromMap(_mapManager, mousePosWorld);
+                coordinates = _mapManager.TryFindGridAt(mousePosWorld, out var grid)
+                    ? grid.MapToGrid(mousePosWorld)
+                    : EntityCoordinates.FromMap(_mapManager, mousePosWorld);
             }
 
             var message = new FullInputCmdMessage(_timing.CurTick, _timing.TickFraction, funcId, kArgs.State,
