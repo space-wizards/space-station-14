@@ -322,9 +322,7 @@ public sealed partial class ChatSystem : SharedChatSystem
             RaiseLocalEvent(source, nameEv);
             name = nameEv.Name;
         }
-
-        var messageWrap = Loc.GetString("chat-manager-entity-whisper-wrap-message",
-            ("entityName", FormattedMessage.EscapeText(name)));
+        name = FormattedMessage.EscapeText(name);
 
         var xforms = GetEntityQuery<TransformComponent>();
         var ghosts = GetEntityQuery<GhostComponent>();
@@ -376,7 +374,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         // Emotes use Identity.Name, since it doesn't actually involve your voice at all.
         var wrappedMessage = Loc.GetString("chat-manager-entity-me-wrap-message",
             ("entityName", name),
-             ("message", FormattedMessage.EscapeText(action)));
+            ("message", FormattedMessage.EscapeText(action)));
 
         SendInVoiceRange(ChatChannel.Emotes, action, wrappedMessage, source, hideChat);
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Emote from {ToPrettyString(source):user}: {action}");
