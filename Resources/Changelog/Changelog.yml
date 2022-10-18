@@ -1,35 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: If the shuttle can't dock it will announce its direction from the station.,
-    type: Tweak}
-  id: 1981
-  time: '2022-07-19T11:47:49.0000000+00:00'
-- author: moony
-  changes:
-  - {message: The nuclear fission explosive MUST be anchored to arm it., type: Tweak}
-  id: 1982
-  time: '2022-07-20T03:57:05.0000000+00:00'
-- author: Myctai
-  changes:
-  - {message: 'It''s CentCom. Not Centcom, centcom, CentComm, Centcomm or centcomm.',
-    type: Fix}
-  id: 1983
-  time: '2022-07-20T04:08:24.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Gatfruit is now available to botanists in the uplink for 4 TC. What
-      a steal!, type: Add}
-  - {message: 'Added the Medicinal Seed Crate, containing all those plants which keep
-      you living.', type: Add}
-  - {message: Reduced amount of medicinal seeds per seed servitor from 5 to 3., type: Tweak}
-  id: 1984
-  time: '2022-07-20T04:16:35.0000000+00:00'
-- author: notafet
-  changes:
-  - {message: Air vents are now more resilient to spacing, type: Add}
-  id: 1985
-  time: '2022-07-20T04:23:23.0000000+00:00'
 - author: Cerol
   changes:
   - {message: added Antag menu for admins to make players into antags and 4 entries
@@ -2938,3 +2907,36 @@ Entries:
   - {message: Ambience no longer plays in the lobby., type: Fix}
   id: 2480
   time: '2022-10-17T04:56:10.0000000+00:00'
+- author: ashtronaut
+  changes:
+  - {message: 'You can now continue to read books, the handheld crew monitor, health
+      analyzer readouts, papers, and your PDA screen after swapping your active hand
+      as long as they remain in your one of your hands. Remember, multitasking is
+      an efficient use of company time.', type: Tweak}
+  id: 2481
+  time: '2022-10-17T20:55:24.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: The classic Space Station 13 style HUD layout has been ported to Space
+      Station 14! Enjoy having your chat in its own separate section of game HUD!,
+    type: Add}
+  id: 2482
+  time: '2022-10-17T22:13:41.0000000+00:00'
+- author: Scribbles0
+  changes:
+  - {message: Cluster's security layout has changed. New south-eastern maintenance
+      halls have been added as well., type: Tweak}
+  id: 2483
+  time: '2022-10-17T22:23:41.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: 'The lobby''s character setup screen now sits in the lobby, instead
+      of it being its own screen.', type: Tweak}
+  id: 2484
+  time: '2022-10-18T06:45:32.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed some chat sanitization issues that allowed some invalid entity
+      names to mess with the chat window., type: Fix}
+  id: 2485
+  time: '2022-10-18T06:59:10.0000000+00:00'
