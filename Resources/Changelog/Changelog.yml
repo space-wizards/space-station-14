@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Barratry got an update., type: Fix}
-  id: 1987
-  time: '2022-07-20T10:34:15.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Gas pipes need to be unanchored before being able to deconstruct them.,
@@ -2939,3 +2934,9 @@ Entries:
   - {message: Stealth boxes no longer cause you to suffocate., type: Fix}
   id: 2486
   time: '2022-10-18T23:04:48.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: NPCs will now always sleep when a player attaches and wake when they
+      leave., type: Tweak}
+  id: 2487
+  time: '2022-10-18T23:07:44.0000000+00:00'
