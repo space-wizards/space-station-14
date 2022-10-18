@@ -37,6 +37,12 @@
     - type: ContainerContainer
       containers:
         cell_slot: !type:ContainerSlot {}
+    - type: Clothing
+      sprite: Objects/Tools/lantern.rsi
+      state: equipped-BELT
+      quickEquip: false
+      slots:
+      - Belt
 
 - type: entity
   name: extra-bright lantern
