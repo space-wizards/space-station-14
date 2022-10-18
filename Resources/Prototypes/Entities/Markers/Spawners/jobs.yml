@@ -512,7 +512,7 @@
   name: zookeeper
   components:
   - type: SpawnPoint
-    job_id: zookeeper
+    job_id: Zookeeper
   - type: Sprite
     layers:
       - state: green
