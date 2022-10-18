@@ -26,7 +26,7 @@ public partial class SharedBodySystem
         if (body.Prototype == null || body.Root != null)
             return;
 
-        var prototype = _prototypes.Index<BodyPrototype>(body.Prototype);
+        var prototype = Prototypes.Index<BodyPrototype>(body.Prototype);
         InitBody(body, prototype);
     }
 
@@ -36,7 +36,7 @@ public partial class SharedBodySystem
         if (body.Prototype == null || body.Root != null)
             return;
 
-        var prototype = _prototypes.Index<BodyPrototype>(body.Prototype);
+        var prototype = Prototypes.Index<BodyPrototype>(body.Prototype);
         InitBody(body, prototype);
     }
 
@@ -63,7 +63,7 @@ public partial class SharedBodySystem
         body.Root = slot;
         partComponent.Body = bodyId;
 
-        _containers.EnsureContainer<Container>(body.Owner, BodyContainerId);
+        Containers.EnsureContainer<Container>(body.Owner, BodyContainerId);
 
         AttachPart(bodyId, slot, partComponent);
         InitPart(partComponent, prototype, prototype.Root);
@@ -85,7 +85,7 @@ public partial class SharedBodySystem
         var coordinates = parent.Owner.ToCoordinates();
         var subConnections = new List<(BodyPartComponent child, string slotId)>();
 
-        _containers.EnsureContainer<Container>(parent.Owner, BodyContainerId);
+        Containers.EnsureContainer<Container>(parent.Owner, BodyContainerId);
 
         foreach (var connection in connections)
         {

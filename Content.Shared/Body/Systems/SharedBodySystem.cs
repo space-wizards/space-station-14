@@ -9,11 +9,11 @@ public abstract partial class SharedBodySystem : EntitySystem
 {
     private const string BodyContainerId = "BodyContainer";
 
-    [Dependency] private readonly IPrototypeManager _prototypes = default!;
+    [Dependency] protected readonly IPrototypeManager Prototypes = default!;
 
-    [Dependency] private readonly SharedContainerSystem _containers = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly StandingStateSystem _standing = default!;
+    [Dependency] protected readonly SharedContainerSystem Containers = default!;
+    [Dependency] protected readonly DamageableSystem Damageable = default!;
+    [Dependency] protected readonly StandingStateSystem Standing = default!;
 
     public override void Initialize()
     {

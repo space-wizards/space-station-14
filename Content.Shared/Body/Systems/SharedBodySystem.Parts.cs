@@ -169,7 +169,7 @@ public partial class SharedBodySystem
                slot.Child == null &&
                Resolve(partId.Value, ref part, false) &&
                (slot.Type == null || slot.Type == part.PartType) &&
-               _containers.TryGetContainer(slot.Parent, BodyContainerId, out var container) &&
+               Containers.TryGetContainer(slot.Parent, BodyContainerId, out var container) &&
                container.CanInsert(partId.Value);
     }
 
@@ -186,7 +186,7 @@ public partial class SharedBodySystem
         DropPart(slot.Child);
         DropPart(partId, part);
 
-        var container = _containers.EnsureContainer<Container>(slot.Parent, BodyContainerId);
+        var container = Containers.EnsureContainer<Container>(slot.Parent, BodyContainerId);
         if (!container.Insert(partId.Value))
             return false;
 
@@ -244,7 +244,7 @@ public partial class SharedBodySystem
         part.ParentSlot = null;
         part.Body = null;
 
-        if (_containers.TryGetContainer(slot.Parent, BodyContainerId, out var container))
+        if (Containers.TryGetContainer(slot.Parent, BodyContainerId, out var container))
             container.Remove(partId.Value);
 
         if (TryComp(partId, out TransformComponent? transform))
@@ -263,14 +263,14 @@ public partial class SharedBodySystem
             if (part.PartType == BodyPartType.Leg &&
                 !GetBodyChildrenOfType(oldBody, BodyPartType.Leg).Any())
             {
-                _standing.Down(oldBody.Value);
+                Standing.Down(oldBody.Value);
             }
 
             if (part.IsVital && !GetBodyChildrenOfType(oldBody, part.PartType).Any())
             {
                 // TODO BODY SYSTEM KILL : Find a more elegant way of killing em than just dumping bloodloss damage.
-                var damage = new DamageSpecifier(_prototypes.Index<DamageTypePrototype>("Bloodloss"), 300);
-                _damageable.TryChangeDamage(part.Owner, damage);
+                var damage = new DamageSpecifier(Prototypes.Index<DamageTypePrototype>("Bloodloss"), 300);
+                Damageable.TryChangeDamage(part.Owner, damage);
             }
 
             foreach (var organSlot in part.Organs.Values)
