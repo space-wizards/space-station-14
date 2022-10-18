@@ -5,7 +5,6 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Body.Systems;
 
-[Virtual]
 public abstract partial class SharedBodySystem : EntitySystem
 {
     private const string BodyContainerId = "BodyContainer";
