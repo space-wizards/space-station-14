@@ -15,6 +15,7 @@ public sealed class PartExchangerSystem : EntitySystem
     [Dependency] private readonly ConstructionSystem _construction = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly StorageSystem _storage = default!;
 
     /// <inheritdoc/>
@@ -28,6 +29,7 @@ public sealed class PartExchangerSystem : EntitySystem
     private void OnFinished(EntityUid uid, PartExchangerComponent component, RpedExchangeFinishedEvent args)
     {
         component.Token = null;
+        component.AudioStream?.Stop();
 
         if (!TryComp<MachineComponent>(args.Target, out var machine))
             return;
@@ -83,6 +85,7 @@ public sealed class PartExchangerSystem : EntitySystem
     private void OnCancelled(EntityUid uid, PartExchangerComponent component, RpedExchangeCancelledEvent args)
     {
         component.Token = null;
+        component.AudioStream?.Stop();
     }
 
     private void OnAfterInteract(EntityUid uid, PartExchangerComponent component, AfterInteractEvent args)
@@ -99,14 +102,17 @@ public sealed class PartExchangerSystem : EntitySystem
         if (!HasComp<MachineComponent>(args.Target))
             return;
 
+
+        component.AudioStream = _audio.PlayPvs(component.ExchangeSound, uid);
+
         component.Token = new CancellationTokenSource();
-        _doAfter.DoAfter(new DoAfterEventArgs(args.Used, component.ExchangeDuration, component.Token.Token, args.Target, args.User)
+        _doAfter.DoAfter(new DoAfterEventArgs(args.User, component.ExchangeDuration, component.Token.Token, args.Target, args.Used)
         {
             BreakOnDamage = true,
             BreakOnStun = true,
             BreakOnUserMove = true,
-            UserFinishedEvent = new RpedExchangeFinishedEvent(args.Target.Value),
-            UserCancelledEvent = new RpedExchangeCancelledEvent()
+            UsedFinishedEvent = new RpedExchangeFinishedEvent(args.Target.Value),
+            UsedCancelledEvent = new RpedExchangeCancelledEvent()
         });
     }
 }

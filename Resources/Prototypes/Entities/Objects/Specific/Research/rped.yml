@@ -16,4 +16,3 @@
     whitelist:
       components:
       - MachinePart
-  - type: DoAfter

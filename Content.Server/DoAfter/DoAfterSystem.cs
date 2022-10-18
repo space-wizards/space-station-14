@@ -153,6 +153,9 @@ namespace Content.Server.DoAfter
                     if(EntityManager.EntityExists(doAfter.EventArgs.User) && doAfter.EventArgs.UserCancelledEvent != null)
                         RaiseLocalEvent(doAfter.EventArgs.User, doAfter.EventArgs.UserCancelledEvent, false);
 
+                    if (doAfter.EventArgs.Used is {} used && EntityManager.EntityExists(used) && doAfter.EventArgs.UsedCancelledEvent != null)
+                        RaiseLocalEvent(used, doAfter.EventArgs.UsedCancelledEvent);
+
                     if(doAfter.EventArgs.Target is {} target && EntityManager.EntityExists(target) && doAfter.EventArgs.TargetCancelledEvent != null)
                         RaiseLocalEvent(target, doAfter.EventArgs.TargetCancelledEvent, false);
 
@@ -166,6 +169,9 @@ namespace Content.Server.DoAfter
 
                     if(EntityManager.EntityExists(doAfter.EventArgs.User) && doAfter.EventArgs.UserFinishedEvent != null)
                         RaiseLocalEvent(doAfter.EventArgs.User, doAfter.EventArgs.UserFinishedEvent, false);
+
+                    if(doAfter.EventArgs.Used is {} used && EntityManager.EntityExists(used) && doAfter.EventArgs.UsedFinishedEvent != null)
+                        RaiseLocalEvent(used, doAfter.EventArgs.UsedFinishedEvent);
 
                     if(doAfter.EventArgs.Target is {} target && EntityManager.EntityExists(target) && doAfter.EventArgs.TargetFinishedEvent != null)
                         RaiseLocalEvent(target, doAfter.EventArgs.TargetFinishedEvent, false);
