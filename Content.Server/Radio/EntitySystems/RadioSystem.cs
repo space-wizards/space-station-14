@@ -7,6 +7,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Radio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Network;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Radio.EntitySystems;
 
@@ -48,17 +49,19 @@ public sealed class RadioSystem : EntitySystem
         if (!_messages.Add(message))
             return;
 
-        // most radios are relayed to chat, so lets parse the chat message beforehand
         var name = TryComp(source, out VoiceMaskComponent? mask) && mask.Enabled
             ? Identity.Name(source, EntityManager)
             : MetaData(source).EntityName;
 
+        name = FormattedMessage.EscapeText(name);
+
+        // most radios are relayed to chat, so lets parse the chat message beforehand
         var chatMsg = new MsgChatMessage
         {
             Channel = ChatChannel.Radio,
             Message = message,
             //Square brackets are added here to avoid issues with escaping
-            MessageWrap = Loc.GetString("chat-radio-message-wrap", ("color", channel.Color), ("channel", $"\\[{channel.LocalizedName}\\]"), ("name", name))
+            WrappedMessage = Loc.GetString("chat-radio-message-wrap", ("color", channel.Color), ("channel", $"\\[{channel.LocalizedName}\\]"), ("name", name), ("message", FormattedMessage.EscapeText(message)))
         };
 
         var ev = new RadioReceiveEvent(message, source, channel, chatMsg);
