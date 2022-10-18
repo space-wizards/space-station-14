@@ -701,13 +701,6 @@
   metabolisms:
     Medicine:
       effects:
-      - !type:HealthChange
-        damage:
-          groups:
-            Burn: -1
-            Toxin: -1
-            Airloss: -1
-            Brute: -1
       - !type:MakeSentient
         conditions:
         - !type:ReagentThreshold

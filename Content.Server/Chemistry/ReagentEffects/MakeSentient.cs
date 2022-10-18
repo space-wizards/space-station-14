@@ -29,12 +29,10 @@ public sealed class MakeSentient : ReagentEffect
 
         // This removes the ActiveNPCComponent, because I'm pretty sure that gets rid of the preexisting AI which we probably don't want
         // Any glitches found in this code probably stem from this part
-        if (entityManager.HasComponent<ActiveNPCComponent>(uid))
-            entityManager.RemoveComponent<ActiveNPCComponent>(uid);
+        entityManager.RemoveComponent<ActiveNPCComponent>(uid);
         
-        // This inactive piece of code makes things able to speak normally, but we probably don't need it
-        //if (entityManager.HasComponent<ReplacementAccentComponent>(uid))
-        //    entityManager.RemoveComponent<ReplacementAccentComponent>(uid);
+        // This piece of code makes things able to speak "normally". One thing of note is that monkeys have a unique accent and won't be affected by this.
+        entityManager.RemoveComponent<ReplacementAccentComponent>(uid);
 
         entityManager.EnsureComponent<MindComponent>(uid);
         //entityManager.EnsureComponent<SharedPlayerInputMoverComponent>(uid); // No idea what this line was for, but it caused errors and the code works fine without them
