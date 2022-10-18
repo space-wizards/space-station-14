@@ -532,6 +532,7 @@
   components:
   - type: Sprite
     layers:
+    - state: default
     - state: idzookeeper
   - type: PresetIdCard
     job: Zookeeper
