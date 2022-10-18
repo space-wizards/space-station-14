@@ -1,10 +1,4 @@
 Entries:
-- author: Cerol
-  changes:
-  - {message: added Antag menu for admins to make players into antags and 4 entries
-      for it., type: Add}
-  id: 1986
-  time: '2022-07-20T09:46:24.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Barratry got an update., type: Fix}
@@ -2940,3 +2934,8 @@ Entries:
       names to mess with the chat window., type: Fix}
   id: 2485
   time: '2022-10-18T06:59:10.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Stealth boxes no longer cause you to suffocate., type: Fix}
+  id: 2486
+  time: '2022-10-18T23:04:48.0000000+00:00'
