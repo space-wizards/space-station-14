@@ -205,3 +205,20 @@
       - !type:GenericStatusEffect
         key: Muted
         component: Muted
+
+- type: reagent
+  id: NorepinephricAcid
+  name: reagent-name-norepinephric-acid
+  group: Narcotics
+  desc: reagent-desc-norepinephric-acid
+  physicalDesc: reagent-physical-desc-milky
+  flavor: salty
+  color: "#96a8b5"
+  boilingPoint: 255.0
+  meltingPoint: 36.0
+  metabolisms:
+    Narcotic:
+      effects:
+      - !type:GenericStatusEffect
+        key: TemporaryBlindness
+        component: TemporaryBlindness
