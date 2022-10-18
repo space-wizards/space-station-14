@@ -46,6 +46,7 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 2.7
     baseSprintSpeed : 4.5
+  - type: Perishable
 
 - type: entity
   save: false
