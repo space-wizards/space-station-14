@@ -1,9 +1,4 @@
 Entries:
-- author: notafet
-  changes:
-  - {message: Air vents are now more resilient to spacing, type: Add}
-  id: 1985
-  time: '2022-07-20T04:23:23.0000000+00:00'
 - author: Cerol
   changes:
   - {message: added Antag menu for admins to make players into antags and 4 entries
@@ -2939,3 +2934,9 @@ Entries:
       of it being its own screen.', type: Tweak}
   id: 2484
   time: '2022-10-18T06:45:32.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed some chat sanitization issues that allowed some invalid entity
+      names to mess with the chat window., type: Fix}
+  id: 2485
+  time: '2022-10-18T06:59:10.0000000+00:00'
