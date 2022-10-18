@@ -486,6 +486,6 @@
   description: Keeps the sun out of your eyes. Makes you a target for the locals.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hats/safari.rsi
+    sprite: Clothing/Head/Hats/safarihat.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hats/safari.rsi
+    sprite: Clothing/Head/Hats/safarihat.rsi
