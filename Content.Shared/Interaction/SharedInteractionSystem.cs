@@ -128,6 +128,7 @@ namespace Content.Shared.Interaction
                 return true;
             }
 
+            //is this user trying to pull themself?
             if (userEntity.Value == uid)
                 return false;
 
