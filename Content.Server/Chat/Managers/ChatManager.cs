@@ -180,7 +180,7 @@ namespace Content.Server.Chat.Managers
             var sponsorData = _sponsorsManager.GetSponsorInfo(player.UserId);
             if (sponsorData?.OOCColor != null)
             {
-                messageWrap = Loc.GetString("chat-manager-send-ooc-patron-wrap-message", ("patronColor", sponsorData.Value.OOCColor),("playerName", player.Name));
+                wrappedMessage = Loc.GetString("chat-manager-send-ooc-patron-wrap-message", ("patronColor", sponsorData.Value.OOCColor),("playerName", player.Name));
             }
 
             //TODO: player.Name color, this will need to change the structure of the MsgChatMessage
