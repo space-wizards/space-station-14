@@ -76,7 +76,9 @@ public sealed partial class ChatSystem
         // Re-capitalize message since we removed the prefix.
         message = SanitizeMessageCapital(message);
 
-        if (!_inventory.TryGetSlotEntity(source, "ears", out var entityUid) || !HasComp<HeadsetComponent>(entityUid))
+        var hasHeadset = _inventory.TryGetSlotEntity(source, "ears", out var entityUid)  && HasComp<HeadsetComponent>(entityUid);
+
+        if (!hasHeadset && !HasComp<IntrinsicRadioTransmitterComponent>(source))
         {
             _popup.PopupEntity(Loc.GetString("chat-manager-no-headset-on-message"), source, Filter.Entities(source));
         }
