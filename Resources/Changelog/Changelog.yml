@@ -1,154 +1,4 @@
 Entries:
-- author: ZeroDayDaemon
-  changes:
-  - {message: Added craftable Sawn Off shotgun., type: Add}
-  - {message: Tweaked bartender to spawn with regular double barreled shotgun., type: Tweak}
-  - {message: Tweaked bardrobe to have enough items for maps with two bartenders.,
-    type: Tweak}
-  id: 1962
-  time: '2022-07-15T09:01:55.0000000+00:00'
-- author: Morb0
-  changes:
-  - {message: Added nuke ops sound declaration of war, type: Add}
-  id: 1963
-  time: '2022-07-15T09:16:41.0000000+00:00'
-- author: Deahaka
-  changes:
-  - {message: Altars added, type: Add}
-  id: 1964
-  time: '2022-07-15T09:17:26.0000000+00:00'
-- author: Kimpes
-  changes:
-  - {message: Updated alarm sound effect, type: Tweak}
-  id: 1965
-  time: '2022-07-15T10:20:04.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Added portable scrubbers., type: Add}
-  id: 1966
-  time: '2022-07-15T12:46:31.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Nukie uplinks now purchase items correctly., type: Fix}
-  - {message: Nukie uplinks can no longer access job-specific items., type: Fix}
-  id: 1967
-  time: '2022-07-15T19:06:05.0000000+00:00'
-- author: TimrodDX
-  changes:
-  - {message: Delta Station's atmos mix chamber should work now., type: Tweak}
-  id: 1968
-  time: '2022-07-16T00:46:20.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Mobs are now properly throwable, type: Tweak}
-  id: 1969
-  time: '2022-07-16T03:04:14.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Throwing pushback reduced to half when weightless., type: Tweak}
-  - {message: Weightless distance for touching upped to 1m as 0.6m to be more forgiving
-      when weightless., type: Tweak}
-  - {message: Vehicles are now predicted. Vehicles are also now generally higher speed
-      but lower acceleration than mobs. ATVs are fastest but have lowest acceleration.,
-    type: Tweak}
-  - {message: Changed mobs back to 4.5 speed., type: Tweak}
-  - {message: Shuttle strafing and rotation now have their own keybinds. Shuttle braking
-      has been implemented on spacebar., type: Tweak}
-  id: 1970
-  time: '2022-07-16T03:51:52.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fixed the makeshift laser recipe not accepting certain diamonds sometimes.,
-    type: Fix}
-  id: 1971
-  time: '2022-07-16T17:43:24.0000000+00:00'
-- author: SunbearDev
-  changes:
-  - {message: added an error as an object!, type: Add}
-  id: 1972
-  time: '2022-07-16T22:33:30.0000000+00:00'
-- author: 13spacemen
-  changes:
-  - {message: 'Added purple research airlocks, green virology airlocks, (not mapped
-      in yet)', type: Add}
-  id: 1973
-  time: '2022-07-16T22:35:39.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Shuttle braking now uses thrusters., type: Tweak}
-  id: 1974
-  time: '2022-07-17T09:36:09.0000000+00:00'
-- author: metalgearsloth and DogZeroX
-  changes:
-  - {message: 'FTL mechanics have been added allowing you to go (for now, limited)
-      other destinations, ported from Vilous Station 14.', type: Add}
-  - {message: Nukies now start on a nukie planet and have to FTL to the station. No
-      more seeking out their shuttle at roundstart., type: Add}
-  - {message: Additional shuttles can now travel to Centcomm after the emergency shuttle
-      departs (e.g. cargo), type: Add}
-  - {message: Fix autodocking when only 1 port was blocked (woops)., type: Fix}
-  - {message: 'IFF labels now show much further away, at the edge of the radar (no
-      more cargo shuttle getting lost).', type: Tweak}
-  id: 1975
-  time: '2022-07-17T10:22:09.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Nuclear Operatives are now internally (i.e. badmins) recognized as antags.
-      You have been legitimized., type: Fix}
-  id: 1976
-  time: '2022-07-17T21:57:52.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Pneumatic cannons and cream pies no longer can be used to instakill
-      people with hyperoptimized poison mixes., type: Remove}
-  id: 1977
-  time: '2022-07-17T22:25:42.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Ported cleanbots from Nyanotrasen MRP., type: Add}
-  id: 1978
-  time: '2022-07-18T03:48:36.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Overfeeding and overhydration no longer show alerts., type: Remove}
-  id: 1979
-  time: '2022-07-18T04:41:55.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Damage overlay won't show up when returning to body anymore., type: Fix}
-  id: 1980
-  time: '2022-07-19T07:09:27.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: If the shuttle can't dock it will announce its direction from the station.,
-    type: Tweak}
-  id: 1981
-  time: '2022-07-19T11:47:49.0000000+00:00'
-- author: moony
-  changes:
-  - {message: The nuclear fission explosive MUST be anchored to arm it., type: Tweak}
-  id: 1982
-  time: '2022-07-20T03:57:05.0000000+00:00'
-- author: Myctai
-  changes:
-  - {message: 'It''s CentCom. Not Centcom, centcom, CentComm, Centcomm or centcomm.',
-    type: Fix}
-  id: 1983
-  time: '2022-07-20T04:08:24.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Gatfruit is now available to botanists in the uplink for 4 TC. What
-      a steal!, type: Add}
-  - {message: 'Added the Medicinal Seed Crate, containing all those plants which keep
-      you living.', type: Add}
-  - {message: Reduced amount of medicinal seeds per seed servitor from 5 to 3., type: Tweak}
-  id: 1984
-  time: '2022-07-20T04:16:35.0000000+00:00'
-- author: notafet
-  changes:
-  - {message: Air vents are now more resilient to spacing, type: Add}
-  id: 1985
-  time: '2022-07-20T04:23:23.0000000+00:00'
 - author: Cerol
   changes:
   - {message: added Antag menu for admins to make players into antags and 4 entries
@@ -2944,3 +2794,149 @@ Entries:
   - {message: Dying as a skeleton now makes you a skull again., type: Fix}
   id: 2461
   time: '2022-10-15T22:06:01.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed crew monitor directional icons sometimes pointing in the wrong
+      direction., type: Fix}
+  id: 2462
+  time: '2022-10-16T00:07:43.0000000+00:00'
+- author: Scribbles0
+  changes:
+  - {message: 'Added Cluster, a new low-pop station!', type: Add}
+  - {message: Removed Packed, type: Remove}
+  id: 2463
+  time: '2022-10-16T00:28:22.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a bug that was preventing the inventory UI from properly updating
+      in some situations., type: Fix}
+  id: 2464
+  time: '2022-10-16T04:16:28.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Stripping dead or incapacitated entities is now 3 or 2 times as fast,
+      respectively.', type: Tweak}
+  id: 2465
+  time: '2022-10-16T05:26:28.0000000+00:00'
+- author: Stealthbomber16
+  changes:
+  - {message: OOOOK!, type: Add}
+  id: 2466
+  time: '2022-10-16T06:13:15.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: Plants can now be mutated using unstable mutagen and cross-pollinated.,
+    type: Add}
+  id: 2467
+  time: '2022-10-16T06:25:42.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Buckle teleporting should be fixed for now., type: Fix}
+  id: 2468
+  time: '2022-10-16T06:38:05.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: If you try to swing melee out of range it doesn't waste the swing.,
+    type: Tweak}
+  id: 2469
+  time: '2022-10-16T15:54:43.0000000+00:00'
+- author: moony
+  changes:
+  - {message: The action bar no longer shows the keybind for empty slots., type: Tweak}
+  id: 2470
+  time: '2022-10-16T16:42:19.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: 'NanoTrasen has given some of your television cameras microphones. Now
+      you can actually hear the news, instead of having to either lip read the newscasters,
+      or have them ring in your headset all the events of the station!', type: Add}
+  id: 2471
+  time: '2022-10-16T17:44:14.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Added voice trigger for modular grenades, type: Add}
+  id: 2472
+  time: '2022-10-16T17:44:51.0000000+00:00'
+- author: Scribbles0
+  changes:
+  - {message: 'Fixed, removed, and changed some of Cluster''s lights around.', type: Tweak}
+  id: 2473
+  time: '2022-10-16T18:20:22.0000000+00:00'
+- author: Nairod
+  changes:
+  - {message: Added spare passenger headsets for the HoP in their locker and vendor,
+    type: Add}
+  id: 2474
+  time: '2022-10-16T18:21:02.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed seed extractor and chem master having lit screens when unpowered.,
+    type: Fix}
+  id: 2475
+  time: '2022-10-16T21:00:18.0000000+00:00'
+- author: 25203
+  changes:
+  - {message: Door remotes can no longer unbolt airlocks if the bolt wire is cut.,
+    type: Fix}
+  - {message: Airlocks will no longer bolt if the bolt wire is cut while it has no
+      power., type: Tweak}
+  - {message: 'All wires, including the bolt wire, now have to be cut to remove the
+      door electronics from an airlock.', type: Tweak}
+  - {message: Fix a bug where airlock deconstruction examine text wouldn't update
+      after cutting the wires., type: Fix}
+  id: 2476
+  time: '2022-10-17T00:44:05.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fix chat/speech pop-ups not rendering properly, type: Fix}
+  id: 2477
+  time: '2022-10-17T04:33:29.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Melee now has lag compensation so the server considers your target's
+      position from when you attacked., type: Add}
+  id: 2478
+  time: '2022-10-17T04:54:32.0000000+00:00'
+- author: router
+  changes:
+  - {message: Saying "^^" or "^-^" will now make you smile instead., type: Add}
+  id: 2479
+  time: '2022-10-17T04:54:52.0000000+00:00'
+- author: Sheppard
+  changes:
+  - {message: Ambience no longer plays in the lobby., type: Fix}
+  id: 2480
+  time: '2022-10-17T04:56:10.0000000+00:00'
+- author: ashtronaut
+  changes:
+  - {message: 'You can now continue to read books, the handheld crew monitor, health
+      analyzer readouts, papers, and your PDA screen after swapping your active hand
+      as long as they remain in your one of your hands. Remember, multitasking is
+      an efficient use of company time.', type: Tweak}
+  id: 2481
+  time: '2022-10-17T20:55:24.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: The classic Space Station 13 style HUD layout has been ported to Space
+      Station 14! Enjoy having your chat in its own separate section of game HUD!,
+    type: Add}
+  id: 2482
+  time: '2022-10-17T22:13:41.0000000+00:00'
+- author: Scribbles0
+  changes:
+  - {message: Cluster's security layout has changed. New south-eastern maintenance
+      halls have been added as well., type: Tweak}
+  id: 2483
+  time: '2022-10-17T22:23:41.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: 'The lobby''s character setup screen now sits in the lobby, instead
+      of it being its own screen.', type: Tweak}
+  id: 2484
+  time: '2022-10-18T06:45:32.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed some chat sanitization issues that allowed some invalid entity
+      names to mess with the chat window., type: Fix}
+  id: 2485
+  time: '2022-10-18T06:59:10.0000000+00:00'

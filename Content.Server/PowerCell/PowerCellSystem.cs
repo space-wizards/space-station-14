@@ -39,7 +39,7 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
 
     private void OnSlotMicrowaved(EntityUid uid, PowerCellSlotComponent component, BeingMicrowavedEvent args)
     {
-        if (_itemSlotsSystem.TryGetSlotById(uid, component.CellSlotId, out ItemSlot? slot))
+        if (_itemSlotsSystem.TryGetSlot(uid, component.CellSlotId, out ItemSlot? slot))
         {
             if (slot.Item == null)
                 return;
@@ -80,7 +80,7 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
         // If this power cell is inside a cell-slot, inform that entity that the power has changed (for updating visuals n such).
         if (_containerSystem.TryGetContainingContainer(uid, out var container)
             && TryComp(container.Owner, out PowerCellSlotComponent? slot)
-            && _itemSlotsSystem.TryGetSlotById(container.Owner, slot.CellSlotId, out ItemSlot? itemSlot))
+            && _itemSlotsSystem.TryGetSlot(container.Owner, slot.CellSlotId, out ItemSlot? itemSlot))
         {
             if (itemSlot.Item == uid)
                 RaiseLocalEvent(container.Owner, new PowerCellChangedEvent(false), false);
@@ -108,7 +108,7 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
             return false;
         }
 
-        if (_itemSlotsSystem.TryGetSlotById(uid, component.CellSlotId, out ItemSlot? slot))
+        if (_itemSlotsSystem.TryGetSlot(uid, component.CellSlotId, out ItemSlot? slot))
         {
             return TryComp(slot.Item, out battery);
         }

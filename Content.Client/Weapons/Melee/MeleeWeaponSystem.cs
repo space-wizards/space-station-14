@@ -16,6 +16,7 @@ using Robust.Shared.Animations;
 using Robust.Shared.Input;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -165,6 +166,14 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
             }
 
             var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
+            var attackerPos = Transform(entity).MapPosition;
+
+            if (mousePos.MapId != attackerPos.MapId ||
+                (attackerPos.Position - mousePos.Position).Length > weapon.Range)
+            {
+                return;
+            }
+
             EntityCoordinates coordinates;
 
             // Bro why would I want a ternary here
@@ -197,9 +206,9 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         }
     }
 
-    protected override bool DoDisarm(EntityUid user, DisarmAttackEvent ev, MeleeWeaponComponent component)
+    protected override bool DoDisarm(EntityUid user, DisarmAttackEvent ev, MeleeWeaponComponent component, ICommonSession? session)
     {
-        if (!base.DoDisarm(user, ev, component))
+        if (!base.DoDisarm(user, ev, component, session))
             return false;
 
         if (!TryComp<CombatModeComponent>(user, out var combatMode) ||

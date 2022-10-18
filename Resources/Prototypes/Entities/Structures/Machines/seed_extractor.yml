@@ -11,6 +11,7 @@
     - state: seedextractor-off
     - state: seedextractor-unlit
       shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
     netsync: false
   - type: Physics
     bodyType: Static
@@ -24,4 +25,11 @@
       - MachineMask
       layer:
       - MachineLayer
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
   - type: SeedExtractor

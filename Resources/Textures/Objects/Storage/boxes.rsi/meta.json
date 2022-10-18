@@ -122,6 +122,9 @@
             "name": "writing_of_doom"
         },
         {
+			"name": "headset"
+		},
+		{
             "name": "inhand-left",
             "directions": 4
         },
