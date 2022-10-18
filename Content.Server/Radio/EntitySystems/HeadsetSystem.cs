@@ -86,7 +86,7 @@ public sealed class HeadsetSystem : EntitySystem
     {
         if (!args.IsInDetailsRange)
             return;
-        // args.PushMarkup(Loc.GetString("examine-radio-frequency", ("frequency", component.BroadcastFrequency)));
+
         args.PushMarkup(Loc.GetString("examine-headset"));
 
         foreach (var id in component.Channels)

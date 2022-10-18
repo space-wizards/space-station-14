@@ -338,6 +338,7 @@
         - CigPack
         - Taser
         - SecBeltEquip
+        - Radio
       components:
         - Stunbaton
         - FlashOnTrigger
