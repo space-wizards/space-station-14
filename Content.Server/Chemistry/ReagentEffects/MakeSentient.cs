@@ -3,6 +3,7 @@
 //using Content.Server.AI.Components; // This was in the original code but caused an error so I'm gonna keep it as a comment just in case
 using Content.Server.Mind.Components;
 using Content.Server.NPC.Components; // Don't think I actually need this but keeping it just in case
+using Content.Server.Speech.Components;
 using Content.Shared.Emoting;
 using Content.Shared.Examine;
 using Content.Shared.Movement.Components;
