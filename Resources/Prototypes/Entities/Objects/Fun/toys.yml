@@ -8,6 +8,8 @@
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     netsync: false
+  - type: StaticPrice
+    price: 2
   - type: EmitSoundOnUse
     sound:
       collection: ToySqueak
