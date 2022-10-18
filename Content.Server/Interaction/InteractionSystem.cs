@@ -126,7 +126,7 @@ namespace Content.Server.Interaction
         }
         #endregion
 
-        private bool HandleTryPullObject(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
+        private bool HandleTryPullObject(ICommonSession? session, EntityCoordinates coords, EntityUid? uid)
         {
             if (!ValidateClientInput(session, coords, uid, out var userEntity))
             {
@@ -140,7 +140,7 @@ namespace Content.Server.Interaction
             if (Deleted(uid))
                 return false;
 
-            if (!InRangeUnobstructed(userEntity.Value, uid, popup: true))
+            if (!InRangeUnobstructed(userEntity.Value, uid.Value, popup: true))
                 return false;
 
             if (!TryComp(uid, out SharedPullableComponent? pull))

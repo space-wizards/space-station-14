@@ -56,7 +56,7 @@ namespace Content.Server.Pointing.EntitySystems
         }
 
         // TODO: FOV
-        private void SendMessage(EntityUid source, IEnumerable<ICommonSession> viewers, EntityUid pointed, string selfMessage,
+        private void SendMessage(EntityUid source, IEnumerable<ICommonSession> viewers, EntityUid? pointed, string selfMessage,
             string viewerMessage, string? viewerPointedAtMessage = null)
         {
             foreach (var viewer in viewers)
@@ -88,7 +88,7 @@ namespace Content.Server.Pointing.EntitySystems
             }
         }
 
-        public bool TryPoint(ICommonSession? session, EntityCoordinates coords, EntityUid pointed)
+        public bool TryPoint(ICommonSession? session, EntityCoordinates coords, EntityUid? pointed)
         {
             var mapCoords = coords.ToMap(EntityManager);
             if ((session as IPlayerSession)?.ContentData()?.Mind?.CurrentEntity is not { } player)
@@ -173,7 +173,7 @@ namespace Content.Server.Pointing.EntitySystems
 
             if (Exists(pointed))
             {
-                var pointedName = Identity.Entity(pointed, EntityManager);
+                var pointedName = Identity.Entity(pointed.Value, EntityManager);
 
                 selfMessage = player == pointed
                     ? Loc.GetString("pointing-system-point-at-self")

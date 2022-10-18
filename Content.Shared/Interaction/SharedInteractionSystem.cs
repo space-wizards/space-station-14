@@ -142,7 +142,7 @@ namespace Content.Shared.Interaction
                 InteractionActivate(user.Value, msg.ItemUid);
         }
 
-        public bool HandleAltUseInteraction(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
+        public bool HandleAltUseInteraction(ICommonSession? session, EntityCoordinates coords, EntityUid? uid)
         {
             // client sanitization
             if (!ValidateClientInput(session, coords, uid, out var user))
@@ -156,7 +156,7 @@ namespace Content.Shared.Interaction
             return false;
         }
 
-        public bool HandleUseInteraction(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
+        public bool HandleUseInteraction(ICommonSession? session, EntityCoordinates coords, EntityUid? uid)
         {
             // client sanitization
             if (!ValidateClientInput(session, coords, uid, out var userEntity))
@@ -746,7 +746,7 @@ namespace Content.Shared.Interaction
         }
 
         #region ActivateItemInWorld
-        private bool HandleActivateItemInWorld(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
+        private bool HandleActivateItemInWorld(ICommonSession? session, EntityCoordinates coords, EntityUid? uid)
         {
             if (!ValidateClientInput(session, coords, uid, out var user))
             {
@@ -757,7 +757,7 @@ namespace Content.Shared.Interaction
             if (Deleted(uid))
                 return false;
 
-            InteractionActivate(user.Value, uid, checkAccess: ShouldCheckAccess(user.Value));
+            InteractionActivate(user.Value, uid.Value, checkAccess: ShouldCheckAccess(user.Value));
             return false;
         }
 
@@ -911,7 +911,7 @@ namespace Content.Shared.Interaction
         public abstract bool CanAccessViaStorage(EntityUid user, EntityUid target);
 
         protected bool ValidateClientInput(ICommonSession? session, EntityCoordinates coords,
-            EntityUid uid, [NotNullWhen(true)] out EntityUid? userEntity)
+            EntityUid? uid, [NotNullWhen(true)] out EntityUid? userEntity)
         {
             userEntity = null;
 
@@ -921,7 +921,14 @@ namespace Content.Shared.Interaction
                 return false;
             }
 
-            if (uid.IsClientSide())
+            if (!uid.HasValue)
+            {
+                Logger.WarningS("system.interaction",
+                    $"Client sent interaction with null entity. Session={session}, coords={coords}");
+                return false;
+            }
+
+            if (uid.Value.IsClientSide())
             {
                 Logger.WarningS("system.interaction",
                     $"Client sent interaction with client-side entity. Session={session}, Uid={uid}");

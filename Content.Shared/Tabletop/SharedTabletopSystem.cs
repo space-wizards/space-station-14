@@ -44,14 +44,14 @@ namespace Content.Shared.Tabletop
             return _interactionSystem.InRangeUnobstructed(playerEntity, table.Value) && _actionBlockerSystem.CanInteract(playerEntity, table);
         }
 
-        protected bool CanDrag(EntityUid playerEntity, EntityUid target, [NotNullWhen(true)] out TabletopDraggableComponent? draggable)
+        protected bool CanDrag(EntityUid playerEntity, [NotNullWhen(true)] EntityUid? target, [NotNullWhen(true)] out TabletopDraggableComponent? draggable)
         {
             if (!TryComp(target, out draggable))
                 return false;
 
             // CanSeeTable checks interaction action blockers. So no need to check them here.
             // If this ever changes, so that ghosts can spectate games, then the check needs to be moved here.
-            
+
             return TryComp(playerEntity, out SharedHandsComponent? hands) && hands.Hands.Count > 0;
         }
         #endregion

@@ -81,13 +81,14 @@ namespace Content.Client.Sandbox
             RaiseNetworkEvent(new MsgSandboxSuicide());
         }
 
-        public bool Copy(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
+        public bool Copy(ICommonSession? session, EntityCoordinates coords, EntityUid? uid)
         {
             if (!SandboxAllowed)
                 return false;
 
             // Try copy entity.
-            if (uid.IsValid()
+            if (uid.HasValue
+                && uid.Value.IsValid()
                 && EntityManager.TryGetComponent(uid, out MetaDataComponent? comp)
                 && !comp.EntityDeleted)
             {

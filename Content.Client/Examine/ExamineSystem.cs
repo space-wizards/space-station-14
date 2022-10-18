@@ -84,19 +84,19 @@ namespace Content.Client.Examine
 
         private bool HandleExamine(in PointerInputCmdHandler.PointerInputCmdArgs args)
         {
-            if (!args.EntityUid.IsValid() || !EntityManager.EntityExists(args.EntityUid))
+            if (!EntityManager.EntityExists(args.EntityUid))
             {
                 return false;
             }
 
             _playerEntity = _playerManager.LocalPlayer?.ControlledEntity ?? default;
 
-            if (_playerEntity == default || !CanExamine(_playerEntity, args.EntityUid))
+            if (_playerEntity == default || !CanExamine(_playerEntity, args.EntityUid.Value))
             {
                 return false;
             }
 
-            DoExamine(args.EntityUid);
+            DoExamine(args.EntityUid.Value);
             return true;
         }
 

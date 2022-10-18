@@ -148,15 +148,15 @@ namespace Content.Client.DragDrop
             }
 
             // check if the entity is reachable
-            if (!_interactionSystem.InRangeUnobstructed(dragger, args.EntityUid))
+            if (!_interactionSystem.InRangeUnobstructed(dragger, args.EntityUid.Value))
             {
                 return false;
             }
 
             var canDrag = false;
-            foreach (var draggable in EntityManager.GetComponents<IDraggable>(args.EntityUid))
+            foreach (var draggable in EntityManager.GetComponents<IDraggable>(args.EntityUid.Value))
             {
-                var dragEventArgs = new StartDragDropEvent(dragger, args.EntityUid);
+                var dragEventArgs = new StartDragDropEvent(dragger, args.EntityUid.Value);
 
                 if (!draggable.CanStartDrag(dragEventArgs))
                 {
@@ -173,7 +173,7 @@ namespace Content.Client.DragDrop
             }
 
             // wait to initiate a drag
-            _dragDropHelper.MouseDown(args.EntityUid);
+            _dragDropHelper.MouseDown(args.EntityUid.Value);
             _dragger = dragger;
             _mouseDownTime = 0;
 

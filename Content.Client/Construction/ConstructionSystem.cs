@@ -137,7 +137,7 @@ namespace Content.Client.Construction
 
         private bool HandleUse(in PointerInputCmdHandler.PointerInputCmdArgs args)
         {
-            if (!args.EntityUid.IsValid() || !args.EntityUid.IsClientSide())
+            if (!args.EntityUid.HasValue || !args.EntityUid.Value.IsValid() || !args.EntityUid.Value.IsClientSide())
                 return false;
 
             if (!EntityManager.TryGetComponent<ConstructionGhostComponent?>(args.EntityUid, out var ghostComp))

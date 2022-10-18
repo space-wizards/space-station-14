@@ -163,7 +163,7 @@ namespace Content.Server.Hands.Systems
         #endregion
 
         #region interactions
-        private bool HandleThrowItem(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
+        private bool HandleThrowItem(ICommonSession? session, EntityCoordinates coords, EntityUid? uid)
         {
             if (session is not IPlayerSession playerSession)
                 return false;

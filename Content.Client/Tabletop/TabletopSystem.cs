@@ -195,7 +195,7 @@ namespace Content.Client.Tabletop
                 return false;
             }
 
-            StartDragging(args.EntityUid, viewport);
+            StartDragging(args.EntityUid.Value, viewport);
             return true;
         }
 

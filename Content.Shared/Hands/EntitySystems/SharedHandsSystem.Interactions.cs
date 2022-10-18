@@ -79,7 +79,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
         TrySetActiveHand(component.Owner, nextHand, component);
     }
 
-    private bool DropPressed(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
+    private bool DropPressed(ICommonSession? session, EntityCoordinates coords, EntityUid? uid)
     {
         if (TryComp(session?.AttachedEntity, out SharedHandsComponent? hands) && hands.ActiveHand != null)
             TryDrop(session!.AttachedEntity!.Value, hands.ActiveHand, coords, handsComp: hands);
