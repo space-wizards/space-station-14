@@ -51,7 +51,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
     private readonly TextureRect _dragShadow;
     private ActionsWindow? _window;
 
-    private ActionsBar? _actionsBar;
+    private ActionsBar? ActionsBar => UIManager.GetActiveUIWidgetOrNull<ActionsBar>();
     private MenuButton? ActionButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.ActionButton;
     private ActionPage CurrentPage => _pages[_currentPageIndex];
 
@@ -88,7 +88,6 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         DebugTools.Assert(_window == null);
 
         _window = UIManager.CreateWindow<ActionsWindow>();
-        _actionsBar = UIManager.GetActiveUIWidget<ActionsBar>();
         LayoutContainer.SetAnchorPreset(_window, LayoutContainer.LayoutPreset.CenterTop);
 
         _window.OnOpen += OnWindowOpened;
@@ -96,8 +95,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         _window.ClearButton.OnPressed += OnClearPressed;
         _window.SearchBar.OnTextChanged += OnSearchChanged;
         _window.FilterButton.OnItemSelected += OnFilterSelected;
-        _actionsBar.PageButtons.LeftArrow.OnPressed += OnLeftArrowPressed;
-        _actionsBar.PageButtons.RightArrow.OnPressed += OnRightArrowPressed;
+
 
         if (_actionsSystem != null)
         {
@@ -198,12 +196,6 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             _window = null;
         }
 
-        if (_actionsBar != null)
-        {
-            _actionsBar.PageButtons.LeftArrow.OnPressed += OnLeftArrowPressed;
-            _actionsBar.PageButtons.RightArrow.OnPressed += OnRightArrowPressed;
-        }
-
         CommandBinds.Unregister<ActionUIController>();
     }
 
@@ -231,7 +223,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         var page = _pages[_currentPageIndex];
         _container?.SetActionData(page);
 
-        _actionsBar!.PageButtons.Label.Text = $"{_currentPageIndex + 1}";
+        ActionsBar!.PageButtons.Label.Text = $"{_currentPageIndex + 1}";
     }
 
     private void OnLeftArrowPressed(ButtonEventArgs args)
@@ -621,25 +613,35 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
     public void ReloadActionContainer()
     {
-        RegisterActionContainer();
+        UnloadGui();
+        LoadGui();
     }
 
-    public void RegisterActionContainer()
+    public void UnloadGui()
     {
-        if (UIManager.ActiveScreen == null)
-        {
-            return;
-        }
-
-        var widget = UIManager.ActiveScreen.GetWidget<ActionsBar>();
-        if (widget == null)
-        {
-            return;
-        }
-
         _actionsSystem?.UnlinkAllActions();
 
-        RegisterActionContainer(widget.ActionsContainer);
+        if (ActionsBar == null)
+        {
+            return;
+        }
+
+        ActionsBar.PageButtons.LeftArrow.OnPressed -= OnLeftArrowPressed;
+        ActionsBar.PageButtons.RightArrow.OnPressed -= OnRightArrowPressed;
+    }
+
+    public void LoadGui()
+    {
+        if (ActionsBar == null)
+        {
+            return;
+        }
+
+        ActionsBar.PageButtons.LeftArrow.OnPressed += OnLeftArrowPressed;
+        ActionsBar.PageButtons.RightArrow.OnPressed += OnRightArrowPressed;
+
+
+        RegisterActionContainer(ActionsBar.ActionsContainer);
 
         _actionsSystem?.LinkAllActions();
     }

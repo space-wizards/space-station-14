@@ -106,6 +106,8 @@ namespace Content.Client.Gameplay
         {
             _chatController.SetMainChat(false);
             _menuController.UnloadButtons();
+            _ghostController.UnloadGui();
+            _actionController.UnloadGui();
             _uiManager.UnloadScreen();
         }
 
@@ -132,8 +134,8 @@ namespace Content.Client.Gameplay
             _menuController.LoadButtons();
 
             // TODO: This could just be like, the equivalent of an event or something
-            _ghostController.UpdateGui();
-            _actionController.RegisterActionContainer();
+            _ghostController.LoadGui();
+            _actionController.LoadGui();
             _alertsController.SyncAlerts();
             _hotbarController.ReloadHotbar();
 
