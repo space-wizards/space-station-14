@@ -1,4 +1,4 @@
-﻿<Control xmlns="https://spacestation14.io"
+﻿<lobbyUi:LobbyGui xmlns="https://spacestation14.io"
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
          xmlns:maths="clr-namespace:Robust.Shared.Maths;assembly=Robust.Shared.Maths"
          xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
@@ -10,7 +10,7 @@
          xmlns:widgets="clr-namespace:Content.Client.UserInterface.Systems.Chat.Widgets">
     <!-- Background -->
     <TextureRect Access="Public" Name = "Background" Stretch="KeepAspectCovered"/>
-    <BoxContainer Orientation="Horizontal" Margin="10 10 10 10" SeparationOverride="2">
+    <BoxContainer Name="MainContainer" Orientation="Horizontal" Margin="10 10 10 10" SeparationOverride="2">
         <SplitContainer State="Auto" HorizontalExpand="True">
             <!-- LHS Controls -->
             <BoxContainer Orientation="Vertical" SeparationOverride="4" HorizontalExpand="True">
@@ -47,7 +47,7 @@
                 <!-- Top row -->
                 <BoxContainer Orientation="Horizontal" MinSize="0 40" Name="HeaderContainer" Access="Public"  SeparationOverride="4">
                     <Label Margin="8 0 0 0" StyleClasses="LabelHeadingBigger" VAlign="Center" Text="{Loc 'ui-lobby-title'}" />
-                    <Label Name="ServerName" Access="Public" StyleClasses="LabelHeadingBigger" VAlign="Center" />
+                    <Label Name="ServerName" Access="Public" StyleClasses="LabelHeadingBigger" VAlign="Center" HorizontalExpand="True" HorizontalAlignment="Center" />
                 </BoxContainer>
                 <!-- Gold line -->
                 <controls:HLine Color="{x:Static style:StyleNano.NanoGold}" Thickness="2"/>
@@ -71,9 +71,9 @@
                 <!-- Gold line -->
                 <controls:HLine Color="{x:Static style:StyleNano.NanoGold}" Thickness="2" Access="Public"/>
                 <controls:HSpacer Spacing="10"/>
-                <widgets:ChatBox Name="Chat" Access="Public" VerticalExpand="True" Margin="3 3 3 3" MinHeight="50" Main="True"/>
+                <widgets:ChatBox Name="Chat" Access="Public" VerticalExpand="True" Margin="3 3 3 3" MinHeight="50" />
                 </BoxContainer>
             </PanelContainer>
         </SplitContainer>
     </BoxContainer>
-</Control>
+</lobbyUi:LobbyGui>

@@ -2,7 +2,6 @@ using Content.Server.Access;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Construction;
-using Content.Server.Construction.Components;
 using Content.Server.Doors.Components;
 using Content.Server.Tools;
 using Content.Server.Tools.Systems;
@@ -271,7 +270,6 @@ public sealed class DoorSystem : SharedDoorSystem
         if (Tags.HasTag(otherUid, "DoorBumpOpener"))
             TryOpen(uid, door, otherUid);
     }
-
     private void OnEmagged(EntityUid uid, DoorComponent door, GotEmaggedEvent args)
     {
         if(TryComp<AirlockComponent>(uid, out var airlockComponent))

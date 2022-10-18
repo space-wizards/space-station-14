@@ -15,14 +15,12 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 namespace Content.Client.Lobby.UI
 {
     [GenerateTypedNameReferences]
-    internal sealed partial class LobbyGui : Control
+    internal sealed partial class LobbyGui : UIScreen
     {
-        public LobbyGui(IEntityManager entityManager,
-            IClientPreferencesManager preferencesManager)
+        public LobbyGui()
         {
             RobustXamlLoader.Load(this);
-            ServerName.HorizontalExpand = true;
-            ServerName.HorizontalAlignment = HAlignment.Center;
+            SetAnchorPreset(MainContainer, LayoutPreset.Wide);
         }
     }
 }
