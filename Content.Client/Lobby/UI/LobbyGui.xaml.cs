@@ -52,7 +52,7 @@ namespace Content.Client.Lobby.UI
                     var actualWidth = (float) _userInterfaceManager.RootControl.PixelWidth;
                     var setupWidth = (float) LeftSide.PixelWidth;
 
-                    if (1 - (setupWidth / actualWidth) > 0.4)
+                    if (1 - (setupWidth / actualWidth) > 0.30)
                     {
                         RightSide.Visible = false;
                     }
