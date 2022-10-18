@@ -71,7 +71,7 @@ namespace Content.Server.Singularity.EntitySystems
         private void ReceivedChanged(
             EntityUid uid,
             EmitterComponent component,
-            PowerConsumerReceivedChanged args)
+            ref PowerConsumerReceivedChanged args)
         {
             if (!component.IsOn)
             {

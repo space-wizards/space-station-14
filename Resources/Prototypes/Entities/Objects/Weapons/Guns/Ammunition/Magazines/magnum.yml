@@ -33,7 +33,7 @@
 
 - type: entity
   id: BaseMagazineMagnumSubMachineGun
-  name: "Drozd magazine (.40 magnum)"
+  name: "Vector magazine (.40 magnum)"
   parent: BaseItem
   abstract: true
   components:
@@ -122,7 +122,7 @@
 
 - type: entity
   id: MagazineMagnumSubMachineGun
-  name: "Drozd magazine (.40 magnum)"
+  name: "Vector magazine (.40 magnum)"
   parent: BaseMagazineMagnumSubMachineGun
   components:
   - type: BallisticAmmoProvider
@@ -136,7 +136,7 @@
 
 - type: entity
   id: MagazineMagnumSubMachineGunHighVelocity
-  name: "Drozd magazine (.40 magnum High-Velocity)"
+  name: "Vector magazine (.40 magnum High-Velocity)"
   parent: BaseMagazineMagnumSubMachineGun
   components:
   - type: BallisticAmmoProvider
@@ -150,7 +150,7 @@
 
 - type: entity
   id: MagazineMagnumSubMachineGunPractice
-  name: "Drozd magazine (.40 magnum practice)"
+  name: "Vector magazine (.40 magnum practice)"
   parent: BaseMagazineMagnumSubMachineGun
   components:
   - type: BallisticAmmoProvider
@@ -164,7 +164,7 @@
 
 - type: entity
   id: MagazineMagnumSubMachineGunRubber
-  name: "Drozd magazine (.40 magnum rubber)"
+  name: "Vector magazine (.40 magnum rubber)"
   parent: BaseMagazineMagnumSubMachineGun
   components:
   - type: BallisticAmmoProvider

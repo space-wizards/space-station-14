@@ -24,9 +24,9 @@ namespace Content.Shared.Chat
         public string Message { get; set; } = string.Empty;
 
         /// <summary>
-        ///     What to "wrap" the message contents with. Example is stuff like 'Joe says: "{0}"'
+        ///     Modified message with some wrapping text. E.g. 'Joe says: "HELP!"'
         /// </summary>
-        public string MessageWrap { get; set; } = string.Empty;
+        public string WrappedMessage { get; set; } = string.Empty;
 
         /// <summary>
         ///     The sending entity.
@@ -46,7 +46,7 @@ namespace Content.Shared.Chat
         {
             Channel = (ChatChannel) buffer.ReadInt16();
             Message = buffer.ReadString();
-            MessageWrap = buffer.ReadString();
+            WrappedMessage = buffer.ReadString();
 
             switch (Channel)
             {
@@ -66,7 +66,7 @@ namespace Content.Shared.Chat
         {
             buffer.Write((short)Channel);
             buffer.Write(Message);
-            buffer.Write(MessageWrap);
+            buffer.Write(WrappedMessage);
 
             switch (Channel)
             {

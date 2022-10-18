@@ -2,7 +2,7 @@
 using Content.Server.Administration;
 using Content.Server.Body.Components;
 using Content.Server.Cargo.Components;
-using Content.Server.Materials;
+using Content.Shared.Materials;
 using Content.Server.Stack;
 using Content.Shared.Administration;
 using Content.Shared.MobState.Components;
@@ -45,17 +45,15 @@ public sealed class PricingSystem : EntitySystem
 
         foreach (var gid in args)
         {
-            if (!int.TryParse(gid, out var i) || i <= 0)
+            if (!EntityUid.TryParse(gid, out var gridId) || !gridId.IsValid())
             {
                 shell.WriteError($"Invalid grid ID \"{gid}\".");
                 continue;
             }
 
-            var gridId = new GridId(i);
-
             if (!_mapManager.TryGetGrid(gridId, out var mapGrid))
             {
-                shell.WriteError($"Grid \"{i}\" doesn't exist.");
+                shell.WriteError($"Grid \"{gridId}\" doesn't exist.");
                 continue;
             }
 
