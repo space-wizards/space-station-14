@@ -6,6 +6,7 @@
   - type: StorageFill
     contents:
       - id: ClothingNeckCloakQm
+      - id: ClothingOuterWinterQM
       - id: ClothingHeadsetCargo
       - id: PlushieLizard
         prob: 0.1
@@ -38,6 +39,7 @@
       - id: CaptainIDCard
       - id: ClothingHeadHatCaptain
       - id: ClothingNeckCloakCap
+      - id: ClothingOuterWinterCap
       - id: ClothingHandsGlovesCaptain
       - id: ClothingOuterHardsuitCap
       - id: ClothingMaskGasCaptain
@@ -68,6 +70,7 @@
   - type: StorageFill
     contents:
       - id: ClothingNeckCloakHop
+      - id: ClothingOuterWinterHoP
       - id: ClothingHeadHatHopcap
       - id: HoPIDCard
         prob: 0.9
@@ -100,6 +103,7 @@
       - id: OxygenTankFilled
       - id: NitrogenTankFilled
       - id: ClothingNeckCloakCe
+      - id: ClothingOuterWinterCE
       - id: ClothingEyesGlassesMeson
       - id: ClothingBeltChiefEngineerFilled
       - id: ClothingHeadHatBeretEngineering
@@ -124,6 +128,7 @@
       #- name: ClothingEyesHudMedical #Removed until working properly
       - id: ClothingHeadsetAltMedical
       - id: ClothingCloakCmo
+      - id: ClothingOuterWinterCMO
       - id: ClothingBackpackDuffelSurgeryFilled
       - id: ClothingOuterCoatLabCmo
       - id: ClothingMaskSterile
@@ -150,6 +155,7 @@
       - id: ProtolatheMachineCircuitboard
       - id: CircuitImprinterMachineCircuitboard
       - id: ClothingNeckCloakRd
+      - id: ClothingOuterWinterRD
       - id: ClothingHeadsetMedicalScience
       - id: ClothingOuterHardsuitRd
       - id: PlushieSlime
@@ -169,6 +175,7 @@
       - id: ClothingHeadHatBeretHoS
       - id: ClothingHeadHatHoshat
       - id: ClothingNeckCloakHos
+      - id: ClothingOuterWinterHoS
       - id: ClothingOuterCoatHoSTrench
       - id: ClothingUniformJumpskirtHoSAlt
       - id: ClothingUniformJumpsuitHoSAlt
