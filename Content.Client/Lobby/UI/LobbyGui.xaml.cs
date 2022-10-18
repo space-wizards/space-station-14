@@ -29,6 +29,7 @@ namespace Content.Client.Lobby.UI
             RobustXamlLoader.Load(this);
             SetAnchorPreset(MainContainer, LayoutPreset.Wide);
             SetAnchorPreset(Background, LayoutPreset.Wide);
+            SetAnchorPreset(Layout, LayoutPreset.Wide);
 
             LeaveButton.OnPressed += _ => _consoleHost.ExecuteCommand("disconnect");
             OptionsButton.OnPressed += _ => _userInterfaceManager.GetUIController<OptionsUIController>().ToggleWindow();
@@ -43,9 +44,19 @@ namespace Content.Client.Lobby.UI
             {
                 case LobbyGuiState.Default:
                     DefaultState.Visible = true;
+                    RightSide.Visible = true;
                     break;
                 case LobbyGuiState.CharacterSetup:
                     CharacterSetupState.Visible = true;
+
+                    var actualWidth = (float) _userInterfaceManager.RootControl.PixelWidth;
+                    var setupWidth = (float) LeftSide.PixelWidth;
+
+                    if (1 - (setupWidth / actualWidth) > 0.4)
+                    {
+                        RightSide.Visible = false;
+                    }
+
                     break;
             }
         }

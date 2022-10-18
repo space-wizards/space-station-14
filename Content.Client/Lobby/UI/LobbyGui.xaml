@@ -7,14 +7,16 @@
          xmlns:style="clr-namespace:Content.Client.Stylesheets"
          xmlns:lobbyUi="clr-namespace:Content.Client.Lobby.UI"
          xmlns:info="clr-namespace:Content.Client.Info"
-         xmlns:widgets="clr-namespace:Content.Client.UserInterface.Systems.Chat.Widgets">
+         xmlns:widgets="clr-namespace:Content.Client.UserInterface.Systems.Chat.Widgets"
+         HorizontalExpand="True"
+         VerticalExpand="True">
     <!-- Background -->
-    <LayoutContainer>
-        <TextureRect Access="Public" Name = "Background" Stretch="KeepAspectCovered"/>
-        <BoxContainer Name="MainContainer" Orientation="Horizontal" Margin="10 10 10 10" SeparationOverride="2">
+    <LayoutContainer Name="Layout" HorizontalExpand="True" VerticalExpand="True">
+        <TextureRect Access="Public" VerticalExpand="True" HorizontalExpand="True" Name = "Background" Stretch="KeepAspectCovered"/>
+        <BoxContainer Name="MainContainer" VerticalExpand="True" HorizontalExpand="True" Orientation="Horizontal" Margin="10 10 10 10" SeparationOverride="2">
             <SplitContainer State="Auto" HorizontalExpand="True">
                 <!-- LHS Controls -->
-                <BoxContainer Orientation="Vertical" SeparationOverride="4" HorizontalExpand="True">
+                <BoxContainer Name="LeftSide" Orientation="Vertical" SeparationOverride="4" HorizontalExpand="True">
                     <Control Name="DefaultState" VerticalExpand="True">
                         <!-- Left Top Panel -->
                         <PanelContainer StyleClasses="AngleRect" HorizontalAlignment="Left" Name = "LeftSideTop" VerticalAlignment="Top" >
