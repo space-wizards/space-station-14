@@ -4,3 +4,6 @@ ent-TimerTrigger = таймер-триггер
 ent-SignalTrigger = сигнальный триггер
     .desc = Позволяет соединить с устройством, заставляющим сработать по сигналу.
     .suffix = { "" }
+ent-VoiceTrigger = voice trigger
+    .desc = Adds a machine link that is triggered by vocal keywords
+    .suffix = { "" }

@@ -1,3 +1,6 @@
+ent-BaseFirelock = firelock
+    .desc = Apply crowbar.
+    .suffix = { "" }
 ent-Firelock = пожарный шлюз
     .desc = Примените лом.
     .suffix = { "" }
