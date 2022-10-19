@@ -1,0 +1,14 @@
+- type: bodyPreset
+  name: "moth"
+  id: MothPreset
+  partIDs:
+    head: HeadMoth
+    torso: TorsoMoth
+    right arm: RightArmMoth
+    left arm: LeftArmMoth
+    right hand: RightHandMoth
+    left hand: LeftHandMoth
+    right leg: RightLegMoth
+    left leg: LeftLegMoth
+    right foot: RightFootMoth
+    left foot: LeftFootMoth
