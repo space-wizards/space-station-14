@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
-using Content.Shared.Directions;
+﻿using System;
+using System.Collections.Generic;
+using Content.Shared;
 using NUnit.Framework;
 using Robust.Shared.Maths;
 using Robust.UnitTesting;
@@ -33,10 +34,11 @@ public sealed class DirectionRandomizerTest : RobustUnitTest
         Direction.East,
         Direction.West,
     })]
-    public void TestCardinalDirections(Direction[] x)
+    public void TestRandomization(Direction[] x)
     {
         var set = new HashSet<Direction>(x);
-        var randomizer = new DirectionRandomizer(x);
+        var randomizer = new Span<Direction>(x);
+        randomizer.Shuffle();
         foreach (var direction in randomizer)
         {
             if (set.Contains(direction))
