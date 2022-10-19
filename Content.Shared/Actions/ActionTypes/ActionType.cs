@@ -6,20 +6,18 @@ namespace Content.Shared.Actions.ActionTypes;
 
 [ImplicitDataDefinitionForInheritors]
 [Serializable, NetSerializable]
-public abstract class ActionType : IEquatable<ActionType>, IComparable, ICloneable
+public abstract class ActionType : IEquatable<ActionType>, IComparable
 {
     /// <summary>
     ///     Icon representing this action in the UI.
     /// </summary>
-    [DataField("icon")]
-    public SpriteSpecifier? Icon;
+    [DataField("icon")] public SpriteSpecifier? Icon;
 
     /// <summary>
     ///     For toggle actions only, icon to show when toggled on. If omitted, the action will simply be highlighted
     ///     when turned on.
     /// </summary>
-    [DataField("iconOn")]
-    public SpriteSpecifier? IconOn;
+    [DataField("iconOn")] public SpriteSpecifier? IconOn;
 
     /// <summary>
     ///     If not null, this color will modulate the action icon color.
@@ -28,32 +26,27 @@ public abstract class ActionType : IEquatable<ActionType>, IComparable, ICloneab
     ///     This currently only exists for decal-placement actions, so that the action icons correspond to the color of
     ///     the decal. But this is probably useful for other actions, including maybe changing color on toggle.
     /// </remarks>
-    [DataField("iconColor")]
-    public Color IconColor = Color.White;
+    [DataField("iconColor")] public Color IconColor = Color.White;
 
     /// <summary>
     ///     Name to show in UI.
     /// </summary>
-    [DataField("name", required: true)]
-    public string DisplayName = string.Empty;
+    [DataField("name", required: true)] public string DisplayName = string.Empty;
 
     /// <summary>
     ///     Description to show in UI. Accepts formatting.
     /// </summary>
-    [DataField("description")]
-    public string Description = string.Empty;
+    [DataField("description")] public string Description = string.Empty;
 
     /// <summary>
     ///     Keywords that can be used to search for this action in the action menu.
     /// </summary>
-    [DataField("keywords")]
-    public HashSet<string> Keywords = new();
+    [DataField("keywords")] public HashSet<string> Keywords = new();
 
     /// <summary>
     ///     Whether this action is currently enabled. If not enabled, this action cannot be performed.
     /// </summary>
-    [DataField("enabled")]
-    public bool Enabled = true;
+    [DataField("enabled")] public bool Enabled = true;
 
     /// <summary>
     ///     The toggle state of this action. Toggling switches the currently displayed icon, see <see cref="Icon"/> and <see cref="IconOn"/>.
@@ -72,8 +65,7 @@ public abstract class ActionType : IEquatable<ActionType>, IComparable, ICloneab
     /// <summary>
     ///     Time interval between action uses.
     /// </summary>
-    [DataField("useDelay")]
-    public TimeSpan? UseDelay;
+    [DataField("useDelay")] public TimeSpan? UseDelay;
 
     /// <summary>
     ///     Convenience tool for actions with limited number of charges. Automatically decremented on use, and the
