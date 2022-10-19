@@ -6,6 +6,7 @@ using Content.Server.Administration;
 using Content.Server.Administration.Managers;
 using Content.Server.Afk;
 using Content.Server.Chat.Managers;
+using Content.Server.GameTicking;
 using Content.Server.Maps;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
@@ -325,6 +326,15 @@ namespace Content.Server.Voting.Managers
             // No, seriously, stop spamming the restart vote!
             if (voteType == StandardVoteType.Restart && _cfg.GetCVar(CCVars.VoteRestartNotAllowedWhenAdminOnline) && _adminMgr.ActiveAdmins.Count() != 0)
                 return false;
+
+            // If only one Preset available thats not really a vote
+            // Still allow vote if availbable one is different from current one
+            if (voteType == StandardVoteType.Preset)
+            {
+                var presets = GetGamePresets();
+                if (presets.Count() == 1 && presets.Select(x => x.Key).Single() == EntitySystem.Get<GameTicker>().Preset?.ID)
+                    return false;
+            }
 
             return !_voteTimeout.TryGetValue(initiator.UserId, out timeSpan);
         }

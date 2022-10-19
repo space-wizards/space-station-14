@@ -1,5 +1,6 @@
 using Content.Shared.Ghost;
 using Content.Shared.Radiation;
+using Content.Shared.Radiation.Components;
 using Content.Shared.Singularity.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
@@ -13,6 +14,8 @@ namespace Content.Shared.Singularity
     public abstract class SharedSingularitySystem : EntitySystem
     {
         [Dependency] private readonly FixtureSystem _fixtures = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
         public const string DeleteFixture = "DeleteCircle";
 
@@ -101,7 +104,7 @@ namespace Content.Shared.Singularity
                 // Prevents it getting stuck (see SingularityController.MoveSingulo)
                 if (physics != null)
                 {
-                    physics.LinearVelocity = Vector2.Zero;
+                    _physics.SetLinearVelocity(physics, Vector2.Zero);
                 }
             }
 
@@ -109,13 +112,10 @@ namespace Content.Shared.Singularity
 
             if (EntityManager.TryGetComponent(singularity.Owner, out RadiationSourceComponent? source))
             {
-                source.RadsPerSecond = singularity.RadsPerLevel * value;
+                source.Intensity = singularity.RadsPerLevel * value;
             }
 
-            if (EntityManager.TryGetComponent(singularity.Owner, out AppearanceComponent? appearance))
-            {
-                appearance.SetData(SingularityVisuals.Level, value);
-            }
+            _appearance.SetData(singularity.Owner, SingularityVisuals.Level, value);
 
             if (physics != null)
             {

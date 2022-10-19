@@ -92,6 +92,9 @@ public sealed class SpeciesPrototype : IPrototype
 
     [DataField("naming")]
     public SpeciesNaming Naming { get; } = SpeciesNaming.FirstLast;
+
+    [DataField("sexes")]
+    public List<Sex> Sexes { get; } = new List<Sex>(){ Sex.Male, Sex.Female };
 }
 
 public enum SpeciesNaming : byte

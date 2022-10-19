@@ -14,6 +14,7 @@ using Content.Shared.Pulling.Events;
 using Content.Shared.Speech;
 using Content.Shared.Standing;
 using Content.Shared.StatusEffect;
+using Content.Shared.Strip.Components;
 using Content.Shared.Throwing;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Serialization;
@@ -36,6 +37,8 @@ namespace Content.Shared.MobState.EntitySystems
             SubscribeLocalEvent<MobStateComponent, ComponentShutdown>(OnMobShutdown);
             SubscribeLocalEvent<MobStateComponent, ComponentStartup>(OnMobStartup);
 
+            SubscribeLocalEvent<MobStateComponent, BeforeGettingStrippedEvent>(OnGettingStripped);
+
             SubscribeLocalEvent<MobStateComponent, ChangeDirectionAttemptEvent>(OnChangeDirectionAttempt);
             SubscribeLocalEvent<MobStateComponent, UseAttemptEvent>(OnUseAttempt);
             SubscribeLocalEvent<MobStateComponent, InteractionAttemptEvent>(OnInteractAttempt);
@@ -52,6 +55,15 @@ namespace Content.Shared.MobState.EntitySystems
             SubscribeLocalEvent<MobStateComponent, StandAttemptEvent>(OnStandAttempt);
             SubscribeLocalEvent<MobStateChangedEvent>(OnStateChanged);
             // Note that there's no check for Down attempts because if a mob's in crit or dead, they can be downed...
+        }
+
+        private void OnGettingStripped(EntityUid uid, MobStateComponent component, BeforeGettingStrippedEvent args)
+        {
+            // Incapacitated or dead targets get stripped two or three times as fast. Makes stripping corpses less tedious.
+            if (IsDead(uid, component))
+                args.Multiplier /= 3;
+            else if (IsCritical(uid, component))
+                args.Multiplier /= 2;
         }
 
         private void OnMobStartup(EntityUid uid, MobStateComponent component, ComponentStartup args)

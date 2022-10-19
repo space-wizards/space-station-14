@@ -30,7 +30,7 @@ public sealed class PickAccessibleComponentOperator : HTNOperator
     /// Where the pathfinding result will be stored (if applicable). This gets removed after execution.
     /// </summary>
     [ViewVariables, DataField("pathfindKey")]
-    public string PathfindKey = "MovementPathfind";
+    public string PathfindKey = NPCBlackboard.PathfindKey;
 
     public override void Initialize(IEntitySystemManager sysManager)
     {
