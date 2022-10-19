@@ -98,7 +98,7 @@ public sealed class RampingStationEventSchedulerSystem : GameRuleSystem
     {
         var mod = ChaosModifier;
 
-        // 5-15 minutes baseline. Will get faster over time as the chaos mod increases.
-        _timeUntilNextEvent = _random.NextFloat(300f / mod, 900f / mod);
+        // 4-12 minutes baseline. Will get faster over time as the chaos mod increases.
+        _timeUntilNextEvent = _random.NextFloat(240f / mod, 720f / mod);
     }
 }
