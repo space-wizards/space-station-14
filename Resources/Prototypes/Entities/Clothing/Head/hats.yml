@@ -30,6 +30,9 @@
     sprite: Clothing/Head/Hats/beret_engineering.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/beret_engineering.rsi
+  - type: Tag
+    tags:
+      - CMOClothing
 
 - type: entity
   parent: ClothingHeadBase

@@ -45,3 +45,14 @@
       whitelist:
         tags:
           - HopClothing
+
+- type: entity
+  parent: BagGarmentBase
+  id: BagGarmentCE
+  name: chief engineer's garment bag
+  description: A bag for storing extra clothes and shoes. This one belongs to the chief engineer.
+  components:
+    - type: Storage
+      whitelist:
+        tags:
+          - CEClothing

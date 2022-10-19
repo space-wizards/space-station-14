@@ -47,3 +47,17 @@
         - id: ClothingNeckMantleHOP
         - id: ClothingNeckCloakHop
         - id: ClothingHeadHatHopcap
+
+- type: entity
+  id: BagGarmentCEFilled
+  suffix: Filled
+  parent: BagGarmentCE
+  components:
+    - type: StorageFill
+      contents:
+        - id: ClothingUniformJumpsuitChiefEngineer
+        - id: ClothingUniformJumpskirtChiefEngineer
+        - id: ClothingNeckCloakCe
+        - id: ClothingNeckMantleCE
+        - id: ClothingOuterWinterCE
+        - id: ClothingHeadHatBeretEngineering

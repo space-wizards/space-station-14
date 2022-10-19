@@ -27,6 +27,9 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/ce.rsi
+  - type: Tag
+    tags:
+      - CMOClothing
 
 - type: entity
   parent: ClothingNeckBase

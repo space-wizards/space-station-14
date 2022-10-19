@@ -99,10 +99,9 @@
       - id: ClothingMaskBreath
       - id: OxygenTankFilled
       - id: NitrogenTankFilled
-      - id: ClothingNeckCloakCe
+      - id: BagGarmentCEFilled
       - id: ClothingEyesGlassesMeson
       - id: ClothingBeltChiefEngineerFilled
-      - id: ClothingHeadHatBeretEngineering
       - id: ClothingShoesBootsMagAdv
       - id: ClothingHandsGlovesColorYellow
       - id: CigarCase

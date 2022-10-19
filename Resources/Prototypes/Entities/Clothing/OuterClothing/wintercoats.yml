@@ -66,6 +66,9 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatce.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatce.rsi
+  - type: Tag
+    tags:
+      - CMOClothing
 
 - type: entity
   parent: ClothingOuterWinterCoat

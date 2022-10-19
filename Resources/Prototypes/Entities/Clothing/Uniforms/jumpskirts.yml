@@ -45,6 +45,9 @@
     modifiers:
       coefficients:
         Radiation: 0.8
+  - type: Tag
+    tags:
+      - CMOClothing
 
 - type: entity
   parent: ClothingUniformSkirtBase
