@@ -154,6 +154,18 @@
     heldPrefix: pink
 
 - type: entity
+  parent: PlushieSharkBlue
+  id: PlushieSharkGrey
+  name: grey shark soft toy
+  description: A quiet, reserved kind of shonk. Loves to ride the grey tide.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/sharkplush.rsi
+    state: grey
+  - type: Item
+    heldPrefix: grey
+
+- type: entity
   parent: BasePlushie
   id: PlushieRatvar
   name: ratvar plushie
