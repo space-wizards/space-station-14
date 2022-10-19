@@ -131,18 +131,18 @@ public sealed partial class GunSystem : SharedGunSystem
                         RaiseLocalEvent(cartridge.Owner, new AmmoShotEvent()
                         {
                             FiredProjectiles = shotProjectiles,
-                        }, false);
+                        });
 
                         SetCartridgeSpent(cartridge, true);
                         MuzzleFlash(gun.Owner, cartridge, user);
-                        PlaySound(gun.Owner, gun.SoundGunshot?.GetSound(Random, ProtoManager), user);
+                        Audio.PlayPredicted(gun.SoundGunshot, gun.Owner, user);
 
                         if (cartridge.DeleteOnSpawn)
                             Del(cartridge.Owner);
                     }
                     else
                     {
-                        PlaySound(gun.Owner, gun.SoundEmpty?.GetSound(Random, ProtoManager), user);
+                        Audio.PlayPredicted(gun.SoundEmpty, gun.Owner, user);
                     }
 
                     // Something like ballistic might want to leave it in the container still
@@ -155,7 +155,7 @@ public sealed partial class GunSystem : SharedGunSystem
                 case AmmoComponent newAmmo:
                     shotProjectiles.Add(newAmmo.Owner);
                     MuzzleFlash(gun.Owner, newAmmo, user);
-                    PlaySound(gun.Owner, gun.SoundGunshot?.GetSound(Random, ProtoManager), user);
+                    Audio.PlayPredicted(gun.SoundGunshot, gun.Owner, user);
 
                     // Do a throw
                     if (!HasComp<ProjectileComponent>(newAmmo.Owner))
@@ -214,7 +214,8 @@ public sealed partial class GunSystem : SharedGunSystem
                     {
                         FireEffects(fromCoordinates, hitscan.MaxLength, mapDirection.ToAngle(), hitscan);
                     }
-                    PlaySound(gun.Owner, gun.SoundGunshot?.GetSound(Random, ProtoManager), user);
+
+                    Audio.PlayPredicted(gun.SoundGunshot, gun.Owner, user);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -231,7 +232,7 @@ public sealed partial class GunSystem : SharedGunSystem
     {
         var physics = EnsureComp<PhysicsComponent>(uid);
         physics.BodyStatus = BodyStatus.InAir;
-        physics.LinearVelocity = direction.Normalized * speed;
+        Physics.SetLinearVelocity(physics, direction.Normalized * speed);
 
         if (user != null)
         {
@@ -274,13 +275,6 @@ public sealed partial class GunSystem : SharedGunSystem
         var angle = new Angle(direction.Theta + component.CurrentAngle.Theta * random);
         DebugTools.Assert(spread <= component.MaxAngle.Theta);
         return angle;
-    }
-
-    protected override void PlaySound(EntityUid gun, string? sound, EntityUid? user = null)
-    {
-        if (string.IsNullOrEmpty(sound)) return;
-
-        SoundSystem.Play(sound, Filter.Pvs(gun, entityManager: EntityManager).RemoveWhereAttachedEntity(e => e == user), gun);
     }
 
     protected override void Popup(string message, EntityUid? uid, EntityUid? user) {}

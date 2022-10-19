@@ -310,6 +310,7 @@
     - GeneratorPlasmaMachineCircuitboard
     - Signaller
     - SignalTrigger
+    - VoiceTrigger
     - AppraisalTool
     - ConveyorBeltAssembly
     - FlashlightLantern

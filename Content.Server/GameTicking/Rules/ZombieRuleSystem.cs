@@ -299,15 +299,16 @@ public sealed class ZombieRuleSystem : GameRuleSystem
 
             if (mind.Session != null)
             {
-                var messageWrapper = Loc.GetString("chat-manager-server-wrap-message");
+                var message = Loc.GetString("zombie-patientzero-role-greeting");
+                var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
 
                 //gets the names now in case the players leave.
                 //this gets unhappy if people with the same name get chose. Probably shouldn't happen.
                 _initialInfectedNames.Add(inCharacterName, mind.Session.Name);
 
                 // I went all the way to ChatManager.cs and all i got was this lousy T-shirt
-                _chatManager.ChatMessageToOne(Shared.Chat.ChatChannel.Server, Loc.GetString("zombie-patientzero-role-greeting"),
-                   messageWrapper, default, false, mind.Session.ConnectedClient, Color.Plum);
+                _chatManager.ChatMessageToOne(Shared.Chat.ChatChannel.Server, message,
+                   wrappedMessage, default, false, mind.Session.ConnectedClient, Color.Plum);
             }
         }
     }

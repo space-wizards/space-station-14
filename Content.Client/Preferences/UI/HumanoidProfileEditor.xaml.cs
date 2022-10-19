@@ -99,7 +99,6 @@ namespace Content.Client.Preferences.UI
 
         private bool _isDirty;
         private bool _needUpdatePreview;
-        private bool _needsDummyRebuild;
         public int CharacterSlot;
         public HumanoidCharacterProfile? Profile;
         private MarkingSet _markingSet = new(); // storing this here feels iffy but a few things need it this high up
@@ -613,7 +612,7 @@ namespace Content.Client.Preferences.UI
                 return;
 
             Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithMarkings(markings.GetForwardEnumerator().ToList()));
-            NeedsDummyRebuild = true;
+            _needUpdatePreview = true;
             IsDirty = true;
         }
 
@@ -678,7 +677,6 @@ namespace Content.Client.Preferences.UI
             }
 
             IsDirty = true;
-            NeedsDummyRebuild = true; // TODO: ugh - fix this asap
         }
 
         protected override void Dispose(bool disposing)
@@ -739,6 +737,7 @@ namespace Content.Client.Preferences.UI
             {
                 _previewSpriteSide.Sprite = sprite;
             }
+            _needUpdatePreview = true;
         }
 
         private void LoadServerData()
@@ -746,7 +745,7 @@ namespace Content.Client.Preferences.UI
             Profile = (HumanoidCharacterProfile) _preferencesManager.Preferences!.SelectedCharacter;
             CharacterSlot = _preferencesManager.Preferences.SelectedCharacterIndex;
 
-            NeedsDummyRebuild = true;
+            _needUpdatePreview = true;
             UpdateControls();
         }
 
@@ -788,8 +787,9 @@ namespace Content.Client.Preferences.UI
             OnSkinColorOnValueChanged(); // Species may have special color prefs, make sure to update it.
             CMarkings.SetSpecies(newSpecies); // Repopulate the markings tab as well.
             UpdateSexControls(); // update sex for new species
-            NeedsDummyRebuild = true;
+            RebuildSpriteView(); // they might have different inv so we need a new dummy
             IsDirty = true;
+            _needUpdatePreview = true;
         }
 
         private void SetName(string newName)
@@ -817,8 +817,8 @@ namespace Content.Client.Preferences.UI
             if (Profile != null)
             {
                 _preferencesManager.UpdateCharacter(Profile, CharacterSlot);
-                NeedsDummyRebuild = true;
                 OnProfileChanged?.Invoke(Profile, CharacterSlot);
+                _needUpdatePreview = true;
             }
         }
 
@@ -830,16 +830,6 @@ namespace Content.Client.Preferences.UI
                 _isDirty = value;
                 _needUpdatePreview = true;
                 UpdateSaveButton();
-            }
-        }
-
-        private bool NeedsDummyRebuild
-        {
-            get => _needsDummyRebuild;
-            set
-            {
-                _needsDummyRebuild = value;
-                _needUpdatePreview = true;
             }
         }
 
@@ -1042,14 +1032,6 @@ namespace Content.Client.Preferences.UI
             if (Profile is null)
                 return;
 
-            /* dear fuck this needs to not happen ever again
-            if (_needsDummyRebuild)
-            {
-                RebuildSpriteView(); // Species change also requires sprite rebuild, so we'll do that now.
-                _needsDummyRebuild = false;
-            }
-            */
-
             EntitySystem.Get<HumanoidSystem>().LoadProfile(_previewDummy!.Value, Profile);
             LobbyCharacterPreviewPanel.GiveDummyJobClothes(_previewDummy!.Value, Profile);
         }
@@ -1073,8 +1055,7 @@ namespace Content.Client.Preferences.UI
             UpdateAntagPreferences();
             UpdateTraitPreferences();
             UpdateMarkings();
-
-            NeedsDummyRebuild = true;
+            RebuildSpriteView();
 
             _preferenceUnavailableButton.SelectId((int) Profile.PreferenceUnavailable);
         }

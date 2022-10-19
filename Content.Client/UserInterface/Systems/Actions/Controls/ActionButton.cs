@@ -294,6 +294,7 @@ public sealed class ActionButton : Control
     public void UpdateData(ActionType action)
     {
         Action = action;
+        Label.Visible = true;
         UpdateIcons();
     }
 
@@ -302,6 +303,7 @@ public sealed class ActionButton : Control
         Action = null;
         Cooldown.Visible = false;
         Cooldown.Progress = 1;
+        Label.Visible = false;
         UpdateIcons();
     }
 

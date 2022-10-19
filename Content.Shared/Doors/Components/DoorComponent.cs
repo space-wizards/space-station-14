@@ -169,9 +169,6 @@ public sealed class DoorComponent : Component, ISerializationHooks
     }
     #endregion
 
-    [DataField("board", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string? BoardPrototype;
-
     [DataField("pryingQuality", customTypeSerializer: typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
     public string PryingQuality = "Prying";
 
