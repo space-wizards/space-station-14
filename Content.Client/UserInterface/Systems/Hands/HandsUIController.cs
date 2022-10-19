@@ -154,7 +154,7 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
             hand.SpriteView.Sprite = sprite;
         }
 
-        if (_playerHandsComponent?.ActiveHand.Name == name)
+        if (_playerHandsComponent?.ActiveHand?.Name == name)
             HandsGui?.UpdatePanelEntity(entity);
     }
 
