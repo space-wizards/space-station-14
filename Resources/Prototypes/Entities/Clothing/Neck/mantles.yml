@@ -41,6 +41,9 @@
     sprite: Clothing/Neck/mantles/hopmantle.rsi
   - type: Clothing
     sprite: Clothing/Neck/mantles/hopmantle.rsi
+  - type: Tag
+    tags:
+      - HopClothing
     
 - type: entity
   parent: ClothingNeckBase

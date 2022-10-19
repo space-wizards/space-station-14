@@ -33,3 +33,17 @@
         - id: ClothingNeckMantleHOS
         - id: ClothingHeadHatHoshat
         - id: ClothingHeadHatBeretHoS
+
+- type: entity
+  id: BagGarmentHopFilled
+  suffix: Filled
+  parent: BagGarmentHop
+  components:
+    - type: StorageFill
+      contents:
+        - id: ClothingUniformJumpsuitHoP
+        - id: ClothingUniformJumpskirtHoP
+        - id: ClothingOuterWinterHoP
+        - id: ClothingNeckMantleHOP
+        - id: ClothingNeckCloakHop
+        - id: ClothingHeadHatHopcap

@@ -136,6 +136,9 @@
     sprite: Clothing/OuterClothing/WinterCoats/coathop.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coathop.rsi
+  - type: Tag
+    tags:
+      - HopClothing
 
 - type: entity
   parent: ClothingOuterWinterCoat

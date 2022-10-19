@@ -135,6 +135,9 @@
     sprite: Clothing/Uniforms/Jumpskirt/hop.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpskirt/hop.rsi
+  - type: Tag
+    tags:
+      - HopClothing
 
 - type: entity
   parent: ClothingUniformSkirtBase

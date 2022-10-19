@@ -66,6 +66,9 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/hop.rsi
+  - type: Tag
+    tags:
+      - HopClothing
 
 - type: entity
   parent: ClothingNeckBase

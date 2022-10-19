@@ -34,3 +34,14 @@
       whitelist:
         tags:
           - HosClothing
+
+- type: entity
+  parent: BagGarmentBase
+  id: BagGarmentHop
+  name: head of personnel's garment bag
+  description: A bag for storing extra clothes and shoes. This one belongs to the head of personnel.
+  components:
+    - type: Storage
+      whitelist:
+        tags:
+          - HopClothing

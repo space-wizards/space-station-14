@@ -160,6 +160,9 @@
     sprite: Clothing/Head/Hats/hopcap.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/hopcap.rsi
+  - type: Tag
+    tags:
+      - HopClothing
 
 - type: entity
   parent: ClothingHeadBase
