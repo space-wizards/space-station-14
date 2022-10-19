@@ -182,10 +182,10 @@
     prototype: PortableScrubber
     requirements:
       MatterBin: 3
-      Laser: 2
-      ScanningModule: 1
+      Manipulator: 2
     materialRequirements:
       Cable: 5
+      Glass: 2
 
 - type: entity
   id: CloningPodMachineCircuitboard
