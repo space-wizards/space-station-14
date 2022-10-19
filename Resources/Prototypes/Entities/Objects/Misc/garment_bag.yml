@@ -23,3 +23,14 @@
       whitelist:
         tags:
           - RDClothing
+
+- type: entity
+  parent: BagGarmentBase
+  id: BagGarmentHos
+  name: head of security's garment bag
+  description: A bag for storing extra clothes and shoes. This one belongs to the head of security.
+  components:
+    - type: Storage
+      whitelist:
+        tags:
+          - HosClothing

@@ -166,20 +166,7 @@
   - type: StorageFill
     contents:
       - id: WeaponDisabler
-      - id: ClothingHeadHatBeretHoS
-      - id: ClothingHeadHatHoshat
-      - id: ClothingNeckCloakHos
-      - id: ClothingOuterCoatHoSTrench
-      - id: ClothingUniformJumpskirtHoSAlt
-      - id: ClothingUniformJumpsuitHoSAlt
-      - id: ClothingUniformJumpsuitHoSBlue
-        prob: 0.5
-      - id: ClothingUniformJumpsuitHoSGrey
-        prob: 0.5
-      - id: ClothingUniformJumpsuitHoSParadeMale
-        prob: 0.1
-      - id: ClothingUniformJumpskirtHoSParadeMale
-        prob: 0.1
+      - id: BagGarmentHosFilled
       - id: ClothingOuterHardsuitSecurityRed
       - id: ClothingMaskGasSecurity
       - id: ClothingShoeSlippersDuck
@@ -193,8 +180,6 @@
       - id: CigarGoldCase
         prob: 0.50
       - id: DoorRemoteSecurity
-      - id: ClothingUniformJumpskirtHosFormal
-      - id: ClothingUniformJumpsuitHosFormal
       - id: RubberStampHos
       - id: SecurityTechFabCircuitboard
       - id: JetpackSecurityFilled

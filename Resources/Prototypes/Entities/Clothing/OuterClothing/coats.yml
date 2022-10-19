@@ -58,6 +58,9 @@
         Slash: 0.7
         Piercing: 0.4
         Heat: 0.7
+  - type: Tag
+    tags:
+      - HosClothing
 
 - type: entity
   parent: ClothingOuterStorageBase

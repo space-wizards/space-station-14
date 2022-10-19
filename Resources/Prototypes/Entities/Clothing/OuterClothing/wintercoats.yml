@@ -146,6 +146,9 @@
     sprite: Clothing/OuterClothing/WinterCoats/coathos.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coathos.rsi
+  - type: Tag
+    tags:
+      - HosClothing
 
 - type: entity
   parent: ClothingOuterWinterCoat

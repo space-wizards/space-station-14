@@ -522,6 +522,9 @@
     sprite: Clothing/Uniforms/Jumpskirt/hosformaldress.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpskirt/hosformaldress.rsi
+  - type: Tag
+    tags:
+      - HosClothing
 
 - type: entity
   parent: UnsensoredClothingUniformSkirtBase

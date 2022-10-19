@@ -41,6 +41,9 @@
     sprite: Clothing/Head/Hats/beret_hos.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/beret_hos.rsi
+  - type: Tag
+    tags:
+      - HosClothing
 
 - type: entity
   parent: ClothingHeadBase
@@ -168,6 +171,9 @@
     sprite: Clothing/Head/Hats/hoshat.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/hoshat.rsi
+  - type: Tag
+    tags:
+      - HosClothing
 
 - type: entity
   parent: ClothingHeadBase

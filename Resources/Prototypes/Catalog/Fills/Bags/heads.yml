@@ -10,3 +10,25 @@
         - id: ClothingNeckCloakRd
         - id: ClothingNeckMantleRD
         - id: ClothingOuterWinterRD
+
+- type: entity
+  id: BagGarmentHosFilled
+  suffix: Filled
+  parent: BagGarmentHos
+  components:
+    - type: StorageFill
+      contents:
+        - id: ClothingUniformJumpsuitHoS
+        - id: ClothingUniformJumpskirtHoS
+        - id: ClothingUniformJumpsuitHoSAlt
+        - id: ClothingUniformJumpskirtHoSAlt
+        - id: ClothingUniformJumpsuitHoSGrey
+        - id: ClothingUniformJumpsuitHoSBlue
+        - id: ClothingUniformJumpsuitHosFormal
+        - id: ClothingUniformJumpskirtHosFormal
+        - id: ClothingUniformJumpsuitHoSParadeMale
+        - id: ClothingNeckCloakHos
+        - id: ClothingOuterCoatHoSTrench
+        - id: ClothingOuterWinterHoS
+        - id: ClothingHeadHatHoshat
+        - id: ClothingHeadHatBeretHoS

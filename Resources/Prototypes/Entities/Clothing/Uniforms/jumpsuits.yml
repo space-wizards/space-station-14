@@ -229,6 +229,9 @@
     sprite: Clothing/Uniforms/Jumpsuit/hos.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/hos.rsi
+  - type: Tag
+    tags:
+      - HosClothing
 
 - type: entity
   parent: ClothingUniformBase
@@ -240,6 +243,9 @@
     sprite: Clothing/Uniforms/Jumpsuit/hos_alt.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/hos_alt.rsi
+  - type: Tag
+    tags:
+      - HosClothing
 
 - type: entity
   parent: ClothingUniformBase
@@ -251,6 +257,9 @@
     sprite: Clothing/Uniforms/Jumpsuit/hos_blue.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/hos_blue.rsi
+  - type: Tag
+    tags:
+      - HosClothing
 
 - type: entity
   parent: ClothingUniformBase
@@ -262,6 +271,9 @@
     sprite: Clothing/Uniforms/Jumpsuit/hos_grey.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/hos_grey.rsi
+  - type: Tag
+    tags:
+      - HosClothing
 
 - type: entity
   parent: ClothingUniformBase
@@ -273,6 +285,9 @@
     sprite: Clothing/Uniforms/Jumpsuit/hos_parade.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/hos_parade.rsi
+  - type: Tag
+    tags:
+      - HosClothing
 
 - type: entity
   parent: ClothingUniformBase
@@ -770,6 +785,9 @@
     sprite: Clothing/Uniforms/Jumpsuit/hosformal.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/hosformal.rsi
+  - type: Tag
+    tags:
+      - HosClothing
 
 - type: entity
   parent: UnsensoredClothingUniformBase

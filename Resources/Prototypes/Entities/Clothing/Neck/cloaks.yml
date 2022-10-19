@@ -15,6 +15,9 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/hos.rsi
+  - type: Tag
+    tags:
+      - HosClothing
 
 - type: entity
   parent: ClothingNeckBase
