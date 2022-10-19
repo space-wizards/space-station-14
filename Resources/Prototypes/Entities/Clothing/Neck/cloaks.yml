@@ -42,6 +42,9 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/rd.rsi
+  - type: Tag
+    tags:
+      - RDClothing
 
 - type: entity
   parent: ClothingNeckBase

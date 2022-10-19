@@ -264,6 +264,9 @@
     sprite: Clothing/Uniforms/Jumpskirt/rnd.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpskirt/rnd.rsi
+  - type: Tag
+    tags:
+      - RDClothing
 
 - type: entity
   parent: ClothingUniformSkirtBase

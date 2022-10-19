@@ -63,3 +63,6 @@
     sprite: Clothing/Neck/mantles/rdmantle.rsi
   - type: Clothing
     sprite: Clothing/Neck/mantles/rdmantle.rsi    
+  - type: Tag
+    tags:
+      - RDClothing

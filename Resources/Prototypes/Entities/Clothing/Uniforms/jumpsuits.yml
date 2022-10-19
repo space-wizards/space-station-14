@@ -369,6 +369,9 @@
     sprite: Clothing/Uniforms/Jumpsuit/rnd.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/rnd.rsi
+  - type: Tag
+    tags:
+      - RDClothing
 
 - type: entity
   parent: ClothingUniformBase

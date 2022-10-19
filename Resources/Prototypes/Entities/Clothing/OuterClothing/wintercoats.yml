@@ -226,6 +226,9 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatrd.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatrd.rsi
+  - type: Tag
+    tags:
+      - RDClothing
 
 - type: entity
   parent: ClothingOuterWinterCoat
