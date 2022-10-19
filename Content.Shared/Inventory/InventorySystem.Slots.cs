@@ -17,6 +17,12 @@ public partial class InventorySystem : EntitySystem
             .AddHandler(HandleViewVariablesSlots, ListViewVariablesSlots);
     }
 
+    private void ShutdownSlots()
+    {
+        _vvm.GetTypeHandler<InventoryComponent>()
+            .RemoveHandler(HandleViewVariablesSlots, ListViewVariablesSlots);
+    }
+
     protected virtual void OnInit(EntityUid uid, InventoryComponent component, ComponentInit args)
     {
         if (!_prototypeManager.TryIndex(component.TemplateId, out InventoryTemplatePrototype? invTemplate))
