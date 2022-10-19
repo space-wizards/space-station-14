@@ -17,6 +17,7 @@ public sealed class GeigerSystem : SharedGeigerSystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly RadiationSystem _radiation = default!;
 
     private static readonly float ApproxEqual = 0.01f;
 
@@ -118,13 +119,14 @@ public sealed class GeigerSystem : SharedGeigerSystem
         if (component.IsEnabled == isEnabled)
             return;
 
-        receiver.CanReceive = isEnabled;
         component.IsEnabled = isEnabled;
         if (!isEnabled)
         {
             component.CurrentRadiation = 0f;
             component.DangerLevel = GeigerDangerLevel.None;
         }
+
+        _radiation.SetCanRecieve(uid, isEnabled, receiver);
 
         UpdateAppearance(uid, component);
         UpdateGeigerSound(uid, component);

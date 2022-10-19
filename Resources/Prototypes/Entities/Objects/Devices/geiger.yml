@@ -19,6 +19,8 @@
       canReceive: false
     - type: Geiger
       isEnabled: false
+      showControl: true
+      showExamine: true
     - type: GeigerVisuals
       states:
         None: geiger_on_idle

@@ -1,5 +1,4 @@
 using Content.Shared.Radiation.Components;
-using Robust.Shared.Audio;
 
 namespace Content.Client.Radiation.Components;
 
@@ -7,8 +6,9 @@ namespace Content.Client.Radiation.Components;
 [ComponentReference(typeof(SharedGeigerComponent))]
 public sealed class GeigerComponent : SharedGeigerComponent
 {
+    [ViewVariables(VVAccess.ReadWrite)]
     [DataField("showControl")]
-    public bool ShowControl = true;
+    public bool ShowControl;
 
     public bool UiUpdateNeeded;
 }

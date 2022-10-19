@@ -1,4 +1,5 @@
-﻿using Content.Shared.Radiation.Events;
+﻿using Content.Server.Radiation.Components;
+using Content.Shared.Radiation.Events;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 
@@ -42,5 +43,13 @@ public sealed partial class RadiationSystem : EntitySystem
     {
         var msg = new OnIrradiatedEvent(time, radsPerSecond);
         RaiseLocalEvent(uid, msg);
+    }
+
+    public void SetCanRecieve(EntityUid uid, bool canReceive, RadiationReceiverComponent? receiver = null)
+    {
+        if (!Resolve(uid, ref receiver))
+            return;
+        receiver.CanReceive = canReceive;
+        receiver.CurrentRadiation = 0f;
     }
 }

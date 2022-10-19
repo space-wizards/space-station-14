@@ -7,6 +7,7 @@ namespace Content.Server.Radiation.Components;
 ///     Marks component that receive radiation from <see cref="RadiationSourceComponent"/>.
 /// </summary>
 [RegisterComponent]
+[Access(typeof(RadiationSystem))]
 public sealed class RadiationReceiverComponent : Component
 {
     /// <summary>
@@ -14,7 +15,6 @@ public sealed class RadiationReceiverComponent : Component
     ///     If false will ignore any radiation sources.
     /// </summary>
     [DataField("canReceive")]
-    [ViewVariables(VVAccess.ReadWrite)]
     public bool CanReceive = true;
 
     /// <summary>
@@ -22,7 +22,6 @@ public sealed class RadiationReceiverComponent : Component
     ///     Periodically updated by radiation system.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
-    [Access(typeof(RadiationSystem))]
     public float CurrentRadiation;
 }
 
