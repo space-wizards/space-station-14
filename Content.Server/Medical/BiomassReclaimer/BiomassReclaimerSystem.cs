@@ -96,6 +96,7 @@ namespace Content.Server.Medical.BiomassReclaimer
             SubscribeLocalEvent<BiomassReclaimerComponent, SuicideEvent>(OnSuicide);
             SubscribeLocalEvent<ReclaimSuccessfulEvent>(OnReclaimSuccessful);
             SubscribeLocalEvent<ReclaimCancelledEvent>(OnReclaimCancelled);
+            SubscribeLocalEvent<GotEmaggedEvent>(OnEmagged);
         }
 
         private void OnSuicide(EntityUid uid, BiomassReclaimerComponent component, SuicideEvent args)
@@ -217,6 +218,13 @@ namespace Content.Server.Medical.BiomassReclaimer
             component.CurrentExpectedYield = (uint) Math.Max(0, physics.FixturesMass * component.YieldPerUnitMass);
             component.ProcessingTimer = physics.FixturesMass * component.ProcessingTimePerUnitMass;
             QueueDel(toProcess);
+        }
+        
+        private void OnEmagged(EntityUid uid, BiomassReclaimerComponent component, GotEmaggedEvent args)
+        {
+            if (!component.SafetyEnabled) return;
+            component.SafetyEnabled = false;
+            args.Handled = true;
         }
 
         private bool CanGib(EntityUid uid, EntityUid dragged, BiomassReclaimerComponent component)
