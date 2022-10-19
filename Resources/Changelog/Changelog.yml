@@ -1,10 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: Gas pipes need to be unanchored before being able to deconstruct them.,
-    type: Tweak}
-  id: 1988
-  time: '2022-07-20T12:30:08.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: The Necronomicon no longer can appear in surplus bundles., type: Tweak}
@@ -2940,3 +2934,10 @@ Entries:
       leave., type: Tweak}
   id: 2487
   time: '2022-10-18T23:07:44.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Extended has been reworked into ''Survival'' mode. No explicit antagonists
+      are spawned at roundstart, as usual, but event severity and frequency ramps
+      up over time. How long can the crew survive?', type: Add}
+  id: 2488
+  time: '2022-10-19T02:51:48.0000000+00:00'
