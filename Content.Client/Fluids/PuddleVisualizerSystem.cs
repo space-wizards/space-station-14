@@ -48,8 +48,7 @@ namespace Content.Client.Fluids
             if  (args.Component.TryGetData(PuddleVisuals.VolumeScale, out float volumeScale)
                 && args.Component.TryGetData(PuddleVisuals.CurrentVolume, out FixedPoint2 currentVolume)
                 && args.Component.TryGetData(PuddleVisuals.SolutionColor, out Color solutionColor)
-                && args.Component.TryGetData(PuddleVisuals.IsEvaporatingVisual, out bool isEvaporating)
-                && args.Component.TryGetData(PuddleVisuals.IsSlipperyVisual, out bool isSlippery))
+                && args.Component.TryGetData(PuddleVisuals.IsEvaporatingVisual, out bool isEvaporating))
             {
                 // volumeScale is our opacity based on level of fullness to overflow. The lower bound is hard-capped for visibility reasons.
                 var cappedScale = Math.Min(1.0f, volumeScale * 0.75f + 0.25f);
@@ -71,26 +70,15 @@ namespace Content.Client.Fluids
                     return;
                 }
 
-                bool wetFloorEffectNeeded = false;
-                bool hidePuddle;
+                bool wetFloorEffectNeeded;
 
                 if (isEvaporating
                     && currentVolume < component.WetFloorEffectThreshold)
                 {
-                    if (isSlippery)
-                    {
-                        wetFloorEffectNeeded = true;
-                        hidePuddle = false;
-                    }
-                    else
-                        hidePuddle = true;
-
+                    wetFloorEffectNeeded = true;
                 }
                 else
-                {
                     wetFloorEffectNeeded = false;
-                    hidePuddle = false;
-                }
 
                 if (wetFloorEffectNeeded)
                 {
@@ -104,8 +92,6 @@ namespace Content.Client.Fluids
                     if (args.Sprite.LayerGetState(0) == "sparkles") // If we have the effect but don't need it - end it
                         EndWetFloorEffect(args.Sprite, component.OriginalRsi);
                 }
-
-                HideUnhidePuddle(args.Sprite, hidePuddle);
             }
             else
             {
@@ -139,14 +125,6 @@ namespace Content.Client.Fluids
         {
             float rotationDegrees = _random.Next(0, 359); // randomly select a rotation for our puddle sprite.
             sprite.Rotation = Angle.FromDegrees(rotationDegrees); // sets the sprite's rotation to the one we randomly selected.
-        }
-
-        private void HideUnhidePuddle(SpriteComponent sprite, bool hidePuddle)
-        {
-            if (hidePuddle)
-                sprite.Visible = false;
-            else
-                sprite.Visible = true;
         }
     }
 }

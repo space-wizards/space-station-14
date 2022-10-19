@@ -8,7 +8,6 @@ namespace Content.Shared.Fluids
         VolumeScale,
         CurrentVolume,
         SolutionColor,
-        IsEvaporatingVisual,
-        IsSlipperyVisual
+        IsEvaporatingVisual
     }
 }
