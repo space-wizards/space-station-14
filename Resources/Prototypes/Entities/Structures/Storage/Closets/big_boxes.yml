@@ -49,6 +49,7 @@
 
 - type: entity
   id: StealthBox
+  suffix: stealth
   parent: BaseBigBox
   name: cardboard box #it's still just a box
   description: Kept ya waiting, huh?
@@ -74,6 +75,7 @@
 - type: entity
   id: GhostBox
   parent: StealthBox
+  suffix: 
   name: ghost box
   description: Beware!
   components:

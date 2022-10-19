@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
 using BenchmarkDotNet.Attributes;
+using Robust.Shared.Analyzers;
 using Robust.Shared.Utility;
 
 namespace Content.Benchmarks
 {
     [SimpleJob]
-    public sealed class EntityFetchBenchmark
+    [Virtual]
+    public class EntityFetchBenchmark
     {
         [Params(1000)] public int N { get; set; }
 
