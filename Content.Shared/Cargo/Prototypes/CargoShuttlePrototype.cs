@@ -12,9 +12,8 @@ public readonly record struct CargoShuttlePrototype : IPrototype
     [IdDataField]
     public string ID { get; } = default!;
 
-    [ViewVariables, DataField("path")]
-    public ResourcePath Path = default!;
+    [ViewVariables, DataField("path")] public readonly ResourcePath Path = default!;
 
     [ViewVariables, DataField("nameDataset", customTypeSerializer:typeof(PrototypeIdSerializer<DatasetPrototype>))]
-    public string NameDataset = "CargoShuttleNames";
+    public readonly string NameDataset = "CargoShuttleNames";
 }

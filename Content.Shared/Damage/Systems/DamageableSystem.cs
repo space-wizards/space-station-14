@@ -65,12 +65,12 @@ namespace Content.Shared.Damage
             {
                 // Initialize damage dictionary, using the types and groups from the damage
                 // container prototype
-                foreach (var type in damageContainerPrototype.SupportedTypes)
+                foreach (var type in damageContainerPrototype.Value.SupportedTypes)
                 {
                     component.Damage.DamageDict.TryAdd(type, FixedPoint2.Zero);
                 }
 
-                foreach (var groupID in damageContainerPrototype.SupportedGroups)
+                foreach (var groupID in damageContainerPrototype.Value.SupportedGroups)
                 {
                     var group = _prototypeManager.Index<DamageGroupPrototype>(groupID);
                     foreach (var type in group.DamageTypes)
@@ -165,7 +165,7 @@ namespace Content.Shared.Damage
                 if (damageable.DamageModifierSetId != null &&
                     _prototypeManager.TryIndex<DamageModifierSetPrototype>(damageable.DamageModifierSetId, out var modifierSet))
                 {
-                    damage = DamageSpecifier.ApplyModifierSet(damage, modifierSet);
+                    damage = DamageSpecifier.ApplyModifierSet(damage, modifierSet.Value.DamageModifierSet);
                 }
 
                 var ev = new DamageModifyEvent(damage);

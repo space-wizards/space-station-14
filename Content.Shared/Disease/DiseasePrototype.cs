@@ -1,4 +1,5 @@
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 
 namespace Content.Shared.Disease
@@ -11,18 +12,12 @@ namespace Content.Shared.Disease
     [DataDefinition]
     public readonly record struct DiseasePrototype : IPrototype, IInheritingPrototype
     {
-        private string _name = string.Empty;
-
         [ViewVariables]
         [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
-        [DataField("name")]
-        public string Name
-        {
-            get => _name;
-            private set => _name = Loc.GetString(value);
-        }
+        [DataField("name", customTypeSerializer: typeof(LocStringSerializer))]
+        public readonly string Name;
 
         [ParentDataFieldAttribute(typeof(AbstractPrototypeIdArraySerializer<DiseasePrototype>))]
         public string[]? Parents { get; }
@@ -65,8 +60,7 @@ namespace Content.Shared.Disease
         /// be checked every second.
         /// Stuff like spaceacillin operates outside this.
         /// </summary>
-        [DataField("cures", serverOnly: true)]
-        public readonly List<DiseaseCure> Cures = new(0);
+        [DataField("cures", serverOnly: true)] public readonly List<DiseaseCure> Cures = new(0);
         /// <summary>
         /// This flatly reduces the probabilty disease medicine
         /// has to cure it every tick. Although, since spaceacillin is

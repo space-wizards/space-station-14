@@ -8,11 +8,11 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.Drunk;
 using Content.Shared.FixedPoint;
 using Content.Shared.IdentityManagement;
 using Content.Shared.MobState.Components;
 using Content.Shared.Popups;
-using Content.Shared.Drunk;
 using Content.Shared.Rejuvenate;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
@@ -151,7 +151,7 @@ public sealed class BloodstreamSystem : EntitySystem
         if (!_prototypeManager.TryIndex<DamageModifierSetPrototype>(component.DamageBleedModifiers, out var modifiers))
             return;
 
-        var bloodloss = DamageSpecifier.ApplyModifierSet(args.DamageDelta, modifiers);
+        var bloodloss = DamageSpecifier.ApplyModifierSet(args.DamageDelta, modifiers.Value.DamageModifierSet);
 
         if (bloodloss.Empty)
             return;

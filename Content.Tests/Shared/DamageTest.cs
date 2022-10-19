@@ -1,11 +1,11 @@
+using System.Collections.Generic;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.FixedPoint;
 using NUnit.Framework;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager;
-using System.Collections.Generic;
-using Content.Shared.FixedPoint;
 
 namespace Content.Tests.Shared
 {
@@ -139,7 +139,7 @@ namespace Content.Tests.Shared
             DamageSpecifier damageSpec = 10 * new DamageSpecifier(_damageSpec);
 
             // Create a modifier set
-            DamageModifierSetPrototype modifierSet = new()
+            DamageModifierSet modifierSet = new()
             {
                 Coefficients = _resistanceCoefficientDict,
                 FlatReduction = _resistanceReductionDict

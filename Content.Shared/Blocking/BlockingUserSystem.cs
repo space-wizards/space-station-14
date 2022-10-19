@@ -1,9 +1,7 @@
-﻿using Content.Shared.Audio;
-using Content.Shared.Damage;
+﻿using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Blocking;
@@ -67,11 +65,11 @@ public sealed class BlockingUserSystem : EntitySystem
         if (TryComp<BlockingComponent>(component.BlockingItem, out var blockingComponent))
         {
             if (_proto.TryIndex(blockingComponent.PassiveBlockDamageModifer, out DamageModifierSetPrototype? passiveblockModifier) && !blockingComponent.IsBlocking)
-                args.Damage = DamageSpecifier.ApplyModifierSet(args.Damage, passiveblockModifier);
+                args.Damage = DamageSpecifier.ApplyModifierSet(args.Damage, passiveblockModifier.Value.DamageModifierSet);
 
             if (_proto.TryIndex(blockingComponent.ActiveBlockDamageModifier, out DamageModifierSetPrototype? activeBlockModifier) && blockingComponent.IsBlocking)
             {
-                args.Damage = DamageSpecifier.ApplyModifierSet(args.Damage, activeBlockModifier);
+                args.Damage = DamageSpecifier.ApplyModifierSet(args.Damage, activeBlockModifier.Value.DamageModifierSet);
                 _audio.PlayPvs(blockingComponent.BlockSound, component.Owner, AudioParams.Default.WithVariation(0.2f));
             }
         }

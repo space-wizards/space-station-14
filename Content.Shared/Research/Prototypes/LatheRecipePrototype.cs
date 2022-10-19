@@ -36,13 +36,12 @@ namespace Content.Shared.Research.Prototypes
         {
             get
             {
-                if (_name.Trim().Length != 0) return _name;
-                var protoMan = IoCManager.Resolve<IPrototypeManager>();
-                if (protoMan == null) return _description;
-                protoMan.TryIndex(_result, out EntityPrototype? prototype);
-                if (prototype?.Name != null)
-                    _name = prototype.Value.Name;
-                return _name;
+                if (!string.IsNullOrWhiteSpace(_name))
+                    return _name;
+
+                return !IoCManager.Resolve<IPrototypeManager>().TryIndex<EntityPrototype>(_result, out var prototype)
+                    ? _name
+                    : prototype.Value.Name;
             }
         }
 
@@ -54,13 +53,12 @@ namespace Content.Shared.Research.Prototypes
         {
             get
             {
-                if (_description.Trim().Length != 0) return _description;
-                var protoMan = IoCManager.Resolve<IPrototypeManager>();
-                if (protoMan == null) return _description;
-                protoMan.TryIndex(_result, out EntityPrototype? prototype);
-                if (prototype?.Description != null)
-                    _description = prototype.Value.Description;
-                return _description;
+                if (!string.IsNullOrWhiteSpace(_description))
+                    return _description;
+
+                return !IoCManager.Resolve<IPrototypeManager>().TryIndex<EntityPrototype>(_result, out var prototype)
+                    ? _description
+                    : prototype.Value.Description;
             }
         }
 

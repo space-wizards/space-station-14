@@ -1,5 +1,6 @@
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Robust.Shared.Utility;
 
@@ -19,14 +20,10 @@ namespace Content.Shared.Research.Prototypes
         ///     The name this technology will have on user interfaces.
         /// </summary>
         [ViewVariables]
-        [DataField("name")]
-        public string Name
-        {
-            get => (_name is not null) ? _name : ID;
-            private set => _name = Loc.GetString(value);
-        }
+        public string Name => _name ?? ID;
 
-        private string? _name;
+        [DataField("name", customTypeSerializer: typeof(LocStringSerializer))]
+        private readonly string? _name;
 
         /// <summary>
         ///     An icon that represent this technology.
@@ -37,15 +34,8 @@ namespace Content.Shared.Research.Prototypes
         /// <summary>
         ///     A short description of the technology.
         /// </summary>
-        [ViewVariables]
-        [DataField("description")]
-        public string Description
-        {
-            get => (_description is not null) ? _description : "";
-            private set => _description = Loc.GetString(value);
-        }
-
-        private string? _description;
+        [ViewVariables] [DataField("description", customTypeSerializer: typeof(LocStringSerializer))]
+        public readonly string Description = "";
 
         /// <summary>
         ///    The required research points to unlock this technology.
