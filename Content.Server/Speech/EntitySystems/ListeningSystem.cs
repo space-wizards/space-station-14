@@ -10,8 +10,6 @@ public sealed class ListeningSystem : EntitySystem
 {
     [Dependency] private readonly SharedTransformSystem _xforms = default!;
 
-    private const float WhisperMultiplier = ChatSystem.WhisperRange / ChatSystem.VoiceRange;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -20,10 +18,10 @@ public sealed class ListeningSystem : EntitySystem
 
     private void OnSpeak(EntitySpokeEvent ev)
     {
-        PingListeners(ev.Source, ev.Message, ev.Whisper);
+        PingListeners(ev.Source, ev.Message, ev.ObfuscatedMessage);
     }
 
-    public void PingListeners(EntityUid source, string message, bool whispering)
+    public void PingListeners(EntityUid source, string message, string? obfuscatedMessage)
     {
         // TODO whispering / audio volume? Microphone sensitivity?
         // for now, whispering just arbitrarily reduces the listener's max range.
@@ -32,22 +30,19 @@ public sealed class ListeningSystem : EntitySystem
         var sourceXform = xformQuery.GetComponent(source);
         var sourcePos = _xforms.GetWorldPosition(sourceXform, xformQuery);
 
-        var attemptEv = new ListenAttemptEvent(message, source);
+        var attemptEv = new ListenAttemptEvent(source);
         var ev = new ListenEvent(message, source);
+        var obfuscatedEv = obfuscatedMessage == null ? null : new ListenEvent(obfuscatedMessage, source);
 
         foreach (var (listener, xform) in EntityQuery<ActiveListenerComponent, TransformComponent>())
         {
             if (xform.MapID != sourceXform.MapID)
                 return;
 
-            // TODO proper speech occlusion
-
-            // This is very arbitrary
-            var effectiveRange = whispering ? listener.Range * WhisperMultiplier : listener.Range;
-
             // range checks
-            var pos = _xforms.GetWorldPosition(xform, xformQuery);
-            if ((pos - sourcePos).LengthSquared > effectiveRange * effectiveRange)
+            // TODO proper speech occlusion
+            var distance = (sourcePos - _xforms.GetWorldPosition(xform, xformQuery)).LengthSquared;
+            if (distance > listener.Range * listener.Range)
                 continue;
 
             RaiseLocalEvent(listener.Owner, attemptEv);
@@ -57,7 +52,10 @@ public sealed class ListeningSystem : EntitySystem
                 continue;
             }
 
-            RaiseLocalEvent(listener.Owner, ev);
+            if (obfuscatedEv != null && distance > ChatSystem.WhisperRange)
+                RaiseLocalEvent(listener.Owner, obfuscatedEv);
+            else
+                RaiseLocalEvent(listener.Owner, ev);
         }
     }
 }

@@ -14,12 +14,10 @@ public sealed class ListenEvent : EntityEventArgs
 
 public sealed class ListenAttemptEvent : CancellableEntityEventArgs
 {
-    public readonly string Message;
     public readonly EntityUid Source;
 
-    public ListenAttemptEvent(string message, EntityUid source)
+    public ListenAttemptEvent(EntityUid source)
     {
-        Message = message;
         Source = source;
     }
 }

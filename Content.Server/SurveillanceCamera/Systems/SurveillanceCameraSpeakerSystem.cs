@@ -74,7 +74,7 @@ public sealed class SurveillanceCameraSpeakerSystem : EntitySystem
         var name = Loc.GetString("speech-name-relay", ("speaker", Name(uid)),
             ("originalName", nameEv.Name)); ;
 
-        var hideGhostChat = true; // log to chat so people can identity the speaker/source, but avoid clogging ghost chat if there are many radios
-        _chatSystem.TrySendInGameICMessage(uid, args.Message, InGameICChatType.Speak, false, hideGhostChat, nameOverride: name);
+        var hideGlobalGhostChat = true; // log to chat so people can identity the speaker/source, but avoid clogging ghost chat if there are many radios
+        _chatSystem.TrySendInGameICMessage(uid, args.Message, InGameICChatType.Speak, false, hideGlobalGhostChat, nameOverride: name);
     }
 }
