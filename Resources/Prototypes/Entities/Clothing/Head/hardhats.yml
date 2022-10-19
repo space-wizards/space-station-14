@@ -22,8 +22,8 @@
   - type: Appearance
   - type: HandheldLight
     addPrefix: false
-    blinkingBehaviourID: blinking
-    radiatingBehaviourID: radiating
+    blinkingBehaviourId: blinking
+    radiatingBehaviourId: radiating
   - type: LightBehaviour
     behaviours:
       - !type:FadeBehaviour

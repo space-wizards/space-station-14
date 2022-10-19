@@ -6,8 +6,8 @@
   components:
     - type: HandheldLight
       addPrefix: true
-      blinkingBehaviourID: blinking
-      radiatingBehaviourID: radiating
+      blinkingBehaviourId: blinking
+      radiatingBehaviourId: radiating
     - type: LightBehaviour
       behaviours:
         - !type:FadeBehaviour

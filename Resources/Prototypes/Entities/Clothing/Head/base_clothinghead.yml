@@ -56,8 +56,8 @@
   - type: Appearance
   - type: HandheldLight
     addPrefix: true
-    blinkingBehaviourID: blinking
-    radiatingBehaviourID: radiating
+    blinkingBehaviourId: blinking
+    radiatingBehaviourId: radiating
   - type: LightBehaviour
     behaviours:
       - !type:FadeBehaviour
@@ -178,8 +178,8 @@
   - type: Appearance
   - type: HandheldLight
     addPrefix: true
-    blinkingBehaviourID: blinking
-    radiatingBehaviourID: radiating
+    blinkingBehaviourId: blinking
+    radiatingBehaviourId: radiating
   - type: LightBehaviour
     behaviours:
       - !type:FadeBehaviour
