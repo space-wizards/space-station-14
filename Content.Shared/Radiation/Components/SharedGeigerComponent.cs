@@ -40,7 +40,6 @@ public enum GeigerDangerLevel : byte
 [Serializable, NetSerializable]
 public enum GeigerLayers : byte
 {
-    Base,
     Screen
 }
 

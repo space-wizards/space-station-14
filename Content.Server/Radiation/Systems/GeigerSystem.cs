@@ -118,8 +118,13 @@ public sealed class GeigerSystem : SharedGeigerSystem
         if (component.IsEnabled == isEnabled)
             return;
 
-        component.IsEnabled = isEnabled;
         receiver.CanReceive = isEnabled;
+        component.IsEnabled = isEnabled;
+        if (!isEnabled)
+        {
+            component.CurrentRadiation = 0f;
+            component.DangerLevel = GeigerDangerLevel.None;
+        }
 
         UpdateAppearance(uid, component);
         UpdateGeigerSound(uid, component);
