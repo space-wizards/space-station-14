@@ -1,4 +1,4 @@
-using System.Linq;
+﻿using System.Linq;
 using System.Runtime.InteropServices;
 using Content.Client.Actions;
 using Content.Client.Construction;
@@ -185,7 +185,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             // handled and prevent further interactions.
             return !action.InteractOnMiss;
         }
-        
+
         switch (action)
         {
             case WorldTargetAction mapTarget:
@@ -330,7 +330,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             return;
 
         if (type is TargetedAction action)
-            ToggleTargeting(action); 
+            ToggleTargeting(action);
         else
             _actionsSystem?.TriggerAction(type);
     }

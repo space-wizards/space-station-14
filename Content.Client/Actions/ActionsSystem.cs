@@ -190,8 +190,8 @@ namespace Content.Client.Actions
 
         public void UnlinkAllActions()
         {
-            UnlinkActions?.Invoke();
             PlayerActions = null;
+            UnlinkActions?.Invoke();
         }
 
         public void LinkAllActions(ActionsComponent? actions = null)
