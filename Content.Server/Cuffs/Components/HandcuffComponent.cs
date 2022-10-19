@@ -19,7 +19,7 @@ namespace Content.Server.Cuffs.Components
     {
         [Dependency] private readonly IEntityManager _entities = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        
+
         private string _brokenName = string.Empty;
         private string _brokenDesc = string.Empty;
 
@@ -83,7 +83,7 @@ namespace Content.Server.Cuffs.Components
         ///     The iconstate used for broken handcuffs
         /// </summary>
         [ViewVariables]
-        [DataField("brokenName")]
+        [DataField("brokenName", readOnly: true)]
         public string BrokenName
         {
             get => _brokenName;
@@ -94,7 +94,7 @@ namespace Content.Server.Cuffs.Components
         ///     The iconstate used for broken handcuffs
         /// </summary>
         [ViewVariables]
-        [DataField("brokenDesc")]
+        [DataField("brokenDesc", readOnly: true)]
         public string BrokenDesc
         {
             get => _brokenDesc;
