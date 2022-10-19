@@ -219,6 +219,33 @@
   metabolisms:
     Narcotic:
       effects:
+      - !type:PopupMessage
+        type: Local
+        messages:
+        - generic-reagent-effect-burning-eyes
+        - generic-reagent-effect-burning-eyes-a-bit
+        - generic-reagent-effect-tearing-up
+        - generic-reagent-effect-eyelids
+        - generic-reagent-effect-eyes-itch
+        - generic-reagent-effect-vision-fade
+        - generic-reagent-effect-vision-fail
+        probability: 0.08
+      - !type:PopupMessage
+        visualType: MediumCaution
+        type: Local
+        messages:
+        - generic-reagent-effect-eye-disconnect
+        - generic-reagent-effect-eye-pain
+        - generic-reagent-effect-darkness
+        - generic-reagent-effect-blindness
+        conditions:
+        - !type:ReagentThreshold
+          min: 20
+        probability: 0.03
+        #If anyone wants to add a light dimming or grayscale effect when under 20u, be my guest
       - !type:GenericStatusEffect
         key: TemporaryBlindness
         component: TemporaryBlindness
+        conditions:
+        - !type:ReagentThreshold
+          min: 20
