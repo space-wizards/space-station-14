@@ -1,4 +1,4 @@
-examine-trigger-voice = Дисплей считывает "{$keyphrase}"
+examine-trigger-voice = На дисплее виднеется "{$keyphrase}"
 trigger-voice-uninitialized = Не запущено...
 
 verb-trigger-voice-record = Запись
