@@ -1,6 +1,6 @@
 - type: entity
   parent: BaseStorageItem
-  id: BagGarment
+  id: BagGarmentBase
   name: garment bag
   description: A bag for storing extra clothes and shoes. This one belongs to the research director.
   components:
@@ -14,7 +14,7 @@
       capacity: 100
 
 - type: entity
-  parent: BagGarment
+  parent: BagGarmentBase
   id: BagGarmentRD
   name: research director's garment bag
   description: A bag for storing extra clothes and shoes. This one belongs to the research director.

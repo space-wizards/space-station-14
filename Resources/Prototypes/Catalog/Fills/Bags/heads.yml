@@ -1,0 +1,12 @@
+- type: entity
+  id: BagGarmentRDFilled
+  suffix: Filled
+  parent: BagGarmentRD
+  components:
+    - type: StorageFill
+      contents:
+        - id: ClothingUniformJumpsuitResearchDirector
+        - id: ClothingUniformJumpskirtResearchDirector
+        - id: ClothingNeckCloakRd
+        - id: ClothingNeckMantleRD
+        - id: ClothingOuterWinterRD
