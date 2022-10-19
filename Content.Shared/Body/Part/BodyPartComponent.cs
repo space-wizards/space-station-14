@@ -9,7 +9,9 @@ namespace Content.Shared.Body.Part;
 [Access(typeof(SharedBodySystem))]
 public sealed class BodyPartComponent : Component
 {
-    [ViewVariables] public EntityUid? Body;
+    [ViewVariables]
+    [DataField("body")]
+    public EntityUid? Body;
 
     [ViewVariables]
     [DataField("parent")]
