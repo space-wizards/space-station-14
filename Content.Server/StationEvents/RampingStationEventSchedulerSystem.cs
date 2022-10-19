@@ -16,10 +16,27 @@ public sealed class RampingStationEventSchedulerSystem : GameRuleSystem
     [Dependency] private readonly EventManagerSystem _event = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
 
+    [ViewVariables(VVAccess.ReadWrite)]
     private float _endTime;
+    [ViewVariables(VVAccess.ReadWrite)]
     private float _maxChaos;
+    [ViewVariables(VVAccess.ReadWrite)]
     private float _startingChaos;
+    [ViewVariables(VVAccess.ReadWrite)]
     private float _timeUntilNextEvent;
+
+    [ViewVariables]
+    public float ChaosModifier
+    {
+        get
+        {
+            var roundTime = (float) _gameTicker.RoundDuration().TotalSeconds;
+            if (roundTime > _endTime)
+                return _maxChaos;
+
+            return (_maxChaos / _endTime) * roundTime + _startingChaos;
+        }
+    }
 
     public override void Initialize()
     {
@@ -34,8 +51,10 @@ public sealed class RampingStationEventSchedulerSystem : GameRuleSystem
         var avgTime = _cfg.GetCVar(CCVars.EventsRampingAverageEndTime);
 
         // Worlds shittiest probability distribution
+        // Got a complaint? Send them to
         _maxChaos = _random.NextFloat(avgChaos - avgChaos / 4, avgChaos + avgChaos / 4);
-        _endTime = _random.NextFloat(avgTime - avgTime / 4, avgTime + avgTime / 4);
+        // This is in minutes, so *60 for seconds (for the chaos calc)
+        _endTime = _random.NextFloat(avgTime - avgTime / 4, avgTime + avgTime / 4) * 60f;
         _startingChaos = _maxChaos / 10;
 
         PickNextEventTime();
@@ -62,6 +81,7 @@ public sealed class RampingStationEventSchedulerSystem : GameRuleSystem
             return;
         }
 
+        PickNextEventTime();
         _event.RunRandomEvent();
     }
 
@@ -70,22 +90,13 @@ public sealed class RampingStationEventSchedulerSystem : GameRuleSystem
         if (!RuleStarted)
             return;
 
-        ev.Modifier *= GetChaosModifier();
+        ev.Modifier *= ChaosModifier;
         Logger.Info($"Ramping set modifier to {ev.Modifier}");
-    }
-
-    private float GetChaosModifier()
-    {
-        var roundTime = (float) _gameTicker.RoundDuration().TotalSeconds;
-        if (roundTime > _endTime)
-            return _maxChaos;
-
-        return (_maxChaos / _endTime) * roundTime + _startingChaos;
     }
 
     private void PickNextEventTime()
     {
-        var mod = GetChaosModifier();
+        var mod = ChaosModifier;
 
         // 5-15 minutes baseline. Will get faster over time as the chaos mod increases.
         _timeUntilNextEvent = _random.NextFloat(300f / mod, 900f / mod);

@@ -111,11 +111,11 @@ namespace Content.Shared.CCVar
         ///     Close to how long you expect a round to last.
         /// </summary>
         public static readonly CVarDef<float>
-            EventsRampingAverageEndTime = CVarDef.Create("events.ramping_average_end_time", 75f, CVar.ARCHIVE | CVar.SERVERONLY);
+            EventsRampingAverageEndTime = CVarDef.Create("events.ramping_average_end_time", 60f, CVar.ARCHIVE | CVar.SERVERONLY);
 
         /// <summary>
         ///     Average ending chaos modifier for the ramping event scheduler.
-        ///     Chosen for a round will deviate from this
+        ///     Max chaos chosen for a round will deviate from this
         /// </summary>
         public static readonly CVarDef<float>
             EventsRampingAverageChaos = CVarDef.Create("events.ramping_average_chaos", 6f, CVar.ARCHIVE | CVar.SERVERONLY);

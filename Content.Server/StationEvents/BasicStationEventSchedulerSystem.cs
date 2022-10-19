@@ -29,6 +29,7 @@ namespace Content.Server.StationEvents
         /// How long until the next check for an event runs
         /// </summary>
         /// Default value is how long until first event is allowed
+        [ViewVariables(VVAccess.ReadWrite)]
         private float _timeUntilNextEvent = MinimumTimeUntilFirstEvent;
 
         public override void Started() { }

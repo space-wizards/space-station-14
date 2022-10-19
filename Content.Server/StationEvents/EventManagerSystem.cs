@@ -40,9 +40,8 @@ public sealed class EventManagerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Randomly run a valid event <b>immediately</b>, ignoring earlieststart or whether the event is enabled
+    /// Randomly runs a valid event.
     /// </summary>
-    /// <returns></returns>
     public string RunRandomEvent()
     {
         var randomEvent = PickRandomEvent();
@@ -50,12 +49,15 @@ public sealed class EventManagerSystem : EntitySystem
         if (randomEvent == null
             || !_prototype.TryIndex<GameRulePrototype>(randomEvent.Id, out var proto))
         {
-            return Loc.GetString("station-event-system-run-random-event-no-valid-events");
+            var errStr = Loc.GetString("station-event-system-run-random-event-no-valid-events");
+            _sawmill.Error(errStr);
+            return errStr;
         }
 
         GameTicker.AddGameRule(proto);
-        _sawmill.Info($"Started event {proto.ID}");
-        return Loc.GetString("station-event-system-run-event",("eventName", randomEvent.Id));
+        var str = Loc.GetString("station-event-system-run-event",("eventName", randomEvent.Id));
+        _sawmill.Info(str);
+        return str;
     }
 
     /// <summary>
@@ -64,6 +66,7 @@ public sealed class EventManagerSystem : EntitySystem
     public StationEventRuleConfiguration? PickRandomEvent()
     {
         var availableEvents = AvailableEvents();
+        _sawmill.Info($"Picking from {availableEvents.Count} total available events");
         return FindEvent(availableEvents);
     }
 
@@ -75,6 +78,7 @@ public sealed class EventManagerSystem : EntitySystem
     {
         if (availableEvents.Count == 0)
         {
+            _sawmill.Warning("No events were available to run!");
             return null;
         }
 
@@ -97,6 +101,7 @@ public sealed class EventManagerSystem : EntitySystem
             }
         }
 
+        _sawmill.Error("Event was not found after weighted pick process!");
         return null;
     }
 
@@ -126,6 +131,7 @@ public sealed class EventManagerSystem : EntitySystem
         {
             if (CanRun(stationEvent, playerCount, currentTime))
             {
+                _sawmill.Debug($"Adding event {stationEvent.Id} to possibilities");
                 result.Add(stationEvent);
             }
         }
