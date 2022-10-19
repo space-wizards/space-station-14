@@ -13,6 +13,8 @@ using Content.Shared.Item;
 using Content.Shared.Movement.Components;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
+using Content.Shared.Pulling;
+using Content.Shared.Pulling.Components;
 using Content.Shared.Throwing;
 using Content.Shared.Timing;
 using Content.Shared.Verbs;
@@ -51,6 +53,7 @@ namespace Content.Shared.Interaction
         [Dependency] private readonly SharedVerbSystem _verbSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly UseDelaySystem _useDelay = default!;
+        [Dependency] private readonly SharedPullingSystem _pullSystem = default!;
 
         private const CollisionGroup InRangeUnobstructedMask
             = CollisionGroup.Impassable | CollisionGroup.InteractImpassable;
@@ -75,6 +78,8 @@ namespace Content.Shared.Interaction
                     new PointerInputCmdHandler(HandleUseInteraction))
                 .Bind(ContentKeyFunctions.ActivateItemInWorld,
                     new PointerInputCmdHandler(HandleActivateItemInWorld))
+                .Bind(ContentKeyFunctions.TryPullObject,
+                    new PointerInputCmdHandler(HandleTryPullObject))
                 .Register<SharedInteractionSystem>();
         }
 
@@ -115,6 +120,30 @@ namespace Content.Shared.Interaction
             args.Cancel();
         }
 
+        private bool HandleTryPullObject(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
+        {
+            if (!ValidateClientInput(session, coords, uid, out var userEntity))
+            {
+                Logger.InfoS("system.interaction", $"TryPullObject input validation failed");
+                return true;
+            }
+
+            //is this user trying to pull themself?
+            if (userEntity.Value == uid)
+                return false;
+
+            if (Deleted(uid))
+                return false;
+
+            if (!InRangeUnobstructed(userEntity.Value, uid, popup: true))
+                return false;
+
+            if (!TryComp(uid, out SharedPullableComponent? pull))
+                return false;
+
+            _pullSystem.TogglePull(userEntity.Value, pull);
+            return false;
+        }
 
         /// <summary>
         ///     Handles the event were a client uses an item in their inventory or in their hands, either by
