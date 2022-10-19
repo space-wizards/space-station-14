@@ -1,5 +1,6 @@
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Prototypes;
+using Content.Shared.Body.Systems;
 using Content.Shared.DragDrop;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
@@ -8,6 +9,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Body.Components;
 
 [RegisterComponent, NetworkedComponent]
+[Access(typeof(SharedBodySystem))]
 public sealed class BodyComponent : Component, IDraggable
 {
     [ViewVariables]

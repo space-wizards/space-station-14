@@ -17,8 +17,6 @@ public sealed record BodyPrototypeSlot
     public readonly HashSet<string> Connections = new();
     public readonly Dictionary<string, string> Organs = new();
 
-    public BodyPrototypeSlot() { }
-
     public BodyPrototypeSlot(string part, HashSet<string>? connections, Dictionary<string, string>? organs)
     {
         Part = part;

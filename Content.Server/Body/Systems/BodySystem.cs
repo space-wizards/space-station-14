@@ -72,8 +72,8 @@ public sealed class BodySystem : SharedBodySystem
         args.Handled = true;
     }
 
-    public override bool AttachPart
-    (EntityUid? partId,
+    public override bool AttachPart(
+        EntityUid? partId,
         BodyPartSlot slot,
         [NotNullWhen(true)] BodyPartComponent? part = null)
     {

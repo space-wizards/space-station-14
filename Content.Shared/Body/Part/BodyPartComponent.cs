@@ -1,10 +1,12 @@
 ﻿using Content.Shared.Body.Components;
 using Content.Shared.Body.Organ;
+using Content.Shared.Body.Systems;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Body.Part;
 
 [RegisterComponent, NetworkedComponent]
+[Access(typeof(SharedBodySystem))]
 public sealed class BodyPartComponent : Component
 {
     [ViewVariables] public EntityUid? Body;

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Organ;
 using Content.Shared.Body.Part;
@@ -52,6 +53,26 @@ public partial class SharedBodySystem
 
         body.Root = state.Root;
         body.GibSound = state.GibSound;
+    }
+
+    public bool TryCreateBodyRootSlot(
+        EntityUid? bodyId,
+        string slotId,
+        [NotNullWhen(true)] out BodyPartSlot? slot,
+        BodyComponent? body = null)
+    {
+        slot = null;
+
+        // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
+        if (bodyId == null ||
+            !Resolve(bodyId.Value, ref body, false) ||
+            body.Root != null)
+            return false;
+
+        slot = new BodyPartSlot(slotId, bodyId.Value, null);
+        body.Root = slot;
+
+        return true;
     }
 
     private void InitBody(BodyComponent body, BodyPrototype prototype)
