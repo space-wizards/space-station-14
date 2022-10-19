@@ -8,8 +8,8 @@ dragon-spawn-action-popup-message-fail-no-eggs = You don't have the stamina to d
 action-name-devour = [color=red]Devour[/color]
 action-description-devour = Attempt to break a structure with your jaws or swallow a creature.
 
-action-name-carp-summon = Summon carp
-action-description-carp-summon = Summon a carp to aid you at seizing the station!
+action-name-carp-rift = Summon Carp Rift
+action-description-carp-rift = Summons a carp rift that will periodically spawns carps.
 
 # Rifts
 carp-rift-warning = A rift is causing an unnaturally large energy flux at {$location}. Stop it at all costs!
