@@ -78,7 +78,7 @@ namespace Content.Client.Atmos.UI
             GasList.Add(new ItemList.Item(GasList)
             {
                 Metadata = null,
-                Text = "None"
+                Text = Loc.GetString("comp-gas-filter-ui-filter-gas-none")
             });
 
             foreach (GasPrototype gas in gases)

@@ -89,7 +89,7 @@ namespace Content.Client.Atmos.UI
             }
             else
             {
-                _window.SetGasFiltered(null, "None");
+                _window.SetGasFiltered(null, Loc.GetString("comp-gas-filter-ui-filter-gas-none"));
             }
         }
 
