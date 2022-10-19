@@ -62,7 +62,7 @@ public sealed class GeigerSystem : SharedGeigerSystem
     private void OnUnequipped(EntityUid uid, GeigerComponent component, GotUnequippedEvent args)
     {
         if (component.AttachedToSuit)
-            SetEnabled(uid, component, true);
+            SetEnabled(uid, component, false);
         SetUser(uid, component, null);
     }
 
@@ -167,7 +167,7 @@ public sealed class GeigerSystem : SharedGeigerSystem
 
         var sound = _audio.GetSound(sounds);
         var param = sounds.Params.WithLoop(true).WithVolume(-4f)
-            .WithPlayOffset(_random.NextFloat(0.0f, 100.0f));
+            .WithPlayOffset(_random.NextFloat(0.0f, 5f));
         component.Stream = _audio.Play(sound, Filter.Entities(component.User.Value), uid, param);
     }
 
