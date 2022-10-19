@@ -64,7 +64,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
     /// <summary>
     /// Action slot we are currently selecting a target for.
     /// </summary>
-    public TargetedAction SelectingTargetFor { get; private set; }
+    public TargetedAction? SelectingTargetFor { get; private set; } = null;
 
     public ActionUIController()
     {
