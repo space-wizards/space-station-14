@@ -177,6 +177,7 @@ public abstract class SharedStealthSystem : EntitySystem
         ///     The sum will be added to the stealth component's visibility.
         /// </summary>
         public float FlatModifier;
+
         public GetVisibilityModifiersEvent(EntityUid uid, StealthComponent stealth, float secondsSinceUpdate, float flatModifier)
         {
             Stealth = stealth;
