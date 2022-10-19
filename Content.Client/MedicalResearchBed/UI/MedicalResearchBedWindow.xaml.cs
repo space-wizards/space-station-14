@@ -50,6 +50,7 @@ namespace Content.Client.MedicalResearchBed.UI
                     text.Append($"{Loc.GetString("disease-scanner-not-diseased")}\n");
                 }
 
+                // Unmetabolised reagents in buckled entity
                 if (msg.BufferReagents.Count > 0)
                     text.Append("\nUnmetabolised Substances\n");
 
@@ -86,7 +87,7 @@ namespace Content.Client.MedicalResearchBed.UI
                     text.AppendLine();
                 }
                 Diagnostics.Text = text.ToString();
-                SetSize = (250, 600);
+                SetSize = (250, 800);
             }
             else
             {

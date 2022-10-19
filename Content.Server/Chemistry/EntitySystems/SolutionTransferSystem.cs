@@ -81,8 +81,7 @@ namespace Content.Server.Chemistry.EntitySystems
             var inputContainerRestriction = false;
             var validInputContainer = false;
 
-            //TODO implement tag-based transfer restrictions for when the target is only supposed to receive from a specific owner
-            //If a reagent tank has an input restriction, then it outputs for everything except for the input (which it will accept input from)
+            //If a container has an input restriction, then it outputs for everything except for the input (which it will accept input from)
             if (TryComp<RefillableSolutionComponent>(target, out var outputRefill))
             {
                 if (outputRefill.InputContainer != string.Empty && TryComp<DrainableSolutionComponent>(uid, out var inputDrain))
@@ -95,6 +94,7 @@ namespace Content.Server.Chemistry.EntitySystems
             }
 
             //Special case for reagent tanks, because normally clicking another container will give solution, not take it.
+            //This will also apply for containers with input restrictions, unless a valid input is used
             if (component.CanReceive  && (!EntityManager.HasComponent<RefillableSolutionComponent>(target)
                                       || (inputContainerRestriction && !validInputContainer)) // target must not be refillable (e.g. Reagent Tanks)
                                       && _solutionContainer.TryGetDrainableSolution(target, out var targetDrain) // target must be drainable

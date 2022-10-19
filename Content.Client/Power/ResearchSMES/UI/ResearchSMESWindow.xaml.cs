@@ -5,8 +5,6 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Content.Shared.Power;
 
 namespace Content.Client.Power.ResearchSMES.UI
@@ -60,8 +58,6 @@ namespace Content.Client.Power.ResearchSMES.UI
             ChargeStored.Text = $"{Math.Round(castState.ChargeStored/1000)} KW";
             ShieldingCost.Text = $"{Math.Round((castState.ShieldingCost*castState.AnalysisCap) / 1000)} KW";
             OverloadThreshold.Text = $"{Math.Round((castState.OverloadThreshold * castState.AnalysisCap) / 1000)} KW";
-            //LastIncrease.Text = $"{Math.Round(castState.LastIncrease / 1000)} KW";
-            //LastDischarge.Text = $"{Math.Round((castState.LastDischarge* castState.ChargeStored) / 1000)} KW";
 
             SmesCap.Text = $"{Math.Round(castState.SmesCap / 1000)} KW";
 

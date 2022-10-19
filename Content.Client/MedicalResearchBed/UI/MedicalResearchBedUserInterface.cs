@@ -1,6 +1,5 @@
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-
 using static Content.Shared.MedicalScanner.SharedMedicalResearchBedComponent;
 
 namespace Content.Client.MedicalResearchBed.UI

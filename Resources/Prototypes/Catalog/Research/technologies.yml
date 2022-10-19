@@ -3,7 +3,6 @@
 
 # Base Technology
 
-#will remove once all new tech trees are established
 - type: technology
   name: technologies-basic-research-technology
   id: BasicResearch
@@ -11,13 +10,15 @@
   icon:
     sprite: Structures/Machines/server.rsi
     state: server-on
-  requiredPoints: 500
+  requiredPoints: 2500
+  #TODO a lathe that prints textbooks with instructions on how to progress each branch of research
  # unlockedRecipes:
- #   - TextBookPrinter <-- a lathe that prints textbooks with instructions on how to progress!
+ #   - TextBookPrinter 
  # incompatibleTechnologies:
  #   - TestExclusion
 
- # Basic Parts Technology Tree - may be worth just auto unlocking all basic parts OR unlocking via each tree start
+ # Basic Parts Technology
+
 - type: technology
   name: technologies-basic-parts-technology
   id: BasicPartsTechnology
@@ -25,7 +26,7 @@
   icon:
     sprite: Objects/Misc/stock_parts.rsi
     state: micro_mani
-  requiredPoints: 1500
+  requiredPoints: 2500
   requiredTechnologies:
     - BasicResearch
   unlockedRecipes:
@@ -35,6 +36,20 @@
     - MicroManipulatorStockPart
     - ScanningModuleStockPart
     - ProtolatheMachineCircuitboard
+
+- type: technology
+  name: technologies-material-sheet-printing
+  id: Sheets
+  description: technologies-material-sheet-printing-description
+  icon: Objects/Materials/Sheets/researchicon.png
+  requiredPoints: 2500
+  requiredTechnologies:
+    - BasicResearch
+  unlockedRecipes:
+    - SheetSteel
+    - SheetPlastic
+    - SheetRGlass
+    - SheetGlass1
 
 # test technology
 
@@ -92,10 +107,6 @@
 #    - BasicResearch
 
 
-#trees will be made mutually exclusive from one another per server
-#though we may go easy on that to start until each tree has plenty to offer
-#may even want to keep points for some techs for now
-#we should have some way to convey how progression works, perhaps through textbooks?
 # Cleaning Technology Tree
 
 - type: technology
@@ -105,7 +116,7 @@
   icon:
     sprite: Objects/Specific/Janitorial/janitorial.rsi
     state: mopbucket
-  requiredPoints: 500
+  requiredPoints: 2500
   unlockedRecipes:
     - Bucket
     - MopItem
@@ -117,7 +128,7 @@
 - type: technology
   name: Analysis mop bucket field test results
   id: CleaningTechResults
-  description: A breakdown of the various liquid distributed in to the analysis mop bucket. #The findings may help unlock the secrets of efficient cleaning technology! <--longer descriptions are not supported...
+  description: A breakdown of the various liquid distributed in to the analysis mop bucket. 
   requiredTechnologies:
    - CleaningTech
   icon:
@@ -134,30 +145,11 @@
   icon:
     sprite: Objects/Specific/Janitorial/janitorial.rsi
     state: analysismopbucket
-  requiredPoints: 1000
+  requiredPoints: 5000
   unlockedRecipes:
     - HighCapMopItem
-  # - AnalysisMop
-  # - AnalysisMopScanner
-
-  #Applied molecular cleaning theory
-  # SuperTrashbag
-  # xTremeSprayCleaner
-  # AnalysisTrashbag
-
-  #Applied janitorial bluespace technology
-  # SpeedGaloshes
-  # TheJanifier
-  # (Later) The Bluespace Engine
 
 # Medical Tech Tree
-# for now viral tech will all fall under here but may (or may not) warrant a separate tree later
-# chem analysis for chem progression (unlock chem machines)
-# another chem task for omnzine synthesis machine? n num units of certain reagent(s) perhaps
-# same viral analysis approach as before (unlock viral cultivator for more vaccines?)
-# monkey cloner! (unlock clone machines - perhaps later unlock BETTER clone machines)
-  #clone monkeys at varying states of decay, with a steadily increasing max decay allowed after each clone
-  #two thresholds - when first threshold is reached print cloner disks, when second is reached print SUPER cloner disk
 
 - type: technology
   name: Basic Medical Technology
@@ -166,7 +158,7 @@
   icon:
     sprite: Objects/Specific/Medical/healthanalyzer.rsi
     state: icon
-  requiredPoints: 500
+  requiredPoints: 2500
   unlockedRecipes:
     - HandheldHealthAnalyzer
     - ClothingHandsGlovesLatex
@@ -185,7 +177,7 @@
 - type: technology
   name: Chemical analysis laboratory results
   id: ChemTechResults
-  description: The molecular analysis of several medicinal compounds. # that may assist in developing advanced chemical production and anti-viral analysis.
+  description: The molecular analysis of several medicinal compounds. 
   requiredTechnologies:
    - MedicalTech
   icon:
@@ -196,7 +188,7 @@
 - type: technology
   name: Health analysis laboratory results
   id: MedTechResults
-  description: The analysis of bodily function under various stress levels #and the healing thereof. # is essential for the development of advanced life support systems.
+  description: The analysis of bodily function under various stress levels.
   requiredTechnologies:
    - MedicalTech
   icon:
@@ -207,13 +199,13 @@
 - type: technology
   name: Advanced chemical production
   id: AdvancedChemTech
-  description: Advanced chemical production #enabled by the development of advanced dispenser and mixture processing machinery.
+  description: Advanced chemical production.
   requiredTechnologies:
    - ChemTechResults
   icon:
     sprite: Structures/dispensers.rsi
     state: industrial-working
-  requiredPoints: 1000
+  requiredPoints: 5000
   unlockedRecipes:
     - CryostasisBeaker
     - ReagentGrinderMachineCircuitboard
@@ -225,33 +217,31 @@
 - type: technology
   name: Advanced viral analysis
   id: AdvancedViralTech
-  description: viral analysis machinery used for developing cures and vaccinations. #The development of 
+  description: Viral analysis machinery used for developing cures and vaccinations.
   requiredTechnologies:
    - ChemTechResults
   icon:
     sprite: Structures/Machines/diagnoser.rsi
     state: icon
-  requiredPoints: 1000
+  requiredPoints: 5000
   unlockedRecipes:
     - VaccinatorMachineCircuitboard
     - DiagnoserMachineCircuitboard
 
 - type: technology
-  name: Exploratory cloning technology
+  name: Cloning technology
   id: CloningTech
-  description: Exploration of cloning technology #- essential tools for cloning experimentation... primarily involving monkeys...
+  description: Advanced cloning technology - capable of restoring an entire person!
   requiredTechnologies:
    - MedTechResults
   icon:
     sprite: Structures/Machines/cloning.rsi
     state: pod_0
-  requiredPoints: 1000
+  requiredPoints: 5000
   unlockedRecipes:
     - BiomassReclaimerMachineCircuitboard
-    #- MonkeyClonerMachineBoard
     - CloningConsoleComputerCircuitboard
-    - CloningPodMachineCircuitboard # will move this up the tree at a later date
-
+    - CloningPodMachineCircuitboard
 
 - type: technology
   name: technologies-advanced-surgery
@@ -260,7 +250,7 @@
   icon:
     sprite: Objects/Specific/Medical/Surgery/saw.rsi
     state: saw
-  requiredPoints: 1000
+  requiredPoints: 5000
   requiredTechnologies:
     - MedTechResults
   unlockedRecipes:
@@ -278,7 +268,7 @@
   icon:
     sprite: Objects/Specific/Medical/handheldcrewmonitor.rsi
     state: icon
-  requiredPoints: 1000
+  requiredPoints: 5000
   requiredTechnologies:
     - MedTechResults
   unlockedRecipes:
@@ -287,6 +277,8 @@
     - MedicalScannerMachineCircuitboard
     - StasisBedMachineCircuitboard
 
+#Engineering Tech Tree
+
 - type: technology
   name: Engineering Fundamentals
   id: EngineeringTech
@@ -294,7 +286,7 @@
   icon:
     sprite: Structures/Machines/protolathe.rsi
     state: icon
-  requiredPoints: 500
+  requiredPoints: 2500
   unlockedRecipes:
     - CableStack
     - CableMVStack
@@ -340,55 +332,6 @@
     sprite: Objects/Specific/Research/researchdisk.rsi
     state: icon
   hidden: true
-
-# Engineering Tech Tree
-# anything not covered by other trees will come here - but this tree will primarily focus on power and utility
-# (for example AppliedMusicology and Avionics would fall under here for now)
-# things like robotics and computer tech will be here until separate branches are made
-# power analysis unit (basically a power monitor that prints results after n minutes, bit boring but still a step up from points imo)
-    #unlock the various better generators and such - really just how things are now but you have to build for the (not)points I guess
-# robot analyser and robot fabricator (analyser to unlock latter, latter requires only basic materials to make robots)
-
-# Security Tech tree <- low priority
-# never allow sec tech to be directly printable via main lathe, always work with them
-# impact analysis dummy (tracks damage, link to terminal for tech unlocks)
-    #(unlock shields and vests for sec techfab (make them earn it))
-# impact analysis vest (same as above but wearable... submit to scanner for unlocks?)
-    #unlock armor forge which can make sec hardsuits, bombsuits, and riot armor
-# impact analysis hardsuit (same as above...)
-    #(unlock super sec hardsuit)
-
-# Agricultural Tech Tree <- low priority - can be integrated in to basic tools research and engineering
-# Produce analyser (similar to chem analyser -
-#   perhaps add an auto grind tool for certain objects that treat the solid objects as pills going in to water)
-# Seed Cloner (takes biomass, clones seeds)
-# Seed Mutator (depends on progress towards plant mutations)
-
-#Xenoarcheology
-# basic analysis tools provided as non-mutually exclusive basic tech
-# analysis device can be used on artefact based on trigger type
-# hidden tech provided will be based on the artefact
-
-#everything under here will be re-allocated in some wayS
-
-# old tree, to be removed
-#- type: technology
-#  name: technologies-cleaning-technology
-#  id: MopBucket
-#  description: technologies-cleaning-technology-description
-#  icon:
-#    sprite: Objects/Specific/Janitorial/janitorial.rsi
-#    state: mopbucket
-#  requiredPoints: 5000
-#  requiredTechnologies:
-#    - BasicResearch
-#  unlockedRecipes:
-#    - Bucket
-#    - MopItem
-#    - SprayBottle
-#    - BodyBag
-
-# Biological Technology Tree
 
 - type: technology
   name: technologies-biological-technology
@@ -603,7 +546,7 @@
   icon:
     sprite: Structures/Piping/Atmospherics/thermomachine.rsi
     state: freezer_off
-  requiredPoints: 1000
+  requiredPoints: 5000
   requiredTechnologies:
   - PowerTechResults
   unlockedRecipes:
@@ -611,6 +554,7 @@
   - PortableScrubberMachineCircuitBoard
   - GasRecyclerMachineCircuitboard
 
+# TODO Add experiment tools for engineering sub trees
 # Avionics Circuitry Technology Tree
 
 - type: technology
@@ -620,7 +564,7 @@
   icon:
     sprite: Structures/Machines/computers.rsi
     state: avionics-systems
-  requiredPoints: 1000
+  requiredPoints: 15000
   requiredTechnologies:
     - PowerTechResults
     - RoboticsTechnology
@@ -665,7 +609,7 @@
   icon:
     sprite: Structures/Power/apc.rsi
     state: apc0
-  requiredPoints: 1000
+  requiredPoints: 5000
   requiredTechnologies:
     - PowerTechResults
   unlockedRecipes:
@@ -685,7 +629,7 @@
   icon:
     sprite: Objects/Fun/Instruments/guitar.rsi
     state: icon
-  requiredPoints: 1000
+  requiredPoints: 5000
   requiredTechnologies:
     - PowerTechResults
   unlockedRecipes:
@@ -699,7 +643,7 @@
   icon:
     sprite: Objects/Power/power_cells.rsi
     state: small
-  requiredPoints: 1000
+  requiredPoints: 5000
   requiredTechnologies:
     - PowerTechResults
   unlockedRecipes:
@@ -712,7 +656,7 @@
   icon:
     sprite: Objects/Power/power_cells.rsi
     state: medium
-  requiredPoints: 5000
+  requiredPoints: 10000
   requiredTechnologies:
     - PowerCellBasic
   unlockedRecipes:
@@ -725,7 +669,7 @@
   icon:
     sprite: Objects/Power/power_cells.rsi
     state: high
-  requiredPoints: 10000
+  requiredPoints: 15000
   requiredTechnologies:
     - PowerCellAdvanced
   unlockedRecipes:
@@ -738,7 +682,7 @@
   icon:
     sprite: Mobs/Silicon/Bots/honkbot.rsi
     state: honkbot
-  requiredPoints: 1000
+  requiredPoints: 10000
   requiredTechnologies:
     - CompactPowerTechnology
   unlockedRecipes:
@@ -753,7 +697,7 @@
   icon:
     sprite: Objects/Misc/stock_parts.rsi
     state: adv_capacitor
-  requiredPoints: 8000
+  requiredPoints: 10000
   requiredTechnologies:
     - BasicPartsTechnology
     - PowerTechResults
@@ -764,6 +708,102 @@
     - HighPowerMicroLaserStockPart
     - NanoManipulatorStockPart
     - AdvancedScanningModuleStockPart
+
+#TODO implement remaining bio-tech into dedicated hydroponics tree with experiment tools
+# Biological Technology Tree 
+- type: technology
+  name: technologies-biological-technology
+  id: BiologicalTechnology
+  description: technologies-biological-technology-description
+  icon:
+    sprite: Structures/Furniture/potted_plants.rsi
+    state: applebush
+  requiredPoints: 5000
+  requiredTechnologies:
+    - BasicResearch
+  unlockedRecipes:
+    - HydroponicsToolScythe
+    - HydroponicsToolHatchet
+    - KitchenKnife
+    - HydroponicsTrayMachineCircuitboard
+
+- type: technology
+  name: technologies-advanced-botany
+  id: AdvancedBotany
+  description: technologies-advanced-botany-description
+  icon:
+    sprite: Objects/Specific/Hydroponics/potato.rsi
+    state: seed
+  requiredPoints: 10000
+  requiredTechnologies:
+    - BiologicalTechnology
+  unlockedRecipes:
+    - Shovel
+    - ButchCleaver
+    - MicrowaveMachineCircuitboard
+
+# Security Technology Tree
+# TODO implement new tree for security tech with experiment tools
+
+# Empty, as all the security tech is now available
+# roundstart in the security techfab.
+
+#- type: technology
+#   name: "ballistic technology"
+#   id: BallisticTechnology
+#   description: Just a fancy term for guns.
+#   icon:
+#     sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
+#     state: icon
+#   requiredPoints: 15000
+#   requiredTechnologies:
+#     - SecurityTechnology
+#
+# - type: technology
+#   name: "direct energy technology"
+#   id: DirectEnergyTechnology
+#   description: Basically laser guns.
+#   icon:
+#     sprite: Objects/Weapons/Guns/Battery/taser.rsi
+#     state: icon
+#   requiredPoints: 15000
+#   requiredTechnologies:
+#     - SecurityTechnology
+#
+# - type: technology
+#   name: "explosives technology"
+#   id: ExplosivesTechnology
+#   description: Let's just start with grenades for now.
+#   icon:
+#     sprite: Objects/Weapons/Grenades/flashbang.rsi
+#     state: icon
+#   requiredPoints: 15000
+#   requiredTechnologies:
+#     - SecurityTechnology
+#
+# - type: technology
+#   name: "armor technology"
+#   id: ArmorTechnology
+#   description: Basic protective gear for security personnel.
+#   icon:
+#     sprite: Clothing/OuterClothing/Vests/kevlar.rsi
+#     state: icon
+#   requiredPoints: 15000
+#   requiredTechnologies:
+#     - SecurityTechnology
+
+# Data Theory Technology Tree
+
+# - type: technology
+#   name: "data theory"
+#   id: DataTheory
+#   description: Just like regular data, but in space!
+#   icon:
+#     sprite: Structures/Machines/computers.rsi
+#     state: computer-datatheory
+#   requiredPoints: 10000
+#   requiredTechnologies:
+#     - BasicResearch
 
 # Bluespace Theory Technology Tree
 

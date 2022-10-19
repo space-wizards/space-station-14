@@ -238,9 +238,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 MetaData(printed).EntityName = reportTitle;
                 _paperSystem.SetContent(printed, contents.ToMarkup(), paper);
             } else
-                contents.AddMarkup("No Chemicals Found");
-
-            
+                contents.AddMarkup("No Chemicals Found");   
 
             var rewardEarned = true;
             if (rewardRequiredNames.Count > 0)

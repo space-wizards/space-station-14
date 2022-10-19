@@ -23,37 +23,46 @@ namespace Content.Server.Power.Components
 
         private BatteryComponent? _battery;
 
+        /// <summary>
+        ///    The damage the battery will do to itself if overloads without shielding
+        /// </summary>
         [DataField("damage", required: true)]
         public DamageSpecifier Damage = default!;
 
+        /// <summary>
+        ///    When research mode is off the research SMES will act as a regular SMES
+        /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("researchMode")]
-        public bool researchMode = false;
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("analysedCharge")]
-        public float analysedCharge = 0f;
+        public bool ResearchMode = false;
 
         /// <summary>
-        ///     Can be toggled but will switch off if not enough charge on the next cycle.
+        ///    The current amount of charge stored for "analysis" - is used to increase the max cap, trigger an overload, and pay for shielding
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("analysedCharge")]
+        public float AnalysedCharge = 0f;
+
+        /// <summary>
+        ///     Can be toggled but will switch off if not enough charge on the next cycle. Prevents overload damage regardless of AnalysedCharge
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("shieldingActive")]
-        public bool shieldingActive = false;
+        public bool ShieldingActive = false;
 
         /// <summary>
         ///     Cost of shielding per analysis cycle relative to the MaxAnalysisCharge.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("shieldingCost")]
-        public float shieldingCost = 0.002f;
+        public float ShieldingCost = 0.002f;
 
         /// <summary>
         ///     How much charge is siphoned per change relative to that charge. This can be reconfigured via interface.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("analysisSiphon")]
-        public float analysisSiphon = 0.1f;
+        public float AnalysisSiphon = 0.1f;
 
         /// <summary>
         ///     The analysis charge is not capable of exceeding this amount.
@@ -65,6 +74,7 @@ namespace Content.Server.Power.Components
         /// <summary>
         ///     The research battery component will not increase a batteries maxcap any more than this amount.
         /// </summary>
+        [ViewVariables]
         public float MaxChargeCeiling = 100000000f;
 
         /// <summary>
@@ -93,9 +103,9 @@ namespace Content.Server.Power.Components
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("overloadThreshold")]
-        public float overloadThreshold = 0.008f;
+        public float OverloadThreshold = 0.008f;
 
-        public float lastRecordedCharge;
+        public float LastRecordedCharge;
 
         private bool PlayerCanUseController(EntityUid playerEntity, bool needsPower = true)
         {
@@ -133,9 +143,9 @@ namespace Content.Server.Power.Components
         {
             var maxCharge = _battery is not null ? _battery.MaxCharge : 0f;
             var currentCharge = _battery is not null ? _battery.CurrentCharge : 0f;
-            var analysisIncrease = (currentCharge - lastRecordedCharge) * analysisSiphon;
+            var analysisIncrease = (currentCharge - LastRecordedCharge) * AnalysisSiphon;
 
-            return new ResearchSMESBoundUserInterfaceState(Powered,analysedCharge,shieldingActive,shieldingCost,analysisSiphon,MaxCapReached,overloadThreshold,researchMode,analysisIncrease,MaxAnalysisCharge,AnalysisDischarge,ResearchAchieved, maxCharge);
+            return new ResearchSMESBoundUserInterfaceState(Powered,AnalysedCharge,ShieldingActive,ShieldingCost,AnalysisSiphon,MaxCapReached,OverloadThreshold,ResearchMode,analysisIncrease,MaxAnalysisCharge,AnalysisDischarge,ResearchAchieved, maxCharge);
         }
 
         private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
@@ -153,18 +163,18 @@ namespace Content.Server.Power.Components
             switch (msg.Button)
             {
                 case UiButton.ToggleResearchMode:
-                    researchMode = !researchMode;
+                    ResearchMode = !ResearchMode;
                     break;
                 case UiButton.ToggleShield:
-                    shieldingActive = !shieldingActive;
+                    ShieldingActive = !ShieldingActive;
                     break;
                 case UiButton.IncreaseSiphon:
-                    analysisSiphon = analysisSiphon < 1f ? analysisSiphon += 0.10f : 1f;
-                    analysisSiphon = analysisSiphon > 1f ? analysisSiphon = 1f : analysisSiphon;
+                    AnalysisSiphon = AnalysisSiphon < 1f ? AnalysisSiphon += 0.10f : 1f;
+                    AnalysisSiphon = AnalysisSiphon > 1f ? AnalysisSiphon = 1f : AnalysisSiphon;
                     break;
                 case UiButton.DecreaseSiphon:
-                    analysisSiphon = analysisSiphon > 0f ? analysisSiphon -= 0.10f : 0f;
-                    analysisSiphon = analysisSiphon < 0f ? analysisSiphon = 0f : analysisSiphon;
+                    AnalysisSiphon = AnalysisSiphon > 0f ? AnalysisSiphon -= 0.10f : 0f;
+                    AnalysisSiphon = AnalysisSiphon < 0f ? AnalysisSiphon = 0f : AnalysisSiphon;
                     break;
             }
 

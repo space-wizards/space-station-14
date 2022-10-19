@@ -38,8 +38,7 @@ namespace Content.Server.Medical
         private void OnBuckleChange(EntityUid uid, MedicalResearchBedComponent medicalResearchBed, BuckleChangeEvent args)
         {
             var entities = IoCManager.Resolve<IEntityManager>();
-            if (entities.TryGetComponent<MedicalResearchBedServerComponent>(uid, out var server))
-                server.bedChange = true;
+            medicalResearchBed.bedChange = true;
 
         }
 
@@ -90,36 +89,32 @@ namespace Content.Server.Medical
                 {
                     if (entities.TryGetComponent<DamageableComponent>(buckledEntity, out var damageable))
                     {
-                        if (entities.TryGetComponent<MedicalResearchBedServerComponent>(uid, out var server))
+                        if (medicalResearchBed.bedChange)
                         {
-
-                            if (server.bedChange)
+                            medicalResearchBed.bedChange = false;
+                            medicalResearchBed.lastHealthRecording = damageable.TotalDamage;
+                        }
+                        else
+                        {
+                            if (damageable.TotalDamage < medicalResearchBed.lastHealthRecording)
                             {
-                                server.bedChange = false;
-                                server.lastHealthRecording = damageable.TotalDamage;
+                                medicalResearchBed.healthChanges += medicalResearchBed.lastHealthRecording - damageable.TotalDamage;
+                                medicalResearchBed.lastHealthRecording = damageable.TotalDamage;
                             }
                             else
                             {
-                                if (damageable.TotalDamage < server.lastHealthRecording)
-                                {
-                                    server.healthChanges += server.lastHealthRecording - damageable.TotalDamage;
-                                    server.lastHealthRecording = damageable.TotalDamage;
-                                }
-                                else
-                                {
-                                    server.lastHealthRecording = damageable.TotalDamage;
-                                }
+                                medicalResearchBed.lastHealthRecording = damageable.TotalDamage;
                             }
-
-                            //Console.WriteLine(server.healthChanges);
-                            if (server.healthChanges >= medicalResearchBed.HealthGoal && !server.diskPrinted)
-                            {
-                                Spawn(medicalResearchBed.ResearchDiskReward, Transform(uid).Coordinates);
-                                server.diskPrinted = true;
-                            }
-
-                            medicalResearchBed.UserInterface?.SendMessage(new MedicalResearchBedScannedUserMessage(buckledEntity, solutions.Solutions["chemicals"].Contents,server.healthChanges));
                         }
+
+                        if (medicalResearchBed.healthChanges >= medicalResearchBed.HealthGoal && !medicalResearchBed.diskPrinted)
+                        {
+                            Spawn(medicalResearchBed.ResearchDiskReward, Transform(uid).Coordinates);
+                            medicalResearchBed.diskPrinted = true;
+                        }
+
+                        medicalResearchBed.UserInterface?.SendMessage(new MedicalResearchBedScannedUserMessage(buckledEntity, solutions.Solutions["chemicals"].Contents,medicalResearchBed.healthChanges));
+                        
                     }
                 }
             }

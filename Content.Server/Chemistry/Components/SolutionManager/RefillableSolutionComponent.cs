@@ -31,7 +31,8 @@ namespace Content.Server.Chemistry.Components.SolutionManager
         /// What method of input, determined by tag, the target will allow
         /// If none given it will accept any input
         /// </summary>
-        [DataField("inputContainer", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>), required: false)]
+        [ViewVariables]
+        [DataField("inputContainer")]
         public string InputContainer = string.Empty;
     }
 }
