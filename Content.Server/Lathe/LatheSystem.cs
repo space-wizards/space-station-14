@@ -152,7 +152,7 @@ namespace Content.Server.Lathe
             component.Queue.RemoveAt(0);
 
             var lathe = EnsureComp<LatheProducingComponent>(uid);
-            lathe.ProductionLength = (float) recipe.CompleteTime.TotalSeconds * component.SpeedMultiplier;
+            lathe.ProductionLength = (float) recipe.CompleteTime.TotalSeconds * component.TimeMultiplier;
             component.CurrentRecipe = recipe;
 
             _audio.PlayPvs(component.ProducingSound, component.Owner);
@@ -262,10 +262,10 @@ namespace Content.Server.Lathe
 
         private void OnPartsRefresh(EntityUid uid, LatheComponent component, RefreshPartsEvent args)
         {
-            var printTimeRating = args.PartRatings[component.MachinePartPrintSpeed];
+            var printTimeRating = args.PartRatings[component.MachinePartPrintTime];
             var materialUseRating = args.PartRatings[component.MachinePartMaterialUse];
 
-            component.SpeedMultiplier = MathF.Pow(component.PartRatingPrintSpeedMultiplier, printTimeRating - 1);
+            component.TimeMultiplier = MathF.Pow(component.PartRatingPrintTimeMultiplier, printTimeRating - 1);
             component.MaterialUseMultiplier = MathF.Pow(component.PartRatingMaterialUseMultiplier, materialUseRating - 1);
             Dirty(component);
         }

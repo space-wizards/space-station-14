@@ -63,19 +63,19 @@ namespace Content.Shared.Lathe
         /// A modifier that changes how long it takes to print a recipe
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public float SpeedMultiplier = 1;
+        public float TimeMultiplier = 1;
 
         /// <summary>
         /// The machine part that reduces how long it takes to print a recipe.
         /// </summary>
         [DataField("machinePartPrintSpeed", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
-        public string MachinePartPrintSpeed = "Manipulator";
+        public string MachinePartPrintTime = "Manipulator";
 
         /// <summary>
-        /// The value that is used to calculate the modified <see cref="SpeedMultiplier"/>
+        /// The value that is used to calculate the modified <see cref="TimeMultiplier"/>
         /// </summary>
-        [DataField("partRatingPrintSpeedMultiplier")]
-        public float PartRatingPrintSpeedMultiplier = 0.5f;
+        [DataField("partRatingPrintTimeMultiplier")]
+        public float PartRatingPrintTimeMultiplier = 0.5f;
 
         /// <summary>
         /// A modifier that changes how much of a material is needed to print a recipe
