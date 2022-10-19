@@ -356,9 +356,9 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
         _slotGroups.Remove(slotGroupName);
     }
 
-    // Monkey sees action
+    // Monkey Sees Action
     // Neuron Activation
-    // Monkey copies code (I have NFI what I'm doing, but I think this is right(.
+    // Monkey copies code
     public void OnSystemLoaded(HandsSystem system)
     {
         _handsSystem.OnPlayerItemAdded += OnItemAdded;
