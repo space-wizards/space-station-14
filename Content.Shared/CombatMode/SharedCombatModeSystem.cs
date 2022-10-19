@@ -3,6 +3,7 @@ using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Targeting;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager;
 
 namespace Content.Shared.CombatMode
 {
@@ -10,6 +11,7 @@ namespace Content.Shared.CombatMode
     {
         [Dependency] private readonly IPrototypeManager _protoMan = default!;
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
+        [Dependency] private readonly ISerializationManager _serialization = default!;
 
         public override void Initialize()
         {
@@ -25,7 +27,7 @@ namespace Content.Shared.CombatMode
             if (component.CombatToggleAction == null
                 && _protoMan.TryIndex(component.CombatToggleActionId, out InstantActionPrototype? toggleProto))
             {
-                component.CombatToggleAction = new(toggleProto);
+                component.CombatToggleAction = _serialization.Copy(toggleProto.Value.InstantAction);
             }
 
             if (component.CombatToggleAction != null)

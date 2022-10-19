@@ -1,5 +1,6 @@
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Alert
@@ -31,22 +32,14 @@ namespace Content.Shared.Alert
         /// <summary>
         /// Name to show in tooltip window. Accepts formatting.
         /// </summary>
-        [DataField("name")]
-        public FormattedMessage Name
-        {
-            get => _name;
-            private set => _name = FormattedMessage.FromMarkup(Loc.GetString(value.ToString()));
-        }
+        [DataField("name", customTypeSerializer: typeof(FormattedMessageSerializer))]
+        public readonly FormattedMessage Name;
 
         /// <summary>
         /// Description to show in tooltip window. Accepts formatting.
         /// </summary>
-        [DataField("description")]
-        public FormattedMessage Description
-        {
-            get => _description;
-            private set => _description = FormattedMessage.FromMarkup(Loc.GetString(value.ToString()));
-        }
+        [DataField("description", customTypeSerializer: typeof(FormattedMessageSerializer))]
+        public readonly FormattedMessage Description;
 
         /// <summary>
         /// Category the alert belongs to. Only one alert of a given category

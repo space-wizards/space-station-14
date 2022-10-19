@@ -32,7 +32,7 @@ namespace Content.Shared.Materials
                 foreach (var id in MaterialIds)
                 {
                     if(prototypeManager.TryIndex<MaterialPrototype>(id, out var material))
-                        yield return material;
+                        yield return material.Value;
                     else
                         Logger.Error($"Material prototype {id} does not exist! Entity: {Owner}");
                 }

@@ -1,4 +1,5 @@
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Roles
 {
@@ -18,22 +19,14 @@ namespace Content.Shared.Roles
         /// <summary>
         ///     The name of this antag as displayed to players.
         /// </summary>
-        [DataField("name")]
-        public string Name
-        {
-            get => _name;
-            private set => _name = Loc.GetString(value);
-        }
+        [DataField("name", customTypeSerializer: typeof(LocStringSerializer))]
+        public readonly string Name = string.Empty;
 
         /// <summary>
         ///     The antag's objective, displayed at round-start to the player.
         /// </summary>
-        [DataField("objective")]
-        public string Objective
-        {
-            get => _objective;
-            private set => _objective = Loc.GetString(value);
-        }
+        [DataField("objective", customTypeSerializer: typeof(LocStringSerializer))]
+        public readonly string Objective = string.Empty;
 
         /// <summary>
         ///     Whether or not the antag role is one of the bad guys.

@@ -47,7 +47,7 @@ namespace Content.Shared.Access.Systems
                 if (!_prototypeManager.TryIndex<AccessGroupPrototype>(group, out var proto))
                     continue;
 
-                component.Tags.UnionWith(proto.Tags);
+                component.Tags.UnionWith(proto.Value.Tags);
             }
         }
 
@@ -77,7 +77,7 @@ namespace Content.Shared.Access.Systems
                 if (!_prototypeManager.TryIndex<AccessGroupPrototype>(group, out var proto))
                     continue;
 
-                access.Tags.UnionWith(proto.Tags);
+                access.Tags.UnionWith(proto.Value.Tags);
             }
 
             Dirty(access);

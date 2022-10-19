@@ -71,7 +71,7 @@ public sealed class MarkingSet
             return;
         }
 
-        _points = MarkingPoints.CloneMarkingPointDictionary(points.Points);
+        _points = MarkingPoints.CloneMarkingPointDictionary(points.Value.Points);
 
         foreach (var marking in markings)
         {
@@ -80,7 +80,7 @@ public sealed class MarkingSet
                 continue;
             }
 
-            AddBack(prototype.MarkingCategory, marking);
+            AddBack(prototype.Value.MarkingCategory, marking);
         }
     }
 
@@ -101,7 +101,7 @@ public sealed class MarkingSet
                 continue;
             }
 
-            AddBack(prototype.MarkingCategory, marking);
+            AddBack(prototype.Value.MarkingCategory, marking);
         }
     }
 
@@ -147,13 +147,13 @@ public sealed class MarkingSet
                     continue;
                 }
 
-                if (onlyWhitelisted && prototype.SpeciesRestrictions == null)
+                if (onlyWhitelisted && prototype.Value.SpeciesRestrictions == null)
                 {
                     toRemove.Add((category, marking.MarkingId));
                 }
 
-                if (prototype.SpeciesRestrictions != null
-                    && !prototype.SpeciesRestrictions.Contains(species))
+                if (prototype.Value.SpeciesRestrictions != null
+                    && !prototype.Value.SpeciesRestrictions.Contains(species))
                 {
                     toRemove.Add((category, marking.MarkingId));
                 }
@@ -185,9 +185,9 @@ public sealed class MarkingSet
                     continue;
                 }
 
-                if (marking.Sprites.Count != list[i].MarkingColors.Count)
+                if (marking.Value.Sprites.Count != list[i].MarkingColors.Count)
                 {
-                    list[i] = new Marking(marking.ID, marking.Sprites.Count);
+                    list[i] = new Marking(marking.Value.ID, marking.Value.Sprites.Count);
                 }
             }
 

@@ -18,7 +18,7 @@ public partial class InventorySystem : EntitySystem
         if (!_prototypeManager.TryIndex(component.TemplateId, out InventoryTemplatePrototype? invTemplate))
             return;
 
-        foreach (var slot in invTemplate.Slots)
+        foreach (var slot in invTemplate.Value.Slots)
         {
             _containerSystem.EnsureContainer<ContainerSlot>(uid, slot.Name).OccludesLight = false;
         }
@@ -60,7 +60,7 @@ public partial class InventorySystem : EntitySystem
         if (!_prototypeManager.TryIndex<InventoryTemplatePrototype>(inventory.TemplateId, out var templatePrototype))
             return false;
 
-        foreach (var slotDef in templatePrototype.Slots)
+        foreach (var slotDef in templatePrototype.Value.Slots)
         {
             if (!slotDef.Name.Equals(slot)) continue;
             slotDefinition = slotDef;
@@ -89,7 +89,7 @@ public partial class InventorySystem : EntitySystem
         if (!_prototypeManager.TryIndex<InventoryTemplatePrototype>(inventoryComponent.TemplateId, out var templatePrototype))
             return false;
 
-        slotDefinitions = templatePrototype.Slots;
+        slotDefinitions = templatePrototype.Value.Slots;
         return true;
     }
 
@@ -114,7 +114,7 @@ public partial class InventorySystem : EntitySystem
             _flags = flags;
 
             if (prototypeManager.TryIndex<InventoryTemplatePrototype>(prototypeId, out var prototype))
-                _slots = prototype.Slots;
+                _slots = prototype.Value.Slots;
             else
                 _slots = Array.Empty<SlotDefinition>();
         }

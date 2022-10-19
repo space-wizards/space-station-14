@@ -17,7 +17,7 @@ namespace Content.Shared.Disease
         public string ID { get; } = default!;
 
         [DataField("name", customTypeSerializer: typeof(LocStringSerializer))]
-        public readonly string Name;
+        public readonly string Name = default!;
 
         [ParentDataFieldAttribute(typeof(AbstractPrototypeIdArraySerializer<DiseasePrototype>))]
         public string[]? Parents { get; }

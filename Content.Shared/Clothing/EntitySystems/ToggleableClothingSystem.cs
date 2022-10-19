@@ -8,6 +8,7 @@ using Content.Shared.Popups;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Clothing.EntitySystems;
@@ -19,6 +20,7 @@ public sealed class ToggleableClothingSystem : EntitySystem
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly ISerializationManager _serialization = default!;
 
     private Queue<EntityUid> _toInsert = new();
 
@@ -183,7 +185,7 @@ public sealed class ToggleableClothingSystem : EntitySystem
         if (component.ToggleAction == null
             && _proto.TryIndex(component.ActionId, out InstantActionPrototype? act))
         {
-            component.ToggleAction = new(act);
+            component.ToggleAction = _serialization.Copy(act.Value.InstantAction);
         }
 
         if (component.ClothingUid != null && component.ToggleAction != null)

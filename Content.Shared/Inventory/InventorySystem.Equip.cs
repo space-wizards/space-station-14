@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
@@ -45,7 +44,7 @@ public abstract partial class InventorySystem
             || !_prototypeManager.TryIndex<InventoryTemplatePrototype>(inv.TemplateId, out var prototype))
             return;
 
-        foreach (var slotDef in prototype.Slots)
+        foreach (var slotDef in prototype.Value.Slots)
         {
             if (!CanEquip(args.User, uid, slotDef.Name, out _, slotDef, inv))
                 continue;

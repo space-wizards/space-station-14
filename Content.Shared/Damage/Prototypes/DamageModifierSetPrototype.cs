@@ -16,6 +16,6 @@ namespace Content.Shared.Damage.Prototypes
         [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
-        [IncludeDataField] public readonly DamageModifierSet DamageModifierSet;
+        [IncludeDataField] public readonly DamageModifierSet DamageModifierSet = default!;
     }
 }

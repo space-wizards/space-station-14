@@ -215,11 +215,11 @@ namespace Content.Shared.Humanoid
             var skinColor = appearance.SkinColor;
             if (proto.TryIndex(species, out SpeciesPrototype? speciesProto))
             {
-                markingSet = new MarkingSet(appearance.Markings, speciesProto.MarkingPoints, markingManager, proto);
+                markingSet = new MarkingSet(appearance.Markings, speciesProto.Value.MarkingPoints, markingManager, proto);
                 markingSet.EnsureValid(markingManager);
                 markingSet.FilterSpecies(species, markingManager);
 
-                switch (speciesProto.SkinColoration)
+                switch (speciesProto.Value.SkinColoration)
                 {
                     case HumanoidSkinColor.HumanToned:
                         if (!Humanoid.SkinColor.VerifyHumanSkinTone(skinColor))

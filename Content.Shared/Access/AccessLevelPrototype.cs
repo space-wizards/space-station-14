@@ -1,4 +1,5 @@
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Access
 {
@@ -12,15 +13,12 @@ namespace Content.Shared.Access
         [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
+        [DataField("name", customTypeSerializer: typeof(LocStringSerializer))]
+        private readonly string? _name = null;
+
         /// <summary>
         ///     The player-visible name of the access level, in the ID card console and such.
         /// </summary>
-        [DataField("name")]
-        public string Name
-        {
-            get => (_name is not null) ? _name : ID;
-            private set => _name = Loc.GetString(value);
-        }
-
+        public string Name => _name ?? ID;
     }
 }

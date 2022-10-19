@@ -1,5 +1,6 @@
 using Content.Shared.Stacks;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 using Robust.Shared.Utility;
@@ -31,13 +32,8 @@ namespace Content.Shared.Materials
         [DataField("stack", customTypeSerializer:typeof(PrototypeIdSerializer<StackPrototype>))]
         public string? StackId { get; } = null;
 
-        [ViewVariables]
-        [DataField("name")]
-        public string Name
-        {
-            get => _name;
-            private set => _name = Loc.GetString(value);
-        }
+        [ViewVariables] [DataField("name", customTypeSerializer: typeof(LocStringSerializer))]
+        public readonly string Name = string.Empty;
 
         [ViewVariables]
         [DataField("color")]

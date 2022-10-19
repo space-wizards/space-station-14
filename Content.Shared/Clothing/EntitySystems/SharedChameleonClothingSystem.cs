@@ -24,23 +24,23 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
             return;
 
         // world sprite icon
-        UpdateSprite(uid, proto);
+        UpdateSprite(uid, proto.Value);
 
         // copy name and description
         var meta = MetaData(uid);
-        meta.EntityName = proto.Name;
-        meta.EntityDescription = proto.Description;
+        meta.EntityName = proto.Value.Name;
+        meta.EntityDescription = proto.Value.Description;
 
         // item sprite logic
         if (TryComp(uid, out ItemComponent? item) &&
-            proto.TryGetComponent(out ItemComponent? otherItem, _factory))
+            proto.Value.TryGetComponent(out ItemComponent? otherItem, _factory))
         {
             _itemSystem.CopyVisuals(uid, otherItem, item);
         }
 
         // clothing sprite logic
         if (TryComp(uid, out SharedClothingComponent? clothing) &&
-            proto.TryGetComponent("Clothing", out SharedClothingComponent? otherClothing))
+            proto.Value.TryGetComponent("Clothing", out SharedClothingComponent? otherClothing))
         {
             _clothingSystem.CopyVisuals(uid, otherClothing, clothing);
         }

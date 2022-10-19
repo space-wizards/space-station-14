@@ -98,7 +98,7 @@ namespace Content.Shared.Body.Components
 
         protected virtual void OnAddMechanism(MechanismComponent mechanism)
         {
-            var prototypeId = _entMan.GetComponent<MetaDataComponent>(mechanism.Owner).EntityPrototype!.ID;
+            var prototypeId = _entMan.GetComponent<MetaDataComponent>(mechanism.Owner).EntityPrototype!.Value.ID;
 
             if (!_mechanismIds.Contains(prototypeId))
             {
@@ -113,7 +113,7 @@ namespace Content.Shared.Body.Components
 
         protected virtual void OnRemoveMechanism(MechanismComponent mechanism)
         {
-            _mechanismIds.Remove(_entMan.GetComponent<MetaDataComponent>(mechanism.Owner).EntityPrototype!.ID);
+            _mechanismIds.Remove(_entMan.GetComponent<MetaDataComponent>(mechanism.Owner).EntityPrototype!.Value.ID);
             mechanism.Part = null;
             SizeUsed -= mechanism.Size;
 

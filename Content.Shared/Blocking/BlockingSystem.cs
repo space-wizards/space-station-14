@@ -1,6 +1,5 @@
 ﻿using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
-using Content.Shared.Buckle.Components;
 using Content.Shared.Doors.Components;
 using Content.Shared.Hands;
 using Content.Shared.Hands.EntitySystems;
@@ -18,6 +17,7 @@ using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.Manager;
 
 namespace Content.Shared.Blocking;
 
@@ -33,6 +33,7 @@ public sealed class BlockingSystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly ISerializationManager _serialization = default!;
 
     public override void Initialize()
     {
@@ -71,7 +72,7 @@ public sealed class BlockingSystem : EntitySystem
         if (component.BlockingToggleAction == null
             && _proto.TryIndex(component.BlockingToggleActionId, out InstantActionPrototype? act))
         {
-            component.BlockingToggleAction = new(act);
+            component.BlockingToggleAction = _serialization.Copy(act)!.Value.InstantAction;
         }
 
         if (component.BlockingToggleAction != null)

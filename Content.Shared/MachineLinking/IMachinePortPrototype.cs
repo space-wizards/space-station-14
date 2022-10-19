@@ -27,12 +27,12 @@ public readonly record struct ReceiverPortPrototype : IMachinePortPrototype, IPr
     public string ID { get; } = default!;
 
     /// <inheritdoc />
-    [DataField("name", required:true)]
-    public string Name { get; }
+    [DataField("name", required: true)]
+    public string Name { get; } = default!;
 
     /// <inheritdoc />
     [DataField("description", required: true)]
-    public string Description { get; }
+    public string Description { get; } = default!;
 }
 
 [Prototype("transmitterPort")]
@@ -49,10 +49,10 @@ public readonly record struct TransmitterPortPrototype : IMachinePortPrototype, 
     public readonly HashSet<string>? DefaultLinks;
 
     /// <inheritdoc />
-    [DataField("name", required:true)]
-    public string Name { get; }
+    [DataField("name", required: true)]
+    public string Name { get; } = default!;
 
     /// <inheritdoc />
     [DataField("description", required: true)]
-    public string Description { get; }
+    public string Description { get; } = default!;
 }

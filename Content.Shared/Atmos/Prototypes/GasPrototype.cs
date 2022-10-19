@@ -9,7 +9,7 @@ namespace Content.Shared.Atmos.Prototypes
     public readonly record struct GasPrototype : IPrototype
     {
         [DataField("name", customTypeSerializer: typeof(LocStringSerializer))]
-        public readonly string Name;
+        public readonly string Name = string.Empty;
 
         // TODO: Control gas amount necessary for overlay to appear
         // TODO: Add interfaces for gas behaviours e.g. breathing, burning

@@ -1,11 +1,9 @@
 using System.Linq;
-using System.Globalization;
 using System.Text.RegularExpressions;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
-using Content.Shared.Random.Helpers;
 using Content.Shared.Roles;
 using Content.Shared.Traits;
 using Robust.Shared.Configuration;
@@ -174,7 +172,7 @@ namespace Content.Shared.Preferences
             var sex = Sex.Unsexed;
             if (prototypeManager.TryIndex<SpeciesPrototype>(species, out var speciesPrototype))
             {
-                sex = random.Pick(speciesPrototype.Sexes);
+                sex = random.Pick(speciesPrototype.Value.Sexes);
             }
 
             var gender = sex == Sex.Male ? Gender.Male : Gender.Female;
@@ -371,9 +369,9 @@ namespace Content.Shared.Preferences
             // ensure the species can be that sex
             if (speciesPrototype != null)
             {
-                if (!speciesPrototype.Sexes.Contains(sex))
+                if (!speciesPrototype.Value.Sexes.Contains(sex))
                 {
-                    sex = speciesPrototype.Sexes[0];
+                    sex = speciesPrototype.Value.Sexes[0];
                 }
             }
 

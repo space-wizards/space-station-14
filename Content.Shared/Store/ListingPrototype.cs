@@ -149,5 +149,5 @@ public readonly record struct ListingPrototype : IPrototype
     [IdDataField]
     public string ID { get; } = default!;
 
-    [IncludeDataField] public readonly ListingData ListingData;
+    [IncludeDataField] public readonly ListingData ListingData = default!;
 }

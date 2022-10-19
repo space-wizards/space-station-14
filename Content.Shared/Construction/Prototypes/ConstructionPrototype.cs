@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Construction.Conditions;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
 
@@ -54,12 +55,8 @@ namespace Content.Shared.Construction.Prototypes
         [DataField("canBuildInImpassable")]
         public bool CanBuildInImpassable { get; }
 
-        [DataField("category")]
-        public string Category
-        {
-            get => _category;
-            private set => _category = Loc.GetString(value);
-        }
+        [DataField("category", customTypeSerializer: typeof(LocStringSerializer))]
+        public readonly string Category = string.Empty;
 
         [DataField("objectType")] public ConstructionType Type { get; } = ConstructionType.Structure;
 

@@ -3,6 +3,7 @@ using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 using Robust.Shared.Utility;
@@ -27,12 +28,8 @@ namespace Content.Shared.Maps
 
         public ushort TileId { get; }
 
-        [DataField("name")]
-        public string Name
-        {
-            get => _name;
-            private set => _name = Loc.GetString(value);
-        }
+        [DataField("name", customTypeSerializer: typeof(LocStringSerializer))]
+        public string Name { get; } = string.Empty;
 
         [DataField("sprite")] public ResourcePath? Sprite { get; }
 

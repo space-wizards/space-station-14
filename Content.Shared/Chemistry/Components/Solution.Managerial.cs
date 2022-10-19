@@ -82,7 +82,7 @@ namespace Content.Shared.Chemistry.Components
                 if (!prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype? proto))
                     proto = new ReagentPrototype();
 
-                heatCapacity += (float) reagent.Quantity * proto.SpecificHeat;
+                heatCapacity += (float) reagent.Quantity * proto.Value.SpecificHeat;
             }
 
             return heatCapacity;

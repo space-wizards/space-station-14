@@ -75,7 +75,9 @@ namespace Content.Shared.Humanoid.Markings
 
         public bool TryGetMarking(Marking marking, [NotNullWhen(true)] out MarkingPrototype? markingResult)
         {
-            return _markings.TryGetValue(marking.MarkingId, out markingResult);
+            var res = _markings.TryGetValue(marking.MarkingId, out var markingResultRaw);
+            markingResult = markingResultRaw;
+            return res;
         }
 
         /// <summary>
@@ -92,13 +94,13 @@ namespace Content.Shared.Humanoid.Markings
                 return false;
             }
 
-            if (proto.MarkingCategory != category ||
-                proto.SpeciesRestrictions != null && !proto.SpeciesRestrictions.Contains(species))
+            if (proto.Value.MarkingCategory != category ||
+                proto.Value.SpeciesRestrictions != null && !proto.Value.SpeciesRestrictions.Contains(species))
             {
                 return false;
             }
 
-            if (marking.MarkingColors.Count != proto.Sprites.Count)
+            if (marking.MarkingColors.Count != proto.Value.Sprites.Count)
             {
                 return false;
             }

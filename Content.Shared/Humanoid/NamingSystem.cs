@@ -1,8 +1,8 @@
-using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Dataset;
-using Robust.Shared.Random;
-using Robust.Shared.Prototypes;
+using Content.Shared.Humanoid.Prototypes;
 using Robust.Shared.Enums;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Shared.Humanoid
 {
@@ -24,13 +24,13 @@ namespace Content.Shared.Humanoid
                 Logger.Warning($"Unable to find species {species} for name, falling back to Human");
             }
 
-            switch (speciesProto.Naming)
+            switch (speciesProto.Value.Naming)
             {
                 case SpeciesNaming.FirstDashFirst:
-                    return $"{GetFirstName(speciesProto, gender)}-{GetFirstName(speciesProto, gender)}";
+                    return $"{GetFirstName(speciesProto.Value, gender)}-{GetFirstName(speciesProto.Value, gender)}";
                 case SpeciesNaming.FirstLast:
                 default:
-                    return $"{GetFirstName(speciesProto, gender)} {GetLastName(speciesProto)}";
+                    return $"{GetFirstName(speciesProto.Value, gender)} {GetLastName(speciesProto.Value)}";
             }
         }
 

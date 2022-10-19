@@ -33,7 +33,7 @@ namespace Content.Shared.Research.Components
             {
                 if (prototypeManager.TryIndex(id, out TechnologyPrototype? tech))
                 {
-                    Technologies.Add(tech);
+                    Technologies.Add(tech.Value);
                 }
             }
         }
@@ -90,7 +90,7 @@ namespace Content.Shared.Research.Components
                 if (requiredTechnology == null)
                     return false;
 
-                if (!IsTechnologyUnlocked(requiredTechnology))
+                if (!IsTechnologyUnlocked(requiredTechnology.Value))
                     return false;
             }
             return true;

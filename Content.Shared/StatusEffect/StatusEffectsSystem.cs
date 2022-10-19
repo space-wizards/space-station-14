@@ -272,9 +272,9 @@ namespace Content.Shared.StatusEffect
                 EntityManager.RemoveComponent(uid, type);
             }
 
-            if (proto.Alert != null)
+            if (proto.Value.Alert != null)
             {
-                _alertsSystem.ClearAlert(uid, proto.Alert.Value);
+                _alertsSystem.ClearAlert(uid, proto.Value.Alert.Value);
             }
 
             status.ActiveEffects.Remove(key);
@@ -342,7 +342,7 @@ namespace Content.Shared.StatusEffect
                 return false;
             if (!_prototypeManager.TryIndex<StatusEffectPrototype>(key, out var proto))
                 return false;
-            if (!status.AllowedEffects.Contains(key) && !proto.AlwaysAllowed)
+            if (!status.AllowedEffects.Contains(key) && !proto.Value.AlwaysAllowed)
                 return false;
 
             return true;
@@ -369,10 +369,10 @@ namespace Content.Shared.StatusEffect
             status.ActiveEffects[key].Cooldown = timer;
 
             if (_prototypeManager.TryIndex<StatusEffectPrototype>(key, out var proto)
-                && proto.Alert != null)
+                && proto.Value.Alert != null)
             {
-                (TimeSpan, TimeSpan)? cooldown = GetAlertCooldown(uid, proto.Alert.Value, status);
-                _alertsSystem.ShowAlert(uid, proto.Alert.Value, null, cooldown);
+                (TimeSpan, TimeSpan)? cooldown = GetAlertCooldown(uid, proto.Value.Alert.Value, status);
+                _alertsSystem.ShowAlert(uid, proto.Value.Alert.Value, null, cooldown);
             }
 
             Dirty(status);
@@ -405,10 +405,10 @@ namespace Content.Shared.StatusEffect
             status.ActiveEffects[key].Cooldown = timer;
 
             if (_prototypeManager.TryIndex<StatusEffectPrototype>(key, out var proto)
-                && proto.Alert != null)
+                && proto.Value.Alert != null)
             {
-                (TimeSpan, TimeSpan)? cooldown = GetAlertCooldown(uid, proto.Alert.Value, status);
-                _alertsSystem.ShowAlert(uid, proto.Alert.Value, null, cooldown);
+                (TimeSpan, TimeSpan)? cooldown = GetAlertCooldown(uid, proto.Value.Alert.Value, status);
+                _alertsSystem.ShowAlert(uid, proto.Value.Alert.Value, null, cooldown);
             }
 
             Dirty(status);

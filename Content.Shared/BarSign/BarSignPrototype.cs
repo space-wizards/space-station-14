@@ -1,4 +1,5 @@
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.BarSign
 {
@@ -15,19 +16,11 @@ namespace Content.Shared.BarSign
 
         [DataField("icon")] public string Icon { get; } = string.Empty;
 
-        [DataField("name")]
-        public string Name
-        {
-            get => _name;
-            private set => _name = Loc.GetString(value);
-        }
+        [DataField("name", customTypeSerializer: typeof(LocStringSerializer))]
+        public readonly string Name;
 
-        [DataField("description")]
-        public string Description
-        {
-            get => _description;
-            private set => _description = Loc.GetString(value);
-        }
+        [DataField("description", customTypeSerializer: typeof(LocStringSerializer))]
+        public readonly string Description;
 
         [DataField("renameArea")] public bool RenameArea { get; } = true;
 

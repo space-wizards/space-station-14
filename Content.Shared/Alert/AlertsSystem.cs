@@ -24,7 +24,7 @@ public abstract class AlertsSystem : EntitySystem
 
         if (TryGet(alertType, out var alert))
         {
-            return alertsComponent.Alerts.ContainsKey(alert.AlertKey);
+            return alertsComponent.Alerts.ContainsKey(alert.Value.AlertKey);
         }
 
         Logger.DebugS("alert", "unknown alert type {0}", alertType);
@@ -66,7 +66,7 @@ public abstract class AlertsSystem : EntitySystem
         {
             // Check whether the alert category we want to show is already being displayed, with the same type,
             // severity, and cooldown.
-            if (alertsComponent.Alerts.TryGetValue(alert.AlertKey, out var alertStateCallback) &&
+            if (alertsComponent.Alerts.TryGetValue(alert.Value.AlertKey, out var alertStateCallback) &&
                 alertStateCallback.Type == alertType &&
                 alertStateCallback.Severity == severity &&
                 alertStateCallback.Cooldown == cooldown)
@@ -75,9 +75,9 @@ public abstract class AlertsSystem : EntitySystem
             }
 
             // In the case we're changing the alert type but not the category, we need to remove it first.
-            alertsComponent.Alerts.Remove(alert.AlertKey);
+            alertsComponent.Alerts.Remove(alert.Value.AlertKey);
 
-            alertsComponent.Alerts[alert.AlertKey] = new AlertState
+            alertsComponent.Alerts[alert.Value.AlertKey] = new AlertState
                 { Cooldown = cooldown, Severity = severity, Type = alertType };
 
             AfterShowAlert(alertsComponent);
@@ -121,7 +121,7 @@ public abstract class AlertsSystem : EntitySystem
 
         if (TryGet(alertType, out var alert))
         {
-            if (!alertsComponent.Alerts.Remove(alert.AlertKey))
+            if (!alertsComponent.Alerts.Remove(alert.Value.AlertKey))
             {
                 return;
             }
@@ -204,7 +204,9 @@ public abstract class AlertsSystem : EntitySystem
     /// <returns>true if found</returns>
     public bool TryGet(AlertType alertType, [NotNullWhen(true)] out AlertPrototype? alert)
     {
-        return _typeToAlert.TryGetValue(alertType, out alert);
+        var res = _typeToAlert.TryGetValue(alertType, out var alertRaw);
+        alert = alertRaw;
+        return res;
     }
 
     private void HandleClickAlert(ClickAlertEvent msg, EntitySessionEventArgs args)
@@ -226,7 +228,7 @@ public abstract class AlertsSystem : EntitySystem
             return;
         }
 
-        alert.OnClick?.AlertClicked(player.Value);
+        alert.Value.OnClick?.AlertClicked(player.Value);
     }
 
     private static void ClientAlertsGetState(EntityUid uid, AlertsComponent component, ref ComponentGetState args)

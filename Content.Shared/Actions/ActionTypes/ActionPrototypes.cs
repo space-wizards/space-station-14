@@ -10,43 +10,29 @@ namespace Content.Shared.Actions.ActionTypes;
 // anymore.
 
 [Prototype("worldTargetAction")]
-public readonly record struct WorldTargetActionPrototype : WorldTargetAction, IPrototype
+public readonly record struct WorldTargetActionPrototype : IPrototype
 {
     [IdDataFieldAttribute]
     public string ID { get; } = default!;
 
-    // This is a shitty hack to get around the fact that action-prototypes should not in general be sever-exclusive
-    // prototypes, but some actions may need to use server-exclusive events, and there is no way to specify on a
-    // per-prototype basis whether the client should ignore it when validating yaml.
-    [DataField("serverEvent", serverOnly: true)]
-    public WorldTargetActionEvent? ServerEvent
-    {
-        get => Event;
-        set => Event = value;
-    }
+    [IncludeDataField] public readonly WorldTargetAction WorldTargetAction = default!;
 }
 
 [Prototype("entityTargetAction")]
-public readonly record struct EntityTargetActionPrototype : EntityTargetAction, IPrototype
+public readonly record struct EntityTargetActionPrototype : IPrototype
 {
     [IdDataFieldAttribute]
     public string ID { get; } = default!;
 
-    [DataField("serverEvent", serverOnly: true)]
-    public override EntityTargetActionEvent? Event { get; }
-
-    public EntityTargetActionEvent? ServerEvent => Event;
+    [IncludeDataField] public readonly EntityTargetAction EntityTargetAction = default!;
 }
 
 [Prototype("instantAction")]
-public readonly record struct InstantActionPrototype : InstantAction, IPrototype
+public readonly record struct InstantActionPrototype : IPrototype
 {
     [IdDataFieldAttribute]
     public string ID { get; } = default!;
 
-    [DataField("serverEvent", serverOnly: true)]
-    public override InstantActionEvent? Event { get; }
-
-    public InstantActionEvent? ServerEvent => Event;
+    [IncludeDataField] public readonly InstantAction InstantAction = default!;
 }
 

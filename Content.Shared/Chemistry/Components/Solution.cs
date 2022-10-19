@@ -108,7 +108,7 @@ namespace Content.Shared.Chemistry.Components
 
             var actualTemp = temperature ?? Temperature;
             var oldThermalEnergy = Temperature * GetHeatCapacity();
-            var addedThermalEnergy = (float) quantity * proto.SpecificHeat * actualTemp;
+            var addedThermalEnergy = (float) quantity * proto.Value.SpecificHeat * actualTemp;
             for (var i = 0; i < Contents.Count; i++)
             {
                 var reagent = Contents[i];
@@ -287,7 +287,7 @@ namespace Content.Shared.Chemistry.Components
                     newSolution.Contents.Add(new ReagentQuantity(reagent.ReagentId, splitQuantity));
 
                 newTotalVolume += splitQuantity;
-                newHeatCapacity += (float) splitQuantity * proto.SpecificHeat;
+                newHeatCapacity += (float) splitQuantity * proto.Value.SpecificHeat;
                 quantity -= splitQuantity;
             }
 
@@ -350,12 +350,12 @@ namespace Content.Shared.Chemistry.Components
 
                 if (mixColor == default)
                 {
-                    mixColor = proto.SubstanceColor;
+                    mixColor = proto.Value.SubstanceColor;
                     continue;
                 }
 
                 var interpolateValue = (1 / runningTotalQuantity.Float()) * reagent.Quantity.Float();
-                mixColor = Color.InterpolateBetween(mixColor, proto.SubstanceColor, interpolateValue);
+                mixColor = Color.InterpolateBetween(mixColor, proto.Value.SubstanceColor, interpolateValue);
             }
             return mixColor;
         }
@@ -375,7 +375,7 @@ namespace Content.Shared.Chemistry.Components
 
                 newSolution.Contents.Add(reagent);
                 volume += reagent.Quantity;
-                heatCapacity += (float) reagent.Quantity * proto.SpecificHeat;
+                heatCapacity += (float) reagent.Quantity * proto.Value.SpecificHeat;
             }
 
             newSolution.TotalVolume = volume;

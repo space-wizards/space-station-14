@@ -24,7 +24,7 @@ namespace Content.Shared.Chemistry.Reagent
 
         [ViewVariables(VVAccess.ReadOnly)]
         [DataField("name", required: true, customTypeSerializer: typeof(LocStringSerializer))]
-        public readonly string Name;
+        public readonly string Name = default!;
 
         [DataField("group")]
         public string Group { get; } = "Unknown";
@@ -38,12 +38,12 @@ namespace Content.Shared.Chemistry.Reagent
 
         [ViewVariables(VVAccess.ReadOnly)]
         [DataField("desc", required: true, customTypeSerializer: typeof(LocStringSerializer))]
-        public readonly string Description;
+        public readonly string Description = default!;
 
 
         [ViewVariables(VVAccess.ReadOnly)]
         [DataField("physicalDesc", required: true, customTypeSerializer: typeof(LocStringSerializer))]
-        public readonly string PhysicalDescription;
+        public readonly string PhysicalDescription = default!;
 
         [DataField("flavor")]
         public string Flavor { get; } = default!;

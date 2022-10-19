@@ -1,10 +1,9 @@
+using System.Text.Json.Serialization;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 using Robust.Shared.Utility;
-using System.Linq;
-using System.Text.Json.Serialization;
-using Content.Shared.FixedPoint;
 
 namespace Content.Shared.Damage
 {
@@ -123,9 +122,9 @@ namespace Content.Shared.Damage
 
                 // Simply distribute evenly (except for rounding).
                 // We do this by reducing remaining the # of types and damage every loop.
-                var remainingTypes = group.DamageTypes.Count;
+                var remainingTypes = group.Value.DamageTypes.Count;
                 var remainingDamage = entry.Value;
-                foreach (var damageType in group.DamageTypes)
+                foreach (var damageType in group.Value.DamageTypes)
                 {
                     var damage = remainingDamage / FixedPoint2.New(remainingTypes);
                     if (!_damageDict.TryAdd(damageType, damage))

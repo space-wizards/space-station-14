@@ -1,6 +1,5 @@
-using Robust.Shared.Prototypes;
 using System.Linq;
-using static Content.Shared.VendingMachines.SharedVendingMachineComponent;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.VendingMachines;
 
@@ -19,9 +18,9 @@ public abstract class SharedVendingMachineSystem : EntitySystem
         if (!_prototypeManager.TryIndex(component.PackPrototypeId, out VendingMachineInventoryPrototype? packPrototype))
             return;
 
-        AddInventoryFromPrototype(uid, packPrototype.StartingInventory, InventoryType.Regular, component);
-        AddInventoryFromPrototype(uid, packPrototype.EmaggedInventory, InventoryType.Emagged, component);
-        AddInventoryFromPrototype(uid, packPrototype.ContrabandInventory, InventoryType.Contraband, component);
+        AddInventoryFromPrototype(uid, packPrototype.Value.StartingInventory, InventoryType.Regular, component);
+        AddInventoryFromPrototype(uid, packPrototype.Value.EmaggedInventory, InventoryType.Emagged, component);
+        AddInventoryFromPrototype(uid, packPrototype.Value.ContrabandInventory, InventoryType.Contraband, component);
     }
 
     /// <summary>
