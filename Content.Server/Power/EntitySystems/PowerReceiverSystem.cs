@@ -137,6 +137,13 @@ namespace Content.Server.Power.EntitySystems
             if (!Resolve(uid, ref receiver, false))
                 return true;
 
+            // it'll save a lot of confusion if 'always powered' means 'always powered'
+            if (!receiver.NeedsPower)
+            {
+                receiver.PowerDisabled = false;
+                return true;
+            }
+
             receiver.PowerDisabled = !receiver.PowerDisabled;
 
             if (playSwitchSound)
