@@ -17,6 +17,17 @@
     {
       "name": "blue-inhand-right",
       "directions": 4
+    },
+    {
+      "name": "pink"
+    },
+    {
+      "name": "pink-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "pink-inhand-right",
+      "directions": 4
     }
   ]
 }
