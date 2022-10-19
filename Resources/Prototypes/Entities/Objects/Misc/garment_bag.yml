@@ -78,3 +78,14 @@
       whitelist:
         tags:
           - QMClothing
+
+- type: entity
+  parent: BagGarmentBase
+  id: BagGarmentCaptain
+  name: captain's garment bag
+  description: A bag for storing extra clothes and shoes. This one belongs to the captain.
+  components:
+    - type: Storage
+      whitelist:
+        tags:
+          - CaptainClothing

@@ -6,6 +6,9 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/cap.rsi
+  - type: Tag
+    tags:
+      - CaptainClothing
 
 - type: entity
   parent: ClothingNeckBase
@@ -105,6 +108,9 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/capcloakformal.rsi
+  - type: Tag
+    tags:
+      - CaptainClothing
 
 - type: entity
   parent: ClothingNeckBase

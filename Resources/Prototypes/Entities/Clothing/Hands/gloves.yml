@@ -91,7 +91,10 @@
     fiberMaterial: fibers-durathread
     fiberColor: fibers-regal-blue
   - type: FingerprintMask
-
+  - type: Tag
+    tags:
+      - CaptainClothing
+ 
 - type: entity
   parent: ClothingHandsBase
   id: ClothingHandsGlovesIhscombat

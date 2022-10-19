@@ -8,6 +8,9 @@
     sprite: Clothing/Neck/mantles/capmantle.rsi
   - type: Clothing
     sprite: Clothing/Neck/mantles/capmantle.rsi
+  - type: Tag
+    tags:
+      - CaptainClothing
 
 - type: entity
   parent: ClothingNeckBase

@@ -80,6 +80,9 @@
     sprite: Clothing/Head/Hats/captain.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/captain.rsi
+  - type: Tag
+    tags:
+      - CaptainClothing
 
 - type: entity
   parent: ClothingHeadBase

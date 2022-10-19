@@ -88,3 +88,21 @@
         - id: ClothingNeckCloakQm
         - id: ClothingOuterWinterQM
         - id: ClothingHeadHatQMsoft
+
+- type: entity
+  id: BagGarmentCaptainFilled
+  suffix: Filled
+  parent: BagGarmentCaptain
+  components:
+    - type: StorageFill
+      contents:
+        - id: ClothingUniformJumpsuitCaptain
+        - id: ClothingUniformJumpskirtCaptain
+        - id: ClothingUniformJumpsuitCapFormal
+        - id: ClothingUniformJumpskirtCapFormalDress
+        - id: ClothingNeckCloakCap
+        - id: ClothingNeckCloakCapFormal
+        - id: ClothingNeckMantleCap
+        - id: ClothingOuterWinterCap
+        - id: ClothingHeadHatCaptain
+        - id: ClothingHandsGlovesCaptain

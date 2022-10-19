@@ -34,9 +34,7 @@
       - id: NukeDisk
       - id: PinpointerNuclear
       - id: CaptainIDCard
-      - id: ClothingHeadHatCaptain
-      - id: ClothingNeckCloakCap
-      - id: ClothingHandsGlovesCaptain
+      - id: BagGarmentCaptainFilled
       - id: ClothingOuterHardsuitCap
       - id: ClothingMaskGasCaptain
       - id: WeaponDisabler
@@ -49,9 +47,6 @@
         prob: 0.25
       - id: ClothingBeltSheathFilled
       - id: DoorRemoteCommand
-      - id: ClothingNeckCloakCapFormal
-      - id: ClothingUniformJumpsuitCapFormal
-      - id: ClothingUniformJumpskirtCapFormalDress
       - id: ClothingNeckBronzeheart
       - id: ClothingNeckGoldmedal
       - id: RubberStampCaptain

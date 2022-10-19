@@ -19,6 +19,9 @@
     sprite: Clothing/Uniforms/Jumpskirt/captain.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpskirt/captain.rsi
+  - type: Tag
+    tags:
+      - CaptainClothing
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -521,6 +524,9 @@
     sprite: Clothing/Uniforms/Jumpskirt/capformaldress.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpskirt/capformaldress.rsi
+  - type: Tag
+    tags:
+      - CaptainClothing
 
 - type: entity
   parent: ClothingUniformSkirtBase

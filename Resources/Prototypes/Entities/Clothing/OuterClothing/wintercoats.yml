@@ -46,6 +46,9 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatcap.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatcap.rsi
+  - type: Tag
+    tags:
+      - CaptainClothing
 
 - type: entity
   parent: ClothingOuterWinterCoat
