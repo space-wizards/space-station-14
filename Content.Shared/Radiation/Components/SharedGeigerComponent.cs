@@ -9,14 +9,14 @@ public abstract class SharedGeigerComponent : Component
     [DataField("showExamine")]
     public bool ShowExamine = true;
 
+    [DataField("isEnabled")]
+    public bool IsEnabled = true;
+
     [ViewVariables(VVAccess.ReadOnly)]
     public float CurrentRadiation;
 
     [ViewVariables(VVAccess.ReadOnly)]
     public GeigerDangerLevel DangerLevel = GeigerDangerLevel.None;
-
-    [ViewVariables(VVAccess.ReadOnly)]
-    public bool IsEnabled;
 }
 
 [Serializable, NetSerializable]

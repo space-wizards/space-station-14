@@ -16,7 +16,9 @@
     - type: Item
       sprite: Objects/Tools/geiger.rsi
     - type: RadiationReceiver
+      canReceive: false
     - type: Geiger
+      isEnabled: false
     - type: GeigerVisuals
       states:
         None: geiger_on_idle
