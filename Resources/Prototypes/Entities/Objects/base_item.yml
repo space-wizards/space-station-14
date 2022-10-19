@@ -22,13 +22,12 @@
   - type: Physics
     bodyType: Dynamic
     fixedRotation: false
-    canCollide: false # most entities start asleep.
   - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.25,-0.25,0.25,0.25"
-      mass: 5
+      density: 20
       mask:
       - ItemMask
       restitution: 0.3  # fite me

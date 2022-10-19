@@ -77,4 +77,5 @@ public enum LogType
     CableCut = 72,
     StorePurchase = 73,
     LatticeCut = 74,
+    Stripping = 75,
 }

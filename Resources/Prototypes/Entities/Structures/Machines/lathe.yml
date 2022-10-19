@@ -27,7 +27,7 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.4,-0.4,0.4,0.4"
-      mass: 25
+      density: 190
       mask:
       - MachineMask
       layer:
@@ -114,7 +114,7 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.4,-0.4,0.4,0.4"
-      mass: 25
+      density: 190
       mask:
       - MachineMask
       layer:
@@ -168,6 +168,7 @@
       - CableMVStack
       - CableHVStack
       - ConveyorBeltAssembly
+      - AppraisalTool
       - RCDAmmo
       - HydroponicsToolScythe
       - HydroponicsToolHatchet
@@ -193,6 +194,11 @@
       - MicroLaserStockPart
       - MatterBinStockPart
       - CapacitorStockPart
+      - AdvancedCapacitorStockPart
+      - AdvancedMatterBinStockPart
+      - HighPowerMicroLaserStockPart
+      - NanoManipulatorStockPart
+      - AdvancedScanningModuleStockPart
       - FirelockElectronics
       - DoorElectronics
       - APCElectronics
@@ -211,6 +217,7 @@
       - FlashPayload
       - Signaller
       - SignalTrigger
+      - VoiceTrigger
       - PowerCellSmall
       - PowerCellMedium
       - PowerCellHigh
@@ -313,7 +320,7 @@
   - type: Lathe
     idleState: icon
     runningState: icon
-    dynamicRecipes:
+    staticRecipes:
       - Flash
       - FlashPayload
       - Handcuffs
@@ -360,7 +367,7 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Lathe
     idleState: icon
-    runningState: building
+    runningState: icon
     dynamicRecipes:
       - HandheldHealthAnalyzer
       - ClothingHandsGlovesLatex

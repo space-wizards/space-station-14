@@ -180,13 +180,15 @@
         damage:
           types:
             Poison: 1
-      - !type:Paralyze
-        paralyzeTime: 1.2
-        refresh: false
       - !type:GenericStatusEffect
-        key: Stutter
-        time: 1
-        component: StutteringAccent
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Nocturine
+          min: 8
+        key: ForcedSleep
+        component: ForcedSleeping
+        refresh: false
+        type: Add
 
 - type: reagent
   id: MuteToxin

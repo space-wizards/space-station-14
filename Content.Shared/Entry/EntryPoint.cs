@@ -1,10 +1,9 @@
-using Content.Shared.CharacterAppearance;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Humanoid.Markings;
 using Content.Shared.IoC;
 using Content.Shared.Localizations;
 using Content.Shared.Maps;
-using Content.Shared.Markings;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
@@ -34,7 +33,6 @@ namespace Content.Shared.Entry
 
             InitTileDefinitions();
             IoCManager.Resolve<ContentLocalizationManager>().Initialize();
-            IoCManager.Resolve<SpriteAccessoryManager>().Initialize();
             IoCManager.Resolve<MarkingManager>().Initialize();
 
             var configMan = IoCManager.Resolve<IConfigurationManager>();

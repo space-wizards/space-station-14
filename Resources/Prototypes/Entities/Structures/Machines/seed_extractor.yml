@@ -11,6 +11,7 @@
     - state: seedextractor-off
     - state: seedextractor-unlit
       shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
     netsync: false
   - type: Physics
     bodyType: Static
@@ -19,9 +20,16 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.25,-0.4,0.25,0.4"
-      mass: 25
+      density: 190
       mask:
       - MachineMask
       layer:
       - MachineLayer
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
   - type: SeedExtractor

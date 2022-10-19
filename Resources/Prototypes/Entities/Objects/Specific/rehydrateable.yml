@@ -34,7 +34,7 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.4,-0.3,0.4,0.3"
-      mass: 2.5
+      density: 5
       mask:
       - ItemMask
     - shape:
@@ -78,7 +78,7 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.4,-0.4,0.4,0.4"
-      mass: 2.5
+      density: 15
       mask:
       - ItemMask
     - shape:

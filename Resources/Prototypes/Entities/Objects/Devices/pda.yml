@@ -36,7 +36,7 @@
       event: !type:ToggleActionEvent
   - type: PointLight
     enabled: false
-    radius: 2.5
+    radius: 1.5
     softness: 5
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
@@ -44,6 +44,7 @@
   - type: ActivatableUI
     key: enum.PDAUiKey.Key
     singleUser: true
+    closeOnHandDeselect: false
   - type: UserInterface
     interfaces:
     - key: enum.PDAUiKey.Key
@@ -221,7 +222,7 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.4,-0.3,0.4,0.3"
-      mass: 2.5
+      density: 5
       mask:
       - ItemMask
 

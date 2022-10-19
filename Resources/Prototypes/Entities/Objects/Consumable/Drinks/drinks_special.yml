@@ -2,7 +2,7 @@
   parent: BaseItem
   id: DrinkShaker
   name: shaker
-  description: ''
+  description: The trusty mixing buddy of the bartender.
   components:
   - type: SolutionContainerManager
     solutions:
@@ -34,7 +34,7 @@
   parent: DrinkGlassBase
   id: DrinkShotGlass
   name: shot glass
-  description: ''
+  description: Perfect for slamming down onto the table angrily. 
   components:
   - type: SolutionContainerManager
     solutions:

@@ -3,6 +3,7 @@
   abstract: true
   id: MobSiliconBase
   components:
+  - type: LagCompensation
   - type: Reactive
     groups:
       Acidic: [Touch]
@@ -25,7 +26,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 20
+      density: 50
       mask:
       - MobMask
       layer:
@@ -113,7 +114,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 8
+      density: 20
       mask:
       - MobMask
       layer:
