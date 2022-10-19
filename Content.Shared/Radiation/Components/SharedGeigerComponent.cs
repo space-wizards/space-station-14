@@ -14,6 +14,9 @@ public abstract class SharedGeigerComponent : Component
 
     [ViewVariables(VVAccess.ReadOnly)]
     public GeigerDangerLevel DangerLevel = GeigerDangerLevel.None;
+
+    [ViewVariables(VVAccess.ReadOnly)]
+    public bool IsEnabled;
 }
 
 [Serializable, NetSerializable]
@@ -21,6 +24,7 @@ public sealed class GeigerComponentState : ComponentState
 {
     public float CurrentRadiation;
     public GeigerDangerLevel DangerLevel;
+    public bool IsEnabled;
 }
 
 [Serializable, NetSerializable]
@@ -43,5 +47,6 @@ public enum GeigerLayers : byte
 [Serializable, NetSerializable]
 public enum GeigerVisuals : byte
 {
-    DangerLevel
+    DangerLevel,
+    IsEnabled
 }
