@@ -169,7 +169,6 @@ public abstract class SharedStealthSystem : EntitySystem
     /// <summary>
     private sealed class GetVisibilityModifiersEvent : EntityEventArgs
     {
-        public readonly EntityUid Uid;
         public readonly StealthComponent Stealth = default!;
         public readonly float SecondsSinceUpdate;
 
@@ -180,7 +179,6 @@ public abstract class SharedStealthSystem : EntitySystem
         public float FlatModifier;
         public GetVisibilityModifiersEvent(EntityUid uid, StealthComponent stealth, float secondsSinceUpdate, float flatModifier)
         {
-            Uid = uid;
             Stealth = stealth;
             SecondsSinceUpdate = secondsSinceUpdate;
             FlatModifier = flatModifier;
