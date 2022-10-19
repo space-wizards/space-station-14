@@ -57,6 +57,8 @@ ui-options-vp-integer-scaling-tooltip =
 ui-options-vp-low-res = Изображение низкого разрешения
 ui-options-parallax-low-quality = Низкокачественный параллакс (фон)
 ui-options-fps-counter = Показать счетчик FPS
+ui-options-vp-width = Ширина области просмотра: {$width}
+ui-options-hud-layout = Внешний вид HUD:
 
 ## Controls menu
 
