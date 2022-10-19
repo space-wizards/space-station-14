@@ -24,7 +24,7 @@ public sealed class ParallaxSystem : SharedParallaxSystem
         _protoManager.PrototypesReloaded += OnReload;
     }
 
-    private void OnReload(PrototypesReloadedEventArgs obj)
+    private void OnReload(PrototypesReloadedEventArgs _)
     {
         _parallax.UnloadParallax(Fallback);
         _parallax.LoadDefaultParallax();

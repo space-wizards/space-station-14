@@ -34,7 +34,7 @@ namespace Content.Server.NPC.Systems
             _protoManager.PrototypesReloaded -= OnProtoReload;
         }
 
-        private void OnProtoReload(PrototypesReloadedEventArgs obj)
+        private void OnProtoReload(PrototypesReloadedEventArgs _)
         {
             RefreshFactions();
         }

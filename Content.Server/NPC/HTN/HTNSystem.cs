@@ -74,7 +74,7 @@ public sealed class HTNSystem : EntitySystem
         }
     }
 
-    private void OnPrototypeLoad(PrototypesReloadedEventArgs obj)
+    private void OnPrototypeLoad(PrototypesReloadedEventArgs _)
     {
         OnLoad();
     }

@@ -94,10 +94,9 @@ public sealed class NameIdentifierSystem : EntitySystem
         if (!ev.ByType.TryGetValue(typeof(NameIdentifierGroupPrototype), out var set))
             return;
 
-        foreach (var (_, proto) in set.Modified)
+        foreach (var id in set)
         {
-            if (proto is not NameIdentifierGroupPrototype group)
-                continue;
+            var group = _prototypeManager.Index<NameIdentifierGroupPrototype>(id);
 
             // Only bother adding new ones.
             if (CurrentIds.ContainsKey(group))

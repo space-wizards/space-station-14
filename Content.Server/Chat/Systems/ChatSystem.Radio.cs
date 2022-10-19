@@ -1,5 +1,3 @@
-using System.Linq;
-using System.Text.RegularExpressions;
 using Content.Server.Headset;
 using Content.Shared.Radio;
 using Robust.Shared.Player;
@@ -20,7 +18,7 @@ public sealed partial class ChatSystem
         CacheRadios();
     }
 
-    private void OnPrototypeReload(PrototypesReloadedEventArgs obj)
+    private void OnPrototypeReload(PrototypesReloadedEventArgs _)
     {
         CacheRadios();
     }

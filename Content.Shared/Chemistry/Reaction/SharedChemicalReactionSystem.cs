@@ -84,14 +84,14 @@ namespace Content.Shared.Chemistry.Reaction
 
             foreach (var (reactant, cache) in _reactions)
             {
-                cache.RemoveAll((reaction) => set.Modified.ContainsKey(reaction.ID));
+                cache.RemoveAll(reaction => set.Contains(reaction.ID));
                 if (cache.Count == 0)
                     _reactions.Remove(reactant);
             }
 
-            foreach (var prototype in set.Modified.Values)
+            foreach (var id in set)
             {
-                CacheReaction((ReactionPrototype) prototype);
+                CacheReaction(_prototypeManager.Index<ReactionPrototype>(id));
             }
         }
 

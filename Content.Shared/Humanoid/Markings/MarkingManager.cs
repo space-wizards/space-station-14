@@ -112,12 +112,11 @@ namespace Content.Shared.Humanoid.Markings
                 return;
 
 
-            _index.RemoveAll(i => set.Modified.ContainsKey(i.ID));
+            _index.RemoveAll(i => set.Contains(i.ID));
 
-            foreach (var prototype in set.Modified.Values)
+            foreach (var id in set)
             {
-                var markingPrototype = (MarkingPrototype) prototype;
-                _index.Add(markingPrototype);
+                _index.Add(_prototypeManager.Index<MarkingPrototype>(id));
             }
         }
     }

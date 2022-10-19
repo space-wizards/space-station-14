@@ -1,9 +1,7 @@
 using System.Linq;
-using Content.Server.Chat;
 using Content.Server.Chat.Systems;
 using Content.Server.Station.Systems;
 using Robust.Shared.Audio;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.AlertLevel;
@@ -77,11 +75,12 @@ public sealed class AlertLevelSystem : EntitySystem
     private void OnPrototypeReload(PrototypesReloadedEventArgs args)
     {
         if (!args.ByType.TryGetValue(typeof(AlertLevelPrototype), out var alertPrototypes)
-            || !alertPrototypes.Modified.TryGetValue(DefaultAlertLevelSet, out var alertObject)
-            || alertObject is not AlertLevelPrototype alerts)
+            || !alertPrototypes.Contains(DefaultAlertLevelSet))
         {
             return;
         }
+
+        var alerts = _prototypeManager.Index<AlertLevelPrototype>(DefaultAlertLevelSet);
 
         foreach (var comp in EntityQuery<AlertLevelComponent>())
         {

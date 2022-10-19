@@ -179,7 +179,7 @@ public abstract class AlertsSystem : EntitySystem
         base.Shutdown();
     }
 
-    private void HandlePrototypesReloaded(PrototypesReloadedEventArgs obj)
+    private void HandlePrototypesReloaded(PrototypesReloadedEventArgs _)
     {
         LoadPrototypes();
     }
