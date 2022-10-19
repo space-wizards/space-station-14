@@ -1,16 +1,16 @@
-using System.Linq;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Server.MachineLinking.Components;
 using Content.Server.MachineLinking.Events;
 using Content.Server.Power.Components;
 using Content.Shared.Interaction;
 using Content.Shared.MachineLinking;
+using Content.Shared.MachineLinking.Events;
 using Content.Shared.Popups;
+using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
-using Content.Shared.Verbs;
 using Robust.Shared.Prototypes;
-using Content.Shared.MachineLinking.Events;
 
 namespace Content.Server.MachineLinking.System
 {
@@ -378,12 +378,12 @@ namespace Content.Server.MachineLinking.System
         /// </summary>
         /// <param name="port"></param>
         /// <returns></returns>
-        public string PortName<TPort>(string port) where TPort : MachinePortPrototype, IPrototype
+        public string PortName<TPort>(string port) where TPort : struct, IMachinePortPrototype, IPrototype
         {
             if (!_protoMan.TryIndex<TPort>(port, out var proto))
                 return port;
 
-            return Loc.GetString(proto.Name);
+            return Loc.GetString(proto.Value.Name);
         }
 
         private void OnLinkerClearSelected(EntityUid uid, SignalLinkerComponent linker, LinkerClearSelected args)

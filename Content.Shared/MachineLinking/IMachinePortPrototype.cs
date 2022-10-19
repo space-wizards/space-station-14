@@ -6,31 +6,37 @@ namespace Content.Shared.MachineLinking;
 /// <summary>
 ///     A prototype for a machine port, for use with machine linking.
 /// </summary>
-public abstract class MachinePortPrototype
+public interface IMachinePortPrototype
 {
     /// <summary>
     ///     Localization string for the port name. Displayed in the linking UI.
     /// </summary>
-    [DataField("name", required:true)]
-    public string Name = default!;
+    public string Name { get; }
 
     /// <summary>
     ///     Localization string for a description of the ports functionality. Should either indicate when a transmitter
     ///     port is fired, or what function a receiver port serves. Displayed as a tooltip in the linking UI.
     /// </summary>
-    [DataField("description", required: true)]
-    public string Description = default!;
+    public string Description { get; }
 }
 
 [Prototype("receiverPort")]
-public readonly record struct ReceiverPortPrototype : MachinePortPrototype, IPrototype
+public readonly record struct ReceiverPortPrototype : IMachinePortPrototype, IPrototype
 {
     [IdDataField]
     public string ID { get; } = default!;
+
+    /// <inheritdoc />
+    [DataField("name", required:true)]
+    public string Name { get; }
+
+    /// <inheritdoc />
+    [DataField("description", required: true)]
+    public string Description { get; }
 }
 
 [Prototype("transmitterPort")]
-public readonly record struct TransmitterPortPrototype : MachinePortPrototype, IPrototype
+public readonly record struct TransmitterPortPrototype : IMachinePortPrototype, IPrototype
 {
     [IdDataField]
     public string ID { get; } = default!;
@@ -41,4 +47,12 @@ public readonly record struct TransmitterPortPrototype : MachinePortPrototype, I
     /// </summary>
     [DataField("defaultLinks", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<ReceiverPortPrototype>))]
     public readonly HashSet<string>? DefaultLinks;
+
+    /// <inheritdoc />
+    [DataField("name", required:true)]
+    public string Name { get; }
+
+    /// <inheritdoc />
+    [DataField("description", required: true)]
+    public string Description { get; }
 }
