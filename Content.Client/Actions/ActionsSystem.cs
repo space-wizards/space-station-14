@@ -180,17 +180,11 @@ namespace Content.Client.Actions
 
         private void OnPlayerAttached(EntityUid uid, ActionsComponent component, PlayerAttachedEvent args)
         {
-            if (uid != _playerManager.LocalPlayer?.ControlledEntity)
-                return;
-
             LinkAllActions(component);
         }
 
         private void OnPlayerDetached(EntityUid uid, ActionsComponent component, PlayerDetachedEvent? args = null)
         {
-            if (uid != _playerManager.LocalPlayer?.ControlledEntity)
-                return;
-
             UnlinkAllActions();
         }
 
