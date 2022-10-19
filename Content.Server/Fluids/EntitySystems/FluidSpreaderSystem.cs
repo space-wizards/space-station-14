@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Fluids.Components;
+using Content.Shared;
 using Content.Shared.Directions;
 using Content.Shared.Doors.Components;
 using Content.Shared.FixedPoint;
@@ -38,6 +39,13 @@ public sealed class FluidSpreaderSystem : EntitySystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
+        Span<Direction> exploreDirections = stackalloc Direction[]
+        {
+            Direction.North,
+            Direction.East,
+            Direction.South,
+            Direction.West,
+        };
         foreach (var fluidMapData in EntityQuery<FluidMapDataComponent>())
         {
             if (fluidMapData.Puddles.Count == 0 || _gameTiming.CurTime <= fluidMapData.GoalTime)
@@ -57,7 +65,8 @@ public sealed class FluidSpreaderSystem : EntitySystem
                 var prototypeName = metaData.EntityPrototype!.ID;
                 var puddles = new List<PuddleComponent>(4);
                 var totalVolume = _puddleSystem.CurrentVolume(puddle.Owner, puddle);
-                foreach (var direction in DirectionRandomizer.RandomCardinal())
+                exploreDirections.Shuffle();
+                foreach (var direction in exploreDirections)
                 {
                     var newPos = pos.Offset(direction);
                     if (CheckTile(_puddleSystem.CurrentVolume(puddle.Owner, puddle), prototypeName, newPos, mapGrid,
