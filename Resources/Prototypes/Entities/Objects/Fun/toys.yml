@@ -131,6 +131,18 @@
 
 - type: entity
   parent: BasePlushie
+  id: PlushieSharkBlue
+  name: blue shark soft toy
+  description: Big and safe to have by your side if you want to discover the world below the surface of the ocean.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/sharkplush.rsi
+    state: blue
+  - type: Item
+    heldPrefix: blue
+
+- type: entity
+  parent: BasePlushie
   id: PlushieRatvar
   name: ratvar plushie
   description: A small stuffed doll of the elder god Ratvar.
