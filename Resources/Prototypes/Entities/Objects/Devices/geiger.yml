@@ -18,7 +18,6 @@
     - type: RadiationReceiver
       canReceive: false
     - type: Geiger
-      isEnabled: false
       showControl: true
       showExamine: true
     - type: GeigerVisuals

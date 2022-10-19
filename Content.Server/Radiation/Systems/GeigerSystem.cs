@@ -37,26 +37,40 @@ public sealed class GeigerSystem : SharedGeigerSystem
 
     private void OnActivate(EntityUid uid, GeigerComponent component, ActivateInWorldEvent args)
     {
-        SetEnabled(uid, !component.IsEnabled, component);
+        if (args.Handled || component.AttachedToSuit)
+            return;
+        args.Handled = true;
+
+        SetEnabled(uid, component, !component.IsEnabled);
     }
 
     private void OnEquipped(EntityUid uid, GeigerComponent component, GotEquippedEvent args)
     {
+        if (component.AttachedToSuit)
+            SetEnabled(uid, component, true);
         SetUser(uid, component, args.Equipee);
     }
 
     private void OnEquippedHand(EntityUid uid, GeigerComponent component, GotEquippedHandEvent args)
     {
+        if (component.AttachedToSuit)
+            return;
+
         SetUser(uid, component, args.User);
     }
 
     private void OnUnequipped(EntityUid uid, GeigerComponent component, GotUnequippedEvent args)
     {
+        if (component.AttachedToSuit)
+            SetEnabled(uid, component, true);
         SetUser(uid, component, null);
     }
 
     private void OnUnequippedHand(EntityUid uid, GeigerComponent component, GotUnequippedHandEvent args)
     {
+        if (component.AttachedToSuit)
+            return;
+
         SetUser(uid, component, null);
     }
 
@@ -108,14 +122,10 @@ public sealed class GeigerSystem : SharedGeigerSystem
 
         component.User = user;
         UpdateGeigerSound(uid, component);
-        Dirty(component);
     }
 
-    private void SetEnabled(EntityUid uid, bool isEnabled, GeigerComponent? component = null,
-        RadiationReceiverComponent? receiver = null)
+    private void SetEnabled(EntityUid uid, GeigerComponent component, bool isEnabled)
     {
-        if (!Resolve(uid, ref component, ref receiver))
-            return;
         if (component.IsEnabled == isEnabled)
             return;
 
@@ -126,7 +136,7 @@ public sealed class GeigerSystem : SharedGeigerSystem
             component.DangerLevel = GeigerDangerLevel.None;
         }
 
-        _radiation.SetCanRecieve(uid, isEnabled, receiver);
+        _radiation.SetCanRecieve(uid, isEnabled);
 
         UpdateAppearance(uid, component);
         UpdateGeigerSound(uid, component);

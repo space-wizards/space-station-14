@@ -16,6 +16,9 @@ public sealed class GeigerComponent : SharedGeigerComponent
         {GeigerDangerLevel.Extreme, new SoundPathSpecifier("/Audio/Items/Geiger/ext.ogg")}
     };
 
+    [DataField("attachedToSuit")]
+    public bool AttachedToSuit;
+
     [ViewVariables(VVAccess.ReadOnly)]
     public EntityUid? User;
 

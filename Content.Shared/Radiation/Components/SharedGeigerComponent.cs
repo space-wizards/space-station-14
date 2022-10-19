@@ -7,7 +7,7 @@ namespace Content.Shared.Radiation.Components;
 public abstract class SharedGeigerComponent : Component
 {
     [DataField("isEnabled")]
-    public bool IsEnabled = true;
+    public bool IsEnabled;
 
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("showExamine")]

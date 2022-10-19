@@ -128,3 +128,7 @@
       coefficients:
         Heat: 0.95
         Radiation: 0.65
+  - type: RadiationReceiver
+    canReceive: false
+  - type: Geiger
+    attachedToSuit: true
