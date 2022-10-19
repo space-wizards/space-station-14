@@ -1,9 +1,4 @@
 Entries:
-- author: Ablankmann
-  changes:
-  - {message: Renamed the Bojevic bundle to the Bulldog bundle., type: Tweak}
-  id: 1991
-  time: '2022-07-20T23:50:49.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: The zombify popup is now more noticeable., type: Tweak}
@@ -2945,3 +2940,10 @@ Entries:
       some spells and space-dragon abilities).', type: Fix}
   id: 2490
   time: '2022-10-19T12:02:38.0000000+00:00'
+- author: Carbonhell
+  changes:
+  - {message: 'Low power lighting radius animations for lanterns, floodlights and
+      flashlights now properly restore the original light radius when going back to
+      full power.', type: Fix}
+  id: 2491
+  time: '2022-10-19T18:34:36.0000000+00:00'
