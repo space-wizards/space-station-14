@@ -27,8 +27,7 @@ namespace Content.Server.Power.EntitySystems
             if (!TryComp<BatteryComponent>(uid, out var batteryComponent))
                 return;
 
-            component.lastRecordedCharge = batteryComponent.CurrentCharge;
-
+            component.LastRecordedCharge = batteryComponent.CurrentCharge;
         }
 
         //Checks if the battery is on research mode - if it is then the charge is redirected for analysis
@@ -38,24 +37,16 @@ namespace Content.Server.Power.EntitySystems
             if (!TryComp<BatteryComponent>(uid, out var batteryComponent))
                 return;
 
-            if (component.lastRecordedCharge < batteryComponent.CurrentCharge && component.researchMode)
+            if (component.LastRecordedCharge < batteryComponent.CurrentCharge && component.ResearchMode)
             {
-                if ((component.analysedCharge + ((batteryComponent.CurrentCharge - component.lastRecordedCharge) * component.analysisSiphon)) <= component.MaxAnalysisCharge)
-                {
-                    component.analysedCharge += (batteryComponent.CurrentCharge - component.lastRecordedCharge) * component.analysisSiphon;
-
-                    //ideally the charge should be taken away, but this appears to cause a crash...
-                    //batteryComponent.CurrentCharge -= (batteryComponent.CurrentCharge - component.lastRecordedCharge) * component.analysisSiphon;
-                }
-                else if ((component.analysedCharge + ((batteryComponent.CurrentCharge - component.lastRecordedCharge) * component.analysisSiphon)) > component.MaxAnalysisCharge
-                    && component.analysedCharge < component.MaxAnalysisCharge)
-                {
-                    //batteryComponent.CurrentCharge -= (1000000f - component.analysedCharge);
-                    component.analysedCharge = 1000000f;
-                }
+                if ((component.AnalysedCharge + ((batteryComponent.CurrentCharge - component.LastRecordedCharge) * component.AnalysisSiphon)) <= component.MaxAnalysisCharge)
+                    component.AnalysedCharge += (batteryComponent.CurrentCharge - component.LastRecordedCharge) * component.AnalysisSiphon;
+                else if ((component.AnalysedCharge + ((batteryComponent.CurrentCharge - component.LastRecordedCharge) * component.AnalysisSiphon)) > component.MaxAnalysisCharge
+                    && component.AnalysedCharge < component.MaxAnalysisCharge)
+                    component.AnalysedCharge = 1000000f;
             }
 
-            component.lastRecordedCharge = batteryComponent.CurrentCharge;
+            component.LastRecordedCharge = batteryComponent.CurrentCharge;
         }
 
         public override void Update(float frameTime)
@@ -72,16 +63,16 @@ namespace Content.Server.Power.EntitySystems
 
             foreach (var researchBattery in researchBatteries)
             {
-                if (researchBattery.researchMode && researchBattery.analysedCharge > 0) {
+                if (researchBattery.ResearchMode && researchBattery.AnalysedCharge > 0) {
                     
                     if (!TryComp<BatteryComponent>(researchBattery.Owner, out var batteryComponent))
                         return;
 
-                    if (!researchBattery.MaxCapReached && (batteryComponent.MaxCharge + (researchBattery.analysedCharge * researchBattery.CapIncrease)) <= researchBattery.MaxChargeCeiling)
+                    if (!researchBattery.MaxCapReached && (batteryComponent.MaxCharge + (researchBattery.AnalysedCharge * researchBattery.CapIncrease)) <= researchBattery.MaxChargeCeiling)
                     {
-                        batteryComponent.MaxCharge += researchBattery.analysedCharge * researchBattery.CapIncrease;
+                        batteryComponent.MaxCharge += researchBattery.AnalysedCharge * researchBattery.CapIncrease;
                     }
-                    else if (!researchBattery.MaxCapReached && (batteryComponent.MaxCharge + (researchBattery.analysedCharge * researchBattery.CapIncrease)) > researchBattery.MaxChargeCeiling
+                    else if (!researchBattery.MaxCapReached && (batteryComponent.MaxCharge + (researchBattery.AnalysedCharge * researchBattery.CapIncrease)) > researchBattery.MaxChargeCeiling
                         && batteryComponent.MaxCharge < researchBattery.MaxChargeCeiling)
                     {
                         batteryComponent.MaxCharge = 100000000f;
@@ -95,20 +86,20 @@ namespace Content.Server.Power.EntitySystems
                     }
 
 
-                    if (researchBattery.shieldingActive && researchBattery.analysedCharge >= researchBattery.MaxAnalysisCharge * researchBattery.shieldingCost)
-                        researchBattery.analysedCharge -= researchBattery.MaxAnalysisCharge * researchBattery.shieldingCost;
-                    else if (researchBattery.shieldingActive)
+                    if (researchBattery.ShieldingActive && researchBattery.AnalysedCharge >= researchBattery.MaxAnalysisCharge * researchBattery.ShieldingCost)
+                        researchBattery.AnalysedCharge -= researchBattery.MaxAnalysisCharge * researchBattery.ShieldingCost;
+                    else if (researchBattery.ShieldingActive)
                     {
-                        researchBattery.shieldingActive = false;
-                        researchBattery.analysedCharge = 0f;
+                        researchBattery.ShieldingActive = false;
+                        researchBattery.AnalysedCharge = 0f;
                     }
 
-                    if (!researchBattery.shieldingActive && researchBattery.analysedCharge > researchBattery.MaxAnalysisCharge * researchBattery.overloadThreshold)
+                    if (!researchBattery.ShieldingActive && researchBattery.AnalysedCharge > researchBattery.MaxAnalysisCharge * researchBattery.OverloadThreshold)
                     {
-                        EntitySystem.Get<DamageableSystem>().TryChangeDamage(researchBattery.Owner, researchBattery.Damage * (researchBattery.analysedCharge - researchBattery.MaxAnalysisCharge * researchBattery.overloadThreshold) / 10000, true);
+                        EntitySystem.Get<DamageableSystem>().TryChangeDamage(researchBattery.Owner, researchBattery.Damage * (researchBattery.AnalysedCharge - researchBattery.MaxAnalysisCharge * researchBattery.OverloadThreshold) / 10000, true);
                     }
 
-                    researchBattery.analysedCharge -= researchBattery.analysedCharge * researchBattery.AnalysisDischarge;
+                    researchBattery.AnalysedCharge -= researchBattery.AnalysedCharge * researchBattery.AnalysisDischarge;
 
                     researchBattery.UpdateUserInterface();
 

@@ -14,12 +14,14 @@ namespace Content.Server.Chemistry.Components
         /// <summary>
         /// What method of input the machine will interact with
         /// </summary>
-        [DataField("machineInputDevice", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>), required: false)]
+        [DataField("machineInputDevice")]
+        [ViewVariables]
         public string MachineInputDevice = string.Empty;
 
         /// <summary>
         /// ChemAnalyser runtime and tracking thereof
         /// </summary>
+        [ViewVariables]
         [DataField("delay")]
         public float Delay = 5f;
         [ViewVariables]
@@ -29,15 +31,16 @@ namespace Content.Server.Chemistry.Components
         /// <summary>
         /// What the machine will spawn
         /// </summary>
-        [DataField("machineOutput", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>), required: true)]
+        [ViewVariables]
+        [DataField("machineOutput", required: true)]
         public string MachineOutput = string.Empty;
 
         //TODO it may be worth separating the reward conditions as a separate component so the same machine can support multiple rewards
-        //for now keep it as is, but doing the above may allow the same machine to support multiple research tiers
         /// <summary>
         /// What the machine will spawn when the reward condition is met (if both are provided)
         /// </summary>
-        [DataField("researchDiskReward", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>), required: false)]
+        [ViewVariables]
+        [DataField("researchDiskReward")]
         public string ResearchDiskReward = string.Empty;
 
         /// <summary>

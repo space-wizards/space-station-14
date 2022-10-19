@@ -3,7 +3,6 @@ using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Content.Shared.Power;
 
-
 namespace Content.Client.Power.ResearchSMES.UI
 {
     [UsedImplicitly]
