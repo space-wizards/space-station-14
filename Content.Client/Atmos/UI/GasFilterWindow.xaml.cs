@@ -75,6 +75,12 @@ namespace Content.Client.Atmos.UI
 
         private void PopulateGasList(IEnumerable<GasPrototype> gases)
         {
+            GasList.Add(new ItemList.Item(GasList)
+            {
+                Metadata = null,
+                Text = "None"
+            });
+
             foreach (GasPrototype gas in gases)
             {
                 GasList.Add(GetGasItem(gas.ID, gas.Name, GasList));

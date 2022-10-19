@@ -57,4 +57,10 @@ namespace Content.Shared.Atmos.Piping.Trinary.Components
             ID = id;
         }
     }
+
+    [Serializable, NetSerializable]
+    public sealed class GasFilterDeselectGasMessage : BoundUserInterfaceMessage
+    {
+        public GasFilterDeselectGasMessage() {}
+    }
 }

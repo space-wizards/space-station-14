@@ -38,6 +38,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             // Bound UI subscriptions
             SubscribeLocalEvent<GasFilterComponent, GasFilterChangeRateMessage>(OnTransferRateChangeMessage);
             SubscribeLocalEvent<GasFilterComponent, GasFilterSelectGasMessage>(OnSelectGasMessage);
+            SubscribeLocalEvent<GasFilterComponent, GasFilterDeselectGasMessage>(OnDeselectGasMessage);
             SubscribeLocalEvent<GasFilterComponent, GasFilterToggleStatusMessage>(OnToggleStatusMessage);
 
         }
@@ -151,6 +152,12 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 
         }
 
+        private void OnDeselectGasMessage(EntityUid uid, GasFilterComponent filter, GasFilterDeselectGasMessage args)
+        {
+            filter.FilteredGas = null;
+            DirtyUI(uid, filter);
+        }
+
         private void OnSelectGasMessage(EntityUid uid, GasFilterComponent filter, GasFilterSelectGasMessage args)
         {
             if (Enum.TryParse<Gas>(args.ID.ToString(), true, out var parsedGas))
@@ -158,7 +165,6 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
                 filter.FilteredGas = parsedGas;
                 DirtyUI(uid, filter);
             }
-
         }
 
         /// <summary>

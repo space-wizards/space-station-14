@@ -58,9 +58,14 @@ namespace Content.Client.Atmos.UI
 
         private void OnSelectGasPressed()
         {
-            if (_window is null || _window.SelectedGas is null) return;
-            if (!int.TryParse(_window.SelectedGas, out var gas)) return;
-            SendMessage(new GasFilterSelectGasMessage(gas));
+            if (_window is null) return;
+            if (_window.SelectedGas is null)
+            {
+                SendMessage(new GasFilterDeselectGasMessage());
+            } else {
+                if (!int.TryParse(_window.SelectedGas, out var gas)) return;
+                SendMessage(new GasFilterSelectGasMessage(gas));
+            }
         }
 
         /// <summary>
