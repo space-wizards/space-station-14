@@ -90,6 +90,9 @@ namespace Content.Server.Power.EntitySystems
             if (!TryComp<ApcPowerReceiverComponent>(uid, out var receiver))
                 return;
 
+            if (!receiver.NeedsPower)
+                return;
+
             AlternativeVerb verb = new()
             {
                 Act = () =>
