@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: The Necronomicon no longer can appear in surplus bundles., type: Tweak}
-  id: 1989
-  time: '2022-07-20T15:29:09.0000000+00:00'
 - author: DoctorBeard
   changes:
   - {message: pAIs can play MIDI again, type: Fix}
@@ -2941,3 +2936,11 @@ Entries:
       up over time. How long can the crew survive?', type: Add}
   id: 2488
   time: '2022-10-19T02:51:48.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed cooldown circle shown on hands getting stuck., type: Fix}
+  - {message: Fixed showing information about the wrong entity on the hand entity
+      panel., type: Fix}
+  - {message: Fixed the item slot preview not updating on switching hands., type: Fix}
+  id: 2489
+  time: '2022-10-19T11:49:07.0000000+00:00'
