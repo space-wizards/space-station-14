@@ -555,3 +555,23 @@
 - type: Tag
   id: Write
 
+- type: Tag
+  id: CaptainClothing
+
+- type: Tag
+  id: HosClothing
+
+- type: Tag
+  id: HopClothing
+
+- type: Tag
+  id: CEClothing
+
+- type: Tag
+  id: CMOClothing
+
+- type: Tag
+  id: RDClothing
+
+- type: Tag
+  id: QMClothing
