@@ -63,7 +63,7 @@ public sealed class GatherableSystem : EntitySystem
             return;
 
         // Complete the gathering process
-        _damageableSystem.TryChangeDamage(ev.Resource, tool.Damage);
+        _damageableSystem.TryChangeDamage(ev.Resource, tool.Damage, origin: ev.Player);
         SoundSystem.Play(tool.GatheringSound.GetSound(), Filter.Pvs(ev.Resource, entityManager: EntityManager), ev.Resource);
         tool.GatheringEntities.Remove(ev.Resource);
 

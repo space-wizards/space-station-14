@@ -46,12 +46,14 @@
     containers:
       gun_magazine: !type:ContainerSlot
       gun_chamber: !type:ContainerSlot
+  - type: StaticPrice
+    price: 500
 
 - type: entity
   name: AKMS
   parent: BaseWeaponRifle
   id: WeaponRifleAk
-  description: An iconic weapon of war.
+  description: An iconic weapon of war. Uses .30 rifle ammo.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/ak.rsi
@@ -97,7 +99,7 @@
   name: M-90gl
   parent: BaseWeaponRifle
   id: WeaponRifleM90GrenadeLauncher
-  description: An older bullpup carbine model, with an attached underbarrel grenade launcher.
+  description: An older bullpup carbine model, with an attached underbarrel grenade launcher. Uses .20 rifle ammo.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/carbine.rsi
@@ -140,7 +142,7 @@
   name: Lecter
   parent: BaseWeaponRifle
   id: WeaponRifleLecter
-  description: A high end military grade assault rifle.
+  description: A high end military grade assault rifle. Uses .20 rifle ammo.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/lecter.rsi

@@ -17,12 +17,14 @@ public abstract class SharedDeviceListSystem : EntitySystem
     /// <param name="uid">The entity to update.</param>
     /// <param name="devices">The devices to store.</param>
     /// <param name="merge">Whether to merge or replace the devices stored.</param>
+    /// <param name="dirty">If the component should be dirtied upon this call.</param>
     /// <param name="deviceList">Device list component</param>
     public DeviceListUpdateResult UpdateDeviceList(EntityUid uid, IEnumerable<EntityUid> devices, bool merge = false, DeviceListComponent? deviceList = null)
     {
         if (!Resolve(uid, ref deviceList))
             return DeviceListUpdateResult.NoComponent;
 
+        var oldDevices = deviceList.Devices.ToList();
         var newDevices = merge ? new HashSet<EntityUid>(deviceList.Devices) : new();
         var devicesList = devices.ToList();
 
@@ -34,7 +36,7 @@ public abstract class SharedDeviceListSystem : EntitySystem
 
         deviceList.Devices = newDevices;
 
-        RaiseLocalEvent(uid, new DeviceListUpdateEvent(devicesList));
+        RaiseLocalEvent(uid, new DeviceListUpdateEvent(oldDevices, devicesList));
 
         Dirty(deviceList);
 
@@ -70,11 +72,13 @@ public abstract class SharedDeviceListSystem : EntitySystem
 
 public sealed class DeviceListUpdateEvent : EntityEventArgs
 {
-    public DeviceListUpdateEvent(List<EntityUid> devices)
+    public DeviceListUpdateEvent(List<EntityUid> oldDevices, List<EntityUid> devices)
     {
+        OldDevices = oldDevices;
         Devices = devices;
     }
 
+    public List<EntityUid> OldDevices { get; }
     public List<EntityUid> Devices { get; }
 }
 

@@ -259,7 +259,7 @@
           pipeDirection: South
 
 - type: entity
-  parent: [ GasBinaryBase, BaseMachine, ConstructibleMachine ]
+  parent: [ BaseMachine, ConstructibleMachine ]
   id: GasRecycler
   name: gas recycler
   description: Recycles carbon dioxide and nitrous oxide. Heater and compressor not included.
@@ -284,7 +284,20 @@
           False: { state: unlit }
   - type: Appearance
   - type: PipeColorVisuals
+  - type: Rotatable
   - type: GasRecycler
+  - type: NodeContainer
+    nodes:
+      inlet:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: North
+      outlet:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: South
+  - type: AtmosDevice
+  - type: AtmosPipeColor
   - type: AmbientSound
     enabled: false
     volume: -9

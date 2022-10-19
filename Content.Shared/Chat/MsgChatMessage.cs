@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using Lidgren.Network;
 using Robust.Shared.Network;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Chat
 {
@@ -23,9 +24,9 @@ namespace Content.Shared.Chat
         public string Message { get; set; } = string.Empty;
 
         /// <summary>
-        ///     What to "wrap" the message contents with. Example is stuff like 'Joe says: "{0}"'
+        ///     Modified message with some wrapping text. E.g. 'Joe says: "HELP!"'
         /// </summary>
-        public string MessageWrap { get; set; } = string.Empty;
+        public string WrappedMessage { get; set; } = string.Empty;
 
         /// <summary>
         ///     The sending entity.
@@ -41,11 +42,11 @@ namespace Content.Shared.Chat
         public bool HideChat { get; set; }
 
 
-        public override void ReadFromBuffer(NetIncomingMessage buffer)
+        public override void ReadFromBuffer(NetIncomingMessage buffer, IRobustSerializer serializer)
         {
             Channel = (ChatChannel) buffer.ReadInt16();
             Message = buffer.ReadString();
-            MessageWrap = buffer.ReadString();
+            WrappedMessage = buffer.ReadString();
 
             switch (Channel)
             {
@@ -61,11 +62,11 @@ namespace Content.Shared.Chat
             HideChat = buffer.ReadBoolean();
         }
 
-        public override void WriteToBuffer(NetOutgoingMessage buffer)
+        public override void WriteToBuffer(NetOutgoingMessage buffer, IRobustSerializer serializer)
         {
             buffer.Write((short)Channel);
             buffer.Write(Message);
-            buffer.Write(MessageWrap);
+            buffer.Write(WrappedMessage);
 
             switch (Channel)
             {

@@ -37,6 +37,7 @@
       state: icon
       netsync: false
     - type: Item
+      sprite: Objects/Tanks/Jetpacks/blue.rsi
       size: 100
     - type: UserInterface
       interfaces:
@@ -66,6 +67,8 @@
         useDelay: 1.0
         event: !type:ToggleJetpackEvent
     - type: Appearance
+    - type: StaticPrice
+      price: 100
 
 #Empty blue
 - type: entity
@@ -104,6 +107,8 @@
   name: jetpack
   suffix: Empty
   components:
+  - type: Item
+    sprite: Objects/Tanks/Jetpacks/black.rsi
   - type: Sprite
     sprite: Objects/Tanks/Jetpacks/black.rsi
   - type: Clothing
@@ -141,6 +146,7 @@
     slots:
       - Back
   - type: Item
+    sprite: Objects/Tanks/Jetpacks/captain.rsi
     size: 30
 
 # Filled captain
@@ -166,6 +172,8 @@
   name: mini jetpack
   suffix: Empty
   components:
+    - type: Item
+      sprite: Objects/Tanks/Jetpacks/mini.rsi
     - type: Sprite
       sprite: Objects/Tanks/Jetpacks/mini.rsi
     - type: Clothing
@@ -197,6 +205,8 @@
   name: security jetpack
   suffix: Empty
   components:
+  - type: Item
+    sprite: Objects/Tanks/Jetpacks/security.rsi
   - type: Sprite
     sprite: Objects/Tanks/Jetpacks/security.rsi
   - type: Clothing
@@ -227,6 +237,8 @@
   name: void jetpack
   suffix: Empty
   components:
+  - type: Item
+    sprite: Objects/Tanks/Jetpacks/void.rsi
   - type: Sprite
     sprite: Objects/Tanks/Jetpacks/void.rsi
   - type: Clothing

@@ -25,6 +25,8 @@ using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
+using Robust.Shared.Map;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
@@ -283,6 +285,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 _robustRandom.NextDouble() > 0.75 ||
                 !component.Container.Insert(args.Thrown))
             {
+                _popupSystem.PopupEntity(Loc.GetString("disposal-unit-thrown-missed"), uid, Filter.Pvs(uid));
                 return;
             }
 
@@ -316,7 +319,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             RemComp<ActiveDisposalUnitComponent>(uid);
         }
 
-        private void HandlePowerChange(EntityUid uid, DisposalUnitComponent component, PowerChangedEvent args)
+        private void HandlePowerChange(EntityUid uid, DisposalUnitComponent component, ref PowerChangedEvent args)
         {
             if (!component.Running)
                 return;
@@ -546,7 +549,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
         public void UpdateInterface(DisposalUnitComponent component, bool powered)
         {
-            var stateString = Loc.GetString($"{component.State}");
+            var stateString = Loc.GetString($"disposal-unit-state-{component.State}");
             var state = new SharedDisposalUnitComponent.DisposalUnitBoundUserInterfaceState(Name(component.Owner), stateString, EstimatedFullPressure(component), powered, component.Engaged);
             _ui.TrySetUiState(component.Owner, SharedDisposalUnitComponent.DisposalUnitUiKey.Key, state);
 

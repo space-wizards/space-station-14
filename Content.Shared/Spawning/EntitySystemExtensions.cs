@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Physics;
 using Robust.Shared.Map;
+using Robust.Shared.Physics.Systems;
 
 namespace Content.Shared.Spawning
 {
@@ -14,7 +15,7 @@ namespace Content.Shared.Spawning
             in Box2? box = null,
             SharedPhysicsSystem? physicsManager = null)
         {
-            physicsManager ??= EntitySystem.Get<SharedPhysicsSystem>();
+            physicsManager ??= entityManager.System<SharedPhysicsSystem>();
             var mapCoordinates = coordinates.ToMap(entityManager);
 
             return entityManager.SpawnIfUnobstructed(prototypeName, mapCoordinates, collisionLayer, box, physicsManager);
@@ -29,7 +30,7 @@ namespace Content.Shared.Spawning
             SharedPhysicsSystem? collision = null)
         {
             var boxOrDefault = box.GetValueOrDefault(Box2.UnitCentered).Translated(coordinates.Position);
-            collision ??= EntitySystem.Get<SharedPhysicsSystem>();
+            collision ??= entityManager.System<SharedPhysicsSystem>();
 
             foreach (var body in collision.GetCollidingEntities(coordinates.MapId, in boxOrDefault))
             {

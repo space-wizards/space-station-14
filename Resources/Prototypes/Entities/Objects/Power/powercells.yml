@@ -4,6 +4,7 @@
   parent: BaseItem
   components:
   - type: Battery
+    pricePerJoule: 0.15
   - type: PowerCell
   - type: Explosive
     explosionType: Default

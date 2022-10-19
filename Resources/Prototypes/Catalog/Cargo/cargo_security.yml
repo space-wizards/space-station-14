@@ -4,7 +4,7 @@
     sprite: Clothing/OuterClothing/Vests/oldarmor.rsi
     state: icon
   product: CrateSecurityArmor
-  cost: 1500
+  cost: 500
   category: Security
   group: market
 
@@ -14,7 +14,7 @@
     sprite: Clothing/Head/Helmets/security.rsi
     state: icon
   product: CrateSecurityHelmet
-  cost: 1000
+  cost: 500
   category: Security
   group: market
 
@@ -24,7 +24,7 @@
     sprite: Objects/Weapons/Guns/Battery/disabler.rsi
     state: base
   product: CrateSecurityNonlethal
-  cost: 1500
+  cost: 2100
   category: Security
   group: market
 
@@ -34,7 +34,7 @@
     sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
     state: icon
   product: CrateSecurityLaser
-  cost: 2000
+  cost: 1600
   category: Security
   group: market
 
@@ -44,7 +44,7 @@
     sprite: Clothing/OuterClothing/Armor/riot.rsi
     state: icon
   product: CrateSecurityRiot
-  cost: 10000
+  cost: 2000
   category: Security
   group: market
 
@@ -54,7 +54,7 @@
     sprite: Objects/Storage/boxes.rsi
     state: box_security
   product: CrateSecuritySupplies
-  cost: 1500
+  cost: 500
   category: Security
   group: market
 
@@ -64,6 +64,6 @@
     sprite: Objects/Misc/handcuffs.rsi
     state: handcuff
   product: CrateRestraints
-  cost: 1500
+  cost: 1000
   category: Security
   group: market

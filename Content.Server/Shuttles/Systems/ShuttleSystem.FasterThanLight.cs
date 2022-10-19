@@ -14,6 +14,8 @@ using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Shuttles.Events;
+using Content.Server.Station.Components;
+using Robust.Shared.Physics.Components;
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -95,7 +97,7 @@ public sealed partial class ShuttleSystem
 
         foreach (var other in _mapManager.FindGridsIntersecting(xform.MapID, bounds))
         {
-            if (grid.GridIndex == other.Index ||
+            if (grid.Owner == other.GridEntityId ||
                 !bodyQuery.TryGetComponent(other.GridEntityId, out var body) ||
                 body.Mass < ShuttleFTLMassThreshold) continue;
 

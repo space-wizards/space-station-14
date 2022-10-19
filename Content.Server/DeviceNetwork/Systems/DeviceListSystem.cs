@@ -12,13 +12,22 @@ public sealed class DeviceListSystem : SharedDeviceListSystem
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeLocalEvent<DeviceListComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<DeviceListComponent, BeforeBroadcastAttemptEvent>(OnBeforeBroadcast);
         SubscribeLocalEvent<DeviceListComponent, BeforePacketSentEvent>(OnBeforePacketSent);
+    }
+
+    public void OnInit(EntityUid uid, DeviceListComponent component, ComponentInit args)
+    {
+        Dirty(component);
     }
 
     /// <summary>
     /// Gets the given device list as a dictionary
     /// </summary>
+    /// <remarks>
+    /// If any entity in the device list is pre-map init, it will show the entity UID of the device instead.
+    /// </remarks>
     public Dictionary<string, EntityUid> GetDeviceList(EntityUid uid, DeviceListComponent? deviceList = null)
     {
         if (!Resolve(uid, ref deviceList))
@@ -31,7 +40,11 @@ public sealed class DeviceListSystem : SharedDeviceListSystem
             if (!TryComp(deviceUid, out DeviceNetworkComponent? deviceNet))
                 continue;
 
-            devices.Add(deviceNet.Address, deviceUid);
+            var address = MetaData(deviceUid).EntityLifeStage == EntityLifeStage.MapInitialized
+                ? deviceNet.Address
+                : $"UID: {deviceUid.ToString()}";
+
+            devices.Add(address, deviceUid);
 
         }
 

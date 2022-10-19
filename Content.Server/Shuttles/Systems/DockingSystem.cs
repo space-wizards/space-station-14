@@ -1,5 +1,6 @@
 using Content.Server.Doors.Components;
 using Content.Server.Doors.Systems;
+using Content.Server.NPC.Pathfinding;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Shared.Doors;
@@ -8,8 +9,10 @@ using Content.Shared.Shuttles.Events;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Dynamics.Joints;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Shuttles.Systems
@@ -22,6 +25,7 @@ namespace Content.Server.Shuttles.Systems
         [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
         [Dependency] private readonly ShuttleConsoleSystem _console = default!;
         [Dependency] private readonly DoorSystem _doorSystem = default!;
+        [Dependency] private readonly PathfindingSystem _pathfinding = default!;
 
         private ISawmill _sawmill = default!;
         private const string DockingFixture = "docking";
@@ -134,6 +138,7 @@ namespace Content.Server.Shuttles.Systems
 
         private void Cleanup(DockingComponent dockA)
         {
+            _pathfinding.RemovePortal(dockA.PathfindHandle);
             _jointSystem.RemoveJoint(dockA.DockJoint!);
 
             var dockBUid = dockA.DockedWith;
@@ -365,6 +370,12 @@ namespace Content.Server.Shuttles.Systems
             {
                 doorB.ChangeAirtight = false;
                 _doorSystem.StartOpening(doorB.Owner, doorB);
+            }
+
+            if (_pathfinding.TryCreatePortal(dockAXform.Coordinates, dockBXform.Coordinates, out var handle))
+            {
+                dockA.PathfindHandle = handle;
+                dockB.PathfindHandle = handle;
             }
 
             var msg = new DockEvent

@@ -19,6 +19,9 @@ namespace Content.Server.Cuffs.Components
     {
         [Dependency] private readonly IEntityManager _entities = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        
+        private string _brokenName = string.Empty;
+        private string _brokenDesc = string.Empty;
 
         /// <summary>
         ///     The time it takes to apply a <see cref="CuffedComponent"/> to an entity.
@@ -81,14 +84,22 @@ namespace Content.Server.Cuffs.Components
         /// </summary>
         [ViewVariables]
         [DataField("brokenName")]
-        public string BrokenName { get; set; } = default!;
+        public string BrokenName
+        {
+            get => _brokenName;
+            private set => _brokenName = Loc.GetString(value);
+        }
 
         /// <summary>
         ///     The iconstate used for broken handcuffs
         /// </summary>
         [ViewVariables]
         [DataField("brokenDesc")]
-        public string BrokenDesc { get; set; } = default!;
+        public string BrokenDesc
+        {
+            get => _brokenDesc;
+            private set => _brokenDesc = Loc.GetString(value);
+        }
 
         [ViewVariables]
         public bool Broken
@@ -167,6 +178,8 @@ namespace Content.Server.Cuffs.Components
             var result = await EntitySystem.Get<DoAfterSystem>().WaitDoAfter(doAfterEventArgs);
 
             Cuffing = false;
+
+            // TODO these pop-ups need third-person variants (i.e. {$user} is cuffing {$target}!
 
             if (result != DoAfterStatus.Cancelled)
             {

@@ -19,13 +19,14 @@ namespace Content.Shared.Actions;
 
 public abstract class SharedActionsSystem : EntitySystem
 {
+    [Dependency] protected readonly IGameTiming GameTiming = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly RotateToFaceSystem _rotateToFaceSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] protected readonly IGameTiming GameTiming = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     public override void Initialize()
     {
@@ -37,7 +38,6 @@ public abstract class SharedActionsSystem : EntitySystem
         SubscribeLocalEvent<ActionsComponent, DidUnequipHandEvent>(OnHandUnequipped);
 
         SubscribeLocalEvent<ActionsComponent, ComponentGetState>(GetState);
-        SubscribeLocalEvent<ActionsComponent, ComponentGetStateAttemptEvent>(OnCanGetState);
 
         SubscribeAllEvent<RequestPerformActionEvent>(OnActionRequest);
     }
@@ -89,12 +89,6 @@ public abstract class SharedActionsSystem : EntitySystem
         args.State = new ActionsComponentState(component.Actions.ToList());
     }
 
-    private void OnCanGetState(EntityUid uid, ActionsComponent component, ref ComponentGetStateAttemptEvent args)
-    {
-        // Only send action state data to the relevant player.
-        if (args.Player.AttachedEntity != uid)
-            args.Cancelled = true;
-    }
     #endregion
 
     #region Execution
@@ -332,8 +326,7 @@ public abstract class SharedActionsSystem : EntitySystem
 
         var filter = Filter.Pvs(performer).RemoveWhereAttachedEntity(e => e == performer);
 
-        if (action.Sound != null)
-            SoundSystem.Play(action.Sound.GetSound(), filter, performer, action.AudioParams);
+        _audio.Play(action.Sound, filter, performer, action.AudioParams);
 
         if (string.IsNullOrWhiteSpace(action.Popup))
             return true;

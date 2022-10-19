@@ -25,6 +25,8 @@
       delayOptions: [3, 5, 10, 15, 30]
       initialBeepDelay: 0
       beepSound: /Audio/Machines/Nuke/general_beep.ogg
+    - type: StaticPrice
+      price: 40
 
 - type: entity
   parent: TimerTrigger
@@ -39,3 +41,20 @@
     components:
     - type: TriggerOnSignal
     - type: SignalReceiver
+    - type: StaticPrice
+      price: 40
+
+- type: entity
+  parent: BaseItem
+  id: VoiceTrigger
+  name: voice trigger
+  description: Adds a machine link that is triggered by vocal keywords
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/voice.rsi
+    state: voice
+  - type: PayloadTrigger
+    components:
+    - type: TriggerOnVoice
+    - type: StaticPrice
+      price: 40

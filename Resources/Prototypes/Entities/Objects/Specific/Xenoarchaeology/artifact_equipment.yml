@@ -28,7 +28,7 @@
         - shape:
             !type:PhysShapeCircle
             radius: 0.45
-          mass: 150
+          density: 235
           mask:
           - MachineMask
           layer:
@@ -72,3 +72,5 @@
       containers:
         entity_storage: !type:Container
         paper_label: !type:ContainerSlot
+    - type: StaticPrice
+      price: 250

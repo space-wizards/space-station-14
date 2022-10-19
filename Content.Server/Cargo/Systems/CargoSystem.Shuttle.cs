@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Server.Cargo.Components;
 using Content.Server.Labels.Components;
+using Content.Server.MobState;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.UserInterface;
@@ -39,6 +40,7 @@ public sealed partial class CargoSystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly PricingSystem _pricing = default!;
     [Dependency] private readonly ShuttleConsoleSystem _console = default!;
     [Dependency] private readonly ShuttleSystem _shuttle = default!;
@@ -309,11 +311,12 @@ public sealed partial class CargoSystem
         double amount = 0;
         var toSell = new HashSet<EntityUid>();
         var xformQuery = GetEntityQuery<TransformComponent>();
+        var blacklistQuery = GetEntityQuery<CargoSellBlacklistComponent>();
 
         foreach (var pallet in GetCargoPallets(component))
         {
             // Containers should already get the sell price of their children so can skip those.
-            foreach (var ent in _lookup.GetEntitiesIntersecting(pallet.Owner, LookupFlags.Anchored))
+            foreach (var ent in _lookup.GetEntitiesIntersecting(pallet.Owner, LookupFlags.Anchored | LookupFlags.Approximate))
             {
                 // Don't re-sell anything, sell anything anchored (e.g. light fixtures), or anything blacklisted
                 // (e.g. players).
@@ -321,7 +324,7 @@ public sealed partial class CargoSystem
                     (xformQuery.TryGetComponent(ent, out var xform) && xform.Anchored))
                     continue;
 
-                if (HasComp<CargoSellBlacklistComponent>(ent))
+                if (blacklistQuery.HasComponent(ent))
                     continue;
 
                 var price = _pricing.GetPrice(ent);
@@ -534,8 +537,8 @@ public sealed partial class CargoSystem
 
         while (childEnumerator.MoveNext(out var child))
         {
-            if (mobQuery.HasComponent(child.Value) ||
-                FoundOrganics(child.Value, mobQuery, xformQuery)) return true;
+            if ((mobQuery.TryGetComponent(child.Value, out var mobState) && !_mobState.IsDead(child.Value, mobState))
+                || FoundOrganics(child.Value, mobQuery, xformQuery)) return true;
         }
 
         return false;

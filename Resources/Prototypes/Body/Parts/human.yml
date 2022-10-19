@@ -13,6 +13,8 @@
     containers:
       bodypart: !type:Container
         ents: []
+  - type: StaticPrice
+    price: 100
 
 - type: entity
   id: TorsoHuman
@@ -68,6 +70,9 @@
     baseSprintSpeed: 0
   - type: InputMover
   - type: GhostOnMove
+  - type: Tag
+    tags:
+      - Head
 
 - type: entity
   id: LeftArmHuman

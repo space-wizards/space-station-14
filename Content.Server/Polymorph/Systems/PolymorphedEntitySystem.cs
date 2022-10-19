@@ -13,11 +13,13 @@ using Content.Shared.Polymorph;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Polymorph.Systems
 {
     public sealed class PolymorphedEntitySystem : EntitySystem
     {
+        [Dependency] private readonly IPrototypeManager _proto = default!;
         [Dependency] private readonly ActionsSystem _actions = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
@@ -29,7 +31,7 @@ namespace Content.Server.Polymorph.Systems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<PolymorphedEntityComponent, PolymorphComponentSetupEvent>(OnInit);
+            SubscribeLocalEvent<PolymorphedEntityComponent, ComponentStartup>(OnInit);
             SubscribeLocalEvent<PolymorphedEntityComponent, RevertPolymorphActionEvent>(OnRevertPolymorphActionEvent);
         }
 
@@ -53,7 +55,11 @@ namespace Content.Server.Polymorph.Systems
             if (Deleted(component.Parent))
                 return;
 
-            var proto = component.Prototype;
+            if (!_proto.TryIndex(component.Prototype, out PolymorphPrototype? proto))
+            {
+                Logger.Error($"{nameof(PolymorphedEntitySystem)} encountered an improperly initialized polymorph component while reverting. Entity {ToPrettyString(uid)}. Prototype: {component.Prototype}");
+                return;
+            }
 
             var uidXform = Transform(uid);
             var parentXform = Transform(component.Parent);
@@ -65,7 +71,7 @@ namespace Content.Server.Polymorph.Systems
             if (_container.TryGetContainingContainer(uid, out var cont))
                 cont.Insert(component.Parent);
 
-            if (component.Prototype.TransferDamage &&
+            if (proto.TransferDamage &&
                 TryComp<DamageableComponent>(component.Parent, out var damageParent) &&
                 _damageable.GetScaledDamage(uid, component.Parent, out var damage) &&
                 damage != null)
@@ -89,6 +95,7 @@ namespace Content.Server.Polymorph.Systems
                         slot.EmptyContainer();
 
                 foreach (var hand in _sharedHands.EnumerateHeld(uid))
+                    // This causes errors/bugs. Use hand related functions instead.
                     hand.TryRemoveFromContainer();
             }
 
@@ -105,9 +112,17 @@ namespace Content.Server.Polymorph.Systems
             QueueDel(uid);
         }
 
-        private void OnInit(EntityUid uid, PolymorphedEntityComponent component, PolymorphComponentSetupEvent args)
+        public void OnInit(EntityUid uid, PolymorphedEntityComponent component, ComponentStartup args)
         {
-            if (component.Prototype.Forced)
+            if (!_proto.TryIndex(component.Prototype, out PolymorphPrototype? proto))
+            {
+                // warning instead of error because of the all-comps one entity test.
+                Logger.Warning($"{nameof(PolymorphedEntitySystem)} encountered an improperly set up polymorph component while initializing. Entity {ToPrettyString(uid)}. Prototype: {component.Prototype}");
+                RemCompDeferred(uid, component);
+                return;
+            }
+
+            if (proto.Forced)
                 return;
 
             var act = new InstantAction()
@@ -116,7 +131,7 @@ namespace Content.Server.Polymorph.Systems
                 EntityIcon = component.Parent,
                 DisplayName = Loc.GetString("polymorph-revert-action-name"),
                 Description = Loc.GetString("polymorph-revert-action-description"),
-                UseDelay = TimeSpan.FromSeconds(component.Prototype.Delay),
+                UseDelay = TimeSpan.FromSeconds(proto.Delay),
            };
 
             _actions.AddAction(uid, act, null);
@@ -126,19 +141,26 @@ namespace Content.Server.Polymorph.Systems
         {
             base.Update(frameTime);
 
-            foreach (var entity in EntityQuery<PolymorphedEntityComponent>())
+            foreach (var comp in EntityQuery<PolymorphedEntityComponent>())
             {
-                entity.Time += frameTime;
+                comp.Time += frameTime;
 
-                if(entity.Prototype.Duration != null && entity.Time >= entity.Prototype.Duration)
-                    Revert(entity.Owner);
+                if (!_proto.TryIndex(comp.Prototype, out PolymorphPrototype? proto))
+                {
+                    Logger.Error($"{nameof(PolymorphedEntitySystem)} encountered an improperly initialized polymorph component while updating. Entity {ToPrettyString(comp.Owner)}. Prototype: {comp.Prototype}");
+                    RemCompDeferred(comp.Owner, comp);
+                    continue;
+                }
 
-                if (!TryComp<MobStateComponent>(entity.Owner, out var mob))
+                if(proto.Duration != null && comp.Time >= proto.Duration)
+                    Revert(comp.Owner);
+
+                if (!TryComp<MobStateComponent>(comp.Owner, out var mob))
                     continue;
 
-                if ((entity.Prototype.RevertOnDeath && mob.IsDead()) ||
-                    (entity.Prototype.RevertOnCrit && mob.IsCritical()))
-                    Revert(entity.Owner);
+                if ((proto.RevertOnDeath && mob.IsDead()) ||
+                    (proto.RevertOnCrit && mob.IsCritical()))
+                    Revert(comp.Owner);
             }
         }
     }

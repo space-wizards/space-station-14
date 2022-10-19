@@ -30,7 +30,7 @@ public sealed class BackgroundAudioSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly IStateManager _stateManager = default!;
     [Dependency] private readonly ClientGameTicker _gameTicker = default!;
-    [Dependency] private readonly AudioSystem _audioSystem = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     private readonly AudioParams _ambientParams = new(-10f, 1, "Master", 0, 0, 0, true, 0f);
     private readonly AudioParams _lobbyParams = new(-5f, 1, "Master", 0, 0, 0, true, 0f);
@@ -135,8 +135,9 @@ public sealed class BackgroundAudioSystem : EntitySystem
     private void EntParentChanged(ref EntParentChangedMessage message)
     {
         if(_playMan.LocalPlayer is null
-           || _playMan.LocalPlayer.ControlledEntity != message.Entity
-           || !_timing.IsFirstTimePredicted) return;
+            || _playMan.LocalPlayer.ControlledEntity != message.Entity
+            || !_timing.IsFirstTimePredicted)
+            return;
 
         // Check if we traversed to grid.
         CheckAmbience(message.Transform);
@@ -144,15 +145,17 @@ public sealed class BackgroundAudioSystem : EntitySystem
 
     private void ChangeAmbience(SoundCollectionPrototype newAmbience)
     {
-        if (_currentCollection == newAmbience) return;
+        if (_currentCollection == newAmbience)
+            return;
         _timerCancelTokenSource.Cancel();
         _currentCollection = newAmbience;
         _timerCancelTokenSource = new();
         Timer.Spawn(1500, () =>
         {
             // If we traverse a few times then don't interrupt an existing song.
-            if (_playingCollection == _currentCollection) return;
-            EndAmbience();
+            // If we are not in gameplay, don't call StartAmbience because of player movement
+            if (_playingCollection == _currentCollection || _stateManager.CurrentState is not GameplayState)
+                return;
             StartAmbience();
         }, _timerCancelTokenSource.Token);
     }
@@ -213,7 +216,8 @@ public sealed class BackgroundAudioSystem : EntitySystem
             return;
         _playingCollection = _currentCollection;
         var file = _robustRandom.Pick(_currentCollection.PickFiles).ToString();
-        _ambientStream = _audioSystem.PlayGlobal(file, Filter.Local(), _ambientParams.WithVolume(_ambientParams.Volume + _configManager.GetCVar(CCVars.AmbienceVolume)));
+        _ambientStream = _audio.PlayGlobal(file, Filter.Local(),
+            _ambientParams.WithVolume(_ambientParams.Volume + _configManager.GetCVar(CCVars.AmbienceVolume)));
     }
 
     private void EndAmbience()
@@ -299,14 +303,16 @@ public sealed class BackgroundAudioSystem : EntitySystem
 
     public void StartLobbyMusic()
     {
-        if (_lobbyStream != null || !_configManager.GetCVar(CCVars.LobbyMusicEnabled)) return;
+        if (_lobbyStream != null || !_configManager.GetCVar(CCVars.LobbyMusicEnabled))
+            return;
 
         var file = _gameTicker.LobbySong;
         if (file == null) // We have not received the lobby song yet.
         {
             return;
         }
-        _lobbyStream = _audioSystem.PlayGlobal(file, Filter.Local(), _lobbyParams);
+
+        _lobbyStream = _audio.PlayGlobal(file, Filter.Local(), _lobbyParams);
     }
 
     private void EndLobbyMusic()

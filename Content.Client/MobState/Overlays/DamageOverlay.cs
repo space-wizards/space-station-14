@@ -1,5 +1,7 @@
 using Content.Shared.MobState;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
+using Robust.Client.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -10,6 +12,8 @@ public sealed class DamageOverlay : Overlay
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
 
     public override OverlaySpace Space => OverlaySpace.ScreenSpace;
 
@@ -53,6 +57,12 @@ public sealed class DamageOverlay : Overlay
 
     protected override void Draw(in OverlayDrawArgs args)
     {
+        if (!_entityManager.TryGetComponent(_playerManager.LocalPlayer?.ControlledEntity, out EyeComponent? eyeComp))
+            return;
+
+        if (args.Viewport.Eye != eyeComp.Eye)
+            return;
+
         /*
          * Here's the rundown:
          * 1. There's lerping for each level so the transitions are smooth.

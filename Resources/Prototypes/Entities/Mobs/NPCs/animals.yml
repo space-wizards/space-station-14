@@ -24,7 +24,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.25
-      mass: 2
+      density: 10
       mask:
       - FlyingMobMask
       layer:
@@ -54,9 +54,9 @@
   - type: ReplacementAccent
     accent: mouse
   - type: MeleeWeapon
-    range: 1.5
-    arcwidth: 0
-    arc: bite
+    hidden: true
+    angle: 0
+    animation: WeaponArcBite
     damage:
       types:
         Piercing: 5
@@ -88,7 +88,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.1
-      mass: 1
+      density: 30
       mask:
       - FlyingMobMask
       layer:
@@ -130,9 +130,9 @@
       autoPopulate: false
       name: action-name-disarm
   - type: MeleeWeapon
-    range: 0.3
-    arcwidth: 0
-    arc: bite
+    hidden: true
+    angle: 0
+    animation: WeaponArcBite
     damage:
       types:
         Poison: 2
@@ -141,7 +141,7 @@
   - type: MobMover
   - type: HTN
     rootTask: SimpleHostileCompound
-  - type: AiFactionTag
+  - type: Faction
     factions:
     - SimpleHostile
   - type: Bloodstream
@@ -165,7 +165,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 3
+      density: 8
       mask:
       - MobMask
       layer:
@@ -216,7 +216,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 2 #They actually are pretty light, I looked it up
+      density: 5 #They actually are pretty light, I looked it up
       mask:
       - MobMask
       layer:
@@ -316,7 +316,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.2
-      mass: 1
+      density: 7.5
       mask:
       - FlyingMobMask
       layer:
@@ -363,7 +363,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.40
-      mass: 700
+      density: 1400
       mask:
       - MobMask
       layer:
@@ -425,7 +425,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 2
+      density: 5
       mask:
       - MobMask
       layer:
@@ -467,7 +467,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 60
+      density: 150
       mask:
       - MobMask
       layer:
@@ -526,7 +526,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 10
+      density: 25
       mask:
       - MobMask
       layer:
@@ -571,7 +571,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.48
-      mass: 150
+      density: 200
       mask:
       - MobMask
       layer:
@@ -613,7 +613,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 50
+      density: 130
       mask:
       - MobMask
       layer:
@@ -638,7 +638,7 @@
   description: A large marsupial herbivore. It has powerful hind legs and... boxing gloves?
   components:
   - type: CombatMode
-    canDisarm: true
+    disarm: null
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -655,9 +655,9 @@
       Dead:
         Base: kangaroo-boxing-dead
   - type: MeleeWeapon
-    range: 1.5
-    arcwidth: 0
-    arc: claw
+    hidden: true
+    angle: 0
+    animation: WeaponArcClaw
     damage:
       types:
         Blunt: 10
@@ -665,7 +665,7 @@
   - type: MobMover
   - type: HTN
     rootTask: SimpleHostileCompound
-  - type: AiFactionTag
+  - type: Faction
     factions:
     - SimpleHostile
 
@@ -676,7 +676,7 @@
   description: New church of neo-darwinists actually believe that EVERY animal evolved from a monkey. Tastes like pork, and killing them is both fun and relaxing.
   components:
   - type: CombatMode
-    canDisarm: true
+    disarm: null
   - type: NameIdentifier
     group: Monkey
   - type: SentienceTarget
@@ -688,7 +688,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 30
+      density: 80
       mask:
       - MobMask
       layer:
@@ -729,6 +729,7 @@
       amount: 3
   - type: MonkeyAccent
   - type: Puller
+  - type: CanHostGuardian
 
 - type: entity
   name: mouse
@@ -738,6 +739,8 @@
   components:
   - type: GhostTakeoverAvailable
     makeSentient: true
+    allowSpeech: true
+    allowMovement: true
     name: ghost-role-information-mouse-name
     description: ghost-role-information-mouse-description
   - type: Speech
@@ -762,7 +765,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.2
-      mass: 10
+      density: 100
       mask:
       - SmallMobMask
       layer:
@@ -916,7 +919,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.2
-      mass: 5
+      density: 50
       mask:
       - MobMask
       layer:
@@ -967,7 +970,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.2
-      mass: 1
+      density: 5
       mask:
       - MobMask
       layer:
@@ -1013,7 +1016,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.2
-      mass: 1
+      density: 5
       mask:
       - SmallMobMask
       layer:
@@ -1062,7 +1065,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.25
-      mass: 2
+      density: 10
       mask:
       - FlyingMobMask
       layer:
@@ -1108,7 +1111,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.25
-      mass: 20
+      density: 100
       mask:
       - MobMask
       layer:
@@ -1146,7 +1149,7 @@
   - type: MobMover
   - type: HTN
     rootTask: SimpleHostileCompound
-  - type: AiFactionTag
+  - type: Faction
     factions:
     - Syndicate
   - type: Sprite
@@ -1161,7 +1164,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.25
-      mass: 5
+      density: 25
       mask:
       - MobMask
       layer:
@@ -1180,9 +1183,9 @@
     - id: FoodMeatPenguin
       amount: 3
   - type: MeleeWeapon
-    range: 0.5
-    arcwidth: 0
-    arc: bite
+    hidden: true
+    angle: 0
+    animation: WeaponArcBite
     damage:
       groups:
         Brute: 5
@@ -1219,7 +1222,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.25
-      mass: 2
+      density: 10
       mask:
       - SmallMobMask
       layer:
@@ -1266,7 +1269,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 50
+      density: 130
       mask:
       - MobMask
       layer:
@@ -1303,7 +1306,7 @@
   id: MobGiantSpiderAngry
   suffix: Angry
   components:
-    - type: AiFactionTag
+    - type: Faction
       factions:
         - Xeno
     - type: InputMover
@@ -1333,7 +1336,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 20
+      density: 50
       mask:
       - MobMask
       layer:
@@ -1392,7 +1395,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 20
+      density: 50
       mask:
       - MobMask
       layer:
@@ -1451,7 +1454,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 20 #They actually are pretty light, I looked it up
+      density: 50 #They actually are pretty light, I looked it up
       mask:
       - MobMask
       layer:

@@ -21,7 +21,7 @@ public sealed class EuiManagerTest
 
             var sPlayerManager = server.ResolveDependency<IPlayerManager>();
 
-            await server.WaitAssertion(async () =>
+            await server.WaitAssertion(() =>
             {
                 var clientSession = sPlayerManager.ServerSessions.Single();
                 var eui = IoCManager.Resolve<EuiManager>();

@@ -5,6 +5,7 @@ using Content.Shared.Inventory;
 using Content.Shared.MobState;
 using Content.Shared.MobState.Components;
 using Content.Shared.Radiation.Events;
+using Content.Shared.Rejuvenate;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -14,6 +15,7 @@ namespace Content.Shared.Damage
     public sealed class DamageableSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         public override void Initialize()
         {
@@ -21,6 +23,7 @@ namespace Content.Shared.Damage
             SubscribeLocalEvent<DamageableComponent, ComponentHandleState>(DamageableHandleState);
             SubscribeLocalEvent<DamageableComponent, ComponentGetState>(DamageableGetState);
             SubscribeLocalEvent<DamageableComponent, OnIrradiatedEvent>(OnIrradiated);
+            SubscribeLocalEvent<DamageableComponent, RejuvenateEvent>(OnRejuvenate);
         }
 
         /// <summary>
@@ -110,7 +113,7 @@ namespace Content.Shared.Damage
         ///     The damage changed event is used by other systems, such as damage thresholds.
         /// </remarks>
         public void DamageChanged(DamageableComponent component, DamageSpecifier? damageDelta = null,
-            bool interruptsDoAfters = true)
+            bool interruptsDoAfters = true, EntityUid? origin = null)
         {
             component.DamagePerGroup = component.Damage.GetDamagePerGroup(_prototypeManager);
             component.TotalDamage = component.Damage.Total;
@@ -119,9 +122,9 @@ namespace Content.Shared.Damage
             if (EntityManager.TryGetComponent<AppearanceComponent>(component.Owner, out var appearance) && damageDelta != null)
             {
                 var data = new DamageVisualizerGroupData(damageDelta.GetDamagePerGroup(_prototypeManager).Keys.ToList());
-                appearance.SetData(DamageVisualizerKeys.DamageUpdateGroups, data);
+                _appearance.SetData(component.Owner, DamageVisualizerKeys.DamageUpdateGroups, data, appearance);
             }
-            RaiseLocalEvent(component.Owner, new DamageChangedEvent(component, damageDelta, interruptsDoAfters), false);
+            RaiseLocalEvent(component.Owner, new DamageChangedEvent(component, damageDelta, interruptsDoAfters, origin));
         }
 
         /// <summary>
@@ -137,7 +140,7 @@ namespace Content.Shared.Damage
         ///     null if the user had no applicable components that can take damage.
         /// </returns>
         public DamageSpecifier? TryChangeDamage(EntityUid? uid, DamageSpecifier damage, bool ignoreResistances = false,
-            bool interruptsDoAfters = true, DamageableComponent? damageable = null)
+            bool interruptsDoAfters = true, DamageableComponent? damageable = null, EntityUid? origin = null)
         {
             if (!uid.HasValue || !Resolve(uid.Value, ref damageable, false))
             {
@@ -243,6 +246,11 @@ namespace Content.Shared.Damage
             }
 
             TryChangeDamage(uid, damage);
+        }
+
+        private void OnRejuvenate(EntityUid uid, DamageableComponent component, RejuvenateEvent args)
+        {
+            SetAllDamage(component, 0);
         }
 
         private void DamageableHandleState(EntityUid uid, DamageableComponent component, ref ComponentHandleState args)
@@ -356,10 +364,16 @@ namespace Content.Shared.Damage
         /// </summary>
         public readonly bool InterruptsDoAfters = false;
 
-        public DamageChangedEvent(DamageableComponent damageable, DamageSpecifier? damageDelta, bool interruptsDoAfters)
+        /// <summary>
+        ///     Contains the entity which caused the change in damage, if any was responsible.
+        /// </summary>
+        public readonly EntityUid? Origin;
+
+        public DamageChangedEvent(DamageableComponent damageable, DamageSpecifier? damageDelta, bool interruptsDoAfters, EntityUid? origin)
         {
             Damageable = damageable;
             DamageDelta = damageDelta;
+            Origin = origin;
 
             if (DamageDelta == null)
                 return;

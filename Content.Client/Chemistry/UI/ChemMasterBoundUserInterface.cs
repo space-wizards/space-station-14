@@ -12,6 +12,7 @@ namespace Content.Client.Chemistry.UI
     [UsedImplicitly]
     public sealed class ChemMasterBoundUserInterface : BoundUserInterface
     {
+        [Dependency] private readonly IEntityManager _entityManager = default!;
         private ChemMasterWindow? _window;
 
         public ChemMasterBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
@@ -30,18 +31,26 @@ namespace Content.Client.Chemistry.UI
             // Setup window layout/elements
             _window = new ChemMasterWindow
             {
-                Title = Loc.GetString("chem-master-bound-user-interface-title"),
+                Title = _entityManager.GetComponent<MetaDataComponent>(Owner.Owner).EntityName,
             };
 
             _window.OpenCentered();
             _window.OnClose += Close;
 
             // Setup static button actions.
-            _window.EjectButton.OnPressed += _ => SendMessage(new ItemSlotButtonPressedEvent(SharedChemMaster.ContainerSlotName));
-            _window.BufferTransferButton.OnPressed += _ => SendMessage(new ChemMasterSetModeMessage(ChemMasterMode.Transfer));
-            _window.BufferDiscardButton.OnPressed += _ => SendMessage(new ChemMasterSetModeMessage(ChemMasterMode.Discard));
-            _window.CreatePillButton.OnPressed += _ => SendMessage(new ChemMasterCreatePillsMessage(((uint)_window.PillAmount.Value), _window.LabelLine));
-            _window.CreateBottleButton.OnPressed += _ => SendMessage(new ChemMasterCreateBottlesMessage(((uint)_window.BottleAmount.Value), _window.LabelLine));
+            _window.InputEjectButton.OnPressed += _ => SendMessage(
+                new ItemSlotButtonPressedEvent(SharedChemMaster.InputSlotName));
+            _window.OutputEjectButton.OnPressed += _ => SendMessage(
+                new ItemSlotButtonPressedEvent(SharedChemMaster.OutputSlotName));
+            _window.BufferTransferButton.OnPressed += _ => SendMessage(
+                new ChemMasterSetModeMessage(ChemMasterMode.Transfer));
+            _window.BufferDiscardButton.OnPressed += _ => SendMessage(
+                new ChemMasterSetModeMessage(ChemMasterMode.Discard));
+            _window.CreatePillButton.OnPressed += _ => SendMessage(
+                new ChemMasterCreatePillsMessage(
+                    (uint)_window.PillDosage.Value, (uint)_window.PillNumber.Value, _window.LabelLine));
+            _window.CreateBottleButton.OnPressed += _ => SendMessage(
+                new ChemMasterOutputToBottleMessage((uint)_window.BottleDosage.Value, _window.LabelLine));
 
             for (uint i = 0; i < _window.PillTypeButtons.Length; i++)
             {
