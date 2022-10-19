@@ -29,7 +29,7 @@
     sprite: Clothing/Neck/Cloaks/ce.rsi
   - type: Tag
     tags:
-      - CMOClothing
+      - CmoClothing
 
 - type: entity
   parent: ClothingNeckBase

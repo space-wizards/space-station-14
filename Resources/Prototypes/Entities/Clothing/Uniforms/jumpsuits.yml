@@ -84,7 +84,7 @@
         Radiation: 0.8
   - type: Tag
     tags:
-      - CMOClothing
+      - CmoClothing
 
 - type: entity
   parent: ClothingUniformBase

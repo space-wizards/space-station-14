@@ -565,10 +565,10 @@
   id: HopClothing
 
 - type: Tag
-  id: CEClothing
+  id: CmoClothing
 
 - type: Tag
-  id: CMOClothing
+  id: CEClothing
 
 - type: Tag
   id: RDClothing
