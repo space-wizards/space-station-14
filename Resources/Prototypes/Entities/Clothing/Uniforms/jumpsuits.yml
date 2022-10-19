@@ -165,6 +165,9 @@
     sprite: Clothing/Uniforms/Jumpsuit/cmo.rsi
   - type: DiseaseProtection
     protection: 0.15
+  - type: Tag
+    tags:
+      - CmoClothing
 
 - type: entity
   parent: ClothingUniformBase

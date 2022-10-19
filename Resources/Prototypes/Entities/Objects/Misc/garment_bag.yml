@@ -56,3 +56,14 @@
       whitelist:
         tags:
           - CEClothing
+
+- type: entity
+  parent: BagGarmentBase
+  id: BagGarmentCmo
+  name: chief medical officer's garment bag
+  description: A bag for storing extra clothes and shoes. This one belongs to the chief medical officer.
+  components:
+    - type: Storage
+      whitelist:
+        tags:
+          - CmoClothing

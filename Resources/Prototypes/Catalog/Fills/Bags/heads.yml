@@ -61,3 +61,17 @@
         - id: ClothingNeckMantleCE
         - id: ClothingOuterWinterCE
         - id: ClothingHeadHatBeretEngineering
+
+- type: entity
+  id: BagGarmentCmoFilled
+  suffix: Filled
+  parent: BagGarmentCmo
+  components:
+    - type: StorageFill
+      contents:
+        - id: ClothingUniformJumpsuitCMO
+        - id: ClothingUniformJumpskirtCMO
+        - id: ClothingNeckMantleCMO
+        - id: ClothingCloakCmo
+        - id: ClothingOuterCoatLabCmo
+        - id: ClothingOuterWinterCMO

@@ -121,9 +121,8 @@
       - id: ClothingHandsGlovesNitrile
       #- name: ClothingEyesHudMedical #Removed until working properly
       - id: ClothingHeadsetAltMedical
-      - id: ClothingCloakCmo
+      - id: BagGarmentCmoFilled
       - id: ClothingBackpackDuffelSurgeryFilled
-      - id: ClothingOuterCoatLabCmo
       - id: ClothingMaskSterile
       - id: ClothingOuterHardsuitMedical
       - id: DiagnoserMachineCircuitboard

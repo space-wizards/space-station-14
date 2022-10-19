@@ -33,6 +33,9 @@
     sprite: Clothing/Neck/mantles/cmomantle.rsi
   - type: Clothing
     sprite: Clothing/Neck/mantles/cmomantle.rsi
+  - type: Tag
+    tags:
+      - CmoClothing
     
 - type: entity
   parent: ClothingNeckBase

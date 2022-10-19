@@ -116,6 +116,9 @@
     sprite: Clothing/OuterClothing/Coats/labcoat_cmo.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/labcoat_cmo.rsi
+  - type: Tag
+    tags:
+      - CmoClothing
 
 - type: entity
   parent: ClothingOuterStorageBase

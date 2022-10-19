@@ -99,6 +99,9 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatcmo.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatcmo.rsi
+  - type: Tag
+    tags:
+      - CmoClothing
 
 - type: entity
   parent: ClothingOuterWinterCoat
