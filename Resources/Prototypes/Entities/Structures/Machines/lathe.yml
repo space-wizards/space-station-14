@@ -199,12 +199,6 @@
       - HighPowerMicroLaserStockPart
       - NanoManipulatorStockPart
       - AdvancedScanningModuleStockPart
-      - FirelockElectronics
-      - DoorElectronics
-      - APCElectronics
-      - AirAlarmElectronics
-      - FireAlarmElectronics
-      - MailingUnitElectronics
       - Bucket
       - MopItem
       - SprayBottle
@@ -250,6 +244,12 @@
     idleState: icon
     runningState: building
     dynamicRecipes:
+      - FirelockElectronics
+      - DoorElectronics
+      - APCElectronics
+      - AirAlarmElectronics
+      - FireAlarmElectronics
+      - MailingUnitElectronics
       - SMESMachineCircuitboard
       - SubstationMachineCircuitboard
       - ThermomachineFreezerMachineCircuitBoard
