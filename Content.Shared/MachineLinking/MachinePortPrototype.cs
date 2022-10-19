@@ -23,14 +23,14 @@ public abstract class MachinePortPrototype
 }
 
 [Prototype("receiverPort")]
-public sealed class ReceiverPortPrototype : MachinePortPrototype, IPrototype
+public readonly record struct ReceiverPortPrototype : MachinePortPrototype, IPrototype
 {
     [IdDataField]
     public string ID { get; } = default!;
 }
 
 [Prototype("transmitterPort")]
-public sealed class TransmitterPortPrototype : MachinePortPrototype, IPrototype
+public readonly record struct TransmitterPortPrototype : MachinePortPrototype, IPrototype
 {
     [IdDataField]
     public string ID { get; } = default!;
@@ -40,5 +40,5 @@ public sealed class TransmitterPortPrototype : MachinePortPrototype, IPrototype
     ///     default-link functionality.
     /// </summary>
     [DataField("defaultLinks", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<ReceiverPortPrototype>))]
-    public HashSet<string>? DefaultLinks;
+    public readonly HashSet<string>? DefaultLinks;
 }

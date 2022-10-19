@@ -9,19 +9,15 @@ namespace Content.Shared.Body.Prototypes
     /// </summary>
     [Prototype("bodyTemplate")]
     [Serializable, NetSerializable]
-    public sealed class BodyTemplatePrototype : IPrototype, ISerializationHooks
+    public readonly record struct BodyTemplatePrototype : IPrototype, ISerializationHooks
     {
-        [DataField("slots")]
-        private Dictionary<string, BodyPartType> _slots = new();
+        [DataField("slots")] private readonly Dictionary<string, BodyPartType> _slots = new();
 
-        [DataField("connections")]
-        private Dictionary<string, List<string>> _rawConnections = new();
+        [DataField("connections")] private readonly Dictionary<string, List<string>> _rawConnections = new();
 
-        [DataField("layers")]
-        private Dictionary<string, string> _layers = new();
+        [DataField("layers")] private readonly Dictionary<string, string> _layers = new();
 
-        [DataField("mechanismLayers")]
-        private Dictionary<string, string> _mechanismLayers = new();
+        [DataField("mechanismLayers")] private readonly Dictionary<string, string> _mechanismLayers = new();
 
         [ViewVariables]
         [IdDataFieldAttribute]
@@ -38,8 +34,7 @@ namespace Content.Shared.Body.Prototypes
         [ViewVariables]
         public Dictionary<string, BodyPartType> Slots => new(_slots);
 
-        [ViewVariables]
-        public Dictionary<string, HashSet<string>> Connections { get; set; } = new();
+        [ViewVariables] public Dictionary<string, HashSet<string>> Connections { get; } = new();
 
         [ViewVariables]
         public Dictionary<string, string> Layers => new(_layers);

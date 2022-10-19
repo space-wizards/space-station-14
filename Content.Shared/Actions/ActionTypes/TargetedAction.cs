@@ -76,9 +76,8 @@ public class EntityTargetAction : TargetedAction
     /// <summary>
     ///     The local-event to raise when this action is performed.
     /// </summary>
-    [NonSerialized]
-    [DataField("event")]
-    public EntityTargetActionEvent? Event;
+    [DataField("event", true)]
+    public virtual EntityTargetActionEvent? Event { get; }
 
     [DataField("whitelist")]
     public EntityWhitelist? Whitelist;

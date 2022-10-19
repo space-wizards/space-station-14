@@ -3,7 +3,7 @@
 namespace Content.Shared.Body.Prototypes
 {
     [Prototype("metabolizerType")]
-    public sealed class MetabolizerTypePrototype : IPrototype
+    public readonly record struct MetabolizerTypePrototype : IPrototype
     {
         [IdDataFieldAttribute]
         public string ID { get; } = default!;

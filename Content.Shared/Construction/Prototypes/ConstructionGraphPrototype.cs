@@ -6,7 +6,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Construction.Prototypes
 {
     [Prototype("constructionGraph")]
-    public sealed class ConstructionGraphPrototype : IPrototype, ISerializationHooks
+    public readonly record struct ConstructionGraphPrototype : IPrototype, ISerializationHooks
     {
         private readonly Dictionary<string, ConstructionGraphNode> _nodes = new();
         private readonly Dictionary<(string, string), ConstructionGraphNode[]?> _paths = new();
@@ -20,8 +20,7 @@ namespace Content.Shared.Construction.Prototypes
         [DataField("start")]
         public string? Start { get; }
 
-        [DataField("graph", priority: 0)]
-        private List<ConstructionGraphNode> _graph = new();
+        [DataField("graph", priority: 0)] private readonly List<ConstructionGraphNode> _graph = new();
 
         [ViewVariables]
         public IReadOnlyDictionary<string, ConstructionGraphNode> Nodes => _nodes;

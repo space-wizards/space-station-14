@@ -4,14 +4,13 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Speech.Components
 {
     [Prototype("accent")]
-    public sealed class ReplacementAccentPrototype : IPrototype
+    public readonly record struct ReplacementAccentPrototype : IPrototype
     {
         [ViewVariables]
         [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
-        [DataField("words")]
-        public string[] Words = default!;
+        [DataField("words")] public readonly string[] Words = default!;
     }
 
     /// <summary>

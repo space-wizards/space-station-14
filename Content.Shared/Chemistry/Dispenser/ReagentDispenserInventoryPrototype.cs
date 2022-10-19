@@ -12,10 +12,10 @@ namespace Content.Shared.Chemistry.Dispenser
     /// machines define their inventory.
     /// </summary>
     [Serializable, NetSerializable, Prototype("reagentDispenserInventory")]
-    public sealed class ReagentDispenserInventoryPrototype : IPrototype
+    public readonly record struct ReagentDispenserInventoryPrototype : IPrototype
     {
         [DataField("inventory", customTypeSerializer: typeof(PrototypeIdListSerializer<ReagentPrototype>))]
-        private List<string> _inventory = new();
+        private readonly List<string> _inventory = new();
 
         [ViewVariables]
         [IdDataFieldAttribute]

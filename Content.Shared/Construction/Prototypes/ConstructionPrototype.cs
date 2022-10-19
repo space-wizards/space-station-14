@@ -6,11 +6,11 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Construction.Prototypes
 {
     [Prototype("construction")]
-    public sealed class ConstructionPrototype : IPrototype
+    public readonly record struct ConstructionPrototype : IPrototype
     {
-        private string _category = string.Empty;
+        private readonly string _category = string.Empty;
 
-        [DataField("conditions")] private List<IConstructionCondition> _conditions = new();
+        [DataField("conditions")] private readonly List<IConstructionCondition> _conditions = new();
 
         /// <summary>
         ///     Friendly name displayed in the construction GUI.
@@ -52,7 +52,7 @@ namespace Content.Shared.Construction.Prototypes
         ///     If you can start building or complete steps on impassable terrain.
         /// </summary>
         [DataField("canBuildInImpassable")]
-        public bool CanBuildInImpassable { get; private set; }
+        public bool CanBuildInImpassable { get; }
 
         [DataField("category")]
         public string Category
@@ -61,7 +61,7 @@ namespace Content.Shared.Construction.Prototypes
             private set => _category = Loc.GetString(value);
         }
 
-        [DataField("objectType")] public ConstructionType Type { get; private set; } = ConstructionType.Structure;
+        [DataField("objectType")] public ConstructionType Type { get; } = ConstructionType.Structure;
 
         [ViewVariables]
         [IdDataFieldAttribute]

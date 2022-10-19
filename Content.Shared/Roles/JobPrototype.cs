@@ -10,7 +10,7 @@ namespace Content.Shared.Roles
     ///     Describes information for a single job on the station.
     /// </summary>
     [Prototype("job")]
-    public sealed class JobPrototype : IPrototype
+    public readonly record struct JobPrototype : IPrototype
     {
         [ViewVariables]
         [IdDataFieldAttribute]
@@ -31,14 +31,11 @@ namespace Content.Shared.Roles
         [ViewVariables(VVAccess.ReadOnly)]
         public string LocalizedName => Loc.GetString(Name);
 
-        [DataField("requirements")]
-        public HashSet<JobRequirement>? Requirements;
+        [DataField("requirements")] public readonly HashSet<JobRequirement>? Requirements;
 
-        [DataField("joinNotifyCrew")]
-        public bool JoinNotifyCrew { get; } = false;
+        [DataField("joinNotifyCrew")] public bool JoinNotifyCrew { get; }
 
-        [DataField("requireAdminNotify")]
-        public bool RequireAdminNotify { get; } = false;
+        [DataField("requireAdminNotify")] public bool RequireAdminNotify { get; }
 
         [DataField("setPreference")]
         public bool SetPreference { get; } = true;
@@ -51,17 +48,16 @@ namespace Content.Shared.Roles
         ///     The job system will try to pick heads before other jobs on the same priority level.
         /// </summary>
         [DataField("weight")]
-        public int Weight { get; private set; }
+        public int Weight { get; }
 
         /// <summary>
         ///     A numerical score for how much easier this job is for antagonists.
         ///     For traitors, reduces starting TC by this amount. Other gamemodes can use it for whatever they find fitting.
         /// </summary>
-        [DataField("antagAdvantage")]
-        public int AntagAdvantage = 0;
+        [DataField("antagAdvantage")] public readonly int AntagAdvantage;
 
         [DataField("startingGear", customTypeSerializer: typeof(PrototypeIdSerializer<StartingGearPrototype>))]
-        public string? StartingGear { get; private set; }
+        public string? StartingGear { get; }
 
         /// <summary>
         /// Use this to spawn in as a non-humanoid (borg, test subject, etc.)
@@ -69,12 +65,12 @@ namespace Content.Shared.Roles
         /// If you want to just add special attributes to a humanoid, use AddComponentSpecial instead.
         /// </summary>
         [DataField("jobEntity", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string? JobEntity = null;
+        public readonly string? JobEntity;
 
         [DataField("icon")] public string Icon { get; } = string.Empty;
 
         [DataField("special", serverOnly:true)]
-        public JobSpecial[] Special { get; private set; } = Array.Empty<JobSpecial>();
+        public JobSpecial[] Special { get; } = Array.Empty<JobSpecial>();
 
         [DataField("access", customTypeSerializer: typeof(PrototypeIdListSerializer<AccessLevelPrototype>))]
         public IReadOnlyCollection<string> Access { get; } = Array.Empty<string>();

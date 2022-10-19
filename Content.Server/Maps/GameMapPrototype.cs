@@ -13,7 +13,7 @@ namespace Content.Server.Maps;
 /// Make a new partial for your fancy new feature, it'll save you time later.
 /// </remarks>
 [Prototype("gameMap"), PublicAPI]
-public sealed partial class GameMapPrototype : IPrototype
+public readonly partial record struct GameMapPrototype : IPrototype
 {
     /// <inheritdoc/>
     [IdDataField]
@@ -32,7 +32,7 @@ public sealed partial class GameMapPrototype : IPrototype
     public ResourcePath MapPath { get; } = default!;
 
     [DataField("stations", required: true)]
-    private Dictionary<string, StationConfig> _stations = new();
+    private readonly Dictionary<string, StationConfig> _stations = new();
 
     /// <summary>
     /// The stations this map contains. The names should match with the BecomesStation components.

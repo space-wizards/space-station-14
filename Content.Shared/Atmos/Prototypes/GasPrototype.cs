@@ -1,20 +1,15 @@
 ﻿using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Atmos.Prototypes
 {
     [Prototype("gas")]
-    public sealed class GasPrototype : IPrototype
+    public readonly record struct GasPrototype : IPrototype
     {
-        private string _name = string.Empty;
-    
-        [DataField("name")]
-        public string Name
-        {
-            get => _name;
-            private set => _name = Loc.GetString(value);
-        }
+        [DataField("name", customTypeSerializer: typeof(LocStringSerializer))]
+        public readonly string Name;
 
         // TODO: Control gas amount necessary for overlay to appear
         // TODO: Add interfaces for gas behaviours e.g. breathing, burning
@@ -27,19 +22,19 @@ namespace Content.Shared.Atmos.Prototypes
         ///     Specific heat for gas.
         /// </summary>
         [DataField("specificHeat")]
-        public float SpecificHeat { get; private set; }
+        public float SpecificHeat { get; }
 
         /// <summary>
         /// Heat capacity ratio for gas
         /// </summary>
         [DataField("heatCapacityRatio")]
-        public float HeatCapacityRatio { get; private set; } = 1.4f;
+        public float HeatCapacityRatio { get; } = 1.4f;
 
         /// <summary>
         /// Molar mass of gas
         /// </summary>
         [DataField("molarMass")]
-        public float MolarMass { get; set; } = 1f;
+        public float MolarMass { get; } = 1f;
 
 
         /// <summary>
@@ -53,8 +48,7 @@ namespace Content.Shared.Atmos.Prototypes
         /// </summary>
         public float GasMolesVisibleMax => GasMolesVisible * GasVisibilityFactor;
 
-        [DataField("gasVisbilityFactor")]
-        public float GasVisibilityFactor = Atmospherics.FactorGasVisibleMax;
+        [DataField("gasVisbilityFactor")] public readonly float GasVisibilityFactor = Atmospherics.FactorGasVisibleMax;
 
         /// <summary>
         ///     If this reagent is in gas form, this is the path to the overlay that will be used to make the gas visible.
@@ -66,13 +60,13 @@ namespace Content.Shared.Atmos.Prototypes
         ///     If this reagent is in gas form, this will be the path to the RSI sprite that will be used to make the gas visible.
         /// </summary>
         [DataField("gasOverlayState")]
-        public string GasOverlayState { get; set; } = string.Empty;
+        public string GasOverlayState { get; } = string.Empty;
 
         /// <summary>
         ///     State for the gas RSI overlay.
         /// </summary>
         [DataField("gasOverlaySprite")]
-        public string GasOverlaySprite { get; set; } = string.Empty;
+        public string GasOverlaySprite { get; } = string.Empty;
 
         /// <summary>
         /// Path to the tile overlay used when this gas appears visible.
@@ -88,7 +82,6 @@ namespace Content.Shared.Atmos.Prototypes
 
         [DataField("color")] public string Color { get; } = string.Empty;
 
-        [DataField("pricePerMole")]
-        public float PricePerMole { get; set; } = 0;
+        [DataField("pricePerMole")] public readonly float PricePerMole { get; }
     }
 }

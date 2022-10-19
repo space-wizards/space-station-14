@@ -1,4 +1,3 @@
-using System.Globalization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -9,11 +8,11 @@ namespace Content.Shared.Alert
     /// An alert popup with associated icon, tooltip, and other data.
     /// </summary>
     [Prototype("alert")]
-    public sealed class AlertPrototype : IPrototype, ISerializationHooks
+    public readonly record struct AlertPrototype : IPrototype, ISerializationHooks
     {
-        private FormattedMessage _name = new ();
-        private FormattedMessage _description = new ();
-        
+        private readonly FormattedMessage _name = new();
+        private readonly FormattedMessage _description = new();
+
         [ViewVariables]
         string IPrototype.ID => AlertType.ToString();
 
@@ -21,14 +20,13 @@ namespace Content.Shared.Alert
         /// Type of alert, no 2 alert prototypes should have the same one.
         /// </summary>
         [IdDataFieldAttribute]
-        public AlertType AlertType { get; private set; }
+        public AlertType AlertType { get; }
 
         /// <summary>
         /// List of icons to use for this alert. Each entry corresponds to a different severity level, starting from the
         /// minimum and incrementing upwards. If severities are not supported, the first entry is used.
         /// </summary>
-        [DataField("icons", required: true)]
-        public readonly List<SpriteSpecifier> Icons = new();
+        [DataField("icons", required: true)] public readonly List<SpriteSpecifier> Icons = new();
 
         /// <summary>
         /// Name to show in tooltip window. Accepts formatting.
@@ -58,27 +56,26 @@ namespace Content.Shared.Alert
         /// hot / cold. If left unspecified, the alert will not replace or be replaced by any other alerts.
         /// </summary>
         [DataField("category")]
-        public AlertCategory? Category { get; private set; }
+        public AlertCategory? Category { get; }
 
         /// <summary>
         /// Key which is unique w.r.t category semantics (alerts with same category have equal keys,
         /// alerts with no category have different keys).
         /// </summary>
-        public AlertKey AlertKey { get; private set; }
+        public AlertKey AlertKey { get; }
 
         /// <summary>
         /// -1 (no effect) unless MaxSeverity is specified. Defaults to 1. Minimum severity level supported by this state.
         /// </summary>
         public short MinSeverity => MaxSeverity == -1 ? (short) -1 : _minSeverity;
 
-        [DataField("minSeverity")] private short _minSeverity = 1;
+        [DataField("minSeverity")] private readonly short _minSeverity = 1;
 
         /// <summary>
         /// Maximum severity level supported by this state. -1 (default) indicates
         /// no severity levels are supported by the state.
         /// </summary>
-        [DataField("maxSeverity")]
-        public short MaxSeverity = -1;
+        [DataField("maxSeverity")] public readonly short MaxSeverity = -1;
 
         /// <summary>
         /// Indicates whether this state support severity levels
@@ -90,7 +87,7 @@ namespace Content.Shared.Alert
         /// This will always be null on clientside.
         /// </summary>
         [DataField("onClick", serverOnly: true)]
-        public IAlertClick? OnClick { get; private set; }
+        public IAlertClick? OnClick { get; }
 
         void ISerializationHooks.AfterDeserialization()
         {

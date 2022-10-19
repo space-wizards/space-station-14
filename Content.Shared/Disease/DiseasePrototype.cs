@@ -9,7 +9,7 @@ namespace Content.Shared.Disease
     /// </summary>
     [Prototype("disease")]
     [DataDefinition]
-    public sealed class DiseasePrototype : IPrototype, IInheritingPrototype
+    public readonly record struct DiseasePrototype : IPrototype, IInheritingPrototype
     {
         private string _name = string.Empty;
 
@@ -25,28 +25,27 @@ namespace Content.Shared.Disease
         }
 
         [ParentDataFieldAttribute(typeof(AbstractPrototypeIdArraySerializer<DiseasePrototype>))]
-        public string[]? Parents { get; private set; }
+        public string[]? Parents { get; }
 
         [NeverPushInheritance]
         [AbstractDataFieldAttribute]
-        public bool Abstract { get; private set; }
+        public bool Abstract { get; }
 
         /// <summary>
         /// Controls how often a disease ticks.
         /// </summary>
-        [ViewVariables]
-        public float TickTime = 1f;
+        [ViewVariables] public readonly float TickTime = 1f;
 
         /// <summary>
         /// Since disease isn't mapped to metabolism or anything,
         /// it needs something to control its tickrate
         /// </summary>
-        public float Accumulator = 0f;
+        public readonly float Accumulator = 0f;
         /// <summary>
         /// Since accumulator is reset with TickTime, this just tracks
         /// the total amount of time a disease has been present.
         /// </summary>
-        public float TotalAccumulator = 0f;
+        public readonly float TotalAccumulator = 0f;
         /// <summary>
         /// Stores all the separate stages of the disease plus the time
         /// thresholds for their activation
@@ -75,7 +74,7 @@ namespace Content.Shared.Disease
         /// a base 33% reduction in cure chance
         /// </summary>
         [DataField("cureResist", serverOnly: true)]
-        public float CureResist = 0.05f;
+        public readonly float CureResist = 0.05f;
         /// <summary>
         /// Whether the disease can infect other people.
         /// Since this isn't just a virology thing, this
@@ -84,6 +83,6 @@ namespace Content.Shared.Disease
         /// You can't print a cancer vaccine
         /// </summary>
         [DataField("infectious", serverOnly: true)]
-        public bool Infectious = true;
+        public readonly bool Infectious = true;
     }
 }

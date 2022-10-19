@@ -9,11 +9,11 @@ namespace Content.Shared.Access;
 ///     Used by <see cref="AccessComponent"/> to avoid boilerplate.
 /// </summary>
 [Prototype("accessGroup")]
-public sealed class AccessGroupPrototype : IPrototype
+public readonly record struct AccessGroupPrototype : IPrototype
 {
     [IdDataFieldAttribute]
     public string ID { get; } = default!;
 
     [DataField("tags", required: true, customTypeSerializer:typeof(PrototypeIdHashSetSerializer<AccessLevelPrototype>))]
-    public HashSet<string> Tags = default!;
+    public readonly HashSet<string> Tags = default!;
 }

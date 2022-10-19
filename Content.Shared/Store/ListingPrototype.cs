@@ -1,12 +1,12 @@
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Utility;
+using System.Linq;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.FixedPoint;
-using System.Linq;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Store;
 
@@ -22,14 +22,12 @@ public class ListingData : IEquatable<ListingData>, ICloneable
     /// <summary>
     /// The name of the listing. If empty, uses the entity's name (if present)
     /// </summary>
-    [DataField("name")]
-    public string Name = string.Empty;
+    [DataField("name")] public string Name = string.Empty;
 
     /// <summary>
     /// The description of the listing. If empty, uses the entity's description (if present)
     /// </summary>
-    [DataField("description")]
-    public string Description = string.Empty;
+    [DataField("description")] public string Description = string.Empty;
 
     /// <summary>
     /// The categories that this listing applies to. Used for filtering a listing for a store.
@@ -53,14 +51,12 @@ public class ListingData : IEquatable<ListingData>, ICloneable
     /// <summary>
     /// The icon for the listing. If null, uses the icon for the entity or action.
     /// </summary>
-    [DataField("icon")]
-    public SpriteSpecifier? Icon;
+    [DataField("icon")] public SpriteSpecifier? Icon;
 
     /// <summary>
     /// The priority for what order the listings will show up in on the menu.
     /// </summary>
-    [DataField("priority")]
-    public int Priority = 0;
+    [DataField("priority")] public int Priority;
 
     /// <summary>
     /// The entity that is given when the listing is purchased.
@@ -77,8 +73,7 @@ public class ListingData : IEquatable<ListingData>, ICloneable
     /// <summary>
     /// The event that is broadcast when the listing is purchased.
     /// </summary>
-    [DataField("productEvent")]
-    public object? ProductEvent;
+    [DataField("productEvent")] public object? ProductEvent;
 
     /// <summary>
     /// used internally for tracking how many times an item was purchased.
@@ -148,9 +143,11 @@ public class ListingData : IEquatable<ListingData>, ICloneable
 [Prototype("listing")]
 [Serializable, NetSerializable]
 [DataDefinition]
-public sealed class ListingPrototype : ListingData, IPrototype
+public readonly record struct ListingPrototype : IPrototype
 {
     [ViewVariables]
     [IdDataField]
     public string ID { get; } = default!;
+
+    [IncludeDataField] public readonly ListingData ListingData;
 }

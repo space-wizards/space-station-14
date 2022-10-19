@@ -8,7 +8,7 @@ using Content.Shared.FixedPoint;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
@@ -16,39 +16,34 @@ namespace Content.Shared.Chemistry.Reagent
 {
     [Prototype("reagent")]
     [DataDefinition]
-    public sealed class ReagentPrototype : IPrototype, IInheritingPrototype
+    public readonly record struct ReagentPrototype : IPrototype, IInheritingPrototype
     {
         [ViewVariables]
         [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
-        [DataField("name", required: true)]
-        private string Name { get; } = default!;
-
         [ViewVariables(VVAccess.ReadOnly)]
-        public string LocalizedName => Loc.GetString(Name);
+        [DataField("name", required: true, customTypeSerializer: typeof(LocStringSerializer))]
+        public readonly string Name;
 
         [DataField("group")]
         public string Group { get; } = "Unknown";
 
         [ParentDataFieldAttribute(typeof(AbstractPrototypeIdArraySerializer<ReagentPrototype>))]
-        public string[]? Parents { get; private set; }
+        public string[]? Parents { get; }
 
         [NeverPushInheritance]
         [AbstractDataFieldAttribute]
-        public bool Abstract { get; private set; }
-
-        [DataField("desc", required: true)]
-        private string Description { get; } = default!;
+        public bool Abstract { get; }
 
         [ViewVariables(VVAccess.ReadOnly)]
-        public string LocalizedDescription => Loc.GetString(Description);
+        [DataField("desc", required: true, customTypeSerializer: typeof(LocStringSerializer))]
+        public readonly string Description;
 
-        [DataField("physicalDesc", required: true)]
-        private string PhysicalDescription { get; } = default!;
 
         [ViewVariables(VVAccess.ReadOnly)]
-        public string LocalizedPhysicalDescription => Loc.GetString(PhysicalDescription);
+        [DataField("physicalDesc", required: true, customTypeSerializer: typeof(LocStringSerializer))]
+        public readonly string PhysicalDescription;
 
         [DataField("flavor")]
         public string Flavor { get; } = default!;
@@ -73,10 +68,10 @@ namespace Content.Shared.Chemistry.Reagent
         public string SpriteReplacementPath { get; } = string.Empty;
 
         [DataField("metabolisms", serverOnly: true, customTypeSerializer: typeof(PrototypeIdDictionarySerializer<ReagentEffectsEntry, MetabolismGroupPrototype>))]
-        public Dictionary<string, ReagentEffectsEntry>? Metabolisms = null;
+        public readonly Dictionary<string, ReagentEffectsEntry>? Metabolisms;
 
         [DataField("reactiveEffects", serverOnly: true, customTypeSerializer: typeof(PrototypeIdDictionarySerializer<ReactiveReagentEffectEntry, ReactiveGroupPrototype>))]
-        public Dictionary<string, ReactiveReagentEffectEntry>? ReactiveEffects = null;
+        public readonly Dictionary<string, ReactiveReagentEffectEntry>? ReactiveEffects;
 
         [DataField("tileReactions", serverOnly: true)]
         public readonly List<ITileReaction> TileReactions = new(0);

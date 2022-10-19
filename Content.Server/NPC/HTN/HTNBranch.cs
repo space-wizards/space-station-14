@@ -12,7 +12,7 @@ public sealed class HTNBranch
     [ViewVariables, DataField("preconditions")]
     public List<HTNPrecondition> Preconditions = new();
 
-    [ViewVariables] public List<HTNTask> Tasks = new();
+    [ViewVariables] public List<IHTNTask> Tasks = new();
 
     /// <summary>
     /// Due to how serv3 works we need to defer getting the actual tasks until after they have all been serialized.

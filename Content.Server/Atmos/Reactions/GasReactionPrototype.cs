@@ -18,7 +18,7 @@ namespace Content.Server.Atmos.Reactions
     }
 
     [Prototype("gasReaction")]
-    public sealed class GasReactionPrototype : IPrototype
+    public readonly record struct GasReactionPrototype : IPrototype
     {
         [ViewVariables]
         [IdDataFieldAttribute]
@@ -58,7 +58,7 @@ namespace Content.Server.Atmos.Reactions
         /// <summary>
         ///     A list of effects this will produce.
         /// </summary>
-        [DataField("effects")] private List<IGasReactionEffect> _effects = new();
+        [DataField("effects")] private readonly List<IGasReactionEffect> _effects = new();
 
         public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, AtmosphereSystem atmosphereSystem)
         {

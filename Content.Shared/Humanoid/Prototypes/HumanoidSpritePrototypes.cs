@@ -1,4 +1,3 @@
-using Content.Shared.Humanoid.Markings;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -9,7 +8,7 @@ namespace Content.Shared.Humanoid.Prototypes;
 ///     or settings per layer)
 /// </summary>
 [Prototype("speciesBaseSprites")]
-public sealed class HumanoidSpeciesBaseSpritesPrototype : IPrototype
+public readonly record struct HumanoidSpeciesBaseSpritesPrototype : IPrototype
 {
      [IdDataField]
      public string ID { get; } = default!;
@@ -20,8 +19,7 @@ public sealed class HumanoidSpeciesBaseSpritesPrototype : IPrototype
      ///     visual layer will not be in use on this species, and will
      ///     be ignored.
      /// </summary>
-     [DataField("sprites", required: true)]
-     public Dictionary<HumanoidVisualLayers, string> Sprites = new();
+     [DataField("sprites", required: true)] public readonly Dictionary<HumanoidVisualLayers, string> Sprites = new();
 }
 
 /// <summary>
@@ -30,7 +28,7 @@ public sealed class HumanoidSpeciesBaseSpritesPrototype : IPrototype
 ///     that sprite (or at least, the layer this sprite is on).
 /// </summary>
 [Prototype("humanoidBaseSprite")]
-public sealed class HumanoidSpeciesSpriteLayer : IPrototype
+public readonly record struct HumanoidSpeciesSpriteLayer : IPrototype
 {
     [IdDataField]
     public string ID { get; } = default!;

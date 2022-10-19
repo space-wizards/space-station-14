@@ -10,14 +10,13 @@ namespace Content.Shared.Kitchen
     ///    A recipe for space microwaves.
     /// </summary>
     [Prototype("microwaveMealRecipe")]
-    public sealed class FoodRecipePrototype : IPrototype
+    public readonly record struct FoodRecipePrototype : IPrototype
     {
         [ViewVariables]
         [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
-        [DataField("name")]
-        private string _name = string.Empty;
+        [DataField("name")] private readonly string _name = string.Empty;
 
         [DataField("reagents", customTypeSerializer:typeof(PrototypeIdDictionarySerializer<FixedPoint2, ReagentPrototype>))]
         private readonly Dictionary<string, FixedPoint2> _ingsReagents = new();

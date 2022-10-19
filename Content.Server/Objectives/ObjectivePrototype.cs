@@ -5,34 +5,32 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Objectives
 {
     [Prototype("objective")]
-    public sealed class ObjectivePrototype : IPrototype
+    public readonly record struct ObjectivePrototype : IPrototype
     {
         [ViewVariables]
         [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
-        [ViewVariables] [DataField("issuer")] public string Issuer { get; private set; } = "Unknown";
+        [ViewVariables] [DataField("issuer")] public string Issuer { get; } = "Unknown";
 
-        [ViewVariables] [DataField("prob")] public float Probability { get; private set; } = 0.3f;
+        [ViewVariables] [DataField("prob")] public float Probability { get; } = 0.3f;
 
         [ViewVariables]
         public float Difficulty => _difficultyOverride ?? _conditions.Sum(c => c.Difficulty);
 
-        [DataField("conditions")]
-        private List<IObjectiveCondition> _conditions = new();
-        [DataField("requirements")]
-        private List<IObjectiveRequirement> _requirements = new();
+        [DataField("conditions")] private readonly List<IObjectiveCondition> _conditions = new();
+        [DataField("requirements")] private readonly List<IObjectiveRequirement> _requirements = new();
 
         [ViewVariables]
         public IReadOnlyList<IObjectiveCondition> Conditions => _conditions;
 
         [ViewVariables]
         [DataField("canBeDuplicate")]
-        public bool CanBeDuplicateAssignment { get; private set; }
+        public bool CanBeDuplicateAssignment { get; }
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("difficultyOverride")]
-        private float? _difficultyOverride = null;
+        private readonly float? _difficultyOverride;
 
         public bool CanBeAssigned(Mind.Mind mind)
         {

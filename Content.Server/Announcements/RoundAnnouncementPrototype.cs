@@ -9,15 +9,15 @@ namespace Content.Server.Announcements;
 /// Used for any announcements on the start of a round.
 /// </summary>
 [Prototype("roundAnnouncement")]
-public sealed class RoundAnnouncementPrototype : IPrototype
+public readonly record struct RoundAnnouncementPrototype : IPrototype
 {
     [IdDataFieldAttribute]
     public string ID { get; } = default!;
 
-    [DataField("sound")] public SoundSpecifier? Sound;
+    [DataField("sound")] public readonly SoundSpecifier? Sound;
 
-    [DataField("message")] public string? Message;
+    [DataField("message")] public readonly string? Message;
 
     [DataField("presets", customTypeSerializer: typeof(PrototypeIdListSerializer<GamePresetPrototype>))]
-    public List<string> GamePresets = new();
+    public readonly List<string> GamePresets = new();
 }

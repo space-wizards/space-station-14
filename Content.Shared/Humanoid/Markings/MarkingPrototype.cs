@@ -4,12 +4,12 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Humanoid.Markings
 {
     [Prototype("marking")]
-    public sealed class MarkingPrototype : IPrototype
+    public readonly record struct MarkingPrototype : IPrototype
     {
         [IdDataField]
         public string ID { get; } = "uwu";
 
-        public string Name { get; private set; } = default!;
+        public string Name { get; } = default!;
 
         [DataField("bodyPart", required: true)]
         public HumanoidVisualLayers BodyPart { get; } = default!;
@@ -23,8 +23,7 @@ namespace Content.Shared.Humanoid.Markings
         [DataField("followSkinColor")]
         public bool FollowSkinColor { get; } = false;
 
-        [DataField("sprites", required: true)]
-        public List<SpriteSpecifier> Sprites { get; private set; } = default!;
+        [DataField("sprites", required: true)] public List<SpriteSpecifier> Sprites { get; } = default!;
 
         public Marking AsMarking()
         {

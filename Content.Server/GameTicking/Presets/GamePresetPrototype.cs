@@ -8,7 +8,7 @@ namespace Content.Server.GameTicking.Presets
     ///     A round-start setup preset, such as which antagonists to spawn.
     /// </summary>
     [Prototype("gamePreset")]
-    public sealed class GamePresetPrototype : IPrototype
+    public readonly record struct GamePresetPrototype : IPrototype
     {
         [IdDataFieldAttribute]
         public string ID { get; } = default!;

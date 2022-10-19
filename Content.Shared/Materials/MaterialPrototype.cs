@@ -11,9 +11,9 @@ namespace Content.Shared.Materials
     ///     Properties should be intrinsic (or at least as much is necessary for game purposes).
     /// </summary>
     [Prototype("material")]
-    public sealed class MaterialPrototype : IPrototype, IInheritingPrototype
+    public readonly record struct MaterialPrototype : IPrototype, IInheritingPrototype
     {
-        private string _name = string.Empty;
+        private readonly string _name = string.Empty;
 
         [ViewVariables]
         [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<MaterialPrototype>))]
@@ -53,7 +53,6 @@ namespace Content.Shared.Materials
         /// <summary>
         /// The price per cm3.
         /// </summary>
-        [DataField("price", required: true)]
-        public double Price = 0;
+        [DataField("price", required: true)] public readonly double Price;
     }
 }

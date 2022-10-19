@@ -14,7 +14,7 @@ namespace Content.Shared.Damage.Prototypes
     /// </remarks>
     [Prototype("damageContainer")]
     [Serializable, NetSerializable]
-    public sealed class DamageContainerPrototype : IPrototype
+    public readonly record struct DamageContainerPrototype : IPrototype
     {
         [ViewVariables]
         [IdDataFieldAttribute]
@@ -24,13 +24,13 @@ namespace Content.Shared.Damage.Prototypes
         ///     List of damage groups that are supported by this container.
         /// </summary>
         [DataField("supportedGroups", customTypeSerializer: typeof(PrototypeIdListSerializer<DamageGroupPrototype>))]
-        public List<string> SupportedGroups = new();
+        public readonly List<string> SupportedGroups = new();
 
         /// <summary>
         ///     Partial List of damage types supported by this container. Note that members of the damage groups listed
         ///     in <see cref="SupportedGroups"/> are also supported, but they are not included in this list.
         /// </summary>
         [DataField("supportedTypes", customTypeSerializer: typeof(PrototypeIdListSerializer<DamageTypePrototype>))]
-        public List<string> SupportedTypes = new();
+        public readonly List<string> SupportedTypes = new();
     }
 }

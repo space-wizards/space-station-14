@@ -8,29 +8,25 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Research.Prototypes
 {
     [NetSerializable, Serializable, Prototype("latheRecipe")]
-    public sealed class LatheRecipePrototype : IPrototype
+    public readonly record struct LatheRecipePrototype : IPrototype
     {
         [ViewVariables]
         [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
-        [DataField("name")]
-        private string _name = string.Empty;
+        [DataField("name")] private readonly string _name = string.Empty;
 
-        [DataField("icon")]
-        private SpriteSpecifier _icon = SpriteSpecifier.Invalid;
+        [DataField("icon")] private readonly SpriteSpecifier _icon = SpriteSpecifier.Invalid;
 
-        [DataField("description")]
-        private string _description = string.Empty;
+        [DataField("description")] private readonly string _description = string.Empty;
 
         [DataField("result", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-        private string _result = string.Empty;
+        private readonly string _result = string.Empty;
 
-        [DataField("completetime")]
-        private TimeSpan _completeTime = TimeSpan.FromSeconds(5);
+        [DataField("completetime")] private readonly TimeSpan _completeTime = TimeSpan.FromSeconds(5);
 
         [DataField("materials", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<int, MaterialPrototype>))]
-        private Dictionary<string, int> _requiredMaterials = new();
+        private readonly Dictionary<string, int> _requiredMaterials = new();
 
         /// <summary>
         ///     Name displayed in the lathe GUI.
@@ -45,7 +41,7 @@ namespace Content.Shared.Research.Prototypes
                 if (protoMan == null) return _description;
                 protoMan.TryIndex(_result, out EntityPrototype? prototype);
                 if (prototype?.Name != null)
-                    _name = prototype.Name;
+                    _name = prototype.Value.Name;
                 return _name;
             }
         }
@@ -63,7 +59,7 @@ namespace Content.Shared.Research.Prototypes
                 if (protoMan == null) return _description;
                 protoMan.TryIndex(_result, out EntityPrototype? prototype);
                 if (prototype?.Description != null)
-                    _description = prototype.Description;
+                    _description = prototype.Value.Description;
                 return _description;
             }
         }
@@ -85,11 +81,7 @@ namespace Content.Shared.Research.Prototypes
         ///     Takes a material ID as string.
         /// </summary>
         [ViewVariables]
-        public Dictionary<string, int> RequiredMaterials
-        {
-            get => _requiredMaterials;
-            private set => _requiredMaterials = value;
-        }
+        public IReadOnlyDictionary<string, int> RequiredMaterials => _requiredMaterials;
 
 
         /// <summary>

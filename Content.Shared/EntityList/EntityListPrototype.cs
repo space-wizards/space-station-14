@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.EntityList
 {
     [Prototype("entityList")]
-    public sealed class EntityListPrototype : IPrototype
+    public readonly record struct EntityListPrototype : IPrototype
     {
         [ViewVariables]
         [IdDataFieldAttribute]

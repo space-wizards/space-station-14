@@ -7,38 +7,38 @@ namespace Content.Shared.Atmos.Monitor;
 // except for the range boundaries
 [Prototype("alarmThreshold")]
 [Serializable, NetSerializable]
-public sealed class AtmosAlarmThreshold : IPrototype, ISerializationHooks
+public readonly record struct AtmosAlarmThreshold : IPrototype, ISerializationHooks
 {
     [IdDataField]
     public string ID { get; } = default!;
     [ViewVariables]
     [DataField("ignore")]
-    public bool Ignore;
+    public readonly bool Ignore;
 
     // zero bounds are not allowed - just
     // set the bound to null if you want
     // to disable it
     [ViewVariables]
     [DataField("upperBound")]
-    public float? UpperBound { get; private set; }
+    public float? UpperBound { get; }
 
     [ViewVariables]
     [DataField("lowerBound")]
-    public float? LowerBound { get; private set; }
+    public float? LowerBound { get; }
 
     // upper warning percentage
     // must always cause UpperWarningBound
     // to be smaller
     [ViewVariables]
     [DataField("upperWarnAround")]
-    public float? UpperWarningPercentage { get; private set; }
+    public float? UpperWarningPercentage { get; }
 
     // lower warning percentage
     // must always cause LowerWarningBound
     // to be larger
     [ViewVariables]
     [DataField("lowerWarnAround")]
-    public float? LowerWarningPercentage { get; private set; }
+    public float? LowerWarningPercentage { get; }
 
     [ViewVariables]
     public float? UpperWarningBound => CalculateWarningBound(AtmosMonitorThresholdBound.Upper);

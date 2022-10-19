@@ -3,7 +3,7 @@
 namespace Content.Shared.Body.Prototypes
 {
     [Prototype("metabolismGroup")]
-    public sealed class MetabolismGroupPrototype : IPrototype
+    public readonly record struct MetabolismGroupPrototype : IPrototype
     {
         [IdDataFieldAttribute]
         public string ID { get; } = default!;

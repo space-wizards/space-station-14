@@ -52,7 +52,7 @@ public sealed class HTNPlanJob : Job<HTNPlan>
         // hence we'll store it here.
         var appliedStates = new List<Dictionary<string, object>?>();
 
-        var tasksToProcess = new Queue<HTNTask>();
+        var tasksToProcess = new Queue<IHTNTask>();
         var finalPlan = new List<HTNPrimitiveTask>();
         tasksToProcess.Enqueue(_rootTask);
 
@@ -154,7 +154,8 @@ public sealed class HTNPlanJob : Job<HTNPlan>
     /// <summary>
     /// Goes through each compound task branch and tries to find an appropriate one.
     /// </summary>
-    private bool TryFindSatisfiedMethod(HTNCompoundTask compound, Queue<HTNTask> tasksToProcess, NPCBlackboard blackboard, ref int mtrIndex)
+    private bool TryFindSatisfiedMethod(HTNCompoundTask compound, Queue<IHTNTask> tasksToProcess,
+        NPCBlackboard blackboard, ref int mtrIndex)
     {
         for (var i = mtrIndex; i < compound.Branches.Count; i++)
         {
@@ -189,7 +190,7 @@ public sealed class HTNPlanJob : Job<HTNPlan>
     /// </summary>
     private void RestoreTolastDecomposedTask(
         Stack<DecompositionState> decompHistory,
-        Queue<HTNTask> tasksToProcess,
+        Queue<IHTNTask> tasksToProcess,
         List<Dictionary<string, object>?> appliedStates,
         List<HTNPrimitiveTask> finalPlan,
         ref int primitiveCount,

@@ -1,11 +1,10 @@
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
-using Robust.Shared.Maths;
 
 namespace Content.Server.Salvage
 {
     [Prototype("salvageMap")]
-    public sealed class SalvageMapPrototype : IPrototype
+    public readonly record struct SalvageMapPrototype : IPrototype
     {
         [ViewVariables]
         [IdDataFieldAttribute]

@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.VendingMachines
 {
     [Serializable, NetSerializable, Prototype("vendingMachineInventory")]
-    public sealed class VendingMachineInventoryPrototype : IPrototype
+    public readonly record struct VendingMachineInventoryPrototype : IPrototype
     {
         [ViewVariables]
         [IdDataField]

@@ -6,13 +6,13 @@ using Robust.Shared.Random;
 namespace Content.Shared.EntityList;
 
 [Prototype("entityLootTable")]
-public sealed class EntityLootTablePrototype : IPrototype
+public readonly record struct EntityLootTablePrototype : IPrototype
 {
     [IdDataField]
     public string ID { get; } = default!;
 
     [DataField("entries")]
-    public ImmutableList<EntitySpawnEntry> Entries = ImmutableList<EntitySpawnEntry>.Empty;
+    public readonly ImmutableList<EntitySpawnEntry> Entries = ImmutableList<EntitySpawnEntry>.Empty;
 
     /// <inheritdoc cref="EntitySpawnCollection.GetSpawns"/>
     public List<string?> GetSpawns(IRobustRandom? random = null)

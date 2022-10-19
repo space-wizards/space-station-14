@@ -3,7 +3,7 @@
 namespace Content.Shared.HUD
 {
     [Prototype("hudTheme")]
-    public sealed class HudThemePrototype : IPrototype
+    public readonly record struct HudThemePrototype : IPrototype
     {
         [DataField("name", required: true)]
         public string Name { get; } = string.Empty;

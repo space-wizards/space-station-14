@@ -7,9 +7,9 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Holiday
 {
     [Prototype("holiday")]
-    public sealed class HolidayPrototype : IPrototype
+    public readonly record struct HolidayPrototype : IPrototype
     {
-        [ViewVariables] [DataField("name")] public string Name { get; private set; } = string.Empty;
+        [ViewVariables] [DataField("name")] public string Name { get; } = string.Empty;
 
         [ViewVariables]
         [IdDataFieldAttribute]
@@ -17,25 +17,25 @@ namespace Content.Server.Holiday
 
         [ViewVariables]
         [DataField("beginDay")]
-        public byte BeginDay { get; set; } = 1;
+        public byte BeginDay { get; } = 1;
 
         [ViewVariables]
         [DataField("beginMonth")]
-        public Month BeginMonth { get; set; } = Month.Invalid;
+        public Month BeginMonth { get; } = Month.Invalid;
 
         /// <summary>
         ///     Day this holiday will end. Zero means it lasts a single day.
         /// </summary>
         [ViewVariables]
         [DataField("endDay")]
-        public byte EndDay { get; set; }
+        public byte EndDay { get; }
 
         /// <summary>
         ///     Month this holiday will end in. Invalid means it lasts a single month.
         /// </summary>
         [ViewVariables]
         [DataField("endMonth")]
-        public Month EndMonth { get; set; } = Month.Invalid;
+        public Month EndMonth { get; } = Month.Invalid;
 
         [ViewVariables] [DataField("shouldCelebrate")]
         private readonly IHolidayShouldCelebrate _shouldCelebrate = new DefaultHolidayShouldCelebrate();

@@ -139,7 +139,7 @@ namespace Content.Client.Chemistry.UI
             {
                 var reagent = state.BufferReagents.OrderBy(r => r.Quantity).First();
                 _prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype? proto);
-                return proto?.LocalizedName ?? "";
+                return proto?.Name ?? "";
             }
 
         }
@@ -150,8 +150,8 @@ namespace Content.Client.Chemistry.UI
         /// <param name="state">State data for the dispenser.</param>
         private void UpdatePanelInfo(ChemMasterBoundUserInterfaceState state)
         {
-            BufferTransferButton.Pressed = state.Mode == Shared.Chemistry.ChemMasterMode.Transfer;
-            BufferDiscardButton.Pressed = state.Mode == Shared.Chemistry.ChemMasterMode.Discard;
+            BufferTransferButton.Pressed = state.Mode == ChemMasterMode.Transfer;
+            BufferDiscardButton.Pressed = state.Mode == ChemMasterMode.Discard;
 
             BuildContainerUI(InputContainerInfo, state.InputContainerInfo, true);
             BuildContainerUI(OutputContainerInfo, state.OutputContainerInfo, false);
@@ -184,7 +184,7 @@ namespace Content.Client.Chemistry.UI
             {
                 // Try to get the prototype for the given reagent. This gives us its name.
                 _prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype? proto);
-                var name = proto?.LocalizedName ?? Loc.GetString("chem-master-window-unknown-reagent-text");
+                var name = proto?.Name ?? Loc.GetString("chem-master-window-unknown-reagent-text");
 
                 if (proto != null)
                 {
@@ -250,7 +250,7 @@ namespace Content.Client.Chemistry.UI
 
                         // Try to get the prototype for the given reagent. This gives us its name.
                         _prototypeManager.TryIndex(lineItem.Id, out ReagentPrototype? proto);
-                        var name = proto?.LocalizedName
+                        var name = proto?.Name
                                    ?? Loc.GetString("chem-master-window-unknown-reagent-text");
 
                         return (name, lineItem.Id, lineItem.Quantity);

@@ -10,7 +10,7 @@ namespace Content.Shared.Actions.ActionTypes;
 // anymore.
 
 [Prototype("worldTargetAction")]
-public sealed class WorldTargetActionPrototype : WorldTargetAction, IPrototype
+public readonly record struct WorldTargetActionPrototype : WorldTargetAction, IPrototype
 {
     [IdDataFieldAttribute]
     public string ID { get; } = default!;
@@ -27,30 +27,26 @@ public sealed class WorldTargetActionPrototype : WorldTargetAction, IPrototype
 }
 
 [Prototype("entityTargetAction")]
-public sealed class EntityTargetActionPrototype : EntityTargetAction, IPrototype
+public readonly record struct EntityTargetActionPrototype : EntityTargetAction, IPrototype
 {
     [IdDataFieldAttribute]
     public string ID { get; } = default!;
 
     [DataField("serverEvent", serverOnly: true)]
-    public EntityTargetActionEvent? ServerEvent
-    {
-        get => Event;
-        set => Event = value;
-    }
+    public override EntityTargetActionEvent? Event { get; }
+
+    public EntityTargetActionEvent? ServerEvent => Event;
 }
 
 [Prototype("instantAction")]
-public sealed class InstantActionPrototype : InstantAction, IPrototype
+public readonly record struct InstantActionPrototype : InstantAction, IPrototype
 {
     [IdDataFieldAttribute]
     public string ID { get; } = default!;
 
     [DataField("serverEvent", serverOnly: true)]
-    public InstantActionEvent? ServerEvent
-    {
-        get => Event;
-        set => Event = value;
-    }
+    public override InstantActionEvent? Event { get; }
+
+    public InstantActionEvent? ServerEvent => Event;
 }
 

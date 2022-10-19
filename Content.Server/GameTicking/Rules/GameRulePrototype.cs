@@ -4,7 +4,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.GameTicking.Rules;
 
 [Prototype("gameRule")]
-public sealed class GameRulePrototype : IPrototype
+public readonly record struct GameRulePrototype : IPrototype
 {
     [IdDataField]
     public string ID { get; } = default!;

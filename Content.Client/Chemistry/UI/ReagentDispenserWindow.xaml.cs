@@ -56,7 +56,11 @@ namespace Content.Client.Chemistry.UI
             ChemicalList.Children.Clear();
 
             foreach (var entry in inventory
-                .OrderBy(r => {_prototypeManager.TryIndex(r, out ReagentPrototype? p); return p?.LocalizedName;}))
+                         .OrderBy(r =>
+                         {
+                             _prototypeManager.TryIndex(r, out ReagentPrototype? p);
+                             return p?.Name;
+                         }))
             {
                 var localizedName = _prototypeManager.TryIndex(entry, out ReagentPrototype? p)
                     ? p.LocalizedName

@@ -6,11 +6,11 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Cargo.Prototypes
 {
     [NetSerializable, Serializable, Prototype("cargoProduct")]
-    public sealed class CargoProductPrototype : IPrototype
+    public readonly record struct CargoProductPrototype : IPrototype
     {
-        [DataField("name")] private string _name = string.Empty;
+        [DataField("name")] private readonly string _name = string.Empty;
 
-        [DataField("description")] private string _description = string.Empty;
+        [DataField("description")] private readonly string _description = string.Empty;
 
         [ViewVariables]
         [IdDataField]

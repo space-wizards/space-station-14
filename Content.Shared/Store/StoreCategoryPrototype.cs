@@ -8,7 +8,7 @@ namespace Content.Shared.Store;
 /// </summary>
 [Prototype("storeCategory")]
 [Serializable, NetSerializable, DataDefinition]
-public sealed class StoreCategoryPrototype : IPrototype
+public readonly record struct StoreCategoryPrototype : IPrototype
 {
     [ViewVariables]
     [IdDataField]

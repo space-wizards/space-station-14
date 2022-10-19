@@ -27,7 +27,7 @@ public sealed partial class StoreSystem : EntitySystem
 
         foreach (var listing in allListings)
         {
-            allData.Add((ListingData) listing.Clone());
+            allData.Add((ListingData) listing.ListingData.Clone());
         }
 
         return allData;
@@ -46,7 +46,8 @@ public sealed partial class StoreSystem : EntitySystem
             Logger.Error("Attempted to add invalid listing.");
             return false;
         }
-        return TryAddListing(component, proto);
+
+        return TryAddListing(component, proto.Value.ListingData);
     }
 
     /// <summary>

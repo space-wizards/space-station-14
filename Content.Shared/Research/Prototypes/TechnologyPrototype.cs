@@ -6,7 +6,7 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Research.Prototypes
 {
     [NetSerializable, Serializable, Prototype("technology")]
-    public sealed class TechnologyPrototype : IPrototype
+    public readonly record struct TechnologyPrototype : IPrototype
     {
         /// <summary>
         ///     The ID of this technology prototype.

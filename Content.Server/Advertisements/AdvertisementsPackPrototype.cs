@@ -3,7 +3,7 @@
 namespace Content.Server.Advertisements
 {
     [Serializable, Prototype("advertisementsPack")]
-    public sealed class AdvertisementsPackPrototype : IPrototype
+    public readonly record struct AdvertisementsPackPrototype : IPrototype
     {
         [ViewVariables]
         [IdDataFieldAttribute]

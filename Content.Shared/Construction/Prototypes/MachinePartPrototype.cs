@@ -8,7 +8,7 @@ namespace Content.Shared.Construction.Prototypes;
 /// different types of machine parts.
 /// </summary>
 [Prototype("machinePart")]
-public sealed class MachinePartPrototype : IPrototype
+public readonly record struct MachinePartPrototype : IPrototype
 {
     /// <inheritdoc/>
     [IdDataField]

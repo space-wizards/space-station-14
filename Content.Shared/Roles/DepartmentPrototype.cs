@@ -4,11 +4,11 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Roles;
 
 [Prototype("department")]
-public sealed class DepartmentPrototype : IPrototype
+public readonly record struct DepartmentPrototype : IPrototype
 {
     [IdDataFieldAttribute] public string ID { get; } = default!;
 
     [ViewVariables(VVAccess.ReadWrite),
      DataField("roles", customTypeSerializer: typeof(PrototypeIdListSerializer<JobPrototype>))]
-    public List<string> Roles = new();
+    public readonly List<string> Roles = new();
 }

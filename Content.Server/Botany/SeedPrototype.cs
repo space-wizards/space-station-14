@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using Content.Server.Botany.Components;
 using Content.Server.Botany.Systems;
 using Content.Shared.Atmos;
@@ -13,9 +12,11 @@ namespace Content.Server.Botany;
 
 
 [Prototype("seed")]
-public sealed class SeedPrototype : SeedData, IPrototype
+public readonly record struct SeedPrototype : IPrototype
 {
     [IdDataField] public string ID { get; private init; } = default!;
+
+    [IncludeDataField] public readonly SeedData SeedData;
 }
 
 public enum HarvestType : byte
@@ -72,7 +73,7 @@ public class SeedData
     private string _name = String.Empty;
     private string _noun = String.Empty;
     private string _displayName = String.Empty;
-    
+
     /// <summary>
     ///     The name of this seed. Determines the name of seed packets.
     /// </summary>

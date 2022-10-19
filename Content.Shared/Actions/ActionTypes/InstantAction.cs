@@ -12,9 +12,8 @@ public class InstantAction : ActionType
     /// <summary>
     ///     The local-event to raise when this action is performed.
     /// </summary>
-    [DataField("event")]
-    [NonSerialized]
-    public InstantActionEvent? Event;
+    [DataField("event", true)]
+    public virtual InstantActionEvent? Event { get; }
 
     public InstantAction() { }
     public InstantAction(InstantAction toClone)

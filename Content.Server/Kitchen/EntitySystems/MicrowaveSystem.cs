@@ -2,21 +2,20 @@ using System.Linq;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Construction;
-using Content.Server.Kitchen.Components;
-using Content.Shared.Destructible;
-using Content.Shared.Interaction;
-using Content.Shared.Item;
-using Content.Shared.Kitchen.Components;
-using Robust.Shared.Player;
-using Content.Shared.Interaction.Events;
-using Content.Shared.Body.Components;
-using Content.Shared.Body.Part;
 using Content.Server.Hands.Systems;
+using Content.Server.Kitchen.Components;
 using Content.Server.Power.Components;
 using Content.Server.Temperature.Components;
 using Content.Server.Temperature.Systems;
+using Content.Shared.Body.Components;
+using Content.Shared.Body.Part;
+using Content.Shared.Destructible;
 using Content.Shared.FixedPoint;
+using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
+using Content.Shared.Item;
 using Content.Shared.Kitchen;
+using Content.Shared.Kitchen.Components;
 using Content.Shared.Popups;
 using Content.Shared.Power;
 using Content.Shared.Tag;
@@ -24,6 +23,8 @@ using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
+using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Kitchen.EntitySystems
 {
@@ -31,7 +32,7 @@ namespace Content.Server.Kitchen.EntitySystems
     {
         [Dependency] private readonly ContainerSystem _container = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-        [Dependency] private readonly RecipeManager _recipeManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedContainerSystem _sharedContainer = default!;
@@ -152,12 +153,12 @@ namespace Content.Server.Kitchen.EntitySystems
                     foreach (var item in component.Storage.ContainedEntities)
                     {
                         var metaData = MetaData(item);
-                        if (metaData.EntityPrototype == null)
+                        if (!metaData.EntityPrototype.HasValue)
                         {
                             continue;
                         }
 
-                        if (metaData.EntityPrototype.ID == recipeSolid.Key)
+                        if (metaData.EntityPrototype.Value.ID == recipeSolid.Key)
                         {
                             component.Storage.Remove(item);
                             EntityManager.DeleteEntity(item);
@@ -345,16 +346,16 @@ namespace Content.Server.Kitchen.EntitySystems
                 }
 
                 var metaData = MetaData(item); //this simply begs for cooking refactor
-                if (metaData.EntityPrototype == null)
+                if (!metaData.EntityPrototype.HasValue)
                     continue;
 
-                if (solidsDict.ContainsKey(metaData.EntityPrototype.ID))
+                if (solidsDict.ContainsKey(metaData.EntityPrototype.Value.ID))
                 {
-                    solidsDict[metaData.EntityPrototype.ID]++;
+                    solidsDict[metaData.EntityPrototype.Value.ID]++;
                 }
                 else
                 {
-                    solidsDict.Add(metaData.EntityPrototype.ID, 1);
+                    solidsDict.Add(metaData.EntityPrototype.Value.ID, 1);
                 }
 
                 if (!TryComp<SolutionContainerManagerComponent>(item, out var solMan))
@@ -373,7 +374,7 @@ namespace Content.Server.Kitchen.EntitySystems
             }
 
             // Check recipes
-            var portionedRecipe = _recipeManager.Recipes.Select(r =>
+            var portionedRecipe = _prototypeManager.EnumeratePrototypes<FoodRecipePrototype>().Select(r =>
                 CanSatisfyRecipe(component, r, solidsDict, reagentDict)).FirstOrDefault(r => r.Item2 > 0);
 
             _audio.PlayPvs(component.StartCookingSound, uid);
@@ -437,13 +438,13 @@ namespace Content.Server.Kitchen.EntitySystems
                 //this means the microwave has finished cooking.
                 AddTemperature(microwave, active.TotalTime);
 
-                if (active.PortionedRecipe.Item1 != null)
+                if (active.PortionedRecipe.Item1.HasValue)
                 {
                     var coords = Transform(microwave.Owner).Coordinates;
                     for (var i = 0; i < active.PortionedRecipe.Item2; i++)
                     {
-                        SubtractContents(microwave, active.PortionedRecipe.Item1);
-                        Spawn(active.PortionedRecipe.Item1.Result, coords);
+                        SubtractContents(microwave, active.PortionedRecipe.Item1.Value);
+                        Spawn(active.PortionedRecipe.Item1.Value.Result, coords);
                     }
                 }
 

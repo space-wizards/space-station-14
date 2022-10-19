@@ -6,7 +6,7 @@ namespace Content.Shared.Damage.Prototypes;
 ///     Prototype for examinable damage messages.
 /// </summary>
 [Prototype("examinableDamage")]
-public sealed class ExaminableDamagePrototype : IPrototype
+public readonly record struct ExaminableDamagePrototype : IPrototype
 {
     [IdDataFieldAttribute]
     public string ID { get; } = default!;
@@ -16,6 +16,5 @@ public sealed class ExaminableDamagePrototype : IPrototype
     ///     First one describes fully intact entity.
     ///     Last one describes almost destroyed.
     /// </summary>
-    [DataField("messages")]
-    public string[] Messages = {};
+    [DataField("messages")] public readonly string[] Messages = Array.Empty<string>();
 }

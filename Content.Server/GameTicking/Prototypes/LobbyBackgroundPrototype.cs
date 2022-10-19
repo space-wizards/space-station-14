@@ -7,15 +7,15 @@ namespace Content.Server.GameTicking.Prototypes;
 /// Prototype for a lobby background the game can choose.
 /// </summary>
 [Prototype("lobbyBackground")]
-public sealed class LobbyBackgroundPrototype : IPrototype
+public readonly record struct LobbyBackgroundPrototype : IPrototype
 {
     /// <inheritdoc/>
     [IdDataField]
-    public string ID { get; set; } = default!;
+    public string ID { get; } = default!;
 
     /// <summary>
     /// The sprite to use as the background. This should ideally be 1920x1080.
     /// </summary>
     [DataField("background", required: true)]
-    public ResourcePath Background = default!;
+    public readonly ResourcePath Background = default!;
 }

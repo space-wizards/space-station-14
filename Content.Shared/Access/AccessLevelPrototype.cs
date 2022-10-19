@@ -6,7 +6,7 @@ namespace Content.Shared.Access
     ///     Defines a single access level that can be stored on ID cards and checked for.
     /// </summary>
     [Prototype("accessLevel")]
-    public sealed class AccessLevelPrototype : IPrototype
+    public readonly record struct AccessLevelPrototype : IPrototype
     {
         [ViewVariables]
         [IdDataFieldAttribute]
@@ -22,6 +22,5 @@ namespace Content.Shared.Access
             private set => _name = Loc.GetString(value);
         }
 
-        private string? _name;
     }
 }

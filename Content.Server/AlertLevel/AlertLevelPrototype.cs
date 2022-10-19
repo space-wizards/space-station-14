@@ -4,7 +4,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.AlertLevel;
 
 [Prototype("alertLevels")]
-public sealed class AlertLevelPrototype : IPrototype
+public readonly record struct AlertLevelPrototype : IPrototype
 {
     [IdDataField] public string ID { get; } = default!;
 
@@ -13,7 +13,7 @@ public sealed class AlertLevelPrototype : IPrototype
     /// part here. Visualizers will use this in order to dictate what alert level to show on
     /// client side sprites, and localization uses each key to dictate the alert level name.
     /// </summary>
-    [DataField("levels")] public Dictionary<string, AlertLevelDetail> Levels = new();
+    [DataField("levels")] public readonly Dictionary<string, AlertLevelDetail> Levels = new();
 
     /// <summary>
     /// Default level that the station is on upon initialization.

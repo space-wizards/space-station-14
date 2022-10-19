@@ -328,7 +328,7 @@ public sealed class HTNSystem : EntitySystem
         return builder.ToString();
     }
 
-    private void AppendDomain(StringBuilder builder, HTNTask task, ref int indent)
+    private void AppendDomain(StringBuilder builder, IHTNTask task, ref int indent)
     {
         var buffer = string.Concat(Enumerable.Repeat("    ", indent));
 

@@ -3,7 +3,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Nutrition;
 
 [Prototype("flavor")]
-public sealed class FlavorPrototype : IPrototype
+public readonly record struct FlavorPrototype : IPrototype
 {
     [IdDataField]
     public string ID { get; } = default!;

@@ -11,7 +11,7 @@ namespace Content.Shared.Chemistry.Reaction
     /// Prototype for chemical reaction definitions
     /// </summary>
     [Prototype("reaction")]
-    public sealed class ReactionPrototype : IPrototype, IComparable<ReactionPrototype>
+    public readonly record struct ReactionPrototype : IPrototype, IComparable<ReactionPrototype>
     {
         [ViewVariables]
         [IdDataFieldAttribute]
@@ -24,61 +24,58 @@ namespace Content.Shared.Chemistry.Reaction
         /// Reactants required for the reaction to occur.
         /// </summary>
         [DataField("reactants", customTypeSerializer:typeof(PrototypeIdDictionarySerializer<ReactantPrototype, ReagentPrototype>))]
-        public Dictionary<string, ReactantPrototype> Reactants = new();
+        public readonly Dictionary<string, ReactantPrototype> Reactants = new();
 
         /// <summary>
         ///     The minimum temperature the reaction can occur at.
         /// </summary>
-        [DataField("minTemp")]
-        public float MinimumTemperature = 0.0f;
+        [DataField("minTemp")] public readonly float MinimumTemperature;
 
         /// <summary>
         ///     The maximum temperature the reaction can occur at.
         /// </summary>
-        [DataField("maxTemp")]
-        public float MaximumTemperature = float.PositiveInfinity;
+        [DataField("maxTemp")] public readonly float MaximumTemperature = float.PositiveInfinity;
 
         /// <summary>
         /// Reagents created when the reaction occurs.
         /// </summary>
         [DataField("products", customTypeSerializer:typeof(PrototypeIdDictionarySerializer<FixedPoint2, ReagentPrototype>))]
-        public Dictionary<string, FixedPoint2> Products = new();
+        public readonly Dictionary<string, FixedPoint2> Products = new();
 
         /// <summary>
         /// Effects to be triggered when the reaction occurs.
         /// </summary>
-        [DataField("effects", serverOnly: true)] public List<ReagentEffect> Effects = new();
+        [DataField("effects", serverOnly: true)]
+        public readonly List<ReagentEffect> Effects = new();
 
         /// <summary>
         /// How dangerous is this effect? Stuff like bicaridine should be low, while things like methamphetamine
         /// or potas/water should be high.
         /// </summary>
-        [DataField("impact", serverOnly: true)] public LogImpact Impact = LogImpact.Low;
+        [DataField("impact", serverOnly: true)]
+        public readonly LogImpact Impact = LogImpact.Low;
 
         // TODO SERV3: Empty on the client, (de)serialize on the server with module manager is server module
-        [DataField("sound", serverOnly: true)] public SoundSpecifier Sound { get; private set; } = new SoundPathSpecifier("/Audio/Effects/Chemistry/bubbles.ogg");
+        [DataField("sound", serverOnly: true)]
+        public SoundSpecifier Sound { get; } = new SoundPathSpecifier("/Audio/Effects/Chemistry/bubbles.ogg");
 
         /// <summary>
         /// If true, this reaction will only consume only integer multiples of the reactant amounts. If there are not
         /// enough reactants, the reaction does not occur. Useful for spawn-entity reactions (e.g. creating cheese).
         /// </summary>
-        [DataField("quantized")] public bool Quantized = false;
+        [DataField("quantized")] public readonly bool Quantized;
 
         /// <summary>
         /// Determines the order in which reactions occur. This should used to ensure that (in general) descriptive /
         /// pop-up generating and explosive reactions occur before things like foam/area effects.
         /// </summary>
-        [DataField("priority")]
-        public int Priority;
+        [DataField("priority")] public readonly int Priority;
 
         /// <summary>
         ///     Comparison for creating a sorted set of reactions. Determines the order in which reactions occur.
         /// </summary>
-        public int CompareTo(ReactionPrototype? other)
+        public int CompareTo(ReactionPrototype other)
         {
-            if (other == null)
-                return -1;
-
             if (Priority != other.Priority)
                 return other.Priority - Priority;
 
@@ -88,7 +85,7 @@ namespace Content.Shared.Chemistry.Reaction
             if (Products.Count != other.Products.Count)
                 return Products.Count - other.Products.Count;
 
-            return ID.CompareTo(other.ID);
+            return string.Compare(ID, other.ID, StringComparison.Ordinal);
         }
     }
 

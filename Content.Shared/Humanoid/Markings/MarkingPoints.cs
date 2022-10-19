@@ -6,15 +6,14 @@ namespace Content.Shared.Humanoid.Markings;
 
 [DataDefinition]
 [Serializable, NetSerializable]
-public sealed class MarkingPoints
+public readonly record struct MarkingPoints
 {
-    [DataField("points", required: true)]
-    public int Points = 0;
+    [DataField("points", required: true)] public readonly int Points;
     [DataField("required", required: true)]
-    public bool Required = false;
+    public readonly bool Required;
     // Default markings for this layer.
     [DataField("defaultMarkings", customTypeSerializer:typeof(PrototypeIdListSerializer<MarkingPrototype>))]
-    public List<string> DefaultMarkings = new();
+    public readonly List<string> DefaultMarkings = new();
 
     public static Dictionary<MarkingCategories, MarkingPoints> CloneMarkingPointDictionary(Dictionary<MarkingCategories, MarkingPoints> self)
     {
@@ -35,7 +34,7 @@ public sealed class MarkingPoints
 }
 
 [Prototype("markingPoints")]
-public sealed class MarkingPointsPrototype : IPrototype
+public readonly record struct MarkingPointsPrototype : IPrototype
 {
     [IdDataField] public string ID { get; } = default!;
 
@@ -44,7 +43,7 @@ public sealed class MarkingPointsPrototype : IPrototype
     ///     use whitelisted markings, and not globally usable markings.
     ///     Only used for validation and profile construction. Ignored anywhere else.
     /// </summary>
-    [DataField("onlyWhitelisted")] public bool OnlyWhitelisted;
+    [DataField("onlyWhitelisted")] public readonly bool OnlyWhitelisted;
 
     [DataField("points", required: true)]
     public Dictionary<MarkingCategories, MarkingPoints> Points { get; } = default!;

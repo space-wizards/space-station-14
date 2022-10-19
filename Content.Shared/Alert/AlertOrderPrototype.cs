@@ -8,7 +8,7 @@ namespace Content.Shared.Alert
     /// </summary>
     [Prototype("alertOrder")]
     [DataDefinition]
-    public sealed class AlertOrderPrototype : IPrototype, IComparer<AlertPrototype>, ISerializationHooks
+    public readonly record struct AlertOrderPrototype : IPrototype, IComparer<AlertPrototype>, ISerializationHooks
     {
         [ViewVariables]
         [IdDataFieldAttribute]
@@ -76,7 +76,7 @@ namespace Content.Shared.Alert
             return -1;
         }
 
-        public int Compare(AlertPrototype? x, AlertPrototype? y)
+        public int Compare(AlertPrototype x, AlertPrototype y)
         {
             if ((x == null) && (y == null)) return 0;
             if (x == null) return 1;

@@ -7,7 +7,7 @@ namespace Content.Shared.Traits
     ///     Describes a trait.
     /// </summary>
     [Prototype("trait")]
-    public sealed class TraitPrototype : IPrototype
+    public readonly record struct TraitPrototype : IPrototype
     {
         [ViewVariables]
         [IdDataField]

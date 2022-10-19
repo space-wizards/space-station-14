@@ -6,10 +6,9 @@ namespace Content.Shared.Random;
 /// Generic random weighting dataset to use.
 /// </summary>
 [Prototype("weightedRandom")]
-public sealed class WeightedRandomPrototype : IPrototype
+public readonly record struct WeightedRandomPrototype : IPrototype
 {
     [IdDataFieldAttribute] public string ID { get; } = default!;
 
-    [DataField("weights")]
-    public Dictionary<string, float> Weights = new();
+    [DataField("weights")] public readonly Dictionary<string, float> Weights = new();
 }

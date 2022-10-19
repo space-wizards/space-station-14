@@ -6,10 +6,10 @@ namespace Content.Shared.Roles
     ///     Describes information for a single antag.
     /// </summary>
     [Prototype("antag")]
-    public sealed class AntagPrototype : IPrototype
+    public readonly record struct AntagPrototype : IPrototype
     {
-        private string _name = string.Empty;
-        private string _objective = string.Empty;
+        private readonly string _name = string.Empty;
+        private readonly string _objective = string.Empty;
 
         [ViewVariables]
         [IdDataFieldAttribute]
@@ -39,12 +39,12 @@ namespace Content.Shared.Roles
         ///     Whether or not the antag role is one of the bad guys.
         /// </summary>
         [DataField("antagonist")]
-        public bool Antagonist { get; private set; }
+        public bool Antagonist { get; }
 
         /// <summary>
         ///     Whether or not the player can set the antag role in antag preferences.
         /// </summary>
         [DataField("setPreference")]
-        public bool SetPreference { get; private set; }
+        public bool SetPreference { get; }
     }
 }

@@ -8,19 +8,18 @@ namespace Content.Shared.DeviceNetwork;
 /// </summary>
 [Prototype("deviceFrequency")]
 [Serializable, NetSerializable]
-public sealed class DeviceFrequencyPrototype : IPrototype
+public readonly record struct DeviceFrequencyPrototype : IPrototype
 {
     [IdDataFieldAttribute]
     public string ID { get; } = default!;
 
     // TODO Somehow Allow per-station or some other type of named but randomized frequencies?
     [DataField("frequency", required: true)]
-    public uint Frequency;
+    public readonly uint Frequency;
 
     /// <summary>
     ///     Optional name for this frequency, for displaying in game.
     /// </summary>
-    [DataField("name")]
-    public string? Name;
+    [DataField("name")] public readonly string? Name;
 
 }

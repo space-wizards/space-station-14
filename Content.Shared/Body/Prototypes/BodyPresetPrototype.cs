@@ -8,14 +8,13 @@ namespace Content.Shared.Body.Prototypes
     /// </summary>
     [Prototype("bodyPreset")]
     [Serializable, NetSerializable]
-    public sealed class BodyPresetPrototype : IPrototype
+    public readonly record struct BodyPresetPrototype : IPrototype
     {
         [ViewVariables]
         [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
-        [DataField("partIDs")]
-        private Dictionary<string, string> _partIDs = new();
+        [DataField("partIDs")] private readonly Dictionary<string, string> _partIDs = new();
 
         [ViewVariables]
         [DataField("name")]

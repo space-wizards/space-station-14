@@ -14,7 +14,7 @@ namespace Content.Shared.Explosion;
 ///     that map of airtight entities. This could be done, but is just not yet implemented.
 /// </remarks>
 [Prototype("explosion")]
-public sealed class ExplosionPrototype : IPrototype
+public readonly record struct ExplosionPrototype : IPrototype
 {
     [IdDataField]
     public string ID { get; } = default!;
@@ -71,8 +71,7 @@ public sealed class ExplosionPrototype : IPrototype
     /// <summary>
     ///     How intense does the explosion have to be at a tile to advance to the next fire texture state?
     /// </summary>
-    [DataField("intensityPerState")]
-    public float IntensityPerState = 12;
+    [DataField("intensityPerState")] public readonly float IntensityPerState = 12;
 
     // Theres probably a better way to do this. Currently Atmos just hard codes a constant int, so I have no one to
     // steal code from.

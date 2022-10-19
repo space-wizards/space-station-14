@@ -6,7 +6,7 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Cargo.Prototypes;
 
 [Prototype("cargoShuttle")]
-public sealed class CargoShuttlePrototype : IPrototype
+public readonly record struct CargoShuttlePrototype : IPrototype
 {
     [ViewVariables]
     [IdDataField]

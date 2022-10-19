@@ -10,7 +10,7 @@ namespace Content.Shared.Damage.Prototypes
     ///     just want normal data to be deserialized.
     /// </remarks>
     [Prototype("damageModifierSet")]
-    public sealed class DamageModifierSetPrototype : DamageModifierSet, IPrototype
+    public readonly record struct DamageModifierSetPrototype : DamageModifierSet, IPrototype
     {
         [ViewVariables]
         [IdDataFieldAttribute]

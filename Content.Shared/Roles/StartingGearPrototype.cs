@@ -5,29 +5,28 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Roles
 {
     [Prototype("startingGear")]
-    public sealed class StartingGearPrototype : IPrototype
+    public readonly record struct StartingGearPrototype : IPrototype
     {
         // TODO: Custom TypeSerializer for dictionary value prototype IDs
-        [DataField("equipment")] private Dictionary<string, string> _equipment = new();
+        [DataField("equipment")] private readonly Dictionary<string, string> _equipment = new();
 
         /// <summary>
         /// if empty, there is no skirt override - instead the uniform provided in equipment is added.
         /// </summary>
         [DataField("innerclothingskirt", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-        private string _innerClothingSkirt = string.Empty;
+        private readonly string _innerClothingSkirt = string.Empty;
 
         [DataField("satchel", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-        private string _satchel = string.Empty;
+        private readonly string _satchel = string.Empty;
 
         [DataField("duffelbag", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-        private string _duffelbag = string.Empty;
+        private readonly string _duffelbag = string.Empty;
 
         public IReadOnlyDictionary<string, string> Inhand => _inHand;
         /// <summary>
         /// hand index, item prototype
         /// </summary>
-        [DataField("inhand")]
-        private Dictionary<string, string> _inHand = new(0);
+        [DataField("inhand")] private readonly Dictionary<string, string> _inHand = new(0);
 
         [ViewVariables]
         [IdDataFieldAttribute]

@@ -4,7 +4,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.StatusEffect
 {
     [Prototype("statusEffect")]
-    public sealed class StatusEffectPrototype : IPrototype
+    public readonly record struct StatusEffectPrototype : IPrototype
     {
         [IdDataFieldAttribute]
         public string ID { get; } = default!;

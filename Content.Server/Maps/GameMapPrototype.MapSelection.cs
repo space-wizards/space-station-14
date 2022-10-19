@@ -1,6 +1,6 @@
 ﻿namespace Content.Server.Maps;
 
-public sealed partial class GameMapPrototype
+public readonly partial record struct GameMapPrototype
 {
     /// <summary>
     /// Controls if the map can be used as a fallback if no maps are eligible.

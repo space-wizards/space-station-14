@@ -3,7 +3,7 @@
 namespace Content.Shared.NameIdentifier;
 
 [Prototype("nameIdentifierGroup")]
-public sealed class NameIdentifierGroupPrototype : IPrototype
+public readonly record struct NameIdentifierGroupPrototype : IPrototype
 {
     [IdDataFieldAttribute]
     public string ID { get; } = default!;
@@ -11,15 +11,11 @@ public sealed class NameIdentifierGroupPrototype : IPrototype
     /// <summary>
     ///     Should the identifier become the full name, or just append?
     /// </summary>
-    [DataField("fullName")]
-    public bool FullName = false;
+    [DataField("fullName")] public readonly bool FullName;
 
-    [DataField("prefix")]
-    public string? Prefix;
+    [DataField("prefix")] public readonly string? Prefix;
 
-    [DataField("maxValue")]
-    public int MaxValue = 999;
+    [DataField("maxValue")] public readonly int MaxValue = 999;
 
-    [DataField("minValue")]
-    public int MinValue = 0;
+    [DataField("minValue")] public readonly int MinValue;
 }

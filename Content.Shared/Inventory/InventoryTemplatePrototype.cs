@@ -4,7 +4,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Inventory;
 
 [Prototype("inventoryTemplate")]
-public sealed class InventoryTemplatePrototype : IPrototype
+public readonly record struct InventoryTemplatePrototype : IPrototype
 {
     [IdDataFieldAttribute] public string ID { get; } = string.Empty;
 

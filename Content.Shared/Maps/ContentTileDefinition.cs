@@ -11,21 +11,21 @@ namespace Content.Shared.Maps
 {
     [UsedImplicitly]
     [Prototype("tile")]
-    public sealed class ContentTileDefinition : IPrototype, IInheritingPrototype, ITileDefinition
+    public readonly record struct ContentTileDefinition : IPrototype, IInheritingPrototype, ITileDefinition
     {
         public const string SpaceID = "Space";
-        private string _name = string.Empty;
+        private readonly string _name = string.Empty;
 
         [ParentDataFieldAttribute(typeof(AbstractPrototypeIdArraySerializer<ContentTileDefinition>))]
-        public string[]? Parents { get; private set; }
+        public string[]? Parents { get; }
 
         [NeverPushInheritance]
         [AbstractDataFieldAttribute]
-        public bool Abstract { get; private set; }
+        public bool Abstract { get; }
 
         [IdDataFieldAttribute] public string ID { get; } = string.Empty;
 
-        public ushort TileId { get; private set; }
+        public ushort TileId { get; }
 
         [DataField("name")]
         public string Name
@@ -36,13 +36,13 @@ namespace Content.Shared.Maps
 
         [DataField("sprite")] public ResourcePath? Sprite { get; }
 
-        [DataField("isSubfloor")] public bool IsSubFloor { get; private set; }
+        [DataField("isSubfloor")] public bool IsSubFloor { get; }
 
         [DataField("baseTurfs")] public List<string> BaseTurfs { get; } = new();
 
-        [DataField("canCrowbar")] public bool CanCrowbar { get; private set; }
+        [DataField("canCrowbar")] public bool CanCrowbar { get; }
 
-        [DataField("canWirecutter")] public bool CanWirecutter { get; private set; }
+        [DataField("canWirecutter")] public bool CanWirecutter { get; }
 
         /// <summary>
         /// These play when the mob has shoes on.
@@ -54,25 +54,26 @@ namespace Content.Shared.Maps
         /// </summary>
         [DataField("barestepSounds")] public SoundSpecifier? BarestepSounds { get; } = new SoundCollectionSpecifier("BarestepHard");
 
-        [DataField("friction")] public float Friction { get; set; }
+        [DataField("friction")] public float Friction { get; }
 
-        [DataField("variants")] public byte Variants { get; set; } = 1;
+        [DataField("variants")] public byte Variants { get; } = 1;
 
         /// <summary>
         /// This controls what variants the `variantize` command is allowed to use.
         /// </summary>
-        [DataField("placementVariants")] public byte[] PlacementVariants { get; set; } = new byte[1] { 0 };
+        [DataField("placementVariants")]
+        public byte[] PlacementVariants { get; } = new byte[1] { 0 };
 
-        [DataField("thermalConductivity")] public float ThermalConductivity { get; set; } = 0.05f;
+        [DataField("thermalConductivity")] public float ThermalConductivity { get; } = 0.05f;
 
         // Heat capacity is opt-in, not opt-out.
-        [DataField("heatCapacity")] public float HeatCapacity = Atmospherics.MinimumHeatCapacity;
+        [DataField("heatCapacity")] public readonly float HeatCapacity = Atmospherics.MinimumHeatCapacity;
 
         [DataField("itemDrop", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string ItemDropPrototypeName { get; } = "FloorTileItemSteel";
 
-        [DataField("isSpace")] public bool IsSpace { get; private set; }
-        [DataField("sturdy")] public bool Sturdy { get; private set; } = true;
+        [DataField("isSpace")] public bool IsSpace { get; }
+        [DataField("sturdy")] public bool Sturdy { get; } = true;
 
         public void AssignTileId(ushort id)
         {
