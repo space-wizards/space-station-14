@@ -1,9 +1,4 @@
 Entries:
-- author: DoctorBeard
-  changes:
-  - {message: pAIs can play MIDI again, type: Fix}
-  id: 1990
-  time: '2022-07-20T16:08:33.0000000+00:00'
 - author: Ablankmann
   changes:
   - {message: Renamed the Bojevic bundle to the Bulldog bundle., type: Tweak}
@@ -2944,3 +2939,9 @@ Entries:
   - {message: Fixed the item slot preview not updating on switching hands., type: Fix}
   id: 2489
   time: '2022-10-19T11:49:07.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Fix some actions not working (particularly target actions, which include
+      some spells and space-dragon abilities).', type: Fix}
+  id: 2490
+  time: '2022-10-19T12:02:38.0000000+00:00'
