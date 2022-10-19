@@ -1,7 +1,5 @@
 using Content.Server.Chat.Systems;
 using Content.Server.Speech.Components;
-using Content.Shared.Interaction;
-using Robust.Shared.Map;
 
 namespace Content.Server.Speech.EntitySystems;
 
@@ -10,8 +8,9 @@ namespace Content.Server.Speech.EntitySystems;
 /// </summary>
 public sealed class ListeningSystem : EntitySystem
 {
-    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly SharedTransformSystem _xforms = default!;
+
+    private const float WhisperMultiplier = ChatSystem.WhisperRange / ChatSystem.VoiceRange;
 
     public override void Initialize()
     {
@@ -31,7 +30,7 @@ public sealed class ListeningSystem : EntitySystem
 
         var xformQuery = GetEntityQuery<TransformComponent>();
         var sourceXform = xformQuery.GetComponent(source);
-        MapCoordinates sourcePos = new(_xforms.GetWorldPosition(sourceXform, xformQuery), sourceXform.MapID);
+        var sourcePos = _xforms.GetWorldPosition(sourceXform, xformQuery);
 
         var attemptEv = new ListenAttemptEvent(message, source);
         var ev = new ListenEvent(message, source);
@@ -41,20 +40,16 @@ public sealed class ListeningSystem : EntitySystem
             if (xform.MapID != sourceXform.MapID)
                 return;
 
-            // this is very arbitrary
-            var effectiveRange = whispering ? listener.Range / 3 : listener.Range;
+            // TODO proper speech occlusion
+
+            // This is very arbitrary
+            var effectiveRange = whispering ? listener.Range * WhisperMultiplier : listener.Range;
 
             // range checks
-            MapCoordinates pos = new(_xforms.GetWorldPosition(xform, xformQuery), xform.MapID);
-            if (listener.RequireUnobstructed)
-            {
-                if (!_interaction.InRangeUnobstructed(sourcePos, pos, range: effectiveRange))
-                    continue;
-            }
-            else if ((pos.Position - sourcePos.Position).LengthSquared > effectiveRange * effectiveRange)
+            var pos = _xforms.GetWorldPosition(xform, xformQuery);
+            if ((pos - sourcePos).LengthSquared > effectiveRange * effectiveRange)
                 continue;
 
-            // attempt event.
             RaiseLocalEvent(listener.Owner, attemptEv);
             if (attemptEv.Cancelled)
             {

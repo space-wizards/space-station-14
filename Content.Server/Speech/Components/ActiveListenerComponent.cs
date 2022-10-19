@@ -1,3 +1,5 @@
+using Content.Server.Chat.Systems;
+
 namespace Content.Server.Speech.Components;
 
 /// <summary>
@@ -7,8 +9,5 @@ namespace Content.Server.Speech.Components;
 public sealed class ActiveListenerComponent : Component
 {
     [DataField("range")]
-    public float Range = 10;
-
-    [DataField("requireUnobstructed")]
-    public bool RequireUnobstructed = true;
+    public float Range = ChatSystem.VoiceRange;
 }

@@ -99,7 +99,7 @@ namespace Content.Server.Chat.Managers
             var wrappedMessage = Loc.GetString("chat-manager-send-admin-announcement-wrap-message",
                 ("adminChannelName", Loc.GetString("chat-manager-admin-channel-name")), ("message", FormattedMessage.EscapeText(message)));
 
-            ChatMessageToMany(ChatChannel.Admin, message, wrappedMessage, default, false, clients.ToList());
+            ChatMessageToMany(ChatChannel.Admin, message, wrappedMessage, default, false, clients);
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Admin announcement from {message}: {message}");
         }
 
@@ -217,7 +217,7 @@ namespace Content.Server.Chat.Managers
             _netManager.ServerSendMessage(msg, client);
         }
 
-        public void ChatMessageToMany(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, List<INetChannel> clients, Color? colorOverride = null)
+        public void ChatMessageToMany(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, IEnumerable<INetChannel> clients, Color? colorOverride = null)
         {
             var msg = new MsgChatMessage();
             msg.Channel = channel;
@@ -229,7 +229,7 @@ namespace Content.Server.Chat.Managers
             {
                 msg.MessageColorOverride = colorOverride.Value;
             }
-            _netManager.ServerSendToMany(msg, clients);
+            _netManager.ServerSendToMany(msg, clients.ToList());
         }
 
         public void ChatMessageToManyFiltered(Filter filter, ChatChannel channel, string message, string wrappedMessage, EntityUid source,

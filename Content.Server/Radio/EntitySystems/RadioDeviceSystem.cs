@@ -142,6 +142,7 @@ public sealed class RadioDeviceSystem : EntitySystem
         var name = Loc.GetString("speech-name-relay", ("speaker", Name(uid)),
             ("originalName", nameEv.Name)); ;
 
-        _chat.TrySendInGameICMessage(uid, args.Message, InGameICChatType.Speak, false, nameOverride: name);
+        var hideGhostChat = true; // log to chat so people can identity the speaker/source, but avoid clogging ghost chat if there are many radios
+        _chat.TrySendInGameICMessage(uid, args.Message, InGameICChatType.Speak, false, nameOverride: name, hideGhostChat:hideGhostChat); 
     }
 }
