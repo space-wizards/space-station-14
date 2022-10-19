@@ -1,0 +1,23 @@
+- type: entity
+  parent: BaseStorageItem
+  id: BagGarment
+  name: garment bag
+  description: A bag for storing extra clothes and shoes. This one belongs to the research director.
+  components:
+    - type: Sprite
+      sprite: Objects/Storage/garment_bag.rsi
+      state: bag
+    - type: Item
+      sprite: Objects/Storage/garment_bag.rsi
+      size: 31
+    - type: Storage
+      capacity: 100
+      whitelist:
+        components:
+          - Clothing
+
+- type: entity
+  parent: BagGarment
+  id: BagGarmentRD
+  name: research director's garment bag
+  description: A bag for storing extra clothes and shoes. This one belongs to the research director.
