@@ -67,8 +67,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingNeckCloakHop
-      - id: ClothingHeadHatHopcap
+      - id: BagGarmentHopFilled
       - id: HoPIDCard
         prob: 0.9
       - id: ClothingHeadsetCommand
