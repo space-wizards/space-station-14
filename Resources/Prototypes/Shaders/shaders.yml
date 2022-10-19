@@ -70,3 +70,9 @@
   id: Dim
   kind: source
   path: "/Textures/Shaders/dim.swsl"
+
+# cloaking distortion effect
+- type: shader
+  id: Stealth
+  kind: source
+  path: "/Textures/Shaders/stealth.swsl"

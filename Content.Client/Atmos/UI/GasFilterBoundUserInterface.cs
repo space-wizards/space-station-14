@@ -26,7 +26,7 @@ namespace Content.Client.Atmos.UI
         {
             base.Open();
 
-            var atmosSystem = EntitySystem.Get<AtmosphereSystem>();
+            var atmosSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AtmosphereSystem>();
 
             _window = new GasFilterWindow(atmosSystem.Gases);
 
@@ -59,7 +59,7 @@ namespace Content.Client.Atmos.UI
         private void OnSelectGasPressed()
         {
             if (_window is null || _window.SelectedGas is null) return;
-            if (!Int32.TryParse(_window.SelectedGas, out var gas)) return;
+            if (!int.TryParse(_window.SelectedGas, out var gas)) return;
             SendMessage(new GasFilterSelectGasMessage(gas));
         }
 
@@ -78,7 +78,7 @@ namespace Content.Client.Atmos.UI
             _window.SetTransferRate(cast.TransferRate);
             if (cast.FilteredGas is not null)
             {
-                var atmos = EntitySystem.Get<AtmosphereSystem>();
+                var atmos = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AtmosphereSystem>();
                 var gas = atmos.GetGas((Gas) cast.FilteredGas);
                 _window.SetGasFiltered(gas.ID, gas.Name);
             }

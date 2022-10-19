@@ -60,7 +60,7 @@
         - shape:
             !type:PhysShapeCircle
             radius: 0.40
-          mass: 50
+          density: 100
           mask:
             - FlyingMobMask
           layer:
@@ -92,7 +92,7 @@
       soundPerceivedByOthers: false # A 75% chance for a loud roar would get old fast.
     - type: MeleeWeapon
       hidden: true
-      hitSound:
+      soundHit:
         path: /Audio/Effects/bite.ogg
       damage:
         types:

@@ -12,6 +12,7 @@ namespace Content.Client.Chemistry.UI
     [UsedImplicitly]
     public sealed class ChemMasterBoundUserInterface : BoundUserInterface
     {
+        [Dependency] private readonly IEntityManager _entityManager = default!;
         private ChemMasterWindow? _window;
 
         public ChemMasterBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
@@ -30,7 +31,7 @@ namespace Content.Client.Chemistry.UI
             // Setup window layout/elements
             _window = new ChemMasterWindow
             {
-                Title = Loc.GetString("chem-master-bound-user-interface-title"),
+                Title = _entityManager.GetComponent<MetaDataComponent>(Owner.Owner).EntityName,
             };
 
             _window.OpenCentered();
