@@ -510,7 +510,8 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
     private void ClearList()
     {
-        _window?.ResultsGrid.RemoveAllChildren();
+        if (_window?.Disposed == false)
+            _window.ResultsGrid.RemoveAllChildren();
     }
 
     private void PopulateActions(IEnumerable<ActionType> actions)
