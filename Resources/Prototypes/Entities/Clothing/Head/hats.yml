@@ -32,7 +32,7 @@
     sprite: Clothing/Head/Hats/beret_engineering.rsi
   - type: Tag
     tags:
-      - CmoClothing
+      - CEClothing
 
 - type: entity
   parent: ClothingHeadBase
