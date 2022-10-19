@@ -75,3 +75,16 @@
         - id: ClothingCloakCmo
         - id: ClothingOuterCoatLabCmo
         - id: ClothingOuterWinterCMO
+
+- type: entity
+  id: BagGarmentQMFilled
+  suffix: Filled
+  parent: BagGarmentQM
+  components:
+    - type: StorageFill
+      contents:
+        - id: ClothingUniformJumpsuitQM
+        - id: ClothingUniformJumpskirtQM
+        - id: ClothingNeckCloakQm
+        - id: ClothingOuterWinterQM
+        - id: ClothingHeadHatQMsoft

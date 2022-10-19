@@ -63,6 +63,9 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/qm.rsi
+  - type: Tag
+    tags:
+      - QMClothing
 
 - type: entity
   parent: ClothingNeckBase

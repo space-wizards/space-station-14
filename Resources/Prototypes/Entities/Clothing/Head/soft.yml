@@ -52,6 +52,9 @@
     sprite: Clothing/Head/Soft/qmsoft.rsi
   - type: Clothing
     sprite: Clothing/Head/Soft/qmsoft.rsi
+  - type: Tag
+    tags:
+      - QMClothing
 
 - type: entity
   parent: ClothingHeadBase
@@ -63,6 +66,9 @@
     sprite: Clothing/Head/Soft/qmsoft_flipped.rsi
   - type: Clothing
     sprite: Clothing/Head/Soft/qmsoft_flipped.rsi
+  - type: Tag
+    tags:
+      - QMClothing
     
 - type: entity
   parent: ClothingHeadBase

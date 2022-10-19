@@ -67,3 +67,14 @@
       whitelist:
         tags:
           - CmoClothing
+
+- type: entity
+  parent: BagGarmentBase
+  id: BagGarmentQM
+  name: quartermaster's garment bag
+  description: A bag for storing extra clothes and shoes. This one belongs to the quartermaster.
+  components:
+    - type: Storage
+      whitelist:
+        tags:
+          - QMClothing

@@ -271,6 +271,9 @@
     sprite: Clothing/Uniforms/Jumpskirt/qm.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpskirt/qm.rsi
+  - type: Tag
+    tags:
+      - QMClothing
 
 - type: entity
   parent: ClothingUniformSkirtBase
