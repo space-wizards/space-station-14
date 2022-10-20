@@ -384,7 +384,7 @@ public sealed class EntityStorageSystem : EntitySystem
 
     private void TakeGas(EntityUid uid, EntityStorageComponent component)
     {
-        if (!component.AirTight)
+        if (!component.Airtight)
             return;
 
         var tile = GetOffsetTileRef(uid, component);
@@ -397,7 +397,7 @@ public sealed class EntityStorageSystem : EntitySystem
 
     private void ReleaseGas(EntityUid uid, EntityStorageComponent component)
     {
-        if (!component.AirTight)
+        if (!component.Airtight)
             return;
 
         var tile = GetOffsetTileRef(uid, component);
@@ -425,7 +425,7 @@ public sealed class EntityStorageSystem : EntitySystem
 
     private void OnInsideInhale(EntityUid uid, InsideEntityStorageComponent component, InhaleLocationEvent args)
     {
-        if (TryComp<EntityStorageComponent>(component.Storage, out var storage) && storage.AirTight)
+        if (TryComp<EntityStorageComponent>(component.Storage, out var storage) && storage.Airtight)
         {
             args.Gas = storage.Air;
         }
@@ -433,7 +433,7 @@ public sealed class EntityStorageSystem : EntitySystem
 
     private void OnInsideExhale(EntityUid uid, InsideEntityStorageComponent component, ExhaleLocationEvent args)
     {
-        if (TryComp<EntityStorageComponent>(component.Storage, out var storage) && storage.AirTight)
+        if (TryComp<EntityStorageComponent>(component.Storage, out var storage) && storage.Airtight)
         {
             args.Gas = storage.Air;
         }
@@ -446,7 +446,7 @@ public sealed class EntityStorageSystem : EntitySystem
 
         if (TryComp<EntityStorageComponent>(component.Storage, out var storage))
         {
-            if (!storage.AirTight)
+            if (!storage.Airtight)
                 return;
 
             args.Gas = storage.Air;
