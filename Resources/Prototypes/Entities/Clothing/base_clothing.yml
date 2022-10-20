@@ -10,3 +10,12 @@
       - WhitelistChameleon
   - type: StaticPrice
     price: 15
+
+- type: entity
+  abstract: true
+  id: GeigerCounterClothing
+  components:
+    - type: RadiationReceiver
+      canReceive: false
+    - type: Geiger
+      attachedToSuit: true

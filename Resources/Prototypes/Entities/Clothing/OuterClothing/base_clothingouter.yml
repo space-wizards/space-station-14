@@ -45,7 +45,7 @@
 
 - type: entity
   abstract: true
-  parent: ClothingOuterBase
+  parent: [ClothingOuterBase, GeigerCounterClothing]
   id: ClothingOuterHardsuitBase
   name: base hardsuit
   components:

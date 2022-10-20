@@ -125,10 +125,6 @@
   - type: DiseaseProtection
     protection: 0.05
   - type: IdentityBlocker
-  - type: RadiationReceiver
-    canReceive: false
-  - type: Geiger
-    attachedToSuit: true
 
 - type: entity
   abstract: true
