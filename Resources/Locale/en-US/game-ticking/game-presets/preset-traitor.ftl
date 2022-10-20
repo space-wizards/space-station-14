@@ -39,5 +39,5 @@ traitor-death-match-end-round-description-entry = {$originalName}'s PDA, with {$
 ## TraitorRole
 
 # TraitorRole
-traitor-role-greeting = Hello Agent
+traitor-role-greeting = You are a syndicate agent. Your objectives and codewords are listed in the character menu. Use the uplink loaded into your PDA to buy the tools you'll need for this mission.
 traitor-role-codewords = Your codewords are: {$codewords}
