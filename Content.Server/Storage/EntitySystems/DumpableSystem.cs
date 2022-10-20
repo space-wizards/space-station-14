@@ -45,7 +45,22 @@ namespace Content.Server.Storage.EntitySystems
             if (storage.StoredEntities == null || storage.StoredEntities.Count == 0)
                 return;
 
-            if (HasComp<MaterialStorageComponent>(args.Target) || HasComp<DisposalUnitComponent>(args.Target) || HasComp<PlaceableSurfaceComponent>(args.Target))
+            if (TryComp<MaterialStorageComponent>(args.Target, out var materialStorage))
+            {
+                foreach(var mat in materialStorage!.EntityWhitelist!.Tags!)
+                {
+                    foreach (var serv in storage!.Whitelist!.Tags!)
+                    {
+                        if (serv == mat)
+                        {
+                            StartDoAfter(uid, args.Target.Value, args.User, component, storage);
+                            return;
+                        }
+                    }
+                }
+            }
+
+            if (HasComp<DisposalUnitComponent>(args.Target) || HasComp<PlaceableSurfaceComponent>(args.Target))
             {
                 StartDoAfter(uid, args.Target.Value, args.User, component, storage);
             }
@@ -79,7 +94,30 @@ namespace Content.Server.Storage.EntitySystems
             if (!TryComp<ServerStorageComponent>(uid, out var storage) || storage.StoredEntities == null || storage.StoredEntities.Count == 0)
                 return;
 
-            if (HasComp<MaterialStorageComponent>(args.Target) || HasComp<DisposalUnitComponent>(args.Target))
+            var addverbstorage = false;
+            if (TryComp<MaterialStorageComponent>(args.Target, out var materialStorage))
+            {
+                foreach (var mat in materialStorage!.EntityWhitelist!.Tags!)
+                {
+                    foreach (var serv in storage!.Whitelist!.Tags!)
+                    {
+                        if (serv == mat)
+                        {
+                            addverbstorage = true;
+                            break;
+                        }
+                    }
+                    if (addverbstorage)
+                        break;
+                }
+            }
+
+            if (!addverbstorage ? HasComp<DisposalUnitComponent>(args.Target) : false)
+            {
+                addverbstorage = true;
+            }
+
+            if (addverbstorage)
             {
                 UtilityVerb verb = new()
                 {
