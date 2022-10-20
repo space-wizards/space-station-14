@@ -272,6 +272,7 @@
           map: ["enum.GunVisualLayers.MagUnshaded"]
           shader: unshaded
     - type: Clothing
+      sprite: Objects/Weapons/Guns/Battery/disabler.rsi
       quickEquip: false
       slots:
         - Belt
