@@ -324,6 +324,9 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<int> TraitorCodewordCount =
             CVarDef.Create("traitor.codeword_count", 4);
+        
+        public static readonly CVarDef<int> TraitorPhraseCount =
+            CVarDef.Create("traitor.phrase_count", 1);
 
         public static readonly CVarDef<int> TraitorStartingBalance =
             CVarDef.Create("traitor.starting_balance", 20);
