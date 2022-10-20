@@ -22,6 +22,7 @@ using Content.Server.Mind.Components;
 using Content.Server.Stack;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Configuration;
@@ -32,6 +33,7 @@ namespace Content.Server.Medical.BiomassReclaimer
 {
     public sealed class BiomassReclaimerSystem : EntitySystem
     {
+        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly StackSystem _stackSystem = default!;
         [Dependency] private readonly MobStateSystem _mobState = default!;
@@ -133,7 +135,7 @@ namespace Content.Server.Medical.BiomassReclaimer
             if (args.Powered)
             {
                 if (component.ProcessingTimer > 0)
-                    AddComp<ActiveBiomassReclaimerComponent>(component.Owner);
+                    _entityManager.EnsureComponent<ActiveBiomassReclaimerComponent>(uid);
             }
             else
                 RemCompDeferred<ActiveBiomassReclaimerComponent>(component.Owner);
