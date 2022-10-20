@@ -131,7 +131,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
             string reportTitle;
 
-            reportTitle = args.Machine.Name + " Report";
+            reportTitle = Loc.GetString("chem-analyser-report-title", ("machine", args.Machine.Name));
             FormattedMessage contents = new();
             int maxLines = 11;
 
@@ -215,11 +215,11 @@ namespace Content.Server.Chemistry.EntitySystems
                     return;
 
                 int numLines = 0;
-                contents.AddMarkup("No. Chemicals Found: ");
+                contents.AddMarkup(Loc.GetString("chem-analyser-num-chems") + " ");
                 contents.AddMarkup(displaySolutions.Count.ToString());
                 contents.PushNewline();
                 contents.PushNewline();
-                contents.AddMarkup("Chemicals Found:");
+                contents.AddMarkup(Loc.GetString("chem-analyser-chems-found"));
                 contents.PushNewline();
                 foreach (var displaySolution in (displaySolutions))
                 {
@@ -231,14 +231,14 @@ namespace Content.Server.Chemistry.EntitySystems
                     }
                     else
                     {
-                        contents.AddMarkup("PRINT LINES EXCEEDED");
+                        contents.AddMarkup(Loc.GetString("chem-analyser-print-lines"));
                         break;
                     }
                 }
                 MetaData(printed).EntityName = reportTitle;
                 _paperSystem.SetContent(printed, contents.ToMarkup(), paper);
             } else
-                contents.AddMarkup("No Chemicals Found");   
+                contents.AddMarkup(Loc.GetString("chem-analyser-no-chems"));   
 
             var rewardEarned = true;
             if (rewardRequiredNames.Count > 0)

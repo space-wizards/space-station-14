@@ -36,7 +36,7 @@ namespace Content.Client.MedicalResearchBed.UI
                 IReadOnlyDictionary<string, FixedPoint2> DamagePerGroup = damageable.DamagePerGroup;
                 IReadOnlyDictionary<string, FixedPoint2> DamagePerType = damageable.Damage.DamageDict;
 
-                text.Append("Total damage healed on bed: \n");
+                text.Append($"{Loc.GetString("health-analyzer-window-damage-total-healed")}\n");
                 text.Append(msg.HealthChanges + "\n\n");
 
                 text.Append($"{Loc.GetString("health-analyzer-window-entity-health-text", ("entityName", entityName))}\n");
@@ -52,7 +52,7 @@ namespace Content.Client.MedicalResearchBed.UI
 
                 // Unmetabolised reagents in buckled entity
                 if (msg.BufferReagents.Count > 0)
-                    text.Append("\nUnmetabolised Substances\n");
+                    text.Append($"\n{Loc.GetString("health-analyzer-window-unmetabolised-chems")}\n");
 
                 foreach (var content in (msg.BufferReagents))
                 {

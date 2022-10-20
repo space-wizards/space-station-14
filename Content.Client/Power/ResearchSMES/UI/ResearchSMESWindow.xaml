@@ -1,68 +1,74 @@
 <DefaultWindow xmlns="https://spacestation14.io"
-            Title="Research SMES Controller"
+            Title="{Loc 'research-smes-controller'}"
             MinSize="750 250">
     <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
         <BoxContainer HorizontalExpand="True" VerticalExpand="True">
             <BoxContainer Orientation="Vertical" HorizontalExpand="True">
-            <Label Text="Controls" HorizontalExpand="True" />
+            <Label Text="{Loc 'research-smes-controls'}" HorizontalExpand="True" />
             <Label Text=" " />
                 <BoxContainer Orientation="Horizontal">
-                    <Label Text="Research Mode: " />
+                    <Label Text="{Loc 'research-smes-research-mode'} " />
+                    <Label Text=" " />
                     <Label Name="ResearchMode" Text="" />
                     <Label Text=" " />
                 </BoxContainer>
                 <BoxContainer Orientation="Horizontal">
                     <Button Name="ToggleResearchMode"
-                    Text="Toggle Research Mode"
+                    Text="{Loc 'research-smes-toggle-research-mode'}"
                     StyleClasses="OpenBoth"
                     Disabled="True" />
                 </BoxContainer>
                 <Label Text=" " />
                 <BoxContainer Orientation="Horizontal">
-                    <Label Text="Shielding Active: " />
+                    <Label Text="{Loc 'research-smes-shielding-active'} " />
+                    <Label Text=" " />
                     <Label Name="ShieldingActive" Text="" />
                     <Label Text=" " />
                 </BoxContainer>
                 <BoxContainer Orientation="Horizontal">
                     <Button Name="ToggleShield"
-                    Text="Toggle Shield"
+                    Text="{Loc 'research-smes-toggle-shield'}"
                     StyleClasses="OpenBoth"
                     Disabled="True" />
                 </BoxContainer>
                 <Label Text=" " />
                 <BoxContainer Orientation="Horizontal">
-                    <Label Text="Siphon Amount: " />
+                    <Label Text="{Loc 'research-smes-siphon-amount'} " />
                     <Label Text=" " />
                     <Label Name="AnalysisChargeSiphon" Text="" />
                 </BoxContainer>
                 <BoxContainer Orientation="Horizontal">
                     <Button Name="IncreaseSiphon"
-                            Text="Increase Siphon"
+                            Text="{Loc 'research-smes-siphon-increase'}"
                             StyleClasses="OpenRight" />
                     <Button Name="DecreaseSiphon"
-                            Text="Decrease Siphon"
+                            Text="{Loc 'research-smes-siphon-decrease'}"
                             StyleClasses="OpenLeft" />
                 </BoxContainer>
             </BoxContainer>
             <BoxContainer Orientation="Vertical" HorizontalExpand="True">
-                <Label Text="Monitor" HorizontalExpand="True" />
+                <Label Text="{Loc 'research-smes-monitor'}" HorizontalExpand="True" />
                 <Label Text=" " />
                 <BoxContainer Orientation="Horizontal">
-                    <Label Text="Charge Stored For Analysis: " />
+                    <Label Text="{Loc 'research-smes-charge-stored'} " />
+                    <Label Text=" " />
                     <Label Name="ChargeStored" Text="" />
                 </BoxContainer>
                 <Label Text=" " />
                 <BoxContainer Orientation="Horizontal">
-                    <Label Text="Shielding Cost: " />
+                    <Label Text="{Loc 'research-smes-shielding-cost'} " />
+                    <Label Text=" " />
                     <Label Name="ShieldingCost" Text="" />
                 </BoxContainer>
                 <BoxContainer Orientation="Horizontal">
-                    <Label Text="Overload Threshold: " />
+                    <Label Text="{Loc 'research-smes-overload-threshold'} " />
+                    <Label Text=" " />
                     <Label Name="OverloadThreshold" Text="" />
                 </BoxContainer>
                 <Label Text=" " />
                 <BoxContainer Orientation="Horizontal">
-                    <Label Text="SMES Capacity: " />
+                    <Label Text="{Loc 'research-smes-smes-cap'} " />
+                    <Label Text=" " />
                     <Label Name="SmesCap" Text="" />
                 </BoxContainer>
                 <BoxContainer Orientation="Horizontal">

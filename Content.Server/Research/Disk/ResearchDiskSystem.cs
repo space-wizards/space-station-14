@@ -35,7 +35,7 @@ namespace Content.Server.Research.Disk
                 _popupSystem.PopupEntity(Loc.GetString("research-disk-inserted", ("points", component.Points)), args.Target.Value, Filter.Entities(args.User));
             } else if (technology != null)
             {
-                _popupSystem.PopupEntity(technology.Name + " added to the server", args.Target.Value, Filter.Entities(args.User));
+                _popupSystem.PopupEntity(Loc.GetString("research-unlock-disk-inserted", ("name", technology.Name)), args.Target.Value, Filter.Entities(args.User));
             }
             EntityManager.QueueDeleteEntity(uid);
 
