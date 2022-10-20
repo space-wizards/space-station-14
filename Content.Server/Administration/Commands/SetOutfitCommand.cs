@@ -12,7 +12,6 @@ using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Prototypes;
-using InventoryComponent = Content.Shared.Inventory.InventoryComponent;
 
 namespace Content.Server.Administration.Commands
 {
@@ -21,7 +20,7 @@ namespace Content.Server.Administration.Commands
     {
         [Dependency] private readonly IEntityManager _entities = default!;
         [Dependency] private readonly IPrototypeManager _prototypes = default!;
-        
+
         public string Command => "setoutfit";
 
         public string Description => Loc.GetString("set-outfit-command-description", ("requiredComponent", nameof(InventoryComponent)));
@@ -99,7 +98,7 @@ namespace Content.Server.Administration.Commands
                 foreach (var slot in slotDefinitions)
                 {
                     invSystem.TryUnequip(target, slot.Name, true, true, false, inventoryComponent);
-                    var gearStr = startingGear.GetGear(slot.Name, profile);
+                    var gearStr = startingGear.Value.GetGear(slot.Name, profile);
                     if (gearStr == string.Empty)
                     {
                         continue;
@@ -122,7 +121,7 @@ namespace Content.Server.Administration.Commands
             {
                 var handsSystem = entityManager.System<HandsSystem>();
                 var coords = entityManager.GetComponent<TransformComponent>(target).Coordinates;
-                foreach (var (hand, prototype) in startingGear.Inhand)
+                foreach (var (hand, prototype) in startingGear.Value.Inhand)
                 {
                     var inhandEntity = entityManager.SpawnEntity(prototype, coords);
                     handsSystem.TryPickup(target, inhandEntity, hand, checkActionBlocker: false, handsComp: handsComponent);

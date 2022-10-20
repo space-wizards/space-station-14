@@ -1,3 +1,5 @@
+using System.Linq;
+using System.Threading.Tasks;
 using Content.Server.Announcements;
 using Content.Server.GameTicking.Events;
 using Content.Server.Ghost;
@@ -11,15 +13,13 @@ using JetBrains.Annotations;
 using Prometheus;
 using Robust.Server.Maps;
 using Robust.Server.Player;
+using Robust.Shared.Asynchronous;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
-using System.Linq;
-using System.Threading.Tasks;
-using Robust.Shared.Asynchronous;
 
 namespace Content.Server.GameTicking
 {
@@ -269,7 +269,7 @@ namespace Content.Server.GameTicking
         public void ShowRoundEndScoreboard(string text = "")
         {
             //Tell every client the round has ended.
-            var gamemodeTitle = Preset != null ? Loc.GetString(Preset.ModeTitle) : string.Empty;
+            var gamemodeTitle = Preset != null ? Loc.GetString(Preset.Value.ModeTitle) : string.Empty;
 
             // Let things add text here.
             var textEv = new RoundEndTextAppendEvent();
@@ -488,7 +488,7 @@ namespace Content.Server.GameTicking
 
             foreach (var proto in _prototypeManager.EnumeratePrototypes<RoundAnnouncementPrototype>())
             {
-                if (!proto.GamePresets.Contains(Preset.ID)) continue;
+                if (!proto.GamePresets.Contains(Preset.Value.ID)) continue;
 
                 if (proto.Message != null)
                     _chatSystem.DispatchGlobalAnnouncement(Loc.GetString(proto.Message), playSound: true);

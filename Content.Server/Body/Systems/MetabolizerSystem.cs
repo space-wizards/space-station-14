@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Body.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
@@ -129,7 +130,7 @@ namespace Content.Server.Body.Systems
                     continue;
 
                 FixedPoint2 mostToRemove = FixedPoint2.Zero;
-                if (proto.Metabolisms == null)
+                if (proto.Value.Metabolisms == null)
                 {
                     if (meta.RemoveEmpty)
                         _solutionContainerSystem.TryRemoveReagent(solutionEntityUid.Value, solution, reagent.ReagentId, FixedPoint2.New(1));
@@ -147,10 +148,10 @@ namespace Content.Server.Body.Systems
 
                 foreach (var group in meta.MetabolismGroups)
                 {
-                    if (!proto.Metabolisms.Keys.Contains(group.Id))
+                    if (!proto.Value.Metabolisms.Keys.Contains(group.Id))
                         continue;
 
-                    var entry = proto.Metabolisms[group.Id];
+                    var entry = proto.Value.Metabolisms[group.Id];
 
                     // we don't remove reagent for every group, just whichever had the biggest rate
                     if (entry.MetabolismRate > mostToRemove)
@@ -170,7 +171,7 @@ namespace Content.Server.Body.Systems
                     }
 
                     var actualEntity = bodyEntityUid != null ? bodyEntityUid.Value : solutionEntityUid.Value;
-                    var args = new ReagentEffectArgs(actualEntity, (meta).Owner, solution, proto, mostToRemove,
+                    var args = new ReagentEffectArgs(actualEntity, (meta).Owner, solution, proto.Value, mostToRemove,
                         EntityManager, null, entry);
 
                     // do all effects, if conditions apply

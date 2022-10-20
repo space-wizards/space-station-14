@@ -1,13 +1,13 @@
+using System.Linq;
 using Content.Server.Stack;
 using Content.Server.Store.Components;
+using Content.Server.UserInterface;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Store;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using System.Linq;
-using Content.Server.UserInterface;
 
 namespace Content.Server.Store.Systems;
 
@@ -132,7 +132,7 @@ public sealed partial class StoreSystem : EntitySystem
         if (!_proto.TryIndex<StorePresetPrototype>(preset, out var proto))
             return;
 
-        InitializeFromPreset(proto, component);
+        InitializeFromPreset(proto.Value, component);
     }
 
     /// <summary>

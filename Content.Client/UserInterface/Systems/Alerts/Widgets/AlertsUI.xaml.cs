@@ -87,8 +87,8 @@ public sealed partial class AlertsUI : UIWidget
                 continue;
             }
 
-            if (_alertControls.TryGetValue(newAlert.AlertKey, out var existingAlertControl) &&
-                existingAlertControl.Alert.AlertType == newAlert.AlertType)
+            if (_alertControls.TryGetValue(newAlert.Value.AlertKey, out var existingAlertControl) &&
+                existingAlertControl.Alert.AlertType == newAlert.Value.AlertType)
             {
                 // key is the same, simply update the existing control severity / cooldown
                 existingAlertControl.SetSeverity(alertState.Severity);
@@ -100,7 +100,7 @@ public sealed partial class AlertsUI : UIWidget
 
                 // this is a new alert + alert key or just a different alert with the same
                 // key, create the control and add it in the appropriate order
-                var newAlertControl = CreateAlertControl(newAlert, alertState);
+                var newAlertControl = CreateAlertControl(newAlert.Value, alertState);
 
                 //TODO: Can the presenter sort the states before giving it to us?
                 if (alertOrderPrototype != null)
@@ -108,7 +108,7 @@ public sealed partial class AlertsUI : UIWidget
                     var added = false;
                     foreach (var alertControl in AlertContainer.Children)
                     {
-                        if (alertOrderPrototype.Compare(newAlert, ((AlertControl) alertControl).Alert) >= 0)
+                        if (alertOrderPrototype.Value.Compare(newAlert.Value, ((AlertControl) alertControl).Alert) >= 0)
                             continue;
 
                         var idx = alertControl.GetPositionInParent();
@@ -126,7 +126,7 @@ public sealed partial class AlertsUI : UIWidget
                     AlertContainer.Children.Add(newAlertControl);
                 }
 
-                _alertControls[newAlert.AlertKey] = newAlertControl;
+                _alertControls[newAlert.Value.AlertKey] = newAlertControl;
             }
         }
     }

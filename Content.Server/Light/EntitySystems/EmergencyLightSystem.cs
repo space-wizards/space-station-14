@@ -1,4 +1,3 @@
-using System.Drawing;
 using Content.Server.AlertLevel;
 using Content.Server.Audio;
 using Content.Server.Light.Components;
@@ -11,7 +10,6 @@ using Content.Shared.Light.Component;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameStates;
-using Color = Robust.Shared.Maths.Color;
 
 namespace Content.Server.Light.EntitySystems
 {
@@ -56,7 +54,7 @@ namespace Content.Server.Light.EntitySystems
             var name = alerts.CurrentLevel;
 
             var color = Color.White;
-            if (alerts.AlertLevels.Levels.TryGetValue(alerts.CurrentLevel, out var details))
+            if (alerts.AlertLevels.Value.Levels.TryGetValue(alerts.CurrentLevel, out var details))
                 color = details.Color;
 
             args.PushMarkup(
@@ -99,7 +97,7 @@ namespace Content.Server.Light.EntitySystems
             if (!TryComp<AlertLevelComponent>(ev.Station, out var alert))
                 return;
 
-            if (alert.AlertLevels == null || !alert.AlertLevels.Levels.TryGetValue(ev.AlertLevel, out var details))
+            if (alert.AlertLevels == null || !alert.AlertLevels.Value.Levels.TryGetValue(ev.AlertLevel, out var details))
                 return;
 
             foreach (var (light, pointLight, appearance, xform) in EntityQuery<EmergencyLightComponent, PointLightComponent, AppearanceComponent, TransformComponent>())

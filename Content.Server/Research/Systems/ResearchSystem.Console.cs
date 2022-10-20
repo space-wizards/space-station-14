@@ -45,9 +45,9 @@ public sealed partial class ResearchSystem
 
         if (!_prototypeManager.TryIndex(args.Id, out TechnologyPrototype? tech) ||
             client.Server == null ||
-            !CanUnlockTechnology(client.Server, tech)) return;
+            !CanUnlockTechnology(client.Server, tech.Value)) return;
 
-        if (!UnlockTechnology(client.Server, tech)) return;
+        if (!UnlockTechnology(client.Server, tech.Value)) return;
 
         SyncWithServer(database);
         Dirty(database);

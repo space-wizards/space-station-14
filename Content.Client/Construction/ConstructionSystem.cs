@@ -79,14 +79,14 @@ namespace Content.Client.Construction
 
             args.PushMarkup(Loc.GetString(
                 "construction-ghost-examine-message",
-                ("name", component.Prototype.Name)));
+                ("name", component.Prototype.Value.Name)));
 
-            if (!_prototypeManager.TryIndex(component.Prototype.Graph, out ConstructionGraphPrototype? graph))
+            if (!_prototypeManager.TryIndex(component.Prototype.Value.Graph, out ConstructionGraphPrototype? graph))
                 return;
 
-            var startNode = graph.Nodes[component.Prototype.StartNode];
+            var startNode = graph.Value.Nodes[component.Prototype.Value.StartNode];
 
-            if (!graph.TryPath(component.Prototype.StartNode, component.Prototype.TargetNode, out var path) ||
+            if (!graph.Value.TryPath(component.Prototype.Value.StartNode, component.Prototype.Value.TargetNode, out var path) ||
                 !startNode.TryGetEdge(path[0].Name, out var edge))
             {
                 return;
@@ -211,7 +211,7 @@ namespace Content.Client.Construction
             }
 
             var transform = EntityManager.GetComponent<TransformComponent>(ghost.Owner);
-            var msg = new TryStartStructureConstructionMessage(transform.Coordinates, ghost.Prototype.ID, transform.LocalRotation, ghostId);
+            var msg = new TryStartStructureConstructionMessage(transform.Coordinates, ghost.Prototype.Value.ID, transform.LocalRotation, ghostId);
             RaiseNetworkEvent(msg);
         }
 

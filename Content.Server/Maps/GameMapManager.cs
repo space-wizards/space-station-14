@@ -33,7 +33,7 @@ public sealed class GameMapManager : IGameMapManager
         _configurationManager.OnValueChanged(CCVars.GameMap, value =>
         {
             if (TryLookupMap(value, out var map))
-                _currentMap = map;
+                _currentMap = map.Value;
             else
                 throw new ArgumentException($"Unknown map prototype {value} was selected!");
         }, true);
@@ -78,9 +78,9 @@ public sealed class GameMapManager : IGameMapManager
 
     public bool TrySelectMap(string gameMap)
     {
-        if (!TryLookupMap(gameMap, out var map) || !IsMapEligible(map)) return false;
+        if (!TryLookupMap(gameMap, out var map) || !IsMapEligible(map.Value)) return false;
 
-        _currentMap = map;
+        _currentMap = map.Value;
         _currentMapForced = false;
         var ticker = EntitySystem.Get<GameTicking.GameTicker>();
         ticker.UpdateInfoText();
@@ -92,7 +92,7 @@ public sealed class GameMapManager : IGameMapManager
     {
         if (!TryLookupMap(gameMap, out var map))
             throw new ArgumentException($"The map \"{gameMap}\" is invalid!");
-        _currentMap = map;
+        _currentMap = map.Value;
         _currentMapForced = true;
         var ticker = EntitySystem.Get<GameTicking.GameTicker>();
         ticker.UpdateInfoText();

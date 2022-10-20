@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Administration.UI;
 using Content.Server.EUI;
 using Content.Server.Explosion.EntitySystems;
@@ -7,7 +8,6 @@ using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using System.Linq;
 
 namespace Content.Server.Administration.Commands;
 
@@ -56,7 +56,7 @@ public sealed class ExplosionCommand : IConsoleCommand
             shell.WriteError($"Failed to parse intensity: {args[0]}");
             return;
         }
- 
+
         float slope = 5;
         if (args.Length > 1 && !float.TryParse(args[1], out slope))
         {
@@ -131,6 +131,6 @@ public sealed class ExplosionCommand : IConsoleCommand
         }
 
         var sysMan = IoCManager.Resolve<IEntitySystemManager>();
-        sysMan.GetEntitySystem<ExplosionSystem>().QueueExplosion(coords, type.ID, intensity, slope, maxIntensity);
+        sysMan.GetEntitySystem<ExplosionSystem>().QueueExplosion(coords, type.Value.ID, intensity, slope, maxIntensity);
     }
 }

@@ -129,7 +129,7 @@ public sealed partial class MappingSystem : EntitySystem
         {
             EntityType = args.EntityType,
             IsTile = args.TileId != null,
-            TileType = args.TileId != null ? _tileMan[args.TileId].TileId : (ushort) 0,
+            TileType = args.TileId != null ? _tileMan.TileIds[args.TileId] : (ushort) 0,
             PlacementOption = args.PlacementOption,
         });
 

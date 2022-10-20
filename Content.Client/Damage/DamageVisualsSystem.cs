@@ -161,7 +161,7 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
             {
                 foreach (var damageType in damageVisComp.DamageOverlayGroups.Keys)
                 {
-                    if (!damageContainer.SupportedGroups.Contains(damageType))
+                    if (!damageContainer.Value.SupportedGroups.Contains(damageType))
                     {
                         Logger.ErrorS(SawmillName, $"Damage key {damageType} was invalid for entity {entity}.");
                         damageVisComp.Valid = false;
@@ -175,7 +175,7 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
             // See if that group is in our entity's damage container.
             else if (!damageVisComp.Overlay && damageVisComp.DamageGroup != null)
             {
-                if (!damageContainer.SupportedGroups.Contains(damageVisComp.DamageGroup))
+                if (!damageContainer.Value.SupportedGroups.Contains(damageVisComp.DamageGroup))
                 {
                     Logger.ErrorS(SawmillName, $"Damage keys were invalid for entity {entity}.");
                     damageVisComp.Valid = false;
@@ -508,7 +508,7 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
                 continue;
 
             if (!_prototypeManager.TryIndex<DamageGroupPrototype>(damageGroup, out var damageGroupPrototype)
-                || !damageComponent.Damage.TryGetDamageInGroup(damageGroupPrototype, out var damageTotal))
+                || !damageComponent.Damage.TryGetDamageInGroup(damageGroupPrototype.Value, out var damageTotal))
                 continue;
 
             if (!damageVisComp.LastThresholdPerGroup.TryGetValue(damageGroup, out var lastThreshold)

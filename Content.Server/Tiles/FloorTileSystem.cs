@@ -69,7 +69,7 @@ namespace Content.Server.Tiles
                         if (!_stackSystem.Use(uid, 1, stack))
                             continue;
 
-                        PlaceAt(mapGrid, location, currentTileDefinition.TileId, component.PlaceTileSound);
+                        PlaceAt(mapGrid, location, _tileDefinitionManager.TileIds[currentTileDefinition.ID], component.PlaceTileSound);
                     }
                 }
                 else if (HasBaseTurf(currentTileDefinition, ContentTileDefinition.SpaceID))
@@ -77,7 +77,7 @@ namespace Content.Server.Tiles
                     mapGrid = _mapManager.CreateGrid(locationMap.MapId);
                     mapGrid.WorldPosition = locationMap.Position;
                     location = new EntityCoordinates(mapGrid.GridEntityId, Vector2.Zero);
-                    PlaceAt(mapGrid, location, _tileDefinitionManager[component.OutputTiles[0]].TileId, component.PlaceTileSound, mapGrid.TileSize / 2f);
+                    PlaceAt(mapGrid, location, _tileDefinitionManager.TileIds[component.OutputTiles[0]], component.PlaceTileSound, mapGrid.TileSize / 2f);
                 }
             }
         }

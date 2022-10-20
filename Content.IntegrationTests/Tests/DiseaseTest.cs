@@ -23,9 +23,9 @@ public sealed class DiseaseTest
         {
             foreach (var proto in protoManager.EnumeratePrototypes<DiseasePrototype>())
             {
-                var stagesLength = proto.Stages.Count;
+                var stagesLength = proto.Disease.Stages.Count;
 
-                foreach (var effect in proto.Effects)
+                foreach (var effect in proto.Disease.Effects)
                 {
                     for (var i = 0; i < effect.Stages.Length; i++)
                     {
@@ -33,7 +33,7 @@ public sealed class DiseaseTest
                     }
                 }
 
-                foreach (var cure in proto.Cures)
+                foreach (var cure in proto.Disease.Cures)
                 {
                     for (var i = 0; i < cure.Stages.Length; i++)
                     {

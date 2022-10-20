@@ -27,8 +27,8 @@ namespace Content.Server.GameTicking.Commands
                 return;
             }
 
-            ticker.SetGamePreset(preset);
-            shell.WriteLine(Loc.GetString("set-game-preset-preset-set", ("preset", preset.ID)));
+            ticker.SetGamePreset(preset.Value);
+            shell.WriteLine(Loc.GetString("set-game-preset-preset-set", ("preset", preset.Value.ID)));
         }
     }
 }

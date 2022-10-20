@@ -3,13 +3,10 @@ using Content.Server.Radio.Components;
 using Content.Server.Radio.EntitySystems;
 using Content.Server.VoiceMask;
 using Content.Shared.Chat;
-using Content.Shared.IdentityManagement;
 using Content.Shared.Radio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Network;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 using Robust.Shared.Utility;
 
@@ -50,7 +47,7 @@ namespace Content.Server.Headset
 
         public bool CanListen(string message, EntityUid source, RadioChannelPrototype? prototype)
         {
-            return prototype != null && Channels.Contains(prototype.ID) && RadioRequested;
+            return prototype != null && Channels.Contains(prototype.Value.ID) && RadioRequested;
         }
 
         public void Receive(string message, RadioChannelPrototype channel, EntityUid source)
@@ -92,7 +89,7 @@ namespace Content.Server.Headset
                 return;
             }
 
-            Broadcast(message, speaker, channel);
+            Broadcast(message, speaker, channel.Value);
         }
 
         public void Broadcast(string message, EntityUid speaker, RadioChannelPrototype channel)

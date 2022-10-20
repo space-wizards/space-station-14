@@ -48,7 +48,7 @@ namespace Content.Server.Stack
 
             // Get a prototype ID to spawn the new entity. Null is also valid, although it should rarely be picked...
             var prototype = _prototypeManager.TryIndex<StackPrototype>(stack.StackTypeId, out var stackType)
-                ? stackType.Spawn
+                ? stackType.Value.Spawn
                 : Prototype(stack.Owner)?.ID;
 
             // Try to remove the amount of things we want to split from the original stack...
@@ -118,7 +118,7 @@ namespace Content.Server.Stack
                 return;
             }
 
-            SpawnMultiple(amount, maxCountPerStack, stackType, spawnPosition);
+            SpawnMultiple(amount, maxCountPerStack, stackType.Value, spawnPosition);
         }
 
         private void OnStackAlternativeInteract(EntityUid uid, StackComponent stack, GetVerbsEvent<AlternativeVerb> args)

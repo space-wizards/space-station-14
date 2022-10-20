@@ -1,9 +1,12 @@
-using Content.Server.Chat.Managers;
+using System.Linq;
 using Content.Server.GameTicking;
+using Content.Server.Ghost.Components;
+using Content.Server.Radio.EntitySystems;
 using Content.Shared.CCVar;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.Radio;
 using Robust.Server.Maps;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
@@ -11,15 +14,6 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
-using System.Linq;
-using Content.Server.Chat;
-using Content.Server.Chat.Systems;
-using Content.Server.Ghost.Components;
-using Content.Server.Radio.EntitySystems;
-using Content.Server.Station.Systems;
-using Content.Shared.Chat;
-using Content.Shared.Radio;
-using Robust.Shared.Network;
 
 namespace Content.Server.Salvage
 {
@@ -251,7 +245,7 @@ namespace Content.Server.Salvage
                 allSalvageMaps = new();
                 if (_prototypeManager.TryIndex<SalvageMapPrototype>(forcedSalvage, out var forcedMap))
                 {
-                    allSalvageMaps.Add(forcedMap);
+                    allSalvageMaps.Add(forcedMap.Value);
                 }
                 else
                 {
@@ -299,7 +293,7 @@ namespace Content.Server.Salvage
                 Offset = spawnLocation
             };
 
-            var (_, salvageEntityId) = _mapLoader.LoadGrid(spl.MapId, map.MapPath.ToString(), opts);
+            var (_, salvageEntityId) = _mapLoader.LoadGrid(spl.MapId, map.Value.MapPath.ToString(), opts);
             if (salvageEntityId == null)
             {
                 Report(component.Owner, component.SalvageChannel, "salvage-system-announcement-spawn-debris-disintegrated");

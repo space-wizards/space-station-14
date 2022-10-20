@@ -57,7 +57,7 @@ namespace Content.Client.Construction.UI
                         _constructionView.OpenCentered();
 
                     if(_selected != null)
-                        PopulateInfo(_selected);
+                        PopulateInfo(_selected.Value);
                 }
                 else
                     _constructionView.Close();
@@ -134,7 +134,7 @@ namespace Content.Client.Construction.UI
 
             _selected = (ConstructionPrototype) item.Metadata!;
             if (_placementManager.IsActive && !_placementManager.Eraser) UpdateGhostPlacement();
-            PopulateInfo(_selected);
+            PopulateInfo(_selected.Value);
         }
 
         private void OnViewPopulateRecipes(object? sender, (string search, string catagory) args)
@@ -256,9 +256,9 @@ namespace Content.Client.Construction.UI
                     return;
                 }
 
-                if (_selected.Type == ConstructionType.Item)
+                if (_selected.Value.Type == ConstructionType.Item)
                 {
-                    _constructionSystem.TryStartItemConstruction(_selected.ID);
+                    _constructionSystem.TryStartItemConstruction(_selected.Value.ID);
                     _constructionView.BuildButtonPressed = false;
                     return;
                 }
@@ -266,7 +266,7 @@ namespace Content.Client.Construction.UI
                 _placementManager.BeginPlacing(new PlacementInformation
                 {
                     IsTile = false,
-                    PlacementOption = _selected.PlacementMode
+                    PlacementOption = _selected.Value.PlacementMode
                 }, new ConstructionPlacementHijack(_constructionSystem, _selected));
 
                 UpdateGhostPlacement();
@@ -279,14 +279,14 @@ namespace Content.Client.Construction.UI
 
         private void UpdateGhostPlacement()
         {
-            if (_selected == null || _selected.Type != ConstructionType.Structure) return;
+            if (_selected == null || _selected.Value.Type != ConstructionType.Structure) return;
 
             var constructSystem = EntitySystem.Get<ConstructionSystem>();
 
             _placementManager.BeginPlacing(new PlacementInformation()
             {
                 IsTile = false,
-                PlacementOption = _selected.PlacementMode,
+                PlacementOption = _selected.Value.PlacementMode,
             }, new ConstructionPlacementHijack(constructSystem, _selected));
 
             _constructionView.BuildButtonPressed = true;
@@ -389,7 +389,7 @@ namespace Content.Client.Construction.UI
             if (_selected == null)
                 return;
 
-            PopulateInfo(_selected);
+            PopulateInfo(_selected.Value);
         }
     }
 }

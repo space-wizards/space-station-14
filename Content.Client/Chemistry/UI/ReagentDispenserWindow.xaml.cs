@@ -63,7 +63,7 @@ namespace Content.Client.Chemistry.UI
                          }))
             {
                 var localizedName = _prototypeManager.TryIndex(entry, out ReagentPrototype? p)
-                    ? p.LocalizedName
+                    ? p.Value.Name
                     : Loc.GetString("reagent-dispenser-window-reagent-name-not-found-text");
 
                 var button = new DispenseReagentButton(entry, localizedName);
@@ -155,7 +155,7 @@ namespace Content.Client.Chemistry.UI
             {
                 // Try get to the prototype for the given reagent. This gives us its name.
                 var localizedName = _prototypeManager.TryIndex(reagent.Id, out ReagentPrototype? p)
-                    ? p.LocalizedName
+                    ? p.Value.Name
                     : Loc.GetString("reagent-dispenser-window-reagent-name-not-found-text");
 
                 var nameLabel = new Label {Text = $"{localizedName}: "};

@@ -130,7 +130,7 @@ public sealed partial class CargoSystem
 
         var xform = Transform(component.Owner);
 
-        var product = EntityManager.SpawnEntity(prototype.Product, xform.Coordinates);
+        var product = EntityManager.SpawnEntity(prototype.Value.Product, xform.Coordinates);
 
         Transform(product).Anchored = false;
 
@@ -148,7 +148,7 @@ public sealed partial class CargoSystem
         _paperSystem.SetContent(printed, Loc.GetString(
             "cargo-console-paper-print-text",
             ("orderNumber", data.OrderNumber),
-            ("itemName", prototype.Name),
+            ("itemName", prototype.Value.Name),
             ("requester", data.Requester),
             ("reason", data.Reason),
             ("approver", data.Approver ?? string.Empty)),

@@ -4,9 +4,6 @@ using Robust.Client.Console;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Administration.UI.SetOutfit
@@ -40,7 +37,7 @@ namespace Content.Client.Administration.UI.SetOutfit
         {
             if (TargetEntityId == null || _selectedOutfit == null)
                 return;
-            var command = $"setoutfit {TargetEntityId} {_selectedOutfit.ID}";
+            var command = $"setoutfit {TargetEntityId} {_selectedOutfit.Value.ID}";
             _consoleHost.ExecuteCommand(command);
             Close();
         }

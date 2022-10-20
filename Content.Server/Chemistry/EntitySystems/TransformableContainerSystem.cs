@@ -35,7 +35,7 @@ namespace Content.Server.Chemistry.EntitySystems
             var reagentId = solution.GetPrimaryReagentId();
 
             //If biggest reagent didn't changed - don't change anything at all
-            if (component.CurrentReagent != null && component.CurrentReagent.ID == reagentId)
+            if (component.CurrentReagent != null && component.CurrentReagent.Value.ID == reagentId)
             {
                 return;
             }
@@ -43,19 +43,19 @@ namespace Content.Server.Chemistry.EntitySystems
             //Only reagents with spritePath property can change appearance of transformable containers!
             if (!string.IsNullOrWhiteSpace(reagentId)
                 && _prototypeManager.TryIndex(reagentId, out ReagentPrototype? proto)
-                && !string.IsNullOrWhiteSpace(proto.SpriteReplacementPath))
+                && !string.IsNullOrWhiteSpace(proto.Value.SpriteReplacementPath))
             {
                 var spriteSpec =
                     new SpriteSpecifier.Rsi(
-                        new ResourcePath("Objects/Consumable/Drinks/" + proto.SpriteReplacementPath), "icon");
+                        new ResourcePath("Objects/Consumable/Drinks/" + proto.Value.SpriteReplacementPath), "icon");
                 if (EntityManager.TryGetComponent(owner, out SpriteComponent? sprite))
                 {
                     sprite?.LayerSetSprite(0, spriteSpec);
                 }
 
-                string val = Loc.GetString("transformable-container-component-glass", ("name", proto.LocalizedName));
+                string val = Loc.GetString("transformable-container-component-glass", ("name", proto.Value.Name));
                 EntityManager.GetComponent<MetaDataComponent>(owner).EntityName = val;
-                EntityManager.GetComponent<MetaDataComponent>(owner).EntityDescription = proto.LocalizedDescription;
+                EntityManager.GetComponent<MetaDataComponent>(owner).EntityDescription = proto.Value.Description;
                 component.CurrentReagent = proto;
                 component.Transformed = true;
             }

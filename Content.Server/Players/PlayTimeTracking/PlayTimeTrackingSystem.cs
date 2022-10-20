@@ -158,13 +158,13 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
     public bool IsAllowed(IPlayerSession player, string role)
     {
         if (!_prototypes.TryIndex<JobPrototype>(role, out var job) ||
-            job.Requirements == null ||
+            job.Value.Requirements == null ||
             !_cfg.GetCVar(CCVars.GameRoleTimers))
             return true;
 
         var playTimes = _tracking.GetTrackerTimes(player);
 
-        return JobRequirements.TryRequirementsMet(job, playTimes, out _, _prototypes);
+        return JobRequirements.TryRequirementsMet(job.Value, playTimes, out _, _prototypes);
     }
 
     public HashSet<string> GetDisallowedJobs(IPlayerSession player)
@@ -208,11 +208,11 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
             var job = jobs[i];
 
             if (!_prototypes.TryIndex<JobPrototype>(job, out var jobber) ||
-                jobber.Requirements == null ||
-                jobber.Requirements.Count == 0)
+                jobber.Value.Requirements == null ||
+                jobber.Value.Requirements.Count == 0)
                 continue;
 
-            foreach (var requirement in jobber.Requirements)
+            foreach (var requirement in jobber.Value.Requirements)
             {
                 if (JobRequirements.TryRequirementMet(requirement, playTimes, out _, _prototypes))
                     continue;

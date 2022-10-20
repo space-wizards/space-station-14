@@ -3,7 +3,6 @@ using Content.Server.Atmos.Piping.Components;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Shared.Atmos;
 using Content.Shared.Maps;
-using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
 
@@ -126,7 +125,7 @@ namespace Content.Server.Atmos.EntitySystems
                 AddActiveTile(atmosphere, tile);
 
                 // TODO ATMOS: Query all the contents of this tile (like walls) and calculate the correct thermal conductivity and heat capacity
-                var tileDef = mapGrid.TryGetTileRef(indices, out var tileRef)
+                ContentTileDefinition? tileDef = mapGrid.TryGetTileRef(indices, out var tileRef)
                     ? tileRef.GetContentTileDefinition(_tileDefinitionManager) : null;
 
                 tile.ThermalConductivity = tileDef?.ThermalConductivity ?? 0.5f;

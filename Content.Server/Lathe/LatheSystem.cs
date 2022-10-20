@@ -1,20 +1,20 @@
 using System.Diagnostics.CodeAnalysis;
-using Content.Server.Lathe.Components;
-using Content.Shared.Lathe;
-using Content.Shared.Materials;
-using Content.Shared.Research.Prototypes;
-using Content.Server.Research.Components;
-using Content.Server.Research;
-using Content.Shared.Research.Components;
-using Robust.Server.GameObjects;
-using Robust.Shared.Prototypes;
-using JetBrains.Annotations;
 using System.Linq;
+using Content.Server.Lathe.Components;
 using Content.Server.Materials;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Server.Research;
+using Content.Server.Research.Components;
 using Content.Server.UserInterface;
+using Content.Shared.Lathe;
+using Content.Shared.Materials;
+using Content.Shared.Research.Components;
+using Content.Shared.Research.Prototypes;
+using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Lathe
 {
@@ -67,7 +67,7 @@ namespace Content.Server.Lathe
 
                 comp.AccumulatedTime += frameTime;
 
-                if (comp.AccumulatedTime >= (float) lathe.CurrentRecipe.CompleteTime.TotalSeconds)
+                if (comp.AccumulatedTime >= (float) lathe.CurrentRecipe.Value.CompleteTime.TotalSeconds)
                     FinishProducing(comp.Owner, lathe);
             }
         }
@@ -82,7 +82,7 @@ namespace Content.Server.Lathe
             {
                 if (!_proto.TryIndex<LatheRecipePrototype>(id, out var proto))
                     continue;
-                foreach (var (mat, _) in proto.RequiredMaterials)
+                foreach (var (mat, _) in proto.Value.RequiredMaterials)
                 {
                     if (!materialWhitelist.Contains(mat))
                     {
@@ -164,7 +164,7 @@ namespace Content.Server.Lathe
                 return;
 
             if (comp.CurrentRecipe != null)
-                Spawn(comp.CurrentRecipe.Result, Transform(uid).Coordinates);
+                Spawn(comp.CurrentRecipe.Value.Result, Transform(uid).Coordinates);
             comp.CurrentRecipe = null;
             prodComp.AccumulatedTime = 0;
 
@@ -270,7 +270,7 @@ namespace Content.Server.Lathe
             {
                 for (var i = 0; i < args.Quantity; i++)
                 {
-                    TryAddToQueue(uid, recipe, component);
+                    TryAddToQueue(uid, recipe.Value, component);
                 }
             }
             TryStartProducing(uid, component);

@@ -2,8 +2,8 @@ using Content.Server.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
-using Content.Shared.Speech;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.Manager;
 
 namespace Content.Server.VoiceMask;
 
@@ -13,6 +13,7 @@ public sealed partial class VoiceMaskSystem
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly ActionsSystem _actions = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly ISerializationManager _serialization = default!;
 
     private const string MaskSlot = "mask";
 
@@ -26,7 +27,7 @@ public sealed partial class VoiceMaskSystem
             throw new ArgumentException("Could not get voice masking prototype.");
         }
 
-        _actions.AddAction(args.Equipee, (InstantAction) action.Clone(), uid);
+        _actions.AddAction(args.Equipee, _serialization.Copy(action.Value.InstantAction), uid);
     }
 
     private void OnUnequip(EntityUid uid, VoiceMaskerComponent compnent, GotUnequippedEvent args)

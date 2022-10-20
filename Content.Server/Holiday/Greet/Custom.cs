@@ -9,7 +9,7 @@ namespace Content.Server.Holiday.Greet
     {
         [DataField("text")] private string _greet = string.Empty;
 
-        public string Greet(HolidayPrototype holiday)
+        public string Greet(Holiday holiday)
         {
             return Loc.GetString(_greet);
         }

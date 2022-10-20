@@ -4,7 +4,7 @@ namespace Content.Server.Holiday.Greet
 {
     public sealed class DefaultHolidayGreet : IHolidayGreet
     {
-        public string Greet(HolidayPrototype holiday)
+        public string Greet(Holiday holiday)
         {
             var holidayName = Loc.GetString(holiday.Name);
             return Loc.GetString("holiday-greet", ("holidayName", holidayName));

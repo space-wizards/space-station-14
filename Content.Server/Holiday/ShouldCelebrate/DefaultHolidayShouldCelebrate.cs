@@ -5,7 +5,7 @@ namespace Content.Server.Holiday.ShouldCelebrate
     [Virtual]
     public class DefaultHolidayShouldCelebrate : IHolidayShouldCelebrate
     {
-        public virtual bool ShouldCelebrate(DateTime date, HolidayPrototype holiday)
+        public virtual bool ShouldCelebrate(DateTime date, Holiday holiday)
         {
             if (holiday.EndDay == 0)
                 holiday.EndDay = holiday.BeginDay;

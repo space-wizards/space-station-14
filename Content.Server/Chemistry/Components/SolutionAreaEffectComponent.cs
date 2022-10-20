@@ -99,7 +99,7 @@ namespace Content.Server.Chemistry.Components
                 }
 
                 var newEffect = _entities.SpawnEntity(
-                    meta.EntityPrototype.ID,
+                    meta.EntityPrototype.Value.ID,
                     grid.GridTileToLocal(index));
 
                 if (!_entities.TryGetComponent(newEffect, out SolutionAreaEffectComponent? effectComponent))

@@ -46,7 +46,7 @@ public sealed class RandomMetadataSystem : EntitySystem
         foreach (var segment in segments)
         {
             outputSegments.Add(_prototype.TryIndex<DatasetPrototype>(segment, out var proto)
-                ? _random.Pick(proto.Values)
+                ? _random.Pick(proto.Value.Values)
                 : segment);
         }
         return string.Join(separator, outputSegments);

@@ -17,6 +17,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Serialization.Manager;
 
 namespace Content.Server.VendingMachines
 {
@@ -33,6 +34,7 @@ namespace Content.Server.VendingMachines
         [Dependency] private readonly PricingSystem _pricing = default!;
         [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
+        [Dependency] private readonly ISerializationManager _serialization = default!;
 
         private ISawmill _sawmill = default!;
 
@@ -66,7 +68,7 @@ namespace Content.Server.VendingMachines
                     continue;
                 }
 
-                price += entry.Amount * _pricing.GetEstimatedPrice(proto, _factory);
+                price += entry.Amount * _pricing.GetEstimatedPrice(proto.Value, _factory);
             }
 
             args.Price += price;
@@ -85,7 +87,7 @@ namespace Content.Server.VendingMachines
 
             if (component.Action != null)
             {
-                var action = new InstantAction(_prototypeManager.Index<InstantActionPrototype>(component.Action));
+                var action = _serialization.Copy(_prototypeManager.Index<InstantActionPrototype>(component.Action).InstantAction);
                 _action.AddAction(uid, action, uid);
             }
         }

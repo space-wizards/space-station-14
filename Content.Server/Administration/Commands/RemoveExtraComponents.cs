@@ -40,7 +40,7 @@ namespace Content.Server.Administration.Commands
 
                 foreach (var component in entityManager.GetComponents(entity))
                 {
-                    if (metaData.EntityPrototype.Components.ContainsKey(component.Name))
+                    if (metaData.EntityPrototype.Value.Components.ContainsKey(component.Name))
                         continue;
 
                     entityManager.RemoveComponent(entity, component);

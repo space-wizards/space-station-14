@@ -14,8 +14,7 @@ namespace Content.Server.Medical.Components
 
         public CancellationTokenSource? CancelToken;
 
-        [DataField("delay")]
-        public float Delay = 2.5f;
+        [DataField("delay")] public float Delay = 2.5f;
 
         public EntityTargetAction Action = new()
         {

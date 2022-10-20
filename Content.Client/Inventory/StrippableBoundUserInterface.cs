@@ -13,7 +13,6 @@ using Content.Shared.Inventory;
 using Content.Shared.Strip.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
@@ -28,7 +27,7 @@ namespace Content.Client.Inventory
     public sealed class StrippableBoundUserInterface : BoundUserInterface
     {
         private const int ButtonSeparation = 4;
-        
+
         [Dependency] private readonly IPrototypeManager _protoMan = default!;
         [Dependency] private readonly IEntityManager _entMan = default!;
         private ExamineSystem _examine = default!;
@@ -84,16 +83,16 @@ namespace Content.Client.Inventory
 
             if (_entMan.TryGetComponent(Owner.Owner, out InventoryComponent? inv) && _protoMan.TryIndex<InventoryTemplatePrototype>(inv.TemplateId, out var template))
             {
-                foreach (var slot in template.Slots)
+                foreach (var slot in template.Value.Slots)
                 {
-                    AddInventoryButton(slot.Name, template, inv);
+                    AddInventoryButton(slot.Name, template.Value, inv);
                 }
             }
 
             if (_entMan.TryGetComponent(Owner.Owner, out HandsComponent? handsComp))
             {
                 // good ol hands shit code. there is a GuiHands comparer that does the same thing... but these are hands
-                // and not gui hands... which are different... 
+                // and not gui hands... which are different...
                 foreach (var hand in handsComp.Hands.Values)
                 {
                     if (hand.Location != HandLocation.Right)
@@ -157,7 +156,7 @@ namespace Content.Client.Inventory
                 if (_entMan.TryGetComponent(Owner.Owner, out CuffableComponent? cuff) && cuff.Container.Contains(virt.BlockingEntity))
                     button.BlockedRect.MouseFilter = MouseFilterMode.Ignore;
             }
-            
+
             UpdateEntityIcon(button, hand.HeldEntity);
             _strippingMenu!.HandsContainer.AddChild(button);
         }

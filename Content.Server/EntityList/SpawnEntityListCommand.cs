@@ -45,7 +45,7 @@ namespace Content.Server.EntityList
             var entityManager = IoCManager.Resolve<IEntityManager>();
             var i = 0;
 
-            foreach (var entity in prototype.Entities(prototypeManager))
+            foreach (var entity in prototype.Value.Entities(prototypeManager))
             {
                 entityManager.SpawnEntity(entity.ID, entityManager.GetComponent<TransformComponent>(attached).Coordinates);
                 i++;

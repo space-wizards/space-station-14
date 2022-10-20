@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using Content.Server.Administration.Managers;
 using Content.Server.Players.PlayTimeTracking;
-using Content.Server.Roles;
 using Content.Server.Station.Components;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
@@ -357,7 +356,7 @@ public sealed partial class StationJobsSystem
                 if (!_prototypeManager.TryIndex(jobId, out JobPrototype? job))
                     continue;
 
-                if (weight is not null && job.Weight != weight.Value)
+                if (weight is not null && job.Value.Weight != weight.Value)
                     continue;
 
                 if (!(roleBans == null || !roleBans.Contains(jobId)))

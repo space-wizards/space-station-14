@@ -1,6 +1,5 @@
 using Content.Server.Disease;
 using Content.Server.Disease.Components;
-using Content.Server.Station.Systems;
 using Content.Shared.Disease;
 using Content.Shared.MobState.Components;
 using Robust.Shared.Random;
@@ -61,7 +60,7 @@ public sealed class DiseaseOutbreak : StationEventSystem
             if (toInfect-- == 0)
                 break;
 
-            _diseaseSystem.TryAddDisease(target.Owner, disease, target);
+            _diseaseSystem.TryAddDisease(target.Owner, disease.Value, target);
 
             var station = StationSystem.GetOwningStation(target.Owner);
             if(station == null) continue;

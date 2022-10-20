@@ -74,7 +74,7 @@ namespace Content.Server.Body.Components
                 {
                     // Using MapPosition instead of Coordinates here prevents
                     // a crash within the character preview menu in the lobby
-                    var entity = _entMan.SpawnEntity(preset.PartIDs[slot.Id], _entMan.GetComponent<TransformComponent>(Owner).MapPosition);
+                    var entity = _entMan.SpawnEntity(preset.Value.PartIDs[slot.Id], _entMan.GetComponent<TransformComponent>(Owner).MapPosition);
 
                     if (!_entMan.TryGetComponent(entity, out SharedBodyPartComponent? part))
                     {

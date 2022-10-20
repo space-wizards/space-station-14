@@ -2,7 +2,6 @@ using System.Linq;
 using Content.Server.Actions;
 using Content.Server.Chat.Managers;
 using Content.Server.Disease;
-using Content.Server.GameTicking.Rules.Configurations;
 using Content.Server.Humanoid;
 using Content.Server.Mind.Components;
 using Content.Server.MobState;
@@ -14,7 +13,6 @@ using Content.Server.Traitor;
 using Content.Server.Zombies;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.CCVar;
-using Content.Shared.FixedPoint;
 using Content.Shared.MobState;
 using Content.Shared.MobState.Components;
 using Content.Shared.Preferences;
@@ -25,6 +23,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Utility;
 
 namespace Content.Server.GameTicking.Rules;
@@ -43,6 +42,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
     [Dependency] private readonly ActionsSystem _action = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly ZombifyOnDeathSystem _zombify = default!;
+    [Dependency] private readonly ISerializationManager _serialization = default!;
 
     private Dictionary<string, string> _initialInfectedNames = new();
 
@@ -191,7 +191,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
     {
         _zombify.ZombifyEntity(uid);
 
-        var action = new InstantAction(_prototypeManager.Index<InstantActionPrototype>(ZombifySelfActionPrototype));
+        var action = _serialization.Copy(_prototypeManager.Index<InstantActionPrototype>(ZombifySelfActionPrototype).InstantAction);
         _action.RemoveAction(uid, action);
     }
 
@@ -293,7 +293,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
                 _diseaseSystem.TryAddDisease(mind.OwnedEntity.Value, InitialZombieVirusPrototype);
                 inCharacterName = MetaData(mind.OwnedEntity.Value).EntityName;
 
-                var action = new InstantAction(_prototypeManager.Index<InstantActionPrototype>(ZombifySelfActionPrototype));
+                var action = _serialization.Copy(_prototypeManager.Index<InstantActionPrototype>(ZombifySelfActionPrototype).InstantAction);
                 _action.AddAction(mind.OwnedEntity.Value, action, null);
             }
 

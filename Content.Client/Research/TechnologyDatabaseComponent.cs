@@ -1,8 +1,5 @@
-using System;
 using Content.Shared.Research.Components;
 using Content.Shared.Research.Prototypes;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Research
@@ -28,7 +25,7 @@ namespace Content.Client.Research
             foreach (var techID in state.Technologies)
             {
                 if (!protoManager.TryIndex(techID, out TechnologyPrototype? technology)) continue;
-                Technologies.Add(technology);
+                Technologies.Add(technology.Value);
             }
 
             OnDatabaseUpdated?.Invoke();

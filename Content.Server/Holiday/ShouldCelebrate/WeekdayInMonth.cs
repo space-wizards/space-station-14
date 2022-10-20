@@ -13,7 +13,7 @@ namespace Content.Server.Holiday.ShouldCelebrate
 
         [DataField("occurrence")] private uint _occurrence = 1;
 
-        public override bool ShouldCelebrate(DateTime date, HolidayPrototype holiday)
+        public override bool ShouldCelebrate(DateTime date, Holiday holiday)
         {
             // Not the needed month.
             if (date.Month != (int) holiday.BeginMonth)

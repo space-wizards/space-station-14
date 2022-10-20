@@ -1,11 +1,7 @@
-﻿using System.Collections.Generic;
-using Content.Shared.Construction;
-using Content.Shared.Construction.Prototypes;
+﻿using Content.Shared.Construction.Prototypes;
 using Robust.Client.Graphics;
 using Robust.Client.Placement;
 using Robust.Client.Utility;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
 namespace Content.Client.Construction
@@ -30,7 +26,7 @@ namespace Content.Client.Construction
             if (_prototype != null)
             {
                 var dir = Manager.Direction;
-                _constructionSystem.SpawnGhost(_prototype, coordinates, dir);
+                _constructionSystem.SpawnGhost(_prototype.Value, coordinates, dir);
             }
             return true;
         }

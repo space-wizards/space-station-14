@@ -6,7 +6,7 @@ using Robust.Shared.Prototypes;
 namespace Content.IntegrationTests.Tests.Atmos
 {
     [TestFixture]
-    [TestOf(typeof(AtmosAlarmThreshold))]
+    [TestOf(typeof(AtmosAlarmThresholdPrototype))]
     public sealed class AlarmThresholdTest
     {
         private const string Prototypes = @"
@@ -29,7 +29,7 @@ namespace Content.IntegrationTests.Tests.Atmos
 
             await server.WaitPost(() =>
             {
-                threshold = prototypeManager.Index<AtmosAlarmThreshold>("testThreshold");
+                threshold = prototypeManager.Index<AtmosAlarmThresholdPrototype>("testThreshold").AtmosAlarmThreshold;
             });
 
             await server.WaitAssertion(() =>

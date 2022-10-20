@@ -64,10 +64,10 @@ namespace Content.Server.Access.Systems
                 return;
             }
 
-            _accessSystem.SetAccessToJob(uid, job, extended);
+            _accessSystem.SetAccessToJob(uid, job.Value, extended);
 
             // and also change job title on a card id
-            _cardSystem.TryChangeJobTitle(uid, job.LocalizedName);
+            _cardSystem.TryChangeJobTitle(uid, job.Value.LocalizedName);
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using Content.Shared.Chat.TypingIndicator;
 using Robust.Client.GameObjects;
-using Robust.Client.Graphics;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Chat.TypingIndicator;
@@ -27,10 +26,10 @@ public sealed class TypingIndicatorVisualizerSystem : VisualizerSystem<TypingInd
         }
 
         var layer = sprite.LayerMapReserveBlank(TypingIndicatorLayers.Base);
-        sprite.LayerSetRSI(layer, proto.SpritePath);
-        sprite.LayerSetState(layer, proto.TypingState);
-        sprite.LayerSetShader(layer, proto.Shader);
-        sprite.LayerSetOffset(layer, proto.Offset);
+        sprite.LayerSetRSI(layer, proto.Value.SpritePath);
+        sprite.LayerSetState(layer, proto.Value.TypingState);
+        sprite.LayerSetShader(layer, proto.Value.Shader);
+        sprite.LayerSetOffset(layer, proto.Value.Offset);
         sprite.LayerSetVisible(layer, false);
     }
 

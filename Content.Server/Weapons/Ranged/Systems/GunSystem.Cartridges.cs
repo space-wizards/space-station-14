@@ -48,7 +48,7 @@ public sealed partial class GunSystem
         if (!ProtoManager.TryIndex<EntityPrototype>(proto, out var entityProto))
             return null;
 
-        if (entityProto.Components
+        if (entityProto.Value.Components
             .TryGetValue(_factory.GetComponentName(typeof(ProjectileComponent)), out var projectile))
         {
             var p = (ProjectileComponent) projectile.Component;

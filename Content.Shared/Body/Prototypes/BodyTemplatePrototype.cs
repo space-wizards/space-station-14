@@ -9,11 +9,9 @@ namespace Content.Shared.Body.Prototypes
     /// </summary>
     [Prototype("bodyTemplate")]
     [Serializable, NetSerializable]
-    public readonly record struct BodyTemplatePrototype : IPrototype, ISerializationHooks
+    public readonly record struct BodyTemplatePrototype : IPrototype
     {
-        [DataField("slots")] private readonly Dictionary<string, BodyPartType> _slots = new();
-
-        [DataField("connections")] private readonly Dictionary<string, List<string>> _rawConnections = new();
+        [IncludeDataField] private readonly ConnectionsData _connectionsData = default;
 
         [DataField("layers")] private readonly Dictionary<string, string> _layers = new();
 
@@ -32,9 +30,9 @@ namespace Content.Shared.Body.Prototypes
         public string CenterSlot { get; } = string.Empty;
 
         [ViewVariables]
-        public Dictionary<string, BodyPartType> Slots => new(_slots);
+        public Dictionary<string, BodyPartType> Slots => new(_connectionsData.Slots);
 
-        [ViewVariables] public Dictionary<string, HashSet<string>> Connections { get; } = new();
+        [ViewVariables] public Dictionary<string, HashSet<string>> Connections => _connectionsData.Connections;
 
         [ViewVariables]
         public Dictionary<string, string> Layers => new(_layers);
@@ -42,40 +40,51 @@ namespace Content.Shared.Body.Prototypes
         [ViewVariables]
         public Dictionary<string, string> MechanismLayers => new(_mechanismLayers);
 
-        void ISerializationHooks.AfterDeserialization()
+        private struct ConnectionsData : ISerializationHooks
         {
-            //Our prototypes don't force the user to define a BodyPart connection twice. E.g. Head: Torso v.s. Torso: Head.
-            //The user only has to do one. We want it to be that way in the code, though, so this cleans that up.
-            var cleanedConnections = new Dictionary<string, HashSet<string>>();
+            [DataField("slots")] public readonly Dictionary<string, BodyPartType> Slots = new();
 
-            foreach (var targetSlotName in _slots.Keys)
+            [DataField("connections")] private readonly Dictionary<string, List<string>> _rawConnections = new();
+
+            public Dictionary<string, HashSet<string>> Connections = new();
+
+            void ISerializationHooks.AfterDeserialization()
             {
-                var tempConnections = new HashSet<string>();
-                foreach (var (slotName, slotConnections) in _rawConnections)
+                //Our prototypes don't force the user to define a BodyPart connection twice. E.g. Head: Torso v.s. Torso: Head.
+                //The user only has to do one. We want it to be that way in the code, though, so this cleans that up.
+                var cleanedConnections = new Dictionary<string, HashSet<string>>();
+
+                foreach (var targetSlotName in Slots.Keys)
                 {
-                    if (slotName == targetSlotName)
+                    var tempConnections = new HashSet<string>();
+                    foreach (var (slotName, slotConnections) in _rawConnections)
                     {
-                        foreach (var connection in slotConnections)
+                        if (slotName == targetSlotName)
                         {
-                            if (!tempConnections.Contains(connection))
+                            foreach (var connection in slotConnections)
                             {
-                                tempConnections.Add(connection);
+                                if (!tempConnections.Contains(connection))
+                                {
+                                    tempConnections.Add(connection);
+                                }
                             }
                         }
+                        else if (slotConnections.Contains(targetSlotName))
+                        {
+                            tempConnections.Add(slotName);
+                        }
                     }
-                    else if (slotConnections.Contains(targetSlotName))
+
+                    if (tempConnections.Count > 0)
                     {
-                        tempConnections.Add(slotName);
+                        cleanedConnections.Add(targetSlotName, tempConnections);
                     }
                 }
 
-                if (tempConnections.Count > 0)
-                {
-                    cleanedConnections.Add(targetSlotName, tempConnections);
-                }
+                Connections = cleanedConnections;
             }
-
-            Connections = cleanedConnections;
         }
+
+
     }
 }

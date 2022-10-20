@@ -29,7 +29,7 @@ public sealed class TraitSystem : EntitySystem
             }
 
             // Add all components required by the prototype
-            foreach (var entry in traitPrototype.Components.Values)
+            foreach (var entry in traitPrototype.Value.Components.Values)
             {
                 var comp = (Component) _serializationManager.Copy(entry.Component);
                 comp.Owner = args.Mob;

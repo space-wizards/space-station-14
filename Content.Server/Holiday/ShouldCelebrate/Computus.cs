@@ -72,7 +72,7 @@ namespace Content.Server.Holiday.ShouldCelebrate
             return easterDate;
         }
 
-        public override bool ShouldCelebrate(DateTime date, HolidayPrototype holiday)
+        public override bool ShouldCelebrate(DateTime date, Holiday holiday)
         {
             if (holiday.BeginMonth == Month.Invalid)
             {

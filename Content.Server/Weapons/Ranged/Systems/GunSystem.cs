@@ -15,6 +15,7 @@ using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
+using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
@@ -23,7 +24,6 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
-using SharedGunSystem = Content.Shared.Weapons.Ranged.Systems.SharedGunSystem;
 
 namespace Content.Server.Weapons.Ranged.Systems;
 
@@ -57,7 +57,7 @@ public sealed partial class GunSystem : SharedGunSystem
         }
 
         // Probably good enough for most.
-        var price = _pricing.GetEstimatedPrice(proto);
+        var price = _pricing.GetEstimatedPrice(proto.Value);
         args.Price += price * component.UnspawnedCount;
     }
 

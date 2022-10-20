@@ -863,7 +863,7 @@ namespace Content.Client.Preferences.UI
             // add species sex options, default to just none if we are in bizzaro world and have no species
             if (_prototypeManager.TryIndex<SpeciesPrototype>(Profile.Species, out var speciesProto))
             {
-                foreach (var sex in speciesProto.Sexes)
+                foreach (var sex in speciesProto.Value.Sexes)
                 {
                     sexes.Add(sex);
                 }

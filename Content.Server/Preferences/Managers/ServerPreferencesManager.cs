@@ -13,7 +13,6 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 
-
 namespace Content.Server.Preferences.Managers
 {
     /// <summary>
@@ -278,7 +277,7 @@ namespace Content.Server.Preferences.Managers
                         var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
                         var selectedSpecies = HumanoidSystem.DefaultSpecies;
 
-                        if (prototypeManager.TryIndex<SpeciesPrototype>(hp.Species, out var species) && species.RoundStart)
+                        if (prototypeManager.TryIndex<SpeciesPrototype>(hp.Species, out var species) && species.Value.RoundStart)
                         {
                             selectedSpecies = hp.Species;
                         }

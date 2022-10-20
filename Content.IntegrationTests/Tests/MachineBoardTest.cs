@@ -47,7 +47,7 @@ public sealed class MachineBoardTest
                 Assert.That(mId, Is.Not.Null, $"Machine board {p.ID} does not have a corresponding machine.");
                 Assert.That(protoMan.TryIndex<EntityPrototype>(mId, out var mProto),
                     $"Machine board {p.ID}'s corresponding machine has an invalid prototype.");
-                Assert.That(mProto.TryGetComponent<MachineComponent>(out var mComp),
+                Assert.That(mProto.Value.TryGetComponent<MachineComponent>(out var mComp),
                     $"Machine board {p.ID}'s corresponding machine {mId} does not have MachineComponent");
                 Assert.That(mComp.BoardPrototype, Is.EqualTo(p.ID),
                     $"Machine {mId}'s BoardPrototype is not equal to it's corresponding machine board, {p.ID}");

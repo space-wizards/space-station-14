@@ -1,8 +1,6 @@
-using Content.Server.Administration.Managers;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
-using Content.Server.Ghost.Components;
 using Content.Server.Power.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.DeviceNetwork;
@@ -36,7 +34,7 @@ public sealed class SurveillanceCameraRouterSystem : EntitySystem
             return;
         }
 
-        router.SubnetFrequency = subnetFrequency.Frequency;
+        router.SubnetFrequency = subnetFrequency.Value.Frequency;
         router.Active = true;
     }
 
@@ -130,7 +128,7 @@ public sealed class SurveillanceCameraRouterSystem : EntitySystem
         }
 
         component.SubnetFrequencyId = component.AvailableNetworks[args.Network];
-        component.SubnetFrequency = frequency.Frequency;
+        component.SubnetFrequency = frequency.Value.Frequency;
         component.Active = true;
         UpdateSetupInterface(uid, component);
     }

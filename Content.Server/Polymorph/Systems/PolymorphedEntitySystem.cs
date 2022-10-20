@@ -71,7 +71,7 @@ namespace Content.Server.Polymorph.Systems
             if (_container.TryGetContainingContainer(uid, out var cont))
                 cont.Insert(component.Parent);
 
-            if (proto.TransferDamage &&
+            if (proto.Value.TransferDamage &&
                 TryComp<DamageableComponent>(component.Parent, out var damageParent) &&
                 _damageable.GetScaledDamage(uid, component.Parent, out var damage) &&
                 damage != null)
@@ -79,7 +79,7 @@ namespace Content.Server.Polymorph.Systems
                 _damageable.SetDamage(damageParent, damage);
             }
 
-            if (proto.Inventory == PolymorphInventoryChange.Transfer)
+            if (proto.Value.Inventory == PolymorphInventoryChange.Transfer)
             {
                 _inventory.TransferEntityInventories(uid, component.Parent);
                 foreach (var hand in _sharedHands.EnumerateHeld(component.Parent))
@@ -88,7 +88,7 @@ namespace Content.Server.Polymorph.Systems
                     _sharedHands.TryPickupAnyHand(component.Parent, hand);
                 }
             }
-            else if (proto.Inventory == PolymorphInventoryChange.Drop)
+            else if (proto.Value.Inventory == PolymorphInventoryChange.Drop)
             {
                 if (_inventory.TryGetContainerSlotEnumerator(uid, out var enumerator))
                     while (enumerator.MoveNext(out var slot))
@@ -122,7 +122,7 @@ namespace Content.Server.Polymorph.Systems
                 return;
             }
 
-            if (proto.Forced)
+            if (proto.Value.Forced)
                 return;
 
             var act = new InstantAction()
@@ -131,7 +131,7 @@ namespace Content.Server.Polymorph.Systems
                 EntityIcon = component.Parent,
                 DisplayName = Loc.GetString("polymorph-revert-action-name"),
                 Description = Loc.GetString("polymorph-revert-action-description"),
-                UseDelay = TimeSpan.FromSeconds(proto.Delay),
+                UseDelay = TimeSpan.FromSeconds(proto.Value.Delay),
            };
 
             _actions.AddAction(uid, act, null);
@@ -152,14 +152,14 @@ namespace Content.Server.Polymorph.Systems
                     continue;
                 }
 
-                if(proto.Duration != null && comp.Time >= proto.Duration)
+                if(proto.Value.Duration != null && comp.Time >= proto.Value.Duration)
                     Revert(comp.Owner);
 
                 if (!TryComp<MobStateComponent>(comp.Owner, out var mob))
                     continue;
 
-                if ((proto.RevertOnDeath && mob.IsDead()) ||
-                    (proto.RevertOnCrit && mob.IsCritical()))
+                if ((proto.Value.RevertOnDeath && mob.IsDead()) ||
+                    (proto.Value.RevertOnCrit && mob.IsCritical()))
                     Revert(comp.Owner);
             }
         }

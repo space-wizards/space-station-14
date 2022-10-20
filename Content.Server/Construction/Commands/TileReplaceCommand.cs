@@ -1,11 +1,8 @@
 using Content.Server.Administration;
 using Content.Shared.Administration;
-using Content.Shared.Maps;
-using Content.Shared.Tag;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Construction.Commands;
 
@@ -55,8 +52,8 @@ sealed class TileReplaceCommand : IConsoleCommand
         }
 
         var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();
-        var tileA = tileDefinitionManager[tileIdA];
-        var tileB = tileDefinitionManager[tileIdB];
+        var tileA = tileDefinitionManager.TileIds[tileIdA];
+        var tileB = tileDefinitionManager.TileIds[tileIdB];
 
         var mapManager = IoCManager.Resolve<IMapManager>();
         if (!mapManager.TryGetGrid(gridId, out var grid))
@@ -75,9 +72,9 @@ sealed class TileReplaceCommand : IConsoleCommand
         foreach (var tile in grid.GetAllTiles())
         {
             var tileContent = tile.Tile;
-            if (tileContent.TypeId == tileA.TileId)
+            if (tileContent.TypeId == tileA)
             {
-                grid.SetTile(tile.GridIndices, new Tile(tileB.TileId));
+                grid.SetTile(tile.GridIndices, new Tile(tileB));
                 changed++;
             }
         }

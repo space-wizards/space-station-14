@@ -1,6 +1,6 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Physics;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
@@ -164,9 +164,7 @@ namespace Content.Shared.Maps
             entityManager.GetComponent<TransformComponent>(tileItem).LocalRotation
                 = robustRandom.NextDouble() * Math.Tau;
 
-            var plating = tileDefinitionManager[tileDef.BaseTurfs[^1]];
-
-            mapGrid.SetTile(tileRef.GridIndices, new Tile(plating.TileId));
+            mapGrid.SetTile(tileRef.GridIndices, new Tile(tileDefinitionManager.TileIds[tileDef.BaseTurfs[^1]]));
 
             return true;
         }

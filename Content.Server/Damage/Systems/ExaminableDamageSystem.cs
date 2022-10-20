@@ -33,7 +33,7 @@ public sealed class ExaminableDamageSystem : EntitySystem
         if (component.MessagesProto == null)
             return;
 
-        var messages = component.MessagesProto.Messages;
+        var messages = component.MessagesProto.Value.Messages;
         if (messages.Length == 0)
             return;
 
@@ -51,7 +51,7 @@ public sealed class ExaminableDamageSystem : EntitySystem
         if (component.MessagesProto == null)
             return 0;
 
-        var maxLevels = component.MessagesProto.Messages.Length - 1;
+        var maxLevels = component.MessagesProto.Value.Messages.Length - 1;
         if (maxLevels <= 0)
             return 0;
 

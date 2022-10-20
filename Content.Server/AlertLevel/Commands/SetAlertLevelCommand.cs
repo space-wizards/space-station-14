@@ -88,7 +88,7 @@ namespace Content.Server.AlertLevel.Commands
             if (alertLevelComp.AlertLevels == null)
                 return new string[]{};
 
-            return alertLevelComp.AlertLevels.Levels.Keys.ToArray();
+            return alertLevelComp.AlertLevels.Value.Levels.Keys.ToArray();
         }
     }
 }

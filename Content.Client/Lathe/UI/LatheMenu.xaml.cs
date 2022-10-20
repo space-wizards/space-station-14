@@ -73,8 +73,8 @@ public sealed partial class LatheMenu : DefaultWindow
             if (!_prototypeManager.TryIndex(id, out MaterialPrototype? material))
                 continue;
             var mat = Loc.GetString("lathe-menu-material-display",
-                ("material", material.Name), ("amount", amount));
-            Materials.AddItem(mat, _spriteSystem.Frame0(material.Icon), false);
+                ("material", material.Value.Name), ("amount", amount));
+            Materials.AddItem(mat, _spriteSystem.Frame0(material.Value.Icon), false);
         }
         PopulateRecipes(lathe);
     }
@@ -93,12 +93,12 @@ public sealed partial class LatheMenu : DefaultWindow
 
             if (SearchBar.Text.Trim().Length != 0)
             {
-                if (proto.Name.ToLowerInvariant().Contains(SearchBar.Text.Trim().ToLowerInvariant()))
-                    recipesToShow.Add(proto);
+                if (proto.Value.Name.ToLowerInvariant().Contains(SearchBar.Text.Trim().ToLowerInvariant()))
+                    recipesToShow.Add(proto.Value);
             }
             else
             {
-                recipesToShow.Add(proto);
+                recipesToShow.Add(proto.Value);
             }
         }
 
@@ -123,7 +123,7 @@ public sealed partial class LatheMenu : DefaultWindow
 
                 sb.Append(amount);
                 sb.Append(' ');
-                sb.Append(proto.Name);
+                sb.Append(proto.Value.Name);
             }
 
             var icon = _spriteSystem.Frame0(prototype.Icon);

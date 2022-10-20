@@ -1,4 +1,3 @@
-using Content.Server.Actions;
 using Content.Server.Popups;
 using Content.Server.PowerCell;
 using Content.Shared.Actions;
@@ -10,12 +9,12 @@ using Content.Shared.Rounding;
 using Content.Shared.Toggleable;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Light.EntitySystems
@@ -26,6 +25,7 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly PowerCellSystem _powerCell = default!;
         [Dependency] private readonly IPrototypeManager _proto = default!;
+        [Dependency] private readonly ISerializationManager _serialization = default!;
 
         // TODO: Ideally you'd be able to subscribe to power stuff to get events at certain percentages.. or something?
         // But for now this will be better anyway.
@@ -73,7 +73,7 @@ namespace Content.Server.Light.EntitySystems
             if (component.ToggleAction == null
                 && _proto.TryIndex(component.ToggleActionId, out InstantActionPrototype? act))
             {
-                component.ToggleAction = new(act);
+                component.ToggleAction = _serialization.Copy(act.Value.InstantAction);
             }
 
             if (component.ToggleAction != null)

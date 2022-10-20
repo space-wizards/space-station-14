@@ -1,6 +1,5 @@
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
-using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Atmos.Monitor.Components;
@@ -22,17 +21,17 @@ public sealed class AtmosMonitorComponent : Component
     [ViewVariables]
     public bool NetEnabled = true;
 
-    [DataField("temperatureThreshold", customTypeSerializer: (typeof(PrototypeIdSerializer<AtmosAlarmThreshold>)))]
+    [DataField("temperatureThreshold", customTypeSerializer: (typeof(PrototypeIdSerializer<AtmosAlarmThresholdPrototype>)))]
     public readonly string? TemperatureThresholdId;
 
     [ViewVariables]
-    public AtmosAlarmThreshold? TemperatureThreshold;
+    public AtmosAlarmThreshold TemperatureThreshold = new();
 
-    [DataField("pressureThreshold", customTypeSerializer: (typeof(PrototypeIdSerializer<AtmosAlarmThreshold>)))]
+    [DataField("pressureThreshold", customTypeSerializer: (typeof(PrototypeIdSerializer<AtmosAlarmThresholdPrototype>)))]
     public readonly string? PressureThresholdId;
 
     [ViewVariables]
-    public AtmosAlarmThreshold? PressureThreshold;
+    public AtmosAlarmThreshold PressureThreshold = new();
 
     // monitor fire - much different from temperature
     // since there's events for fire, setting this to true

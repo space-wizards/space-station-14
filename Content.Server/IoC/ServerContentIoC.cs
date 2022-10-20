@@ -20,8 +20,6 @@ using Content.Server.ServerUpdates;
 using Content.Server.Voting.Managers;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Logs;
-using Content.Shared.Kitchen;
-using Content.Shared.Module;
 
 namespace Content.Server.IoC
 {
@@ -34,7 +32,6 @@ namespace Content.Server.IoC
             IoCManager.Register<IMoMMILink, MoMMILink>();
             IoCManager.Register<IServerPreferencesManager, ServerPreferencesManager>();
             IoCManager.Register<IServerDbManager, ServerDbManager>();
-            IoCManager.Register<RecipeManager, RecipeManager>();
             IoCManager.Register<INodeGroupFactory, NodeGroupFactory>();
             IoCManager.Register<IConnectionManager, ConnectionManager>();
             IoCManager.Register<ServerUpdateManager>();

@@ -244,7 +244,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         if (addLog) // dont log if already created a separate, more detailed, log.
             _adminLogger.Add(LogType.Explosion, LogImpact.High, $"Explosion spawned at {epicenter:coordinates} with intensity {totalIntensity} slope {slope}");
 
-        _explosionQueue.Enqueue(() => SpawnExplosion(epicenter, type, totalIntensity,
+        _explosionQueue.Enqueue(() => SpawnExplosion(epicenter, type.Value, totalIntensity,
             slope, maxTileIntensity, tileBreakScale, maxTileBreak, canCreateVacuum));
     }
 

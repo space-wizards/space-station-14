@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.Server.Administration;
 using Content.Server.GameTicking.Rules;
-using Content.Server.GameTicking.Rules.Configurations;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 
@@ -164,11 +163,11 @@ namespace Content.Server.GameTicking
                 if (!_prototypeManager.TryIndex<GameRulePrototype>(ruleId, out var rule))
                     continue;
 
-                AddGameRule(rule);
+                AddGameRule(rule.Value);
 
                 // Start rule if we're already in the middle of a round
                 if(RunLevel == GameRunLevel.InRound)
-                    StartGameRule(rule);
+                    StartGameRule(rule.Value);
             }
         }
 
@@ -190,7 +189,7 @@ namespace Content.Server.GameTicking
                 if (!_prototypeManager.TryIndex<GameRulePrototype>(ruleId, out var rule))
                     continue;
 
-                EndGameRule(rule);
+                EndGameRule(rule.Value);
             }
         }
 

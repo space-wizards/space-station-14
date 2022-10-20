@@ -27,12 +27,9 @@ namespace Content.Shared.Cargo.Prototypes
                 if (_name.Trim().Length != 0)
                     return _name;
 
-                if (IoCManager.Resolve<IPrototypeManager>().TryIndex(Product, out EntityPrototype? prototype))
-                {
-                    _name = prototype.Name;
-                }
-
-                return _name;
+                return IoCManager.Resolve<IPrototypeManager>().TryIndex(Product, out EntityPrototype? prototype)
+                    ? prototype.Value.Name
+                    : _name;
             }
         }
 
@@ -44,15 +41,12 @@ namespace Content.Shared.Cargo.Prototypes
         {
             get
             {
-                if (_description.Trim().Length != 0)
+                if (!string.IsNullOrWhiteSpace(_description))
                     return _description;
 
-                if (IoCManager.Resolve<IPrototypeManager>().TryIndex(Product, out EntityPrototype? prototype))
-                {
-                    _description = prototype.Description;
-                }
-
-                return _description;
+                return IoCManager.Resolve<IPrototypeManager>().TryIndex(Product, out EntityPrototype? prototype)
+                    ? prototype.Value.Description
+                    : _description;
             }
         }
 

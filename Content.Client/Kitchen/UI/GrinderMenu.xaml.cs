@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Kitchen.Components;
@@ -7,10 +6,6 @@ using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Kitchen.UI
@@ -124,7 +119,7 @@ namespace Content.Client.Kitchen.UI
             {
                 foreach (var reagent in reagents)
                 {
-                    var reagentName = _prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype? proto) ? Loc.GetString($"{reagent.Quantity} {proto.LocalizedName}") : "???";
+                    var reagentName = _prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype? proto) ? Loc.GetString($"{reagent.Quantity} {proto.Value.Name}") : "???";
                     BeakerContentBox.BoxContents.AddItem(reagentName);
                 }
             }

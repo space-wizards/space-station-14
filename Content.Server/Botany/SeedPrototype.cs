@@ -16,7 +16,7 @@ public readonly record struct SeedPrototype : IPrototype
 {
     [IdDataField] public string ID { get; private init; } = default!;
 
-    [IncludeDataField] public readonly SeedData SeedData;
+    [IncludeDataField] public readonly SeedData SeedData = new();
 }
 
 public enum HarvestType : byte

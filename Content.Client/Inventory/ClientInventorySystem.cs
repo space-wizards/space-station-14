@@ -152,7 +152,7 @@ namespace Content.Client.Inventory
             if (!_prototypeManager.TryIndex(component.TemplateId, out InventoryTemplatePrototype? invTemplate))
                 return;
 
-            foreach (var slot in invTemplate.Slots)
+            foreach (var slot in invTemplate.Value.Slots)
             {
                 TryAddSlotDef(uid, (ClientInventoryComponent)component, slot);
             }

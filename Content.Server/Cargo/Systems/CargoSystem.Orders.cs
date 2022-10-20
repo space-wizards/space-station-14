@@ -144,7 +144,7 @@ namespace Content.Server.Cargo.Systems
                 PlayDenySound(uid, component);
             }
 
-            var cost = product.PointCost * order.Amount;
+            var cost = product.Value.PointCost * order.Amount;
 
             // Not enough balance
             if (cost > bankAccount.Balance)

@@ -26,9 +26,9 @@ namespace Content.Client.Lathe.UI
         {
             if (recipe != null)
             {
-                Icon.Texture = _spriteSystem.Frame0(recipe.Icon);
-                NameLabel.Text = recipe.Name;
-                Description.Text = recipe.Description;
+                Icon.Texture = _spriteSystem.Frame0(recipe.Value.Icon);
+                NameLabel.Text = recipe.Value.Name;
+                Description.Text = recipe.Value.Description;
             }
             else
             {

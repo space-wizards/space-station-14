@@ -1,10 +1,8 @@
-using System.Linq;
 using Content.Server.GameTicking;
 using Content.Server.Maps;
 using Content.Shared.Administration;
 using Robust.Server.Maps;
 using Robust.Shared.Console;
-using Robust.Shared.ContentPack;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
@@ -47,7 +45,7 @@ namespace Content.Server.Administration.Commands
                 {
                     loadOptions.Offset = new Vector2(x, y);
                 }
-                var (ents, grids) = gameTicker.LoadGameMap(gameMap, new MapId(mapId), loadOptions, stationName);
+                var (ents, grids) = gameTicker.LoadGameMap(gameMap.Value, new MapId(mapId), loadOptions, stationName);
                 shell.WriteLine($"Loaded {ents.Count} entities and {grids.Count} grids.");
             }
             else

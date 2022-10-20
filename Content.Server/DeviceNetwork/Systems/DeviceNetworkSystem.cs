@@ -1,13 +1,11 @@
+using System.Buffers;
+using System.Diagnostics.CodeAnalysis;
 using Content.Server.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork;
+using Content.Shared.Examine;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Utility;
-using System.Buffers;
-using System.Diagnostics.CodeAnalysis;
-using Content.Shared.Examine;
-using static Content.Server.DeviceNetwork.Components.DeviceNetworkComponent;
 
 namespace Content.Server.DeviceNetwork.Systems
 {
@@ -79,14 +77,14 @@ namespace Content.Server.DeviceNetwork.Systems
                 && device.ReceiveFrequencyId != null
                 && _protoMan.TryIndex<DeviceFrequencyPrototype>(device.ReceiveFrequencyId, out var receive))
             {
-                device.ReceiveFrequency = receive.Frequency;
+                device.ReceiveFrequency = receive.Value.Frequency;
             }
 
             if (device.TransmitFrequency == null
                 && device.TransmitFrequencyId != null
                 && _protoMan.TryIndex<DeviceFrequencyPrototype>(device.TransmitFrequencyId, out var xmit))
             {
-                device.TransmitFrequency = xmit.Frequency;
+                device.TransmitFrequency = xmit.Value.Frequency;
             }
 
             if (device.AutoConnect)

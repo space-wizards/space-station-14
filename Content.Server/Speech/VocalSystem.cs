@@ -8,6 +8,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Serialization.Manager;
 
 namespace Content.Server.Speech;
 
@@ -23,6 +24,7 @@ public sealed class VocalSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly ActionBlockerSystem _blocker = default!;
+    [Dependency] private readonly ISerializationManager _serialization = default!;
 
     public override void Initialize()
     {
@@ -38,7 +40,7 @@ public sealed class VocalSystem : EntitySystem
         if (component.ScreamAction == null
             && _proto.TryIndex(component.ActionId, out InstantActionPrototype? act))
         {
-            component.ScreamAction = new(act);
+            component.ScreamAction = _serialization.Copy(act.Value.InstantAction);
         }
 
         if (component.ScreamAction != null)

@@ -5,7 +5,7 @@ namespace Content.Server.Holiday.ShouldCelebrate
 {
     public sealed class ChineseNewYear : IHolidayShouldCelebrate
     {
-        public bool ShouldCelebrate(DateTime date, HolidayPrototype holiday)
+        public bool ShouldCelebrate(DateTime date, Holiday holiday)
         {
             var chinese = new ChineseLunisolarCalendar();
 

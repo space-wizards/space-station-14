@@ -1,14 +1,14 @@
-using Content.Shared.Examine;
-using Content.Shared.PAI;
-using Content.Shared.Verbs;
-using Content.Server.Popups;
-using Content.Server.Instruments;
 using Content.Server.Ghost.Roles.Components;
+using Content.Server.Instruments;
 using Content.Server.Mind.Components;
+using Content.Server.Popups;
+using Content.Shared.Examine;
+using Content.Shared.Interaction.Events;
+using Content.Shared.PAI;
+using Content.Shared.Popups;
+using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
-using Content.Shared.Interaction.Events;
-using Content.Shared.Popups;
 
 namespace Content.Server.PAI
 {
@@ -75,7 +75,7 @@ namespace Content.Server.PAI
             // But having the pda's name permanently be "old lady's PAI" is weird.
             // Changing the PAI's identity in a way that ties it to the owner's identity also seems weird.
             // Cause then you could remotely figure out information about the owner's equipped items.
-            
+
             EntityManager.GetComponent<MetaDataComponent>(component.Owner).EntityName = val;
 
             var ghostFinder = EntityManager.EnsureComponent<GhostTakeoverAvailableComponent>(uid);
@@ -118,7 +118,7 @@ namespace Content.Server.PAI
             {
                 var proto = metadata.EntityPrototype;
                 if (proto != null)
-                    metadata.EntityName = proto.Name;
+                    metadata.EntityName = proto.Value.Name;
             }
         }
 

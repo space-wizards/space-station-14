@@ -72,7 +72,7 @@ namespace Content.Server.Polymorph.Systems
                 return null;
             }
 
-            return PolymorphEntity(target, proto);
+            return PolymorphEntity(target, proto.Value);
         }
 
         /// <summary>
@@ -178,17 +178,17 @@ namespace Content.Server.Polymorph.Systems
             if (!TryComp<PolymorphableComponent>(target, out var polycomp))
                 return;
 
-            var entproto = _proto.Index<EntityPrototype>(polyproto.Entity);
+            var entproto = _proto.Index<EntityPrototype>(polyproto.Value.Entity);
 
             var act = new InstantAction()
             {
                 Event = new PolymorphActionEvent
                 {
-                    Prototype = polyproto,
+                    Prototype = polyproto.Value,
                 },
                 DisplayName = Loc.GetString("polymorph-self-action-name", ("target", entproto.Name)),
                 Description = Loc.GetString("polymorph-self-action-description", ("target", entproto.Name)),
-                Icon = new SpriteSpecifier.EntityPrototype(polyproto.Entity),
+                Icon = new SpriteSpecifier.EntityPrototype(polyproto.Value.Entity),
                 ItemIconStyle = ItemActionIconStyle.NoItem,
             };
 

@@ -1,10 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
-using Content.Server.Access.Systems;
 using Content.Server.GameTicking;
 using Content.Server.Station.Systems;
 using Content.Server.StationRecords;
 using Content.Server.StationRecords.Systems;
-using Content.Shared.Access.Components;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Content.Shared.Preferences;
@@ -116,12 +114,12 @@ public sealed class StationRecordsSystem : EntitySystem
         {
             Name = name,
             Age = age,
-            JobTitle = jobPrototype.Name,
-            JobIcon = jobPrototype.Icon,
+            JobTitle = jobPrototype.Value.Name,
+            JobIcon = jobPrototype.Value.Icon,
             JobPrototype = jobId,
             Species = species,
             Gender = gender,
-            DisplayPriority = jobPrototype.Weight
+            DisplayPriority = jobPrototype.Value.Weight
         };
 
         var key = AddRecord(station, records);

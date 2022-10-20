@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Shared.CCVar;
 using Content.Shared.Coordinates;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
@@ -140,8 +138,7 @@ namespace Content.IntegrationTests.Tests
 
                 grid = mapManager.CreateGrid(mapId);
 
-                var tileDefinition = tileDefinitionManager["UnderPlating"];
-                var tile = new Tile(tileDefinition.TileId);
+                var tile = new Tile(tileDefinitionManager.TileIds["UnderPlating"]);
                 var coordinates = grid.ToCoordinates();
 
                 grid.SetTile(coordinates, tile);
@@ -235,8 +232,7 @@ namespace Content.IntegrationTests.Tests
 
                 grid = mapManager.CreateGrid(mapId);
 
-                var tileDefinition = tileDefinitionManager["UnderPlating"];
-                var tile = new Tile(tileDefinition.TileId);
+                var tile = new Tile(tileDefinitionManager.TileIds["UnderPlating"]);
 
                 grid.SetTile(Vector2i.Zero, tile);
                 mapManager.DoMapInitialize(mapId);

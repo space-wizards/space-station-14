@@ -45,7 +45,7 @@ namespace Content.Server.Alert.Commands
                 return;
             }
 
-            alertsSystem.ClearAlert(attachedEntity, alert.AlertType);
+            alertsSystem.ClearAlert(attachedEntity, alert.Value.AlertType);
         }
     }
 }

@@ -34,7 +34,7 @@ public sealed class NPCDomainCommand : IConsoleCommand
 
         var htnSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<HTNSystem>();
 
-        foreach (var line in htnSystem.GetDomain(compound).Split("\n"))
+        foreach (var line in htnSystem.GetDomain(compound.Value).Split("\n"))
         {
             shell.WriteLine(line);
         }

@@ -56,7 +56,7 @@ public class EntityTargetAction : TargetedAction
     ///     The local-event to raise when this action is performed.
     /// </summary>
     [DataField("event", true)]
-    public EntityTargetActionEvent? Event { get; }
+    public EntityTargetActionEvent? Event { get; set; }
 
     [DataField("serverEvent", serverOnly: true)]
     public EntityTargetActionEvent? ServerEvent { get; }

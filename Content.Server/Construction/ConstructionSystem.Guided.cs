@@ -24,7 +24,7 @@ namespace Content.Server.Construction
             if (!_prototypeManager.TryIndex(msg.ConstructionId, out ConstructionPrototype? prototype))
                 return;
 
-            if(GetGuide(prototype) is {} guide)
+            if(GetGuide(prototype.Value) is {} guide)
                 RaiseNetworkEvent(new ResponseConstructionGuide(msg.ConstructionId, guide), args.SenderSession.ConnectedClient);
         }
 
@@ -122,12 +122,12 @@ namespace Content.Server.Construction
                 return null;
 
             // If either the start node or the target node are missing, do nothing.
-            if (GetNodeFromGraph(graph, construction.StartNode) is not {} startNode
-                || GetNodeFromGraph(graph, construction.TargetNode) is not {} targetNode)
+            if (GetNodeFromGraph(graph.Value, construction.StartNode) is not {} startNode
+                || GetNodeFromGraph(graph.Value, construction.TargetNode) is not {} targetNode)
                 return null;
 
             // If there's no path from start to target, do nothing.
-            if (graph.Path(construction.StartNode, construction.TargetNode) is not {} path
+            if (graph.Value.Path(construction.StartNode, construction.TargetNode) is not {} path
                 || path.Length == 0)
                 return null;
 

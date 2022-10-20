@@ -1,20 +1,16 @@
-using System.Linq;
-using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Atmos.Piping.EntitySystems;
+using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Atmos.Piping.Components;
+using Content.Server.Atmos.Piping.EntitySystems;
 using Content.Server.DeviceNetwork;
-using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Tag;
-using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.Manager;
 
 namespace Content.Server.Atmos.Monitor.Systems;
 
@@ -28,6 +24,7 @@ public sealed class AtmosMonitorSystem : EntitySystem
     [Dependency] private readonly AtmosDeviceSystem _atmosDeviceSystem = default!;
     [Dependency] private readonly DeviceNetworkSystem _deviceNetSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly ISerializationManager _serialization = default!;
 
     // Commands
     public const string AtmosMonitorSetThresholdCmd = "atmos_monitor_set_threshold";
@@ -53,18 +50,18 @@ public sealed class AtmosMonitorSystem : EntitySystem
     private void OnAtmosMonitorInit(EntityUid uid, AtmosMonitorComponent component, ComponentInit args)
     {
         if (component.TemperatureThresholdId != null)
-            component.TemperatureThreshold = new(_prototypeManager.Index<AtmosAlarmThreshold>(component.TemperatureThresholdId));
+            component.TemperatureThreshold = _serialization.Copy(_prototypeManager.Index<AtmosAlarmThresholdPrototype>(component.TemperatureThresholdId).AtmosAlarmThreshold);
 
         if (component.PressureThresholdId != null)
-            component.PressureThreshold = new(_prototypeManager.Index<AtmosAlarmThreshold>(component.PressureThresholdId));
+            component.PressureThreshold = _serialization.Copy(_prototypeManager.Index<AtmosAlarmThresholdPrototype>(component.PressureThresholdId).AtmosAlarmThreshold);
 
         if (component.GasThresholdIds != null)
         {
             component.GasThresholds = new();
             foreach (var (gas, id) in component.GasThresholdIds)
             {
-                if (_prototypeManager.TryIndex<AtmosAlarmThreshold>(id, out var gasThreshold))
-                    component.GasThresholds.Add(gas, new(gasThreshold));
+                if (_prototypeManager.TryIndex<AtmosAlarmThresholdPrototype>(id, out var gasThreshold))
+                    component.GasThresholds.Add(gas, _serialization.Copy(gasThreshold.Value.AtmosAlarmThreshold));
             }
         }
     }
@@ -106,11 +103,11 @@ public sealed class AtmosMonitorSystem : EntitySystem
                 // Don't clear alarm states here.
                 break;
             case AtmosMonitorSetThresholdCmd:
-                if (args.Data.TryGetValue(AtmosMonitorThresholdData, out AtmosAlarmThreshold? thresholdData)
+                if (args.Data.TryGetValue(AtmosMonitorThresholdData, out AtmosAlarmThresholdPrototype? thresholdData)
                     && args.Data.TryGetValue(AtmosMonitorThresholdDataType, out AtmosMonitorThresholdType? thresholdType))
                 {
                     args.Data.TryGetValue(AtmosMonitorThresholdGasType, out Gas? gas);
-                    SetThreshold(uid, thresholdType.Value, thresholdData, gas);
+                    SetThreshold(uid, thresholdType.Value, thresholdData.Value.AtmosAlarmThreshold, gas);
                 }
 
                 break;
@@ -187,8 +184,7 @@ public sealed class AtmosMonitorSystem : EntitySystem
         // only monitor state elevation so that stuff gets alarmed quicker during a fire,
         // let the atmos update loop handle when temperature starts to reach different
         // thresholds and different states than normal -> warning -> danger
-        if (component.TemperatureThreshold != null
-            && component.TemperatureThreshold.CheckThreshold(args.Temperature, out var temperatureState)
+        if (component.TemperatureThreshold.CheckThreshold(args.Temperature, out var temperatureState)
             && temperatureState > component.LastAlarmState)
         {
             component.TrippedThresholds.Add(AtmosMonitorThresholdType.Temperature);
@@ -234,8 +230,7 @@ public sealed class AtmosMonitorSystem : EntitySystem
         var state = AtmosAlarmType.Normal;
         HashSet<AtmosMonitorThresholdType> alarmTypes = new(monitor.TrippedThresholds);
 
-        if (monitor.TemperatureThreshold != null
-            && monitor.TemperatureThreshold.CheckThreshold(air.Temperature, out var temperatureState))
+        if (monitor.TemperatureThreshold.CheckThreshold(air.Temperature, out var temperatureState))
         {
             if (temperatureState > state)
             {
@@ -248,9 +243,7 @@ public sealed class AtmosMonitorSystem : EntitySystem
             }
         }
 
-        if (monitor.PressureThreshold != null
-            && monitor.PressureThreshold.CheckThreshold(air.Pressure, out var pressureState)
-           )
+        if (monitor.PressureThreshold.CheckThreshold(air.Pressure, out var pressureState))
         {
             if (pressureState > state)
             {

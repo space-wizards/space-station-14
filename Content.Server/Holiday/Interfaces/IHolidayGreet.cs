@@ -2,6 +2,6 @@ namespace Content.Server.Holiday.Interfaces
 {
     public interface IHolidayGreet
     {
-        string Greet(HolidayPrototype holiday);
+        string Greet(Holiday holiday);
     }
 }

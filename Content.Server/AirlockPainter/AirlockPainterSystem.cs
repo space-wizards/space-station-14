@@ -73,7 +73,7 @@ namespace Content.Server.AirlockPainter
             }
 
             string style = Styles[component.Index];
-            if (!grp.StylePaths.TryGetValue(style, out var sprite))
+            if (!grp.Value.StylePaths.TryGetValue(style, out var sprite))
             {
                 string msg = Loc.GetString("airlock-painter-style-not-available");
                 _popupSystem.PopupEntity(msg, args.User, Filter.Entities(args.User));

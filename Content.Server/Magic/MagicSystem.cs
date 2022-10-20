@@ -1,12 +1,9 @@
 ﻿using System.Threading;
 using Content.Server.Body.Components;
 using Content.Server.Coordinates.Helpers;
-using Content.Server.Decals;
 using Content.Server.DoAfter;
 using Content.Server.Doors.Components;
 using Content.Server.Magic.Events;
-using Content.Server.Popups;
-using Content.Server.Spawners.Components;
 using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
@@ -24,6 +21,7 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Serialization.Manager;
 
 namespace Content.Server.Magic;
 
@@ -40,6 +38,7 @@ public sealed class MagicSystem : EntitySystem
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
     [Dependency] private readonly GunSystem _gunSystem = default!;
+    [Dependency] private readonly ISerializationManager _serialization = default!;
 
     public override void Initialize()
     {
@@ -63,21 +62,21 @@ public sealed class MagicSystem : EntitySystem
         //Negative charges means the spell can be used without it running out.
         foreach (var (id, charges) in component.WorldSpells)
         {
-            var spell = new WorldTargetAction(_prototypeManager.Index<WorldTargetActionPrototype>(id));
+            var spell = _serialization.Copy(_prototypeManager.Index<WorldTargetActionPrototype>(id).WorldTargetAction);
             _actionsSystem.SetCharges(spell, charges < 0 ? null : charges);
             component.Spells.Add(spell);
         }
 
         foreach (var (id, charges) in component.InstantSpells)
         {
-            var spell = new InstantAction(_prototypeManager.Index<InstantActionPrototype>(id));
+            var spell = _serialization.Copy(_prototypeManager.Index<InstantActionPrototype>(id).InstantAction);
             _actionsSystem.SetCharges(spell, charges < 0 ? null : charges);
             component.Spells.Add(spell);
         }
 
         foreach (var (id, charges) in component.EntitySpells)
         {
-            var spell = new EntityTargetAction(_prototypeManager.Index<EntityTargetActionPrototype>(id));
+            var spell = _serialization.Copy(_prototypeManager.Index<EntityTargetActionPrototype>(id).EntityTargetAction);
             _actionsSystem.SetCharges(spell, charges < 0 ? null : charges);
             component.Spells.Add(spell);
         }

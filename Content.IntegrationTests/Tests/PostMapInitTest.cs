@@ -7,19 +7,18 @@ using System.Threading.Tasks;
 using Content.Server.GameTicking;
 using Content.Server.Maps;
 using Content.Server.Shuttles.Components;
+using Content.Server.Shuttles.Systems;
 using Content.Server.Spawners.Components;
 using Content.Server.Station.Components;
-using Content.Server.Station.Systems;
 using Content.Shared.Roles;
 using NUnit.Framework;
 using Robust.Server.Maps;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Utility;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
-using ShuttleSystem = Content.Server.Shuttles.Systems.ShuttleSystem;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -255,7 +254,7 @@ namespace Content.IntegrationTests.Tests
                     .Select(x => x.Key);
                 var spawnPoints = entManager.EntityQuery<SpawnPointComponent>()
                     .Where(spawnpoint => spawnpoint.SpawnType == SpawnPointType.Job)
-                    .Select(spawnpoint => spawnpoint.Job.ID)
+                    .Select(spawnpoint => spawnpoint.Job.Value.ID)
                     .Distinct();
                 List<string> missingSpawnPoints = new() { };
                 foreach (var spawnpoint in jobList.Except(spawnPoints))

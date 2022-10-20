@@ -1,28 +1,29 @@
 using Content.Server.Actions;
-using Content.Shared.Popups;
-using Content.Shared.Alert;
-using Content.Shared.Damage;
-using Content.Shared.Interaction;
 using Content.Server.DoAfter;
 using Content.Server.GameTicking;
-using Content.Shared.Stunnable;
-using Content.Shared.Revenant;
-using Robust.Server.GameObjects;
-using Robust.Shared.Random;
-using Content.Shared.StatusEffect;
 using Content.Server.MobState;
-using Content.Server.Visible;
-using Content.Shared.Examine;
-using Robust.Shared.Prototypes;
-using Content.Shared.Actions.ActionTypes;
-using Content.Shared.Tag;
 using Content.Server.Store.Components;
 using Content.Server.Store.Systems;
+using Content.Server.Visible;
+using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Alert;
+using Content.Shared.Damage;
+using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
-using Robust.Shared.Player;
+using Content.Shared.Interaction;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
+using Content.Shared.Popups;
+using Content.Shared.Revenant;
 using Content.Shared.Revenant.Components;
+using Content.Shared.StatusEffect;
+using Content.Shared.Stunnable;
+using Content.Shared.Tag;
+using Robust.Server.GameObjects;
+using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
+using Robust.Shared.Serialization.Manager;
 
 namespace Content.Server.Revenant.EntitySystems;
 
@@ -45,6 +46,7 @@ public sealed partial class RevenantSystem : EntitySystem
     [Dependency] private readonly StoreSystem _store = default!;
     [Dependency] private readonly VisibilitySystem _visibility = default!;
     [Dependency] private readonly GameTicker _ticker = default!;
+    [Dependency] private readonly ISerializationManager _serialization = default!;
 
     public override void Initialize()
     {
@@ -83,7 +85,7 @@ public sealed partial class RevenantSystem : EntitySystem
         if (TryComp(component.Owner, out EyeComponent? eye))
             eye.VisibilityMask |= (uint) (VisibilityFlags.Ghost);
 
-        var shopaction = new InstantAction(_proto.Index<InstantActionPrototype>("RevenantShop"));
+        var shopaction = _serialization.Copy(_proto.Index<InstantActionPrototype>("RevenantShop").InstantAction);
         _action.AddAction(uid, shopaction, null);
     }
 

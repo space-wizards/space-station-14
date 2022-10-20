@@ -1,5 +1,3 @@
-using System.Linq;
-using Content.Server.Chat;
 using Content.Server.Chat.Systems;
 using Content.Server.Radio.EntitySystems;
 using Content.Shared.Interaction;
@@ -76,7 +74,7 @@ namespace Content.Server.Radio.Components
 
         public bool CanListen(string message, EntityUid source, RadioChannelPrototype? prototype)
         {
-            if (prototype != null && !_channels.Contains(prototype.ID)
+            if (prototype != null && !_channels.Contains(prototype.Value.ID)
                 || !_prototypeManager.HasIndex<RadioChannelPrototype>(BroadcastChannel))
             {
                 return false;
@@ -103,7 +101,7 @@ namespace Content.Server.Radio.Components
                 return;
             }
 
-            Broadcast(message, speaker, prototype);
+            Broadcast(message, speaker, prototype.Value);
         }
 
         public void Broadcast(string message, EntityUid speaker, RadioChannelPrototype channel)

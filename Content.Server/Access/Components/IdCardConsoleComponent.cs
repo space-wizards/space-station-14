@@ -1,14 +1,14 @@
 using System.Linq;
 using Content.Server.Access.Systems;
+using Content.Server.Administration.Logs;
 using Content.Server.Station.Systems;
 using Content.Server.StationRecords;
 using Content.Server.UserInterface;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
-using Content.Shared.StationRecords;
-using Content.Server.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Roles;
+using Content.Shared.StationRecords;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 
@@ -123,7 +123,7 @@ namespace Content.Server.Access.Components
             if (_prototypeManager.TryIndex(newJobProto, out JobPrototype? job))
             {
                 record.JobPrototype = newJobProto;
-                record.JobIcon = job.Icon;
+                record.JobIcon = job.Value.Icon;
             }
 
             _recordSystem.Synchronize(station.Value);

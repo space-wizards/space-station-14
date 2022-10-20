@@ -54,7 +54,7 @@ public sealed class ExplosionOverlaySystem : EntitySystem
         }
         if (_overlay.ActiveExplosion != null)
             QueueDel(_overlay.ActiveExplosion.LightEntity);
-        
+
         _overlay.CompletedExplosions.Clear();
         _overlay.ActiveExplosion = null;
         _overlay.Index = 0;
@@ -79,7 +79,7 @@ public sealed class ExplosionOverlaySystem : EntitySystem
 
         // increment the lifetime of completed explosions, and remove them if they have been ons screen for more
         // than ExplosionPersistence seconds
-        for (int i = _overlay.CompletedExplosions.Count - 1; i>= 0; i--) 
+        for (int i = _overlay.CompletedExplosions.Count - 1; i>= 0; i--)
         {
             var explosion = _overlay.CompletedExplosions[i];
 
@@ -141,11 +141,11 @@ public sealed class ExplosionOverlaySystem : EntitySystem
         var lightEntity = Spawn("ExplosionLight", args.Epicenter);
         var light = EnsureComp<PointLightComponent>(lightEntity);
         light.Energy = light.Radius = args.Intensity.Count;
-        light.Color = type.LightColor;
+        light.Color = type.Value.LightColor;
 
         if (_overlay.ActiveExplosion == null)
         {
-            _overlay.ActiveExplosion = new(args, type, lightEntity, _resCache);
+            _overlay.ActiveExplosion = new(args, type.Value, lightEntity, _resCache);
             return;
         }
 
@@ -157,13 +157,13 @@ public sealed class ExplosionOverlaySystem : EntitySystem
         {
             // This is a newer explosion. Add the old-currently-active explosions to the completed list
             _overlay.CompletedExplosions.Add(_overlay.ActiveExplosion);
-            _overlay.ActiveExplosion = new(args, type, lightEntity, _resCache);
+            _overlay.ActiveExplosion = new(args, type.Value, lightEntity, _resCache);
         }
         else
         {
             // explosions were out of order. keep the active one, and directly add the received one to the completed
             // list.
-            _overlay.CompletedExplosions.Add(new(args, type, lightEntity, _resCache));
+            _overlay.CompletedExplosions.Add(new(args, type.Value, lightEntity, _resCache));
             return;
         }
     }

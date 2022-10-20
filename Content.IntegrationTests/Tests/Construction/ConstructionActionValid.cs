@@ -101,7 +101,7 @@ namespace Content.IntegrationTests.Tests.Construction
             {
                 foreach (var node in graph.Nodes.Values)
                 {
-                    if (string.IsNullOrEmpty(node.Entity) || protoMan.TryIndex(node.Entity, out EntityPrototype _)) continue;
+                    if (string.IsNullOrEmpty(node.Entity) || protoMan.HasIndex<EntityPrototype>(node.Entity)) continue;
 
                     valid = false;
                     message.Append($"Invalid entity prototype \"{node.Entity}\" on node \"{node.Name}\" of graph \"{graph.ID}\"\n");

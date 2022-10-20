@@ -1,8 +1,6 @@
-using Content.Server.Administration.Managers;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
-using Content.Server.Ghost.Components;
 using Content.Server.Power.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.DeviceNetwork;
@@ -187,7 +185,7 @@ public sealed class SurveillanceCameraSystem : EntitySystem
             return;
         }
 
-        _deviceNetworkSystem.SetReceiveFrequency(uid, frequency.Frequency);
+        _deviceNetworkSystem.SetReceiveFrequency(uid, frequency.Value.Frequency);
         component.NetworkSet = true;
         UpdateSetupInterface(uid, component);
     }

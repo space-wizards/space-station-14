@@ -13,7 +13,7 @@ namespace Content.Server.Holiday.ShouldCelebrate
         [DataField("dayOfYear")]
         private uint _dayOfYear = 1;
 
-        public bool ShouldCelebrate(DateTime date, HolidayPrototype holiday)
+        public bool ShouldCelebrate(DateTime date, Holiday holiday)
         {
             return date.DayOfYear == _dayOfYear;
         }

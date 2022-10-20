@@ -63,10 +63,10 @@ public sealed class AlertLevelSystem : EntitySystem
 
         alertLevelComponent.AlertLevels = alerts;
 
-        var defaultLevel = alertLevelComponent.AlertLevels.DefaultLevel;
+        var defaultLevel = alertLevelComponent.AlertLevels.Value.DefaultLevel;
         if (string.IsNullOrEmpty(defaultLevel))
         {
-            defaultLevel = alertLevelComponent.AlertLevels.Levels.Keys.First();
+            defaultLevel = alertLevelComponent.AlertLevels.Value.Levels.Keys.First();
         }
 
         SetLevel(args.Station, defaultLevel, false, false, true);
@@ -86,12 +86,12 @@ public sealed class AlertLevelSystem : EntitySystem
         {
             comp.AlertLevels = alerts;
 
-            if (!comp.AlertLevels.Levels.ContainsKey(comp.CurrentLevel))
+            if (!comp.AlertLevels.Value.Levels.ContainsKey(comp.CurrentLevel))
             {
-                var defaultLevel = comp.AlertLevels.DefaultLevel;
+                var defaultLevel = comp.AlertLevels.Value.DefaultLevel;
                 if (string.IsNullOrEmpty(defaultLevel))
                 {
-                    defaultLevel = comp.AlertLevels.Levels.Keys.First();
+                    defaultLevel = comp.AlertLevels.Value.Levels.Keys.First();
                 }
 
                 SetLevel(comp.Owner, defaultLevel, true, true, true);
@@ -125,7 +125,7 @@ public sealed class AlertLevelSystem : EntitySystem
     {
         if (!Resolve(station, ref component, ref dataComponent)
             || component.AlertLevels == null
-            || !component.AlertLevels.Levels.TryGetValue(level, out var detail)
+            || !component.AlertLevels.Value.Levels.TryGetValue(level, out var detail)
             || component.CurrentLevel == level)
         {
             return;

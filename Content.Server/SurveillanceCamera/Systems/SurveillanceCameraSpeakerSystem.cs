@@ -43,9 +43,9 @@ public sealed class SurveillanceCameraSpeakerSystem : EntitySystem
         {
             var sound = args.Message[^1] switch
             {
-                '?' => speechProto.AskSound,
-                '!' => speechProto.ExclaimSound,
-                _ => speechProto.SaySound
+                '?' => speechProto.Value.AskSound,
+                '!' => speechProto.Value.ExclaimSound,
+                _ => speechProto.Value.SaySound
             };
 
             var uppercase = 0;
@@ -59,10 +59,10 @@ public sealed class SurveillanceCameraSpeakerSystem : EntitySystem
 
             if (uppercase > args.Message.Length / 2)
             {
-                sound = speechProto.ExclaimSound;
+                sound = speechProto.Value.ExclaimSound;
             }
 
-            var scale = (float) _random.NextGaussian(1, speechProto.Variation);
+            var scale = (float) _random.NextGaussian(1, speechProto.Value.Variation);
             var param = speech.AudioParams.WithPitchScale(scale);
             _audioSystem.PlayPvs(sound, uid, param);
 

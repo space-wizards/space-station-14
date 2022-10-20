@@ -1,18 +1,19 @@
+using System.Linq;
 using Content.Server.Actions;
 using Content.Server.Administration.Logs;
 using Content.Server.Mind.Components;
+using Content.Server.Stack;
 using Content.Server.Store.Components;
 using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Store;
-using Content.Shared.Database;
-using Robust.Server.GameObjects;
-using System.Linq;
-using Content.Server.Stack;
 using Content.Shared.Prototypes;
+using Content.Shared.Store;
+using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.Manager;
 
 namespace Content.Server.Store.Systems;
 
@@ -24,6 +25,7 @@ public sealed partial class StoreSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly StackSystem _stack = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
+    [Dependency] private readonly ISerializationManager _serialization = default!;
 
     private void InitializeUi()
     {
@@ -145,7 +147,7 @@ public sealed partial class StoreSystem : EntitySystem
         //give action
         if (listing.ProductAction != null)
         {
-            var action = new InstantAction(_proto.Index<InstantActionPrototype>(listing.ProductAction));
+            var action = _serialization.Copy(_proto.Index<InstantActionPrototype>(listing.ProductAction).InstantAction);
             _actions.AddAction(buyer, action, null);
         }
 
@@ -186,26 +188,26 @@ public sealed partial class StoreSystem : EntitySystem
             return;
 
         //we need an actually valid entity to spawn. This check has been done earlier, but just in case.
-        if (proto.Cash == null || !proto.CanWithdraw)
+        if (proto.Value.Cash == null || !proto.Value.CanWithdraw)
             return;
 
         if (msg.Session.AttachedEntity is not { Valid: true} buyer)
             return;
-        
+
         FixedPoint2 amountRemaining = msg.Amount;
         var coordinates = Transform(buyer).Coordinates;
 
-        var sortedCashValues = proto.Cash.Keys.OrderByDescending(x => x).ToList();
+        var sortedCashValues = proto.Value.Cash.Keys.OrderByDescending(x => x).ToList();
         foreach (var value in sortedCashValues)
         {
-            var cashId = proto.Cash[value];
+            var cashId = proto.Value.Cash[value];
 
             if (!_proto.TryIndex<EntityPrototype>(cashId, out var cashProto))
                 continue;
 
             //how many times this subdivision fits in the amount remaining
             var amountToSpawn = (int) Math.Floor((double) (amountRemaining / value));
-            if (cashProto.HasComponent<StackComponent>())
+            if (cashProto.Value.HasComponent<StackComponent>())
             {
                 var amountToRemove = amountToSpawn; //we don't want to modify amountToSpawn, as we use it for calculations
                 while (amountToRemove > 0)

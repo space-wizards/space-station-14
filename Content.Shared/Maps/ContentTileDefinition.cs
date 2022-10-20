@@ -26,8 +26,6 @@ namespace Content.Shared.Maps
 
         [IdDataFieldAttribute] public string ID { get; } = string.Empty;
 
-        public ushort TileId { get; }
-
         [DataField("name", customTypeSerializer: typeof(LocStringSerializer))]
         public string Name { get; } = string.Empty;
 
@@ -71,10 +69,5 @@ namespace Content.Shared.Maps
 
         [DataField("isSpace")] public bool IsSpace { get; }
         [DataField("sturdy")] public bool Sturdy { get; } = true;
-
-        public void AssignTileId(ushort id)
-        {
-            TileId = id;
-        }
     }
 }

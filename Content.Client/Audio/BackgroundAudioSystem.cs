@@ -1,11 +1,13 @@
-using Content.Client.GameTicking.Managers;
 using System.Threading;
 using Content.Client.Gameplay;
+using Content.Client.GameTicking.Managers;
 using Content.Client.Lobby;
 using Content.Shared.CCVar;
 using JetBrains.Annotations;
 using Robust.Client;
+using Robust.Client.GameObjects;
 using Robust.Client.Player;
+using Robust.Client.ResourceManagement;
 using Robust.Client.State;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
@@ -13,8 +15,6 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using Robust.Client.GameObjects;
-using Robust.Client.ResourceManagement;
 using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Client.Audio
@@ -211,10 +211,10 @@ namespace Content.Client.Audio
         private void StartAmbience()
         {
             EndAmbience();
-            if (_currentCollection == null || !CanPlayCollection(_currentCollection))
+            if (_currentCollection == null || !CanPlayCollection(_currentCollection.Value))
                 return;
             _playingCollection = _currentCollection;
-            var file = _robustRandom.Pick(_currentCollection.PickFiles).ToString();
+            var file = _robustRandom.Pick(_currentCollection.Value.PickFiles).ToString();
             _ambientStream = _audio.PlayGlobal(file, Filter.Local(),
                 _ambientParams.WithVolume(_ambientParams.Volume + _configManager.GetCVar(CCVars.AmbienceVolume)));
         }
@@ -241,11 +241,11 @@ namespace Content.Client.Audio
             if (_currentCollection == null)
                 return;
 
-            if (enabled && _stateManager.CurrentState is GameplayState && _currentCollection.ID == _stationAmbience.ID)
+            if (enabled && _stateManager.CurrentState is GameplayState && _currentCollection.Value.ID == _stationAmbience.ID)
             {
                 StartAmbience();
             }
-            else if(_currentCollection.ID == _stationAmbience.ID)
+            else if(_currentCollection.Value.ID == _stationAmbience.ID)
             {
                 EndAmbience();
             }
@@ -256,11 +256,11 @@ namespace Content.Client.Audio
             if (_currentCollection == null)
                 return;
 
-            if (enabled && _stateManager.CurrentState is GameplayState && _currentCollection.ID == _spaceAmbience.ID)
+            if (enabled && _stateManager.CurrentState is GameplayState && _currentCollection.Value.ID == _spaceAmbience.ID)
             {
                 StartAmbience();
             }
-            else if(_currentCollection.ID == _spaceAmbience.ID)
+            else if(_currentCollection.Value.ID == _spaceAmbience.ID)
             {
                 EndAmbience();
             }

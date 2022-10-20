@@ -1,5 +1,4 @@
 using Content.Server.Advertisements;
-using Content.Server.Chat;
 using Content.Server.Chat.Systems;
 using Content.Server.Power.Components;
 using Content.Server.VendingMachines;
@@ -57,7 +56,7 @@ namespace Content.Server.Advertise
                 return;
 
             if (_prototypeManager.TryIndex(advertise.PackPrototypeId, out AdvertisementsPackPrototype? advertisements))
-                _chat.TrySendInGameICMessage(advertise.Owner, Loc.GetString(_random.Pick(advertisements.Advertisements)), InGameICChatType.Speak, true);
+                _chat.TrySendInGameICMessage(advertise.Owner, Loc.GetString(_random.Pick(advertisements.Value.Advertisements)), InGameICChatType.Speak, true);
 
             if(refresh)
                 RefreshTimer(uid, true, advertise);

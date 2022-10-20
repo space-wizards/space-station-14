@@ -7,57 +7,46 @@ namespace Content.Shared.Atmos.Monitor;
 // except for the range boundaries
 [Prototype("alarmThreshold")]
 [Serializable, NetSerializable]
-public readonly record struct AtmosAlarmThreshold : IPrototype, ISerializationHooks
+public readonly record struct AtmosAlarmThresholdPrototype : IPrototype
 {
-    [IdDataField]
-    public string ID { get; } = default!;
+    [IdDataField] public string ID { get; } = default!;
+
+    [IncludeDataField] public readonly AtmosAlarmThreshold AtmosAlarmThreshold = new();
+}
+
+[DataDefinition]
+public sealed class AtmosAlarmThreshold : ISerializationHooks
+{
     [ViewVariables]
     [DataField("ignore")]
-    public readonly bool Ignore;
+    public bool Ignore;
 
     // zero bounds are not allowed - just
     // set the bound to null if you want
     // to disable it
-    [ViewVariables]
-    [DataField("upperBound")]
-    public float? UpperBound { get; }
+    [ViewVariables] [DataField("upperBound")]
+    public float? UpperBound;
 
-    [ViewVariables]
-    [DataField("lowerBound")]
-    public float? LowerBound { get; }
+    [ViewVariables] [DataField("lowerBound")]
+    public float? LowerBound;
 
     // upper warning percentage
     // must always cause UpperWarningBound
     // to be smaller
-    [ViewVariables]
-    [DataField("upperWarnAround")]
-    public float? UpperWarningPercentage { get; }
+    [ViewVariables] [DataField("upperWarnAround")]
+    public float? UpperWarningPercentage;
 
     // lower warning percentage
     // must always cause LowerWarningBound
     // to be larger
-    [ViewVariables]
-    [DataField("lowerWarnAround")]
-    public float? LowerWarningPercentage { get; }
+    [ViewVariables] [DataField("lowerWarnAround")]
+    public float? LowerWarningPercentage;
 
     [ViewVariables]
     public float? UpperWarningBound => CalculateWarningBound(AtmosMonitorThresholdBound.Upper);
 
     [ViewVariables]
     public float? LowerWarningBound => CalculateWarningBound(AtmosMonitorThresholdBound.Lower);
-
-    public AtmosAlarmThreshold()
-    {
-    }
-
-    public AtmosAlarmThreshold(AtmosAlarmThreshold other)
-    {
-        Ignore = other.Ignore;
-        UpperBound = other.UpperBound;
-        LowerBound = other.LowerBound;
-        UpperWarningPercentage = other.UpperWarningPercentage;
-        LowerWarningPercentage = other.LowerWarningPercentage;
-    }
 
     void ISerializationHooks.AfterDeserialization()
     {

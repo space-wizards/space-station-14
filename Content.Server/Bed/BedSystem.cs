@@ -1,20 +1,21 @@
-using Content.Shared.Damage;
-using Content.Server.Bed.Components;
-using Content.Server.Buckle.Components;
-using Content.Server.Body.Systems;
-using Content.Shared.Buckle.Components;
-using Content.Shared.Body.Components;
-using Content.Shared.Bed;
-using Content.Shared.Bed.Sleep;
-using Content.Server.Bed.Sleep;
-using Content.Server.Power.Components;
-using Content.Server.Power.EntitySystems;
-using Content.Shared.Emag.Systems;
 using Content.Server.Actions;
+using Content.Server.Bed.Components;
+using Content.Server.Bed.Sleep;
+using Content.Server.Body.Systems;
+using Content.Server.Buckle.Components;
 using Content.Server.Construction;
 using Content.Server.MobState;
+using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Bed;
+using Content.Shared.Bed.Sleep;
+using Content.Shared.Body.Components;
+using Content.Shared.Buckle.Components;
+using Content.Shared.Damage;
+using Content.Shared.Emag.Systems;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.Manager;
 
 namespace Content.Server.Bed
 {
@@ -26,6 +27,8 @@ namespace Content.Server.Bed
         [Dependency] private readonly SleepingSystem _sleepingSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
+        [Dependency] private readonly ISerializationManager _serialization = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -43,12 +46,12 @@ namespace Content.Server.Bed
             {
                 AddComp<HealOnBuckleHealingComponent>(uid);
                 if (sleepAction != null)
-                    _actionsSystem.AddAction(args.BuckledEntity, new InstantAction(sleepAction), null);
+                    _actionsSystem.AddAction(args.BuckledEntity, _serialization.Copy(sleepAction.Value.InstantAction), null);
                 return;
             }
 
             if (sleepAction != null)
-                _actionsSystem.RemoveAction(args.BuckledEntity, sleepAction);
+                _actionsSystem.RemoveAction(args.BuckledEntity, sleepAction.Value.InstantAction);
 
             _sleepingSystem.TryWaking(args.BuckledEntity);
             RemComp<HealOnBuckleHealingComponent>(uid);

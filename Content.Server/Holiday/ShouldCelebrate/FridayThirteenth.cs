@@ -9,7 +9,7 @@ namespace Content.Server.Holiday.ShouldCelebrate
     [UsedImplicitly]
     public sealed class FridayThirteenth : IHolidayShouldCelebrate
     {
-        public bool ShouldCelebrate(DateTime date, HolidayPrototype holiday)
+        public bool ShouldCelebrate(DateTime date, Holiday holiday)
         {
             return date.Day == 13 && date.DayOfWeek == DayOfWeek.Friday;
         }

@@ -1,5 +1,4 @@
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations;
 using Robust.Shared.Utility;
 
@@ -9,11 +8,8 @@ namespace Content.Shared.Alert
     /// An alert popup with associated icon, tooltip, and other data.
     /// </summary>
     [Prototype("alert")]
-    public readonly record struct AlertPrototype : IPrototype, ISerializationHooks
+    public readonly record struct AlertPrototype : IPrototype
     {
-        private readonly FormattedMessage _name = new();
-        private readonly FormattedMessage _description = new();
-
         [ViewVariables]
         string IPrototype.ID => AlertType.ToString();
 
@@ -33,13 +29,13 @@ namespace Content.Shared.Alert
         /// Name to show in tooltip window. Accepts formatting.
         /// </summary>
         [DataField("name", customTypeSerializer: typeof(FormattedMessageSerializer))]
-        public readonly FormattedMessage Name;
+        public readonly FormattedMessage Name = new();
 
         /// <summary>
         /// Description to show in tooltip window. Accepts formatting.
         /// </summary>
         [DataField("description", customTypeSerializer: typeof(FormattedMessageSerializer))]
-        public readonly FormattedMessage Description;
+        public readonly FormattedMessage Description = new();
 
         /// <summary>
         /// Category the alert belongs to. Only one alert of a given category
@@ -55,6 +51,7 @@ namespace Content.Shared.Alert
         /// Key which is unique w.r.t category semantics (alerts with same category have equal keys,
         /// alerts with no category have different keys).
         /// </summary>
+        [IncludeDataField(customTypeSerializer: typeof(AlertKeySerializer))]
         public AlertKey AlertKey { get; }
 
         /// <summary>
@@ -81,16 +78,6 @@ namespace Content.Shared.Alert
         /// </summary>
         [DataField("onClick", serverOnly: true)]
         public IAlertClick? OnClick { get; }
-
-        void ISerializationHooks.AfterDeserialization()
-        {
-            if (AlertType == AlertType.Error)
-            {
-                Logger.ErrorS("alert", "missing or invalid alertType for alert with name {0}", Name);
-            }
-
-            AlertKey = new AlertKey(AlertType, Category);
-        }
 
         /// <param name="severity">severity level, if supported by this alert</param>
         /// <returns>the icon path to the texture for the provided severity level</returns>

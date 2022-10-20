@@ -114,7 +114,7 @@ namespace Content.Server.RCD.Systems
             {
                 //Floor mode just needs the tile to be a space tile (subFloor)
                 case RcdMode.Floors:
-                    mapGrid.SetTile(snapPos, new Tile(_tileDefinitionManager["FloorSteel"].TileId));
+                    mapGrid.SetTile(snapPos, new Tile(_tileDefinitionManager.TileIds["FloorSteel"]));
                     _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to set grid: {tile.GridUid} {snapPos} to FloorSteel");
                     break;
                 //We don't want to place a space tile on something that's already a space tile. Let's do the inverse of the last check.

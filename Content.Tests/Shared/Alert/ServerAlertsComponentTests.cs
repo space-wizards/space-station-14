@@ -54,12 +54,12 @@ namespace Content.Tests.Shared.Alert
             var alertState = alertsComponent.GetComponentState() as AlertsComponentState;
             Assert.NotNull(alertState);
             Assert.That(alertState.Alerts.Count, Is.EqualTo(1));
-            Assert.That(alertState.Alerts.ContainsKey(lowpressure.AlertKey));
+            Assert.That(alertState.Alerts.ContainsKey(lowpressure.Value.AlertKey));
 
             EntitySystem.Get<AlertsSystem>().ShowAlert(alertsComponent.Owner, AlertType.HighPressure, null, null);
             alertState = alertsComponent.GetComponentState() as AlertsComponentState;
             Assert.That(alertState.Alerts.Count, Is.EqualTo(1));
-            Assert.That(alertState.Alerts.ContainsKey(highpressure.AlertKey));
+            Assert.That(alertState.Alerts.ContainsKey(highpressure.Value.AlertKey));
 
             EntitySystem.Get<AlertsSystem>().ClearAlertCategory(alertsComponent.Owner, AlertCategory.Pressure);
             alertState = alertsComponent.GetComponentState() as AlertsComponentState;

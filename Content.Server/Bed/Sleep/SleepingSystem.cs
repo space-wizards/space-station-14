@@ -17,6 +17,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Bed.Sleep
@@ -28,8 +29,9 @@ namespace Content.Server.Bed.Sleep
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
-
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
+        [Dependency] private readonly ISerializationManager _serialization = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -65,14 +67,14 @@ namespace Content.Server.Bed.Sleep
 
                 if (wakeAction != null)
                 {
-                    var wakeInstance = new InstantAction(wakeAction);
+                    var wakeInstance = _serialization.Copy(wakeAction.Value.InstantAction);
                     wakeInstance.Cooldown = (_gameTiming.CurTime, _gameTiming.CurTime + TimeSpan.FromSeconds(15));
                     _actionsSystem.AddAction(uid, wakeInstance, null);
                 }
                 return;
             }
             if (wakeAction != null)
-                _actionsSystem.RemoveAction(uid, wakeAction);
+                _actionsSystem.RemoveAction(uid, wakeAction.Value.InstantAction);
 
             RemComp<StunnedComponent>(uid);
             RemComp<KnockedDownComponent>(uid);
@@ -173,7 +175,7 @@ namespace Content.Server.Bed.Sleep
                 return false;
 
             if (_prototypeManager.TryIndex<InstantActionPrototype>("Sleep", out var sleepAction))
-                _actionsSystem.RemoveAction(uid, sleepAction);
+                _actionsSystem.RemoveAction(uid, sleepAction.Value.InstantAction);
 
             EnsureComp<SleepingComponent>(uid);
             return true;

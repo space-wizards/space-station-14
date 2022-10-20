@@ -4,7 +4,6 @@ using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
-using Content.Shared.FixedPoint;
 using Robust.Shared.Console;
 using Robust.Shared.Prototypes;
 
@@ -74,7 +73,7 @@ namespace Content.Server.Damage.Commands
             {
                 func = (entity, ignoreResistances) =>
                 {
-                    var damage = new DamageSpecifier(damageGroup, amount);
+                    var damage = new DamageSpecifier(damageGroup.Value, amount);
                     EntitySystem.Get<DamageableSystem>().TryChangeDamage(entity, damage, ignoreResistances);
                 };
 
@@ -85,7 +84,7 @@ namespace Content.Server.Damage.Commands
             {
                 func = (entity, ignoreResistances) =>
                 {
-                    var damage = new DamageSpecifier(damageType, amount);
+                    var damage = new DamageSpecifier(damageType.Value, amount);
                     EntitySystem.Get<DamageableSystem>().TryChangeDamage(entity, damage, ignoreResistances);
                 };
                 return true;

@@ -1,9 +1,6 @@
 using System.Threading.Tasks;
 using Content.Server.Construction.Components;
-using Content.Server.Stack;
 using Content.Shared.Construction.Prototypes;
-using Content.Shared.Construction.Steps;
-using Content.Shared.Prototypes;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -107,8 +104,8 @@ namespace Content.IntegrationTests.Tests.Construction
                 Assert.That(path!.Length, Is.GreaterThanOrEqualTo(1), $"Unable to find path from \"{start}\" to \"{target}\" on graph \"{graph.ID}\".");
                 var next = path[0];
                 Assert.That(next.Entity, Is.Not.Null, $"The next node ({next.Name}) in the path from the start node ({start}) to the target node ({target}) must specify an entity! Graph: {graph.ID}");
-                Assert.That(protoMan.TryIndex(next.Entity, out EntityPrototype entity), $"The next node ({next.Name}) in the path from the start node ({start}) to the target node ({target}) specified an invalid entity prototype ({next.Entity})");
-                Assert.That(entity.Components.ContainsKey("Construction"), $"The next node ({next.Name}) in the path from the start node ({start}) to the target node ({target}) specified an entity prototype ({next.Entity}) without a ConstructionComponent.");
+                Assert.That(protoMan.TryIndex<EntityPrototype>(next.Entity, out var entity), $"The next node ({next.Name}) in the path from the start node ({start}) to the target node ({target}) specified an invalid entity prototype ({next.Entity})");
+                Assert.That(entity.Value.Components.ContainsKey("Construction"), $"The next node ({next.Name}) in the path from the start node ({start}) to the target node ({target}) specified an entity prototype ({next.Entity}) without a ConstructionComponent.");
             }
             await pairTracker.CleanReturnAsync();
         }

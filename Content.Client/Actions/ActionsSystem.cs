@@ -28,7 +28,6 @@ namespace Content.Client.Actions
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IResourceManager _resources = default!;
         [Dependency] private readonly ISerializationManager _serialization = default!;
-
         [Dependency] private readonly PopupSystem _popupSystem = default!;
 
         public event Action<ActionType>? ActionAdded;
@@ -72,7 +71,8 @@ namespace Content.Client.Actions
                     continue;
                 }
 
-                act.CopyFrom(serverAct);
+                component.Actions.Remove(act);
+                component.Actions.Add(_serialization.Copy(serverAct));
                 serverActions.Remove(serverAct);
             }
 
@@ -82,7 +82,7 @@ namespace Content.Client.Actions
             foreach (var newAct in serverActions)
             {
                 // We create a new action, not just sorting a reference to the state's action.
-                var action = (ActionType) newAct.Clone();
+                var action = _serialization.Copy(newAct);
                 component.Actions.Add(action);
                 added.Add(action);
             }
@@ -296,7 +296,8 @@ namespace Content.Client.Actions
 
                 if (PlayerActions.Actions.TryGetValue(action, out var existingAction))
                 {
-                    existingAction.CopyFrom(action);
+                    PlayerActions.Actions.Remove(existingAction);
+                    PlayerActions.Actions.Add(_serialization.Copy(action));
                     action = existingAction;
                 }
                 else

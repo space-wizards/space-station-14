@@ -1,7 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Botany.Components;
-using Content.Server.Mind.Commands;
 using Content.Server.Kitchen.Components;
 using Content.Shared.Botany;
 using Content.Shared.Examine;
@@ -35,7 +34,7 @@ public sealed partial class BotanySystem
         if (comp.SeedId != null
             && _prototypeManager.TryIndex(comp.SeedId, out SeedPrototype? protoSeed))
         {
-            seed = protoSeed;
+            seed = protoSeed.Value.SeedData;
             return true;
         }
 
@@ -54,7 +53,7 @@ public sealed partial class BotanySystem
         if (comp.SeedId != null
             && _prototypeManager.TryIndex(comp.SeedId, out SeedPrototype? protoSeed))
         {
-            seed = protoSeed;
+            seed = protoSeed.Value.SeedData;
             return true;
         }
 

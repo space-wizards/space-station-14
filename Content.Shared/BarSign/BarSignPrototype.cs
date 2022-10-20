@@ -17,10 +17,10 @@ namespace Content.Shared.BarSign
         [DataField("icon")] public string Icon { get; } = string.Empty;
 
         [DataField("name", customTypeSerializer: typeof(LocStringSerializer))]
-        public readonly string Name;
+        public readonly string Name = string.Empty;
 
         [DataField("description", customTypeSerializer: typeof(LocStringSerializer))]
-        public readonly string Description;
+        public readonly string Description = string.Empty;
 
         [DataField("renameArea")] public bool RenameArea { get; } = true;
 

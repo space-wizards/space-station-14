@@ -40,7 +40,7 @@ namespace Content.Server.Holiday
 
             foreach (var holiday in _prototypeManager.EnumeratePrototypes<HolidayPrototype>())
             {
-                if (holiday.ShouldCelebrate(now))
+                if (holiday.Holiday.ShouldCelebrate(now))
                 {
                     _currentHolidays.Add(holiday);
                 }
@@ -53,7 +53,7 @@ namespace Content.Server.Holiday
         {
             foreach (var holiday in _currentHolidays)
             {
-                _chatManager.DispatchServerAnnouncement(holiday.Greet());
+                _chatManager.DispatchServerAnnouncement(holiday.Holiday.Greet());
             }
         }
 
@@ -61,7 +61,7 @@ namespace Content.Server.Holiday
         {
             foreach (var holiday in _currentHolidays)
             {
-                holiday.Celebrate();
+                holiday.Holiday.Celebrate();
             }
         }
 
@@ -75,7 +75,7 @@ namespace Content.Server.Holiday
             if (!_prototypeManager.TryIndex(holiday, out HolidayPrototype? prototype))
                 return false;
 
-            return _currentHolidays.Contains(prototype);
+            return _currentHolidays.Contains(prototype.Value);
         }
 
         private void OnHolidaysEnableChange(bool enabled)

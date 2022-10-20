@@ -51,10 +51,10 @@ public sealed class AdjustStationJobCommand : IConsoleCommand
 
         if (amount == -1)
         {
-            stationJobs.MakeJobUnlimited(station, job);
+            stationJobs.MakeJobUnlimited(station, job.Value);
             return;
         }
 
-        stationJobs.TrySetJobSlot(station, job, amount, true);
+        stationJobs.TrySetJobSlot(station, job.Value, amount, true);
     }
 }

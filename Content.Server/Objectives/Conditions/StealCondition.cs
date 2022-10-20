@@ -1,4 +1,3 @@
-using Content.Server.Containers;
 using Content.Server.Objectives.Interfaces;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
@@ -35,7 +34,7 @@ namespace Content.Server.Objectives.Conditions
 
         private string PrototypeName =>
             IoCManager.Resolve<IPrototypeManager>().TryIndex<EntityPrototype>(_prototypeId, out var prototype)
-                ? prototype.Name
+                ? prototype.Value.Name
                 : "[CANNOT FIND NAME]";
 
         public string Title =>

@@ -369,7 +369,7 @@ namespace Content.Server.Construction
             if (!_prototypeManager.TryIndex<ConstructionGraphPrototype>(graphId, out var graph))
                 return false;
 
-            if(GetNodeFromGraph(graph, nodeId) is not {})
+            if(GetNodeFromGraph(graph.Value, nodeId) is not {})
                 return false;
 
             construction.Graph = graphId;

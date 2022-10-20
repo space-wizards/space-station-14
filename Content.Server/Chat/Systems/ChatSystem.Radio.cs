@@ -50,15 +50,12 @@ public sealed partial class ChatSystem
             return (string.Empty, null);
 
         // Look for a prefix indicating a destination radio channel.
-        RadioChannelPrototype? chan;
+        RadioChannelPrototype chan;
         if (channelMessage && message.Length >= 2)
         {
-            _keyCodes.TryGetValue(message[1], out chan);
-
-            if (chan == null)
+            if (!_keyCodes.TryGetValue(message[1], out chan))
             {
                 _popup.PopupEntity(Loc.GetString("chat-manager-no-such-channel"), source, Filter.Entities(source));
-                chan = null;
             }
 
             // Strip message prefix.

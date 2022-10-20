@@ -1,13 +1,10 @@
 using System.Linq;
-using Content.Server.GameTicking;
 using Content.Shared.Examine;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.IdentityManagement;
-using Content.Shared.Inventory.Events;
 using Content.Shared.Preferences;
-using Content.Shared.Tag;
 using Content.Shared.Verbs;
 using Robust.Shared.GameObjects.Components.Localization;
 using Robust.Shared.Prototypes;
@@ -59,12 +56,12 @@ public sealed partial class HumanoidSystem : SharedHumanoidSystem
         }
 
         // Do this first, because profiles currently do not support custom base layers
-        foreach (var (layer, info) in startingSet.CustomBaseLayers)
+        foreach (var (layer, info) in startingSet.Value.CustomBaseLayers)
         {
             humanoid.CustomBaseLayers.Add(layer, info);
         }
 
-        LoadProfile(uid, startingSet.Profile, humanoid);
+        LoadProfile(uid, startingSet.Value.Profile, humanoid);
     }
 
     private void OnExamined(EntityUid uid, HumanoidComponent component, ExaminedEvent args)
@@ -170,7 +167,7 @@ public sealed partial class HumanoidSystem : SharedHumanoidSystem
         humanoid.Species = species;
         humanoid.CurrentMarkings.FilterSpecies(species, _markingManager);
         var oldMarkings = humanoid.CurrentMarkings.GetForwardEnumerator().ToList();
-        humanoid.CurrentMarkings = new(oldMarkings, prototype.MarkingPoints, _markingManager, _prototypeManager);
+        humanoid.CurrentMarkings = new(oldMarkings, prototype.Value.MarkingPoints, _markingManager, _prototypeManager);
 
         if (sync)
         {
@@ -490,7 +487,7 @@ public sealed partial class HumanoidSystem : SharedHumanoidSystem
     {
         if (_prototypeManager.TryIndex<SpeciesPrototype>(speciesId, out var species))
         {
-            return Loc.GetString(species.Name);
+            return Loc.GetString(species.Value.Name);
         }
         else
         {

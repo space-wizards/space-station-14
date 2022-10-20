@@ -25,7 +25,7 @@ namespace Content.Server.GameTicking
             if (!startAttempt.Cancelled)
                 return true;
 
-            var presetTitle = Preset != null ? Loc.GetString(Preset.ModeTitle) : string.Empty;
+            var presetTitle = Preset != null ? Loc.GetString(Preset.Value.ModeTitle) : string.Empty;
 
             void FailedPresetRestart()
             {
@@ -49,7 +49,7 @@ namespace Content.Server.GameTicking
                 _chatManager.DispatchServerAnnouncement(
                     Loc.GetString("game-ticker-start-round-cannot-start-game-mode-fallback",
                         ("failedGameMode", presetTitle),
-                        ("fallbackMode", Loc.GetString(Preset!.ModeTitle))));
+                        ("fallbackMode", Loc.GetString(Preset!.Value.ModeTitle))));
 
                 if (startAttempt.Cancelled)
                 {
@@ -92,7 +92,7 @@ namespace Content.Server.GameTicking
         {
             var proto = FindGamePreset(preset);
             if(proto != null)
-                SetGamePreset(proto, force);
+                SetGamePreset(proto.Value, force);
         }
 
         public GamePresetPrototype? FindGamePreset(string preset)
@@ -124,12 +124,12 @@ namespace Content.Server.GameTicking
             if (DummyTicker || Preset == null)
                 return false;
 
-            foreach (var rule in Preset.Rules)
+            foreach (var rule in Preset.Value.Rules)
             {
                 if (!_prototypeManager.TryIndex(rule, out GameRulePrototype? ruleProto))
                     continue;
 
-                AddGameRule(ruleProto);
+                AddGameRule(ruleProto.Value);
             }
 
             return true;

@@ -100,7 +100,7 @@ public sealed class FluidSpreaderSystem : EntitySystem
         if (!Resolve(suid, ref puddleComponent, ref metadataOriginal, ref transformOrig, ref spreader, false))
             return;
 
-        var prototypeName = metadataOriginal.EntityPrototype!.ID;
+        var prototypeName = metadataOriginal.EntityPrototype!.Value.ID;
         var visitedTiles = new HashSet<Vector2i>();
 
         if (!_mapManager.TryGetGrid(transformOrig.GridUid, out var mapGrid))

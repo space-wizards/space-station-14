@@ -212,13 +212,13 @@ public sealed partial class MarkingPicker : Control
                 continue;
             }
 
-            var text = Loc.GetString(marking.Forced ? "marking-used-forced" : "marking-used", ("marking-name", $"{GetMarkingName(newMarking)}"),
-                ("marking-category", Loc.GetString($"markings-category-{newMarking.MarkingCategory}")));
+            var text = Loc.GetString(marking.Forced ? "marking-used-forced" : "marking-used", ("marking-name", $"{GetMarkingName(newMarking.Value)}"),
+                ("marking-category", Loc.GetString($"markings-category-{newMarking.Value.MarkingCategory}")));
 
             var _item = new ItemList.Item(CMarkingsUsed)
             {
                 Text = text,
-                Icon = newMarking.Sprites[0].Frame0(),
+                Icon = newMarking.Value.Sprites[0].Frame0(),
                 Selectable = true,
                 Metadata = newMarking,
                 IconModulate = marking.MarkingColors[0]

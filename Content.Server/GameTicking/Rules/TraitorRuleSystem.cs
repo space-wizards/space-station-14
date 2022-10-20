@@ -205,8 +205,8 @@ public sealed class TraitorRuleSystem : GameRuleSystem
         {
             var objective = _objectivesManager.GetRandomObjective(traitorRole.Mind);
             if (objective == null) continue;
-            if (traitorRole.Mind.TryAddObjective(objective))
-                difficulty += objective.Difficulty;
+            if (traitorRole.Mind.TryAddObjective(objective.Value))
+                difficulty += objective.Value.Difficulty;
         }
 
         //give traitors their codewords to keep in their character info menu
@@ -231,7 +231,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem
         if (ev.JobId == null || !_prototypeManager.TryIndex<JobPrototype>(ev.JobId, out var job))
             return;
 
-        if (!job.CanBeAntag)
+        if (!job.Value.CanBeAntag)
             return;
 
         // the nth player we adjust our probabilities around

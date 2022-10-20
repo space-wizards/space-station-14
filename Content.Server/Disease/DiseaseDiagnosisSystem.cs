@@ -1,23 +1,23 @@
 using System.Threading;
 using Content.Server.Disease.Components;
-using Content.Shared.Disease;
-using Content.Shared.Interaction;
-using Content.Shared.Inventory;
-using Content.Shared.Examine;
 using Content.Server.DoAfter;
-using Content.Server.Popups;
 using Content.Server.Hands.Components;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Paper;
+using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
-using Robust.Shared.Random;
-using Robust.Shared.Player;
-using Robust.Shared.Audio;
-using Robust.Shared.Utility;
-using Content.Shared.Tools.Components;
 using Content.Server.Station.Systems;
+using Content.Shared.Disease;
+using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Interaction;
+using Content.Shared.Inventory;
+using Content.Shared.Tools.Components;
+using Robust.Shared.Audio;
+using Robust.Shared.Player;
+using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Disease
 {
@@ -186,7 +186,7 @@ namespace Content.Server.Disease
             if (!HasComp<HandsComponent>(args.User) || HasComp<ToolComponent>(args.Used)) //This check ensures tools don't break without yaml ordering jank
                 return;
 
-            if (!TryComp<DiseaseSwabComponent>(args.Used, out var swab) || swab.Disease == null || !swab.Disease.Infectious)
+            if (!TryComp<DiseaseSwabComponent>(args.Used, out var swab) || swab.Disease == null || !swab.Disease.Value.Disease.Infectious)
             {
                 _popupSystem.PopupEntity(Loc.GetString("diagnoser-cant-use-swab", ("machine", uid), ("swab", args.Used)), uid, Filter.Entities(args.User));
                 return;
@@ -233,7 +233,7 @@ namespace Content.Server.Disease
             report.AddMarkup(Loc.GetString("diagnoser-disease-report-name", ("disease", disease.Name)));
             report.PushNewline();
 
-            if (disease.Infectious)
+            if (disease.Disease.Infectious)
             {
                 report.AddMarkup(Loc.GetString("diagnoser-disease-report-infectious"));
                 report.PushNewline();
@@ -243,7 +243,7 @@ namespace Content.Server.Disease
                 report.PushNewline();
             }
             string cureResistLine = string.Empty;
-            cureResistLine += disease.CureResist switch
+            cureResistLine += disease.Disease.CureResist switch
             {
                 < 0f => Loc.GetString("diagnoser-disease-report-cureresist-none"),
                 <= 0.05f => Loc.GetString("diagnoser-disease-report-cureresist-low"),
@@ -254,7 +254,7 @@ namespace Content.Server.Disease
             report.PushNewline();
 
             // Add Cures
-            if (disease.Cures.Count == 0)
+            if (disease.Disease.Cures.Count == 0)
             {
                 report.AddMarkup(Loc.GetString("diagnoser-no-cures"));
             }
@@ -264,7 +264,7 @@ namespace Content.Server.Disease
                 report.AddMarkup(Loc.GetString("diagnoser-cure-has"));
                 report.PushNewline();
 
-                foreach (var cure in disease.Cures)
+                foreach (var cure in disease.Disease.Cures)
                 {
                     report.AddMarkup(cure.CureText());
                     report.PushNewline();
@@ -355,8 +355,8 @@ namespace Content.Server.Disease
             FormattedMessage contents = new();
             if (args.Machine.Disease != null)
             {
-                reportTitle = Loc.GetString("diagnoser-disease-report", ("disease", args.Machine.Disease.Name));
-                contents = AssembleDiseaseReport(args.Machine.Disease);
+                reportTitle = Loc.GetString("diagnoser-disease-report", ("disease", args.Machine.Disease.Value.Name));
+                contents = AssembleDiseaseReport(args.Machine.Disease.Value);
 
                 var known = false;
 
@@ -365,13 +365,13 @@ namespace Content.Server.Disease
                     if (_stationSystem.GetOwningStation(server.Owner) != _stationSystem.GetOwningStation(uid))
                         continue;
 
-                    if (ServerHasDisease(server, args.Machine.Disease))
+                    if (ServerHasDisease(server, args.Machine.Disease.Value))
                     {
                        known = true;
                     }
                     else
                     {
-                        server.Diseases.Add(args.Machine.Disease);
+                        server.Diseases.Add(args.Machine.Disease.Value);
                     }
                 }
 

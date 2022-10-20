@@ -9,6 +9,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Serialization.Manager;
 
 namespace Content.Server.Animals.Systems;
 
@@ -18,6 +19,7 @@ public sealed class EggLayerSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly ActionsSystem _actions = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly ISerializationManager _serialization = default!;
 
     public override void Initialize()
     {
@@ -54,7 +56,7 @@ public sealed class EggLayerSystem : EntitySystem
         if (!_prototype.TryIndex<InstantActionPrototype>(component.EggLayAction, out var action))
             return;
 
-        _actions.AddAction(uid, new InstantAction(action), uid);
+        _actions.AddAction(uid, _serialization.Copy(action.Value.InstantAction), uid);
         component.CurrentEggLayCooldown = _random.NextFloat(component.EggLayCooldownMin, component.EggLayCooldownMax);
     }
 

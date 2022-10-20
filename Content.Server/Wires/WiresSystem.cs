@@ -13,7 +13,6 @@ using Content.Shared.Tools.Components;
 using Content.Shared.Wires;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
-using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -81,11 +80,11 @@ public sealed class WiresSystem : EntitySystem
             return;
         }
 
-        dummyWires += layoutPrototype.DummyWires;
+        dummyWires += layoutPrototype.Value.DummyWires;
 
-        if (layoutPrototype.Wires != null)
+        if (layoutPrototype.Value.Wires != null)
         {
-            wireActions.AddRange(layoutPrototype.Wires);
+            wireActions.AddRange(layoutPrototype.Value.Wires);
         }
 
         // does the prototype have a parent (and are the wires empty?) if so, we just create

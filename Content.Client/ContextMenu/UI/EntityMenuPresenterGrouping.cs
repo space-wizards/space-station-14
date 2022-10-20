@@ -1,6 +1,6 @@
+using System.Linq;
 using Content.Shared.IdentityManagement;
 using Robust.Client.GameObjects;
-using System.Linq;
 
 namespace Content.Client.ContextMenu.UI
 {
@@ -32,7 +32,7 @@ namespace Content.Client.ContextMenu.UI
         {
             private static readonly List<Func<EntityUid, EntityUid, IEntityManager, bool>> EqualsList = new()
             {
-                (a, b, entMan) => entMan.GetComponent<MetaDataComponent>(a).EntityPrototype!.ID == entMan.GetComponent<MetaDataComponent>(b).EntityPrototype!.ID,
+                (a, b, entMan) => entMan.GetComponent<MetaDataComponent>(a).EntityPrototype!.Value.ID == entMan.GetComponent<MetaDataComponent>(b).EntityPrototype!.Value.ID,
                 (a, b, entMan) =>
                 {
                     entMan.TryGetComponent<ISpriteComponent?>(a, out var spriteA);
@@ -49,7 +49,7 @@ namespace Content.Client.ContextMenu.UI
             };
             private static readonly List<Func<EntityUid, IEntityManager, int>> GetHashCodeList = new()
             {
-                (e, entMan) => EqualityComparer<string>.Default.GetHashCode(entMan.GetComponent<MetaDataComponent>(e).EntityPrototype!.ID),
+                (e, entMan) => EqualityComparer<string>.Default.GetHashCode(entMan.GetComponent<MetaDataComponent>(e).EntityPrototype!.Value.ID),
                 (e, entMan) =>
                 {
                     var hash = 0;

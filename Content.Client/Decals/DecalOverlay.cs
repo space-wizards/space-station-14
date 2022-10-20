@@ -2,7 +2,6 @@ using Content.Shared.Decals;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
-using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -72,7 +71,7 @@ namespace Content.Client.Decals
 
                         var cardinal = Angle.Zero;
 
-                        if (decalProto.SnapCardinals)
+                        if (decalProto.Value.SnapCardinals)
                         {
                             var worldAngle = eyeAngle + worldRot;
                             cardinal = worldAngle.GetCardinalDir().ToAngle();
@@ -94,7 +93,7 @@ namespace Content.Client.Decals
         public SpriteSpecifier GetDecalSprite(string id)
         {
             if (_prototypeManager.TryIndex<DecalPrototype>(id, out var proto))
-                return proto.Sprite;
+                return proto.Value.Sprite;
 
             Logger.Error($"Unknown decal prototype: {id}");
             return new SpriteSpecifier.Texture(new ResourcePath("/Textures/noSprite.png"));

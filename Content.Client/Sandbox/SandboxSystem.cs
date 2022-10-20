@@ -91,7 +91,7 @@ namespace Content.Client.Sandbox
                 && EntityManager.TryGetComponent(uid, out MetaDataComponent? comp)
                 && !comp.EntityDeleted)
             {
-                if (comp.EntityPrototype == null || comp.EntityPrototype.NoSpawn || comp.EntityPrototype.Abstract)
+                if (comp.EntityPrototype == null || comp.EntityPrototype.Value.NoSpawn || comp.EntityPrototype.Value.Abstract)
                     return false;
 
                 if (_placement.Eraser)
@@ -99,10 +99,10 @@ namespace Content.Client.Sandbox
 
                 _placement.BeginPlacing(new()
                 {
-                    EntityType = comp.EntityPrototype.ID,
+                    EntityType = comp.EntityPrototype.Value.ID,
                     IsTile = false,
                     TileType = 0,
-                    PlacementOption = comp.EntityPrototype.PlacementMode
+                    PlacementOption = comp.EntityPrototype.Value.PlacementMode
                 });
                 return true;
             }

@@ -1,11 +1,11 @@
-﻿using Content.Server.Administration;
+﻿using System.Linq;
+using Content.Server.Administration;
 using Content.Server.Players;
 using Content.Shared.Administration;
 using Content.Shared.Roles;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Prototypes;
-using System.Linq;
 
 namespace Content.Server.Roles
 {
@@ -47,13 +47,13 @@ namespace Content.Server.Roles
                 return;
             }
 
-            if (mind.AllRoles.Any(r => r.Name == jobPrototype.Name))
+            if (mind.AllRoles.Any(r => r.Name == jobPrototype.Value.Name))
             {
                 shell.WriteLine("Mind already has that role");
                 return;
             }
 
-            var role = new Job(mind, jobPrototype!);
+            var role = new Job(mind, jobPrototype.Value);
             mind.AddRole(role);
         }
     }

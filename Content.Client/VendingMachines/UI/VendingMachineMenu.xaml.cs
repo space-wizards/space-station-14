@@ -65,8 +65,8 @@ namespace Content.Client.VendingMachines.UI
                 Texture? icon = null;
                 if (_prototypeManager.TryIndex<EntityPrototype>(entry.ID, out var prototype))
                 {
-                    itemName = prototype.Name;
-                    icon = spriteSystem.GetPrototypeIcon(prototype).Default;
+                    itemName = prototype.Value.Name;
+                    icon = spriteSystem.GetPrototypeIcon(prototype.Value).Default;
                 }
 
                 if (itemName.Length > longestEntry.Length)

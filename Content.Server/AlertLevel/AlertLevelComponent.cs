@@ -41,7 +41,7 @@ public sealed class AlertLevelComponent : Component
         get
         {
             if (AlertLevels == null
-                || !AlertLevels.Levels.TryGetValue(CurrentLevel, out var level))
+                || !AlertLevels.Value.Levels.TryGetValue(CurrentLevel, out var level))
             {
                 return false;
             }

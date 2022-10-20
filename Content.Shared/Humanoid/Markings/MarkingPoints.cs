@@ -6,14 +6,14 @@ namespace Content.Shared.Humanoid.Markings;
 
 [DataDefinition]
 [Serializable, NetSerializable]
-public readonly record struct MarkingPoints
+public record struct MarkingPoints
 {
-    [DataField("points", required: true)] public readonly int Points;
+    [DataField("points", required: true)] public int Points;
     [DataField("required", required: true)]
-    public readonly bool Required;
+    public bool Required;
     // Default markings for this layer.
     [DataField("defaultMarkings", customTypeSerializer:typeof(PrototypeIdListSerializer<MarkingPrototype>))]
-    public readonly List<string> DefaultMarkings = new();
+    public List<string> DefaultMarkings = new();
 
     public static Dictionary<MarkingCategories, MarkingPoints> CloneMarkingPointDictionary(Dictionary<MarkingCategories, MarkingPoints> self)
     {

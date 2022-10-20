@@ -43,7 +43,7 @@ namespace Content.Server.Objectives.Commands
                 return;
             }
 
-            if (!mind.TryAddObjective(objectivePrototype))
+            if (!mind.TryAddObjective(objectivePrototype.Value))
             {
                 shell.WriteLine("Objective requirements dont allow that objective to be added.");
             }

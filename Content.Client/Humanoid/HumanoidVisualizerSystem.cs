@@ -3,8 +3,6 @@ using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid.Prototypes;
 using Robust.Client.GameObjects;
-using Robust.Client.Graphics;
-using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -31,7 +29,7 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
         }
 
         if (!_prototypeManager.TryIndex(data.Species, out SpeciesPrototype? speciesProto)
-            || !_prototypeManager.TryIndex(speciesProto.SpriteSet, out HumanoidSpeciesBaseSpritesPrototype? baseSprites))
+            || !_prototypeManager.TryIndex(speciesProto.Value.SpriteSet, out HumanoidSpeciesBaseSpritesPrototype? baseSprites))
         {
             return;
         }
@@ -41,11 +39,11 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
 
         if (data.CustomBaseLayerInfo.Count != 0)
         {
-            dirty |= MergeCustomBaseSprites(uid, baseSprites.Sprites, data.CustomBaseLayerInfo, component);
+            dirty |= MergeCustomBaseSprites(uid, baseSprites.Value.Sprites, data.CustomBaseLayerInfo, component);
         }
         else
         {
-            dirty |= MergeCustomBaseSprites(uid, baseSprites.Sprites, null, component);
+            dirty |= MergeCustomBaseSprites(uid, baseSprites.Value.Sprites, null, component);
         }
 
         if (dirty)
@@ -159,7 +157,7 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
                 continue;
             }
 
-            ApplyMarking(uid, dirtyMarking, newMarkings[i].MarkingColors, newMarkings[i].Visible, humanoid, sprite);
+            ApplyMarking(uid, dirtyMarking.Value, newMarkings[i].MarkingColors, newMarkings[i].Visible, humanoid, sprite);
         }
 
         if (humanoid.CurrentMarkings.Count < newMarkings.Count && dirtyRangeStart < 0)
@@ -224,7 +222,7 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
             return;
         }
 
-        foreach (var sprite in prototype.Sprites)
+        foreach (var sprite in prototype.Value.Sprites)
         {
             if (sprite is not SpriteSpecifier.Rsi rsi)
             {
@@ -254,7 +252,7 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
                 continue;
             }
 
-            ApplyMarking(uid, markingPrototype, marking.MarkingColors, marking.Visible, humanoid, spriteComp);
+            ApplyMarking(uid, markingPrototype.Value, marking.MarkingColors, marking.Visible, humanoid, spriteComp);
         }
     }
 
@@ -363,9 +361,9 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
                 continue;
             }
 
-            if (!newBaseLayers.TryAdd(key, baseLayer))
+            if (!newBaseLayers.TryAdd(key, baseLayer.Value))
             {
-                newBaseLayers[key] = baseLayer;
+                newBaseLayers[key] = baseLayer.Value;
             }
         }
 
@@ -381,9 +379,9 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
                 continue;
             }
 
-            if (!newBaseLayers.TryAdd(key, baseLayer))
+            if (!newBaseLayers.TryAdd(key, baseLayer.Value))
             {
-                newBaseLayers[key] = baseLayer;
+                newBaseLayers[key] = baseLayer.Value;
             }
         }
 

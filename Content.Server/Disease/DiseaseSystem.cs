@@ -1,27 +1,27 @@
 using System.Threading;
-using Content.Shared.Disease;
-using Content.Shared.Disease.Components;
-using Content.Server.Disease.Components;
-using Content.Server.Clothing.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chat.Systems;
-using Content.Shared.MobState.Components;
-using Content.Shared.Examine;
-using Content.Shared.Inventory;
-using Content.Shared.Interaction;
-using Content.Server.Popups;
+using Content.Server.Clothing.Components;
+using Content.Server.Disease.Components;
 using Content.Server.DoAfter;
+using Content.Server.MobState;
+using Content.Server.Nutrition.EntitySystems;
+using Content.Server.Popups;
+using Content.Shared.Disease;
+using Content.Shared.Disease.Components;
+using Content.Shared.Examine;
+using Content.Shared.IdentityManagement;
+using Content.Shared.Interaction;
+using Content.Shared.Inventory;
+using Content.Shared.Inventory.Events;
+using Content.Shared.Item;
+using Content.Shared.MobState.Components;
+using Content.Shared.Rejuvenate;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager;
-using Content.Shared.Inventory.Events;
-using Content.Server.Nutrition.EntitySystems;
 using Robust.Shared.Utility;
-using Content.Shared.IdentityManagement;
-using Content.Shared.Item;
-using Content.Server.MobState;
-using Content.Shared.Rejuvenate;
 
 namespace Content.Server.Disease
 {
@@ -102,29 +102,29 @@ namespace Content.Server.Disease
                 for (var i = 0; i < carrierComp.Diseases.Count; i++) //this is a for-loop so that it doesn't break when new diseases are added
                 {
                     var disease = carrierComp.Diseases[i];
-                    disease.Accumulator += frameTime;
-                    disease.TotalAccumulator += frameTime;
+                    disease.Disease.Accumulator += frameTime;
+                    disease.Disease.TotalAccumulator += frameTime;
 
-                    if (disease.Accumulator < disease.TickTime) continue;
+                    if (disease.Disease.Accumulator < disease.Disease.TickTime) continue;
 
                     // if the disease is on the silent disease list, don't do effects
                     var doEffects = carrierComp.CarrierDiseases?.Contains(disease.ID) != true;
                     var args = new DiseaseEffectArgs(carrierComp.Owner, disease, EntityManager);
-                    disease.Accumulator -= disease.TickTime;
+                    disease.Disease.Accumulator -= disease.Disease.TickTime;
 
                     int stage = 0; //defaults to stage 0 because you should always have one
                     float lastThreshold = 0;
-                    for (var j = 0; j < disease.Stages.Count; j++)
+                    for (var j = 0; j < disease.Disease.Stages.Count; j++)
                     {
-                        if (disease.TotalAccumulator >= disease.Stages[j] &&
-                            disease.Stages[j] > lastThreshold)
+                        if (disease.Disease.TotalAccumulator >= disease.Disease.Stages[j] &&
+                            disease.Disease.Stages[j] > lastThreshold)
                         {
-                            lastThreshold = disease.Stages[j];
+                            lastThreshold = disease.Disease.Stages[j];
                             stage = j;
                         }
                     }
 
-                    foreach (var cure in disease.Cures)
+                    foreach (var cure in disease.Disease.Cures)
                     {
                         if (cure.Stages.AsSpan().Contains(stage) && cure.Cure(args))
                             CureDisease(carrierComp, disease);
@@ -132,7 +132,7 @@ namespace Content.Server.Disease
 
                     if (doEffects)
                     {
-                        foreach (var effect in disease.Effects)
+                        foreach (var effect in disease.Disease.Effects)
                         {
                             if (effect.Stages.AsSpan().Contains(stage) && _random.Prob(effect.Probability))
                                 effect.Effect(args);
@@ -157,7 +157,7 @@ namespace Content.Server.Disease
             foreach (var immunity in component.NaturalImmunities)
             {
                 if (_prototypeManager.TryIndex<DiseasePrototype>(immunity, out var disease))
-                    component.PastDiseases.Add(disease);
+                    component.PastDiseases.Add(disease.Value);
                 else
                 {
                     Logger.Error("Failed to index disease prototype + " + immunity + " for " + uid);
@@ -174,7 +174,7 @@ namespace Content.Server.Disease
         {
             foreach (var disease in component.Diseases)
             {
-                var cureProb = ((args.CureChance / component.Diseases.Count) - disease.CureResist);
+                var cureProb = ((args.CureChance / component.Diseases.Count) - disease.Disease.CureResist);
                 if (cureProb < 0)
                     return;
                 if (cureProb > 1)
@@ -343,15 +343,15 @@ namespace Content.Server.Disease
         {
             foreach (var disease in component.Diseases)
             {
-                disease.TickTime *= args.Multiplier;
+                disease.Disease.TickTime *= args.Multiplier;
                 return;
             }
         }
         foreach (var disease in component.Diseases)
         {
-            disease.TickTime /= args.Multiplier;
-            if (disease.Accumulator >= disease.TickTime)
-                disease.Accumulator = disease.TickTime;
+            disease.Disease.TickTime /= args.Multiplier;
+            if (disease.Disease.Accumulator >= disease.Disease.TickTime)
+                disease.Disease.Accumulator = disease.Disease.TickTime;
         }
     }
 
@@ -389,7 +389,7 @@ namespace Content.Server.Disease
 
             foreach (var disease in target.AllDiseases)
             {
-                if (disease.ID == addedDisease?.ID) //ID because of the way protoypes work
+                if (disease.ID == addedDisease.ID) //ID because of the way protoypes work
                     return;
             }
 
@@ -406,7 +406,7 @@ namespace Content.Server.Disease
             if (addedDisease == null || !_prototypeManager.TryIndex<DiseasePrototype>(addedDisease, out var added))
                 return;
 
-            TryAddDisease(host, added, target);
+            TryAddDisease(host, added.Value, target);
         }
 
         /// <summary>
@@ -421,13 +421,13 @@ namespace Content.Server.Disease
         /// <param name="forced">Bypass the disease's infectious trait.</param>
         public void TryInfect(DiseaseCarrierComponent carrier, DiseasePrototype? disease, float chance = 0.7f, bool forced = false)
         {
-            if(disease == null || !forced && !disease.Infectious)
+            if(disease == null || !forced && !disease.Value.Disease.Infectious)
                 return;
             var infectionChance = chance - carrier.DiseaseResist;
             if (infectionChance <= 0)
                 return;
             if (_random.Prob(infectionChance))
-                TryAddDisease(carrier.Owner, disease, carrier);
+                TryAddDisease(carrier.Owner, disease.Value, carrier);
         }
 
         public void TryInfect(DiseaseCarrierComponent carrier, string? disease, float chance = 0.7f, bool forced = false)
@@ -450,7 +450,7 @@ namespace Content.Server.Disease
             if (!string.IsNullOrEmpty(snoughMessage))
                 _popupSystem.PopupEntity(Loc.GetString(snoughMessage, ("person", Identity.Entity(uid, EntityManager))), uid, Filter.Pvs(uid));
 
-            if (disease is not { Infectious: true } || !airTransmit)
+            if (disease?.Disease is not { Infectious: true } || !airTransmit)
                 return;
 
             if (_inventorySystem.TryGetSlotEntity(uid, "mask", out var maskUid) &&
@@ -496,7 +496,7 @@ namespace Content.Server.Disease
         {
             if (args.Vaxx.Disease == null)
                 return;
-            Vaccinate(args.Carrier, args.Vaxx.Disease);
+            Vaccinate(args.Carrier, args.Vaxx.Disease.Value);
             EntityManager.DeleteEntity(args.Vaxx.Owner);
         }
 

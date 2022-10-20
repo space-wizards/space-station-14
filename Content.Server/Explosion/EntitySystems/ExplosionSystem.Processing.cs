@@ -428,10 +428,11 @@ public sealed partial class ExplosionSystem : EntitySystem
             tileDef = newDef;
         }
 
-        if (tileDef.TileId == tileRef.Tile.TypeId)
+        var tileId = _tileDefinitionManager.TileIds[tileDef.ID];
+        if (tileId == tileRef.Tile.TypeId)
             return;
 
-        damagedTiles.Add((tileRef.GridIndices, new Tile(tileDef.TileId)));
+        damagedTiles.Add((tileRef.GridIndices, new Tile(tileId)));
     }
 }
 

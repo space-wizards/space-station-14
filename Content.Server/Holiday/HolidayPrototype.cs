@@ -9,33 +9,36 @@ namespace Content.Server.Holiday
     [Prototype("holiday")]
     public readonly record struct HolidayPrototype : IPrototype
     {
-        [ViewVariables] [DataField("name")] public string Name { get; } = string.Empty;
-
         [ViewVariables]
         [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
+        [IncludeDataField] public readonly Holiday Holiday = default;
+    }
+
+    public struct Holiday
+    {
+        [ViewVariables] [DataField("name")] public string Name { get; } = string.Empty;
+
         [ViewVariables]
         [DataField("beginDay")]
-        public byte BeginDay { get; } = 1;
+        public byte BeginDay = 1;
 
         [ViewVariables]
         [DataField("beginMonth")]
-        public Month BeginMonth { get; } = Month.Invalid;
+        public Month BeginMonth = Month.Invalid;
 
         /// <summary>
         ///     Day this holiday will end. Zero means it lasts a single day.
         /// </summary>
-        [ViewVariables]
-        [DataField("endDay")]
-        public byte EndDay { get; }
+        [ViewVariables] [DataField("endDay")] public byte EndDay;
 
         /// <summary>
         ///     Month this holiday will end in. Invalid means it lasts a single month.
         /// </summary>
         [ViewVariables]
         [DataField("endMonth")]
-        public Month EndMonth { get; } = Month.Invalid;
+        public Month EndMonth = Month.Invalid;
 
         [ViewVariables] [DataField("shouldCelebrate")]
         private readonly IHolidayShouldCelebrate _shouldCelebrate = new DefaultHolidayShouldCelebrate();
@@ -63,5 +66,6 @@ namespace Content.Server.Holiday
         {
             _celebrate.Celebrate(this);
         }
+
     }
 }

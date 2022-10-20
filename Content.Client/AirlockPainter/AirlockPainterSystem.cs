@@ -1,8 +1,8 @@
+using System.Linq;
 using Content.Shared.AirlockPainter;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Utility;
-using System.Linq;
 using static Robust.Shared.GameObjects.SharedSpriteComponent;
 
 namespace Content.Client.AirlockPainter
@@ -21,7 +21,7 @@ namespace Content.Client.AirlockPainter
             {
                 string? iconPath = Groups
                   .FindAll(x => x.StylePaths.ContainsKey(style))?
-                  .MaxBy(x => x.IconPriority)?.StylePaths[style];
+                  .MaxBy(x => x.IconPriority).StylePaths[style];
                 if (iconPath == null)
                 {
                     Entries.Add(new AirlockPainterEntry(style, null));

@@ -73,10 +73,10 @@ public sealed class NameIdentifierSystem : EntitySystem
 
         // Generate a new name.
         var meta = MetaData(uid);
-        var uniqueName = GenerateUniqueName(uid, group);
+        var uniqueName = GenerateUniqueName(uid, group.Value);
 
         // "DR-1234" as opposed to "drone (DR-1234)"
-        meta.EntityName = group.FullName
+        meta.EntityName = group.Value.FullName
             ? uniqueName
             : $"{meta.EntityName} ({uniqueName})";
     }

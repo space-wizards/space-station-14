@@ -36,7 +36,7 @@ namespace Content.Server.GameTicking.Commands
                 return;
             }
 
-            ticker.SetGamePreset(type, true);
+            ticker.SetGamePreset(type.Value, true);
             shell.WriteLine($"Forced the game to start with preset {name}.");
             ticker.UpdateInfoText();
         }

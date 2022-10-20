@@ -5,7 +5,6 @@ using Content.Shared.Tag;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Construction.Commands
 {
@@ -66,8 +65,7 @@ namespace Content.Server.Construction.Commands
 
             var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();
             var tagSystem = EntitySystem.Get<TagSystem>();
-            var underplating = tileDefinitionManager[TilePrototypeID];
-            var underplatingTile = new Tile(underplating.TileId);
+            var underplatingTile = new Tile(tileDefinitionManager.TileIds[TilePrototypeID]);
             var changed = 0;
             foreach (var child in entityManager.GetComponent<TransformComponent>(grid.GridEntityId).ChildEntities)
             {

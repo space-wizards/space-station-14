@@ -3,7 +3,6 @@ using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Configurations;
 using Content.Shared.CCVar;
-using Content.Shared.GameTicking;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
@@ -54,7 +53,7 @@ public sealed class EventManagerSystem : EntitySystem
             return errStr;
         }
 
-        GameTicker.AddGameRule(proto);
+        GameTicker.AddGameRule(proto.Value);
         var str = Loc.GetString("station-event-system-run-event",("eventName", randomEvent.Id));
         _sawmill.Info(str);
         return str;

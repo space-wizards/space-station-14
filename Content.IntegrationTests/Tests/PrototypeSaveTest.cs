@@ -159,8 +159,7 @@ public sealed class PrototypeSaveTest
 
             grid = mapManager.CreateGrid(mapId);
 
-            var tileDefinition = tileDefinitionManager["UnderPlating"];
-            var tile = new Tile(tileDefinition.TileId);
+            var tile = new Tile(tileDefinitionManager.TileIds["UnderPlating"]);
             var coordinates = grid.ToCoordinates();
 
             grid.SetTile(coordinates, tile);

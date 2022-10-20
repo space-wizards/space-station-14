@@ -42,7 +42,7 @@ namespace Content.Client.Research.UI
             {
                 if (_consoleMenu.TechnologySelected != null)
                 {
-                    SendMessage(new ConsoleUnlockTechnologyMessage(_consoleMenu.TechnologySelected.ID));
+                    SendMessage(new ConsoleUnlockTechnologyMessage(_consoleMenu.TechnologySelected.Value.ID));
                 }
             };
 

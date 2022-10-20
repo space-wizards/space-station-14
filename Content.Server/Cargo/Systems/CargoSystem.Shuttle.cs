@@ -2,12 +2,12 @@ using System.Linq;
 using Content.Server.Cargo.Components;
 using Content.Server.Labels.Components;
 using Content.Server.MobState;
+using Content.Server.Paper;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
-using Content.Server.UserInterface;
-using Content.Server.Paper;
 using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Components;
+using Content.Server.UserInterface;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.BUI;
 using Content.Shared.Cargo.Components;
@@ -469,7 +469,7 @@ public sealed partial class CargoSystem
         _paperSystem.SetContent(printed, Loc.GetString(
             "cargo-console-paper-print-text",
             ("orderNumber", order.OrderNumber),
-            ("itemName", prototype.Name),
+            ("itemName", prototype.Value.Name),
             ("requester", order.Requester),
             ("reason", order.Reason),
             ("approver", order.Approver ?? string.Empty)),

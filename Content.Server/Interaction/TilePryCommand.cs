@@ -66,8 +66,7 @@ namespace Content.Server.Interaction
 
                     if (!tileDef.CanCrowbar) continue;
 
-                    var underplating = tileDefinitionManager["UnderPlating"];
-                    mapGrid.SetTile(coordinates, new Tile(underplating.TileId));
+                    mapGrid.SetTile(coordinates, new Tile(tileDefinitionManager.TileIds["UnderPlating"]));
                 }
             }
         }

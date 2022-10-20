@@ -1,7 +1,6 @@
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.Administration.Logs;
 using Content.Server.Construction.Components;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
@@ -294,24 +293,24 @@ namespace Content.Server.Construction
                 return;
             }
 
-            if (!_prototypeManager.TryIndex(constructionPrototype.Graph,
+            if (!_prototypeManager.TryIndex(constructionPrototype.Value.Graph,
                     out ConstructionGraphPrototype? constructionGraph))
             {
                 _sawmill.Error(
-                    $"Invalid construction graph '{constructionPrototype.Graph}' in recipe '{ev.PrototypeName}'!");
+                    $"Invalid construction graph '{constructionPrototype.Value.Graph}' in recipe '{ev.PrototypeName}'!");
                 return;
             }
 
-            var startNode = constructionGraph.Nodes[constructionPrototype.StartNode];
-            var targetNode = constructionGraph.Nodes[constructionPrototype.TargetNode];
-            var pathFind = constructionGraph.Path(startNode.Name, targetNode.Name);
+            var startNode = constructionGraph.Value.Nodes[constructionPrototype.Value.StartNode];
+            var targetNode = constructionGraph.Value.Nodes[constructionPrototype.Value.TargetNode];
+            var pathFind = constructionGraph.Value.Path(startNode.Name, targetNode.Name);
 
             if (args.SenderSession.AttachedEntity is not {Valid: true} user ||
                 !Get<ActionBlockerSystem>().CanInteract(user, null)) return;
 
             if (!EntityManager.TryGetComponent(user, out HandsComponent? hands)) return;
 
-            foreach (var condition in constructionPrototype.Conditions)
+            foreach (var condition in constructionPrototype.Value.Conditions)
             {
                 if (!condition.Condition(user, user.ToCoordinates(0, 0), Direction.South))
                     return;
@@ -338,7 +337,7 @@ namespace Content.Server.Construction
                 }
             }
 
-            if (await Construct(user, "item_construction", constructionGraph, edge, targetNode) is not { Valid: true } item)
+            if (await Construct(user, "item_construction", constructionGraph.Value, edge, targetNode) is not { Valid: true } item)
                 return;
 
             // Just in case this is a stack, attempt to merge it. If it isn't a stack, this will just normally pick up
@@ -357,9 +356,9 @@ namespace Content.Server.Construction
                 return;
             }
 
-            if (!_prototypeManager.TryIndex(constructionPrototype.Graph, out ConstructionGraphPrototype? constructionGraph))
+            if (!_prototypeManager.TryIndex(constructionPrototype.Value.Graph, out ConstructionGraphPrototype? constructionGraph))
             {
-                _sawmill.Error($"Invalid construction graph '{constructionPrototype.Graph}' in recipe '{ev.PrototypeName}'!");
+                _sawmill.Error($"Invalid construction graph '{constructionPrototype.Value.Graph}' in recipe '{ev.PrototypeName}'!");
                 RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack));
                 return;
             }
@@ -376,9 +375,9 @@ namespace Content.Server.Construction
                 return;
             }
 
-            var startNode = constructionGraph.Nodes[constructionPrototype.StartNode];
-            var targetNode = constructionGraph.Nodes[constructionPrototype.TargetNode];
-            var pathFind = constructionGraph.Path(startNode.Name, targetNode.Name);
+            var startNode = constructionGraph.Value.Nodes[constructionPrototype.Value.StartNode];
+            var targetNode = constructionGraph.Value.Nodes[constructionPrototype.Value.TargetNode];
+            var pathFind = constructionGraph.Value.Path(startNode.Name, targetNode.Name);
 
 
             if (_beingBuilt.TryGetValue(args.SenderSession, out var set))
@@ -395,7 +394,7 @@ namespace Content.Server.Construction
                 _beingBuilt[args.SenderSession] = newSet;
             }
 
-            foreach (var condition in constructionPrototype.Conditions)
+            foreach (var condition in constructionPrototype.Value.Conditions)
             {
                 if (!condition.Condition(user, ev.Location, ev.Angle.GetCardinalDir()))
                 {
@@ -417,7 +416,7 @@ namespace Content.Server.Construction
             }
 
             var mapPos = ev.Location.ToMap(EntityManager);
-            var predicate = GetPredicate(constructionPrototype.CanBuildInImpassable, mapPos);
+            var predicate = GetPredicate(constructionPrototype.Value.CanBuildInImpassable, mapPos);
 
             if (!_interactionSystem.InRangeUnobstructed(user, mapPos, predicate: predicate))
             {
@@ -465,7 +464,7 @@ namespace Content.Server.Construction
                 return;
             }
 
-            if (await Construct(user, (ev.Ack + constructionPrototype.GetHashCode()).ToString(), constructionGraph,
+            if (await Construct(user, (ev.Ack + constructionPrototype.GetHashCode()).ToString(), constructionGraph.Value,
                     edge, targetNode) is not {Valid: true} structure)
             {
                 Cleanup();
@@ -478,7 +477,7 @@ namespace Content.Server.Construction
             EntityManager.GetComponent<TransformComponent>(structure).Anchored = false;
 
             EntityManager.GetComponent<TransformComponent>(structure).Coordinates = ev.Location;
-            EntityManager.GetComponent<TransformComponent>(structure).LocalRotation = constructionPrototype.CanRotate ? ev.Angle : Angle.Zero;
+            EntityManager.GetComponent<TransformComponent>(structure).LocalRotation = constructionPrototype.Value.CanRotate ? ev.Angle : Angle.Zero;
 
             EntityManager.GetComponent<TransformComponent>(structure).Anchored = wasAnchored;
 

@@ -1,10 +1,8 @@
 using System.Linq;
-using System.Text;
 using Content.Server.Nutrition.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
-using Microsoft.VisualBasic;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 
@@ -61,7 +59,7 @@ public sealed class FlavorProfileSystem : EntitySystem
                 continue;
             }
 
-            flavors.Add(flavorPrototype);
+            flavors.Add(flavorPrototype.Value);
         }
 
         flavors.Sort((a, b) => a.FlavorType.CompareTo(b.FlavorType));

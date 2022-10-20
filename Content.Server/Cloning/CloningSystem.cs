@@ -1,36 +1,36 @@
-using Content.Shared.GameTicking;
-using Content.Shared.Damage;
-using Content.Shared.Stacks;
-using Content.Shared.Examine;
-using Content.Shared.Cloning;
-using Content.Shared.Atmos;
-using Content.Shared.CCVar;
-using Content.Server.Cloning.Components;
-using Content.Server.Mind.Components;
-using Content.Server.Power.EntitySystems;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.EUI;
-using Content.Server.Humanoid;
-using Content.Server.MachineLinking.System;
-using Content.Server.MachineLinking.Events;
-using Content.Server.MobState;
-using Content.Shared.Chemistry.Components;
-using Content.Server.Fluids.EntitySystems;
 using Content.Server.Chat.Systems;
+using Content.Server.Cloning.Components;
 using Content.Server.Construction;
 using Content.Server.Construction.Components;
-using Content.Server.Materials;
-using Content.Server.Stack;
+using Content.Server.EUI;
+using Content.Server.Fluids.EntitySystems;
+using Content.Server.Humanoid;
 using Content.Server.Jobs;
+using Content.Server.MachineLinking.Events;
+using Content.Server.MachineLinking.System;
+using Content.Server.Materials;
+using Content.Server.Mind.Components;
+using Content.Server.MobState;
+using Content.Server.Power.EntitySystems;
+using Content.Server.Stack;
+using Content.Shared.Atmos;
+using Content.Shared.CCVar;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Cloning;
+using Content.Shared.Damage;
+using Content.Shared.Examine;
+using Content.Shared.GameTicking;
 using Content.Shared.Humanoid.Prototypes;
-using Robust.Server.GameObjects;
+using Content.Shared.Stacks;
 using Robust.Server.Containers;
+using Robust.Server.GameObjects;
 using Robust.Server.Player;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Server.Cloning.Systems
 {
@@ -217,7 +217,7 @@ namespace Content.Server.Cloning.Systems
             }
             // end of genetic damage checks
 
-            var mob = Spawn(speciesPrototype.Prototype, Transform(clonePod.Owner).MapPosition);
+            var mob = Spawn(speciesPrototype.Value.Prototype, Transform(clonePod.Owner).MapPosition);
             _humanoidSystem.CloneAppearance(bodyToClone, mob);
 
             MetaData(mob).EntityName = MetaData(bodyToClone).EntityName;

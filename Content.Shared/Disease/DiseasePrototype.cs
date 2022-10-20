@@ -26,21 +26,28 @@ namespace Content.Shared.Disease
         [AbstractDataFieldAttribute]
         public bool Abstract { get; }
 
+        [IncludeDataField]
+        public readonly Disease Disease = new();
+    }
+
+    [DataDefinition]
+    public sealed class Disease
+    {
         /// <summary>
         /// Controls how often a disease ticks.
         /// </summary>
-        [ViewVariables] public readonly float TickTime = 1f;
+        [ViewVariables] public float TickTime = 1f;
 
         /// <summary>
         /// Since disease isn't mapped to metabolism or anything,
         /// it needs something to control its tickrate
         /// </summary>
-        public readonly float Accumulator = 0f;
+        public float Accumulator = 0f;
         /// <summary>
         /// Since accumulator is reset with TickTime, this just tracks
         /// the total amount of time a disease has been present.
         /// </summary>
-        public readonly float TotalAccumulator = 0f;
+        public float TotalAccumulator = 0f;
         /// <summary>
         /// Stores all the separate stages of the disease plus the time
         /// thresholds for their activation
@@ -48,19 +55,19 @@ namespace Content.Shared.Disease
         /// float: the time it takes for the stage to begin.
         /// </summary>
         [DataField("stages", serverOnly: true)]
-        public readonly List<float> Stages = new() { 0f };
+        public List<float> Stages = new() { 0f };
         /// <summary>
         /// List of effects the disease has that will
         /// run every second (by default anyway)
         /// </summary>
         [DataField("effects", serverOnly: true)]
-        public readonly List<DiseaseEffect> Effects = new(0);
+        public List<DiseaseEffect> Effects = new(0);
         /// <summary>
         /// List of SPECIFIC CURES the disease has that will
         /// be checked every second.
         /// Stuff like spaceacillin operates outside this.
         /// </summary>
-        [DataField("cures", serverOnly: true)] public readonly List<DiseaseCure> Cures = new(0);
+        [DataField("cures", serverOnly: true)] public List<DiseaseCure> Cures = new(0);
         /// <summary>
         /// This flatly reduces the probabilty disease medicine
         /// has to cure it every tick. Although, since spaceacillin is
@@ -68,7 +75,7 @@ namespace Content.Shared.Disease
         /// a base 33% reduction in cure chance
         /// </summary>
         [DataField("cureResist", serverOnly: true)]
-        public readonly float CureResist = 0.05f;
+        public float CureResist = 0.05f;
         /// <summary>
         /// Whether the disease can infect other people.
         /// Since this isn't just a virology thing, this
@@ -77,6 +84,6 @@ namespace Content.Shared.Disease
         /// You can't print a cancer vaccine
         /// </summary>
         [DataField("infectious", serverOnly: true)]
-        public readonly bool Infectious = true;
+        public bool Infectious = true;
     }
 }

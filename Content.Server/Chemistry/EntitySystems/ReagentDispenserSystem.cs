@@ -75,14 +75,14 @@ namespace Content.Server.Chemistry.EntitySystems
             if (reagentDispenser.PackPrototypeId is not null
                 && _prototypeManager.TryIndex(reagentDispenser.PackPrototypeId, out ReagentDispenserInventoryPrototype? packPrototype))
             {
-                inventory.AddRange(packPrototype.Inventory);
+                inventory.AddRange(packPrototype.Value.Inventory);
             }
 
             if (reagentDispenser.IsEmagged
                 && reagentDispenser.EmagPackPrototypeId is not null
                 && _prototypeManager.TryIndex(reagentDispenser.EmagPackPrototypeId, out ReagentDispenserInventoryPrototype? emagPackPrototype))
             {
-                inventory.AddRange(emagPackPrototype.Inventory);
+                inventory.AddRange(emagPackPrototype.Value.Inventory);
             }
 
             return inventory;
