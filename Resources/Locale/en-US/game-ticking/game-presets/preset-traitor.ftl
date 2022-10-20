@@ -41,3 +41,4 @@ traitor-death-match-end-round-description-entry = {$originalName}'s PDA, with {$
 # TraitorRole
 traitor-role-greeting = Hello Agent
 traitor-role-codewords = Your codewords are: {$codewords}
+traitor-role-phrases = Sleeper agents have infiltrated the station. The phrase to activate them is: {$phrases}
