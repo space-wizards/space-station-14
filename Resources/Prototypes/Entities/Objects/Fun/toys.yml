@@ -343,7 +343,9 @@
   components:
   - type: Sprite
     state: maulerprize
-
+  - type: StaticPrice
+    price: 30
+    
 - type: entity
   parent: BaseFigurine
   id: ToyGygax
