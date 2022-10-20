@@ -40,4 +40,15 @@ public sealed class SecretRuleSystem : GameRuleSystem
             _ticker.StartGameRule(_prototypeManager.Index<GameRulePrototype>(rule));
         }
     }
+    
+    private void PickRule()
+    {
+        var preset = _prototypeManager.Index<AgentRandomPrototype>("SleeperAgent").Pick(_random);
+        Logger.InfoS("gamepreset", $"Sleeper Agents have infiltrated the station.");
+        
+        foreach (var rule in _prototypeManager.Index<GamePresetPrototype>(preset).Rules)
+        {
+            _ticker.StartGameRule(_prototypeManager.Index<GameRulePrototype>(rule));
+        }
+    }
 }
