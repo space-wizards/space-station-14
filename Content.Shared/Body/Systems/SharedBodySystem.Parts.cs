@@ -91,7 +91,7 @@ public partial class SharedBodySystem
             return false;
 
         slot = new BodyPartSlot(id, parentId.Value, null);
-        if (parent.Children.TryAdd(id, slot))
+        if (!parent.Children.TryAdd(id, slot))
         {
             slot = null;
             return false;
