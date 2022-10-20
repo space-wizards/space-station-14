@@ -62,7 +62,9 @@ namespace Content.Client.Atmos.UI
             if (_window.SelectedGas is null)
             {
                 SendMessage(new GasFilterDeselectGasMessage());
-            } else {
+            }
+            else
+            {
                 if (!int.TryParse(_window.SelectedGas, out var gas)) return;
                 SendMessage(new GasFilterSelectGasMessage(gas));
             }
