@@ -1,9 +1,4 @@
 Entries:
-- author: Morb0
-  changes:
-  - {message: Now any job can spawn as nukeops antag, type: Fix}
-  id: 1993
-  time: '2022-07-21T21:00:24.0000000+00:00'
 - author: HoofedEar
   changes:
   - {message: Research servers are once again uniquely identified and can be selected
@@ -2950,3 +2945,8 @@ Entries:
       rarity.', type: Tweak}
   id: 2492
   time: '2022-10-20T13:16:29.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix wallmount interactions., type: Fix}
+  id: 2493
+  time: '2022-10-20T13:20:53.0000000+00:00'
