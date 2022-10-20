@@ -333,6 +333,25 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<int> TraitorMaxPicks =
             CVarDef.Create("traitor.max_picks", 20);
+         
+        /*
+         * Sleeper Agents
+         */
+         
+        public static readonly CVarDef<int> AgentMinPlayers =
+            CVarDef.Create("agent.min_players", 5);
+        
+        public static readonly CVarDef<int> AgentMaxAgents =
+            CVarDef.Create("agent.max_agents", 12);
+            
+        public static readonly CVarDef<int> AgentPlayersPerAgent =
+            CVarDef.Create("agent.players_per_agent", 8);
+            
+        public static readonly CVarDef<int> AgentMaxDifficulty =
+            CVarDef.Create("agent.max_difficulty", 3);
+            
+        public static readonly CVarDef<int> AgentMaxPicks =
+            CVarDef.Create("agent.max_picks", 25);
 
         /*
          * TraitorDeathMatch
