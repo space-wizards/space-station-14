@@ -108,7 +108,21 @@ public sealed class TraitorRuleSystem : GameRuleSystem
             Codewords[i] = _random.PickAndTake(codewordPool);
         }
     }
-
+    
+    private void MakePhrases()
+    {
+    
+        var phraseCount = cfg.GetCvar(CCVars.TraitorPhraseCount);
+        var phrases = _prototypeManager.Index<DatasetPrototype>("phrases").Values;
+        var phrasePool = phrases.ToList();
+        var finalPhraseCount = Math.min(phraseCount, phrasePool.count)
+        Phrases = new string[finalPhraseCount]
+        for (var i = 0; i < finalPhraseCount; i++)
+        {
+            Phrases[i] = _random.PickAndTake(phrasePool);
+        }
+    }
+    
     private void OnPlayersSpawned(RulePlayerJobsAssignedEvent ev)
     {
         if (!RuleAdded)
@@ -211,7 +225,13 @@ public sealed class TraitorRuleSystem : GameRuleSystem
 
         //give traitors their codewords to keep in their character info menu
         traitorRole.Mind.Briefing = Loc.GetString("traitor-role-codewords", ("codewords", string.Join(", ", Codewords)));
-
+        
+        //This gives traitors the agent activation phrase if they have the objective to activate agents. 
+        //TODO: Make this automatically fail if the activation event is scheduled (Would just be a freebie)
+        if (ActivateSleeperAgentsObjective = true)
+        traitorRole.Mind.Briefing = Loc.GetString("traitor-role-phrases", ("phrases", string.Join(", ", Phrases)));
+        
+        
         SoundSystem.Play(_addedSound.GetSound(), Filter.Empty().AddPlayer(traitor), AudioParams.Default);
         return true;
     }
