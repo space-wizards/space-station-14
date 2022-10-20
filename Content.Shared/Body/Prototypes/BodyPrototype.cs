@@ -3,12 +3,33 @@
 namespace Content.Shared.Body.Prototypes;
 
 [PrototypeRecord("body")]
-public sealed record BodyPrototype(
-    [field: IdDataField] string ID,
-    string Name,
-    string Root,
-    Dictionary<string, BodyPrototypeSlot> Slots
-) : IPrototype;
+public sealed class BodyPrototype : IPrototype
+{
+    [IdDataField] public string ID { get; } = default!;
+
+    private string _name = string.Empty;
+
+    [DataField("name")]
+    public string Name
+    {
+        get => _name;
+        private set => _name = Loc.GetString(value);
+    }
+
+    [DataField("root")] public string Root { get; } = string.Empty;
+
+    [DataField("slots")] public Dictionary<string, BodyPrototypeSlot> Slots { get; } = new();
+
+    private BodyPrototype() { }
+
+    public BodyPrototype(string id, string name, string root, Dictionary<string, BodyPrototypeSlot> slots)
+    {
+        ID = id;
+        Name = name;
+        Root = root;
+        Slots = slots;
+    }
+}
 
 [DataRecord]
 public sealed record BodyPrototypeSlot
