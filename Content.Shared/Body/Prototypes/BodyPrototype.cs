@@ -2,7 +2,7 @@
 
 namespace Content.Shared.Body.Prototypes;
 
-[PrototypeRecord("body")]
+[Prototype("body")]
 public sealed class BodyPrototype : IPrototype
 {
     [IdDataField] public string ID { get; } = default!;
