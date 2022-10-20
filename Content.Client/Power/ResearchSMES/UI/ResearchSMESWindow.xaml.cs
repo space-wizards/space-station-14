@@ -41,17 +41,17 @@ namespace Content.Client.Power.ResearchSMES.UI
 
             if (castState.ResearchMode)
             {
-                ResearchMode.Text = $"On";
+                ResearchMode.Text = Loc.GetString("research-smes-on");
             } else
             {
-                ResearchMode.Text = $"Off";
+                ResearchMode.Text = Loc.GetString("research-smes-off");
             }
-            if ( castState.ShieldingActive)
+            if (castState.ShieldingActive)
             {
-                ShieldingActive.Text = $"On";
+                ShieldingActive.Text = Loc.GetString("research-smes-on");
             } else
             {
-                ShieldingActive.Text = $"Off";
+                ShieldingActive.Text = Loc.GetString("research-smes-off");
             }
 
             AnalysisChargeSiphon.Text = $"{Math.Round(castState.AnalysisChargeSiphon * 100)}%";
@@ -63,12 +63,12 @@ namespace Content.Client.Power.ResearchSMES.UI
 
             if (castState.ResearchComplete)
             {
-                ResearchComplete.Text = $"RESEARCH GOAL COMPLETE";
+                ResearchComplete.Text = Loc.GetString("research-smes-goal-complete");
             }
 
             if (castState.MaxCapReached)
             {
-                MaxCapReached.Text = $"SMES CAPACITY MAXIMUM REACHED";
+                MaxCapReached.Text = Loc.GetString("research-smes-max-cap");
             }
 
         }

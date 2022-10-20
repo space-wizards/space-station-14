@@ -69,6 +69,7 @@ namespace Content.Server.Power.Components
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public float MaxAnalysisCharge = 10000000f;
+        [ViewVariables(VVAccess.ReadWrite)]
         public bool MaxCapReached = false;
 
         /// <summary>

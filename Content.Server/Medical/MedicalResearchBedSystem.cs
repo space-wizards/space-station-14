@@ -135,7 +135,7 @@ namespace Content.Server.Medical
 
             ActivationVerb verb = new();
             verb.Act = () => HandleActivateVerb(uid, component, args);
-            verb.Text = "Open UI";
+            verb.Text = Loc.GetString("ui-verb-toggle-open");
             args.Verbs.Add(verb);
         }
 
