@@ -151,5 +151,5 @@
   parent: BaseDrink
   desc: reagent-desc-juice-watermelon
   physicalDesc: reagent-physical-desc-sweet
-  flavor: tomato
+  flavor: watermelon
   color: "#EF3520"

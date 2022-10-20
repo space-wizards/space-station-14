@@ -109,7 +109,7 @@ public sealed partial class CargoSystem
         appearance?.SetData(CargoTelepadVisuals.State, CargoTelepadState.Unpowered);
     }
 
-    private void OnTelepadPowerChange(EntityUid uid, CargoTelepadComponent component, PowerChangedEvent args)
+    private void OnTelepadPowerChange(EntityUid uid, CargoTelepadComponent component, ref PowerChangedEvent args)
     {
         SetEnabled(component);
     }

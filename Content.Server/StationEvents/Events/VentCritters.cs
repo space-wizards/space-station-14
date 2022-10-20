@@ -18,7 +18,9 @@ public sealed class VentCritters : StationEventSystem
         var spawnLocations = EntityManager.EntityQuery<VentCritterSpawnLocationComponent>().ToList();
         RobustRandom.Shuffle(spawnLocations);
 
-        var spawnAmount = RobustRandom.Next(4, 12); // A small colony of critters.
+        var mod = Math.Sqrt(GetSeverityModifier());
+
+        var spawnAmount = (int) (RobustRandom.Next(4, 12) * mod); // A small colony of critters.
         Sawmill.Info($"Spawning {spawnAmount} of {spawnChoice}");
         foreach (var location in spawnLocations)
         {

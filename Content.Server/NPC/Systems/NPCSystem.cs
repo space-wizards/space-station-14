@@ -1,11 +1,11 @@
+using Content.Server.MobState;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.HTN;
 using Content.Shared.CCVar;
 using Content.Shared.MobState;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Reflection;
 
 namespace Content.Server.NPC.Systems
 {
@@ -17,6 +17,7 @@ namespace Content.Server.NPC.Systems
     {
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly HTNSystem _htn = default!;
+        [Dependency] private readonly MobStateSystem _mobState = default!;
 
         private ISawmill _sawmill = default!;
 
@@ -43,8 +44,23 @@ namespace Content.Server.NPC.Systems
             SubscribeLocalEvent<NPCComponent, MobStateChangedEvent>(OnMobStateChange);
             SubscribeLocalEvent<NPCComponent, MapInitEvent>(OnNPCMapInit);
             SubscribeLocalEvent<NPCComponent, ComponentShutdown>(OnNPCShutdown);
+            SubscribeLocalEvent<NPCComponent, PlayerAttachedEvent>(OnPlayerNPCAttach);
+            SubscribeLocalEvent<NPCComponent, PlayerDetachedEvent>(OnPlayerNPCDetach);
             _configurationManager.OnValueChanged(CCVars.NPCEnabled, SetEnabled, true);
             _configurationManager.OnValueChanged(CCVars.NPCMaxUpdates, SetMaxUpdates, true);
+        }
+
+        private void OnPlayerNPCAttach(EntityUid uid, NPCComponent component, PlayerAttachedEvent args)
+        {
+            SleepNPC(uid, component);
+        }
+
+        private void OnPlayerNPCDetach(EntityUid uid, NPCComponent component, PlayerDetachedEvent args)
+        {
+            if (_mobState.IsIncapacitated(uid))
+                return;
+
+            WakeNPC(uid, component);
         }
 
         private void SetMaxUpdates(int obj) => _maxUpdates = obj;
@@ -116,6 +132,9 @@ namespace Content.Server.NPC.Systems
 
         private void OnMobStateChange(EntityUid uid, NPCComponent component, MobStateChangedEvent args)
         {
+            if (HasComp<ActorComponent>(uid))
+                return;
+
             switch (args.CurrentMobState)
             {
                 case DamageState.Alive:

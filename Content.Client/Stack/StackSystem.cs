@@ -28,7 +28,7 @@ namespace Content.Client.Stack
             // TODO PREDICT ENTITY DELETION: This should really just be a normal entity deletion call.
             if (component.Count <= 0)
             {
-                Transform(uid).DetachParentToNull();
+                Xform.DetachParentToNull(Transform(uid));
                 return;
             }
 

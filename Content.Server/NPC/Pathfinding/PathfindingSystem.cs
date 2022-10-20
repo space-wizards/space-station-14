@@ -282,6 +282,21 @@ namespace Content.Server.NPC.Pathfinding
 
         public async Task<PathResultEvent> GetPath(
             EntityUid entity,
+            EntityUid target,
+            float range,
+            CancellationToken cancelToken,
+            PathFlags flags = PathFlags.None)
+        {
+            if (!TryComp<TransformComponent>(entity, out var xform) ||
+                !TryComp<TransformComponent>(target, out var targetXform))
+                return new PathResultEvent(PathResult.NoPath, new Queue<PathPoly>());
+
+            var request = GetRequest(entity, xform.Coordinates, targetXform.Coordinates, range, cancelToken, flags);
+            return await GetPath(request);
+        }
+
+        public async Task<PathResultEvent> GetPath(
+            EntityUid entity,
             EntityCoordinates start,
             EntityCoordinates end,
             float range,
@@ -385,14 +400,19 @@ namespace Content.Server.NPC.Pathfinding
         {
             var flags = PathFlags.None;
 
-            if (blackboard.TryGetValue<bool>(NPCBlackboard.NavPry, out var pry))
+            if (blackboard.TryGetValue<bool>(NPCBlackboard.NavPry, out var pry) && pry)
             {
                 flags |= PathFlags.Prying;
             }
 
-            if (blackboard.TryGetValue<bool>(NPCBlackboard.NavSmash, out var smash))
+            if (blackboard.TryGetValue<bool>(NPCBlackboard.NavSmash, out var smash) && smash)
             {
                 flags |= PathFlags.Smashing;
+            }
+
+            if (blackboard.TryGetValue<bool>(NPCBlackboard.NavInteract, out var interact) && interact)
+            {
+                flags |= PathFlags.Interact;
             }
 
             return flags;

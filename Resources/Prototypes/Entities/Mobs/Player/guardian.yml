@@ -6,6 +6,7 @@
   description: guardian
   save: false
   components:
+    - type: LagCompensation
     - type: GhostTakeoverAvailable
       allowMovement: true
       allowSpeech: true
@@ -60,7 +61,7 @@
         - shape:
             !type:PhysShapeCircle
             radius: 0.35
-          mass: 10
+          density: 25
           mask:
             - FlyingMobMask
           layer:
@@ -80,7 +81,6 @@
     - type: Pullable
     - type: MeleeWeapon
       hidden: true
-      range: 2
       angle: 30
       animation: WeaponArcFist
       attackRate: 1.5
