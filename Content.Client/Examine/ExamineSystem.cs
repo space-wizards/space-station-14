@@ -63,13 +63,23 @@ namespace Content.Client.Examine
             base.Shutdown();
         }
 
-        public override bool CanExamine(EntityUid examiner, MapCoordinates target, Ignored? predicate = null)
+        public override bool CanExamine(EntityUid examiner, MapCoordinates target, Ignored? predicate = null, EntityUid? examined = null, ExaminerComponent? examinerComp = null)
         {
-            var b = _eyeManager.GetWorldViewbounds();
-            if (!b.Contains(target.Position))
+            if (!Resolve(examiner, ref examinerComp, false))
                 return false;
 
-            return base.CanExamine(examiner, target, predicate);
+            if (examinerComp.SkipChecks)
+                return true;
+
+            if (examinerComp.CheckInRangeUnOccluded)
+            {
+                // TODO fix this. This should be using the examiner's eye component, not eye manager.
+                var b = _eyeManager.GetWorldViewbounds();
+                if (!b.Contains(target.Position))
+                    return false;
+            }
+
+            return base.CanExamine(examiner, target, predicate, examined, examinerComp);
         }
 
         private bool HandleExamine(in PointerInputCmdHandler.PointerInputCmdArgs args)

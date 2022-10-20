@@ -41,8 +41,8 @@ namespace Content.Client.Inventory
             base.Initialize();
 
             SubscribeLocalEvent<ClientInventoryComponent, PlayerAttachedEvent>(OnPlayerAttached);
+            SubscribeLocalEvent<ClientInventoryComponent, PlayerDetachedEvent>(OnPlayerDetached);
 
-            SubscribeLocalEvent<ClientInventoryComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<ClientInventoryComponent, ComponentShutdown>(OnShutdown);
 
             SubscribeLocalEvent<ClientInventoryComponent, DidEquipEvent>((_, comp, args) =>
@@ -111,6 +111,11 @@ namespace Content.Client.Inventory
             OnUnlinkInventory?.Invoke();
         }
 
+        private void OnPlayerDetached(EntityUid uid, ClientInventoryComponent component, PlayerDetachedEvent args)
+        {
+            OnUnlinkInventory?.Invoke();
+        }
+
         private void OnPlayerAttached(EntityUid uid, ClientInventoryComponent component, PlayerAttachedEvent args)
         {
             if (TryGetSlots(uid, out var definitions))
@@ -130,8 +135,7 @@ namespace Content.Client.Inventory
                 }
             }
 
-            if (uid == _playerManager.LocalPlayer?.ControlledEntity)
-                OnLinkInventory?.Invoke(component);
+            OnLinkInventory?.Invoke(component);
         }
 
         public override void Shutdown()
@@ -140,17 +144,30 @@ namespace Content.Client.Inventory
             base.Shutdown();
         }
 
-        private void OnInit(EntityUid uid, ClientInventoryComponent component, ComponentInit args)
+        protected override void OnInit(EntityUid uid, InventoryComponent component, ComponentInit args)
         {
-            _clothingVisualsSystem.InitClothing(uid, component);
+            base.OnInit(uid, component, args);
+            _clothingVisualsSystem.InitClothing(uid, (ClientInventoryComponent) component);
 
             if (!_prototypeManager.TryIndex(component.TemplateId, out InventoryTemplatePrototype? invTemplate))
                 return;
 
             foreach (var slot in invTemplate.Slots)
             {
-                TryAddSlotDef(uid, component, slot);
+                TryAddSlotDef(uid, (ClientInventoryComponent)component, slot);
             }
+        }
+
+        public void ReloadInventory(ClientInventoryComponent? component = null)
+        {
+            var player = _playerManager.LocalPlayer?.ControlledEntity;
+            if (player == null || !Resolve(player.Value, ref component))
+            {
+                return;
+            }
+
+            OnUnlinkInventory?.Invoke();
+            OnLinkInventory?.Invoke(component);
         }
 
         public void SetSlotHighlight(EntityUid owner, ClientInventoryComponent component, string slotName, bool state)
@@ -185,7 +202,6 @@ namespace Content.Client.Inventory
             SlotData newSlotData = newSlotDef; //convert to slotData
             if (!component.SlotData.TryAdd(newSlotDef.Name, newSlotData))
                 return false;
-
 
             if (owner == _playerManager.LocalPlayer?.ControlledEntity)
                 OnSlotAdded?.Invoke(newSlotData);
@@ -236,7 +252,7 @@ namespace Content.Client.Inventory
 
         public void UIInventoryStorageActivate(string slot)
         {
-            EntityManager.RaisePredictiveEvent(new OpenSlotStorageNetworkMessage(slot));
+            EntityManager.EntityNetManager?.SendSystemNetworkMessage(new OpenSlotStorageNetworkMessage(slot));
         }
 
         public void UIInventoryExamine(string slot, EntityUid uid)
@@ -260,7 +276,7 @@ namespace Content.Client.Inventory
             if (!TryGetSlotEntity(uid, slot, out var item))
                 return;
 
-            EntityManager.EntityNetManager?.SendSystemNetworkMessage(
+            EntityManager.RaisePredictiveEvent(
                 new InteractInventorySlotEvent(item.Value, altInteract: false));
         }
 
@@ -278,6 +294,8 @@ namespace Content.Client.Inventory
             public EntityUid? HeldEntity => Container?.ContainedEntity;
             public bool Blocked;
             public bool Highlighted;
+
+            [ViewVariables]
             public ContainerSlot? Container;
             public bool HasSlotGroup => SlotDef.SlotGroup != "Default";
             public Vector2i ButtonOffset => SlotDef.UIWindowPosition;
