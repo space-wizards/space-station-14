@@ -182,7 +182,7 @@
     id: AgentActivation
     startAnnouncement: station-event-agent-activation-announcement
     startAudio:
-      path: //adding this later once I can make a cool sound
+      path: /// adding this later once I can make a cool sound
       earliestStart: 20
       weight: 4
       maxOccurences: 1
