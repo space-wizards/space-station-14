@@ -16,7 +16,8 @@ public abstract class SharedGeigerSystem : EntitySystem
         if (!component.ShowExamine || !component.IsEnabled || !args.IsInDetailsRange)
             return;
 
-        var rads = component.CurrentRadiation.ToString("N1");
+        var currentRads = component.CurrentRadiation;
+        var rads = currentRads.ToString("N1");
         var color = LevelToColor(component.DangerLevel);
         var msg = Loc.GetString("geiger-component-examine",
             ("rads", rads), ("color", color));
