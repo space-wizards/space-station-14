@@ -250,6 +250,9 @@
   id: Gauze
 
 - type: Tag
+  id: GeigerCounter
+
+- type: Tag
   id: GlassBeaker
 
 - type: Tag
