@@ -43,10 +43,10 @@
   id: ActivateSleeperAgent
   issuer: syndicate
   requirements:
-    -!type:TraitorRequirement {}
-    -!type:SleeperAgentInfiltrationRequirement
+    - !type:TraitorRequirement {}
+    - !type:SleeperAgentInfiltrationRequirement
   conditions:
-    -!type:ActivateSleeperAgentCondition {}
+    - !type:ActivateSleeperAgentCondition {}
   canBeDuplicate: true
 
 - type: objective
