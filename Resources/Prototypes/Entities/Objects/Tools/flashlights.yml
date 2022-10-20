@@ -10,6 +10,29 @@
     - DroneUsable
   - type: HandheldLight
     addPrefix: false
+    blinkingBehaviourId: blinking
+    radiatingBehaviourId: radiating
+  - type: LightBehaviour
+    behaviours:
+      - !type:FadeBehaviour
+        id: radiating
+        interpolate: Linear
+        maxDuration: 2.0
+        startValue: 3.0
+        endValue: 2.0
+        isLooped: true
+        property: Radius
+        enabled: false
+        reverseWhenFinished: true
+      - !type:PulseBehaviour
+        id: blinking
+        interpolate: Nearest
+        maxDuration: 1.0
+        minValue: 0.1
+        maxValue: 2.0
+        isLooped: true
+        property: Radius
+        enabled: false
     toggleAction:
       name: action-name-toggle-light
       description: action-description-toggle-light
@@ -53,8 +76,6 @@
     autoRot: true
     radius: 4.5
   - type: Appearance
-    visuals:
-      - type: FlashLightVisualizer
   - type: StaticPrice
     price: 40
 
