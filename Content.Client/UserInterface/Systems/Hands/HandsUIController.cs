@@ -1,4 +1,4 @@
-﻿using Content.Client.Gameplay;
+using Content.Client.Gameplay;
 using Content.Client.Hands;
 using Content.Client.Hands.Systems;
 using Content.Client.UserInterface.Controls;
@@ -146,7 +146,6 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
 
     private void OnItemAdded(string name, EntityUid entity)
     {
-        HandsGui?.UpdatePanelEntity(entity);
         var hand = GetHand(name);
         if (hand == null)
             return;
@@ -154,15 +153,20 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
         {
             hand.SpriteView.Sprite = sprite;
         }
+
+        if (_playerHandsComponent?.ActiveHand?.Name == name)
+            HandsGui?.UpdatePanelEntity(entity);
     }
 
     private void OnItemRemoved(string name, EntityUid entity)
     {
-        HandsGui?.UpdatePanelEntity(null);
         var hand = GetHand(name);
         if (hand == null)
             return;
+
         hand.SpriteView.Sprite = null;
+        if (_playerHandsComponent?.ActiveHand?.Name == name)
+            HandsGui?.UpdatePanelEntity(null);
     }
 
     private HandsContainer GetFirstAvailableContainer()
@@ -364,17 +368,14 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
         {
             foreach (var hand in container.GetButtons())
             {
-                if (hand.Entity is not { } entity)
-                    return;
-
-                if (_entities.Deleted(entity) ||
-                    !_entities.TryGetComponent(entity, out ItemCooldownComponent? cooldown) ||
+                if (!_entities.TryGetComponent(hand.Entity, out ItemCooldownComponent? cooldown) ||
                     cooldown is not { CooldownStart: { } start, CooldownEnd: { } end})
                 {
                     hand.CooldownDisplay.Visible = false;
                     return;
                 }
 
+                hand.CooldownDisplay.Visible = true;
                 hand.CooldownDisplay.FromTime(start, end);
             }
         }

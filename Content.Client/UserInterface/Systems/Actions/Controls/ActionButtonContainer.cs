@@ -1,4 +1,4 @@
-﻿using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Actions.ActionTypes;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 
@@ -7,8 +7,6 @@ namespace Content.Client.UserInterface.Systems.Actions.Controls;
 [Virtual]
 public class ActionButtonContainer : GridContainer
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
-
     public event Action<GUIBoundKeyEventArgs, ActionButton>? ActionPressed;
     public event Action<GUIBoundKeyEventArgs, ActionButton>? ActionUnpressed;
     public event Action<ActionButton>? ActionFocusExited;
