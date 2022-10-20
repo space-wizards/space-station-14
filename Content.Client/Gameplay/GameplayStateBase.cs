@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Client.Clickable;
 using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Client.State;
@@ -59,17 +60,26 @@ namespace Content.Client.Gameplay
             var entities = EntitySystem.Get<EntityLookupSystem>().GetEntitiesIntersecting(coordinates.MapId,
                 Box2.CenteredAround(coordinates.Position, (1, 1)));
 
+            var eye = IoCManager.Resolve<IEyeManager>().CurrentEye;
+
             var containerSystem = _entitySystemManager.GetEntitySystem<SharedContainerSystem>();
 
             // Check the entities against whether or not we can click them
-            var foundEntities = new List<(EntityUid clicked, int drawDepth, uint renderOrder)>();
+            var foundEntities = new List<(EntityUid clicked, int drawDepth, uint renderOrder, float top)>();
+            var clickQuery = _entityManager.GetEntityQuery<ClickableComponent>();
+            var metaQuery = _entityManager.GetEntityQuery<MetaDataComponent>();
+            var spriteQuery = _entityManager.GetEntityQuery<SpriteComponent>();
+            var xformQuery = _entityManager.GetEntityQuery<TransformComponent>();
+
             foreach (var entity in entities)
             {
-                if (_entityManager.TryGetComponent<ClickableComponent?>(entity, out var component)
-                    && !containerSystem.IsEntityInContainer(entity)
-                    && component.CheckClick(coordinates.Position, out var drawDepthClicked, out var renderOrder))
+                if (clickQuery.TryGetComponent(entity, out var component) &&
+                    metaQuery.TryGetComponent(entity, out var meta) &&
+                    !containerSystem.IsEntityInContainer(entity, meta) &&
+                    spriteQuery.TryGetComponent(entity, out var sprite) &&
+                    component.CheckClick(sprite, xformQuery, coordinates.Position, eye, out var drawDepthClicked, out var renderOrder, out var top))
                 {
-                    foundEntities.Add((entity, drawDepthClicked, renderOrder));
+                    foundEntities.Add((entity, drawDepthClicked, renderOrder, top));
                 }
             }
 
@@ -77,11 +87,12 @@ namespace Content.Client.Gameplay
                 return Array.Empty<EntityUid>();
 
             foundEntities.Sort(_comparer);
+            foundEntities.Reverse();
             // 0 is the top element.
             return foundEntities.Select(a => a.clicked).ToList();
         }
 
-        private sealed class ClickableEntityComparer : IComparer<(EntityUid clicked, int depth, uint renderOrder)>
+        private sealed class ClickableEntityComparer : IComparer<(EntityUid clicked, int depth, uint renderOrder, float top)>
         {
             private readonly IEntityManager _entities;
 
@@ -90,30 +101,28 @@ namespace Content.Client.Gameplay
                 _entities = entities;
             }
 
-            public int Compare((EntityUid clicked, int depth, uint renderOrder) x,
-                (EntityUid clicked, int depth, uint renderOrder) y)
+            public int Compare((EntityUid clicked, int depth, uint renderOrder, float top) x,
+                (EntityUid clicked, int depth, uint renderOrder, float top) y)
             {
-                var val = y.depth.CompareTo(x.depth);
-                if (val != 0)
+                var cmp = x.depth.CompareTo(y.depth);
+                if (cmp != 0)
                 {
-                    return val;
+                    return cmp;
                 }
 
-                // Turning this off it can make picking stuff out of lockers and such up a bit annoying.
-                /*
-                val = x.renderOrder.CompareTo(y.renderOrder);
-                if (val != 0)
-                {
-                    return val;
-                }
-                */
+                cmp = x.renderOrder.CompareTo(y.renderOrder);
 
-                var transX = _entities.GetComponent<TransformComponent>(x.clicked);
-                var transY = _entities.GetComponent<TransformComponent>(y.clicked);
-                val = transX.Coordinates.Y.CompareTo(transY.Coordinates.Y);
-                if (val != 0)
+                if (cmp != 0)
                 {
-                    return val;
+                    return cmp;
+                }
+
+                // compare the top of the sprite's BB for y-sorting. Because screen coordinates are flipped, the "top" of the BB is actually the "bottom".
+                cmp = x.top.CompareTo(y.top);
+
+                if (cmp != 0)
+                {
+                    return cmp;
                 }
 
                 return x.clicked.CompareTo(y.clicked);
