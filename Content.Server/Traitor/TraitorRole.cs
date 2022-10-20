@@ -25,6 +25,7 @@ namespace Content.Server.Traitor
                 var chatMgr = IoCManager.Resolve<IChatManager>();
                 chatMgr.DispatchServerMessage(session, Loc.GetString("traitor-role-greeting"));
                 chatMgr.DispatchServerMessage(session, Loc.GetString("traitor-role-codewords", ("codewords", string.Join(", ",codewords))));
+                chatMgr.DispatchServerMessage(session, Loc.GetString("traitor-role-phrases", ("phrases", string.Join(", ",phrases))));
             }
         }
     }
