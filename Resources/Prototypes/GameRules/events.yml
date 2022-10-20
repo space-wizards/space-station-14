@@ -183,6 +183,6 @@
     startAnnouncement: station-event-agent-activation-announcement
     startAudio:
       path: /// adding this later once I can make a cool sound
-      earliestStart: 20
-      weight: 4
+      earliestStart: 30
+      weight: 10
       maxOccurences: 1
