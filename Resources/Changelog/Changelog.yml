@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: The zombify popup is now more noticeable., type: Tweak}
-  id: 1992
-  time: '2022-07-21T04:32:05.0000000+00:00'
 - author: Morb0
   changes:
   - {message: Now any job can spawn as nukeops antag, type: Fix}
@@ -2947,3 +2942,11 @@ Entries:
       full power.', type: Fix}
   id: 2491
   time: '2022-10-19T18:34:36.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added ore veins; ores now drop from rock on destruction., type: Add}
+  - {message: Pickaxes now mine faster., type: Tweak}
+  - {message: 'Increased the amount of ores per rock mined, scaling based on the ore
+      rarity.', type: Tweak}
+  id: 2492
+  time: '2022-10-20T13:16:29.0000000+00:00'
