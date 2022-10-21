@@ -285,6 +285,8 @@ namespace Content.Client.Hands.Systems
             if (!Resolve(uid, ref handComp, ref sprite, false))
                 return;
 
+            OnPlayerItemAdded?.Invoke(hand.Name, held);
+
             if (!handComp.ShowInHands)
                 return;
 
@@ -361,8 +363,7 @@ namespace Content.Client.Hands.Systems
 
         private void HandlePlayerAttached(EntityUid uid, HandsComponent component, PlayerAttachedEvent args)
         {
-            if (_playerManager.LocalPlayer?.ControlledEntity == uid)
-                OnPlayerHandsAdded?.Invoke(component);
+            OnPlayerHandsAdded?.Invoke(component);
         }
 
         private void HandlePlayerDetached(EntityUid uid, HandsComponent component, PlayerDetachedEvent args)
