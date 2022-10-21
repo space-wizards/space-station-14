@@ -1,10 +1,4 @@
 Entries:
-- author: HoofedEar
-  changes:
-  - {message: Research servers are once again uniquely identified and can be selected
-      in the lathe server menu., type: Fix}
-  id: 1994
-  time: '2022-07-21T22:16:15.0000000+00:00'
 - author: moony
   changes:
   - {message: Introduced another 15 admin smites., type: Add}
@@ -2950,3 +2944,10 @@ Entries:
   - {message: Fix wallmount interactions., type: Fix}
   id: 2493
   time: '2022-10-20T13:20:53.0000000+00:00'
+- author: Mervill
+  changes:
+  - {message: Updated some item descriptions in the Syndicate Uplink menu., type: Tweak}
+  - {message: 'Clarified that, should you purchase the Syndicate Pajama Bundle, you
+      will have the ultimate sleepover.', type: Tweak}
+  id: 2494
+  time: '2022-10-21T18:47:09.0000000+00:00'
