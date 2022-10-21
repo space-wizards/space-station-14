@@ -39,60 +39,45 @@ namespace Content.Client.Lobby
         private ClientGameTicker _gameTicker = default!;
 
         protected override Type? LinkedScreenType { get; } = typeof(LobbyGui);
-        private LobbyGui Lobby => (LobbyGui) _userInterfaceManager.ActiveScreen!;
+        private LobbyGui? _lobby;
 
         protected override void Startup()
         {
+            if (_userInterfaceManager.ActiveScreen == null)
+            {
+                return;
+            }
+
+            _lobby = (LobbyGui) _userInterfaceManager.ActiveScreen;
+
             var chatController = _userInterfaceManager.GetUIController<ChatUIController>();
             _gameTicker = _entityManager.System<ClientGameTicker>();
             _characterSetup = new CharacterSetupGui(_entityManager, _resourceCache, _preferencesManager,
                 _prototypeManager, _configurationManager);
             LayoutContainer.SetAnchorPreset(_characterSetup, LayoutContainer.LayoutPreset.Wide);
 
+            _lobby.CharacterSetupState.AddChild(_characterSetup);
             chatController.SetMainChat(true);
 
             _characterSetup.CloseButton.OnPressed += _ =>
             {
-                _userInterfaceManager.StateRoot.AddChild(Lobby);
-                _userInterfaceManager.StateRoot.RemoveChild(_characterSetup);
+                _lobby.SwitchState(LobbyGui.LobbyGuiState.Default);
             };
 
             _characterSetup.SaveButton.OnPressed += _ =>
             {
                 _characterSetup.Save();
-                Lobby?.CharacterPreview.UpdateUI();
+                _lobby.CharacterPreview.UpdateUI();
             };
 
-            LayoutContainer.SetAnchorPreset(Lobby, LayoutContainer.LayoutPreset.Wide);
-            _voteManager.SetPopupContainer(Lobby.VoteContainer);
-            Lobby.ServerName.Text = _baseClient.GameInfo?.ServerName; //The eye of refactor gazes upon you...
+            LayoutContainer.SetAnchorPreset(_lobby, LayoutContainer.LayoutPreset.Wide);
+            _voteManager.SetPopupContainer(_lobby.VoteContainer);
+            _lobby.ServerName.Text = _baseClient.GameInfo?.ServerName; //The eye of refactor gazes upon you...
             UpdateLobbyUi();
 
-            Lobby.CharacterPreview.CharacterSetupButton.OnPressed += _ =>
-            {
-                SetReady(false);
-                _userInterfaceManager.StateRoot.RemoveChild(Lobby);
-                _userInterfaceManager.StateRoot.AddChild(_characterSetup);
-            };
-
-            Lobby.ReadyButton.OnPressed += _ =>
-            {
-                if (!_gameTicker.IsGameStarted)
-                {
-                    return;
-                }
-
-                new LateJoinGui().OpenCentered();
-            };
-
-            Lobby.ReadyButton.OnToggled += args =>
-            {
-                SetReady(args.Pressed);
-            };
-
-            Lobby.LeaveButton.OnPressed += _ => _consoleHost.ExecuteCommand("disconnect");
-            Lobby.OptionsButton.OnPressed += _ => _userInterfaceManager.GetUIController<OptionsUIController>().ToggleWindow();
-
+            _lobby.CharacterPreview.CharacterSetupButton.OnPressed += OnSetupPressed;
+            _lobby.ReadyButton.OnPressed += OnReadyPressed;
+            _lobby.ReadyButton.OnToggled += OnReadyToggled;
 
             _gameTicker.InfoBlobUpdated += UpdateLobbyUi;
             _gameTicker.LobbyStatusUpdated += LobbyStatusUpdated;
@@ -107,17 +92,44 @@ namespace Content.Client.Lobby
             _gameTicker.LobbyStatusUpdated -= LobbyStatusUpdated;
             _gameTicker.LobbyLateJoinStatusUpdated -= LobbyLateJoinStatusUpdated;
 
+            _lobby!.CharacterPreview.CharacterSetupButton.OnPressed -= OnSetupPressed;
+            _lobby!.ReadyButton.OnPressed -= OnReadyPressed;
+            _lobby!.ReadyButton.OnToggled -= OnReadyToggled;
+
+            _lobby = null;
+
             _characterSetup?.Dispose();
             _characterSetup = null;
+        }
+
+        private void OnSetupPressed(BaseButton.ButtonEventArgs args)
+        {
+            SetReady(false);
+            _lobby!.SwitchState(LobbyGui.LobbyGuiState.CharacterSetup);
+        }
+
+        private void OnReadyPressed(BaseButton.ButtonEventArgs args)
+        {
+            if (!_gameTicker.IsGameStarted)
+            {
+                return;
+            }
+
+            new LateJoinGui().OpenCentered();
+        }
+
+        private void OnReadyToggled(BaseButton.ButtonToggledEventArgs args)
+        {
+            SetReady(args.Pressed);
         }
 
         public override void FrameUpdate(FrameEventArgs e)
         {
             if (_gameTicker.IsGameStarted)
             {
-                Lobby.StartTime.Text = string.Empty;
+
                 var roundTime = _gameTiming.CurTime.Subtract(_gameTicker.RoundStartTimeSpan);
-                Lobby.StationTime.Text = Loc.GetString("lobby-state-player-status-round-time", ("hours", roundTime.Hours), ("minutes", roundTime.Minutes));
+                _lobby!.StationTime.Text = Loc.GetString("lobby-state-player-status-round-time", ("hours", roundTime.Hours), ("minutes", roundTime.Minutes));
                 return;
             }
 
@@ -141,8 +153,8 @@ namespace Content.Client.Lobby
                 }
             }
 
-            Lobby.StationTime.Text =  Loc.GetString("lobby-state-player-status-round-not-started");
-            Lobby.StartTime.Text = Loc.GetString("lobby-state-round-start-countdown-text", ("timeLeft", text));
+            _lobby!.StationTime.Text =  Loc.GetString("lobby-state-player-status-round-not-started");
+            _lobby!.StartTime.Text = Loc.GetString("lobby-state-round-start-countdown-text", ("timeLeft", text));
         }
 
         private void LobbyStatusUpdated()
@@ -153,31 +165,31 @@ namespace Content.Client.Lobby
 
         private void LobbyLateJoinStatusUpdated()
         {
-            Lobby.ReadyButton.Disabled = _gameTicker.DisallowedLateJoin;
+            _lobby!.ReadyButton.Disabled = _gameTicker.DisallowedLateJoin;
         }
 
         private void UpdateLobbyUi()
         {
             if (_gameTicker.IsGameStarted)
             {
-                Lobby.ReadyButton.Text = Loc.GetString("lobby-state-ready-button-join-state");
-                Lobby.ReadyButton.ToggleMode = false;
-                Lobby.ReadyButton.Pressed = false;
-                Lobby.ObserveButton.Disabled = false;
+                _lobby!.ReadyButton.Text = Loc.GetString("lobby-state-ready-button-join-state");
+                _lobby!.ReadyButton.ToggleMode = false;
+                _lobby!.ReadyButton.Pressed = false;
+                _lobby!.ObserveButton.Disabled = false;
             }
             else
             {
-                Lobby.StartTime.Text = string.Empty;
-                Lobby.ReadyButton.Text = Loc.GetString("lobby-state-ready-button-ready-up-state");
-                Lobby.ReadyButton.ToggleMode = true;
-                Lobby.ReadyButton.Disabled = false;
-                Lobby.ReadyButton.Pressed = _gameTicker.AreWeReady;
-                Lobby.ObserveButton.Disabled = true;
+                _lobby!.StartTime.Text = string.Empty;
+                _lobby!.ReadyButton.Text = Loc.GetString("lobby-state-ready-button-ready-up-state");
+                _lobby!.ReadyButton.ToggleMode = true;
+                _lobby!.ReadyButton.Disabled = false;
+                _lobby!.ReadyButton.Pressed = _gameTicker.AreWeReady;
+                _lobby!.ObserveButton.Disabled = true;
             }
 
             if (_gameTicker.ServerInfoBlob != null)
             {
-                Lobby.ServerInfo.SetInfoBlob(_gameTicker.ServerInfoBlob);
+                _lobby!.ServerInfo.SetInfoBlob(_gameTicker.ServerInfoBlob);
             }
         }
 
@@ -185,11 +197,11 @@ namespace Content.Client.Lobby
         {
             if (_gameTicker.LobbyBackground != null)
             {
-                Lobby.Background.Texture = _resourceCache.GetResource<TextureResource>(_gameTicker.LobbyBackground );
+                _lobby!.Background.Texture = _resourceCache.GetResource<TextureResource>(_gameTicker.LobbyBackground );
             }
             else
             {
-                Lobby.Background.Texture = null;
+                _lobby!.Background.Texture = null;
             }
 
         }
