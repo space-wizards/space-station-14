@@ -1,16 +1,22 @@
 using System.Linq;
 using Content.Server.Construction.Components;
+using Content.Server.Examine;
 using Content.Shared.Construction.Prototypes;
+using Content.Shared.Verbs;
 using Robust.Shared.Containers;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Construction;
 
 public sealed partial class ConstructionSystem
 {
+    [Dependency] private readonly ExamineSystem _examineSystem = default!;
+
     private void InitializeMachines()
     {
         SubscribeLocalEvent<MachineComponent, ComponentInit>(OnMachineInit);
         SubscribeLocalEvent<MachineComponent, MapInitEvent>(OnMachineMapInit);
+        SubscribeLocalEvent<MachineComponent, GetVerbsEvent<ExamineVerb>>(OnMachineExaminableVerb);
     }
 
     private void OnMachineInit(EntityUid uid, MachineComponent component, ComponentInit args)
@@ -23,6 +29,31 @@ public sealed partial class ConstructionSystem
     {
         CreateBoardAndStockParts(component);
         RefreshParts(component);
+    }
+
+    private void OnMachineExaminableVerb(EntityUid uid, MachineComponent component, GetVerbsEvent<ExamineVerb> args)
+    {
+        if (!args.CanInteract || !args.CanAccess)
+            return;
+
+        var markup = new FormattedMessage();
+        RaiseLocalEvent(uid, new UpgradeExamineEvent(ref markup));
+        if (markup.IsEmpty)
+            return; // Not upgradable.
+
+        var verb = new ExamineVerb()
+        {
+            Act = () =>
+            {
+                _examineSystem.SendExamineTooltip(args.User, uid, markup, getVerbs: false, centerAtCursor: false);
+            },
+            Text = Loc.GetString("machine-examinable-verb-text"),
+            Message = Loc.GetString("machine-examinable-verb-message"),
+            Category = VerbCategory.Examine,
+            IconTexture = "/Textures/Interface/VerbIcons/pickup.svg.192dpi.png"
+        };
+
+        args.Verbs.Add(verb);
     }
 
     public List<MachinePartComponent> GetAllParts(MachineComponent component)
@@ -142,4 +173,36 @@ public sealed class RefreshPartsEvent : EntityEventArgs
     public IReadOnlyList<MachinePartComponent> Parts = new List<MachinePartComponent>();
 
     public Dictionary<string, float> PartRatings = new Dictionary<string, float>();
+}
+
+public sealed class UpgradeExamineEvent : EntityEventArgs
+{
+    private FormattedMessage Message;
+
+    public UpgradeExamineEvent(ref FormattedMessage message)
+    {
+        Message = message;
+    }
+
+    public void AddPercentageUpgrade(string upgradedAttribute, float multiplier)
+    {
+        var percent = Math.Round(100 * MathF.Abs(multiplier - 1), 2);
+        var incOrDec = multiplier switch {
+            < 1 => $"is decreased by {percent}%",
+            1 or float.NaN => "is not upgraded",
+            > 1 => $"is increased by {percent}%",
+        };
+        this.Message.AddMarkup($"[color=yellow]{upgradedAttribute}[/color] {incOrDec}.\n");
+    }
+
+    public void AddNumberUpgrade(string upgradedAttribute, int number)
+    {
+        var difference = Math.Abs(number);
+        var incOrDec = number switch {
+            < 0 => $"is decreased by {difference}",
+            0 => "is not upgraded",
+            > 0 => $"is increased by {difference}%",
+        };
+        this.Message.AddMarkup($"[color=yellow]{upgradedAttribute}[/color] {incOrDec}.\n");
+    }
 }
