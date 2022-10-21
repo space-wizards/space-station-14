@@ -1,0 +1,82 @@
+- type: entity
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  id: WoodBurned
+  name: woodburner
+  description: It produces items using metal and glass.			## Change it ------------------
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/autolathe.rsi					## Change it ------------------
+    snapCardinals: true
+    netsync: false
+    layers:
+    - state: icon
+      map: ["enum.LatheVisualLayers.IsRunning"]					## Change it ------------------
+    - state: unlit
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]				## Change it ------------------
+    - state: inserting
+      map: ["enum.LatheVisualLayers.IsInserting"]				## Change it ------------------
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]			## Change it ------------------
+  - type: Appearance
+  - type: Rotatable
+  - type: WiresVisuals
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.4,-0.4,0.4,0.4"
+      density: 190
+      mask:
+      - MachineMask
+      layer:
+      - MachineLayer
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Machine
+    board: AutolatheMachineCircuitboard	## Change it ------------------
+  - type: MaterialStorage
+    materialWhiteList:
+    - WoodPlank
+  - type: Wires
+    BoardName: "WoodBurner"
+    LayoutId: WoodBurner
+  - type: ActivatableUI					## Change it ------------------
+    key: enum.LatheUiKey.Key			## Change it ------------------
+  - type: ActivatableUIRequiresPower	## Change it ------------------
+  - type: UserInterface
+    interfaces:
+    - key: enum.LatheUiKey.Key			## Change it ------------------
+      type: LatheBoundUserInterface		## Change it ------------------
+  - type: Transform
+    anchored: true
+  - type: Pullable
+  - type: Lathe							## Change or Remove it ------------------
+    idleState: icon
+    runningState: building
+    staticRecipes:
+      - Wirecutter
+    - type: PipeColorVisuals			## Data for pipe color
+    - type: AtmosPipeColor				## Set data for pipe color
+    - type: NodeContainer				## !!!!!Check it ----------------------------
+      nodes:
+        pipe:
+          !type:PipeNode
+          nodeGroupID: Pipe
+          pipeDirection: South
+  - type: StaticPrice
+    price: 800
+	
+## Check it
+
+    - type: AtmosDevice
