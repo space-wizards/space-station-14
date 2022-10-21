@@ -32,7 +32,7 @@ public sealed partial class PathfindingSystem
     // Probably can't pool polys as there might be old pathfinding refs to them.
 
     private readonly ObjectPool<HashSet<PathPoly>> _neighborPolyPool =
-        new DefaultObjectPool<HashSet<PathPoly>>(new DefaultPooledObjectPolicy<HashSet<PathPoly>>(), MaxPoolSize);
+        new DefaultObjectPool<HashSet<PathPoly>>(new SetPolicy<PathPoly>(), MaxPoolSize);
 
     private static int MaxPoolSize = Environment.ProcessorCount * 2 * ChunkSize * ChunkSize;
 
@@ -574,7 +574,7 @@ public sealed partial class PathfindingSystem
             {
                 var index = x * ChunkSize + y;
                 var polys = chunkPolys[index];
-                ref var existing = ref chunk.Polygons[index];
+                var existing = chunk.Polygons[index];
 
                 var isEquivalent = true;
 
@@ -629,12 +629,10 @@ public sealed partial class PathfindingSystem
         foreach (var neighbor in poly.Neighbors)
         {
             neighbor.Neighbors.Remove(poly);
-            poly.Neighbors.Remove(neighbor);
         }
 
         // If any paths have a ref to it let them know that the class is no longer a valid node.
         poly.Data.Flags = PathfindingBreadcrumbFlag.Invalid;
-        poly.Neighbors.Clear();
         _neighborPolyPool.Return(poly.Neighbors);
     }
 
