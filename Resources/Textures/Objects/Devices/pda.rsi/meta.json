@@ -166,7 +166,7 @@
     {
       "name": "pda-zookeeper"
     },
-	{
+    {
       "name": "pda-ert"
     }
   ]
