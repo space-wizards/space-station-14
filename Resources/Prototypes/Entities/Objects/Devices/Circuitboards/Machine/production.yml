@@ -318,15 +318,13 @@
       state: service
     - type: MachineBoard
       prototype: SeedExtractor
-      # See: https://github.com/vgstation-coders/vgstation13/blob/e9a806f30b4db0efa2a68b9eb42e3120d2321b6a/code/modules/hydroponics/seed_extractor.dm#L21
       requirements:
         Manipulator: 2
-        MatterBin: 1
-        Laser: 1
-        ScanningModule: 1
+        Capacitor: 1
       materialRequirements:
         # replacing the console screen
         Glass: 1
+        Cable: 2
 
 - type: entity
   id: SMESMachineCircuitboard

@@ -41,7 +41,7 @@ public sealed class SeedExtractorSystem : EntitySystem
 
         QueueDel(args.Used);
 
-        var amount = _random.Next(seedExtractor.BaseMinSeeds, seedExtractor.BaseMaxSeeds + 1) + seedExtractor.SeedAmountModifier;
+        var amount = (int) _random.NextFloat(seedExtractor.BaseMinSeeds, seedExtractor.BaseMaxSeeds + 1) * seedExtractor.SeedAmountMultiplier;
         var coords = Transform(uid).Coordinates;
 
         if (amount > 1)
@@ -55,6 +55,7 @@ public sealed class SeedExtractorSystem : EntitySystem
 
     private void OnRefreshParts(EntityUid uid, SeedExtractorComponent seedExtractor, RefreshPartsEvent args)
     {
-        seedExtractor.SeedAmountModifier = (int) args.PartRatings[seedExtractor.MachinePartSeedAmount] - 1;
+        var manipulatorQuality = args.PartRatings[seedExtractor.MachinePartSeedAmount];
+        seedExtractor.SeedAmountMultiplier = MathF.Pow(seedExtractor.PartRatingSeedAmountMultiplier, manipulatorQuality - 1);
     }
 }

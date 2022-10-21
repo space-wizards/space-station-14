@@ -25,11 +25,18 @@ public sealed class SeedExtractorComponent : Component
     /// Modifier to the amount of seeds outputted, set on <see cref="RefreshPartsEvent"/>.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    public int SeedAmountModifier;
+    public float SeedAmountMultiplier;
 
     /// <summary>
     /// Machine part whose rating modifies the amount of seed packets dropped.
     /// </summary>
     [DataField("machinePartYieldAmount", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
     public string MachinePartSeedAmount = "Manipulator";
+
+    /// <summary>
+    /// How much the machine part quality affects the amount of seeds outputted.
+    /// Going up a tier will multiply the seed output by this amount.
+    /// </summary>
+    [DataField("partRatingSeedAmountMultiplier"), ViewVariables]
+    public float PartRatingSeedAmountMultiplier = 1.5f;
 }
