@@ -33,7 +33,6 @@ namespace Content.Server.Medical.BiomassReclaimer
 {
     public sealed class BiomassReclaimerSystem : EntitySystem
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly StackSystem _stackSystem = default!;
         [Dependency] private readonly MobStateSystem _mobState = default!;
@@ -135,10 +134,10 @@ namespace Content.Server.Medical.BiomassReclaimer
             if (args.Powered)
             {
                 if (component.ProcessingTimer > 0)
-                    _entityManager.EnsureComponent<ActiveBiomassReclaimerComponent>(uid);
+                    EnsureComp<ActiveBiomassReclaimerComponent>(uid);
             }
             else
-                RemCompDeferred<ActiveBiomassReclaimerComponent>(component.Owner);
+                RemComp<ActiveBiomassReclaimerComponent>(component.Owner);
         }
 
         private void OnUnanchorAttempt(EntityUid uid, ActiveBiomassReclaimerComponent component, UnanchorAttemptEvent args)
