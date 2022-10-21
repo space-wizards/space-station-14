@@ -1,46 +1,4 @@
 Entries:
-- author: Cerol
-  changes:
-  - {message: added Antag menu for admins to make players into antags and 4 entries
-      for it., type: Add}
-  id: 1986
-  time: '2022-07-20T09:46:24.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Barratry got an update., type: Fix}
-  id: 1987
-  time: '2022-07-20T10:34:15.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Gas pipes need to be unanchored before being able to deconstruct them.,
-    type: Tweak}
-  id: 1988
-  time: '2022-07-20T12:30:08.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: The Necronomicon no longer can appear in surplus bundles., type: Tweak}
-  id: 1989
-  time: '2022-07-20T15:29:09.0000000+00:00'
-- author: DoctorBeard
-  changes:
-  - {message: pAIs can play MIDI again, type: Fix}
-  id: 1990
-  time: '2022-07-20T16:08:33.0000000+00:00'
-- author: Ablankmann
-  changes:
-  - {message: Renamed the Bojevic bundle to the Bulldog bundle., type: Tweak}
-  id: 1991
-  time: '2022-07-20T23:50:49.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: The zombify popup is now more noticeable., type: Tweak}
-  id: 1992
-  time: '2022-07-21T04:32:05.0000000+00:00'
-- author: Morb0
-  changes:
-  - {message: Now any job can spawn as nukeops antag, type: Fix}
-  id: 1993
-  time: '2022-07-21T21:00:24.0000000+00:00'
 - author: HoofedEar
   changes:
   - {message: Research servers are once again uniquely identified and can be selected
@@ -2940,3 +2898,55 @@ Entries:
       names to mess with the chat window., type: Fix}
   id: 2485
   time: '2022-10-18T06:59:10.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Stealth boxes no longer cause you to suffocate., type: Fix}
+  id: 2486
+  time: '2022-10-18T23:04:48.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: NPCs will now always sleep when a player attaches and wake when they
+      leave., type: Tweak}
+  id: 2487
+  time: '2022-10-18T23:07:44.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Extended has been reworked into ''Survival'' mode. No explicit antagonists
+      are spawned at roundstart, as usual, but event severity and frequency ramps
+      up over time. How long can the crew survive?', type: Add}
+  id: 2488
+  time: '2022-10-19T02:51:48.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed cooldown circle shown on hands getting stuck., type: Fix}
+  - {message: Fixed showing information about the wrong entity on the hand entity
+      panel., type: Fix}
+  - {message: Fixed the item slot preview not updating on switching hands., type: Fix}
+  id: 2489
+  time: '2022-10-19T11:49:07.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Fix some actions not working (particularly target actions, which include
+      some spells and space-dragon abilities).', type: Fix}
+  id: 2490
+  time: '2022-10-19T12:02:38.0000000+00:00'
+- author: Carbonhell
+  changes:
+  - {message: 'Low power lighting radius animations for lanterns, floodlights and
+      flashlights now properly restore the original light radius when going back to
+      full power.', type: Fix}
+  id: 2491
+  time: '2022-10-19T18:34:36.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added ore veins; ores now drop from rock on destruction., type: Add}
+  - {message: Pickaxes now mine faster., type: Tweak}
+  - {message: 'Increased the amount of ores per rock mined, scaling based on the ore
+      rarity.', type: Tweak}
+  id: 2492
+  time: '2022-10-20T13:16:29.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix wallmount interactions., type: Fix}
+  id: 2493
+  time: '2022-10-20T13:20:53.0000000+00:00'

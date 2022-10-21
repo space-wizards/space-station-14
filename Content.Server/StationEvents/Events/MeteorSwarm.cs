@@ -30,7 +30,8 @@ namespace Content.Server.StationEvents.Events
         public override void Started()
         {
             base.Started();
-            _waveCounter = RobustRandom.Next(MinimumWaves, MaximumWaves);
+            var mod = Math.Sqrt(GetSeverityModifier());
+            _waveCounter = (int) (RobustRandom.Next(MinimumWaves, MaximumWaves) * mod);
         }
 
         public override void Ended()
@@ -53,13 +54,16 @@ namespace Content.Server.StationEvents.Events
                 return;
             }
 
+            var mod = GetSeverityModifier();
+
             _cooldown -= frameTime;
 
-            if (_cooldown > 0f) return;
+            if (_cooldown > 0f)
+                return;
 
             _waveCounter--;
 
-            _cooldown += (MaximumCooldown - MinimumCooldown) * RobustRandom.NextFloat() + MinimumCooldown;
+            _cooldown += (MaximumCooldown - MinimumCooldown) * RobustRandom.NextFloat() / mod + MinimumCooldown;
 
             Box2? playableArea = null;
             var mapId = GameTicker.DefaultMap;

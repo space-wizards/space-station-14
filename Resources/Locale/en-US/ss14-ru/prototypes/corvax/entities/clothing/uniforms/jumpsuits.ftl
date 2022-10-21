@@ -7,3 +7,6 @@ ent-ClothingUniformJumpsuitAerostatic = aerostatic suit
 ent-ClothingUniformJumpsuitCentcomOfficerBlack = special operations officer uniform
     .desc = Special Operations Officer uniform, nothing like that. Although... If you have time to read this, it's too late...
     .suffix = { "" }
+ent-ClothingUniformJumpsuitCentcomAdmiral = admiral's uniform
+    .desc = A uniform worn by those with the rank Admiral in the Nanotrasen Navy.
+    .suffix = { "" }
