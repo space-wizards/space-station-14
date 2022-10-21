@@ -14,11 +14,6 @@ public sealed class PathPoly : IEquatable<PathPoly>
 
     public readonly HashSet<PathPoly> Neighbors;
 
-    public PathPoly()
-    {
-        Neighbors = new HashSet<PathPoly>();
-    }
-
     public PathPoly(EntityUid graphUid, Vector2i chunkOrigin, byte tileIndex, Box2 vertices, PathfindingData data, HashSet<PathPoly> neighbors)
     {
         GraphUid = graphUid;
