@@ -375,7 +375,7 @@
 
 - type: listing
   id: UplinkSyndicateJawsOfLife
-  description: A combined prying and cutting tool. Useful for entering the station or its departments
+  description: A combined prying and cutting tool. Useful for entering the station or its departments.
   productEntity: SyndicateJawsOfLife
   cost:
     Telecrystal: 2
