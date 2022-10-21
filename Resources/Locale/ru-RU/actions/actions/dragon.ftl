@@ -4,8 +4,8 @@ devour-action-popup-message-fail-target-alive = Вы не можете погл�
 dragon-spawn-action-popup-message-fail-no-eggs = Вам не хватит выносливости для создания карпа!
 action-name-devour = [color=red]Поглотить[/color]
 action-description-devour = Попытаться разрушить конструкцию своими челюстями или проглотить существо.
-action-name-carp-summon = Призвать карпа
-action-description-carp-summon = Призовите карпа, чтобы он помог вам захватить станцию!
+action-name-carp-rift = Summon Carp Rift
+action-description-carp-rift = Summons a carp rift that will periodically spawns carps.
 # Rifts
 carp-rift-warning = Разлом в { $location } порождает неестественно большой поток энергии. Остановите это любой ценой!
 carp-rift-duplicate = Невозможно иметь 2 заряжающихся разлома одновременно!
