@@ -15,6 +15,7 @@ public sealed class UpgradePowerSystem : EntitySystem
     {
         SubscribeLocalEvent<UpgradePowerDrawComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<UpgradePowerDrawComponent, RefreshPartsEvent>(OnRefreshParts);
+        SubscribeLocalEvent<UpgradePowerDrawComponent, UpgradeExamineEvent>(OnUpgradeExamine);
 
         SubscribeLocalEvent<UpgradePowerSupplierComponent, MapInitEvent>(OnSupplierMapInit);
         SubscribeLocalEvent<UpgradePowerSupplierComponent, RefreshPartsEvent>(OnSupplierRefreshParts);
@@ -49,6 +50,11 @@ public sealed class UpgradePowerSystem : EntitySystem
             powa.Load = load;
         if (TryComp<PowerConsumerComponent>(uid, out var powa2))
             powa2.DrawRate = load;
+    }
+
+    private void OnUpgradeExamine(EntityUid uid, UpgradePowerDrawComponent component, UpgradeExamineEvent args)
+    {
+        args.AddPercentageUpgrade("Power draw", component.PowerDrawMultiplier);
     }
 
     private void OnSupplierMapInit(EntityUid uid, UpgradePowerSupplierComponent component, MapInitEvent args)
