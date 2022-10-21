@@ -1,5 +1,6 @@
 using Content.Client.Gameplay;
 using Content.Client.Hands;
+using Content.Client.Hands.Systems;
 using Content.Client.Inventory;
 using Content.Client.Storage;
 using Content.Client.UserInterface.Controls;
@@ -20,11 +21,12 @@ using static Robust.Client.UserInterface.Controls.BaseButton;
 namespace Content.Client.UserInterface.Systems.Inventory;
 
 public sealed class InventoryUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>,
-    IOnSystemChanged<ClientInventorySystem>
+    IOnSystemChanged<ClientInventorySystem>, IOnSystemChanged<HandsSystem>
 {
     [Dependency] private readonly IEntityManager _entities = default!;
 
     [UISystemDependency] private readonly ClientInventorySystem _inventorySystem = default!;
+    [UISystemDependency] private readonly HandsSystem _handsSystem = default!;
 
     private ClientInventoryComponent? _playerInventory;
     private readonly Dictionary<string, ItemSlotButtonContainer> _slotGroups = new();
@@ -32,6 +34,8 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
     private StrippingWindow? _strippingWindow;
     private ItemSlotButtonContainer? _inventoryHotbar;
     private MenuButton? InventoryButton => UIManager.ActiveScreen?.GetWidget<MenuBar.Widgets.GameTopMenuBar>()?.InventoryButton;
+
+    private SlotControl? _lastHovered = null;
 
     public void OnStateEntered(GameplayState state)
     {
@@ -248,6 +252,12 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
 
     private void SlotButtonHovered(GUIMouseHoverEventArgs args, SlotControl control)
     {
+        UpdateHover(control);
+        _lastHovered = control;
+    }
+
+    public void UpdateHover(SlotControl control)
+    {
         var player = _playerInventory?.Owner;
 
         if (!control.MouseIsHovering ||
@@ -344,5 +354,41 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
     public void RemoveSlotGroup(string slotGroupName)
     {
         _slotGroups.Remove(slotGroupName);
+    }
+
+    // Monkey Sees Action
+    // Neuron Activation
+    // Monkey copies code
+    public void OnSystemLoaded(HandsSystem system)
+    {
+        _handsSystem.OnPlayerItemAdded += OnItemAdded;
+        _handsSystem.OnPlayerItemRemoved += OnItemRemoved;
+        _handsSystem.OnPlayerSetActiveHand += SetActiveHand;
+    }
+
+    public void OnSystemUnloaded(HandsSystem system)
+    {
+        _handsSystem.OnPlayerItemAdded -= OnItemAdded;
+        _handsSystem.OnPlayerItemRemoved -= OnItemRemoved;
+        _handsSystem.OnPlayerSetActiveHand -= SetActiveHand;
+    }
+
+
+    private void OnItemAdded(string name, EntityUid entity)
+    {
+        if (_lastHovered != null)
+            UpdateHover(_lastHovered);
+    }
+
+    private void OnItemRemoved(string name, EntityUid entity)
+    {
+        if (_lastHovered != null)
+            UpdateHover(_lastHovered);
+    }
+
+    private void SetActiveHand(string? handName)
+    {
+        if (_lastHovered != null)
+            UpdateHover(_lastHovered);
     }
 }
