@@ -131,6 +131,16 @@
       "name": "body_tiger",
       "directions": 4
 	
+    },
+    {
+      "name": "eye_r",
+      "directions": 4
+	
+    },
+    {
+      "name": "eye_l",
+      "directions": 4
+	
     }
   ]
 }

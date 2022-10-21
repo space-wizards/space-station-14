@@ -182,3 +182,23 @@
   sprites:
   - sprite: Mobs/Customization/reptilian_parts.rsi
     state: body_tiger
+    
+- type: marking
+  id: LizardEyeRight
+  bodyPart: Eyes
+  markingCategory: Head
+  followSkinColor: false
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi
+    state: eye_r
+    
+- type: marking
+  id: LizardEyeLeft
+  bodyPart: Eyes
+  markingCategory: Head
+  followSkinColor: false
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi
+    state: eye_l
