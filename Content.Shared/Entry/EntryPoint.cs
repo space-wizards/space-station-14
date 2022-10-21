@@ -21,8 +21,6 @@ namespace Content.Shared.Entry
         {
             IoCManager.InjectDependencies(this);
             SharedContentIoC.Register();
-
-            Localization.Init();
         }
 
         public override void Init()
@@ -34,6 +32,7 @@ namespace Content.Shared.Entry
             base.PostInit();
 
             InitTileDefinitions();
+            IoCManager.Resolve<ContentLocalizationManager>().Initialize();
             IoCManager.Resolve<MarkingManager>().Initialize();
 
             var configMan = IoCManager.Resolve<IConfigurationManager>();
