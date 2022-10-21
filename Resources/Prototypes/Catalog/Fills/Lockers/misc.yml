@@ -11,6 +11,8 @@
       - id: ClothingUniformJumpsuitOperative
       - id: ClothingUniformJumpskirtOperative
       - id: ClothingHeadsetAltSyndicate
+      - id: ClothingShoesBootsMagSyndie
+      - id: ClothingShoesChameleonNoSlips
 
 - type: entity
   id: ClosetEmergencyFilledRandom
