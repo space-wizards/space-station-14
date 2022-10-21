@@ -628,6 +628,7 @@ public sealed partial class PathfindingSystem
 
         // If any paths have a ref to it let them know that the class is no longer a valid node.
         poly.Data.Flags = PathfindingBreadcrumbFlag.Invalid;
+        poly.Neighbors.Clear();
     }
 
     private void BuildNavmesh(GridPathfindingChunk chunk, GridPathfindingComponent component)
