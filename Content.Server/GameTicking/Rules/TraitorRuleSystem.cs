@@ -130,6 +130,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem
 
         var numTraitors = MathHelper.Clamp(ev.Players.Length / _playersPerTraitor, 1, _maxTraitors);
         var codewordCount = _cfg.GetCVar(CCVars.TraitorCodewordCount);
+        var phraseCount = _cfg.GetCVar(CCVars.TraitorPhraseCount);
 
         var traitorPool = FindPotentialTraitors(ev);
         var selectedTraitors = PickTraitors(numTraitors, traitorPool);
@@ -228,7 +229,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem
         
         //This gives traitors the agent activation phrase if they have the objective to activate agents. 
         //TODO: Make this automatically fail if the activation event is scheduled (Would just be a freebie)
-        if (ActivateSleeperAgentsObjective = true)
+        if (ActivateSleeperAgentObjective = true)
         traitorRole.Mind.Briefing = Loc.GetString("traitor-role-phrases", ("phrases", string.Join(", ", Phrases)));
         
         
