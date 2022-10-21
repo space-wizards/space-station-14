@@ -40,7 +40,7 @@
   canBeDuplicate: true
   
 - type: objective
-  id: ActivateSleeperAgent
+  id: ActivateSleeperAgentObjective
   issuer: syndicate
   requirements:
     - !type:TraitorRequirement {}
