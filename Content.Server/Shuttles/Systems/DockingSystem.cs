@@ -363,13 +363,13 @@ namespace Content.Server.Shuttles.Systems
             if (TryComp(dockA.Owner, out DoorComponent? doorA))
             {
                 doorA.ChangeAirtight = false;
-                _doorSystem.StartOpening(doorA.Owner, doorA);
+                _doorSystem.TryOpen(doorA.Owner, doorA);
             }
 
             if (TryComp(dockB.Owner, out DoorComponent? doorB))
             {
                 doorB.ChangeAirtight = false;
-                _doorSystem.StartOpening(doorB.Owner, doorB);
+                _doorSystem.TryOpen(doorB.Owner, doorB);
             }
 
             if (_pathfinding.TryCreatePortal(dockAXform.Coordinates, dockBXform.Coordinates, out var handle))
