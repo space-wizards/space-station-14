@@ -1,9 +1,9 @@
 ent-ClothingHeadCapCentcomBlack = фуражка офицера специальных операций
     .desc = Специальная фуражка высших чинов NanoTrasen с золотой гравировкой, уже давно прошедшая не один блицкриг...
     .suffix = { "" }
-ent-ClothingHeadCapCentcomNaval = naval cap
-    .desc = A cap worn by those in the Nanotrasen Navy.
+ent-ClothingHeadCapCentcomNaval = флотская фуражка
+    .desc = Фуражка, которую носят на флоте Nanotrasen.
     .suffix = { "" }
-ent-ClothingHeadHatBeretCentcomNaval = naval beret
-    .desc = A beret worn by those in the Nanotrasen Navy.
+ent-ClothingHeadHatBeretCentcomNaval = флотский берет
+    .desc = Берет, который носят на флоте Nanotrasen.
     .suffix = { "" }

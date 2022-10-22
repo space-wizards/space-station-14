@@ -1,2 +1,2 @@
-survival-title = Survival
-survival-description = No internal threats, but how long can the station survive increasingly chaotic and frequent events?
+survival-title = Выживание
+survival-description = Внутренние угрозы отсутствуют, но как долго станция сможет продержаться в обстановке все более разрушительных и частых событий?
