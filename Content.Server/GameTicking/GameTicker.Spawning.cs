@@ -83,6 +83,9 @@ namespace Content.Server.GameTicking
             // Spawn everybody in!
             foreach (var (player, (job, station)) in assignedJobs)
             {
+                if (station == EntityUid.Invalid)
+                    continue;
+
                 SpawnPlayer(_playerManager.GetSessionByUserId(player), profiles[player], station, job, false);
             }
 
