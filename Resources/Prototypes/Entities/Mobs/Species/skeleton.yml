@@ -48,6 +48,7 @@
       60: 0.9
       80: 0.7
   - type: Speech
+  - type: SkeletonAccent
   - type: Fixtures
     fixtures:
       - shape:
