@@ -175,8 +175,7 @@
   - type: Humanoid
     species: Human
   - type: Body
-    template: HumanoidTemplate
-    preset: HumanPreset
+    prototype: Human
   - type: Damageable
     damageContainer: Biological
   - type: RadiationReceiver
@@ -366,8 +365,7 @@
     - type: Humanoid
       species: Human
     - type: Body
-      template: HumanoidTemplate
-      preset: HumanPreset
+      prototype: Human
     - type: Damageable
       damageContainer: Biological
     - type: MobState

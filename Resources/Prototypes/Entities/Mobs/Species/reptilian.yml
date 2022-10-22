@@ -13,8 +13,7 @@
     sprite: Mobs/Species/Reptilian/parts.rsi
     state: full
   - type: Body
-    template: HumanoidTemplate
-    preset: ReptilianPreset
+    prototype: Reptilian
   - type: LizardAccent
   - type: Speech
     speechSounds: Lizard
