@@ -20,6 +20,16 @@
     Plastic: 300
 
 - type: latheRecipe
+  id: ForensicPad
+  icon:
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: paper
+  result: ForensicPad
+  completetime: 4
+  materials:
+    Plastic: 100
+
+- type: latheRecipe
   id: RiotShield
   icon:
     sprite: Objects/Weapons/Melee/shields.rsi
