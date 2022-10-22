@@ -1,20 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Shotgun shell boxes now come with 12 shells instead of 6., type: Tweak}
-  id: 2000
-  time: '2022-07-24T11:09:33.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Drinking now breaks on distance from the drink., type: Fix}
-  - {message: You now have to to stand closer to something to eat/drink it., type: Tweak}
-  id: 2001
-  time: '2022-07-24T11:33:52.0000000+00:00'
-- author: HoofedEar
-  changes:
-  - {message: Mobs can now open and close curtains while colliding with them., type: Fix}
-  id: 2002
-  time: '2022-07-24T11:35:34.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Glass can no longer be duplicated using lathes and plating., type: Fix}
@@ -2955,3 +2939,18 @@ Entries:
       on., type: Tweak}
   id: 2499
   time: '2022-10-22T21:51:51.0000000+00:00'
+- author: Nairod
+  changes:
+  - {message: Added a proper sprite for all handguns that fit belt slots, type: Add}
+  id: 2500
+  time: '2022-10-22T21:53:43.0000000+00:00'
+- author: Jackrost
+  changes:
+  - {message: biomass reclaimer is don't jitter if power off, type: Add}
+  id: 2501
+  time: '2022-10-22T21:54:20.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix cargo orders not showing up on shuttle., type: Fix}
+  id: 2502
+  time: '2022-10-22T21:55:13.0000000+00:00'
