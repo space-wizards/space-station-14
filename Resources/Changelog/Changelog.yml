@@ -1,10 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: You no longer need to give yourself carpal tunnel to move something
-      you're pulling. (Fixed ctrl+click pulling), type: Fix}
-  id: 1996
-  time: '2022-07-23T14:26:07.0000000+00:00'
 - author: Myctai
   changes:
   - {message: Thrusters now kill you with Heat type damage specifically., type: Fix}
@@ -2953,3 +2947,8 @@ Entries:
   - {message: Removed sovl!, type: Remove}
   id: 2495
   time: '2022-10-22T01:53:25.0000000+00:00'
+- author: Nairod
+  changes:
+  - {message: Added scarfs to the Clothesmate., type: Add}
+  id: 2496
+  time: '2022-10-22T05:06:46.0000000+00:00'
