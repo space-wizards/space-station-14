@@ -5,41 +5,46 @@
   license: "CC-BY-SA-3.0"
   copyright: "CEV-Eris commit 28e589f0ff72a009adf17db767e90be39054f0f2"
   source: "https://github.com/discordia-space/CEV-Eris/"
-- files: [ "asteroid_sand.png", "asteroid_tile.png", "dark.png", "elevator_shaft.png", "freezer.png", "green_circuit.png", "hydro.png", "lino.png", "mono.png", "rock_vault.png", "showroom.png"]
+
+- files: [ "asteroid_sand.png", "asteroid_tile.png", "elevator_shaft.png", "freezer.png", "green_circuit.png", "lino.png", "mono.png", "rock_vault.png", "showroom.png"]
   license: "CC-BY-SA-3.0"
   copyright: "vgstation13 at roughly commit e4d3ea7f69d21c3667be12b114fa935c4640cb05, asteroid.png renamed to asteroid_sand.png, asteroidfloor.png renamed to asteroid_tile.png"
   source: "https://github.com/vgstation-coders/vgstation13"
 
-- files: ["bar.png", "blue.png", "blue_circuit.png", "clown.png", "cropped_parallax.png", "glass.png", "eighties.png", "gold.png", "grass.png", "ironsand1.png", "ironsand2.png", "ironsand3.png", "ironsand4.png", "junglegrass.png", "kitchen.png", "lattice.png", "laundry.png", "mime.png", "plating.png", "rglass.png", "reinforced.png", "silver.png","steel.png", "steel_dirty.png", "snow.png", "white.png", "wood.png"]
+- files: ["blue_circuit.png", "cropped_parallax.png", "glass.png", "eighties.png", "gold.png", "grass.png", "ironsand1.png", "ironsand2.png", "ironsand3.png", "ironsand4.png", "junglegrass.png", "lattice.png", "plating.png", "rglass.png", "reinforced.png", "silver.png", "snow.png", "wood.png"]
   license: "CC-BY-SA-3.0"
   copyright: "tgstation commit 8abb19545828230d92ba18827feeb42a67a55d49, cropped_parallax modified from parallax."
   source: "https://github.com/tgstation/tgstation/"
-  
+
+- files: [ "bar.png", "blue.png", "kitchen.png", "laundry.png", "mime.png" "steel.png", "steel_dirty.png", "steel_diagonal.png", "steel_mini.png", "steel_offset.png", "steel_pavement.png" "white.png", "white_diagonal.png", "white_mini.png", "white_offset.png", "white_pavement.png", "white_plastic.png", "dark.png", "dark_diagonal.png", "dark_mini.png", "dark_offset.png", "dark_pavement.png", "dark_plastic.png", "hydro.png", "clown.png" ]
+  license: "CC0-1.0"
+  copyright: "Created by github user @moonheart08"
+
 - files: ["arcadeblue.png", "arcadered.png"]
   license: "CC-BY-SA-3.0"
   copyright: "arcadered renamed from eightiesred, arcadeblue by Peptide90 modified from arcadered.png, tgstation commit 8abb19545828230d92ba18827feeb42a67a55d49"
   source: "https://github.com/tgstation/tgstation/"
-  
+
 - files: ["shuttleblue.png", "shuttleorange.png", "shuttlepurple.png", "shuttlered.png", "shuttlewhite.png"]
   license: "CC-BY-SA-3.0"
   copyright: "paradisestation commit 69c831afcd9aef25a2889b507e4f36a3a5fc6def, originally from /VG/ eris"
   source: "https://github.com/ParadiseSS13/Paradise"
-  
+
 - files: ["deprecated.png"]
   license: "MIT"
   copyright: "created by 20kdc"
   source: "https://github.com/ParadiseSS13/Paradise"
-  
+
 - files: ["arcadeblue2.png", "boxing.png", "carpetclown.png", "carpetoffice.png", "gym.png", "metaldiamond.png"]
   license: "CC-BY-NC-SA-3.0"
   copyright: "by WALPVRGIS for Goonstation, taken at commit 236551b95a5b24917c72f3069223026b2dc4e690 from floors.dmi"
   source: "https://github.com/goonstation/goonstation"
-  
+
 - files: ["cave.png", "cavedrought.png"]
   license: "CC-BY-NC-SA-3.0"
   copyright: "Mojave-Sun, taken at commit 0587dd16e28108bdf0b0a28e2caae4319845e861"
   source: "https://github.com/Mojave-Sun/mojave-sun-13"
-  
+
 - files: ["grassdark.png", "grasslight.png", "dirt.png"]
   license: "CC-BY-SA-3.0"
   copyright: "Fortuna commit 2a9408a47e2f83d945335e4feeeeafb552173e6f, grasslight and dirt by Peptide based on grassdark.png and dirt."
