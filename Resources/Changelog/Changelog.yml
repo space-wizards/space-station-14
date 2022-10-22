@@ -1,17 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Gas tank internals now have an alert, type: Add}
-  id: 2007
-  time: '2022-07-25T04:42:25.0000000+00:00'
-- author: keronshb
-  changes:
-  - {message: You can no longer clip people into walls with riot shields., type: Fix}
-  - {message: You can no longer hide behind doors while using a shield., type: Fix}
-  id: 2008
-  time: '2022-07-25T04:54:18.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Nukie planet now has its own parallax., type: Add}
   id: 2009
   time: '2022-07-25T05:10:23.0000000+00:00'
@@ -2955,3 +2944,13 @@ Entries:
   - {message: Added a rare new chemical that makes dumb creatures sentient., type: Add}
   id: 2506
   time: '2022-10-22T22:05:06.0000000+00:00'
+- author: Mervill
+  changes:
+  - {message: Slime corpses no longer rot or produce miasma, type: Tweak}
+  id: 2507
+  time: '2022-10-22T22:07:36.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: Apron pockets were added, type: Add}
+  id: 2508
+  time: '2022-10-22T22:07:51.0000000+00:00'
