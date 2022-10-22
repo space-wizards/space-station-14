@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Cursor popups now show at the correct spot for non-100% UI scales.,
-    type: Fix}
-  id: 2013
-  time: '2022-07-25T08:58:23.0000000+00:00'
 - author: Elijahrane
   changes:
   - {message: Ported medibots from Nyanotrasen MRP., type: Add}
@@ -2957,3 +2951,10 @@ Entries:
     type: Add}
   id: 2512
   time: '2022-10-22T22:40:28.0000000+00:00'
+- author: Mervill
+  changes:
+  - {message: Cap gun revolver uses proper revolver behavior instead of generic gun
+      behavior., type: Fix}
+  - {message: 'Cap gun revolver starts loaded, like most other guns.', type: Fix}
+  id: 2513
+  time: '2022-10-22T22:47:20.0000000+00:00'
