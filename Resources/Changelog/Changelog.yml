@@ -1,9 +1,4 @@
 Entries:
-- author: Myctai
-  changes:
-  - {message: Thrusters now kill you with Heat type damage specifically., type: Fix}
-  id: 1997
-  time: '2022-07-23T14:26:19.0000000+00:00'
 - author: lapatison
   changes:
   - {message: shot glass sprite has been centered, type: Tweak}
@@ -2952,3 +2947,9 @@ Entries:
   - {message: Added scarfs to the Clothesmate., type: Add}
   id: 2496
   time: '2022-10-22T05:06:46.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fix hands GUI showing icons for items held by other players., type: Fix}
+  - {message: Fix weapon chargers no longer ejecting on left-click., type: Fix}
+  id: 2497
+  time: '2022-10-22T16:13:25.0000000+00:00'
