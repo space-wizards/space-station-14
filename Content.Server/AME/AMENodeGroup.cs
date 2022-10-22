@@ -25,6 +25,7 @@ namespace Content.Server.AME
         [Dependency] private readonly IRobustRandom _random = default!;
 
         [Dependency] private readonly IEntityManager _entMan = default!;
+        [Dependency] private readonly IEntitySystemManager _esMan = default!;
 
         public AMEControllerComponent? MasterController => _masterController;
 
@@ -178,7 +179,7 @@ namespace Content.Server.AME
 
             radius *= 2;
             radius = Math.Min(radius, 8);
-            EntitySystem.Get<ExplosionSystem>().TriggerExplosive(MasterController.Owner, radius: radius, delete: false);
+            _esMan.GetEntitySystem<ExplosionSystem>().TriggerExplosive(MasterController.Owner, radius: radius, delete: false);
         }
     }
 }

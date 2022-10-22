@@ -287,13 +287,15 @@ namespace Content.Server.Ghost.Roles
     [AnyCommand]
     public sealed class GhostRoles : IConsoleCommand
     {
+        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
+
         public string Command => "ghostroles";
         public string Description => "Opens the ghost role request window.";
         public string Help => $"{Command}";
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if(shell.Player != null)
-                EntitySystem.Get<GhostRoleSystem>().OpenEui((IPlayerSession)shell.Player);
+                _sysMan.GetEntitySystem<GhostRoleSystem>().OpenEui((IPlayerSession)shell.Player);
             else
                 shell.WriteLine("You can only open the ghost roles UI on a client.");
         }

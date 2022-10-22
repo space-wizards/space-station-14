@@ -15,6 +15,7 @@ namespace Content.Server.Ghost.Roles.Components
     public sealed class GhostRoleMobSpawnerComponent : GhostRoleComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
+        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
 
         [ViewVariables(VVAccess.ReadWrite)] [DataField("deleteOnSpawn")]
         private bool _deleteOnSpawn = true;
@@ -50,7 +51,7 @@ namespace Content.Server.Ghost.Roles.Components
 
             mob.EnsureComponent<MindComponent>();
 
-            var ghostRoleSystem = EntitySystem.Get<GhostRoleSystem>();
+            var ghostRoleSystem = _sysMan.GetEntitySystem<GhostRoleSystem>();
             ghostRoleSystem.GhostRoleInternalCreateMindAndTransfer(session, Owner, mob, this);
 
             if (++_currentTakeovers < _availableTakeovers)

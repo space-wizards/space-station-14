@@ -16,7 +16,7 @@ public sealed class ModifyBleedAmount : ReagentEffect
     {
         if (args.EntityManager.TryGetComponent<BloodstreamComponent>(args.SolutionEntity, out var blood))
         {
-            var sys = EntitySystem.Get<BloodstreamSystem>();
+            var sys = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<BloodstreamSystem>();
             var amt = Scaled ? Amount * args.Quantity.Float() : Amount;
             sys.TryModifyBleedAmount(args.SolutionEntity, amt, blood);
         }

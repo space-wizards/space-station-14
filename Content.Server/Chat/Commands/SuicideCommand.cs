@@ -10,6 +10,8 @@ namespace Content.Server.Chat.Commands
     [AnyCommand]
     internal sealed class SuicideCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
+
         public string Command => "suicide";
 
         public string Description => Loc.GetString("suicide-command-description");
@@ -34,8 +36,8 @@ namespace Content.Server.Chat.Commands
                 shell.WriteLine("You don't have a mind!");
                 return;
             }
-            var gameTicker = EntitySystem.Get<GameTicker>();
-            var suicideSystem = EntitySystem.Get<SuicideSystem>();
+            var gameTicker = _sysMan.GetEntitySystem<GameTicker>();
+            var suicideSystem = _sysMan.GetEntitySystem<SuicideSystem>();
             if (suicideSystem.Suicide(victim))
             {
                 // Prevent the player from returning to the body.

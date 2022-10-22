@@ -35,7 +35,7 @@ public sealed class VendingMachineEjectItemWireAction : BaseWireAction
     {
         base.Initialize();
 
-        _vendingMachineSystem = EntitySystem.Get<VendingMachineSystem>();
+        _vendingMachineSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<VendingMachineSystem>();
     }
 
     public override bool Cut(EntityUid user, Wire wire)

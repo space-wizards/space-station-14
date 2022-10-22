@@ -26,6 +26,7 @@ namespace Content.Server.StationEvents.Events
         [Dependency] protected readonly IMapManager MapManager = default!;
         [Dependency] protected readonly ChatSystem ChatSystem = default!;
         [Dependency] protected readonly StationSystem StationSystem = default!;
+        [Dependency] protected readonly IEntitySystemManager _sysMan = default!;
 
         protected ISawmill Sawmill = default!;
 
@@ -148,7 +149,7 @@ namespace Content.Server.StationEvents.Events
                 return false;
             var grid = gridComp.Grid;
 
-            var atmosphereSystem = Get<AtmosphereSystem>();
+            var atmosphereSystem = _sysMan.GetEntitySystem<AtmosphereSystem>();
             var found = false;
             var gridBounds = grid.WorldAABB;
             var gridPos = grid.WorldPosition;

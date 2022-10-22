@@ -56,6 +56,7 @@ namespace Content.IntegrationTests.Tests.Body
             var mapLoader = server.ResolveDependency<IMapLoader>();
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
+            var entitySystemManager = server.ResolveDependency<IEntitySystemManager>();
             RespiratorSystem respSys = default;
             MetabolizerSystem metaSys = default;
 
@@ -92,8 +93,8 @@ namespace Content.IntegrationTests.Tests.Body
                 var coords = new Vector2(0.5f, -1f);
                 var coordinates = new EntityCoordinates(grid.Value, coords);
                 human = entityManager.SpawnEntity("HumanBodyDummy", coordinates);
-                respSys = EntitySystem.Get<RespiratorSystem>();
-                metaSys = EntitySystem.Get<MetabolizerSystem>();
+                respSys = entitySystemManager.GetEntitySystem<RespiratorSystem>();
+                metaSys = entitySystemManager.GetEntitySystem<MetabolizerSystem>();
                 relevantAtmos = entityManager.GetComponent<GridAtmosphereComponent>(grid.Value);
                 startingMoles = GetMapMoles();
 

@@ -21,7 +21,7 @@ namespace Content.Client.AirlockPainter.UI
                 UpdateState(State);
 
             // Add styles
-            var painterSystem = EntitySystem.Get<AirlockPainterSystem>();
+            var painterSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AirlockPainterSystem>();
             _window.Populate(painterSystem.Entries);
 
             _window.OpenCentered();

@@ -257,13 +257,13 @@ namespace Content.Server.Arcade.Components
 
             private void SendHighscoreUpdate()
             {
-                var entitySystem = EntitySystem.Get<ArcadeSystem>();
+                var entitySystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ArcadeSystem>();
                 _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameHighScoreUpdateMessage(entitySystem.GetLocalHighscores(), entitySystem.GetGlobalHighscores()));
             }
 
             private void SendHighscoreUpdate(IPlayerSession session)
             {
-                var entitySystem = EntitySystem.Get<ArcadeSystem>();
+                var entitySystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ArcadeSystem>();
                 _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameHighScoreUpdateMessage(entitySystem.GetLocalHighscores(), entitySystem.GetGlobalHighscores()), session);
             }
 
@@ -622,7 +622,7 @@ namespace Content.Server.Arcade.Components
 
                 if (_component._player?.AttachedEntity is {Valid: true} playerEntity)
                 {
-                    var blockGameSystem = EntitySystem.Get<ArcadeSystem>();
+                    var blockGameSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ArcadeSystem>();
 
                     _highScorePlacement = blockGameSystem.RegisterHighScore(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(playerEntity).EntityName, Points);
                     SendHighscoreUpdate();

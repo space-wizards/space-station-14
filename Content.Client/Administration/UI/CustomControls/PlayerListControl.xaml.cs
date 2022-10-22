@@ -29,8 +29,9 @@ namespace Content.Client.Administration.UI.CustomControls
 
         public PlayerListControl()
         {
-            _adminSystem = EntitySystem.Get<AdminSystem>();
-            _verbSystem = EntitySystem.Get<VerbSystem>();
+            var es_man = IoCManager.Resolve<IEntitySystemManager>();
+            _adminSystem = es_man.GetEntitySystem<AdminSystem>();
+            _verbSystem = es_man.GetEntitySystem<VerbSystem>();
             IoCManager.InjectDependencies(this);
             RobustXamlLoader.Load(this);
             // Fill the Option data

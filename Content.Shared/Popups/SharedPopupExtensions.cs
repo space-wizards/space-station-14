@@ -15,7 +15,7 @@ namespace Content.Shared.Popups
         [Obsolete("Use PopupSystem.PopupEntity instead.")]
         public static void PopupMessage(this EntityUid source, EntityUid viewer, string message)
         {
-            var popupSystem = EntitySystem.Get<SharedPopupSystem>();
+            var popupSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedPopupSystem>();
 
             popupSystem.PopupEntity(message, source, Filter.Entities(viewer));
         }
@@ -41,7 +41,7 @@ namespace Content.Shared.Popups
         [Obsolete("Use PopupSystem.PopupCursor instead.")]
         public static void PopupMessageCursor(this EntityUid viewer, string message)
         {
-            var popupSystem = EntitySystem.Get<SharedPopupSystem>();
+            var popupSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedPopupSystem>();
             popupSystem.PopupCursor(message, Filter.Entities(viewer));
         }
     }

@@ -10,6 +10,8 @@ namespace Content.Server.Alert.Commands
     [AdminCommand(AdminFlags.Debug)]
     public sealed class ClearAlert : IConsoleCommand
     {
+        [Dependency] private readonly IEntitySystemManager _esMan = default!;
+
         public string Command => "clearalert";
         public string Description => "Clears an alert for a player, defaulting to current player";
         public string Help => "clearalert <alertType> <name or userID, omit for current player>";
@@ -38,7 +40,7 @@ namespace Content.Server.Alert.Commands
             }
 
             var alertType = args[0];
-            var alertsSystem = EntitySystem.Get<AlertsSystem>();
+            var alertsSystem = _esMan.GetEntitySystem<AlertsSystem>();
             if (!alertsSystem.TryGet(Enum.Parse<AlertType>(alertType), out var alert))
             {
                 shell.WriteLine("unrecognized alertType " + alertType);

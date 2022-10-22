@@ -12,7 +12,7 @@ namespace Content.Server.Chemistry.ReagentEffects
         {
             if (!args.EntityManager.TryGetComponent(args.SolutionEntity, out FlammableComponent? flammable)) return;
 
-            var flammableSystem = EntitySystem.Get<FlammableSystem>();
+            var flammableSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<FlammableSystem>();
             flammableSystem.Extinguish(args.SolutionEntity, flammable);
             flammableSystem.AdjustFireStacks(args.SolutionEntity, -1.5f * (float) args.Quantity, flammable);
         }

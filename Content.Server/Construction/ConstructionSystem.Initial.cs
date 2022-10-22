@@ -29,6 +29,7 @@ namespace Content.Server.Construction
         [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
+        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
 
         // --- WARNING! LEGACY CODE AHEAD! ---
         // This entire file contains the legacy code for initial construction.
@@ -306,7 +307,7 @@ namespace Content.Server.Construction
             var targetNode = constructionGraph.Nodes[constructionPrototype.TargetNode];
             var pathFind = constructionGraph.Path(startNode.Name, targetNode.Name);
 
-            if (args.SenderSession.AttachedEntity is not {Valid: true} user || _actionBlocker.CanInteract(user, null))
+            if (args.SenderSession.AttachedEntity is not {Valid: true} user || !_actionBlocker.CanInteract(user, null))
                 return;
 
             if (!HasComp<HandsComponent>(user))

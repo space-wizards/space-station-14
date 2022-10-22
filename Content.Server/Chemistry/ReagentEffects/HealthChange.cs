@@ -36,7 +36,7 @@ namespace Content.Server.Chemistry.ReagentEffects
             var scale = ScaleByQuantity ? args.Quantity : FixedPoint2.New(1);
             if (args.MetabolismEffects != null)
                 scale *= (args.Quantity / args.MetabolismEffects.MetabolismRate);
-            EntitySystem.Get<DamageableSystem>().TryChangeDamage(args.SolutionEntity, Damage * scale, IgnoreResistances);
+            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<DamageableSystem>().TryChangeDamage(args.SolutionEntity, Damage * scale, IgnoreResistances);
         }
     }
 }

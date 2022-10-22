@@ -7,6 +7,8 @@ namespace Content.Server.GameTicking.Commands
     [AnyCommand]
     sealed class ToggleReadyCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
+
         public string Command => "toggleready";
         public string Description => "";
         public string Help => "";
@@ -24,7 +26,7 @@ namespace Content.Server.GameTicking.Commands
                 return;
             }
 
-            var ticker = EntitySystem.Get<GameTicker>();
+            var ticker = _sysMan.GetEntitySystem<GameTicker>();
             ticker.ToggleReady(player, bool.Parse(args[0]));
         }
     }

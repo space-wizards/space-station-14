@@ -11,6 +11,8 @@ namespace Content.Server.Decals.Commands
     [AdminCommand(AdminFlags.Mapping)]
     public sealed class AddDecalCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
+
         public string Command => "adddecal";
         public string Description => "Creates a decal on the map";
         public string Help => $"{Command} <id> <x position> <y position> <gridId> [angle=<angle> zIndex=<zIndex> color=<color>]";
@@ -100,7 +102,7 @@ namespace Content.Server.Decals.Commands
                 }
             }
 
-            if(EntitySystem.Get<DecalSystem>().TryAddDecal(args[0], coordinates, out var uid, color, rotation, zIndex))
+            if(_sysMan.GetEntitySystem<DecalSystem>().TryAddDecal(args[0], coordinates, out var uid, color, rotation, zIndex))
             {
                 shell.WriteLine($"Successfully created decal {uid}.");
             }

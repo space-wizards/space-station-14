@@ -9,6 +9,8 @@ namespace Content.Server.Administration.Commands
     [AdminCommand(AdminFlags.Fun)]
     public sealed class SetSolutionCapacity : IConsoleCommand
     {
+        [Dependency] private readonly IEntitySystemManager _esMan = default!;
+
         public string Command => "setsolutioncapacity";
         public string Description => "Set the capacity (maximum volume) of some solution.";
         public string Help => $"Usage: {Command} <target> <solution> <new capacity>";
@@ -54,7 +56,7 @@ namespace Content.Server.Administration.Commands
             }
 
             var quantity = FixedPoint2.New(quantityFloat);
-            EntitySystem.Get<SolutionContainerSystem>().SetCapacity(uid, solution, quantity);
+            _esMan.GetEntitySystem<SolutionContainerSystem>().SetCapacity(uid, solution, quantity);
         }
     }
 }

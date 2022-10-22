@@ -15,9 +15,10 @@ namespace Content.Server.Chemistry.ReagentEffects
     {
         public override void Effect(ReagentEffectArgs args)
         {
-            string disease = EntitySystem.Get<MiasmaSystem>().RequestPoolDisease();
+            var sysMan = IoCManager.Resolve<IEntitySystemManager>();
 
-            EntitySystem.Get<DiseaseSystem>().TryAddDisease(args.SolutionEntity, disease);
+            string disease = sysMan.GetEntitySystem<MiasmaSystem>().RequestPoolDisease();
+            sysMan.GetEntitySystem<DiseaseSystem>().TryAddDisease(args.SolutionEntity, disease);
         }
     }
 }

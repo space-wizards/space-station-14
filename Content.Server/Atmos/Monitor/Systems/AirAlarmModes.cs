@@ -81,6 +81,8 @@ public sealed class AirAlarmModeFactory
 public abstract class AirAlarmModeExecutor : IAirAlarmMode
 {
     [Dependency] public readonly IEntityManager EntityManager = default!;
+    [Dependency] public readonly IEntitySystemManager _esMan = default!;
+
     public readonly DeviceNetworkSystem DeviceNetworkSystem;
     public readonly AirAlarmSystem AirAlarmSystem;
 
@@ -90,8 +92,8 @@ public abstract class AirAlarmModeExecutor : IAirAlarmMode
     {
         IoCManager.InjectDependencies(this);
 
-        DeviceNetworkSystem = EntitySystem.Get<DeviceNetworkSystem>();
-        AirAlarmSystem = EntitySystem.Get<AirAlarmSystem>();
+        DeviceNetworkSystem = _esMan.GetEntitySystem<DeviceNetworkSystem>();
+        AirAlarmSystem = _esMan.GetEntitySystem<AirAlarmSystem>();
     }
 }
 

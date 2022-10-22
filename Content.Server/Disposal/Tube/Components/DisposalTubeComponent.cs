@@ -72,6 +72,7 @@ namespace Content.Server.Disposal.Tube.Components
 
             _connected = false;
 
+            var disposableSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<DisposableSystem>();
             foreach (var entity in Contents.ContainedEntities.ToArray())
             {
                 if (!_entMan.TryGetComponent(entity, out DisposalHolderComponent? holder))
@@ -79,7 +80,7 @@ namespace Content.Server.Disposal.Tube.Components
                     continue;
                 }
 
-                EntitySystem.Get<DisposableSystem>().ExitDisposals((holder).Owner);
+                disposableSystem.ExitDisposals((holder).Owner);
             }
         }
 

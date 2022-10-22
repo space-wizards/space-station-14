@@ -283,7 +283,7 @@ namespace Content.Server.GameTicking
             //Generate a list of basic player info to display in the end round summary.
             var listOfPlayerInfo = new List<RoundEndMessageEvent.RoundEndPlayerInfo>();
             // Grab the great big book of all the Minds, we'll need them for this.
-            var allMinds = Get<MindTrackerSystem>().AllMinds;
+            var allMinds = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<MindTrackerSystem>().AllMinds;
             foreach (var mind in allMinds)
             {
                 if (mind != null)

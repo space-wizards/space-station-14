@@ -9,6 +9,8 @@ namespace Content.Server.Shuttles;
 [AdminCommand(AdminFlags.Mapping)]
 public sealed class DockCommand : IConsoleCommand
 {
+    [Dependency] private readonly IEntitySystemManager _sysMan = default!;
+
     public string Command => "dock";
     public string Description => $"Attempts to dock 2 airlocks together. Doesn't check whether it is valid.";
     public string Help => $"{Command} <airlock entityuid1> <airlock entityuid2>";
@@ -46,7 +48,7 @@ public sealed class DockCommand : IConsoleCommand
             return;
         }
 
-        var dockSystem = EntitySystem.Get<DockingSystem>();
+        var dockSystem = _sysMan.GetEntitySystem<DockingSystem>();
         dockSystem.Dock(dock1, dock2);
     }
 }

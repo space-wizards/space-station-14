@@ -21,7 +21,8 @@ namespace Content.Server.Chemistry.TileReactions
 
         FixedPoint2 ITileReaction.TileReact(TileRef tile, ReagentPrototype reagent, FixedPoint2 reactVolume)
         {
-            var entities = EntitySystem.Get<EntityLookupSystem>().GetEntitiesIntersecting(tile).ToArray();
+            var sysMan = IoCManager.Resolve<IEntitySystemManager>();
+            var entities = sysMan.GetEntitySystem<EntityLookupSystem>().GetEntitiesIntersecting(tile).ToArray();
             var amount = FixedPoint2.Zero;
             var entMan = IoCManager.Resolve<IEntityManager>();
             foreach (var entity in entities)
@@ -38,7 +39,7 @@ namespace Content.Server.Chemistry.TileReactions
                 }
             }
 
-            var decalSystem = EntitySystem.Get<DecalSystem>();
+            var decalSystem = sysMan.GetEntitySystem<DecalSystem>();
             foreach (var (uid, _) in decalSystem.GetDecalsInRange(tile.GridUid, tile.GridIndices+new Vector2(0.5f, 0.5f), validDelegate: x => x.Cleanable))
             {
                 decalSystem.RemoveDecal(tile.GridUid, uid);

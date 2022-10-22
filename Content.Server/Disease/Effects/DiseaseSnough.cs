@@ -34,7 +34,7 @@ namespace Content.Server.Disease
         {
             if (SnoughSound != null)
                 SoundSystem.Play(SnoughSound.GetSound(), Filter.Pvs(args.DiseasedEntity), args.DiseasedEntity, AudioHelpers.WithVariation(0.2f));
-            EntitySystem.Get<DiseaseSystem>().SneezeCough(args.DiseasedEntity, args.Disease, SnoughMessage, AirTransmit);
+            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<DiseaseSystem>().SneezeCough(args.DiseasedEntity, args.Disease, SnoughMessage, AirTransmit);
         }
     }
 }

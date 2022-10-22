@@ -12,6 +12,7 @@ namespace Content.Server.Nutrition.Components
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
 
         // Base stuff
         [ViewVariables(VVAccess.ReadWrite)]
@@ -72,17 +73,17 @@ namespace Content.Server.Nutrition.Components
                 if (_lastHungerThreshold == HungerThreshold.Starving && _currentHungerThreshold != HungerThreshold.Dead &&
                     _entMan.TryGetComponent(Owner, out MovementSpeedModifierComponent? movementSlowdownComponent))
                 {
-                    EntitySystem.Get<MovementSpeedModifierSystem>().RefreshMovementSpeedModifiers(Owner);
+                    _sysMan.GetEntitySystem<MovementSpeedModifierSystem>().RefreshMovementSpeedModifiers(Owner);
                 }
 
                 // Update UI
                 if (HungerThresholdAlertTypes.TryGetValue(_currentHungerThreshold, out var alertId))
                 {
-                    EntitySystem.Get<AlertsSystem>().ShowAlert(Owner, alertId);
+                    _sysMan.GetEntitySystem<AlertsSystem>().ShowAlert(Owner, alertId);
                 }
                 else
                 {
-                    EntitySystem.Get<AlertsSystem>().ClearAlertCategory(Owner, AlertCategory.Hunger);
+                    _sysMan.GetEntitySystem<AlertsSystem>().ClearAlertCategory(Owner, AlertCategory.Hunger);
                 }
 
                 switch (_currentHungerThreshold)
@@ -106,7 +107,7 @@ namespace Content.Server.Nutrition.Components
                     case HungerThreshold.Starving:
                         // TODO: If something else bumps this could cause mega-speed.
                         // If some form of speed update system if multiple things are touching it use that.
-                        EntitySystem.Get<MovementSpeedModifierSystem>().RefreshMovementSpeedModifiers(Owner);
+                        _sysMan.GetEntitySystem<MovementSpeedModifierSystem>().RefreshMovementSpeedModifiers(Owner);
                         _lastHungerThreshold = _currentHungerThreshold;
                         _actualDecayRate = _baseDecayRate * 0.6f;
                         return;

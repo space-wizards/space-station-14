@@ -1,3 +1,4 @@
+using Robust.Shared.IoC;
 using Content.Server.Atmos.Piping.EntitySystems;
 using JetBrains.Annotations;
 
@@ -13,7 +14,7 @@ namespace Content.Server.Atmos.Piping.Components
         public Color ColorVV
         {
             get => Color;
-            set => EntitySystem.Get<AtmosPipeColorSystem>().SetColor(Owner, this, value);
+            set => IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AtmosPipeColorSystem>().SetColor(Owner, this, value);
         }
     }
 }

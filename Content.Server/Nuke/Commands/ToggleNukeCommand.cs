@@ -10,6 +10,8 @@ namespace Content.Server.Nuke.Commands
     [AdminCommand(AdminFlags.Fun)]
     public sealed class ToggleNukeCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
+
         public string Command => "nukearm";
         public string Description => "Toggle nuclear bomb timer. You can set timer directly. Uid is optional.";
         public string Help => "nukearm <timer> <uid>";
@@ -42,7 +44,7 @@ namespace Content.Server.Nuke.Commands
                 bombUid = bomb.Owner;
             }
 
-            var nukeSys = EntitySystem.Get<NukeSystem>();
+            var nukeSys = _sysMan.GetEntitySystem<NukeSystem>();
             if (args.Length >= 1)
             {
                 if (!float.TryParse(args[0], out var timer))

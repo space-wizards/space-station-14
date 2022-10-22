@@ -38,7 +38,7 @@ namespace Content.Shared.Hands.Components
 
             // update hands GUI with new entity.
             if (Owner.TryGetContainer(out _))
-                EntitySystem.Get<SharedItemSystem>().VisualsChanged(Owner);
+                IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedItemSystem>().VisualsChanged(Owner);
         }
 
         [Serializable, NetSerializable]

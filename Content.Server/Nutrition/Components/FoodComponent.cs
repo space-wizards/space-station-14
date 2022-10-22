@@ -68,7 +68,7 @@ namespace Content.Server.Nutrition.Components
         {
             get
             {
-                if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
+                if (!IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
                 {
                     return 0;
                 }

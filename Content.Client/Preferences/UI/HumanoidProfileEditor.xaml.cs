@@ -1032,7 +1032,7 @@ namespace Content.Client.Preferences.UI
             if (Profile is null)
                 return;
 
-            EntitySystem.Get<HumanoidSystem>().LoadProfile(_previewDummy!.Value, Profile);
+            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<HumanoidSystem>().LoadProfile(_previewDummy!.Value, Profile);
             LobbyCharacterPreviewPanel.GiveDummyJobClothes(_previewDummy!.Value, Profile);
         }
 

@@ -8,6 +8,8 @@ namespace Content.Server.Administration.Commands
     [AdminCommand(AdminFlags.Fun)]
     public sealed class SetSolutionTemperature : IConsoleCommand
     {
+        [Dependency] private readonly IEntitySystemManager _esMan = default!;
+
         public string Command => "setsolutiontemperature";
         public string Description => "Set the temperature of some solution.";
         public string Help => $"Usage: {Command} <target> <solution> <new temperature>";
@@ -52,7 +54,7 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            EntitySystem.Get<SolutionContainerSystem>().SetTemperature(uid, solution, quantity);
+            _esMan.GetEntitySystem<SolutionContainerSystem>().SetTemperature(uid, solution, quantity);
         }
     }
 }

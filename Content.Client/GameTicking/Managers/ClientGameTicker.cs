@@ -20,6 +20,7 @@ namespace Content.Client.GameTicking.Managers
     {
         [Dependency] private readonly IStateManager _stateManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IEntitySystemManager _entSysManager = default!;
         [Dependency] private readonly IConfigurationManager _configManager = default!;
 
         [ViewVariables] private bool _initialized;
@@ -127,7 +128,7 @@ namespace Content.Client.GameTicking.Managers
             if (message.LobbySong != null)
             {
                 LobbySong = message.LobbySong;
-                Get<BackgroundAudioSystem>().StartLobbyMusic();
+                _entSysManager.GetEntitySystem<BackgroundAudioSystem>().StartLobbyMusic();
             }
 
             RestartSound = message.RestartSound;

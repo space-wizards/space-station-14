@@ -197,13 +197,14 @@ namespace Content.Server.Chemistry.Components
             if (solution.TotalVolume == 0)
                 return;
 
-            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solutionArea))
+            var solSys = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SolutionContainerSystem>();
+            if (!solSys.TryGetSolution(Owner, SolutionName, out var solutionArea))
                 return;
 
             var addSolution =
                 solution.SplitSolution(FixedPoint2.Min(solution.TotalVolume, solutionArea.AvailableVolume));
 
-            EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(Owner, solutionArea, addSolution);
+            solSys.TryAddSolution(Owner, solutionArea, addSolution);
 
             UpdateVisuals();
         }

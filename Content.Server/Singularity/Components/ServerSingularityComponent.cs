@@ -76,7 +76,7 @@ namespace Content.Server.Singularity.Components
         {
             base.Initialize();
 
-            _singularitySystem = EntitySystem.Get<SharedSingularitySystem>();
+            _singularitySystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedSingularitySystem>();
 
             var audioParams = AudioParams.Default;
             audioParams.Loop = true;

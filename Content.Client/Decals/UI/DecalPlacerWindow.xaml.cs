@@ -33,7 +33,7 @@ public sealed partial class DecalPlacerWindow : DefaultWindow
     {
         RobustXamlLoader.Load(this);
 
-        _decalPlacementSystem = EntitySystem.Get<DecalPlacementSystem>();
+        _decalPlacementSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<DecalPlacementSystem>();
 
         // This needs to be done in C# so we can have custom stuff passed in the constructor
         // and thus have a proper step size

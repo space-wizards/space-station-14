@@ -18,7 +18,7 @@ namespace Content.Server.Chemistry.TileReactions
             if (reactVolume <= FixedPoint2.Zero || tile.Tile.IsEmpty)
                 return FixedPoint2.Zero;
 
-            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
+            var atmosphereSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AtmosphereSystem>();
 
             var environment = atmosphereSystem.GetTileMixture(tile.GridUid, null, tile.GridIndices, true);
             if (environment == null || !atmosphereSystem.IsHotspotActive(tile.GridUid, tile.GridIndices))

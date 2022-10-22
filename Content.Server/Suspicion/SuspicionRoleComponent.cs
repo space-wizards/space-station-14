@@ -12,6 +12,7 @@ namespace Content.Server.Suspicion
     public sealed class SuspicionRoleComponent : SharedSuspicionRoleComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
+        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
 
         private Role? _role;
         [ViewVariables]
@@ -32,7 +33,7 @@ namespace Content.Server.Suspicion
 
                 Dirty();
 
-                var sus = EntitySystem.Get<SuspicionRuleSystem>();
+                var sus = _sysMan.GetEntitySystem<SuspicionRuleSystem>();
 
                 if (value == null || !value.Antagonist)
                 {

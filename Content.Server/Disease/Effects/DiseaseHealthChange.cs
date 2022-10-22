@@ -15,7 +15,7 @@ namespace Content.Server.Disease.Effects
         public DamageSpecifier Damage = default!;
         public override void Effect(DiseaseEffectArgs args)
         {
-            EntitySystem.Get<DamageableSystem>().TryChangeDamage(args.DiseasedEntity, Damage, true, false);
+            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<DamageableSystem>().TryChangeDamage(args.DiseasedEntity, Damage, true, false);
         }
     }
 }

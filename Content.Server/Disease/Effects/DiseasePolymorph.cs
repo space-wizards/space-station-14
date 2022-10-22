@@ -27,13 +27,14 @@ namespace Content.Server.Disease.Effects
 
         public override void Effect(DiseaseEffectArgs args)
         {
-            EntityUid? polyUid = EntitySystem.Get<PolymorphableSystem>().PolymorphEntity(args.DiseasedEntity, PolymorphId);
+            var sysMan = IoCManager.Resolve<IEntitySystemManager>();
+            EntityUid? polyUid = sysMan.GetEntitySystem<PolymorphableSystem>().PolymorphEntity(args.DiseasedEntity, PolymorphId);
 
             if (PolymorphSound != null && polyUid != null)
                 SoundSystem.Play(PolymorphSound.GetSound(), Filter.Pvs(polyUid.Value), polyUid.Value, AudioHelpers.WithVariation(0.2f));
 
             if (PolymorphMessage != null && polyUid != null)
-                EntitySystem.Get<SharedPopupSystem>().PopupEntity(Loc.GetString(PolymorphMessage), polyUid.Value, Filter.Entities(polyUid.Value), Shared.Popups.PopupType.Large);
+                sysMan.GetEntitySystem<SharedPopupSystem>().PopupEntity(Loc.GetString(PolymorphMessage), polyUid.Value, Filter.Entities(polyUid.Value), Shared.Popups.PopupType.Large);
         }
     }
 }

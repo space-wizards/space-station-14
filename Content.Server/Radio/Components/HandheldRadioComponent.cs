@@ -52,8 +52,9 @@ namespace Content.Server.Radio.Components
         {
             base.Initialize();
 
-            _radioSystem = EntitySystem.Get<RadioSystem>();
-            _chatSystem = EntitySystem.Get<ChatSystem>();
+            var sysMan = IoCManager.Resolve<IEntitySystemManager>();
+            _radioSystem = sysMan.GetEntitySystem<RadioSystem>();
+            _chatSystem = sysMan.GetEntitySystem<ChatSystem>();
 
             RadioOn = false;
         }
@@ -83,7 +84,7 @@ namespace Content.Server.Radio.Components
             }
 
             return RadioOn
-                   && EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(Owner, source, range: ListenRange);
+                   && IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedInteractionSystem>().InRangeUnobstructed(Owner, source, range: ListenRange);
         }
 
         public void Receive(string message, RadioChannelPrototype channel, EntityUid speaker)

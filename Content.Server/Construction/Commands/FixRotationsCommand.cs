@@ -12,6 +12,8 @@ namespace Content.Server.Construction.Commands
     [AdminCommand(AdminFlags.Mapping)]
     sealed class FixRotationsCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
+
         // ReSharper disable once StringLiteralTypo
         public string Command => "fixrotations";
         public string Description => "Sets the rotation of all occluders, low walls and windows to south.";
@@ -63,7 +65,7 @@ namespace Content.Server.Construction.Commands
             }
 
             var changed = 0;
-            var tagSystem = entityManager.EntitySysManager.GetEntitySystem<TagSystem>();
+            var tagSystem = _sysMan.GetEntitySystem<TagSystem>();
 
             foreach (var child in xformQuery.GetComponent(grid.GridEntityId).ChildEntities)
             {

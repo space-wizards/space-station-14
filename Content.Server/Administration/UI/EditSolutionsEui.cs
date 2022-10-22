@@ -13,6 +13,8 @@ namespace Content.Server.Administration.UI
     public sealed class EditSolutionsEui : BaseEui
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IEntitySystemManager _esMan = default!;
+
         public readonly EntityUid Target;
 
         public EditSolutionsEui(EntityUid entity)
@@ -30,7 +32,7 @@ namespace Content.Server.Administration.UI
         public override void Closed()
         {
             base.Closed();
-            EntitySystem.Get<Systems.AdminVerbSystem>().OnEditSolutionsEuiClosed(Player);
+            _esMan.GetEntitySystem<Systems.AdminVerbSystem>().OnEditSolutionsEuiClosed(Player);
         }
 
         public override EuiStateBase GetNewState()

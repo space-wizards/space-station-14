@@ -9,6 +9,8 @@ namespace Content.Server.Atmos.Commands
     [AdminCommand(AdminFlags.Debug)]
     public sealed class ShowAtmos : IConsoleCommand
     {
+        [Dependency] private readonly IEntitySystemManager _esMan = default!;
+
         public string Command => "showatmos";
         public string Description => "Toggles seeing atmos debug overlay.";
         public string Help => $"Usage: {Command}";
@@ -22,7 +24,7 @@ namespace Content.Server.Atmos.Commands
                 return;
             }
 
-            var atmosDebug = EntitySystem.Get<AtmosDebugOverlaySystem>();
+            var atmosDebug = _esMan.GetEntitySystem<AtmosDebugOverlaySystem>();
             var enabled = atmosDebug.ToggleObserver(player);
 
             shell.WriteLine(enabled

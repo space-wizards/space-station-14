@@ -24,7 +24,7 @@ internal sealed class MappingClientSideSetupCommand : IConsoleCommand
         var mgr = IoCManager.Resolve<ILightManager>();
         if (!mgr.LockConsoleAccess)
         {
-            EntitySystem.Get<MarkerSystem>().MarkersVisible = true;
+            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<MarkerSystem>().MarkersVisible = true;
             mgr.Enabled = false;
             shell.ExecuteCommand("showsubfloorforever");
             shell.ExecuteCommand("loadmapacts");

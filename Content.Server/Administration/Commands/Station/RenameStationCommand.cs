@@ -7,6 +7,8 @@ namespace Content.Server.Administration.Commands.Station;
 [AdminCommand(AdminFlags.Admin)]
 public sealed class RenameStationCommand : IConsoleCommand
 {
+    [Dependency] private readonly IEntitySystemManager _esMan = default!;
+
     public string Command => "renamestation";
 
     public string Description => "Renames the given station";
@@ -21,7 +23,7 @@ public sealed class RenameStationCommand : IConsoleCommand
             return;
         }
 
-        var stationSystem = EntitySystem.Get<StationSystem>();
+        var stationSystem = _esMan.GetEntitySystem<StationSystem>();
 
         if (!int.TryParse(args[0], out var station) || !stationSystem.Stations.Contains(new EntityUid(station)))
         {

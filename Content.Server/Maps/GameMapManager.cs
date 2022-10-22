@@ -11,6 +11,7 @@ namespace Content.Server.Maps;
 
 public sealed class GameMapManager : IGameMapManager
 {
+    [Dependency] private readonly IEntitySystemManager _sysMan = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -82,7 +83,7 @@ public sealed class GameMapManager : IGameMapManager
 
         _currentMap = map;
         _currentMapForced = false;
-        var ticker = EntitySystem.Get<GameTicking.GameTicker>();
+        var ticker = _sysMan.GetEntitySystem<GameTicking.GameTicker>();
         ticker.UpdateInfoText();
         return true;
 
@@ -94,7 +95,7 @@ public sealed class GameMapManager : IGameMapManager
             throw new ArgumentException($"The map \"{gameMap}\" is invalid!");
         _currentMap = map;
         _currentMapForced = true;
-        var ticker = EntitySystem.Get<GameTicking.GameTicker>();
+        var ticker = _sysMan.GetEntitySystem<GameTicking.GameTicker>();
         ticker.UpdateInfoText();
     }
 
@@ -103,7 +104,7 @@ public sealed class GameMapManager : IGameMapManager
         var maps = CurrentlyEligibleMaps().ToList();
         _currentMap = _random.Pick(maps);
         _currentMapForced = false;
-        var ticker = EntitySystem.Get<GameTicking.GameTicker>();
+        var ticker = _sysMan.GetEntitySystem<GameTicking.GameTicker>();
         ticker.UpdateInfoText();
     }
 

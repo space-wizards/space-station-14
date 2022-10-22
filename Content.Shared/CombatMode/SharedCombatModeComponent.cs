@@ -48,7 +48,7 @@ namespace Content.Shared.CombatMode
                 if (_isInCombatMode == value) return;
                 _isInCombatMode = value;
                 if (CombatToggleAction != null)
-                    EntitySystem.Get<SharedActionsSystem>().SetToggled(CombatToggleAction, _isInCombatMode);
+                    IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedActionsSystem>().SetToggled(CombatToggleAction, _isInCombatMode);
 
                 Dirty();
             }

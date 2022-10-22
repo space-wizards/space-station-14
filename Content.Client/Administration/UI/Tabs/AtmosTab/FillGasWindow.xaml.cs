@@ -35,7 +35,7 @@ namespace Content.Client.Administration.UI.Tabs.AtmosTab
             GridOptions.OnItemSelected += eventArgs => GridOptions.SelectId(eventArgs.Id);
 
             // Fill out gases
-            _gasData = EntitySystem.Get<AtmosphereSystem>().Gases;
+            _gasData = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AtmosphereSystem>().Gases;
             foreach (var gas in _gasData)
             {
                 GasOptions.AddItem($"{gas.Name} ({gas.ID})");

@@ -35,7 +35,7 @@ namespace Content.Client.Commands
                 shell.WriteLine("Scale cannot be zero, as this would cause a division by zero in AtmosDebugOverlay.");
                 return;
             }
-            var sys = EntitySystem.Get<AtmosDebugOverlaySystem>();
+            var sys = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AtmosDebugOverlaySystem>();
             sys.CfgBase = xStart;
             sys.CfgScale = xEnd - xStart;
         }
@@ -89,7 +89,7 @@ namespace Content.Client.Commands
                     xScale = -160;
                 }
             }
-            var sys = EntitySystem.Get<AtmosDebugOverlaySystem>();
+            var sys = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AtmosDebugOverlaySystem>();
             sys.CfgMode = xMode;
             sys.CfgSpecificGas = xSpecificGas;
             sys.CfgBase = xBase;
@@ -115,7 +115,7 @@ namespace Content.Client.Commands
                 shell.WriteLine("Invalid flag");
                 return;
             }
-            var sys = EntitySystem.Get<AtmosDebugOverlaySystem>();
+            var sys = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AtmosDebugOverlaySystem>();
             sys.CfgCBM = xFlag;
         }
     }

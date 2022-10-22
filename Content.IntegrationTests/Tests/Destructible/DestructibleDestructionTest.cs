@@ -47,7 +47,7 @@ namespace Content.IntegrationTests.Tests.Destructible
 
                 Assert.DoesNotThrow(() =>
                 {
-                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(sDestructibleEntity, bruteDamage, true);
+                    sEntitySystemManager.GetEntitySystem<DamageableSystem>().TryChangeDamage(sDestructibleEntity, bruteDamage, true);
                 });
 
                 Assert.That(sTestThresholdListenerSystem.ThresholdsReached.Count, Is.EqualTo(1));
@@ -63,7 +63,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 Assert.That(spawnEntitiesBehavior.Spawn.Keys.Single(), Is.EqualTo(SpawnedEntityId));
                 Assert.That(spawnEntitiesBehavior.Spawn.Values.Single(), Is.EqualTo(new MinMax {Min = 1, Max = 1}));
 
-                var entitiesInRange = EntitySystem.Get<EntityLookupSystem>().GetEntitiesInRange(coordinates, 2);
+                var entitiesInRange = sEntitySystemManager.GetEntitySystem<EntityLookupSystem>().GetEntitiesInRange(coordinates, 2);
                 var found = false;
 
                 foreach (var entity in entitiesInRange)

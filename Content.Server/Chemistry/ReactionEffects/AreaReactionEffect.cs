@@ -77,7 +77,8 @@ namespace Content.Server.Chemistry.ReactionEffects
             if (args.Source == null)
                 return;
 
-            var splitSolution = EntitySystem.Get<SolutionContainerSystem>().SplitSolution(args.SolutionEntity, args.Source, args.Source.MaxVolume);
+            var splitSolution = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SolutionContainerSystem>()
+                .SplitSolution(args.SolutionEntity, args.Source, args.Source.MaxVolume);
             // We take the square root so it becomes harder to reach higher amount values
             var amount = (int) Math.Round(_rangeConstant + _rangeMultiplier*Math.Sqrt(args.Quantity.Float()));
             amount = Math.Min(amount, _maxRange);

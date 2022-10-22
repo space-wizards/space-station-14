@@ -12,13 +12,15 @@ namespace Content.Server.Sandbox.Commands
     [AnyCommand]
     public sealed class ColorNetworkCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
+
         public string Command => "colornetwork";
         public string Description => Loc.GetString("color-network-command-description");
         public string Help => Loc.GetString("color-network-command-help-text", ("command",Command));
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var sandboxManager = EntitySystem.Get<SandboxSystem>();
+            var sandboxManager = _sysMan.GetEntitySystem<SandboxSystem>();
             var adminManager = IoCManager.Resolve<IAdminManager>();
             if (shell.IsClient && (!sandboxManager.IsSandboxEnabled && !adminManager.HasAdminFlag((IPlayerSession)shell.Player!, AdminFlags.Mapping)))
             {
@@ -81,7 +83,7 @@ namespace Content.Server.Sandbox.Commands
             {
                 if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<AtmosPipeColorComponent?>(x.Owner, out var atmosPipeColorComponent)) continue;
 
-                EntitySystem.Get<AtmosPipeColorSystem>().SetColor(x.Owner, atmosPipeColorComponent, color);
+                _sysMan.GetEntitySystem<AtmosPipeColorSystem>().SetColor(x.Owner, atmosPipeColorComponent, color);
             }
         }
     }

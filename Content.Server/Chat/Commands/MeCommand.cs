@@ -9,6 +9,8 @@ namespace Content.Server.Chat.Commands
     [AnyCommand]
     internal sealed class MeCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
+
         public string Command => "me";
         public string Description => "Perform an action.";
         public string Help => "me <text>";
@@ -37,7 +39,7 @@ namespace Content.Server.Chat.Commands
             if (string.IsNullOrEmpty(message))
                 return;
 
-            EntitySystem.Get<ChatSystem>().TrySendInGameICMessage(playerEntity, message, InGameICChatType.Emote, false, shell, player);
+            _sysMan.GetEntitySystem<ChatSystem>().TrySendInGameICMessage(playerEntity, message, InGameICChatType.Emote, false, shell, player);
         }
     }
 }

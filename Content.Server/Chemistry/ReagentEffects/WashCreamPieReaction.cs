@@ -12,7 +12,7 @@ namespace Content.Server.Chemistry.ReagentEffects
         {
             if (!args.EntityManager.TryGetComponent(args.SolutionEntity, out CreamPiedComponent? creamPied)) return;
 
-            EntitySystem.Get<CreamPieSystem>().SetCreamPied(args.SolutionEntity, creamPied, false);
+            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<CreamPieSystem>().SetCreamPied(args.SolutionEntity, creamPied, false);
         }
     }
 }

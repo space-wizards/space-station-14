@@ -25,7 +25,7 @@ namespace Content.Server.Ghost.Roles.Components
             if (MakeSentient)
                 MakeSentientCommand.MakeSentient(Owner, IoCManager.Resolve<IEntityManager>(), AllowMovement, AllowSpeech);
 
-            var ghostRoleSystem = EntitySystem.Get<GhostRoleSystem>();
+            var ghostRoleSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<GhostRoleSystem>();
             ghostRoleSystem.GhostRoleInternalCreateMindAndTransfer(session, Owner, Owner, this);
 
             ghostRoleSystem.UnregisterGhostRole(this);

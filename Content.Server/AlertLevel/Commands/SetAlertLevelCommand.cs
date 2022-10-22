@@ -12,6 +12,8 @@ namespace Content.Server.AlertLevel.Commands
     [AdminCommand(AdminFlags.Admin)]
     public sealed class SetAlertLevelCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntitySystemManager _esMan = default!;
+
         public string Command => "setalertlevel";
         public string Description => Loc.GetString("cmd-setalertlevel-desc");
         public string Help => Loc.GetString("cmd-setalertlevel-help");
@@ -22,7 +24,7 @@ namespace Content.Server.AlertLevel.Commands
             var player = shell.Player as IPlayerSession;
             if (player?.AttachedEntity != null)
             {
-                var stationUid = EntitySystem.Get<StationSystem>().GetOwningStation(player.AttachedEntity.Value);
+                var stationUid = _esMan.GetEntitySystem<StationSystem>().GetOwningStation(player.AttachedEntity.Value);
                 if (stationUid != null)
                 {
                     levelNames = GetStationLevelNames(stationUid.Value);
@@ -61,7 +63,7 @@ namespace Content.Server.AlertLevel.Commands
                 return;
             }
 
-            var stationUid = EntitySystem.Get<StationSystem>().GetOwningStation(player.AttachedEntity.Value);
+            var stationUid = _esMan.GetEntitySystem<StationSystem>().GetOwningStation(player.AttachedEntity.Value);
             if (stationUid == null)
             {
                 shell.WriteLine(Loc.GetString("cmd-setalertlevel-invalid-grid"));
@@ -76,7 +78,7 @@ namespace Content.Server.AlertLevel.Commands
                 return;
             }
 
-            EntitySystem.Get<AlertLevelSystem>().SetLevel(stationUid.Value, level, true, true, true, locked);
+            _esMan.GetEntitySystem<AlertLevelSystem>().SetLevel(stationUid.Value, level, true, true, true, locked);
         }
 
         private string[] GetStationLevelNames(EntityUid station)

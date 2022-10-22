@@ -39,6 +39,7 @@ public sealed class TraitorDeathMatchRuleSystem : GameRuleSystem
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
     [Dependency] private readonly TransformSystem _transformSystem = default!;
     [Dependency] private readonly UplinkSystem _uplink = default!;
+    [Dependency] private readonly IEntitySystemManager _sysMan = default!;
 
     public override string Prototype => "TraitorDeathMatch";
 
@@ -152,7 +153,7 @@ public sealed class TraitorDeathMatchRuleSystem : GameRuleSystem
             {
                 // TODO BODY SYSTEM KILL
                 var damage = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Asphyxiation"), 100);
-                Get<DamageableSystem>().TryChangeDamage(entity, damage, true);
+                _sysMan.GetEntitySystem<DamageableSystem>().TryChangeDamage(entity, damage, true);
             }
             else if (!mobState.IsDead())
             {

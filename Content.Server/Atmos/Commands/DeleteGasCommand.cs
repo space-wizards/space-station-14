@@ -11,6 +11,8 @@ namespace Content.Server.Atmos.Commands
     [AdminCommand(AdminFlags.Debug)]
     public sealed class DeleteGasCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntitySystemManager _esMan = default!;
+
         public string Command => "deletegas";
         public string Description => "Removes all gases from a grid, or just of one type if specified.";
         public string Help => $"Usage: {Command} <GridId> <Gas> / {Command} <GridId> / {Command} <Gas> / {Command}";
@@ -127,7 +129,7 @@ namespace Content.Server.Atmos.Commands
                 return;
             }
 
-            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
+            var atmosphereSystem = _esMan.GetEntitySystem<AtmosphereSystem>();
 
             var tiles = 0;
             var moles = 0f;

@@ -13,7 +13,7 @@ public sealed class Oxygenate : ReagentEffect
     {
         if (args.EntityManager.TryGetComponent<RespiratorComponent>(args.SolutionEntity, out var resp))
         {
-            var respSys = EntitySystem.Get<RespiratorSystem>();
+            var respSys = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<RespiratorSystem>();
             respSys.UpdateSaturation(resp.Owner, args.Quantity.Float() * Factor, resp);
         }
     }

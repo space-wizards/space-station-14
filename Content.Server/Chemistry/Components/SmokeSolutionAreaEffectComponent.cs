@@ -19,7 +19,8 @@ namespace Content.Server.Chemistry.Components
         protected override void UpdateVisuals()
         {
             if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance) &&
-                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
+                IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SolutionContainerSystem>()
+                    .TryGetSolution(Owner, SolutionName, out var solution))
             {
                 appearance.SetData(SmokeVisuals.Color, solution.Color);
             }
@@ -27,17 +28,18 @@ namespace Content.Server.Chemistry.Components
 
         protected override void ReactWithEntity(EntityUid entity, double solutionFraction)
         {
-            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
+            var sysMan = IoCManager.Resolve<IEntitySystemManager>();
+            if(!sysMan.GetEntitySystem<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
                 return;
 
-            if (!_entMan.TryGetComponent(entity, out BloodstreamComponent? bloodstream))
+            if(!_entMan.TryGetComponent(entity, out BloodstreamComponent? bloodstream))
                 return;
 
-            if (_entMan.TryGetComponent(entity, out InternalsComponent? internals) &&
-                IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<InternalsSystem>().AreInternalsWorking(internals))
+            if (_entMan.TryGetComponent(entity, out InternalsComponent? internals)
+            &&  sysMan.GetEntitySystem<InternalsSystem>().AreInternalsWorking(internals))
                 return;
 
-            var chemistry = EntitySystem.Get<ReactiveSystem>();
+            var chemistry = sysMan.GetEntitySystem<ReactiveSystem>();
             var cloneSolution = solution.Clone();
             var transferAmount = FixedPoint2.Min(cloneSolution.TotalVolume * solutionFraction, bloodstream.ChemicalSolution.AvailableVolume);
             var transferSolution = cloneSolution.SplitSolution(transferAmount);
@@ -48,7 +50,7 @@ namespace Content.Server.Chemistry.Components
                 chemistry.ReactionEntity(entity, ReactionMethod.Ingestion, reagentQuantity.ReagentId, reagentQuantity.Quantity, transferSolution);
             }
 
-            var bloodstreamSys = EntitySystem.Get<BloodstreamSystem>();
+            var bloodstreamSys = sysMan.GetEntitySystem<BloodstreamSystem>();
             bloodstreamSys.TryAddToChemicals(entity, transferSolution, bloodstream);
         }
 

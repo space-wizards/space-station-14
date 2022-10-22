@@ -8,6 +8,7 @@ namespace Content.Server.Administration.Commands.Station;
 public sealed class ListStationsCommand : IConsoleCommand
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private readonly IEntitySystemManager _esMan = default!;
 
     public string Command => "lsstations";
 
@@ -17,7 +18,7 @@ public sealed class ListStationsCommand : IConsoleCommand
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        foreach (var station in EntitySystem.Get<StationSystem>().Stations)
+        foreach (var station in _esMan.GetEntitySystem<StationSystem>().Stations)
         {
             var name = _entityManager.GetComponent<MetaDataComponent>(station).EntityName;
             shell.WriteLine($"{station, -10} | {name}");

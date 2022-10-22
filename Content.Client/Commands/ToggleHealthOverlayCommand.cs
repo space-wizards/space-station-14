@@ -12,7 +12,7 @@ namespace Content.Client.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var system = EntitySystem.Get<HealthOverlaySystem>();
+            var system = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<HealthOverlaySystem>();
             system.Enabled = !system.Enabled;
 
             shell.WriteLine($"Health overlay system {(system.Enabled ? "enabled" : "disabled")}.");

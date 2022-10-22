@@ -128,7 +128,7 @@ namespace Content.Client.Lobby.UI
                     _viewBox.AddChild(viewWest);
                     _viewBox.AddChild(viewEast);
                     _summaryLabel.Text = selectedCharacter.Summary;
-                    EntitySystem.Get<HumanoidSystem>().LoadProfile(_previewDummy.Value, selectedCharacter);
+                    IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<HumanoidSystem>().LoadProfile(_previewDummy.Value, selectedCharacter);
                     GiveDummyJobClothes(_previewDummy.Value, selectedCharacter);
                 }
             }
@@ -138,7 +138,7 @@ namespace Content.Client.Lobby.UI
         {
             var protoMan = IoCManager.Resolve<IPrototypeManager>();
             var entMan = IoCManager.Resolve<IEntityManager>();
-            var invSystem = EntitySystem.Get<ClientInventorySystem>();
+            var invSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ClientInventorySystem>();
 
             var highPriorityJob = profile.JobPriorities.FirstOrDefault(p => p.Value == JobPriority.High).Key;
 

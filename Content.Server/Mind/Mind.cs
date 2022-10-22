@@ -273,6 +273,7 @@ namespace Content.Server.Mind
             }
 
             var entMan = IoCManager.Resolve<IEntityManager>();
+            var sysMan = IoCManager.Resolve<IEntitySystemManager>();
 
             MindComponent? component = null;
             var alreadyAttached = false;
@@ -285,7 +286,7 @@ namespace Content.Server.Mind
                 }
                 else if (component!.HasMind)
                 {
-                    EntitySystem.Get<GameTicker>().OnGhostAttempt(component.Mind!, false);
+                    sysMan.GetEntitySystem<GameTicker>().OnGhostAttempt(component.Mind!, false);
                 }
 
                 if (entMan.TryGetComponent<ActorComponent>(entity.Value, out var actor))
@@ -300,7 +301,7 @@ namespace Content.Server.Mind
                 }
             }
 
-            var mindSystem = EntitySystem.Get<MindSystem>();
+            var mindSystem = sysMan.GetEntitySystem<MindSystem>();
 
             if(OwnedComponent != null)
                 mindSystem.InternalEjectMind(OwnedComponent.Owner, OwnedComponent);

@@ -20,7 +20,7 @@ public sealed class AdjustAlert : ReagentEffect
 
     public override void Effect(ReagentEffectArgs args)
     {
-        var alertSys = EntitySystem.Get<AlertsSystem>();
+        var alertSys = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AlertsSystem>();
         if (args.EntityManager.HasComponent<AlertsComponent>(args.SolutionEntity))
         {
             if (Clear)

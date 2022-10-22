@@ -56,7 +56,7 @@ public sealed class LoadActionsCommand : IConsoleCommand
 
         try
         {
-            EntitySystem.Get<ActionsSystem>().LoadActionAssignments(args[0], true);
+            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ActionsSystem>().LoadActionAssignments(args[0], true);
         }
         catch
         {
@@ -78,7 +78,7 @@ public sealed class LoadMappingActionsCommand : IConsoleCommand
     {
         try
         {
-            EntitySystem.Get<MappingSystem>().LoadMappingActions();
+            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<MappingSystem>().LoadMappingActions();
         }
         catch
         {

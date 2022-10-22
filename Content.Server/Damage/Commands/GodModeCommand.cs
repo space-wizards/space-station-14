@@ -9,6 +9,8 @@ namespace Content.Server.Damage.Commands
     [AdminCommand(AdminFlags.Admin)]
     public sealed class GodModeCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
+
         public string Command => "godmode";
         public string Description => "Makes your entity or another invulnerable to almost anything. May have irreversible changes.";
         public string Help => $"Usage: {Command} / {Command} <entityUid>";
@@ -57,7 +59,7 @@ namespace Content.Server.Damage.Commands
                     return;
             }
 
-            var godmodeSystem = EntitySystem.Get<GodmodeSystem>();
+            var godmodeSystem = _sysMan.GetEntitySystem<GodmodeSystem>();
             var enabled = godmodeSystem.ToggleGodmode(entity);
 
             var name = entityManager.GetComponent<MetaDataComponent>(entity).EntityName;

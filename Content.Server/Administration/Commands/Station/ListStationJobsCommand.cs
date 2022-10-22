@@ -7,6 +7,8 @@ namespace Content.Server.Administration.Commands.Station;
 [AdminCommand(AdminFlags.Admin)]
 public sealed class ListStationJobsCommand : IConsoleCommand
 {
+    [Dependency] private readonly IEntitySystemManager _esMan = default!;
+
     public string Command => "lsstationjobs";
 
     public string Description => "Lists all jobs on the given station.";
@@ -21,8 +23,8 @@ public sealed class ListStationJobsCommand : IConsoleCommand
             return;
         }
 
-        var stationSystem = EntitySystem.Get<StationSystem>();
-        var stationJobs = EntitySystem.Get<StationJobsSystem>();
+        var stationSystem = _esMan.GetEntitySystem<StationSystem>();
+        var stationJobs = _esMan.GetEntitySystem<StationJobsSystem>();
 
         if (!int.TryParse(args[0], out var station) || !stationSystem.Stations.Contains(new EntityUid(station)))
         {

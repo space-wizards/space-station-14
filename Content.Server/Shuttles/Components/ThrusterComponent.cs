@@ -20,7 +20,7 @@ namespace Content.Server.Shuttles.Components
                 if (_enabled == value) return;
                 _enabled = value;
 
-                var system = EntitySystem.Get<ThrusterSystem>();
+                var system = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ThrusterSystem>();
 
                 if (!_enabled)
                 {

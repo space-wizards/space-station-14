@@ -170,7 +170,8 @@ namespace Content.Client.Preferences.UI
                     _previewDummy = entityManager.SpawnEntity(prototypeManager.Index<SpeciesPrototype>(SharedHumanoidSystem.DefaultSpecies).DollPrototype, MapCoordinates.Nullspace);
                 }
 
-                EntitySystem.Get<HumanoidSystem>().LoadProfile(_previewDummy, (HumanoidCharacterProfile) profile);
+                IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<HumanoidSystem>()
+                    .LoadProfile(_previewDummy, (HumanoidCharacterProfile) profile);
 
                 if (humanoid != null)
                 {

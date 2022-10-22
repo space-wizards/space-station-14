@@ -11,6 +11,8 @@ namespace Content.Server.Construction.Commands
     [AdminCommand(AdminFlags.Mapping)]
     sealed class TileWallsCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
+
         // ReSharper disable once StringLiteralTypo
         public string Command => "tilewalls";
         public string Description => "Puts an underplating tile below every wall on a grid.";
@@ -64,7 +66,7 @@ namespace Content.Server.Construction.Commands
             }
 
             var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();
-            var tagSystem = entityManager.EntitySysManager.GetEntitySystem<TagSystem>();
+            var tagSystem = _sysMan.GetEntitySystem<TagSystem>();
             var underplating = tileDefinitionManager[TilePrototypeId];
             var underplatingTile = new Tile(underplating.TileId);
             var changed = 0;

@@ -46,7 +46,7 @@ namespace Content.Server.Chemistry.ReagentEffects
             IncreaseTimer(status, StatusLifetime);
 
             if (modified)
-                EntitySystem.Get<MovementSpeedModifierSystem>().RefreshMovementSpeedModifiers(args.SolutionEntity);
+                IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<MovementSpeedModifierSystem>().RefreshMovementSpeedModifiers(args.SolutionEntity);
 
         }
         public void IncreaseTimer(MovespeedModifierMetabolismComponent status, float time)

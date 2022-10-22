@@ -25,6 +25,7 @@ namespace Content.Server.Botany.Components
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IEntityManager _entMan = default!;
+        [Dependency] private readonly IEntitySystemManager _esMan = default!;
 
         [ViewVariables] private int _lastProduce;
 
@@ -126,7 +127,7 @@ namespace Content.Server.Botany.Components
             LastCycle = curTime;
 
             // todo ecs.
-            var botanySystem = EntitySystem.Get<BotanySystem>();
+            var botanySystem = _esMan.GetEntitySystem<BotanySystem>();
 
             // Process mutations
             if (MutationLevel > 0)
@@ -425,7 +426,7 @@ namespace Content.Server.Botany.Components
             if (Seed == null || _entMan.Deleted(user))
                 return false;
 
-            var botanySystem = EntitySystem.Get<BotanySystem>();
+            var botanySystem = _esMan.GetEntitySystem<BotanySystem>();
 
             if (Harvest && !Dead)
             {
@@ -456,7 +457,7 @@ namespace Content.Server.Botany.Components
             if (Seed == null || !Harvest)
                 return;
 
-            var botanySystem = EntitySystem.Get<BotanySystem>();
+            var botanySystem = _esMan.GetEntitySystem<BotanySystem>();
 
             botanySystem.AutoHarvest(Seed, _entMan.GetComponent<TransformComponent>(Owner).Coordinates);
             AfterHarvest();
@@ -553,7 +554,7 @@ namespace Content.Server.Botany.Components
 
         public void UpdateReagents()
         {
-            var solutionSystem = EntitySystem.Get<SolutionContainerSystem>();
+            var solutionSystem = _esMan.GetEntitySystem<SolutionContainerSystem>();
             if (!solutionSystem.TryGetSolution(Owner, SoilSolutionName, out var solution))
                 return;
 

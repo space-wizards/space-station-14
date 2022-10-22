@@ -7,6 +7,8 @@ namespace Content.Server.GameTicking.Commands
 {
     sealed class RespawnCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
+
         public string Command => "respawn";
         public string Description => "Respawns a player, kicking them back to the lobby.";
         public string Help => "respawn [player]";
@@ -21,7 +23,7 @@ namespace Content.Server.GameTicking.Commands
             }
 
             var playerMgr = IoCManager.Resolve<IPlayerManager>();
-            var ticker = EntitySystem.Get<GameTicker>();
+            var ticker = _sysMan.GetEntitySystem<GameTicker>();
 
             NetUserId userId;
             if (args.Length == 0)

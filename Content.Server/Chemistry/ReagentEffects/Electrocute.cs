@@ -18,8 +18,14 @@ public sealed class Electrocute : ReagentEffect
 
     public override void Effect(ReagentEffectArgs args)
     {
-        EntitySystem.Get<ElectrocutionSystem>().TryDoElectrocution(args.SolutionEntity, null,
-            Math.Max((args.Quantity * ElectrocuteDamageScale).Int(), 1), TimeSpan.FromSeconds(ElectrocuteTime), Refresh, ignoreInsulation: true);
+        IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ElectrocutionSystem>()
+            .TryDoElectrocution(
+                args.SolutionEntity, null,
+                Math.Max((args.Quantity * ElectrocuteDamageScale).Int(), 1),
+                TimeSpan.FromSeconds(ElectrocuteTime),
+                Refresh,
+                ignoreInsulation: true
+            );
 
         args.Source?.RemoveReagent(args.Reagent.ID, args.Quantity);
     }

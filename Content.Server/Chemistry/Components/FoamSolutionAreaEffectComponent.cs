@@ -20,7 +20,7 @@ namespace Content.Server.Chemistry.Components
         protected override void UpdateVisuals()
         {
             if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance) &&
-                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
+                IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
             {
                 appearance.SetData(FoamVisuals.Color, solution.Color.WithAlpha(0.80f));
             }
@@ -28,13 +28,14 @@ namespace Content.Server.Chemistry.Components
 
         protected override void ReactWithEntity(EntityUid entity, double solutionFraction)
         {
-            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
+            var sysMan = IoCManager.Resolve<IEntitySystemManager>();
+            if (!sysMan.GetEntitySystem<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
                 return;
 
             if (!_entMan.TryGetComponent(entity, out BloodstreamComponent? bloodstream))
                 return;
 
-            var invSystem = EntitySystem.Get<InventorySystem>();
+            var invSystem = sysMan.GetEntitySystem<InventorySystem>();
 
             // TODO: Add a permeability property to clothing
             // For now it just adds to protection for each clothing equipped
@@ -54,7 +55,7 @@ namespace Content.Server.Chemistry.Components
                 }
             }
 
-            var bloodstreamSys = EntitySystem.Get<BloodstreamSystem>();
+            var bloodstreamSys = sysMan.GetEntitySystem<BloodstreamSystem>();
 
             var cloneSolution = solution.Clone();
             var transferAmount = FixedPoint2.Min(cloneSolution.TotalVolume * solutionFraction * (1 - protection),

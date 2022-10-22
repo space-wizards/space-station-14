@@ -25,7 +25,7 @@ namespace Content.Shared.Singularity.Components
                 return;
             }
 
-            EntitySystem.Get<SharedSingularitySystem>().ChangeSingularityLevel(this, state.Level);
+            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedSingularitySystem>().ChangeSingularityLevel(this, state.Level);
         }
     }
 

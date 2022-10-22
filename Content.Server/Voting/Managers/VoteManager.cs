@@ -34,6 +34,7 @@ namespace Content.Server.Voting.Managers
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IGameMapManager _gameMapManager = default!;
+        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
 
         private int _nextVoteId = 1;
 
@@ -332,7 +333,7 @@ namespace Content.Server.Voting.Managers
             if (voteType == StandardVoteType.Preset)
             {
                 var presets = GetGamePresets();
-                if (presets.Count() == 1 && presets.Select(x => x.Key).Single() == EntitySystem.Get<GameTicker>().Preset?.ID)
+                if (presets.Count() == 1 && presets.Select(x => x.Key).Single() == _sysMan.GetEntitySystem<GameTicker>().Preset?.ID)
                     return false;
             }
 

@@ -19,7 +19,7 @@ namespace Content.Client.Commands
             if (!TryParseArguments(shell, args, out var visibility))
                 return;
 
-            EntitySystem.Get<VerbSystem>().Visibility = visibility;
+            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<VerbSystem>().Visibility = visibility;
         }
 
         private bool TryParseArguments(IConsoleShell shell, string[] args, out MenuVisibility visibility)

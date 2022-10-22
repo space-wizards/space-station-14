@@ -175,7 +175,7 @@ namespace Content.Server.Cuffs.Components
 
             Cuffing = true;
 
-            var result = await EntitySystem.Get<DoAfterSystem>().WaitDoAfter(doAfterEventArgs);
+            var result = await IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<DoAfterSystem>().WaitDoAfter(doAfterEventArgs);
 
             Cuffing = false;
 

@@ -20,7 +20,7 @@
 
         protected override void Shutdown()
         {
-            EntitySystem.Get<SharedPullingStateManagementSystem>().ForceDisconnectPuller(this);
+            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedPullingStateManagementSystem>().ForceDisconnectPuller(this);
             base.Shutdown();
         }
 

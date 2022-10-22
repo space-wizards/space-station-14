@@ -30,7 +30,7 @@ public sealed class SurveillanceCameraMicrophoneComponent : Component, IListen
     {
         base.Initialize();
 
-        _microphoneSystem = EntitySystem.Get<SurveillanceCameraMicrophoneSystem>();
+        _microphoneSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SurveillanceCameraMicrophoneSystem>();
     }
 
     public int ListenRange { get; } = 10;

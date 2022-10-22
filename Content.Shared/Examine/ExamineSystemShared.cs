@@ -168,7 +168,7 @@ namespace Content.Shared.Examine
                 length = MaxRaycastRange;
             }
 
-            var occluderSystem = Get<OccluderSystem>();
+            var occluderSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<OccluderSystem>();
             IoCManager.Resolve(ref entMan);
 
             var ray = new Ray(origin.Position, dir.Normalized);

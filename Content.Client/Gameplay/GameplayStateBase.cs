@@ -56,8 +56,10 @@ namespace Content.Client.Gameplay
         public IList<EntityUid> GetEntitiesUnderPosition(MapCoordinates coordinates)
         {
             // Find all the entities intersecting our click
-            var entities = _entityManager.EntitySysManager.GetEntitySystem<EntityLookupSystem>().GetEntitiesIntersecting(coordinates.MapId,
-                Box2.CenteredAround(coordinates.Position, (1, 1)), LookupFlags.Uncontained | LookupFlags.Approximate);
+            var entities = _entitySystemManager.GetEntitySystem<EntityLookupSystem>().GetEntitiesIntersecting(coordinates.MapId,
+                Box2.CenteredAround(coordinates.Position, (1, 1)));
+
+            var containerSystem = _entitySystemManager.GetEntitySystem<SharedContainerSystem>();
 
             // Check the entities against whether or not we can click them
             var foundEntities = new List<(EntityUid clicked, int drawDepth, uint renderOrder)>();

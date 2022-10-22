@@ -22,6 +22,7 @@ public sealed class AdminLogsEui : BaseEui
     [Dependency] private readonly IAdminManager _adminManager = default!;
     [Dependency] private readonly ILogManager _logManager = default!;
     [Dependency] private readonly IConfigurationManager _configuration = default!;
+    [Dependency] private readonly IEntitySystemManager _esMan = default!;
 
     private readonly ISawmill _sawmill;
 
@@ -49,7 +50,7 @@ public sealed class AdminLogsEui : BaseEui
         };
     }
 
-    public int CurrentRoundId => EntitySystem.Get<GameTicker>().RoundId;
+    public int CurrentRoundId => _esMan.GetEntitySystem<GameTicker>().RoundId;
 
     public override async void Opened()
     {
@@ -57,7 +58,7 @@ public sealed class AdminLogsEui : BaseEui
 
         _adminManager.OnPermsChanged += OnPermsChanged;
 
-        var roundId = _filter.Round ?? EntitySystem.Get<GameTicker>().RoundId;
+        var roundId = _filter.Round ?? _esMan.GetEntitySystem<GameTicker>().RoundId;
         LoadFromDb(roundId);
     }
 
@@ -124,7 +125,7 @@ public sealed class AdminLogsEui : BaseEui
                     Limit = _clientBatchSize
                 };
 
-                var roundId = _filter.Round ??= EntitySystem.Get<GameTicker>().RoundId;
+                var roundId = _filter.Round ??= _esMan.GetEntitySystem<GameTicker>().RoundId;
                 LoadFromDb(roundId);
 
                 SendLogs(true);

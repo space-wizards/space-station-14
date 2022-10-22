@@ -15,6 +15,7 @@ namespace Content.Server.Chemistry.EntitySystems
     [UsedImplicitly]
     public sealed class SolutionTransferSystem : EntitySystem
     {
+        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
@@ -180,7 +181,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
             var actualAmount = FixedPoint2.Min(amount, FixedPoint2.Min(source.DrainAvailable, target.AvailableVolume));
 
-            var solutionSystem = Get<SolutionContainerSystem>();
+            var solutionSystem = _sysMan.GetEntitySystem<SolutionContainerSystem>();
             var solution = solutionSystem.Drain(sourceEntity, source, actualAmount);
             solutionSystem.Refill(targetEntity, target, solution);
 

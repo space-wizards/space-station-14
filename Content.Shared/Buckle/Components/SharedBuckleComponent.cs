@@ -11,6 +11,8 @@ namespace Content.Shared.Buckle.Components
     public abstract class SharedBuckleComponent : Component, IDraggable
     {
         [Dependency] protected readonly IEntityManager EntMan = default!;
+        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
+
 
         /// <summary>
         ///     The range from which this entity can buckle to a <see cref="SharedStrapComponent"/>.
@@ -63,10 +65,10 @@ namespace Content.Shared.Buckle.Components
                 case StrapPosition.None:
                     break;
                 case StrapPosition.Stand:
-                    EntitySystem.Get<StandingStateSystem>().Stand(Owner);
+                    _sysMan.GetEntitySystem<StandingStateSystem>().Stand(Owner);
                     break;
                 case StrapPosition.Down:
-                    EntitySystem.Get<StandingStateSystem>().Down(Owner, false, false);
+                    _sysMan.GetEntitySystem<StandingStateSystem>().Down(Owner, false, false);
                     break;
             }
         }

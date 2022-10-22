@@ -10,7 +10,7 @@ namespace Content.Server.Temperature.Components
         {
             // TODO: When making into system: Any animal that touches bulb that has no
             // InventoryComponent but still would have default heat resistance in the future (maybe)
-            if (EntitySystem.Get<InventorySystem>().TryGetSlotEntity(Owner, "gloves", out var slotEntity) &&
+            if (IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<InventorySystem>().TryGetSlotEntity(Owner, "gloves", out var slotEntity) &&
                 IoCManager.Resolve<IEntityManager>().TryGetComponent<GloveHeatResistanceComponent>(slotEntity, out var gloves))
             {
                 return gloves.HeatResistance;

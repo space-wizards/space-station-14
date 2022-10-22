@@ -26,7 +26,6 @@ namespace Content.Server.Cuffs.Components
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IEntitySystemManager _sysMan = default!;
-        [Dependency] private readonly IComponentFactory _componentFactory = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
         /// <summary>
@@ -89,7 +88,7 @@ namespace Content.Server.Cuffs.Components
                 return false;
             }
 
-            if (!EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(handcuff, Owner))
+            if (!_sysMan.GetEntitySystem<SharedInteractionSystem>().InRangeUnobstructed(handcuff, Owner))
             {
                 Logger.Warning("Handcuffs being applied to player are obstructed or too far away! This should not happen!");
                 return true;
@@ -166,11 +165,11 @@ namespace Content.Server.Cuffs.Components
         {
             if (CanStillInteract)
             {
-                EntitySystem.Get<AlertsSystem>().ClearAlert(Owner, AlertType.Handcuffed);
+                _sysMan.GetEntitySystem<AlertsSystem>().ClearAlert(Owner, AlertType.Handcuffed);
             }
             else
             {
-                EntitySystem.Get<AlertsSystem>().ShowAlert(Owner, AlertType.Handcuffed);
+                _sysMan.GetEntitySystem<AlertsSystem>().ShowAlert(Owner, AlertType.Handcuffed);
             }
         }
 
@@ -217,7 +216,7 @@ namespace Content.Server.Cuffs.Components
                 return;
             }
 
-            if (!isOwner && !EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(user, Owner))
+            if (!isOwner && !_sysMan.GetEntitySystem<SharedInteractionSystem>().InRangeUnobstructed(user, Owner))
             {
                 user.PopupMessage(Loc.GetString("cuffable-component-cannot-remove-cuffs-too-far-message"));
                 return;
@@ -244,7 +243,7 @@ namespace Content.Server.Cuffs.Components
                 NeedHand = true
             };
 
-            var doAfterSystem = EntitySystem.Get<DoAfterSystem>();
+            var doAfterSystem = _sysMan.GetEntitySystem<DoAfterSystem>();
             _uncuffing = true;
 
             var result = await doAfterSystem.WaitDoAfter(doAfterEventArgs);

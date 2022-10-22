@@ -27,7 +27,7 @@ namespace Content.Client.Administration.UI.Tabs.PlayerTab
 
         public PlayerTab()
         {
-            _adminSystem = EntitySystem.Get<AdminSystem>();
+            _adminSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AdminSystem>();
             RobustXamlLoader.Load(this);
             RefreshPlayerList(_adminSystem.PlayerList);
 

@@ -13,7 +13,7 @@ namespace Content.Server.Objectives.Conditions
         public IObjectiveCondition GetAssigned(Mind.Mind mind)
         {
             var entityMgr = IoCManager.Resolve<IEntityManager>();
-            var traitors = EntitySystem.Get<TraitorRuleSystem>().Traitors;
+            var traitors = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<TraitorRuleSystem>().Traitors;
             List<Traitor.TraitorRole> removeList = new();
 
             foreach (var traitor in traitors)

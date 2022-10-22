@@ -8,6 +8,8 @@ namespace Content.Server.Decals.Commands
     [AdminCommand(AdminFlags.Mapping)]
     public sealed class RemoveDecalCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
+
         public string Command => "rmdecal";
         public string Description => "removes a decal";
         public string Help => $"{Command} <uid> <gridId>";
@@ -31,7 +33,7 @@ namespace Content.Server.Decals.Commands
                 shell.WriteError("Failed parsing gridId.");
             }
 
-            var decalSystem = EntitySystem.Get<DecalSystem>();
+            var decalSystem = _sysMan.GetEntitySystem<DecalSystem>();
             if (decalSystem.RemoveDecal(rawGridId, uid))
             {
                 shell.WriteLine($"Successfully removed decal {uid}.");

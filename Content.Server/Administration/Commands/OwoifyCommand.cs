@@ -8,6 +8,8 @@ namespace Content.Server.Administration.Commands;
 [AdminCommand(AdminFlags.Fun)]
 public sealed class OwoifyCommand : IConsoleCommand
 {
+    [Dependency] private readonly IEntitySystemManager _esMan = default!;
+
     public string Command => "owoify";
 
     public string Description => "For when you need everything to be cat. Uses OwOAccent's formatting on the name and description of an entity.";
@@ -35,7 +37,7 @@ public sealed class OwoifyCommand : IConsoleCommand
         var meta = entityManager.GetComponent<MetaDataComponent>(eUid);
 
         var random = IoCManager.Resolve<IRobustRandom>();
-        var owoSys = EntitySystem.Get<OwOAccentSystem>();
+        var owoSys = _esMan.GetEntitySystem<OwOAccentSystem>();
 
         meta.EntityName = owoSys.Accentuate(meta.EntityName);
         meta.EntityDescription = owoSys.Accentuate(meta.EntityDescription);

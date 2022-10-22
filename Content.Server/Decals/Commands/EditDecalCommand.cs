@@ -8,6 +8,8 @@ namespace Content.Server.Decals;
 [AdminCommand(AdminFlags.Mapping)]
 public sealed class EditDecalCommand : IConsoleCommand
 {
+    [Dependency] private readonly IEntitySystemManager _sysMan = default!;
+
     public string Command => "editdecal";
     public string Description => "Edits a decal.";
     public string Help => $@"{Command} <gridId> <uid> <mode>\n
@@ -45,7 +47,7 @@ Possible modes are:\n
             return;
         }
 
-        var decalSystem = EntitySystem.Get<DecalSystem>();
+        var decalSystem = _sysMan.GetEntitySystem<DecalSystem>();
         switch (args[2].ToLower())
         {
             case "position":

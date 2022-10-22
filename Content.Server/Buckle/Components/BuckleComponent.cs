@@ -91,17 +91,17 @@ namespace Content.Server.Buckle.Components
             if (Buckled)
             {
                 AlertType alertType = BuckledTo?.BuckledAlertType ?? AlertType.Buckled;
-                EntitySystem.Get<AlertsSystem>().ShowAlert(Owner, alertType);
+                _sysMan.GetEntitySystem<AlertsSystem>().ShowAlert(Owner, alertType);
             }
             else
             {
-                EntitySystem.Get<AlertsSystem>().ClearAlertCategory(Owner, AlertCategory.Buckled);
+                _sysMan.GetEntitySystem<AlertsSystem>().ClearAlertCategory(Owner, AlertCategory.Buckled);
             }
         }
 
         public bool CanBuckle(EntityUid user, EntityUid to, [NotNullWhen(true)] out StrapComponent? strap)
         {
-            var popupSystem = EntitySystem.Get<SharedPopupSystem>();
+            var popupSystem = _sysMan.GetEntitySystem<SharedPopupSystem>();
             strap = null;
 
             if (user == to)
@@ -117,7 +117,7 @@ namespace Content.Server.Buckle.Components
             var strapUid = strap.Owner;
             bool Ignored(EntityUid entity) => entity == Owner || entity == user || entity == strapUid;
 
-            if (!EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(Owner, strapUid, Range, predicate: Ignored, popup: true))
+            if (!_sysMan.GetEntitySystem<SharedInteractionSystem>().InRangeUnobstructed(Owner, strapUid, Range, predicate: Ignored, popup: true))
             {
                 return false;
             }
@@ -180,7 +180,7 @@ namespace Content.Server.Buckle.Components
 
         public override bool TryBuckle(EntityUid user, EntityUid to)
         {
-            var popupSystem = EntitySystem.Get<SharedPopupSystem>();
+            var popupSystem = _sysMan.GetEntitySystem<SharedPopupSystem>();
             if (!CanBuckle(user, to, out var strap))
             {
                 return false;
@@ -216,7 +216,7 @@ namespace Content.Server.Buckle.Components
             {
                 if (ownerPullable.Puller != null)
                 {
-                    EntitySystem.Get<PullingSystem>().TryStopPull(ownerPullable);
+                    _sysMan.GetEntitySystem<PullingSystem>().TryStopPull(ownerPullable);
                 }
             }
 
@@ -225,7 +225,7 @@ namespace Content.Server.Buckle.Components
                 if (toPullable.Puller == Owner)
                 {
                     // can't pull it and buckle to it at the same time
-                    EntitySystem.Get<PullingSystem>().TryStopPull(toPullable);
+                    _sysMan.GetEntitySystem<PullingSystem>().TryStopPull(toPullable);
                 }
             }
 
@@ -260,7 +260,7 @@ namespace Content.Server.Buckle.Components
                     return false;
                 }
 
-                if (!EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(user, oldBuckledTo.Owner, Range, popup: true))
+                if (!_sysMan.GetEntitySystem<SharedInteractionSystem>().InRangeUnobstructed(user, oldBuckledTo.Owner, Range, popup: true))
                 {
                     return false;
                 }
@@ -294,11 +294,11 @@ namespace Content.Server.Buckle.Components
             if (EntMan.HasComponent<KnockedDownComponent>(Owner)
                 | (EntMan.TryGetComponent<MobStateComponent>(Owner, out var mobState) && mobState.IsIncapacitated()))
             {
-                EntitySystem.Get<StandingStateSystem>().Down(Owner);
+                _sysMan.GetEntitySystem<StandingStateSystem>().Down(Owner);
             }
             else
             {
-                EntitySystem.Get<StandingStateSystem>().Stand(Owner);
+                _sysMan.GetEntitySystem<StandingStateSystem>().Stand(Owner);
             }
 
             IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedMobStateSystem>()

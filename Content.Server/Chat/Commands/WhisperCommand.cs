@@ -9,6 +9,8 @@ namespace Content.Server.Chat.Commands
     [AnyCommand]
     internal sealed class WhisperCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
+
         public string Command => "whisper";
         public string Description => "Send chat messages to the local channel as a whisper";
         public string Help => "whisper <text>";
@@ -37,7 +39,7 @@ namespace Content.Server.Chat.Commands
             if (string.IsNullOrEmpty(message))
                 return;
 
-            EntitySystem.Get<ChatSystem>().TrySendInGameICMessage(playerEntity, message, InGameICChatType.Whisper, false, shell, player);
+            _sysMan.GetEntitySystem<ChatSystem>().TrySendInGameICMessage(playerEntity, message, InGameICChatType.Whisper, false, shell, player);
         }
     }
 }

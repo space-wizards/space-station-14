@@ -7,6 +7,8 @@ namespace Content.Server.GameTicking.Commands
     [AdminCommand(AdminFlags.Round)]
     sealed class SetGamePresetCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
+
         public string Command => "setgamepreset";
         public string Description => Loc.GetString("set-game-preset-command-description", ("command", Command));
         public string Help => Loc.GetString("set-game-preset-command-help-text", ("command", Command));
@@ -19,7 +21,7 @@ namespace Content.Server.GameTicking.Commands
                 return;
             }
 
-            var ticker = EntitySystem.Get<GameTicker>();
+            var ticker = _sysMan.GetEntitySystem<GameTicker>();
 
             if (!ticker.TryFindGamePreset(args[0], out var preset))
             {

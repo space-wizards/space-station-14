@@ -14,6 +14,8 @@ namespace Content.Server.Administration.Commands
     [AdminCommand(AdminFlags.Admin)]
     public sealed class AddReagent : IConsoleCommand
     {
+        [Dependency] private readonly IEntitySystemManager _esMan = default!;
+
         public string Command => "addreagent";
         public string Description => "Add (or remove) some amount of reagent from some solution.";
         public string Help => $"Usage: {Command} <target> <solution> <reagent> <quantity>";
@@ -60,9 +62,9 @@ namespace Content.Server.Administration.Commands
             var quantity = FixedPoint2.New(MathF.Abs(quantityFloat));
 
             if (quantityFloat > 0)
-                EntitySystem.Get<SolutionContainerSystem>().TryAddReagent(uid, solution, args[2], quantity, out var _);
+                _esMan.GetEntitySystem<SolutionContainerSystem>().TryAddReagent(uid, solution, args[2], quantity, out var _);
             else
-                EntitySystem.Get<SolutionContainerSystem>().TryRemoveReagent(uid, solution, args[2], quantity);
+                _esMan.GetEntitySystem<SolutionContainerSystem>().TryRemoveReagent(uid, solution, args[2], quantity);
         }
     }
 }

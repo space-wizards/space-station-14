@@ -36,7 +36,7 @@ namespace Content.Server.Voting.Managers
                 default:
                     throw new ArgumentOutOfRangeException(nameof(voteType), voteType, null);
             }
-            var ticker = EntitySystem.Get<GameTicker>();
+            var ticker = _sysMan.GetEntitySystem<GameTicker>();
             ticker.UpdateInfoText();
             TimeoutStandardVote(voteType);
         }
@@ -76,7 +76,7 @@ namespace Content.Server.Voting.Managers
                 if (total > 0 && votesYes / (float) total >= ratioRequired)
                 {
                     _chatManager.DispatchServerAnnouncement(Loc.GetString("ui-vote-restart-succeeded"));
-                    EntitySystem.Get<RoundEndSystem>().EndRound();
+                    _sysMan.GetEntitySystem<RoundEndSystem>().EndRound();
                 }
                 else
                 {
@@ -142,7 +142,7 @@ namespace Content.Server.Voting.Managers
                         Loc.GetString("ui-vote-gamemode-win", ("winner", Loc.GetString(presets[picked]))));
                 }
 
-                EntitySystem.Get<GameTicker>().SetGamePreset(picked);
+                _sysMan.GetEntitySystem<GameTicker>().SetGamePreset(picked);
             };
         }
 

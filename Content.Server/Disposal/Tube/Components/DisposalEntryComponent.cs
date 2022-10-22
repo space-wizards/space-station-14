@@ -25,13 +25,14 @@ namespace Content.Server.Disposal.Tube.Components
                 holderComponent.TryInsert(entity);
             }
 
-            EntitySystem.Get<AtmosphereSystem>().Merge(holderComponent.Air, from.Air);
+            var sysMan = IoCManager.Resolve<IEntitySystemManager>();
+            sysMan.GetEntitySystem<AtmosphereSystem>().Merge(holderComponent.Air, from.Air);
             from.Air.Clear();
 
             if (tags != default)
                 holderComponent.Tags.UnionWith(tags);
 
-            return EntitySystem.Get<DisposableSystem>().EnterTube((holderComponent).Owner, Owner, holderComponent, null, this);
+            return sysMan.GetEntitySystem<DisposableSystem>().EnterTube((holderComponent).Owner, Owner, holderComponent, null, this);
         }
 
         protected override Direction[] ConnectableDirections()

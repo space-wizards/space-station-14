@@ -12,6 +12,7 @@ namespace Content.Server.Administration.Commands
     public sealed class AGhost : IConsoleCommand
     {
         [Dependency] private readonly IEntityManager _entities = default!;
+        [Dependency] private readonly IEntitySystemManager _esMan = default!;
 
         public string Command => "aghost";
         public string Description => "Makes you an admin ghost.";
@@ -44,7 +45,7 @@ namespace Content.Server.Administration.Commands
                             && !_entities.HasComponent<GhostComponent>(mind.CurrentEntity);
             var coordinates = player.AttachedEntity != null
                 ? _entities.GetComponent<TransformComponent>(player.AttachedEntity.Value).Coordinates
-                : EntitySystem.Get<GameTicker>().GetObserverSpawnPoint();
+                : _esMan.GetEntitySystem<GameTicker>().GetObserverSpawnPoint();
             var ghost = _entities.SpawnEntity("AdminObserver", coordinates);
             _entities.GetComponent<TransformComponent>(ghost).AttachToGridOrMap();
 
@@ -65,7 +66,7 @@ namespace Content.Server.Administration.Commands
             }
 
             var comp = _entities.GetComponent<GhostComponent>(ghost);
-            EntitySystem.Get<SharedGhostSystem>().SetCanReturnToBody(comp, canReturn);
+            _esMan.GetEntitySystem<SharedGhostSystem>().SetCanReturnToBody(comp, canReturn);
         }
     }
 }

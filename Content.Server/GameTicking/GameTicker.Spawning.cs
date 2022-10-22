@@ -276,7 +276,7 @@ namespace Content.Server.GameTicking
             var mob = SpawnObserverMob();
             EntityManager.GetComponent<MetaDataComponent>(mob).EntityName = name;
             var ghost = EntityManager.GetComponent<GhostComponent>(mob);
-            EntitySystem.Get<SharedGhostSystem>().SetCanReturnToBody(ghost, false);
+            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedGhostSystem>().SetCanReturnToBody(ghost, false);
             newMind.TransferTo(mob);
 
             _playerGameStatuses[player.UserId] = PlayerGameStatus.JoinedGame;

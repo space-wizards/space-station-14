@@ -24,7 +24,7 @@ namespace Content.Server.Chemistry.ReactionEffects
         [DataField("maxIntensity")]
         [JsonIgnore]
         public float MaxIntensity = 5;
-        
+
         /// <summary>
         ///     How quickly intensity drops off as you move away from the epicenter
         /// </summary>
@@ -57,12 +57,14 @@ namespace Content.Server.Chemistry.ReactionEffects
         {
             var intensity = MathF.Min((float) args.Quantity * IntensityPerUnit, MaxTotalIntensity);
 
-            EntitySystem.Get<ExplosionSystem>().QueueExplosion(
-                args.SolutionEntity,
-                ExplosionType,
-                intensity,
-                IntensitySlope,
-                MaxIntensity);
+            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ExplosionSystem>()
+                .QueueExplosion(
+                    args.SolutionEntity,
+                    ExplosionType,
+                    intensity,
+                    IntensitySlope,
+                    MaxIntensity
+                );
         }
     }
 }

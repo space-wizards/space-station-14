@@ -9,6 +9,8 @@ namespace Content.Server.Administration.Commands
     [AdminCommand(AdminFlags.Admin)]
     sealed class DSay : IConsoleCommand
     {
+        [Dependency] private readonly IEntitySystemManager _esMan = default!;
+
         public string Command => "dsay";
 
         public string Description => Loc.GetString("dsay-command-description");
@@ -34,8 +36,8 @@ namespace Content.Server.Administration.Commands
             if (string.IsNullOrEmpty(message))
                 return;
 
-            var chat = EntitySystem.Get<ChatSystem>();
-            chat.TrySendInGameOOCMessage(entity, message, InGameOOCChatType.Dead, false, shell, player);
+            _esMan.GetEntitySystem<ChatSystem>()
+                .TrySendInGameOOCMessage(entity, message, InGameOOCChatType.Dead, false, shell, player);
         }
     }
 }

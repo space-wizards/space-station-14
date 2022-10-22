@@ -6,9 +6,10 @@ namespace Content.Server.Ghost.Roles.UI
 {
     public sealed class GhostRolesEui : BaseEui
     {
+        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
         public override GhostRolesEuiState GetNewState()
         {
-            return new(EntitySystem.Get<GhostRoleSystem>().GetGhostRolesInfo());
+            return new(_sysMan.GetEntitySystem<GhostRoleSystem>().GetGhostRolesInfo());
         }
 
         public override void HandleMessage(EuiMessageBase msg)
@@ -18,10 +19,10 @@ namespace Content.Server.Ghost.Roles.UI
             switch (msg)
             {
                 case GhostRoleTakeoverRequestMessage req:
-                    EntitySystem.Get<GhostRoleSystem>().Takeover(Player, req.Identifier);
+                    _sysMan.GetEntitySystem<GhostRoleSystem>().Takeover(Player, req.Identifier);
                     break;
                 case GhostRoleFollowRequestMessage req:
-                    EntitySystem.Get<GhostRoleSystem>().Follow(Player, req.Identifier);
+                    _sysMan.GetEntitySystem<GhostRoleSystem>().Follow(Player, req.Identifier);
                     break;
                 case GhostRoleWindowCloseMessage _:
                     Closed();
@@ -33,7 +34,7 @@ namespace Content.Server.Ghost.Roles.UI
         {
             base.Closed();
 
-            EntitySystem.Get<GhostRoleSystem>().CloseEui(Player);
+            _sysMan.GetEntitySystem<GhostRoleSystem>().CloseEui(Player);
         }
     }
 }

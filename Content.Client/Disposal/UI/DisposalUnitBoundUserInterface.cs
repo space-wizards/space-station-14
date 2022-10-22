@@ -17,6 +17,7 @@ namespace Content.Client.Disposal.UI
     [UsedImplicitly]
     public sealed class DisposalUnitBoundUserInterface : BoundUserInterface
     {
+        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
         public MailingUnitWindow? MailingUnitWindow;
         public DisposalUnitWindow? DisposalUnitWindow;
 
@@ -91,7 +92,7 @@ namespace Content.Client.Disposal.UI
                     break;
             }
 
-            EntitySystem.Get<DisposalUnitSystem>().UpdateActive(component, true);
+            _sysMan.GetEntitySystem<DisposalUnitSystem>().UpdateActive(component, true);
         }
 
         protected override void Dispose(bool disposing)

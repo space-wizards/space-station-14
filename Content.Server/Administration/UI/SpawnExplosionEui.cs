@@ -12,6 +12,8 @@ namespace Content.Server.Administration.UI;
 [UsedImplicitly]
 public sealed class SpawnExplosionEui : BaseEui
 {
+    [Dependency] private readonly IEntitySystemManager _esMan = default!;
+
     public override void HandleMessage(EuiMessageBase msg)
     {
         if (msg is SpawnExplosionEuiMsg.Close)
@@ -26,7 +28,7 @@ public sealed class SpawnExplosionEui : BaseEui
         if (request.TotalIntensity <= 0 || request.IntensitySlope <= 0)
             return;
 
-        var explosion = EntitySystem.Get<ExplosionSystem>().GenerateExplosionPreview(request);
+        var explosion = _esMan.GetEntitySystem<ExplosionSystem>().GenerateExplosionPreview(request);
 
         if (explosion == null)
         {

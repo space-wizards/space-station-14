@@ -10,6 +10,8 @@ namespace Content.Server.Atmos.Commands
     [AdminCommand(AdminFlags.Debug)]
     public sealed class FillGas : IConsoleCommand
     {
+        [Dependency] private readonly IEntitySystemManager _esMan = default!;
+
         public string Command => "fillgas";
         public string Description => "Adds gas to all tiles in a grid.";
         public string Help => "fillgas <GridEid> <Gas> <moles>";
@@ -29,7 +31,7 @@ namespace Content.Server.Atmos.Commands
                 return;
             }
 
-            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
+            var atmosphereSystem = _esMan.GetEntitySystem<AtmosphereSystem>();
 
             foreach (var tile in atmosphereSystem.GetAllMixtures(grid.GridEntityId, true))
             {

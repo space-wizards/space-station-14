@@ -55,7 +55,8 @@ namespace Content.Server.Chemistry.Components
                 target = user;
             }
 
-            var solutionsSys = EntitySystem.Get<SolutionContainerSystem>();
+            var sysMan = IoCManager.Resolve<IEntitySystemManager>();
+            var solutionsSys = sysMan.GetEntitySystem<SolutionContainerSystem>();
             solutionsSys.TryGetSolution(Owner, SolutionName, out var hypoSpraySolution);
 
             if (hypoSpraySolution == null || hypoSpraySolution.CurrentVolume == 0)
@@ -76,7 +77,7 @@ namespace Content.Server.Chemistry.Components
             if (target != user)
             {
                 target.Value.PopupMessage(Loc.GetString("hypospray-component-feel-prick-message"));
-                var meleeSys = EntitySystem.Get<MeleeWeaponSystem>();
+                var meleeSys = sysMan.GetEntitySystem<MeleeWeaponSystem>();
                 var angle = Angle.FromWorldVec(_entMan.GetComponent<TransformComponent>(target.Value).WorldPosition - _entMan.GetComponent<TransformComponent>(user).WorldPosition);
                 // TODO: This should just be using melee attacks...
                 // meleeSys.SendLunge(angle, user);
@@ -97,7 +98,7 @@ namespace Content.Server.Chemistry.Components
 
             // Move units from attackSolution to targetSolution
             var removedSolution =
-                EntitySystem.Get<SolutionContainerSystem>()
+                sysMan.GetEntitySystem<SolutionContainerSystem>()
                     .SplitSolution(Owner, hypoSpraySolution, realTransferAmount);
 
             if (!targetSolution.CanAddSolution(removedSolution))
@@ -107,7 +108,7 @@ namespace Content.Server.Chemistry.Components
 
             removedSolution.DoEntityReaction(target.Value, ReactionMethod.Injection);
 
-            EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(target.Value, targetSolution, removedSolution);
+            sysMan.GetEntitySystem<SolutionContainerSystem>().TryAddSolution(target.Value, targetSolution, removedSolution);
 
             static bool EligibleEntity([NotNullWhen(true)] EntityUid? entity, IEntityManager entMan)
             {

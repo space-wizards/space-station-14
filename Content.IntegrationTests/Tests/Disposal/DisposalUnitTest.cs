@@ -39,7 +39,7 @@ namespace Content.IntegrationTests.Tests.Disposal
 
         private void UnitInsert(DisposalUnitComponent unit, bool result, params EntityUid[] entities)
         {
-            var system = EntitySystem.Get<DisposalUnitSystem>();
+            var system = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<DisposalUnitSystem>();
 
             foreach (var entity in entities)
             {
@@ -67,7 +67,7 @@ namespace Content.IntegrationTests.Tests.Disposal
             Assert.That(unit.Container.ContainedEntities, Is.SupersetOf(entities));
             Assert.That(entities.Length, Is.EqualTo(unit.Container.ContainedEntities.Count));
 
-            Assert.That(result, Is.EqualTo(EntitySystem.Get<DisposalUnitSystem>().TryFlush(unit)));
+            Assert.That(result, Is.EqualTo(IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<DisposalUnitSystem>().TryFlush(unit)));
             Assert.That(result || entities.Length == 0, Is.EqualTo(unit.Container.ContainedEntities.Count == 0));
         }
 

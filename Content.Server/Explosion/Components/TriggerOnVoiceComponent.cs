@@ -48,8 +48,9 @@ namespace Content.Server.Explosion.Components
         {
             base.Initialize();
 
-            _sharedInteractionSystem = EntitySystem.Get<SharedInteractionSystem>();
-            _triggerSystem = EntitySystem.Get<TriggerSystem>();
+            var sysMan = IoCManager.Resolve<IEntitySystemManager>();
+            _sharedInteractionSystem = sysMan.GetEntitySystem<SharedInteractionSystem>();
+            _triggerSystem = sysMan.GetEntitySystem<TriggerSystem>();
         }
 
         bool IListen.CanListen(string message, EntityUid source, RadioChannelPrototype? channelPrototype)

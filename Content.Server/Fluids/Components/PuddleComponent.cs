@@ -44,7 +44,7 @@ namespace Content.Server.Fluids.Components
         public SoundSpecifier SpillSound = new SoundPathSpecifier("/Audio/Effects/Fluids/splat.ogg");
 
         [ViewVariables(VVAccess.ReadOnly)]
-        public FixedPoint2 CurrentVolume => EntitySystem.Get<PuddleSystem>().CurrentVolume(Owner);
+        public FixedPoint2 CurrentVolume => IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<PuddleSystem>().CurrentVolume(Owner);
 
         [ViewVariables] [DataField("overflowVolume")]
         public FixedPoint2 OverflowVolume = DefaultOverflowVolume;

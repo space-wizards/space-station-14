@@ -42,7 +42,7 @@ namespace Content.Server.Disease.Effects
 
         public override void Effect(DiseaseEffectArgs args)
         {
-            var statusSys = EntitySystem.Get<StatusEffectsSystem>();
+            var statusSys = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<StatusEffectsSystem>();
             if (Type == StatusEffectDiseaseType.Add && Component != String.Empty)
             {
                 statusSys.TryAddStatusEffect(args.DiseasedEntity, Key, TimeSpan.FromSeconds(Time), Refresh, Component);

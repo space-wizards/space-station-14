@@ -387,7 +387,7 @@ public static class PoolManager
             pair.Client.SetConnectTarget(pair.Server);
             await pair.Server.WaitPost(() =>
             {
-                EntitySystem.Get<GameTicker>().RestartRound();
+                IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<GameTicker>().RestartRound();
             });
             await pair.Client.WaitPost(() =>
             {
@@ -444,7 +444,7 @@ public static class PoolManager
         await TestContext.Out.WriteLineAsync($"Recycling: {methodWatch.Elapsed.TotalMilliseconds} ms: Restarting server again");
         await pair.Server.WaitPost(() =>
         {
-            EntitySystem.Get<GameTicker>().RestartRound();
+            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<GameTicker>().RestartRound();
         });
 
 

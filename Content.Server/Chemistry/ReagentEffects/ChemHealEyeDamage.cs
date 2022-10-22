@@ -17,7 +17,7 @@ namespace Content.Server.Chemistry.ReagentEffects
 
         public override void Effect(ReagentEffectArgs args)
         {
-            EntitySystem.Get<SharedBlindingSystem>().AdjustEyeDamage(args.SolutionEntity, Add);
+            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedBlindingSystem>().AdjustEyeDamage(args.SolutionEntity, Add);
         }
     }
 }

@@ -43,7 +43,7 @@ namespace Content.Client.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            EntitySystem.Get<SubFloorHideSystem>().ShowAll = true;
+            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SubFloorHideSystem>().ShowAll = true;
 
             var entMan = IoCManager.Resolve<IEntityManager>();
             var components = entMan.EntityQuery<SubFloorHideComponent, SpriteComponent>(true);

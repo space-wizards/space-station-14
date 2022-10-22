@@ -20,7 +20,7 @@ namespace Content.IntegrationTests.Tests.Atmos
 
             await server.WaitPost(() =>
             {
-                var atmosSystem = EntitySystem.Get<AtmosphereSystem>();
+                var atmosSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<AtmosphereSystem>();
 
                 Assert.That(atmosSystem.Gases.Count(), Is.EqualTo(Atmospherics.TotalNumberOfGases));
 

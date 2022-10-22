@@ -9,6 +9,8 @@ namespace Content.Server.Verbs.Commands
     [AdminCommand(AdminFlags.Admin)]
     public sealed class InvokeVerbCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
+
         public string Command => "invokeverb";
         public string Description => Loc.GetString("invoke-verb-command-description");
         public string Help => Loc.GetString("invoke-verb-command-help");
@@ -22,7 +24,7 @@ namespace Content.Server.Verbs.Commands
             }
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            var verbSystem = EntitySystem.Get<SharedVerbSystem>();
+            var verbSystem = _sysMan.GetEntitySystem<SharedVerbSystem>();
 
             // get the 'player' entity (defaulting to command user, otherwise uses a uid)
             EntityUid? playerEntity = null;

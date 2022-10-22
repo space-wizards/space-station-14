@@ -1,3 +1,4 @@
+using Robust.Shared.IoC;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Chemistry.Components;
@@ -34,7 +35,7 @@ namespace Content.Server.Atmos.Reactions
             mixture.AdjustMoles(GasId, -MolesPerUnit);
 
             var tileRef = tile.GridIndices.GetTileRef(tile.GridIndex);
-            EntitySystem.Get<SpillableSystem>()
+            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SpillableSystem>()
                 .SpillAt(tileRef, new Solution(Reagent, FixedPoint2.New(MolesPerUnit)), PuddlePrototype, sound: false);
 
             return ReactionResult.Reacting;

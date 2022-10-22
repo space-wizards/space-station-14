@@ -19,7 +19,7 @@ namespace Content.Server.Chemistry.ReagentEffects
         {
             if (!args.EntityManager.TryGetComponent(args.SolutionEntity, out FlammableComponent? flammable)) return;
 
-            EntitySystem.Get<FlammableSystem>().AdjustFireStacks(args.SolutionEntity, args.Quantity.Float() * Multiplier, flammable);
+            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<FlammableSystem>().AdjustFireStacks(args.SolutionEntity, args.Quantity.Float() * Multiplier, flammable);
             args.Source?.RemoveReagent(args.Reagent.ID, args.Quantity);
         }
     }

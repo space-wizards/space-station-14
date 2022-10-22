@@ -9,6 +9,9 @@ namespace Content.Server.Administration.Commands.Station;
 [AdminCommand(AdminFlags.Round)]
 public sealed class AdjustStationJobCommand : IConsoleCommand
 {
+    [Dependency] private readonly IPrototypeManager _protoMan = default!;
+    [Dependency] private readonly IEntitySystemManager _esMan = default!;
+
     public string Command => "adjstationjob";
 
     public string Description => "Adjust the job manifest on a station.";
@@ -23,9 +26,8 @@ public sealed class AdjustStationJobCommand : IConsoleCommand
             return;
         }
 
-        var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-        var stationSystem = EntitySystem.Get<StationSystem>();
-        var stationJobs = EntitySystem.Get<StationJobsSystem>();
+        var stationSystem = _esMan.GetEntitySystem<StationSystem>();
+        var stationJobs = _esMan.GetEntitySystem<StationJobsSystem>();
 
         if (!int.TryParse(args[0], out var stationInt) || !stationSystem.Stations.Contains(new EntityUid(stationInt)))
         {
@@ -35,7 +37,7 @@ public sealed class AdjustStationJobCommand : IConsoleCommand
 
         var station = new EntityUid(stationInt);
 
-        if (!prototypeManager.TryIndex<JobPrototype>(args[1], out var job))
+        if (!_protoMan.TryIndex<JobPrototype>(args[1], out var job))
         {
             shell.WriteError(Loc.GetString("shell-argument-must-be-prototype",
                 ("index", 2), ("prototypeName", nameof(JobPrototype))));

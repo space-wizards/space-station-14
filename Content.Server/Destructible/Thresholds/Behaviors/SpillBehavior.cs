@@ -21,8 +21,9 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
         /// <param name="system">system calling the behavior</param>
         public void Execute(EntityUid owner, DestructibleSystem system)
         {
-            var solutionContainerSystem = EntitySystem.Get<SolutionContainerSystem>();
-            var spillableSystem = EntitySystem.Get<SpillableSystem>();
+            var sysMan = IoCManager.Resolve<IEntitySystemManager>();
+            var solutionContainerSystem = sysMan.GetEntitySystem<SolutionContainerSystem>();
+            var spillableSystem = sysMan.GetEntitySystem<SpillableSystem>();
 
             var coordinates = system.EntityManager.GetComponent<TransformComponent>(owner).Coordinates;
 

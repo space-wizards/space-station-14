@@ -10,6 +10,6 @@ public sealed class Scream : ReagentEffect
 {
     public override void Effect(ReagentEffectArgs args)
     {
-        EntitySystem.Get<VocalSystem>().TryScream(args.SolutionEntity);
+        IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<VocalSystem>().TryScream(args.SolutionEntity);
     }
 }

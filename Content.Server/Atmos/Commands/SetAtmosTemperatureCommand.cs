@@ -10,6 +10,8 @@ namespace Content.Server.Atmos.Commands
     [AdminCommand(AdminFlags.Debug)]
     public sealed class SetAtmosTemperatureCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntitySystemManager _esMan = default!;
+
         public string Command => "setatmostemp";
         public string Description => "Sets a grid's temperature (in kelvin).";
         public string Help => "Usage: setatmostemp <GridId> <Temperature>";
@@ -34,7 +36,7 @@ namespace Content.Server.Atmos.Commands
                 return;
             }
 
-            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
+            var atmosphereSystem = _esMan.GetEntitySystem<AtmosphereSystem>();
 
             var tiles = 0;
             foreach (var tile in atmosphereSystem.GetAllMixtures(gridComp.GridEntityId, true))

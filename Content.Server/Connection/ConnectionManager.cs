@@ -113,7 +113,7 @@ namespace Content.Server.Connection
                 }
             }
 
-            var wasInGame = EntitySystem.TryGet<GameTicker>(out var ticker) &&
+            var wasInGame = IoCManager.Resolve<IEntitySystemManager>().TryGetEntitySystem<GameTicker>(out var ticker) &&
                             ticker.PlayerGameStatuses.TryGetValue(userId, out var status) &&
                             status == PlayerGameStatus.JoinedGame;
             if ((_plyMgr.PlayerCount >= _cfg.GetCVar(CCVars.SoftMaxPlayers) && adminData is null) && !wasInGame)

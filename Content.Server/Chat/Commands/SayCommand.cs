@@ -9,6 +9,8 @@ namespace Content.Server.Chat.Commands
     [AnyCommand]
     internal sealed class SayCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
+
         public string Command => "say";
         public string Description => "Send chat messages to the local channel or a specified radio channel.";
         public string Help => "say <text>";
@@ -37,7 +39,7 @@ namespace Content.Server.Chat.Commands
             if (string.IsNullOrEmpty(message))
                 return;
 
-            EntitySystem.Get<ChatSystem>().TrySendInGameICMessage(playerEntity, message, InGameICChatType.Speak, false, shell, player);
+            _sysMan.GetEntitySystem<ChatSystem>().TrySendInGameICMessage(playerEntity, message, InGameICChatType.Speak, false, shell, player);
         }
     }
 }

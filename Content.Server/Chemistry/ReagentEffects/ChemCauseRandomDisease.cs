@@ -26,7 +26,8 @@ namespace Content.Server.Chemistry.ReagentEffects
 
             var random = IoCManager.Resolve<IRobustRandom>();
 
-            EntitySystem.Get<DiseaseSystem>().TryAddDisease(args.SolutionEntity, random.Pick(Diseases));
+            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<DiseaseSystem>()
+                .TryAddDisease(args.SolutionEntity, random.Pick(Diseases));
         }
     }
 }

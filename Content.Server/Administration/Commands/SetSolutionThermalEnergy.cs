@@ -8,6 +8,8 @@ namespace Content.Server.Administration.Commands
     [AdminCommand(AdminFlags.Fun)]
     public sealed class SetSolutionThermalEnergy : IConsoleCommand
     {
+        [Dependency] private readonly IEntitySystemManager _esMan = default!;
+
         public string Command => "setsolutionthermalenergy";
         public string Description => "Set the thermal energy of some solution.";
         public string Help => $"Usage: {Command} <target> <solution> <new thermal energy>";
@@ -59,7 +61,7 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            EntitySystem.Get<SolutionContainerSystem>().SetThermalEnergy(uid, solution, quantity);
+            _esMan.GetEntitySystem<SolutionContainerSystem>().SetThermalEnergy(uid, solution, quantity);
         }
     }
 }

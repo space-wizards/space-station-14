@@ -11,6 +11,8 @@ namespace Content.Server.Singularity
     [AdminCommand(AdminFlags.Admin)]
     public sealed class StartSingularityEngineCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
+
         public string Command => "startsingularityengine";
         public string Description => "Automatically turns on the particle accelerator and containment field emitters.";
         public string Help => $"{Command}";
@@ -26,11 +28,11 @@ namespace Content.Server.Singularity
             var entityManager = IoCManager.Resolve<IEntityManager>();
             foreach (var comp in entityManager.EntityQuery<EmitterComponent>())
             {
-                EntitySystem.Get<EmitterSystem>().SwitchOn(comp);
+                _sysMan.GetEntitySystem<EmitterSystem>().SwitchOn(comp);
             }
             foreach (var comp in entityManager.EntityQuery<RadiationCollectorComponent>())
             {
-                EntitySystem.Get<RadiationCollectorSystem>().SetCollectorEnabled(comp.Owner, true, null, comp);
+                _sysMan.GetEntitySystem<RadiationCollectorSystem>().SetCollectorEnabled(comp.Owner, true, null, comp);
             }
             foreach (var comp in entityManager.EntityQuery<ParticleAcceleratorControlBoxComponent>())
             {

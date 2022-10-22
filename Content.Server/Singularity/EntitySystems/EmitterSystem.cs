@@ -31,6 +31,7 @@ namespace Content.Server.Singularity.EntitySystems
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly ProjectileSystem _projectile = default!;
+        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
 
         public override void Initialize()
         {

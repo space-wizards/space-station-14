@@ -40,7 +40,7 @@ namespace Content.Server.Engineering.EntitySystems
             if (string.IsNullOrEmpty(component.Prototype))
                 return;
 
-            if (component.DoAfterTime > 0 && TryGet<DoAfterSystem>(out var doAfterSystem))
+            if (component.DoAfterTime > 0 && IoCManager.Resolve<IEntitySystemManager>().TryGetEntitySystem<DoAfterSystem>(out var doAfterSystem))
             {
                 var doAfterArgs = new DoAfterEventArgs(user, component.DoAfterTime, component.TokenSource.Token)
                 {

@@ -19,7 +19,7 @@ namespace Content.Server.Chemistry.ReagentEffects
         public override void Effect(ReagentEffectArgs args)
         {
             if (args.EntityManager.TryGetComponent(args.SolutionEntity, out ThirstComponent? thirst))
-                EntitySystem.Get<ThirstSystem>().UpdateThirst(thirst, HydrationFactor);
+                IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ThirstSystem>().UpdateThirst(thirst, HydrationFactor);
         }
     }
 }

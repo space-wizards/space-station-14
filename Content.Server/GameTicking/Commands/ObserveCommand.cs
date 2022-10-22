@@ -8,6 +8,8 @@ namespace Content.Server.GameTicking.Commands
     [AnyCommand]
     sealed class ObserveCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
+
         public string Command => "observe";
         public string Description => "";
         public string Help => "";
@@ -19,7 +21,7 @@ namespace Content.Server.GameTicking.Commands
                 return;
             }
 
-            var ticker = EntitySystem.Get<GameTicker>();
+            var ticker = _sysMan.GetEntitySystem<GameTicker>();
 
             if (ticker.RunLevel == GameRunLevel.PreRoundLobby)
             {

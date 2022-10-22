@@ -21,7 +21,7 @@ namespace Content.Client.NodeContainer
                 return;
             }
 
-            var sys = EntitySystem.Get<NodeGroupSystem>();
+            var sys = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<NodeGroupSystem>();
             sys.SetVisEnabled(!sys.VisEnabled);
         }
     }
@@ -34,7 +34,7 @@ namespace Content.Client.NodeContainer
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var sys = EntitySystem.Get<NodeGroupSystem>();
+            var sys = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<NodeGroupSystem>();
 
             if (args.Length == 0)
             {

@@ -14,7 +14,7 @@ namespace Content.Server.Chemistry.TileReactions
     {
         public FixedPoint2 TileReact(TileRef tile, ReagentPrototype reagent, FixedPoint2 reactVolume)
         {
-            var spillSystem = EntitySystem.Get<SpillableSystem>();
+            var spillSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SpillableSystem>();
             if (reactVolume < 5 || !spillSystem.TryGetPuddle(tile, out _)) return FixedPoint2.Zero;
 
             return spillSystem.SpillAt(tile,new Solution(reagent.ID, reactVolume), "PuddleSmear", true, false, true) != null

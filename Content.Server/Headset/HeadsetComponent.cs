@@ -44,8 +44,9 @@ namespace Content.Server.Headset
         {
             base.Initialize();
 
-            _chatSystem = EntitySystem.Get<ChatSystem>();
-            _radioSystem = EntitySystem.Get<RadioSystem>();
+            var sysMan = IoCManager.Resolve<IEntitySystemManager>();
+            _chatSystem = sysMan.GetEntitySystem<ChatSystem>();
+            _radioSystem = sysMan.GetEntitySystem<RadioSystem>();
         }
 
         public bool CanListen(string message, EntityUid source, RadioChannelPrototype? prototype)

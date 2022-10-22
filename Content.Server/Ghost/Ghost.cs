@@ -9,6 +9,8 @@ namespace Content.Server.Ghost
     [AnyCommand]
     public sealed class Ghost : IConsoleCommand
     {
+        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
+
         public string Command => "ghost";
         public string Description => "Give up on life and become a ghost.";
         public string Help => "ghost";
@@ -29,7 +31,7 @@ namespace Content.Server.Ghost
                 return;
             }
 
-            if (!EntitySystem.Get<GameTicker>().OnGhostAttempt(mind, true))
+            if (!_sysMan.GetEntitySystem<GameTicker>().OnGhostAttempt(mind, true))
             {
                 shell?.WriteLine("You can't ghost right now.");
                 return;

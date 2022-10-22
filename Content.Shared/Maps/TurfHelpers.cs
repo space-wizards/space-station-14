@@ -177,7 +177,7 @@ namespace Content.Shared.Maps
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerable<EntityUid> GetEntitiesInTile(this TileRef turf, LookupFlags flags = LookupFlags.Anchored, EntityLookupSystem? lookupSystem = null)
         {
-            lookupSystem ??= EntitySystem.Get<EntityLookupSystem>();
+            lookupSystem ??= IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<EntityLookupSystem>();
 
             if (!GetWorldTileBox(turf, out var worldBox))
                 return Enumerable.Empty<EntityUid>();

@@ -58,7 +58,7 @@ namespace Content.Client.Hands
                 return;
             }
 
-            var handEntity = EntityOverride ?? EntitySystem.Get<HandsSystem>().GetActiveHandEntity();
+            var handEntity = EntityOverride ?? IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<HandsSystem>().GetActiveHandEntity();
 
             if (handEntity == null || !_entMan.HasComponent<ISpriteComponent>(handEntity))
                 return;

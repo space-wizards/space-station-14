@@ -16,12 +16,9 @@ namespace Content.Server.Chemistry.ReagentEffects
                 return;
 
             // TODO see if this is correct
-            if (!EntitySystem.Get<SolutionContainerSystem>()
-                    .TryGetSolution(args.SolutionEntity, _solution, out var solutionContainer))
-                return;
-
-            if (EntitySystem.Get<SolutionContainerSystem>()
-                .TryAddReagent(args.SolutionEntity, solutionContainer, args.Reagent.ID, args.Quantity, out var accepted))
+            var solSys = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SolutionContainerSystem>();
+            if (solSys.TryGetSolution(args.SolutionEntity, _solution, out var solutionContainer)
+            &&  solSys.TryAddReagent(args.SolutionEntity, solutionContainer, args.Reagent.ID, args.Quantity, out var accepted))
                 args.Source?.RemoveReagent(args.Reagent.ID, accepted);
         }
     }

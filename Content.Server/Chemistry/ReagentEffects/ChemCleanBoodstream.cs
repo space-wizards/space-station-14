@@ -17,7 +17,7 @@ namespace Content.Server.Chemistry.ReactionEffects
             if (args.Source == null)
                 return;
 
-            var bloodstreamSys = EntitySystem.Get<BloodstreamSystem>();
+            var bloodstreamSys = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<BloodstreamSystem>();
             bloodstreamSys.FlushChemicals(args.SolutionEntity, args.Reagent.ID, CleanseRate);
         }
     }

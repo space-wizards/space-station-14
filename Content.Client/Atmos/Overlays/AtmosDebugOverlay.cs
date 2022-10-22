@@ -22,7 +22,7 @@ namespace Content.Client.Atmos.Overlays
         {
             IoCManager.InjectDependencies(this);
 
-            _atmosDebugOverlaySystem = EntitySystem.Get<AtmosDebugOverlaySystem>();
+            _atmosDebugOverlaySystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AtmosDebugOverlaySystem>();
         }
 
         protected override void Draw(in OverlayDrawArgs args)

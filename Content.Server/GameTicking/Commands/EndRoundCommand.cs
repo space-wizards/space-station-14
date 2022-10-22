@@ -7,13 +7,15 @@ namespace Content.Server.GameTicking.Commands
     [AdminCommand(AdminFlags.Round)]
     sealed class EndRoundCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
+
         public string Command => "endround";
         public string Description => "Ends the round and moves the server to PostRound.";
         public string Help => String.Empty;
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var ticker = EntitySystem.Get<GameTicker>();
+            var ticker = _sysMan.GetEntitySystem<GameTicker>();
 
             if (ticker.RunLevel != GameRunLevel.InRound)
             {

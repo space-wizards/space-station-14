@@ -65,7 +65,8 @@ namespace Content.Shared.Buckle.Components
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Dragged, out SharedBuckleComponent? buckleComponent)) return false;
             bool Ignored(EntityUid entity) => entity == eventArgs.User || entity == eventArgs.Dragged || entity == eventArgs.Target;
 
-            return EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(eventArgs.Target, eventArgs.Dragged, buckleComponent.Range, predicate: Ignored);
+            return IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedInteractionSystem>()
+                .InRangeUnobstructed(eventArgs.Target, eventArgs.Dragged, buckleComponent.Range, predicate: Ignored);
         }
 
         public abstract bool DragDropOn(DragDropEvent eventArgs);

@@ -9,6 +9,8 @@ namespace Content.Server.Atmos.Commands
     [AdminCommand(AdminFlags.Debug)]
     public sealed class RemoveGasCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntitySystemManager _esMan = default!;
+
         public string Command => "removegas";
         public string Description => "Removes an amount of gases.";
         public string Help => "removegas <X> <Y> <GridId> <amount> <ratio>\nIf <ratio> is true, amount will be treated as the ratio of gas to be removed.";
@@ -22,7 +24,7 @@ namespace Content.Server.Atmos.Commands
                || !float.TryParse(args[3], out var amount)
                || !bool.TryParse(args[4], out var ratio)) return;
 
-            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
+            var atmosphereSystem = _esMan.GetEntitySystem<AtmosphereSystem>();
             var indices = new Vector2i(x, y);
             var tile = atmosphereSystem.GetTileMixture(id, null, indices, true);
 

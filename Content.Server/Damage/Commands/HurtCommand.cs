@@ -13,6 +13,8 @@ namespace Content.Server.Damage.Commands
     [AdminCommand(AdminFlags.Fun)]
     sealed class DamageCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
+
         public string Command => "damage";
         public string Description => Loc.GetString("damage-command-description");
         public string Help => Loc.GetString("damage-command-help", ("command", Command));
@@ -75,7 +77,7 @@ namespace Content.Server.Damage.Commands
                 func = (entity, ignoreResistances) =>
                 {
                     var damage = new DamageSpecifier(damageGroup, amount);
-                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(entity, damage, ignoreResistances);
+                    _sysMan.GetEntitySystem<DamageableSystem>().TryChangeDamage(entity, damage, ignoreResistances);
                 };
 
                 return true;
@@ -86,7 +88,7 @@ namespace Content.Server.Damage.Commands
                 func = (entity, ignoreResistances) =>
                 {
                     var damage = new DamageSpecifier(damageType, amount);
-                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(entity, damage, ignoreResistances);
+                    _sysMan.GetEntitySystem<DamageableSystem>().TryChangeDamage(entity, damage, ignoreResistances);
                 };
                 return true;
 
