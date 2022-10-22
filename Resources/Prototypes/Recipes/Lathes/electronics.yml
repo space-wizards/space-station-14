@@ -206,6 +206,15 @@
      Gold: 100
 
 - type: latheRecipe
+  id: RadarConsoleCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: RadarConsoleCircuitboard
+  completetime: 4
+  materials:
+     Steel: 100
+     Glass: 900
+
+- type: latheRecipe
   id: DawInstrumentMachineCircuitboard
   icon: Objects/Misc/module.rsi/id_mod.png
   result: DawInstrumentMachineCircuitboard
@@ -310,6 +319,15 @@
   id: SolarControlComputerCircuitboard
   icon: Objects/Misc/module.rsi/id_mod.png
   result: SolarControlComputerCircuitboard
+  completetime: 4
+  materials:
+     Steel: 100
+     Glass: 900
+
+- type: latheRecipe
+  id: PowerComputerCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: PowerComputerCircuitboard
   completetime: 4
   materials:
      Steel: 100
