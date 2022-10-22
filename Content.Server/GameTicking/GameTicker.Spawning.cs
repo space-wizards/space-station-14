@@ -65,9 +65,17 @@ namespace Content.Server.GameTicking
 
             // Calculate extended access for stations.
             var stationJobCounts = _stationSystem.Stations.ToDictionary(e => e, _ => 0);
-            foreach (var (_, (_, station)) in assignedJobs)
+            foreach (var (netUser, (_, station)) in assignedJobs)
             {
-                stationJobCounts[station] += 1;
+                if (station == EntityUid.Invalid)
+                {
+                    var playerSession = _playerManager.GetSessionByUserId(netUser);
+                    _chatManager.DispatchServerMessage(playerSession, Loc.GetString("job-not-available-wait-in-lobby"));
+                }
+                else
+                {
+                    stationJobCounts[station] += 1;
+                }
             }
 
             _stationJobs.CalcExtendedAccess(stationJobCounts);
