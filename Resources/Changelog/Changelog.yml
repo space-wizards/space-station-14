@@ -1,9 +1,4 @@
 Entries:
-- author: Deahaka
-  changes:
-  - {message: Added lights for altars, type: Add}
-  id: 2006
-  time: '2022-07-24T22:57:12.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Gas tank internals now have an alert, type: Add}
@@ -2955,3 +2950,8 @@ Entries:
   - {message: Matchbox sprite will now properly show its fill states., type: Fix}
   id: 2505
   time: '2022-10-22T21:59:53.0000000+00:00'
+- author: Interrobang01
+  changes:
+  - {message: Added a rare new chemical that makes dumb creatures sentient., type: Add}
+  id: 2506
+  time: '2022-10-22T22:05:06.0000000+00:00'
