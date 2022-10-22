@@ -17,7 +17,6 @@ public sealed class SkeletonAccentSystem : EntitySystem
         { "shit", "RATTLE RATTLE" }, // Capitalize RATTLE RATTLE regardless of original message case.
         { "definitely", "make no bones about it" },
         { "absolutely", "make no bones about it" },
-        { "lonely", "bonely"},
         { "afraid", "rattled"},
         { "scared", "rattled"},
         { "spooked", "rattled"},
