@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Fixed gravity mispredict., type: Fix}
-  id: 2011
-  time: '2022-07-25T06:55:25.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: No more magboots in space., type: Fix}
   id: 2012
   time: '2022-07-25T07:35:35.0000000+00:00'
@@ -2956,3 +2951,8 @@ Entries:
       (power efficiency)., type: Add}
   id: 2510
   time: '2022-10-22T22:26:03.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Generators can now be upgraded using machine parts., type: Add}
+  id: 2511
+  time: '2022-10-22T22:38:57.0000000+00:00'
