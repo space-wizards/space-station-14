@@ -1,9 +1,4 @@
 Entries:
-- author: Elijahrane
-  changes:
-  - {message: Ported medibots from Nyanotrasen MRP., type: Add}
-  id: 2014
-  time: '2022-07-25T15:33:32.0000000+00:00'
 - author: zerorulez
   changes:
   - {message: Entities without hands can no longer open/close storage and toggle locks.,
@@ -2958,3 +2953,11 @@ Entries:
   - {message: 'Cap gun revolver starts loaded, like most other guns.', type: Fix}
   id: 2513
   time: '2022-10-22T22:47:20.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added machines upgrades for the portable scrubber., type: Add}
+  - {message: Slightly modified the parts needed to create the portable scrubber.,
+    type: Tweak}
+  - {message: Fixed portable scrubbers not scrubbing from adjacent tiles., type: Fix}
+  id: 2514
+  time: '2022-10-22T22:49:30.0000000+00:00'
