@@ -16,21 +16,21 @@ public sealed class GravityWellComponent : SharedGravityWellComponent
     /// <summary>
     ///     The minimum range at which the gravity well can push/pull entities.
     /// </summary>
-    [DataField("maxRange")]
+    [DataField("minRange")]
     [ViewVariables(VVAccess.ReadWrite)]
     public float MinRange;
 
     /// <summary>
     ///     The acceleration entities will experience towards the gravity well at a distance of 1m.
     /// </summary>
-    [DataField("maxRange")]
+    [DataField("baseRadialAcceleration")]
     [ViewVariables(VVAccess.ReadWrite)]
     public float BaseRadialAcceleration = 10.0f;
 
     /// <summary>
     ///     The acceleration entities will experience tangent to the gravity well at a distance of 1m.
     /// </summary>
-    [DataField("maxRange")]
+    [DataField("baseTangentialAcceleration")]
     [ViewVariables(VVAccess.ReadWrite)]
     public float BaseTangentialAcceleration = 0.0f;
 

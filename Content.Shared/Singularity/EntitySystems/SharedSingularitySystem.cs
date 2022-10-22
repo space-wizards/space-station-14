@@ -23,7 +23,7 @@ public abstract class SharedSingularitySystem : EntitySystem
 
         SubscribeLocalEvent<AppearanceComponent, SingularityLevelChangedEvent>(UpdateAppearance);
         SubscribeLocalEvent<RadiationSourceComponent, SingularityLevelChangedEvent>(UpdateRadiation);
-        SubscribeLocalEvent<PhysicsComponent, SingularityLevelChangedEvent>(UpdateLinearVelocity);
+        SubscribeLocalEvent<PhysicsComponent, SingularityLevelChangedEvent>(UpdateBody);
         SubscribeLocalEvent<SharedEventHorizonComponent, SingularityLevelChangedEvent>(UpdateEventHorizon);
         SubscribeLocalEvent<SingularityDistortionComponent, SingularityLevelChangedEvent>(UpdateDistortion);
     }
@@ -112,8 +112,9 @@ public abstract class SharedSingularitySystem : EntitySystem
         comp.Intensity = GetIntensity(args.NewValue);
     }
 
-    private void UpdateLinearVelocity(EntityUid uid, PhysicsComponent comp, SingularityLevelChangedEvent args)
+    private void UpdateBody(EntityUid uid, PhysicsComponent comp, SingularityLevelChangedEvent args)
     {
+        comp.BodyStatus = (args.NewValue > 1) ? BodyStatus.InAir : BodyStatus.OnGround;
         if (args.NewValue <= 1 && args.OldValue > 1)
             _physics.SetLinearVelocity(comp, Vector2.Zero);
     }

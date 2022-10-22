@@ -1,6 +1,8 @@
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
+using Robust.Server.GameStates;
 
+using Content.Shared.Singularity.Components;
 using Content.Shared.Singularity.EntitySystems;
 using Content.Shared.Singularity.Events;
 
@@ -13,6 +15,7 @@ namespace Content.Server.Singularity.EntitySystems;
 public sealed class SingularitySystem : SharedSingularitySystem
 {
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly PVSOverrideSystem _pvs = default!;
 
     /// <summary>
     ///     The amount of energy singulos accumulate when they eat a tile.
@@ -27,14 +30,15 @@ public sealed class SingularitySystem : SharedSingularitySystem
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeLocalEvent<SingularityDistortionComponent, ComponentStartup>(OnDistortionStartup);
         SubscribeLocalEvent<SingularityComponent, ComponentStartup>(OnSingularityStartup);
         SubscribeLocalEvent<SingularityComponent, ComponentShutdown>(OnSingularityShutdown);
         SubscribeLocalEvent<SingularityComponent, EventHorizonConsumedEntityEvent>(OnConsumed);
         SubscribeLocalEvent<SinguloFoodComponent, EventHorizonConsumedEntityEvent>(OnConsumed);
         SubscribeLocalEvent<SingularityComponent, EntityConsumedByEventHorizonEvent>(OnConsumedEntity);
         SubscribeLocalEvent<SingularityComponent, TilesConsumedByEventHorizonEvent>(OnConsumedTiles);
+        // TODO: Figure out where all this coupling should be handled.
         SubscribeLocalEvent<SingularityComponent, SingularityLevelChangedEvent>(UpdateEnergyDrain);
-        SubscribeLocalEvent<PhysicsComponent, SingularityLevelChangedEvent>(UpdateBodyStatus);
         SubscribeLocalEvent<RandomWalkComponent, SingularityLevelChangedEvent>(UpdateRandomWalk);
         SubscribeLocalEvent<GravityWellComponent, SingularityLevelChangedEvent>(UpdateGravityWell);
     }
@@ -94,6 +98,18 @@ public sealed class SingularitySystem : SharedSingularitySystem
     }
 
 #region Event Handlers
+
+    /// <summary>
+    /// Makes entities that have the singularity distortion visual warping always get their state shared with the client.
+    /// This prevents some major popin with large distortion ranges.
+    /// </summary>
+    /// <param name="uid">The entity UID of the entity that is gaining the shader.</param>
+    /// <param name="comp">The component of the shader that the entity is gaining.</param>
+    /// <param name="args">The event arguments.</param>
+    public void OnDistortionStartup(EntityUid uid, SingularityDistortionComponent comp, ComponentStartup args)
+    {
+        _pvs.AddGlobalOverride(uid);
+    }
 
     /// <summary>
     /// Handles playing the startup sounds when a singulo forms.
@@ -196,17 +212,6 @@ public sealed class SingularitySystem : SharedSingularitySystem
             1 => 1,
             _ => 0
         };
-    }
-
-    /// <summary>
-    /// Updates the status of the physicsbody according to the singulos level.
-    /// </summary>
-    /// <param name="uid">The entity UID of the singularity.</param>
-    /// <param name="comp">The physics component sharing the entity with the singulo component.</param>
-    /// <param name="args">The event arguments.</param>
-    private void UpdateBodyStatus(EntityUid uid, PhysicsComponent comp, SingularityLevelChangedEvent args)
-    {
-        comp.BodyStatus = (args.NewValue > 1) ? BodyStatus.InAir : BodyStatus.OnGround;
     }
 
     /// <summary>

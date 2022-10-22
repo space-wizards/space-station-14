@@ -14,6 +14,13 @@ public abstract class SharedEventHorizonSystem : EntitySystem
 
     public const string DefaultHorizonFixtureId = "EventHorizon";
 
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        // Allows for predicted collisions with singularities.
+        SubscribeLocalEvent<SharedEventHorizonComponent, PreventCollideEvent>(OnPreventCollide);
+    }
 
 #region Getters/Setters
 

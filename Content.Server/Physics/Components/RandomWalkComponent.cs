@@ -25,7 +25,7 @@ public sealed class RandomWalkComponent : Component
     /// <summary>
     /// The amount of speed carried over when the speed updates.
     /// </summary>
-    [DataField("maxSpeed")]
+    [DataField("accumulatorRatio")]
     [ViewVariables(VVAccess.ReadWrite)]
     public float AccumulatorRatio = 0.0f;
 

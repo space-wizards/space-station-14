@@ -1,18 +1,17 @@
 ﻿using Content.Shared.Singularity.Components;
-using Robust.Shared.GameObjects;
+using Content.Client.Singularity.EntitySystems;
 
-namespace Content.Client.Singularity.Components
+namespace Content.Client.Singularity.Components;
+
+[RegisterComponent]
+[ComponentReference(typeof(SharedSingularityComponent))]
+public sealed class SingularityComponent : SharedSingularityComponent
 {
-    [RegisterComponent]
-    [ComponentReference(typeof(SharedSingularityComponent))]
-    public sealed class SingularityComponent : SharedSingularityComponent
+    public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
     {
-        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
-        {
-            if (curState is not SingularityComponentState state)
-                return;
+        if (curState is not SingularityComponentState state)
+            return;
 
-            EntitySystem.Get<SharedSingularitySystem>().SetSingularityLevel(this, state.Level);
-        }
+        IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SingularitySystem>().SetSingularityLevel(this, state.Level);
     }
 }

@@ -271,7 +271,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// <param name="uid">The event horizon entity.</param>
     /// <param name="comp">The event horizon.</param>
     /// <param name="args">The event arguments.</param>
-    private void OnStartCollide(EntityUid uid, EventHorizonComponent comp, StartCollideEvent args)
+    private void OnStartCollide(EntityUid uid, EventHorizonComponent comp, ref StartCollideEvent args)
     {
         if (comp.BeingConsumedByAnotherEventHorizon)
             return;

@@ -2,7 +2,6 @@ using Content.Shared.Singularity.EntitySystems;
 
 namespace Content.Shared.Singularity.Components;
 
-[RegisterComponent]
 public abstract class SharedEventHorizonComponent : Component
 {
     /// <summary>
