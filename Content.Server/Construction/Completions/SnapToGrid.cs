@@ -8,7 +8,7 @@ namespace Content.Server.Construction.Completions
     [DataDefinition]
     public sealed class SnapToGrid : IGraphAction
     {
-        [DataField("southRotation")] public bool SouthRotation { get; private set; } = false;
+        [DataField("southRotation")] public bool SouthRotation { get; private set; }
 
         public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {

@@ -340,7 +340,7 @@ namespace Content.Server.Construction
                         construction.Containers.Add(store);
 
                         // The container doesn't necessarily need to exist, so we ensure it.
-                        _containerSystem.EnsureContainer<Container>(uid, store).Insert(insert);
+                        _container.EnsureContainer<Container>(uid, store).Insert(insert);
                     }
                     else
                     {
