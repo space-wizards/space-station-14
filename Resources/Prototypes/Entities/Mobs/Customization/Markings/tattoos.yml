@@ -74,7 +74,7 @@
   id: TattooEyeRight
   bodyPart: Eyes
   markingCategory: Head
-  speciesRestriction: [Human]
+  speciesRestriction: [Human, SlimePerson, Reptilian]
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
     state: tattoo_eye_r
@@ -83,7 +83,7 @@
   id: TattooEyeLeft
   bodyPart: Eyes
   markingCategory: Head
-  speciesRestriction: [Human]
+  speciesRestriction: [Human, SlimePerson, Reptilian]
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
     state: tattoo_eye_l

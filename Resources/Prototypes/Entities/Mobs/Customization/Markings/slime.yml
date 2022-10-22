@@ -52,20 +52,3 @@
   - sprite: Mobs/Customization/slime_parts.rsi
     state: gradient_r_hand
     
-- type: marking
-  id: SlimeEyeRight
-  bodyPart: Eyes
-  markingCategory: Head
-  speciesRestriction: [SlimePerson]
-  sprites:
-  - sprite: Mobs/Customization/slime_parts.rsi
-    state: eye_r
-    
-- type: marking
-  id: SlimeEyeLeft
-  bodyPart: Eyes
-  markingCategory: Head
-  speciesRestriction: [SlimePerson]
-  sprites:
-  - sprite: Mobs/Customization/slime_parts.rsi
-    state: eye_l

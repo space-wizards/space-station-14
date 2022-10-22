@@ -57,9 +57,3 @@ marking-LizardFrillsAxolotl = Lizard Frills (Axolotl)
 
 marking-LizardFrillsHood-frills_hood = Lizard Frills (Hood)
 marking-LizardFrillsHood = Lizard Frills (Hood)
-
-marking-LizardEyeRight-eye_right = Right Eye
-marking-LizardEyeRight = Right Eye
-
-marking-LizardEyeLeft-eye_left = Left Eye
-marking-LizardEyeLeft = Left Eye

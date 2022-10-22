@@ -15,9 +15,3 @@ marking-SlimeGradientLeftHand = Slime Left Hand (Gradient)
 
 marking-SlimeGradientRightHand-gradient_Right_hand = Slime Right Hand (Gradient)
 marking-SlimeGradientRightHand = Slime Right Hand (Gradient)
-
-marking-SlimeEyeRight-eye_right = Right Eye
-marking-SlimeEyeRight = Right Eye
-
-marking-SlimeEyeLeft-eye-left = Left Eye
-marking-SlimeEyeLeft = Left Eye
