@@ -57,7 +57,6 @@ namespace Content.Server.Power.Pow3r
                 EstimateNetworkDepth(state, network);
             }
 
-            var i = 0;
             foreach (var network in state.Networks.Values)
             {
                 _sortBuffer.Enqueue(network.Height, network);
