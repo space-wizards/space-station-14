@@ -1,9 +1,4 @@
 Entries:
-- author: DogZeroX
-  changes:
-  - {message: 'Reptilians have two new markings: Axolotl and cobra hood!', type: Add}
-  id: 2010
-  time: '2022-07-25T05:47:04.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fixed gravity mispredict., type: Fix}
@@ -2954,3 +2949,10 @@ Entries:
   - {message: Made the sec duffle bag sprites more consistent., type: Tweak}
   id: 2509
   time: '2022-10-22T22:14:19.0000000+00:00'
+- author: 25203
+  changes:
+  - {message: Sci can now print seed extractor machine boards after unlocking advanced
+      botany. They can be upgraded with better manipulators (seed output) and capacitors
+      (power efficiency)., type: Add}
+  id: 2510
+  time: '2022-10-22T22:26:03.0000000+00:00'
