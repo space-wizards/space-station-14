@@ -68,6 +68,7 @@
       - Wirecutter
     - type: PipeColorVisuals			## Data for pipe color
     - type: AtmosPipeColor				## Set data for pipe color
+    - type: AtmosDevice
     - type: NodeContainer				## !!!!!Check it ----------------------------
       nodes:
         pipe:
@@ -76,7 +77,3 @@
           pipeDirection: South
   - type: StaticPrice
     price: 800
-	
-## Check it
-
-    - type: AtmosDevice

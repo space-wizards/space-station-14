@@ -1,3 +1,4 @@
+using Content.Shared.Atmos;
 using Content.Shared.Research.Prototypes;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
@@ -9,25 +10,28 @@ namespace Content.Shared.WoodBurner
     // TO-DO --- Change all of this
 
     [RegisterComponent]
-    public class SharedWoodBurnerComponent
+    public class SharedWoodBurnerComponent : Component
     {
-        /// <summary>
-        /// All of the recipes that the lathe has by default
-        /// </summary>
-        [DataField("staticRecipes", customTypeSerializer: typeof(PrototypeIdListSerializer<LatheRecipePrototype>))]
-        public readonly List<string> StaticRecipes = new();
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("enabled")]
+        public bool Enabled = true;
+
+        [DataField("inlet")]
+        public string InletName = "pipe";
 
         /// <summary>
-        /// All of the recipes that the lathe is capable of researching
+        /// How hot is gas that will be released 
         /// </summary>
-        [DataField("dynamicRecipes", customTypeSerializer: typeof(PrototypeIdListSerializer<LatheRecipePrototype>))]
-        public readonly List<string>? DynamicRecipes;
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("outputGasTemperature")]
+        public float OutputGasTemperature { get; set; } = 1000f;
 
         /// <summary>
-        /// The lathe's construction queue
+        /// How much gas will be released 
         /// </summary>
-        [DataField("queue")]
-        public List<LatheRecipePrototype> Queue = new();
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("outputGasAmount")]
+        public float OutputGasAmount { get; set; } = Atmospherics.MolesCellStandard * 20f;
 
         /// <summary>
         /// How long the inserting animation will play
@@ -53,15 +57,9 @@ namespace Content.Shared.WoodBurner
         public bool IgnoreColor;
         #endregion
 
-        /// <summary>
-        /// The recipe the lathe is currently producing
-        /// </summary>
-        [ViewVariables]
-        public LatheRecipePrototype? CurrentRecipe;
-
 
     }
-
+    /*
     public sealed class LatheGetRecipesEvent : EntityEventArgs
     {
         public readonly EntityUid Lathe;
@@ -73,5 +71,5 @@ namespace Content.Shared.WoodBurner
             Lathe = lathe;
         }
     }
-
+    */
 }
