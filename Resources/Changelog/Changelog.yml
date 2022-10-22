@@ -1,14 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Glass can no longer be duplicated using lathes and plating., type: Fix}
-  id: 2003
-  time: '2022-07-24T11:37:29.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: You can now swap instrument styles even while playing them!, type: Tweak}
-  id: 2004
-  time: '2022-07-24T11:40:05.0000000+00:00'
 - author: Level10Cybermancer
   changes:
   - {message: The clothesmate now stocks backpacks, type: Add}
@@ -2954,3 +2944,14 @@ Entries:
   - {message: Fix cargo orders not showing up on shuttle., type: Fix}
   id: 2502
   time: '2022-10-22T21:55:13.0000000+00:00'
+- author: Willhelm53
+  changes:
+  - {message: 'Added Nanotransen Oceanic Apex Predator Plush Figure - Available in
+      blue, pink, and grey!', type: Add}
+  id: 2503
+  time: '2022-10-22T21:58:18.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'The price scanner now reports in spacebucks, not credits.', type: Fix}
+  id: 2504
+  time: '2022-10-22T21:58:27.0000000+00:00'
