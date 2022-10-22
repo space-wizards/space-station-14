@@ -16,6 +16,91 @@
   heatCapacity: 10000
 
 - type: tile
+  id: FloorSteelMini
+  name: tiles-steel-floor-mini
+  sprite: /Textures/Tiles/steel_mini.png
+  variants: 4
+  placementVariants: [0, 1, 2, 3]
+  baseTurfs:
+    - Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepFloor
+  friction: 0.30
+  itemDrop: FloorTileItemSteel
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorSteelPavement
+  name: tiles-steel-floor-pavement
+  sprite: /Textures/Tiles/steel_pavement.png
+  variants: 4
+  placementVariants: [0, 1, 2, 3]
+  baseTurfs:
+    - Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepFloor
+  friction: 0.30
+  itemDrop: FloorTileItemSteel
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorSteelDiagonal
+  name: tiles-steel-floor-diagonal
+  sprite: /Textures/Tiles/steel_diagonal.png
+  variants: 4
+  placementVariants: [0, 1, 2, 3]
+  baseTurfs:
+    - Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepFloor
+  friction: 0.30
+  itemDrop: FloorTileItemSteel
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorSteelOffset
+  name: tiles-steel-floor-offset
+  sprite: /Textures/Tiles/steel_offset.png
+  variants: 1
+  placementVariants: [0]
+  baseTurfs:
+    - Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepFloor
+  friction: 0.30
+  itemDrop: FloorTileItemSteel
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorPlastic
+  name: tiles-plastic-floor
+  sprite: /Textures/Tiles/plastic.png
+  variants: 4
+  placementVariants: [0, 1, 2, 3]
+  baseTurfs:
+    - Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepFloor
+  friction: 0.30
+  itemDrop: FloorTileItemSteel
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+
+- type: tile
   id: FloorWood
   name: tiles-wood
   sprite: /Textures/Tiles/wood.png
@@ -52,6 +137,91 @@
   heatCapacity: 10000
 
 - type: tile
+  id: FloorWhiteMini
+  name: tiles-white-floor-mini
+  sprite: /Textures/Tiles/white_mini.png
+  variants: 4
+  placementVariants: [0, 1, 2, 3]
+  baseTurfs:
+    - Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepTile
+  friction: 0.25
+  itemDrop: FloorTileItemWhite
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorWhitePavement
+  name: tiles-white-floor-pavement
+  sprite: /Textures/Tiles/white_pavement.png
+  variants: 4
+  placementVariants: [0, 1, 2, 3]
+  baseTurfs:
+    - Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepTile
+  friction: 0.25
+  itemDrop: FloorTileItemWhite
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorWhiteDiagonal
+  name: tiles-white-floor-diagonal
+  sprite: /Textures/Tiles/white_diagonal.png
+  variants: 4
+  placementVariants: [0, 1, 2, 3]
+  baseTurfs:
+    - Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepTile
+  friction: 0.25
+  itemDrop: FloorTileItemWhite
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorWhiteOffset
+  name: tiles-white-floor-offset
+  sprite: /Textures/Tiles/white_offset.png
+  variants: 1
+  placementVariants: [0]
+  baseTurfs:
+    - Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepTile
+  friction: 0.25
+  itemDrop: FloorTileItemWhite
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorWhitePlastic
+  name: tiles-plastic-white-floor
+  sprite: /Textures/Tiles/white_plastic.png
+  variants: 4
+  placementVariants: [0, 1, 2, 3]
+  baseTurfs:
+    - Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepTile
+  friction: 0.25
+  itemDrop: FloorTileItemWhite
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+
+- type: tile
   id: FloorDark
   name: tiles-dark-floor
   sprite: /Textures/Tiles/dark.png
@@ -59,6 +229,91 @@
   placementVariants: [ 0, 1, 2, 3 ]
   baseTurfs:
   - Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepTile
+  friction: 0.30
+  itemDrop: FloorTileItemDark
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorDarkMini
+  name: tiles-dark-floor-mini
+  sprite: /Textures/Tiles/dark_mini.png
+  variants: 4
+  placementVariants: [ 0, 1, 2, 3 ]
+  baseTurfs:
+    - Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepTile
+  friction: 0.30
+  itemDrop: FloorTileItemDark
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorDarkPavement
+  name: tiles-dark-floor-pavement
+  sprite: /Textures/Tiles/dark_pavement.png
+  variants: 4
+  placementVariants: [ 0, 1, 2, 3 ]
+  baseTurfs:
+    - Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepTile
+  friction: 0.30
+  itemDrop: FloorTileItemDark
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorDarkDiagonal
+  name: tiles-dark-floor-diagonal
+  sprite: /Textures/Tiles/dark_diagonal.png
+  variants: 4
+  placementVariants: [ 0, 1, 2, 3 ]
+  baseTurfs:
+    - Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepTile
+  friction: 0.30
+  itemDrop: FloorTileItemDark
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorDarkOffset
+  name: tiles-dark-floor-offset
+  sprite: /Textures/Tiles/dark_offset.png
+  variants: 1
+  placementVariants: [0]
+  baseTurfs:
+    - Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepTile
+  friction: 0.25
+  itemDrop: FloorTileItemDark
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorDarkPlastic
+  name: tiles-plastic-dark-floor
+  sprite: /Textures/Tiles/dark_plastic.png
+  variants: 4
+  placementVariants: [ 0, 1, 2, 3 ]
+  baseTurfs:
+    - Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
