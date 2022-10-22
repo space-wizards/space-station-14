@@ -25,6 +25,7 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Dispenser;
 using Content.Shared.Gravity;
 using Content.Shared.Lathe;
+using Content.Shared.Localizations;
 using Content.Shared.Markers;
 using Robust.Client;
 using Robust.Client.Graphics;
@@ -70,6 +71,7 @@ namespace Content.Client.Entry
         [Dependency] private readonly GhostKickManager _ghostKick = default!;
         [Dependency] private readonly ExtendedDisconnectInformationManager _extendedDisconnectInformation = default!;
         [Dependency] private readonly PlayTimeTrackingManager _playTimeTracking = default!;
+        [Dependency] private readonly ContentLocalizationManager _contentLoc = default!;
 
         public const int NetBufferSizeOverride = 2;
 
@@ -91,6 +93,7 @@ namespace Content.Client.Entry
             IoCManager.Resolve<IConfigurationManager>().OverrideDefault(CVars.NetBufferSize, NetBufferSizeOverride);
 #endif
 
+            _contentLoc.Initialize();
             _componentFactory.DoAutoRegistrations();
             _componentFactory.IgnoreMissingComponents();
 

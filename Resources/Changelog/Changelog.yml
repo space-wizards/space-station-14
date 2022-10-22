@@ -1,26 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: The zombify popup is now more noticeable., type: Tweak}
-  id: 1992
-  time: '2022-07-21T04:32:05.0000000+00:00'
-- author: Morb0
-  changes:
-  - {message: Now any job can spawn as nukeops antag, type: Fix}
-  id: 1993
-  time: '2022-07-21T21:00:24.0000000+00:00'
-- author: HoofedEar
-  changes:
-  - {message: Research servers are once again uniquely identified and can be selected
-      in the lathe server menu., type: Fix}
-  id: 1994
-  time: '2022-07-21T22:16:15.0000000+00:00'
-- author: moony
-  changes:
-  - {message: Introduced another 15 admin smites., type: Add}
-  - {message: Introduced a bunch of admin "tricks" for common tasks., type: Add}
-  id: 1995
-  time: '2022-07-21T22:30:00.0000000+00:00'
 - author: moony
   changes:
   - {message: You no longer need to give yourself carpal tunnel to move something
@@ -2947,3 +2925,31 @@ Entries:
       full power.', type: Fix}
   id: 2491
   time: '2022-10-19T18:34:36.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added ore veins; ores now drop from rock on destruction., type: Add}
+  - {message: Pickaxes now mine faster., type: Tweak}
+  - {message: 'Increased the amount of ores per rock mined, scaling based on the ore
+      rarity.', type: Tweak}
+  id: 2492
+  time: '2022-10-20T13:16:29.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix wallmount interactions., type: Fix}
+  id: 2493
+  time: '2022-10-20T13:20:53.0000000+00:00'
+- author: Mervill
+  changes:
+  - {message: Updated some item descriptions in the Syndicate Uplink menu., type: Tweak}
+  - {message: 'Clarified that, should you purchase the Syndicate Pajama Bundle, you
+      will have the ultimate sleepover.', type: Tweak}
+  id: 2494
+  time: '2022-10-21T18:47:09.0000000+00:00'
+- author: moony
+  changes:
+  - {message: 'The floor tiles have been resprited. They should look pretty similar,
+      but are a lot easier to edit for the developers considering they weren''t jpeg
+      compressed at some point in their life.', type: Tweak}
+  - {message: Removed sovl!, type: Remove}
+  id: 2495
+  time: '2022-10-22T01:53:25.0000000+00:00'

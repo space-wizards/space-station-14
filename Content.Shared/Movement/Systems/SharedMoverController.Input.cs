@@ -59,7 +59,7 @@ namespace Content.Shared.Movement.Systems
             CameraRotationLocked = obj;
         }
 
-        private void SetMoveInput(InputMoverComponent component, MoveButtons buttons)
+        protected void SetMoveInput(InputMoverComponent component, MoveButtons buttons)
         {
             if (component.HeldMoveButtons == buttons) return;
             component.HeldMoveButtons = buttons;
@@ -517,28 +517,29 @@ namespace Content.Shared.Movement.Systems
             }
         }
     }
-}
 
-[Flags]
-public enum MoveButtons : byte
-{
-    None = 0,
-    Up = 1,
-    Down = 2,
-    Left = 4,
-    Right = 8,
-    Walk = 16,
-}
+    [Flags]
+    public enum MoveButtons : byte
+    {
+        None = 0,
+        Up = 1,
+        Down = 2,
+        Left = 4,
+        Right = 8,
+        Walk = 16,
+    }
 
-[Flags]
-public enum ShuttleButtons : byte
-{
-    None = 0,
-    StrafeUp = 1 << 0,
-    StrafeDown = 1 << 1,
-    StrafeLeft = 1 << 2,
-    StrafeRight = 1 << 3,
-    RotateLeft = 1 << 4,
-    RotateRight = 1 << 5,
-    Brake = 1 << 6,
+    [Flags]
+    public enum ShuttleButtons : byte
+    {
+        None = 0,
+        StrafeUp = 1 << 0,
+        StrafeDown = 1 << 1,
+        StrafeLeft = 1 << 2,
+        StrafeRight = 1 << 3,
+        RotateLeft = 1 << 4,
+        RotateRight = 1 << 5,
+        Brake = 1 << 6,
+    }
+
 }
