@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Nukie planet now has its own parallax., type: Add}
-  id: 2009
-  time: '2022-07-25T05:10:23.0000000+00:00'
 - author: DogZeroX
   changes:
   - {message: 'Reptilians have two new markings: Axolotl and cobra hood!', type: Add}
@@ -2954,3 +2949,8 @@ Entries:
   - {message: Apron pockets were added, type: Add}
   id: 2508
   time: '2022-10-22T22:07:51.0000000+00:00'
+- author: Nairod
+  changes:
+  - {message: Made the sec duffle bag sprites more consistent., type: Tweak}
+  id: 2509
+  time: '2022-10-22T22:14:19.0000000+00:00'
