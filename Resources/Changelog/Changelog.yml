@@ -1,9 +1,4 @@
 Entries:
-- author: Level10Cybermancer
-  changes:
-  - {message: The clothesmate now stocks backpacks, type: Add}
-  id: 2005
-  time: '2022-07-24T22:41:22.0000000+00:00'
 - author: Deahaka
   changes:
   - {message: Added lights for altars, type: Add}
@@ -2955,3 +2950,8 @@ Entries:
   - {message: 'The price scanner now reports in spacebucks, not credits.', type: Fix}
   id: 2504
   time: '2022-10-22T21:58:27.0000000+00:00'
+- author: Mervill
+  changes:
+  - {message: Matchbox sprite will now properly show its fill states., type: Fix}
+  id: 2505
+  time: '2022-10-22T21:59:53.0000000+00:00'
