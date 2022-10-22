@@ -278,7 +278,7 @@
           SheetSteel1:
             min: 5
             max: 5
-          SheetPlasma1:
+          SheetUranium1:
             min: 5
             max: 5
       - !type:DoActsBehavior
