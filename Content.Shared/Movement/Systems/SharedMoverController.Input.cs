@@ -97,6 +97,7 @@ namespace Content.Shared.Movement.Systems
         {
             CommandBinds.Unregister<SharedMoverController>();
             _configManager.UnsubValueChanged(CCVars.CameraRotationLocked, SetCameraRotationLocked);
+            _configManager.UnsubValueChanged(CCVars.GameDiagonalMovement, SetDiagonalMovement);
         }
 
         public bool DiagonalMovementEnabled { get; private set; }
