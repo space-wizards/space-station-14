@@ -309,6 +309,24 @@
           ExamineName: Glass Beaker
 
 - type: entity
+  id: SeedExtractorMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: seed extractor machine board
+  description: A machine printed circuit board for a seed extractor
+  components:
+    - type: Sprite
+      state: service
+    - type: MachineBoard
+      prototype: SeedExtractor
+      requirements:
+        Manipulator: 2
+        Capacitor: 1
+      materialRequirements:
+        # replacing the console screen
+        Glass: 1
+        Cable: 2
+
+- type: entity
   id: SMESMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: SMES machine board

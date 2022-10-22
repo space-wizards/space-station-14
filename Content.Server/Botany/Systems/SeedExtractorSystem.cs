@@ -1,6 +1,6 @@
 using Content.Server.Botany.Components;
+using Content.Server.Construction;
 using Content.Server.Popups;
-using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
@@ -20,9 +20,10 @@ public sealed class SeedExtractorSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<SeedExtractorComponent, InteractUsingEvent>(OnInteractUsing);
+        SubscribeLocalEvent<SeedExtractorComponent, RefreshPartsEvent>(OnRefreshParts);
     }
 
-    private void OnInteractUsing(EntityUid uid, SeedExtractorComponent component, InteractUsingEvent args)
+    private void OnInteractUsing(EntityUid uid, SeedExtractorComponent seedExtractor, InteractUsingEvent args)
     {
         if (!this.IsPowered(uid, EntityManager))
             return;
@@ -40,15 +41,21 @@ public sealed class SeedExtractorSystem : EntitySystem
 
         QueueDel(args.Used);
 
-        var random = _random.Next(component.MinSeeds, component.MaxSeeds);
+        var amount = (int) _random.NextFloat(seedExtractor.BaseMinSeeds, seedExtractor.BaseMaxSeeds + 1) * seedExtractor.SeedAmountMultiplier;
         var coords = Transform(uid).Coordinates;
 
-        if (random > 1)
+        if (amount > 1)
             seed.Unique = false;
 
-        for (var i = 0; i < random; i++)
+        for (var i = 0; i < amount; i++)
         {
             _botanySystem.SpawnSeedPacket(seed, coords);
         }
+    }
+
+    private void OnRefreshParts(EntityUid uid, SeedExtractorComponent seedExtractor, RefreshPartsEvent args)
+    {
+        var manipulatorQuality = args.PartRatings[seedExtractor.MachinePartSeedAmount];
+        seedExtractor.SeedAmountMultiplier = MathF.Pow(seedExtractor.PartRatingSeedAmountMultiplier, manipulatorQuality - 1);
     }
 }
