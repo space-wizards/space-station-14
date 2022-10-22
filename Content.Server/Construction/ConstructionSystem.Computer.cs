@@ -31,7 +31,7 @@ public sealed partial class ConstructionSystem
         CreateComputerBoard(component);
     }
 
-    private void OnCompPowerChange(EntityUid uid, ComputerComponent component, PowerChangedEvent args)
+    private void OnCompPowerChange(EntityUid uid, ComputerComponent component, ref PowerChangedEvent args)
     {
         if (TryComp<AppearanceComponent>(uid, out var appearance))
         {

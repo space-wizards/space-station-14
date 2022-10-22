@@ -1,4 +1,4 @@
-﻿<Control xmlns="https://spacestation14.io"
+<lobbyUi:LobbyGui xmlns="https://spacestation14.io"
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
          xmlns:maths="clr-namespace:Robust.Shared.Maths;assembly=Robust.Shared.Maths"
          xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
@@ -9,37 +9,42 @@
          xmlns:info="clr-namespace:Content.Client.Info"
          xmlns:widgets="clr-namespace:Content.Client.UserInterface.Systems.Chat.Widgets">
     <!-- Background -->
-    <TextureRect Access="Public" Name = "Background" Stretch="KeepAspectCovered"/>
-    <BoxContainer Orientation="Horizontal" Margin="10 10 10 10" SeparationOverride="2">
+    <TextureRect Access="Public" VerticalExpand="True" HorizontalExpand="True" Name = "Background" Stretch="KeepAspectCovered"/>
+    <BoxContainer Name="MainContainer" VerticalExpand="True" HorizontalExpand="True" Orientation="Horizontal" Margin="10 10 10 10" SeparationOverride="2">
         <SplitContainer State="Auto" HorizontalExpand="True">
             <!-- LHS Controls -->
-            <BoxContainer Orientation="Vertical" SeparationOverride="4" HorizontalExpand="True">
-                <!-- Left Top Panel -->
-                <PanelContainer StyleClasses="AngleRect" HorizontalAlignment="Left" Name = "LeftSideTop" VerticalAlignment="Top" >
-                    <BoxContainer Orientation="Vertical" HorizontalAlignment="Center" MaxWidth="620">
-                        <info:LinkBanner Name="LinkBanner" VerticalExpand="false" HorizontalAlignment="Center" Margin="3 3 3 3"/>
-                        <controls:StripeBack>
-                            <BoxContainer Orientation="Horizontal" SeparationOverride="6" Margin="3 3 3 3">
-                                <cc:UICommandButton Command="observe" Name="ObserveButton" Access="Public" Text="{Loc 'ui-lobby-observe-button'}" StyleClasses="ButtonBig"  WindowType="{x:Type lobbyUi:ObserveWarningWindow}"/>
-                                <Label Name="StartTime"
-                                       Access="Public"
-                                       Align="Right"
-                                       FontColorOverride="{x:Static maths:Color.DarkGray}"
-                                       StyleClasses="LabelBig" HorizontalExpand="True" />
-                                <Button Name="ReadyButton" Access="Public" ToggleMode="True" Text="{Loc 'ui-lobby-ready-up-button'}"
-                                        StyleClasses="ButtonBig" />
-                            </BoxContainer>
-                        </controls:StripeBack>
+            <BoxContainer Name="LeftSide" Orientation="Vertical" SeparationOverride="4" HorizontalExpand="True">
+                <Control Name="DefaultState" VerticalExpand="True">
+                    <!-- Left Top Panel -->
+                    <PanelContainer StyleClasses="AngleRect" HorizontalAlignment="Left" Name = "LeftSideTop" VerticalAlignment="Top" >
+                        <BoxContainer Orientation="Vertical" HorizontalAlignment="Center" MaxWidth="620">
+                            <info:LinkBanner Name="LinkBanner" VerticalExpand="false" HorizontalAlignment="Center" Margin="3 3 3 3"/>
+                            <controls:StripeBack>
+                                <BoxContainer Orientation="Horizontal" SeparationOverride="6" Margin="3 3 3 3">
+                                    <cc:UICommandButton Command="observe" Name="ObserveButton" Access="Public" Text="{Loc 'ui-lobby-observe-button'}" StyleClasses="ButtonBig"  WindowType="{x:Type lobbyUi:ObserveWarningWindow}"/>
+                                    <Label Name="StartTime"
+                                           Access="Public"
+                                           Align="Right"
+                                           FontColorOverride="{x:Static maths:Color.DarkGray}"
+                                           StyleClasses="LabelBig" HorizontalExpand="True" />
+                                    <Button Name="ReadyButton" Access="Public" ToggleMode="True" Text="{Loc 'ui-lobby-ready-up-button'}"
+                                            StyleClasses="ButtonBig" />
+                                </BoxContainer>
+                            </controls:StripeBack>
+                        </BoxContainer>
+                    </PanelContainer>
+                    <!-- Voting Popups -->
+                    <BoxContainer Orientation="Vertical" SeparationOverride="4" Name="VoteContainer" Access="Public" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <!-- Vertical Padding-->
+                    <Control VerticalExpand="True"/>
+                    <!-- Left Bot Panel -->
+                    <BoxContainer Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Bottom" MaxWidth="620">
+                        <info:DevInfoBanner Name="DevInfoBanner" VerticalExpand="false" Margin="3 3 3 3"/>
                     </BoxContainer>
-                </PanelContainer>
-                <!-- Voting Popups -->
-                <BoxContainer Orientation="Vertical" SeparationOverride="4" Name="VoteContainer" Access="Public" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                <!-- Vertical Padding-->
-                <Control VerticalExpand="True"/>
-                <!-- Left Bot Panel -->
-                <BoxContainer Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Bottom" MaxWidth="620">
-                    <info:DevInfoBanner Name="DevInfoBanner" VerticalExpand="false" Margin="3 3 3 3"/>
-                </BoxContainer>
+                </Control>
+                <!-- Character setup state -->
+                <!-- This is injected on startup. Funky! -->
+                <Control Access="Public" Visible="False" Name="CharacterSetupState" VerticalExpand="True" />
             </BoxContainer>
             <!-- Right Panel -->
             <PanelContainer Name="RightSide" StyleClasses="AngleRect" HorizontalAlignment= "Right" VerticalExpand="True" VerticalAlignment="Stretch">
@@ -47,7 +52,7 @@
                 <!-- Top row -->
                 <BoxContainer Orientation="Horizontal" MinSize="0 40" Name="HeaderContainer" Access="Public"  SeparationOverride="4">
                     <Label Margin="8 0 0 0" StyleClasses="LabelHeadingBigger" VAlign="Center" Text="{Loc 'ui-lobby-title'}" />
-                    <Label Name="ServerName" Access="Public" StyleClasses="LabelHeadingBigger" VAlign="Center" />
+                    <Label Name="ServerName" Access="Public" StyleClasses="LabelHeadingBigger" VAlign="Center" HorizontalExpand="True" HorizontalAlignment="Center" />
                 </BoxContainer>
                 <!-- Gold line -->
                 <controls:HLine Color="{x:Static style:StyleNano.NanoGold}" Thickness="2"/>
@@ -71,9 +76,9 @@
                 <!-- Gold line -->
                 <controls:HLine Color="{x:Static style:StyleNano.NanoGold}" Thickness="2" Access="Public"/>
                 <controls:HSpacer Spacing="10"/>
-                <widgets:ChatBox Name="Chat" Access="Public" VerticalExpand="True" Margin="3 3 3 3" MinHeight="50" Main="True"/>
+                <widgets:ChatBox Name="Chat" Access="Public" VerticalExpand="True" Margin="3 3 3 3" MinHeight="50" />
                 </BoxContainer>
             </PanelContainer>
         </SplitContainer>
     </BoxContainer>
-</Control>
+</lobbyUi:LobbyGui>

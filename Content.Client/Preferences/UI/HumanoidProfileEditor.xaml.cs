@@ -61,8 +61,7 @@ namespace Content.Client.Preferences.UI
         private Button _randomizeEverythingButton => CRandomizeEverything;
         private RichTextLabel _warningLabel => CWarningLabel;
         private Button _saveButton => CSaveButton;
-        private Button _sexFemaleButton => CSexFemale;
-        private Button _sexMaleButton => CSexMale;
+        private OptionButton _sexButton => CSexButton;
         private OptionButton _genderButton => CPronounsButton;
         private Slider _skinColor => CSkin;
         private OptionButton _clothingButton => CClothingButton;
@@ -100,7 +99,6 @@ namespace Content.Client.Preferences.UI
 
         private bool _isDirty;
         private bool _needUpdatePreview;
-        private bool _needsDummyRebuild;
         public int CharacterSlot;
         public HumanoidCharacterProfile? Profile;
         private MarkingSet _markingSet = new(); // storing this here feels iffy but a few things need it this high up
@@ -139,29 +137,10 @@ namespace Content.Client.Preferences.UI
 
             #region Sex
 
-            var sexButtonGroup = new ButtonGroup();
-
-            _sexMaleButton.Group = sexButtonGroup;
-            _sexMaleButton.OnPressed += args =>
+            _sexButton.OnItemSelected += args =>
             {
-                SetSex(Sex.Male);
-                if (Profile?.Gender == Gender.Female)
-                {
-                    SetGender(Gender.Male);
-                    UpdateGenderControls();
-                }
-            };
-
-            _sexFemaleButton.Group = sexButtonGroup;
-            _sexFemaleButton.OnPressed += _ =>
-            {
-                SetSex(Sex.Female);
-
-                if (Profile?.Gender == Gender.Male)
-                {
-                    SetGender(Gender.Female);
-                    UpdateGenderControls();
-                }
+                _sexButton.SelectId(args.Id);
+                SetSex((Sex) args.Id);
             };
 
             #endregion Sex
@@ -633,7 +612,7 @@ namespace Content.Client.Preferences.UI
                 return;
 
             Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithMarkings(markings.GetForwardEnumerator().ToList()));
-            NeedsDummyRebuild = true;
+            _needUpdatePreview = true;
             IsDirty = true;
         }
 
@@ -698,7 +677,6 @@ namespace Content.Client.Preferences.UI
             }
 
             IsDirty = true;
-            NeedsDummyRebuild = true; // TODO: ugh - fix this asap
         }
 
         protected override void Dispose(bool disposing)
@@ -759,6 +737,7 @@ namespace Content.Client.Preferences.UI
             {
                 _previewSpriteSide.Sprite = sprite;
             }
+            _needUpdatePreview = true;
         }
 
         private void LoadServerData()
@@ -766,7 +745,7 @@ namespace Content.Client.Preferences.UI
             Profile = (HumanoidCharacterProfile) _preferencesManager.Preferences!.SelectedCharacter;
             CharacterSlot = _preferencesManager.Preferences.SelectedCharacterIndex;
 
-            NeedsDummyRebuild = true;
+            _needUpdatePreview = true;
             UpdateControls();
         }
 
@@ -779,6 +758,20 @@ namespace Content.Client.Preferences.UI
         private void SetSex(Sex newSex)
         {
             Profile = Profile?.WithSex(newSex);
+            // for convenience, default to most common gender when new sex is selected
+            switch (newSex)
+            {
+                case Sex.Male:
+                    Profile = Profile?.WithGender(Gender.Male);
+                    break;
+                case Sex.Female:
+                    Profile = Profile?.WithGender(Gender.Female);
+                    break;
+                default:
+                    Profile = Profile?.WithGender(Gender.Epicene);
+                    break;
+            }
+            UpdateGenderControls();
             IsDirty = true;
         }
 
@@ -793,8 +786,10 @@ namespace Content.Client.Preferences.UI
             Profile = Profile?.WithSpecies(newSpecies);
             OnSkinColorOnValueChanged(); // Species may have special color prefs, make sure to update it.
             CMarkings.SetSpecies(newSpecies); // Repopulate the markings tab as well.
-            NeedsDummyRebuild = true;
+            UpdateSexControls(); // update sex for new species
+            RebuildSpriteView(); // they might have different inv so we need a new dummy
             IsDirty = true;
+            _needUpdatePreview = true;
         }
 
         private void SetName(string newName)
@@ -822,8 +817,8 @@ namespace Content.Client.Preferences.UI
             if (Profile != null)
             {
                 _preferencesManager.UpdateCharacter(Profile, CharacterSlot);
-                NeedsDummyRebuild = true;
                 OnProfileChanged?.Invoke(Profile, CharacterSlot);
+                _needUpdatePreview = true;
             }
         }
 
@@ -835,16 +830,6 @@ namespace Content.Client.Preferences.UI
                 _isDirty = value;
                 _needUpdatePreview = true;
                 UpdateSaveButton();
-            }
-        }
-
-        private bool NeedsDummyRebuild
-        {
-            get => _needsDummyRebuild;
-            set
-            {
-                _needsDummyRebuild = value;
-                _needUpdatePreview = true;
             }
         }
 
@@ -868,10 +853,35 @@ namespace Content.Client.Preferences.UI
 
         private void UpdateSexControls()
         {
-            if (Profile?.Sex == Sex.Male)
-                _sexMaleButton.Pressed = true;
+            if (Profile == null)
+                return;
+
+            _sexButton.Clear();
+
+            var sexes = new List<Sex>();
+
+            // add species sex options, default to just none if we are in bizzaro world and have no species
+            if (_prototypeManager.TryIndex<SpeciesPrototype>(Profile.Species, out var speciesProto))
+            {
+                foreach (var sex in speciesProto.Sexes)
+                {
+                    sexes.Add(sex);
+                }
+            } else
+            {
+                sexes.Add(Sex.Unsexed);
+            }
+
+            // add button for each sex
+            foreach (var sex in sexes)
+            {
+                _sexButton.AddItem(Loc.GetString($"humanoid-profile-editor-sex-{sex.ToString().ToLower()}-text"), (int) sex);
+            }
+
+            if (sexes.Contains(Profile.Sex))
+                _sexButton.SelectId((int) Profile.Sex);
             else
-                _sexFemaleButton.Pressed = true;
+                _sexButton.SelectId((int) sexes[0]);
         }
 
         private void UpdateSkinColor()
@@ -1022,14 +1032,6 @@ namespace Content.Client.Preferences.UI
             if (Profile is null)
                 return;
 
-            /* dear fuck this needs to not happen ever again
-            if (_needsDummyRebuild)
-            {
-                RebuildSpriteView(); // Species change also requires sprite rebuild, so we'll do that now.
-                _needsDummyRebuild = false;
-            }
-            */
-
             EntitySystem.Get<HumanoidSystem>().LoadProfile(_previewDummy!.Value, Profile);
             LobbyCharacterPreviewPanel.GiveDummyJobClothes(_previewDummy!.Value, Profile);
         }
@@ -1053,8 +1055,7 @@ namespace Content.Client.Preferences.UI
             UpdateAntagPreferences();
             UpdateTraitPreferences();
             UpdateMarkings();
-
-            NeedsDummyRebuild = true;
+            RebuildSpriteView();
 
             _preferenceUnavailableButton.SelectId((int) Profile.PreferenceUnavailable);
         }
