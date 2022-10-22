@@ -178,7 +178,7 @@
   bodyPart: Chest
   markingCategory: Chest
   followSkinColor: false
-  speciesRestriction: [Reptilian, Human]
+  speciesRestriction: [Reptilian]
   sprites:
   - sprite: Mobs/Customization/reptilian_parts.rsi
     state: body_tiger
