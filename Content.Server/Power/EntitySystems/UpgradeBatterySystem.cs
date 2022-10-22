@@ -2,7 +2,7 @@ using Content.Server.Construction;
 using Content.Server.Power.Components;
 using JetBrains.Annotations;
 
-namespace Content.Server.Power.SMES
+namespace Content.Server.Power.EntitySystems
 {
     [UsedImplicitly]
     public sealed class UpgradeBatterySystem : EntitySystem
