@@ -170,7 +170,7 @@
   - type: Machine
     board: GeneratorPlasmaMachineCircuitboard
   - type: UpgradePowerSupplier
-    powerDrawMultiplier: 1.25
+    powerSupplyMultiplier: 1.25
     scaling: Exponential
 
 - type: entity
@@ -189,7 +189,7 @@
   - type: Machine
     board: GeneratorUraniumMachineCircuitboard
   - type: UpgradePowerSupplier
-    powerDrawMultiplier: 1.25
+    powerSupplyMultiplier: 1.25
     scaling: Exponential
 
 - type: entity
