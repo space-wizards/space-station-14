@@ -180,15 +180,15 @@
         damage:
           types:
             Poison: 1
-     - !type:GenericStatusEffect
+      - !type:GenericStatusEffect
         conditions:
-       - !type:ReagentThreshold
-         reagent: Nocturine
-         min: 8
-       key: ForcedSleep
-       component: ForcedSleeping
-       refresh: false
-       type: Add
+        - !type:ReagentThreshold
+          reagent: Nocturine
+          min: 8
+        key: ForcedSleep
+        component: ForcedSleeping
+        refresh: false
+        type: Add
 
 - type: reagent
   id: MuteToxin
