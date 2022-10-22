@@ -4,11 +4,11 @@ using System.Linq;
 using Content.Client.Inventory;
 using Content.Shared.Clothing;
 using Content.Shared.Clothing.Components;
+using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Humanoid;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
-using Content.Shared.Tag;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
@@ -17,7 +17,7 @@ using static Robust.Shared.GameObjects.SharedSpriteComponent;
 
 namespace Content.Client.Clothing;
 
-public sealed class ClothingVisualsSystem : EntitySystem
+public sealed class ClientClothingSystem : ClothingSystem
 {
     /// <summary>
     /// This is a shitty hotfix written by me (Paul) to save me from renaming all files.
@@ -44,14 +44,10 @@ public sealed class ClothingVisualsSystem : EntitySystem
 
     [Dependency] private IResourceCache _cache = default!;
     [Dependency] private InventorySystem _inventorySystem = default!;
-    [Dependency] private TagSystem _tagSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
-
-        SubscribeLocalEvent<ClothingComponent, GotEquippedEvent>(OnGotEquipped);
-        SubscribeLocalEvent<ClothingComponent, GotUnequippedEvent>(OnGotUnequipped);
 
         SubscribeLocalEvent<ClothingComponent, GetEquipmentVisualsEvent>(OnGetVisuals);
 
@@ -148,11 +144,6 @@ public sealed class ClothingVisualsSystem : EntitySystem
         RenderEquipment(uid, args.Item, clothing.InSlot, component, null, clothing);
     }
 
-    private void OnGotUnequipped(EntityUid uid, ClothingComponent component, GotUnequippedEvent args)
-    {
-        component.InSlot = null;
-    }
-
     private void OnDidUnequip(EntityUid uid, SpriteComponent component, DidUnequipEvent args)
     {
         if (!TryComp(uid, out ClientInventoryComponent? inventory) || !TryComp(uid, out SpriteComponent? sprite))
@@ -184,9 +175,9 @@ public sealed class ClothingVisualsSystem : EntitySystem
         }
     }
 
-    private void OnGotEquipped(EntityUid uid, ClothingComponent component, GotEquippedEvent args)
+    protected override void OnGotEquipped(EntityUid uid, ClothingComponent component, GotEquippedEvent args)
     {
-        component.InSlot = args.Slot;
+        base.OnGotEquipped(uid, component, args);
 
         RenderEquipment(args.Equipee, uid, args.Slot, clothingComponent: component);
     }

@@ -10,8 +10,9 @@ namespace Content.Shared.Clothing.Components;
 ///     This handles entities which can be equipped.
 /// </summary>
 [NetworkedComponent]
+[RegisterComponent]
 [Access(typeof(ClothingSystem), typeof(InventorySystem))]
-public abstract class SharedClothingComponent : Component
+public sealed class ClothingComponent : Component
 {
     [DataField("clothingVisuals")]
     [Access(typeof(ClothingSystem), typeof(InventorySystem), Other = AccessPermissions.ReadExecute)] // TODO remove execute permissions.
@@ -46,6 +47,8 @@ public abstract class SharedClothingComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("femaleMask")]
     public FemaleClothingMask FemaleMask = FemaleClothingMask.UniformFull;
+
+    public string? InSlot;
 }
 
 [Serializable, NetSerializable]

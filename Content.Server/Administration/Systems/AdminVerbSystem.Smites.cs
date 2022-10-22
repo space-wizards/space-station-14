@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Threading;
 using Content.Server.Administration.Commands;
 using Content.Server.Administration.Components;
@@ -28,6 +28,7 @@ using Content.Server.Tools.Systems;
 using Content.Shared.Administration;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
+using Content.Shared.Clothing.Components;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Disease;
