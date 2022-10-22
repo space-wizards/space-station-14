@@ -562,18 +562,19 @@
       - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
-  - type: BallisticAmmoProvider
+  - type: RevolverAmmoProvider
     whitelist:
       tags:
         - CartridgeCap
+    proto: CartridgeCap
     capacity: 6
-    autoCycle: true
+    chambers: [ True, True, True, True, True, True ]
+    ammoSlots: [ null, null, null, null, null, null ]
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
   - type: ContainerContainer
     containers:
-      ballistic-ammo: !type:Container
-        ents: []
+      revolver-ammo: !type:Container
 
 - type: entity
   parent: BaseItem
