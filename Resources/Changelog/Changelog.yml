@@ -1,9 +1,4 @@
 Entries:
-- author: lapatison
-  changes:
-  - {message: shot glass sprite has been centered, type: Tweak}
-  id: 1998
-  time: '2022-07-24T01:47:02.0000000+00:00'
 - author: ike709
   changes:
   - {message: Added the current station's name to PDAs, type: Add}
@@ -2953,3 +2948,9 @@ Entries:
   - {message: Fix weapon chargers no longer ejecting on left-click., type: Fix}
   id: 2497
   time: '2022-10-22T16:13:25.0000000+00:00'
+- author: moony
+  changes:
+  - {message: LED lights no longer burn your eyes out (fixed their overly high brightness/energy),
+    type: Fix}
+  id: 2498
+  time: '2022-10-22T18:16:32.0000000+00:00'
