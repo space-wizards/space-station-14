@@ -1,7 +1,7 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Administration.Managers;
 using Content.Server.Players.PlayTimeTracking;
-using Content.Server.Roles;
+using Content.Server.Chat.Managers;
 using Content.Server.Station.Components;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
@@ -18,6 +18,7 @@ public sealed partial class StationJobsSystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly RoleBanManager _roleBanManager = default!;
     [Dependency] private readonly PlayTimeTrackingSystem _playTime = default!;
+    [Dependency] private readonly IChatManager _chatManager = default!;
 
     private Dictionary<int, HashSet<string>> _jobsByWeight = default!;
     private List<int> _orderedWeights = default!;
@@ -289,8 +290,12 @@ public sealed partial class StationJobsSystem
 
             var profile = profiles[player];
             if (profile.PreferenceUnavailable != PreferenceUnavailableMode.SpawnAsOverflow)
+            {
+                var userSession = _playerManager.GetSessionByUserId(player);
+                _chatManager.DispatchServerMessage(userSession, Loc.GetString("job-not-available-wait-in-lobby"));
                 continue;
-
+            }
+            
             _random.Shuffle(givenStations);
 
             foreach (var station in givenStations)
