@@ -1,9 +1,4 @@
 Entries:
-- author: ike709
-  changes:
-  - {message: Added the current station's name to PDAs, type: Add}
-  id: 1999
-  time: '2022-07-24T01:58:29.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Shotgun shell boxes now come with 12 shells instead of 6., type: Tweak}
@@ -2954,3 +2949,9 @@ Entries:
     type: Fix}
   id: 2498
   time: '2022-10-22T18:16:32.0000000+00:00'
+- author: Mervill
+  changes:
+  - {message: You will now see a message at spawn telling you what station you're
+      on., type: Tweak}
+  id: 2499
+  time: '2022-10-22T21:51:51.0000000+00:00'
