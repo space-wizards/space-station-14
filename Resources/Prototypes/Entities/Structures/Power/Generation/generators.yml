@@ -276,10 +276,10 @@
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetSteel1:
-            min: 5
+            min: 1
             max: 5
           SheetUranium1:
-            min: 5
+            min: 1
             max: 5
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
