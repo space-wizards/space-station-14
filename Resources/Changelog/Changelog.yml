@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: No more magboots in space., type: Fix}
-  id: 2012
-  time: '2022-07-25T07:35:35.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Cursor popups now show at the correct spot for non-100% UI scales.,
     type: Fix}
   id: 2013
@@ -2956,3 +2951,9 @@ Entries:
   - {message: Generators can now be upgraded using machine parts., type: Add}
   id: 2511
   time: '2022-10-22T22:38:57.0000000+00:00'
+- author: Willhelm53
+  changes:
+  - {message: Skeletons now spook a little speakier! Uhh... speak a little spookier!,
+    type: Add}
+  id: 2512
+  time: '2022-10-22T22:40:28.0000000+00:00'
