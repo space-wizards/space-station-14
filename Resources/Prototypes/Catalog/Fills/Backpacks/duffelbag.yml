@@ -183,6 +183,7 @@
       - id: PlushieCarp
       - id: PlushieNuke
       - id: PlushieLizard
+      - id: PlushieSharkBlue
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
