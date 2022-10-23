@@ -79,7 +79,15 @@ namespace Content.Server.WoodBurner
                             if (_material.GetMaterialAmount(burner.Owner, "Charcoal") >= 100)
                             {
                                 _material.TryChangeMaterialAmount(burner.Owner, "Charcoal", -100, storage);
-                                _stackSystem.SpawnMultiple(1,100,"CharCoal", Transform(burner.Owner).Coordinates);
+
+                                // TO-DO - Uncomment this after Stack Refactor
+                                //_stackSystem.SpawnMultiple(1,100,"CharCoal", Transform(burner.Owner).Coordinates);
+
+                                // TO-DO - Delete this after Stack Refactor
+                                var entity = Spawn("MaterialCharCoal", Transform(burner.Owner).Coordinates);
+                                var stack = Comp<StackComponent>(entity);
+                                _stackSystem.SetCount(entity, 1, stack);
+
                             }
 
                             if (_material.GetMaterialAmount(burner.Owner, "Wood") < 10)
@@ -149,7 +157,6 @@ namespace Content.Server.WoodBurner
                         return;
                 }
                 args.Handled = _material.TryInsertMaterialEntity(args.User, args.Used, uid, storage);
-                // TryInsertMaterialEntity(EntityUid user, EntityUid toInsert, EntityUid receiver, MaterialStorageComponent? component = null)
             }
         }
 
@@ -169,8 +176,10 @@ namespace Content.Server.WoodBurner
 
         private void OnDeconstruct(EntityUid uid, WoodBurnerComponent component, MachineDeconstructedEvent args)
         {
-            _stackSystem.SpawnMultiple(_material.GetMaterialAmount(uid, "Wood"), 100, "Wood", Transform(uid).Coordinates);
-            _stackSystem.SpawnMultiple(_material.GetMaterialAmount(uid, "Charcoal"), 100, "Charcoal", Transform(uid).Coordinates);
+            // TO-DO - Uncomment this after StackSystem Refactor
+
+            //_stackSystem.SpawnMultiple(_material.GetMaterialAmount(uid, "Wood"), 100, "Wood", Transform(uid).Coordinates);
+            //_stackSystem.SpawnMultiple(_material.GetMaterialAmount(uid, "Charcoal"), 100, "Charcoal", Transform(uid).Coordinates);
         }
 
         private void OnAnchorChanged(EntityUid uid, WoodBurnerComponent component, ref AnchorStateChangedEvent args)

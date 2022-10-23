@@ -47,6 +47,14 @@
   price: 0.05
 
 - type: material
+  id: Charcoal
+  stack: CharCoal
+  name: materials-charcoal
+  icon: Objects/Materials/materials.rsi/charcoal.png
+  color: "#464646"
+  price: 0.08
+  
+- type: material
   id: Uranium
   stack: Uranium
   name: materials-uranium
