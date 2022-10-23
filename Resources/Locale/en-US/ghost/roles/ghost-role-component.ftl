@@ -8,3 +8,5 @@ ghost-role-information-mouse-description = A hungry and mischievous mouse.
 
 ghost-role-information-giant-spider-name = Giant spider
 ghost-role-information-giant-spider-description = Wreak havoc on the station's inhabitants!
+
+ghost-role-information-cognizine-description = Made conscious with the magic of cognizine.

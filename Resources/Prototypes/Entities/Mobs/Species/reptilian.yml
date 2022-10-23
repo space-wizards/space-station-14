@@ -13,8 +13,7 @@
     sprite: Mobs/Species/Reptilian/parts.rsi
     state: full
   - type: Body
-    template: HumanoidTemplate
-    preset: ReptilianPreset
+    prototype: Reptilian
   - type: LizardAccent
   - type: Speech
     speechSounds: Lizard
@@ -46,6 +45,7 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 2.7
     baseSprintSpeed : 4.5
+  - type: Perishable
 
 - type: entity
   save: false
