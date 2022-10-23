@@ -708,8 +708,7 @@
   - type: Speech
     speechSounds: Monkey
   - type: Body
-    template: PrimateTemplate
-    preset: PrimatePreset
+    prototype: Primate
   - type: DamageStateVisuals
     states:
       Alive:

@@ -3,6 +3,7 @@ using Content.Client.Examine;
 using Content.Client.Storage;
 using Content.Client.UserInterface.Controls;
 using Content.Client.Verbs;
+using Content.Shared.Clothing.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
@@ -23,7 +24,7 @@ namespace Content.Client.Inventory
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
 
-        [Dependency] private readonly ClothingVisualsSystem _clothingVisualsSystem = default!;
+        [Dependency] private readonly ClientClothingSystem _clothingVisualsSystem = default!;
         [Dependency] private readonly ExamineSystem _examine = default!;
         [Dependency] private readonly VerbSystem _verbs = default!;
 
