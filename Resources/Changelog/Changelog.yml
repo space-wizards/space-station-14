@@ -1,115 +1,4 @@
 Entries:
-- author: HoofedEar
-  changes:
-  - {message: Research servers are once again uniquely identified and can be selected
-      in the lathe server menu., type: Fix}
-  id: 1994
-  time: '2022-07-21T22:16:15.0000000+00:00'
-- author: moony
-  changes:
-  - {message: Introduced another 15 admin smites., type: Add}
-  - {message: Introduced a bunch of admin "tricks" for common tasks., type: Add}
-  id: 1995
-  time: '2022-07-21T22:30:00.0000000+00:00'
-- author: moony
-  changes:
-  - {message: You no longer need to give yourself carpal tunnel to move something
-      you're pulling. (Fixed ctrl+click pulling), type: Fix}
-  id: 1996
-  time: '2022-07-23T14:26:07.0000000+00:00'
-- author: Myctai
-  changes:
-  - {message: Thrusters now kill you with Heat type damage specifically., type: Fix}
-  id: 1997
-  time: '2022-07-23T14:26:19.0000000+00:00'
-- author: lapatison
-  changes:
-  - {message: shot glass sprite has been centered, type: Tweak}
-  id: 1998
-  time: '2022-07-24T01:47:02.0000000+00:00'
-- author: ike709
-  changes:
-  - {message: Added the current station's name to PDAs, type: Add}
-  id: 1999
-  time: '2022-07-24T01:58:29.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Shotgun shell boxes now come with 12 shells instead of 6., type: Tweak}
-  id: 2000
-  time: '2022-07-24T11:09:33.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Drinking now breaks on distance from the drink., type: Fix}
-  - {message: You now have to to stand closer to something to eat/drink it., type: Tweak}
-  id: 2001
-  time: '2022-07-24T11:33:52.0000000+00:00'
-- author: HoofedEar
-  changes:
-  - {message: Mobs can now open and close curtains while colliding with them., type: Fix}
-  id: 2002
-  time: '2022-07-24T11:35:34.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Glass can no longer be duplicated using lathes and plating., type: Fix}
-  id: 2003
-  time: '2022-07-24T11:37:29.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: You can now swap instrument styles even while playing them!, type: Tweak}
-  id: 2004
-  time: '2022-07-24T11:40:05.0000000+00:00'
-- author: Level10Cybermancer
-  changes:
-  - {message: The clothesmate now stocks backpacks, type: Add}
-  id: 2005
-  time: '2022-07-24T22:41:22.0000000+00:00'
-- author: Deahaka
-  changes:
-  - {message: Added lights for altars, type: Add}
-  id: 2006
-  time: '2022-07-24T22:57:12.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Gas tank internals now have an alert, type: Add}
-  id: 2007
-  time: '2022-07-25T04:42:25.0000000+00:00'
-- author: keronshb
-  changes:
-  - {message: You can no longer clip people into walls with riot shields., type: Fix}
-  - {message: You can no longer hide behind doors while using a shield., type: Fix}
-  id: 2008
-  time: '2022-07-25T04:54:18.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Nukie planet now has its own parallax., type: Add}
-  id: 2009
-  time: '2022-07-25T05:10:23.0000000+00:00'
-- author: DogZeroX
-  changes:
-  - {message: 'Reptilians have two new markings: Axolotl and cobra hood!', type: Add}
-  id: 2010
-  time: '2022-07-25T05:47:04.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fixed gravity mispredict., type: Fix}
-  id: 2011
-  time: '2022-07-25T06:55:25.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: No more magboots in space., type: Fix}
-  id: 2012
-  time: '2022-07-25T07:35:35.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Cursor popups now show at the correct spot for non-100% UI scales.,
-    type: Fix}
-  id: 2013
-  time: '2022-07-25T08:58:23.0000000+00:00'
-- author: Elijahrane
-  changes:
-  - {message: Ported medibots from Nyanotrasen MRP., type: Add}
-  id: 2014
-  time: '2022-07-25T15:33:32.0000000+00:00'
 - author: zerorulez
   changes:
   - {message: Entities without hands can no longer open/close storage and toggle locks.,
@@ -2950,3 +2839,125 @@ Entries:
   - {message: Fix wallmount interactions., type: Fix}
   id: 2493
   time: '2022-10-20T13:20:53.0000000+00:00'
+- author: Mervill
+  changes:
+  - {message: Updated some item descriptions in the Syndicate Uplink menu., type: Tweak}
+  - {message: 'Clarified that, should you purchase the Syndicate Pajama Bundle, you
+      will have the ultimate sleepover.', type: Tweak}
+  id: 2494
+  time: '2022-10-21T18:47:09.0000000+00:00'
+- author: moony
+  changes:
+  - {message: 'The floor tiles have been resprited. They should look pretty similar,
+      but are a lot easier to edit for the developers considering they weren''t jpeg
+      compressed at some point in their life.', type: Tweak}
+  - {message: Removed sovl!, type: Remove}
+  id: 2495
+  time: '2022-10-22T01:53:25.0000000+00:00'
+- author: Nairod
+  changes:
+  - {message: Added scarfs to the Clothesmate., type: Add}
+  id: 2496
+  time: '2022-10-22T05:06:46.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fix hands GUI showing icons for items held by other players., type: Fix}
+  - {message: Fix weapon chargers no longer ejecting on left-click., type: Fix}
+  id: 2497
+  time: '2022-10-22T16:13:25.0000000+00:00'
+- author: moony
+  changes:
+  - {message: LED lights no longer burn your eyes out (fixed their overly high brightness/energy),
+    type: Fix}
+  id: 2498
+  time: '2022-10-22T18:16:32.0000000+00:00'
+- author: Mervill
+  changes:
+  - {message: You will now see a message at spawn telling you what station you're
+      on., type: Tweak}
+  id: 2499
+  time: '2022-10-22T21:51:51.0000000+00:00'
+- author: Nairod
+  changes:
+  - {message: Added a proper sprite for all handguns that fit belt slots, type: Add}
+  id: 2500
+  time: '2022-10-22T21:53:43.0000000+00:00'
+- author: Jackrost
+  changes:
+  - {message: biomass reclaimer is don't jitter if power off, type: Add}
+  id: 2501
+  time: '2022-10-22T21:54:20.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix cargo orders not showing up on shuttle., type: Fix}
+  id: 2502
+  time: '2022-10-22T21:55:13.0000000+00:00'
+- author: Willhelm53
+  changes:
+  - {message: 'Added Nanotransen Oceanic Apex Predator Plush Figure - Available in
+      blue, pink, and grey!', type: Add}
+  id: 2503
+  time: '2022-10-22T21:58:18.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'The price scanner now reports in spacebucks, not credits.', type: Fix}
+  id: 2504
+  time: '2022-10-22T21:58:27.0000000+00:00'
+- author: Mervill
+  changes:
+  - {message: Matchbox sprite will now properly show its fill states., type: Fix}
+  id: 2505
+  time: '2022-10-22T21:59:53.0000000+00:00'
+- author: Interrobang01
+  changes:
+  - {message: Added a rare new chemical that makes dumb creatures sentient., type: Add}
+  id: 2506
+  time: '2022-10-22T22:05:06.0000000+00:00'
+- author: Mervill
+  changes:
+  - {message: Slime corpses no longer rot or produce miasma, type: Tweak}
+  id: 2507
+  time: '2022-10-22T22:07:36.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: Apron pockets were added, type: Add}
+  id: 2508
+  time: '2022-10-22T22:07:51.0000000+00:00'
+- author: Nairod
+  changes:
+  - {message: Made the sec duffle bag sprites more consistent., type: Tweak}
+  id: 2509
+  time: '2022-10-22T22:14:19.0000000+00:00'
+- author: 25203
+  changes:
+  - {message: Sci can now print seed extractor machine boards after unlocking advanced
+      botany. They can be upgraded with better manipulators (seed output) and capacitors
+      (power efficiency)., type: Add}
+  id: 2510
+  time: '2022-10-22T22:26:03.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Generators can now be upgraded using machine parts., type: Add}
+  id: 2511
+  time: '2022-10-22T22:38:57.0000000+00:00'
+- author: Willhelm53
+  changes:
+  - {message: Skeletons now spook a little speakier! Uhh... speak a little spookier!,
+    type: Add}
+  id: 2512
+  time: '2022-10-22T22:40:28.0000000+00:00'
+- author: Mervill
+  changes:
+  - {message: Cap gun revolver uses proper revolver behavior instead of generic gun
+      behavior., type: Fix}
+  - {message: 'Cap gun revolver starts loaded, like most other guns.', type: Fix}
+  id: 2513
+  time: '2022-10-22T22:47:20.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added machines upgrades for the portable scrubber., type: Add}
+  - {message: Slightly modified the parts needed to create the portable scrubber.,
+    type: Tweak}
+  - {message: Fixed portable scrubbers not scrubbing from adjacent tiles., type: Fix}
+  id: 2514
+  time: '2022-10-22T22:49:30.0000000+00:00'

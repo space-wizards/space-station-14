@@ -1,4 +1,5 @@
-﻿using Content.Server.DoAfter;
+﻿using Content.Server.Body.Systems;
+using Content.Server.DoAfter;
 using Content.Server.Kitchen.Components;
 using Content.Server.MobState;
 using Content.Shared.Body.Components;
@@ -16,6 +17,7 @@ namespace Content.Server.Kitchen.EntitySystems;
 
 public sealed class SharpSystem : EntitySystem
 {
+    [Dependency] private readonly BodySystem _bodySystem = default!;
     [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly ContainerSystem _containerSystem = default!;
@@ -95,7 +97,7 @@ public sealed class SharpSystem : EntitySystem
             popupEnt = Spawn(proto, coords.Offset(_robustRandom.NextVector2(0.25f)));
         }
 
-        var hasBody = TryComp<SharedBodyComponent>(ev.Entity, out var body);
+        var hasBody = TryComp<BodyComponent>(ev.Entity, out var body);
 
         // only show a big popup when butchering living things.
         var popupType = PopupType.Small;
@@ -107,7 +109,7 @@ public sealed class SharpSystem : EntitySystem
 
         if (hasBody)
         {
-            body!.Gib();
+            _bodySystem.GibBody(body!.Owner, body: body);
         }
         else
         {

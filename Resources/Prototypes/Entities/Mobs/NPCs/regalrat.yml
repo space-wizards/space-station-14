@@ -49,8 +49,7 @@
         Slash: 12
         Piercing: 8
   - type: Body
-    template: AnimalTemplate
-    preset: RatPreset
+    prototype: Rat
   - type: Appearance
   - type: DamageStateVisuals
     rotate: true
@@ -207,8 +206,7 @@
         Slash: 5
         Piercing: 3
   - type: Body
-    template: AnimalTemplate
-    preset: RatPreset
+    prototype: Rat
   - type: Appearance
   - type: DamageStateVisuals
     rotate: true
