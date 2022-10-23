@@ -16,12 +16,14 @@ using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.UserInterface;
 using Robust.Server.Player;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Lathe
 {
     [UsedImplicitly]
     public sealed class LatheSystem : SharedLatheSystem
     {
+        [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IPrototypeManager _proto = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -67,9 +69,7 @@ namespace Content.Server.Lathe
                 if (lathe.CurrentRecipe == null)
                     continue;
 
-                comp.AccumulatedTime += frameTime;
-
-                if (comp.AccumulatedTime >= comp.ProductionLength)
+                if ( _timing.CurTime - comp.StartTime >= comp.ProductionLength)
                     FinishProducing(comp.Owner, lathe);
             }
         }
@@ -152,7 +152,8 @@ namespace Content.Server.Lathe
             component.Queue.RemoveAt(0);
 
             var lathe = EnsureComp<LatheProducingComponent>(uid);
-            lathe.ProductionLength = (float) recipe.CompleteTime.TotalSeconds * component.TimeMultiplier;
+            lathe.StartTime = _timing.CurTime;
+            lathe.ProductionLength = recipe.CompleteTime * component.TimeMultiplier;
             component.CurrentRecipe = recipe;
 
             _audio.PlayPvs(component.ProducingSound, component.Owner);
@@ -169,7 +170,7 @@ namespace Content.Server.Lathe
             if (comp.CurrentRecipe != null)
                 Spawn(comp.CurrentRecipe.Result, Transform(uid).Coordinates);
             comp.CurrentRecipe = null;
-            prodComp.AccumulatedTime = 0;
+            prodComp.StartTime = _timing.CurTime;
 
             if (!TryStartProducing(uid, comp))
             {
