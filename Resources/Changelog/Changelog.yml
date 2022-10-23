@@ -1,10 +1,4 @@
 Entries:
-- author: BurninDreamer
-  changes:
-  - {message: The Syndicate headset no longer misinforms you in the description!,
-    type: Fix}
-  id: 2016
-  time: '2022-07-26T01:38:30.0000000+00:00'
 - author: DogZeroX
   changes:
   - {message: The bread has been unplated., type: Remove}
@@ -2960,3 +2954,9 @@ Entries:
   - {message: Added the head's mantles to the uniform printer., type: Add}
   id: 2515
   time: '2022-10-23T17:56:59.0000000+00:00'
+- author: checkraze
+  changes:
+  - {message: Added the Zookeeper. Find them patrolling and caring for Kettle station's
+      various wildlife soon!, type: Add}
+  id: 2516
+  time: '2022-10-23T19:42:25.0000000+00:00'
