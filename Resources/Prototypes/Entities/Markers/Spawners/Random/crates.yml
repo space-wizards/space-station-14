@@ -6,7 +6,7 @@
     - type: Sprite
       layers:
         - state: red
-        - texture: Structures/Storage/Crates/generic.rsi/crate.png
+        - texture: Structures/Storage/Crates/generic.rsi/icon.png
     - type: RandomSpawner
       prototypes:
         - CrateGenericSteel
@@ -31,7 +31,7 @@
     - type: Sprite
       layers:
         - state: red
-        - texture: Structures/Storage/Crates/o2.rsi/o2crate.png
+        - texture: Structures/Storage/Crates/o2.rsi/icon.png
     - type: RandomSpawner
       prototypes:
         - CrateServiceReplacementLights

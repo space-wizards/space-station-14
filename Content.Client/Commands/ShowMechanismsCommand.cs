@@ -1,9 +1,7 @@
-﻿using Content.Shared.Body.Components;
+﻿using Content.Shared.Body.Organ;
 using Robust.Client.Console;
 using Robust.Client.GameObjects;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Client.Commands
 {
@@ -19,9 +17,9 @@ namespace Content.Client.Commands
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            var mechanisms = entityManager.EntityQuery<MechanismComponent>(true);
+            var organs = entityManager.EntityQuery<OrganComponent>(true);
 
-            foreach (var mechanism in mechanisms)
+            foreach (var mechanism in organs)
             {
                 if (entityManager.TryGetComponent(mechanism.Owner, out SpriteComponent? sprite))
                 {

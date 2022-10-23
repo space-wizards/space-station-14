@@ -1,14 +1,13 @@
-using System.Threading.Tasks;
-using Content.Server.Clothing.Components;
 using Content.Server.Inventory;
+using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Inventory;
-using Content.Shared.Item;
 using NUnit.Framework;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using System.Threading.Tasks;
 
 namespace Content.IntegrationTests.Tests
 {

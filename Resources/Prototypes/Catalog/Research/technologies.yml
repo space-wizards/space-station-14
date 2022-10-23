@@ -508,6 +508,7 @@
     - Shovel
     - ButchCleaver
     - MicrowaveMachineCircuitboard
+    - SeedExtractorMachineCircuitboard
 
 # Security Technology Tree
 # TODO implement new tree for security tech with experiment tools

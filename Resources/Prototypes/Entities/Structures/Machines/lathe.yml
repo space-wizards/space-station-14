@@ -295,6 +295,7 @@
       - MedicalResearchBedCircuitboard
       - ChemicalAnalysisCircuitboard
       - ResearchSMESMachineCircuitboard
+      - SeedExtractorMachineCircuitboard
   - type: MaterialStorage
     whitelist:
       tags:
