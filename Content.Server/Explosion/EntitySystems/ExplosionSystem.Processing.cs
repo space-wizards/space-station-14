@@ -281,7 +281,8 @@ public sealed partial class ExplosionSystem : EntitySystem
         ref (List<TransformComponent> List, HashSet<EntityUid> Processed, EntityQuery<TransformComponent> XformQuery) state,
         in FixtureProxy proxy)
     {
-        return GridQueryCallback(ref state, in proxy);
+        var owner = proxy.Fixture.Body.Owner;
+        return GridQueryCallback(ref state, in owner);
     }
 
     /// <summary>
