@@ -2598,3 +2598,10 @@ Entries:
     type: Add
   id: 306
   time: '2022-10-23T16:39:17.0000000+00:00'
+- author: Morty
+  changes:
+  - message: "\u0418\u0437\u043C\u0435\u043D\u0435\u043D\u044B \u0441\u043F\u0440\u0430\
+      \u0439\u0442\u044B \u044F\u0449\u0438\u043A\u043E\u0432"
+    type: Tweak
+  id: 307
+  time: '2022-10-23T16:41:01.0000000+00:00'
