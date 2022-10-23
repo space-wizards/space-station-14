@@ -5,7 +5,6 @@
   license: "CC-BY-SA-3.0"
   copyright: "CEV-Eris commit 28e589f0ff72a009adf17db767e90be39054f0f2"
   source: "https://github.com/discordia-space/CEV-Eris/"
-- files: [ "asteroid_sand.png", "asteroid_tile.png", "elevator_shaft.png", "freezer.png", "green_circuit.png", "lino.png", "mono.png", "rock_vault.png", "showroom.png"]
 
 - files: [ "asteroid_sand.png", "asteroid_tile.png", "elevator_shaft.png", "freezer.png", "green_circuit.png", "lino.png", "mono.png", "rock_vault.png", "showroom.png"]
   license: "CC-BY-SA-3.0"
