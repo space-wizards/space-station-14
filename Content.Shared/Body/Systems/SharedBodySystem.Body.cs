@@ -14,13 +14,13 @@ public partial class SharedBodySystem
 {
     public void InitializeBody()
     {
-        SubscribeLocalEvent<BodyComponent, MapInitEvent>(OnBodyMapInit);
+        SubscribeLocalEvent<BodyComponent, ComponentInit>(OnBodyInit);
 
         SubscribeLocalEvent<BodyComponent, ComponentGetState>(OnBodyGetState);
         SubscribeLocalEvent<BodyComponent, ComponentHandleState>(OnBodyHandleState);
     }
 
-    private void OnBodyMapInit(EntityUid bodyId, BodyComponent body, MapInitEvent args)
+    private void OnBodyInit(EntityUid bodyId, BodyComponent body, ComponentInit args)
     {
         // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
         if (body.Prototype == null || body.Root != null)
