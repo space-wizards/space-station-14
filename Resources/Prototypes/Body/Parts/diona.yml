@@ -30,10 +30,6 @@
     state: "torso_m"
   - type: BodyPart
     partType: Torso
-    size: 14
-    compatibility: Biological
-    mechanisms:
-    - OrganDionaStomach
 
 - type: entity
   id: HeadDiona
