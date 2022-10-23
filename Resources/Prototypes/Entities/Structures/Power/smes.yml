@@ -89,6 +89,7 @@
   placement:
     mode: SnapgridCenter
   components:
+    - type: Appearance
     - type: AmbientSound
       volume: -7
       range: 3
