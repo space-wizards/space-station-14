@@ -85,6 +85,8 @@
   name: medical research bed
   description: A medical bed with an in-built health analyser and body analysis system for research purposes.
   components:
+  - type: Machine
+    board: MedicalResearchBedCircuitboard
   - type: Sprite
     sprite: Structures/Furniture/researchmedbed.rsi
     state: bed-RESMED
