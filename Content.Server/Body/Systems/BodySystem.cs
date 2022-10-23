@@ -6,7 +6,9 @@ using Content.Server.Kitchen.Components;
 using Content.Server.Mind.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
+using Content.Shared.Body.Prototypes;
 using Content.Shared.Body.Systems;
+using Content.Shared.Coordinates;
 using Content.Shared.Humanoid;
 using Content.Shared.MobState.Components;
 using Content.Shared.Movement.Events;
@@ -111,6 +113,21 @@ public sealed class BodySystem : SharedBodySystem
         var layers = HumanoidVisualLayersExtension.Sublayers(layer.Value);
         _humanoidSystem.SetLayersVisibility(oldBody.Value, layers, false, true, humanoid);
         return true;
+    }
+
+    protected override void InitBody(BodyComponent body, BodyPrototype prototype)
+    {
+        var root = prototype.Slots[prototype.Root];
+        var bodyId = Spawn(root.Part, body.Owner.ToCoordinates());
+        var partComponent = Comp<BodyPartComponent>(bodyId);
+        var slot = new BodyPartSlot(root.Part, body.Owner, partComponent.PartType);
+        body.Root = slot;
+        partComponent.Body = bodyId;
+
+        Containers.EnsureContainer<Container>(body.Owner, BodyContainerId);
+
+        AttachPart(bodyId, slot, partComponent);
+        InitPart(partComponent, prototype, prototype.Root);
     }
 
     public override HashSet<EntityUid> GibBody(EntityUid? bodyId, bool gibOrgans = false, BodyComponent? body = null)
