@@ -7,3 +7,4 @@ ghost-role-information-mouse-name = Мышь
 ghost-role-information-mouse-description = Голодная и озорная мышь.
 ghost-role-information-giant-spider-name = Гигантский паук
 ghost-role-information-giant-spider-description = Устройте хаос обитателям станции!
+ghost-role-information-cognizine-description = Made conscious with the magic of cognizine.

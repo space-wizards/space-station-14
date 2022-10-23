@@ -1,4 +1,4 @@
-using Content.Server.Body.Components;
+using Content.Server.Body.Systems;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 
@@ -26,16 +26,11 @@ namespace Content.Server.Administration.Commands
             }
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
+            var bodySystem = entityManager.System<BodySystem>();
 
-            if (!entityManager.TryGetComponent<TransformComponent>(entityUid, out var transform)) return;
-
-            var parent = transform.ParentUid;
-
-            if (entityManager.TryGetComponent<BodyComponent>(parent, out var body) &&
-                entityManager.TryGetComponent<BodyPartComponent>(entityUid, out var part))
+            if (bodySystem.DropPart(entityUid))
             {
-                body.RemovePart(part);
-
+                shell.WriteLine($"Removed body part {entityManager.ToPrettyString(entityUid)}.");
             }
             else
             {

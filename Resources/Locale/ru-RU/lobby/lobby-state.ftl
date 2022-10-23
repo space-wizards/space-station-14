@@ -7,4 +7,5 @@ lobby-state-ready-button-ready-up-state = Готов
 lobby-state-player-status-not-ready = Не готов
 lobby-state-player-status-ready = Готов
 lobby-state-player-status-observer = Наблюдатель
-lobby-state-player-status-station-time = Время на станции: { $stationTime }
+lobby-state-player-status-round-not-started = The round hasn't started yet
+lobby-state-player-status-round-time = The round time is: { $hours } hours and { $minutes } minutes
