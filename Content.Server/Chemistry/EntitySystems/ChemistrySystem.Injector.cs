@@ -15,13 +15,22 @@ using Content.Shared.MobState.Components;
 using Robust.Shared.GameStates;
 using Robust.Shared.Player;
 using System.Threading;
+using Content.Shared.Verbs;
+using Robust.Server.GameObjects;
+using Content.Shared.Popups;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
 public sealed partial class ChemistrySystem
 {
+
+    /// <summary>
+    ///     Default transfer amounts for the set-transfer verb.
+    /// </summary>
+    public static readonly List<int> DefaultTransferAmounts = new() { 5, 10, 15};
     private void InitializeInjector()
     {
+        SubscribeLocalEvent<InjectorComponent, GetVerbsEvent<AlternativeVerb>>(AddSetTransferVerbs);
         SubscribeLocalEvent<InjectorComponent, SolutionChangedEvent>(OnSolutionChange);
         SubscribeLocalEvent<InjectorComponent, HandDeselectedEvent>(OnInjectorDeselected);
         SubscribeLocalEvent<InjectorComponent, ComponentStartup>(OnInjectorStartup);
@@ -32,6 +41,47 @@ public sealed partial class ChemistrySystem
         SubscribeLocalEvent<InjectionCompleteEvent>(OnInjectionComplete);
         SubscribeLocalEvent<InjectionCancelledEvent>(OnInjectionCancelled);
     }
+
+    private void AddSetTransferVerbs(EntityUid uid, InjectorComponent component, GetVerbsEvent<AlternativeVerb> args)
+        {
+            if (!args.CanAccess || !args.CanInteract || args.Hands == null)
+                return;
+
+            if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
+                return;
+
+            // Custom transfer verb
+            AlternativeVerb custom = new();
+            custom.Text = Loc.GetString("comp-solution-transfer-verb-custom-amount");
+            custom.Category = VerbCategory.SetTransferAmount;
+            custom.Act = () => component.UserInterface?.Open(actor.PlayerSession);
+            custom.Priority = 1;
+            args.Verbs.Add(custom);
+
+            // Add specific transfer verbs according to the container's size
+            var priority = 0;
+            foreach (var amount in DefaultTransferAmounts)
+            {
+                if ( amount < component.MinimumTransferAmount.Int() || amount > component.MaximumTransferAmount.Int())
+                    continue;
+
+                AlternativeVerb verb = new();
+                verb.Text = Loc.GetString("comp-solution-transfer-verb-amount", ("amount", amount));
+                verb.Category = VerbCategory.SetTransferAmount;
+                verb.Act = () =>
+                {
+                    component.TransferAmount = FixedPoint2.New(amount);
+                    args.User.PopupMessage(Loc.GetString("comp-solution-transfer-set-amount", ("amount", amount)));
+                };
+
+                // we want to sort by size, not alphabetically by the verb text.
+                verb.Priority = priority;
+                priority--;
+
+                args.Verbs.Add(verb);
+            }
+        }
+
 
     private static void OnInjectionCancelled(InjectionCancelledEvent ev)
     {
