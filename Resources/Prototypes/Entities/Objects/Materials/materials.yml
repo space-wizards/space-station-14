@@ -134,6 +134,14 @@
     state: charcoal
   - type: Item
     heldPrefix: charcoal
+  - type: Extractable
+    grindableSolutionName: charcoal
+  - type: SolutionContainerManager
+    solutions:
+      charcoal:
+        reagents:
+        - ReagentId: Carbon
+          Quantity: 10
 
 - type: entity
   parent: MaterialCharCoal

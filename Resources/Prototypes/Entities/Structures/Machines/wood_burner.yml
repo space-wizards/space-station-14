@@ -15,13 +15,16 @@
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: unlit
       shader: unshaded
-      map: ["enum.PowerDeviceVisualLayers.Powered"]				## Change it ------------------
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: process
+      shader: unshaded
+      map: ["enum.WoodBurnerMachineVisuals.Enabled"]
     ##- state: inserting
     ##  map: ["enum.LatheVisualLayers.IsInserting"]				## Change it ------------------
-    ##- state: panel
-    ##  map: ["enum.WiresVisualLayers.MaintenancePanel"]			## Change it ------------------
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
-  ##- type: PipeColorVisuals			                            ## Data for pipe color
+  - type: PipeColorVisuals
   - type: Rotatable
   - type: Pullable
   - type: WiresVisuals
@@ -49,7 +52,7 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Machine
-    board: AutolatheMachineCircuitboard	## Change it ------------------
+    board: WoodBurnerMachineCircuitboard
   - type: MaterialStorage
     materialWhiteList:
     - Wood
@@ -65,9 +68,9 @@
 ##    - key: enum.LatheUiKey.Key			## Change it ------------------
 ##      type: LatheBoundUserInterface		## Change it ------------------
   - type: WoodBurner
-  - type: AtmosPipeColor			## Set data for pipe color
+  - type: AtmosPipeColor
   - type: AtmosDevice
-  - type: NodeContainer				## !!!!!Check it ----------------------------
+  - type: NodeContainer
     nodes:
       pipe:
         !type:PipeNode

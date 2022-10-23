@@ -418,6 +418,20 @@
           ExamineName: Glass Beaker
 
 - type: entity
+  id: WoodBurnerMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: woodburner machine board
+  description: A machine printed circuit board for a woodburner
+  components:
+    - type: MachineBoard
+      prototype: WoodBurned
+      requirements:
+        MatterBin: 2
+        Laser: 2
+      materialRequirements:
+        Cable: 5
+
+- type: entity
   id: StasisBedMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: Stasis Bed (Machine Board)
