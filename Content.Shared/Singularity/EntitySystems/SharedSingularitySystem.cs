@@ -104,7 +104,7 @@ public abstract class SharedSingularitySystem : EntitySystem
     /// <param name="rads">The radiation source associated with the same entity as the singularity.</param>
     private void UpdateRadiation(SharedSingularityComponent singularity, RadiationSourceComponent? rads = null)
     {
-        if(!Resolve(singularity.Owner, ref rads))
+        if(!Resolve(singularity.Owner, ref rads, logMissing: false))
             return;
         rads.Intensity = singularity.Level * singularity.RadsPerLevel;
     }

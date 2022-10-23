@@ -92,7 +92,7 @@ public abstract class SharedEventHorizonSystem : EntitySystem
     public void UpdateEventHorizonFixture(SharedEventHorizonComponent eventHorizon, PhysicsComponent? fixtures = null)
     {
         var fixtureId = eventHorizon.HorizonFixtureId;
-        if (fixtureId == null || !Resolve(eventHorizon.Owner, ref fixtures))
+        if (fixtureId == null || !Resolve(eventHorizon.Owner, ref fixtures, logMissing: false))
             return;
 
         var fixture = _fixtures.GetFixtureOrNull(fixtures, fixtureId);
