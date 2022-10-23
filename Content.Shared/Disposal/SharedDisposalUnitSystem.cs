@@ -6,9 +6,7 @@ using Content.Shared.MobState.Components;
 using Content.Shared.MobState.EntitySystems;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
-using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Timing;
 
@@ -65,7 +63,7 @@ namespace Content.Shared.Disposal
 
             // TODO: Probably just need a disposable tag.
             if (!EntityManager.TryGetComponent(entity, out ItemComponent? storable) &&
-                !EntityManager.HasComponent<SharedBodyComponent>(entity))
+                !EntityManager.HasComponent<BodyComponent>(entity))
             {
                 return false;
             }

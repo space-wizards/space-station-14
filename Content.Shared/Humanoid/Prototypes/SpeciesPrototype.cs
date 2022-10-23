@@ -95,6 +95,31 @@ public sealed class SpeciesPrototype : IPrototype
 
     [DataField("sexes")]
     public List<Sex> Sexes { get; } = new List<Sex>(){ Sex.Male, Sex.Female };
+
+    /// <summary>
+    ///     Characters younger than this are too young to be hired by Nanotrasen.
+    /// <summary>
+    [DataField("minAge")]
+    public int MinAge = 18;
+
+    /// <summary>
+    ///     Characters younger than this appear young.
+    /// <summary>
+    [DataField("youngAge")]
+    public int YoungAge = 30;
+
+    /// <summary>
+    ///     Characters older than this appear old. Characters in between young and old age appear middle aged.
+    /// </summary>
+    [DataField("oldAge")]
+    public int OldAge = 60;
+
+    /// <summary>
+    ///     Characters cannot be older than this. Only used for restrictions...
+    ///     although imagine if ghosts could age people WYCI...
+    /// <summary>
+    [DataField("maxAge")]
+    public int MaxAge = 120;
 }
 
 public enum SpeciesNaming : byte

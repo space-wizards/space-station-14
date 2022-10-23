@@ -14,8 +14,7 @@
     sprite: Mobs/Species/Diona/parts.rsi
     state: full
   - type: Body
-    template: HumanoidTemplate
-    preset: DionaPreset
+    prototype: Diona
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Diona

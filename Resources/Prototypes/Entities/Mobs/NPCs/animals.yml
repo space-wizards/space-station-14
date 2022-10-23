@@ -708,8 +708,7 @@
   - type: Speech
     speechSounds: Monkey
   - type: Body
-    template: PrimateTemplate
-    preset: PrimatePreset
+    prototype: Primate
   - type: DamageStateVisuals
     states:
       Alive:
@@ -729,6 +728,7 @@
       amount: 3
   - type: MonkeyAccent
   - type: Puller
+  - type: CanHostGuardian
 
 - type: entity
   name: mouse

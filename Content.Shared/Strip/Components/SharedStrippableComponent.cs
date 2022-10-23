@@ -49,22 +49,36 @@ namespace Content.Shared.Strip.Components
         }
     }
 
-    /// <summary>
-    /// Used to modify strip times.
-    /// </summary>
-    [NetSerializable, Serializable]
-    public sealed class BeforeStripEvent : EntityEventArgs, IInventoryRelayEvent
+    public abstract class BaseBeforeStripEvent : EntityEventArgs, IInventoryRelayEvent
     {
         public readonly float InitialTime;
-        public float Time;
+        public float Time => MathF.Max(InitialTime * Multiplier + Additive, 0f);
         public float Additive = 0;
+        public float Multiplier = 1f;
         public bool Stealth;
 
         public SlotFlags TargetSlots { get; } = SlotFlags.GLOVES;
 
-        public BeforeStripEvent(float initialTime)
+        public BaseBeforeStripEvent(float initialTime, bool stealth = false)
         {
-            InitialTime = Time = initialTime;
+            InitialTime = initialTime;
+            Stealth = stealth;
         }
+    }
+
+    /// <summary>
+    /// Used to modify strip times. Raised directed at the user.
+    /// </summary>
+    public sealed class BeforeStripEvent : BaseBeforeStripEvent
+    {
+        public BeforeStripEvent(float initialTime, bool stealth = false) : base(initialTime, stealth) { }
+    }
+
+    /// <summary>
+    /// Used to modify strip times. Raised directed at the target.
+    /// </summary>
+    public sealed class BeforeGettingStrippedEvent : BaseBeforeStripEvent
+    {
+        public BeforeGettingStrippedEvent(float initialTime, bool stealth = false) : base(initialTime, stealth) { }
     }
 }

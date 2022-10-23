@@ -1,5 +1,5 @@
-﻿using Content.Server.Clothing.Components;
 using Content.Server.Speech.Components;
+using Content.Shared.Clothing.Components;
 using Content.Shared.Inventory.Events;
 
 namespace Content.Server.Speech.EntitySystems;
