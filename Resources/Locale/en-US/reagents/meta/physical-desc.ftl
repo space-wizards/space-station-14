@@ -81,3 +81,4 @@ reagent-physical-desc-electric = electric
 reagent-physical-desc-chewy = chewy
 reagent-physical-desc-volatile = volatile
 reagent-physical-desc-inky = inky
+reagent-physical-desc-enigmatic = enigmatic

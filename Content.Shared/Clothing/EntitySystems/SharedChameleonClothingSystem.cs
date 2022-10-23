@@ -39,8 +39,8 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
         }
 
         // clothing sprite logic
-        if (TryComp(uid, out SharedClothingComponent? clothing) &&
-            proto.TryGetComponent("Clothing", out SharedClothingComponent? otherClothing))
+        if (TryComp(uid, out ClothingComponent? clothing) &&
+            proto.TryGetComponent("Clothing", out ClothingComponent? otherClothing))
         {
             _clothingSystem.CopyVisuals(uid, otherClothing, clothing);
         }
@@ -62,7 +62,7 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
             return false;
 
         // check if it's valid clothing
-        if (!proto.TryGetComponent("Clothing", out SharedClothingComponent? clothing))
+        if (!proto.TryGetComponent("Clothing", out ClothingComponent? clothing))
             return false;
         if (!clothing.Slots.HasFlag(chameleonSlot))
             return false;

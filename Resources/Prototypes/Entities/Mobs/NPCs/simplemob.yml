@@ -114,8 +114,7 @@
     - TemporaryBlindness
     - Pacified
   - type: Body
-    template: AnimalTemplate
-    preset: AnimalPreset
+    prototype: Animal
   - type: Examiner
   - type: MeleeWeapon
     hidden: true
