@@ -10,9 +10,13 @@ using Content.Server.Singularity.Components;
 
 namespace Content.Server.Singularity.EntitySystems;
 
+/// <summary>
+/// The server side version of <see cref="SharedGravityWellSystem"/>.
+/// Primarily responsible for managing <see cref="GravityWellComponent"/>s.
+/// Handles the gravitational pulses they can emit.
+/// </summary>
 public sealed class GravityWellSystem : SharedGravityWellSystem
 {
-#region SystemState
 #region Dependencies
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
@@ -20,21 +24,22 @@ public sealed class GravityWellSystem : SharedGravityWellSystem
 #endregion Dependencies
 
     /// <summary>
-    ///     The minimum range at which gravpulses will act.
-    ///     Prevents division by zero problems.
+    /// The minimum range at which gravpulses will act.
+    /// Prevents division by zero problems.
     /// </summary>
     public const float MinGravPulseRange = 0.00001f;
-#endregion SystemState
+
     /// <summary>
-    /// Makes all gravitational pulse sources pulse if they are off cooldown.
+    /// Updates the pulse cooldowns of all gravity wells.
+    /// If they are off cooldown it makes them emit a gravitational pulse and reset their cooldown.
     /// </summary>
-    /// <param name="frameTime">The amount of time since the last set of waves.</param>
+    /// <param name="frameTime">The time elapsed since the last set of updates.</param>
     public override void Update(float frameTime)
     {
         foreach(var (gravWell, xform) in EntityManager.EntityQuery<GravityWellComponent, TransformComponent>())
         {
             if ((gravWell._timeSinceLastGravPulse += frameTime) > gravWell.GravPulsePeriod)
-                Update(gravWell, xform, gravWell._timeSinceLastGravPulse);
+                Update(gravWell, xform);
         }
     }
 
@@ -42,11 +47,13 @@ public sealed class GravityWellSystem : SharedGravityWellSystem
     /// Makes a gravity well emit a gravitational pulse and puts it on cooldown.
     /// </summary>
     /// <param name="gravWell">The gravity well to pulse.</param>
-    /// <param name="xform">The transform of the gravity well entity.</param>
     /// <param name="frameTime">The amount to consider as having passed since the last gravitational pulse by the gravity well. Pulse force scales with this.</param>
-    private void Update(GravityWellComponent gravWell, TransformComponent xform, float frameTime)
+    /// <param name="xform">The transform of the gravity well entity.</param>
+    private void Update(GravityWellComponent gravWell, float frameTime, TransformComponent? xform = null)
     {
         gravWell._timeSinceLastGravPulse = 0.0f;
+        if(!Resolve(gravWell.Owner, ref xform))
+            return;
         if (gravWell.MaxRange < 0.0f)
             return;
 
@@ -55,13 +62,12 @@ public sealed class GravityWellSystem : SharedGravityWellSystem
 
     /// <summary>
     /// Makes a gravity well emit a gravitational pulse and puts it on cooldown.
-    /// The longer since the last gravitational pulse the more powerful the force it applies on affected entities.
+    /// The longer since the last gravitational pulse the more force it applies on affected entities.
     /// </summary>
-    /// <param name="gravWell">The amount of time since the last set of waves.</param>
-    /// <param name="xform">The amount of time since the last set of waves.</param>
-    private void Update(GravityWellComponent gravWell, TransformComponent xform)
-        => Update(gravWell, xform, gravWell._timeSinceLastGravPulse);
-
+    /// <param name="gravWell">The gravity well to make pulse.</param>
+    /// <param name="xform">The transform of the gravity well.</param>
+    private void Update(GravityWellComponent gravWell, TransformComponent? xform = null)
+        => Update(gravWell, gravWell._timeSinceLastGravPulse, xform);
 
 #region GravPulse
 
@@ -69,7 +75,7 @@ public sealed class GravityWellSystem : SharedGravityWellSystem
     /// Checks whether an entity can be affected by gravity pulses.
     /// TODO: Make this an event or such.
     /// </summary>
-    /// <param name="entity">The epicenter of the gravity pulse.</param>
+    /// <param name="entity">The entity to check.</param>
     private bool CanGravPulseAffect(EntityUid entity)
     {
         return !(
@@ -93,7 +99,7 @@ public sealed class GravityWellSystem : SharedGravityWellSystem
             return; // No gravpulses in nullspace please.
 
         var epicenter = mapPos.Position;
-        var minRange2 = MathF.Max(minRange * minRange, MinGravPulseRange);
+        var minRange2 = MathF.Max(minRange * minRange, MinGravPulseRange); // Cache square value for speed. Also apply a sane minimum value to the minimum value so that div/0s don't happen.
         foreach(var entity in _lookup.GetEntitiesInRange(mapPos.MapId, epicenter, maxRange, flags: LookupFlags.None))
         {
             if(!TryComp<PhysicsComponent?>(entity, out var physics)
@@ -108,7 +114,7 @@ public sealed class GravityWellSystem : SharedGravityWellSystem
             if (distance2 < minRange2)
                 continue;
 
-            var scaling = (1f / distance2) * physics.Mass; // TODO: Variable falloff
+            var scaling = (1f / distance2) * physics.Mass; // TODO: Variable falloff gradiants.
             _physics.ApplyLinearImpulse(physics, (displacement * baseMatrixDeltaV) * scaling);
         }
     }

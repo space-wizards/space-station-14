@@ -3,7 +3,7 @@ using Content.Server.Physics.Controllers;
 namespace Content.Server.Physics.Components;
 
 /// <summary>
-///     A component which makes its entity move around at random.
+/// A component which makes its entity move around at random.
 /// </summary>
 [RegisterComponent]
 public sealed class RandomWalkComponent : Component

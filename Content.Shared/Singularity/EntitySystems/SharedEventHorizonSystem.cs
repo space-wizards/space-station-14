@@ -8,68 +8,91 @@ using Content.Shared.Singularity.Components;
 
 namespace Content.Shared.Singularity.EntitySystems;
 
+/// <summary>
+/// The entity system primarily responsible for managing <see cref="SharedEventHorizonComponent"/>s.
+/// </summary>
 public abstract class SharedEventHorizonSystem : EntitySystem
 {
+#region Dependencies
     [Dependency] private readonly FixtureSystem _fixtures = default!;
-
-    public const string DefaultHorizonFixtureId = "EventHorizon";
-
+#endregion Dependencies
     public override void Initialize()
     {
         base.Initialize();
 
         // Allows for predicted collisions with singularities.
+        SubscribeLocalEvent<SharedEventHorizonComponent, ComponentStartup>(OnEventHorizonStartup);
         SubscribeLocalEvent<SharedEventHorizonComponent, PreventCollideEvent>(OnPreventCollide);
     }
 
 #region Getters/Setters
 
     /// <summary>
-    ///     Sets the radius of an event horizon to a new value.
+    /// Setter for <see cref="SharedEventHorizonComponent.Radius"/>
+    /// May also update the fixture associated with the event horizon.
     /// </summary>
-    public void SetRadius(EntityUid uid, float value, bool updateFixture = true, SharedEventHorizonComponent? eventHorizon = null)
+    /// <param name="eventHorizon">The event horizon to change the radius of.</param>
+    /// <param name="value">The new radius of the event horizon.</param>
+    /// <param name="updateFixture">Whether to update the associated fixture upon changing the radius of the event horizon.</param>
+    public void SetRadius(SharedEventHorizonComponent eventHorizon, float value, bool updateFixture = true)
     {
-        if(!Resolve(uid, ref eventHorizon))
-            return;
-
-        var oldValue = eventHorizon._radius;
+        var oldValue = eventHorizon.Radius;
         if (value == oldValue)
             return;
 
-        eventHorizon._radius = value;
+        eventHorizon.Radius = value;
         eventHorizon.Dirty();
         if (updateFixture)
-            UpdateEventHorizonFixture(uid, eventHorizon, null);
+            UpdateEventHorizonFixture(eventHorizon);
     }
 
     /// <summary>
-    ///     Sets the radius of an event horizon to a new value.
+    /// Setter for <see cref="SharedEventHorizonComponent.CanBreachContainment"/>
+    /// May also update the fixture associated with the event horizon.
     /// </summary>
-    public void SetCanBreachContainment(EntityUid uid, bool value, bool updateFixture = true, SharedEventHorizonComponent? eventHorizon = null)
+    /// <param name="eventHorizon">The event horizon to make (in)capable of breaching containment.</param>
+    /// <param name="value">Whether the event horizon should be able to breach containment.</param>
+    /// <param name="updateFixture">Whether to update the associated fixture upon changing whether the event horizon can breach containment.</param>
+    public void SetCanBreachContainment(SharedEventHorizonComponent eventHorizon, bool value, bool updateFixture = true)
     {
-        if(!Resolve(uid, ref eventHorizon))
-            return;
-
-        var oldValue = eventHorizon._canBreachContainment;
+        var oldValue = eventHorizon.CanBreachContainment;
         if (value == oldValue)
             return;
 
-        eventHorizon._canBreachContainment = value;
+        eventHorizon.CanBreachContainment = value;
         eventHorizon.Dirty();
         if (updateFixture)
-            UpdateEventHorizonFixture(uid, eventHorizon, null);
+            UpdateEventHorizonFixture(eventHorizon);
     }
 
     /// <summary>
-    ///     Sets the radius of an event horizon to a new value.
+    /// Setter for <see cref="SharedEventHorizonComponent.HorizonFixtureId"/>
+    /// May also update the fixture associated with the event horizon.
     /// </summary>
-    public void UpdateEventHorizonFixture(EntityUid uid, SharedEventHorizonComponent? eventHorizon, PhysicsComponent? fixtures)
+    /// <param name="eventHorizon">The event horizon with the fixture ID to change.</param>
+    /// <param name="value">The new fixture ID to associate the event horizon with.</param>
+    /// <param name="updateFixture">Whether to update the associated fixture upon changing whether the event horizon can breach containment.</param>
+    public void SetHorizonFixtureId(SharedEventHorizonComponent eventHorizon, string? value, bool updateFixture = true)
     {
-        if(!Resolve(uid, ref eventHorizon))
+        var oldValue = eventHorizon.HorizonFixtureId;
+        if (value == oldValue)
             return;
 
+        eventHorizon.HorizonFixtureId = value;
+        eventHorizon.Dirty();
+        if (updateFixture)
+            UpdateEventHorizonFixture(eventHorizon);
+    }
+
+    /// <summary>
+    /// Updates the state of the fixture associated with the event horizon.
+    /// </summary>
+    /// <param name="eventHorizon">The event horizon component associated with the fixture to update.</param>
+    /// <param name="fixtures">The physics component containing the fixture to update.</param>
+    public void UpdateEventHorizonFixture(SharedEventHorizonComponent eventHorizon, PhysicsComponent? fixtures = null)
+    {
         var fixtureId = eventHorizon.HorizonFixtureId;
-        if (fixtureId == null || !Resolve(uid, ref fixtures))
+        if (fixtureId == null || !Resolve(eventHorizon.Owner, ref fixtures))
             return;
 
         var fixture = _fixtures.GetFixtureOrNull(fixtures, fixtureId);
@@ -88,14 +111,38 @@ public abstract class SharedEventHorizonSystem : EntitySystem
 #region EventHandlers
 
     /// <summary>
-    ///
+    /// Syncs the state of the fixture associated with the event horizon upon startup.
     /// </summary>
+    /// <param name="uid">The entity that has just gained an event horizon component.</param>
+    /// <param name="comp">The event horizon component that is starting up.</param>
+    /// <param name="args">The event arguments.</param>
+    private void OnEventHorizonStartup(EntityUid uid, SharedEventHorizonComponent comp, ComponentStartup args)
+    {
+        UpdateEventHorizonFixture(comp);
+    }
+
+    /// <summary>
+    /// Prevents the event horizon from colliding with anything it cannot consume.
+    /// Most notably map grids and ghosts.
+    /// Also makes event horizons phase through containment if it can breach.
+    /// </summary>
+    /// <param name="uid">The entity that is trying to collide with another entity.</param>
+    /// <param name="comp">The event horizon of the former.</param>
+    /// <param name="args">The event arguments.</param>
     private void OnPreventCollide(EntityUid uid, SharedEventHorizonComponent comp, ref PreventCollideEvent args)
     {
         if(!args.Cancelled)
             PreventCollide(uid, comp, ref args);
     }
 
+    /// <summary>
+    /// The actual, functional part of SharedEventHorizonSystem.OnPreventCollide.
+    /// The return value allows for overrides to early return if the base successfully handles collision prevention.
+    /// </summary>
+    /// <param name="uid">The entity that is trying to collide with another entity.</param>
+    /// <param name="comp">The event horizon of the former.</param>
+    /// <param name="args">The event arguments.</param>
+    /// <returns>A bool indicating whether the collision prevention has been handled.</return>
     protected virtual bool PreventCollide(EntityUid uid, SharedEventHorizonComponent comp, ref PreventCollideEvent args)
     {
         var otherUid = args.BodyB.Owner;
@@ -108,7 +155,7 @@ public abstract class SharedEventHorizonSystem : EntitySystem
             return true;
         }
 
-        // If we're above 4 then breach containment
+        // If we can, breach containment
         // otherwise, check if it's containment and just keep the collision
         if (EntityManager.HasComponent<SharedContainmentFieldComponent>(otherUid) ||
             EntityManager.HasComponent<SharedContainmentFieldGeneratorComponent>(otherUid))

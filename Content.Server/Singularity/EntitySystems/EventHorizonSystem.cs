@@ -11,22 +11,33 @@ using Content.Server.Singularity.Events;
 
 namespace Content.Server.Singularity.EntitySystems;
 
+/// <summary>
+/// The entity system primarily responsible for managing <see cref="EventHorizonComponent"/>s.
+/// Handles their consumption of entities.
+/// </summary>
 public sealed class EventHorizonSystem : SharedEventHorizonSystem
 {
+#region Dependencies
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly IMapManager _mapMan = default!;
+#endregion Dependencies
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<IMapGridComponent, EventHorizonAttemptConsumeEntityEvent>(PreventConsumeEntity);
-        SubscribeLocalEvent<GhostComponent, EventHorizonAttemptConsumeEntityEvent>(PreventConsumeEntity);
-        SubscribeLocalEvent<StationDataComponent, EventHorizonAttemptConsumeEntityEvent>(PreventConsumeEntity);
+        SubscribeLocalEvent<IMapGridComponent, EventHorizonAttemptConsumeEntityEvent>(PreventConsume);
+        SubscribeLocalEvent<GhostComponent, EventHorizonAttemptConsumeEntityEvent>(PreventConsume);
+        SubscribeLocalEvent<StationDataComponent, EventHorizonAttemptConsumeEntityEvent>(PreventConsume);
         SubscribeLocalEvent<EventHorizonComponent, StartCollideEvent>(OnStartCollide);
         SubscribeLocalEvent<EventHorizonComponent, EventHorizonAttemptConsumeEntityEvent>(OnAnotherEventHorizonAttemptConsumeThisEventHorizon);
         SubscribeLocalEvent<EventHorizonComponent, EventHorizonConsumedEntityEvent>(OnAnotherEventHorizonConsumedThisEventHorizon);
     }
 
+    /// <summary>
+    /// Updates the cooldowns of all event horizons.
+    /// If an event horizon are off cooldown this makes it consume everything within range and resets their cooldown.
+    /// </summary>
+    /// <param name="frameTime">The amount of time that has elapsed since the last cooldown update.</param>]
     public override void Update(float frameTime)
     {
         foreach(var (eventHorizon, xform) in EntityManager.EntityQuery<EventHorizonComponent, TransformComponent>())
@@ -36,9 +47,16 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         }
     }
 
-    public void Update(EventHorizonComponent eventHorizon, TransformComponent xform)
+    /// <summary>
+    /// Makes an event horizon consume everything nearby and resets the cooldown it for the next automated wave.
+    /// </summary>
+    /// <param name="eventHorizon">The event horizon we want to consume nearby things.</param>
+    /// <param name="xform">The transform of the event horizon.</param>
+    public void Update(EventHorizonComponent eventHorizon, TransformComponent? xform)
     {
         eventHorizon._timeSinceLastConsumeWave = 0.0f;
+        if(!Resolve(eventHorizon.Owner, ref xform))
+            return;
         if (eventHorizon.Radius < 0.0f || eventHorizon.BeingConsumedByAnotherEventHorizon)
             return;
 
@@ -52,19 +70,19 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// <summary>
     /// Makes an event horizon consume a given entity.
     /// </summary>
-    /// <param name="uid">The to consume.</param>
+    /// <param name="uid">The entity to consume.</param>
     /// <param name="eventHorizon">The event horizon consuming the given entity.</param>
     public void ConsumeEntity(EntityUid uid, EventHorizonComponent eventHorizon)
     {
-        RaiseLocalEvent(eventHorizon.Owner, new EntityConsumedByEventHorizonEvent(uid, eventHorizon, this));
-        RaiseLocalEvent(uid, new EventHorizonConsumedEntityEvent(uid, eventHorizon, this));
+        RaiseLocalEvent(eventHorizon.Owner, new EntityConsumedByEventHorizonEvent(uid, eventHorizon));
+        RaiseLocalEvent(uid, new EventHorizonConsumedEntityEvent(uid, eventHorizon));
         EntityManager.QueueDeleteEntity(uid);
     }
 
     /// <summary>
     /// Makes an event horizon attempt to consume a given entity.
     /// </summary>
-    /// <param name="uid">The to attempt to consume.</param>
+    /// <param name="uid">The entity to attempt to consume.</param>
     /// <param name="eventHorizon">The event horizon attempting to consume the given entity.</param>
     public bool AttemptConsumeEntity(EntityUid uid, EventHorizonComponent eventHorizon)
     {
@@ -82,7 +100,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// <param name="eventHorizon">The event horizon checking whether it can consume the entity.</param>
     public bool CanConsumeEntity(EntityUid uid, EventHorizonComponent eventHorizon)
     {
-        var ev = new EventHorizonAttemptConsumeEntityEvent(uid, eventHorizon, this);
+        var ev = new EventHorizonAttemptConsumeEntityEvent(uid, eventHorizon);
         RaiseLocalEvent(uid, ev);
         return !ev.Cancelled;
     }
@@ -136,7 +154,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     public void ConsumeTiles(List<(Vector2i, Tile)> tiles, IMapGrid grid, EventHorizonComponent eventHorizon)
     {
         if (tiles.Count > 0)
-            RaiseLocalEvent(eventHorizon.Owner, new TilesConsumedByEventHorizonEvent(tiles, grid, eventHorizon, this));
+            RaiseLocalEvent(eventHorizon.Owner, new TilesConsumedByEventHorizonEvent(tiles, grid, eventHorizon));
             grid.SetTiles(tiles);
     }
 
@@ -162,7 +180,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
 
     /// <summary>
     /// Checks whether an event horizon can consume a given tile.
-    /// This is only possible if it can also consume all entities attached to the tile.
+    /// This is only possible if it can also consume all entities anchored to the tile.
     /// </summary>
     /// <param name="tile">The tile to check for consumability.</param>
     /// <param name="grid">The grid hosting the tile to check.</param>
@@ -243,7 +261,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// <param name="uid">The entity the singularity is trying to eat.</param>
     /// <param name="comp">The component the singularity is trying to eat.</param>
     /// <param name="args">The event arguments.</param>
-    public void PreventConsumeEntity<TComp>(EntityUid uid, TComp comp, EventHorizonAttemptConsumeEntityEvent args)
+    public void PreventConsume<TComp>(EntityUid uid, TComp comp, EventHorizonAttemptConsumeEntityEvent args)
     {
         if(!args.Cancelled)
             args.Cancel();
@@ -251,7 +269,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
 
     /// <summary>
     /// A generic event handler that prevents singularities from breaching containment.
-    /// In this case 'breaching containment' means eating an entity with a component of a given type unless the event horizon is set to breach containment anyway.
+    /// In this case 'breaching containment' means consuming an entity with a component of the given type unless the event horizon is set to breach containment anyway.
     /// </summary>
     /// <param name="uid">The entity the singularity is trying to eat.</param>
     /// <param name="comp">The component the singularity is trying to eat.</param>
@@ -261,7 +279,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         if (args.Cancelled)
             return;
         if(!args.EventHorizon.CanBreachContainment)
-            PreventConsumeEntity(uid, comp, args);
+            PreventConsume(uid, comp, args);
     }
 
     /// <summary>
@@ -282,9 +300,9 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     }
 
     /// <summary>
-    /// Prevents two singularities from annihilating one another.
-    /// Specifically ensures that if this event horizon has already been consumed by another event horizon it cannot be consumed again.
-    /// Also prevents singularities from consuming themselves.
+    /// Prevents two event horizons from annihilating one another.
+    /// Specifically prevents event horizons from consuming themselves.
+    /// Also ensures that if this event horizon has already been consumed by another event horizon it cannot be consumed again.
     /// </summary>
     /// <param name="uid">The event horizon entity.</param>
     /// <param name="comp">The event horizon.</param>

@@ -1,54 +1,48 @@
-using Content.Shared.Singularity;
 using Content.Shared.Singularity.Components;
 using Content.Server.Singularity.EntitySystems;
 using Robust.Shared.Audio;
-using Robust.Shared.Player;
 
 namespace Content.Server.Singularity.Components;
 
+/// <summary>
+/// The server-side version of <see cref="SharedSingularityComponent">.
+/// Primarily managed by <see cref="SingularitySystem">.
+/// </summary>
 [RegisterComponent]
 [ComponentReference(typeof(SharedSingularityComponent))]
 public sealed class SingularityComponent : SharedSingularityComponent
 {
     /// <summary>
-    ///
-    /// </summary>
-    [Access(friends:typeof(SingularitySystem))]
-    public float _energy = 180;
-
-    /// <summary>
-    ///
+    /// The amount of energy this singularity contains.
+    /// If you want to set this go through <see cref="SingularitySystem.SetEnergy"/>
     /// </summary>
     [DataField("energy")]
-    [ViewVariables(VVAccess.ReadWrite)]
-    public float Energy
-    {
-        get => _level;
-        set { IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SingularitySystem>().SetSingularityEnergy(this, value); }
-    }
+    [Access(friends:typeof(SingularitySystem), Other=AccessPermissions.Read, Self=AccessPermissions.Read)]
+    public float Energy = 180f;
 
     /// <summary>
-    ///     The rate at which this singularity loses energy over time.
+    /// The rate at which this singularity loses energy over time.
     /// </summary>
     [DataField("energyLoss")]
     [ViewVariables(VVAccess.ReadWrite)]
     public float EnergyDrain;
 
     /// <summary>
-    ///     The number of seconds between energy level updates.
+    /// The amount of time between energy level updates.
     /// </summary>
     [DataField("updatePeriod")]
     [ViewVariables(VVAccess.ReadWrite)]
     public float UpdatePeriod = 1.0f;
 
     /// <summary>
-    ///     The amount of time that has passed since the last energy level update.
+    /// The amount of time that has elapsed since the last energy level update.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
-    public float _timeSinceLastUpdate = float.PositiveInfinity;
+    public float _timeSinceLastUpdate = 0f;
 
+#region Audio
     /// <summary>
-    ///     The sound that this singularity produces by existing.
+    /// The sound that this singularity produces by existing.
     /// </summary>
     [DataField("ambiantSound")]
     [ViewVariables(VVAccess.ReadOnly)]
@@ -58,7 +52,7 @@ public sealed class SingularityComponent : SharedSingularityComponent
     );
 
     /// <summary>
-    ///     The audio stream that plays the above sound on loop.
+    /// The audio stream that plays the sound specified by <see cref="AmbiantSound"> on loop.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     public IPlayingAudioStream? AmbiantSoundStream = null;
@@ -79,10 +73,21 @@ public sealed class SingularityComponent : SharedSingularityComponent
         "/Audio/Effects/singularity_collapse.ogg",
         AudioParams.Default
     );
+#endregion Audio
 
-
+#region Serialization
     public override ComponentState GetComponentState()
     {
         return new SingularityComponentState(Level);
     }
+#endregion Serialization
+
+#region VV
+    [ViewVariables(VVAccess.ReadWrite)]
+    public float VVEnergy
+    {
+        get => Energy;
+        set { IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SingularitySystem>().SetEnergy(this, value); }
+    }
+#endregion VV
 }

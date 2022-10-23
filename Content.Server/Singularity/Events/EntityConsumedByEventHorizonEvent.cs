@@ -1,5 +1,4 @@
 using Content.Shared.Singularity.Components;
-using Content.Shared.Singularity.EntitySystems;
 
 namespace Content.Server.Singularity.Events;
 
@@ -9,24 +8,18 @@ namespace Content.Server.Singularity.Events;
 public sealed class EntityConsumedByEventHorizonEvent : EntityEventArgs
 {
     /// <summary>
-    ///     The entity being consumed by the event horizon.
+    /// The entity being consumed by the event horizon.
     /// </summary>
     public readonly EntityUid Entity;
 
     /// <summary>
-    ///     The event horizon consuming the entity.
+    /// The event horizon consuming the entity.
     /// </summary>
     public readonly SharedEventHorizonComponent EventHorizon;
 
-    /// <summary>
-    ///     The local event horizon system.
-    /// </summary>
-    public readonly SharedEventHorizonSystem EventHorizonSystem;
-
-    public EntityConsumedByEventHorizonEvent(EntityUid entity, SharedEventHorizonComponent eventHorizon, SharedEventHorizonSystem eventHorizonSystem)
+    public EntityConsumedByEventHorizonEvent(EntityUid entity, SharedEventHorizonComponent eventHorizon)
     {
         Entity = entity;
         EventHorizon = eventHorizon;
-        EventHorizonSystem = eventHorizonSystem;
     }
 }

@@ -1,5 +1,4 @@
 using Content.Shared.Singularity.Components;
-using Content.Shared.Singularity.EntitySystems;
 
 namespace Content.Shared.Singularity.Events;
 
@@ -11,28 +10,22 @@ public sealed class SingularityLevelChangedEvent : EntityEventArgs
     /// <summary>
     /// The new level of the singularity.
     /// </summary>
-    public readonly ulong NewValue;
+    public readonly byte NewValue;
 
     /// <summary>
     /// The previous level of the singularity.
     /// </summary>
-    public readonly ulong OldValue;
+    public readonly byte OldValue;
 
     /// <summary>
     /// The singularity that just changed level.
     /// </summary>
     public readonly SharedSingularityComponent Singularity;
 
-    /// <summary>
-    /// The system that managed the level change.
-    /// </summary>
-    public readonly SharedSingularitySystem SingularitySystem;
-
-    public SingularityLevelChangedEvent(ulong newValue, ulong oldValue, SharedSingularityComponent singularity, SharedSingularitySystem singularitySystem)
+    public SingularityLevelChangedEvent(byte newValue, byte oldValue, SharedSingularityComponent singularity)
     {
         NewValue = newValue;
         OldValue = oldValue;
         Singularity = singularity;
-        SingularitySystem = singularitySystem;
     }
 }
