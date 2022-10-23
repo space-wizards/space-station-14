@@ -97,7 +97,7 @@ public sealed class GeigerSystem : SharedGeigerSystem
     private void SetCurrentRadiation(EntityUid uid, GeigerComponent component, float rads)
     {
         // check that it's approx equal
-        if (MathF.Abs(component.CurrentRadiation - rads) < ApproxEqual)
+        if (MathHelper.CloseTo(component.CurrentRadiation, rads, ApproxEqual))
             return;
 
         var curLevel = component.DangerLevel;
