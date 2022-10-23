@@ -90,7 +90,7 @@ namespace Content.Server.Cloning.Systems
 
         private void OnDeconstruct(EntityUid uid, CloningPodComponent component, MachineDeconstructedEvent args)
         {
-            _serverStackSystem.SpawnMultiple(component.MaterialCloningOuput, _material.GetMaterialAmount(uid, component.RequiredMaterial), Transform(uid).Coordinates);
+            _serverStackSystem.SpawnMultiple(component.MaterialCloningOutput, _material.GetMaterialAmount(uid, component.RequiredMaterial), Transform(uid).Coordinates);
         }
 
         internal void TransferMindToClone(Mind.Mind mind)
@@ -312,7 +312,7 @@ namespace Content.Server.Cloning.Systems
             }
             _spillableSystem.SpillAt(uid, bloodSolution, "PuddleBlood");
 
-            var biomassStack = Spawn(clonePod.MaterialCloningOuput, transform.Coordinates);
+            var biomassStack = Spawn(clonePod.MaterialCloningOutput, transform.Coordinates);
             _stackSystem.SetCount(biomassStack, _robustRandom.Next(1, (int) (clonePod.UsedBiomass / 2.5)));
 
             clonePod.UsedBiomass = 0;

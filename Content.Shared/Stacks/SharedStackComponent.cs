@@ -8,8 +8,8 @@ namespace Content.Shared.Stacks
     public abstract class SharedStackComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("stackType", required:true, customTypeSerializer:typeof(PrototypeIdSerializer<StackPrototype>))]
-        public string? StackTypeId { get; private set; }
+        [DataField("stackType", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<StackPrototype>))]
+        public string StackTypeId { get; private set; } = default!;
 
         /// <summary>
         ///     Current stack count.

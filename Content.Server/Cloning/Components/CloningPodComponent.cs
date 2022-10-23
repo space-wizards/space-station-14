@@ -37,7 +37,7 @@ namespace Content.Server.Cloning.Components
         /// The entity that is spawned on machine deconstruct as well as failed cloning.
         /// </summary>
         [DataField("materialCloningOutput", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)), ViewVariables(VVAccess.ReadWrite)]
-        public string MaterialCloningOuput = "MaterialBiomass";
+        public string MaterialCloningOutput = "MaterialBiomass";
 
         /// <summary>
         /// The base amount of time it takes to clone a body

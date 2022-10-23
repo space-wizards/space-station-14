@@ -46,9 +46,6 @@ namespace Content.Server.Stack
             if (!Resolve(uid, ref stack))
                 return null;
 
-            if (stack.StackTypeId == null)
-                return null;
-
             // Get a prototype ID to spawn the new entity. Null is also valid, although it should rarely be picked...
             var prototype = _prototypeManager.TryIndex<StackPrototype>(stack.StackTypeId, out var stackType)
                 ? stackType.Spawn
