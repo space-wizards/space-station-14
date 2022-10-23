@@ -9,6 +9,16 @@
     Steel: 300
 
 - type: latheRecipe
+  id: Zipties
+  icon:
+    sprite: Objects/Misc/zipties.rsi
+    state: cuff
+  result: Zipties
+  completetime: 2
+  materials:
+    Plastic: 200
+
+- type: latheRecipe
   id: Stunbaton
   icon:
     sprite: Objects/Weapons/Melee/stunbaton.rsi
@@ -28,6 +38,17 @@
   completetime: 4
   materials:
     Plastic: 100
+
+- type: latheRecipe
+  id: ClothingEyesGlassesSecurity
+  icon:
+    sprite: Clothing/Eyes/Glasses/secglasses.rsi
+    state: icon
+  result: ClothingEyesGlassesSecurity
+  completetime: 2
+  materials:
+    Steel: 300
+    Glass: 200
 
 - type: latheRecipe
   id: RiotShield
