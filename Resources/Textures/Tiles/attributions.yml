@@ -16,7 +16,7 @@
   copyright: "tgstation commit 8abb19545828230d92ba18827feeb42a67a55d49, cropped_parallax modified from parallax."
   source: "https://github.com/tgstation/tgstation/"
 
-- files: [ "bar.png", "blue.png", "kitchen.png", "laundry.png", "mime.png" "steel.png", "steel_dirty.png", "steel_diagonal.png", "steel_mini.png", "steel_offset.png", "steel_pavement.png" "white.png", "white_diagonal.png", "white_mini.png", "white_offset.png", "white_pavement.png", "white_plastic.png", "dark.png", "dark_diagonal.png", "dark_mini.png", "dark_offset.png", "dark_pavement.png", "dark_plastic.png", "hydro.png", "clown.png" ]
+- files: [ "bar.png", "blue.png", "kitchen.png", "laundry.png", "mime.png", "steel.png", "steel_dirty.png", "steel_diagonal.png", "steel_mini.png", "steel_offset.png", "steel_pavement.png", "white.png", "white_diagonal.png", "white_mini.png", "white_offset.png", "white_pavement.png", "white_plastic.png", "dark.png", "dark_diagonal.png", "dark_mini.png", "dark_offset.png", "dark_pavement.png", "dark_plastic.png", "hydro.png", "clown.png" ]
   license: "CC0-1.0"
   copyright: "Created by github user @moonheart08"
 
