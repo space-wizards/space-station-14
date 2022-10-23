@@ -17,4 +17,5 @@ materials-durathread = durathread
 materials-plasma = plasma
 materials-plastic = plastic
 materials-wood = wood
+materials-charcoal = charcoal
 materials-uranium = uranium
