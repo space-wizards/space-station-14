@@ -81,3 +81,4 @@ reagent-physical-desc-electric = электрическое
 reagent-physical-desc-chewy = жевательное
 reagent-physical-desc-volatile = нестабильное
 reagent-physical-desc-inky = чернильное
+reagent-physical-desc-enigmatic = enigmatic
