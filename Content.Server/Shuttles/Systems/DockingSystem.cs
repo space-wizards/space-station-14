@@ -350,16 +350,6 @@ namespace Content.Server.Shuttles.Systems
             dockB.DockJoint = joint;
             dockB.DockJointId = joint.ID;
 
-            if (TryComp<AirlockComponent>(dockA.Owner, out var airlockA))
-            {
-                airlockA.SetBoltsWithAudio(true);
-            }
-
-            if (TryComp<AirlockComponent>(dockB.Owner, out var airlockB))
-            {
-                airlockB.SetBoltsWithAudio(true);
-            }
-
             if (TryComp(dockA.Owner, out DoorComponent? doorA))
             {
                 doorA.ChangeAirtight = false;
@@ -370,6 +360,16 @@ namespace Content.Server.Shuttles.Systems
             {
                 doorB.ChangeAirtight = false;
                 _doorSystem.TryOpen(doorB.Owner, doorB);
+            }
+
+            if (TryComp<AirlockComponent>(dockA.Owner, out var airlockA))
+            {
+                airlockA.SetBoltsWithAudio(true);
+            }
+
+            if (TryComp<AirlockComponent>(dockB.Owner, out var airlockB))
+            {
+                airlockB.SetBoltsWithAudio(true);
             }
 
             if (_pathfinding.TryCreatePortal(dockAXform.Coordinates, dockBXform.Coordinates, out var handle))
