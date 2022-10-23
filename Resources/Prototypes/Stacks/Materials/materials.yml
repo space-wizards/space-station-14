@@ -11,6 +11,12 @@
   spawn: MaterialWoodPlank1
 
 - type: stack
+  id: CharCoal
+  name: charcoal
+  icon: /Textures/Objects/Materials/materials.rsi/charcoal.png
+  spawn: MaterialCharCoal1
+
+- type: stack
   id: Cloth
   name: cloth
   icon: /Textures/Objects/Materials/materials.rsi/cloth.png

@@ -9,6 +9,7 @@ namespace Content.Shared.WoodBurner
     // Copy paste from Lathe
     // TO-DO --- Change all of this
 
+    /*
     [RegisterComponent]
     public class SharedWoodBurnerComponent : Component
     {
@@ -59,6 +60,9 @@ namespace Content.Shared.WoodBurner
 
 
     }
+    */
+
+
     /*
     public sealed class LatheGetRecipesEvent : EntityEventArgs
     {

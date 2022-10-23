@@ -2,27 +2,32 @@
   parent: [ BaseMachinePowered, ConstructibleMachine ]
   id: WoodBurned
   name: woodburner
-  description: It produces items using metal and glass.			## Change it ------------------
+  description: Burn wood into charcoal. Produce CarbonDioxide into pipe.
   components:
   - type: Sprite
-    sprite: Structures/Machines/autolathe.rsi					## Change it ------------------
-    snapCardinals: true
+    sprite: Structures/Machines/woodburner.rsi
     netsync: false
     layers:
     - state: icon
-      map: ["enum.LatheVisualLayers.IsRunning"]					## Change it ------------------
+      map: ["enabled"]
+    - state: pipe
+      sprite: Structures/Machines/woodburner.rsi
+      map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: unlit
       shader: unshaded
       map: ["enum.PowerDeviceVisualLayers.Powered"]				## Change it ------------------
-    - state: inserting
-      map: ["enum.LatheVisualLayers.IsInserting"]				## Change it ------------------
-    - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]			## Change it ------------------
+    ##- state: inserting
+    ##  map: ["enum.LatheVisualLayers.IsInserting"]				## Change it ------------------
+    ##- state: panel
+    ##  map: ["enum.WiresVisualLayers.MaintenancePanel"]			## Change it ------------------
   - type: Appearance
+  ##- type: PipeColorVisuals			                            ## Data for pipe color
   - type: Rotatable
+  - type: Pullable
   - type: WiresVisuals
   - type: Physics
-    bodyType: Static
+  - type: Transform
+    anchored: true
   - type: Fixtures
     fixtures:
     - shape:
@@ -47,33 +52,26 @@
     board: AutolatheMachineCircuitboard	## Change it ------------------
   - type: MaterialStorage
     materialWhiteList:
-    - WoodPlank
+    - Wood
+    - Charcoal
   - type: Wires
     BoardName: "WoodBurner"
     LayoutId: WoodBurner
-  - type: ActivatableUI					## Change it ------------------
-    key: enum.LatheUiKey.Key			## Change it ------------------
-  - type: ActivatableUIRequiresPower	## Change it ------------------
-  - type: UserInterface
-    interfaces:
-    - key: enum.LatheUiKey.Key			## Change it ------------------
-      type: LatheBoundUserInterface		## Change it ------------------
-  - type: Transform
-    anchored: true
-  - type: Pullable
-  - type: Lathe							## Change or Remove it ------------------
-    idleState: icon
-    runningState: building
-    staticRecipes:
-      - Wirecutter
-    - type: PipeColorVisuals			## Data for pipe color
-    - type: AtmosPipeColor				## Set data for pipe color
-    - type: AtmosDevice
-    - type: NodeContainer				## !!!!!Check it ----------------------------
-      nodes:
-        pipe:
-          !type:PipeNode
-          nodeGroupID: Pipe
-          pipeDirection: South
+##  - type: ActivatableUI					## Change it ------------------
+##    key: enum.LatheUiKey.Key			## Change it ------------------
+##  - type: ActivatableUIRequiresPower	## Change it ------------------
+##  - type: UserInterface
+##    interfaces:
+##    - key: enum.LatheUiKey.Key			## Change it ------------------
+##      type: LatheBoundUserInterface		## Change it ------------------
+  - type: WoodBurner
+  - type: AtmosPipeColor			## Set data for pipe color
+  - type: AtmosDevice
+  - type: NodeContainer				## !!!!!Check it ----------------------------
+    nodes:
+      pipe:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: South
   - type: StaticPrice
     price: 800

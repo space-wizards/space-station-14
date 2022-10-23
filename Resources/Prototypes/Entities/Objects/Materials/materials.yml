@@ -121,6 +121,30 @@
 
 - type: entity
   parent: MaterialBase
+  id: MaterialCharCoal
+  name: charcoal
+  suffix: Full
+  components:
+  - type: Material
+    materials:
+      Charcoal: 100
+  - type: Stack
+    stackType: CharCoal
+  - type: Sprite
+    state: charcoal
+  - type: Item
+    heldPrefix: charcoal
+
+- type: entity
+  parent: MaterialCharCoal
+  id: MaterialCharCoal1
+  suffix: Single
+  components:
+  - type: Stack
+    count: 1    
+
+- type: entity
+  parent: MaterialBase
   id: MaterialBiomass
   name: biomass
   suffix: Full
