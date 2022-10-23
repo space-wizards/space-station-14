@@ -9,7 +9,7 @@
     sprite: Objects/Fun/toys.rsi
     netsync: false
   - type: StaticPrice
-    price: 2
+    price: 0
   - type: EmitSoundOnUse
     sound:
       collection: ToySqueak
@@ -259,7 +259,7 @@
     sprite: Objects/Fun/toys.rsi
     netsync: false
   - type: StaticPrice
-    price: 2
+    price: 0
 
 - type: entity
   parent: BaseFigurine
@@ -333,7 +333,7 @@
   - type: Sprite
     state: marauderprize
   - type: StaticPrice
-    price: 20
+    price: 1
 
 - type: entity
   parent: BaseFigurine
@@ -344,7 +344,7 @@
   - type: Sprite
     state: maulerprize
   - type: StaticPrice
-    price: 30
+    price: 1
     
 - type: entity
   parent: BaseFigurine
@@ -355,7 +355,7 @@
   - type: Sprite
     state: gygaxtoy
   - type: StaticPrice
-    price: 10
+    price: 1
 
 - type: entity
   parent: BaseFigurine
@@ -366,7 +366,7 @@
   - type: Sprite
     state: odysseusprize
   - type: StaticPrice
-    price: 8
+    price: 1
 
 - type: entity
   parent: BaseFigurine
@@ -386,7 +386,7 @@
   - type: Sprite
     state: deathripleytoy
   - type: StaticPrice
-    price: 20
+    price: 1
 
 - type: entity
   parent: BaseFigurine
@@ -397,7 +397,7 @@
   - type: Sprite
     state: phazonprize
   - type: StaticPrice
-    price: 25
+    price: 2
 
 - type: entity
   parent: BaseFigurine
@@ -416,6 +416,8 @@
   components:
   - type: Sprite
     state: reticenceprize
+  - type: StaticPrice
+    price: 2
 
 - type: entity
   parent: BaseFigurine
@@ -436,7 +438,7 @@
   - type: Sprite
     state: seraphprize
   - type: StaticPrice
-    price: 25
+    price: 2
 
 
 - type: entity
@@ -448,7 +450,7 @@
   - type: Sprite
     state: durandprize
   - type: StaticPrice
-    price: 20
+    price: 1
 
 
 ### Yeah I left these all mixed up for a future coder to puzzle over, it's lore.
@@ -475,6 +477,8 @@
     netsync: false
   - type: Item
     size: 24
+  - type: StaticPrice
+    price: 0
 
 - type: entity
   parent: FoamWeaponBase
@@ -485,8 +489,6 @@
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: foamcrossbow
-  - type: StaticPrice
-    price: 10
   - type: Item
     size: 24
     sprite: Objects/Fun/toys.rsi
@@ -509,6 +511,8 @@
     containers:
       ballistic-ammo: !type:Container
         ents: []
+  - type: StaticPrice
+    price: 1
 
 - type: entity
   parent: BaseItem
@@ -520,7 +524,7 @@
   - type: Sprite
     netsync: false
   - type: StaticPrice
-    price: 10
+    price: 1
 
 - type: entity
   parent: ToyGunBase
@@ -564,8 +568,6 @@
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: foamblade
-  - type: StaticPrice
-    price: 10
   - type: MeleeWeapon
     attackRate: 1.5
     angle: 0
@@ -578,6 +580,8 @@
     sprite: Objects/Fun/toys.rsi
     heldPrefix: foamblade
   - type: ItemCooldown
+  - type: StaticPrice
+    price: 0
 
 # MISC
 
@@ -595,7 +599,7 @@
     sprite: Objects/Fun/toys.rsi
     heldPrefix: bask
   - type: StaticPrice
-    price: 5
+    price: 0
 
 - type: entity
   parent: BaseItem
@@ -611,7 +615,7 @@
     sprite: Objects/Fun/toys.rsi
     heldPrefix: footb
   - type: StaticPrice
-    price: 5
+    price: 0
 
 - type: entity
   parent: BaseItem
@@ -626,6 +630,8 @@
     size: 24
     sprite: Objects/Fun/toys.rsi
     heldPrefix: synb
+  - type: StaticPrice
+    price: 5
 
 - type: entity
   parent: BaseItem
@@ -640,6 +646,8 @@
     size: 24
     sprite: Objects/Fun/toys.rsi
     heldPrefix: corgib
+  - type: StaticPrice
+    price: 5
 
 - type: entity
   parent: BaseItem
@@ -661,7 +669,7 @@
     sprite: Objects/Fun/toys.rsi
     heldPrefix: singularitytoy
   - type: StaticPrice
-    price: 40
+    price: 5
 
 - type: entity
   parent: BaseItem
@@ -680,6 +688,8 @@
     size: 24
     sprite: Objects/Fun/toys.rsi
     heldPrefix: orb
+  - type: StaticPrice
+    price: 2
 
 - type: entity
   id: ToySword
@@ -745,4 +755,4 @@
       - enum.DamageStateVisualLayers.Base:
           base: Sixteen
   - type: StaticPrice
-    price: 3
+    price: 2

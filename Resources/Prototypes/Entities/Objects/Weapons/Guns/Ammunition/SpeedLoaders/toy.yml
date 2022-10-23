@@ -25,6 +25,8 @@
     containers:
       ballistic-ammo: !type:Container
         ents: []
+  - type: StaticPrice
+    price: 0
 
 - type: entity
   id: SpeedLoaderCap

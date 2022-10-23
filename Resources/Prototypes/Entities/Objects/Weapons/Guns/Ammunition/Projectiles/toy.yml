@@ -12,3 +12,5 @@
       sprite: Objects/Fun/toys.rsi
       layers:
         - state: foamdart
+    - type: StaticPrice
+      price: 0
