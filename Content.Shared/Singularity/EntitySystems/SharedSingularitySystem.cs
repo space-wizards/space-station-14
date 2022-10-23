@@ -1,5 +1,6 @@
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.ViewVariables;
 
 using Content.Shared.Radiation.Components;
 using Content.Shared.Singularity.Components;
@@ -16,6 +17,7 @@ public abstract class SharedSingularitySystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _visualizer = default!;
     [Dependency] private readonly SharedEventHorizonSystem _horizons = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] protected readonly IViewVariablesManager _vvm = default!;
 #endregion Dependencies
 
     /// <summary>
@@ -38,6 +40,19 @@ public abstract class SharedSingularitySystem : EntitySystem
         SubscribeLocalEvent<PhysicsComponent, SingularityLevelChangedEvent>(UpdateBody);
         SubscribeLocalEvent<SharedEventHorizonComponent, SingularityLevelChangedEvent>(UpdateEventHorizon);
         SubscribeLocalEvent<SingularityDistortionComponent, SingularityLevelChangedEvent>(UpdateDistortion);
+
+        var vvHandle = _vvm.GetTypeHandler<SharedSingularityComponent>();
+        vvHandle.AddPath(nameof(SharedSingularityComponent.Level), (_, comp) => comp.Level, SetLevel);
+        vvHandle.AddPath(nameof(SharedSingularityComponent.RadsPerLevel), (_, comp) => comp.RadsPerLevel, SetRadsPerLevel);
+    }
+
+    public override void Shutdown()
+    {
+        var vvHandle = _vvm.GetTypeHandler<SharedSingularityComponent>();
+        vvHandle.RemovePath(nameof(SharedSingularityComponent.Level));
+        vvHandle.RemovePath(nameof(SharedSingularityComponent.RadsPerLevel));
+
+        base.Shutdown();
     }
 
 #region Getters/Setters
@@ -108,6 +123,32 @@ public abstract class SharedSingularitySystem : EntitySystem
             return;
         rads.Intensity = singularity.Level * singularity.RadsPerLevel;
     }
+#region VV
+    /// <summary>
+    /// VV Setter for <see cref="SharedSingularityComponent.Level"/>
+    /// Also sends out an event alerting that the singularities level has changed.
+    /// </summary>
+    /// <param name="uid">The entity hosting the singularity that is being modified.</param>
+    /// <param name="value">The value of the new level the singularity should have.</param>
+    /// <param name="comp">The singularity to change the level of.</param>
+    private void SetLevel(EntityUid uid, byte value, SharedSingularityComponent? comp)
+    {
+        if (Resolve(uid, ref comp))
+            SetLevel(comp, value);
+    }
+
+    /// <summary>
+    /// VV Setter for <see cref="SharedSingularityComponent.RadsPerLevel"/>
+    /// </summary>
+    /// <param name="uid">The entity hosting the singularity that is being modified.</param>
+    /// <param name="value">The new amount of radiation the singularity should emit per its level.</param>
+    /// <param name="comp">The singularity to change the radioactivity of.</param>
+    private void SetRadsPerLevel(EntityUid uid, float value, SharedSingularityComponent? comp)
+    {
+        if (Resolve(uid, ref comp))
+            SetRadsPerLevel(comp, value);
+    }
+#endregion VV
 #endregion Getters/Setters
 #region Derivations
     /// <summary>

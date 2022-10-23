@@ -49,23 +49,4 @@ public abstract class SharedSingularityComponent : Component
         }
     }
 #endregion Serialization
-
-#region VV
-    [ViewVariables(VVAccess.ReadWrite)]
-    [Access(friends:typeof(ViewVariablesPath), Other=AccessPermissions.None, Self=AccessPermissions.None)]
-    public byte VVLevel
-    {
-        get => Level;
-        set { IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedSingularitySystem>().SetLevel(this, value); }
-    }
-
-    [ViewVariables(VVAccess.ReadWrite)]
-    [Access(friends:typeof(ViewVariablesPath), Other=AccessPermissions.None, Self=AccessPermissions.None)]
-    public float VVRadsPerLevel
-    {
-        get => Level;
-        set { IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedSingularitySystem>().SetRadsPerLevel(this, value); }
-    }
-
-#endregion VV
 }

@@ -121,7 +121,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         foreach(var entity in _lookup.GetEntitiesInRange(xform.MapPosition, range, flags: LookupFlags.Anchored))
         {
             if (entity != uid)
-                AttemptConsumeEntity(uid, eventHorizon);
+                AttemptConsumeEntity(entity, eventHorizon);
         }
     }
 

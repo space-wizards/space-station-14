@@ -81,13 +81,4 @@ public sealed class SingularityComponent : SharedSingularityComponent
         return new SingularityComponentState(Level);
     }
 #endregion Serialization
-
-#region VV
-    [ViewVariables(VVAccess.ReadWrite)]
-    public float VVEnergy
-    {
-        get => Energy;
-        set { IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SingularitySystem>().SetEnergy(this, value); }
-    }
-#endregion VV
 }

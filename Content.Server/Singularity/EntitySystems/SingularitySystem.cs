@@ -49,6 +49,17 @@ public sealed class SingularitySystem : SharedSingularitySystem
         // TODO: Figure out where all this coupling should be handled.
         SubscribeLocalEvent<RandomWalkComponent, SingularityLevelChangedEvent>(UpdateRandomWalk);
         SubscribeLocalEvent<GravityWellComponent, SingularityLevelChangedEvent>(UpdateGravityWell);
+
+        var vvHandle = _vvm.GetTypeHandler<SingularityComponent>();
+        vvHandle.AddPath(nameof(SingularityComponent.Energy), (_, comp) => comp.Energy, SetEnergy);
+    }
+
+    public override void Shutdown()
+    {
+        _vvm.GetTypeHandler<SingularityComponent>()
+            .RemovePath(nameof(SingularityComponent.Energy));
+
+        base.Shutdown();
     }
 
     /// <summary>
@@ -124,7 +135,20 @@ public sealed class SingularitySystem : SharedSingularitySystem
             return;
         SetEnergy(singularity, MathHelper.Clamp(newValue, min, max));
     }
-
+#region VV
+    /// <summary>
+    /// VV Setter for <see cref="SingularityComponent.Energy"/>.
+    /// Also updates the level of the singularity accordingly.
+    /// </summary>
+    /// <param name="uid">The entity hosting the singularity that is being modified.</param>
+    /// <param name="value">The amount of energy for the singularity to have.</param>
+    /// <param name="comp">The singularity to set the energy of.</param>
+    private void SetEnergy(EntityUid uid, float value, SingularityComponent? comp)
+    {
+        if (Resolve(uid, ref comp))
+            SetEnergy(comp, value);
+    }
+#endregion VV
 #endregion Getters/Setters
 #region Event Handlers
     /// <summary>

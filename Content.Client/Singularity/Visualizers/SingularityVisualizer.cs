@@ -32,7 +32,7 @@ namespace Content.Client.Singularity.Visualizers
                 return;
             }
 
-            if (!component.TryGetData(SingularityVisuals.Level, out int level))
+            if (!component.TryGetData(SingularityVisuals.Level, out byte level))
             {
                 return;
             }

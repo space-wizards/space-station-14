@@ -34,31 +34,4 @@ public abstract class SharedEventHorizonComponent : Component
     [DataField("horizonFixtureId")]
     [Access(friends:typeof(SharedEventHorizonSystem), Other=AccessPermissions.Read, Self=AccessPermissions.Read)]
     public string? HorizonFixtureId = "EventHorizon";
-
-#region VV
-    [ViewVariables(VVAccess.ReadWrite)]
-    [Access(friends:typeof(ViewVariablesPath), Other=AccessPermissions.None, Self=AccessPermissions.None)]
-    public float VVRadius
-    {
-        get => Radius;
-        set { IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedEventHorizonSystem>().SetRadius(this, value); }
-    }
-
-    [ViewVariables(VVAccess.ReadWrite)]
-    [Access(friends:typeof(ViewVariablesPath), Other=AccessPermissions.None, Self=AccessPermissions.None)]
-    public bool VVCanBreachContainment
-    {
-        get => CanBreachContainment;
-        set { IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedEventHorizonSystem>().SetCanBreachContainment(this, value); }
-    }
-
-    [ViewVariables(VVAccess.ReadWrite)]
-    [Access(friends:typeof(ViewVariablesPath), Other=AccessPermissions.None, Self=AccessPermissions.None)]
-    public string? VVHorizonFixtureId
-    {
-        get => HorizonFixtureId;
-        set { IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedEventHorizonSystem>().SetHorizonFixtureId(this, value); }
-    }
-
-#endregion VV
 }
