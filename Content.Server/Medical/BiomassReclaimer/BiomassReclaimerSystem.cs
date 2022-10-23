@@ -22,6 +22,7 @@ using Content.Server.Mind.Components;
 using Content.Server.Stack;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Configuration;
@@ -93,6 +94,7 @@ namespace Content.Server.Medical.BiomassReclaimer
             SubscribeLocalEvent<BiomassReclaimerComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
             SubscribeLocalEvent<BiomassReclaimerComponent, ClimbedOnEvent>(OnClimbedOn);
             SubscribeLocalEvent<BiomassReclaimerComponent, RefreshPartsEvent>(OnRefreshParts);
+            SubscribeLocalEvent<BiomassReclaimerComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<BiomassReclaimerComponent, SuicideEvent>(OnSuicide);
             SubscribeLocalEvent<ReclaimSuccessfulEvent>(OnReclaimSuccessful);
             SubscribeLocalEvent<ReclaimCancelledEvent>(OnReclaimCancelled);
@@ -125,6 +127,17 @@ namespace Content.Server.Medical.BiomassReclaimer
         {
             RemComp<JitteringComponent>(uid);
             _ambientSoundSystem.SetAmbience(uid, false);
+        }
+
+        private void OnPowerChanged(EntityUid uid, BiomassReclaimerComponent component, ref PowerChangedEvent args)
+        {
+            if (args.Powered)
+            {
+                if (component.ProcessingTimer > 0)
+                    EnsureComp<ActiveBiomassReclaimerComponent>(uid);
+            }
+            else
+                RemComp<ActiveBiomassReclaimerComponent>(component.Owner);
         }
 
         private void OnUnanchorAttempt(EntityUid uid, ActiveBiomassReclaimerComponent component, UnanchorAttemptEvent args)

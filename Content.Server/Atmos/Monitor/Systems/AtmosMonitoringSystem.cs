@@ -142,7 +142,7 @@ public sealed class AtmosMonitorSystem : EntitySystem
         }
     }
 
-    private void OnPowerChangedEvent(EntityUid uid, AtmosMonitorComponent component, PowerChangedEvent args)
+    private void OnPowerChangedEvent(EntityUid uid, AtmosMonitorComponent component, ref PowerChangedEvent args)
     {
         if (TryComp<AtmosDeviceComponent>(uid, out var atmosDeviceComponent))
         {
@@ -337,7 +337,7 @@ public sealed class AtmosMonitorSystem : EntitySystem
     {
         if (!monitor.NetEnabled) return;
 
-        if (!Resolve(monitor.Owner, ref tags))
+        if (!Resolve(monitor.Owner, ref tags, false))
         {
             return;
         }

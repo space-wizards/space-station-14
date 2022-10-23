@@ -1,11 +1,12 @@
 using Content.Shared.Clothing.Components;
 using Content.Shared.Inventory;
+using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Clothing.EntitySystems;
 
-public sealed class ClothingSystem : EntitySystem
+public abstract class ClothingSystem : EntitySystem
 {
     [Dependency] private readonly SharedItemSystem _itemSys = default!;
 
@@ -13,16 +14,28 @@ public sealed class ClothingSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SharedClothingComponent, ComponentGetState>(OnGetState);
-        SubscribeLocalEvent<SharedClothingComponent, ComponentHandleState>(OnHandleState);
+        SubscribeLocalEvent<ClothingComponent, ComponentGetState>(OnGetState);
+        SubscribeLocalEvent<ClothingComponent, ComponentHandleState>(OnHandleState);
+        SubscribeLocalEvent<ClothingComponent, GotEquippedEvent>(OnGotEquipped);
+        SubscribeLocalEvent<ClothingComponent, GotUnequippedEvent>(OnGotUnequipped);
     }
 
-    private void OnGetState(EntityUid uid, SharedClothingComponent component, ref ComponentGetState args)
+    protected virtual void OnGotEquipped(EntityUid uid, ClothingComponent component, GotEquippedEvent args)
+    {
+        component.InSlot = args.Slot;
+    }
+
+    protected virtual void OnGotUnequipped(EntityUid uid, ClothingComponent component, GotUnequippedEvent args)
+    {
+        component.InSlot = null;
+    }
+
+    private void OnGetState(EntityUid uid, ClothingComponent component, ref ComponentGetState args)
     {
         args.State = new ClothingComponentState(component.EquippedPrefix);
     }
 
-    private void OnHandleState(EntityUid uid, SharedClothingComponent component, ref ComponentHandleState args)
+    private void OnHandleState(EntityUid uid, ClothingComponent component, ref ComponentHandleState args)
     {
         if (args.Current is ClothingComponentState state)
             SetEquippedPrefix(uid, state.EquippedPrefix, component);
@@ -30,7 +43,7 @@ public sealed class ClothingSystem : EntitySystem
 
     #region Public API
 
-    public void SetEquippedPrefix(EntityUid uid, string? prefix, SharedClothingComponent? clothing = null)
+    public void SetEquippedPrefix(EntityUid uid, string? prefix, ClothingComponent? clothing = null)
     {
         if (!Resolve(uid, ref clothing, false))
             return;
@@ -43,7 +56,7 @@ public sealed class ClothingSystem : EntitySystem
         Dirty(clothing);
     }
 
-    public void SetSlots(EntityUid uid, SlotFlags slots, SharedClothingComponent? clothing = null)
+    public void SetSlots(EntityUid uid, SlotFlags slots, ClothingComponent? clothing = null)
     {
         if (!Resolve(uid, ref clothing))
             return;
@@ -55,7 +68,7 @@ public sealed class ClothingSystem : EntitySystem
     /// <summary>
     ///     Copy all clothing specific visuals from another item.
     /// </summary>
-    public void CopyVisuals(EntityUid uid, SharedClothingComponent otherClothing, SharedClothingComponent? clothing = null)
+    public void CopyVisuals(EntityUid uid, ClothingComponent otherClothing, ClothingComponent? clothing = null)
     {
         if (!Resolve(uid, ref clothing))
             return;

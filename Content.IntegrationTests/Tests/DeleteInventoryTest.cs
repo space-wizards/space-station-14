@@ -1,14 +1,13 @@
-using System.Threading.Tasks;
-using Content.Server.Clothing.Components;
 using Content.Server.Inventory;
+using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Inventory;
-using Content.Shared.Item;
 using NUnit.Framework;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using System.Threading.Tasks;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -33,11 +32,11 @@ namespace Content.IntegrationTests.Tests
 
                 var entMgr = IoCManager.Resolve<IEntityManager>();
                 var container = entMgr.SpawnEntity(null, MapCoordinates.Nullspace);
-                entMgr.AddComponent<ServerInventoryComponent>(container);
-                entMgr.AddComponent<ContainerManagerComponent>(container);
+                entMgr.EnsureComponent<ServerInventoryComponent>(container);
+                entMgr.EnsureComponent<ContainerManagerComponent>(container);
 
                 var child = entMgr.SpawnEntity(null, MapCoordinates.Nullspace);
-                var item = entMgr.AddComponent<ClothingComponent>(child);
+                var item = entMgr.EnsureComponent<ClothingComponent>(child);
 
                 IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ClothingSystem>().SetSlots(item.Owner, SlotFlags.HEAD, item);
 

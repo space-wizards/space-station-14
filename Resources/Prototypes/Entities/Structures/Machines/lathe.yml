@@ -217,6 +217,7 @@
       - FlashPayload
       - Signaller
       - SignalTrigger
+      - VoiceTrigger
       - PowerCellSmall
       - PowerCellMedium
       - PowerCellHigh
@@ -288,6 +289,7 @@
       - WallmountSubstationElectronics
       - EmitterCircuitboard
       - GasRecyclerMachineCircuitboard
+      - SeedExtractorMachineCircuitboard
   - type: MaterialStorage
     whitelist:
       tags:

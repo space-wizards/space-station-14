@@ -147,10 +147,7 @@ public sealed partial class ExplosionSystem : EntitySystem
             foreach (var (type, value) in explosionType.DamagePerIntensity.DamageDict)
             {
                 if (!damageable.Damage.DamageDict.ContainsKey(type))
-                {
-                    explosionTolerance[index] = float.MaxValue;
                     continue;
-                }
 
                 var ev = new GetExplosionResistanceEvent(explosionType.ID);
                 RaiseLocalEvent(uid, ev, false);

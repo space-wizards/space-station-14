@@ -366,6 +366,7 @@
 
 - type: listing
   id: UplinkToolbox
+  description: A full compliment of tools for the mechanically inclined traitor. Includes a pair of insulated combat gloves, syndicate gas mask and a shoulder holster.
   productEntity: ToolboxSyndicateFilled
   cost:
     Telecrystal: 2
@@ -374,6 +375,7 @@
 
 - type: listing
   id: UplinkSyndicateJawsOfLife
+  description: A combined prying and cutting tool. Useful for entering the station or its departments.
   productEntity: SyndicateJawsOfLife
   cost:
     Telecrystal: 2
@@ -535,14 +537,6 @@
   - UplinkMisc
 
 - type: listing
-  id: UplinkRevolverCapGun
-  productEntity: RevolverCapGun
-  cost:
-    Telecrystal: 4
-  categories:
-  - UplinkMisc
-
-- type: listing
   id: UplinkCigarettes
   productEntity: CigPackSyndicate
   cost:
@@ -611,6 +605,14 @@
  # Pointless
 
 - type: listing
+  id: UplinkRevolverCapGun
+  productEntity: RevolverCapGun
+  cost:
+    Telecrystal: 4
+  categories:
+  - UplinkPointless
+
+- type: listing
   id: UplinkSyndicateStamp
   productEntity: RubberStampSyndicate
   cost:
@@ -647,6 +649,8 @@
 - type: listing
   id: UplinkCostumeClown
   productEntity: ClothingBackpackDuffelSyndicateCostumeClown
+  name: clown costume duffel bag
+  description: Contains a complete Clown outfit. Includes PDA and service radio.
   cost:
     Telecrystal: 4
   categories:

@@ -1,10 +1,11 @@
 ﻿using System.Linq;
 using Content.Server.Administration;
-using Content.Server.Body.Components;
+using Content.Server.Body.Systems;
 using Content.Server.Cargo.Components;
-using Content.Shared.Materials;
 using Content.Server.Stack;
 using Content.Shared.Administration;
+using Content.Shared.Body.Components;
+using Content.Shared.Materials;
 using Content.Shared.MobState.Components;
 using Robust.Shared.Console;
 using Robust.Shared.Containers;
@@ -21,6 +22,8 @@ public sealed class PricingSystem : EntitySystem
 {
     [Dependency] private readonly IConsoleHost _consoleHost = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
+
+    [Dependency] private readonly BodySystem _bodySystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -45,17 +48,15 @@ public sealed class PricingSystem : EntitySystem
 
         foreach (var gid in args)
         {
-            if (!int.TryParse(gid, out var i) || i <= 0)
+            if (!EntityUid.TryParse(gid, out var gridId) || !gridId.IsValid())
             {
                 shell.WriteError($"Invalid grid ID \"{gid}\".");
                 continue;
             }
 
-            var gridId = new GridId(i);
-
             if (!_mapManager.TryGetGrid(gridId, out var mapGrid))
             {
-                shell.WriteError($"Grid \"{i}\" doesn't exist.");
+                shell.WriteError($"Grid \"{gridId}\" doesn't exist.");
                 continue;
             }
 
@@ -86,8 +87,8 @@ public sealed class PricingSystem : EntitySystem
             return;
         }
 
-        var partList = body.Slots.ToList();
-        var totalPartsPresent = partList.Sum(x => x.Part != null ? 1 : 0);
+        var partList = _bodySystem.GetBodyAllSlots(uid, body).ToList();
+        var totalPartsPresent = partList.Sum(x => x.Child != null ? 1 : 0);
         var totalParts = partList.Count;
 
         var partRatio = totalPartsPresent / (double) totalParts;
