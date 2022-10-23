@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.GameTicking;
 using Robust.Server.Player;
 using Robust.Shared.Network;
@@ -41,11 +42,14 @@ namespace Content.Server.GameTicking
             }
 
             var playerCount = $"{_playerManager.PlayerCount}";
+            var readyCount = _playerGameStatuses.Values.Count(x => x == PlayerGameStatus.ReadyToPlay);
             var map = _gameMapManager.GetSelectedMap();
             var mapName = map?.MapName ?? Loc.GetString("game-ticker-no-map-selected");
             var gmTitle = Loc.GetString(Preset.ModeTitle);
             var desc = Loc.GetString(Preset.Description);
-            return Loc.GetString("game-ticker-get-info-text",("roundId", RoundId), ("playerCount", playerCount),("mapName", mapName),("gmTitle", gmTitle),("desc", desc));
+            return RunLevel == GameRunLevel.PreRoundLobby
+                ? Loc.GetString("game-ticker-get-info-preround-text",("roundId", RoundId), ("playerCount", playerCount),("readyCount", readyCount),("mapName", mapName),("gmTitle", gmTitle),("desc", desc))
+                : Loc.GetString("game-ticker-get-info-text",("roundId", RoundId), ("playerCount", playerCount),("mapName", mapName),("gmTitle", gmTitle),("desc", desc));
         }
 
         private TickerLobbyReadyEvent GetStatusSingle(ICommonSession player, PlayerGameStatus gameStatus)
@@ -146,6 +150,8 @@ namespace Content.Server.GameTicking
             _playerGameStatuses[player.UserId] = ready ? PlayerGameStatus.ReadyToPlay : PlayerGameStatus.NotReadyToPlay;
             RaiseNetworkEvent(GetStatusMsg(player), player.ConnectedClient);
             RaiseNetworkEvent(GetStatusSingle(player, status));
+            // update server info to reflect new ready count
+            UpdateInfoText();
         }
     }
 }

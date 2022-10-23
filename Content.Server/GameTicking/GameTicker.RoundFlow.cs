@@ -217,6 +217,7 @@ namespace Content.Server.GameTicking
             ReqWindowAttentionAll();
             UpdateLateJoinStatus();
             AnnounceRound();
+            UpdateInfoText();
 
 #if EXCEPTION_TOLERANCE
             }
