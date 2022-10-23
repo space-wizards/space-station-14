@@ -20,7 +20,6 @@ public sealed class GravityWellSystem : SharedGravityWellSystem
 #region Dependencies
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly SharedSingularitySystem _singulos = default!;
 #endregion Dependencies
 
     /// <summary>
