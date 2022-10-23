@@ -75,6 +75,12 @@ namespace Content.Shared.CCVar
             CVarDef.Create("ambience.volume", 0.0f, CVar.ARCHIVE | CVar.CLIENTONLY);
 
         /// <summary>
+        /// Lobby / round end music volume.
+        /// </summary>
+        public static readonly CVarDef<float> LobbyMusicVolume =
+            CVarDef.Create("ambience.lobby_music_volume", 0.0f, CVar.ARCHIVE | CVar.CLIENTONLY);
+
+        /// <summary>
         /// Whether to play the station ambience (humming) sound
         /// </summary>
         public static readonly CVarDef<bool> StationAmbienceEnabled =

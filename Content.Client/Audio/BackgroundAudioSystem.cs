@@ -70,6 +70,7 @@ namespace Content.Client.Audio
 
             _configManager.OnValueChanged(CCVars.AmbienceVolume, AmbienceCVarChanged);
             _configManager.OnValueChanged(CCVars.LobbyMusicEnabled, LobbyMusicCVarChanged);
+            _configManager.OnValueChanged(CCVars.LobbyMusicVolume, LobbyMusicVolumeCVarChanged);
             _configManager.OnValueChanged(CCVars.StationAmbienceEnabled, StationAmbienceCVarChanged);
             _configManager.OnValueChanged(CCVars.SpaceAmbienceEnabled, SpaceAmbienceCVarChanged);
 
@@ -104,6 +105,7 @@ namespace Content.Client.Audio
 
             _configManager.UnsubValueChanged(CCVars.AmbienceVolume, AmbienceCVarChanged);
             _configManager.UnsubValueChanged(CCVars.LobbyMusicEnabled, LobbyMusicCVarChanged);
+            _configManager.UnsubValueChanged(CCVars.LobbyMusicVolume, LobbyMusicVolumeCVarChanged);
             _configManager.UnsubValueChanged(CCVars.StationAmbienceEnabled, StationAmbienceCVarChanged);
             _configManager.UnsubValueChanged(CCVars.SpaceAmbienceEnabled, SpaceAmbienceCVarChanged);
 
@@ -266,6 +268,14 @@ namespace Content.Client.Audio
             }
         }
 
+        private void LobbyMusicVolumeCVarChanged(float volume)
+        {
+            if (_stateManager.CurrentState is LobbyState)
+            {
+                RestartLobbyMusic();
+            }
+        }
+
         private void LobbyMusicCVarChanged(bool musicEnabled)
         {
             if (!musicEnabled)
@@ -311,7 +321,8 @@ namespace Content.Client.Audio
                 return;
             }
 
-            _lobbyStream = _audio.PlayGlobal(file, Filter.Local(), _lobbyParams);
+            _lobbyStream = _audio.PlayGlobal(file, Filter.Local(),
+                _lobbyParams.WithVolume(_lobbyParams.Volume + _configManager.GetCVar(CCVars.LobbyMusicVolume)));
         }
 
         private void EndLobbyMusic()
