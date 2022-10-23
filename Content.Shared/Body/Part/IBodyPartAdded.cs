@@ -1,5 +1,4 @@
 ﻿using Content.Shared.Body.Components;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.Body.Part
 {
@@ -10,18 +9,16 @@ namespace Content.Shared.Body.Part
     public interface IBodyPartAdded : IComponent
     {
         /// <summary>
-        ///     Called when a <see cref="SharedBodyPartComponent"/> is added to the
+        ///     Called when a <see cref="BodyComponent"/> is added to the
         ///     entity owning this component.
         /// </summary>
         /// <param name="args">Information about the part that was added.</param>
         void BodyPartAdded(BodyPartAddedEventArgs args);
     }
 
-
-    [Serializable, NetSerializable]
     public sealed class BodyPartAddedEventArgs : EventArgs
     {
-        public BodyPartAddedEventArgs(string slot, SharedBodyPartComponent part)
+        public BodyPartAddedEventArgs(string slot, BodyPartComponent part)
         {
             Slot = slot;
             Part = part;
@@ -35,6 +32,6 @@ namespace Content.Shared.Body.Part
         /// <summary>
         ///     The part that was added.
         /// </summary>
-        public SharedBodyPartComponent Part { get; }
+        public BodyPartComponent Part { get; }
     }
 }

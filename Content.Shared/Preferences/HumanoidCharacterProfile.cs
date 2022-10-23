@@ -24,8 +24,6 @@ namespace Content.Shared.Preferences
     [Serializable, NetSerializable]
     public sealed class HumanoidCharacterProfile : ICharacterProfile
     {
-        public const int MinimumAge = 18;
-        public const int MaximumAge = 120;
         public const int MaxNameLength = 32;
         public const int MaxDescLength = 512;
 
@@ -110,7 +108,7 @@ namespace Content.Shared.Preferences
                 "John Doe",
                 "",
                 SharedHumanoidSystem.DefaultSpecies,
-                MinimumAge,
+                18,
                 Sex.Male,
                 Gender.Male,
                 HumanoidCharacterAppearance.Default(),
@@ -136,7 +134,7 @@ namespace Content.Shared.Preferences
                 "John Doe",
                 "",
                 species,
-                MinimumAge,
+                18,
                 Sex.Male,
                 Gender.Male,
                 HumanoidCharacterAppearance.DefaultWithSpecies(species),
@@ -172,15 +170,16 @@ namespace Content.Shared.Preferences
             var random = IoCManager.Resolve<IRobustRandom>();
 
             var sex = Sex.Unsexed;
+            var age = 18;
             if (prototypeManager.TryIndex<SpeciesPrototype>(species, out var speciesPrototype))
             {
                 sex = random.Pick(speciesPrototype.Sexes);
+                age = random.Next(speciesPrototype.MinAge, speciesPrototype.OldAge); // people don't look and keep making 119 year old characters with zero rp, cap it at middle aged
             }
 
             var gender = sex == Sex.Male ? Gender.Male : Gender.Female;
 
             var name = GetName(species, gender);
-            var age = random.Next(MinimumAge, MaximumAge);
 
             return new HumanoidCharacterProfile(name, "", species, age, sex, gender, HumanoidCharacterAppearance.Random(species, sex), ClothingPreference.Jumpsuit, BackpackPreference.Backpack,
                 new Dictionary<string, JobPriority>
@@ -354,8 +353,6 @@ namespace Content.Shared.Preferences
 
         public void EnsureValid()
         {
-            var age = Math.Clamp(Age, MinimumAge, MaximumAge);
-
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
 
             prototypeManager.TryIndex<SpeciesPrototype>(Species, out var speciesPrototype);
@@ -368,13 +365,15 @@ namespace Content.Shared.Preferences
                 _ => Sex.Male // Invalid enum values.
             };
 
-            // ensure the species can be that sex
+            // ensure the species can be that sex and their age fits the founds
+            var age = Age;
             if (speciesPrototype != null)
             {
                 if (!speciesPrototype.Sexes.Contains(sex))
                 {
                     sex = speciesPrototype.Sexes[0];
                 }
+                age = Math.Clamp(Age, speciesPrototype.MinAge, speciesPrototype.MaxAge);
             }
 
             var gender = Gender switch

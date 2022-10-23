@@ -68,6 +68,7 @@
           state: agentbox
           state_open: cardboard_open
     - type: Stealth
+    - type: StealthOnMove
       passiveVisibilityRate: -0.24
       movementVisibilityRate: 0.10
 
@@ -75,7 +76,7 @@
 - type: entity
   id: GhostBox
   parent: StealthBox
-  suffix: 
+  suffix:
   name: ghost box
   description: Beware!
   components:
