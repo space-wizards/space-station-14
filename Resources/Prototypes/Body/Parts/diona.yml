@@ -65,8 +65,6 @@
     state: "l_arm"
   - type: BodyPart
     partType: Arm
-    size: 5
-    compatibility: Biological
     symmetry: Left
 
 - type: entity
@@ -80,8 +78,6 @@
     state: "r_arm"
   - type: BodyPart
     partType: Arm
-    size: 5
-    compatibility: Biological
     symmetry: Right
 
 - type: entity
@@ -95,8 +91,6 @@
     state: "l_hand"
   - type: BodyPart
     partType: Hand
-    size: 3
-    compatibility: Biological
     symmetry: Left
 
 - type: entity
@@ -110,8 +104,6 @@
     state: "r_hand"
   - type: BodyPart
     partType: Hand
-    size: 3
-    compatibility: Biological
     symmetry: Right
 
 - type: entity
@@ -125,8 +117,6 @@
     state: "l_leg"
   - type: BodyPart
     partType: Leg
-    size: 6
-    compatibility: Biological
     symmetry: Left
 
 - type: entity
@@ -140,8 +130,6 @@
     state: "r_leg"
   - type: BodyPart
     partType: Leg
-    size: 6
-    compatibility: Biological
     symmetry: Right
 
 - type: entity
@@ -155,8 +143,6 @@
     state: "l_foot"
   - type: BodyPart
     partType: Foot
-    size: 2
-    compatibility: Biological
     symmetry: Left
 
 - type: entity
@@ -170,6 +156,4 @@
     state: "r_foot"
   - type: BodyPart
     partType: Foot
-    size: 2
-    compatibility: Biological
     symmetry: Right
