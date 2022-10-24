@@ -19,6 +19,7 @@ public sealed class UpgradePowerSystem : EntitySystem
 
         SubscribeLocalEvent<UpgradePowerSupplierComponent, MapInitEvent>(OnSupplierMapInit);
         SubscribeLocalEvent<UpgradePowerSupplierComponent, RefreshPartsEvent>(OnSupplierRefreshParts);
+        SubscribeLocalEvent<UpgradePowerSupplierComponent, UpgradeExamineEvent>(OnSupplierUpgradeExamine);
     }
 
     private void OnMapInit(EntityUid uid, UpgradePowerDrawComponent component, MapInitEvent args)
@@ -87,5 +88,12 @@ public sealed class UpgradePowerSystem : EntitySystem
                 powa.MaxSupply = component.BaseSupplyRate;
                 break;
         }
+    }
+
+    private void OnSupplierUpgradeExamine(EntityUid uid, UpgradePowerSupplierComponent component, UpgradeExamineEvent args)
+    {
+        // UpgradePowerSupplierComponent.PowerSupplyMultiplier is not the actual multiplier, so we have to do this.
+        if (TryComp<PowerSupplierComponent>(uid, out var powa))
+            args.AddPercentageUpgrade("upgrade-power-supply", powa.MaxSupply / component.BaseSupplyRate);
     }
 }

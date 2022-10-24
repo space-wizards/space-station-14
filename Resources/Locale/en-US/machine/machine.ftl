@@ -8,3 +8,4 @@ machine-upgrade-not-upgraded = [color=yellow]{CAPITALIZE($upgraded)}[/color] not
 
 upgrade-power-draw = power draw
 upgrade-max-charge = max charge
+upgrade-power-supply = power supply
