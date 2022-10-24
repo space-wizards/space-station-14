@@ -354,7 +354,7 @@ namespace Content.Shared.CCVar
             CVarDef.Create("agent.starting_balance", 0); //If you're robust enough you could buy some syndie items, but when you start you're on your own
             
         public static readonly CVarDef<int> AgentMaxDifficulty =
-            CVarDef.Create("agent.max_difficulty", 3);
+            CVarDef.Create("agent.max_difficulty", 5);
             
         public static readonly CVarDef<int> AgentMaxPicks =
             CVarDef.Create("agent.max_picks", 25);
