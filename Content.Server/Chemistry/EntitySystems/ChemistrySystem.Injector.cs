@@ -50,14 +50,6 @@ public sealed partial class ChemistrySystem
             if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
                 return;
 
-            // Custom transfer verb
-            AlternativeVerb custom = new();
-            custom.Text = Loc.GetString("comp-solution-transfer-verb-custom-amount");
-            custom.Category = VerbCategory.SetTransferAmount;
-            custom.Act = () => component.UserInterface?.Open(actor.PlayerSession);
-            custom.Priority = 1;
-            args.Verbs.Add(custom);
-
             // Add specific transfer verbs according to the container's size
             var priority = 0;
             foreach (var amount in DefaultTransferAmounts)
@@ -246,6 +238,10 @@ public sealed partial class ChemistrySystem
             return;
 
         var actualDelay = MathF.Max(component.Delay, 1f);
+
+        // Injections take 1 second longer per additional 5u
+        actualDelay += (float) component.TransferAmount / component.Delay - 1;
+
         if (user != target)
         {
             // Create a pop-up for the target
