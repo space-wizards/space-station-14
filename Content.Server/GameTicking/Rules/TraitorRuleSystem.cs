@@ -70,7 +70,14 @@ public sealed class TraitorRuleSystem : GameRuleSystem
         MakeCodewords();
         if (!RuleAdded)
             return;
-
+            
+        if (_gameTicker.Preset?.Rules.Contains(SleeperAgent) ?? true)
+        {
+        MakePhrases();
+        if (!RuleAdded)
+            return;
+        }
+        
         // If the current preset doesn't explicitly contain the traitor game rule, just carry on and remove self.
         if (_gameTicker.Preset?.Rules.Contains(Prototype) ?? false)
         {
