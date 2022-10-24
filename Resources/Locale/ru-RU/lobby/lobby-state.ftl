@@ -7,5 +7,14 @@ lobby-state-ready-button-ready-up-state = Готов
 lobby-state-player-status-not-ready = Не готов
 lobby-state-player-status-ready = Готов
 lobby-state-player-status-observer = Наблюдатель
-lobby-state-player-status-round-not-started = The round hasn't started yet
-lobby-state-player-status-round-time = The round time is: { $hours } hours and { $minutes } minutes
+lobby-state-player-status-round-not-started = Раунд ещё не начался
+lobby-state-player-status-round-time =
+    Время раунда: { $hours } { $hours ->
+        [one] час
+        [few] часа
+        [many] часов
+    } и { $minutes } { $minutes ->
+        [one] минута
+        [few] минуты
+        [many] минут
+    }
