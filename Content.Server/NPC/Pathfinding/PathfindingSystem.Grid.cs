@@ -243,8 +243,10 @@ public sealed partial class PathfindingSystem
             return;
         }
 
-        var oldGridUid = ev.OldPosition.GetGridUid(EntityManager);
-        var gridUid = ev.NewPosition.GetGridUid(EntityManager);
+        var gridUid = ev.Component.GridUid;
+        var oldGridUid = ev.OldPosition.EntityId == ev.NewPosition.EntityId
+            ? gridUid
+            : ev.OldPosition.GetGridUid(EntityManager);
 
         // Not on a grid at all so just ignore.
         if (oldGridUid == gridUid && oldGridUid == null)
