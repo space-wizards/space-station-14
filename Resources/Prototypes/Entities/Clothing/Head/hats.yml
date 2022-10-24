@@ -478,3 +478,14 @@
     sprite: Clothing/Head/Hats/rasta.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/rasta.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadSafari
+  name: safari hat
+  description: Keeps the sun out of your eyes. Makes you a target for the locals.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/safarihat.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/safarihat.rsi

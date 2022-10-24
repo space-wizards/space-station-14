@@ -1,21 +1,4 @@
 Entries:
-- author: zerorulez
-  changes:
-  - {message: Entities without hands can no longer open/close storage and toggle locks.,
-    type: Fix}
-  id: 2015
-  time: '2022-07-26T01:31:25.0000000+00:00'
-- author: BurninDreamer
-  changes:
-  - {message: The Syndicate headset no longer misinforms you in the description!,
-    type: Fix}
-  id: 2016
-  time: '2022-07-26T01:38:30.0000000+00:00'
-- author: DogZeroX
-  changes:
-  - {message: The bread has been unplated., type: Remove}
-  id: 2017
-  time: '2022-07-26T02:37:51.0000000+00:00'
 - author: moony
   changes:
   - {message: Waystation has been pulled from rotation., type: Remove}
@@ -2961,3 +2944,19 @@ Entries:
   - {message: Fixed portable scrubbers not scrubbing from adjacent tiles., type: Fix}
   id: 2514
   time: '2022-10-22T22:49:30.0000000+00:00'
+- author: Nairod
+  changes:
+  - {message: Added the head's mantles to the uniform printer., type: Add}
+  id: 2515
+  time: '2022-10-23T17:56:59.0000000+00:00'
+- author: checkraze
+  changes:
+  - {message: Added the Zookeeper. Find them patrolling and caring for Kettle station's
+      various wildlife soon!, type: Add}
+  id: 2516
+  time: '2022-10-23T19:42:25.0000000+00:00'
+- author: Cheackraze
+  changes:
+  - {message: Added a Zoo and a few animals to Kettle!, type: Add}
+  id: 2517
+  time: '2022-10-24T02:30:37.0000000+00:00'
