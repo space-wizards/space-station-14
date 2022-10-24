@@ -85,4 +85,3 @@ tiles-cave-drought = cave drought
 tiles-techmaint3-floor = grated maintenance floor
 tiles-techmaint2-floor = steel maintenance floor
 tiles-wood2 = wood pattern floor
-tiles-rustymaint-floor = rusty maintenance floor

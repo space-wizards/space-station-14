@@ -262,8 +262,3 @@
   id: FloorTileGratingMaint
   name: grating maint floor
   spawn: FloorTileItemGratingMaint
-
-- type: stack
-  id: FloorTileRustyMaint
-  name: rusty maint floor
-  spawn: FloorTileItemRustyMaint

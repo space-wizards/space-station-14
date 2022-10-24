@@ -762,18 +762,3 @@
   - type: Stack
     stackType: FloorTileGratingMaint
 
-- type: entity
-  name: rusty maint floor
-  parent: FloorTileItemBase
-  id: FloorTileItemRustyMaint
-  components:
-  - type: Sprite
-    state: rustymaintfloor
-  - type: Item
-    heldPrefix: steel
-  - type: FloorTile
-    outputs:
-      - Plating
-      - FloorRustyMaint
-  - type: Stack
-    stackType: FloorTileRustyMaint
