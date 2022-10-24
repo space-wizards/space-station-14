@@ -763,7 +763,7 @@
     stackType: FloorTileGratingMaint
 
 - type: entity
-  name: grating maint floor
+  name: rusty maint floor
   parent: FloorTileItemBase
   id: FloorTileItemRustyMaint
   components:
