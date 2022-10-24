@@ -45,6 +45,8 @@
   requirements:
     - !type:TraitorRequirement {}
     - !type:SleeperAgentInfiltrationRequirement
+    - !type:NotRoleRequirement
+      roleId: Mime
   conditions:
     - !type:ActivateSleeperAgentCondition {}
   canBeDuplicate: true
