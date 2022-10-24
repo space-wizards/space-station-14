@@ -1,8 +1,8 @@
 ﻿using Content.Server.Access.Systems;
-using Content.Server.CharacterAppearance.Systems;
 using Content.Server.DetailExaminable;
 using Content.Server.Hands.Components;
 using Content.Server.Hands.Systems;
+using Content.Server.Humanoid;
 using Content.Server.IdentityManagement;
 using Content.Server.PDA;
 using Content.Server.Roles;
@@ -10,11 +10,11 @@ using Content.Server.Station.Components;
 using Content.Server.Mind.Commands;
 using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
+using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
-using Content.Shared.Species;
 using JetBrains.Annotations;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
@@ -34,7 +34,7 @@ public sealed class StationSpawningSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
     [Dependency] private readonly HandsSystem _handsSystem = default!;
-    [Dependency] private readonly HumanoidAppearanceSystem _humanoidAppearanceSystem = default!;
+    [Dependency] private readonly HumanoidSystem _humanoidSystem = default!;
     [Dependency] private readonly IdCardSystem _cardSystem = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly PDASystem _pdaSystem = default!;
@@ -106,7 +106,7 @@ public sealed class StationSpawningSystem : EntitySystem
         }
 
         var entity = EntityManager.SpawnEntity(
-            _prototypeManager.Index<SpeciesPrototype>(profile?.Species ?? SpeciesManager.DefaultSpecies).Prototype,
+            _prototypeManager.Index<SpeciesPrototype>(profile?.Species ?? HumanoidSystem.DefaultSpecies).Prototype,
             coordinates);
 
         if (job?.StartingGear != null)
@@ -119,7 +119,7 @@ public sealed class StationSpawningSystem : EntitySystem
 
         if (profile != null)
         {
-            _humanoidAppearanceSystem.UpdateFromProfile(entity, profile);
+            _humanoidSystem.LoadProfile(entity, profile);
             EntityManager.GetComponent<MetaDataComponent>(entity).EntityName = profile.Name;
             if (profile.FlavorText != "" && _configurationManager.GetCVar(CCVars.FlavorText))
             {

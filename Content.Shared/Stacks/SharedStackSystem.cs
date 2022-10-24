@@ -13,9 +13,12 @@ namespace Content.Shared.Stacks
     [UsedImplicitly]
     public abstract class SharedStackSystem : EntitySystem
     {
+        [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
         [Dependency] protected readonly SharedPopupSystem PopupSystem = default!;
         [Dependency] protected readonly SharedHandsSystem HandsSystem = default!;
+        [Dependency] protected readonly SharedTransformSystem Xform = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IViewVariablesManager _vvm = default!;
 
         public override void Initialize()
         {
@@ -26,6 +29,17 @@ namespace Content.Shared.Stacks
             SubscribeLocalEvent<SharedStackComponent, ComponentStartup>(OnStackStarted);
             SubscribeLocalEvent<SharedStackComponent, ExaminedEvent>(OnStackExamined);
             SubscribeLocalEvent<SharedStackComponent, InteractUsingEvent>(OnStackInteractUsing);
+
+            _vvm.GetTypeHandler<SharedStackComponent>()
+                .AddPath(nameof(SharedStackComponent.Count), (_, comp) => comp.Count, SetCount);
+        }
+
+        public override void Shutdown()
+        {
+            base.Shutdown();
+
+            _vvm.GetTypeHandler<SharedStackComponent>()
+                .RemovePath(nameof(SharedStackComponent.Count));
         }
 
         private void OnStackInteractUsing(EntityUid uid, SharedStackComponent stack, InteractUsingEvent args)
@@ -153,10 +167,7 @@ namespace Content.Shared.Stacks
             component.Count = amount;
             Dirty(component);
 
-            // Change appearance data.
-            if (TryComp(uid, out AppearanceComponent? appearance))
-                appearance.SetData(StackVisuals.Actual, component.Count);
-
+            Appearance.SetData(uid, StackVisuals.Actual, component.Count);
             RaiseLocalEvent(uid, new StackCountChangedEvent(old, component.Count), false);
         }
 
@@ -189,9 +200,9 @@ namespace Content.Shared.Stacks
             if (!TryComp(uid, out AppearanceComponent? appearance))
                 return;
 
-            appearance.SetData(StackVisuals.Actual, component.Count);
-            appearance.SetData(StackVisuals.MaxCount, component.MaxCount);
-            appearance.SetData(StackVisuals.Hide, false);
+            Appearance.SetData(uid, StackVisuals.Actual, component.Count, appearance);
+            Appearance.SetData(uid, StackVisuals.MaxCount, component.MaxCount, appearance);
+            Appearance.SetData(uid, StackVisuals.Hide, false, appearance);
         }
 
         private void OnStackGetState(EntityUid uid, SharedStackComponent component, ref ComponentGetState args)

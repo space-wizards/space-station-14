@@ -19,10 +19,7 @@
   id: Bee
 
 - type: Tag
-  id: BrassInstrument
-
-- type: Tag
-  id: Brutepack
+  id: BikeHorn
 
 - type: Tag
   id: BodyBag
@@ -41,6 +38,18 @@
 
 - type: Tag
   id: Bottle
+
+- type: Tag
+  id: BoxHug
+
+- type: Tag
+  id: BrassInstrument
+
+- type: Tag
+  id: Brutepack
+
+- type: Tag
+  id: Bucket
 
 - type: Tag
   id: BulletFoam
@@ -106,6 +115,9 @@
   id: CigPack
 
 - type: Tag
+  id: ClownRubberStamp
+
+- type: Tag
   id: Crayon
 
 - type: Tag
@@ -149,6 +161,9 @@
 
 - type: Tag
   id: CombatKnife
+
+- type: Tag
+  id: ComputerTelevisionCircuitboard
 
 - type: Tag
   id: Debug
@@ -238,6 +253,9 @@
   id: GlassBeaker
 
 - type: Tag
+  id: GlassShard
+
+- type: Tag
   id: Grenade
 
 - type: Tag
@@ -245,6 +263,9 @@
 
 - type: Tag
   id: Handcuffs
+
+- type: Tag
+  id: Head
 
 - type: Tag
   id: HideContextMenu
@@ -327,10 +348,10 @@
   id: MagazinePistolSubMachineGun
 
 - type: Tag
-  id: Matchstick
+  id: MailingUnitElectronics
 
 - type: Tag
-  id: MailingUnitElectronics
+  id: Matchstick
 
 - type: Tag
   id: Medkit
@@ -343,6 +364,9 @@
 
 - type: Tag
   id: MicrowaveSelfUnsafe
+
+- type: Tag
+  id: MindTransferTarget
 
 - type: Tag
   id: MonkeyCube
@@ -445,10 +469,19 @@
   id: Shovel
 
 - type: Tag
+  id: SkeletonMotorcycleKeys
+
+- type: Tag
   id: Smokable
   
 - type: Tag
   id: Soap
+
+- type: Tag
+  id: SolarAssemblyPart
+
+- type: Tag
+  id: SolarTrackerElectronics
 
 - type: Tag
   id: Spray
@@ -458,6 +491,9 @@
 
 - type: Tag
   id: StringInstrument
+
+- type: Tag
+  id: SurveillanceCameraMonitorCircuitboard
 
 - type: Tag
   id: Syndicate
@@ -482,6 +518,15 @@
 
 - type: Tag
   id: Wall
+
+- type: Tag
+  id: WallmountGeneratorAPUElectronics
+
+- type: Tag
+  id: WallmountGeneratorElectronics
+
+- type: Tag
+  id: WallmountSubstationElectronics
 
 - type: Tag
   id: Window

@@ -1,6 +1,6 @@
 - type: disease
   id: Ultragigacancer
-  name: ultragigacancer
+  name: disease-proto-ultragigacancer
   infectious: false
   cureResist: 0.15
   effects:
@@ -20,7 +20,7 @@
 
 - type: disease
   id: SpectralTiredness
-  name: spectral tiredness
+  name: disease-proto-spectral-tiredness
   infectious: false
   effects:
     - !type:DiseaseGenericStatusEffect
@@ -47,7 +47,7 @@
 
 - type: disease
   id: StageIIIALungCancer
-  name: Stage IIIA Lung Cancer
+  name: disease-proto-lung-cancer
   infectious: false
   cureResist: 1.0
   effects:

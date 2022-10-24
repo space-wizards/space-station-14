@@ -22,9 +22,7 @@ namespace Content.IntegrationTests.Tests.Body
   components:
   - type: SolutionContainerManager
   - type: Body
-    template: HumanoidTemplate
-    preset: HumanPreset
-    centerSlot: torso
+    prototype: Human
   - type: MobState
     thresholds:
       0: Alive
@@ -49,7 +47,8 @@ namespace Content.IntegrationTests.Tests.Body
         public async Task AirConsistencyTest()
         {
             // --- Setup
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
+                {NoClient = true, ExtraPrototypes = Prototypes});
             var server = pairTracker.Pair.Server;
 
             await server.WaitIdleAsync();
@@ -62,7 +61,7 @@ namespace Content.IntegrationTests.Tests.Body
 
             MapId mapId;
             EntityUid? grid = null;
-            SharedBodyComponent body = default;
+            BodyComponent body = default;
             EntityUid human = default;
             GridAtmosphereComponent relevantAtmos = default;
             float startingMoles = 0.0f;
@@ -127,7 +126,8 @@ namespace Content.IntegrationTests.Tests.Body
         [Test]
         public async Task NoSuffocationTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
+                {NoClient = true, ExtraPrototypes = Prototypes});
             var server = pairTracker.Pair.Server;
 
             var mapLoader = server.ResolveDependency<IMapLoader>();
@@ -155,7 +155,7 @@ namespace Content.IntegrationTests.Tests.Body
                 var coordinates = new EntityCoordinates(grid.Value, center);
                 human = entityManager.SpawnEntity("HumanBodyDummy", coordinates);
 
-                Assert.True(entityManager.HasComponent<SharedBodyComponent>(human));
+                Assert.True(entityManager.HasComponent<BodyComponent>(human));
                 Assert.True(entityManager.TryGetComponent(human, out respirator));
                 Assert.False(respirator.SuffocationCycles > respirator.SuffocationCycleThreshold);
             });
@@ -167,7 +167,8 @@ namespace Content.IntegrationTests.Tests.Body
                 await server.WaitRunTicks(increment);
                 await server.WaitAssertion(() =>
                 {
-                    Assert.False(respirator.SuffocationCycles > respirator.SuffocationCycleThreshold, $"Entity {entityManager.GetComponent<MetaDataComponent>(human).EntityName} is suffocating on tick {tick}");
+                    Assert.False(respirator.SuffocationCycles > respirator.SuffocationCycleThreshold,
+                        $"Entity {entityManager.GetComponent<MetaDataComponent>(human).EntityName} is suffocating on tick {tick}");
                 });
             }
 

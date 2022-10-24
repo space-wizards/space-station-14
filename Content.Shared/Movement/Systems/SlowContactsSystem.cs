@@ -1,7 +1,6 @@
 using Content.Shared.Movement.Components;
 using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 
@@ -74,6 +73,9 @@ public sealed class SlowContactsSystem : EntitySystem
         {
             var ent = colliding.Owner;
             if (!TryComp<SlowContactsComponent>(ent, out var slowContactsComponent))
+                continue;
+
+            if (slowContactsComponent.IgnoreWhitelist != null && slowContactsComponent.IgnoreWhitelist.IsValid(ent))
                 continue;
 
             walkSpeed = Math.Min(walkSpeed, slowContactsComponent.WalkSpeedModifier);
