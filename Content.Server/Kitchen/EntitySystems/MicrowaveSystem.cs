@@ -1,22 +1,22 @@
 using System.Linq;
+using Content.Server.Body.Systems;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Construction;
-using Content.Server.Kitchen.Components;
-using Content.Shared.Destructible;
-using Content.Shared.Interaction;
-using Content.Shared.Item;
-using Content.Shared.Kitchen.Components;
-using Robust.Shared.Player;
-using Content.Shared.Interaction.Events;
-using Content.Shared.Body.Components;
-using Content.Shared.Body.Part;
 using Content.Server.Hands.Systems;
+using Content.Server.Kitchen.Components;
 using Content.Server.Power.Components;
 using Content.Server.Temperature.Components;
 using Content.Server.Temperature.Systems;
+using Content.Shared.Body.Components;
+using Content.Shared.Body.Part;
+using Content.Shared.Destructible;
 using Content.Shared.FixedPoint;
+using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
+using Content.Shared.Item;
 using Content.Shared.Kitchen;
+using Content.Shared.Kitchen.Components;
 using Content.Shared.Popups;
 using Content.Shared.Power;
 using Content.Shared.Tag;
@@ -24,11 +24,13 @@ using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
+using Robust.Shared.Player;
 
 namespace Content.Server.Kitchen.EntitySystems
 {
     public sealed class MicrowaveSystem : EntitySystem
     {
+        [Dependency] private readonly BodySystem _bodySystem = default!;
         [Dependency] private readonly ContainerSystem _container = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly RecipeManager _recipeManager = default!;
@@ -182,29 +184,19 @@ namespace Content.Server.Kitchen.EntitySystems
             var victim = args.Victim;
             var headCount = 0;
 
-            if (TryComp<SharedBodyComponent>(victim, out var body))
+            if (TryComp<BodyComponent>(victim, out var body))
             {
-                var headSlots = body.GetSlotsOfType(BodyPartType.Head);
+                var headSlots = _bodySystem.GetBodyChildrenOfType(victim, BodyPartType.Head, body);
 
-                foreach (var slot in headSlots)
+                foreach (var part in headSlots)
                 {
-                    var part = slot.Part;
-
-                    if (part == null ||
-                        !body.TryDropPart(slot, out var dropped))
+                    if (!_bodySystem.OrphanPart(part.Id, part.Component))
                     {
                         continue;
                     }
 
-                    foreach (var droppedPart in dropped.Values)
-                    {
-                        if (droppedPart.PartType != BodyPartType.Head)
-                        {
-                            continue;
-                        }
-                        component.Storage.Insert(droppedPart.Owner);
-                        headCount++;
-                    }
+                    component.Storage.Insert(part.Id);
+                    headCount++;
                 }
             }
 

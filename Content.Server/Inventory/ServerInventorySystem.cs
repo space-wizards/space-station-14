@@ -1,7 +1,7 @@
-using Content.Server.Clothing.Components;
 using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Server.Temperature.Systems;
+using Content.Shared.Clothing.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;

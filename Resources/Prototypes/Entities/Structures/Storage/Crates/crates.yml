@@ -1,53 +1,22 @@
 - type: entity
+  parent: CrateBaseWeldable
   id: CrateGenericSteel
   name: crate
-  parent: CrateGeneric
   components:
-  - type: Sprite
-    sprite: Structures/Storage/Crates/generic.rsi
-    layers:
-    - state: crate
-    - state: crate_door
-      map: ["enum.StorageVisualLayers.Door"]
-    - state: welded
-      visible: false
-      map: ["enum.WeldableLayers.BaseWelded"]
   - type: Icon
     sprite: Structures/Storage/Crates/generic.rsi
-    state: crate_icon
-  - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state_open: crate_open
-      state_closed: crate_door
-  - type: Construction
-    graph: CrateGenericSteel
-    node: crategenericsteel
-    containers:
-    - entity_storage
+  - type: Sprite
+    sprite: Structures/Storage/Crates/generic.rsi
 
 - type: entity
+  parent: CrateBaseWeldable
   id: CratePlastic
   name: plastic crate
-  parent: CrateGeneric
   components:
-  - type: Sprite
-    sprite: Structures/Storage/Crates/plastic.rsi
-    layers:
-    - state: plasticcrate
-    - state: plasticcrate_door
-      map: ["enum.StorageVisualLayers.Door"]
-    - state: welded
-      visible: false
-      map: ["enum.WeldableLayers.BaseWelded"]
   - type: Icon
     sprite: Structures/Storage/Crates/plastic.rsi
-    state: plasticcrate_icon
-  - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state_open: plasticcrate_open
-      state_closed: plasticcrate_door
+  - type: Sprite
+    sprite: Structures/Storage/Crates/plastic.rsi
   - type: Construction
     graph: CratePlastic
     node: crateplastic
@@ -55,570 +24,229 @@
     - entity_storage
 
 - type: entity
+  parent: CrateBaseWeldable
   id: CrateFreezer
   name: freezer
-  parent: CrateGeneric
   components:
-  - type: Sprite
-    sprite: Structures/Storage/Crates/freezer.rsi
-    layers:
-    - state: freezer
-    - state: freezer_door
-      map: ["enum.StorageVisualLayers.Door"]
-    - state: welded
-      visible: false
-      map: ["enum.WeldableLayers.BaseWelded"]
   - type: Icon
     sprite: Structures/Storage/Crates/freezer.rsi
-    state: freezer_icon
-  - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state_open: freezer_open
-      state_closed: freezer_door
-  - type: Construction
-    graph: CrateGenericSteel
-    node: crategenericsteel
-    containers:
-    - entity_storage
+  - type: Sprite
+    sprite: Structures/Storage/Crates/freezer.rsi
   - type: AntiRottingContainer
 
 - type: entity
   id: CrateHydroponics
   name: hydroponics crate
-  parent: CrateGeneric
+  parent: CrateBaseWeldable
   components:
-  - type: Sprite
-    sprite: Structures/Storage/Crates/hydro.rsi
-    layers:
-    - state: hydrocrate
-    - state: hydrocrate_door
-      map: ["enum.StorageVisualLayers.Door"]
-    - state: welded
-      visible: false
-      map: ["enum.WeldableLayers.BaseWelded"]
   - type: Icon
-    sprite: Structures/Storage/Crates/hydro.rsi
-    state: hydrocrate_icon
-  - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state_open: hydrocrate_open
-      state_closed: hydrocrate_door
-  - type: Construction
-    graph: CrateGenericSteel
-    node: crategenericsteel
-    containers:
-    - entity_storage
+    sprite: Structures/Storage/Crates/hydroponics.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/hydroponics.rsi
 
 - type: entity
+  parent: CrateBaseWeldable
   id: CrateMedical
   name: medical crate
-  parent: CrateGeneric
   components:
-  - type: Sprite
-    sprite: Structures/Storage/Crates/medical.rsi
-    layers:
-    - state: medicalcrate
-    - state: medicalcrate_door
-      map: ["enum.StorageVisualLayers.Door"]
-    - state: welded
-      visible: false
-      map: ["enum.WeldableLayers.BaseWelded"]
   - type: Icon
     sprite: Structures/Storage/Crates/medical.rsi
-    state: medicalcrate_icon
-  - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state_open: medicalcrate_open
-      state_closed: medicalcrate_door
-  - type: Construction
-    graph: CrateGenericSteel
-    node: crategenericsteel
-    containers:
-    - entity_storage
+  - type: Sprite
+    sprite: Structures/Storage/Crates/medical.rsi
 
 - type: entity
+  parent: CrateBaseWeldable
   id: CrateRadiation
   name: radiation gear crate
   description: Is not actually lead lined. Do not store your plutonium in this.
-  parent: CrateGeneric
   components:
-  - type: Sprite
-    sprite: Structures/Storage/Crates/radiation.rsi
-    layers:
-    - state: radiationcrate
-    - state: radiationcrate_door
-      map: ["enum.StorageVisualLayers.Door"]
-    - state: welded
-      visible: false
-      map: ["enum.WeldableLayers.BaseWelded"]
   - type: Icon
     sprite: Structures/Storage/Crates/radiation.rsi
-    state: radiationcrate_icon
-  - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state_open: radiationcrate_open
-      state_closed: radiationcrate_door
-  - type: Construction
-    graph: CrateGenericSteel
-    node: crategenericsteel
-    containers:
-    - entity_storage
+  - type: Sprite
+    sprite: Structures/Storage/Crates/radiation.rsi
 
 - type: entity
+  parent: CrateBaseWeldable
   id: CrateInternals
   name: oxygen crate
-  parent: CrateGeneric
   components:
-  - type: Sprite
-    sprite: Structures/Storage/Crates/o2.rsi
-    layers:
-    - state: o2crate
-    - state: o2crate_door
-      map: ["enum.StorageVisualLayers.Door"]
-    - state: welded
-      visible: false
-      map: ["enum.WeldableLayers.BaseWelded"]
   - type: Icon
     sprite: Structures/Storage/Crates/o2.rsi
-    state: o2crate_icon
-  - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state_open: o2crate_open
-      state_closed: o2crate_door
-  - type: Construction
-    graph: CrateGenericSteel
-    node: crategenericsteel
-    containers:
-    - entity_storage
+  - type: Sprite
+    sprite: Structures/Storage/Crates/o2.rsi
 
 - type: entity
+  parent: CrateBaseWeldable
   id: CrateElectrical
   name: electrical crate
-  parent: CrateGeneric
   components:
-  - type: Sprite
-    sprite: Structures/Storage/Crates/electricalcrate.rsi
-    layers:
-    - state: electricalcrate
-    - state: electricalcrate_door
-      map: ["enum.StorageVisualLayers.Door"]
-    - state: welded
-      visible: false
-      map: ["enum.WeldableLayers.BaseWelded"]
   - type: Icon
-    sprite: Structures/Storage/Crates/electricalcrate.rsi
-    state: electricalcrate_icon
-  - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state_open: electricalcrate_open
-      state_closed: electricalcrate_door
-  - type: Construction
-    graph: CrateGenericSteel
-    node: crategenericsteel
-    containers:
-    - entity_storage
+    sprite: Structures/Storage/Crates/electrical.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/electrical.rsi
 
 - type: entity
+  parent: CrateBaseWeldable
   id: CrateEngineering
   name: engineering crate
-  parent: CrateGeneric
   components:
-  - type: Sprite
-    sprite: Structures/Storage/Crates/engicrate.rsi
-    layers:
-    - state: engicrate
-    - state: engicrate_door
-      map: ["enum.StorageVisualLayers.Door"]
-    - state: welded
-      visible: false
-      map: ["enum.WeldableLayers.BaseWelded"]
   - type: Icon
-    sprite: Structures/Storage/Crates/engicrate.rsi
-    state: engicrate_icon
-  - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state_open: engicrate_open
-      state_closed: engicrate_door
-  - type: Construction
-    graph: CrateGenericSteel
-    node: crategenericsteel
-    containers:
-    - entity_storage
+    sprite: Structures/Storage/Crates/engineering.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/engineering.rsi
 
 - type: entity
+  parent: CrateBaseWeldable
   id: CrateScience
   name: science crate
-  parent: CrateGeneric
   components:
-  - type: Sprite
-    sprite: Structures/Storage/Crates/scicrate.rsi
-    layers:
-    - state: scicrate
-    - state: scicrate_door
-      map: ["enum.StorageVisualLayers.Door"]
-    - state: welded
-      visible: false
-      map: ["enum.WeldableLayers.BaseWelded"]
   - type: Icon
-    sprite: Structures/Storage/Crates/scicrate.rsi
-    state: scicrate_icon
-  - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state_open: scicrate_open
-      state_closed: scicrate_door
-  - type: Construction
-    graph: CrateGenericSteel
-    node: crategenericsteel
-    containers:
-    - entity_storage
+    sprite: Structures/Storage/Crates/science.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/science.rsi
 
 - type: entity
+  parent: CrateBaseWeldable
   id: CrateSurgery
   name: surgery crate
-  parent: CrateGeneric
   components:
-  - type: Sprite
-    sprite: Structures/Storage/Crates/surgerycrate.rsi
-    layers:
-    - state: surgerycrate
-    - state: surgerycrate_door
-      map: ["enum.StorageVisualLayers.Door"]
-    - state: welded
-      visible: false
-      map: ["enum.WeldableLayers.BaseWelded"]
   - type: Icon
-    sprite: Structures/Storage/Crates/surgerycrate.rsi
-    state: surgerycrate_icon
-  - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state_open: surgerycrate_open
-      state_closed: surgerycrate_door
-  - type: Construction
-    graph: CrateGenericSteel
-    node: crategenericsteel
-    containers:
-    - entity_storage
+    sprite: Structures/Storage/Crates/surgery.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/surgery.rsi
 
 # Secure Crates
 
 - type: entity
+  parent: CrateBaseSecure
   id: CrateSecgear
   name: secgear crate
-  parent: CrateBaseSecure
   components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/sec_gear.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/sec_gear.rsi
   - type: AccessReader
     access: [["Security"]]
-  - type: Lock
-  - type: Sprite
-    sprite: Structures/Storage/Crates/sec_gear.rsi
-    layers:
-    - state: secgearcrate
-    - state: secgearcrate_door
-      map: ["enum.StorageVisualLayers.Door"]
-    - state: welded
-      visible: false
-      map: ["enum.WeldableLayers.BaseWelded"]
-    - state: locked
-      map: ["enum.StorageVisualLayers.Lock"]
-      shader: unshaded
-  - type: Icon
-    sprite: Structures/Storage/Crates/sec_gear.rsi
-    state: secgearcrate_icon
-  - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state_open: secgearcrate_open
-      state_closed: secgearcrate_door
 
 - type: entity
+  parent: CrateBaseSecure
   id: CrateEngineeringSecure
   name: secure engineering crate
-  parent: CrateBaseSecure
   components:
-  - type: AccessReader
-    access: [["Engineering"]]
-  - type: Lock
-  - type: Sprite
-    sprite: Structures/Storage/Crates/engicrate_secure.rsi
-    layers:
-    - state: engicratesecure
-    - state: engicratesecure_door
-      map: ["enum.StorageVisualLayers.Door"]
-    - state: welded
-      visible: false
-      map: ["enum.WeldableLayers.BaseWelded"]
-    - state: locked
-      map: ["enum.StorageVisualLayers.Lock"]
-      shader: unshaded
   - type: Icon
     sprite: Structures/Storage/Crates/engicrate_secure.rsi
-    state: engicratesecure_icon
-  - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state_open: engicratesecure_open
-      state_closed: engicratesecure_door
+  - type: Sprite
+    sprite: Structures/Storage/Crates/engicrate_secure.rsi
+  - type: AccessReader
+    access: [["Engineering"]]
 
 - type: entity
+  parent: CrateBaseSecure
   id: CrateMedicalSecure
   name: secure medical crate
-  parent: CrateBaseSecure
   components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/medicalcrate_secure.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/medicalcrate_secure.rsi
   - type: AccessReader
     access: [["Medical"]]
-  - type: Lock
-  - type: Sprite
-    sprite: Structures/Storage/Crates/medicalcrate_secure.rsi
-    layers:
-    - state: medicalcratesecure
-    - state: medicalcratesecure_door
-      map: ["enum.StorageVisualLayers.Door"]
-    - state: welded
-      visible: false
-      map: ["enum.WeldableLayers.BaseWelded"]
-    - state: locked
-      map: ["enum.StorageVisualLayers.Lock"]
-      shader: unshaded
-  - type: Icon
-    sprite: Structures/Storage/Crates/medicalcrate_secure.rsi
-    state: medicalcratesecure_icon
-  - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state_open: medicalcratesecure_open
-      state_closed: medicalcratesecure_door
 
 - type: entity
+  parent: CrateBaseSecure
   id: CratePrivateSecure
   name: private crate
-  parent: CrateBaseSecure
   components:
-  - type: AccessReader
-  - type: Lock
-  - type: Sprite
-    sprite: Structures/Storage/Crates/privatecrate_secure.rsi
-    layers:
-    - state: privatecrate
-    - state: privatecrate_door
-      map: ["enum.StorageVisualLayers.Door"]
-    - state: welded
-      visible: false
-      map: ["enum.WeldableLayers.BaseWelded"]
-    - state: locked
-      map: ["enum.StorageVisualLayers.Lock"]
-      shader: unshaded
   - type: Icon
     sprite: Structures/Storage/Crates/privatecrate_secure.rsi
-    state: privatecrate_icon
-  - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state_open: privatecrate_open
-      state_closed: privatecrate_door
+  - type: Sprite
+    sprite: Structures/Storage/Crates/privatecrate_secure.rsi
 
 - type: entity
+  parent: CrateBaseSecure
   id: CrateScienceSecure
   name: secure science crate
-  parent: CrateBaseSecure
   components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/scicrate_secure.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/scicrate_secure.rsi
   - type: AccessReader
     access: [["Research"]]
-  - type: Lock
-  - type: Sprite
-    sprite: Structures/Storage/Crates/scicrate_secure.rsi
-    layers:
-    - state: scicratesecure
-    - state: scicratesecure_door
-      map: ["enum.StorageVisualLayers.Door"]
-    - state: welded
-      visible: false
-      map: ["enum.WeldableLayers.BaseWelded"]
-    - state: locked
-      map: ["enum.StorageVisualLayers.Lock"]
-      shader: unshaded
-  - type: Icon
-    sprite: Structures/Storage/Crates/scicrate_secure.rsi
-    state: scicratesecure_icon
-  - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state_open: scicratesecure_open
-      state_closed: scicratesecure_door
 
 - type: entity
+  parent: CrateBaseSecure
   id: CratePlasma
   name: plasma crate
-  parent: CrateBaseSecure
   components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/plasma.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/plasma.rsi
   - type: AccessReader
     access: [["Engineering"]]
-  - type: Lock
-  - type: Sprite
-    sprite: Structures/Storage/Crates/plasma.rsi
-    layers:
-    - state: plasmacrate
-    - state: plasmacrate_door
-      map: ["enum.StorageVisualLayers.Door"]
-    - state: welded
-      visible: false
-      map: ["enum.WeldableLayers.BaseWelded"]
-    - state: locked
-      map: ["enum.StorageVisualLayers.Lock"]
-      shader: unshaded
-  - type: Icon
-    sprite: Structures/Storage/Crates/plasma.rsi
-    state: plasmacrate_icon
-  - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state_open: plasmacrate_open
-      state_closed: plasmacrate_door
 
 - type: entity
+  parent: CrateBaseSecure
   id: CrateSecure
   name: secure crate
-  parent: CrateBaseSecure
   components:
-  - type: AccessReader
-  - type: Lock
-  - type: Sprite
-    sprite: Structures/Storage/Crates/secure.rsi
-    layers:
-    - state: securecrate
-    - state: securecrate_door
-      map: ["enum.StorageVisualLayers.Door"]
-    - state: welded
-      visible: false
-      map: ["enum.WeldableLayers.BaseWelded"]
-    - state: locked
-      map: ["enum.StorageVisualLayers.Lock"]
-      shader: unshaded
-  - type: Icon
-    sprite: Structures/Storage/Crates/secure.rsi
-    state: securecrate_icon
-  - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state_open: securecrate_open
-      state_closed: securecrate_door
+    - type: Icon
+      sprite: Structures/Storage/Crates/secure.rsi
+    - type: Sprite
+      sprite: Structures/Storage/Crates/secure.rsi
 
 - type: entity
+  parent: CrateBaseSecure
   id: CrateHydroSecure
   name: secure hydroponics crate
-  parent: CrateBaseSecure
   components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/hydro_secure.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/hydro_secure.rsi
   - type: AccessReader
     access: [["Hydroponics"]]
-  - type: Lock
-  - type: Sprite
-    sprite: Structures/Storage/Crates/hydro_secure.rsi
-    layers:
-    - state: hydrocratesecure
-    - state: hydrocratesecure_door
-      map: ["enum.StorageVisualLayers.Door"]
-    - state: welded
-      visible: false
-      map: ["enum.WeldableLayers.BaseWelded"]
-    - state: locked
-      map: ["enum.StorageVisualLayers.Lock"]
-      shader: unshaded
-  - type: Icon
-    sprite: Structures/Storage/Crates/hydro_secure.rsi
-    state: hydrocratesecure_icon
-  - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state_open: hydrocratesecure_open
-      state_closed: hydrocratesecure_door
 
 - type: entity
+  parent: CrateBaseSecure
   id: CrateWeaponSecure
   name: secure weapon crate
-  parent: CrateBaseSecure
   components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/weapon.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/weapon.rsi
   - type: AccessReader
     access: [["Armory"]]
-  - type: Lock
-  - type: Sprite
-    sprite: Structures/Storage/Crates/weapon.rsi
-    layers:
-    - state: weaponcrate
-    - state: weaponcrate_door
-      map: ["enum.StorageVisualLayers.Door"]
-    - state: locked
-      map: ["enum.StorageVisualLayers.Lock"]
-      shader: unshaded
-  - type: Icon
-    sprite: Structures/Storage/Crates/weapon.rsi
-    state: weaponcrate_icon
-  - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state_open: weaponcrate_open
-      state_closed: weaponcrate_door
 
 - type: entity
+  parent: CrateBaseSecure
   id: CrateCommandSecure
   name: command crate
-  parent: CrateBaseSecure
   components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/secure.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/secure.rsi
   - type: AccessReader
     access: [["Command"]]
-  - type: Lock
-  - type: Sprite
-    sprite: Structures/Storage/Crates/secure.rsi
-    layers:
-    - state: securecrate
-    - state: securecrate_door
-      map: ["enum.StorageVisualLayers.Door"]
-    - state: welded
-      visible: false
-      map: ["enum.WeldableLayers.BaseWelded"]
-    - state: locked
-      map: ["enum.StorageVisualLayers.Lock"]
-      shader: unshaded
-  - type: Icon
-    sprite: Structures/Storage/Crates/secure.rsi
-    state: securecrate_icon
-  - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state_open: securecrate_open
-      state_closed: securecrate_door
 
 - type: entity
+  parent: CrateGeneric
   id: CrateLivestock
   name: livestock crate
-  parent: CrateGeneric
   components:
-  - type: EntityStorage
-    capacity: 500
   - type: Sprite
     sprite: Structures/Storage/Crates/livestock.rsi
     layers:
-    - state: livestockcrate
-    - state: livestockcrate_door
+    - state: base
+    - state: closed
       map: ["enum.StorageVisualLayers.Door"]
   - type: Icon
     sprite: Structures/Storage/Crates/livestock.rsi
-    state: livestockcrate
-  - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state_open: livestockcrate_open
-      state_closed: livestockcrate_door
-  - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
+    state: base
   - type: Destructible
     thresholds:
     - trigger:
