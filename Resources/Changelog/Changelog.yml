@@ -1,9 +1,4 @@
 Entries:
-- author: DogZeroX
-  changes:
-  - {message: The bread has been unplated., type: Remove}
-  id: 2017
-  time: '2022-07-26T02:37:51.0000000+00:00'
 - author: moony
   changes:
   - {message: Waystation has been pulled from rotation., type: Remove}
@@ -2960,3 +2955,8 @@ Entries:
       various wildlife soon!, type: Add}
   id: 2516
   time: '2022-10-23T19:42:25.0000000+00:00'
+- author: Cheackraze
+  changes:
+  - {message: Added a Zoo and a few animals to Kettle!, type: Add}
+  id: 2517
+  time: '2022-10-24T02:30:37.0000000+00:00'
