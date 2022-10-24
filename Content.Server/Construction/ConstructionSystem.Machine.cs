@@ -184,6 +184,9 @@ public sealed class UpgradeExamineEvent : EntityEventArgs
         Message = message;
     }
 
+    /// <summary>
+    /// Add a line to the upgrade examine tooltip with a percentage-based increase or decrease.
+    /// </summary>
     public void AddPercentageUpgrade(string upgradedLocId, float multiplier)
     {
         var percent = Math.Round(100 * MathF.Abs(multiplier - 1), 2);
@@ -196,6 +199,9 @@ public sealed class UpgradeExamineEvent : EntityEventArgs
         this.Message.AddMarkup(Loc.GetString(locId, ("upgraded", upgraded), ("percent", percent)) + '\n');
     }
 
+    /// <summary>
+    /// Add a line to the upgrade examine tooltip with a numeric increase or decrease.
+    /// </summary>
     public void AddNumberUpgrade(string upgradedLocId, int number)
     {
         var difference = Math.Abs(number);
