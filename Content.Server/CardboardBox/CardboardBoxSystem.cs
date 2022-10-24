@@ -1,13 +1,19 @@
 using System.Linq;
 using Content.Shared.CardboardBox.Components;
 using Content.Server.Storage.Components;
+using Content.Shared.ActionBlocker;
+using Content.Shared.Bed.Sleep;
 using Content.Shared.CardboardBox;
+using Content.Shared.Damage;
+using Content.Shared.Damage.Prototypes;
 using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Content.Shared.Stealth.Components;
 using Content.Shared.Stealth;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.CardboardBox;
 
@@ -17,6 +23,9 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
     [Dependency] private readonly SharedMoverController _mover = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedStealthSystem _stealth = default!;
+    [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
 
     public override void Initialize()
     {
@@ -24,6 +33,9 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
         SubscribeLocalEvent<CardboardBoxComponent, StorageBeforeCloseEvent>(OnBeforeStorageClosed);
         SubscribeLocalEvent<CardboardBoxComponent, StorageAfterOpenEvent>(AfterStorageOpen);
         SubscribeLocalEvent<CardboardBoxComponent, StorageAfterCloseEvent>(AfterStorageClosed);
+
+        SubscribeLocalEvent<CardboardBoxComponent, DamageChangedEvent>(OnDamage);
+        SubscribeLocalEvent<CardboardBoxComponent, DamageModifyEvent>(OnDamageModified);
     }
 
     private void OnBeforeStorageClosed(EntityUid uid, CardboardBoxComponent component, StorageBeforeCloseEvent args)
@@ -74,5 +86,25 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
             _stealth.SetVisibility(uid, stealth.MaxVisibility, stealth);
             _stealth.SetEnabled(uid, true, stealth);
         }
+    }
+
+    //Relay damage to the mover
+    private void OnDamage(EntityUid uid, CardboardBoxComponent component, DamageChangedEvent args)
+    {
+        if (args.DamageDelta != null && args.DamageIncreased)
+        {
+            _damageable.TryChangeDamage(component.Mover, args.DamageDelta, origin: args.Origin);
+        }
+    }
+
+    //Modify damage if applicable
+    private void OnDamageModified(EntityUid uid, CardboardBoxComponent component, DamageModifyEvent args)
+    {
+        if (!TryComp<DamageableComponent>(uid, out var damageable) ||
+            damageable.DamageModifierSetId == null ||
+            !_proto.TryIndex(damageable.DamageModifierSetId, out DamageModifierSetPrototype? modifier))
+            return;
+
+        args.Damage = DamageSpecifier.ApplyModifierSet(args.Damage, modifier);
     }
 }
