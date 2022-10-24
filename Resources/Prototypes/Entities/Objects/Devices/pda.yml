@@ -690,6 +690,21 @@
 
 - type: entity
   parent: BasePDA
+  id: ZookeeperPDA
+  name: zookeeper PDA
+  description: Made with genuine synthetic leather. Crikey!
+  components:
+  - type: PDA
+    id: ZookeeperIDCard
+  - type: Appearance
+    visuals:
+      - type: PDAVisualizer
+        state: pda-zookeeper
+  - type: Icon
+    state: pda-zookeeper
+
+- type: entity
+  parent: BasePDA
   id: BoxerPDA
   name: boxer PDA
   description: Float like a butterfly, ringtone like a bee.
