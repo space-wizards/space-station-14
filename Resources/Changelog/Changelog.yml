@@ -1,19 +1,4 @@
 Entries:
-- author: DogZeroX
-  changes:
-  - {message: The bread has been unplated., type: Remove}
-  id: 2017
-  time: '2022-07-26T02:37:51.0000000+00:00'
-- author: moony
-  changes:
-  - {message: Waystation has been pulled from rotation., type: Remove}
-  id: 2018
-  time: '2022-07-26T02:41:06.0000000+00:00'
-- author: DogZeroX
-  changes:
-  - {message: Lizards and slimes now have different speech sounds!, type: Add}
-  id: 2019
-  time: '2022-07-26T09:13:12.0000000+00:00'
 - author: Pancake
   changes:
   - {message: Syndicate layoffs., type: Tweak}
@@ -2960,3 +2945,20 @@ Entries:
       various wildlife soon!, type: Add}
   id: 2516
   time: '2022-10-23T19:42:25.0000000+00:00'
+- author: Cheackraze
+  changes:
+  - {message: Added a Zoo and a few animals to Kettle!, type: Add}
+  id: 2517
+  time: '2022-10-24T02:30:37.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Pillar map major update. Atmos is now in engi, corridors are now smaller
+      and more alive, maint has been spruced up and lots of spaces are bigger, more
+      decorated and more loot sprawled.', type: Tweak}
+  id: 2518
+  time: '2022-10-24T17:30:50.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: Added two new jester suits in AutoDrobe, type: Add}
+  id: 2519
+  time: '2022-10-24T18:04:55.0000000+00:00'
