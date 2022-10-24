@@ -1,4 +1,3 @@
-using Content.Shared.Inventory;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Electrocution
@@ -10,8 +9,6 @@ namespace Content.Shared.Electrocution
             base.Initialize();
 
             SubscribeLocalEvent<InsulatedComponent, ElectrocutionAttemptEvent>(OnInsulatedElectrocutionAttempt);
-            // as long as legally distinct electric-mice are never added, this should be fine (otherwise a mouse-hat will transfer it's power to the wearer).
-            SubscribeLocalEvent<InsulatedComponent, InventoryRelayedEvent<ElectrocutionAttemptEvent>>((e, c, ev) => OnInsulatedElectrocutionAttempt(e, c, ev.Args));
             SubscribeLocalEvent<InsulatedComponent, ComponentGetState>(OnInsulatedGetState);
             SubscribeLocalEvent<InsulatedComponent, ComponentHandleState>(OnInsulatedHandleState);
         }

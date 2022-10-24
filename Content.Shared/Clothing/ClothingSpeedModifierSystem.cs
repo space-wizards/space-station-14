@@ -1,5 +1,4 @@
-using Content.Shared.Examine;
-using Content.Shared.Inventory;
+﻿using Content.Shared.Examine;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
@@ -20,7 +19,7 @@ public sealed class ClothingSpeedModifierSystem : EntitySystem
 
         SubscribeLocalEvent<ClothingSpeedModifierComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<ClothingSpeedModifierComponent, ComponentHandleState>(OnHandleState);
-        SubscribeLocalEvent<ClothingSpeedModifierComponent, InventoryRelayedEvent<RefreshMovementSpeedModifiersEvent>>(OnRefreshMoveSpeed);
+        SubscribeLocalEvent<ClothingSpeedModifierComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMoveSpeed);
         SubscribeLocalEvent<ClothingSpeedModifierComponent, GetVerbsEvent<ExamineVerb>>(OnClothingVerbExamine);
     }
 
@@ -66,12 +65,12 @@ public sealed class ClothingSpeedModifierSystem : EntitySystem
         }
     }
 
-    private void OnRefreshMoveSpeed(EntityUid uid, ClothingSpeedModifierComponent component, InventoryRelayedEvent<RefreshMovementSpeedModifiersEvent> args)
+    private void OnRefreshMoveSpeed(EntityUid uid, ClothingSpeedModifierComponent component, RefreshMovementSpeedModifiersEvent args)
     {
         if (!component.Enabled)
             return;
 
-        args.Args.ModifySpeed(component.WalkModifier, component.SprintModifier);
+        args.ModifySpeed(component.WalkModifier, component.SprintModifier);
     }
 
     private void OnClothingVerbExamine(EntityUid uid, ClothingSpeedModifierComponent component, GetVerbsEvent<ExamineVerb> args)
