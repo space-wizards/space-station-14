@@ -24,7 +24,7 @@ public abstract class SharedMagbootsSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<MagbootsComponent, GetVerbsEvent<ActivationVerb>>(AddToggleVerb);
-        SubscribeLocalEvent<MagbootsComponent, InventoryRelayedEvent<SlipAttemptEvent>>(OnSlipAttempt);
+        SubscribeLocalEvent<MagbootsComponent, SlipAttemptEvent>(OnSlipAttempt);
         SubscribeLocalEvent<MagbootsComponent, GetItemActionsEvent>(OnGetActions);
         SubscribeLocalEvent<MagbootsComponent, ToggleActionEvent>(OnToggleAction);
     }
@@ -72,10 +72,10 @@ public abstract class SharedMagbootsSystem : EntitySystem
         args.Verbs.Add(verb);
     }
 
-    private void OnSlipAttempt(EntityUid uid, MagbootsComponent component, InventoryRelayedEvent<SlipAttemptEvent> args)
+    private void OnSlipAttempt(EntityUid uid, MagbootsComponent component, SlipAttemptEvent args)
     {
         if (component.On)
-            args.Args.Cancel();
+            args.Cancel();
     }
 
     private void OnGetActions(EntityUid uid, MagbootsComponent component, GetItemActionsEvent args)

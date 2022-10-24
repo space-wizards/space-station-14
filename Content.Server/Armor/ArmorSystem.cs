@@ -1,8 +1,7 @@
-using Content.Shared.Damage;
+﻿using Content.Shared.Damage;
 using Content.Server.Examine;
 using Content.Shared.Verbs;
 using Robust.Shared.Utility;
-using Content.Shared.Inventory;
 
 namespace Content.Server.Armor
 {
@@ -15,13 +14,13 @@ namespace Content.Server.Armor
         {
             base.Initialize();
 
-            SubscribeLocalEvent<ArmorComponent, InventoryRelayedEvent<DamageModifyEvent>>(OnDamageModify);
+            SubscribeLocalEvent<ArmorComponent, DamageModifyEvent>(OnDamageModify);
             SubscribeLocalEvent<ArmorComponent, GetVerbsEvent<ExamineVerb>>(OnArmorVerbExamine);
         }
 
-        private void OnDamageModify(EntityUid uid, ArmorComponent component, InventoryRelayedEvent<DamageModifyEvent> args)
+        private void OnDamageModify(EntityUid uid, ArmorComponent component, DamageModifyEvent args)
         {
-            args.Args.Damage = DamageSpecifier.ApplyModifierSet(args.Args.Damage, component.Modifiers);
+            args.Damage = DamageSpecifier.ApplyModifierSet(args.Damage, component.Modifiers);
         }
 
         private void OnArmorVerbExamine(EntityUid uid, ArmorComponent component, GetVerbsEvent<ExamineVerb> args)
