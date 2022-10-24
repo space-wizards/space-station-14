@@ -1,9 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: Waystation has been pulled from rotation., type: Remove}
-  id: 2018
-  time: '2022-07-26T02:41:06.0000000+00:00'
 - author: DogZeroX
   changes:
   - {message: Lizards and slimes now have different speech sounds!, type: Add}
@@ -2960,3 +2955,10 @@ Entries:
   - {message: Added a Zoo and a few animals to Kettle!, type: Add}
   id: 2517
   time: '2022-10-24T02:30:37.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Pillar map major update. Atmos is now in engi, corridors are now smaller
+      and more alive, maint has been spruced up and lots of spaces are bigger, more
+      decorated and more loot sprawled.', type: Tweak}
+  id: 2518
+  time: '2022-10-24T17:30:50.0000000+00:00'
