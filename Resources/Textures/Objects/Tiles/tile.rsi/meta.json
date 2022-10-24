@@ -149,6 +149,18 @@
       "name": "metaldiamond"
     },
     {
+      "name": "steelmaintfloor"
+    },
+    {
+      "name": "gratingmaintfloor"
+    },
+    {
+      "name": "woodpatternfloor"
+    },
+    {
+      "name": "rustymaintfloor"
+    },
+    {
       "name": "bcircuit-inhand-left",
       "directions": 4
     },
