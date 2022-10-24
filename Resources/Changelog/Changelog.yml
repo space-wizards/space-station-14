@@ -1,9 +1,4 @@
 Entries:
-- author: DogZeroX
-  changes:
-  - {message: Lizards and slimes now have different speech sounds!, type: Add}
-  id: 2019
-  time: '2022-07-26T09:13:12.0000000+00:00'
 - author: Pancake
   changes:
   - {message: Syndicate layoffs., type: Tweak}
@@ -2962,3 +2957,8 @@ Entries:
       decorated and more loot sprawled.', type: Tweak}
   id: 2518
   time: '2022-10-24T17:30:50.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: Added two new jester suits in AutoDrobe, type: Add}
+  id: 2519
+  time: '2022-10-24T18:04:55.0000000+00:00'
