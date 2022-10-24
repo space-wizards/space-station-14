@@ -219,4 +219,117 @@ public sealed class SleeperAgentRuleSystem : GameRuleSystem
                     Logger.InfoS("preset", "{$name},{$job}, has been activated as a sleeper agent!");
                     }
                 }
+            }
+ 
+ private void HandleLatejoin(PlayerSpawnCompleteEvent ev)
+    {
+        if (!RuleAdded)
+            return;
+        if (TotalTAgents >= _maxAgents)
+            return;
+        if (!ev.LateJoin)
+            return;
+        if (!ev.Profile.AntagPreferences.Contains(AgentPrototypeID))
+            return;
+
+
+        if (ev.JobId == null || !_prototypeManager.TryIndex<JobPrototype>(ev.JobId, out var job))
+            return;
+
+        // the nth player we adjust our probabilities around
+        int target = ((_playersPerAgent * TotalAgents) + 1);
+
+        float chance = (1f / _playersPerAgent);
+
+        /// If we have too many traitors, divide by how many players below target for next traitor we are.
+        if (ev.JoinOrder < target)
+        {
+            chance /= (target - ev.JoinOrder);
+        } else // Tick up towards 100% chance.
+        {
+            chance *= ((ev.JoinOrder + 1) - target);
+        }
+        if (chance > 1)
+            chance = 1;
+
+        // Now that we've calculated our chance, roll and make them a traitor if we roll under.
+        // You get one shot.
+        if (_random.Prob((float) chance))
+        {
+            MakeAgent(ev.Player);
+        }
+    }
+
+    private void OnRoundEndText(RoundEndTextAppendEvent ev)
+    {
+        if (!RuleAdded)
+            return;
+
+        var result = Loc.GetString("agent-round-end-result", ("agentCount", Agents.Count));
+
+        foreach (var traitor in Agents)
+        {
+            var name = agent.Mind.CharacterName;
+            agent.Mind.TryGetSession(out var session);
+            var username = session?.Name;
+
+            var objectives = agent.Mind.AllObjectives.ToArray();
+            if (objectives.Length == 0)
+            {
+                if (username != null)
+                {
+                    if (name == null)
+                        result += "\n" + Loc.GetString("agent-user-was-a-sleeper-agent", ("user", username));
+                    else
+                        result += "\n" + Loc.GetString("agent-user-was-a-sleeper-agent-named", ("user", username), ("name", name));
+                }
+                else if (name != null)
+                    result += "\n" + Loc.GetString("agent-was-a-sleeper-agent-named", ("name", name));
+
+                continue;
+            }
+
+            if (username != null)
+            {
+                if (name == null)
+                    result += "\n" + Loc.GetString("agent-user-was-a-activated-sleeper-agent-with-objectives", ("user", username));
+                else
+                    result += "\n" + Loc.GetString("agent-user-was-a-activated-sleeper-agent-with-objectives-named", ("user", username), ("name", name));
+            }
+            else if (name != null)
+                result += "\n" + Loc.GetString("agent-was-a-activated-sleeper-agent-with-objectives-named", ("name", name));
+
+            foreach (var objectiveGroup in objectives.GroupBy(o => o.Prototype.Issuer))
+            {
+                result += "\n" + Loc.GetString($"preset-traitor-objective-issuer-{objectiveGroup.Key}");
+
+                foreach (var objective in objectiveGroup)
+                {
+                    foreach (var condition in objective.Conditions)
+                    {
+                        var progress = condition.Progress;
+                        if (progress > 0.99f)
+                        {
+                            result += "\n- " + Loc.GetString(
+                                "traitor-objective-condition-success",
+                                ("condition", condition.Title),
+                                ("markupColor", "green")
+                            );
+                        }
+                        else
+                        {
+                            result += "\n- " + Loc.GetString(
+                                "traitor-objective-condition-fail",
+                                ("condition", condition.Title),
+                                ("progress", (int) (progress * 100)),
+                                ("markupColor", "red")
+                            );
+                        }
+                    }
+                }
+            }
+        }
+        ev.AddLine(result);
+    }
+}
 
