@@ -54,7 +54,12 @@ public sealed class UpgradePowerSystem : EntitySystem
 
     private void OnUpgradeExamine(EntityUid uid, UpgradePowerDrawComponent component, UpgradeExamineEvent args)
     {
-        args.AddPercentageUpgrade("Power draw", component.PowerDrawMultiplier);
+        // UpgradePowerDrawComponent.PowerDrawMultiplier is not the actual multiplier, so we have to do this.
+        var powerDrawMultiplier = CompOrNull<ApcPowerReceiverComponent>(uid)?.Load / component.BaseLoad
+            ?? CompOrNull<PowerConsumerComponent>(uid)?.DrawRate / component.BaseLoad;
+
+        if (powerDrawMultiplier is not null)
+            args.AddPercentageUpgrade("upgrade-power-draw", powerDrawMultiplier.Value);
     }
 
     private void OnSupplierMapInit(EntityUid uid, UpgradePowerSupplierComponent component, MapInitEvent args)

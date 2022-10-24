@@ -184,25 +184,27 @@ public sealed class UpgradeExamineEvent : EntityEventArgs
         Message = message;
     }
 
-    public void AddPercentageUpgrade(string upgradedAttribute, float multiplier)
+    public void AddPercentageUpgrade(string upgradedLocId, float multiplier)
     {
         var percent = Math.Round(100 * MathF.Abs(multiplier - 1), 2);
-        var incOrDec = multiplier switch {
-            < 1 => $"is decreased by {percent}%",
-            1 or float.NaN => "is not upgraded",
-            > 1 => $"is increased by {percent}%",
+        var locId = multiplier switch {
+            < 1 => "machine-upgrade-decreased-by-percentage",
+            1 or float.NaN => "machine-upgrade-not-upgraded",
+            > 1 => "machine-upgrade-increased-by-percentage",
         };
-        this.Message.AddMarkup($"[color=yellow]{upgradedAttribute}[/color] {incOrDec}.\n");
+        var upgraded = Loc.GetString(upgradedLocId);
+        this.Message.AddMarkup(Loc.GetString(locId, ("upgraded", upgraded), ("percent", percent)) + '\n');
     }
 
-    public void AddNumberUpgrade(string upgradedAttribute, int number)
+    public void AddNumberUpgrade(string upgradedLocId, int number)
     {
         var difference = Math.Abs(number);
-        var incOrDec = number switch {
-            < 0 => $"is decreased by {difference}",
-            0 => "is not upgraded",
-            > 0 => $"is increased by {difference}%",
+        var locId = number switch {
+            < 0 => "machine-upgrade-decreased-by-amount",
+            0 => "machine-upgrade-not-upgraded",
+            > 0 => "machine-upgrade-increased-by-amount",
         };
-        this.Message.AddMarkup($"[color=yellow]{upgradedAttribute}[/color] {incOrDec}.\n");
+        var upgraded = Loc.GetString(upgradedLocId);
+        this.Message.AddMarkup(Loc.GetString(locId, ("upgraded", upgraded), ("difference", difference)) + '\n');
     }
 }

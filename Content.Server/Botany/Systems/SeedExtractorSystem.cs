@@ -62,6 +62,6 @@ public sealed class SeedExtractorSystem : EntitySystem
 
     private void OnUpgradeExamine(EntityUid uid, SeedExtractorComponent seedExtractor, UpgradeExamineEvent args)
     {
-        args.AddPercentageUpgrade("Seed yield", seedExtractor.SeedAmountMultiplier);
+        args.AddPercentageUpgrade("seed-extractor-component-upgrade-seed-yield", seedExtractor.SeedAmountMultiplier);
     }
 }
