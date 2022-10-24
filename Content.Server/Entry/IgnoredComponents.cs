@@ -7,17 +7,14 @@ namespace Content.Server.Entry
             "ConstructionGhost",
             "IconSmooth",
             "InteractionOutline",
-            "MeleeWeaponArcAnimation",
             "AnimationsTest",
             "ItemStatus",
             "Marker",
             "Clickable",
             "Icon",
             "ClientEntitySpawner",
-            "CharacterInfo",
             "HandheldGPS",
             "CableVisualizer",
-            "EnsnareableVisualizer",
         };
     }
 }

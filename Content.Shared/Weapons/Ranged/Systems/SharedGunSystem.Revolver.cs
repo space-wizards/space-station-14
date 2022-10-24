@@ -84,7 +84,7 @@ public partial class SharedGunSystem
 
             component.AmmoSlots[index] = uid;
             component.AmmoContainer.Insert(uid);
-            PlaySound(component.Owner, component.SoundInsert?.GetSound(Random, ProtoManager), user);
+            Audio.PlayPredicted(component.SoundInsert, component.Owner, user);
             Popup(Loc.GetString("gun-revolver-insert"), component.Owner, user);
             UpdateRevolverAppearance(component);
             UpdateAmmoCount(uid);
@@ -210,7 +210,7 @@ public partial class SharedGunSystem
 
         if (anyEmpty)
         {
-            PlaySound(component.Owner, component.SoundEject?.GetSound(Random, ProtoManager), user);
+            Audio.PlayPredicted(component.SoundEject, component.Owner, user);
             UpdateAmmoCount(component.Owner);
             UpdateRevolverAppearance(component);
             Dirty(component);
@@ -219,16 +219,18 @@ public partial class SharedGunSystem
 
     private void UpdateRevolverAppearance(RevolverAmmoProviderComponent component)
     {
-        if (!TryComp<AppearanceComponent>(component.Owner, out var appearance)) return;
+        if (!TryComp<AppearanceComponent>(component.Owner, out var appearance))
+            return;
+
         var count = GetRevolverCount(component);
-        appearance.SetData(AmmoVisuals.HasAmmo, count != 0);
-        appearance.SetData(AmmoVisuals.AmmoCount, count);
-        appearance.SetData(AmmoVisuals.AmmoMax, component.Capacity);
+        Appearance.SetData(component.Owner, AmmoVisuals.HasAmmo, count != 0, appearance);
+        Appearance.SetData(component.Owner, AmmoVisuals.AmmoCount, count, appearance);
+        Appearance.SetData(component.Owner, AmmoVisuals.AmmoMax, component.Capacity, appearance);
     }
 
     protected virtual void SpinRevolver(RevolverAmmoProviderComponent component, EntityUid? user = null)
     {
-        PlaySound(component.Owner, component.SoundSpin?.GetSound(Random, ProtoManager), user);
+        Audio.PlayPredicted(component.SoundSpin, component.Owner, user);
         Popup(Loc.GetString("gun-revolver-spun"), component.Owner, user);
     }
 

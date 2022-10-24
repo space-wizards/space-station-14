@@ -9,13 +9,16 @@ using Content.Shared.Physics;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Network;
+using Robust.Shared.Physics.Systems;
 
 namespace Content.Shared.Standing
 {
     public sealed class StandingStateSystem : EntitySystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly INetManager _netMan = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
         // If StandingCollisionLayer value is ever changed to more than one layer, the logic needs to be edited.
         private const int StandingCollisionLayer = (int) CollisionGroup.MidImpassable;
@@ -28,10 +31,11 @@ namespace Content.Shared.Standing
 
         private void OnHandleState(EntityUid uid, StandingStateComponent component, ref ComponentHandleState args)
         {
-            if (args.Current is not StandingComponentState state) return;
+            if (args.Current is not StandingComponentState state)
+                return;
 
             component.Standing = state.Standing;
-            component.ChangedFixtures = new(state.ChangedFixtures);
+            component.ChangedFixtures = new List<string>(state.ChangedFixtures);
         }
 
         private void OnGetState(EntityUid uid, StandingStateComponent component, ref ComponentGetState args)
@@ -82,7 +86,7 @@ namespace Content.Shared.Standing
             RaiseLocalEvent(uid, new DownedEvent(), false);
 
             // Seemed like the best place to put it
-            appearance?.SetData(RotationVisuals.RotationState, RotationState.Horizontal);
+            _appearance.SetData(uid, RotationVisuals.RotationState, RotationState.Horizontal, appearance);
 
             // Change collision masks to allow going under certain entities like flaps and tables
             if (TryComp(uid, out FixturesComponent? fixtureComponent))
@@ -93,17 +97,16 @@ namespace Content.Shared.Standing
                         continue;
 
                     standingState.ChangedFixtures.Add(key);
-                    fixture.CollisionMask &= ~StandingCollisionLayer;
+                    _physics.SetCollisionMask(fixture, fixture.CollisionMask & ~StandingCollisionLayer);
                 }
             }
 
             if (!_gameTiming.IsFirstTimePredicted)
                 return true;
 
-            // TODO audio prediction
-            if (playSound && _netMan.IsServer)
+            if (playSound)
             {
-                SoundSystem.Play(standingState.DownSound.GetSound(), Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.25f));
+                _audio.PlayPredicted(standingState.DownSound, uid, uid, AudioParams.Default.WithVariation(0.25f));
             }
 
             return true;
@@ -133,14 +136,14 @@ namespace Content.Shared.Standing
             Dirty(standingState);
             RaiseLocalEvent(uid, new StoodEvent(), false);
 
-            appearance?.SetData(RotationVisuals.RotationState, RotationState.Vertical);
+            _appearance.SetData(uid, RotationVisuals.RotationState, RotationState.Vertical, appearance);
 
             if (TryComp(uid, out FixturesComponent? fixtureComponent))
             {
                 foreach (var key in standingState.ChangedFixtures)
                 {
                     if (fixtureComponent.Fixtures.TryGetValue(key, out var fixture))
-                        fixture.CollisionMask |= StandingCollisionLayer;
+                        _physics.SetCollisionMask(fixture, fixture.CollisionMask | StandingCollisionLayer);
                 }
             }
             standingState.ChangedFixtures.Clear();

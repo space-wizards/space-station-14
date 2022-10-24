@@ -814,6 +814,17 @@
 
 - type: entity
   parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitSafari
+  name: safari suit
+  description: Perfect for a jungle excursion.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/safari.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/safari.rsi
+
+- type: entity
+  parent: ClothingUniformBase
   id: ClothingUniformJumpsuitJournalist
   name: journalist suit
   description: If journalism is good, it is controversial, by nature.

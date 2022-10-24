@@ -11,19 +11,20 @@ namespace Content.Shared.Clothing;
 
 public abstract class SharedMagbootsSystem : EntitySystem
 {
-    [Dependency] private readonly SharedActionsSystem _sharedActions = default!;
     [Dependency] private readonly ClothingSpeedModifierSystem _clothingSpeedModifier = default!;
-    [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly SharedItemSystem _item = default!;
     [Dependency] private readonly ClothingSystem _clothing = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private readonly SharedActionsSystem _sharedActions = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedContainerSystem _sharedContainer = default!;
+    [Dependency] private readonly SharedItemSystem _item = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<MagbootsComponent, GetVerbsEvent<ActivationVerb>>(AddToggleVerb);
-        SubscribeLocalEvent<MagbootsComponent, SlipAttemptEvent>(OnSlipAttempt);
+        SubscribeLocalEvent<MagbootsComponent, InventoryRelayedEvent<SlipAttemptEvent>>(OnSlipAttempt);
         SubscribeLocalEvent<MagbootsComponent, GetItemActionsEvent>(OnGetActions);
         SubscribeLocalEvent<MagbootsComponent, ToggleActionEvent>(OnToggleAction);
     }
@@ -46,9 +47,7 @@ public abstract class SharedMagbootsSystem : EntitySystem
             _clothing.SetEquippedPrefix(uid, component.On ? "on" : null);
         }
 
-        if (TryComp(uid, out AppearanceComponent? appearance))
-            appearance.SetData(ToggleVisuals.Toggled, component.On);
-
+        _appearance.SetData(uid, ToggleVisuals.Toggled, component.Owner);
         OnChanged(component);
         Dirty(component);
     }
@@ -73,10 +72,10 @@ public abstract class SharedMagbootsSystem : EntitySystem
         args.Verbs.Add(verb);
     }
 
-    private void OnSlipAttempt(EntityUid uid, MagbootsComponent component, SlipAttemptEvent args)
+    private void OnSlipAttempt(EntityUid uid, MagbootsComponent component, InventoryRelayedEvent<SlipAttemptEvent> args)
     {
         if (component.On)
-            args.Cancel();
+            args.Args.Cancel();
     }
 
     private void OnGetActions(EntityUid uid, MagbootsComponent component, GetItemActionsEvent args)

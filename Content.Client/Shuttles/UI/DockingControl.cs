@@ -75,7 +75,7 @@ public class DockingControl : Control
             Angle == null ||
             !_entManager.TryGetComponent<TransformComponent>(GridEntity, out var gridXform)) return;
 
-        var rotation = Matrix3.CreateRotation(Angle.Value);
+        var rotation = Matrix3.CreateRotation(-Angle.Value + Math.PI);
         var matrix = Matrix3.CreateTranslation(-Coordinates.Value.Position);
 
         // Draw the fixtures around the dock before drawing it

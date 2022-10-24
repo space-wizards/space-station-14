@@ -23,7 +23,7 @@ namespace Content.Server.NodeContainer.EntitySystems
             SubscribeLocalEvent<NodeContainerComponent, ComponentShutdown>(OnShutdownEvent);
             SubscribeLocalEvent<NodeContainerComponent, AnchorStateChangedEvent>(OnAnchorStateChanged);
             SubscribeLocalEvent<NodeContainerComponent, ReAnchorEvent>(OnReAnchor);
-            SubscribeLocalEvent<NodeContainerComponent, RotateEvent>(OnRotateEvent);
+            SubscribeLocalEvent<NodeContainerComponent, MoveEvent>(OnMoveEvent);
             SubscribeLocalEvent<NodeContainerComponent, ExaminedEvent>(OnExamine);
         }
 
@@ -81,14 +81,14 @@ namespace Content.Server.NodeContainer.EntitySystems
             }
         }
 
-        private void OnRotateEvent(EntityUid uid, NodeContainerComponent container, ref RotateEvent ev)
+        private void OnMoveEvent(EntityUid uid, NodeContainerComponent container, ref MoveEvent ev)
         {
             if (ev.NewRotation == ev.OldRotation)
             {
                 return;
             }
 
-            var xform = Transform(uid);
+            var xform = ev.Component;
 
             foreach (var node in container.Nodes.Values)
             {
@@ -99,7 +99,7 @@ namespace Content.Server.NodeContainer.EntitySystems
                 if (!node.Connectable(EntityManager, xform))
                     continue;
 
-                if (rotatableNode.RotateEvent(ref ev))
+                if (rotatableNode.RotateNode(in ev))
                     _nodeGroupSystem.QueueReflood(node);
             }
         }

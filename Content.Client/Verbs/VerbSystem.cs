@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Client.CombatMode;
 using Content.Client.ContextMenu.UI;
 using Content.Client.Examine;
 using Content.Client.Gameplay;
@@ -28,6 +29,7 @@ namespace Content.Client.Verbs
     [UsedImplicitly]
     public sealed class VerbSystem : SharedVerbSystem
     {
+        [Dependency] private readonly CombatModeSystem _combatMode = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly ExamineSystem _examineSystem = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
@@ -60,7 +62,7 @@ namespace Content.Client.Verbs
             SubscribeNetworkEvent<VerbsResponseEvent>(HandleVerbResponse);
 
             EntityMenu = new(this);
-            VerbMenu = new(this);
+            VerbMenu = new(_combatMode, this);
         }
 
         public void Reset(RoundRestartCleanupEvent ev)
@@ -106,18 +108,34 @@ namespace Content.Client.Verbs
                 ? Visibility
                 : Visibility | MenuVisibility.NoFov;
 
+
+            // Get entities
+            List<EntityUid> entities;
+
             // Do we have to do FoV checks?
             if ((visibility & MenuVisibility.NoFov) == 0)
             {
                 var entitiesUnderMouse = gameScreenBase.GetEntitiesUnderPosition(targetPos);
                 bool Predicate(EntityUid e) => e == player || entitiesUnderMouse.Contains(e);
+
+                // first check the general location.
                 if (!_examineSystem.CanExamine(player.Value, targetPos, Predicate))
                     return false;
-            }
 
-            // Get entities
-            var entities = _entityLookup.GetEntitiesInRange(targetPos, EntityMenuLookupSize)
-                .ToList();
+                TryComp(player.Value, out ExaminerComponent? examiner);
+
+                // Then check every entity
+                entities = new();
+                foreach (var ent in _entityLookup.GetEntitiesInRange(targetPos, EntityMenuLookupSize))
+                {
+                    if (_examineSystem.CanExamine(player.Value, targetPos, Predicate, ent, examiner))
+                        entities.Add(ent);
+                }
+            }
+            else
+            {
+                entities = _entityLookup.GetEntitiesInRange(targetPos, EntityMenuLookupSize).ToList();
+            }
 
             if (entities.Count == 0)
                 return false;
@@ -208,6 +226,10 @@ namespace Content.Client.Verbs
             {
                 RaiseNetworkEvent(new RequestServerVerbsEvent(target, verbTypes, adminRequest: force));
             }
+
+            // Some admin menu interactions will try get verbs for entities that have not yet been sent to the player.
+            if (!Exists(target))
+                return new();
 
             return GetLocalVerbs(target, user, verbTypes, force);
         }

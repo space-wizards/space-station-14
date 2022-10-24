@@ -26,7 +26,9 @@
         acts: ["Destruction"]
   - type: Machine
     board: ChemDispenserMachineCircuitboard
-  - type: MaterialStorage
   - type: Wires
     BoardName: "chem_dispenser"
     LayoutId: chem_dispenser
+  - type: UpgradePowerDraw
+    powerDrawMultiplier: 0.75
+    scaling: Exponential
