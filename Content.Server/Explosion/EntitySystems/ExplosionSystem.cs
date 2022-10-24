@@ -8,7 +8,6 @@ using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Explosion;
 using Content.Shared.GameTicking;
-using Content.Shared.Inventory;
 using Content.Shared.Throwing;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
@@ -64,10 +63,6 @@ public sealed partial class ExplosionSystem : EntitySystem
         SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoved);
         SubscribeLocalEvent<GridStartupEvent>(OnGridStartup);
         SubscribeLocalEvent<ExplosionResistanceComponent, GetExplosionResistanceEvent>(OnGetResistance);
-
-        // as long as explosion-resistance mice are never added, this should be fine (otherwise a mouse-hat will transfer it's power to the wearer).
-        SubscribeLocalEvent<ExplosionResistanceComponent, InventoryRelayedEvent<GetExplosionResistanceEvent>>((e, c, ev) => OnGetResistance(e, c, ev.Args));
-
         SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
 
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnReset);

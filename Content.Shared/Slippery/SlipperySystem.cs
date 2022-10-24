@@ -30,8 +30,6 @@ namespace Content.Shared.Slippery
             SubscribeLocalEvent<SlipperyComponent, StepTriggerAttemptEvent>(HandleAttemptCollide);
             SubscribeLocalEvent<SlipperyComponent, StepTriggeredEvent>(HandleStepTrigger);
             SubscribeLocalEvent<NoSlipComponent, SlipAttemptEvent>(OnNoSlipAttempt);
-            // as long as slip-resistant mice are never added, this should be fine (otherwise a mouse-hat will transfer it's power to the wearer).
-            SubscribeLocalEvent<NoSlipComponent, InventoryRelayedEvent<SlipAttemptEvent>>((e, c, ev) => OnNoSlipAttempt(e, c, ev.Args));
             SubscribeLocalEvent<SlipperyComponent, ComponentGetState>(OnSlipperyGetState);
             SubscribeLocalEvent<SlipperyComponent, ComponentHandleState>(OnSlipperyHandleState);
         }
