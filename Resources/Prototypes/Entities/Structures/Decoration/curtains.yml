@@ -27,9 +27,9 @@
     performCollisionCheck: false
     bumpOpen: false
     clickOpen: true
-    closeTimeOne: 0.1
+    closeTimeOne: 0.5
     closeTimeTwo: 0.1
-    openTimeOne: 0.1
+    openTimeOne: 0.5
     openTimeTwo: 0.1
     openSound:
       path: /Audio/Effects/curtain_openclose.ogg
