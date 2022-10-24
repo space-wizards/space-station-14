@@ -39,7 +39,6 @@
         cell_slot: !type:ContainerSlot {}
     - type: Clothing
       sprite: Objects/Tools/lantern.rsi
-      state: equipped-BELT
       quickEquip: false
       slots:
       - Belt
