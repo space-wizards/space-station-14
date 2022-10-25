@@ -27,7 +27,7 @@ namespace Content.Shared.Eye.Blinding
 
         private void OnEquipped(EntityUid uid, BlindfoldComponent component, GotEquippedEvent args)
         {
-            if (!TryComp<SharedClothingComponent>(uid, out var clothing) || clothing.Slots == SlotFlags.PREVENTEQUIP) // we live in a society
+            if (!TryComp<ClothingComponent>(uid, out var clothing) || clothing.Slots == SlotFlags.PREVENTEQUIP) // we live in a society
                 return;
             // Is the clothing in its actual slot?
             if (!clothing.Slots.HasFlag(args.SlotFlags))
@@ -51,7 +51,7 @@ namespace Content.Shared.Eye.Blinding
 
         private void OnGlassesEquipped(EntityUid uid, VisionCorrectionComponent component, GotEquippedEvent args)
         {
-            if (!TryComp<SharedClothingComponent>(uid, out var clothing) || clothing.Slots == SlotFlags.PREVENTEQUIP) // we live in a society
+            if (!TryComp<ClothingComponent>(uid, out var clothing) || clothing.Slots == SlotFlags.PREVENTEQUIP) // we live in a society
                 return;
             // Is the clothing in its actual slot?
             if (!clothing.Slots.HasFlag(args.SlotFlags))

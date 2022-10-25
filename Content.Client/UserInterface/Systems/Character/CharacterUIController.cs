@@ -23,19 +23,16 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
     [UISystemDependency] private readonly CharacterInfoSystem _characterInfo = default!;
 
     private CharacterWindow? _window;
-    private MenuButton? _characterButton;
+    private MenuButton? CharacterButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.CharacterButton;
 
     public void OnStateEntered(GameplayState state)
     {
         DebugTools.Assert(_window == null);
-        _characterButton = UIManager.GetActiveUIWidget<MenuBar.Widgets.GameTopMenuBar>().CharacterButton;
-        _characterButton.OnPressed += CharacterButtonPressed;
 
         _window = UIManager.CreateWindow<CharacterWindow>();
         LayoutContainer.SetAnchorPreset(_window, LayoutContainer.LayoutPreset.CenterTop);
 
-        _window.OnClose += () => { _characterButton.Pressed = false; };
-        _window.OnOpen += () => { _characterButton.Pressed = true; };
+
 
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.OpenCharacterMenu,
@@ -49,13 +46,6 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
         {
             _window.Dispose();
             _window = null;
-        }
-
-        if (_characterButton != null)
-        {
-            _characterButton.OnPressed -= CharacterButtonPressed;
-            _characterButton.Pressed = false;
-            _characterButton = null;
         }
 
         CommandBinds.Unregister<CharacterUIController>();
@@ -72,6 +62,37 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
         system.OnCharacterUpdate -= CharacterUpdated;
         system.OnCharacterDetached -= CharacterDetached;
     }
+
+    public void UnloadButton()
+    {
+        if (CharacterButton == null)
+        {
+            return;
+        }
+
+        CharacterButton.OnPressed -= CharacterButtonPressed;
+    }
+
+    public void LoadButton()
+    {
+        if (CharacterButton == null)
+        {
+            return;
+        }
+
+        CharacterButton.OnPressed += CharacterButtonPressed;
+
+        if (_window == null)
+        {
+            return;
+        }
+
+        _window.OnClose += DeactivateButton;
+        _window.OnOpen += ActivateButton;
+    }
+
+    private void DeactivateButton() => CharacterButton!.Pressed = false;
+    private void ActivateButton() => CharacterButton!.Pressed = true;
 
     private void CharacterUpdated(CharacterData data)
     {
@@ -141,6 +162,12 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
     {
         if (_window == null)
             return;
+
+        if (CharacterButton != null)
+        {
+            CharacterButton.Pressed = !_window.IsOpen;
+        }
+
         if (_window.IsOpen)
         {
             CloseWindow();

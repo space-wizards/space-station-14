@@ -18,10 +18,11 @@ public sealed class RandomSentience : StationEventSystem
         base.Started();
         HashSet<EntityUid> stationsToNotify = new();
 
+        var mod = GetSeverityModifier();
         var targetList = EntityManager.EntityQuery<SentienceTargetComponent>().ToList();
         RobustRandom.Shuffle(targetList);
 
-        var toMakeSentient = RobustRandom.Next(2, 5);
+        var toMakeSentient = (int) (RobustRandom.Next(2, 5) * Math.Sqrt(mod));
         var groups = new HashSet<string>();
 
         foreach (var target in targetList)

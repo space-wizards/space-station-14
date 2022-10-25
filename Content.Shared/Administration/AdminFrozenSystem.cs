@@ -20,14 +20,20 @@ public sealed class AdminFrozenSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<AdminFrozenComponent, UseAttemptEvent>((_, _, args) => args.Cancel());
-        SubscribeLocalEvent<AdminFrozenComponent, PickupAttemptEvent>((_, _, args) => args.Cancel());
-        SubscribeLocalEvent<AdminFrozenComponent, ThrowAttemptEvent>((_, _, args) => args.Cancel());
-        SubscribeLocalEvent<AdminFrozenComponent, InteractionAttemptEvent>((_, _, args) => args.Cancel());
+        SubscribeLocalEvent<AdminFrozenComponent, UseAttemptEvent>(OnAttempt);
+        SubscribeLocalEvent<AdminFrozenComponent, PickupAttemptEvent>(OnAttempt);
+        SubscribeLocalEvent<AdminFrozenComponent, ThrowAttemptEvent>(OnAttempt);
+        SubscribeLocalEvent<AdminFrozenComponent, InteractionAttemptEvent>(OnAttempt);
         SubscribeLocalEvent<AdminFrozenComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<AdminFrozenComponent, ComponentShutdown>(UpdateCanMove);
         SubscribeLocalEvent<AdminFrozenComponent, UpdateCanMoveEvent>(OnUpdateCanMove);
         SubscribeLocalEvent<AdminFrozenComponent, PullAttemptEvent>(OnPullAttempt);
+        SubscribeLocalEvent<AdminFrozenComponent, AttackAttemptEvent>(OnAttempt);
+    }
+
+    private void OnAttempt(EntityUid uid, AdminFrozenComponent component, CancellableEntityEventArgs args)
+    {
+        args.Cancel();
     }
 
     private void OnPullAttempt(EntityUid uid, AdminFrozenComponent component, PullAttemptEvent args)

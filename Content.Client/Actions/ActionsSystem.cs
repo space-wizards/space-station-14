@@ -180,20 +180,30 @@ namespace Content.Client.Actions
 
         private void OnPlayerAttached(EntityUid uid, ActionsComponent component, PlayerAttachedEvent args)
         {
-            if (uid != _playerManager.LocalPlayer?.ControlledEntity)
-                return;
-
-            LinkActions?.Invoke(component);
-            PlayerActions = component;
+            LinkAllActions(component);
         }
 
         private void OnPlayerDetached(EntityUid uid, ActionsComponent component, PlayerDetachedEvent? args = null)
         {
-            if (uid != _playerManager.LocalPlayer?.ControlledEntity)
-                return;
+            UnlinkAllActions();
+        }
 
-            UnlinkActions?.Invoke();
+        public void UnlinkAllActions()
+        {
             PlayerActions = null;
+            UnlinkActions?.Invoke();
+        }
+
+        public void LinkAllActions(ActionsComponent? actions = null)
+        {
+             var player = _playerManager.LocalPlayer?.ControlledEntity;
+             if (player == null || !Resolve(player.Value, ref actions))
+             {
+                 return;
+             }
+
+             LinkActions?.Invoke(actions);
+             PlayerActions = actions;
         }
 
         public override void Shutdown()
