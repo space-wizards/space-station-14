@@ -1,13 +1,10 @@
 using System.Linq;
 using Content.Shared.CardboardBox.Components;
 using Content.Server.Storage.Components;
-using Content.Shared.ActionBlocker;
-using Content.Shared.Bed.Sleep;
 using Content.Shared.CardboardBox;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Movement.Components;
-using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
@@ -25,7 +22,6 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
     [Dependency] private readonly SharedStealthSystem _stealth = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
 
     public override void Initialize()
     {
