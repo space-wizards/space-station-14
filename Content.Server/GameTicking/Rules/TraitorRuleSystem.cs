@@ -359,6 +359,11 @@ public sealed class TraitorRuleSystem : GameRuleSystem
                 removeList.Add(traitor);
                 continue;
             }
+            if (traitor.Mind.CurrentEntity != null && traitor.Mind.CurrentEntity != traitor.Mind.OwnedEntity) // they switched to another entity
+            {
+                removeList.Add(traitor);
+                continue;
+            }
         }
 
         foreach (var traitor in removeList)
