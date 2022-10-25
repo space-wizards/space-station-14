@@ -156,9 +156,12 @@
     layers:
       - state: icon
         map: ["enum.GunVisualLayers.Base"]
-  - type: ContainerContainer
-    containers:
+  - containers:
       balistic-ammo: !type:Container
+        ents: []
+      ballistic-ammo: !type:Container
+        ents: []
+    type: ContainerContainer
   - type: Clothing
     sprite: Objects/Weapons/Guns/Launchers/pirate_cannon.rsi
   - type: Gun
@@ -176,3 +179,8 @@
     proto: CannonBall
     soundInsert:
       path: /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
+  - type: Appearance
