@@ -40,7 +40,7 @@ public sealed class ProfileEntitySpawningCommand : IConsoleCommand
                 return;
         }
 
-        // Disable sandbox and uncomment to use
+        // Disable sandboxing and uncomment to use
 
         // MeasureProfiler.StartCollectingData();
         //
