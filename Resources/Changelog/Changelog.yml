@@ -1,9 +1,4 @@
 Entries:
-- author: Pancake
-  changes:
-  - {message: Syndicate layoffs., type: Tweak}
-  id: 2020
-  time: '2022-07-26T09:50:18.0000000+00:00'
 - author: DogZeroX
   changes:
   - {message: The emergency boxes now have tinned meat instead of chocolate., type: Tweak}
@@ -2962,3 +2957,8 @@ Entries:
   - {message: Added two new jester suits in AutoDrobe, type: Add}
   id: 2519
   time: '2022-10-24T18:04:55.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix clientside organs being left around., type: Fix}
+  id: 2520
+  time: '2022-10-25T00:08:41.0000000+00:00'
