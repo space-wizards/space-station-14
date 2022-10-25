@@ -14,11 +14,13 @@ public sealed class ArtifactComponent : Component
     [ViewVariables]
     public ArtifactNode? CurrentNode;
 
+    #region Node Tree Gen
     [DataField("nodesMin")]
-    public int NodesMin = 1;
+    public int NodesMin = 5;
 
     [DataField("nodesMax")]
-    public int NodesMax = 7;
+    public int NodesMax = 10;
+    #endregion
 
     /// <summary>
     ///     Cooldown time between artifact activations (in seconds).
@@ -70,5 +72,4 @@ public sealed class ArtifactNode
 
     [ViewVariables]
     public ArtifactEffectPrototype? Effect;
-
 }

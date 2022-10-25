@@ -13,6 +13,8 @@ public sealed partial class ArtifactSystem
     [Dependency] private readonly IComponentFactory _componentFactory = default!;
     [Dependency] private readonly ISerializationManager _serialization = default!;
 
+    public const int MaxEdgesPerNode = 3;
+
     /// <summary>
     /// Randomize a given artifact.
     /// </summary>
@@ -20,7 +22,9 @@ public sealed partial class ArtifactSystem
     {
         var nodeAmount = _random.Next(component.NodesMin, component.NodesMax);
         component.RandomSeed = _random.Next();
+
         component.NodeTree = new ArtifactTree();
+
         GenerateArtifactNodeTree(ref component.NodeTree, nodeAmount);
         EnterNode(component.Owner, ref component.NodeTree.StartNode, component);
     }
@@ -61,8 +65,10 @@ public sealed partial class ArtifactSystem
         node.Id = $"node-{_random.Next(0, 10000)}";
 
         //Generate the connected nodes
-        var maxEdges = targetNodeAmount - tree.AllNodes.Count - uninitializedNodes.Count - 1;
-        var minEdges = Math.Min(maxEdges, 1);
+        var maxEdges = Math.Max(1, targetNodeAmount - tree.AllNodes.Count - uninitializedNodes.Count - 1);
+        maxEdges = Math.Min(maxEdges, MaxEdgesPerNode);
+        var minEdges = 0;
+
         var edgeAmount = _random.Next(minEdges, maxEdges);
 
         for (var i = 0; i < edgeAmount; i++)

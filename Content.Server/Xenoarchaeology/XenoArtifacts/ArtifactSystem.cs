@@ -50,6 +50,7 @@ public sealed partial class ArtifactSystem : EntitySystem
             Activator = user
         };
         RaiseLocalEvent(uid, ev, true);
+
         if (component.CurrentNode == null)
             return;
         component.CurrentNode.Triggered = true;
