@@ -82,3 +82,6 @@ tiles-asteroid-ironsand-pebbles = asteroid ironsand pebbles
 tiles-asteroid-ironsand-rock = asteroid ironsand rock
 tiles-cave = cave
 tiles-cave-drought = cave drought
+tiles-techmaint3-floor = grated maintenance floor
+tiles-techmaint2-floor = steel maintenance floor
+tiles-wood2 = wood pattern floor
