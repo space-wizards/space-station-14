@@ -74,6 +74,10 @@ public sealed partial class StationJobsSystem : EntitySystem
         {
             if (x.Value[0] <= -1)
                 return null;
+
+            if (!_prototypeManager.Index<JobPrototype>(x.Key).SetPreference)
+                return (uint?) 0;
+
             return (uint?) x.Value[0];
         });
         stationJobs.OverflowJobs = stationData.StationConfig.OverflowJobs.ToHashSet();
