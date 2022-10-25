@@ -1,4 +1,5 @@
 ﻿using Content.Server.Fluids.EntitySystems;
+using Robust.Shared.Serialization.TypeSerializers.Implementations;
 
 namespace Content.Server.Fluids.Components;
 
@@ -9,17 +10,19 @@ public sealed class FluidMapDataComponent : Component
     /// <summary>
     /// At what time will <see cref="FluidSpreaderSystem"/> be checked next
     /// </summary>
+    [DataField("goalTime", customTypeSerializer:typeof(TimespanSerializer))]
     public TimeSpan GoalTime;
 
     /// <summary>
     /// Delay between two runs of <see cref="FluidSpreaderSystem"/>
     /// </summary>
+    [DataField("delay", customTypeSerializer:typeof(TimespanSerializer))]
     public TimeSpan Delay = TimeSpan.FromSeconds(2);
 
     /// <summary>
     /// Puddles to be expanded.
     /// </summary>
-    public  HashSet<EntityUid> Puddles = new();
+    public HashSet<EntityUid> Puddles = new();
 
     /// <summary>
     /// Convenience method for setting GoalTime to <paramref name="start"/> + <see cref="Delay"/>

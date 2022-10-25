@@ -15,13 +15,12 @@ public static class SharedArrayExtension
         var n = array.Length;
         if (n <= 1)
             return;
-
-        var robustRandom = random ?? IoCManager.Resolve<IRobustRandom>();
+        IoCManager.Resolve(ref random);
 
         while (n > 1)
         {
             n--;
-            var k = robustRandom.Next(n + 1);
+            var k = random.Next(n + 1);
             (array[k], array[n]) =
                 (array[n], array[k]);
         }

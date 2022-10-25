@@ -153,7 +153,7 @@ namespace Content.Server.Fluids.EntitySystems
             solution.AddSolution(addedSolution);
             if (checkForOverflow && IsOverflowing(puddleUid, puddleComponent))
             {
-                _fluidSpreaderSystem.AddOverflowingPuddle(puddleComponent);
+                _fluidSpreaderSystem.AddOverflowingPuddle(puddleComponent.Owner, puddleComponent);
             }
 
             RaiseLocalEvent(puddleComponent.Owner, new SolutionChangedEvent(), true);

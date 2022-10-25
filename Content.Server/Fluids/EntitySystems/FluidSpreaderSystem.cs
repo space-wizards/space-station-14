@@ -1,14 +1,12 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Server.Fluids.Components;
 using Content.Shared;
 using Content.Shared.Directions;
-using Content.Shared.Doors.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Physics;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
-using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Fluids.EntitySystems;
@@ -23,17 +21,19 @@ public sealed class FluidSpreaderSystem : EntitySystem
     /// <summary>
     /// Adds an overflow component to the map data tracking overflowing puddles
     /// </summary>
-    /// <param name="puddle"> that's overflowing</param>
-    public void AddOverflowingPuddle(PuddleComponent puddle)
+    /// <param name="puddleUid">EntityUid of overflowing puddle</param>
+    /// <param name="puddle">Optional PuddleComponent</param>
+    /// <param name="xform">Optional TransformComponent</param>
+    public void AddOverflowingPuddle(EntityUid puddleUid, PuddleComponent? puddle = null,
+        TransformComponent? xform = null)
     {
-        TransformComponent? transformComponent = null;
-        if (!Resolve(puddle.Owner, ref transformComponent, false) || transformComponent.MapUid == null)
+        if (!Resolve(puddleUid, ref puddle, ref xform, false) || xform.MapUid == null)
             return;
 
-        var mapId = transformComponent.MapUid.Value;
+        var mapId = xform.MapUid.Value;
 
         EntityManager.EnsureComponent<FluidMapDataComponent>(mapId, out var component);
-        component.Puddles.Add(puddle.Owner);
+        component.Puddles.Add(puddleUid);
     }
 
     public override void Update(float frameTime)
@@ -46,6 +46,10 @@ public sealed class FluidSpreaderSystem : EntitySystem
             Direction.South,
             Direction.West,
         };
+        var puddles = new List<PuddleComponent>(4);
+        var puddleQuery = GetEntityQuery<PuddleComponent>();
+        var metaQuery = GetEntityQuery<MetaDataComponent>();
+        var xFormQuery = GetEntityQuery<TransformComponent>();
         foreach (var fluidMapData in EntityQuery<FluidMapDataComponent>())
         {
             if (fluidMapData.Puddles.Count == 0 || _gameTiming.CurTime <= fluidMapData.GoalTime)
@@ -54,16 +58,16 @@ public sealed class FluidSpreaderSystem : EntitySystem
             var newIteration = new HashSet<EntityUid>();
             foreach (var puddleUid in fluidMapData.Puddles)
             {
-                PuddleComponent? puddle = null;
-                MetaDataComponent? metaData = null;
-                TransformComponent? transform = null;
-                if (!Resolve(puddleUid, ref puddle, ref metaData, ref transform, false)
+                if (!puddleQuery.TryGetComponent(puddleUid, out var puddle)
+                    || !metaQuery.TryGetComponent(puddleUid, out var metaData)
+                    || !xFormQuery.TryGetComponent(puddleUid, out var transform)
                     || !_mapManager.TryGetGrid(transform.GridUid, out var mapGrid))
                     continue;
 
+                puddles.Clear();
                 var pos = transform.Coordinates;
-                var prototypeName = metaData.EntityPrototype!.ID;
-                var puddles = new List<PuddleComponent>(4);
+                var prototypeName = metaData.EntityPrototype?.ID ?? "PuddleSmear";
+
                 var totalVolume = _puddleSystem.CurrentVolume(puddle.Owner, puddle);
                 exploreDirections.Shuffle();
                 foreach (var direction in exploreDirections)
@@ -107,33 +111,29 @@ public sealed class FluidSpreaderSystem : EntitySystem
 
         foreach (var entity in mapGrid.GetAnchoredEntities(pos))
         {
-            IPhysBody? physics = null;
-            PuddleComponent? existingPuddle = null;
+            // If this is valid puddle check if we spread to it.
+            if (TryComp(entity, out PuddleComponent? existingPuddle))
+            {
+                // If current puddle has more volume than current we skip that field
+                if (_puddleSystem.CurrentVolume(existingPuddle.Owner, existingPuddle) >= puddleCurrentVolume)
+                {
+                    puddle = null;
+                    return false;
+                }
 
-            // This is an invalid location if it is impassable or if it's passable and there are locked door
-            if (Resolve(entity, ref physics, false)
-                && ((physics.CollisionLayer & (int) CollisionGroup.Impassable) != 0
-                    || TryComp<DoorComponent>(entity, out var door) && door.State == DoorState.Closed))
+                puddle = existingPuddle;
+                return true;
+            }
+
+            // if not puddle is this tile blocked by an object like wall or door
+            if (TryComp(entity, out PhysicsComponent? physComponent) && physComponent.CanCollide
+                                                                     && ((physComponent.CollisionLayer +
+                                                                          physComponent.CollisionMask) &
+                                                                         (int) CollisionGroup.MobMask) != 0)
             {
                 puddle = null;
                 return false;
             }
-
-
-            if (!Resolve(entity, ref existingPuddle, false))
-            {
-                continue;
-            }
-
-            // If current puddle has more volume than current we skip that field
-            if (_puddleSystem.CurrentVolume(existingPuddle.Owner, existingPuddle) >= puddleCurrentVolume)
-            {
-                puddle = null;
-                return false;
-            }
-
-            puddle = existingPuddle;
-            return true;
         }
 
         var puid = EntityManager.SpawnEntity(prototype, pos);

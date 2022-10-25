@@ -9,32 +9,33 @@ public sealed class PuddleDebugOverlaySystem : SharedPuddleDebugOverlaySystem
     [Dependency] private readonly IOverlayManager _overlayManager = default!;
 
     public readonly Dictionary<EntityUid, PuddleOverlayDebugMessage> TileData = new();
+    private PuddleOverlay? _overlay;
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeNetworkEvent<PuddleOverlayDisableMessage>(DisableOverlay);
         SubscribeNetworkEvent<PuddleOverlayDebugMessage>(RenderDebugData);
-
-        if (!_overlayManager.HasOverlay<PuddleOverlay>())
-        {
-            _overlayManager.AddOverlay(new PuddleOverlay());
-        }
     }
 
     private void RenderDebugData(PuddleOverlayDebugMessage message)
     {
         TileData[message.GridUid] = message;
+        if (_overlay != null)
+            return;
+
+        _overlay = new PuddleOverlay();
+        _overlayManager.AddOverlay(_overlay);
     }
 
     private void DisableOverlay(PuddleOverlayDisableMessage message)
     {
         TileData.Clear();
-    }
+        if (_overlay == null)
+            return;
 
-    public bool HasData(EntityUid gridId)
-    {
-        return TileData.ContainsKey(gridId);
+        _overlayManager.RemoveOverlay(_overlay);
+        _overlay = null;
     }
 
     public PuddleDebugOverlayData[] GetData(EntityUid mapGridGridEntityId)
