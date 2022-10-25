@@ -140,6 +140,7 @@
   - type: Recyclable
     safe: false
   - type: StandingState
+  - type: SimpleMob
   - type: Alerts
   - type: NameIdentifier
     group: GenericNumber
