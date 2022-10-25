@@ -212,6 +212,9 @@ namespace Content.Client.LateJoin
 
                     foreach (var prototype in jobsAvailable)
                     {
+                        if (!prototype.SetPreference)
+                            continue;
+
                         var value = stationAvailable[prototype.ID];
                         var jobButton = new JobButton(prototype.ID, value);
 
