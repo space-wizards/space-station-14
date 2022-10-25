@@ -1,9 +1,4 @@
 Entries:
-- author: DogZeroX
-  changes:
-  - {message: The emergency boxes now have tinned meat instead of chocolate., type: Tweak}
-  id: 2021
-  time: '2022-07-26T09:56:56.0000000+00:00'
 - author: Rane
   changes:
   - {message: Observers now have a warp for the nuke disk., type: Add}
@@ -2962,3 +2957,9 @@ Entries:
   - {message: Fix clientside organs being left around., type: Fix}
   id: 2520
   time: '2022-10-25T00:08:41.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Some miscellaneous electronics have been additionally added to the circuit
+      imprinter., type: Add}
+  id: 2521
+  time: '2022-10-25T00:22:12.0000000+00:00'
