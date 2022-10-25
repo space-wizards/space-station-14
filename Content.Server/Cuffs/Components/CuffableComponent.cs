@@ -235,7 +235,7 @@ namespace Content.Server.Cuffs.Components
             }
 
             var uncuffTime = isOwner ? cuff.BreakoutTime : cuff.UncuffTime;
-            var doAfterEventArgs = new DoAfterEventArgs(user, uncuffTime)
+            var doAfterEventArgs = new DoAfterEventArgs(user, uncuffTime, target: Owner)
             {
                 BreakOnUserMove = true,
                 BreakOnTargetMove = true,

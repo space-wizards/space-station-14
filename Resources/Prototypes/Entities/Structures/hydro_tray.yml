@@ -78,7 +78,6 @@
         acts: ["Destruction"]
   - type: Machine
     board: HydroponicsTrayMachineCircuitboard
-  - type: MaterialStorage
   - type: Wires
     BoardName: "HydroponicsTray"
     LayoutId: HydroponicsTray

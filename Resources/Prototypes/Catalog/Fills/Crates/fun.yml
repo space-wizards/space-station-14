@@ -26,6 +26,8 @@
         amount: 1
       - id: PlushieRatvar
         amount: 1
+      - id: PlushieSharkBlue
+        amount: 1
 
 - type: entity
   id: CrateFunInstruments
