@@ -9,26 +9,27 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems;
 public sealed class GasArtifactSystem : EntitySystem
 {
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly IRobustRandom _random = default!; //TODO: kille
 
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<GasArtifactComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<GasArtifactComponent, ArtifactNodeEnteredEvent>(OnNodeEntered);
         SubscribeLocalEvent<GasArtifactComponent, ArtifactActivatedEvent>(OnActivate);
     }
 
-    private void OnMapInit(EntityUid uid, GasArtifactComponent component, MapInitEvent args)
+    private void OnNodeEntered(EntityUid uid, GasArtifactComponent component, ArtifactNodeEnteredEvent args)
     {
-        if (component.SpawnGas == null && component.PossibleGases.Length != 0)
+        if (component.SpawnGas == null && component.PossibleGases.Count != 0)
         {
-            var gas = _random.Pick(component.PossibleGases);
+            var gas = component.PossibleGases[args.RandomSeed % component.PossibleGases.Count];
             component.SpawnGas = gas;
         }
 
         if (component.SpawnTemperature == null)
         {
-            var temp = _random.NextFloat(component.MinRandomTemperature, component.MaxRandomTemperature);
+            var temp = args.RandomSeed % component.MaxRandomTemperature - component.MinRandomTemperature +
+                       component.MinRandomTemperature;
             component.SpawnTemperature = temp;
         }
     }
@@ -37,8 +38,6 @@ public sealed class GasArtifactSystem : EntitySystem
     {
         if (component.SpawnGas == null || component.SpawnTemperature == null)
             return;
-
-        var transform = Transform(uid);
 
         var environment = _atmosphereSystem.GetContainingMixture(uid, false, true);
         if (environment == null)

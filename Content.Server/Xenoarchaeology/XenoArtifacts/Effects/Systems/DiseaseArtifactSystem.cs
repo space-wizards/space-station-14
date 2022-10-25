@@ -15,7 +15,6 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems
     public sealed class DiseaseArtifactSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly DiseaseSystem _disease = default!;
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
@@ -36,17 +35,18 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<DiseaseArtifactComponent, MapInitEvent>(OnMapInit);
+            SubscribeLocalEvent<DiseaseArtifactComponent, ArtifactNodeEnteredEvent>(OnNodeEntered);
             SubscribeLocalEvent<DiseaseArtifactComponent, ArtifactActivatedEvent>(OnActivate);
         }
 
         /// <summary>
         /// Makes sure this artifact is assigned a disease
         /// </summary>
-        private void OnMapInit(EntityUid uid, DiseaseArtifactComponent component, MapInitEvent args)
+        private void OnNodeEntered(EntityUid uid, DiseaseArtifactComponent component, ArtifactNodeEnteredEvent args)
         {
-            if (component.SpawnDisease != null || ArtifactDiseases.Count == 0) return;
-            var diseaseName = _random.Pick(ArtifactDiseases);
+            if (component.SpawnDisease != null || ArtifactDiseases.Count == 0)
+                return;
+            var diseaseName = ArtifactDiseases[args.RandomSeed % ArtifactDiseases.Count];
 
             if (!_prototypeManager.TryIndex<DiseasePrototype>(diseaseName, out var disease))
             {

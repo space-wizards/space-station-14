@@ -16,10 +16,10 @@ public sealed class ArtifactGasTriggerSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<ArtifactGasTriggerComponent, RandomizeTriggerEvent>(OnRandomizeTrigger);
+        SubscribeLocalEvent<ArtifactGasTriggerComponent, ArtifactNodeEnteredEvent>(OnRandomizeTrigger);
     }
 
-    private void OnRandomizeTrigger(EntityUid uid, ArtifactGasTriggerComponent component, RandomizeTriggerEvent args)
+    private void OnRandomizeTrigger(EntityUid uid, ArtifactGasTriggerComponent component, ArtifactNodeEnteredEvent args)
     {
         if (component.ActivationGas == null)
         {

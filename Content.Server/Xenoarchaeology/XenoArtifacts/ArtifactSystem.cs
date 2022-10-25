@@ -10,7 +10,6 @@ public sealed partial class ArtifactSystem : EntitySystem
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 
-
     public override void Initialize()
     {
         base.Initialize();

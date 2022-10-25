@@ -13,12 +13,18 @@ public sealed class SpawnArtifactSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<SpawnArtifactComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<SpawnArtifactComponent, ArtifactNodeEnteredEvent>(OnNodeEntered);
         SubscribeLocalEvent<SpawnArtifactComponent, ArtifactActivatedEvent>(OnActivate);
     }
-    private void OnMapInit(EntityUid uid, SpawnArtifactComponent component, MapInitEvent args)
+    private void OnNodeEntered(EntityUid uid, SpawnArtifactComponent component, ArtifactNodeEnteredEvent args)
     {
-        ChooseRandomPrototype(uid, component);
+        if (!component.RandomPrototype)
+            return;
+        if (component.PossiblePrototypes.Count == 0)
+            return;
+
+        var proto = component.PossiblePrototypes[args.RandomSeed % component.PossiblePrototypes.Count];
+        component.Prototype = proto;
     }
 
     private void OnActivate(EntityUid uid, SpawnArtifactComponent component, ArtifactActivatedEvent args)
@@ -41,19 +47,5 @@ public sealed class SpawnArtifactSystem : EntitySystem
         // if there is an user - try to put spawned item in their hands
         // doesn't work for spawners
         _handsSystem.PickupOrDrop(args.Activator, spawned);
-    }
-
-    private void ChooseRandomPrototype(EntityUid uid, SpawnArtifactComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
-            return;
-
-        if (!component.RandomPrototype)
-            return;
-        if (component.PossiblePrototypes.Count == 0)
-            return;
-
-        var proto = _random.Pick(component.PossiblePrototypes);
-        component.Prototype = proto;
     }
 }
