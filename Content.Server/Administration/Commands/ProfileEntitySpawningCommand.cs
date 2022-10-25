@@ -1,11 +1,11 @@
-﻿using Content.Shared.Administration;
+﻿#if !FULL_RELEASE
+using Content.Shared.Administration;
 using JetBrains.Profiler.Api;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
 
 namespace Content.Server.Administration.Commands;
 
-#if !FULL_RELEASE
 [AdminCommand(AdminFlags.Host)]
 public sealed class ProfileEntitySpawningCommand : IConsoleCommand
 {
@@ -17,17 +17,21 @@ public sealed class ProfileEntitySpawningCommand : IConsoleCommand
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var amount = 10000;
+        var amount = 1000;
+        string? prototype = null;
+
         switch (args.Length)
         {
             case 0:
                 break;
-            case 1:
+            case 2:
                 if (!int.TryParse(args[0], out amount))
                 {
                     shell.WriteError($"First argument is not an integer: {args[0]}");
                     return;
                 }
+
+                prototype = args[1];
 
                 break;
             default:
@@ -39,10 +43,10 @@ public sealed class ProfileEntitySpawningCommand : IConsoleCommand
 
         for (var i = 0; i < amount; i++)
         {
-            _entities.SpawnEntity(null, MapCoordinates.Nullspace);
+            _entities.SpawnEntity(prototype, MapCoordinates.Nullspace);
         }
 
-        MeasureProfiler.SaveData($"Server: Spawning {amount} entities");
+        MeasureProfiler.SaveData();
         shell.WriteLine($"Server: Profiled spawning {amount} entities");
     }
 }

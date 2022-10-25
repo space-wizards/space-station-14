@@ -1,11 +1,12 @@
-﻿// ReSharper disable RedundantUsingDirective
+﻿#if !FULL_RELEASE
+// ReSharper disable RedundantUsingDirective
 using JetBrains.Profiler.Api;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
+// ReSharper disable NotAccessedVariable
 
 namespace Content.Client.Commands;
 
-#if !FULL_RELEASE
 public sealed class ProfileEntitySpawningCommand : IConsoleCommand
 {
 #pragma warning disable CS0414
@@ -18,7 +19,7 @@ public sealed class ProfileEntitySpawningCommand : IConsoleCommand
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var amount = 10000;
+        var amount = 1000;
         string? prototype = null;
 
         switch (args.Length)
@@ -49,7 +50,7 @@ public sealed class ProfileEntitySpawningCommand : IConsoleCommand
         //     _entities.SpawnEntity(prototype, MapCoordinates.Nullspace);
         // }
         //
-        // MeasureProfiler.SaveData($"Client: Spawning {amount} entities");
+        // MeasureProfiler.SaveData();
         // shell.WriteLine($"Client: Profiled spawning {amount} entities");
     }
 }
