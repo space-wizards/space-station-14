@@ -1,10 +1,12 @@
+using Robust.Shared.GameStates;
+
 namespace Content.Shared.Stealth.Components
 {
     /// <summary>
     ///     When added to an entity with stealth component, this component will change the visibility
     ///     based on the entity's (lack of) movement.
     /// </summary>
-    [RegisterComponent]
+    [RegisterComponent, NetworkedComponent]
     public sealed class StealthOnMoveComponent : Component
     {
         /// <summary>

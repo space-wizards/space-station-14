@@ -630,6 +630,72 @@
     Durathread: 300
 
 - type: latheRecipe
+  id: ClothingNeckMantleCap
+  icon:
+    sprite: Clothing/Neck/mantles/capmantle.rsi
+    state: icon
+  result: ClothingNeckMantleCap
+  completetime: 2.8
+  materials:
+    Cloth: 150
+    Durathread: 150
+
+- type: latheRecipe
+  id: ClothingNeckMantleCE
+  icon:
+    sprite: Clothing/Neck/mantles/cemantle.rsi
+    state: icon
+  result: ClothingNeckMantleCE
+  completetime: 2.8
+  materials:
+    Cloth: 150
+    Durathread: 150
+
+- type: latheRecipe
+  id: ClothingNeckMantleCMO
+  icon:
+    sprite: Clothing/Neck/mantles/cmomantle.rsi
+    state: icon
+  result: ClothingNeckMantleCMO
+  completetime: 2.8
+  materials:
+    Cloth: 150
+    Durathread: 150
+
+- type: latheRecipe
+  id: ClothingNeckMantleHOP
+  icon:
+    sprite: Clothing/Neck/mantles/hopmantle.rsi
+    state: icon
+  result: ClothingNeckMantleHOP
+  completetime: 2.8
+  materials:
+    Cloth: 150
+    Durathread: 150
+
+- type: latheRecipe
+  id: ClothingNeckMantleHOS
+  icon:
+    sprite: Clothing/Neck/mantles/hosmantle.rsi
+    state: icon
+  result: ClothingNeckMantleHOS
+  completetime: 2.8
+  materials:
+    Cloth: 150
+    Durathread: 150
+
+- type: latheRecipe
+  id: ClothingNeckMantleRD
+  icon:
+    sprite: Clothing/Neck/mantles/rdmantle.rsi
+    state: icon
+  result: ClothingNeckMantleRD
+  completetime: 2.8
+  materials:
+    Cloth: 150
+    Durathread: 150
+
+- type: latheRecipe
   id: ClothingOuterWinterMusician
   icon:
     sprite: Clothing/OuterClothing/WinterCoats/coatnomi.rsi
