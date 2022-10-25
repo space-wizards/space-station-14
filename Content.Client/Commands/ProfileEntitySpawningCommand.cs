@@ -1,4 +1,5 @@
-﻿using JetBrains.Profiler.Api;
+﻿// ReSharper disable RedundantUsingDirective
+using JetBrains.Profiler.Api;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
 
@@ -7,7 +8,9 @@ namespace Content.Client.Commands;
 #if !FULL_RELEASE
 public sealed class ProfileEntitySpawningCommand : IConsoleCommand
 {
+#pragma warning disable CS0414
     [Dependency] private readonly IEntityManager _entities = default!;
+#pragma warning restore CS0414
 
     public string Command => "profileEntitySpawning";
     public string Description => "Profiles entity spawning with n entities";
@@ -37,16 +40,17 @@ public sealed class ProfileEntitySpawningCommand : IConsoleCommand
                 return;
         }
 
-        MeasureProfiler.StartCollectingData();
+        // Disable sandbox and uncomment to use
 
-        for (var i = 0; i < amount; i++)
-        {
-            _entities.SpawnEntity(prototype, MapCoordinates.Nullspace);
-
-        }
-
-        MeasureProfiler.SaveData($"Client: Spawning {amount} entities");
-        shell.WriteLine($"Client: Profiled spawning {amount} entities");
+        // MeasureProfiler.StartCollectingData();
+        //
+        // for (var i = 0; i < amount; i++)
+        // {
+        //     _entities.SpawnEntity(prototype, MapCoordinates.Nullspace);
+        // }
+        //
+        // MeasureProfiler.SaveData($"Client: Spawning {amount} entities");
+        // shell.WriteLine($"Client: Profiled spawning {amount} entities");
     }
 }
 #endif

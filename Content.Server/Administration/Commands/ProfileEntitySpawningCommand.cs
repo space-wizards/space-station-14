@@ -40,7 +40,6 @@ public sealed class ProfileEntitySpawningCommand : IConsoleCommand
         for (var i = 0; i < amount; i++)
         {
             _entities.SpawnEntity(null, MapCoordinates.Nullspace);
-
         }
 
         MeasureProfiler.SaveData($"Server: Spawning {amount} entities");
