@@ -27,7 +27,7 @@ public sealed partial class ChemistrySystem
     /// <summary>
     ///     Default transfer amounts for the set-transfer verb.
     /// </summary>
-    public static readonly List<int> DefaultTransferAmounts = new() { 5, 10, 15};
+    public static readonly List<int> TransferAmounts = new() { 5, 10, 15};
     private void InitializeInjector()
     {
         SubscribeLocalEvent<InjectorComponent, GetVerbsEvent<AlternativeVerb>>(AddSetTransferVerbs);
@@ -43,36 +43,36 @@ public sealed partial class ChemistrySystem
     }
 
     private void AddSetTransferVerbs(EntityUid uid, InjectorComponent component, GetVerbsEvent<AlternativeVerb> args)
+    {
+        if (!args.CanAccess || !args.CanInteract || args.Hands == null)
+            return;
+
+        if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
+            return;
+
+        // Add specific transfer verbs according to the container's size
+        var priority = 0;
+        foreach (var amount in TransferAmounts)
         {
-            if (!args.CanAccess || !args.CanInteract || args.Hands == null)
-                return;
+            if ( amount < component.MinimumTransferAmount.Int() || amount > component.MaximumTransferAmount.Int())
+                continue;
 
-            if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
-                return;
-
-            // Add specific transfer verbs according to the container's size
-            var priority = 0;
-            foreach (var amount in DefaultTransferAmounts)
+            AlternativeVerb verb = new();
+            verb.Text = Loc.GetString("comp-solution-transfer-verb-amount", ("amount", amount));
+            verb.Category = VerbCategory.SetTransferAmount;
+            verb.Act = () =>
             {
-                if ( amount < component.MinimumTransferAmount.Int() || amount > component.MaximumTransferAmount.Int())
-                    continue;
+                component.TransferAmount = FixedPoint2.New(amount);
+                args.User.PopupMessage(Loc.GetString("comp-solution-transfer-set-amount", ("amount", amount)));
+            };
 
-                AlternativeVerb verb = new();
-                verb.Text = Loc.GetString("comp-solution-transfer-verb-amount", ("amount", amount));
-                verb.Category = VerbCategory.SetTransferAmount;
-                verb.Act = () =>
-                {
-                    component.TransferAmount = FixedPoint2.New(amount);
-                    args.User.PopupMessage(Loc.GetString("comp-solution-transfer-set-amount", ("amount", amount)));
-                };
+            // we want to sort by size, not alphabetically by the verb text.
+            verb.Priority = priority;
+            priority--;
 
-                // we want to sort by size, not alphabetically by the verb text.
-                verb.Priority = priority;
-                priority--;
-
-                args.Verbs.Add(verb);
-            }
+            args.Verbs.Add(verb);
         }
+    }
 
 
     private static void OnInjectionCancelled(InjectionCancelledEvent ev)

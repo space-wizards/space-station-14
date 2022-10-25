@@ -81,7 +81,5 @@ namespace Content.Server.Chemistry.Components
                 Dirty();
             }
         }
-
-        [ViewVariables] public BoundUserInterface? UserInterface => Owner.GetUIOrNull(TransferAmountUiKey.Key);
     }
 }
