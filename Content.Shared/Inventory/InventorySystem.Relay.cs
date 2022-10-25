@@ -5,6 +5,7 @@ using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Slippery;
 using Content.Shared.Strip.Components;
+using Content.Shared.Temperature;
 
 namespace Content.Shared.Inventory;
 
@@ -19,6 +20,7 @@ public partial class InventorySystem
         SubscribeLocalEvent<InventoryComponent, GetExplosionResistanceEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, BeforeStripEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, SeeIdentityAttemptEvent>(RelayInventoryEvent);
+        SubscribeLocalEvent<InventoryComponent, ModifyChangedTemperatureEvent>(RelayInventoryEvent);
     }
 
     protected void RelayInventoryEvent<T>(EntityUid uid, InventoryComponent component, T args) where T : EntityEventArgs, IInventoryRelayEvent
