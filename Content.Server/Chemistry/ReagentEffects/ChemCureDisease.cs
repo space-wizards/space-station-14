@@ -20,8 +20,7 @@ namespace Content.Server.Chemistry.ReagentEffects
         {
             var cureChance = CureChance;
 
-            if (args.MetabolismEffects != null)
-                cureChance *= (float) (args.Quantity / args.MetabolismEffects.MetabolismRate);
+            cureChance *= args.Scale;
 
             var ev = new CureDiseaseAttemptEvent(cureChance);
             args.EntityManager.EventBus.RaiseLocalEvent(args.SolutionEntity, ev, false);

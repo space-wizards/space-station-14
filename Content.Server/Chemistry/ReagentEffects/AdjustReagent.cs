@@ -34,8 +34,7 @@ namespace Content.Server.Chemistry.ReagentEffects
                 var solutionSys = args.EntityManager.EntitySysManager.GetEntitySystem<SolutionContainerSystem>();
                 var amount = Amount;
 
-                if (args.MetabolismEffects != null)
-                    amount *= (args.Quantity / args.MetabolismEffects.MetabolismRate);
+                amount *= args.Scale;
 
                 if (Reagent != null)
                 {

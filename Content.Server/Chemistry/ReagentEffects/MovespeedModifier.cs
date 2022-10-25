@@ -45,8 +45,7 @@ namespace Content.Server.Chemistry.ReagentEffects
 
             // only going to scale application time
             var statusLifetime = StatusLifetime;
-            if (args.MetabolismEffects != null)
-                statusLifetime *= (float) (args.Quantity / args.MetabolismEffects.MetabolismRate);
+            statusLifetime *= args.Scale;
 
             IncreaseTimer(status, statusLifetime);
 

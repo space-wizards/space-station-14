@@ -19,8 +19,7 @@ public sealed class ModifyBloodLevel : ReagentEffect
         {
             var sys = EntitySystem.Get<BloodstreamSystem>();
             var amt = Scaled ? Amount * args.Quantity : Amount;
-            if (args.MetabolismEffects != null)
-                amt *= (args.Quantity / args.MetabolismEffects.MetabolismRate);
+            amt *= args.Scale;
 
             sys.TryModifyBloodLevel(args.SolutionEntity, amt, blood);
         }

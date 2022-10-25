@@ -28,8 +28,7 @@ namespace Content.Server.Chemistry.ReagentEffects.StatusEffects
         public override void Effect(ReagentEffectArgs args)
         {
             var time = Time;
-            if (args.MetabolismEffects != null)
-                time *= (float) (args.Quantity / args.MetabolismEffects.MetabolismRate);
+            time *= args.Scale;
 
             args.EntityManager.EntitySysManager.GetEntitySystem<SharedJitteringSystem>()
                 .DoJitter(args.SolutionEntity, TimeSpan.FromSeconds(time), Refresh, Amplitude, Frequency);

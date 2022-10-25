@@ -21,8 +21,7 @@ public sealed class Drunk : ReagentEffect
     {
         var boozePower = BoozePower;
 
-        if (args.MetabolismEffects != null)
-            boozePower *= (float) (args.Quantity / args.MetabolismEffects.MetabolismRate);
+        boozePower *= args.Scale;
 
         var drunkSys = args.EntityManager.EntitySysManager.GetEntitySystem<SharedDrunkSystem>();
         drunkSys.TryApplyDrunkenness(args.SolutionEntity, boozePower, SlurSpeech);

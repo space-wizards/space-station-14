@@ -15,8 +15,7 @@ public sealed class Paralyze : ReagentEffect
     public override void Effect(ReagentEffectArgs args)
     {
         var paralyzeTime = ParalyzeTime;
-        if (args.MetabolismEffects != null)
-            paralyzeTime *= (float) (args.Quantity / args.MetabolismEffects.MetabolismRate);
+        paralyzeTime *= args.Scale;
 
         EntitySystem.Get<StunSystem>().TryParalyze(args.SolutionEntity, TimeSpan.FromSeconds(paralyzeTime), Refresh);
     }

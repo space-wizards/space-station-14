@@ -42,8 +42,7 @@ namespace Content.Server.Chemistry.ReagentEffects.StatusEffects
             var statusSys = args.EntityManager.EntitySysManager.GetEntitySystem<StatusEffectsSystem>();
 
             var time = Time;
-            if (args.MetabolismEffects != null)
-                time *= (float) (args.Quantity / args.MetabolismEffects.MetabolismRate);
+            time *= args.Scale;
 
             if (Type == StatusEffectMetabolismType.Add && Component != String.Empty)
             {

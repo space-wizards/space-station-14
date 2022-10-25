@@ -19,8 +19,7 @@ namespace Content.Server.Chemistry.ReactionEffects
 
             var cleanseRate = CleanseRate;
 
-            if (args.MetabolismEffects != null)
-                cleanseRate *= (float) (args.Quantity / args.MetabolismEffects.MetabolismRate);
+            cleanseRate *= args.Scale;
 
             var bloodstreamSys = EntitySystem.Get<BloodstreamSystem>();
             bloodstreamSys.FlushChemicals(args.SolutionEntity, args.Reagent.ID, cleanseRate);

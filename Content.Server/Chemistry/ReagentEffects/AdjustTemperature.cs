@@ -16,8 +16,7 @@ namespace Content.Server.Chemistry.ReagentEffects
                 var sys = args.EntityManager.EntitySysManager.GetEntitySystem<TemperatureSystem>();
                 var amount = Amount;
 
-                if (args.MetabolismEffects != null)
-                    amount *= (float) (args.Quantity / args.MetabolismEffects.MetabolismRate);
+                amount *= args.Scale;
 
                 sys.ChangeHeat(args.SolutionEntity, amount, true, temp);
             }
