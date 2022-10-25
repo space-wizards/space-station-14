@@ -160,7 +160,6 @@ public sealed class SleeperAgentRuleSystem : GameRuleSystem
             if (IsPhrase)
             {
                 KeyPhrase = "Phrase";
-                _triggerSystem.ToggleRecord(this, Activator, true);
             }
             else if (KeyPhrase != null && message.Contains("Phrase", StringComparison.InvariantCultureIgnoreCase))
             {
