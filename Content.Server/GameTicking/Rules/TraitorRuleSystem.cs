@@ -339,7 +339,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem
                 removeList.Add(traitor);
                 continue;
             }
-            if (traitor.Mind.CurrentEntity == null) // no entity
+            if (traitor.Mind.OwnedEntity == null) // no entity
             {
                 removeList.Add(traitor);
                 continue;
@@ -354,7 +354,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem
                 removeList.Add(traitor);
                 continue;
             }
-            if (!_mobStateSystem.IsAlive(traitor.Mind.CurrentEntity.Value)) // they are dead
+            if (!_mobStateSystem.IsAlive(traitor.Mind.OwnedEntity.Value)) // they are dead
             {
                 removeList.Add(traitor);
                 continue;
