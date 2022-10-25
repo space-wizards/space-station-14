@@ -3,13 +3,11 @@ using Content.Server.Chat.Managers;
 using Content.Server.Objectives.Interfaces;
 using Content.Server.Players;
 using Content.Server.Roles;
-using Content.Server.Store.Systems;
 using Content.Server.Traitor;
 using Content.Server.Traitor.Uplink;
+using Content.Server.MobState;
 using Content.Shared.CCVar;
 using Content.Shared.Dataset;
-using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Inventory;
 using Content.Shared.Roles;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
@@ -29,10 +27,9 @@ public sealed class TraitorRuleSystem : GameRuleSystem
     [Dependency] private readonly IObjectivesManager _objectivesManager = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
-    [Dependency] private readonly InventorySystem _inventorySystem = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly StoreSystem _store = default!;
+    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly UplinkSystem _uplink = default!;
+
 
     public override string Prototype => "Traitor";
 
@@ -328,5 +325,47 @@ public sealed class TraitorRuleSystem : GameRuleSystem
             }
         }
         ev.AddLine(result);
+    }
+
+    public List<Traitor.TraitorRole> GetOtherTraitorsAliveAndConnected(Mind.Mind ourMind)
+    {
+        var traitors = Traitors;
+        List<Traitor.TraitorRole> removeList = new();
+
+        foreach (var traitor in traitors) // we remove if...
+        {
+            if (traitor.Mind == null) // no mind
+            {
+                removeList.Add(traitor);
+                continue;
+            }
+            if (traitor.Mind.CurrentEntity == null) // no entity
+            {
+                removeList.Add(traitor);
+                continue;
+            }
+            if (traitor.Mind.Session == null) // player disconnected
+            {
+                removeList.Add(traitor);
+                continue;
+            }
+            if (traitor.Mind == ourMind) // it's our mind
+            {
+                removeList.Add(traitor);
+                continue;
+            }
+            if (!_mobStateSystem.IsAlive(traitor.Mind.CurrentEntity.Value)) // they are dead
+            {
+                removeList.Add(traitor);
+                continue;
+            }
+        }
+
+        foreach (var traitor in removeList)
+        {
+            traitors.Remove(traitor);
+        }
+
+        return traitors;
     }
 }
