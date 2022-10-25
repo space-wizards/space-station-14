@@ -74,7 +74,6 @@ public sealed partial class ChemistrySystem
         }
     }
 
-
     private static void OnInjectionCancelled(InjectionCancelledEvent ev)
     {
         ev.Component.CancelToken = null;
