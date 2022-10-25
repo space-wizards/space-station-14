@@ -136,7 +136,7 @@ public sealed class BeamSystem : SharedBeamSystem
     /// <param name="controller"></param>
     public void TryCreateBeam(EntityUid user, EntityUid target, string bodyPrototype, string? bodyState = null, string shader = "unshaded", EntityUid? controller = null)
     {
-        if (!user.IsValid() || !target.IsValid())
+        if (Deleted(user) || Deleted(target))
             return;
 
         var userMapPos = Transform(user).MapPosition;
