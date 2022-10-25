@@ -247,7 +247,7 @@
     soundHit:
       collection: Punch
     angle: 30
-    animation: WeaponArcPunch
+    animation: WeaponArcFist
     attackRate: 1
     damage:
       types:

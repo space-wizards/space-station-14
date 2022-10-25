@@ -55,7 +55,7 @@
     - type: Sprite
       state: bite
     - type: TimedDespawn
-      lifetime: 0.4
+      lifetime: 0.399
 
 - type: entity
   id: WeaponArcClaw
@@ -67,7 +67,7 @@
     - type: Sprite
       state: claw
     - type: TimedDespawn
-      lifetime: 0.4
+      lifetime: 0.399
 
 - type: entity
   id: WeaponArcDisarm
@@ -79,7 +79,7 @@
     - type: Sprite
       state: disarm
     - type: TimedDespawn
-      lifetime: 0.3
+      lifetime: 0.299
 
 - type: entity
   id: WeaponArcFist
@@ -99,7 +99,7 @@
     - type: Sprite
       state: punch
     - type: TimedDespawn
-      lifetime: 0.5
+      lifetime: 0.499
 
 - type: entity
   id: WeaponArcKick
@@ -111,7 +111,7 @@
     - type: Sprite
       state: kick
     - type: TimedDespawn
-      lifetime: 0.3
+      lifetime: 0.299
 
 - type: entity
   id: WeaponArcSmash
@@ -123,4 +123,4 @@
     - type: Sprite
       state: smash
     - type: TimedDespawn
-      lifetime: 0.3
+      lifetime: 0.299

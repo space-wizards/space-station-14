@@ -254,19 +254,23 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         weapon.NextAttack += TimeSpan.FromSeconds(1f / weapon.AttackRate);
 
         // Attack confirmed
+        string animation;
 
         switch (attack)
         {
             case LightAttackEvent light:
                 DoLightAttack(user, light, weapon, session);
+                animation = weapon.ClickAnimation;
                 break;
             case DisarmAttackEvent disarm:
                 if (!DoDisarm(user, disarm, weapon, session))
                     return;
 
+                animation = weapon.ClickAnimation;
                 break;
             case HeavyAttackEvent heavy:
                 DoHeavyAttack(user, heavy, weapon, session);
+                animation = weapon.WideAnimation;
                 break;
             default:
                 throw new NotImplementedException();
@@ -275,7 +279,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         // Play a sound to give instant feedback; same with playing the animations
         Audio.PlayPredicted(weapon.SwingSound, weapon.Owner, user);
 
-        DoLungeAnimation(user, weapon.Angle, attack.Coordinates.ToMap(EntityManager), weapon.Range, weapon.Animation);
+        DoLungeAnimation(user, weapon.Angle, attack.Coordinates.ToMap(EntityManager), weapon.Range, animation);
         weapon.Attacking = true;
         Dirty(weapon);
     }
