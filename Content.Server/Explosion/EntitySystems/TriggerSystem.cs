@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
+using Content.Server.Body.Systems;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Explosion.Components;
 using Content.Server.Flash;
@@ -51,6 +52,7 @@ namespace Content.Server.Explosion.EntitySystems
         [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;
+        [Dependency] private readonly BodySystem _body = default!;
 
         public override void Initialize()
         {
@@ -97,18 +99,12 @@ namespace Content.Server.Explosion.EntitySystems
 
         private void HandleGibTrigger(EntityUid uid, GibOnTriggerComponent component, TriggerEvent args)
         {
-            var bodyQuery = GetEntityQuery<SharedBodyComponent>();
-
             //Code so implants can properly handle gibbing their owners
-            if (TryComp<SubdermalImplantComponent>(uid, out var implantComponent) &&
-                implantComponent.EntityUid != null &&
-                bodyQuery.TryGetComponent(implantComponent.EntityUid.Value, out var implantedBody))
-            {
-                implantedBody.Gib(deleteItems:component.DeleteItems);
-            }
+            if (TryComp<SubdermalImplantComponent>(uid, out var implantComponent) && implantComponent.EntityUid != null)
+                _body.GibBody(implantComponent.EntityUid.Value, deleteItems: component.DeleteItems);
 
-            if (bodyQuery.TryGetComponent(uid, out var body))
-                body.Gib(deleteItems:component.DeleteItems);
+            else
+                _body.GibBody(uid, deleteItems: component.DeleteItems);
 
             args.Handled = true;
         }

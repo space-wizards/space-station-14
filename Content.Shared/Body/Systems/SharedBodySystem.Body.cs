@@ -161,7 +161,7 @@ public partial class SharedBodySystem
     }
 
     public virtual HashSet<EntityUid> GibBody(EntityUid? partId, bool gibOrgans = false,
-        BodyComponent? body = null)
+        BodyComponent? body = null, bool deleteItems = false)
     {
         if (partId == null || !Resolve(partId.Value, ref body, false))
             return new HashSet<EntityUid>();
