@@ -127,7 +127,7 @@ public sealed class SleeperAgentRuleSystem : GameRuleSystem
         return results;
     }
     
-    public bool MakeAgent(IPlayerSession agent)
+    bool MakeAgent(IPlayerSession agent)
     {
         var mind = agent.Data.ContentData()?.Mind;
         if (mind == null)
@@ -163,6 +163,7 @@ public sealed class SleeperAgentRuleSystem : GameRuleSystem
             }
             else if (KeyPhrase != null && message.Contains("Phrase", StringComparison.InvariantCultureIgnoreCase))
             {
+                _popupSystem.PopupEntity(Loc.GetString("agent-activation-success"), args.User, Filter.Entities(args.User));
                 public bool MakeAgentActivated(IPlayerSession agent)
                 {
                     var mind = agent.Data.ContentData()?.Mind;
@@ -220,7 +221,7 @@ public sealed class SleeperAgentRuleSystem : GameRuleSystem
                 }
             }
  
- private void HandleLatejoin(PlayerSpawnCompleteEvent ev)
+ void HandleLatejoin(PlayerSpawnCompleteEvent ev)
     {
         if (!RuleAdded)
             return;
