@@ -68,3 +68,7 @@
   Commands:
     - uploadfile
     - loadprototype
+
+- Flags: HOST
+  Commands:
+  - profileEntitySpawning
