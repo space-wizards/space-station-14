@@ -1,8 +1,9 @@
 ﻿using Content.Server.Cargo.Components;
-using Content.Server.Xenoarchaeology.XenoArtifacts.Equipment.Components;
+using Content.Server.Xenoarchaeology.Equipment.Components;
+using Content.Server.Xenoarchaeology.XenoArtifacts;
 using Robust.Shared.Containers;
 
-namespace Content.Server.Xenoarchaeology.XenoArtifacts.Equipment.Systems;
+namespace Content.Server.Xenoarchaeology.Equipment.Systems;
 
 public sealed class SuppressArtifactContainerSystem : EntitySystem
 {

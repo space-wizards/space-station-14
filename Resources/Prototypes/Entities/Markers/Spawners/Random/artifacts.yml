@@ -9,16 +9,7 @@
         - texture: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi/ano01.png
     - type: RandomSpawner
       prototypes:
-        - BadfeelingArtifact
-        - GoodfeelingArtifact
-        - AngryMobsSpawnArtifact
-        - JunkSpawnArtifact
-        - BananaSpawnArtifact
-        - HeatArtifact
-        - ColdArtifact
-        - RadiateArtifact
-        - GasArtifact
-        - DiseaseArtifact
+        - FoodBanana #yell at me to change this bakc
       chance: 1
 
 - type: entity

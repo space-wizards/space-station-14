@@ -1,25 +1,24 @@
+using Content.Shared.Xenoarchaeology.XenoArtifacts;
+
 namespace Content.Server.Xenoarchaeology.XenoArtifacts;
 
 [RegisterComponent]
 public sealed class ArtifactComponent : Component
 {
-    /// <summary>
-    ///     Should artifact pick a random trigger on startup?
-    /// </summary>
-    [DataField("randomTrigger")]
-    public bool RandomTrigger = true;
+    [ViewVariables(VVAccess.ReadOnly)]
+    public int RandomSeed;
 
-    /// <summary>
-    ///     List of all possible triggers activations.
-    ///     Should be same as components names.
-    /// </summary>
-    [DataField("possibleTriggers")]
-    public string[] PossibleTriggers = {
-        "ArtifactInteractionTrigger",
-        "ArtifactGasTrigger",
-        "ArtifactHeatTrigger",
-        "ArtifactElectricityTrigger",
-    };
+    [ViewVariables]
+    public ArtifactTree? NodeTree;
+
+    [ViewVariables]
+    public ArtifactNode? CurrentNode;
+
+    [DataField("nodesMin")]
+    public int NodesMin = 1;
+
+    [DataField("nodesMax")]
+    public int NodesMax = 7;
 
     /// <summary>
     ///     Cooldown time between artifact activations (in seconds).
@@ -36,4 +35,40 @@ public sealed class ArtifactComponent : Component
     public bool IsSuppressed;
 
     public TimeSpan LastActivationTime;
+}
+
+[DataDefinition]
+public sealed class ArtifactTree
+{
+    [ViewVariables]
+    public ArtifactNode StartNode = default!;
+
+    [ViewVariables]
+    public readonly List<ArtifactNode> AllNodes = new();
+}
+
+[DataDefinition]
+public sealed class ArtifactNode
+{
+    [ViewVariables]
+    public string Id = string.Empty;
+
+    [ViewVariables]
+    public int Depth = 0;
+
+    [ViewVariables]
+    public readonly List<ArtifactNode> Edges = new();
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    public bool Discovered = false;
+
+    [ViewVariables]
+    public ArtifactTriggerPrototype? Trigger;
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    public bool Triggered = false;
+
+    [ViewVariables]
+    public ArtifactEffectPrototype? Effect;
+
 }

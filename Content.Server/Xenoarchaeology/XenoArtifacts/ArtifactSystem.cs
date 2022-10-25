@@ -1,14 +1,15 @@
+using System.Linq;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts;
 
-public sealed class ArtifactSystem : EntitySystem
+public sealed partial class ArtifactSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IComponentFactory _componentFactory = default!;
+
 
     public override void Initialize()
     {
@@ -18,33 +19,10 @@ public sealed class ArtifactSystem : EntitySystem
 
     private void OnInit(EntityUid uid, ArtifactComponent component, MapInitEvent args)
     {
-        if (component.RandomTrigger)
-        {
-            AddRandomTrigger(uid, component);
-        }
+        RandomizeArtifact(component);
     }
 
-    private void AddRandomTrigger(EntityUid uid, ArtifactComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
-            return;
-
-        var triggerName = _random.Pick(component.PossibleTriggers);
-        var trigger = (Component) _componentFactory.GetComponent(triggerName);
-        trigger.Owner = uid;
-
-        if (EntityManager.HasComponent(uid, trigger.GetType()))
-        {
-            Logger.Error($"Attempted to add a random artifact trigger ({triggerName}) to an entity ({ToPrettyString(uid)}), but it already has the trigger");
-            return;
-        }
-
-        EntityManager.AddComponent(uid, trigger);
-        RaiseLocalEvent(uid, new RandomizeTriggerEvent(), true);
-    }
-
-    public bool TryActivateArtifact(EntityUid uid, EntityUid? user = null,
-        ArtifactComponent? component = null)
+    public bool TryActivateArtifact(EntityUid uid, EntityUid? user = null, ArtifactComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return false;
@@ -62,18 +40,24 @@ public sealed class ArtifactSystem : EntitySystem
         return true;
     }
 
-    public void ForceActivateArtifact(EntityUid uid, EntityUid? user = null,
-        ArtifactComponent? component = null)
+    public void ForceActivateArtifact(EntityUid uid, EntityUid? user = null, ArtifactComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
-
         component.LastActivationTime = _gameTiming.CurTime;
 
-        var ev = new ArtifactActivatedEvent()
+        var ev = new ArtifactActivatedEvent
         {
             Activator = user
         };
         RaiseLocalEvent(uid, ev, true);
+        if (component.CurrentNode == null)
+            return;
+        component.CurrentNode.Triggered = true;
+        if (component.CurrentNode.Edges.Any())
+        {
+            var newNode = _random.Pick(component.CurrentNode.Edges);
+            EnterNode(uid, ref newNode, component);
+        }
     }
 }

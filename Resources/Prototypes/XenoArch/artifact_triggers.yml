@@ -1,0 +1,24 @@
+- type: artifactTrigger
+  id: TriggerElectricity
+  components:
+  - type: ArtifactElectricityTrigger
+
+- type: artifactTrigger
+  id: TriggerGas
+  components:
+  - type: ArtifactGasTrigger
+
+- type: artifactTrigger
+  id: TriggerHeat
+  components:
+  - type: ArtifactHeatTrigger
+
+- type: artifactTrigger
+  id: TriggerInteraction
+  components:
+  - type: ArtifactInteractionTrigger
+
+- type: artifactTrigger
+  id: TriggerTimer
+  components:
+  - type: ArtifactTimerTrigger
