@@ -152,7 +152,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
             // Cap the chamber. Don't want someone putting in 500 entities and ejecting them all at once.
             // Maybe I should have done that for the microwave too?
-            if (inputContainer.ContainedEntities.Count >= reagentGrinder.StorageCap)
+            if (inputContainer.ContainedEntities.Count >= reagentGrinder.StorageMaxEntities)
                 return;
 
             if (!inputContainer.Insert(heldEnt, EntityManager))

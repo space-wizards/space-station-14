@@ -14,8 +14,8 @@ namespace Content.Server.Kitchen.Components
     public sealed class ReagentGrinderComponent : Component
     {
         //YAML serialization vars
-        [DataField("chamberCapacity"), ViewVariables(VVAccess.ReadWrite)]
-        public int StorageCap = 16;
+        [DataField("storageMaxEntities"), ViewVariables(VVAccess.ReadWrite)]
+        public int StorageMaxEntities = 16;
 
         [DataField("workTime"), ViewVariables(VVAccess.ReadWrite)]
         public TimeSpan WorkTime = TimeSpan.FromSeconds(3.5); // Roughly matches the grind/juice sounds.
