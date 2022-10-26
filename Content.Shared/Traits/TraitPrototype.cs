@@ -10,6 +10,7 @@ namespace Content.Shared.Traits
     public sealed class TraitPrototype : IPrototype
     {
         private string _name = string.Empty;
+        private string? _description;
 
         [ViewVariables]
         [IdDataField]
@@ -29,7 +30,11 @@ namespace Content.Shared.Traits
         ///     The description of this trait.
         /// </summary>
         [DataField("description")]
-        public string? Description { get; }
+        public string? Description
+        {
+            get => _description;
+            private set => _description = value is null ? null : Loc.GetString(value);
+        }
 
         /// <summary>
         ///     The components that get added to the player, when they pick this trait.
