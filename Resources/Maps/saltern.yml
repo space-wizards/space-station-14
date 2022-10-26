@@ -5445,7 +5445,7 @@ entities:
     parent: 852
     type: Transform
 - uid: 790
-  type: Grille
+  type: ReinforcedWindow
   components:
   - pos: -44.5,7.5
     parent: 852

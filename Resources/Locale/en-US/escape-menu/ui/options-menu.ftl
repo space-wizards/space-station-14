@@ -57,6 +57,8 @@ ui-options-vp-integer-scaling-tooltip = If this option is enabled, the viewport 
 ui-options-vp-low-res = Low-resolution viewport
 ui-options-parallax-low-quality = Low-quality Parallax (background)
 ui-options-fps-counter = Show FPS counter
+ui-options-vp-width = Viewport width: { $width }
+ui-options-hud-layout = HUD layout:
 
 ## Controls menu
 
@@ -123,7 +125,7 @@ ui-options-function-open-character-menu = Open character menu
 ui-options-function-open-context-menu = Open context menu
 ui-options-function-open-crafting-menu = Open crafting menu
 ui-options-function-open-inventory-menu = Open inventory
-ui-options-function-open-info = Open admin help
+ui-options-function-open-ahelp = Open admin help
 ui-options-function-open-abilities-menu = Open action menu
 ui-options-function-open-entity-spawn-window = Open entity spawn menu
 ui-options-function-open-sandbox-window = Open sandbox menu
@@ -176,6 +178,8 @@ ui-options-function-shuttle-brake = Brake
 
 ## Network menu
 
+ui-options-net-predict = Client-side prediction
+
 ui-options-net-interp-ratio = State buffer size
 ui-options-net-interp-ratio-tooltip = Increasing this will generally make the game more resistant
                                       to server->client packet-loss, however in doing so it
@@ -188,10 +192,15 @@ ui-options-net-predict-tick-bias-tooltip = Increasing this will generally make t
                                            effectively adds slightly more latency and requires the
                                            client to predict more future ticks.
 
-ui-options-net-pvs-entry = PVS entity budget
-ui-options-net-pvs-entry-tooltip = This limits the rate at which the server will send new
+ui-options-net-pvs-spawn = PVS entity spawn budget
+ui-options-net-pvs-spawn-tooltip = This limits the rate at which the server will send newly spawned
                                        entities to the client. Lowering this can help reduce
                                        stuttering due to entity spawning, but can lead to pop-in.
+
+ui-options-net-pvs-entry = PVS entity budget
+ui-options-net-pvs-entry-tooltip = This limits the rate at which the server will send newly visible
+                                       entities to the client. Lowering this can help reduce
+                                       stuttering, but can lead to pop-in.
 
 ui-options-net-pvs-leave = PVS detach rate
 ui-options-net-pvs-leave-tooltip = This limits the rate at which the client will remove

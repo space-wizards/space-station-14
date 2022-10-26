@@ -141,6 +141,23 @@
           Quantity: 30
 
 - type: entity
+  id: UnstableMutagenChemistryBottle
+  name: unstable mutagen bottle
+  description: This will cause rapid mutations in your plants.
+  parent: BaseChemistryEmptyBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: UnstableMutagen
+          Quantity: 30
+  - type: Tag
+    tags:
+    - Bottle
+
+- type: entity
   id: NocturineChemistryBottle
   name: nocturine bottle
   description: This will make someone fall down almost immediately. Hard to overdose on.

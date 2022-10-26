@@ -41,6 +41,9 @@ namespace Content.Client.Light
 
         private void OnComponentShutdown(EntityUid uid, RgbLightControllerComponent rgb, ComponentShutdown args)
         {
+            if (LifeStage(uid) >= EntityLifeStage.Terminating)
+                return;
+
             ResetOriginalColors(uid, rgb);
 
             // and reset any in-hands or clothing sprites

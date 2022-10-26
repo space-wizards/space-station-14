@@ -36,8 +36,9 @@ namespace Content.Shared.Movement.Systems
         [Dependency] private readonly SharedContainerSystem _container = default!;
         [Dependency] private readonly SharedGravitySystem _gravity = default!;
         [Dependency] private readonly SharedMobStateSystem _mobState = default!;
-        [Dependency] private readonly TagSystem _tags = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
+        [Dependency] private readonly TagSystem _tags = default!;
 
         private const float StepSoundMoveDistanceRunning = 2;
         private const float StepSoundMoveDistanceWalking = 1.5f;
@@ -231,7 +232,7 @@ namespace Content.Shared.Movement.Systems
 
             var total = walkDir * walkSpeed + sprintDir * sprintSpeed;
 
-            var parentRotation = GetParentGridAngle(mover);
+            var parentRotation = GetParentGridAngle(mover, xformQuery);
             var worldTotal = _relativeMovement ? parentRotation.RotateVec(total) : total;
 
             DebugTools.Assert(MathHelper.CloseToPercent(total.Length, worldTotal.Length));
