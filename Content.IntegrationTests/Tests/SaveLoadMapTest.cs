@@ -34,14 +34,14 @@ namespace Content.IntegrationTests.Tests
 
                 {
                     var gridEnt = mapManager.EntityManager.SpawnEntity(null, mapId);
-                    var mapGrid = mapManager.EntityManager.AddComponent<MapGridComponent>(gridEnt);
+                    var mapGrid = (MapGridComponent) mapManager.EntityManager.AddComponent<MapGridComponent>(gridEnt);
                     var mapGridEnt = mapGrid.Owner;
                     sEntities.GetComponent<TransformComponent>(mapGridEnt).WorldPosition = new Vector2(10, 10);
                     mapGrid.SetTile(new Vector2i(0,0), new Tile(1, (TileRenderFlag)1, 255));
                 }
                 {
                     var gridEnt = mapManager.EntityManager.SpawnEntity(null, mapId);
-                    var mapGrid = mapManager.EntityManager.AddComponent<MapGridComponent>(gridEnt);
+                    var mapGrid = (MapGridComponent) mapManager.EntityManager.AddComponent<MapGridComponent>(gridEnt);
                     var mapGridEnt = mapGrid.Owner;
                     sEntities.GetComponent<TransformComponent>(mapGridEnt).WorldPosition = new Vector2(-8, -8);
                     mapGrid.SetTile(new Vector2i(0, 0), new Tile(2, (TileRenderFlag)1, 254));
