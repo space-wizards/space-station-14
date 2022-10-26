@@ -113,7 +113,6 @@
         state: female_full
         visible: false
       - map: [ "jumpsuit" ]
-        shader: StencilDraw
       - map: [ "enum.HumanoidVisualLayers.LHand" ]
       - map: [ "enum.HumanoidVisualLayers.RHand" ]
       - map: [ "enum.HumanoidVisualLayers.LFoot" ]
@@ -321,7 +320,6 @@
           state: female_full
           visible: false
         - map: [ "jumpsuit" ]
-          shader: StencilDraw
         - map: [ "enum.HumanoidVisualLayers.LHand" ]
         - map: [ "enum.HumanoidVisualLayers.RHand" ]
         - map: [ "enum.HumanoidVisualLayers.LFoot" ]
