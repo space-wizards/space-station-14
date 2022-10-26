@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Client.Inventory;
+using Content.Client.Humanoid;
 using Content.Shared.Clothing;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
@@ -74,13 +75,11 @@ public sealed class ClientClothingSystem : ClothingSystem
                 return;
         }
 
-        Logger.Error("item slot: " + item.Slots);
 
         // add each layer to the visuals
         var i = 0;
         foreach (var layer in layers)
         {
-            Logger.Error("layer shader: " + layer.Shader);
             var key = layer.MapKeys?.FirstOrDefault();
             if (key == null)
             {
@@ -197,16 +196,16 @@ public sealed class ClientClothingSystem : ClothingSystem
 
         if (clothingComponent.FemaleMask != null && slot == "jumpsuit" && sprite.LayerMapTryGet(HumanoidVisualLayers.StencilMask, out _))
         {
-            var mask = clothingComponent.FemaleMask switch
+            if (TryComp<HumanoidComponent>(equipee, out var humanoid) && humanoid.Sex == Sex.Female)
             {
-                FemaleClothingMask.NoMask => "female_none",
-                FemaleClothingMask.UniformTop => "female_top",
-                _ => "female_full",
-            };
-
-            Logger.Error("Setting stencil mask: " + mask);
-            sprite.LayerSetState(HumanoidVisualLayers.StencilMask, mask);
-            sprite.LayerSetVisible(HumanoidVisualLayers.StencilMask, true);
+                sprite.LayerSetState(HumanoidVisualLayers.StencilMask, clothingComponent.FemaleMask switch
+                {
+                    FemaleClothingMask.NoMask => "female_none",
+                    FemaleClothingMask.UniformTop => "female_top",
+                    _ => "female_full",
+                });
+                sprite.LayerSetVisible(HumanoidVisualLayers.StencilMask, true);
+            }
         }
 
         if (!_inventorySystem.TryGetSlot(equipee, slot, out var slotDef, inventory))
