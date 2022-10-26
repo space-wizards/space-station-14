@@ -20,15 +20,15 @@ public sealed class CartridgeUISerializer : ITypeSerializer<CartridgeUI, ValueDa
         return serializationManager.Read(node, context, skipHook, value);
     }
 
-    public DataNode Write(ISerializationManager serializationManager, CartridgeUI value, bool alwaysWrite = false,
-        ISerializationContext? context = null)
-    {
-        return serializationManager.WriteValue(value, alwaysWrite, context);
-    }
-
     public CartridgeUI Copy(ISerializationManager serializationManager, CartridgeUI source, CartridgeUI target, bool skipHook,
         ISerializationContext? context = null)
     {
         return serializationManager.Copy(source, context, skipHook);
+    }
+
+    public DataNode Write(ISerializationManager serializationManager, CartridgeUI value, IDependencyCollection dependencies,
+        bool alwaysWrite = false, ISerializationContext? context = null)
+    {
+        return serializationManager.WriteValue(value, alwaysWrite, context);
     }
 }

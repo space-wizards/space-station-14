@@ -1,11 +1,8 @@
 using System.Linq;
-using Content.Client.Actions.UI;
 using Content.Client.ContextMenu.UI;
 using Content.Client.Examine;
-using Content.Client.HUD.UI;
 using Content.Client.PDA;
 using Content.Client.Resources;
-using Content.Client.Targeting;
 using Content.Client.Targeting.UI;
 using Content.Client.UserInterface.Controls;
 using Content.Client.Verbs.UI;
@@ -15,7 +12,6 @@ using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.Maths;
 using static Robust.Client.UserInterface.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets
