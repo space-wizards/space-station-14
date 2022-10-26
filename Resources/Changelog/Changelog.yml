@@ -1,10 +1,4 @@
 Entries:
-- author: Elijahrane
-  changes:
-  - {message: 'If OOC is disabled in the middle of a round, dead players lose the
-      ability to talk in LOOC.', type: Add}
-  id: 2024
-  time: '2022-07-26T13:58:19.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Bumped pulling modified speed from 0.75 to 0.9, type: Tweak}
@@ -2966,3 +2960,8 @@ Entries:
       entire stack won't fit in the beaker., type: Fix}
   id: 2523
   time: '2022-10-26T06:34:56.0000000+00:00'
+- author: JustinTrotter
+  changes:
+  - {message: Syringes can now set how much solution to transfer., type: Add}
+  id: 2524
+  time: '2022-10-26T06:40:06.0000000+00:00'
