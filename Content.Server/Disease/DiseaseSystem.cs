@@ -21,6 +21,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Utility;
+using System.Threading;
 
 namespace Content.Server.Disease
 {
