@@ -1,7 +1,7 @@
 ﻿- type: trait
   id: UncontrollableSneezing
   name: trait-sneezing-name
-  description: You sneeze and cough uncontrollably
+  description: trait-sneezing-desc
   components:
     - type: UncontrollableSnough
       snoughSound:
