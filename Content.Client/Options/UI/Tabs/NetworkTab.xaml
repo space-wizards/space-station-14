@@ -5,6 +5,9 @@
     <BoxContainer Orientation="Vertical" >
         <BoxContainer Orientation="Vertical" Margin="8 8 8 8" VerticalExpand="True">
             <BoxContainer Orientation="Horizontal" Margin="4 10 4 0">
+                <CheckBox Name="NetPredictCheckbox" Text="{Loc 'ui-options-net-predict'}" />
+            </BoxContainer>
+            <BoxContainer Orientation="Horizontal" Margin="4 10 4 0">
                 <Label Text="{Loc 'ui-options-net-interp-ratio'}" />
                 <Control MinSize="8 0" />
                 <Slider Name="NetInterpRatioSlider"
@@ -32,11 +35,25 @@
                 <Control MinSize="4 0"/>
             </BoxContainer>
             <BoxContainer Orientation="Horizontal" Margin="4 10 4 0">
+                <Label Text="{Loc 'ui-options-net-pvs-spawn'}" />
+                <Control MinSize="8 0" />
+                <Slider Name="NetPvsSpawnSlider"
+                            ToolTip="{Loc 'ui-options-net-pvs-spawn-tooltip'}"
+                            MaxValue="150"
+                            MinValue="20"
+                            HorizontalExpand="True"
+                            MinSize="80 0"
+                            Rounded="True" />
+                <Control MinSize="8 0" />
+                <Label Name="NetPvsSpawnLabel" MinSize="48 0" Align="Right" />
+                <Control MinSize="4 0"/>
+            </BoxContainer>
+            <BoxContainer Orientation="Horizontal" Margin="4 10 4 0">
                 <Label Text="{Loc 'ui-options-net-pvs-entry'}" />
                 <Control MinSize="8 0" />
                 <Slider Name="NetPvsEntrySlider"
                             ToolTip="{Loc 'ui-options-net-pvs-entry-tooltip'}"
-                            MaxValue="150"
+                            MaxValue="500"
                             MinValue="20"
                             HorizontalExpand="True"
                             MinSize="80 0"

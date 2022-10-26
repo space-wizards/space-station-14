@@ -1,40 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: Waystation has been pulled from rotation., type: Remove}
-  id: 2018
-  time: '2022-07-26T02:41:06.0000000+00:00'
-- author: DogZeroX
-  changes:
-  - {message: Lizards and slimes now have different speech sounds!, type: Add}
-  id: 2019
-  time: '2022-07-26T09:13:12.0000000+00:00'
-- author: Pancake
-  changes:
-  - {message: Syndicate layoffs., type: Tweak}
-  id: 2020
-  time: '2022-07-26T09:50:18.0000000+00:00'
-- author: DogZeroX
-  changes:
-  - {message: The emergency boxes now have tinned meat instead of chocolate., type: Tweak}
-  id: 2021
-  time: '2022-07-26T09:56:56.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Observers now have a warp for the nuke disk., type: Add}
-  id: 2022
-  time: '2022-07-26T13:55:15.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: do_after bar no longer flickers for a frame., type: Fix}
-  id: 2023
-  time: '2022-07-26T13:57:31.0000000+00:00'
-- author: Elijahrane
-  changes:
-  - {message: 'If OOC is disabled in the middle of a round, dead players lose the
-      ability to talk in LOOC.', type: Add}
-  id: 2024
-  time: '2022-07-26T13:58:19.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Bumped pulling modified speed from 0.75 to 0.9, type: Tweak}
@@ -2960,3 +2924,44 @@ Entries:
   - {message: Added a Zoo and a few animals to Kettle!, type: Add}
   id: 2517
   time: '2022-10-24T02:30:37.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Pillar map major update. Atmos is now in engi, corridors are now smaller
+      and more alive, maint has been spruced up and lots of spaces are bigger, more
+      decorated and more loot sprawled.', type: Tweak}
+  id: 2518
+  time: '2022-10-24T17:30:50.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: Added two new jester suits in AutoDrobe, type: Add}
+  id: 2519
+  time: '2022-10-24T18:04:55.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix clientside organs being left around., type: Fix}
+  id: 2520
+  time: '2022-10-25T00:08:41.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Some miscellaneous electronics have been additionally added to the circuit
+      imprinter., type: Add}
+  id: 2521
+  time: '2022-10-25T00:22:12.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Nanotrasen's experimental precrime police program has been defunded
+      (fixed forensic evidence being applied and diseases spreading by simply examining
+      or being in the vicinity of items)., type: Fix}
+  id: 2522
+  time: '2022-10-26T01:15:48.0000000+00:00'
+- author: 25203
+  changes:
+  - {message: Reagent grinder can now process partial stacks if the solution of the
+      entire stack won't fit in the beaker., type: Fix}
+  id: 2523
+  time: '2022-10-26T06:34:56.0000000+00:00'
+- author: JustinTrotter
+  changes:
+  - {message: Syringes can now set how much solution to transfer., type: Add}
+  id: 2524
+  time: '2022-10-26T06:40:06.0000000+00:00'
