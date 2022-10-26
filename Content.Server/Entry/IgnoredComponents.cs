@@ -17,7 +17,6 @@ namespace Content.Server.Entry
             "CableVisualizer",
             "CartridgeUi",
             "PDABorderColor",
-            "EnsnareableVisualizer",
         };
     }
 }
