@@ -1,20 +1,22 @@
 - type: entity
-  id: CrateGeneric
   parent: BaseStructureDynamic
+  id: CrateGeneric
   noSpawn: true
   name: crate
   description: A large container for items.
   components:
-  - type: ResistLocker
   - type: Transform
     noRot: true
+  - type: Icon
+    sprite: Structures/Storage/Crates/generic.rsi
+    state: icon
   - type: Sprite
     netsync: false
     noRot: true
     sprite: Structures/Storage/Crates/generic.rsi
     layers:
-    - state: crate
-    - state: crate_door
+    - state: base
+    - state: closed
       map: ["enum.StorageVisualLayers.Door"]
     - state: welded
       visible: false
@@ -33,7 +35,6 @@
       - MachineLayer
   - type: EntityStorage
     capacity: 500
-  - type: Weldable
   - type: PlaceableSurface
     isPlaceable: false # defaults to closed.
   - type: Damageable
@@ -50,8 +51,8 @@
   - type: Appearance
     visuals:
     - type: StorageVisualizer
-      state_open: crate_open
-      state_closed: crate_door
+      state_open: open
+      state_closed: closed
   - type: PaperLabel
     labelSlot:
       insertVerbText: Attach Label
@@ -64,44 +65,40 @@
       entity_storage: !type:Container
       paper_label: !type:ContainerSlot
   - type: ItemSlots
+  - type: Construction
+    graph: CrateGenericSteel
+    node: crategenericsteel
+    containers:
+      - entity_storage
 
 - type: entity
-  id: CrateBaseSecure
-  parent: BaseStructureDynamic
-  noSpawn: true
-  name: crate
-  description: A large container for items.
+  parent: CrateGeneric
+  id: CrateBaseWeldable
   components:
-  - type: Transform
-    noRot: true
+  - type: Weldable
+  - type: ResistLocker
+
+- type: entity
+  parent: CrateGeneric
+  id: CrateBaseSecure
+  components:
+  - type: Lock
+  - type: AccessReader
+  - type: Icon
+    sprite: Structures/Storage/Crates/secure.rsi
+    state: icon
   - type: Sprite
-    netsync: false
-    sprite: Structures/Storage/Crates/generic.rsi
-    snapCardinals: true
+    sprite: Structures/Storage/Crates/secure.rsi
     layers:
-    - state: crate
-    - state: crate_door
+    - state: base
+    - state: closed
       map: ["enum.StorageVisualLayers.Door"]
     - state: welded
       visible: false
       map: ["enum.WeldableLayers.BaseWelded"]
-  - type: InteractionOutline
-  - type: Physics
-  - type: Fixtures
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.4,-0.4,0.4,0.29"
-      density: 190
-      mask:
-      - SmallMobMask
-      layer:
-      - MachineLayer
-  - type: EntityStorage
-    capacity: 500
-  - type: Weldable
-  - type: PlaceableSurface
-    isPlaceable: false # defaults to closed.
+    - state: locked
+      map: ["enum.StorageVisualLayers.Lock"]
+      shader: unshaded
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: StrongMetallic
@@ -113,25 +110,8 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
-  - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state_open: crate_open
-      state_closed: crate_door
-  - type: PaperLabel
-    labelSlot:
-      insertVerbText: Attach Label
-      ejectVerbText: Remove Label
-      whitelist:
-        components:
-        - Paper
   - type: Construction
     graph: CrateSecure
     node: cratesecure
     containers:
     - entity_storage
-  - type: ContainerContainer
-    containers:
-      entity_storage: !type:Container
-      paper_label: !type:ContainerSlot
-  - type: ItemSlots
