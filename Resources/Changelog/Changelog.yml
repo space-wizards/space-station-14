@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Bumped pulling modified speed from 0.75 to 0.9, type: Tweak}
-  id: 2025
-  time: '2022-07-26T13:58:40.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: People with empty-name ID cards no longer show up as having an empty
@@ -2965,3 +2960,8 @@ Entries:
   - {message: Syringes can now set how much solution to transfer., type: Add}
   id: 2524
   time: '2022-10-26T06:40:06.0000000+00:00'
+- author: exincore
+  changes:
+  - {message: added keybind awareness to chatbox hint, type: Add}
+  id: 2525
+  time: '2022-10-26T14:40:12.0000000+00:00'
