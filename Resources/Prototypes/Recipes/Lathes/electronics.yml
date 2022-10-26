@@ -431,16 +431,6 @@
   materials:
      Steel: 100
      Glass: 900
-    Glass: 900
-
-- type: latheRecipe
-  id: SeedExtractorMachineCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
-  result: SeedExtractorMachineCircuitboard
-  completetime: 4
-  materials:
-    Steel: 100
-    Glass: 900
 
 - type: latheRecipe
   id: ResearchSMESMachineCircuitboard
@@ -450,3 +440,12 @@
   materials:
      Steel: 100
      Glass: 900
+
+- type: latheRecipe
+  id: SeedExtractorMachineCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: SeedExtractorMachineCircuitboard
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
