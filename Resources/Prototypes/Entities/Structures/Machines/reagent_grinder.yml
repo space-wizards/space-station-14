@@ -8,14 +8,6 @@
   - type: Transform
     anchored: true
   - type: ReagentGrinder
-    beakerSlot:
-      insertSound: /Audio/Machines/machine_switch.ogg
-      ejectSound: /Audio/Machines/machine_switch.ogg
-      soundOptions:
-        volume: -2
-      whitelist:
-        components:
-        - FitsInDispenser
   - type: ActivatableUI
     key: enum.ReagentGrinderUiKey.Key
   - type: UserInterface
@@ -44,11 +36,16 @@
   - type: ApcPowerReceiver
     powerLoad: 300
   - type: ItemSlots
+    slots:
+      beakerSlot:
+        whitelist:
+          components:
+          - FitsInDispenser
   - type: Machine
     board: ReagentGrinderMachineCircuitboard
   - type: ContainerContainer
     containers:
-      ReagentGrinder-reagentContainerContainer: !type:ContainerSlot
-      ReagentGrinder-entityContainerContainer: !type:Container
+      beakerSlot: !type:ContainerSlot
+      inputContainer: !type:Container
       machine_board: !type:Container
       machine_parts: !type:Container

@@ -93,6 +93,7 @@ namespace Content.Shared.Pulling
                 Verb verb = new();
                 verb.Text = Loc.GetString("pulling-verb-get-data-text-stop-pulling");
                 verb.Act = () => TryStopPull(component, args.User);
+                verb.DoContactInteraction = false; // pulling handle its own contact interaction.
                 args.Verbs.Add(verb);
             }
             else if (CanPull(args.User, args.Target))
@@ -100,6 +101,7 @@ namespace Content.Shared.Pulling
                 Verb verb = new();
                 verb.Text = Loc.GetString("pulling-verb-get-data-text");
                 verb.Act = () => TryStartPull(args.User, args.Target);
+                verb.DoContactInteraction = false; // pulling handle its own contact interaction.
                 args.Verbs.Add(verb);
             }
         }

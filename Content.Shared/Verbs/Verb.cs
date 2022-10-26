@@ -147,6 +147,15 @@ namespace Content.Shared.Verbs
         public bool ConfirmationPopup = false;
 
         /// <summary>
+        ///     If true, this verb will raise <see cref="ContactInteractionEvent"/>s when executed. If not explicitly
+        ///     specified, this will just default to raising the event if <see cref="DefaultDoContactInteraction"/> is
+        ///     true and the user is in range.
+        /// </summary>
+        public bool? DoContactInteraction;
+
+        public virtual bool DefaultDoContactInteraction => false;
+
+        /// <summary>
         ///     Compares two verbs based on their <see cref="Priority"/>, <see cref="Category"/>, <see cref="Text"/>,
         ///     and <see cref="IconTexture"/>.
         /// </summary>
@@ -235,6 +244,7 @@ namespace Content.Shared.Verbs
     {
         public new static string DefaultTextStyleClass = "InteractionVerb";
         public override int TypePriority => 4;
+        public override bool DefaultDoContactInteraction => true;
 
         public InteractionVerb() : base()
         {
@@ -256,6 +266,7 @@ namespace Content.Shared.Verbs
     public sealed class UtilityVerb : Verb
     {
         public override int TypePriority => 3;
+        public override bool DefaultDoContactInteraction => true;
 
         public UtilityVerb() : base()
         {
@@ -293,6 +304,7 @@ namespace Content.Shared.Verbs
     {
         public override int TypePriority => 2;
         public new static string DefaultTextStyleClass = "AlternativeVerb";
+        public override bool DefaultDoContactInteraction => true;
 
         public AlternativeVerb() : base()
         {
@@ -314,6 +326,7 @@ namespace Content.Shared.Verbs
     {
         public override int TypePriority => 1;
         public new static string DefaultTextStyleClass = "ActivationVerb";
+        public override bool DefaultDoContactInteraction => true;
 
         public ActivationVerb() : base()
         {
