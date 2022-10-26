@@ -11,6 +11,9 @@ public class SharedCartridgeLoaderComponent : Component
     [DataField("cartridgeSlot")]
     public ItemSlot CartridgeSlot = new();
 
+    [DataField("preinstalled")]
+    public List<string> PreinstalledPrograms = new();
+
     [ViewVariables(VVAccess.ReadWrite)]
     public EntityUid? ActiveProgram = default;
 

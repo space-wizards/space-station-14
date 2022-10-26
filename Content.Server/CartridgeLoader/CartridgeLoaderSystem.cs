@@ -20,10 +20,20 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<CartridgeLoaderComponent, MapInitEvent>(OnMapInit);
+
         SubscribeLocalEvent<CartridgeLoaderComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
         SubscribeLocalEvent<CartridgeLoaderComponent, AfterInteractEvent>(OnUsed);
         SubscribeLocalEvent<CartridgeLoaderComponent, CartridgeLoaderUiMessage>(OnLoaderUiMessage);
         SubscribeLocalEvent<CartridgeLoaderComponent, CartridgeUiMessage>(OnUiMessage);
+    }
+
+    private void OnMapInit(EntityUid uid, CartridgeLoaderComponent component, MapInitEvent args)
+    {
+        foreach (var prototype in component.PreinstalledPrograms)
+        {
+            InstallProgram(uid, prototype);
+        }
     }
 
     public void UpdateUiState(EntityUid loaderUid, CartridgeLoaderUiState state, IPlayerSession? session = default!, CartridgeLoaderComponent? loader  = default!)
@@ -95,7 +105,7 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
 
         UpdateCartridgeInstallationStatus(installedProgram, InstallationStatus.Installed);
         loader.InstalledPrograms.Add(installedProgram);
-        
+
         RaiseLocalEvent(installedProgram, new CartridgeAddedEvent(loaderUid));
         UpdateUserInterfaceState(loaderUid, loader);
         return true;

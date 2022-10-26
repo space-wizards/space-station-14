@@ -1,8 +1,8 @@
 ﻿- type: entity
   parent: BaseItem
-  id: TestCartridge
-  name: Test Cartridge
-  description: Funny test entity goes BRRRRR!
+  id: NotekeeperCartridge
+  name: Notekeeper Cartridge
+  description: A program for keeping notes
   components:
   - type: Sprite
     sprite: Objects/Devices/cartridge.rsi
@@ -14,10 +14,10 @@
   - type: CartridgeUi
     ui: !type:NotekeeperUi
   - type: Cartridge
-    programName: Test Program
+    programName: Notekeeper
     icon:
-      sprite:  Objects/Devices/cartridge.rsi
-      state: cart-y
+      sprite:  Objects/Misc/books.rsi
+      state: book6
   - type: NotekeeperCartridge
 
 

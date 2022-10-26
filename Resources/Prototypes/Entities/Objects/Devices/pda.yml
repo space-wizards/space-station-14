@@ -51,6 +51,8 @@
     range: 500
   - type: CartridgeLoader
     uiKey: enum.PDAUiKey.Key
+    preinstalled:
+      - NotekeeperCartridge
     cartridgeSlot:
       priority: -1
       name: Cartridge
