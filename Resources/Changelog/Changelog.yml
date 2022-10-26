@@ -1,20 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Observers now have a warp for the nuke disk., type: Add}
-  id: 2022
-  time: '2022-07-26T13:55:15.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: do_after bar no longer flickers for a frame., type: Fix}
-  id: 2023
-  time: '2022-07-26T13:57:31.0000000+00:00'
-- author: Elijahrane
-  changes:
-  - {message: 'If OOC is disabled in the middle of a round, dead players lose the
-      ability to talk in LOOC.', type: Add}
-  id: 2024
-  time: '2022-07-26T13:58:19.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Bumped pulling modified speed from 0.75 to 0.9, type: Tweak}
@@ -2963,3 +2947,21 @@ Entries:
       imprinter., type: Add}
   id: 2521
   time: '2022-10-25T00:22:12.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Nanotrasen's experimental precrime police program has been defunded
+      (fixed forensic evidence being applied and diseases spreading by simply examining
+      or being in the vicinity of items)., type: Fix}
+  id: 2522
+  time: '2022-10-26T01:15:48.0000000+00:00'
+- author: 25203
+  changes:
+  - {message: Reagent grinder can now process partial stacks if the solution of the
+      entire stack won't fit in the beaker., type: Fix}
+  id: 2523
+  time: '2022-10-26T06:34:56.0000000+00:00'
+- author: JustinTrotter
+  changes:
+  - {message: Syringes can now set how much solution to transfer., type: Add}
+  id: 2524
+  time: '2022-10-26T06:40:06.0000000+00:00'
