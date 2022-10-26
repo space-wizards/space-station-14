@@ -28,7 +28,7 @@ namespace Content.Server.Stack
 
         public override void SetCount(EntityUid uid, int amount, SharedStackComponent? component = null)
         {
-            if (!Resolve(uid, ref component))
+            if (!Resolve(uid, ref component, false))
                 return;
 
             base.SetCount(uid, amount, component);
@@ -98,21 +98,11 @@ namespace Content.Server.Stack
             var maxCountPerStack = GetMaxCount(stack);
             while (amount > 0)
             {
-                if (amount > maxCountPerStack)
-                {
-                    entity = Spawn(entityPrototype, spawnPosition);
+                entity = Spawn(entityPrototype, spawnPosition);
 
-                    SetCount(entity, maxCountPerStack);
-                    amount -= maxCountPerStack;
-                }
-                else
-                {
-                    //just doing this so that the entity returned is always a full stack.
-                    var e = Spawn(entityPrototype, spawnPosition);
-
-                    SetCount(e, amount);
-                    amount = 0;
-                }
+                var countAmount = Math.Min(maxCountPerStack, amount);
+                SetCount(entity, countAmount);
+                amount -= countAmount;
             }
             return entity;
         }

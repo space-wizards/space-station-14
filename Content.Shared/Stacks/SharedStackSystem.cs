@@ -199,8 +199,8 @@ namespace Content.Shared.Stacks
         public int GetMaxCount(string entityId)
         {
             var entProto = _prototype.Index<EntityPrototype>(entityId);
-            entProto.TryGetComponent<SharedStackComponent>(out var stackProto);
-            return GetMaxCount(stackProto);
+            entProto.TryGetComponent<SharedStackComponent>(out var stackComp);
+            return GetMaxCount(stackComp);
         }
 
         /// <summary>
@@ -218,17 +218,29 @@ namespace Content.Shared.Stacks
         /// Gets the maximum amount that can be fit on a stack.
         /// </summary>
         /// <remarks>
+        /// <p>
         /// if there's no stackcomp, this equals 1. Otherwise, if there's a max
         /// count override, it equals that. It then checks for a max count value
         /// on the prototype. If there isn't one, it defaults to the max integer
         /// value (unlimimted).
+        /// </p>
         /// </remarks>
         /// <param name="component"></param>
         /// <returns></returns>
         public int GetMaxCount(SharedStackComponent? component)
         {
-            return component == null ? 1 : component.MaxCountOverride ?? (component.StackTypeId == null
-                ? 1 : _prototype.Index<StackPrototype>(component.StackTypeId).MaxCount ?? int.MaxValue);
+            if (component == null)
+                return 1;
+
+            if (component.MaxCountOverride != null)
+                return component.MaxCountOverride.Value;
+
+            if (component.StackTypeId == null)
+                return 1;
+
+            var stackProto = _prototype.Index<StackPrototype>(component.StackTypeId);
+
+            return stackProto.MaxCount ?? int.MaxValue;
         }
 
         /// <summary>
