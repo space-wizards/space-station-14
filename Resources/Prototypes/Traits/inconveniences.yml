@@ -1,6 +1,7 @@
 ﻿- type: trait
   id: UncontrollableSneezing
   name: Runny nose
+  description: You sneeze and cough uncontrollably
   components:
     - type: UncontrollableSnough
       snoughSound:
