@@ -8,7 +8,7 @@ namespace Content.Client.Research.UI
     [UsedImplicitly]
     public sealed class ResearchConsoleBoundUserInterface : BoundUserInterface
     {
-        public IDictionary<string, int> Points { get; private set; } = new Dictionary<string, int>() { { "points", 0 } };
+        public int Points { get; private set; }
         public int PointsPerSecond { get; private set; }
         private ResearchConsoleMenu? _consoleMenu;
         private TechnologyDatabaseComponent? _technologyDatabase;
@@ -66,8 +66,7 @@ namespace Content.Client.Research.UI
             base.UpdateState(state);
 
             var castState = (ResearchConsoleBoundInterfaceState)state;
-            //TODO include different kinds of points (in a dict)
-            Points = castState.SpecialisationPoints;
+            Points = castState.Points;
             PointsPerSecond = castState.PointsPerSecond;
             // We update the user interface here.
             _consoleMenu?.PopulatePoints();

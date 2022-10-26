@@ -32,10 +32,7 @@ public sealed partial class ResearchSystem
     private void UpdateServer(ResearchServerComponent component, int time)
     {
         if (!CanRun(component)) return;
-        if (component.SpecialisationPoints.ContainsKey("points"))
-            component.SpecialisationPoints["points"] += PointsPerSecond(component) * time;
-        else
-            component.SpecialisationPoints.Add("points", PointsPerSecond(component) * time);
+        component.Points += PointsPerSecond(component) * time;
     }
 
     public bool RegisterServerClient(ResearchServerComponent component, ResearchClientComponent clientComponent)
@@ -81,10 +78,8 @@ public sealed partial class ResearchSystem
         if (!Resolve(component.Owner, ref databaseComponent, false))
             return false;
 
-        //TODO include required points type as parameter and check by required points dict
-        //may need to use a loop here (loop through tech req types, first check if they are all present, then their points)
         if (!databaseComponent.CanUnlockTechnology(technology) ||
-            component.SpecialisationPoints["points"] < technology.RequiredPoints ||
+            component.Points < technology.RequiredPoints ||
             IsTechnologyUnlocked(component, technology, databaseComponent))
             return false;
 
@@ -99,10 +94,8 @@ public sealed partial class ResearchSystem
 
         if (!CanUnlockTechnology(component, prototype, databaseComponent)) return false;
         var result = UnlockTechnology(databaseComponent, prototype);
-        //TODO negate the specific points type
-        //may need to use a loop here (loop through tech req types, first check if they are all present, then their points)
         if (result)
-            component.SpecialisationPoints["points"] -= prototype.RequiredPoints;
+            component.Points -= prototype.RequiredPoints;
         return result;
     }
 
@@ -111,8 +104,7 @@ public sealed partial class ResearchSystem
         var points = 0;
 
         // Is our machine powered, and are we below our limit of passive point gain?
-        //TODO accommodate different point types
-        if (CanRun(component) && component.SpecialisationPoints["points"] < (component.PassiveLimitPerSource * component.PointSources.Count))
+        if (CanRun(component) && component.Points < (component.PassiveLimitPerSource * component.PointSources.Count))
         {
             foreach (var source in component.PointSources)
             {

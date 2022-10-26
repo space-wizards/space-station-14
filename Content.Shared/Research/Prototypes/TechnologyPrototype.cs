@@ -47,7 +47,6 @@ namespace Content.Shared.Research.Prototypes
 
         private string? _description;
 
-        //TODO dict of different point types required
         /// <summary>
         ///    The required research points to unlock this technology.
         /// </summary>
@@ -68,7 +67,6 @@ namespace Content.Shared.Research.Prototypes
         [DataField("unlockedRecipes", customTypeSerializer:typeof(PrototypeIdListSerializer<LatheRecipePrototype>))]
         public List<string> UnlockedRecipes { get; } = new();
 
-        //TODO remove hidden and incompatible tech if there is not longer any use for them (but keep for now)
         /// <summary>
         ///     A list of recipe IDs this technology excludes.
         /// </summary>

@@ -36,11 +36,11 @@ namespace Content.Shared.Research.Components
     [Serializable, NetSerializable]
     public sealed class ResearchConsoleBoundInterfaceState : BoundUserInterfaceState
     {
-        public IDictionary<string, int> SpecialisationPoints;
+        public int Points;
         public int PointsPerSecond;
-        public ResearchConsoleBoundInterfaceState(IDictionary<string, int> specialisationPoints, int pointsPerSecond)
+        public ResearchConsoleBoundInterfaceState(int points, int pointsPerSecond)
         {
-            SpecialisationPoints = specialisationPoints;
+            Points = points;
             PointsPerSecond = pointsPerSecond;
         }
     }
