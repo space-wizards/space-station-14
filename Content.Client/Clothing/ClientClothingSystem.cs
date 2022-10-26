@@ -74,10 +74,13 @@ public sealed class ClientClothingSystem : ClothingSystem
                 return;
         }
 
+        Logger.Error("item slot: " + item.Slots);
+
         // add each layer to the visuals
         var i = 0;
         foreach (var layer in layers)
         {
+            Logger.Error("layer shader: " + layer.Shader);
             var key = layer.MapKeys?.FirstOrDefault();
             if (key == null)
             {
@@ -131,6 +134,10 @@ public sealed class ClientClothingSystem : ClothingSystem
         var layer = new PrototypeLayerData();
         layer.RsiPath = rsi.Path.ToString();
         layer.State = state;
+
+        if (clothing.FemaleMask != null)
+            layer.Shader = "StencilDraw";
+
         layers = new() { layer };
 
         return true;
@@ -188,8 +195,9 @@ public sealed class ClientClothingSystem : ClothingSystem
         if(!Resolve(equipee, ref inventory, ref sprite) || !Resolve(equipment, ref clothingComponent, false))
             return;
 
-        if (slot == "jumpsuit" && sprite.LayerMapTryGet(HumanoidVisualLayers.StencilMask, out _))
+        if (clothingComponent.FemaleMask != null && slot == "jumpsuit" && sprite.LayerMapTryGet(HumanoidVisualLayers.StencilMask, out _))
         {
+            Logger.Error("Setting stencil mask...");
             sprite.LayerSetState(HumanoidVisualLayers.StencilMask, clothingComponent.FemaleMask switch
             {
                 FemaleClothingMask.NoMask => "female_none",
