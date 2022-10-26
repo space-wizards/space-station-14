@@ -8,8 +8,11 @@ namespace Content.Server.Research.Components
         [DataField("servername")]
         private string _serverName = "RDSERVER";
 
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("points")]
-        public int Points = 0;
+        /// <summary>
+        /// Tracks the different kinds of research points available to the server
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)] //[DataField("points")]
+        public Dictionary<string,int> SpecialisationPoints = new Dictionary<string, int>() { { "points", 0 } };
 
         /// <summary>
         /// To encourage people to spend points,

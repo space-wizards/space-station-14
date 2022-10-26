@@ -45,9 +45,9 @@ public sealed partial class ResearchSystem
 
         if (!_prototypeManager.TryIndex(args.Id, out TechnologyPrototype? tech) ||
             client.Server == null ||
-            !CanUnlockTechnology(client.Server, tech)) return;
+            !CanUnlockTechnology(client.Server, tech)) return; //TODO include point types needed
 
-        if (!UnlockTechnology(client.Server, tech)) return;
+        if (!UnlockTechnology(client.Server, tech)) return; //TODO include point types needed
 
         SyncWithServer(database);
         Dirty(database);
@@ -61,13 +61,14 @@ public sealed partial class ResearchSystem
         if (!Resolve(component.Owner, ref clientComponent, false) ||
             clientComponent.Server == null)
         {
-            state = new ResearchConsoleBoundInterfaceState(default, default);
+            state = new ResearchConsoleBoundInterfaceState(new Dictionary<string, int>() { { "points", 0 } }, default);
         }
         else
         {
-            var points = clientComponent.ConnectedToServer ? clientComponent.Server.Points : 0;
+            //TODO include multiple points types
+            var specialisationPoints = clientComponent.ConnectedToServer ? clientComponent.Server.SpecialisationPoints : new Dictionary<string, int>() { { "points", 0 } };
             var pointsPerSecond = clientComponent.ConnectedToServer ? PointsPerSecond(clientComponent.Server) : 0;
-            state = new ResearchConsoleBoundInterfaceState(points, pointsPerSecond);
+            state = new ResearchConsoleBoundInterfaceState(specialisationPoints, pointsPerSecond);
         }
         _uiSystem.GetUiOrNull(component.Owner, ResearchConsoleUiKey.Key)?.SetState(state);
     }
