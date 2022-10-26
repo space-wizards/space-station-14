@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: do_after bar no longer flickers for a frame., type: Fix}
-  id: 2023
-  time: '2022-07-26T13:57:31.0000000+00:00'
 - author: Elijahrane
   changes:
   - {message: 'If OOC is disabled in the middle of a round, dead players lose the
@@ -2965,3 +2960,9 @@ Entries:
       or being in the vicinity of items)., type: Fix}
   id: 2522
   time: '2022-10-26T01:15:48.0000000+00:00'
+- author: 25203
+  changes:
+  - {message: Reagent grinder can now process partial stacks if the solution of the
+      entire stack won't fit in the beaker., type: Fix}
+  id: 2523
+  time: '2022-10-26T06:34:56.0000000+00:00'
