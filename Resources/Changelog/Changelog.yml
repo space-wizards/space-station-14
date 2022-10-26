@@ -1,9 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Observers now have a warp for the nuke disk., type: Add}
-  id: 2022
-  time: '2022-07-26T13:55:15.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: do_after bar no longer flickers for a frame., type: Fix}
@@ -2963,3 +2958,10 @@ Entries:
       imprinter., type: Add}
   id: 2521
   time: '2022-10-25T00:22:12.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Nanotrasen's experimental precrime police program has been defunded
+      (fixed forensic evidence being applied and diseases spreading by simply examining
+      or being in the vicinity of items)., type: Fix}
+  id: 2522
+  time: '2022-10-26T01:15:48.0000000+00:00'
