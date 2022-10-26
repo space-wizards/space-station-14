@@ -197,13 +197,16 @@ public sealed class ClientClothingSystem : ClothingSystem
 
         if (clothingComponent.FemaleMask != null && slot == "jumpsuit" && sprite.LayerMapTryGet(HumanoidVisualLayers.StencilMask, out _))
         {
-            Logger.Error("Setting stencil mask...");
-            sprite.LayerSetState(HumanoidVisualLayers.StencilMask, clothingComponent.FemaleMask switch
+            var mask = clothingComponent.FemaleMask switch
             {
                 FemaleClothingMask.NoMask => "female_none",
                 FemaleClothingMask.UniformTop => "female_top",
                 _ => "female_full",
-            });
+            };
+
+            Logger.Error("Setting stencil mask: " + mask);
+            sprite.LayerSetState(HumanoidVisualLayers.StencilMask, mask);
+            sprite.LayerSetVisible(HumanoidVisualLayers.StencilMask, true);
         }
 
         if (!_inventorySystem.TryGetSlot(equipee, slot, out var slotDef, inventory))
