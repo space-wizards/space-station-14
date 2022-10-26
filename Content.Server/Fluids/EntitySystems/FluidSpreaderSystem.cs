@@ -126,10 +126,9 @@ public sealed class FluidSpreaderSystem : EntitySystem
             }
 
             // if not puddle is this tile blocked by an object like wall or door
-            if (TryComp(entity, out PhysicsComponent? physComponent) && physComponent.CanCollide
-                                                                     && ((physComponent.CollisionLayer +
-                                                                          physComponent.CollisionMask) &
-                                                                         (int) CollisionGroup.MobMask) != 0)
+            if (TryComp(entity, out PhysicsComponent? physComponent)
+                && physComponent.CanCollide
+                && ((physComponent.CollisionLayer + physComponent.CollisionMask) & (int) CollisionGroup.MobMask) != 0)
             {
                 puddle = null;
                 return false;
