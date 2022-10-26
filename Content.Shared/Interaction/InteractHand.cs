@@ -55,4 +55,26 @@ namespace Content.Shared.Interaction
             Target = target;
         }
     }
+
+    /// <summary>
+    /// Reverse of the InteractNoHandEvent - raised on what was interacted on, rather than the other way around.
+    /// </summary>
+    public sealed class InteractedNoHandEvent : HandledEntityEventArgs, ITargetedInteractEventArgs
+    {
+        /// <summary>
+        /// Entity that was interacted on
+        /// </summary>
+        public EntityUid Target { get; }
+
+        /// <summary>
+        /// Entity that triggered this interaction
+        /// </summary>
+        public EntityUid User { get; }
+
+        public InteractedNoHandEvent(EntityUid target, EntityUid user)
+        {
+            Target = target;
+            User = user;
+        }
+    }
 }
