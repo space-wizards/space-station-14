@@ -64,7 +64,6 @@
     LayoutId: chem_master
   - type: Machine
     board: ChemMasterMachineCircuitboard
-  - type: MaterialStorage
   - type: ContainerContainer
     containers:
       beakerSlot: !type:ContainerSlot

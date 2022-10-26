@@ -1,4 +1,5 @@
-﻿using Content.Shared.Construction.Prototypes;
+﻿using Content.Server.Construction.Components;
+using Content.Shared.Construction.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Power.Components;
@@ -34,14 +35,7 @@ public sealed class UpgradePowerDrawComponent : Component
     /// What type of scaling is being used?
     /// </summary>
     [DataField("scaling", required: true), ViewVariables(VVAccess.ReadWrite)]
-    public PowerDrawScalingType Scaling;
+    public MachineUpgradeScalingType Scaling;
 }
 
-/// <summary>
-/// The different types of scaling that are available
-/// </summary>
-public enum PowerDrawScalingType : byte
-{
-    Linear,
-    Exponential
-}
+

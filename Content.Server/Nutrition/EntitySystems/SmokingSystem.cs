@@ -1,12 +1,11 @@
-using System.Linq;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.EntitySystems;
-using Content.Server.Clothing.Components;
 using Content.Server.Nutrition.Components;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
@@ -15,6 +14,7 @@ using Content.Shared.Smoking;
 using Content.Shared.Temperature;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
+using System.Linq;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
