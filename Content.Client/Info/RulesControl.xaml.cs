@@ -11,9 +11,6 @@ namespace Content.Client.Info;
 [GenerateTypedNameReferences]
 public sealed partial class RulesControl : BoxContainer
 {
-    [Dependency] private readonly IResourceCache _resourceManager = default!;
-    [Dependency] private readonly IConfigurationManager _cfgManager = default!;
-    [Dependency] private readonly IEntitySystemManager _sysMan = default!;
     [Dependency] private readonly RulesManager _rules = default!;
 
     public RulesControl()

@@ -1,0 +1,7 @@
+﻿- type: body
+  id: Bot
+  name: "bot"
+  root: hand 1
+  slots:
+    hand 1:
+      part: LeftArmBorg

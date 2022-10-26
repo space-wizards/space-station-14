@@ -674,7 +674,10 @@
     - type: WirelessNetworkConnection
       range: 200
     - type: DeviceNetworkRequiresPower
+    - type: Speech
+    - type: SurveillanceCameraSpeaker
     - type: SurveillanceCameraMonitor
+      speechEnabled: true
     - type: ActivatableUI
       key: enum.SurveillanceCameraMonitorUiKey.Key
     - type: ActivatableUIRequiresPower

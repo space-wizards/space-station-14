@@ -198,8 +198,8 @@ public sealed partial class ChatSystem : SharedChatSystem
     public void DispatchGlobalAnnouncement(string message, string sender = "Central Command",
         bool playSound = true, SoundSpecifier? announcementSound = null, Color? colorOverride = null)
     {
-        var messageWrap = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender));
-        _chatManager.ChatMessageToAll(ChatChannel.Radio, message, messageWrap, colorOverride);
+        var wrappedMessage = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender), ("message", FormattedMessage.EscapeText(message)));
+        _chatManager.ChatMessageToAll(ChatChannel.Radio, message, wrappedMessage, colorOverride);
         if (playSound)
         {
             SoundSystem.Play(announcementSound?.GetSound() ?? DefaultAnnouncementSound, Filter.Broadcast(), AudioParams.Default.WithVolume(-2f));
@@ -218,7 +218,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     public void DispatchStationAnnouncement(EntityUid source, string message, string sender = "Central Command",
         bool playDefaultSound = true, SoundSpecifier? announcementSound = null, Color? colorOverride = null)
     {
-        var messageWrap = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender));
+        var wrappedMessage = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender), ("message", FormattedMessage.EscapeText(message)));
         var station = _stationSystem.GetOwningStation(source);
 
         if (station == null)
@@ -231,7 +231,7 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         var filter = _stationSystem.GetInStation(stationDataComp);
 
-        _chatManager.ChatMessageToManyFiltered(filter, ChatChannel.Radio, message, messageWrap, source, false, colorOverride);
+        _chatManager.ChatMessageToManyFiltered(filter, ChatChannel.Radio, message, wrappedMessage, source, false, colorOverride);
 
         if (playDefaultSound)
         {
@@ -261,15 +261,16 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         var nameEv = new TransformSpeakerNameEvent(source, Name(source));
         RaiseLocalEvent(source, nameEv);
+        var name = FormattedMessage.EscapeText(nameEv.Name);
 
         message = TransformSpeech(source, message);
         if (message.Length == 0)
             return;
 
-        var messageWrap = Loc.GetString("chat-manager-entity-say-wrap-message",
-            ("entityName", nameEv.Name));
+        var wrappedMessage = Loc.GetString("chat-manager-entity-say-wrap-message",
+            ("entityName", name), ("message", FormattedMessage.EscapeText(message)));
 
-        SendInVoiceRange(ChatChannel.Local, message, messageWrap, source, hideChat);
+        SendInVoiceRange(ChatChannel.Local, message, wrappedMessage, source, hideChat);
         _listener.PingListeners(source, message, null);
 
         var ev = new EntitySpokeEvent(message);
@@ -302,8 +303,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         var nameEv = new TransformSpeakerNameEvent(source, Name(source));
         RaiseLocalEvent(source, nameEv);
 
-        var messageWrap = Loc.GetString("chat-manager-entity-whisper-wrap-message",
-            ("entityName", nameEv.Name));
+        var name = FormattedMessage.EscapeText(nameEv.Name);
 
         var xforms = GetEntityQuery<TransformComponent>();
         var ghosts = GetEntityQuery<GhostComponent>();
@@ -322,11 +322,17 @@ public sealed partial class ChatSystem : SharedChatSystem
             if (sourceCoords.InRange(EntityManager, transformEntity.Coordinates, WhisperRange) ||
                 ghosts.HasComponent(playerEntity))
             {
-                _chatManager.ChatMessageToOne(ChatChannel.Whisper, message, messageWrap, source, hideChat, session.ConnectedClient);
+                var wrappedMessage = Loc.GetString("chat-manager-entity-whisper-wrap-message",
+                    ("entityName", name), ("message", FormattedMessage.EscapeText(message)));
+
+                _chatManager.ChatMessageToOne(ChatChannel.Whisper, message, wrappedMessage, source, hideChat, session.ConnectedClient);
             }
             else
             {
-                _chatManager.ChatMessageToOne(ChatChannel.Whisper, obfuscatedMessage, messageWrap, source, hideChat,
+                var wrappedMessage = Loc.GetString("chat-manager-entity-whisper-wrap-message",
+                    ("entityName", name), ("message", FormattedMessage.EscapeText(obfuscatedMessage)));
+
+                _chatManager.ChatMessageToOne(ChatChannel.Whisper, obfuscatedMessage, wrappedMessage, source, hideChat,
                     session.ConnectedClient);
             }
         }
@@ -344,26 +350,32 @@ public sealed partial class ChatSystem : SharedChatSystem
     {
         if (!_actionBlocker.CanEmote(source)) return;
 
-        // Emotes use Identity.Name, since it doesn't actually involve your voice at all.
-        var messageWrap = Loc.GetString("chat-manager-entity-me-wrap-message",
-            ("entityName", Identity.Name(source, EntityManager)));
+        var name = FormattedMessage.EscapeText(Identity.Name(source, EntityManager));
 
-        SendInVoiceRange(ChatChannel.Emotes, action, messageWrap, source, hideChat);
+        // Emotes use Identity.Name, since it doesn't actually involve your voice at all.
+        var wrappedMessage = Loc.GetString("chat-manager-entity-me-wrap-message",
+            ("entityName", name),
+             ("message", FormattedMessage.EscapeText(action)));
+
+        SendInVoiceRange(ChatChannel.Emotes, action, wrappedMessage, source, hideChat);
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Emote from {ToPrettyString(source):user}: {action}");
     }
 
     // ReSharper disable once InconsistentNaming
     private void SendLOOC(EntityUid source, IPlayerSession player, string message, bool hideChat)
     {
+        var name = FormattedMessage.EscapeText(Identity.Name(source, EntityManager));
+
         if (_adminManager.IsAdmin(player))
         {
             if (!_adminLoocEnabled) return;
         }
         else if (!_loocEnabled) return;
-        var messageWrap = Loc.GetString("chat-manager-entity-looc-wrap-message",
-            ("entityName", Identity.Name(source, EntityManager)));
+        var wrappedMessage = Loc.GetString("chat-manager-entity-looc-wrap-message",
+            ("entityName", name),
+            ("message", FormattedMessage.EscapeText(message)));
 
-        SendInVoiceRange(ChatChannel.LOOC, message, messageWrap, source, hideChat);
+        SendInVoiceRange(ChatChannel.LOOC, message, wrappedMessage, source, hideChat);
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"LOOC from {player:Player}: {message}");
     }
 
@@ -371,23 +383,25 @@ public sealed partial class ChatSystem : SharedChatSystem
     {
         var clients = GetDeadChatClients();
         var playerName = Name(source);
-        string messageWrap;
+        string wrappedMessage;
         if (_adminManager.IsAdmin(player))
         {
-            messageWrap = Loc.GetString("chat-manager-send-admin-dead-chat-wrap-message",
+            wrappedMessage = Loc.GetString("chat-manager-send-admin-dead-chat-wrap-message",
                 ("adminChannelName", Loc.GetString("chat-manager-admin-channel-name")),
-                ("userName", player.ConnectedClient.UserName));
+                ("userName", player.ConnectedClient.UserName),
+                ("message", FormattedMessage.EscapeText(message)));
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Admin dead chat from {player:Player}: {message}");
         }
         else
         {
-            messageWrap = Loc.GetString("chat-manager-send-dead-chat-wrap-message",
+            wrappedMessage = Loc.GetString("chat-manager-send-dead-chat-wrap-message",
                 ("deadChannelName", Loc.GetString("chat-manager-dead-channel-name")),
-                ("playerName", (playerName)));
+                ("playerName", (playerName)),
+                ("message", FormattedMessage.EscapeText(message)));
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Dead chat from {player:Player}: {message}");
         }
 
-        _chatManager.ChatMessageToMany(ChatChannel.Dead, message, messageWrap, source, hideChat, clients.ToList());
+        _chatManager.ChatMessageToMany(ChatChannel.Dead, message, wrappedMessage, source, hideChat, clients.ToList());
 
     }
     #endregion
@@ -397,11 +411,11 @@ public sealed partial class ChatSystem : SharedChatSystem
     /// <summary>
     ///     Sends a chat message to the given players in range of the source entity.
     /// </summary>
-    private void SendInVoiceRange(ChatChannel channel, string message, string messageWrap, EntityUid source, bool hideChat)
+    private void SendInVoiceRange(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat)
     {
         var sessions = new List<ICommonSession>();
         ClientDistanceToList(source, VoiceRange, sessions);
-        _chatManager.ChatMessageToMany(channel, message, messageWrap, source, hideChat, sessions.Select(s => s.ConnectedClient).ToList());
+        _chatManager.ChatMessageToMany(channel, message, wrappedMessage, source, hideChat, sessions.Select(s => s.ConnectedClient).ToList());
     }
 
     /// <summary>
@@ -438,7 +452,6 @@ public sealed partial class ChatSystem : SharedChatSystem
             newMessage = SanitizeMessageCapital(newMessage);
         if (punctuate)
             newMessage = SanitizeMessagePeriod(newMessage);
-        newMessage = FormattedMessage.EscapeText(newMessage);
 
         _sanitizer.TrySanitizeOutSmilies(newMessage, source, out newMessage, out emoteStr);
 
