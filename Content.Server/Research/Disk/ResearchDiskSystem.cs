@@ -30,8 +30,7 @@ namespace Content.Server.Research.Disk
             var protoMan = IoCManager.Resolve<IPrototypeManager>();
             protoMan.TryIndex(component.Technology, out TechnologyPrototype? technology);
 
-            //TODO different kind of points add
-            server.SpecialisationPoints["points"] += component.Points;
+            server.Points += component.Points;
             if (component.Points > 0) {
                 _popupSystem.PopupEntity(Loc.GetString("research-disk-inserted", ("points", component.Points)), args.Target.Value, Filter.Entities(args.User));
             } else if (technology != null)

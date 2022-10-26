@@ -1,4 +1,4 @@
-<DefaultWindow xmlns="https://spacestation14.io"
+﻿<DefaultWindow xmlns="https://spacestation14.io"
             Title="{Loc 'research-console-menu-title'}"
             MinSize="800 400"
             SetSize="800 400">
@@ -65,7 +65,6 @@
                           HorizontalExpand="True"
                           VerticalExpand="True"
                           SizeFlagsStretchRatio="1">
-                <!-- TODO list all different point types that are available (will need to expand box height and width) -->
                 <Label Name="PointLabel" />
                 <Label Name="PointsPerSecondLabel" />
                 <BoxContainer Orientation="Vertical"

@@ -7,7 +7,5 @@ namespace Content.Server.Research.Disk
         public int Points = 0;
         [DataField("technology")]
         public string Technology = "";
-
-        //TODO add different point types
     }
 }

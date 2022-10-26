@@ -34,7 +34,6 @@ namespace Content.Client.Research.UI
             UnlockableTechnologies.OnItemSelected += UnlockableTechnologySelected;
             FutureTechnologies.OnItemSelected += FutureTechnologySelected;
 
-            //TODO adapt to display all different kinds of points in dict 
             PointLabel.Text = Loc.GetString("research-console-menu-research-points-text", ("points", 0));
             PointsPerSecondLabel.Text = Loc.GetString("research-console-menu-points-per-second-text", ("pointsPerSecond", 0));
 
@@ -79,8 +78,7 @@ namespace Content.Client.Research.UI
         {
             TechnologySelected = _unlockableTechnologyPrototypes[obj.ItemIndex];
 
-            //TODO check multiple point types
-            UnlockButton.Disabled = Owner.Points["points"] < TechnologySelected.RequiredPoints;
+            UnlockButton.Disabled = Owner.Points < TechnologySelected.RequiredPoints;
 
             PopulateSelectedTechnology();
         }
@@ -179,8 +177,7 @@ namespace Content.Client.Research.UI
 
             TechnologyIcon.Texture = TechnologySelected.Icon.Frame0();
             TechnologyName.Text = TechnologySelected.Name;
-            //TODO change to list all required point types
-            TechnologyDescription.Text = TechnologySelected.Description + $"\n{TechnologySelected.RequiredPoints} " + Loc.GetString("research-console-menu-research-points-text" ,("points", Owner.Points["points"])).ToLowerInvariant();
+            TechnologyDescription.Text = TechnologySelected.Description + $"\n{TechnologySelected.RequiredPoints} " + Loc.GetString("research-console-menu-research-points-text" ,("points", Owner.Points)).ToLowerInvariant();
             TechnologyRequirements.Text = Loc.GetString("research-console-tech-requirements-none");
 
             var prototypeMan = IoCManager.Resolve<IPrototypeManager>();
@@ -201,8 +198,7 @@ namespace Content.Client.Research.UI
         /// </summary>
         public void PopulatePoints()
         {
-            //TODO list all available point types
-            PointLabel.Text = Loc.GetString("research-console-menu-research-points-text", ("points", Owner.Points["points"]));
+            PointLabel.Text = Loc.GetString("research-console-menu-research-points-text", ("points", Owner.Points));
             PointsPerSecondLabel.Text = Loc.GetString("research-console-menu-points-per-second-text", ("pointsPerSecond", Owner.PointsPerSecond));
         }
 
