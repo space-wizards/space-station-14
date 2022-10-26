@@ -37,14 +37,11 @@ public sealed partial class RulesPopup : Control
     private void OnQuitButtonPressed(BaseButton.ButtonEventArgs obj)
     {
         OnQuitPressed?.Invoke();
-        Dispose();
     }
 
     private void OnAcceptButtonPressed(BaseButton.ButtonEventArgs obj)
     {
-        Parent?.RemoveChild(this);
         OnAcceptPressed?.Invoke();
-        Dispose();
     }
 
     protected override void FrameUpdate(FrameEventArgs args)

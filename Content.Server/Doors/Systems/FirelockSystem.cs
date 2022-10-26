@@ -1,4 +1,3 @@
-using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Monitor.Systems;
 using Content.Server.Doors.Components;
@@ -20,9 +19,10 @@ namespace Content.Server.Doors.Systems
         [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
         [Dependency] private readonly AtmosAlarmableSystem _atmosAlarmable = default!;
         [Dependency] private readonly AtmosphereSystem _atmosSystem = default!;
-        [Dependency] private readonly AirtightSystem _airtightSystem = default!;
+        [Dependency] private readonly TransformSystem _xformSys = default!;
+        [Dependency] private readonly AppearanceSystem _appearance = default!;
 
-        private static float _visualUpdateInterval = 0.2f;
+        private static float _visualUpdateInterval = 0.5f;
         private float _accumulatedFrameTime;
 
         public override void Initialize()
@@ -55,16 +55,17 @@ namespace Content.Server.Doors.Systems
 
             foreach (var (_, door, appearance, xform) in EntityQuery<FirelockComponent, DoorComponent, AppearanceComponent, TransformComponent>())
             {
-                UpdateVisuals(door.Owner, door, appearance, powerQuery);
+                UpdateVisuals(door.Owner, door, appearance, xform, powerQuery);
             }
         }
 
         private void UpdateVisuals(EntityUid uid,
             DoorComponent? door = null,
             AppearanceComponent? appearance = null,
+            TransformComponent? xform = null,
             EntityQuery<ApcPowerReceiverComponent>? powerQuery = null)
         {
-            if (!Resolve(uid, ref door, ref appearance, false))
+            if (!Resolve(uid, ref door, ref appearance, ref xform, false))
                 return;
 
             // only bother to check pressure on doors that are some variation of closed.
@@ -72,19 +73,18 @@ namespace Content.Server.Doors.Systems
                 && door.State != DoorState.Welded
                 && door.State != DoorState.Denying)
             {
-                appearance.SetData(DoorVisuals.ClosedLights, false);
+                _appearance.SetData(uid, DoorVisuals.ClosedLights, false, appearance);
                 return;
             }
 
             powerQuery ??= EntityManager.GetEntityQuery<ApcPowerReceiverComponent>();
             if (powerQuery.Value.TryGetComponent(uid, out var receiver) && !receiver.Powered)
             {
-                appearance.SetData(DoorVisuals.ClosedLights, false);
+                _appearance.SetData(uid, DoorVisuals.ClosedLights, false, appearance);
                 return;
             }
 
-            appearance.SetData(DoorVisuals.ClosedLights,
-                IsHoldingPressureOrFire(uid));
+            _appearance.SetData(uid, DoorVisuals.ClosedLights, IsHoldingPressureOrFire(uid, xform), appearance);
         }
         #endregion
 
@@ -173,20 +173,20 @@ namespace Content.Server.Doors.Systems
             }
         }
 
-        public bool IsHoldingPressureOrFire(EntityUid uid)
+        public bool IsHoldingPressureOrFire(EntityUid uid, TransformComponent? xform = null)
         {
-            var result = CheckPressureAndFire(uid);
+            var result = CheckPressureAndFire(uid, xform);
             return result.Pressure || result.Fire;
         }
 
-        public (bool Pressure, bool Fire) CheckPressureAndFire(EntityUid owner)
+        public (bool Pressure, bool Fire) CheckPressureAndFire(EntityUid owner, TransformComponent? xform = null)
         {
+            if (!Resolve(owner, ref xform))
+                return (false, false);
+
             float threshold = 20;
-            var atmosphereSystem = EntityManager.EntitySysManager.GetEntitySystem<AtmosphereSystem>();
-            var transformSystem = EntityManager.EntitySysManager.GetEntitySystem<TransformSystem>();
-            var transform = EntityManager.GetComponent<TransformComponent>(owner);
-            var position = transformSystem.GetGridOrMapTilePosition(owner, transform);
-            if (transform.GridUid is not {} gridUid)
+            var position = _xformSys.GetGridOrMapTilePosition(owner, xform);
+            if (xform.GridUid is not {} gridUid)
                 return (false, false);
             var minMoles = float.MaxValue;
             var maxMoles = 0f;
@@ -195,7 +195,7 @@ namespace Content.Server.Doors.Systems
 
             bool IsHoldingPressure()
             {
-                foreach (var adjacent in atmosphereSystem.GetAdjacentTileMixtures(gridUid, position))
+                foreach (var adjacent in _atmosSystem.GetAdjacentTileMixtures(gridUid, position))
                 {
                     var moles = adjacent.TotalMoles;
                     if (moles < minMoles)
@@ -209,15 +209,15 @@ namespace Content.Server.Doors.Systems
 
             bool IsHoldingFire()
             {
-                if (atmosphereSystem.GetTileMixture(gridUid, null, position) == null)
+                if (_atmosSystem.GetTileMixture(gridUid, null, position) == null)
                     return false;
 
-                if (atmosphereSystem.IsHotspotActive(gridUid, position))
+                if (_atmosSystem.IsHotspotActive(gridUid, position))
                     return true;
 
-                foreach (var adjacent in atmosphereSystem.GetAdjacentTiles(gridUid, position))
+                foreach (var adjacent in _atmosSystem.GetAdjacentTiles(gridUid, position))
                 {
-                    if (atmosphereSystem.IsHotspotActive(gridUid, adjacent))
+                    if (_atmosSystem.IsHotspotActive(gridUid, adjacent))
                         return true;
                 }
                 return false;

@@ -9,7 +9,6 @@ using Content.Shared.Disposal;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Map;
 using Robust.Shared.Reflection;
 
 namespace Content.IntegrationTests.Tests.Disposal
@@ -78,9 +77,7 @@ namespace Content.IntegrationTests.Tests.Disposal
   id: HumanDummy
   components:
   - type: Body
-    template: HumanoidTemplate
-    preset: HumanPreset
-    centerSlot: torso
+    prototype: Human
   - type: MobState
   - type: Damageable
     damageContainer: Biological
@@ -127,7 +124,8 @@ namespace Content.IntegrationTests.Tests.Disposal
         [Test]
         public async Task Test()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
+                {NoClient = true, ExtraPrototypes = Prototypes});
             var server = pairTracker.Pair.Server;
 
             var testMap = await PoolManager.CreateTestMap(pairTracker);
@@ -147,7 +145,8 @@ namespace Content.IntegrationTests.Tests.Disposal
                 human = entityManager.SpawnEntity("HumanDummy", coordinates);
                 wrench = entityManager.SpawnEntity("WrenchDummy", coordinates);
                 disposalUnit = entityManager.SpawnEntity("DisposalUnitDummy", coordinates);
-                disposalTrunk = entityManager.SpawnEntity("DisposalTrunkDummy", IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(disposalUnit).MapPosition);
+                disposalTrunk = entityManager.SpawnEntity("DisposalTrunkDummy",
+                    IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(disposalUnit).MapPosition);
 
                 // Test for components existing
                 ref DisposalUnitComponent? comp = ref unit!;
@@ -197,7 +196,7 @@ namespace Content.IntegrationTests.Tests.Disposal
                 // Remove power need
                 Assert.True(entityManager.TryGetComponent(disposalUnit, out ApcPowerReceiverComponent power));
                 power!.NeedsPower = false;
-                unit.Powered = true;//Power state changed event doesn't get fired smh
+                unit.Powered = true; //Power state changed event doesn't get fired smh
 
                 // Flush with a mob and an item
                 Flush(unit, true, human, wrench);

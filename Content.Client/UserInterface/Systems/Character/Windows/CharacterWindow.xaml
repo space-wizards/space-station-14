@@ -1,0 +1,22 @@
+﻿<windows:CharacterWindow
+    xmlns="https://spacestation14.io"
+    xmlns:cc="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:windows="clr-namespace:Content.Client.UserInterface.Systems.Character.Windows"
+    Title="{Loc 'character-info-title'}"
+    MinWidth="400"
+    MinHeight="545">
+    <ScrollContainer>
+        <BoxContainer Orientation="Vertical">
+            <BoxContainer Orientation="Horizontal">
+                <SpriteView OverrideDirection="South" Scale="2 2" Name="SpriteView" Access="Public"/>
+                <BoxContainer Orientation="Vertical" VerticalAlignment="Top">
+                    <Label Name="NameLabel" Access="Public"/>
+                    <Label Name="SubText" VerticalAlignment="Top" StyleClasses="LabelSubText" Access="Public"/>
+                </BoxContainer>
+            </BoxContainer>
+            <Label Text="{Loc 'character-info-objectives-label'}" HorizontalAlignment="Center"/>
+            <BoxContainer Orientation="Vertical" Name="Objectives" Access="Public"/>
+            <cc:Placeholder PlaceholderText="{Loc 'character-info-roles-antagonist-text'}"/>
+        </BoxContainer>
+    </ScrollContainer>
+</windows:CharacterWindow>

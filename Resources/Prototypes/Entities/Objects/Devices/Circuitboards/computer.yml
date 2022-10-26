@@ -97,6 +97,10 @@
   components:
     - type: ComputerBoard
       prototype: ComputerSurveillanceCameraMonitor
+    - type: Tag
+      tags:
+        - DroneUsable
+        - SurveillanceCameraMonitorCircuitboard
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -115,6 +119,10 @@
   components:
     - type: ComputerBoard
       prototype: ComputerTelevision
+    - type: Tag
+      tags:
+        - DroneUsable
+        - ComputerTelevisionCircuitboard
 
 - type: entity
   parent: BaseComputerCircuitboard

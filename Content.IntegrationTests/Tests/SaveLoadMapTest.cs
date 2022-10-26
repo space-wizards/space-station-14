@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using Robust.Server.Maps;
 using Robust.Shared.ContentPack;
@@ -45,15 +45,15 @@ namespace Content.IntegrationTests.Tests
                     mapGrid.SetTile(new Vector2i(0, 0), new Tile(2, (TileRenderFlag)1, 254));
                 }
 
-                mapLoader.SaveMap(mapId, mapPath);
-
-                mapManager.DeleteMap(mapId);
+                Assert.Multiple(() => mapLoader.SaveMap(mapId, mapPath));
+                Assert.Multiple(() => mapManager.DeleteMap(mapId));
             });
             await server.WaitIdleAsync();
 
             await server.WaitPost(() =>
             {
-                mapLoader.LoadMap(new MapId(10), mapPath);
+                Assert.Multiple(() => mapLoader.LoadMap(new MapId(10), mapPath));
+                
             });
             await server.WaitIdleAsync();
             await server.WaitAssertion(() =>

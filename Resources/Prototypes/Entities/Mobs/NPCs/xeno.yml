@@ -15,6 +15,8 @@
   - type: HTN
     rootTask: XenoCompound
     blackboard:
+      NavInteract: !type:Bool
+        true
       NavPry: !type:Bool
         true
       NavSmash: !type:Bool
@@ -46,7 +48,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.25
-      mass: 200
+      density: 1000
       mask:
       - MobMask
       layer:
@@ -67,7 +69,6 @@
           -0.25
   - type: MeleeWeapon
     hidden: true
-    range: 1.5
     angle: 0
     soundHit:
      collection: AlienClaw
@@ -137,7 +138,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.45
-      mass: 250
+      density: 400
       mask:
       - MobMask
       layer:
@@ -170,7 +171,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.45
-      mass: 200
+      density: 450
       mask:
       - MobMask
       layer:
@@ -208,7 +209,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.45
-      mass: 10000
+      density: 15500
       mask:
       - MobMask
       layer:
@@ -246,7 +247,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.45
-      mass: 600
+      density: 1350
       mask:
       - MobMask
       layer:
@@ -284,7 +285,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.45
-      mass: 150
+      density: 235
       mask:
       - MobMask
       layer:
@@ -324,7 +325,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.45
-      mass: 150
+      density: 235
       mask:
       - MobMask
       layer:
@@ -364,7 +365,6 @@
     - Xeno
   - type: MeleeWeapon
     hidden: true
-    range: 1.5
     angle: 0
     animation: WeaponArcBite
     damage:
@@ -388,7 +388,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 10
+      density: 25
       mask:
       - MobMask
       layer:

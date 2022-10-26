@@ -36,13 +36,15 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.49,-0.49,0.49,0.49" # don't want this colliding with walls or they won't close
-      mass: 100
+      density: 100
       mask:
       - FullTileMask
       layer:
       - AirlockLayer
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronics ]
   - type: Door
-    board: DoorElectronics
     crushDamage:
       types:
         Blunt: 15
@@ -79,6 +81,8 @@
   - type: Airtight
     fixVacuum: true
     noAirWhenFullyAirBlocked: false
+  - type: RadiationBlocker
+    resistance: 3
   - type: Occluder
   - type: Damageable
     damageContainer: Inorganic
@@ -94,6 +98,8 @@
   - type: Construction
     graph: Airlock
     node: airlock
+    containers:
+    - board
   - type: IconSmooth
     key: walls
     mode: NoSprite

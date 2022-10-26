@@ -4,6 +4,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using System.Threading;
+using Content.Server.Power.EntitySystems;
 using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.StationEvents.Events
@@ -11,6 +12,9 @@ namespace Content.Server.StationEvents.Events
     [UsedImplicitly]
     public sealed class PowerGridCheck : StationEventSystem
     {
+        [Dependency] private readonly ApcSystem _apcSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+
         public override string Prototype => "PowerGridCheck";
 
         private CancellationTokenSource? _announceCancelToken;
@@ -33,9 +37,9 @@ namespace Content.Server.StationEvents.Events
 
         public override void Started()
         {
-            foreach (var component in EntityManager.EntityQuery<ApcPowerReceiverComponent>(true))
+            foreach (var component in EntityManager.EntityQuery<ApcComponent>(true))
             {
-                if (!component.PowerDisabled)
+                if (component.MainBreakerEnabled)
                     _powered.Add(component.Owner);
             }
 
@@ -74,9 +78,10 @@ namespace Content.Server.StationEvents.Events
 
                 var selected = _powered.Pop();
                 if (EntityManager.Deleted(selected)) continue;
-                if (EntityManager.TryGetComponent<ApcPowerReceiverComponent>(selected, out var powerReceiverComponent))
+                if (EntityManager.TryGetComponent<ApcComponent>(selected, out var apcComponent))
                 {
-                    powerReceiverComponent.PowerDisabled = true;
+                    if (apcComponent.MainBreakerEnabled)
+                        _apcSystem.ApcToggleBreaker(selected, apcComponent);
                 }
                 _unpowered.Add(selected);
             }
@@ -88,9 +93,10 @@ namespace Content.Server.StationEvents.Events
             {
                 if (EntityManager.Deleted(entity)) continue;
 
-                if (EntityManager.TryGetComponent(entity, out ApcPowerReceiverComponent? powerReceiverComponent))
+                if (EntityManager.TryGetComponent(entity, out ApcComponent? apcComponent))
                 {
-                    powerReceiverComponent.PowerDisabled = false;
+                    if(!apcComponent.MainBreakerEnabled)
+                        _apcSystem.ApcToggleBreaker(entity, apcComponent);
                 }
             }
 
@@ -99,7 +105,7 @@ namespace Content.Server.StationEvents.Events
             _announceCancelToken = new CancellationTokenSource();
             Timer.Spawn(3000, () =>
             {
-                SoundSystem.Play("/Audio/Announcements/power_on.ogg", Filter.Broadcast(), AudioParams.Default);
+                _audioSystem.PlayGlobal("/Audio/Announcements/power_on.ogg", Filter.Broadcast());
             }, _announceCancelToken.Token);
             _unpowered.Clear();
 

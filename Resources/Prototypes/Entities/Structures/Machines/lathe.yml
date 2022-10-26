@@ -27,7 +27,7 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.4,-0.4,0.4,0.4"
-      mass: 25
+      density: 190
       mask:
       - MachineMask
       layer:
@@ -114,7 +114,7 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.4,-0.4,0.4,0.4"
-      mass: 25
+      density: 190
       mask:
       - MachineMask
       layer:
@@ -217,6 +217,7 @@
       - FlashPayload
       - Signaller
       - SignalTrigger
+      - VoiceTrigger
       - PowerCellSmall
       - PowerCellMedium
       - PowerCellHigh
@@ -249,6 +250,12 @@
     idleState: icon
     runningState: building
     dynamicRecipes:
+      - FirelockElectronics
+      - DoorElectronics
+      - APCElectronics
+      - AirAlarmElectronics
+      - FireAlarmElectronics
+      - MailingUnitElectronics
       - SMESMachineCircuitboard
       - SubstationMachineCircuitboard
       - ThermomachineFreezerMachineCircuitBoard
@@ -288,6 +295,7 @@
       - WallmountSubstationElectronics
       - EmitterCircuitboard
       - GasRecyclerMachineCircuitboard
+      - SeedExtractorMachineCircuitboard
   - type: MaterialStorage
     whitelist:
       tags:
@@ -474,6 +482,12 @@
       - ClothingOuterWinterHoS
       - ClothingOuterWinterQM
       - ClothingOuterWinterRD
+      - ClothingNeckMantleCap
+      - ClothingNeckMantleCE
+      - ClothingNeckMantleCMO
+      - ClothingNeckMantleHOP
+      - ClothingNeckMantleHOS
+      - ClothingNeckMantleRD
       - ClothingOuterWinterMusician
       - ClothingOuterWinterClown
       - ClothingOuterWinterMime
