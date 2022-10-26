@@ -40,7 +40,7 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
 
     private void OnNoHandInteracted(EntityUid uid, CardboardBoxComponent component, InteractedNoHandEvent args)
     {
-        //Free the mice
+        //Free the mice please
         if (!TryComp<EntityStorageComponent>(uid, out var box) || box.Open || !box.Contents.Contains(args.User))
             return;
 
