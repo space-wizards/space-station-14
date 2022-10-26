@@ -44,8 +44,11 @@ public abstract class CartridgeLoaderBoundUserInterface : BoundUserInterface
         if (_activeUiFragment is not null)
             DetachCartridgeUI(_activeUiFragment);
 
-        if (control is not null)
+        if (control is not null && _activeProgram.HasValue)
+        {
             AttachCartridgeUI(control, comp?.ProgramName);
+            SendCartridgeUiReadyEvent(_activeProgram.Value);
+        }
 
         _activeCartridgeUI = ui;
         _activeUiFragment?.Dispose();
@@ -110,6 +113,12 @@ public abstract class CartridgeLoaderBoundUserInterface : BoundUserInterface
     protected CartridgeComponent? RetrieveCartridgeComponent(EntityUid? cartridgeUid)
     {
         return _entityManager?.GetComponentOrNull<CartridgeComponent>(cartridgeUid);
+    }
+
+    private void SendCartridgeUiReadyEvent(EntityUid cartridgeUid)
+    {
+        var message = new CartridgeLoaderUiMessage(cartridgeUid, CartridgeUiMessageAction.UIReady);
+        SendMessage(message);
     }
 
     private CartridgeUI? RetrieveCartridgeUI(EntityUid? cartridgeUid)

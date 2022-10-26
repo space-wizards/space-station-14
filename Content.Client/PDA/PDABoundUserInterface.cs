@@ -99,7 +99,6 @@ namespace Content.Client.PDA
         {
             _menu?.ProgramView.AddChild(cartridgeUI);
             _menu?.ToProgramView(title ?? Loc.GetString("comp-pda-io-program-fallback-title"));
-
         }
 
         protected override void DetachCartridgeUI(Control cartridgeUI)

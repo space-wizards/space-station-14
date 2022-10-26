@@ -73,40 +73,50 @@ public abstract class SharedCartridgeLoaderSystem : EntitySystem
 
 public sealed class CartridgeAddedEvent : EntityEventArgs
 {
-    public readonly EntityUid Computer;
+    public readonly EntityUid Loader;
 
-    public CartridgeAddedEvent(EntityUid computer)
+    public CartridgeAddedEvent(EntityUid loader)
     {
-        Computer = computer;
+        Loader = loader;
     }
 }
 
 public sealed class CartridgeRemovedEvent : EntityEventArgs
 {
-    public readonly EntityUid Computer;
+    public readonly EntityUid Loader;
 
-    public CartridgeRemovedEvent(EntityUid computer)
+    public CartridgeRemovedEvent(EntityUid loader)
     {
-        Computer = computer;
+        Loader = loader;
     }
 }
 
 public sealed class CartridgeActivatedEvent : EntityEventArgs
 {
-    public readonly EntityUid Computer;
+    public readonly EntityUid Loader;
 
-    public CartridgeActivatedEvent(EntityUid computer)
+    public CartridgeActivatedEvent(EntityUid loader)
     {
-        Computer = computer;
+        Loader = loader;
     }
 }
 
 public sealed class CartridgeDeactivatedEvent : EntityEventArgs
 {
-    public readonly EntityUid Computer;
+    public readonly EntityUid Loader;
 
-    public CartridgeDeactivatedEvent(EntityUid computer)
+    public CartridgeDeactivatedEvent(EntityUid loader)
     {
-        Computer = computer;
+        Loader = loader;
+    }
+}
+
+public sealed class CartridgeUiReadyEvent : EntityEventArgs
+{
+    public readonly EntityUid Loader;
+
+    public CartridgeUiReadyEvent(EntityUid loader)
+    {
+        Loader = loader;
     }
 }
