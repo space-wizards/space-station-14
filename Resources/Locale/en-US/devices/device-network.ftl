@@ -24,3 +24,7 @@ device-address-prefix-sensor = Sns-
 
 #PDAs and terminals
 device-address-prefix-console = Cls-
+device-address-prefix-fire-alarm = Fir-
+device-address-prefix-air-alarm = Air-
+
+device-address-examine-message = The device's address is {$address}.

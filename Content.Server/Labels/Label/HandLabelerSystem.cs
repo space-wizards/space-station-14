@@ -1,10 +1,12 @@
 using Content.Server.Labels.Components;
 using Content.Server.UserInterface;
+using Content.Server.Popups;
 using Content.Shared.Interaction;
 using Content.Shared.Labels;
-using Content.Shared.Popups;
+using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Shared.Player;
 
 namespace Content.Server.Labels
 {
@@ -15,6 +17,7 @@ namespace Content.Server.Labels
     public sealed class HandLabelerSystem : EntitySystem
     {
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly LabelSystem _labelSystem = default!;
 
         public override void Initialize()
@@ -23,10 +26,31 @@ namespace Content.Server.Labels
 
             SubscribeLocalEvent<HandLabelerComponent, AfterInteractEvent>(AfterInteractOn);
             SubscribeLocalEvent<HandLabelerComponent, ActivateInWorldEvent>(OnActivate);
+            SubscribeLocalEvent<HandLabelerComponent, GetVerbsEvent<UtilityVerb>>(OnUtilityVerb);
             // Bound UI subscriptions
             SubscribeLocalEvent<HandLabelerComponent, HandLabelerLabelChangedMessage>(OnHandLabelerLabelChanged);
         }
 
+        private void OnUtilityVerb(EntityUid uid, HandLabelerComponent handLabeler, GetVerbsEvent<UtilityVerb> args)
+        {
+            if (args.Target is not { Valid: true } target || !handLabeler.Whitelist.IsValid(target) || !args.CanAccess)
+                return;
+
+            string labelerText = handLabeler.AssignedLabel == string.Empty ? Loc.GetString("hand-labeler-remove-label-text") : Loc.GetString("hand-labeler-add-label-text");
+
+            var verb = new UtilityVerb()
+            {
+                Act = () =>
+                {
+                    AddLabelTo(uid, handLabeler, target, out string? result);
+                    if (result != null)
+                        _popupSystem.PopupEntity(result, args.User, Filter.Entities(args.User));
+                },
+                Text = labelerText
+            };
+
+            args.Verbs.Add(verb);
+        }
         private void AfterInteractOn(EntityUid uid, HandLabelerComponent handLabeler, AfterInteractEvent args)
         {
             if (args.Target is not {Valid: true} target || !handLabeler.Whitelist.IsValid(target) || !args.CanReach)
@@ -34,7 +58,7 @@ namespace Content.Server.Labels
 
             AddLabelTo(uid, handLabeler, target, out string? result);
             if (result != null)
-                handLabeler.Owner.PopupMessage(args.User, result);
+                _popupSystem.PopupEntity(result, args.User, Filter.Entities(args.User));
         }
 
         private void AddLabelTo(EntityUid uid, HandLabelerComponent? handLabeler, EntityUid target, out string? result)

@@ -272,6 +272,7 @@
           map: ["enum.GunVisualLayers.MagUnshaded"]
           shader: unshaded
     - type: Clothing
+      sprite: Objects/Weapons/Guns/Battery/disabler.rsi
       quickEquip: false
       slots:
         - Belt
@@ -307,11 +308,12 @@
     - state: mag-unshaded-0
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
+  - type: Item
+    heldPrefix: taser4
   - type: Clothing
     quickEquip: false
     slots:
     - Belt
-    heldPrefix: taser4
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser.ogg
@@ -330,6 +332,8 @@
   id: WeaponAntiqueLaser
   description: This is an antique laser gun. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy.
   components:
+  - type: Item
+    size: 30
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/antiquelasergun.rsi
     layers:

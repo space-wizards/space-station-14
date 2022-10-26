@@ -24,6 +24,7 @@ namespace Content.Server.Rotatable
             Verb verb = new();
             verb.Act = () => TryFlip(component, args.User);
             verb.Text = Loc.GetString("flippable-verb-get-data-text");
+            verb.DoContactInteraction = true;
             // TODO VERB ICONS Add Uno reverse card style icon?
             args.Verbs.Add(verb);
         }
@@ -43,6 +44,7 @@ namespace Content.Server.Rotatable
 
             Verb resetRotation = new ()
             {
+                DoContactInteraction = true,
                 Act = () => EntityManager.GetComponent<TransformComponent>(component.Owner).LocalRotation = Angle.Zero,
                 Category = VerbCategory.Rotate,
                 IconTexture = "/Textures/Interface/VerbIcons/refresh.svg.192dpi.png",

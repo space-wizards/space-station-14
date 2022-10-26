@@ -117,7 +117,7 @@ namespace Content.Server.Light.EntitySystems
                     var burnMsg = Loc.GetString("powered-light-component-burn-hand");
                     _popupSystem.PopupEntity(burnMsg, uid, Filter.Entities(userUid));
 
-                    var damage = _damageableSystem.TryChangeDamage(userUid, light.Damage);
+                    var damage = _damageableSystem.TryChangeDamage(userUid, light.Damage, origin: userUid);
 
                     if (damage != null)
                         _adminLogger.Add(LogType.Damaged,
@@ -347,7 +347,7 @@ namespace Content.Server.Light.EntitySystems
             args.Handled = true;
         }
 
-        private void OnPowerChanged(EntityUid uid, PoweredLightComponent component, PowerChangedEvent args)
+        private void OnPowerChanged(EntityUid uid, PoweredLightComponent component, ref PowerChangedEvent args)
         {
             UpdateLight(uid, component);
         }

@@ -154,6 +154,23 @@ namespace Content.Shared.Verbs
         /// <remarks>
         ///     This will try to call the action delegates and raise the local events for the given verb.
         /// </remarks>
-        public abstract void ExecuteVerb(Verb verb, EntityUid user, EntityUid target, bool forced = false);
+        public virtual void ExecuteVerb(Verb verb, EntityUid user, EntityUid target, bool forced = false)
+        {
+            // invoke any relevant actions
+            verb.Act?.Invoke();
+
+            // Maybe raise a local event
+            if (verb.ExecutionEventArgs != null)
+            {
+                if (verb.EventTarget.IsValid())
+                    RaiseLocalEvent(verb.EventTarget, verb.ExecutionEventArgs);
+                else
+                    RaiseLocalEvent(verb.ExecutionEventArgs);
+            }
+
+            // Perform any contact interactions
+            if (verb.DoContactInteraction ?? (verb.DefaultDoContactInteraction && _interactionSystem.InRangeUnobstructed(user, target)))
+                _interactionSystem.DoContactInteraction(user, target);
+        }
     }
 }

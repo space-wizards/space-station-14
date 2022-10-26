@@ -7,7 +7,7 @@
   - type: InputMover
   - type: MobMover
   - type: Loadout
-    prototype: PassengerGear
+    prototypes: [PassengerGear]
   - type: Faction
     factions:
     - NanoTrasen
@@ -25,20 +25,6 @@
   - type: MobMover
   - type: HTN
     rootTask: RangedCombatCompound
-
-- type: entity
-  parent: MobHuman
-  id: MobCBURNUnit
-  name: CBURN Agent
-  description: A miserable pile of secrets
-  components:
-  - type: RandomHumanoidAppearance
-  - type: Loadout
-    prototype: CBURNGear
-  - type: GhostTakeoverAvailable
-    makeSentient: false
-    name: CBURN Agent
-    description: A highly trained CentCom agent, capable of dealing with various threats.
 
 - type: entity
   parent: BaseMobHuman

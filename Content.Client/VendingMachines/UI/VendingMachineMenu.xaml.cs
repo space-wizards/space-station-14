@@ -52,7 +52,8 @@ namespace Content.Client.VendingMachines.UI
             }
 
             var longestEntry = string.Empty;
-            var spriteSystem = EntitySystem.Get<SpriteSystem>();
+            var spriteSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SpriteSystem>();
+
             for (var i = 0; i < inventory.Count; i++)
             {
                 var entry = inventory[i];

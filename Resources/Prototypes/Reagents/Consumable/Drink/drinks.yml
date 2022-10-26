@@ -324,9 +324,9 @@
 
 - type: reagent
   id: KiraSpecial
-  name: kira special
+  name: reagent-name-kira-special
   parent: BaseDrink
-  desc: Long live the guy who everyone had mistaken for a girl. Baka!
+  desc: reagent-desc-kira-special
   physicalDesc: strong-smelling
   flavor: sweet
   color: "#CCCC99"
@@ -334,9 +334,9 @@
 
 - type: reagent
   id: Rewriter
-  name: rewriter
+  name: reagent-name-rewriter
   parent: BaseDrink
-  desc: The secret of the sanctuary of the Librarian...
+  desc: reagent-desc-rewriter
   physicalDesc: strong-smelling
   flavor: sweet
   color: "#485000"
