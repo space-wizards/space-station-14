@@ -153,6 +153,26 @@
 
 - type: entity
   parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitJester
+  name: jester suit
+  description: A jolly dress, well suited to entertain your master, nuncle.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/jester.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/jester.rsi
+
+- type: entity
+  parent: ClothingUniformJumpsuitJester
+  id: ClothingUniformJumpsuitJesterAlt
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/jester2.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/jester2.rsi
+
+- type: entity
+  parent: ClothingUniformBase
   id: ClothingUniformJumpsuitCMO
   name: chief medical officer's jumpsuit
   description: It's a jumpsuit worn by those with the experience to be Chief Medical Officer. It provides minor biological protection.
