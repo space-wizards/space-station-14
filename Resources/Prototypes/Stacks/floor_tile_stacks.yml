@@ -297,3 +297,21 @@
   name: snow floor tile
   spawn: FloorTileItemSnow
   maxCount: 30
+
+- type: stack
+  id: FloorTileWoodPattern
+  name: wood pattern floor
+  spawn: FloorTileItemWoodPattern
+  maxCount: 30
+
+- type: stack
+  id: FloorTileSteelMaint
+  name: steel maint floor
+  spawn: FloorTileItemSteelMaint
+  maxCount: 30
+
+- type: stack
+  id: FloorTileGratingMaint
+  name: grating maint floor
+  spawn: FloorTileItemGratingMaint
+  maxCount: 30
