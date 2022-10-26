@@ -9,7 +9,7 @@
         - texture: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi/ano01.png
     - type: RandomSpawner
       prototypes:
-        - FoodBanana #yell at me to change this back
+        - SimpleXenoArtifact
       chance: 1
 
 - type: entity

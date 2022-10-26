@@ -3,7 +3,7 @@
   id: BaseXenoArtifact
   name: alien artifact
   description: A strange alien device.
-  abstract: false
+  abstract: true
   components:
     - type: Sprite
       drawdepth: SmallObjects
@@ -48,3 +48,11 @@
       highVoltageNode: high
       mediumVoltageNode: medium
       lowVoltageNode: low
+
+- type: entity
+  parent: BaseXenoArtifact
+  id: SimpleXenoArtifact
+  components:
+  - type: Artifact
+    nodesMin: 1
+    nodesMax: 1

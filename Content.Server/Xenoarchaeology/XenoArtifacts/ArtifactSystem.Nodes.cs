@@ -26,7 +26,7 @@ public sealed partial class ArtifactSystem
         component.NodeTree = new ArtifactTree();
 
         GenerateArtifactNodeTree(ref component.NodeTree, nodeAmount);
-        EnterNode(component.Owner, ref component.NodeTree.StartNode, component);
+        EnterNode(component.Owner, ref component.NodeTree.StartNode, component, false);
     }
 
     /// <summary>
@@ -34,7 +34,7 @@ public sealed partial class ArtifactSystem
     /// </summary>
     /// <param name="tree">The tree being generated.</param>
     /// <param name="nodeAmount">The amount of nodes it has.</param>
-    public void GenerateArtifactNodeTree(ref ArtifactTree tree, int nodeAmount)
+    private void GenerateArtifactNodeTree(ref ArtifactTree tree, int nodeAmount)
     {
         if (nodeAmount < 1)
         {
@@ -97,7 +97,7 @@ public sealed partial class ArtifactSystem
     /// <summary>
     /// Enter a node: attach the relevant components
     /// </summary>
-    public void EnterNode(EntityUid uid, ref ArtifactNode node, ArtifactComponent? component = null)
+    private void EnterNode(EntityUid uid, ref ArtifactNode node, ArtifactComponent? component = null, bool activate = true)
     {
         if (!Resolve(uid, ref component))
             return;
@@ -139,13 +139,14 @@ public sealed partial class ArtifactSystem
             }
         }
 
-        RaiseLocalEvent(uid, new ArtifactNodeEnteredEvent(component.RandomSeed));
+        if (activate)
+            RaiseLocalEvent(uid, new ArtifactNodeEnteredEvent(component.RandomSeed));
     }
 
     /// <summary>
     /// Exit a node: remove the relevant components.
     /// </summary>
-    public void ExitNode(EntityUid uid, ArtifactComponent? component = null)
+    private void ExitNode(EntityUid uid, ArtifactComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
@@ -159,7 +160,7 @@ public sealed partial class ArtifactSystem
             foreach (var name in node.Trigger.Components.Keys)
             {
                 var comp = _componentFactory.GetRegistration(name);
-                RemCompDeferred(uid, comp.Type);
+                EntityManager.RemoveComponentDeferred(uid, comp.Type);
             }
         }
 
@@ -168,7 +169,7 @@ public sealed partial class ArtifactSystem
             foreach (var name in node.Effect.Components.Keys)
             {
                 var comp = _componentFactory.GetRegistration(name);
-                RemCompDeferred(uid, comp.Type);
+                EntityManager.RemoveComponentDeferred(uid, comp.Type);
             }
         }
 

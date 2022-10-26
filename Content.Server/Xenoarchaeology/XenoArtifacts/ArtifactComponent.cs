@@ -16,10 +16,10 @@ public sealed class ArtifactComponent : Component
 
     #region Node Tree Gen
     [DataField("nodesMin")]
-    public int NodesMin = 5;
+    public int NodesMin = 3;
 
     [DataField("nodesMax")]
-    public int NodesMax = 10;
+    public int NodesMax = 9;
     #endregion
 
     /// <summary>
