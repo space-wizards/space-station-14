@@ -1504,7 +1504,7 @@
     attributes:
       gender: epicene
   - type: SentienceTarget
-    flavorKind: corgi
+    flavorKind: station-event-random-sentience-flavor-corgi
   - type: Puller
   - type: MobPrice
     price: 200
