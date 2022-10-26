@@ -19,7 +19,7 @@
             - material: Cable
               amount: 5
               doAfter: 3
-              
+
         - to: start
           completed:
             - !type:GivePrototype
@@ -37,12 +37,12 @@
           steps:
             - tool: Screwing
               doAfter: 2
-            - prototype: SurveillanceCameraMonitorCircuitboard
+            - tag: SurveillanceCameraMonitorCircuitboard
               name: surveillance camera monitor board
               icon:
                 sprite: Objects/Misc/module.rsi
                 state: cpuboard
-                
+
         - to: TelescreenFrame
           completed:
             - !type:GivePrototype
@@ -54,8 +54,8 @@
           steps:
             - tool: Cutting
               doAfter: 2
-              
-              
+
+
     - node: Screen
       entity: WallmountTelescreenFrame
       edges:
@@ -108,7 +108,7 @@
             - material: Cable
               amount: 5
               doAfter: 3
-              
+
         - to: start
           completed:
             - !type:GivePrototype
@@ -126,12 +126,12 @@
           steps:
             - tool: Screwing
               doAfter: 2
-            - prototype: ComputerTelevisionCircuitboard
+            - tag: ComputerTelevisionCircuitboard
               name: television board
               icon:
                 sprite: Objects/Misc/module.rsi
                 state: cpuboard
-                
+
         - to: TelevisionFrame
           completed:
             - !type:GivePrototype
@@ -143,8 +143,8 @@
           steps:
             - tool: Cutting
               doAfter: 2
-              
-              
+
+
     - node: Screen
       entity: WallmountTelevisionFrame
       edges:

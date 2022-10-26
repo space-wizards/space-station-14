@@ -18,6 +18,7 @@
   - type: Paper
   - type: ActivatableUI
     key: enum.PaperUiKey.Key
+    closeOnHandDeselect: false
   - type: UserInterface
     interfaces:
     - key: enum.PaperUiKey.Key
@@ -314,6 +315,9 @@
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: stamp-clown
+  - type: Tag
+    tags:
+      - ClownRubberStamp
 
 - type: entity
   name: chief medical officer's rubber stamp

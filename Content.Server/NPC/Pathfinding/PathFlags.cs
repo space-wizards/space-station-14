@@ -19,4 +19,9 @@ public enum PathFlags : byte
     /// Can stuff like walls be broken.
     /// </summary>
     Smashing = 1 << 2,
+
+    /// <summary>
+    /// Can we open stuff that requires interaction (e.g. click-open doors).
+    /// </summary>
+    Interact = 1 << 3,
 }

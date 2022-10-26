@@ -1,12 +1,14 @@
 ﻿- type: trait
   id: Blindness
-  name: trait-blindness
+  name: trait-blindness-name
+  description: You lack vision
   components:
     - type: PermanentBlindness
 
 - type: trait
   id: Narcolepsy
-  name: trait-narcolepsy
+  name: trait-narcolepsy-name
+  description: You fall asleep randomly
   components:
     - type: Narcolepsy
       timeBetweenIncidents: 300, 600
@@ -14,6 +16,6 @@
 
 - type: trait
   id: Pacifist
-  name: trait-pacifist
+  name: trait-pacifist-name
   components:
     - type: Pacifist

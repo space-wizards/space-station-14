@@ -1,23 +1,24 @@
-using Content.Shared.Drone;
+using Content.Server.Body.Systems;
 using Content.Server.Drone.Components;
-using Content.Shared.MobState;
-using Content.Shared.MobState.Components;
-using Content.Shared.Interaction.Events;
-using Content.Shared.Interaction.Components;
-using Content.Shared.Examine;
-using Content.Shared.Tag;
-using Content.Shared.Throwing;
-using Content.Shared.Item;
-using Content.Shared.Emoting;
-using Content.Shared.Body.Components;
-using Content.Shared.IdentityManagement;
-using Content.Shared.Popups;
-using Content.Server.Popups;
-using Content.Server.Mind.Components;
 using Content.Server.Ghost.Components;
 using Content.Server.Ghost.Roles.Components;
+using Content.Server.Mind.Components;
+using Content.Server.Popups;
 using Content.Server.Tools.Innate;
 using Content.Server.UserInterface;
+using Content.Shared.Body.Components;
+using Content.Shared.Drone;
+using Content.Shared.Emoting;
+using Content.Shared.Examine;
+using Content.Shared.IdentityManagement;
+using Content.Shared.Interaction.Components;
+using Content.Shared.Interaction.Events;
+using Content.Shared.Item;
+using Content.Shared.MobState;
+using Content.Shared.MobState.Components;
+using Content.Shared.Popups;
+using Content.Shared.Tag;
+using Content.Shared.Throwing;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
@@ -25,6 +26,7 @@ namespace Content.Server.Drone
 {
     public sealed class DroneSystem : SharedDroneSystem
     {
+        [Dependency] private readonly BodySystem _bodySystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
@@ -83,8 +85,8 @@ namespace Content.Server.Drone
                 if (TryComp<InnateToolComponent>(uid, out var innate))
                     _innateToolSystem.Cleanup(uid, innate);
 
-                if (TryComp<SharedBodyComponent>(uid, out var body))
-                    body.Gib();
+                if (TryComp<BodyComponent>(uid, out var body))
+                    _bodySystem.GibBody(uid, body: body);
                 Del(uid);
             }
         }
