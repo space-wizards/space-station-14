@@ -75,7 +75,6 @@ public sealed class ClientClothingSystem : ClothingSystem
                 return;
         }
 
-
         // add each layer to the visuals
         var i = 0;
         foreach (var layer in layers)
