@@ -178,6 +178,8 @@ ui-options-function-shuttle-brake = Brake
 
 ## Network menu
 
+ui-options-net-predict = Client-side prediction
+
 ui-options-net-interp-ratio = State buffer size
 ui-options-net-interp-ratio-tooltip = Increasing this will generally make the game more resistant
                                       to server->client packet-loss, however in doing so it
