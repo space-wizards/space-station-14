@@ -133,9 +133,6 @@ public sealed class ClientClothingSystem : ClothingSystem
         layer.RsiPath = rsi.Path.ToString();
         layer.State = state;
 
-        if (slot == "jumpsuit")
-            layer.Shader = "StencilDraw";
-
         layers = new() { layer };
 
         return true;
