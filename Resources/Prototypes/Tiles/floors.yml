@@ -1340,3 +1340,54 @@
   friction: 0.30
   thermalConductivity: 0.04
   heatCapacity: 10000
+
+- type: tile
+  id: FloorTechMaint2
+  name: tiles-techmaint2-floor
+  sprite: /Textures/Tiles/steel_maint.png
+  baseTurfs:
+  - Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepHull
+  friction: 0.30
+  itemDrop: FloorTileItemSteelMaint
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorTechMaint3
+  name: tiles-techmaint3-floor
+  sprite: /Textures/Tiles/grating_maint.png
+  variants: 4
+  placementVariants: [0, 1, 2, 3]
+  baseTurfs:
+  - Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepHull
+  friction: 0.30
+  itemDrop: FloorTileItemGratingMaint
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorWoodTile
+  name: tiles-wood2
+  sprite: /Textures/Tiles/wood_tile.png
+  variants: 4
+  placementVariants: [0, 1, 2, 3]
+  baseTurfs:
+  - Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepWood
+  barestepSounds:
+    collection: BarestepWood
+  friction: 0.30
+  itemDrop: FloorTileItemWoodPattern
+  thermalConductivity: 0.04
+  heatCapacity: 10000
