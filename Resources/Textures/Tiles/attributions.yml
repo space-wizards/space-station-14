@@ -50,3 +50,9 @@
   license: "CC-BY-SA-3.0"
   copyright: "Fortuna commit 2a9408a47e2f83d945335e4feeeeafb552173e6f, grasslight and dirt by Peptide based on grassdark.png and dirt."
   source: "https://github.com/FortunaSS13/Fortuna"
+  
+- files: ["steel_maint.png", "grating_maint.png", "wood_tile.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "by brainfood for space-station-14, ."
+  source: "https://github.com/space-wizards/space-station-14/pull/12193"
+
