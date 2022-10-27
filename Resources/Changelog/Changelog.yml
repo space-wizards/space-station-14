@@ -1,12 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Radio messages will properly capitalize the first letter of your message
-      again., type: Fix}
-  - {message: Sending a radio message will now make you whisper locally instead of
-      speak., type: Add}
-  id: 2027
-  time: '2022-07-26T23:49:23.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Zombies now move slower than normal people., type: Tweak}
@@ -2964,3 +2956,11 @@ Entries:
   - {message: Fix the item status for chambered guns flickering., type: Fix}
   id: 2526
   time: '2022-10-26T14:46:13.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a bug that was causing bullets and other physics objects to not
+      work properly., type: Fix}
+  - {message: Fixed a bug that was causing crashes when attempting to follow or teleport
+      to entities., type: Fix}
+  id: 2527
+  time: '2022-10-27T02:35:44.0000000+00:00'
