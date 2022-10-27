@@ -896,7 +896,6 @@ entities:
     parent: 84
     type: Transform
   - type: MapGrid
-  - type: EntityLookup
   - type: Broadphase
   - id: Kettle
     type: BecomesStation
@@ -40407,7 +40406,6 @@ entities:
   - type: Transform
   - index: 4
     type: Map
-  - type: EntityLookup
   - type: Broadphase
   - type: PhysicsMap
   - type: OccluderTree

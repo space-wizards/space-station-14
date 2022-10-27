@@ -134,7 +134,6 @@ entities:
   - parent: null
     type: Transform
   - type: MapGrid
-  - type: EntityLookup
   - type: Broadphase
   - id: centcomm
     type: BecomesStation

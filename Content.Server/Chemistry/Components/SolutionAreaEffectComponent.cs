@@ -145,9 +145,12 @@ namespace Content.Server.Chemistry.Components
         /// with the other area effects from the inception.</param>
         public void React(float averageExposures)
         {
-
-            if (!_entities.EntitySysManager.GetEntitySystem<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
+            if (!_entities.EntitySysManager.GetEntitySystem<SolutionContainerSystem>()
+                    .TryGetSolution(Owner, SolutionName, out var solution) ||
+                solution.Contents.Count == 0)
+            {
                 return;
+            }
 
             var xform = _entities.GetComponent<TransformComponent>(Owner);
             if (!MapManager.TryGetGrid(xform.GridUid, out var mapGrid))
@@ -158,6 +161,7 @@ namespace Content.Server.Chemistry.Components
             var lookup = _entities.EntitySysManager.GetEntitySystem<EntityLookupSystem>();
 
             var solutionFraction = 1 / Math.Floor(averageExposures);
+            var ents = lookup.GetEntitiesIntersecting(tile, LookupFlags.Uncontained).ToArray();
 
             foreach (var reagentQuantity in solution.Contents.ToArray())
             {
@@ -173,14 +177,14 @@ namespace Content.Server.Chemistry.Components
                 }
 
                 // Touch every entity on the tile
-                foreach (var entity in lookup.GetEntitiesIntersecting(tile).ToArray())
+                foreach (var entity in ents)
                 {
                     chemistry.ReactionEntity(entity, ReactionMethod.Touch, reagent,
                         reagentQuantity.Quantity * solutionFraction, solution);
                 }
             }
 
-            foreach (var entity in lookup.GetEntitiesIntersecting(tile).ToArray())
+            foreach (var entity in ents)
             {
                 ReactWithEntity(entity, solutionFraction);
             }
