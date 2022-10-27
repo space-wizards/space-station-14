@@ -110,7 +110,7 @@ public sealed class CryoPodSystem: EntitySystem
 
             cryoPod.Accumulator -= cryoPod.BeakerTransferTime;
 
-            var container = _itemSlotsSystem.GetItem(cryoPod.Owner, cryoPod.SolutionContainerName);
+            var container = _itemSlotsSystem.GetItemOrNull(cryoPod.Owner, cryoPod.SolutionContainerName);
             var patient = cryoPod.BodyContainer.ContainedEntity;
             if (container != null
                 && container.Value.Valid
@@ -289,7 +289,7 @@ public sealed class CryoPodSystem: EntitySystem
 
     private void OnExamined(EntityUid uid, CryoPodComponent component, ExaminedEvent args)
     {
-        var container = _itemSlotsSystem.GetItem(component.Owner, component.SolutionContainerName);
+        var container = _itemSlotsSystem.GetItemOrNull(component.Owner, component.SolutionContainerName);
         if (args.IsInDetailsRange && container != null && _solutionContainerSystem.TryGetFitsInDispenser(container.Value, out var containerSolution))
         {
             args.PushMarkup(Loc.GetString("cryo-pod-examine", ("beaker", Name(container.Value))));
@@ -321,7 +321,7 @@ public sealed class CryoPodSystem: EntitySystem
         args.Handled = true;
     }
 
-    private void OnPowerChanged(EntityUid uid, CryoPodComponent component, PowerChangedEvent args)
+    private void OnPowerChanged(EntityUid uid, CryoPodComponent component, ref PowerChangedEvent args)
     {
         // Needed to avoid adding/removing components on a deleted entity
         if (Terminating(uid))

@@ -16,7 +16,7 @@ public abstract class SharedCryoPodComponent: Component, IDragDropOn
 
     public bool CanInsert(EntityUid entity)
     {
-        return IoCManager.Resolve<IEntityManager>().HasComponent<SharedBodyComponent>(entity);
+        return IoCManager.Resolve<IEntityManager>().HasComponent<BodyComponent>(entity);
     }
 
     bool IDragDropOn.CanDragDropOn(DragDropEvent eventArgs)
