@@ -172,7 +172,7 @@ namespace Content.Client.Audio
             var ambientQuery = GetEntityQuery<AmbientSoundComponent>();
             var xformQuery = GetEntityQuery<TransformComponent>();
 
-            foreach (var entity in _lookup.GetEntitiesInRange(coordinates, _maxAmbientRange + RangeBuffer, LookupFlags.Anchored | LookupFlags.Approximate))
+            foreach (var entity in _lookup.GetEntitiesInRange(coordinates, _maxAmbientRange + RangeBuffer))
             {
                 if (!ambientQuery.TryGetComponent(entity, out var ambientComp) ||
                     !ambientComp.Enabled ||
