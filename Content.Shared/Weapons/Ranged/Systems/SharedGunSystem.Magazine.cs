@@ -1,6 +1,4 @@
-using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Examine;
-using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
@@ -18,6 +16,7 @@ public abstract partial class SharedGunSystem
         SubscribeLocalEvent<MagazineAmmoProviderComponent, TakeAmmoEvent>(OnMagazineTakeAmmo);
         SubscribeLocalEvent<MagazineAmmoProviderComponent, GetVerbsEvent<Verb>>(OnMagazineVerb);
         SubscribeLocalEvent<MagazineAmmoProviderComponent, EntInsertedIntoContainerMessage>(OnMagazineSlotChange);
+        SubscribeLocalEvent<MagazineAmmoProviderComponent, EntRemovedFromContainerMessage>(OnMagazineSlotChange);
         SubscribeLocalEvent<MagazineAmmoProviderComponent, UseInHandEvent>(OnMagazineUse);
         SubscribeLocalEvent<MagazineAmmoProviderComponent, ExaminedEvent>(OnMagazineExamine);
     }
@@ -37,7 +36,7 @@ public abstract partial class SharedGunSystem
 
         if (magEnt == null) return;
 
-        RaiseLocalEvent(magEnt.Value, args, false);
+        RaiseLocalEvent(magEnt.Value, args);
         UpdateAmmoCount(uid);
         UpdateMagazineAppearance(component, magEnt.Value);
     }
@@ -50,13 +49,16 @@ public abstract partial class SharedGunSystem
 
         if (magEnt != null)
         {
-            RaiseLocalEvent(magEnt.Value, args, false);
+            RaiseLocalEvent(magEnt.Value, args);
             UpdateMagazineAppearance(component, magEnt.Value);
         }
     }
 
-    private void OnMagazineSlotChange(EntityUid uid, MagazineAmmoProviderComponent component, EntInsertedIntoContainerMessage args)
+    protected virtual void OnMagazineSlotChange(EntityUid uid, MagazineAmmoProviderComponent component, ContainerModifiedMessage args)
     {
+        if (MagazineSlot != args.Container.ID)
+            return;
+
         UpdateAmmoCount(uid);
         if (!TryComp<AppearanceComponent>(uid, out var appearance))
             return;

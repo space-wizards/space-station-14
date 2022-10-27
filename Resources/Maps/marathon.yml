@@ -466,7 +466,6 @@ entities:
     parent: 5350
     type: Transform
   - type: MapGrid
-  - type: EntityLookup
   - type: Broadphase
   - angularDamping: 0.05
     linearDamping: 0.05
@@ -61444,7 +61443,6 @@ entities:
   - type: Transform
   - index: 4
     type: Map
-  - type: EntityLookup
   - type: Broadphase
   - type: PhysicsMap
   - type: OccluderTree

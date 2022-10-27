@@ -1,0 +1,78 @@
+- type: entity
+  id: RandomFoodBakedSingle
+  name: random baked food spawner
+  suffix: Single Serving
+  parent: MarkerBase
+  placement:
+    mode: AlignTileAny
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - texture: Objects/Consumable/Food/Baked/pie.rsi/plain-slice.png 
+  - type: RandomSpawner
+    prototypes:
+      - FoodBreadPlainSlice
+      - FoodBreadMeatSlice
+      - FoodBreadBananaSlice
+      - FoodBreadCreamcheeseSlice
+      - FoodBreadMoldySlice
+      - FoodBreadGarlicSlice
+      - FoodBreadButteredToast
+      - FoodCakeBlueberrySlice
+      - FoodCakePlainSlice
+      - FoodCakeCarrotSlice
+      - FoodCakeCheeseSlice
+      - FoodCakeOrangeSlice
+      - FoodCakeLimeSlice
+      - FoodCakeLemonSlice
+      - FoodCakeChocolateSlice
+      - FoodCakeAppleSlice
+      - FoodCakeSlimeSlice
+      - FoodCakePumpkinSlice
+      - FoodCakeChristmasSlice
+      - FoodCakeVanillaSlice
+      - FoodCakeBirthdaySlice
+      - FoodBakedMuffin
+      - FoodBakedMuffinBerry
+      - FoodBakedMuffinCherry
+      - FoodBakedMuffinBluecherry
+      - FoodBakedBunHoney
+      - FoodBakedBunHotX
+      - FoodBakedBunMeat
+      - FoodBakedCookie
+      - FoodBakedCookieFortune
+      - FoodBakedCookieOatmeal
+      - FoodBakedCookieRaisin
+      - FoodBakedCookieSugar
+      - FoodBakedNugget
+      - FoodBakedPancake
+      - FoodBakedPancakeBb
+      - FoodBakedPancakeCc
+      - FoodBakedWaffle
+      - FoodBakedWaffleSoy
+      - FoodBakedWaffleSoylent
+      - FoodBakedWaffleRoffle
+      - FoodBakedPretzel
+      - FoodBakedCannoli
+      - FoodPieAppleSlice
+      - FoodPieBaklavaSlice
+      - FoodPieClafoutisSlice
+      - FoodPieMeatSlice
+      - FoodPieCherrySlice
+      - FoodPieFrostySlice
+      - FoodTartGrape
+      - FoodTartCoco
+    chance: 0.8
+    offset: 0.0
+    #rare
+    rarePrototypes:
+      - FoodBreadMeatSpiderSlice
+      - FoodBreadMimanaSlice
+      - FoodCakeBrainSlice
+      - FoodCakeClownSlice
+      - FoodCakeSpacemanSlice
+      - FoodTartGapple
+      - FoodBreadMeatXenoSlice
+      - FoodPieXenoSlice
+    rareChance: 0.05
