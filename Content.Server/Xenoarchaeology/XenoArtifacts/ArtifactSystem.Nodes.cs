@@ -53,7 +53,7 @@ public sealed partial class ArtifactSystem
         //Generate the connected nodes
         var maxEdges = Math.Max(1, targetNodeAmount - tree.AllNodes.Count - uninitializedNodes.Count - 1);
         maxEdges = Math.Min(maxEdges, MaxEdgesPerNode);
-        var minEdges = 0;
+        var minEdges = Math.Clamp(targetNodeAmount - tree.AllNodes.Count - uninitializedNodes.Count - 1, 0, 1);
 
         var edgeAmount = _random.Next(minEdges, maxEdges);
 

@@ -52,6 +52,7 @@
 - type: entity
   parent: BaseXenoArtifact
   id: SimpleXenoArtifact
+  suffix: Simple
   components:
   - type: Artifact
     nodesMin: 1
@@ -60,6 +61,7 @@
 - type: entity
   parent: BaseXenoArtifact
   id: MediumXenoArtifact
+  suffix: Medium
   components:
   - type: Artifact
     nodesMin: 5
@@ -68,6 +70,7 @@
 - type: entity
   parent: BaseXenoArtifact
   id: ComplexXenoArtifact
+  suffix: Complex
   components:
   - type: Artifact
     nodesMin: 7

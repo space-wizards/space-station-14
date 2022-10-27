@@ -2,7 +2,7 @@
 
 namespace Content.Shared.Xenoarchaeology.Equipment;
 
-[RegisterComponent, Serializable, NetSerializable]
+[RegisterComponent]
 public sealed class SharedArtifactAnalyzerComponent : Component
 {
 
