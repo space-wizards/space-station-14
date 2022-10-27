@@ -45,8 +45,6 @@ namespace Content.Server.WoodBurner
 
             SubscribeLocalEvent<WoodBurnerComponent, ComponentInit>(OnInit);
             //SubscribeLocalEvent<ActiveWoodBurnerComponent, ComponentShutdown>(OnShutdown);
-
-
             //SubscribeLocalEvent<SharedWoodBurnerComponent, AnchorStateChangedEvent>(OnAnchorChanged);
             //SubscribeLocalEvent<WoodBurnerComponent, MaterialEntityInsertedEvent>(OnWoodInserted);
             SubscribeLocalEvent<WoodBurnerComponent, InteractUsingEvent>(OnInteractUsing);
@@ -140,9 +138,10 @@ namespace Content.Server.WoodBurner
 
         private void UpdateAppearance(EntityUid uid, WoodBurnerComponent component)
         {
-            //_appearance.SetData(uid, WoodBurnerMachineVisuals.Enabled, false);
-
-            _appearance.SetData(uid, WoodBurnerMachineVisuals.Enabled, component.Enabled);
+            if (!TryComp<ApcPowerReceiverComponent>(component.Owner, out var power))
+                return;
+            _appearance.SetData(component.Owner, WoodBurnerVisuals.Powered, power!.Powered);
+            _appearance.SetData(component.Owner, WoodBurnerVisuals.Processing, (power!.Powered ? component.Enabled : false));
         }
 
         private void TurnOnMachine(WoodBurnerComponent component)
