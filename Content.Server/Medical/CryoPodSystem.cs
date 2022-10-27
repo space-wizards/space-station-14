@@ -335,7 +335,7 @@ public sealed class CryoPodSystem: EntitySystem
         }
         else
         {
-            RemCompDeferred<ActiveCryoPodComponent>(uid);
+            RemComp<ActiveCryoPodComponent>(uid);
             _uiSystem.TryCloseAll(uid, SharedHealthAnalyzerComponent.HealthAnalyzerUiKey.Key);
         }
         UpdateAppearance(uid, component);
