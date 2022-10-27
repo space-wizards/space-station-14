@@ -18,7 +18,7 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.45,-0.45,0.45,0.45"
-      mass: 25
+      density: 190
       mask:
       - FullTileMask
       layer:
@@ -70,6 +70,9 @@
 #  - type: ExtensionCableReceiver
   - type: PowerSupplier
     supplyRate: 0
+  - type: ContainerContainer
+    containers:
+      AMEController-fuelJarContainer: !type:ContainerSlot {}
 
 - type: entity
   noSpawn: true
@@ -99,7 +102,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-      mass: 25
+      density: 190
       mask:
       - FullTileMask
       layer:

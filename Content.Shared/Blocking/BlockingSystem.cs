@@ -23,15 +23,16 @@ namespace Content.Shared.Blocking;
 
 public sealed class BlockingSystem : EntitySystem
 {
-    [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
+    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
     public override void Initialize()
     {
@@ -231,7 +232,7 @@ public sealed class BlockingSystem : EntitySystem
 
             _actionsSystem.SetToggled(component.BlockingToggleAction, false);
             _fixtureSystem.DestroyFixture(physicsComponent, BlockingComponent.BlockFixtureID);
-            physicsComponent.BodyType = blockingUserComponent.OriginalBodyType;
+            _physics.SetBodyType(physicsComponent, blockingUserComponent.OriginalBodyType);
             _popupSystem.PopupEntity(msgUser, user, Filter.Entities(user));
             _popupSystem.PopupEntity(msgOther, user, Filter.Pvs(user).RemoveWhereAttachedEntity(e => e == user));
         }

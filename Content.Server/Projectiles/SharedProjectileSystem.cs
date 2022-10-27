@@ -1,19 +1,17 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Projectiles.Components;
+using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Camera;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Projectiles;
-using Content.Shared.Vehicle.Components;
 using Content.Shared.Weapons.Melee;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
 using Robust.Shared.Physics.Events;
-using GunSystem = Content.Server.Weapon.Ranged.Systems.GunSystem;
 
 namespace Content.Server.Projectiles
 {
@@ -45,14 +43,14 @@ namespace Content.Server.Projectiles
 
             var otherEntity = args.OtherFixture.Body.Owner;
             var direction = args.OurFixture.Body.LinearVelocity.Normalized;
-            var modifiedDamage = _damageableSystem.TryChangeDamage(otherEntity, component.Damage, component.IgnoreResistances);
+            var modifiedDamage = _damageableSystem.TryChangeDamage(otherEntity, component.Damage, component.IgnoreResistances, origin: component.Shooter);
             component.DamagedEntity = true;
 
             if (modifiedDamage is not null && EntityManager.EntityExists(component.Shooter))
             {
                 if (modifiedDamage.Total > FixedPoint2.Zero)
                 {
-                    RaiseNetworkEvent(new DamageEffectEvent(otherEntity), Filter.Pvs(otherEntity, entityManager: EntityManager));
+                    RaiseNetworkEvent(new DamageEffectEvent(Color.Red, new List<EntityUid> {otherEntity}), Filter.Pvs(otherEntity, entityManager: EntityManager));
                 }
 
                 _adminLogger.Add(LogType.BulletHit,

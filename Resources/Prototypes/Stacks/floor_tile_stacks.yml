@@ -247,3 +247,18 @@
   id: FloorTileSnow
   name: snow floor tile
   spawn: FloorTileItemSnow
+
+- type: stack
+  id: FloorTileWoodPattern
+  name: wood pattern floor
+  spawn: FloorTileItemWoodPattern
+
+- type: stack
+  id: FloorTileSteelMaint
+  name: steel maint floor
+  spawn: FloorTileItemSteelMaint
+
+- type: stack
+  id: FloorTileGratingMaint
+  name: grating maint floor
+  spawn: FloorTileItemGratingMaint

@@ -1,0 +1,82 @@
+﻿<DefaultWindow
+    xmlns="https://spacestation14.io"
+    xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    Title="{Loc 'lathe-menu-title'}"
+    MinSize="300 450"
+    SetSize="300 450">
+    <BoxContainer
+        Orientation="Vertical"
+        VerticalExpand="True"
+        SeparationOverride="5">
+        <BoxContainer
+            Orientation="Horizontal"
+            Align="End"
+            HorizontalExpand="True"
+            VerticalExpand="True"
+            SizeFlagsStretchRatio="1">
+            <Button
+                Name="QueueButton"
+                Text="{Loc 'lathe-menu-queue'}"
+                TextAlign="Center"
+                Mode="Press"
+                SizeFlagsStretchRatio="1">
+            </Button>
+            <Button
+                Name="ServerListButton"
+                Text="{Loc 'lathe-menu-server-list'}"
+                TextAlign="Center"
+                Mode="Press"
+                SizeFlagsStretchRatio="1">
+            </Button>
+            <Button
+                Name="ServerSyncButton"
+                Text="{Loc 'lathe-menu-sync'}"
+                TextAlign="Center"
+                Mode="Press"
+                SizeFlagsStretchRatio="1">
+            </Button>
+        </BoxContainer>
+        <BoxContainer
+            Orientation="Horizontal"
+            HorizontalExpand="True"
+            VerticalExpand="True"
+            SizeFlagsStretchRatio="1">
+            <LineEdit
+                Name="SearchBar"
+                PlaceHolder="{Loc 'lathe-menu-search-designs'}"
+                HorizontalExpand="True"
+                SizeFlagsStretchRatio="1">
+            </LineEdit>
+            <Button
+                Name="FilterButton"
+                Text="{Loc 'lathe-menu-search-filter'}"
+                TextAlign="Center"
+                SizeFlagsStretchRatio="1"
+                Disabled="True">
+            </Button>
+        </BoxContainer>
+        <ScrollContainer MinHeight="225">
+            <BoxContainer
+                Name="RecipeList"
+                Orientation="Vertical"
+                SizeFlagsStretchRatio="8"
+                HorizontalExpand="True"
+                VerticalExpand="True">
+            </BoxContainer>
+        </ScrollContainer>
+        <LineEdit
+            Name="AmountLineEdit"
+            PlaceHolder="{Loc 'lathe-menu-search-amount'}"
+            Text="1"
+            HorizontalExpand="True">
+        </LineEdit>
+        <ItemList
+            Name="Materials"
+            VerticalExpand="True"
+            SizeFlagsStretchRatio="3">
+        </ItemList>
+    </BoxContainer>
+</DefaultWindow>
+
+

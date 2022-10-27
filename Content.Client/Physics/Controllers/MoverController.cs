@@ -1,6 +1,7 @@
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Pulling.Components;
+using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
@@ -12,6 +13,37 @@ namespace Content.Client.Physics.Controllers
     {
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            SubscribeLocalEvent<RelayInputMoverComponent, PlayerAttachedEvent>(OnRelayPlayerAttached);
+            SubscribeLocalEvent<RelayInputMoverComponent, PlayerDetachedEvent>(OnRelayPlayerDetached);
+            SubscribeLocalEvent<InputMoverComponent, PlayerAttachedEvent>(OnPlayerAttached);
+            SubscribeLocalEvent<InputMoverComponent, PlayerDetachedEvent>(OnPlayerDetached);
+        }
+
+        private void OnRelayPlayerAttached(EntityUid uid, RelayInputMoverComponent component, PlayerAttachedEvent args)
+        {
+            if (TryComp<InputMoverComponent>(component.RelayEntity, out var inputMover))
+                SetMoveInput(inputMover, MoveButtons.None);
+        }
+
+        private void OnRelayPlayerDetached(EntityUid uid, RelayInputMoverComponent component, PlayerDetachedEvent args)
+        {
+            if (TryComp<InputMoverComponent>(component.RelayEntity, out var inputMover))
+                SetMoveInput(inputMover, MoveButtons.None);
+        }
+
+        private void OnPlayerAttached(EntityUid uid, InputMoverComponent component, PlayerAttachedEvent args)
+        {
+            SetMoveInput(component, MoveButtons.None);
+        }
+
+        private void OnPlayerDetached(EntityUid uid, InputMoverComponent component, PlayerDetachedEvent args)
+        {
+            SetMoveInput(component, MoveButtons.None);
+        }
 
         public override void UpdateBeforeSolve(bool prediction, float frameTime)
         {

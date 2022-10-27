@@ -46,6 +46,7 @@
         - ReagentId: Water
           Quantity: 250 # half-full at roundstart to leave room for puddles
   - type: Spillable
+    spillDelay: 3.0
   - type: DrainableSolution
     solution: bucket
   - type: RefillableSolution
@@ -64,7 +65,7 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.25,-0.40,0.25,0.25"
-      mass: 20
+      density: 60
       mask:
       - MobMask
       layer:
@@ -135,12 +136,13 @@
       - shape:
           !type:PhysShapeCircle
           radius: 0.3
-        mass: 100
+        density: 350
         layer:
         - MobLayer
         mask:
         - MobMask
     - type: Spillable
+      spillDelay: 3.0
     - type: SolutionContainerManager
       solutions:
         bucket:

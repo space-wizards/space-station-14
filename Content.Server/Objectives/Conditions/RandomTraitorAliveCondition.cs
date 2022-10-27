@@ -1,9 +1,6 @@
-using Content.Server.Mind.Components;
 using Content.Server.Objectives.Interfaces;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
-using Content.Server.Traitor;
-using Content.Server.Mind;
 using Content.Server.GameTicking.Rules;
 
 namespace Content.Server.Objectives.Conditions
@@ -17,8 +14,28 @@ namespace Content.Server.Objectives.Conditions
         {
             var entityMgr = IoCManager.Resolve<IEntityManager>();
             var traitors = EntitySystem.Get<TraitorRuleSystem>().Traitors;
+            List<Traitor.TraitorRole> removeList = new();
 
-            if (traitors.Count == 0) return new RandomTraitorAliveCondition { _target = mind }; //You were made a traitor by admins, and are the first/only.
+            foreach (var traitor in traitors)
+            {
+                if (traitor.Mind == null)
+                {
+                    removeList.Add(traitor);
+                    continue;
+                }
+                if (traitor.Mind == mind) // we have different objectives for defending ourselves.
+                {
+                    removeList.Add(traitor);
+                    continue;
+                }
+            }
+
+            foreach (var traitor in removeList)
+            {
+                traitors.Remove(traitor);
+            }
+
+            if (traitors.Count == 0) return new EscapeShuttleCondition{}; //You were made a traitor by admins, and are the first/only.
             return new RandomTraitorAliveCondition { _target = IoCManager.Resolve<IRobustRandom>().Pick(traitors).Mind };
         }
 

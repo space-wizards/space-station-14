@@ -119,7 +119,7 @@ namespace Content.Server.VendingMachines
             AuthorizedVend(uid, entity, args.Type, args.ID, component);
         }
 
-        private void OnPowerChanged(EntityUid uid, VendingMachineComponent component, PowerChangedEvent args)
+        private void OnPowerChanged(EntityUid uid, VendingMachineComponent component, ref PowerChangedEvent args)
         {
             TryUpdateVisualState(uid, component);
         }
