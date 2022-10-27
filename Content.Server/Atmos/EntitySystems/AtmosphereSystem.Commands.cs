@@ -122,11 +122,18 @@ public sealed partial class AtmosphereSystem
         if (shell.Player is { AttachedEntity: { } playerEnt })
             playerMap = Transform(playerEnt).MapID;
 
-        var options = _mapManager.GetAllGrids()
-            .OrderByDescending(e => playerMap != null && e.ParentMapId == playerMap)
-            .ThenBy(e => (int) e.ParentMapId)
-            .ThenBy(e => (int) e.GridEntityId)
-            .Select(e => new CompletionOption(e.GridEntityId.ToString(), $"{MetaData(e.GridEntityId).EntityName} - Map {e.ParentMapId}"));
+        var options = new List<CompletionOption>();
+
+        if (playerMap == null)
+            return CompletionResult.FromOptions(options);
+
+        foreach (var grid in _mapManager.GetAllMapGrids(playerMap.Value).OrderBy(o => o.GridEntityId))
+        {
+            if (!TryComp<TransformComponent>(grid.GridEntityId, out var gridXform))
+                continue;
+
+            options.Add(new CompletionOption(grid.GridEntityId.ToString(), $"{MetaData(grid.GridEntityId).EntityName} - Map {gridXform.MapID}"));
+        }
 
         return CompletionResult.FromOptions(options);
     }

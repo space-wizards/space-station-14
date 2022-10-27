@@ -295,7 +295,7 @@ public sealed class StationSystem : EntitySystem
             bounds.Add(bound);
             if (!mapIds.Contains(mapId))
             {
-                mapIds.Add(grid.ParentMapId);
+                mapIds.Add(xform.MapID);
             }
         }
 
