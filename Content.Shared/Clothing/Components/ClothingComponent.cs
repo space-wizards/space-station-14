@@ -46,7 +46,7 @@ public sealed class ClothingComponent : Component
 
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("femaleMask")]
-    public FemaleClothingMask? FemaleMask;
+    public FemaleClothingMask FemaleMask = FemaleClothingMask.UniformFull;
 
     public string? InSlot;
 }
