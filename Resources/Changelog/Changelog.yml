@@ -1,12 +1,6 @@
 Entries:
 - author: mirrorcult
   changes:
-  - {message: Transylvanian vampire cloak is now available rarely in the maint fluff
-      spawner., type: Add}
-  id: 2031
-  time: '2022-07-27T08:15:47.0000000+00:00'
-- author: mirrorcult
-  changes:
   - {message: 'Freon has been added. It is a refrigerant gas which reacts with nitrogen
       to rapidly cool down areas, increasing in effectiveness with temperature. It''s
       also a hallucinogenic, and you may feel woozy (and just a little brain damaged)
@@ -2954,3 +2948,8 @@ Entries:
   - {message: Ghostly bodies have been limited to one per person., type: Remove}
   id: 2530
   time: '2022-10-27T14:09:36.0000000+00:00'
+- author: moony
+  changes:
+  - {message: Removed split-station due to map rotation limits., type: Remove}
+  id: 2531
+  time: '2022-10-27T14:31:20.0000000+00:00'
