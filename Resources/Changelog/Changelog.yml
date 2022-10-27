@@ -1,20 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: 'Boxers and boxing gloves have been ported from Nyanotrasen MRP! The
-      role is only selectable on Lighthouse, but all boxing gloves work.', type: Add}
-  - {message: Map-specific jobs no longer clog up the preference menu., type: Fix}
-  id: 2029
-  time: '2022-07-27T01:34:20.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Added sleeping., type: Add}
-  - {message: Added nitrous oxide., type: Add}
-  - {message: Slimes exhale nitrous oxide., type: Tweak}
-  - {message: Disease interaction infection checks now use the same robust method
-      that forensics do. No more edge cases where you don't check anything., type: Fix}
-  id: 2030
-  time: '2022-07-27T04:46:24.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Transylvanian vampire cloak is now available rarely in the maint fluff
@@ -2960,3 +2944,13 @@ Entries:
     type: Tweak}
   id: 2528
   time: '2022-10-27T11:54:12.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix entity storage closing and some other erroneous flags., type: Fix}
+  id: 2529
+  time: '2022-10-27T14:09:16.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Ghostly bodies have been limited to one per person., type: Remove}
+  id: 2530
+  time: '2022-10-27T14:09:36.0000000+00:00'
