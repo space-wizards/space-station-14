@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
+using JetBrains.Annotations;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -19,6 +20,21 @@ public sealed partial class ArtifactSystem : EntitySystem
     private void OnInit(EntityUid uid, ArtifactComponent component, MapInitEvent args)
     {
         RandomizeArtifact(component);
+    }
+
+    /// <summary>
+    /// Randomize a given artifact.
+    /// </summary>
+    [PublicAPI]
+    public void RandomizeArtifact(ArtifactComponent component)
+    {
+        var nodeAmount = _random.Next(component.NodesMin, component.NodesMax);
+        component.RandomSeed = _random.Next();
+
+        component.NodeTree = new ArtifactTree();
+
+        GenerateArtifactNodeTree(ref component.NodeTree, nodeAmount);
+        EnterNode(component.Owner, ref component.NodeTree.StartNode, component, false);
     }
 
     public bool TryActivateArtifact(EntityUid uid, EntityUid? user = null, ArtifactComponent? component = null)

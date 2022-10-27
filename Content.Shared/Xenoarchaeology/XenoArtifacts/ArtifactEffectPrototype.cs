@@ -25,4 +25,7 @@ public sealed class ArtifactEffectPrototype : IPrototype
     /// </summary>
     [DataField("permanentComponents")]
     public EntityPrototype.ComponentRegistry PermanentComponents = new();
+
+    [DataField("targetDepth")]
+    public int TargetDepth = 0;
 }

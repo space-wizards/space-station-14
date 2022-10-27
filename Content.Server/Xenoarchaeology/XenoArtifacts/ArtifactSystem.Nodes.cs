@@ -13,21 +13,7 @@ public sealed partial class ArtifactSystem
     [Dependency] private readonly IComponentFactory _componentFactory = default!;
     [Dependency] private readonly ISerializationManager _serialization = default!;
 
-    public const int MaxEdgesPerNode = 3;
-
-    /// <summary>
-    /// Randomize a given artifact.
-    /// </summary>
-    public void RandomizeArtifact(ArtifactComponent component)
-    {
-        var nodeAmount = _random.Next(component.NodesMin, component.NodesMax);
-        component.RandomSeed = _random.Next();
-
-        component.NodeTree = new ArtifactTree();
-
-        GenerateArtifactNodeTree(ref component.NodeTree, nodeAmount);
-        EnterNode(component.Owner, ref component.NodeTree.StartNode, component, false);
-    }
+    private const int MaxEdgesPerNode = 3;
 
     /// <summary>
     /// Generate an Artifact tree with fully developed nodes.
@@ -83,15 +69,67 @@ public sealed partial class ArtifactSystem
             uninitializedNodes.Add(neighbor);
         }
 
-        //create trigger here
-        var triggerProto = _random.Pick(_prototype.EnumeratePrototypes<ArtifactTriggerPrototype>().ToList());
-        node.Trigger = triggerProto;
-
-        //TODO: make some kind of weighted system based on depth.
-        var effectProto = _random.Pick(_prototype.EnumeratePrototypes<ArtifactEffectPrototype>().ToList());
-        node.Effect = effectProto;
+        node.Trigger = GetRandomTrigger(ref node);
+        node.Effect = GetRandomEffect(ref node);
 
         tree.AllNodes.Add(node);
+    }
+
+    private ArtifactTriggerPrototype GetRandomTrigger(ref ArtifactNode node)
+    {
+        var allTriggers = _prototype.EnumeratePrototypes<ArtifactTriggerPrototype>().ToList();
+        var validDepth = allTriggers.Select(x => x.TargetDepth).Distinct().ToList();
+
+        var weights = new Dictionary<int, float>();
+        foreach (var d in validDepth) //determines the weights for each trigger based on distance from target depth.
+        {
+            //TODO: is this equation sus? idk. -emo
+            // 0.5 / (|depth - nodeDepth| + 1)^2
+            var w = 0.5f / MathF.Pow(Math.Abs(d - node.Depth) + 1, 2);
+            weights.Add(d, w);
+        }
+        var selectedRandomTargetDepth = GetRandomTargetDepth(weights);
+        var targetTriggers = allTriggers.Where(x =>
+            x.TargetDepth == selectedRandomTargetDepth).ToList();
+        return _random.Pick(targetTriggers);
+    }
+
+    private ArtifactEffectPrototype GetRandomEffect(ref ArtifactNode node)
+    {
+        var allTriggers = _prototype.EnumeratePrototypes<ArtifactEffectPrototype>().ToList();
+        var validDepth = allTriggers.Select(x => x.TargetDepth).Distinct().ToList();
+
+        var weights = new Dictionary<int, float>();
+        foreach (var d in validDepth) //determines the weights for each trigger based on distance from target depth.
+        {
+            // 0.5 / (|depth - nodeDepth| + 1)^2
+            var w = 0.5f / MathF.Pow(Math.Abs(d - node.Depth) + 1, 2);
+            weights.Add(d, w);
+        }
+        var selectedRandomTargetDepth = GetRandomTargetDepth(weights);
+        var targetTriggers = allTriggers.Where(x =>
+            x.TargetDepth == selectedRandomTargetDepth).ToList();
+        return _random.Pick(targetTriggers);
+    }
+
+    private int GetRandomTargetDepth(Dictionary<int, float> weights)
+    {
+        var sum = weights.Values.Sum();
+        var accumulated = 0f;
+
+        var rand = _random.NextFloat() * sum;
+
+        foreach (var (key, weight) in weights)
+        {
+            accumulated += weight;
+
+            if (accumulated >= rand)
+            {
+                return key;
+            }
+        }
+
+        return _random.Pick(weights.Keys); //shouldn't happen
     }
 
     /// <summary>

@@ -2,10 +2,14 @@
 
 namespace Content.Shared.Xenoarchaeology.Equipment;
 
-/// <summary>
-/// This is used for...
-/// </summary>
-public abstract class SharedArtifactAnalyzerComponent : Component
+[RegisterComponent, Serializable, NetSerializable]
+public sealed class SharedArtifactAnalyzerComponent : Component
 {
 
+}
+
+[Serializable, NetSerializable]
+public enum ArtifactAnaylzerUiKey : byte
+{
+    Key
 }
