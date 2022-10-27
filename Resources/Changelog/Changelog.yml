@@ -1,14 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Zombies now move slower than normal people., type: Tweak}
-  - {message: Zombies now do a bit of structure damage., type: Tweak}
-  - {message: Zombies now do further decreased damage to other zombies., type: Tweak}
-  - {message: Zombies that were cuffed before turning now behave properly after being
-      uncuffed., type: Fix}
-  - {message: Zombies no longer take damage over time from rotting., type: Fix}
-  id: 2028
-  time: '2022-07-27T00:35:35.0000000+00:00'
 - author: Rane
   changes:
   - {message: 'Boxers and boxing gloves have been ported from Nyanotrasen MRP! The
@@ -2964,3 +2954,9 @@ Entries:
       to entities., type: Fix}
   id: 2527
   time: '2022-10-27T02:35:44.0000000+00:00'
+- author: checkraze
+  changes:
+  - {message: Nanotrasen has updated their Dart ERT shuttle for faster response times!,
+    type: Tweak}
+  id: 2528
+  time: '2022-10-27T11:54:12.0000000+00:00'
