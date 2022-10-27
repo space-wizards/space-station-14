@@ -75,22 +75,19 @@ public sealed partial class ArtifactSystem
         tree.AllNodes.Add(node);
     }
 
+    //yeah these two functions are near duplicates but i don't
+    //want to implement an interface or abstract parent
+
     private ArtifactTriggerPrototype GetRandomTrigger(ref ArtifactNode node)
     {
         var allTriggers = _prototype.EnumeratePrototypes<ArtifactTriggerPrototype>().ToList();
         var validDepth = allTriggers.Select(x => x.TargetDepth).Distinct().ToList();
 
-        var weights = new Dictionary<int, float>();
-        foreach (var d in validDepth) //determines the weights for each trigger based on distance from target depth.
-        {
-            //TODO: is this equation sus? idk. -emo
-            // 0.5 / (|depth - nodeDepth| + 1)^2
-            var w = 0.5f / MathF.Pow(Math.Abs(d - node.Depth) + 1, 2);
-            weights.Add(d, w);
-        }
+        var weights = GetDepthWeights(validDepth, node.Depth);
         var selectedRandomTargetDepth = GetRandomTargetDepth(weights);
         var targetTriggers = allTriggers.Where(x =>
             x.TargetDepth == selectedRandomTargetDepth).ToList();
+
         return _random.Pick(targetTriggers);
     }
 
@@ -99,19 +96,35 @@ public sealed partial class ArtifactSystem
         var allTriggers = _prototype.EnumeratePrototypes<ArtifactEffectPrototype>().ToList();
         var validDepth = allTriggers.Select(x => x.TargetDepth).Distinct().ToList();
 
-        var weights = new Dictionary<int, float>();
-        foreach (var d in validDepth) //determines the weights for each trigger based on distance from target depth.
-        {
-            // 0.5 / (|depth - nodeDepth| + 1)^2
-            var w = 0.5f / MathF.Pow(Math.Abs(d - node.Depth) + 1, 2);
-            weights.Add(d, w);
-        }
+        var weights = GetDepthWeights(validDepth, node.Depth);
         var selectedRandomTargetDepth = GetRandomTargetDepth(weights);
         var targetTriggers = allTriggers.Where(x =>
             x.TargetDepth == selectedRandomTargetDepth).ToList();
+
         return _random.Pick(targetTriggers);
     }
 
+    /// <remarks>
+    /// The goal is that the depth that is closest to targetDepth has the highest chance of appearing.
+    /// The issue is that we also want some variance, so levels that are +/- 1 should also have a
+    /// decent shot of appearing. This function should probably get some tweaking at some point.
+    /// </remarks>
+    private Dictionary<int, float> GetDepthWeights(IEnumerable<int> depths, int targetDepth)
+    {
+        var weights = new Dictionary<int, float>();
+        foreach (var d in depths)
+        {
+            //TODO: is this equation sus? idk. -emo
+            // 0.2 / (|depth - nodeDepth| + 1)^2
+            var w = 0.2f / MathF.Pow(Math.Abs(d - targetDepth) + 1, 2);
+            weights.Add(d, w);
+        }
+        return weights;
+    }
+
+    /// <summary>
+    /// Uses a weighted random system to get a random depth.
+    /// </summary>
     private int GetRandomTargetDepth(Dictionary<int, float> weights)
     {
         var sum = weights.Values.Sum();

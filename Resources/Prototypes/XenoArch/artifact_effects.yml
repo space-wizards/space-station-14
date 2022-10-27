@@ -1,5 +1,6 @@
 - type: artifactEffect
   id: EffectBadFeeling
+  targetDepth: 1
   components:
   - type: TelepathicArtifact
     messages:
@@ -28,6 +29,7 @@
 
 - type: artifactEffect
   id: EffectGoodFeeling
+  targetDepth: 0
   components:
   - type: TelepathicArtifact
     messages:
@@ -54,16 +56,8 @@
       - goodfeeling-artifact-drastic-6
 
 - type: artifactEffect
-  id: EffectAngryCarpSpawn
-  components:
-  - type: SpawnArtifact
-    maxSpawns: 5
-    possiblePrototypes:
-    - MobCarpHolo
-    - MobCarpMagic
-
-- type: artifactEffect
   id: EffectJunkSpawn
+  targetDepth: 0
   components:
   - type: SpawnArtifact
     maxSpawns: 10
@@ -75,6 +69,7 @@
 
 - type: artifactEffect #bornana
   id: EffectBananaSpawn
+  targetDepth: 0
   components:
   - type: SpawnArtifact
     maxSpawns: 20
@@ -83,21 +78,35 @@
 
 - type: artifactEffect
   id: EffectCold
+  targetDepth: 1
   components:
   - type: TemperatureArtifact
     targetTemp: 150
 
 - type: artifactEffect
+  id: EffectAngryCarpSpawn
+  targetDepth: 2
+  components:
+  - type: SpawnArtifact
+    maxSpawns: 5
+    possiblePrototypes:
+    - MobCarpHolo
+    - MobCarpMagic
+
+- type: artifactEffect
   id: EffectRadiate
+  targetDepth: 2
   components:
   - type: RadiateArtifact
 
 - type: artifactEffect
   id: EffectGas
+  targetDepth: 2
   components:
   - type: GasArtifact
 
 - type: artifactEffect
   id: EffectDisease
+  targetDepth: 2
   components:
   - type: DiseaseArtifact

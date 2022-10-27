@@ -1,24 +1,29 @@
 - type: artifactTrigger
   id: TriggerElectricity
+  targetDepth: 0
   components:
   - type: ArtifactElectricityTrigger
 
 - type: artifactTrigger
-  id: TriggerGas
-  components:
-  - type: ArtifactGasTrigger
-
-- type: artifactTrigger
   id: TriggerHeat
+  targetDepth: 0
   components:
   - type: ArtifactHeatTrigger
 
 - type: artifactTrigger
   id: TriggerInteraction
+  targetDepth: 0
   components:
   - type: ArtifactInteractionTrigger
 
 - type: artifactTrigger
   id: TriggerTimer
+  targetDepth: 1
   components:
   - type: ArtifactTimerTrigger
+
+- type: artifactTrigger
+  id: TriggerGas
+  targetDepth: 2
+  components:
+  - type: ArtifactGasTrigger

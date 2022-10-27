@@ -56,3 +56,19 @@
   - type: Artifact
     nodesMin: 1
     nodesMax: 1
+
+- type: entity
+  parent: BaseXenoArtifact
+  id: MediumXenoArtifact
+  components:
+  - type: Artifact
+    nodesMin: 5
+    nodesMax: 8
+
+- type: entity
+  parent: BaseXenoArtifact
+  id: ComplexXenoArtifact
+  components:
+  - type: Artifact
+    nodesMin: 7
+    nodesMax: 12
