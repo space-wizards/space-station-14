@@ -28,14 +28,14 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
         SubscribeLocalEvent<CartridgeLoaderComponent, CartridgeUiMessage>(OnUiMessage);
     }
 
-    private void OnMapInit(EntityUid uid, CartridgeLoaderComponent component, MapInitEvent args)
-    {
-        foreach (var prototype in component.PreinstalledPrograms)
-        {
-            InstallProgram(uid, prototype);
-        }
-    }
-
+    /// <summary>
+    /// Updates the cartridge loaders ui state.
+    /// </summary>
+    /// <remarks>
+    /// Because the cartridge loader integrates with the ui of the entity using it, the entities ui state needs to inherit from <see cref="CartridgeLoaderUiState"/>
+    /// and use this method to update its state so the cartridge loaders state can be added to it.
+    /// </remarks>
+    /// <seealso cref="PDA.PDASystem.UpdatePDAUserInterface"/>
     public void UpdateUiState(EntityUid loaderUid, CartridgeLoaderUiState state, IPlayerSession? session = default!, CartridgeLoaderComponent? loader  = default!)
     {
         if (!Resolve(loaderUid, ref loader))
@@ -49,6 +49,17 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
             _userInterfaceSystem.SetUiState(ui, state, session);
     }
 
+    /// <summary>
+    /// Updates the programs ui state
+    /// </summary>
+    /// <param name="loaderUid">The cartridge loaders entity uid</param>
+    /// <param name="state">The programs ui state. Programs should use their own ui state class inheriting from <see cref="BoundUserInterfaceState"/></param>
+    /// <param name="session">The players session</param>
+    /// <param name="loader">The cartridge loader component</param>
+    /// <remarks>
+    /// This method is called "UpdateCartridgeUiState" but cartridges and a programs are the same. A cartridge is just a program as a visible item.
+    /// </remarks>
+    /// <seealso cref="Cartridges.NotekeeperCartridgeSystem.UpdateUiState"/>
     public void UpdateCartridgeUiState(EntityUid loaderUid, BoundUserInterfaceState state, IPlayerSession? session = default!, CartridgeLoaderComponent? loader = default!)
     {
         if (!Resolve(loaderUid, ref loader))
@@ -59,12 +70,18 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
             _userInterfaceSystem.SetUiState(ui, state, session);
     }
 
+    /// <summary>
+    /// Returns a list of all installed programs and the inserted cartridge if it isn't already installed
+    /// </summary>
+    /// <param name="uid">The cartridge loaders uid</param>
+    /// <param name="loader">The cartridge loader component</param>
+    /// <returns>A list of all the available program entity ids</returns>
     public List<EntityUid> GetAvailablePrograms(EntityUid uid, CartridgeLoaderComponent? loader  = default!)
     {
         if (!Resolve(uid, ref loader))
             return new List<EntityUid>();
 
-        //Don't count a cartridge that has been installed as available to avoid confusion
+        //Don't count a cartridge that has already been installed as available to avoid confusion
         if (loader.CartridgeSlot.HasItem && IsInstalled(Prototype(loader.CartridgeSlot.Item!.Value)?.ID, loader))
             return loader.InstalledPrograms;
 
@@ -77,6 +94,13 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
         return available;
     }
 
+    /// <summary>
+    /// Installs a cartridge by spawning an invisible version of the cartridges prototype into the cartridge loaders program container program container
+    /// </summary>
+    /// <param name="loaderUid">The cartridge loader uid</param>
+    /// <param name="cartridgeUid">The uid of the cartridge to be installed</param>
+    /// <param name="loader">The cartridge loader component</param>
+    /// <returns>Whether installing the cartridge was successful</returns>
     public bool InstallCartridge(EntityUid loaderUid, EntityUid cartridgeUid, CartridgeLoaderComponent? loader = default!)
     {
         if (!Resolve(loaderUid, ref loader) || loader.InstalledPrograms.Count >= loader.DiskSpace)
@@ -88,6 +112,13 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
         return prototypeId != null && InstallProgram(loaderUid, prototypeId, loader);
     }
 
+    /// <summary>
+    /// Installs a program by its prototype
+    /// </summary>
+    /// <param name="loaderUid">The cartridge loader uid</param>
+    /// <param name="prototype">The prototype name</param>
+    /// <param name="loader">The cartridge loader component</param>
+    /// <returns>Whether installing the cartridge was successful</returns>
     public bool InstallProgram(EntityUid loaderUid, string prototype, CartridgeLoaderComponent? loader  = default!)
     {
         if (!Resolve(loaderUid, ref loader) || loader.InstalledPrograms.Count >= loader.DiskSpace)
@@ -111,50 +142,69 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
         return true;
     }
 
-    public bool UninstallProgram(EntityUid loaderUid, EntityUid cartridgeUid, CartridgeLoaderComponent? loader  = default!)
+    /// <summary>
+    /// Uninstalls a program using its uid
+    /// </summary>
+    /// <param name="loaderUid">The cartridge loader uid</param>
+    /// <param name="programUid">The uid of the program to be uninstalled</param>
+    /// <param name="loader">The cartridge loader component</param>
+    /// <returns>Whether uninstalling the program was successful</returns>
+    public bool UninstallProgram(EntityUid loaderUid, EntityUid programUid, CartridgeLoaderComponent? loader  = default!)
     {
-        if (!Resolve(loaderUid, ref loader) || !ContainsCartridge(cartridgeUid, loader, true))
+        if (!Resolve(loaderUid, ref loader) || !ContainsCartridge(programUid, loader, true))
             return false;
 
-        loader.InstalledPrograms.Remove(cartridgeUid);
-        EntityManager.QueueDeleteEntity(cartridgeUid);
+        loader.InstalledPrograms.Remove(programUid);
+        EntityManager.QueueDeleteEntity(programUid);
         UpdateUserInterfaceState(loaderUid, loader);
         return true;
     }
 
-    public void ActivateProgram(EntityUid loaderUid, EntityUid cartridgeUid, CartridgeLoaderComponent? loader  = default!)
+    /// <summary>
+    /// Activates a program or cartridge and displays its ui fragment. Deactivates any previously active program.
+    /// </summary>
+    public void ActivateProgram(EntityUid loaderUid, EntityUid programUid, CartridgeLoaderComponent? loader  = default!)
     {
         if (!Resolve(loaderUid, ref loader))
             return;
 
-        if (!ContainsCartridge(cartridgeUid, loader))
+        if (!ContainsCartridge(programUid, loader))
             return;
 
         if (loader.ActiveProgram.HasValue)
-            DeactivateProgram(loaderUid, cartridgeUid, loader);
+            DeactivateProgram(loaderUid, programUid, loader);
 
-        if (!loader.BackgroundPrograms.Contains(cartridgeUid))
-            RaiseLocalEvent(cartridgeUid, new CartridgeActivatedEvent(loaderUid));
+        if (!loader.BackgroundPrograms.Contains(programUid))
+            RaiseLocalEvent(programUid, new CartridgeActivatedEvent(loaderUid));
 
-        loader.ActiveProgram = cartridgeUid;
+        loader.ActiveProgram = programUid;
         UpdateUserInterfaceState(loaderUid, loader);
     }
 
-    public void DeactivateProgram(EntityUid loaderUid, EntityUid cartridgeUid, CartridgeLoaderComponent? loader  = default!)
+    /// <summary>
+    /// Deactivates the currently active program or cartridge.
+    /// </summary>
+    public void DeactivateProgram(EntityUid loaderUid, EntityUid programUid, CartridgeLoaderComponent? loader  = default!)
     {
         if (!Resolve(loaderUid, ref loader))
             return;
 
-        if (!ContainsCartridge(cartridgeUid, loader) || loader.ActiveProgram != cartridgeUid)
+        if (!ContainsCartridge(programUid, loader) || loader.ActiveProgram != programUid)
             return;
 
-        if (!loader.BackgroundPrograms.Contains(cartridgeUid))
-            RaiseLocalEvent(cartridgeUid, new CartridgeDeactivatedEvent(cartridgeUid));
+        if (!loader.BackgroundPrograms.Contains(programUid))
+            RaiseLocalEvent(programUid, new CartridgeDeactivatedEvent(programUid));
 
         loader.ActiveProgram = default;
         UpdateUserInterfaceState(loaderUid, loader);
     }
 
+    /// <summary>
+    /// Registers the given program as a running in the background. Programs running in the background will receive certain events like device net packets but not ui messages
+    /// </summary>
+    /// <remarks>
+    /// Programs wanting to use this functionality will have to provide a way to register and unregister themselves as background programs through their ui fragment.
+    /// </remarks>
     public void RegisterBackgroundProgram(EntityUid loaderUid, EntityUid cartridgeUid, CartridgeLoaderComponent? loader  = default!)
     {
         if (!Resolve(loaderUid, ref loader))
@@ -169,6 +219,9 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
         loader.BackgroundPrograms.Add(cartridgeUid);
     }
 
+    /// <summary>
+    /// Unregisters the given program as running in the background
+    /// </summary>
     public void UnregisterBackgroundProgram(EntityUid loaderUid, EntityUid cartridgeUid, CartridgeLoaderComponent? loader  = default!)
     {
         if (!Resolve(loaderUid, ref loader))
@@ -206,6 +259,17 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
         base.OnItemRemoved(uid, loader, args);
     }
 
+    /// <summary>
+    /// Installs programs from the list of preinstalled programs
+    /// </summary>
+    private void OnMapInit(EntityUid uid, CartridgeLoaderComponent component, MapInitEvent args)
+    {
+        foreach (var prototype in component.PreinstalledPrograms)
+        {
+            InstallProgram(uid, prototype);
+        }
+    }
+
     private void OnUsed(EntityUid uid, CartridgeLoaderComponent component, AfterInteractEvent args)
     {
         RelayEvent(component, new CartridgeAfterInteractEvent(uid, args));
@@ -241,6 +305,9 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
         }
     }
 
+    /// <summary>
+    /// Relays ui messages meant for cartridges to the currently active cartridge
+    /// </summary>
     private void OnUiMessage(EntityUid uid, CartridgeLoaderComponent component, CartridgeUiMessage args)
     {
         var cartridgeEvent = args.MessageEvent;
@@ -249,6 +316,13 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
         RelayEvent(component, cartridgeEvent, true);
     }
 
+    /// <summary>
+    /// Relays events to the currently active program and and programs running in the background.
+    /// Skips background programs if "skipBackgroundPrograms" is set to true
+    /// </summary>
+    /// <param name="loader">The cartritge loader component</param>
+    /// <param name="args">The event to be relayed</param>
+    /// <param name="skipBackgroundPrograms">Whether to skip relaying the event to programs running in the background</param>
     private void RelayEvent<TEvent>(CartridgeLoaderComponent loader, TEvent args, bool skipBackgroundPrograms = false) where TEvent : notnull
     {
         if (loader.ActiveProgram.HasValue)
@@ -263,6 +337,9 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
         }
     }
 
+    /// <summary>
+    /// Checks if a program is already installed by searching for its prototype name in the list of installed programs
+    /// </summary>
     private bool IsInstalled(string? prototype, CartridgeLoaderComponent loader)
     {
         foreach (var program in loader.InstalledPrograms)
@@ -274,14 +351,18 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
         return false;
     }
 
+    /// <summary>
+    /// Shortcut for updating the loaders user interface state without passing in a subtype of <see cref="CartridgeLoaderUiState"/>
+    /// like the <see cref="PDA.PDASystem"/> does when updating its ui state
+    /// </summary>
+    /// <seealso cref="PDA.PDASystem.UpdatePDAUserInterface"/>
     private void UpdateUserInterfaceState(EntityUid loaderUid, CartridgeLoaderComponent loader)
     {
         UpdateUiState(loaderUid, new CartridgeLoaderUiState(), null, loader);
     }
 
-    private void UpdateCartridgeInstallationStatus(EntityUid cartridgeUid, InstallationStatus installationStatus)
+    private void UpdateCartridgeInstallationStatus(EntityUid cartridgeUid, InstallationStatus installationStatus, CartridgeComponent? cartridgeComponent = default!)
     {
-        CartridgeComponent? cartridgeComponent = default!;
         if (Resolve(cartridgeUid, ref cartridgeComponent))
         {
             cartridgeComponent.InstallationStatus = installationStatus;
@@ -295,6 +376,10 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
     }
 }
 
+/// <summary>
+/// Gets sent to running programs when the cartridge loader receives a device net package
+/// </summary>
+/// <seealso cref="DeviceNetworkPacketEvent"/>
 public sealed class CartridgeDeviceNetPacketEvent : EntityEventArgs
 {
     public readonly EntityUid Loader;
@@ -307,6 +392,10 @@ public sealed class CartridgeDeviceNetPacketEvent : EntityEventArgs
     }
 }
 
+/// <summary>
+/// Gets sent to running programs when the cartridge loader receives an after interact event
+/// </summary>
+/// <seealso cref="AfterInteractEvent"/>
 public sealed class CartridgeAfterInteractEvent : EntityEventArgs
 {
     public readonly EntityUid Loader;
