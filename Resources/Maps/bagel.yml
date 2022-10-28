@@ -38250,12 +38250,6 @@ entities:
   - pos: -24.5,1.5
     parent: 60
     type: Transform
-- uid: 1820
-  type: PortableFlasher
-  components:
-  - pos: -27.5,-0.5
-    parent: 60
-    type: Transform
 - uid: 1821
   type: TableReinforced
   components:
@@ -40420,12 +40414,6 @@ entities:
   components:
   - rot: -1.5707963267948966 rad
     pos: 3.5,1.5
-    parent: 60
-    type: Transform
-- uid: 2101
-  type: PortableFlasher
-  components:
-  - pos: -25.5,-0.5
     parent: 60
     type: Transform
 - uid: 2102

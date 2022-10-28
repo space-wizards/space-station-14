@@ -77720,12 +77720,6 @@ entities:
   - pos: -55.5,25.5
     parent: 8
     type: Transform
-- uid: 7044
-  type: PortableFlasher
-  components:
-  - pos: -34.5,6.5
-    parent: 8
-    type: Transform
 - uid: 7045
   type: VendingMachineYouTool
   components:
@@ -83695,18 +83689,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-- uid: 7862
-  type: PortableFlasher
-  components:
-  - pos: -33.5,6.5
-    parent: 8
-    type: Transform
-- uid: 7863
-  type: PortableFlasher
-  components:
-  - pos: -32.5,6.5
-    parent: 8
-    type: Transform
 - uid: 7864
   type: GasPipeStraight
   components:

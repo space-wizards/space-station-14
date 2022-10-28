@@ -138882,12 +138882,6 @@ entities:
   - pos: 12.456029,56.749344
     parent: 100
     type: Transform
-- uid: 16198
-  type: PortableFlasher
-  components:
-  - pos: 16.5,50.5
-    parent: 100
-    type: Transform
 - uid: 16199
   type: MagazinePistol
   components:

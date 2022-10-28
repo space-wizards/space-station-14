@@ -53902,12 +53902,6 @@ entities:
   - pos: 49.546967,-25.346378
     parent: 127
     type: Transform
-- uid: 6806
-  type: PortableFlasher
-  components:
-  - pos: 37.5,-26.5
-    parent: 127
-    type: Transform
 - uid: 6807
   type: CableApcExtension
   components:

@@ -193982,12 +193982,6 @@ entities:
   - pos: 53.5,-18.5
     parent: 82
     type: Transform
-- uid: 22979
-  type: PortableFlasher
-  components:
-  - pos: 48.5,-16.5
-    parent: 82
-    type: Transform
 - uid: 22980
   type: ClothingMaskBreath
   components:
@@ -211281,12 +211275,6 @@ entities:
   type: CableApcExtension
   components:
   - pos: 19.5,-81.5
-    parent: 82
-    type: Transform
-- uid: 25319
-  type: PortableFlasher
-  components:
-  - pos: 49.5,-16.5
     parent: 82
     type: Transform
 - uid: 25320

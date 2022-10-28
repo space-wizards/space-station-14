@@ -36917,18 +36917,6 @@ entities:
   - pos: -37.5,60.5
     parent: 30
     type: Transform
-- uid: 1925
-  type: PortableFlasher
-  components:
-  - pos: -41.5,51.5
-    parent: 30
-    type: Transform
-- uid: 1926
-  type: PortableFlasher
-  components:
-  - pos: -37.5,51.5
-    parent: 30
-    type: Transform
 - uid: 1927
   type: SignArmory
   components:
