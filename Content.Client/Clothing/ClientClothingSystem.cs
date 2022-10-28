@@ -66,7 +66,7 @@ public sealed class ClientClothingSystem : ClothingSystem
 
         if (!args.AppearanceData.TryGetValue(HumanoidVisualizerKey.Key, out object? obj)
             || obj is not HumanoidVisualizerData data
-            || data.Sex == Sex.Male
+            || data.Sex != Sex.Female
             || !_inventorySystem.TryGetSlotEntity(uid, "jumpsuit", out var suit, component)
             || !TryComp(suit, out ClothingComponent? clothing))
         {
