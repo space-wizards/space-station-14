@@ -42,8 +42,9 @@ public sealed class ClientClothingSystem : ClothingSystem
         {"pocket2", "POCKET2"},
     };
 
-    [Dependency] private IResourceCache _cache = default!;
-    [Dependency] private InventorySystem _inventorySystem = default!;
+    [Dependency] private readonly IResourceCache _cache = default!;
+    [Dependency] private readonly InventorySystem _inventorySystem = default!;
+    [Dependency] private readonly AppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
@@ -53,6 +54,33 @@ public sealed class ClientClothingSystem : ClothingSystem
 
         SubscribeLocalEvent<ClientInventoryComponent, VisualsChangedEvent>(OnVisualsChanged);
         SubscribeLocalEvent<SpriteComponent, DidUnequipEvent>(OnDidUnequip);
+        SubscribeLocalEvent<ClientInventoryComponent, AppearanceChangeEvent>(OnAppearanceUpdate);
+    }
+
+    private void OnAppearanceUpdate(EntityUid uid, ClientInventoryComponent component, ref AppearanceChangeEvent args)
+    {
+        // May need to update jumpsuit stencils if the sex changed. Also required to properly set the stencil on init
+        // when sex is first loaded from the profile.
+        if (!TryComp(uid, out SpriteComponent? sprite) || !sprite.LayerMapTryGet(HumanoidVisualLayers.StencilMask, out var layer))
+            return;
+
+        if (!args.AppearanceData.TryGetValue(HumanoidVisualizerKey.Key, out object? obj)
+            || obj is not HumanoidVisualizerData data
+            || data.Sex == Sex.Male
+            || !_inventorySystem.TryGetSlotEntity(uid, "jumpsuit", out var suit, component)
+            || !TryComp(suit, out ClothingComponent? clothing))
+        {
+            sprite.LayerSetVisible(layer, false);
+            return;
+        }
+
+        sprite.LayerSetState(layer, clothing.FemaleMask switch
+        {
+            FemaleClothingMask.NoMask => "female_none",
+            FemaleClothingMask.UniformTop => "female_top",
+            _ => "female_full",
+        });
+        sprite.LayerSetVisible(layer, true);
     }
 
     private void OnGetVisuals(EntityUid uid, ClothingComponent item, GetEquipmentVisualsEvent args)
@@ -188,18 +216,22 @@ public sealed class ClientClothingSystem : ClothingSystem
         if(!Resolve(equipee, ref inventory, ref sprite) || !Resolve(equipment, ref clothingComponent, false))
             return;
 
-        if (slot == "jumpsuit" && sprite.LayerMapTryGet(HumanoidVisualLayers.StencilMask, out _))
+        if (slot == "jumpsuit" && sprite.LayerMapTryGet(HumanoidVisualLayers.StencilMask, out var suitLayer))
         {
-            if (TryComp<HumanoidComponent>(equipee, out var humanoid) && humanoid.Sex == Sex.Female)
+            if (_appearance.TryGetData(equipee, HumanoidVisualizerKey.Key, out object? obj)
+                && obj is HumanoidVisualizerData data
+                && data.Sex == Sex.Female)
             {
-                sprite.LayerSetState(HumanoidVisualLayers.StencilMask, clothingComponent.FemaleMask switch
+                sprite.LayerSetState(suitLayer, clothingComponent.FemaleMask switch
                 {
                     FemaleClothingMask.NoMask => "female_none",
                     FemaleClothingMask.UniformTop => "female_top",
                     _ => "female_full",
                 });
-                sprite.LayerSetVisible(HumanoidVisualLayers.StencilMask, true);
+                sprite.LayerSetVisible(suitLayer, true);
             }
+            else
+                sprite.LayerSetVisible(suitLayer, false);
         }
 
         if (!_inventorySystem.TryGetSlot(equipee, slot, out var slotDef, inventory))
