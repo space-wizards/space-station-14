@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed a bug preventing the Identity system from working for most players.,
-    type: Fix}
-  id: 2036
-  time: '2022-07-28T23:21:48.0000000+00:00'
 - author: Rane
   changes:
   - {message: Latejoiners are now eligible for traitor., type: Tweak}
@@ -2946,3 +2940,9 @@ Entries:
   - {message: Changed it so lamps now spawn with power cells., type: Tweak}
   id: 2535
   time: '2022-10-28T05:22:09.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed being unable to interact with construction outlines / ghosts.,
+    type: Fix}
+  id: 2536
+  time: '2022-10-28T06:08:47.0000000+00:00'
