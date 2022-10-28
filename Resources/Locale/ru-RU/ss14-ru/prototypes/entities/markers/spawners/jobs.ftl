@@ -124,3 +124,6 @@ ent-SpawnPointReporter = reporter
 ent-SpawnPointPsychologist = psychologist
     .desc = { ent-SpawnPointJobBase.desc }
     .suffix = { "" }
+ent-SpawnPointZookeeper = zookeeper
+    .desc = { ent-SpawnPointJobBase.desc }
+    .suffix = { "" }

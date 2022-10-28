@@ -12,9 +12,9 @@ lobby-state-player-status-round-time =
     Время раунда: { $hours } { $hours ->
         [one] час
         [few] часа
-        *[other] часов
+       *[other] часов
     } и { $minutes } { $minutes ->
         [one] минута
         [few] минуты
-        *[other] минут
+       *[other] минут
     }

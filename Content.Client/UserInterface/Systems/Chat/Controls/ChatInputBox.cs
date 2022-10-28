@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Chat;
+using Content.Shared.Input;
 using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.UserInterface.Systems.Chat.Controls;
@@ -32,7 +33,7 @@ public class ChatInputBox : PanelContainer
         Input = new HistoryLineEdit
         {
             Name = "Input",
-            PlaceHolder = Loc.GetString("hud-chatbox-info"),
+            PlaceHolder = Loc.GetString("hud-chatbox-info", ("talk-key", BoundKeyHelper.ShortKeyName(ContentKeyFunctions.FocusChat)), ("cycle-key", BoundKeyHelper.ShortKeyName(ContentKeyFunctions.CycleChatChannelForward))),
             HorizontalExpand = true,
             StyleClasses = {"chatLineEdit"}
         };

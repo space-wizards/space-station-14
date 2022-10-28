@@ -54,7 +54,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
 
-    private const int VoiceRange = 7; // how far voice goes in world units
+    private const int VoiceRange = 10; // how far voice goes in world units
     private const int WhisperRange = 2; // how far whisper goes in world units
     private const string DefaultAnnouncementSound = "/Audio/Announcements/announce.ogg";
 

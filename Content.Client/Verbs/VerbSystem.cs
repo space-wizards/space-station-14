@@ -263,21 +263,6 @@ namespace Content.Client.Verbs
                 EntityManager.RaisePredictiveEvent(new ExecuteVerbEvent(target, verb));
         }
 
-        public override void ExecuteVerb(Verb verb, EntityUid user, EntityUid target, bool forced = false)
-        {
-            // invoke any relevant actions
-            verb.Act?.Invoke();
-
-            // Maybe raise a local event
-            if (verb.ExecutionEventArgs != null)
-            {
-                if (verb.EventTarget.IsValid())
-                    RaiseLocalEvent(verb.EventTarget, verb.ExecutionEventArgs, true);
-                else
-                    RaiseLocalEvent(verb.ExecutionEventArgs);
-            }
-        }
-
         private void HandleVerbResponse(VerbsResponseEvent msg)
         {
             if (!VerbMenu.RootMenu.Visible || VerbMenu.CurrentTarget != msg.Entity)
