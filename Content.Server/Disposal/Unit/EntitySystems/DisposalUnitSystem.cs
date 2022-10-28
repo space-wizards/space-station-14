@@ -123,6 +123,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             Verb verb = new()
             {
                 Act = () => TryInsert(component.Owner, args.User, args.User),
+                DoContactInteraction = true,
                 Text = Loc.GetString("disposal-self-insert-verb-get-data-text")
             };
             // TODO VERN ICON

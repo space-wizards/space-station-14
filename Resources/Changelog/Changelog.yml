@@ -1,142 +1,4 @@
 Entries:
-- author: zerorulez
-  changes:
-  - {message: Entities without hands can no longer open/close storage and toggle locks.,
-    type: Fix}
-  id: 2015
-  time: '2022-07-26T01:31:25.0000000+00:00'
-- author: BurninDreamer
-  changes:
-  - {message: The Syndicate headset no longer misinforms you in the description!,
-    type: Fix}
-  id: 2016
-  time: '2022-07-26T01:38:30.0000000+00:00'
-- author: DogZeroX
-  changes:
-  - {message: The bread has been unplated., type: Remove}
-  id: 2017
-  time: '2022-07-26T02:37:51.0000000+00:00'
-- author: moony
-  changes:
-  - {message: Waystation has been pulled from rotation., type: Remove}
-  id: 2018
-  time: '2022-07-26T02:41:06.0000000+00:00'
-- author: DogZeroX
-  changes:
-  - {message: Lizards and slimes now have different speech sounds!, type: Add}
-  id: 2019
-  time: '2022-07-26T09:13:12.0000000+00:00'
-- author: Pancake
-  changes:
-  - {message: Syndicate layoffs., type: Tweak}
-  id: 2020
-  time: '2022-07-26T09:50:18.0000000+00:00'
-- author: DogZeroX
-  changes:
-  - {message: The emergency boxes now have tinned meat instead of chocolate., type: Tweak}
-  id: 2021
-  time: '2022-07-26T09:56:56.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Observers now have a warp for the nuke disk., type: Add}
-  id: 2022
-  time: '2022-07-26T13:55:15.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: do_after bar no longer flickers for a frame., type: Fix}
-  id: 2023
-  time: '2022-07-26T13:57:31.0000000+00:00'
-- author: Elijahrane
-  changes:
-  - {message: 'If OOC is disabled in the middle of a round, dead players lose the
-      ability to talk in LOOC.', type: Add}
-  id: 2024
-  time: '2022-07-26T13:58:19.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Bumped pulling modified speed from 0.75 to 0.9, type: Tweak}
-  id: 2025
-  time: '2022-07-26T13:58:40.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: People with empty-name ID cards no longer show up as having an empty
-      identity., type: Fix}
-  id: 2026
-  time: '2022-07-26T23:49:15.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Radio messages will properly capitalize the first letter of your message
-      again., type: Fix}
-  - {message: Sending a radio message will now make you whisper locally instead of
-      speak., type: Add}
-  id: 2027
-  time: '2022-07-26T23:49:23.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Zombies now move slower than normal people., type: Tweak}
-  - {message: Zombies now do a bit of structure damage., type: Tweak}
-  - {message: Zombies now do further decreased damage to other zombies., type: Tweak}
-  - {message: Zombies that were cuffed before turning now behave properly after being
-      uncuffed., type: Fix}
-  - {message: Zombies no longer take damage over time from rotting., type: Fix}
-  id: 2028
-  time: '2022-07-27T00:35:35.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: 'Boxers and boxing gloves have been ported from Nyanotrasen MRP! The
-      role is only selectable on Lighthouse, but all boxing gloves work.', type: Add}
-  - {message: Map-specific jobs no longer clog up the preference menu., type: Fix}
-  id: 2029
-  time: '2022-07-27T01:34:20.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Added sleeping., type: Add}
-  - {message: Added nitrous oxide., type: Add}
-  - {message: Slimes exhale nitrous oxide., type: Tweak}
-  - {message: Disease interaction infection checks now use the same robust method
-      that forensics do. No more edge cases where you don't check anything., type: Fix}
-  id: 2030
-  time: '2022-07-27T04:46:24.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Transylvanian vampire cloak is now available rarely in the maint fluff
-      spawner., type: Add}
-  id: 2031
-  time: '2022-07-27T08:15:47.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Freon has been added. It is a refrigerant gas which reacts with nitrogen
-      to rapidly cool down areas, increasing in effectiveness with temperature. It''s
-      also a hallucinogenic, and you may feel woozy (and just a little brain damaged)
-      after breathing it in.', type: Add}
-  - {message: 'Freon can be produced by combining tritium, oxygen, and nitrogen as
-      catalyst at temperatures below 73.15 kelvin.', type: Add}
-  - {message: Miasma reacts with freon to subsume and convert it into more miasma.,
-    type: Add}
-  id: 2032
-  time: '2022-07-27T09:55:28.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: 'Ramens description points out you need to use boiling water, not just
-      any water.', type: Fix}
-  id: 2033
-  time: '2022-07-27T14:18:16.0000000+00:00'
-- author: FunkySphere
-  changes:
-  - {message: Fixed name of mime jumpskirt (previously "mime suit"), type: Fix}
-  id: 2034
-  time: '2022-07-27T23:15:04.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed missing inhand sprites for various syndicate duffel bags., type: Fix}
-  id: 2035
-  time: '2022-07-27T23:32:43.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed a bug preventing the Identity system from working for most players.,
-    type: Fix}
-  id: 2036
-  time: '2022-07-28T23:21:48.0000000+00:00'
 - author: Rane
   changes:
   - {message: Latejoiners are now eligible for traitor., type: Tweak}
@@ -2961,3 +2823,126 @@ Entries:
   - {message: Fixed portable scrubbers not scrubbing from adjacent tiles., type: Fix}
   id: 2514
   time: '2022-10-22T22:49:30.0000000+00:00'
+- author: Nairod
+  changes:
+  - {message: Added the head's mantles to the uniform printer., type: Add}
+  id: 2515
+  time: '2022-10-23T17:56:59.0000000+00:00'
+- author: checkraze
+  changes:
+  - {message: Added the Zookeeper. Find them patrolling and caring for Kettle station's
+      various wildlife soon!, type: Add}
+  id: 2516
+  time: '2022-10-23T19:42:25.0000000+00:00'
+- author: Cheackraze
+  changes:
+  - {message: Added a Zoo and a few animals to Kettle!, type: Add}
+  id: 2517
+  time: '2022-10-24T02:30:37.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Pillar map major update. Atmos is now in engi, corridors are now smaller
+      and more alive, maint has been spruced up and lots of spaces are bigger, more
+      decorated and more loot sprawled.', type: Tweak}
+  id: 2518
+  time: '2022-10-24T17:30:50.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: Added two new jester suits in AutoDrobe, type: Add}
+  id: 2519
+  time: '2022-10-24T18:04:55.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix clientside organs being left around., type: Fix}
+  id: 2520
+  time: '2022-10-25T00:08:41.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Some miscellaneous electronics have been additionally added to the circuit
+      imprinter., type: Add}
+  id: 2521
+  time: '2022-10-25T00:22:12.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Nanotrasen's experimental precrime police program has been defunded
+      (fixed forensic evidence being applied and diseases spreading by simply examining
+      or being in the vicinity of items)., type: Fix}
+  id: 2522
+  time: '2022-10-26T01:15:48.0000000+00:00'
+- author: 25203
+  changes:
+  - {message: Reagent grinder can now process partial stacks if the solution of the
+      entire stack won't fit in the beaker., type: Fix}
+  id: 2523
+  time: '2022-10-26T06:34:56.0000000+00:00'
+- author: JustinTrotter
+  changes:
+  - {message: Syringes can now set how much solution to transfer., type: Add}
+  id: 2524
+  time: '2022-10-26T06:40:06.0000000+00:00'
+- author: exincore
+  changes:
+  - {message: added keybind awareness to chatbox hint, type: Add}
+  id: 2525
+  time: '2022-10-26T14:40:12.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix the item status for chambered guns flickering., type: Fix}
+  id: 2526
+  time: '2022-10-26T14:46:13.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a bug that was causing bullets and other physics objects to not
+      work properly., type: Fix}
+  - {message: Fixed a bug that was causing crashes when attempting to follow or teleport
+      to entities., type: Fix}
+  id: 2527
+  time: '2022-10-27T02:35:44.0000000+00:00'
+- author: checkraze
+  changes:
+  - {message: Nanotrasen has updated their Dart ERT shuttle for faster response times!,
+    type: Tweak}
+  id: 2528
+  time: '2022-10-27T11:54:12.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix entity storage closing and some other erroneous flags., type: Fix}
+  id: 2529
+  time: '2022-10-27T14:09:16.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Ghostly bodies have been limited to one per person., type: Remove}
+  id: 2530
+  time: '2022-10-27T14:09:36.0000000+00:00'
+- author: moony
+  changes:
+  - {message: Removed split-station due to map rotation limits., type: Remove}
+  id: 2531
+  time: '2022-10-27T14:31:20.0000000+00:00'
+- author: JustinTrotter
+  changes:
+  - {message: Mice scream properly, type: Tweak}
+  id: 2532
+  time: '2022-10-28T00:42:36.0000000+00:00'
+- author: tsp01
+  changes:
+  - {message: The range from which you can hear players has been increased from 7
+      to 10 units., type: Tweak}
+  id: 2533
+  time: '2022-10-28T03:25:48.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a bug causing some entities not being interactable., type: Fix}
+  id: 2534
+  time: '2022-10-28T03:30:48.0000000+00:00'
+- author: Nairod
+  changes:
+  - {message: Changed it so lamps now spawn with power cells., type: Tweak}
+  id: 2535
+  time: '2022-10-28T05:22:09.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed being unable to interact with construction outlines / ghosts.,
+    type: Fix}
+  id: 2536
+  time: '2022-10-28T06:08:47.0000000+00:00'

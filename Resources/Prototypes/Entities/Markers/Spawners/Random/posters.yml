@@ -82,7 +82,9 @@
       - PosterContrabandBeachStarYamamoto
       - PosterContrabandHighEffectEngineering
       - PosterContrabandNuclearDeviceInformational
-      - PosterLegitEnlist
+      - PosterLegitEnlist # Corvax LORE
+      - PosterContrabandRevolt
+      - PosterContrabandRise
     chance: 1
 
 - type: entity
@@ -134,4 +136,5 @@
       - PosterLegitDickGumshue
       - PosterLegitThereIsNoGasGiant
       - PosterLegitJustAWeekAway
+      - PosterLegitSecWatch
     chance: 1

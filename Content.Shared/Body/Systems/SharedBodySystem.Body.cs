@@ -14,21 +14,10 @@ public partial class SharedBodySystem
 {
     public void InitializeBody()
     {
-        SubscribeLocalEvent<BodyComponent, MapInitEvent>(OnBodyMapInit);
         SubscribeLocalEvent<BodyComponent, ComponentInit>(OnBodyInit);
 
         SubscribeLocalEvent<BodyComponent, ComponentGetState>(OnBodyGetState);
         SubscribeLocalEvent<BodyComponent, ComponentHandleState>(OnBodyHandleState);
-    }
-
-    private void OnBodyMapInit(EntityUid bodyId, BodyComponent body, MapInitEvent args)
-    {
-        // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
-        if (body.Prototype == null || body.Root != null)
-            return;
-
-        var prototype = Prototypes.Index<BodyPrototype>(body.Prototype);
-        InitBody(body, prototype);
     }
 
     private void OnBodyInit(EntityUid bodyId, BodyComponent body, ComponentInit args)
@@ -75,22 +64,9 @@ public partial class SharedBodySystem
         return true;
     }
 
-    private void InitBody(BodyComponent body, BodyPrototype prototype)
-    {
-        var root = prototype.Slots[prototype.Root];
-        var bodyId = Spawn(root.Part, body.Owner.ToCoordinates());
-        var partComponent = Comp<BodyPartComponent>(bodyId);
-        var slot = new BodyPartSlot(root.Part, body.Owner, partComponent.PartType);
-        body.Root = slot;
-        partComponent.Body = bodyId;
+    protected abstract void InitBody(BodyComponent body, BodyPrototype prototype);
 
-        Containers.EnsureContainer<Container>(body.Owner, BodyContainerId);
-
-        AttachPart(bodyId, slot, partComponent);
-        InitPart(partComponent, prototype, prototype.Root);
-    }
-
-    private void InitPart(BodyPartComponent parent, BodyPrototype prototype, string slotId, HashSet<string>? initialized = null)
+    protected void InitPart(BodyPartComponent parent, BodyPrototype prototype, string slotId, HashSet<string>? initialized = null)
     {
         initialized ??= new HashSet<string>();
 

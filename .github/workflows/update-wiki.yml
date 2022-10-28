@@ -1,6 +1,7 @@
 name: Update Wiki
 
 on:
+  workflow_dispatch:
   push:
     branches: [ master, jsondump ]
     paths:
