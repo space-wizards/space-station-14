@@ -1,10 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: 'Ramens description points out you need to use boiling water, not just
-      any water.', type: Fix}
-  id: 2033
-  time: '2022-07-27T14:18:16.0000000+00:00'
 - author: FunkySphere
   changes:
   - {message: Fixed name of mime jumpskirt (previously "mime suit"), type: Fix}
@@ -2946,3 +2940,9 @@ Entries:
   - {message: Mice scream properly, type: Tweak}
   id: 2532
   time: '2022-10-28T00:42:36.0000000+00:00'
+- author: tsp01
+  changes:
+  - {message: The range from which you can hear players has been increased from 7
+      to 10 units., type: Tweak}
+  id: 2533
+  time: '2022-10-28T03:25:48.0000000+00:00'
