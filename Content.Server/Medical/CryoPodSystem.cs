@@ -88,7 +88,7 @@ public sealed class CryoPodSystem: EntitySystem
             return;
 
         var cryoPodEnabled = HasComp<ActiveCryoPodComponent>(uid);
-        _appearanceSystem.SetData(uid, SharedCryoPodComponent.CryoPodVisuals.IsOpen, cryoPod.BodyContainer.ContainedEntity == null);
+        _appearanceSystem.SetData(uid, SharedCryoPodComponent.CryoPodVisuals.ContainsEntity, cryoPod.BodyContainer.ContainedEntity == null);
         _appearanceSystem.SetData(uid, SharedCryoPodComponent.CryoPodVisuals.IsOn, cryoPodEnabled);
         if (TryComp<PointLightComponent>(uid, out var light))
         {
@@ -139,7 +139,6 @@ public sealed class CryoPodSystem: EntitySystem
 
         var xform = Transform(target);
         cryoPodComponent.BodyContainer.Insert(target, transform: xform);
-        xform.LocalPosition = new Vector2(0, 1); // So that the target appears to be floating within the pod
 
         var comp = EnsureComp<InsideCryoPodComponent>(target);
         comp.Holder = cryoPodComponent.Owner;

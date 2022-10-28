@@ -6,6 +6,35 @@ namespace Content.Client.Medical.Cryogenics;
 
 public sealed class CryoPodSystem: VisualizerSystem<CryoPodVisualsComponent>
 {
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<InsideCryoPodComponent, ComponentAdd>(OnCryoPodInsertion);
+        SubscribeLocalEvent<InsideCryoPodComponent, ComponentRemove>(OnCryoPodRemoval);
+    }
+
+    private void OnCryoPodInsertion(EntityUid uid, InsideCryoPodComponent component, ComponentAdd args)
+    {
+        if (!TryComp<SpriteComponent>(uid, out var spriteComponent))
+        {
+            return;
+        }
+
+        component.PreviousOffset = spriteComponent.Offset;
+        spriteComponent.Offset = new Vector2(0, 1);
+    }
+
+    private void OnCryoPodRemoval(EntityUid uid, InsideCryoPodComponent component, ComponentRemove args)
+    {
+        if (!TryComp<SpriteComponent>(uid, out var spriteComponent))
+        {
+            return;
+        }
+
+        spriteComponent.Offset = component.PreviousOffset;
+    }
+
     protected override void OnAppearanceChange(EntityUid uid, CryoPodVisualsComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
@@ -13,7 +42,7 @@ public sealed class CryoPodSystem: VisualizerSystem<CryoPodVisualsComponent>
             return;
         }
 
-        if (!args.Component.TryGetData(SharedCryoPodComponent.CryoPodVisuals.IsOpen, out bool isOpen)
+        if (!args.Component.TryGetData(SharedCryoPodComponent.CryoPodVisuals.ContainsEntity, out bool isOpen)
             || !args.Component.TryGetData(SharedCryoPodComponent.CryoPodVisuals.IsOn, out bool isOn))
         {
             return;

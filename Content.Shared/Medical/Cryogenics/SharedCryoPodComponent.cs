@@ -9,7 +9,7 @@ public abstract class SharedCryoPodComponent: Component, IDragDropOn
     [Serializable, NetSerializable]
     public enum CryoPodVisuals : byte
     {
-        IsOpen,
+        ContainsEntity,
         PanelOpen,
         IsOn
     }
