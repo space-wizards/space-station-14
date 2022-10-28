@@ -163,7 +163,7 @@ namespace Content.Client.Inventory
         public void ReloadInventory(ClientInventoryComponent? component = null)
         {
             var player = _playerManager.LocalPlayer?.ControlledEntity;
-            if (player == null || !Resolve(player.Value, ref component))
+            if (player == null || !Resolve(player.Value, ref component, false))
             {
                 return;
             }
