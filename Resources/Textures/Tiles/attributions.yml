@@ -23,8 +23,8 @@
 
 - files: [ "steel_diagonal.png", "steel_mini.png", "steel_offset.png", "steel_pavement.png", "white_diagonal.png", "white_mini.png", "white_offset.png", "white_pavement.png", "white_plastic.png", "dark_diagonal.png", "dark_mini.png", "dark_offset.png", "dark_pavement.png", "dark_plastic.png" ]
   license: "CC0-1.0"
-  copyright: "Created by github user @moonheart08"
-  source: "https://github.com/space-wizards/space-station-14/pull/12140"
+  copyright: "Created by github user @morb0"
+  source: "https://github.com/space-syndicate/space-station-14/pull/489"
 
 - files: ["arcadeblue.png", "arcadered.png"]
   license: "CC-BY-SA-3.0"
