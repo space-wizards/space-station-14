@@ -1,16 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: 'Freon has been added. It is a refrigerant gas which reacts with nitrogen
-      to rapidly cool down areas, increasing in effectiveness with temperature. It''s
-      also a hallucinogenic, and you may feel woozy (and just a little brain damaged)
-      after breathing it in.', type: Add}
-  - {message: 'Freon can be produced by combining tritium, oxygen, and nitrogen as
-      catalyst at temperatures below 73.15 kelvin.', type: Add}
-  - {message: Miasma reacts with freon to subsume and convert it into more miasma.,
-    type: Add}
-  id: 2032
-  time: '2022-07-27T09:55:28.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: 'Ramens description points out you need to use boiling water, not just
@@ -2953,3 +2941,8 @@ Entries:
   - {message: Removed split-station due to map rotation limits., type: Remove}
   id: 2531
   time: '2022-10-27T14:31:20.0000000+00:00'
+- author: JustinTrotter
+  changes:
+  - {message: Mice scream properly, type: Tweak}
+  id: 2532
+  time: '2022-10-28T00:42:36.0000000+00:00'
