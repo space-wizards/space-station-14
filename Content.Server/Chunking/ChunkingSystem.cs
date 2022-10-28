@@ -1,12 +1,11 @@
+using System.Linq;
 using Content.Shared.Decals;
 using Microsoft.Extensions.ObjectPool;
 using Robust.Server.Player;
 using Robust.Shared;
 using Robust.Shared.Configuration;
-using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
-using System.Linq;
 
 namespace Content.Shared.Chunking;
 
@@ -44,29 +43,13 @@ public sealed class ChunkingSystem : EntitySystem
         ObjectPool<Dictionary<EntityUid, HashSet<Vector2i>>> viewerPool,
         float? viewEnlargement = null)
     {
-        var viewers = GetSessionViewers(session);
+        var viewers = session.GetSessionViewers();
         var chunks = GetChunksForViewers(viewers, chunkSize, indexPool, viewerPool, viewEnlargement ?? chunkSize, xformQuery);
         return chunks;
     }
 
-    private HashSet<EntityUid> GetSessionViewers(IPlayerSession session)
-    {
-        var viewers = new HashSet<EntityUid>();
-        if (session.Status != SessionStatus.InGame || session.AttachedEntity is null)
-            return viewers;
-
-        viewers.Add(session.AttachedEntity.Value);
-
-        foreach (var uid in session.ViewSubscriptions)
-        {
-            viewers.Add(uid);
-        }
-
-        return viewers;
-    }
-
     private Dictionary<EntityUid, HashSet<Vector2i>> GetChunksForViewers(
-        HashSet<EntityUid> viewers,
+        EntityUid[] viewers,
         int chunkSize,
         ObjectPool<HashSet<Vector2i>> indexPool,
         ObjectPool<Dictionary<EntityUid, HashSet<Vector2i>>> viewerPool,
