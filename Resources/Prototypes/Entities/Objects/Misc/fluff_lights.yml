@@ -35,6 +35,7 @@
     slots:
       cell_slot:
         name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellSmall
   - type: ContainerContainer
     containers:
       cell_slot: !type:ContainerSlot
