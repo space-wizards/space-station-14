@@ -56,7 +56,7 @@
   components:
   - type: Artifact
     nodesMin: 1
-    nodesMax: 1
+    nodesMax: 3
 
 - type: entity
   parent: BaseXenoArtifact
@@ -65,7 +65,7 @@
   components:
   - type: Artifact
     nodesMin: 5
-    nodesMax: 8
+    nodesMax: 9
 
 - type: entity
   parent: BaseXenoArtifact
@@ -74,4 +74,4 @@
   components:
   - type: Artifact
     nodesMin: 7
-    nodesMax: 12
+    nodesMax: 13

@@ -65,11 +65,11 @@ public sealed class ArtifactNode
     public bool Discovered = false;
 
     [ViewVariables]
-    public ArtifactTriggerPrototype? Trigger;
+    public ArtifactTriggerPrototype Trigger = default!;
 
     [ViewVariables(VVAccess.ReadWrite)]
     public bool Triggered = false;
 
     [ViewVariables]
-    public ArtifactEffectPrototype? Effect;
+    public ArtifactEffectPrototype Effect = default!;
 }

@@ -31,8 +31,9 @@ public sealed class ArtifactGasTriggerSystem : EntitySystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
-        var query = EntityManager.EntityQuery<ArtifactGasTriggerComponent, TransformComponent>();
-        foreach (var (trigger, transform) in query)
+
+        List<ArtifactComponent> toUpdate = new();
+        foreach (var (trigger, artifact, transform) in EntityQuery<ArtifactGasTriggerComponent, ArtifactComponent, TransformComponent>())
         {
             var uid = trigger.Owner;
 
@@ -50,7 +51,12 @@ public sealed class ArtifactGasTriggerSystem : EntitySystem
             if (moles < trigger.ActivationMoles)
                 continue;
 
-            _artifactSystem.TryActivateArtifact(trigger.Owner);
+            toUpdate.Add(artifact);
+        }
+
+        foreach (var a in toUpdate)
+        {
+            _artifactSystem.TryActivateArtifact(a.Owner, null, a);
         }
     }
 }

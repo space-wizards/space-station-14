@@ -145,6 +145,8 @@ public sealed partial class ArtifactSystem
         return _random.Pick(weights.Keys); //shouldn't happen
     }
 
+    //TODO: this needs to be deffered
+
     /// <summary>
     /// Enter a node: attach the relevant components
     /// </summary>
@@ -161,33 +163,16 @@ public sealed partial class ArtifactSystem
         component.CurrentNode = node;
         node.Discovered = true;
 
-        if (node.Trigger != null)
+        var allComponents = node.Effect.Components.Concat(node.Effect.PermanentComponents).Concat(node.Trigger.Components);
+        foreach (var (name, entry) in allComponents)
         {
-            foreach (var (name, entry) in node.Trigger.Components)
-            {
-                var reg = _componentFactory.GetRegistration(name);
-                var comp = (Component) _componentFactory.GetComponent(reg);
-                comp.Owner = uid;
+            var reg = _componentFactory.GetRegistration(name);
+            var comp = (Component) _componentFactory.GetComponent(reg);
+            comp.Owner = uid;
 
-                var temp = (object) comp;
-                _serialization.Copy(entry.Component, ref temp);
-                EntityManager.AddComponent(uid, (Component) temp!, true);
-            }
-        }
-
-        if (node.Effect != null)
-        {
-            var allComponents = node.Effect.Components.Concat(node.Effect.PermanentComponents);
-            foreach (var (name, entry) in allComponents)
-            {
-                var reg = _componentFactory.GetRegistration(name);
-                var comp = (Component) _componentFactory.GetComponent(reg);
-                comp.Owner = uid;
-
-                var temp = (object) comp;
-                _serialization.Copy(entry.Component, ref temp);
-                EntityManager.AddComponent(uid, (Component) temp!, true);
-            }
+            var temp = (object) comp;
+            _serialization.Copy(entry.Component, ref temp);
+            EntityManager.AddComponent(uid, (Component) temp!, true);
         }
 
         if (activate)
@@ -206,22 +191,10 @@ public sealed partial class ArtifactSystem
         if (node == null)
             return;
 
-        if (node.Trigger != null)
+        foreach (var name in node.Effect.Components.Keys.Concat(node.Trigger.Components.Keys))
         {
-            foreach (var name in node.Trigger.Components.Keys)
-            {
-                var comp = _componentFactory.GetRegistration(name);
-                EntityManager.RemoveComponentDeferred(uid, comp.Type);
-            }
-        }
-
-        if (node.Effect != null)
-        {
-            foreach (var name in node.Effect.Components.Keys)
-            {
-                var comp = _componentFactory.GetRegistration(name);
-                EntityManager.RemoveComponentDeferred(uid, comp.Type);
-            }
+            var comp = _componentFactory.GetRegistration(name);
+            EntityManager.RemoveComponentDeferred(uid, comp.Type);
         }
 
         component.CurrentNode = null;

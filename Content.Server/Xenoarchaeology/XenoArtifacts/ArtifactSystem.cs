@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Server.Cargo.Systems;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
 using JetBrains.Annotations;
 using Robust.Shared.Random;
@@ -14,12 +15,51 @@ public sealed partial class ArtifactSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<ArtifactComponent, MapInitEvent>(OnInit);
+        SubscribeLocalEvent<ArtifactComponent, PriceCalculationEvent>(GetPrice);
     }
 
     private void OnInit(EntityUid uid, ArtifactComponent component, MapInitEvent args)
     {
         RandomizeArtifact(component);
+    }
+
+    /// <summary>
+    /// Calculates the price of an artifact based on
+    /// how many nodes have been unlocked/triggered
+    /// </summary>
+    /// <remarks>
+    /// General balancing (for fully unlocked artifacts):
+    /// Simple (1-2 Nodes): 1-2K
+    /// Medium (5-8 Nodes): 6-7K
+    /// Complex (7-12 Nodes): 10-11K
+    /// </remarks>
+    private void GetPrice(EntityUid uid, ArtifactComponent component, ref PriceCalculationEvent args)
+    {
+        if (component.NodeTree == null)
+            return;
+
+        var price = component.NodeTree.AllNodes.Sum(GetNodePrice);
+
+        // 25% bonus for fully exploring every node.
+        var fullyExploredBonus = component.NodeTree.AllNodes.Any(x => !x.Triggered) ? 1 : 1.25f;
+
+        args.Price =+ price * fullyExploredBonus;
+    }
+
+    private double GetNodePrice(ArtifactNode node)
+    {
+        if (!node.Discovered) //no money for undiscovered nodes.
+            return 0;
+
+        //quarter price if not triggered
+        var priceMultiplier = node.Triggered ? 1f : 0.25f;
+        //the danger is the average of node depth, effect danger, and trigger danger.
+        var nodeDanger = (node.Depth + node.Effect.TargetDepth + node.Trigger.TargetDepth) / 3;
+
+        var price = MathF.Pow(2f, nodeDanger) * 500 * priceMultiplier;
+        return price;
     }
 
     /// <summary>

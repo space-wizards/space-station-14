@@ -26,6 +26,7 @@ public sealed class ArtifactEffectPrototype : IPrototype
     [DataField("permanentComponents")]
     public EntityPrototype.ComponentRegistry PermanentComponents = new();
 
+    //TODO: make this a list so we can have multiple target depths
     [DataField("targetDepth")]
     public int TargetDepth = 0;
 }
