@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed missing inhand sprites for various syndicate duffel bags., type: Fix}
-  id: 2035
-  time: '2022-07-27T23:32:43.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed a bug preventing the Identity system from working for most players.,
@@ -2946,3 +2941,8 @@ Entries:
   - {message: Fixed a bug causing some entities not being interactable., type: Fix}
   id: 2534
   time: '2022-10-28T03:30:48.0000000+00:00'
+- author: Nairod
+  changes:
+  - {message: Changed it so lamps now spawn with power cells., type: Tweak}
+  id: 2535
+  time: '2022-10-28T05:22:09.0000000+00:00'
