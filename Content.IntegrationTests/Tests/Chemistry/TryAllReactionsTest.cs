@@ -34,28 +34,30 @@ namespace Content.IntegrationTests.Tests.Chemistry
             var prototypeManager = server.ResolveDependency<IPrototypeManager>();
             var testMap = await PoolManager.CreateTestMap(pairTracker);
             var coordinates = testMap.GridCoords;
+            var solutionSystem = server.ResolveDependency<IEntitySystemManager>()
+                .GetEntitySystem<SolutionContainerSystem>();
 
             foreach (var reactionPrototype in prototypeManager.EnumeratePrototypes<ReactionPrototype>())
             {
                 //since i have no clue how to isolate each loop assert-wise im just gonna throw this one in for good measure
                 Console.WriteLine($"Testing {reactionPrototype.ID}");
 
-                EntityUid beaker;
+                EntityUid beaker = default;
                 Solution component = null;
 
                 await server.WaitAssertion(() =>
                 {
                     beaker = entityManager.SpawnEntity("TestSolutionContainer", coordinates);
-                    Assert.That(EntitySystem.Get<SolutionContainerSystem>()
+                    Assert.That(solutionSystem
                         .TryGetSolution(beaker, "beaker", out component));
                     foreach (var (id, reactant) in reactionPrototype.Reactants)
                     {
-                        Assert.That(EntitySystem.Get<SolutionContainerSystem>()
+                        Assert.That(solutionSystem
                             .TryAddReagent(beaker, component, id, reactant.Amount, out var quantity));
                         Assert.That(reactant.Amount, Is.EqualTo(quantity));
                     }
 
-                    EntitySystem.Get<SolutionContainerSystem>().SetTemperature(beaker, component, reactionPrototype.MinimumTemperature);
+                    solutionSystem.SetTemperature(beaker, component, reactionPrototype.MinimumTemperature);
                 });
 
                 await server.WaitIdleAsync();

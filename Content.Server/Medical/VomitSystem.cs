@@ -1,16 +1,16 @@
-using Content.Server.Nutrition.Components;
-using Content.Server.Stunnable;
-using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Body.Components;
-using Content.Server.Fluids.Components;
-using Content.Server.Chemistry.EntitySystems;
-using Content.Server.Popups;
 using Content.Server.Body.Systems;
-using Content.Shared.StatusEffect;
+using Content.Server.Chemistry.EntitySystems;
+using Content.Server.Fluids.Components;
+using Content.Server.Nutrition.Components;
+using Content.Server.Nutrition.EntitySystems;
+using Content.Server.Popups;
+using Content.Server.Stunnable;
 using Content.Shared.Audio;
+using Content.Shared.IdentityManagement;
+using Content.Shared.StatusEffect;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
-using Content.Shared.IdentityManagement;
 
 namespace Content.Server.Medical
 {
@@ -29,7 +29,7 @@ namespace Content.Server.Medical
         public void Vomit(EntityUid uid, float thirstAdded = -40f, float hungerAdded = -40f)
         {
             /// Main requirement: You have a stomach
-            var stomachList = _bodySystem.GetComponentsOnMechanisms<StomachComponent>(uid);
+            var stomachList = _bodySystem.GetBodyOrganComponents<StomachComponent>(uid);
             if (stomachList.Count == 0)
             {
                 return;

@@ -132,6 +132,9 @@
         },
         {
             "name": "SecurityCadet"
+        },
+        {
+            "name": "Zookeeper"
         }
     ]
 }
