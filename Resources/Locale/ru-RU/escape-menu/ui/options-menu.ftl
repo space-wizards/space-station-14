@@ -164,6 +164,7 @@ ui-options-function-shuttle-rotate-left = Поворот налево
 ui-options-function-shuttle-rotate-right = Поворот направо
 ui-options-function-shuttle-brake = Торможение
 ui-options-net-interp-ratio = Сетевое сглаживание
+ui-options-net-predict = Client-side prediction
 ui-options-net-interp-ratio-tooltip =
     Увеличение этого параметра, как правило, делает игру
     более устойчивой к потере пакетов, однако при этом
@@ -176,6 +177,11 @@ ui-options-net-predict-tick-bias-tooltip =
     немного возрастает задержка, и клиенту требуется предугадывать
     больше будущих тиков.
 ui-options-net-pvs-entry = Лимит PVS сущностей
+ui-options-net-pvs-spawn = PVS entity spawn budget
+ui-options-net-pvs-spawn-tooltip =
+    This limits the rate at which the server will send newly spawned
+    entities to the client. Lowering this can help reduce
+    stuttering due to entity spawning, but can lead to pop-in.
 ui-options-net-pvs-entry-tooltip =
     Ограничение частоты отправки новых сущностей сервером на клиент. 
     Снижение этого параметра может помочь уменьшить "захлебывания",

@@ -2,6 +2,7 @@
 
 reagent-grinder-bound-user-interface-instant-button = МГНОВЕННО
 reagent-grinder-bound-user-interface-cook-time-label = ВРЕМЯ:
+reagent-grinder-component-cannot-put-entity-message = You can't put this in the reagent grinder!
 grinder-menu-title = All-In-One Grinder 3000
 grinder-menu-grind-button = Измельчить
 grinder-menu-juice-button = Выжать
