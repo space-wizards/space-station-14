@@ -1,6 +1,7 @@
 - type: job
   id: HeadOfSecurity
   name: job-name-hos
+  description: job-description-hos
   playTimeTracker: JobHeadOfSecurity
   requirements:
     - !type:RoleTimeRequirement

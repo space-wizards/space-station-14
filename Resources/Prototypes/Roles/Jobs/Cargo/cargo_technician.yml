@@ -1,6 +1,7 @@
 - type: job
   id: CargoTechnician
   name: job-name-cargotech
+  description: job-description-cargotech
   playTimeTracker: JobCargoTechnician
   startingGear: CargoTechGear
   icon: "CargoTechnician"

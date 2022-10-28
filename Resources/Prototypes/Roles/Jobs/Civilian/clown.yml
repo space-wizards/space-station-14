@@ -1,6 +1,7 @@
 - type: job
   id: Clown
   name: job-name-clown
+  description: job-description-clown
   playTimeTracker: JobClown
   startingGear: ClownGear
   icon: "Clown"
