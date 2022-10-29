@@ -20,6 +20,9 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
         public void ExitDisposals(EntityUid uid, DisposalHolderComponent? holder = null, TransformComponent? holderTransform = null)
         {
+            if (Terminating(uid))
+                return;
+
             if (!Resolve(uid, ref holder, ref holderTransform))
                 return;
             if (holder.IsExitingDisposals)

@@ -376,6 +376,9 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
         private void OnAnchorChanged(EntityUid uid, DisposalUnitComponent component, ref AnchorStateChangedEvent args)
         {
+            if (Terminating(uid))
+                return;
+
             UpdateVisualState(component);
             if (!args.Anchored)
                 TryEjectContents(component);
