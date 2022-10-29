@@ -12,8 +12,8 @@
         prefixCreator: '14'
       overflowJobs: []
       availableJobs:
-        ERTLeader: [ 1, 1 ]
-        ERTEngineer: [ 1, 1 ]
-        ERTSecurity: [ 1, 1 ]
-        ERTMedical: [ 1, 1 ]
-        ERTJanitor: [ 1, 1 ]
+        ERTLeader: [ 0, 1 ]
+        ERTEngineer: [ 0, 1 ]
+        ERTSecurity: [ 0, 1 ]
+        ERTMedical: [ 0, 1 ]
+        ERTJanitor: [ 0, 1 ]

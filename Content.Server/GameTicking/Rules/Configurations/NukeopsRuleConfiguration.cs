@@ -1,5 +1,6 @@
 using Content.Server.GameTicking.Rules.Configurations;
 using Content.Shared.Dataset;
+using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Roles;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
@@ -25,8 +26,8 @@ public sealed class NukeopsRuleConfiguration : GameRuleConfiguration
     [DataField("maxOps")]
     public int MaxOperatives = 5;
 
-    [DataField("spawnEntityProto", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string SpawnEntityPrototype = "MobHumanNukeOp";
+    [DataField("randomHumanoidSettings", customTypeSerializer: typeof(PrototypeIdSerializer<RandomHumanoidSettingsPrototype>))]
+    public string RandomHumanoidSettingsPrototype = "NukeOp";
 
     [DataField("spawnPointProto", customTypeSerializer: typeof(PrototypeIdSerializer<StartingGearPrototype>))]
     public string SpawnPointPrototype = "SpawnPointNukies";

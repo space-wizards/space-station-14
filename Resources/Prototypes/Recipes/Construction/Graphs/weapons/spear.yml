@@ -12,9 +12,9 @@
             - material: Cable
               amount: 2
               doAfter: 1
-            - prototype: ShardGlass
+            - tag: GlassShard
               name: Glass Shard
-              icon: 
+              icon:
                 sprite: Objects/Materials/Shards/shard.rsi
                 state: shard1
               doAfter: 1

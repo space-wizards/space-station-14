@@ -9,15 +9,16 @@ using Content.Shared.Physics;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Network;
+using Robust.Shared.Physics.Systems;
 
 namespace Content.Shared.Standing
 {
     public sealed class StandingStateSystem : EntitySystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly INetManager _netMan = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
         // If StandingCollisionLayer value is ever changed to more than one layer, the logic needs to be edited.
         private const int StandingCollisionLayer = (int) CollisionGroup.MidImpassable;
@@ -96,7 +97,7 @@ namespace Content.Shared.Standing
                         continue;
 
                     standingState.ChangedFixtures.Add(key);
-                    fixture.CollisionMask &= ~StandingCollisionLayer;
+                    _physics.SetCollisionMask(fixture, fixture.CollisionMask & ~StandingCollisionLayer);
                 }
             }
 
@@ -142,7 +143,7 @@ namespace Content.Shared.Standing
                 foreach (var key in standingState.ChangedFixtures)
                 {
                     if (fixtureComponent.Fixtures.TryGetValue(key, out var fixture))
-                        fixture.CollisionMask |= StandingCollisionLayer;
+                        _physics.SetCollisionMask(fixture, fixture.CollisionMask | StandingCollisionLayer);
                 }
             }
             standingState.ChangedFixtures.Clear();

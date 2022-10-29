@@ -20,6 +20,12 @@ namespace Content.Shared.Traits
         public string Name { get; } = string.Empty;
 
         /// <summary>
+        ///     The description of this trait.
+        /// </summary>
+        [DataField("description")]
+        public string? Description { get; }
+
+        /// <summary>
         ///     The components that get added to the player, when they pick this trait.
         /// </summary>
         [DataField("components")]

@@ -31,11 +31,6 @@ public sealed partial class PathfindingSystem
 
     // Probably can't pool polys as there might be old pathfinding refs to them.
 
-    private readonly ObjectPool<HashSet<PathPoly>> _neighborPolyPool =
-        new DefaultObjectPool<HashSet<PathPoly>>(new DefaultPooledObjectPolicy<HashSet<PathPoly>>(), MaxPoolSize);
-
-    private static int MaxPoolSize = Environment.ProcessorCount * 2 * ChunkSize * ChunkSize;
-
     private void InitializeGrid()
     {
         SubscribeLocalEvent<GridInitializeEvent>(OnGridInit);
@@ -248,8 +243,10 @@ public sealed partial class PathfindingSystem
             return;
         }
 
-        var oldGridUid = ev.OldPosition.GetGridUid(EntityManager);
-        var gridUid = ev.NewPosition.GetGridUid(EntityManager);
+        var gridUid = ev.Component.GridUid;
+        var oldGridUid = ev.OldPosition.EntityId == ev.NewPosition.EntityId
+            ? gridUid
+            : ev.OldPosition.GetGridUid(EntityManager);
 
         // Not on a grid at all so just ignore.
         if (oldGridUid == gridUid && oldGridUid == null)
@@ -561,7 +558,7 @@ public sealed partial class PathfindingSystem
                         (Vector2) (poly.TopRight + Vector2i.One) / SubStep + polyOffset);
                     var polyData = points[x * SubStep + poly.Left, y * SubStep + poly.Bottom].Data;
 
-                    var neighbors = _neighborPolyPool.Get();
+                    var neighbors = new HashSet<PathPoly>();
                     tilePoly.Add(new PathPoly(grid.GridEntityId, chunk.Origin, GetIndex(x, y), box, polyData, neighbors));
                 }
             }
@@ -574,7 +571,7 @@ public sealed partial class PathfindingSystem
             {
                 var index = x * ChunkSize + y;
                 var polys = chunkPolys[index];
-                ref var existing = ref chunk.Polygons[index];
+                var existing = chunk.Polygons[index];
 
                 var isEquivalent = true;
 
@@ -629,13 +626,11 @@ public sealed partial class PathfindingSystem
         foreach (var neighbor in poly.Neighbors)
         {
             neighbor.Neighbors.Remove(poly);
-            poly.Neighbors.Remove(neighbor);
         }
 
         // If any paths have a ref to it let them know that the class is no longer a valid node.
         poly.Data.Flags = PathfindingBreadcrumbFlag.Invalid;
         poly.Neighbors.Clear();
-        _neighborPolyPool.Return(poly.Neighbors);
     }
 
     private void BuildNavmesh(GridPathfindingChunk chunk, GridPathfindingComponent component)
