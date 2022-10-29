@@ -1161,6 +1161,7 @@ namespace Content.Client.Preferences.UI
                 {
                     Text = job.LocalizedName,
                     MinSize = (175, 0)
+                    MouseFilter = MouseFilterMode.Stop
                 };
 
                 if (job.LocalizedDescription != null)
