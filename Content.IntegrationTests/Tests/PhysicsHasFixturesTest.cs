@@ -51,7 +51,7 @@ public sealed class PhysicsFixtureTest
                 foreach (var body in physics)
                 {
                     Assert.That(fixturesQuery.GetComponent(body.Owner).FixtureCount > 0,
-                        $"Entity prototype {ent.GetComponent<MetaDataComponent>(body.Owner).EntityPrototype?.ID} has physics without fixtures");
+                        $"{ent.ToPrettyString(body.Owner)} has a physics component without any fixtures!");
                 }
             });
         });
