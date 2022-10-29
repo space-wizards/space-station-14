@@ -371,10 +371,11 @@ public abstract partial class SharedGunSystem : EntitySystem
 
     public void CauseImpulse(Vector2 direction, EntityUid? user = null)
     {
-        if(user == null)   return;
+        if (user == null) return;
         var userPhysics = EnsureComp<PhysicsComponent>(user.Value);
+        if (userPhysics == null) return;
 
-        if(!Gravity.IsWeightless(user.Value, userPhysics))   return;
+        if (!Gravity.IsWeightless(user.Value, userPhysics)) return;
         var impulseVector =  direction.Normalized * userPhysics.Mass;
         Physics.ApplyLinearImpulse(userPhysics, -impulseVector * 1.2f);
     }
