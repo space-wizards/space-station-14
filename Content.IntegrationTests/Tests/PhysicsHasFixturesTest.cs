@@ -50,7 +50,7 @@ public sealed class PhysicsFixtureTest
             {
                 foreach (var body in physics)
                 {
-                    Assert.That(fixturesQuery.GetComponent(body.Owner).FixtureCount > 0,
+                    Assert.That(fixturesQuery.GetComponent(body.Owner).FixtureCount > 0 || ent.HasComponent<IMapGridComponent>(body.Owner),
                         $"{ent.ToPrettyString(body.Owner)} has a physics component without any fixtures!");
                 }
             });
