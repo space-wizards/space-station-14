@@ -104,10 +104,9 @@ namespace Content.Server.Connection
             if (_cfg.GetCVar(CCVars.PanicBunkerEnabled))
             {
                 var record = await _dbManager.GetPlayerRecordByUserId(userId);
+
                 if ((record is null ||
-                    record.FirstSeenTime.CompareTo(DateTimeOffset.Now - TimeSpan.FromMinutes(_cfg.GetCVar(CCVars.PanicBunkerMinAccountAge))) < 0)
-                    && !await _db.GetWhitelistStatusAsync(userId)
-                    )
+                    (record.FirstSeenTime.CompareTo(DateTimeOffset.Now - TimeSpan.FromMinutes(_cfg.GetCVar(CCVars.PanicBunkerMinAccountAge))) > 0)))
                 {
                     return (ConnectionDenyReason.Panic, Loc.GetString("panic-bunker-account-denied"), null);
                 }
