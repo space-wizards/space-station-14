@@ -241,6 +241,8 @@ public sealed partial class GunSystem : SharedGunSystem
         }
 
         Transform(uid).WorldRotation = direction.ToWorldAngle();
+        // Projectiles cause impulses especially important in non gravity environments
+        CauseImpulse(direction, user);
     }
 
     /// <summary>

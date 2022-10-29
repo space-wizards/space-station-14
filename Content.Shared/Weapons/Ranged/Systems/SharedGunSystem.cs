@@ -5,6 +5,7 @@ using Content.Shared.CombatMode;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Damage;
 using Content.Shared.Examine;
+using Content.Shared.Gravity;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
@@ -20,6 +21,7 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -38,6 +40,7 @@ public abstract partial class SharedGunSystem : EntitySystem
     [Dependency] protected readonly IRobustRandom Random = default!;
     [Dependency] protected readonly ISharedAdminLogManager Logs = default!;
     [Dependency] protected readonly DamageableSystem Damageable = default!;
+    [Dependency] private readonly SharedGravitySystem Gravity = default!;
     [Dependency] private   readonly ItemSlotsSystem _slots = default!;
     [Dependency] protected readonly SharedActionsSystem Actions = default!;
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
@@ -364,6 +367,16 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         var ev = new MuzzleFlashEvent(gun, sprite, user == gun);
         CreateEffect(gun, ev, user);
+    }
+
+    public void CauseImpulse(Vector2 direction, EntityUid? user = null)
+    {
+        if(user == null)   return;
+        var userPhysics = EnsureComp<PhysicsComponent>(user.Value);
+
+        if(!Gravity.IsWeightless(user.Value, userPhysics))   return;
+        var impulseVector =  direction.Normalized * userPhysics.Mass;
+        Physics.ApplyLinearImpulse(userPhysics, -impulseVector * 1.2f);
     }
 
     protected abstract void CreateEffect(EntityUid uid, MuzzleFlashEvent message, EntityUid? user = null);
