@@ -154,6 +154,10 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
         if (!Resolve(loaderUid, ref loader) || !ContainsCartridge(programUid, loader, true))
             return false;
 
+        if (loader.ActiveProgram == programUid)
+            loader.ActiveProgram = null;
+
+        loader.BackgroundPrograms.Remove(programUid);
         loader.InstalledPrograms.Remove(programUid);
         EntityManager.QueueDeleteEntity(programUid);
         UpdateUserInterfaceState(loaderUid, loader);

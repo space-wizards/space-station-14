@@ -82,7 +82,7 @@ public abstract class CartridgeLoaderBoundUserInterface : BoundUserInterface
         SendMessage(message);
     }
 
-    protected List<(EntityUid, CartridgeComponent)> GetCartridgeComponents(List<EntityUid> programs)
+    private List<(EntityUid, CartridgeComponent)> GetCartridgeComponents(List<EntityUid> programs)
     {
         var components = new List<(EntityUid, CartridgeComponent)>();
 
@@ -96,9 +96,15 @@ public abstract class CartridgeLoaderBoundUserInterface : BoundUserInterface
         return components;
     }
 
-    protected abstract void AttachCartridgeUI(Control cartridgeUI, string? title);
+    /// <summary>
+    /// The implementing ui needs to add the passed ui fragment as a child to itself
+    /// </summary>
+    protected abstract void AttachCartridgeUI(Control cartridgeUIFragment, string? title);
 
-    protected abstract void DetachCartridgeUI(Control cartridgeUI);
+    /// <summary>
+    /// The implementing ui needs to remove the passed ui from itself
+    /// </summary>
+    protected abstract void DetachCartridgeUI(Control cartridgeUIFragment);
 
     protected abstract void UpdateAvailablePrograms(List<(EntityUid, CartridgeComponent)> programs);
 

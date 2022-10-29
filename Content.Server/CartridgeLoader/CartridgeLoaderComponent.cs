@@ -7,6 +7,9 @@ namespace Content.Server.CartridgeLoader;
 [ComponentReference(typeof(SharedCartridgeLoaderComponent))]
 public sealed class CartridgeLoaderComponent : SharedCartridgeLoaderComponent
 {
+    /// <summary>
+    /// The maximum amount of programs that can be installed on the cartridge loader entity
+    /// </summary>
     [DataField("diskSpace")]
     public int DiskSpace = 5;
 

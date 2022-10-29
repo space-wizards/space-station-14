@@ -6,6 +6,16 @@ using Robust.Shared.Serialization.TypeSerializers.Interfaces;
 
 namespace Content.Client.CartridgeLoader;
 
+/// <summary>
+/// Boilerplate serializer for defining the ui fragment used for a cartridge in yaml
+/// </summary>
+/// <example>
+/// This is an example from the yaml definition from the notekeeper ui
+/// <code>
+/// - type: CartridgeUi
+///     ui: !type:NotekeeperUi
+/// </code>
+/// </example>
 public sealed class CartridgeUISerializer : ITypeSerializer<CartridgeUI, ValueDataNode>
 {
     public ValidationNode Validate(ISerializationManager serializationManager, ValueDataNode node,

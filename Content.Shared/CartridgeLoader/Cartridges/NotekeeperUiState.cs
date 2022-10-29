@@ -5,10 +5,10 @@ namespace Content.Shared.CartridgeLoader.Cartridges;
 [Serializable, NetSerializable]
 public sealed class NotekeeperUiState : BoundUserInterfaceState
 {
-    public List<String> Messages;
+    public List<String> Notes;
 
-    public NotekeeperUiState(List<string> messages)
+    public NotekeeperUiState(List<string> notes)
     {
-        Messages = messages;
+        Notes = notes;
     }
 }

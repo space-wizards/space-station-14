@@ -27,7 +27,7 @@ public sealed class NotekeeperUi : CartridgeUI
         if (state is not NotekeeperUiState notekeepeerState)
             return;
 
-        _fragment?.UpdateState(notekeepeerState.Messages);
+        _fragment?.UpdateState(notekeepeerState.Notes);
     }
 
     private void SendNotekeeperMessage(NotekeeperUiAction action, string note, BoundUserInterface userInterface)

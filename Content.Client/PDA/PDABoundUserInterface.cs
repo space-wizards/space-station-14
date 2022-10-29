@@ -75,7 +75,7 @@ namespace Content.Client.PDA
             _menu.OnUninstallButtonPressed += UninstallCartridge;
             _menu.ProgramCloseButton.OnPressed += _ => DeactivateActiveCartridge();
 
-            var borderColorComponent = getBorderColorComponent();
+            var borderColorComponent = GetBorderColorComponent();
             if (borderColorComponent == null)
                 return;
 
@@ -95,20 +95,20 @@ namespace Content.Client.PDA
         }
 
 
-        protected override void AttachCartridgeUI(Control cartridgeUI, string? title)
+        protected override void AttachCartridgeUI(Control cartridgeUIFragment, string? title)
         {
-            _menu?.ProgramView.AddChild(cartridgeUI);
+            _menu?.ProgramView.AddChild(cartridgeUIFragment);
             _menu?.ToProgramView(title ?? Loc.GetString("comp-pda-io-program-fallback-title"));
         }
 
-        protected override void DetachCartridgeUI(Control cartridgeUI)
+        protected override void DetachCartridgeUI(Control cartridgeUIFragment)
         {
             if (_menu is null)
                 return;
 
             _menu.ToHomeScreen();
             _menu.HideProgramHeader();
-            _menu.ProgramView.RemoveChild(cartridgeUI);
+            _menu.ProgramView.RemoveChild(cartridgeUIFragment);
         }
 
         protected override void UpdateAvailablePrograms(List<(EntityUid, CartridgeComponent)> programs)
@@ -125,10 +125,9 @@ namespace Content.Client.PDA
             _menu?.Dispose();
         }
 
-        private PDABorderColorComponent? getBorderColorComponent()
+        private PDABorderColorComponent? GetBorderColorComponent()
         {
-            var owner = Owner.Owner;
-            return _entityManager?.GetComponentOrNull<PDABorderColorComponent>(owner);
+            return _entityManager?.GetComponentOrNull<PDABorderColorComponent>(Owner.Owner);
         }
     }
 }

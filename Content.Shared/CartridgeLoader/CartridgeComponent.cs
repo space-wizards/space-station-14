@@ -4,6 +4,9 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.CartridgeLoader;
 
+/// <summary>
+/// This is used for defining values used for displaying in the program ui in yaml
+/// </summary>
 [NetworkedComponent]
 [RegisterComponent]
 public sealed class CartridgeComponent : Component

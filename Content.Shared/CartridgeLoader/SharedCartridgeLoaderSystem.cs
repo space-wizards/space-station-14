@@ -30,6 +30,9 @@ public abstract class SharedCartridgeLoaderSystem : EntitySystem
         _itemSlotsSystem.AddItemSlot(uid, SharedCartridgeLoaderComponent.CartridgeSlotId, loader.CartridgeSlot);
     }
 
+    /// <summary>
+    /// Marks installed program entities for deletion when the component gets removed
+    /// </summary>
     private void OnComponentRemove(EntityUid uid, SharedCartridgeLoaderComponent loader, ComponentRemove args)
     {
         _itemSlotsSystem.RemoveItemSlot(uid, loader.CartridgeSlot);
@@ -72,6 +75,9 @@ public abstract class SharedCartridgeLoaderSystem : EntitySystem
     }
 }
 
+/// <summary>
+/// Gets sent to program / cartridge entities when they get inserted or installed
+/// </summary>
 public sealed class CartridgeAddedEvent : EntityEventArgs
 {
     public readonly EntityUid Loader;
@@ -82,6 +88,9 @@ public sealed class CartridgeAddedEvent : EntityEventArgs
     }
 }
 
+/// <summary>
+/// Gets sent to cartridge entities when they get ejected
+/// </summary>
 public sealed class CartridgeRemovedEvent : EntityEventArgs
 {
     public readonly EntityUid Loader;
@@ -92,6 +101,12 @@ public sealed class CartridgeRemovedEvent : EntityEventArgs
     }
 }
 
+/// <summary>
+/// Gets sent to program / cartridge entities when they get activated
+/// </summary>
+/// <remarks>
+/// Don't update the programs ui state in this events listener
+/// </remarks>
 public sealed class CartridgeActivatedEvent : EntityEventArgs
 {
     public readonly EntityUid Loader;
@@ -102,6 +117,9 @@ public sealed class CartridgeActivatedEvent : EntityEventArgs
     }
 }
 
+/// <summary>
+/// Gets sent to program / cartridge entities when they get deactivated
+/// </summary>
 public sealed class CartridgeDeactivatedEvent : EntityEventArgs
 {
     public readonly EntityUid Loader;
@@ -112,6 +130,12 @@ public sealed class CartridgeDeactivatedEvent : EntityEventArgs
     }
 }
 
+/// <summary>
+/// Gets sent to program / cartridge entities when the ui is ready to be updated by the cartridge.
+/// </summary>
+/// <remarks>
+/// This is used for the initial ui state update because updating the ui in the activate event doesn't work
+/// </remarks>
 public sealed class CartridgeUiReadyEvent : EntityEventArgs
 {
     public readonly EntityUid Loader;
