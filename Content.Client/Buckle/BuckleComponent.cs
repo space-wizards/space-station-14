@@ -46,6 +46,8 @@ namespace Content.Client.Buckle
                 return;
             }
 
+            // Adjust draw depth when the chair faces north so that the seat back is drawn over the player.
+            // Reset the draw depth when rotated in any other direction.
             // TODO when ECSing, make this a visualizer
             if (_buckled &&
                 LastEntityBuckledTo != null &&
@@ -57,7 +59,8 @@ namespace Content.Client.Buckle
                 return;
             }
 
-            if (_originalDrawDepth.HasValue && !_buckled)
+            // If here, we're not turning north and should restore the saved draw depth.
+            if (_originalDrawDepth.HasValue)
             {
                 ownerSprite.DrawDepth = _originalDrawDepth.Value;
                 _originalDrawDepth = null;
