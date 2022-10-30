@@ -226,6 +226,8 @@ public sealed partial class GunSystem : SharedGunSystem
         {
             FiredProjectiles = shotProjectiles,
         }, false);
+        // Projectiles cause impulses especially important in non gravity environments
+        CauseImpulse(mapDirection, user);
     }
 
     public void ShootProjectile(EntityUid uid, Vector2 direction, EntityUid? user = null, float speed = 20f)
@@ -241,8 +243,6 @@ public sealed partial class GunSystem : SharedGunSystem
         }
 
         Transform(uid).WorldRotation = direction.ToWorldAngle();
-        // Projectiles cause impulses especially important in non gravity environments
-        CauseImpulse(direction, user);
     }
 
     /// <summary>

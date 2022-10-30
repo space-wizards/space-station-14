@@ -369,17 +369,18 @@ public abstract partial class SharedGunSystem : EntitySystem
         CreateEffect(gun, ev, user);
     }
 
-    public void CauseImpulse(Vector2 direction, EntityUid? user = null)
+    public void CauseImpulse(Vector2 direction, EntityUid? user = null, EntityQuery<PhysicsComponent>? physicsQuery = null)
     {
-        if (user == null) return;
-        var userPhysics = EnsureComp<PhysicsComponent>(user.Value);
-        if (userPhysics == null) return;
+        physicsQuery ??= GetEntityQuery<PhysicsComponent>();
+        if (physicsQuery.Value.TryGetComponent(user, out var userPhysics))
+        {
+            if (!Gravity.IsWeightless(user.Value, userPhysics))
+                return;
 
-        if (!Gravity.IsWeightless(user.Value, userPhysics)) return;
-        var impulseVector =  direction.Normalized * userPhysics.Mass;
-        Physics.ApplyLinearImpulse(userPhysics, -impulseVector * 1.2f);
+            var impulseVector =  direction.Normalized * userPhysics.Mass;
+            Physics.ApplyLinearImpulse(userPhysics, -impulseVector * 1.2f);
+        }
     }
-
     protected abstract void CreateEffect(EntityUid uid, MuzzleFlashEvent message, EntityUid? user = null);
 
     [Serializable, NetSerializable]
