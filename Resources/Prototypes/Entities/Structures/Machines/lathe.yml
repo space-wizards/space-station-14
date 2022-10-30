@@ -377,6 +377,7 @@
   - type: Lathe
     idleState: icon
     runningState: icon
+    machinePartPrintSpeed: Laser
     dynamicRecipes:
       - HandheldHealthAnalyzer
       - ClothingHandsGlovesLatex
