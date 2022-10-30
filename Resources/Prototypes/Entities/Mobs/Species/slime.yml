@@ -10,8 +10,7 @@
     sprite: Mobs/Species/Slime/parts.rsi
     state: full
   - type: Body
-    template: HumanoidTemplate
-    preset: SlimePreset
+    prototype: Slime
   - type: Humanoid
     species: SlimePerson
   - type: Speech

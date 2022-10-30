@@ -46,6 +46,7 @@ namespace Content.Server.Ghost
 
             SubscribeLocalEvent<GhostComponent, MindRemovedMessage>(OnMindRemovedMessage);
             SubscribeLocalEvent<GhostComponent, MindUnvisitedMessage>(OnMindUnvisitedMessage);
+            SubscribeLocalEvent<GhostComponent, PlayerDetachedEvent>(OnPlayerDetached);
 
             SubscribeLocalEvent<GhostOnMoveComponent, MoveInputEvent>(OnRelayMoveInput);
 
@@ -58,6 +59,7 @@ namespace Content.Server.Ghost
 
             SubscribeLocalEvent<RoundEndTextAppendEvent>(_ => MakeVisible(true));
         }
+
         private void OnActionPerform(EntityUid uid, GhostComponent component, BooActionEvent args)
         {
             if (args.Handled)
@@ -158,6 +160,11 @@ namespace Content.Server.Ghost
         private void OnMindUnvisitedMessage(EntityUid uid, GhostComponent component, MindUnvisitedMessage args)
         {
             DeleteEntity(uid);
+        }
+
+        private void OnPlayerDetached(EntityUid uid, GhostComponent component, PlayerDetachedEvent args)
+        {
+            QueueDel(uid);
         }
 
         private void OnGhostWarpsRequest(GhostWarpsRequestEvent msg, EntitySessionEventArgs args)
