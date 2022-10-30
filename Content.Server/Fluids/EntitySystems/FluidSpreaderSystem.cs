@@ -2,7 +2,6 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Server.Fluids.Components;
 using Content.Shared;
 using Content.Shared.Directions;
-using Content.Shared.FixedPoint;
 using Content.Shared.Physics;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
@@ -48,7 +47,6 @@ public sealed class FluidSpreaderSystem : EntitySystem
         };
         var puddles = new List<PuddleComponent>(4);
         var puddleQuery = GetEntityQuery<PuddleComponent>();
-        var metaQuery = GetEntityQuery<MetaDataComponent>();
         var xFormQuery = GetEntityQuery<TransformComponent>();
         foreach (var fluidMapData in EntityQuery<FluidMapDataComponent>())
         {
@@ -59,21 +57,19 @@ public sealed class FluidSpreaderSystem : EntitySystem
             foreach (var puddleUid in fluidMapData.Puddles)
             {
                 if (!puddleQuery.TryGetComponent(puddleUid, out var puddle)
-                    || !metaQuery.TryGetComponent(puddleUid, out var metaData)
                     || !xFormQuery.TryGetComponent(puddleUid, out var transform)
                     || !_mapManager.TryGetGrid(transform.GridUid, out var mapGrid))
                     continue;
 
                 puddles.Clear();
                 var pos = transform.Coordinates;
-                var prototypeName = metaData.EntityPrototype?.ID ?? "PuddleSmear";
 
                 var totalVolume = _puddleSystem.CurrentVolume(puddle.Owner, puddle);
                 exploreDirections.Shuffle();
                 foreach (var direction in exploreDirections)
                 {
                     var newPos = pos.Offset(direction);
-                    if (CheckTile(_puddleSystem.CurrentVolume(puddle.Owner, puddle), prototypeName, newPos, mapGrid,
+                    if (CheckTile(puddle.Owner, puddle, newPos, mapGrid,
                             out var puddleComponent))
                     {
                         puddles.Add(puddleComponent);
@@ -93,13 +89,13 @@ public sealed class FluidSpreaderSystem : EntitySystem
     /// <summary>
     /// Check a tile is valid for solution allocation.
     /// </summary>
-    /// <param name="puddleCurrentVolume">parameter used to filter which puddle to spill to.</param>
-    /// <param name="prototype">puddle prototype if  a new puddle needs to be constructed</param>
+    /// <param name="srcUid">Entity Uid of original puddle</param>
+    /// <param name="srcPuddle">PuddleComponent attached to srcUid</param>
     /// <param name="pos">at which to check tile</param>
     /// <param name="mapGrid">helper param needed to extract entities</param>
     /// <param name="puddle">either found or newly created PuddleComponent.</param>
     /// <returns>true if tile is empty or occupied by a non-overflowing puddle (or a puddle close to being overflowing)</returns>
-    private bool CheckTile(FixedPoint2 puddleCurrentVolume, string prototype, EntityCoordinates pos, IMapGrid mapGrid,
+    private bool CheckTile(EntityUid srcUid, PuddleComponent srcPuddle, EntityCoordinates pos, IMapGrid mapGrid,
         [NotNullWhen(true)] out PuddleComponent? puddle)
     {
         if (!mapGrid.TryGetTileRef(pos, out var tileRef)
@@ -108,6 +104,8 @@ public sealed class FluidSpreaderSystem : EntitySystem
             puddle = null;
             return false;
         }
+
+        var puddleCurrentVolume = _puddleSystem.CurrentVolume(srcUid, srcPuddle);
 
         foreach (var entity in mapGrid.GetAnchoredEntities(pos))
         {
@@ -135,8 +133,7 @@ public sealed class FluidSpreaderSystem : EntitySystem
             }
         }
 
-        var puid = EntityManager.SpawnEntity(prototype, pos);
-        EntityManager.EnsureComponent<PuddleComponent>(puid, out puddle);
+        puddle = _puddleSystem.SpawnPuddle(srcUid, pos, srcPuddle);
         return true;
     }
 }

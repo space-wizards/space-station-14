@@ -100,6 +100,14 @@ namespace Content.Shared.Slippery
             _adminLogger.Add(LogType.Slip, LogImpact.Low,
                 $"{ToPrettyString(other):mob} slipped on collision with {ToPrettyString(component.Owner):entity}");
         }
+
+        public void CopyConstruct(EntityUid destUid, SlipperyComponent srcSlip)
+        {
+            var destEvaporation = EntityManager.EnsureComponent<SlipperyComponent>(destUid);
+            destEvaporation.SlipSound = srcSlip.SlipSound;
+            destEvaporation.ParalyzeTime = srcSlip.ParalyzeTime;
+            destEvaporation.LaunchForwardsMultiplier = srcSlip.LaunchForwardsMultiplier;
+        }
     }
 
     /// <summary>

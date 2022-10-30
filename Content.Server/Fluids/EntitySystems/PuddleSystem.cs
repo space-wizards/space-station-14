@@ -1,14 +1,18 @@
+using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Fluids.Components;
-using Content.Shared.Chemistry.Components;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids;
+using Content.Shared.Slippery;
 using Content.Shared.StepTrigger.Components;
 using Content.Shared.StepTrigger.Systems;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Solution = Content.Shared.Chemistry.Components.Solution;
 
 namespace Content.Server.Fluids.EntitySystems
 {
@@ -18,6 +22,9 @@ namespace Content.Server.Fluids.EntitySystems
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly FluidSpreaderSystem _fluidSpreaderSystem = default!;
         [Dependency] private readonly StepTriggerSystem _stepTrigger = default!;
+        [Dependency] private readonly SlipperySystem _slipSystem = default!;
+        [Dependency] private readonly EvaporationSystem _evaporationSystem = default!;
+        
 
         public override void Initialize()
         {
@@ -235,6 +242,72 @@ namespace Content.Server.Fluids.EntitySystems
                 return false;
 
             return CurrentVolume(uid, puddle) > puddle.OverflowVolume;
+        }
+
+        public PuddleComponent SpawnPuddle(EntityUid srcUid, EntityCoordinates pos, PuddleComponent? srcPuddleComponent = null)
+        {
+            MetaDataComponent? metadata = null;
+            string? prototype = null;
+            if (Resolve(srcUid, ref srcPuddleComponent, ref metadata))
+            {
+                prototype = metadata.EntityPrototype?.ID;
+            }
+
+            var destUid = EntityManager.SpawnEntity(prototype, pos);
+            var destPuddle = EntityManager.EnsureComponent<PuddleComponent>(destUid);
+
+            
+            // if this is metadata-less component we do special puddle spawning
+            if (srcPuddleComponent != null && metadata == null)
+            {
+                // Copy puddle values
+                destPuddle.SlipThreshold = srcPuddleComponent.SlipThreshold;
+                destPuddle.WetFloorEffectThreshold = srcPuddleComponent.WetFloorEffectThreshold;
+                destPuddle.SpillSound = srcPuddleComponent.SpillSound;
+                destPuddle.OverflowVolume = srcPuddleComponent.OverflowVolume;
+                destPuddle.OpacityModifier = srcPuddleComponent.OpacityModifier;
+                destPuddle.SolutionName = srcPuddleComponent.SolutionName;
+                
+                // Copy SolutionContainer properties
+                EntityManager.EnsureComponent<SolutionContainerManagerComponent>(destUid);
+                _solutionContainerSystem.EnsureSolution(destUid, srcPuddleComponent.SolutionName);
+                
+                // Copy visuals
+                var spriteQuery = EntityManager.GetEntityQuery<SpriteComponent>();
+                if (spriteQuery.TryGetComponent(srcUid, out var srcSprite))
+                {
+                    var destSprite = EntityManager.EnsureComponent<SpriteComponent>(destUid);
+                    destSprite.Visible = srcSprite.Visible;
+                    destSprite.DrawDepth = srcSprite.DrawDepth;
+                    destSprite.Scale = srcSprite.Scale;
+                    destSprite.Rotation = srcSprite.Rotation;
+                    destSprite.Offset = srcSprite.Offset;
+                    destSprite.Color = srcSprite.Color;
+                    destSprite.DrawDepth = srcSprite.DrawDepth;
+                    destSprite.RenderOrder = srcSprite.RenderOrder;
+                    destSprite.BaseRSIPath = srcSprite.BaseRSIPath;
+                }
+                
+                // Copy Slip and Step properties
+                var slipQuery = EntityManager.GetEntityQuery<SlipperyComponent>();
+                var stepQuery = EntityManager.GetEntityQuery<StepTriggerComponent>();
+                if (slipQuery.TryGetComponent(srcUid, out var srcSlip) 
+                    && stepQuery.TryGetComponent(srcUid, out var srcStep))
+                {
+                    _slipSystem.CopyConstruct(destUid, srcSlip);
+                    _stepTrigger.CopyConstruct(destUid, srcStep);
+                }
+                
+                // Copy Evaporation
+                var evaporationQuery = EntityManager.GetEntityQuery<EvaporationComponent>();
+                if (evaporationQuery.TryGetComponent(srcUid, out var srcEvaporation))
+                {
+                    _evaporationSystem.CopyConstruct(destUid, srcEvaporation);
+                    
+                }
+            }
+
+            return destPuddle;
         }
     }
 }
