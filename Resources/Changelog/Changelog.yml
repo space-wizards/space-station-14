@@ -1,11 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: The sound effect for walking in snow has been replaced., type: Tweak}
-  id: 2044
-  time: '2022-07-31T02:36:49.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: Firesuits no longer protect against space., type: Fix}
   id: 2045
   time: '2022-07-31T02:44:50.0000000+00:00'
@@ -2952,3 +2947,9 @@ Entries:
   - {message: 'Added Norepinephric Acid, the blindness inducing chemical.', type: Add}
   id: 2543
   time: '2022-10-30T07:10:00.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Lathes can now be upgraded to print faster and to consume fewer materials
+      per print., type: Add}
+  id: 2544
+  time: '2022-10-30T07:12:11.0000000+00:00'
