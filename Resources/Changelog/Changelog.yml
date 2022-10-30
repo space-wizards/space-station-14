@@ -1,9 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Desk lamps and floodlights are now heavier., type: Tweak}
-  id: 2050
-  time: '2022-07-31T02:56:42.0000000+00:00'
 - author: GoodWheatley
   changes:
   - {message: nuke disk now takes up 5 space instead of 12, type: Tweak}
@@ -2955,3 +2950,9 @@ Entries:
   - {message: The Syndicate hates Nanotrasen slightly more., type: Tweak}
   id: 2549
   time: '2022-10-30T18:56:41.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Fixed several items of clothing making your entire head invisible.,
+    type: Fix}
+  id: 2550
+  time: '2022-10-30T18:58:36.0000000+00:00'
