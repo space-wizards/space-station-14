@@ -1,9 +1,4 @@
 Entries:
-- author: Deahaka
-  changes:
-  - {message: Added donut-vend., type: Add}
-  id: 2052
-  time: '2022-07-31T02:58:57.0000000+00:00'
 - author: notafet
   changes:
   - {message: Passive gates now equalize pressure instantly and come with a built-in
@@ -2956,3 +2951,9 @@ Entries:
   - {message: Flying mobs no longer run into mousetraps and glass shards, type: Fix}
   id: 2551
   time: '2022-10-30T19:55:07.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed some entity lookup / physics bugs. Hopefully the game should be
+      a bit more stable now., type: Fix}
+  id: 2552
+  time: '2022-10-30T23:17:28.0000000+00:00'
