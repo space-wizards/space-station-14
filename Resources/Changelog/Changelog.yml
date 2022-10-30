@@ -1,9 +1,4 @@
 Entries:
-- author: GoodWheatley
-  changes:
-  - {message: nuke disk now takes up 5 space instead of 12, type: Tweak}
-  id: 2051
-  time: '2022-07-31T02:58:19.0000000+00:00'
 - author: Deahaka
   changes:
   - {message: Added donut-vend., type: Add}
@@ -2956,3 +2951,8 @@ Entries:
     type: Fix}
   id: 2550
   time: '2022-10-30T18:58:36.0000000+00:00'
+- author: aklos
+  changes:
+  - {message: Flying mobs no longer run into mousetraps and glass shards, type: Fix}
+  id: 2551
+  time: '2022-10-30T19:55:07.0000000+00:00'
