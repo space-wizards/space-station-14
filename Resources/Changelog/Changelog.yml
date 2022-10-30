@@ -1,9 +1,4 @@
 Entries:
-- author: jessicamaybe
-  changes:
-  - {message: You can now see the station time in the lobby screen, type: Add}
-  id: 2047
-  time: '2022-07-31T02:55:43.0000000+00:00'
 - author: CormosLemming
   changes:
   - {message: Popcorn sprite now has the proper number on it., type: Fix}
@@ -2953,3 +2948,8 @@ Entries:
   - {message: Console chat hotkey works again., type: Fix}
   id: 2546
   time: '2022-10-30T07:18:41.0000000+00:00'
+- author: JustinTrotter
+  changes:
+  - {message: added minor delay to curtain open/close time, type: Tweak}
+  id: 2547
+  time: '2022-10-30T07:34:01.0000000+00:00'
