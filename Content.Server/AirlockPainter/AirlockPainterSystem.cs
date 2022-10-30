@@ -19,6 +19,7 @@ namespace Content.Server.AirlockPainter
     public sealed class AirlockPainterSystem : SharedAirlockPainterSystem
     {
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
 
@@ -39,7 +40,7 @@ namespace Content.Server.AirlockPainter
             if (TryComp<AppearanceComponent>(ev.Target, out var appearance) &&
                 TryComp<PaintableAirlockComponent>(ev.Target, out PaintableAirlockComponent? airlock))
             {
-                SoundSystem.Play(ev.Component.SpraySound.GetSound(), Filter.Pvs(ev.User, entityManager:EntityManager), ev.User);
+                _audioSystem.Play(ev.Component.SpraySound, Filter.Pvs(ev.User, entityManager:EntityManager), ev.User);
                 appearance.SetData(DoorVisuals.BaseRSI, ev.Sprite);
             }
         }

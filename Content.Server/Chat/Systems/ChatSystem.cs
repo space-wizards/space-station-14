@@ -53,6 +53,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
     private const int VoiceRange = 10; // how far voice goes in world units
     private const int WhisperRange = 2; // how far whisper goes in world units
@@ -202,7 +203,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         _chatManager.ChatMessageToAll(ChatChannel.Radio, message, wrappedMessage, colorOverride);
         if (playSound)
         {
-            SoundSystem.Play(announcementSound?.GetSound() ?? DefaultAnnouncementSound, Filter.Broadcast(), AudioParams.Default.WithVolume(-2f));
+            _audioSystem.PlayGlobal(announcementSound != null ? _audioSystem.GetSound(announcementSound) : DefaultAnnouncementSound, Filter.Broadcast(), AudioParams.Default.WithVolume(-2f));
         }
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Global station announcement from {sender}: {message}");
     }
@@ -235,7 +236,7 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         if (playDefaultSound)
         {
-            SoundSystem.Play(announcementSound?.GetSound() ?? DefaultAnnouncementSound, filter, AudioParams.Default.WithVolume(-2f));
+            _audioSystem.PlayGlobal(announcementSound != null ? _audioSystem.GetSound(announcementSound) : DefaultAnnouncementSound, filter, AudioParams.Default.WithVolume(-2f));
         }
 
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Station Announcement on {station} from {sender}: {message}");

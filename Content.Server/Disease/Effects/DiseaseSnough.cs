@@ -32,9 +32,10 @@ namespace Content.Server.Disease
 
         public override void Effect(DiseaseEffectArgs args)
         {
+            var sysMan = IoCManager.Resolve<IEntitySystemManager>();
             if (SnoughSound != null)
-                SoundSystem.Play(SnoughSound.GetSound(), Filter.Pvs(args.DiseasedEntity), args.DiseasedEntity, AudioHelpers.WithVariation(0.2f));
-            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<DiseaseSystem>().SneezeCough(args.DiseasedEntity, args.Disease, SnoughMessage, AirTransmit);
+                sysMan.GetEntitySystem<SharedAudioSystem>().Play(SnoughSound, Filter.Pvs(args.DiseasedEntity), args.DiseasedEntity, AudioHelpers.WithVariation(0.2f));
+            sysMan.GetEntitySystem<DiseaseSystem>().SneezeCough(args.DiseasedEntity, args.Disease, SnoughMessage, AirTransmit);
         }
     }
 }

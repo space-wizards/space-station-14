@@ -19,6 +19,7 @@ namespace Content.Server.Chemistry.Components
     public sealed class HyposprayComponent : SharedHyposprayComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
+        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
 
         [DataField("clumsyFailChance")]
         [ViewVariables(VVAccess.ReadWrite)]
@@ -83,7 +84,7 @@ namespace Content.Server.Chemistry.Components
                 // meleeSys.SendLunge(angle, user);
             }
 
-            SoundSystem.Play(_injectSound.GetSound(), Filter.Pvs(user), user);
+            _sysMan.GetEntitySystem<SharedAudioSystem>().Play(_injectSound, Filter.Pvs(user), user);
 
             // Get transfer amount. May be smaller than _transferAmount if not enough room
             var realTransferAmount = FixedPoint2.Min(TransferAmount, targetSolution.AvailableVolume);

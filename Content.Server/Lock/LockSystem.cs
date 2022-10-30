@@ -22,6 +22,7 @@ namespace Content.Server.Lock
     {
         [Dependency] private readonly AccessReaderSystem _accessReader = default!;
         [Dependency] private readonly SharedPopupSystem _sharedPopupSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
         /// <inheritdoc />
         public override void Initialize()
@@ -96,7 +97,7 @@ namespace Content.Server.Lock
 
             if(lockComp.LockSound != null)
             {
-                SoundSystem.Play(lockComp.LockSound.GetSound(), Filter.Pvs(lockComp.Owner), lockComp.Owner, AudioParams.Default.WithVolume(-5));
+                _audioSystem.Play(lockComp.LockSound, Filter.Pvs(lockComp.Owner), lockComp.Owner, AudioParams.Default.WithVolume(-5));
             }
 
             if (EntityManager.TryGetComponent(lockComp.Owner, out AppearanceComponent? appearanceComp))
@@ -119,7 +120,7 @@ namespace Content.Server.Lock
 
             if (lockComp.UnlockSound != null)
             {
-                SoundSystem.Play(lockComp.UnlockSound.GetSound(), Filter.Pvs(lockComp.Owner), lockComp.Owner, AudioParams.Default.WithVolume(-5));
+                _audioSystem.Play(lockComp.UnlockSound, Filter.Pvs(lockComp.Owner), lockComp.Owner, AudioParams.Default.WithVolume(-5));
             }
 
             if (EntityManager.TryGetComponent(lockComp.Owner, out AppearanceComponent? appearanceComp))
@@ -203,7 +204,7 @@ namespace Content.Server.Lock
             {
                 if (component.UnlockSound != null)
                 {
-                    SoundSystem.Play(component.UnlockSound.GetSound(), Filter.Pvs(component.Owner), component.Owner, AudioParams.Default.WithVolume(-5));
+                    _audioSystem.Play(component.UnlockSound, Filter.Pvs(component.Owner), component.Owner, AudioParams.Default.WithVolume(-5));
                 }
 
                 if (EntityManager.TryGetComponent(component.Owner, out AppearanceComponent? appearanceComp))

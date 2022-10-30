@@ -9,6 +9,7 @@ namespace Content.Server.MachineLinking.System
     public sealed class SignalSwitchSystem : EntitySystem
     {
         [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
         public override void Initialize()
         {
@@ -30,7 +31,7 @@ namespace Content.Server.MachineLinking.System
 
             component.State = !component.State;
             _signalSystem.InvokePort(uid, component.State ? component.OnPort : component.OffPort);
-            SoundSystem.Play(component.ClickSound.GetSound(), Filter.Pvs(component.Owner), component.Owner,
+            _audioSystem.Play(component.ClickSound, Filter.Pvs(component.Owner), component.Owner,
                 AudioHelpers.WithVariation(0.125f).WithVolume(8f));
 
             args.Handled = true;

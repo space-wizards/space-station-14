@@ -31,6 +31,7 @@ namespace Content.Server.Polymorph.Systems
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly HumanoidSystem _humanoid = default!;
         [Dependency] private readonly ContainerSystem _container = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
         public override void Initialize()
         {

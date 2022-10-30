@@ -494,7 +494,8 @@ namespace Content.Server.GameTicking
                     _chatSystem.DispatchGlobalAnnouncement(Loc.GetString(proto.Message), playSound: true);
 
                 if (proto.Sound != null)
-                    SoundSystem.Play(proto.Sound.GetSound(), Filter.Broadcast());
+                    IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedAudioSystem>()
+                        .PlayGlobal(proto.Sound, Filter.Broadcast());
 
                 // Only play one because A
                 break;

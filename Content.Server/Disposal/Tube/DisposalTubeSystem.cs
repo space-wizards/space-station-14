@@ -21,6 +21,7 @@ namespace Content.Server.Disposal.Tube
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
         public override void Initialize()
         {
@@ -47,7 +48,7 @@ namespace Content.Server.Disposal.Tube
             }
 
             component.LastClang = _gameTiming.CurTime;
-            SoundSystem.Play(component.ClangSound.GetSound(), Filter.Pvs(uid), uid);
+            _audioSystem.Play(component.ClangSound, Filter.Pvs(uid), uid);
         }
 
         private void OnBreak(EntityUid uid, DisposalTubeComponent component, BreakageEventArgs args)

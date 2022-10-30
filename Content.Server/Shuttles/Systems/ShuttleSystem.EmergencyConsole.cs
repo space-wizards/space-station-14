@@ -238,7 +238,7 @@ public sealed partial class ShuttleSystem
                 playSound: false, colorOverride: DangerColor);
 
         if (!CheckForLaunch(component))
-            SoundSystem.Play("/Audio/Misc/notice1.ogg", Filter.Broadcast());
+            _audio.PlayGlobal("/Audio/Misc/notice1.ogg", Filter.Broadcast());
 
         UpdateAllEmergencyConsoles();
     }
@@ -313,7 +313,7 @@ public sealed partial class ShuttleSystem
             playSound: false,
             colorOverride: DangerColor);
 
-        SoundSystem.Play("/Audio/Misc/notice1.ogg", Filter.Broadcast());
+        _audio.PlayGlobal("/Audio/Misc/notice1.ogg", Filter.Broadcast());
     }
 
     public bool DelayEmergencyRoundEnd()

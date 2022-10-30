@@ -25,6 +25,7 @@ namespace Content.Server.RCD.Systems
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
         private readonly int RCDModeCount = Enum.GetValues(typeof(RcdMode)).Length;
 
@@ -150,7 +151,7 @@ namespace Content.Server.RCD.Systems
                     return; //I don't know why this would happen, but sure I guess. Get out of here invalid state!
             }
 
-            SoundSystem.Play(rcd.SuccessSound.GetSound(), Filter.Pvs(uid, entityManager: EntityManager), rcd.Owner);
+            _audioSystem.Play(rcd.SuccessSound, Filter.Pvs(uid, entityManager: EntityManager), rcd.Owner);
             rcd.CurrentAmmo--;
             args.Handled = true;
         }
@@ -241,7 +242,7 @@ namespace Content.Server.RCD.Systems
 
         private void NextMode(EntityUid uid, RCDComponent rcd, EntityUid user)
         {
-            SoundSystem.Play(rcd.SwapModeSound.GetSound(), Filter.Pvs(uid, entityManager: EntityManager), uid);
+            _audioSystem.Play(rcd.SwapModeSound, Filter.Pvs(uid, entityManager: EntityManager), uid);
 
             var mode = (int) rcd.Mode;
             mode = ++mode % RCDModeCount;

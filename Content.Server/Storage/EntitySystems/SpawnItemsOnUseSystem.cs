@@ -12,6 +12,7 @@ namespace Content.Server.Storage.EntitySystems
     {
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
         public override void Initialize()
         {
@@ -35,7 +36,7 @@ namespace Content.Server.Storage.EntitySystems
             }
 
             if (component.Sound != null)
-                SoundSystem.Play(component.Sound.GetSound(), Filter.Pvs(uid), uid);
+                _audioSystem.Play(component.Sound, Filter.Pvs(uid), uid);
 
             component.Uses--;
             if (component.Uses == 0)

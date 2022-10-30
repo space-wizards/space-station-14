@@ -18,6 +18,7 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
         public override void Initialize()
         {
@@ -76,7 +77,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 xform.LocalRotation = 0;
             }
 
-            SoundSystem.Play(component.Sound.GetSound(), Filter.Pvs(uid),
+            _audioSystem.Play(component.Sound, Filter.Pvs(uid),
                 transform.Coordinates, AudioParams.Default.WithVolume(-2));
 
             component.Count--;

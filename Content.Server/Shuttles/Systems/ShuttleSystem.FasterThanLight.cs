@@ -197,7 +197,7 @@ public sealed partial class ShuttleSystem
         component = AddComp<FTLComponent>(uid);
         component.State = FTLState.Starting;
         // TODO: Need BroadcastGrid to not be bad.
-        SoundSystem.Play(_startupSound.GetSound(), Filter.Empty().AddInRange(Transform(uid).MapPosition, GetSoundRange(component.Owner)), _startupSound.Params);
+        _audio.PlayGlobal(_startupSound, Filter.Empty().AddInRange(Transform(uid).MapPosition, GetSoundRange(component.Owner)), _startupSound.Params);
         // Make sure the map is setup before we leave to avoid pop-in (e.g. parallax).
         SetupHyperspace();
         return true;
@@ -239,7 +239,7 @@ public sealed partial class ShuttleSystem
 
                     if (comp.TravelSound != null)
                     {
-                        comp.TravelStream = SoundSystem.Play(comp.TravelSound.GetSound(),
+                        comp.TravelStream = _audio.PlayGlobal(comp.TravelSound,
                             Filter.Pvs(comp.Owner, 4f, entityManager: EntityManager), comp.TravelSound.Params);
                     }
 
@@ -300,7 +300,7 @@ public sealed partial class ShuttleSystem
                         comp.TravelStream = null;
                     }
 
-                    SoundSystem.Play(_arrivalSound.GetSound(), Filter.Empty().AddInRange(Transform(comp.Owner).MapPosition, GetSoundRange(comp.Owner)), _arrivalSound.Params);
+                    _audio.PlayGlobal(_arrivalSound, Filter.Empty().AddInRange(Transform(comp.Owner).MapPosition, GetSoundRange(comp.Owner)), _arrivalSound.Params);
 
                     if (TryComp<FTLDestinationComponent>(comp.Owner, out var dest))
                     {

@@ -19,6 +19,7 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly SharedItemSystem _item = default!;
         [Dependency] private readonly ClothingSystem _clothing = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
         public override void Initialize()
         {
@@ -131,7 +132,7 @@ namespace Content.Server.Light.EntitySystems
                 {
                     case ExpendableLightState.Lit:
                     {
-                        SoundSystem.Play(component.LitSound.GetSound(), Filter.Pvs(component.Owner), component.Owner);
+                        _audioSystem.Play(component.LitSound, Filter.Pvs(component.Owner), component.Owner);
 
                         if (component.IconStateLit != string.Empty)
                         {
@@ -150,7 +151,7 @@ namespace Content.Server.Light.EntitySystems
                     case ExpendableLightState.Dead:
                     {
                         if (component.DieSound != null)
-                            SoundSystem.Play(component.DieSound.GetSound(), Filter.Pvs(component.Owner), component.Owner);
+                            _audioSystem.Play(component.DieSound, Filter.Pvs(component.Owner), component.Owner);
 
                         sprite.LayerSetState(0, component.IconStateSpent);
                         sprite.LayerSetShader(0, "shaded");

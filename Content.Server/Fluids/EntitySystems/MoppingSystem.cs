@@ -22,6 +22,7 @@ public sealed class MoppingSystem : EntitySystem
     [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionSystem = default!;
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
     const string puddlePrototypeId = "PuddleSmear"; // The puddle prototype to use when releasing liquid to the floor, making a new puddle
 
@@ -129,7 +130,7 @@ public sealed class MoppingSystem : EntitySystem
                 TryTransfer(used, target, "absorbed", puddle.SolutionName, transferAmount); // Complete the transfer right away, with no doAfter.
 
                 sfx = component.TransferSound;
-                SoundSystem.Play(sfx.GetSound(), Filter.Pvs(user), used); // Give instant feedback for diluting puddle, so that it's clear that the player is adding to the puddle (as opposed to other behaviours, which have a doAfter).
+                _audioSystem.Play(sfx, Filter.Pvs(user), used); // Give instant feedback for diluting puddle, so that it's clear that the player is adding to the puddle (as opposed to other behaviours, which have a doAfter).
 
                 msg = "mopping-system-puddle-diluted";
                 user.PopupMessage(user, Loc.GetString(msg)); // play message now because we are aborting.
@@ -306,7 +307,7 @@ public sealed class MoppingSystem : EntitySystem
 
     private void OnTransferComplete(TransferCompleteEvent ev)
     {
-        SoundSystem.Play(ev.Sound.GetSound(), Filter.Pvs(ev.User), ev.Tool); // Play the After SFX
+        _audioSystem.Play(ev.Sound, Filter.Pvs(ev.User), ev.Tool); // Play the After SFX
 
         ev.User.PopupMessage(ev.User, Loc.GetString(ev.Message, ("target", ev.Target), ("used", ev.Tool))); // Play the After popup message
 

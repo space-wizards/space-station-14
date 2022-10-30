@@ -42,6 +42,7 @@ namespace Content.Server.Electrocution
         [Dependency] private readonly SharedStunSystem _stunSystem = default!;
         [Dependency] private readonly SharedStutteringSystem _stutteringSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly NodeGroupSystem _nodeGroupSystem = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger= default!;
@@ -455,7 +456,7 @@ namespace Content.Server.Electrocution
                 return;
             }
 
-            SoundSystem.Play(electrified.ShockNoises.GetSound(), Filter.Pvs(targetUid), targetUid, AudioParams.Default.WithVolume(electrified.ShockVolume));
+            _audioSystem.Play(electrified.ShockNoises, Filter.Pvs(targetUid), targetUid, AudioParams.Default.WithVolume(electrified.ShockVolume));
         }
     }
 }

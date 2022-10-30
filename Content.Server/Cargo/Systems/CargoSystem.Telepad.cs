@@ -78,7 +78,7 @@ public sealed partial class CargoSystem
             if (order.Amount <= 0)
                 orderDatabase.Orders.Remove(index);
 
-            SoundSystem.Play(comp.TeleportSound.GetSound(), Filter.Pvs(comp.Owner), comp.Owner, AudioParams.Default.WithVolume(-8f));
+            _audioSystem.Play(comp.TeleportSound, Filter.Pvs(comp.Owner), comp.Owner, AudioParams.Default.WithVolume(-8f));
             SpawnProduct(comp, order);
             UpdateOrders(orderDatabase);
 

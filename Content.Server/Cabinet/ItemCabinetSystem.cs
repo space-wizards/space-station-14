@@ -13,6 +13,7 @@ namespace Content.Server.Cabinet
     public sealed class ItemCabinetSystem : EntitySystem
     {
         [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
         public override void Initialize()
         {
@@ -108,7 +109,7 @@ namespace Content.Server.Cabinet
                 return;
 
             cabinet.Opened = !cabinet.Opened;
-            SoundSystem.Play(cabinet.DoorSound.GetSound(), Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.15f));
+            _audioSystem.Play(cabinet.DoorSound, Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.15f));
             _itemSlotsSystem.SetLock(uid, cabinet.CabinetSlot, !cabinet.Opened);
 
             UpdateAppearance(uid, cabinet);

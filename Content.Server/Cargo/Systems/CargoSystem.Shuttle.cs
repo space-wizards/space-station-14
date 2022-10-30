@@ -509,7 +509,7 @@ public sealed partial class CargoSystem
         if (IsBlocked(shuttle))
         {
             _popup.PopupEntity(Loc.GetString("cargo-shuttle-console-organics"), player.Value, Filter.Entities(player.Value));
-            SoundSystem.Play(component.DenySound.GetSound(), Filter.Pvs(uid, entityManager: EntityManager), uid);
+            _audioSystem.Play(component.DenySound, Filter.Pvs(uid, entityManager: EntityManager), uid);
             return;
         };
 

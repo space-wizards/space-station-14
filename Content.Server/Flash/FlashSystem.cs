@@ -28,6 +28,7 @@ namespace Content.Server.Flash
         [Dependency] private readonly MetaDataSystem _metaSystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
         public override void Initialize()
         {
@@ -89,7 +90,7 @@ namespace Content.Server.Flash
                     });
                 }
 
-                SoundSystem.Play(comp.Sound.GetSound(), Filter.Pvs(comp.Owner), comp.Owner, AudioParams.Default);
+                _audioSystem.Play(comp.Sound, Filter.Pvs(comp.Owner), comp.Owner, AudioParams.Default);
 
                 return true;
             }
@@ -147,7 +148,7 @@ namespace Content.Server.Flash
             }
             if (sound != null)
             {
-                SoundSystem.Play(sound.GetSound(), Filter.Pvs(transform), source);
+                _audioSystem.Play(sound, Filter.Pvs(transform), source);
             }
         }
 

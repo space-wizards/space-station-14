@@ -27,6 +27,7 @@ namespace Content.Server.StationEvents.Events
         [Dependency] protected readonly ChatSystem ChatSystem = default!;
         [Dependency] protected readonly StationSystem StationSystem = default!;
         [Dependency] protected readonly IEntitySystemManager _sysMan = default!;
+        [Dependency] protected readonly SharedAudioSystem AudioSystem = default!;
 
         protected ISawmill Sawmill = default!;
 
@@ -68,7 +69,7 @@ namespace Content.Server.StationEvents.Events
 
             if (ev.StartAudio != null)
             {
-                SoundSystem.Play(ev.StartAudio.GetSound(), Filter.Broadcast(), ev.StartAudio.Params);
+                AudioSystem.PlayGlobal(ev.StartAudio, Filter.Broadcast(), ev.StartAudio.Params);
             }
 
             Elapsed = 0;
@@ -91,7 +92,7 @@ namespace Content.Server.StationEvents.Events
 
             if (ev.EndAudio != null)
             {
-                SoundSystem.Play(ev.EndAudio.GetSound(), Filter.Broadcast(), ev.EndAudio.Params);
+                AudioSystem.PlayGlobal(ev.EndAudio, Filter.Broadcast(), ev.EndAudio.Params);
             }
         }
 

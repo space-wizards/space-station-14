@@ -224,13 +224,14 @@ namespace Content.Server.Cuffs.Components
 
             user.PopupMessage(Loc.GetString("cuffable-component-start-removing-cuffs-message"));
 
+            var audioSystem = _sysMan.GetEntitySystem<SharedAudioSystem>();
             if (isOwner)
             {
-                SoundSystem.Play(cuff.StartBreakoutSound.GetSound(), Filter.Pvs(Owner, entityManager: _entMan), Owner);
+                audioSystem.Play(cuff.StartBreakoutSound, Filter.Pvs(Owner, entityManager: _entMan), Owner);
             }
             else
             {
-                SoundSystem.Play(cuff.StartUncuffSound.GetSound(), Filter.Pvs(Owner, entityManager: _entMan), Owner);
+                audioSystem.Play(cuff.StartUncuffSound, Filter.Pvs(Owner, entityManager: _entMan), Owner);
             }
 
             var uncuffTime = isOwner ? cuff.BreakoutTime : cuff.UncuffTime;
@@ -252,7 +253,7 @@ namespace Content.Server.Cuffs.Components
 
             if (result != DoAfterStatus.Cancelled)
             {
-                SoundSystem.Play(cuff.EndUncuffSound.GetSound(), Filter.Pvs(Owner), Owner);
+                audioSystem.Play(cuff.EndUncuffSound, Filter.Pvs(Owner), Owner);
 
                 _entMan.EntitySysManager.GetEntitySystem<HandVirtualItemSystem>().DeleteInHandsMatching(user, cuffsToRemove.Value);
                 _entMan.EntitySysManager.GetEntitySystem<SharedHandsSystem>().PickupOrDrop(user, cuffsToRemove.Value);

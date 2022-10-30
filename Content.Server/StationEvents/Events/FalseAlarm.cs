@@ -26,7 +26,7 @@ namespace Content.Server.StationEvents.Events
 
             if (cfg.StartAudio != null)
             {
-                SoundSystem.Play(cfg.StartAudio.GetSound(), Filter.Broadcast(), cfg.StartAudio.Params);
+                AudioSystem.PlayGlobal(cfg.StartAudio, Filter.Broadcast(), cfg.StartAudio.Params);
             }
         }
     }

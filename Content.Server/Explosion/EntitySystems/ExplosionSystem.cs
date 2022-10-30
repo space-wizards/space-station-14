@@ -36,6 +36,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
     /// <summary>
     ///     "Tile-size" for space when there are no nearby grids to use as a reference.
@@ -288,7 +289,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         // play sound.
         var audioRange = iterationIntensity.Count * 5;
         var filter = Filter.Pvs(epicenter).AddInRange(epicenter, audioRange);
-        SoundSystem.Play(type.Sound.GetSound(), filter, mapEntityCoords, _audioParams);
+        _audioSystem.Play(type.Sound, filter, mapEntityCoords, _audioParams);
 
         return new Explosion(this,
             type,

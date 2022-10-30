@@ -22,6 +22,7 @@ namespace Content.Server.Weapons.Melee.EnergySword
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly SharedRgbLightControllerSystem _rgbSystem = default!;
         [Dependency] private readonly SharedItemSystem _item = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
         public override void Initialize()
         {
@@ -91,7 +92,7 @@ namespace Content.Server.Weapons.Melee.EnergySword
             if (comp.IsSharp)
                 RemComp<SharpComponent>(comp.Owner);
 
-            SoundSystem.Play(comp.DeActivateSound.GetSound(), Filter.Pvs(comp.Owner, entityManager: EntityManager), comp.Owner);
+            _audioSystem.Play(comp.DeActivateSound, Filter.Pvs(comp.Owner, entityManager: EntityManager), comp.Owner);
 
             comp.Activated = false;
         }
@@ -116,7 +117,7 @@ namespace Content.Server.Weapons.Melee.EnergySword
                     weaponComp.HideFromExamine = false;
             }
 
-            SoundSystem.Play(comp.ActivateSound.GetSound(), Filter.Pvs(comp.Owner, entityManager: EntityManager), comp.Owner);
+            _audioSystem.Play(comp.ActivateSound, Filter.Pvs(comp.Owner, entityManager: EntityManager), comp.Owner);
 
             if (TryComp<DisarmMalusComponent>(comp.Owner, out var malus))
             {

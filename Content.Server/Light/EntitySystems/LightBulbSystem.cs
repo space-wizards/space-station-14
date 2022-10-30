@@ -9,6 +9,8 @@ namespace Content.Server.Light.EntitySystems
 {
     public sealed class LightBulbSystem : EntitySystem
     {
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -65,7 +67,7 @@ namespace Content.Server.Light.EntitySystems
             if (!Resolve(uid, ref bulb))
                 return;
 
-            SoundSystem.Play(bulb.BreakSound.GetSound(), Filter.Pvs(uid), uid);
+            _audioSystem.Play(bulb.BreakSound, Filter.Pvs(uid), uid);
         }
 
         private void UpdateAppearance(EntityUid uid, LightBulbComponent? bulb = null,

@@ -12,6 +12,7 @@ namespace Content.Server.PDA.Ringer
     public sealed class RingerSystem : SharedRingerSystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
         public override void Initialize()
         {
@@ -106,7 +107,7 @@ namespace Content.Server.PDA.Ringer
                 ringer.TimeElapsed -= NoteDelay;
                 var ringerXform = Transform(ringer.Owner);
 
-                SoundSystem.Play(GetSound(ringer.Ringtone[ringer.NoteCount]),
+                _audioSystem.Play(GetSound(ringer.Ringtone[ringer.NoteCount]),
                     Filter.Empty().AddInRange(ringerXform.MapPosition, ringer.Range),
                     ringer.Owner, AudioParams.Default.WithMaxDistance(ringer.Range).WithVolume(ringer.Volume));
 

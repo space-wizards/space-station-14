@@ -15,6 +15,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
     public sealed class GasValveSystem : EntitySystem
     {
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
         public override void Initialize()
         {
@@ -46,7 +47,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
         private void OnActivate(EntityUid uid, GasValveComponent component, ActivateInWorldEvent args)
         {
             Toggle(uid, component);
-            SoundSystem.Play(component.ValveSound.GetSound(), Filter.Pvs(component.Owner), component.Owner, AudioHelpers.WithVariation(0.25f));
+            _audioSystem.Play(component.ValveSound, Filter.Pvs(component.Owner), component.Owner, AudioHelpers.WithVariation(0.25f));
         }
 
         public void Set(EntityUid uid, GasValveComponent component, bool value)

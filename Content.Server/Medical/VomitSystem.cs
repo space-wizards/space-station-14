@@ -22,6 +22,7 @@ namespace Content.Server.Medical
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly BodySystem _bodySystem = default!;
         [Dependency] private readonly ThirstSystem _thirstSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
         /// <summary>
         /// Make an entity vomit, if they have a stomach.
@@ -51,7 +52,7 @@ namespace Content.Server.Medical
 
             var puddleComp = Comp<PuddleComponent>(puddle);
 
-            SoundSystem.Play("/Audio/Effects/Diseases/vomiting.ogg", Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.2f).WithVolume(-4f));
+            _audioSystem.Play("/Audio/Effects/Diseases/vomiting.ogg", Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.2f).WithVolume(-4f));
 
             _popupSystem.PopupEntity(Loc.GetString("disease-vomit", ("person", Identity.Entity(uid, EntityManager))), uid, Filter.Pvs(uid));
             // Get the solution of the puddle we spawned

@@ -42,6 +42,7 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
         [Dependency] private readonly SpillableSystem _spillableSystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
         public override void Initialize()
         {
@@ -141,7 +142,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!component.Opened)
             {
                 //Do the opening stuff like playing the sounds.
-                SoundSystem.Play(component.OpenSounds.GetSound(), Filter.Pvs(args.User), args.User, AudioParams.Default);
+                _audioSystem.Play(component.OpenSounds, Filter.Pvs(args.User), args.User, AudioParams.Default);
 
                 SetOpen(uid, true, component);
                 return;
@@ -163,7 +164,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 var solution = _solutionContainerSystem.Drain(uid, interactions, interactions.DrainAvailable);
                 _spillableSystem.SpillAt(uid, solution, "PuddleSmear");
 
-                SoundSystem.Play(component.BurstSound.GetSound(), Filter.Pvs(uid), uid, AudioParams.Default.WithVolume(-4));
+                _audioSystem.Play(component.BurstSound, Filter.Pvs(uid), uid, AudioParams.Default.WithVolume(-4));
             }
         }
 
@@ -361,7 +362,7 @@ namespace Content.Server.Nutrition.EntitySystems
                     Loc.GetString("drink-component-try-use-drink-success-slurp"), args.User, Filter.PvsExcept(args.User));
             }
 
-            SoundSystem.Play(args.Drink.UseSound.GetSound(), Filter.Pvs(uid), uid, AudioParams.Default.WithVolume(-2f));
+            _audioSystem.Play(args.Drink.UseSound, Filter.Pvs(uid), uid, AudioParams.Default.WithVolume(-2f));
 
             drained.DoEntityReaction(uid, ReactionMethod.Ingestion);
             _stomachSystem.TryTransferSolution(firstStomach.Value.Comp.Owner, drained, firstStomach.Value.Comp);

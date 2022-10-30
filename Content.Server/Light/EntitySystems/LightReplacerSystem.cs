@@ -16,6 +16,7 @@ namespace Content.Server.Light.EntitySystems
     {
         [Dependency] private readonly PoweredLightSystem _poweredLight = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
         public override void Initialize()
         {
@@ -131,7 +132,7 @@ namespace Content.Server.Light.EntitySystems
             var wasReplaced = _poweredLight.ReplaceBulb(fixtureUid, bulb, fixture);
             if (wasReplaced)
             {
-                SoundSystem.Play(replacer.Sound.GetSound(),
+                _audioSystem.Play(replacer.Sound,
                     Filter.Pvs(replacerUid), replacerUid, AudioParams.Default.WithVolume(-4f));
             }
 

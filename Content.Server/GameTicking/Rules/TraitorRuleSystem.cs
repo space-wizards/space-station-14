@@ -29,10 +29,8 @@ public sealed class TraitorRuleSystem : GameRuleSystem
     [Dependency] private readonly IObjectivesManager _objectivesManager = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
-    [Dependency] private readonly InventorySystem _inventorySystem = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly StoreSystem _store = default!;
     [Dependency] private readonly UplinkSystem _uplink = default!;
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
     public override string Prototype => "Traitor";
 
@@ -212,7 +210,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem
         //give traitors their codewords to keep in their character info menu
         traitorRole.Mind.Briefing = Loc.GetString("traitor-role-codewords", ("codewords", string.Join(", ", Codewords)));
 
-        SoundSystem.Play(_addedSound.GetSound(), Filter.Empty().AddPlayer(traitor), AudioParams.Default);
+        _audioSystem.PlayGlobal(_addedSound, Filter.Empty().AddPlayer(traitor), AudioParams.Default);
         return true;
     }
 

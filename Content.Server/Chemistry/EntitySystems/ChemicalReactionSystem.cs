@@ -10,6 +10,8 @@ namespace Content.Server.Chemistry.EntitySystems
 {
     public sealed class ChemicalReactionSystem : SharedChemicalReactionSystem
     {
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+
         protected override void OnReaction(Solution solution, ReactionPrototype reaction, ReagentPrototype randomReagent, EntityUid owner, FixedPoint2 unitReactions)
         {
             base.OnReaction(solution, reaction,  randomReagent, owner, unitReactions);
@@ -19,7 +21,7 @@ namespace Content.Server.Chemistry.EntitySystems
             _adminLogger.Add(LogType.ChemicalReaction, reaction.Impact,
                 $"Chemical reaction {reaction.ID:reaction} occurred with strength {unitReactions:strength} on entity {ToPrettyString(owner):metabolizer} at {coordinates}");
 
-            SoundSystem.Play(reaction.Sound.GetSound(), Filter.Pvs(owner, entityManager:EntityManager), owner);
+            _audioSystem.Play(reaction.Sound, Filter.Pvs(owner, entityManager:EntityManager), owner);
         }
     }
 }

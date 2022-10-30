@@ -30,6 +30,7 @@ namespace Content.Client.Actions
         [Dependency] private readonly ISerializationManager _serialization = default!;
 
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
         public event Action<ActionType>? ActionAdded;
         public event Action<ActionType>? ActionRemoved;
@@ -173,7 +174,7 @@ namespace Content.Client.Actions
             }
 
             if (action.Sound != null)
-                SoundSystem.Play(action.Sound.GetSound(), Filter.Local(), user, action.AudioParams);
+                _audioSystem.Play(action.Sound, Filter.Local(), user, action.AudioParams);
 
             return performedAction;
         }

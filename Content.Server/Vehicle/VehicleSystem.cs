@@ -25,6 +25,7 @@ namespace Content.Server.Vehicle
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
         [Dependency] private readonly SharedJointSystem _joints = default!;
         [Dependency] private readonly SharedMoverController _mover = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
         public override void Initialize()
         {
@@ -47,7 +48,7 @@ namespace Content.Server.Vehicle
             // TODO: Need audio refactor maybe, just some way to null it when the stream is over.
             // For now better to just not loop to keep the code much cleaner.
             vehicle.HonkPlayingStream?.Stop();
-            vehicle.HonkPlayingStream = SoundSystem.Play(vehicle.HornSound.GetSound(), Filter.Pvs(uid), uid, vehicle.HornSound.Params);
+            vehicle.HonkPlayingStream = _audioSystem.Play(vehicle.HornSound, Filter.Pvs(uid), uid, vehicle.HornSound.Params);
             args.Handled = true;
         }
 

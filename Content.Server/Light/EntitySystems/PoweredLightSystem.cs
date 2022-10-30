@@ -39,6 +39,7 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
         private static readonly TimeSpan ThunkDelay = TimeSpan.FromSeconds(2);
         public const string LightBulbContainer = "light_bulb";
@@ -123,7 +124,7 @@ namespace Content.Server.Light.EntitySystems
                         _adminLogger.Add(LogType.Damaged,
                             $"{ToPrettyString(args.User):user} burned their hand on {ToPrettyString(args.Target):target} and received {damage.Total:damage} damage");
 
-                    SoundSystem.Play(light.BurnHandSound.GetSound(), Filter.Pvs(uid), uid);
+                    _audioSystem.Play(light.BurnHandSound, Filter.Pvs(uid), uid);
 
                     args.Handled = true;
                     return;
@@ -287,7 +288,7 @@ namespace Content.Server.Light.EntitySystems
                             if (time > light.LastThunk + ThunkDelay)
                             {
                                 light.LastThunk = time;
-                                SoundSystem.Play(light.TurnOnSound.GetSound(), Filter.Pvs(uid), uid, AudioParams.Default.WithVolume(-10f));
+                                _audioSystem.Play(light.TurnOnSound, Filter.Pvs(uid), uid, AudioParams.Default.WithVolume(-10f));
                             }
                         }
                         else

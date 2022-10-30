@@ -16,7 +16,7 @@ public sealed class InteractionPopupSystem : EntitySystem
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
-
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -77,9 +77,9 @@ public sealed class InteractionPopupSystem : EntitySystem
         if (sfx is not null) //not all cases will have sound.
         {
             if (component.SoundPerceivedByOthers)
-                SoundSystem.Play(sfx, Filter.Pvs(args.Target), args.Target); //play for everyone in range
+                _audioSystem.Play(sfx, Filter.Pvs(args.Target), args.Target); //play for everyone in range
             else
-                SoundSystem.Play(sfx, Filter.Entities(args.User, args.Target), args.Target); //play only for the initiating entity and its target.
+                _audioSystem.Play(sfx, Filter.Entities(args.User, args.Target), args.Target); //play only for the initiating entity and its target.
         }
 
         component.LastInteractTime = curTime;

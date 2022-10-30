@@ -28,6 +28,7 @@ namespace Content.Server.Recycling
         [Dependency] private readonly GameTicker _ticker = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly TagSystem _tags = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
         private const float RecyclerSoundCooldown = 0.8f;
 
@@ -116,7 +117,7 @@ namespace Content.Server.Recycling
 
             if (component.Sound != null && (_timing.CurTime - component.LastSound).TotalSeconds > RecyclerSoundCooldown)
             {
-                SoundSystem.Play(component.Sound.GetSound(), Filter.Pvs(component.Owner, entityManager: EntityManager), component.Owner, AudioHelpers.WithVariation(0.01f).WithVolume(-3));
+                _audioSystem.Play(component.Sound, Filter.Pvs(component.Owner, entityManager: EntityManager), component.Owner, AudioHelpers.WithVariation(0.01f).WithVolume(-3));
                 component.LastSound = _timing.CurTime;
             }
         }

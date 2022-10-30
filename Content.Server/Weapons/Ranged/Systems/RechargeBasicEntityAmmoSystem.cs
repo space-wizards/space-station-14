@@ -12,6 +12,7 @@ public sealed class RechargeBasicEntityAmmoSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedGunSystem _gun = default!;
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
     public override void Initialize()
     {
@@ -42,7 +43,7 @@ public sealed class RechargeBasicEntityAmmoSystem : EntitySystem
 
             if (_gun.UpdateBasicEntityAmmoCount(ammo.Owner, ammo.Count.Value + 1, ammo))
             {
-                SoundSystem.Play(recharge.RechargeSound.GetSound(), Filter.Pvs(recharge.Owner), recharge.Owner,
+                _audioSystem.Play(recharge.RechargeSound, Filter.Pvs(recharge.Owner), recharge.Owner,
                     recharge.RechargeSound.Params);
             }
         }

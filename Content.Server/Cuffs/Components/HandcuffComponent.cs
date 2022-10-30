@@ -175,7 +175,9 @@ namespace Content.Server.Cuffs.Components
 
             Cuffing = true;
 
-            var result = await IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<DoAfterSystem>().WaitDoAfter(doAfterEventArgs);
+            var sysMan = IoCManager.Resolve<IEntitySystemManager>();
+            var result = await sysMan.GetEntitySystem<DoAfterSystem>().WaitDoAfter(doAfterEventArgs);
+            var audio = sysMan.GetEntitySystem<SharedAudioSystem>();
 
             Cuffing = false;
 
@@ -185,7 +187,7 @@ namespace Content.Server.Cuffs.Components
             {
                 if (cuffs.TryAddNewCuffs(user, Owner))
                 {
-                    SoundSystem.Play(EndCuffSound.GetSound(), Filter.Pvs(Owner), Owner);
+                    audio.Play(EndCuffSound, Filter.Pvs(Owner), Owner);
                     if (target == user)
                     {
                         user.PopupMessage(Loc.GetString("handcuff-component-cuff-self-success-message"));

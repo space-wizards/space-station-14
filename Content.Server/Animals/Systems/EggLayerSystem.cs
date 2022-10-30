@@ -18,6 +18,7 @@ public sealed class EggLayerSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly ActionsSystem _actions = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
     public override void Initialize()
     {
@@ -86,7 +87,7 @@ public sealed class EggLayerSystem : EntitySystem
         }
 
         // Sound + popups
-        SoundSystem.Play(component.EggLaySound.GetSound(), Filter.Pvs(uid), uid, component.EggLaySound.Params);
+        _audioSystem.Play(component.EggLaySound, Filter.Pvs(uid), uid, component.EggLaySound.Params);
         _popup.PopupEntity(Loc.GetString("action-popup-lay-egg-user"), uid, Filter.Entities(uid));
         _popup.PopupEntity(Loc.GetString("action-popup-lay-egg-others", ("entity", uid)), uid, Filter.PvsExcept(uid));
 

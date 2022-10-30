@@ -76,13 +76,15 @@ namespace Content.Server.Singularity.Components
         {
             base.Initialize();
 
-            _singularitySystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedSingularitySystem>();
+            var sysMan = IoCManager.Resolve<IEntitySystemManager>();
+            _singularitySystem = sysMan.GetEntitySystem<SharedSingularitySystem>();
 
+            var audioSystem = sysMan.GetEntitySystem<SharedAudioSystem>();
             var audioParams = AudioParams.Default;
             audioParams.Loop = true;
             audioParams.MaxDistance = 20f;
             audioParams.Volume = 5;
-            SoundSystem.Play(_singularityFormingSound.GetSound(), Filter.Pvs(Owner), Owner);
+            audioSystem.Play(_singularityFormingSound, Filter.Pvs(Owner), Owner);
 
             _singularitySystem.ChangeSingularityLevel(this, 1);
         }
@@ -90,7 +92,8 @@ namespace Content.Server.Singularity.Components
         protected override void Shutdown()
         {
             base.Shutdown();
-            SoundSystem.Play(_singularityCollapsingSound.GetSound(), Filter.Pvs(Owner), _entMan.GetComponent<TransformComponent>(Owner).Coordinates);
+            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedAudioSystem>()
+                .Play(_singularityCollapsingSound, Filter.Pvs(Owner), _entMan.GetComponent<TransformComponent>(Owner).Coordinates);
         }
     }
 }

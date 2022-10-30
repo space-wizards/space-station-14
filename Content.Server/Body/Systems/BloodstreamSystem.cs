@@ -31,6 +31,7 @@ public sealed class BloodstreamSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
     [Dependency] private readonly SharedDrunkSystem _drunkSystem = default!;
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
     // TODO here
     // Update over time. Modify bloodloss damage in accordance with (amount of blood / max blood level), and reduce bleeding over time
@@ -166,7 +167,7 @@ public sealed class BloodstreamSystem : EntitySystem
         if (totalFloat > 0 && _robustRandom.Prob(prob))
         {
             TryModifyBloodLevel(uid, (-total) / 5, component);
-            SoundSystem.Play(component.InstantBloodSound.GetSound(), Filter.Pvs(uid), uid, AudioParams.Default);
+            _audioSystem.Play(component.InstantBloodSound, Filter.Pvs(uid), uid, AudioParams.Default);
         }
         else if (totalFloat < 0 && oldBleedAmount > 0 && _robustRandom.Prob(healPopupProb))
         {
@@ -174,7 +175,7 @@ public sealed class BloodstreamSystem : EntitySystem
             // because it's burn damage that cauterized their wounds.
 
             // We'll play a special sound and popup for feedback.
-            SoundSystem.Play(component.BloodHealedSound.GetSound(), Filter.Pvs(uid), uid, AudioParams.Default);
+            _audioSystem.Play(component.BloodHealedSound, Filter.Pvs(uid), uid, AudioParams.Default);
             _popupSystem.PopupEntity(Loc.GetString("bloodstream-component-wounds-cauterized"), uid,
                 Filter.Entities(uid), PopupType.Medium);
 ;       }

@@ -19,6 +19,7 @@ namespace Content.Server.Nutrition.EntitySystems
     {
         [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
         [Dependency] private readonly SpillableSystem _spillableSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
         public override void Initialize()
         {
@@ -29,7 +30,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
         protected override void SplattedCreamPie(EntityUid uid, CreamPieComponent creamPie)
         {
-            SoundSystem.Play(creamPie.Sound.GetSound(), Filter.Pvs(creamPie.Owner), creamPie.Owner, AudioHelpers.WithVariation(0.125f));
+            _audioSystem.Play(creamPie.Sound, Filter.Pvs(creamPie.Owner), creamPie.Owner, AudioHelpers.WithVariation(0.125f));
 
             if (EntityManager.TryGetComponent<FoodComponent?>(creamPie.Owner, out var foodComp) && _solutionsSystem.TryGetSolution(creamPie.Owner, foodComp.SolutionName, out var solution))
             {

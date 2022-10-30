@@ -39,6 +39,7 @@ public sealed class MagicSystem : EntitySystem
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
     [Dependency] private readonly GunSystem _gunSystem = default!;
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
     public override void Initialize()
     {
@@ -236,7 +237,7 @@ public sealed class MagicSystem : EntitySystem
 
         transform.WorldPosition = args.Target.Position;
         transform.AttachToGridOrMap();
-        SoundSystem.Play(args.BlinkSound.GetSound(), Filter.Pvs(args.Target), args.Performer, AudioParams.Default.WithVolume(args.BlinkVolume));
+        _audioSystem.Play(args.BlinkSound, Filter.Pvs(args.Target), args.Performer, AudioParams.Default.WithVolume(args.BlinkVolume));
         args.Handled = true;
     }
 
@@ -253,7 +254,7 @@ public sealed class MagicSystem : EntitySystem
         var transform = Transform(args.Performer);
         var coords = transform.Coordinates;
 
-        SoundSystem.Play(args.KnockSound.GetSound(), Filter.Pvs(coords), args.Performer, AudioParams.Default.WithVolume(args.KnockVolume));
+        _audioSystem.Play(args.KnockSound, Filter.Pvs(coords), args.Performer, AudioParams.Default.WithVolume(args.KnockVolume));
 
         //Look for doors and don't open them if they're already open.
         foreach (var entity in _lookup.GetEntitiesInRange(coords, args.Range))

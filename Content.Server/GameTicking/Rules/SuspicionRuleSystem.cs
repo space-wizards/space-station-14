@@ -47,6 +47,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
     [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
     [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
     [Dependency] private readonly UplinkSystem _uplink = default!;
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
     public override string Prototype => "Suspicion";
 
@@ -206,7 +207,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
         var filter = Filter.Empty()
             .AddWhere(session => ((IPlayerSession) session).ContentData()?.Mind?.HasRole<SuspicionTraitorRole>() ?? false);
 
-        SoundSystem.Play(_addedSound.GetSound(), filter, AudioParams.Default);
+        _audioSystem.PlayGlobal(_addedSound, filter, AudioParams.Default);
 
         _doorSystem.AccessType = SharedDoorSystem.AccessTypes.AllowAllNoExternal;
 

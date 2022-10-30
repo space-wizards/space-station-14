@@ -17,6 +17,7 @@ public sealed class MedibotInjectOperator : HTNOperator
     private SharedInteractionSystem _interactionSystem = default!;
     private SharedPopupSystem _popupSystem = default!;
     private SolutionContainerSystem _solutionSystem = default!;
+    private SharedAudioSystem _audioSystem = default!;
 
     /// <summary>
     /// Target entity to inject.
@@ -31,6 +32,7 @@ public sealed class MedibotInjectOperator : HTNOperator
         _interactionSystem = sysManager.GetEntitySystem<SharedInteractionSystem>();
         _popupSystem = sysManager.GetEntitySystem<SharedPopupSystem>();
         _solutionSystem = sysManager.GetEntitySystem<SolutionContainerSystem>();
+        _audioSystem = sysManager.GetEntitySystem<SharedAudioSystem>();
     }
 
     public override void Shutdown(NPCBlackboard blackboard, HTNOperatorStatus status)
@@ -69,7 +71,7 @@ public sealed class MedibotInjectOperator : HTNOperator
         {
             _solutionSystem.TryAddReagent(target, injectable, botComp.EmergencyMed, botComp.EmergencyMedInjectAmount, out var accepted);
             _popupSystem.PopupEntity(Loc.GetString("hypospray-component-feel-prick-message"), target, Filter.Entities(target));
-            SoundSystem.Play("/Audio/Items/hypospray.ogg", Filter.Pvs(target), target);
+            _audioSystem.Play("/Audio/Items/hypospray.ogg", Filter.Pvs(target), target);
             _chat.TrySendInGameICMessage(owner, Loc.GetString("medibot-finish-inject"), InGameICChatType.Speak, false);
             return HTNOperatorStatus.Finished;
         }
@@ -78,7 +80,7 @@ public sealed class MedibotInjectOperator : HTNOperator
         {
             _solutionSystem.TryAddReagent(target, injectable, botComp.StandardMed, botComp.StandardMedInjectAmount, out var accepted);
             _popupSystem.PopupEntity(Loc.GetString("hypospray-component-feel-prick-message"), target, Filter.Entities(target));
-            SoundSystem.Play("/Audio/Items/hypospray.ogg", Filter.Pvs(target), target);
+            _audioSystem.Play("/Audio/Items/hypospray.ogg", Filter.Pvs(target), target);
             _chat.TrySendInGameICMessage(owner, Loc.GetString("medibot-finish-inject"), InGameICChatType.Speak, false);
             return HTNOperatorStatus.Finished;
         }

@@ -17,6 +17,7 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly SharedItemSystem _item = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
         public override void Initialize()
         {
@@ -73,7 +74,7 @@ namespace Content.Server.Light.EntitySystems
         public void Ignite(MatchstickComponent component, EntityUid user)
         {
             // Play Sound
-            SoundSystem.Play(component.IgniteSound.GetSound(), Filter.Pvs(component.Owner),
+            _audioSystem.Play(component.IgniteSound, Filter.Pvs(component.Owner),
                 component.Owner, AudioHelpers.WithVariation(0.125f).WithVolume(-0.125f));
 
             // Change state

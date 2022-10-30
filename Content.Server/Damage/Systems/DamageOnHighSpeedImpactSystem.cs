@@ -19,6 +19,7 @@ namespace Content.Server.Damage.Systems
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly StunSystem _stunSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
         public override void Initialize()
         {
@@ -35,7 +36,7 @@ namespace Content.Server.Damage.Systems
 
             if (speed < component.MinimumSpeed) return;
 
-            SoundSystem.Play(component.SoundHit.GetSound(), Filter.Pvs(otherBody), otherBody, AudioHelpers.WithVariation(0.125f).WithVolume(-0.125f));
+            _audioSystem.Play(component.SoundHit, Filter.Pvs(otherBody), otherBody, AudioHelpers.WithVariation(0.125f).WithVolume(-0.125f));
 
             if ((_gameTiming.CurTime - component.LastHit).TotalSeconds < component.DamageCooldown)
                 return;

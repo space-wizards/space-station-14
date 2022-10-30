@@ -21,6 +21,7 @@ namespace Content.Server.Forensics
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly PaperSystem _paperSystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
         public override void Initialize()
         {
@@ -113,7 +114,7 @@ namespace Content.Server.Forensics
             {
                 if (fiber == pad.Sample)
                 {
-                    SoundSystem.Play("/Audio/Machines/Nuke/angry_beep.ogg", Filter.Pvs(uid), uid);
+                    _audioSystem.Play("/Audio/Machines/Nuke/angry_beep.ogg", Filter.Pvs(uid), uid);
                     _popupSystem.PopupEntity(Loc.GetString("forensic-scanner-match-fiber"), uid, Filter.Entities(args.User));
                     return;
                 }
@@ -123,12 +124,12 @@ namespace Content.Server.Forensics
             {
                 if (fingerprint == pad.Sample)
                 {
-                    SoundSystem.Play("/Audio/Machines/Nuke/angry_beep.ogg", Filter.Pvs(uid), uid);
+                    _audioSystem.Play("/Audio/Machines/Nuke/angry_beep.ogg", Filter.Pvs(uid), uid);
                     _popupSystem.PopupEntity(Loc.GetString("forensic-scanner-match-fingerprint"), uid, Filter.Entities(args.User));
                     return;
                 }
             }
-            SoundSystem.Play("/Audio/Machines/airlock_deny.ogg", Filter.Pvs(uid), uid);
+            _audioSystem.Play("/Audio/Machines/airlock_deny.ogg", Filter.Pvs(uid), uid);
             _popupSystem.PopupEntity(Loc.GetString("forensic-scanner-match-none"), uid, Filter.Entities(args.User));
         }
 

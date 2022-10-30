@@ -17,6 +17,7 @@ namespace Content.Server.Doors.Components
     public sealed class AirlockComponent : SharedAirlockComponent
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IEntitySystemManager _systemManager = default!;
 
         /// <summary>
         /// Sound to play when the bolts on the airlock go up.
@@ -180,7 +181,8 @@ namespace Content.Server.Doors.Components
 
             BoltsDown = newBolts;
 
-            SoundSystem.Play(newBolts ? BoltDownSound.GetSound() : BoltUpSound.GetSound(), Filter.Pvs(Owner), Owner);
+            _systemManager.GetEntitySystem<SharedAudioSystem>()
+                .Play(newBolts ? BoltDownSound : BoltUpSound, Filter.Pvs(Owner), Owner);
         }
     }
 }

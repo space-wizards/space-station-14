@@ -31,7 +31,7 @@ namespace Content.Server.Disease.Effects
             EntityUid? polyUid = sysMan.GetEntitySystem<PolymorphableSystem>().PolymorphEntity(args.DiseasedEntity, PolymorphId);
 
             if (PolymorphSound != null && polyUid != null)
-                SoundSystem.Play(PolymorphSound.GetSound(), Filter.Pvs(polyUid.Value), polyUid.Value, AudioHelpers.WithVariation(0.2f));
+                sysMan.GetEntitySystem<SharedAudioSystem>().Play(PolymorphSound, Filter.Pvs(polyUid.Value), polyUid.Value, AudioHelpers.WithVariation(0.2f));
 
             if (PolymorphMessage != null && polyUid != null)
                 sysMan.GetEntitySystem<SharedPopupSystem>().PopupEntity(Loc.GetString(PolymorphMessage), polyUid.Value, Filter.Entities(polyUid.Value), Shared.Popups.PopupType.Large);

@@ -28,6 +28,7 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly GasTileOverlaySystem _gasTileOverlaySystem = default!;
     [Dependency] private readonly TransformSystem _transformSystem = default!;
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
 
     private const float ExposedUpdateDelay = 1f;

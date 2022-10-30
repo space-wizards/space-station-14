@@ -148,7 +148,7 @@ namespace Content.Client.GameTicking.Managers
                 return;
             }
 
-            SoundSystem.Play(RestartSound, Filter.Empty());
+            _entSysManager.GetEntitySystem<SharedAudioSystem>().PlayGlobal(RestartSound, Filter.Empty());
 
             // Cleanup the sound, we only want it to play when the round restarts after it ends normally.
             RestartSound = null;

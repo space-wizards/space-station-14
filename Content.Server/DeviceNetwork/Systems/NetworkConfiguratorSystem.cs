@@ -26,6 +26,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly AccessReaderSystem _accessSystem = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
 
     public override void Initialize()
@@ -130,7 +131,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         if (_accessSystem.IsAllowed(user.Value, reader))
             return true;
 
-        SoundSystem.Play(component.SoundNoAccess.GetSound(), Filter.Pvs(user.Value), target, AudioParams.Default.WithVolume(-2f).WithPitchScale(1.2f));
+        _audioSystem.Play(component.SoundNoAccess, Filter.Pvs(user.Value), target, AudioParams.Default.WithVolume(-2f).WithPitchScale(1.2f));
         _popupSystem.PopupEntity(Loc.GetString("network-configurator-device-access-denied"), target, Filter.Entities(user.Value));
 
         return false;

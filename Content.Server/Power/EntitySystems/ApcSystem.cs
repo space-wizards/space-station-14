@@ -27,6 +27,7 @@ namespace Content.Server.Power.EntitySystems
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly ToolSystem _toolSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
         private const float ScrewTime = 2f;
 
@@ -82,7 +83,7 @@ namespace Content.Server.Power.EntitySystems
             battery.CanDischarge = apc.MainBreakerEnabled;
 
             UpdateUIState(uid, apc);
-            SoundSystem.Play(apc.OnReceiveMessageSound.GetSound(), Filter.Pvs(uid), uid, AudioParams.Default.WithVolume(-2f));
+            _audioSystem.Play(apc.OnReceiveMessageSound, Filter.Pvs(uid), uid, AudioParams.Default.WithVolume(-2f));
         }
 
         private void OnEmagged(EntityUid uid, ApcComponent comp, GotEmaggedEvent args)
@@ -218,11 +219,11 @@ namespace Content.Server.Power.EntitySystems
 
             if (component.IsApcOpen)
             {
-                SoundSystem.Play(component.ScrewdriverOpenSound.GetSound(), Filter.Pvs(args.Target), args.Target);
+                _audioSystem.Play(component.ScrewdriverOpenSound, Filter.Pvs(args.Target), args.Target);
             }
             else
             {
-                SoundSystem.Play(component.ScrewdriverCloseSound.GetSound(), Filter.Pvs(args.Target), args.Target);
+                _audioSystem.Play(component.ScrewdriverCloseSound, Filter.Pvs(args.Target), args.Target);
             }
         }
 

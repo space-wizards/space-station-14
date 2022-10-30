@@ -15,6 +15,7 @@ namespace Content.Server.Dice
     public sealed class DiceSystem : EntitySystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
         public override void Initialize()
         {
@@ -75,7 +76,7 @@ namespace Content.Server.Dice
             SetCurrentSide(uid, roll, die);
 
             die.Owner.PopupMessageEveryone(Loc.GetString("dice-component-on-roll-land", ("die", die.Owner), ("currentSide", die.CurrentSide)));
-            SoundSystem.Play(die.Sound.GetSound(), Filter.Pvs(die.Owner), die.Owner, AudioHelpers.WithVariation(0.05f));
+            _audioSystem.Play(die.Sound, Filter.Pvs(die.Owner), die.Owner, AudioHelpers.WithVariation(0.05f));
         }
     }
 }

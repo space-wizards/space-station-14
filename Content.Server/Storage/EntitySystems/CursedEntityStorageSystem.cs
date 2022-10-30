@@ -13,6 +13,7 @@ public sealed class CursedEntityStorageSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
     public override void Initialize()
     {
@@ -42,6 +43,6 @@ public sealed class CursedEntityStorageSystem : EntitySystem
             storage.Contents.Remove(entity);
             _entityStorage.AddToContents(entity, lockerEnt);
         }
-        SoundSystem.Play(component.CursedSound.GetSound(), Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.125f, _random));
+        _audioSystem.Play(component.CursedSound, Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.125f, _random));
     }
 }

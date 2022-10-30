@@ -51,6 +51,7 @@ namespace Content.Server.Storage.EntitySystems
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedCombatModeSystem _combatMode = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
         /// <inheritdoc />
         public override void Initialize()
@@ -402,7 +403,7 @@ namespace Content.Server.Storage.EntitySystems
             {
                 if (_sharedHandsSystem.TryPickupAnyHand(player, args.InteractedItemUID, handsComp: hands)
                     && storageComp.StorageRemoveSound != null)
-                        SoundSystem.Play(storageComp.StorageRemoveSound.GetSound(), Filter.Pvs(uid, entityManager: EntityManager), uid, AudioParams.Default);
+                        _audioSystem.Play(storageComp.StorageRemoveSound, Filter.Pvs(uid, entityManager: EntityManager), uid, AudioParams.Default);
                 return;
             }
 
@@ -440,7 +441,7 @@ namespace Content.Server.Storage.EntitySystems
                 UpdateStorageVisualization(uid, storageComp);
 
                 if (storageComp.StorageCloseSound is not null)
-                    SoundSystem.Play(storageComp.StorageCloseSound.GetSound(), Filter.Pvs(uid, entityManager: EntityManager), uid, storageComp.StorageCloseSound.Params);
+                    _audioSystem.Play(storageComp.StorageCloseSound, Filter.Pvs(uid, entityManager: EntityManager), uid, storageComp.StorageCloseSound.Params);
             }
         }
 
@@ -653,7 +654,7 @@ namespace Content.Server.Storage.EntitySystems
                 return;
 
             if (storageComp.StorageOpenSound is not null)
-                SoundSystem.Play(storageComp.StorageOpenSound.GetSound(), Filter.Pvs(uid, entityManager: EntityManager), uid, storageComp.StorageOpenSound.Params);
+                _audioSystem.Play(storageComp.StorageOpenSound, Filter.Pvs(uid, entityManager: EntityManager), uid, storageComp.StorageOpenSound.Params);
 
             Logger.DebugS(storageComp.LoggerName, $"Storage (UID {uid}) \"used\" by player session (UID {player.PlayerSession.AttachedEntity}).");
 

@@ -40,6 +40,7 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
         public override void Initialize()
         {
@@ -199,7 +200,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 _popupSystem.PopupEntity(Loc.GetString(args.Food.EatMessage, ("food", args.Food.Owner), ("flavors", flavors)), args.User, Filter.Entities(args.User));
             }
 
-            SoundSystem.Play(args.Food.UseSound.GetSound(), Filter.Pvs(uid), uid, AudioParams.Default.WithVolume(-1f));
+            _audioSystem.Play(args.Food.UseSound, Filter.Pvs(uid), uid, AudioParams.Default.WithVolume(-1f));
 
             // Try to break all used utensils
             foreach (var utensil in args.Utensils)
@@ -302,7 +303,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             foodSolution.DoEntityReaction(uid, ReactionMethod.Ingestion);
             _stomachSystem.TryTransferSolution(((IComponent) firstStomach.Value.Comp).Owner, foodSolution, firstStomach.Value.Comp);
-            SoundSystem.Play(food.UseSound.GetSound(), Filter.Pvs(target), target, AudioParams.Default.WithVolume(-1f));
+            _audioSystem.Play(food.UseSound, Filter.Pvs(target), target, AudioParams.Default.WithVolume(-1f));
 
             if (string.IsNullOrEmpty(food.TrashPrototype))
                 EntityManager.QueueDeleteEntity(food.Owner);

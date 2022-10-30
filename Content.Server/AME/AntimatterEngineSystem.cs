@@ -19,6 +19,8 @@ namespace Content.Server.AME
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly ToolSystem _toolSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+
         private float _accumulatedFrameTime;
 
         private const float UpdateCooldown = 10f;
@@ -104,7 +106,7 @@ namespace Content.Server.AME
 
             var ent = EntityManager.SpawnEntity("AMEShielding", mapGrid.GridTileToLocal(snapPos));
 
-            SoundSystem.Play(component.UnwrapSound.GetSound(), Filter.Pvs(uid), uid);
+            _audioSystem.Play(component.UnwrapSound, Filter.Pvs(uid), uid);
 
             EntityManager.QueueDeleteEntity(uid);
         }

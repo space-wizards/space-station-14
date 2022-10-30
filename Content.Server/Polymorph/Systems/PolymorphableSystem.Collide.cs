@@ -25,7 +25,7 @@ public partial class PolymorphableSystem
             var ent = PolymorphEntity(data.Ent, data.Polymorph);
             if (ent != null)
             {
-                SoundSystem.Play(data.Sound.GetSound(), Filter.Pvs(ent.Value, entityManager: EntityManager),
+                _audioSystem.Play(data.Sound, Filter.Pvs(ent.Value, entityManager: EntityManager),
                     ent.Value, data.Sound.Params);
             }
         }

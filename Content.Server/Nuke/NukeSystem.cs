@@ -34,6 +34,7 @@ namespace Content.Server.Nuke
         [Dependency] private readonly ChatSystem _chatSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
         /// <summary>
         ///     Used to calculate when the nuke song should start playing for maximum kino with the nuke sfx
@@ -293,7 +294,7 @@ namespace Content.Server.Nuke
             // play alert sound if time is running out
             if (nuke.RemainingTime <= nuke.AlertSoundTime && !nuke.PlayedAlertSound)
             {
-                nuke.AlertAudioStream = SoundSystem.Play(nuke.AlertSound.GetSound(), Filter.Broadcast());
+                nuke.AlertAudioStream = _audioSystem.PlayGlobal(nuke.AlertSound, Filter.Broadcast());
                 _soundSystem.StopStationEventMusic(uid, StationEventMusicType.Nuke);
                 nuke.PlayedAlertSound = true;
             }
@@ -412,7 +413,7 @@ namespace Content.Server.Nuke
             // Don't double-dip on the octave shifting
             component.LastPlayedKeypadSemitones = number == 0 ? component.LastPlayedKeypadSemitones : semitoneShift;
 
-            SoundSystem.Play(component.KeypadPressSound.GetSound(), Filter.Pvs(uid), uid,
+            _audioSystem.Play(component.KeypadPressSound, Filter.Pvs(uid), uid,
                 AudioHelpers.ShiftSemitone(semitoneShift).WithVolume(-5f));
         }
 
@@ -422,7 +423,7 @@ namespace Content.Server.Nuke
             if (!Resolve(uid, ref component))
                 return;
 
-            SoundSystem.Play(sound.GetSound(),
+            _audioSystem.Play(sound,
                 Filter.Pvs(uid), uid, AudioHelpers.WithVariation(varyPitch).WithVolume(-5f));
         }
 

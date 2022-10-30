@@ -186,7 +186,7 @@ namespace Content.Server.Buckle.Components
                 return false;
             }
 
-            SoundSystem.Play(strap.BuckleSound.GetSound(), Filter.Pvs(Owner), Owner);
+            _sysMan.GetEntitySystem<SharedAudioSystem>().Play(strap.BuckleSound, Filter.Pvs(Owner), Owner);
 
             if (!strap.TryAdd(this))
             {
@@ -307,7 +307,7 @@ namespace Content.Server.Buckle.Components
             UpdateBuckleStatus();
 
             oldBuckledTo.Remove(this);
-            SoundSystem.Play(oldBuckledTo.UnbuckleSound.GetSound(), Filter.Pvs(Owner), Owner);
+            _sysMan.GetEntitySystem<SharedAudioSystem>().Play(oldBuckledTo.UnbuckleSound, Filter.Pvs(Owner), Owner);
 
             var ev = new BuckleChangeEvent() { Buckling = false, Strap = oldBuckledTo.Owner, BuckledEntity = Owner };
             EntMan.EventBus.RaiseLocalEvent(Owner, ev, false);

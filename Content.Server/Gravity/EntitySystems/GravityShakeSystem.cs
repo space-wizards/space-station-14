@@ -15,7 +15,7 @@ namespace Content.Server.Gravity.EntitySystems
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
-
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
         [Dependency] private readonly SharedCameraRecoilSystem _sharedCameraRecoil = default!;
 
         private Dictionary<EntityUid, uint> _gridsToShake = new();
@@ -48,8 +48,11 @@ namespace Content.Server.Gravity.EntitySystems
         {
             _gridsToShake[gridId] = ShakeTimes;
 
-            SoundSystem.Play(comp.GravityShakeSound.GetSound(),
-                Filter.BroadcastGrid(gridId), AudioParams.Default.WithVolume(-2f));
+            _audioSystem.PlayGlobal(
+                comp.GravityShakeSound,
+                Filter.BroadcastGrid(gridId),
+                AudioParams.Default.WithVolume(-2f)
+            );
         }
 
         private void ShakeGrids()

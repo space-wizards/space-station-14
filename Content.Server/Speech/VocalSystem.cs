@@ -23,6 +23,7 @@ public sealed class VocalSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly ActionBlockerSystem _blocker = default!;
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
     public override void Initialize()
     {
@@ -71,7 +72,7 @@ public sealed class VocalSystem : EntitySystem
 
         if (_random.Prob(component.WilhelmProbability))
         {
-            SoundSystem.Play(component.Wilhelm.GetSound(), Filter.Pvs(uid), uid, component.AudioParams);
+            _audioSystem.Play(component.Wilhelm, Filter.Pvs(uid), uid, component.AudioParams);
             return true;
         }
 
@@ -81,13 +82,13 @@ public sealed class VocalSystem : EntitySystem
         switch (sex)
         {
             case Sex.Male:
-                SoundSystem.Play(component.MaleScream.GetSound(), Filter.Pvs(uid), uid, pitchedParams);
+                _audioSystem.Play(component.MaleScream, Filter.Pvs(uid), uid, pitchedParams);
                 break;
             case Sex.Female:
-                SoundSystem.Play(component.FemaleScream.GetSound(), Filter.Pvs(uid), uid, pitchedParams);
+                _audioSystem.Play(component.FemaleScream, Filter.Pvs(uid), uid, pitchedParams);
                 break;
             default:
-                SoundSystem.Play(component.UnsexedScream.GetSound(), Filter.Pvs(uid), uid, pitchedParams);
+                _audioSystem.Play(component.UnsexedScream, Filter.Pvs(uid), uid, pitchedParams);
                 break;
         }
 

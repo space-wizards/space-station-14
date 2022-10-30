@@ -26,6 +26,7 @@ namespace Content.Server.Kitchen.EntitySystems
         [Dependency] private readonly DoAfterSystem _doAfter = default!;
         [Dependency] private readonly IAdminLogManager _logger = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
         public override void Initialize()
         {
@@ -131,7 +132,7 @@ namespace Content.Server.Kitchen.EntitySystems
             // TODO: Need to be able to leave them on the spike to do DoT, see ss13.
             EntityManager.QueueDeleteEntity(victimUid);
 
-            SoundSystem.Play(component.SpikeSound.GetSound(), Filter.Pvs(uid), uid);
+            _audioSystem.Play(component.SpikeSound, Filter.Pvs(uid), uid);
         }
 
         private bool TryGetPiece(EntityUid uid, EntityUid user, EntityUid used,

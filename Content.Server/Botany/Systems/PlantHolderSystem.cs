@@ -26,6 +26,7 @@ namespace Content.Server.Botany.Systems
         [Dependency] private readonly TagSystem _tagSystem = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
         public override void Initialize()
         {
@@ -172,8 +173,8 @@ namespace Content.Server.Botany.Systems
                 var solutionEntity = args.Used;
 
 
-                SoundSystem.Play(spray.SpraySound.GetSound(), Filter.Pvs(args.Used),
-                args.Used, AudioHelpers.WithVariation(0.125f));
+                _audioSystem.Play(spray.SpraySound, Filter.Pvs(args.Used),
+                    args.Used, AudioHelpers.WithVariation(0.125f));
 
 
                 var split =_solutionSystem.Drain(solutionEntity, solution, amount);

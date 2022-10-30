@@ -251,7 +251,7 @@ public sealed partial class ShuttleSystem
            _logger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle {ToPrettyString(stationUid.Value)} unable to dock with station {ToPrettyString(stationUid.Value)}");
            _chatSystem.DispatchStationAnnouncement(stationUid.Value, Loc.GetString("emergency-shuttle-good-luck"), playDefaultSound: false);
            // TODO: Need filter extensions or something don't blame me.
-           SoundSystem.Play("/Audio/Misc/notice1.ogg", Filter.Broadcast());
+           _audio.PlayGlobal("/Audio/Misc/notice1.ogg", Filter.Broadcast());
            return;
        }
 
@@ -267,7 +267,7 @@ public sealed partial class ShuttleSystem
 
            _logger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle {ToPrettyString(stationUid.Value)} docked with stations");
            // TODO: Need filter extensions or something don't blame me.
-           SoundSystem.Play("/Audio/Announcements/shuttle_dock.ogg", Filter.Broadcast());
+           _audio.PlayGlobal("/Audio/Announcements/shuttle_dock.ogg", Filter.Broadcast());
        }
        else
        {
@@ -279,7 +279,7 @@ public sealed partial class ShuttleSystem
 
            _logger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle {ToPrettyString(stationUid.Value)} unable to find a valid docking port for {ToPrettyString(stationUid.Value)}");
            // TODO: Need filter extensions or something don't blame me.
-           SoundSystem.Play("/Audio/Misc/notice1.ogg", Filter.Broadcast());
+           _audio.PlayGlobal("/Audio/Misc/notice1.ogg", Filter.Broadcast());
        }
    }
 

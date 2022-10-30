@@ -19,6 +19,7 @@ public sealed class ImmovableRodSystem : EntitySystem
 
     [Dependency] private readonly BodySystem _bodySystem = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
     public override void Update(float frameTime)
     {
@@ -74,7 +75,7 @@ public sealed class ImmovableRodSystem : EntitySystem
 
         if (_random.Prob(component.HitSoundProbability))
         {
-            SoundSystem.Play(component.Sound.GetSound(), Filter.Pvs(uid), uid, component.Sound.Params);
+            _audioSystem.Play(component.Sound, Filter.Pvs(uid), uid, component.Sound.Params);
         }
 
         if (HasComp<ImmovableRodComponent>(ent))

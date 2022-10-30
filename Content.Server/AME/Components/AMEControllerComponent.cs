@@ -279,12 +279,14 @@ namespace Content.Server.AME.Components
 
         private void ClickSound()
         {
-            SoundSystem.Play(_clickSound.GetSound(), Filter.Pvs(Owner), Owner, AudioParams.Default.WithVolume(-2f));
+            _sysMan.GetEntitySystem<SharedAudioSystem>()
+                .Play(_clickSound, Filter.Pvs(Owner), Owner, AudioParams.Default.WithVolume(-2f));
         }
 
         private void InjectSound(bool overloading)
         {
-            SoundSystem.Play(_injectSound.GetSound(), Filter.Pvs(Owner), Owner, AudioParams.Default.WithVolume(overloading ? 10f : 0f));
+            _sysMan.GetEntitySystem<SharedAudioSystem>()
+                .Play(_injectSound, Filter.Pvs(Owner), Owner, AudioParams.Default.WithVolume(overloading ? 10f : 0f));
         }
     }
 

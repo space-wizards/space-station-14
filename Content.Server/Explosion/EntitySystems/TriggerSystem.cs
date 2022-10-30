@@ -48,6 +48,7 @@ namespace Content.Server.Explosion.EntitySystems
         [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
         public override void Initialize()
         {
@@ -194,7 +195,7 @@ namespace Content.Server.Explosion.EntitySystems
 
                 timer.TimeUntilBeep += timer.BeepInterval;
                 var filter = Filter.Pvs(timer.Owner, entityManager: EntityManager);
-                SoundSystem.Play(timer.BeepSound.GetSound(), filter, timer.Owner, timer.BeepParams);
+                _audioSystem.Play(timer.BeepSound, filter, timer.Owner, timer.BeepParams);
             }
 
             foreach (var uid in toRemove)

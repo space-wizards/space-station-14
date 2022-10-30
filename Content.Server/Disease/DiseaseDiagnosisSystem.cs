@@ -31,6 +31,7 @@ namespace Content.Server.Disease
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
         [Dependency] private readonly PaperSystem _paperSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
         [Dependency] private readonly StationSystem _stationSystem = default!;
 
@@ -167,7 +168,7 @@ namespace Content.Server.Disease
 
             AddQueue.Enqueue(uid);
             UpdateAppearance(uid, true, true);
-            SoundSystem.Play("/Audio/Machines/diagnoser_printing.ogg", Filter.Pvs(uid), uid);
+            _audioSystem.Play("/Audio/Machines/diagnoser_printing.ogg", Filter.Pvs(uid), uid);
         }
 
         /// <summary>
@@ -198,7 +199,7 @@ namespace Content.Server.Disease
 
             AddQueue.Enqueue(uid);
             UpdateAppearance(uid, true, true);
-            SoundSystem.Play("/Audio/Machines/vaccinator_running.ogg", Filter.Pvs(uid), uid);
+            _audioSystem.Play("/Audio/Machines/vaccinator_running.ogg", Filter.Pvs(uid), uid);
         }
 
         /// <summary>

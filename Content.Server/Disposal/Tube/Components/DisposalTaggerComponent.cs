@@ -15,6 +15,7 @@ namespace Content.Server.Disposal.Tube.Components
     public sealed class DisposalTaggerComponent : DisposalTransitComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
+        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
 
         public override string ContainerId => "DisposalTagger";
 
@@ -69,7 +70,8 @@ namespace Content.Server.Disposal.Tube.Components
 
         private void ClickSound()
         {
-            SoundSystem.Play(_clickSound.GetSound(), Filter.Pvs(Owner), Owner, AudioParams.Default.WithVolume(-2f));
+            _sysMan.GetEntitySystem<SharedAudioSystem>()
+                .Play(_clickSound, Filter.Pvs(Owner), Owner, AudioParams.Default.WithVolume(-2f));
         }
 
         protected override void OnRemove()

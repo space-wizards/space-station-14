@@ -26,6 +26,7 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly PowerCellSystem _powerCell = default!;
         [Dependency] private readonly IPrototypeManager _proto = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
         // TODO: Ideally you'd be able to subscribe to power stuff to get events at certain percentages.. or something?
         // But for now this will be better anyway.
@@ -209,7 +210,7 @@ namespace Content.Server.Light.EntitySystems
             if (!_powerCell.TryGetBatteryFromSlot(component.Owner, out var battery) &&
                 !TryComp(component.Owner, out battery))
             {
-                SoundSystem.Play(component.TurnOnFailSound.GetSound(), Filter.Pvs(component.Owner, entityManager: EntityManager), component.Owner);
+                _audioSystem.Play(component.TurnOnFailSound, Filter.Pvs(component.Owner, entityManager: EntityManager), component.Owner);
                 _popup.PopupEntity(Loc.GetString("handheld-light-component-cell-missing-message"), component.Owner, Filter.Entities(user));
                 return false;
             }
@@ -219,7 +220,7 @@ namespace Content.Server.Light.EntitySystems
             // Simple enough.
             if (component.Wattage > battery.CurrentCharge)
             {
-                SoundSystem.Play(component.TurnOnFailSound.GetSound(), Filter.Pvs(component.Owner, entityManager: EntityManager), component.Owner);
+                _audioSystem.Play(component.TurnOnFailSound, Filter.Pvs(component.Owner, entityManager: EntityManager), component.Owner);
                 _popup.PopupEntity(Loc.GetString("handheld-light-component-cell-dead-message"), component.Owner, Filter.Entities(user));
                 return false;
             }

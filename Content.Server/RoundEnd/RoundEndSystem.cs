@@ -31,6 +31,7 @@ namespace Content.Server.RoundEnd
         [Dependency] private readonly GameTicker _gameTicker = default!;
         [Dependency] private readonly ShuttleSystem _shuttle = default!;
         [Dependency] private readonly StationSystem _stationSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
         public TimeSpan DefaultCooldownDuration { get; set; } = TimeSpan.FromSeconds(30);
 
@@ -136,7 +137,7 @@ namespace Content.Server.RoundEnd
                 null,
                 Color.Gold);
 
-            SoundSystem.Play("/Audio/Announcements/shuttlecalled.ogg", Filter.Broadcast());
+            _audioSystem.PlayGlobal("/Audio/Announcements/shuttlecalled.ogg", Filter.Broadcast());
 
             LastCountdownStart = _gameTiming.CurTime;
             ExpectedCountdownEnd = _gameTiming.CurTime + countdownTime;
@@ -167,7 +168,7 @@ namespace Content.Server.RoundEnd
             _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("round-end-system-shuttle-recalled-announcement"),
                 Loc.GetString("Station"), false, colorOverride: Color.Gold);
 
-            SoundSystem.Play("/Audio/Announcements/shuttlerecalled.ogg", Filter.Broadcast());
+            _audioSystem.PlayGlobal("/Audio/Announcements/shuttlerecalled.ogg", Filter.Broadcast());
 
             LastCountdownStart = null;
             ExpectedCountdownEnd = null;

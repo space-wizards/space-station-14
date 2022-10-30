@@ -25,6 +25,7 @@ namespace Content.Client.UserInterface.Systems.Bwoink;
 [UsedImplicitly]
 public sealed class AHelpUIController: UIController, IOnStateChanged<GameplayState>, IOnSystemChanged<BwoinkSystem>
 {
+    [Dependency] private readonly IEntitySystemManager _systemManager = default!;
     [Dependency] private readonly IClientAdminManager _adminManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IClyde _clyde = default!;
@@ -115,7 +116,7 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
         }
         if (localPlayer.UserId != message.TrueSender)
         {
-            SoundSystem.Play("/Audio/Effects/adminhelp.ogg", Filter.Local());
+            _systemManager.GetEntitySystem<SharedAudioSystem>().PlayGlobal("/Audio/Effects/adminhelp.ogg", Filter.Local());
             _clyde.RequestWindowAttention();
         }
 

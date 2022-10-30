@@ -26,6 +26,7 @@ namespace Content.Server.Tools
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly SharedItemSystem _itemSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
         public override void Initialize()
         {
@@ -246,7 +247,7 @@ namespace Content.Server.Tools
                 return;
 
             // Pass tool.Owner to Filter.Pvs to avoid a TryGetEntity call.
-            SoundSystem.Play(sound.GetSound(), Filter.Pvs(tool.Owner),
+            _audioSystem.Play(sound, Filter.Pvs(tool.Owner),
                 uid, AudioHelpers.WithVariation(0.175f).WithVolume(-5f));
         }
 

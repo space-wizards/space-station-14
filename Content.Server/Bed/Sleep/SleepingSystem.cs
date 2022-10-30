@@ -26,8 +26,8 @@ namespace Content.Server.Bed.Sleep
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly ActionsSystem _actionsSystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         public override void Initialize()
@@ -188,7 +188,7 @@ namespace Content.Server.Bed.Sleep
             {
                 if (user != null)
                 {
-                    SoundSystem.Play("/Audio/Effects/thudswoosh.ogg", Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.05f, _robustRandom));
+                    _audioSystem.Play("/Audio/Effects/thudswoosh.ogg", Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.05f, _robustRandom));
                     _popupSystem.PopupEntity(Loc.GetString("wake-other-failure", ("target", Identity.Entity(uid, EntityManager))), uid, Filter.Entities(user.Value), Shared.Popups.PopupType.SmallCaution);
                 }
                 return false;
@@ -196,7 +196,7 @@ namespace Content.Server.Bed.Sleep
 
             if (user != null)
             {
-                SoundSystem.Play("/Audio/Effects/thudswoosh.ogg", Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.05f, _robustRandom));
+                _audioSystem.Play("/Audio/Effects/thudswoosh.ogg", Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.05f, _robustRandom));
                 _popupSystem.PopupEntity(Loc.GetString("wake-other-success", ("target", Identity.Entity(uid, EntityManager))), uid, Filter.Entities(user.Value));
             }
             RemComp<SleepingComponent>(uid);

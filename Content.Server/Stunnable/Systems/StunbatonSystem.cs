@@ -25,6 +25,7 @@ namespace Content.Server.Stunnable.Systems
     public sealed class StunbatonSystem : EntitySystem
     {
         [Dependency] private readonly SharedItemSystem _item = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
         public override void Initialize()
         {
@@ -57,7 +58,7 @@ namespace Content.Server.Stunnable.Systems
 
             if (battery.CurrentCharge < component.EnergyPerUse)
             {
-                SoundSystem.Play(component.SparksSound.GetSound(), Filter.Pvs(component.Owner, entityManager: EntityManager), uid, AudioHelpers.WithVariation(0.25f));
+                _audioSystem.Play(component.SparksSound, Filter.Pvs(component.Owner, entityManager: EntityManager), uid, AudioHelpers.WithVariation(0.25f));
                 TurnOff(component);
             }
         }
@@ -97,7 +98,7 @@ namespace Content.Server.Stunnable.Systems
                 appearance.SetData(ToggleVisuals.Toggled, false);
             }
 
-            SoundSystem.Play(comp.SparksSound.GetSound(), Filter.Pvs(comp.Owner), comp.Owner, AudioHelpers.WithVariation(0.25f));
+            _audioSystem.Play(comp.SparksSound, Filter.Pvs(comp.Owner), comp.Owner, AudioHelpers.WithVariation(0.25f));
 
             comp.Activated = false;
         }
@@ -110,7 +111,7 @@ namespace Content.Server.Stunnable.Systems
             var playerFilter = Filter.Pvs(comp.Owner, entityManager: EntityManager);
             if (!TryComp<BatteryComponent>(comp.Owner, out var battery) || battery.CurrentCharge < comp.EnergyPerUse)
             {
-                SoundSystem.Play(comp.TurnOnFailSound.GetSound(), playerFilter, comp.Owner, AudioHelpers.WithVariation(0.25f));
+                _audioSystem.Play(comp.TurnOnFailSound, playerFilter, comp.Owner, AudioHelpers.WithVariation(0.25f));
                 user.PopupMessage(Loc.GetString("stunbaton-component-low-charge"));
                 return;
             }
@@ -122,7 +123,7 @@ namespace Content.Server.Stunnable.Systems
                 appearance.SetData(ToggleVisuals.Toggled, true);
             }
 
-            SoundSystem.Play(comp.SparksSound.GetSound(), playerFilter, comp.Owner, AudioHelpers.WithVariation(0.25f));
+            _audioSystem.Play(comp.SparksSound, playerFilter, comp.Owner, AudioHelpers.WithVariation(0.25f));
             comp.Activated = true;
         }
 

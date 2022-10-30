@@ -19,6 +19,7 @@ namespace Content.Server.Fluids.EntitySystems
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly FluidSpreaderSystem _fluidSpreaderSystem = default!;
         [Dependency] private readonly StepTriggerSystem _stepTrigger = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
         public override void Initialize()
         {
@@ -166,7 +167,7 @@ namespace Content.Server.Fluids.EntitySystems
                 return true;
             }
 
-            SoundSystem.Play(puddleComponent.SpillSound.GetSound(),
+            _audioSystem.Play(puddleComponent.SpillSound,
                 Filter.Pvs(puddleComponent.Owner), puddleComponent.Owner);
             return true;
         }

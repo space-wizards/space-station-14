@@ -18,6 +18,7 @@ namespace Content.Server.Arcade.Components
         [Dependency] private readonly IRobustRandom _random = null!;
 
         [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IEntitySystemManager _systemManager = default!;
         private bool Powered => _entityManager.TryGetComponent<ApcPowerReceiverComponent>(Owner, out var powerReceiverComponent) && powerReceiverComponent.Powered;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(SpaceVillainArcadeUiKey.Key);
@@ -99,7 +100,8 @@ namespace Content.Server.Arcade.Components
                     Game?.ExecutePlayerAction(msg.PlayerAction);
                     break;
                 case PlayerAction.NewGame:
-                    SoundSystem.Play(_newGameSound.GetSound(), Filter.Pvs(Owner), Owner, AudioParams.Default.WithVolume(-4f));
+                    _systemManager.GetEntitySystem<SharedAudioSystem>()
+                        .Play(_newGameSound, Filter.Pvs(Owner), Owner, AudioParams.Default.WithVolume(-4f));
 
                     Game = new SpaceVillainGame(this);
                     UserInterface?.SendMessage(Game.GenerateMetaDataMessage());
@@ -143,6 +145,7 @@ namespace Content.Server.Arcade.Components
         public sealed class SpaceVillainGame
         {
             [Dependency] private readonly IRobustRandom _random = default!;
+            [Dependency] private readonly IEntitySystemManager _systemManager = default!;
 
             [ViewVariables] private readonly SpaceVillainArcadeComponent _owner;
 
@@ -205,7 +208,9 @@ namespace Content.Server.Arcade.Components
                         _latestPlayerActionMessage = Loc.GetString("space-villain-game-player-attack-message",
                                                                    ("enemyName", _enemyName),
                                                                    ("attackAmount", attackAmount));
-                        SoundSystem.Play(_owner._playerAttackSound.GetSound(), Filter.Pvs(_owner.Owner), _owner.Owner, AudioParams.Default.WithVolume(-4f));
+
+                        _systemManager.GetEntitySystem<SharedAudioSystem>()
+                            .Play(_owner._playerAttackSound, Filter.Pvs(_owner.Owner), _owner.Owner, AudioParams.Default.WithVolume(-4f));
                         if (!_owner.EnemyInvincibilityFlag)
                             _enemyHp -= attackAmount;
                         _turtleTracker -= _turtleTracker > 0 ? 1 : 0;
@@ -216,7 +221,8 @@ namespace Content.Server.Arcade.Components
                         _latestPlayerActionMessage = Loc.GetString("space-villain-game-player-heal-message",
                                                                     ("magicPointAmount", pointAmount),
                                                                     ("healAmount", healAmount));
-                        SoundSystem.Play(_owner._playerHealSound.GetSound(), Filter.Pvs(_owner.Owner), _owner.Owner, AudioParams.Default.WithVolume(-4f));
+                        _systemManager.GetEntitySystem<SharedAudioSystem>()
+                            .Play(_owner._playerHealSound, Filter.Pvs(_owner.Owner), _owner.Owner, AudioParams.Default.WithVolume(-4f));
                         if (!_owner.PlayerInvincibilityFlag)
                             _playerMp -= pointAmount;
                         _playerHp += healAmount;
@@ -225,7 +231,8 @@ namespace Content.Server.Arcade.Components
                     case PlayerAction.Recharge:
                         var chargeAmount = _random.Next(4, 7);
                         _latestPlayerActionMessage = Loc.GetString("space-villain-game-player-recharge-message", ("regainedPoints", chargeAmount));
-                        SoundSystem.Play(_owner._playerChargeSound.GetSound(), Filter.Pvs(_owner.Owner), _owner.Owner, AudioParams.Default.WithVolume(-4f));
+                        _systemManager.GetEntitySystem<SharedAudioSystem>()
+                            .Play(_owner._playerChargeSound, Filter.Pvs(_owner.Owner), _owner.Owner, AudioParams.Default.WithVolume(-4f));
                         _playerMp += chargeAmount;
                         _turtleTracker -= _turtleTracker > 0 ? 1 : 0;
                         break;
@@ -259,7 +266,8 @@ namespace Content.Server.Arcade.Components
                     UpdateUi(Loc.GetString("space-villain-game-player-wins-message"),
                              Loc.GetString("space-villain-game-enemy-dies-message", ("enemyName", _enemyName)),
                              true);
-                    SoundSystem.Play(_owner._winSound.GetSound(), Filter.Pvs(_owner.Owner), _owner.Owner, AudioParams.Default.WithVolume(-4f));
+                    _systemManager.GetEntitySystem<SharedAudioSystem>()
+                            .Play(_owner._winSound, Filter.Pvs(_owner.Owner), _owner.Owner, AudioParams.Default.WithVolume(-4f));
                     _owner.ProcessWin();
                     return false;
                 }
@@ -272,7 +280,8 @@ namespace Content.Server.Arcade.Components
                     UpdateUi(Loc.GetString("space-villain-game-player-loses-message"),
                              Loc.GetString("space-villain-game-enemy-cheers-message", ("enemyName", _enemyName)),
                              true);
-                    SoundSystem.Play(_owner._gameOverSound.GetSound(), Filter.Pvs(_owner.Owner), _owner.Owner, AudioParams.Default.WithVolume(-4f));
+                    _systemManager.GetEntitySystem<SharedAudioSystem>()
+                            .Play(_owner._gameOverSound, Filter.Pvs(_owner.Owner), _owner.Owner, AudioParams.Default.WithVolume(-4f));
                     return false;
                 }
                 if (_enemyHp <= 0 || _enemyMp <= 0)
@@ -281,7 +290,8 @@ namespace Content.Server.Arcade.Components
                     UpdateUi(Loc.GetString("space-villain-game-player-loses-message"),
                              Loc.GetString("space-villain-game-enemy-dies-with-player-message ", ("enemyName", _enemyName)),
                              true);
-                    SoundSystem.Play(_owner._gameOverSound.GetSound(), Filter.Pvs(_owner.Owner), _owner.Owner, AudioParams.Default.WithVolume(-4f));
+                    _systemManager.GetEntitySystem<SharedAudioSystem>()
+                            .Play(_owner._gameOverSound, Filter.Pvs(_owner.Owner), _owner.Owner, AudioParams.Default.WithVolume(-4f));
                     return false;
                 }
 
