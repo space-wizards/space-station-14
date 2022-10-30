@@ -2700,3 +2700,10 @@ Entries:
     type: Fix
   id: 319
   time: '2022-10-30T06:46:09.0000000+00:00'
+- author: Morty
+  changes:
+  - message: "\u0418\u0441\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u044F \u043D\
+      \u0430 Delta station"
+    type: Tweak
+  id: 320
+  time: '2022-10-30T07:19:12.0000000+00:00'
