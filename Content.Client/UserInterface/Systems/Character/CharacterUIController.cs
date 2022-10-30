@@ -6,6 +6,7 @@ using Content.Client.UserInterface.Systems.Character.Windows;
 using Content.Client.UserInterface.Systems.Objectives.Controls;
 using Content.Shared.Input;
 using JetBrains.Annotations;
+using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface.Controls;
@@ -21,6 +22,7 @@ namespace Content.Client.UserInterface.Systems.Character;
 public sealed class CharacterUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>, IOnSystemChanged<CharacterInfoSystem>
 {
     [UISystemDependency] private readonly CharacterInfoSystem _characterInfo = default!;
+    [UISystemDependency] private readonly SpriteSystem _spriteSystem = default!;
 
     private CharacterWindow? _window;
     private MenuButton? CharacterButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.CharacterButton;
@@ -123,7 +125,7 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
             foreach (var condition in conditions)
             {
                 var conditionControl = new ObjectiveConditionsControl();
-                conditionControl.ProgressTexture.Texture = condition.SpriteSpecifier.Frame0();
+                conditionControl.ProgressTexture.Texture = _spriteSystem.Frame0(condition.SpriteSpecifier);
                 conditionControl.ProgressTexture.Progress = condition.Progress;
 
                 conditionControl.Title.Text = condition.Title;

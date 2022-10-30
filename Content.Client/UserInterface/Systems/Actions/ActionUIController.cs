@@ -38,6 +38,7 @@ namespace Content.Client.UserInterface.Systems.Actions;
 
 public sealed class ActionUIController : UIController, IOnStateChanged<GameplayState>, IOnSystemChanged<ActionsSystem>
 {
+    [Dependency] private readonly IEntitySystemManager _systems = default!;
     [Dependency] private readonly IEntityManager _entities = default!;
     [Dependency] private readonly IOverlayManager _overlays = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
@@ -716,7 +717,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             }
             else if (action.Icon != null)
             {
-                _dragShadow.Texture = action.Icon!.Frame0();
+                _dragShadow.Texture = _systems.GetEntitySystem<SpriteSystem>().Frame0(action.Icon);
             }
             else
             {
@@ -911,14 +912,15 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         // override "held-item" overlay
         if (action.TargetingIndicator && _overlays.TryGetOverlay<ShowHandItemOverlay>(out var handOverlay))
         {
+            var spriteSystem = _systems.GetEntitySystem<SpriteSystem>();
             if (action.ItemIconStyle == ItemActionIconStyle.BigItem && action.Provider != null)
             {
                 handOverlay.EntityOverride = action.Provider;
             }
             else if (action.Toggled && action.IconOn != null)
-                handOverlay.IconOverride = action.IconOn.Frame0();
+                handOverlay.IconOverride = spriteSystem.Frame0(action.IconOn);
             else if (action.Icon != null)
-                handOverlay.IconOverride = action.Icon.Frame0();
+                handOverlay.IconOverride = spriteSystem.Frame0(action.Icon);
         }
 
         // TODO: allow world-targets to check valid positions. E.g., maybe:

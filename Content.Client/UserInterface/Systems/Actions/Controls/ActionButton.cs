@@ -274,10 +274,11 @@ public sealed class ActionButton : Control
             return;
         }
 
+        var spriteSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SpriteSystem>();
         if ((Controller.SelectingTargetFor == Action || Action.Toggled) && Action.IconOn != null)
-            SetActionIcon(Action.IconOn.Frame0());
-        else
-            SetActionIcon(Action.Icon?.Frame0());
+            SetActionIcon(spriteSystem.Frame0(Action.IconOn));
+        else if(Action.Icon != null)
+            SetActionIcon(spriteSystem.Frame0(Action.Icon));
     }
 
     public bool TryReplaceWith(ActionType action)

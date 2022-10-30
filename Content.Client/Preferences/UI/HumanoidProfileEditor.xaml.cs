@@ -1134,7 +1134,8 @@ namespace Content.Client.Preferences.UI
                 {
                     var specifier = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Interface/Misc/job_icons.rsi"),
                         job.Icon);
-                    icon.Texture = specifier.Frame0();
+                    icon.Texture = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SpriteSystem>()
+                        .Frame0(specifier);
                 }
 
                 _requirementsLabel = new Label()

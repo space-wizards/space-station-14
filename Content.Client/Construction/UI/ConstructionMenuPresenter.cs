@@ -244,7 +244,7 @@ namespace Content.Client.Construction.UI
             {
                 Metadata = recipe,
                 Text = recipe.Name,
-                Icon = recipe.Icon.Frame0(),
+                Icon = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SpriteSystem>().Frame0(recipe.Icon),
                 TooltipEnabled = true,
                 TooltipText = recipe.Description
             };
