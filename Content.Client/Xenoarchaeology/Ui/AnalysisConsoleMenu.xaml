@@ -1,0 +1,38 @@
+﻿<controls:FancyWindow xmlns="https://spacestation14.io"
+                      xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                      xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
+                      Title="{Loc 'analysis-console-menu-title'}"
+                      MinSize="600 320"
+                      SetSize="600 320">
+    <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True">
+        <BoxContainer Margin="10 10 10 10" MinWidth="150" Orientation="Vertical" VerticalExpand="True" SizeFlagsStretchRatio="1">
+            <Button Text="Server"></Button>
+            <BoxContainer MinHeight="5"></BoxContainer>
+            <Button Text="Scan"></Button>
+            <BoxContainer MinHeight="5"></BoxContainer>
+            <Button Text="Destroy"></Button>
+        </BoxContainer>
+        <customControls:VSeparator StyleClasses="LowDivider"/>
+        <PanelContainer Margin="10 10 10 10" HorizontalExpand="True" SizeFlagsStretchRatio="3">
+            <PanelContainer.PanelOverride>
+                <gfx:StyleBoxFlat BackgroundColor="#000000FF" />
+            </PanelContainer.PanelOverride>
+            <BoxContainer Margin="10 10 10 10" Orientation="Horizontal">
+                <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                    <Label Text="DEPTH: 1"></Label>
+                    <Label Text="STIMULI: HEAT-BASED"></Label>
+                    <Label Text="EFFECT: UNKNOWN"></Label>
+                    <Label Text="NODE ID: 94821"></Label>
+                    <Label Text="TOTAL NODE COUNT: 5"></Label>
+                </BoxContainer>
+                <BoxContainer>
+                    <TextureRect
+                        TextureScale="2 2"
+                        TexturePath="Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi/ano1.png">
+                    </TextureRect>
+                </BoxContainer>
+            </BoxContainer>
+        </PanelContainer>
+    </BoxContainer>
+</controls:FancyWindow>

@@ -45,3 +45,9 @@ signal-port-description-med-scanner-sender = Medical scanner signal sender
 
 signal-port-name-med-scanner-receiver = Medical scanner
 signal-port-description-med-scanner-receiver = Medical scanner signal receiver
+
+signal-port-name-artifact-analyzer-sender = Analysis console
+signal-port-description-artifact-analyzer-sender = Analysis console signal sender
+
+signal-port-name-artifact-analyzer-receiver = Artifact analyzer
+signal-port-description-artifact-analyzer-receiver = Artifact analyzer signal receiver

@@ -337,25 +337,31 @@
 
 - type: entity
   parent: BaseComputer
-  id: ComputerArtifactAnalyzerConsole
-  name: artifact analzyer console
+  id: ComputerAnalysisConsole
+  name: analysis console
   description: A computer used to interface with the artifact analyzer.
   components:
   - type: Appearance
     visuals:
     - type: ComputerVisualizer
-      key: rd_key
-      screen: rdcomp
+      key: tech_key
+      screen: artifact
   - type: ResearchClient
-  - type: ResearchConsole
-  - type: TechnologyDatabase
+  - type: AnalysisConsole
+  - type: DeviceList
+  - type: DeviceNetwork
+    deviceNetId: Wired
+  - type: SignalTransmitter
+    transmissionRange: 5
+    outputs:
+      ArtifactAnalyzerSender: []
   - type: ActivatableUI
-    key: enum.ResearchConsoleUiKey.Key
+    key: enum.ArtifactAnalzyerUiKey.Key
   - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
-    - key: enum.ResearchConsoleUiKey.Key
-      type: ResearchConsoleBoundUserInterface
+    - key: enum.ArtifactAnalzyerUiKey.Key
+      type: AnalysisConsoleBoundUserInterface
     - key: enum.ResearchClientUiKey.Key
       type: ResearchClientBoundUserInterface
   - type: ApcPowerReceiver

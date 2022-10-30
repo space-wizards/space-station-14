@@ -1,0 +1,50 @@
+﻿- type: entity
+  id: MachineArtifactAnalyzer
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  name: artifact analyzer
+  description: A platform capable of performing analysis on various types of artifacts.
+  components:
+  - type: Sprite
+    noRot: true
+    netsync: false
+    drawdepth: FloorTiles
+    sprite: Structures/Machines/artifact_analyzer.rsi
+    layers:
+    - state: icon
+    - state: unshaded
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+  - type: Physics
+    bodyType: Static
+    canCollide: false
+  - type: Fixtures
+    fixtures:
+      - shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.00"
+        density: 190
+        mask:
+          - MachineMask
+  - type: Transform
+    anchored: true
+    noRot: false
+  - type: DeviceNetwork
+    deviceNetId: Wired
+  - type: DeviceList
+  - type: SignalReceiver
+    inputs:
+      ArtifactAnalyzerReceiver: []
+  - type: Machine
+    board: ArtifactAnalyzerMachineCircuitboard
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#b53ca1"
+  - type: LitOnPowered
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
