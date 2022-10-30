@@ -25,7 +25,6 @@ public sealed partial class LatheMenu : DefaultWindow
     public event Action<string, int>? RecipeQueueAction;
 
     public List<string> Recipes = new();
-    private List<LatheRecipePrototype> _oldRecipesToShow = new();
 
     public LatheMenu(LatheBoundUserInterface owner)
     {
@@ -85,6 +84,9 @@ public sealed partial class LatheMenu : DefaultWindow
     /// <param name="lathe"></param>
     public void PopulateRecipes(EntityUid lathe)
     {
+        if (!_entityManager.TryGetComponent<LatheComponent>(lathe, out var component))
+            return;
+
         var recipesToShow = new List<LatheRecipePrototype>();
         foreach (var recipe in Recipes)
         {
@@ -106,7 +108,6 @@ public sealed partial class LatheMenu : DefaultWindow
             quantity = 1;
 
         RecipeList.Children.Clear();
-        _oldRecipesToShow = recipesToShow;
         foreach (var prototype in recipesToShow)
         {
             StringBuilder sb = new();
@@ -121,7 +122,7 @@ public sealed partial class LatheMenu : DefaultWindow
                 else
                     sb.Append('\n');
 
-                sb.Append(amount);
+                sb.Append((int) (amount * component.MaterialUseMultiplier));
                 sb.Append(' ');
                 sb.Append(proto.Name);
             }
