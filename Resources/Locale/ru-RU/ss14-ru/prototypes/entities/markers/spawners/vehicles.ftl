@@ -1,9 +1,9 @@
-ent-SpawnVehicleSecway = Secway Spawner
+ent-SpawnVehicleSecway = спавнер секвея
     .desc = { ent-MarkerBase.desc }
     .suffix = { "" }
-ent-SpawnVehiclePussywagon = Janicart Spawner
+ent-SpawnVehiclePussywagon = спавнер уборочной машины
     .desc = { ent-MarkerBase.desc }
     .suffix = { "" }
-ent-SpawnVehicleATV = ATV Spawner
+ent-SpawnVehicleATV = спавнер квадроцикла
     .desc = { ent-MarkerBase.desc }
     .suffix = { "" }

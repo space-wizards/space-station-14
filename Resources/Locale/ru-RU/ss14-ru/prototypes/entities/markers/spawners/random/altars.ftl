@@ -1,9 +1,9 @@
-ent-AltarSpawner = random altar spawner
+ent-AltarSpawner = спавнер случайный алтарь
     .desc = { ent-MarkerBase.desc }
     .suffix = { "" }
-ent-ConvertAltarSpawner = random convert-altar spawner
+ent-ConvertAltarSpawner = спавнер случайный конверт-алтарь
     .desc = { ent-MarkerBase.desc }
     .suffix = { "" }
-ent-CultAltarSpawner = random cult-altar spawner
+ent-CultAltarSpawner = спавнер случайный культ-алтарь
     .desc = { ent-MarkerBase.desc }
     .suffix = { "" }
