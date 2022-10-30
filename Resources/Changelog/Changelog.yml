@@ -1,9 +1,4 @@
 Entries:
-- author: CormosLemming
-  changes:
-  - {message: Popcorn sprite now has the proper number on it., type: Fix}
-  id: 2048
-  time: '2022-07-31T02:56:04.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed a bug that enabled people to keep breathing using gas tanks that
@@ -2953,3 +2948,9 @@ Entries:
   - {message: added minor delay to curtain open/close time, type: Tweak}
   id: 2547
   time: '2022-10-30T07:34:01.0000000+00:00'
+- author: Carbonhell
+  changes:
+  - {message: Examining a humanoid with an age between 30 and 60 years old now properly
+      shows them as middle-aged instead of old., type: Fix}
+  id: 2548
+  time: '2022-10-30T18:54:20.0000000+00:00'
