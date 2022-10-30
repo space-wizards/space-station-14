@@ -189,7 +189,7 @@ namespace Content.Shared.Damage
 
             if (!delta.Empty)
             {
-                DamageChanged(damageable, delta, interruptsDoAfters);
+                DamageChanged(damageable, delta, interruptsDoAfters, origin);
             }
 
             return delta;
