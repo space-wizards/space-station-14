@@ -73,7 +73,7 @@ namespace Content.Client.Verbs
 
         public override void FrameUpdate(float frameTime)
         {
-            base.Update(frameTime);
+            base.FrameUpdate(frameTime);
             EntityMenu?.Update();
         }
 
