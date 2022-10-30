@@ -509,10 +509,14 @@ public sealed partial class HumanoidSystem : SharedHumanoidSystem
         }
 
         if (age < speciesPrototype.YoungAge)
+        {
             return Loc.GetString("identity-age-young");
+        }
 
         if (age < speciesPrototype.OldAge)
-            Loc.GetString("identity-age-middle-aged");
+        {
+            return Loc.GetString("identity-age-middle-aged");
+        }
 
         return Loc.GetString("identity-age-old");
     }
