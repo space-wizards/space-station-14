@@ -25,14 +25,12 @@ namespace Content.Server.VendingMachineRestockPackage
         ///     Sound that plays when starting to restock a machine.
         /// </summary>
         [DataField("soundRestockStart")]
-        // Credit to: https://freesound.org/people/Defaultv/sounds/534362/
         public SoundSpecifier SoundRestockStart = new SoundPathSpecifier("/Audio/Machines/vending_restock_start.ogg");
 
         /// <summary>
         ///     Sound that plays when finished restocking a machine.
         /// </summary>
         [DataField("soundRestockDone")]
-        // Credit to: https://freesound.org/people/felipelnv/sounds/153298/
         public SoundSpecifier SoundRestockDone = new SoundPathSpecifier("/Audio/Machines/vending_restock_done.ogg");
     }
 }
