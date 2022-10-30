@@ -1,9 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Bloodloss now makes you dizzy., type: Add}
-  id: 2042
-  time: '2022-07-31T02:24:24.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Adds a new salvage equipment vendor to be added to maps., type: Add}
@@ -2949,3 +2944,11 @@ Entries:
     type: Fix}
   id: 2541
   time: '2022-10-30T06:12:05.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added machine part upgrades for emitters. Have fun blasting holes into
+      things quicker., type: Add}
+  - {message: Slightly increased emitter power consumption and minimum burst delay.,
+    type: Tweak}
+  id: 2542
+  time: '2022-10-30T06:53:31.0000000+00:00'
