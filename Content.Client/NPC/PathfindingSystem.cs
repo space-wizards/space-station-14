@@ -245,8 +245,6 @@ namespace Content.Client.NPC
                 if (!_mapManager.TryFindGridAt(mouseWorldPos, out var grid))
                     return;
 
-                var found = false;
-
                 if (!_system.Polys.TryGetValue(grid.GridEntityId, out var data))
                     return;
 
@@ -263,7 +261,6 @@ namespace Content.Client.NPC
 
                 var invGridMatrix = grid.InvWorldMatrix;
                 DebugPathPoly? nearest = null;
-                var nearestDistance = float.MaxValue;
 
                 foreach (var poly in tile)
                 {

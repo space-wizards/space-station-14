@@ -11,7 +11,6 @@ namespace Content.Server.Actions
     public sealed class ActionsSystem : SharedActionsSystem
     {
         [Dependency] private readonly ChatSystem _chat = default!;
-        [Dependency] private readonly MetaDataSystem _metaSystem = default!;
 
         public override void Initialize()
         {

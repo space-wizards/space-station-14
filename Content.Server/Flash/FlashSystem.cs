@@ -25,7 +25,6 @@ namespace Content.Server.Flash
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly StunSystem _stunSystem = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
-        [Dependency] private readonly MetaDataSystem _metaSystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;

@@ -45,7 +45,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IServerPreferencesManager _prefs = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IMapLoader _mapLoader = default!;

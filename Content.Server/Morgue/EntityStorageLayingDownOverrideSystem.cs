@@ -9,7 +9,6 @@ namespace Content.Server.Morgue;
 public sealed class EntityStorageLayingDownOverrideSystem : EntitySystem
 {
     [Dependency] private readonly StandingStateSystem _standing = default!;
-    [Dependency] private readonly BodySystem _body = default!;
 
     public override void Initialize()
     {

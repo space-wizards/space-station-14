@@ -114,7 +114,7 @@ namespace Content.Client.Doors
                     }
                 }
             }
-            EmaggingAnimation = new Animation { Length = TimeSpan.FromSeconds(_delay) };
+            EmaggingAnimation = new Animation { Length = TimeSpan.FromSeconds(_delayEmag) };
             {
                 var flickUnlit = new AnimationTrackSpriteFlick();
                 EmaggingAnimation.AnimationTracks.Add(flickUnlit);

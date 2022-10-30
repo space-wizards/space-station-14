@@ -15,7 +15,6 @@ namespace Content.Client.Sandbox
         [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
         [Dependency] private readonly IMapManager _map = default!;
         [Dependency] private readonly IPlacementManager _placement = default!;
-        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
 
         private bool _sandboxEnabled;
         public bool SandboxAllowed { get; private set; }
