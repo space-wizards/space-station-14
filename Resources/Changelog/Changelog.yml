@@ -1,9 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed various visuals for held & equipped items., type: Fix}
-  id: 2038
-  time: '2022-07-29T01:02:09.0000000+00:00'
 - author: corentt
   changes:
   - {message: Syringes can be put in medical belts, type: Add}
@@ -2945,3 +2940,12 @@ Entries:
   - {message: Hopefully fix the server crashing very often., type: Fix}
   id: 2537
   time: '2022-10-29T16:22:22.417732+00:00'
+- author: Scribbles0
+  changes:
+  - {message: A mini jetpack crate can now be found in cargo's ordering catalog.,
+    type: Add}
+  - {message: Mini jetpacks now have slightly more air capacity., type: Tweak}
+  - {message: Fixed certain mini jetpacks having the capacity of a normal jetpack.,
+    type: Fix}
+  id: 2538
+  time: '2022-10-30T05:54:03.0000000+00:00'
