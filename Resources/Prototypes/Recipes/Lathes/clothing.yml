@@ -685,6 +685,17 @@
     Durathread: 150
 
 - type: latheRecipe
+  id: ClothingNeckMantleHOSShoulder
+  icon:
+    sprite: Clothing/Neck/mantles/hosmantle_shoulder.rsi
+    state: icon
+  result: ClothingNeckMantleHOSShoulder
+  completetime: 2.8
+  materials:
+    Cloth: 200
+    Durathread: 150
+
+- type: latheRecipe
   id: ClothingNeckMantleRD
   icon:
     sprite: Clothing/Neck/mantles/rdmantle.rsi
