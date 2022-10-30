@@ -54,7 +54,7 @@ public sealed class UploadFile : IConsoleCommand
         var data = file.CopyToArray();
 
         var netManager = IoCManager.Resolve<INetManager>();
-        var msg = netManager.CreateNetMessage<NetworkResourceUploadMessage>();
+        var msg = new NetworkResourceUploadMessage();
 
         msg.RelativePath = path;
         msg.Data = data;

@@ -30,7 +30,7 @@ public sealed class GamePrototypeLoadManager : IGamePrototypeLoadManager
 
     public void SendGamePrototype(string prototype)
     {
-        var msg = _netManager.CreateNetMessage<GamePrototypeLoadMessage>();
+        var msg = new GamePrototypeLoadMessage();
         msg.PrototypeData = prototype;
         _netManager.ClientSendMessage(msg);
     }
