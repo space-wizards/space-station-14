@@ -10,17 +10,20 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 using JetBrains.Annotations;
 using System.Linq;
+using Content.Server.Construction;
 using Content.Server.Materials;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.UserInterface;
 using Robust.Server.Player;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Lathe
 {
     [UsedImplicitly]
     public sealed class LatheSystem : SharedLatheSystem
     {
+        [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IPrototypeManager _proto = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -35,6 +38,7 @@ namespace Content.Server.Lathe
             SubscribeLocalEvent<LatheComponent, GetMaterialWhitelistEvent>(OnGetWhitelist);
             SubscribeLocalEvent<LatheComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<LatheComponent, PowerChangedEvent>(OnPowerChanged);
+            SubscribeLocalEvent<LatheComponent, RefreshPartsEvent>(OnPartsRefresh);
 
             SubscribeLocalEvent<LatheComponent, LatheQueueRecipeMessage>(OnLatheQueueRecipeMessage);
             SubscribeLocalEvent<LatheComponent, LatheSyncRequestMessage>(OnLatheSyncRequestMessage);
@@ -65,9 +69,7 @@ namespace Content.Server.Lathe
                 if (lathe.CurrentRecipe == null)
                     continue;
 
-                comp.AccumulatedTime += frameTime;
-
-                if (comp.AccumulatedTime >= (float) lathe.CurrentRecipe.CompleteTime.TotalSeconds)
+                if ( _timing.CurTime - comp.StartTime >= comp.ProductionLength)
                     FinishProducing(comp.Owner, lathe);
             }
         }
@@ -132,7 +134,7 @@ namespace Content.Server.Lathe
 
             foreach (var (mat, amount) in recipe.RequiredMaterials)
             {
-                _materialStorage.TryChangeMaterialAmount(uid, mat, -amount);
+                _materialStorage.TryChangeMaterialAmount(uid, mat, (int) (-amount * component.MaterialUseMultiplier));
             }
             component.Queue.Add(recipe);
 
@@ -149,7 +151,9 @@ namespace Content.Server.Lathe
             var recipe = component.Queue.First();
             component.Queue.RemoveAt(0);
 
-            EnsureComp<LatheProducingComponent>(uid);
+            var lathe = EnsureComp<LatheProducingComponent>(uid);
+            lathe.StartTime = _timing.CurTime;
+            lathe.ProductionLength = recipe.CompleteTime * component.TimeMultiplier;
             component.CurrentRecipe = recipe;
 
             _audio.PlayPvs(component.ProducingSound, component.Owner);
@@ -166,7 +170,7 @@ namespace Content.Server.Lathe
             if (comp.CurrentRecipe != null)
                 Spawn(comp.CurrentRecipe.Result, Transform(uid).Coordinates);
             comp.CurrentRecipe = null;
-            prodComp.AccumulatedTime = 0;
+            prodComp.StartTime = _timing.CurTime;
 
             if (!TryStartProducing(uid, comp))
             {
@@ -256,6 +260,17 @@ namespace Content.Server.Lathe
                 TryStartProducing(uid, component);
             }
         }
+
+        private void OnPartsRefresh(EntityUid uid, LatheComponent component, RefreshPartsEvent args)
+        {
+            var printTimeRating = args.PartRatings[component.MachinePartPrintTime];
+            var materialUseRating = args.PartRatings[component.MachinePartMaterialUse];
+
+            component.TimeMultiplier = MathF.Pow(component.PartRatingPrintTimeMultiplier, printTimeRating - 1);
+            component.MaterialUseMultiplier = MathF.Pow(component.PartRatingMaterialUseMultiplier, materialUseRating - 1);
+            Dirty(component);
+        }
+
 
         protected override bool HasRecipe(EntityUid uid, LatheRecipePrototype recipe, LatheComponent component)
         {
