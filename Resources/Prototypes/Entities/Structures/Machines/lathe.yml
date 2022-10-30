@@ -250,6 +250,12 @@
     idleState: icon
     runningState: building
     dynamicRecipes:
+      - FirelockElectronics
+      - DoorElectronics
+      - APCElectronics
+      - AirAlarmElectronics
+      - FireAlarmElectronics
+      - MailingUnitElectronics
       - SMESMachineCircuitboard
       - SubstationMachineCircuitboard
       - ThermomachineFreezerMachineCircuitBoard
@@ -271,12 +277,14 @@
       - SurveillanceWirelessCameraAnchoredCircuitboard
       - HydroponicsTrayMachineCircuitboard
       - SolarControlComputerCircuitboard
+      - PowerComputerCircuitboard
       - AutolatheMachineCircuitboard
       - ProtolatheMachineCircuitboard
       - ReagentGrinderMachineCircuitboard
       - MicrowaveMachineCircuitboard
       - UniformPrinterMachineCircuitboard
       - ShuttleConsoleCircuitboard
+      - RadarConsoleCircuitboard
       - CircuitImprinterMachineCircuitboard
       - DawInstrumentMachineCircuitboard
       - CloningConsoleComputerCircuitboard
@@ -289,6 +297,7 @@
       - WallmountSubstationElectronics
       - EmitterCircuitboard
       - GasRecyclerMachineCircuitboard
+      - SeedExtractorMachineCircuitboard
   - type: MaterialStorage
     whitelist:
       tags:
@@ -475,6 +484,12 @@
       - ClothingOuterWinterHoS
       - ClothingOuterWinterQM
       - ClothingOuterWinterRD
+      - ClothingNeckMantleCap
+      - ClothingNeckMantleCE
+      - ClothingNeckMantleCMO
+      - ClothingNeckMantleHOP
+      - ClothingNeckMantleHOS
+      - ClothingNeckMantleRD
       - ClothingOuterWinterMusician
       - ClothingOuterWinterClown
       - ClothingOuterWinterMime

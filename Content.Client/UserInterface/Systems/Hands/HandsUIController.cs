@@ -1,4 +1,4 @@
-﻿using Content.Client.Gameplay;
+using Content.Client.Gameplay;
 using Content.Client.Hands;
 using Content.Client.Hands.Systems;
 using Content.Client.UserInterface.Controls;
@@ -108,7 +108,17 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
         foreach (var (name, hand) in handsComp.Hands)
         {
             var handButton = AddHand(name, hand.Location);
-            handButton.SpriteView.Sprite = _entities.GetComponentOrNull<SpriteComponent>(hand.HeldEntity);
+
+            if (_entities.TryGetComponent(hand.HeldEntity, out HandVirtualItemComponent? virt))
+            {
+                handButton.SpriteView.Sprite = _entities.GetComponentOrNull<SpriteComponent>(virt.BlockingEntity);
+                handButton.Blocked = true;
+            }
+            else
+            {
+                handButton.SpriteView.Sprite = _entities.GetComponentOrNull<SpriteComponent>(hand.HeldEntity);
+                handButton.Blocked = false;
+            }
         }
 
         var activeHand = handsComp.ActiveHand;
@@ -146,23 +156,34 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
 
     private void OnItemAdded(string name, EntityUid entity)
     {
-        HandsGui?.UpdatePanelEntity(entity);
         var hand = GetHand(name);
         if (hand == null)
             return;
-        if (_entities.TryGetComponent(entity, out ISpriteComponent? sprite))
+
+        if (_entities.TryGetComponent(entity, out HandVirtualItemComponent? virt))
         {
-            hand.SpriteView.Sprite = sprite;
+            hand.SpriteView.Sprite = _entities.GetComponentOrNull<SpriteComponent>(virt.BlockingEntity);
+            hand.Blocked = true;
         }
+        else
+        {
+            hand.SpriteView.Sprite = _entities.GetComponentOrNull<SpriteComponent>(entity);
+            hand.Blocked = false;
+        }
+
+        if (_playerHandsComponent?.ActiveHand?.Name == name)
+            HandsGui?.UpdatePanelEntity(entity);
     }
 
     private void OnItemRemoved(string name, EntityUid entity)
     {
-        HandsGui?.UpdatePanelEntity(null);
         var hand = GetHand(name);
         if (hand == null)
             return;
+
         hand.SpriteView.Sprite = null;
+        if (_playerHandsComponent?.ActiveHand?.Name == name)
+            HandsGui?.UpdatePanelEntity(null);
     }
 
     private HandsContainer GetFirstAvailableContainer()
@@ -364,17 +385,14 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
         {
             foreach (var hand in container.GetButtons())
             {
-                if (hand.Entity is not { } entity)
-                    return;
-
-                if (_entities.Deleted(entity) ||
-                    !_entities.TryGetComponent(entity, out ItemCooldownComponent? cooldown) ||
+                if (!_entities.TryGetComponent(hand.Entity, out ItemCooldownComponent? cooldown) ||
                     cooldown is not { CooldownStart: { } start, CooldownEnd: { } end})
                 {
                     hand.CooldownDisplay.Visible = false;
                     return;
                 }
 
+                hand.CooldownDisplay.Visible = true;
                 hand.CooldownDisplay.FromTime(start, end);
             }
         }
