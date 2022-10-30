@@ -1,9 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Adds a new salvage equipment vendor to be added to maps., type: Add}
-  id: 2043
-  time: '2022-07-31T02:31:51.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: The sound effect for walking in snow has been replaced., type: Tweak}
@@ -2952,3 +2947,8 @@ Entries:
     type: Tweak}
   id: 2542
   time: '2022-10-30T06:53:31.0000000+00:00'
+- author: Nairod
+  changes:
+  - {message: 'Added Norepinephric Acid, the blindness inducing chemical.', type: Add}
+  id: 2543
+  time: '2022-10-30T07:10:00.0000000+00:00'
