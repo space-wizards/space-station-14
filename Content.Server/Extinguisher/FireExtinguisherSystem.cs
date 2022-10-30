@@ -136,7 +136,7 @@ public sealed class FireExtinguisherSystem : EntitySystem
 
         extinguisher.Safety = !extinguisher.Safety;
         _audioSystem.Play(extinguisher.SafetySound, Filter.Pvs(uid),
-            uid, AudioHelpers.WithVariation(0.125f).WithVolume(-4f));
+            uid, AudioParams.Default.WithVariation(0.125f).WithVolume(-4f));
         UpdateAppearance(uid, extinguisher);
     }
 }

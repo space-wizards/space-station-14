@@ -117,7 +117,7 @@ namespace Content.Server.Recycling
 
             if (component.Sound != null && (_timing.CurTime - component.LastSound).TotalSeconds > RecyclerSoundCooldown)
             {
-                _audioSystem.Play(component.Sound, Filter.Pvs(component.Owner, entityManager: EntityManager), component.Owner, AudioHelpers.WithVariation(0.01f).WithVolume(-3));
+                _audioSystem.Play(component.Sound, Filter.Pvs(component.Owner, entityManager: EntityManager), component.Owner, AudioParams.Default.WithVariation(0.01f).WithVolume(-3));
                 component.LastSound = _timing.CurTime;
             }
         }

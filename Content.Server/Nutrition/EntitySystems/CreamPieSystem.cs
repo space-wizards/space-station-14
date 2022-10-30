@@ -30,7 +30,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
         protected override void SplattedCreamPie(EntityUid uid, CreamPieComponent creamPie)
         {
-            _audioSystem.Play(creamPie.Sound, Filter.Pvs(creamPie.Owner), creamPie.Owner, AudioHelpers.WithVariation(0.125f));
+            _audioSystem.Play(creamPie.Sound, Filter.Pvs(creamPie.Owner), creamPie.Owner, AudioParams.Default.WithVariation(0.125f));
 
             if (EntityManager.TryGetComponent<FoodComponent?>(creamPie.Owner, out var foodComp) && _solutionsSystem.TryGetSolution(creamPie.Owner, foodComp.SolutionName, out var solution))
             {

@@ -232,7 +232,7 @@ namespace Content.Server.Guardian
             }
             else if (args.CurrentMobState.IsDead())
             {
-                _audioSystem.Play("/Audio/Voice/Human/malescream_guardian.ogg", Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.20f));
+                _audioSystem.Play("/Audio/Voice/Human/malescream_guardian.ogg", Filter.Pvs(uid), uid, AudioParams.Default.WithVariation(0.20f));
                 EntityManager.RemoveComponent<GuardianHostComponent>(uid);
             }
         }

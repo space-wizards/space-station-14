@@ -75,7 +75,7 @@ namespace Content.Server.Light.EntitySystems
         {
             // Play Sound
             _audioSystem.Play(component.IgniteSound, Filter.Pvs(component.Owner),
-                component.Owner, AudioHelpers.WithVariation(0.125f).WithVolume(-0.125f));
+                component.Owner, AudioParams.Default.WithVariation(0.125f).WithVolume(-0.125f));
 
             // Change state
             SetState(component, SmokableState.Lit);

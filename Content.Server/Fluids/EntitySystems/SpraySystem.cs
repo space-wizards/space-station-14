@@ -119,7 +119,7 @@ public sealed class SpraySystem : EntitySystem
             _vaporSystem.Start(vaporComponent, vaporXform, impulseDirection, component.SprayVelocity, target, component.SprayAliveTime, args.User);
         }
 
-        _audioSystem.Play(component.SpraySound, Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.125f));
+        _audioSystem.Play(component.SpraySound, Filter.Pvs(uid), uid, AudioParams.Default.WithVariation(0.125f));
 
         RaiseLocalEvent(uid,
             new RefreshItemCooldownEvent(curTime, curTime + TimeSpan.FromSeconds(component.CooldownTime)), true);

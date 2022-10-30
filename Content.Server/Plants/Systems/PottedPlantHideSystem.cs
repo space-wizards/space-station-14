@@ -59,7 +59,7 @@ namespace Content.Server.Plants.Systems
             if (!Resolve(uid, ref component))
                 return;
 
-            _audioSystem.Play(component.RustleSound, Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.25f));
+            _audioSystem.Play(component.RustleSound, Filter.Pvs(uid), uid, AudioParams.Default.WithVariation(0.25f));
         }
     }
 }

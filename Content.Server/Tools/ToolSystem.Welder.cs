@@ -114,7 +114,7 @@ namespace Content.Server.Tools
             if (light != null)
                 light.Enabled = true;
 
-            _audioSystem.Play(welder.WelderOnSounds, Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.125f).WithVolume(-5f));
+            _audioSystem.Play(welder.WelderOnSounds, Filter.Pvs(uid), uid, AudioParams.Default.WithVariation(0.125f).WithVolume(-5f));
 
             if (transform.GridUid is {} gridUid)
             {
@@ -155,7 +155,7 @@ namespace Content.Server.Tools
             if (light != null)
                 light.Enabled = false;
 
-            _audioSystem.Play(welder.WelderOffSounds, Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.125f).WithVolume(-5f));
+            _audioSystem.Play(welder.WelderOffSounds, Filter.Pvs(uid), uid, AudioParams.Default.WithVariation(0.125f).WithVolume(-5f));
 
             welder.Dirty();
 

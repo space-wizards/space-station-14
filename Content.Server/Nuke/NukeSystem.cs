@@ -424,7 +424,7 @@ namespace Content.Server.Nuke
                 return;
 
             _audioSystem.Play(sound,
-                Filter.Pvs(uid), uid, AudioHelpers.WithVariation(varyPitch).WithVolume(-5f));
+                Filter.Pvs(uid), uid, AudioParams.Default.WithVariation(varyPitch).WithVolume(-5f));
         }
 
         public string GenerateRandomNumberString(int length)

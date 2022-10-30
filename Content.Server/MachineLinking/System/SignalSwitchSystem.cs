@@ -32,7 +32,7 @@ namespace Content.Server.MachineLinking.System
             component.State = !component.State;
             _signalSystem.InvokePort(uid, component.State ? component.OnPort : component.OffPort);
             _audioSystem.Play(component.ClickSound, Filter.Pvs(component.Owner), component.Owner,
-                AudioHelpers.WithVariation(0.125f).WithVolume(8f));
+                AudioParams.Default.WithVariation(0.125f).WithVolume(8f));
 
             args.Handled = true;
         }

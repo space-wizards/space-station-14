@@ -16,7 +16,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
         public void Execute(EntityUid owner, DestructibleSystem system)
         {
             var pos = system.EntityManager.GetComponent<TransformComponent>(owner).Coordinates;
-            system.AudioSystem.Play(Sound, Filter.Pvs(pos), pos, AudioHelpers.WithVariation(0.125f));
+            system.AudioSystem.Play(Sound, Filter.Pvs(pos), pos, AudioParams.Default.WithVariation(0.125f));
         }
     }
 }

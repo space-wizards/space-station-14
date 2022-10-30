@@ -109,7 +109,7 @@ namespace Content.Server.Cabinet
                 return;
 
             cabinet.Opened = !cabinet.Opened;
-            _audioSystem.Play(cabinet.DoorSound, Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.15f));
+            _audioSystem.Play(cabinet.DoorSound, Filter.Pvs(uid), uid, AudioParams.Default.WithVariation(0.15f));
             _itemSlotsSystem.SetLock(uid, cabinet.CabinetSlot, !cabinet.Opened);
 
             UpdateAppearance(uid, cabinet);

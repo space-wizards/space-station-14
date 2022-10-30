@@ -58,7 +58,7 @@ namespace Content.Server.Stunnable.Systems
 
             if (battery.CurrentCharge < component.EnergyPerUse)
             {
-                _audioSystem.Play(component.SparksSound, Filter.Pvs(component.Owner, entityManager: EntityManager), uid, AudioHelpers.WithVariation(0.25f));
+                _audioSystem.Play(component.SparksSound, Filter.Pvs(component.Owner, entityManager: EntityManager), uid, AudioParams.Default.WithVariation(0.25f));
                 TurnOff(component);
             }
         }
@@ -98,7 +98,7 @@ namespace Content.Server.Stunnable.Systems
                 appearance.SetData(ToggleVisuals.Toggled, false);
             }
 
-            _audioSystem.Play(comp.SparksSound, Filter.Pvs(comp.Owner), comp.Owner, AudioHelpers.WithVariation(0.25f));
+            _audioSystem.Play(comp.SparksSound, Filter.Pvs(comp.Owner), comp.Owner, AudioParams.Default.WithVariation(0.25f));
 
             comp.Activated = false;
         }
@@ -111,7 +111,7 @@ namespace Content.Server.Stunnable.Systems
             var playerFilter = Filter.Pvs(comp.Owner, entityManager: EntityManager);
             if (!TryComp<BatteryComponent>(comp.Owner, out var battery) || battery.CurrentCharge < comp.EnergyPerUse)
             {
-                _audioSystem.Play(comp.TurnOnFailSound, playerFilter, comp.Owner, AudioHelpers.WithVariation(0.25f));
+                _audioSystem.Play(comp.TurnOnFailSound, playerFilter, comp.Owner, AudioParams.Default.WithVariation(0.25f));
                 user.PopupMessage(Loc.GetString("stunbaton-component-low-charge"));
                 return;
             }
@@ -123,7 +123,7 @@ namespace Content.Server.Stunnable.Systems
                 appearance.SetData(ToggleVisuals.Toggled, true);
             }
 
-            _audioSystem.Play(comp.SparksSound, playerFilter, comp.Owner, AudioHelpers.WithVariation(0.25f));
+            _audioSystem.Play(comp.SparksSound, playerFilter, comp.Owner, AudioParams.Default.WithVariation(0.25f));
             comp.Activated = true;
         }
 

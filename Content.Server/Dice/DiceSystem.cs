@@ -76,7 +76,7 @@ namespace Content.Server.Dice
             SetCurrentSide(uid, roll, die);
 
             die.Owner.PopupMessageEveryone(Loc.GetString("dice-component-on-roll-land", ("die", die.Owner), ("currentSide", die.CurrentSide)));
-            _audioSystem.Play(die.Sound, Filter.Pvs(die.Owner), die.Owner, AudioHelpers.WithVariation(0.05f));
+            _audioSystem.Play(die.Sound, Filter.Pvs(die.Owner), die.Owner, AudioParams.Default.WithVariation(0.05f));
         }
     }
 }

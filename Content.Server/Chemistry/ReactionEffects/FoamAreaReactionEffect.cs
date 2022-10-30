@@ -38,7 +38,7 @@ namespace Content.Server.Chemistry.ReactionEffects
             areaEffectComponent.Start(amount, duration, spreadDelay, removeDelay);
 
             IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedAudioSystem>()
-                .Play(sound, Filter.Pvs(ent), ent, AudioHelpers.WithVariation(0.125f));
+                .Play(sound, Filter.Pvs(ent), ent, AudioParams.Default.WithVariation(0.125f));
         }
     }
 }

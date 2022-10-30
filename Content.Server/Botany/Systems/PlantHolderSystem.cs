@@ -174,7 +174,7 @@ namespace Content.Server.Botany.Systems
 
 
                 _audioSystem.Play(spray.SpraySound, Filter.Pvs(args.Used),
-                    args.Used, AudioHelpers.WithVariation(0.125f));
+                    args.Used, AudioParams.Default.WithVariation(0.125f));
 
 
                 var split =_solutionSystem.Drain(solutionEntity, solution, amount);

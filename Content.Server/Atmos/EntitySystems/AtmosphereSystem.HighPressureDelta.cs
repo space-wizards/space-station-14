@@ -98,7 +98,7 @@ namespace Content.Server.Atmos.EntitySystems
                 {
                     var coordinates = tile.GridIndices.ToEntityCoordinates(tile.GridIndex, _mapManager);
                     _audioSystem.Play(SpaceWindSound, Filter.Pvs(coordinates),
-                        coordinates, AudioHelpers.WithVariation(0.125f).WithVolume(MathHelper.Clamp(tile.PressureDifference / 10, 10, 100)));
+                        coordinates, AudioParams.Default.WithVariation(0.125f).WithVolume(MathHelper.Clamp(tile.PressureDifference / 10, 10, 100)));
                 }
             }
 
