@@ -40,6 +40,7 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
         private static readonly TimeSpan ThunkDelay = TimeSpan.FromSeconds(2);
         public const string LightBulbContainer = "light_bulb";
@@ -262,16 +263,13 @@ namespace Content.Server.Light.EntitySystems
             if (!Resolve(uid, ref light, ref powerReceiver))
                 return;
 
-            // Optional component.
-            Resolve(uid, ref appearance, false);
-
             // check if light has bulb
             var bulbUid = GetBulb(uid, light);
             if (bulbUid == null || !EntityManager.TryGetComponent(bulbUid.Value, out LightBulbComponent? lightBulb))
             {
                 SetLight(uid, false, light: light);
                 powerReceiver.Load = 0;
-                appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Empty);
+                _appearanceSystem.SetData(uid, PoweredLightVisuals.BulbState, PoweredLightState.Empty, appearance);
                 return;
             }
             else
@@ -283,7 +281,7 @@ namespace Content.Server.Light.EntitySystems
                         if (powerReceiver.Powered && light.On)
                         {
                             SetLight(uid, true, lightBulb.Color, light, lightBulb.LightRadius, lightBulb.LightEnergy, lightBulb.LightSoftness);
-                            appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.On);
+                            _appearanceSystem.SetData(uid, PoweredLightVisuals.BulbState, PoweredLightState.On, appearance);
                             var time = _gameTiming.CurTime;
                             if (time > light.LastThunk + ThunkDelay)
                             {
@@ -294,16 +292,16 @@ namespace Content.Server.Light.EntitySystems
                         else
                         {
                             SetLight(uid, false, light: light);
-                            appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Off);
+                            _appearanceSystem.SetData(uid, PoweredLightVisuals.BulbState, PoweredLightState.Off, appearance);
                         }
                         break;
                     case LightBulbState.Broken:
                         SetLight(uid, false, light: light);
-                        appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Broken);
+                        _appearanceSystem.SetData(uid, PoweredLightVisuals.BulbState, PoweredLightState.Broken, appearance);
                         break;
                     case LightBulbState.Burned:
                         SetLight(uid, false, light: light);
-                        appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Burned);
+                        _appearanceSystem.SetData(uid, PoweredLightVisuals.BulbState, PoweredLightState.Burned, appearance);
                         break;
                 }
 
@@ -362,7 +360,7 @@ namespace Content.Server.Light.EntitySystems
 
             if (!EntityManager.TryGetComponent(light.Owner, out AppearanceComponent? appearance))
                 return;
-            appearance.SetData(PoweredLightVisuals.Blinking, isNowBlinking);
+            _appearanceSystem.SetData(appearance.Owner, PoweredLightVisuals.Blinking, isNowBlinking, appearance);
         }
 
         private void OnSignalReceived(EntityUid uid, PoweredLightComponent component, SignalReceivedEvent args)

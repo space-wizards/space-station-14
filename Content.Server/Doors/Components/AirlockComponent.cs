@@ -143,9 +143,10 @@ namespace Content.Server.Doors.Components
             base.Initialize();
 
             if (_entityManager.TryGetComponent<ApcPowerReceiverComponent>(Owner, out var receiverComponent) &&
-                _entityManager.TryGetComponent<AppearanceComponent>(Owner, out var appearanceComponent))
+                _entityManager.TryGetComponent<AppearanceComponent>(Owner, out var appearanceComponent) &&
+                _systemManager.TryGetEntitySystem<SharedAppearanceSystem>(out var appearanceSystem))
             {
-                appearanceComponent.SetData(DoorVisuals.Powered, receiverComponent.Powered);
+                appearanceSystem.SetData(appearanceComponent.Owner, DoorVisuals.Powered, receiverComponent.Powered, appearanceComponent);
             }
         }
 
@@ -166,9 +167,10 @@ namespace Content.Server.Doors.Components
 
         public void UpdateBoltLightStatus()
         {
-            if (_entityManager.TryGetComponent<AppearanceComponent>(Owner, out var appearanceComponent))
+            if (_entityManager.TryGetComponent<AppearanceComponent>(Owner, out var appearanceComponent) &&
+                _systemManager.TryGetEntitySystem<SharedAppearanceSystem>(out var appearanceSystem))
             {
-                appearanceComponent.SetData(DoorVisuals.BoltLights, BoltLightsVisible);
+                appearanceSystem.SetData(appearanceComponent.Owner, DoorVisuals.BoltLights, BoltLightsVisible, appearanceComponent);
             }
         }
 

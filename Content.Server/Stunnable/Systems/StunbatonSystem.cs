@@ -26,6 +26,7 @@ namespace Content.Server.Stunnable.Systems
     {
         [Dependency] private readonly SharedItemSystem _item = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
         public override void Initialize()
         {
@@ -95,7 +96,7 @@ namespace Content.Server.Stunnable.Systems
                 TryComp<ItemComponent>(comp.Owner, out var item))
             {
                 _item.SetHeldPrefix(comp.Owner, "off", item);
-                appearance.SetData(ToggleVisuals.Toggled, false);
+                _appearanceSystem.SetData(appearance.Owner, ToggleVisuals.Toggled, false, appearance);
             }
 
             _audioSystem.Play(comp.SparksSound, Filter.Pvs(comp.Owner), comp.Owner, AudioParams.Default.WithVariation(0.25f));
@@ -120,7 +121,7 @@ namespace Content.Server.Stunnable.Systems
                 EntityManager.TryGetComponent<ItemComponent>(comp.Owner, out var item))
             {
                 _item.SetHeldPrefix(comp.Owner, "on", item);
-                appearance.SetData(ToggleVisuals.Toggled, true);
+                _appearanceSystem.SetData(appearance.Owner, ToggleVisuals.Toggled, true, appearance);
             }
 
             _audioSystem.Play(comp.SparksSound, playerFilter, comp.Owner, AudioParams.Default.WithVariation(0.25f));

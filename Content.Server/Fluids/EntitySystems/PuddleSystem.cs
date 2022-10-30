@@ -20,6 +20,7 @@ namespace Content.Server.Fluids.EntitySystems
         [Dependency] private readonly FluidSpreaderSystem _fluidSpreaderSystem = default!;
         [Dependency] private readonly StepTriggerSystem _stepTrigger = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
         public override void Initialize()
         {
@@ -66,9 +67,9 @@ namespace Content.Server.Fluids.EntitySystems
             bool changeToWetFloor = (puddleComponent.CurrentVolume <= puddleComponent.WetFloorEffectThreshold
                                     && canEvaporate);
 
-            appearanceComponent.SetData(PuddleVisuals.VolumeScale, volumeScale);
-            appearanceComponent.SetData(PuddleVisuals.SolutionColor, puddleSolution.Color);
-            appearanceComponent.SetData(PuddleVisuals.ForceWetFloorSprite, changeToWetFloor);
+            _appearanceSystem.SetData(uid, PuddleVisuals.VolumeScale, volumeScale, appearanceComponent);
+            _appearanceSystem.SetData(uid, PuddleVisuals.SolutionColor, puddleSolution.Color, appearanceComponent);
+            _appearanceSystem.SetData(uid, PuddleVisuals.ForceWetFloorSprite, changeToWetFloor, appearanceComponent);
         }
 
         private void UpdateSlip(EntityUid entityUid, PuddleComponent puddleComponent)

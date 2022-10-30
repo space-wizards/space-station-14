@@ -32,7 +32,8 @@ public sealed partial class CargoSystem
             if (comp.CurrentState == CargoTelepadState.Unpowered)
             {
                 comp.CurrentState = CargoTelepadState.Idle;
-                appearance?.SetData(CargoTelepadVisuals.State, CargoTelepadState.Idle);
+                if (appearance != null)
+                    _appearanceSystem.SetData(comp.Owner, CargoTelepadVisuals.State, CargoTelepadState.Idle, appearance);
                 comp.Accumulator = comp.Delay;
                 continue;
             }
@@ -43,7 +44,8 @@ public sealed partial class CargoSystem
             if (comp.Accumulator > 0f)
             {
                 comp.CurrentState = CargoTelepadState.Idle;
-                appearance?.SetData(CargoTelepadVisuals.State, CargoTelepadState.Idle);
+                if (appearance != null)
+                    _appearanceSystem.SetData(comp.Owner, CargoTelepadVisuals.State, CargoTelepadState.Idle, appearance);
                 continue;
             }
 
@@ -83,7 +85,8 @@ public sealed partial class CargoSystem
             UpdateOrders(orderDatabase);
 
             comp.CurrentState = CargoTelepadState.Teleporting;
-            appearance?.SetData(CargoTelepadVisuals.State, CargoTelepadState.Teleporting);
+            if (appearance != null)
+                _appearanceSystem.SetData(comp.Owner, CargoTelepadVisuals.State, CargoTelepadState.Teleporting, appearance);
             comp.Accumulator += comp.Delay;
         }
     }
@@ -104,9 +107,8 @@ public sealed partial class CargoSystem
         // Setting idle state should be handled by Update();
         if (disabled) return;
 
-        TryComp<AppearanceComponent>(component.Owner, out var appearance);
         component.CurrentState = CargoTelepadState.Unpowered;
-        appearance?.SetData(CargoTelepadVisuals.State, CargoTelepadState.Unpowered);
+        _appearanceSystem.SetData(component.Owner, CargoTelepadVisuals.State, CargoTelepadState.Unpowered);
     }
 
     private void OnTelepadPowerChange(EntityUid uid, CargoTelepadComponent component, ref PowerChangedEvent args)

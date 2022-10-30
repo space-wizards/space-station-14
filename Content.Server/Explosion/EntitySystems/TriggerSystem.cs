@@ -49,6 +49,7 @@ namespace Content.Server.Explosion.EntitySystems
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
         public override void Initialize()
         {
@@ -163,7 +164,7 @@ namespace Content.Server.Explosion.EntitySystems
             active.TimeUntilBeep = initialBeepDelay == null ? active.BeepInterval : initialBeepDelay.Value;
 
             if (TryComp<AppearanceComponent>(uid, out var appearance))
-                appearance.SetData(TriggerVisuals.VisualState, TriggerVisualState.Primed);
+                _appearanceSystem.SetData(appearance.Owner, TriggerVisuals.VisualState, TriggerVisualState.Primed, appearance);
         }
 
         public override void Update(float frameTime)
@@ -204,7 +205,7 @@ namespace Content.Server.Explosion.EntitySystems
 
                 // In case this is a re-usable grenade, un-prime it.
                 if (TryComp<AppearanceComponent>(uid, out var appearance))
-                    appearance.SetData(TriggerVisuals.VisualState, TriggerVisualState.Unprimed);
+                    _appearanceSystem.SetData(appearance.Owner, TriggerVisuals.VisualState, TriggerVisualState.Unprimed, appearance);
             }
         }
     }

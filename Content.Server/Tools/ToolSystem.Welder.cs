@@ -109,7 +109,8 @@ namespace Content.Server.Tools
             if(item != null)
                 _itemSystem.SetHeldPrefix(uid, "on", item);
 
-            appearance?.SetData(WelderVisuals.Lit, true);
+            if (appearance != null)
+                _appearanceSystem.SetData(uid, WelderVisuals.Lit, true, appearance);
 
             if (light != null)
                 light.Enabled = true;
@@ -150,7 +151,8 @@ namespace Content.Server.Tools
                 _itemSystem.SetHeldPrefix(uid, "off", item);
 
             // Layer 1 is the flame.
-            appearance?.SetData(WelderVisuals.Lit, false);
+            if (appearance != null)
+                _appearanceSystem.SetData(uid, WelderVisuals.Lit, false, appearance);
 
             if (light != null)
                 light.Enabled = false;

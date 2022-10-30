@@ -16,6 +16,7 @@ namespace Content.Server.Doors.Systems
     {
         [Dependency] private readonly WiresSystem _wiresSystem = default!;
         [Dependency] private readonly PowerReceiverSystem _power = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
         public override void Initialize()
         {
@@ -34,7 +35,7 @@ namespace Content.Server.Doors.Systems
         {
             if (TryComp<AppearanceComponent>(uid, out var appearanceComponent))
             {
-                appearanceComponent.SetData(DoorVisuals.Powered, args.Powered);
+                _appearanceSystem.SetData(appearanceComponent.Owner, DoorVisuals.Powered, args.Powered, appearanceComponent);
             }
 
             if (!TryComp(uid, out DoorComponent? door))

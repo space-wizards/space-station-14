@@ -22,7 +22,8 @@ namespace Content.Server.Chemistry.Components
             if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance) &&
                 IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
             {
-                appearance.SetData(FoamVisuals.Color, solution.Color.WithAlpha(0.80f));
+                _entMan.EntitySysManager.GetEntitySystem<SharedAppearanceSystem>()
+                    .SetData(appearance.Owner, FoamVisuals.Color, solution.Color.WithAlpha(0.80f), appearance);
             }
         }
 
@@ -71,7 +72,8 @@ namespace Content.Server.Chemistry.Components
                 return;
             if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
             {
-                appearance.SetData(FoamVisuals.State, true);
+                _entMan.EntitySysManager.GetEntitySystem<SharedAppearanceSystem>()
+                    .SetData(appearance.Owner, FoamVisuals.State, true, appearance);
             }
 
             Owner.SpawnTimer(600, () =>

@@ -11,6 +11,7 @@ namespace Content.Server.Chat.TypingIndicator;
 public sealed class TypingIndicatorSystem : SharedTypingIndicatorSystem
 {
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
     public override void Initialize()
     {
@@ -59,6 +60,6 @@ public sealed class TypingIndicatorSystem : SharedTypingIndicatorSystem
         if (!Resolve(uid, ref appearance, false))
             return;
 
-        appearance.SetData(TypingIndicatorVisuals.IsTyping, isEnabled);
+        _appearanceSystem.SetData(appearance.Owner, TypingIndicatorVisuals.IsTyping, isEnabled, appearance);
     }
 }

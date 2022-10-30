@@ -15,6 +15,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
         public override void Initialize()
         {
@@ -41,7 +42,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (!Resolve(component.Owner, ref appearance, false))
                 return;
 
-            appearance.SetData(OutletInjectorVisuals.Enabled, component.Enabled);
+            _appearanceSystem.SetData(appearance.Owner, OutletInjectorVisuals.Enabled, component.Enabled, appearance);
         }
 
         private void OnOutletInjectorUpdated(EntityUid uid, GasOutletInjectorComponent injector, AtmosDeviceUpdateEvent args)

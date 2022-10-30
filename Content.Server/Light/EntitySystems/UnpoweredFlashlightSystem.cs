@@ -15,6 +15,7 @@ namespace Content.Server.Light.EntitySystems
     {
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
         public override void Initialize()
         {
@@ -68,7 +69,7 @@ namespace Content.Server.Light.EntitySystems
             light.Enabled = flashlight.LightOn;
 
             if (EntityManager.TryGetComponent(flashlight.Owner, out AppearanceComponent? appearance))
-                appearance.SetData(UnpoweredFlashlightVisuals.LightOn, flashlight.LightOn);
+                _appearanceSystem.SetData(appearance.Owner, UnpoweredFlashlightVisuals.LightOn, flashlight.LightOn, appearance);
 
             _audioSystem.Play(flashlight.ToggleSound, Filter.Pvs(light.Owner), flashlight.Owner);
 

@@ -32,6 +32,7 @@ namespace Content.Server.Physics.Controllers
         [Dependency] private readonly RecyclerSystem _recycler = default!;
         [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
         public const string ConveyorFixture = "conveyor";
 
@@ -96,7 +97,7 @@ namespace Content.Server.Physics.Controllers
         {
             if (!EntityManager.TryGetComponent<AppearanceComponent?>(component.Owner, out var appearance)) return;
             var isPowered = this.IsPowered(component.Owner, EntityManager);
-            appearance.SetData(ConveyorVisuals.State, isPowered ? component.State : ConveyorState.Off);
+            _appearanceSystem.SetData(appearance.Owner, ConveyorVisuals.State, isPowered ? component.State : ConveyorState.Off, appearance);
         }
 
         private void OnSignalReceived(EntityUid uid, ConveyorComponent component, SignalReceivedEvent args)

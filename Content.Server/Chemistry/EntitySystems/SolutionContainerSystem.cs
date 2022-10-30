@@ -24,11 +24,9 @@ public sealed class SolutionChangedEvent : EntityEventArgs
 [UsedImplicitly]
 public sealed partial class SolutionContainerSystem : EntitySystem
 {
-    [Dependency]
-    private readonly SharedChemicalReactionSystem _chemistrySystem = default!;
-
-    [Dependency]
-    private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly SharedChemicalReactionSystem _chemistrySystem = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
     public override void Initialize()
     {
@@ -97,8 +95,12 @@ public sealed partial class SolutionContainerSystem : EntitySystem
             return;
 
         var filledVolumePercent = Math.Min(1.0f, solution.CurrentVolume.Float() / solution.MaxVolume.Float());
-        appearanceComponent.SetData(SolutionContainerVisuals.VisualState,
-            new SolutionContainerVisualState(solution.Color, filledVolumePercent));
+        _appearanceSystem.SetData(
+            uid,
+            SolutionContainerVisuals.VisualState,
+            new SolutionContainerVisualState(solution.Color, filledVolumePercent),
+            appearanceComponent
+        );
     }
 
     /// <summary>

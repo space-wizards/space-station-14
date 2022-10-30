@@ -7,6 +7,8 @@ namespace Content.Server.Security.Systems
 {
     public sealed class DeployableBarrierSystem : EntitySystem
     {
+        [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -35,7 +37,7 @@ namespace Content.Server.Security.Systems
                 return;
 
             var state = isDeployed ? DeployableBarrierState.Deployed : DeployableBarrierState.Idle;
-            appearanceComponent.SetData(DeployableBarrierVisuals.State, state);
+            _appearanceSystem.SetData(appearanceComponent.Owner, DeployableBarrierVisuals.State, state, appearanceComponent);
 
             if (EntityManager.TryGetComponent(component.Owner, out PointLightComponent? light))
                 light.Enabled = isDeployed;

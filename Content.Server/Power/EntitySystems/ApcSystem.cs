@@ -28,6 +28,7 @@ namespace Content.Server.Power.EntitySystems
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly ToolSystem _toolSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
         private const float ScrewTime = 2f;
 
@@ -115,7 +116,7 @@ namespace Content.Server.Power.EntitySystems
 
                 if (appearance != null)
                 {
-                    appearance.SetData(ApcVisuals.ChargeState, newState);
+                    _appearanceSystem.SetData(appearance.Owner, ApcVisuals.ChargeState, newState, appearance);
                 }
             }
 
@@ -232,7 +233,7 @@ namespace Content.Server.Power.EntitySystems
             if (!Resolve(uid, ref appearance, ref apc, false))
                 return;
 
-            appearance.SetData(ApcVisuals.PanelState, GetPanelState(apc));
+            _appearanceSystem.SetData(appearance.Owner, ApcVisuals.PanelState, GetPanelState(apc), appearance);
         }
 
         private sealed class ApcToolFinishedEvent : EntityEventArgs

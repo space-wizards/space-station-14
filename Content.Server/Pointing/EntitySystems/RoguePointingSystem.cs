@@ -16,6 +16,7 @@ namespace Content.Server.Pointing.EntitySystems
     {
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly ExplosionSystem _explosion = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
         private EntityUid? RandomNearbyPlayer(EntityUid uid, RoguePointingArrowComponent? component = null, TransformComponent? transform = null)
         {
@@ -40,7 +41,7 @@ namespace Content.Server.Pointing.EntitySystems
             if (!Resolve(uid, ref component, ref transform, ref appearance) || component.Chasing == null)
                 return;
 
-            appearance.SetData(RoguePointingArrowVisuals.Rotation, transform.LocalRotation.Degrees);
+            _appearanceSystem.SetData(appearance.Owner, RoguePointingArrowVisuals.Rotation, transform.LocalRotation.Degrees, appearance);
         }
 
         public void SetTarget(EntityUid arrow, EntityUid target, RoguePointingArrowComponent? component = null)

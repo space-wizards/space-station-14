@@ -27,6 +27,7 @@ namespace Content.Server.Medical
         [Dependency] private readonly CloningConsoleSystem _cloningConsoleSystem = default!;
         [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         [Dependency] private readonly ContainerSystem _containerSystem = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
         private const float UpdateRate = 1f;
         private float _updateDif;
@@ -178,7 +179,7 @@ namespace Content.Server.Medical
         {
             if (TryComp<AppearanceComponent>(scannerComponent.Owner, out var appearance))
             {
-                appearance.SetData(MedicalScannerVisuals.Status, GetStatus(scannerComponent));
+                _appearanceSystem.SetData(appearance.Owner, MedicalScannerVisuals.Status, GetStatus(scannerComponent), appearance);
             }
         }
 

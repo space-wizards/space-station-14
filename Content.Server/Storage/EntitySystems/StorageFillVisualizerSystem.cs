@@ -7,6 +7,8 @@ namespace Content.Server.Storage.EntitySystems;
 
 public sealed class StorageFillVisualizerSystem : EntitySystem
 {
+    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -40,6 +42,6 @@ public sealed class StorageFillVisualizerSystem : EntitySystem
             return;
 
         var level = ContentHelpers.RoundToEqualLevels(storage.StorageUsed, storage.StorageCapacityMax, component.MaxFillLevels);
-        appearance.SetData(StorageFillVisuals.FillLevel, level);
+        _appearanceSystem.SetData(appearance.Owner, StorageFillVisuals.FillLevel, level, appearance);
     }
 }

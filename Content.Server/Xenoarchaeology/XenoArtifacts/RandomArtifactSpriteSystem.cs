@@ -9,6 +9,7 @@ public sealed class RandomArtifactSpriteSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IGameTiming _time = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
     public override void Initialize()
     {
@@ -29,7 +30,7 @@ public sealed class RandomArtifactSpriteSystem : EntitySystem
             var timeDif = _time.CurTime - component.ActivationStart.Value;
             if (timeDif.Seconds >= component.ActivationTime)
             {
-                appearance.SetData(SharedArtifactsVisuals.IsActivated, false);
+                _appearanceSystem.SetData(appearance.Owner, SharedArtifactsVisuals.IsActivated, false, appearance);
                 component.ActivationStart = null;
             }
         }
@@ -41,7 +42,7 @@ public sealed class RandomArtifactSpriteSystem : EntitySystem
             return;
 
         var randomSprite = _random.Next(component.MinSprite, component.MaxSprite + 1);
-        appearance.SetData(SharedArtifactsVisuals.SpriteIndex, randomSprite);
+        _appearanceSystem.SetData(appearance.Owner, SharedArtifactsVisuals.SpriteIndex, randomSprite, appearance);
     }
 
     private void OnActivated(EntityUid uid, RandomArtifactSpriteComponent component, ArtifactActivatedEvent args)
@@ -49,7 +50,7 @@ public sealed class RandomArtifactSpriteSystem : EntitySystem
         if (!TryComp(uid, out AppearanceComponent? appearance))
             return;
 
-        appearance.SetData(SharedArtifactsVisuals.IsActivated, true);
+        _appearanceSystem.SetData(appearance.Owner, SharedArtifactsVisuals.IsActivated, true, appearance);
         component.ActivationStart = _time.CurTime;
     }
 }

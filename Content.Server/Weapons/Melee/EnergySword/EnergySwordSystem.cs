@@ -23,6 +23,7 @@ namespace Content.Server.Weapons.Melee.EnergySword
         [Dependency] private readonly SharedRgbLightControllerSystem _rgbSystem = default!;
         [Dependency] private readonly SharedItemSystem _item = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
         public override void Initialize()
         {
@@ -132,8 +133,8 @@ namespace Content.Server.Weapons.Melee.EnergySword
             if (!TryComp(component.Owner, out AppearanceComponent? appearanceComponent))
                 return;
 
-            appearanceComponent.SetData(ToggleableLightVisuals.Enabled, component.Activated);
-            appearanceComponent.SetData(ToggleableLightVisuals.Color, component.BladeColor);
+            _appearanceSystem.SetData(appearanceComponent.Owner, ToggleableLightVisuals.Enabled, component.Activated, appearanceComponent);
+            _appearanceSystem.SetData(appearanceComponent.Owner, ToggleableLightVisuals.Color, component.BladeColor, appearanceComponent);
         }
 
         private void OnInteractUsing(EntityUid uid, EnergySwordComponent comp, InteractUsingEvent args)

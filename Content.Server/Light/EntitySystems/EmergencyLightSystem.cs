@@ -20,6 +20,7 @@ namespace Content.Server.Light.EntitySystems
     {
         [Dependency] private readonly AmbientSoundSystem _ambient = default!;
         [Dependency] private readonly StationSystem _station = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
         private readonly HashSet<EmergencyLightComponent> _activeLights = new();
 
@@ -108,7 +109,7 @@ namespace Content.Server.Light.EntitySystems
                     continue;
 
                 pointLight.Color = details.EmergencyLightColor;
-                appearance.SetData(EmergencyLightVisuals.Color, details.EmergencyLightColor);
+                _appearanceSystem.SetData(appearance.Owner, EmergencyLightVisuals.Color, details.EmergencyLightColor, appearance);
 
                 if (details.ForceEnableEmergencyLights && !light.ForciblyEnabled)
                 {
@@ -201,7 +202,7 @@ namespace Content.Server.Light.EntitySystems
             }
 
             if (TryComp(component.Owner, out AppearanceComponent? appearance))
-                appearance.SetData(EmergencyLightVisuals.On, false);
+                _appearanceSystem.SetData(appearance.Owner, EmergencyLightVisuals.On, false, appearance);
 
             _ambient.SetAmbience(component.Owner, false);
         }
@@ -215,7 +216,7 @@ namespace Content.Server.Light.EntitySystems
 
             if (TryComp(component.Owner, out AppearanceComponent? appearance))
             {
-                appearance.SetData(EmergencyLightVisuals.On, true);
+                _appearanceSystem.SetData(appearance.Owner, EmergencyLightVisuals.On, true, appearance);
             }
 
             _ambient.SetAmbience(component.Owner, true);

@@ -12,6 +12,7 @@ public sealed partial class CargoSystem : SharedCargoSystem
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly ItemSlotsSystem _slots = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
     private ISawmill _sawmill = default!;
 

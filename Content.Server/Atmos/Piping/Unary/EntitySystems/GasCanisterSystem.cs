@@ -206,19 +206,19 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
             if (canister.Air.Pressure < 10)
             {
-                appearance.SetData(GasCanisterVisuals.PressureState, 0);
+                _appearanceSystem.SetData(appearance.Owner, GasCanisterVisuals.PressureState, 0, appearance);
             }
             else if (canister.Air.Pressure < Atmospherics.OneAtmosphere)
             {
-                appearance.SetData(GasCanisterVisuals.PressureState, 1);
+                _appearanceSystem.SetData(appearance.Owner, GasCanisterVisuals.PressureState, 1, appearance);
             }
             else if (canister.Air.Pressure < (15 * Atmospherics.OneAtmosphere))
             {
-                appearance.SetData(GasCanisterVisuals.PressureState, 2);
+                _appearanceSystem.SetData(appearance.Owner, GasCanisterVisuals.PressureState, 2, appearance);
             }
             else
             {
-                appearance.SetData(GasCanisterVisuals.PressureState, 3);
+                _appearanceSystem.SetData(appearance.Owner, GasCanisterVisuals.PressureState, 3, appearance);
             }
         }
 
@@ -280,7 +280,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (!EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
                 return;
 
-            appearance.SetData(GasCanisterVisuals.TankInserted, true);
+            _appearanceSystem.SetData(appearance.Owner, GasCanisterVisuals.TankInserted, true, appearance);
         }
 
         private void OnCanisterContainerRemoved(EntityUid uid, GasCanisterComponent component, EntRemovedFromContainerMessage args)
@@ -293,7 +293,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (!EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
                 return;
 
-            appearance.SetData(GasCanisterVisuals.TankInserted, false);
+            _appearanceSystem.SetData(appearance.Owner, GasCanisterVisuals.TankInserted, false, appearance);
         }
 
         /// <summary>

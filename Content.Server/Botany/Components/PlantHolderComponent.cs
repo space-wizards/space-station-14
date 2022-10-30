@@ -600,48 +600,51 @@ namespace Content.Server.Botany.Components
             if (!_entMan.TryGetComponent<AppearanceComponent>(Owner, out var appearanceComponent))
                 return;
 
+            var appearanceSystem = _esMan.GetEntitySystem<SharedAppearanceSystem>();
             if (Seed != null)
             {
                 if (DrawWarnings)
-                    appearanceComponent.SetData(PlantHolderVisuals.HealthLight, Health <= (Seed.Endurance / 2f));
+                    appearanceSystem.SetData(appearanceComponent.Owner, PlantHolderVisuals.HealthLight, Health <= (Seed.Endurance / 2f), appearanceComponent);
 
                 if (Dead)
                 {
-                    appearanceComponent.SetData(PlantHolderVisuals.PlantRsi, Seed.PlantRsi.ToString());
-                    appearanceComponent.SetData(PlantHolderVisuals.PlantState, "dead");
+                    appearanceSystem.SetData(appearanceComponent.Owner, PlantHolderVisuals.PlantRsi, Seed.PlantRsi.ToString(), appearanceComponent);
+                    appearanceSystem.SetData(appearanceComponent.Owner, PlantHolderVisuals.PlantState, "dead", appearanceComponent);
                 }
                 else if (Harvest)
                 {
-                    appearanceComponent.SetData(PlantHolderVisuals.PlantRsi, Seed.PlantRsi.ToString());
-                    appearanceComponent.SetData(PlantHolderVisuals.PlantState, "harvest");
+                    appearanceSystem.SetData(appearanceComponent.Owner, PlantHolderVisuals.PlantRsi, Seed.PlantRsi.ToString(), appearanceComponent);
+                    appearanceSystem.SetData(appearanceComponent.Owner, PlantHolderVisuals.PlantState, "harvest", appearanceComponent);
                 }
                 else if (Age < Seed.Maturation)
                 {
                     var growthStage = Math.Max(1, (int) ((Age * Seed.GrowthStages) / Seed.Maturation));
 
-                    appearanceComponent.SetData(PlantHolderVisuals.PlantRsi, Seed.PlantRsi.ToString());
-                    appearanceComponent.SetData(PlantHolderVisuals.PlantState, $"stage-{growthStage}");
+                    appearanceSystem.SetData(appearanceComponent.Owner, PlantHolderVisuals.PlantRsi, Seed.PlantRsi.ToString(), appearanceComponent);
+                    appearanceSystem.SetData(appearanceComponent.Owner, PlantHolderVisuals.PlantState, $"stage-{growthStage}", appearanceComponent);
                     _lastProduce = Age;
                 }
                 else
                 {
-                    appearanceComponent.SetData(PlantHolderVisuals.PlantRsi, Seed.PlantRsi.ToString());
-                    appearanceComponent.SetData(PlantHolderVisuals.PlantState, $"stage-{Seed.GrowthStages}");
+                    appearanceSystem.SetData(appearanceComponent.Owner, PlantHolderVisuals.PlantRsi, Seed.PlantRsi.ToString(), appearanceComponent);
+                    appearanceSystem.SetData(appearanceComponent.Owner, PlantHolderVisuals.PlantState, $"stage-{Seed.GrowthStages}", appearanceComponent);
                 }
             }
             else
             {
-                appearanceComponent.SetData(PlantHolderVisuals.PlantState, "");
-                appearanceComponent.SetData(PlantHolderVisuals.HealthLight, false);
+                appearanceSystem.SetData(appearanceComponent.Owner, PlantHolderVisuals.PlantState, "", appearanceComponent);
+                appearanceSystem.SetData(appearanceComponent.Owner, PlantHolderVisuals.HealthLight, false, appearanceComponent);
             }
 
             if (!DrawWarnings) return;
-            appearanceComponent.SetData(PlantHolderVisuals.WaterLight, WaterLevel <= 10);
-            appearanceComponent.SetData(PlantHolderVisuals.NutritionLight, NutritionLevel <= 2);
-            appearanceComponent.SetData(PlantHolderVisuals.AlertLight,
-                WeedLevel >= 5 || PestLevel >= 5 || Toxins >= 40 || ImproperHeat || ImproperLight || ImproperPressure ||
-                MissingGas > 0);
-            appearanceComponent.SetData(PlantHolderVisuals.HarvestLight, Harvest);
+            appearanceSystem.SetData(appearanceComponent.Owner, PlantHolderVisuals.WaterLight, WaterLevel <= 10, appearanceComponent);
+            appearanceSystem.SetData(appearanceComponent.Owner, PlantHolderVisuals.NutritionLight, NutritionLevel <= 2, appearanceComponent);
+            appearanceSystem.SetData(appearanceComponent.Owner,
+                PlantHolderVisuals.AlertLight,
+                WeedLevel >= 5 || PestLevel >= 5 || Toxins >= 40 || ImproperHeat || ImproperLight || ImproperPressure || MissingGas > 0,
+                appearanceComponent
+            );
+            appearanceSystem.SetData(appearanceComponent.Owner, PlantHolderVisuals.HarvestLight, Harvest, appearanceComponent);
         }
 
         /// <summary>

@@ -22,6 +22,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     [Dependency] private readonly TagSystem _tags = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly PhysicsSystem _physics = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
     public override void Initialize()
     {
@@ -360,19 +361,19 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
             return;
 
         if(component.PowerBuffer == 0)
-            appearance.SetData(ContainmentFieldGeneratorVisuals.PowerLight, PowerLevelVisuals.NoPower);
+            _appearanceSystem.SetData(appearance.Owner, ContainmentFieldGeneratorVisuals.PowerLight, PowerLevelVisuals.NoPower, appearance);
 
         if (component.PowerBuffer > 0 && component.PowerBuffer < component.PowerMinimum)
-            appearance.SetData(ContainmentFieldGeneratorVisuals.PowerLight, PowerLevelVisuals.LowPower);
+            _appearanceSystem.SetData(appearance.Owner, ContainmentFieldGeneratorVisuals.PowerLight, PowerLevelVisuals.LowPower, appearance);
 
         if (component.PowerBuffer >= component.PowerMinimum && component.PowerBuffer < 25)
         {
-            appearance.SetData(ContainmentFieldGeneratorVisuals.PowerLight, PowerLevelVisuals.MediumPower);
+            _appearanceSystem.SetData(appearance.Owner, ContainmentFieldGeneratorVisuals.PowerLight, PowerLevelVisuals.MediumPower, appearance);
         }
 
         if (component.PowerBuffer == 25)
         {
-            appearance.SetData(ContainmentFieldGeneratorVisuals.PowerLight, PowerLevelVisuals.HighPower);
+            _appearanceSystem.SetData(appearance.Owner, ContainmentFieldGeneratorVisuals.PowerLight, PowerLevelVisuals.HighPower, appearance);
         }
     }
 
@@ -387,22 +388,22 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
 
         if (component.Connections.Count == 0 && !component.Enabled)
         {
-            appearance.SetData(ContainmentFieldGeneratorVisuals.FieldLight, FieldLevelVisuals.NoLevel);
+            _appearanceSystem.SetData(appearance.Owner, ContainmentFieldGeneratorVisuals.FieldLight, FieldLevelVisuals.NoLevel, appearance);
         }
 
         if (component.Connections.Count == 0 && component.Enabled)
         {
-            appearance.SetData(ContainmentFieldGeneratorVisuals.FieldLight, FieldLevelVisuals.On);
+            _appearanceSystem.SetData(appearance.Owner, ContainmentFieldGeneratorVisuals.FieldLight, FieldLevelVisuals.On, appearance);
         }
 
         if (component.Connections.Count == 1)
         {
-            appearance.SetData(ContainmentFieldGeneratorVisuals.FieldLight, FieldLevelVisuals.OneField);
+            _appearanceSystem.SetData(appearance.Owner, ContainmentFieldGeneratorVisuals.FieldLight, FieldLevelVisuals.OneField, appearance);
         }
 
         if (component.Connections.Count > 1)
         {
-            appearance.SetData(ContainmentFieldGeneratorVisuals.FieldLight, FieldLevelVisuals.MultipleFields);
+            _appearanceSystem.SetData(appearance.Owner, ContainmentFieldGeneratorVisuals.FieldLight, FieldLevelVisuals.MultipleFields, appearance);
         }
     }
 
@@ -411,7 +412,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         if (!TryComp<AppearanceComponent>(component.Owner, out var appearance))
             return;
 
-        appearance.SetData(ContainmentFieldGeneratorVisuals.OnLight, component.IsConnected);
+        _appearanceSystem.SetData(appearance.Owner, ContainmentFieldGeneratorVisuals.OnLight, component.IsConnected, appearance);
     }
     #endregion
 }

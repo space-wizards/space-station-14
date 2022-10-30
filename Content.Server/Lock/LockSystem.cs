@@ -23,6 +23,7 @@ namespace Content.Server.Lock
         [Dependency] private readonly AccessReaderSystem _accessReader = default!;
         [Dependency] private readonly SharedPopupSystem _sharedPopupSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
         /// <inheritdoc />
         public override void Initialize()
@@ -40,7 +41,7 @@ namespace Content.Server.Lock
         {
             if (EntityManager.TryGetComponent(lockComp.Owner, out AppearanceComponent? appearance))
             {
-                appearance.SetData(StorageVisuals.CanLock, true);
+                _appearanceSystem.SetData(appearance.Owner, StorageVisuals.CanLock, true, appearance);
             }
         }
 
@@ -102,7 +103,7 @@ namespace Content.Server.Lock
 
             if (EntityManager.TryGetComponent(lockComp.Owner, out AppearanceComponent? appearanceComp))
             {
-                appearanceComp.SetData(StorageVisuals.Locked, true);
+                _appearanceSystem.SetData(appearanceComp.Owner, StorageVisuals.Locked, true, appearanceComp);
             }
 
             RaiseLocalEvent(lockComp.Owner, new LockToggledEvent(true), true);
@@ -125,7 +126,7 @@ namespace Content.Server.Lock
 
             if (EntityManager.TryGetComponent(lockComp.Owner, out AppearanceComponent? appearanceComp))
             {
-                appearanceComp.SetData(StorageVisuals.Locked, false);
+                _appearanceSystem.SetData(appearanceComp.Owner, StorageVisuals.Locked, false, appearanceComp);
             }
 
             RaiseLocalEvent(lockComp.Owner, new LockToggledEvent(false), true);
@@ -209,7 +210,7 @@ namespace Content.Server.Lock
 
                 if (EntityManager.TryGetComponent(component.Owner, out AppearanceComponent? appearanceComp))
                 {
-                    appearanceComp.SetData(StorageVisuals.Locked, false);
+                    _appearanceSystem.SetData(appearanceComp.Owner, StorageVisuals.Locked, false, appearanceComp);
                 }
                 EntityManager.RemoveComponent<LockComponent>(uid); //Literally destroys the lock as a tell it was emagged
                 args.Handled = true;

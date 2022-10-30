@@ -109,13 +109,14 @@ namespace Content.Server.Buckle.Components
 
             _occupiedSize += buckle.Size;
 
+            var appearanceSystem = _entityManager.EntitySysManager.GetEntitySystem<SharedAppearanceSystem>();
             if(_entityManager.TryGetComponent<AppearanceComponent>(buckle.Owner, out var appearanceComponent))
-                appearanceComponent.SetData(StrapVisuals.RotationAngle, _rotation);
+                appearanceSystem.SetData(appearanceComponent.Owner, StrapVisuals.RotationAngle, _rotation, appearanceComponent);
 
             // Update the visuals of the strap object
             if (IoCManager.Resolve<IEntityManager>().TryGetComponent<AppearanceComponent>(Owner, out var appearance))
             {
-                appearance.SetData(StrapVisuals.State, true);
+                appearanceSystem.SetData(appearance.Owner, StrapVisuals.State, true, appearance);
             }
 
             Dirty();
@@ -133,7 +134,8 @@ namespace Content.Server.Buckle.Components
             {
                 if (IoCManager.Resolve<IEntityManager>().TryGetComponent<AppearanceComponent>(Owner, out var appearance))
                 {
-                    appearance.SetData(StrapVisuals.State, false);
+                    _entityManager.EntitySysManager.GetEntitySystem<SharedAppearanceSystem>()
+                        .SetData(appearance.Owner, StrapVisuals.State, false, appearance);
                 }
 
                 _occupiedSize -= buckle.Size;

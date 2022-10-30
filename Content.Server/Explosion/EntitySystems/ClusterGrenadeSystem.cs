@@ -15,6 +15,7 @@ public sealed class ClusterGrenadeSystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly TriggerSystem _trigger = default!;
     [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
     public override void Initialize()
     {
@@ -126,6 +127,6 @@ public sealed class ClusterGrenadeSystem : EntitySystem
     {
         if (!TryComp<AppearanceComponent>(component.Owner, out var appearance)) return;
 
-        appearance.SetData(ClusterGrenadeVisuals.GrenadesCounter, component.GrenadesContainer.ContainedEntities.Count + component.UnspawnedCount);
+        _appearanceSystem.SetData(appearance.Owner, ClusterGrenadeVisuals.GrenadesCounter, component.GrenadesContainer.ContainedEntities.Count + component.UnspawnedCount, appearance);
     }
 }

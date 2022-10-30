@@ -198,7 +198,8 @@ namespace Content.Server.Buckle.Components
             }
 
             if(EntMan.TryGetComponent<AppearanceComponent>(Owner, out var appearance))
-                appearance.SetData(BuckleVisuals.Buckled, true);
+                _sysMan.GetEntitySystem<SharedAppearanceSystem>()
+                    .SetData(appearance.Owner, BuckleVisuals.Buckled, true, appearance);
 
             ReAttach(strap);
 
@@ -289,7 +290,8 @@ namespace Content.Server.Buckle.Components
             }
 
             if(EntMan.TryGetComponent<AppearanceComponent>(Owner, out var appearance))
-                appearance.SetData(BuckleVisuals.Buckled, false);
+                _sysMan.GetEntitySystem<SharedAppearanceSystem>()
+                    .SetData(appearance.Owner, BuckleVisuals.Buckled, false, appearance);
 
             if (EntMan.HasComponent<KnockedDownComponent>(Owner)
                 | (EntMan.TryGetComponent<MobStateComponent>(Owner, out var mobState) && mobState.IsIncapacitated()))

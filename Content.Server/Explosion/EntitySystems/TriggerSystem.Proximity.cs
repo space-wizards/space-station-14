@@ -85,7 +85,7 @@ public sealed partial class TriggerSystem
     {
         if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearanceComponent))
         {
-            appearanceComponent.SetData(ProximityTriggerVisualState.State, component.Enabled ? ProximityTriggerVisuals.Inactive : ProximityTriggerVisuals.Off);
+            _appearanceSystem.SetData(appearanceComponent.Owner, ProximityTriggerVisualState.State, component.Enabled ? ProximityTriggerVisuals.Inactive : ProximityTriggerVisuals.Off, appearanceComponent);
         }
     }
 
@@ -106,7 +106,7 @@ public sealed partial class TriggerSystem
 
         if (EntityManager.TryGetComponent(component.Owner, out AppearanceComponent? appearanceComponent))
         {
-            appearanceComponent.SetData(ProximityTriggerVisualState.State, ProximityTriggerVisuals.Active);
+            _appearanceSystem.SetData(appearanceComponent.Owner, ProximityTriggerVisualState.State, ProximityTriggerVisuals.Active, appearanceComponent);
         }
 
         Trigger(component.Owner);

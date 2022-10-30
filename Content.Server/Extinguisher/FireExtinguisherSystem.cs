@@ -18,6 +18,7 @@ public sealed class FireExtinguisherSystem : EntitySystem
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
     public override void Initialize()
     {
@@ -124,7 +125,7 @@ public sealed class FireExtinguisherSystem : EntitySystem
 
         if (comp.HasSafety)
         {
-            appearance.SetData(FireExtinguisherVisuals.Safety, comp.Safety);
+            _appearanceSystem.SetData(uid, FireExtinguisherVisuals.Safety, comp.Safety, appearance);
         }
     }
 

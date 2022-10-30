@@ -13,6 +13,8 @@ namespace Content.Server.Singularity.EntitySystems
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -78,7 +80,7 @@ namespace Content.Server.Singularity.EntitySystems
                 return;
 
             var state = component.Enabled ? RadiationCollectorVisualState.Active : RadiationCollectorVisualState.Deactive;
-            appearance.SetData(RadiationCollectorVisuals.VisualState, state);
+            _appearanceSystem.SetData(appearance.Owner, RadiationCollectorVisuals.VisualState, state, appearance);
         }
     }
 }

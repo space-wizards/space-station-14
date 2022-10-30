@@ -10,6 +10,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems;
 public sealed class AtmosPipeAppearanceSystem : EntitySystem
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
     public override void Initialize()
     {
@@ -69,6 +70,6 @@ public sealed class AtmosPipeAppearanceSystem : EntitySystem
             };
         }
 
-        appearance.SetData(PipeVisuals.VisualState, netConnectedDirections);
+        _appearanceSystem.SetData(appearance.Owner, PipeVisuals.VisualState, netConnectedDirections, appearance);
     }
 }

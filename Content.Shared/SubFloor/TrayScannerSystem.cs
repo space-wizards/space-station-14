@@ -15,6 +15,7 @@ public sealed class TrayScannerSystem : EntitySystem
     [Dependency] private IGameTiming _gameTiming = default!;
     [Dependency] private SharedSubFloorHideSystem _subfloorSystem = default!;
     [Dependency] private SharedContainerSystem _containerSystem = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
     private HashSet<EntityUid> _activeScanners = new();
     private RemQueue<EntityUid> _invalidScanners = new();
@@ -50,7 +51,7 @@ public sealed class TrayScannerSystem : EntitySystem
 
         if (EntityManager.TryGetComponent<AppearanceComponent>(uid, out var appearance))
         {
-            appearance.SetData(TrayScannerVisual.Visual, scanner.Enabled == true ? TrayScannerVisual.On : TrayScannerVisual.Off);
+            _appearanceSystem.SetData(appearance.Owner, TrayScannerVisual.Visual, scanner.Enabled == true ? TrayScannerVisual.On : TrayScannerVisual.Off, appearance);
         }
     }
 

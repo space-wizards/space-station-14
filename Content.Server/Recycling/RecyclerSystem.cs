@@ -29,6 +29,7 @@ namespace Content.Server.Recycling
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly TagSystem _tags = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
         private const float RecyclerSoundCooldown = 0.8f;
 
@@ -132,7 +133,7 @@ namespace Content.Server.Recycling
         {
             if (EntityManager.TryGetComponent(component.Owner, out AppearanceComponent? appearance))
             {
-                appearance.SetData(RecyclerVisuals.Bloody, true);
+                _appearanceSystem.SetData(appearance.Owner, RecyclerVisuals.Bloody, true, appearance);
             }
         }
 

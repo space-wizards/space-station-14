@@ -11,6 +11,8 @@ namespace Content.Server.Tabletop
 {
     public sealed partial class TabletopSystem
     {
+        [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
+
         public void InitializeDraggable()
         {
             SubscribeNetworkEvent<TabletopMoveEvent>(OnTabletopMove);
@@ -57,13 +59,13 @@ namespace Content.Server.Tabletop
 
             if (draggableComponent.DraggingPlayer != null)
             {
-                appearance.SetData(TabletopItemVisuals.Scale, new Vector2(1.25f, 1.25f));
-                appearance.SetData(TabletopItemVisuals.DrawDepth, (int) DrawDepth.Items + 1);
+                _appearanceSystem.SetData(appearance.Owner, TabletopItemVisuals.Scale, new Vector2(1.25f, 1.25f), appearance);
+                _appearanceSystem.SetData(appearance.Owner, TabletopItemVisuals.DrawDepth, (int) DrawDepth.Items + 1, appearance);
             }
             else
             {
-                appearance.SetData(TabletopItemVisuals.Scale, Vector2.One);
-                appearance.SetData(TabletopItemVisuals.DrawDepth, (int) DrawDepth.Items);
+                _appearanceSystem.SetData(appearance.Owner, TabletopItemVisuals.Scale, Vector2.One, appearance);
+                _appearanceSystem.SetData(appearance.Owner, TabletopItemVisuals.DrawDepth, (int) DrawDepth.Items, appearance);
             }
         }
 

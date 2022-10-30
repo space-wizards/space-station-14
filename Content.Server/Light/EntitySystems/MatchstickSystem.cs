@@ -18,6 +18,7 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly SharedItemSystem _item = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
         public override void Initialize()
         {
@@ -111,7 +112,7 @@ namespace Content.Server.Light.EntitySystems
 
             if (EntityManager.TryGetComponent(component.Owner, out AppearanceComponent? appearance))
             {
-                appearance.SetData(SmokingVisuals.Smoking, component.CurrentState);
+                _appearanceSystem.SetData(appearance.Owner, SmokingVisuals.Smoking, component.CurrentState, appearance);
             }
         }
     }

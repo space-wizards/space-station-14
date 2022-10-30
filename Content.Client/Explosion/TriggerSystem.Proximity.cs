@@ -9,6 +9,7 @@ namespace Content.Client.Explosion;
 public sealed partial class TriggerSystem
 {
     [Dependency] private readonly AnimationPlayerSystem _player = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
     /*
      * Currently all of the appearance stuff is hardcoded for portable flashers
@@ -50,10 +51,11 @@ public sealed partial class TriggerSystem
 
     private void OnProxAnimation(EntityUid uid, TriggerOnProximityComponent component, AnimationCompletedEvent args)
     {
-        if (!TryComp<AppearanceComponent>(uid, out var appearance)) return;
+        if(!TryComp<AppearanceComponent>(uid, out var appearance))
+            return;
 
         // So animation doesn't get spammed if no server state comes in.
-        appearance.SetData(ProximityTriggerVisualState.State, ProximityTriggerVisuals.Inactive);
+        _appearanceSystem.SetData(uid, ProximityTriggerVisualState.State, ProximityTriggerVisuals.Inactive, appearance);
         OnChangeData(uid, component, appearance);
     }
 

@@ -547,10 +547,15 @@ namespace Content.Server.ParticleAccelerator.Components
         {
             if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
             {
-                appearance.SetData(ParticleAcceleratorVisuals.VisualState,
-                    _apcPowerReceiverComponent!.Powered
-                        ? (ParticleAcceleratorVisualState) _selectedStrength
-                        : ParticleAcceleratorVisualState.Unpowered);
+                _entMan.EntitySysManager.GetEntitySystem<SharedAppearanceSystem>()
+                    .SetData(
+                        Owner,
+                        ParticleAcceleratorVisuals.VisualState,
+                        _apcPowerReceiverComponent!.Powered
+                            ? (ParticleAcceleratorVisualState) _selectedStrength
+                            : ParticleAcceleratorVisualState.Unpowered,
+                        appearance
+                    );
             }
         }
 
@@ -659,7 +664,8 @@ namespace Content.Server.ParticleAccelerator.Components
             var state = _isPowered
                 ? (ParticleAcceleratorVisualState) _selectedStrength
                 : ParticleAcceleratorVisualState.Unpowered;
-            appearanceComponent.SetData(ParticleAcceleratorVisuals.VisualState, state);
+            _entMan.EntitySysManager.GetEntitySystem<SharedAppearanceSystem>()
+                .SetData(appearanceComponent.Owner, ParticleAcceleratorVisuals.VisualState, state, appearanceComponent);
         }
 
         public override void Moved()

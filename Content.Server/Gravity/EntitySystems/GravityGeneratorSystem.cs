@@ -14,6 +14,7 @@ namespace Content.Server.Gravity.EntitySystems
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly GravitySystem _gravitySystem = default!;
         [Dependency] private readonly GravityShakeSystem _gravityShakeSystem = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
         public override void Initialize()
         {
@@ -233,7 +234,7 @@ namespace Content.Server.Gravity.EntitySystems
         {
             var uid = grav.Owner;
             var appearance = EntityManager.GetComponentOrNull<AppearanceComponent>(uid);
-            appearance?.SetData(GravityGeneratorVisuals.Charge, grav.Charge);
+            _appearanceSystem.SetData(uid, GravityGeneratorVisuals.Charge, grav.Charge, appearance);
 
             if (EntityManager.TryGetComponent(uid, out PointLightComponent? pointLight))
             {
@@ -263,28 +264,28 @@ namespace Content.Server.Gravity.EntitySystems
         {
             _ambientSoundSystem.SetAmbience(component.Owner, false);
 
-            appearance?.SetData(GravityGeneratorVisuals.State, GravityGeneratorStatus.Broken);
+            _appearanceSystem.SetData(component.Owner, GravityGeneratorVisuals.State, GravityGeneratorStatus.Broken, appearance);
         }
 
         private void MakeUnpowered(GravityGeneratorComponent component, AppearanceComponent? appearance)
         {
             _ambientSoundSystem.SetAmbience(component.Owner, false);
 
-            appearance?.SetData(GravityGeneratorVisuals.State, GravityGeneratorStatus.Unpowered);
+            _appearanceSystem.SetData(component.Owner, GravityGeneratorVisuals.State, GravityGeneratorStatus.Unpowered, appearance);
         }
 
         private void MakeOff(GravityGeneratorComponent component, AppearanceComponent? appearance)
         {
             _ambientSoundSystem.SetAmbience(component.Owner, false);
 
-            appearance?.SetData(GravityGeneratorVisuals.State, GravityGeneratorStatus.Off);
+            _appearanceSystem.SetData(component.Owner, GravityGeneratorVisuals.State, GravityGeneratorStatus.Off, appearance);
         }
 
         private void MakeOn(GravityGeneratorComponent component, AppearanceComponent? appearance)
         {
             _ambientSoundSystem.SetAmbience(component.Owner, true);
 
-            appearance?.SetData(GravityGeneratorVisuals.State, GravityGeneratorStatus.On);
+            _appearanceSystem.SetData(component.Owner, GravityGeneratorVisuals.State, GravityGeneratorStatus.On, appearance);
         }
 
         private void OnSwitchGenerator(

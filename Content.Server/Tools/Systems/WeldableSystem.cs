@@ -8,6 +8,7 @@ namespace Content.Server.Tools.Systems;
 public sealed class WeldableSystem : EntitySystem
 {
     [Dependency] private readonly ToolSystem _toolSystem = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
     public override void Initialize()
     {
@@ -93,7 +94,7 @@ public sealed class WeldableSystem : EntitySystem
 
         if (!TryComp(uid, out AppearanceComponent? appearance))
             return;
-        appearance.SetData(WeldableVisuals.IsWelded, component.IsWelded);
+        _appearanceSystem.SetData(appearance.Owner, WeldableVisuals.IsWelded, component.IsWelded, appearance);
     }
 
     public void ForceWeldedState(EntityUid uid, bool state, WeldableComponent? component = null)

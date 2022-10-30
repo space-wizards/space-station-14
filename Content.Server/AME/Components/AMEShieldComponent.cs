@@ -27,13 +27,17 @@ namespace Content.Server.AME.Components
         {
             if(_isCore) { return; }
             _isCore = true;
-            _appearance?.SetData(AMEShieldVisuals.Core, "isCore");
+            if (_appearance != null)
+                IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedAppearanceSystem>()
+                    .SetData(Owner, AMEShieldVisuals.Core, "isCore", _appearance);
         }
 
         public void UnsetCore()
         {
             _isCore = false;
-            _appearance?.SetData(AMEShieldVisuals.Core, "isNotCore");
+            if (_appearance != null)
+                IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedAppearanceSystem>()
+                    .SetData(Owner, AMEShieldVisuals.Core, "isNotCore", _appearance);
             UpdateCoreVisuals(0, false);
         }
 
@@ -41,7 +45,9 @@ namespace Content.Server.AME.Components
         {
             if (!injecting)
             {
-                _appearance?.SetData(AMEShieldVisuals.CoreState, "off");
+                if (_appearance != null)
+                    IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedAppearanceSystem>()
+                        .SetData(Owner, AMEShieldVisuals.CoreState, "off", _appearance);
                 if (_pointLight != null) { _pointLight.Enabled = false; }
                 return;
             }
@@ -54,11 +60,15 @@ namespace Content.Server.AME.Components
 
             if (injectionStrength > 2)
             {
-                _appearance?.SetData(AMEShieldVisuals.CoreState, "strong");
+                if (_appearance != null)
+                    IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedAppearanceSystem>()
+                        .SetData(Owner, AMEShieldVisuals.CoreState, "strong", _appearance);
                 return;
             }
 
-            _appearance?.SetData(AMEShieldVisuals.CoreState, "weak");
+            if (_appearance != null)
+                IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedAppearanceSystem>()
+                    .SetData(Owner, AMEShieldVisuals.CoreState, "weak", _appearance);
         }
     }
 }

@@ -7,6 +7,7 @@ namespace Content.Server.Atmos.EntitySystems;
 public sealed class AtmosPlaqueSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
     public override void Initialize()
     {
@@ -70,7 +71,7 @@ public sealed class AtmosPlaqueSystem : EntitySystem
         {
             var state = component.Type == PlaqueType.Zumos ? "zumosplaque" : "atmosplaque";
 
-            appearance.SetData(AtmosPlaqueVisuals.State, state);
+            _appearanceSystem.SetData(appearance.Owner, AtmosPlaqueVisuals.State, state, appearance);
         }
     }
 }

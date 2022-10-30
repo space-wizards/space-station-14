@@ -7,6 +7,7 @@ namespace Content.Server.MachineLinking.System
     public sealed class TwoWayLeverSystem : EntitySystem
     {
         [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
         public override void Initialize()
         {
@@ -37,7 +38,7 @@ namespace Content.Server.MachineLinking.System
                 component.NextSignalLeft = !component.NextSignalLeft;
 
             if (TryComp(uid, out AppearanceComponent? appearanceComponent))
-                appearanceComponent.SetData(TwoWayLeverVisuals.State, component.State);
+                _appearanceSystem.SetData(appearanceComponent.Owner, TwoWayLeverVisuals.State, component.State, appearanceComponent);
 
             var port = component.State switch
             {

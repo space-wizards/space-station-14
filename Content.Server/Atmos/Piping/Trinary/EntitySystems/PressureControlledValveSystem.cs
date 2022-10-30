@@ -16,6 +16,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         [Dependency] private IGameTiming _gameTiming = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
         public override void Initialize()
         {
@@ -90,7 +91,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             if (!Resolve(uid, ref comp, ref appearance, false))
                 return;
 
-            appearance.SetData(FilterVisuals.Enabled, comp.Enabled);
+            _appearanceSystem.SetData(appearance.Owner, FilterVisuals.Enabled, comp.Enabled, appearance);
         }
     }
 }

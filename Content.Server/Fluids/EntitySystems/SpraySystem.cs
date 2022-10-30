@@ -21,6 +21,7 @@ public sealed class SpraySystem : EntitySystem
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly VaporSystem _vaporSystem = default!;
 
@@ -106,8 +107,8 @@ public sealed class SpraySystem : EntitySystem
 
             if (TryComp(vapor, out AppearanceComponent? appearance))
             {
-                appearance.SetData(VaporVisuals.Color, solution.Color.WithAlpha(1f));
-                appearance.SetData(VaporVisuals.State, true);
+                _appearanceSystem.SetData(uid, VaporVisuals.Color, solution.Color.WithAlpha(1f), appearance);
+                _appearanceSystem.SetData(uid, VaporVisuals.State, true, appearance);
             }
 
             // Add the solution to the vapor and actually send the thing

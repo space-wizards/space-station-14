@@ -10,6 +10,7 @@ namespace Content.Server.Light.EntitySystems
     public sealed class LightBulbSystem : EntitySystem
     {
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
         public override void Initialize()
         {
@@ -77,8 +78,8 @@ namespace Content.Server.Light.EntitySystems
                 return;
 
             // try to update appearance and color
-            appearance.SetData(LightBulbVisuals.State, bulb.State);
-            appearance.SetData(LightBulbVisuals.Color, bulb.Color);
+            _appearanceSystem.SetData(appearance.Owner, LightBulbVisuals.State, bulb.State, appearance);
+            _appearanceSystem.SetData(appearance.Owner, LightBulbVisuals.Color, bulb.Color, appearance);
         }
     }
 }

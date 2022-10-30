@@ -19,6 +19,8 @@ namespace Content.Server.Botany.Systems;
 
 public sealed partial class BotanySystem
 {
+    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
+
     public void InitializeSeeds()
     {
         SubscribeLocalEvent<SeedComponent, ExaminedEvent>(OnExamined);
@@ -152,7 +154,7 @@ public sealed partial class BotanySystem
 
             if (TryComp<AppearanceComponent>(entity, out var appearance))
             {
-                appearance.SetData(ProduceVisuals.Potency, proto.Potency);
+                _appearanceSystem.SetData(appearance.Owner, ProduceVisuals.Potency, proto.Potency, appearance);
             }
 
             if (proto.Mysterious)

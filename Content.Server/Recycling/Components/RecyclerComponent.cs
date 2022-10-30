@@ -32,7 +32,8 @@ namespace Content.Server.Recycling.Components
         {
             if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
             {
-                appearance.SetData(RecyclerVisuals.Bloody, false);
+                _entMan.EntitySysManager.GetEntitySystem<SharedAppearanceSystem>()
+                        .SetData(appearance.Owner, RecyclerVisuals.Bloody, false, appearance);
             }
         }
 

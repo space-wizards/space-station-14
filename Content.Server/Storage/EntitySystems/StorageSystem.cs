@@ -52,6 +52,7 @@ namespace Content.Server.Storage.EntitySystems
         [Dependency] private readonly SharedCombatModeSystem _combatMode = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
         /// <inheritdoc />
         public override void Initialize()
@@ -456,11 +457,11 @@ namespace Content.Server.Storage.EntitySystems
             if (!TryComp<AppearanceComponent>(uid, out var appearance))
                 return;
 
-            appearance.SetData(StorageVisuals.Open, storageComp.IsOpen);
-            appearance.SetData(SharedBagOpenVisuals.BagState, storageComp.IsOpen ? SharedBagState.Open : SharedBagState.Closed);
+            _appearanceSystem.SetData(appearance.Owner, StorageVisuals.Open, storageComp.IsOpen, appearance);
+            _appearanceSystem.SetData(appearance.Owner, SharedBagOpenVisuals.BagState, storageComp.IsOpen ? SharedBagState.Open : SharedBagState.Closed, appearance);
 
             if (HasComp<ItemCounterComponent>(uid))
-                appearance.SetData(StackVisuals.Hide, !storageComp.IsOpen);
+                _appearanceSystem.SetData(appearance.Owner, StackVisuals.Hide, !storageComp.IsOpen, appearance);
         }
 
         private void RecalculateStorageUsed(ServerStorageComponent storageComp)

@@ -45,7 +45,8 @@ namespace Content.Server.Power.SMES
 
                 if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
                 {
-                    appearance.SetData(SmesVisuals.LastChargeLevel, newLevel);
+                    _entMan.EntitySysManager.GetEntitySystem<SharedAppearanceSystem>()
+                        .SetData(appearance.Owner, SmesVisuals.LastChargeLevel, newLevel, appearance);
                 }
             }
 
@@ -57,7 +58,8 @@ namespace Content.Server.Power.SMES
 
                 if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
                 {
-                    appearance.SetData(SmesVisuals.LastChargeState, newChargeState);
+                    _entMan.EntitySysManager.GetEntitySystem<SharedAppearanceSystem>()
+                        .SetData(appearance.Owner, SmesVisuals.LastChargeState, newChargeState, appearance);
                 }
             }
         }

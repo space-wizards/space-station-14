@@ -52,7 +52,8 @@ namespace Content.Server.ParticleAccelerator.Components
 
             if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
             {
-                appearance.SetData(ParticleAcceleratorVisuals.VisualState, state);
+                _entMan.EntitySysManager.GetEntitySystem<SharedAppearanceSystem>()
+                    .SetData(appearance.Owner, ParticleAcceleratorVisuals.VisualState, state, appearance);
             }
 
             _entMan.EntitySysManager.GetEntitySystem<SharedPhysicsSystem>().SetLinearVelocity(physicsComponent, angle.ToWorldVec() * 20f);

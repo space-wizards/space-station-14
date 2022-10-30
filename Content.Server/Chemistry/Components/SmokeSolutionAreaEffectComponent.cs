@@ -22,7 +22,8 @@ namespace Content.Server.Chemistry.Components
                 IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SolutionContainerSystem>()
                     .TryGetSolution(Owner, SolutionName, out var solution))
             {
-                appearance.SetData(SmokeVisuals.Color, solution.Color);
+                _entMan.EntitySysManager.GetEntitySystem<SharedAppearanceSystem>()
+                    .SetData(appearance.Owner, SmokeVisuals.Color, solution.Color, appearance);
             }
         }
 

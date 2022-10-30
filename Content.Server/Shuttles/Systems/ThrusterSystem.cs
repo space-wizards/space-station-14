@@ -30,6 +30,7 @@ namespace Content.Server.Shuttles.Systems
         [Robust.Shared.IoC.Dependency] private readonly AmbientSoundSystem _ambient = default!;
         [Robust.Shared.IoC.Dependency] private readonly FixtureSystem _fixtureSystem = default!;
         [Robust.Shared.IoC.Dependency] private readonly DamageableSystem _damageable = default!;
+        [Robust.Shared.IoC.Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
         // Essentially whenever thruster enables we update the shuttle's available impulses which are used for movement.
         // This is done for each direction available.
@@ -289,7 +290,7 @@ namespace Content.Server.Shuttles.Systems
 
             if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearanceComponent))
             {
-                appearanceComponent.SetData(ThrusterVisualState.State, true);
+                _appearanceSystem.SetData(appearanceComponent.Owner, ThrusterVisualState.State, true, appearanceComponent);
             }
 
             if (EntityManager.TryGetComponent(uid, out PointLightComponent? pointLightComponent))
@@ -342,7 +343,7 @@ namespace Content.Server.Shuttles.Systems
 
             if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearanceComponent))
             {
-                appearanceComponent.SetData(ThrusterVisualState.State, false);
+                _appearanceSystem.SetData(appearanceComponent.Owner, ThrusterVisualState.State, false, appearanceComponent);
             }
 
             if (EntityManager.TryGetComponent(uid, out PointLightComponent? pointLightComponent))
@@ -454,7 +455,7 @@ namespace Content.Server.Shuttles.Systems
                     continue;
 
                 comp.Firing = true;
-                appearanceComponent.SetData(ThrusterVisualState.Thrusting, true);
+                _appearanceSystem.SetData(appearanceComponent.Owner, ThrusterVisualState.Thrusting, true, appearanceComponent);
             }
         }
 
@@ -475,7 +476,7 @@ namespace Content.Server.Shuttles.Systems
                     continue;
 
                 comp.Firing = false;
-                appearanceComponent.SetData(ThrusterVisualState.Thrusting, false);
+                _appearanceSystem.SetData(appearanceComponent.Owner, ThrusterVisualState.Thrusting, false, appearanceComponent);
             }
         }
 
@@ -499,7 +500,7 @@ namespace Content.Server.Shuttles.Systems
                         continue;
 
                     comp.Firing = true;
-                    appearanceComponent.SetData(ThrusterVisualState.Thrusting, true);
+                    _appearanceSystem.SetData(appearanceComponent.Owner, ThrusterVisualState.Thrusting, true, appearanceComponent);
                 }
             }
             else
@@ -510,7 +511,7 @@ namespace Content.Server.Shuttles.Systems
                         continue;
 
                     comp.Firing = false;
-                    appearanceComponent.SetData(ThrusterVisualState.Thrusting, false);
+                    _appearanceSystem.SetData(appearanceComponent.Owner, ThrusterVisualState.Thrusting, false, appearanceComponent);
                 }
             }
         }

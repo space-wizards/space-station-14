@@ -14,6 +14,7 @@ namespace Content.Server.Cabinet
     {
         [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
         public override void Initialize()
         {
@@ -52,8 +53,8 @@ namespace Content.Server.Cabinet
             if (!Resolve(uid, ref cabinet, ref appearance, false))
                 return;
 
-            appearance.SetData(ItemCabinetVisuals.IsOpen, cabinet.Opened);
-            appearance.SetData(ItemCabinetVisuals.ContainsItem, cabinet.CabinetSlot.HasItem);
+            _appearanceSystem.SetData(appearance.Owner, ItemCabinetVisuals.IsOpen, cabinet.Opened, appearance);
+            _appearanceSystem.SetData(appearance.Owner, ItemCabinetVisuals.ContainsItem, cabinet.CabinetSlot.HasItem, appearance);
         }
 
         private void OnContainerModified(EntityUid uid, ItemCabinetComponent cabinet, ContainerModifiedMessage args)

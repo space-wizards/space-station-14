@@ -43,6 +43,7 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly SpillableSystem _spillableSystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
         public override void Initialize()
         {
@@ -123,7 +124,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             if (EntityManager.TryGetComponent<AppearanceComponent>(uid, out var appearance))
             {
-                appearance.SetData(DrinkCanStateVisual.Opened, opened);
+                _appearanceSystem.SetData(appearance.Owner, DrinkCanStateVisual.Opened, opened, appearance);
             }
         }
 
@@ -205,8 +206,8 @@ namespace Content.Server.Nutrition.EntitySystems
             }
 
             var drainAvailable = _solutionContainerSystem.DrainAvailable((component).Owner);
-            appearance.SetData(FoodVisuals.Visual, drainAvailable.Float());
-            appearance.SetData(DrinkCanStateVisual.Opened, component.Opened);
+            _appearanceSystem.SetData(appearance.Owner, FoodVisuals.Visual, drainAvailable.Float(), appearance);
+            _appearanceSystem.SetData(appearance.Owner, DrinkCanStateVisual.Opened, component.Opened, appearance);
         }
 
         private void OnTransferAttempt(EntityUid uid, DrinkComponent component, SolutionTransferAttemptEvent args)

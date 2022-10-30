@@ -14,6 +14,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
     public sealed class GasPortableSystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
         public override void Initialize()
         {
@@ -46,7 +47,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
             if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
             {
-                appearance.SetData(GasPortableVisuals.ConnectedState, args.Anchored);
+                _appearanceSystem.SetData(appearance.Owner, GasPortableVisuals.ConnectedState, args.Anchored, appearance);
             }
         }
 

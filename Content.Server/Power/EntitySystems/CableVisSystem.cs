@@ -12,6 +12,7 @@ namespace Content.Server.Power.EntitySystems
     public sealed class CableVisSystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
         public override void Initialize()
         {
@@ -55,7 +56,7 @@ namespace Content.Server.Power.EntitySystems
                 };
             }
 
-            appearance.SetData(WireVisVisuals.ConnectedMask, mask);
+            _appearanceSystem.SetData(appearance.Owner, WireVisVisuals.ConnectedMask, mask, appearance);
         }
     }
 }

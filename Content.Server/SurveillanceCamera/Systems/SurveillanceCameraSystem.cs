@@ -20,6 +20,7 @@ public sealed class SurveillanceCameraSystem : EntitySystem
     [Dependency] private readonly ViewSubscriberSystem _viewSubscriberSystem = default!;
     [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
     // Pings a surveillance camera subnet. All cameras will always respond
     // with a data message if they are on the same subnet.
@@ -391,7 +392,7 @@ public sealed class SurveillanceCameraSystem : EntitySystem
             key = SurveillanceCameraVisuals.InUse;
         }
 
-        appearance.SetData(SurveillanceCameraVisualsKey.Key, key);
+        _appearanceSystem.SetData(appearance.Owner, SurveillanceCameraVisualsKey.Key, key, appearance);
     }
 }
 

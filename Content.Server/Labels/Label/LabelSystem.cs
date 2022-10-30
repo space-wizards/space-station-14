@@ -16,6 +16,7 @@ namespace Content.Server.Labels
     public sealed class LabelSystem : EntitySystem
     {
         [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
         public const string ContainerName = "paper_label";
 
@@ -71,7 +72,7 @@ namespace Content.Server.Labels
             if (!EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
                 return;
 
-            appearance.SetData(PaperLabelVisuals.HasLabel, false);
+            _appearanceSystem.SetData(appearance.Owner, PaperLabelVisuals.HasLabel, false, appearance);
         }
 
         private void OnComponentRemove(EntityUid uid, PaperLabelComponent component, ComponentRemove args)
@@ -128,7 +129,7 @@ namespace Content.Server.Labels
             if (!EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
                 return;
 
-            appearance.SetData(PaperLabelVisuals.HasLabel, label.LabelSlot.HasItem);
+            _appearanceSystem.SetData(appearance.Owner, PaperLabelVisuals.HasLabel, label.LabelSlot.HasItem, appearance);
         }
     }
 }

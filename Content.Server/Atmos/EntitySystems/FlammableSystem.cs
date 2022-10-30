@@ -34,6 +34,7 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly FixtureSystem _fixture = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
         private const float MinimumFireStacks = -10f;
         private const float MaximumFireStacks = 20f;
@@ -179,8 +180,8 @@ namespace Content.Server.Atmos.EntitySystems
             if (!Resolve(uid, ref flammable, ref appearance))
                 return;
 
-            appearance.SetData(FireVisuals.OnFire, flammable.OnFire);
-            appearance.SetData(FireVisuals.FireStacks, flammable.FireStacks);
+            _appearanceSystem.SetData(appearance.Owner, FireVisuals.OnFire, flammable.OnFire, appearance);
+            _appearanceSystem.SetData(appearance.Owner, FireVisuals.FireStacks, flammable.FireStacks, appearance);
         }
 
         public void AdjustFireStacks(EntityUid uid, float relativeFireStacks, FlammableComponent? flammable = null)

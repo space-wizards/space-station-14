@@ -18,9 +18,10 @@ namespace Content.Server.Construction.Completions
 
             if (entityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
             {
-                if(IoCManager.Resolve<IReflectionManager>().TryParseEnumReference(Key, out var @enum))
+                if(IoCManager.Resolve<IReflectionManager>().TryParseEnumReference(Key, out var @enum)
+                && IoCManager.Resolve<IEntitySystemManager>().TryGetEntitySystem<SharedAppearanceSystem>(out var appearanceSystem))
                 {
-                    appearance.SetData(@enum, Data);
+                    appearanceSystem.SetData(appearance.Owner, @enum, Data, appearance);
                 }
             }
         }
