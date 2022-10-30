@@ -93,7 +93,11 @@ namespace Content.Server.Lock
             if (!HasUserAccess(uid, user, quiet: false))
                 return false;
 
-            lockComp.Owner.PopupMessage(user, Loc.GetString("lock-comp-do-lock-success", ("entityName", EntityManager.GetComponent<MetaDataComponent>(lockComp.Owner).EntityName)));
+            _sharedPopupSystem.PopupEntity(
+                Loc.GetString("lock-comp-do-lock-success", ("entityName", EntityManager.GetComponent<MetaDataComponent>(lockComp.Owner).EntityName)),
+                lockComp.Owner,
+                Filter.Entities(user)
+            );
             lockComp.Locked = true;
 
             if(lockComp.LockSound != null)
@@ -116,7 +120,11 @@ namespace Content.Server.Lock
             if (!Resolve(uid, ref lockComp))
                 return;
 
-            lockComp.Owner.PopupMessage(user, Loc.GetString("lock-comp-do-unlock-success", ("entityName", EntityManager.GetComponent<MetaDataComponent>(lockComp.Owner).EntityName)));
+            _sharedPopupSystem.PopupEntity(
+                Loc.GetString("lock-comp-do-unlock-success", ("entityName", EntityManager.GetComponent<MetaDataComponent>(lockComp.Owner).EntityName)),
+                lockComp.Owner,
+                Filter.Entities(user)
+            );
             lockComp.Locked = false;
 
             if (lockComp.UnlockSound != null)
@@ -178,7 +186,7 @@ namespace Content.Server.Lock
             if (!_accessReader.IsAllowed(user, reader))
             {
                 if (!quiet)
-                    reader.Owner.PopupMessage(user, Loc.GetString("lock-comp-has-user-access-fail"));
+                    _sharedPopupSystem.PopupEntity(Loc.GetString("lock-comp-has-user-access-fail"), reader.Owner, Filter.Entities(user));
                 return false;
             }
 

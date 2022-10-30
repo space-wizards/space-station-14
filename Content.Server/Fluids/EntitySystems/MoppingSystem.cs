@@ -23,6 +23,7 @@ public sealed class MoppingSystem : EntitySystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
 
     const string puddlePrototypeId = "PuddleSmear"; // The puddle prototype to use when releasing liquid to the floor, making a new puddle
 
@@ -61,7 +62,7 @@ public sealed class MoppingSystem : EntitySystem
         {
             ReleaseToFloor(args.ClickLocation, component, absorbedSolution);
             args.Handled = true;
-            args.User.PopupMessage(args.User, Loc.GetString("mopping-system-release-to-floor"));
+            _popupSystem.PopupEntity(Loc.GetString("mopping-system-release-to-floor"), args.User, Filter.Entities(args.User));
             return;
         }
         else if (args.Target is not null)
@@ -118,7 +119,7 @@ public sealed class MoppingSystem : EntitySystem
             else if (availableVolume < 0) // mop is completely full
             {
                 msg = "mopping-system-tool-full";
-                user.PopupMessage(user, Loc.GetString(msg, ("used", used))); // play message now because we are aborting.
+                _popupSystem.PopupEntity(Loc.GetString(msg, ("used", used)), user, Filter.Entities(user)); // play message now because we are aborting.
                 return;
             }
             // adding to puddles
@@ -133,7 +134,7 @@ public sealed class MoppingSystem : EntitySystem
                 _audioSystem.Play(sfx, Filter.Pvs(user), used); // Give instant feedback for diluting puddle, so that it's clear that the player is adding to the puddle (as opposed to other behaviours, which have a doAfter).
 
                 msg = "mopping-system-puddle-diluted";
-                user.PopupMessage(user, Loc.GetString(msg)); // play message now because we are aborting.
+                _popupSystem.PopupEntity(Loc.GetString(msg), user, Filter.Entities(user)); // play message now because we are aborting.
 
                 return; // Do not begin a doAfter.
             }
@@ -175,13 +176,13 @@ public sealed class MoppingSystem : EntitySystem
             else if (refillableSolution.AvailableVolume <= 0) // target container is full (liquid destination)
             {
                 msg = "mopping-system-target-container-full";
-                user.PopupMessage(user, Loc.GetString(msg, ("target", target))); // play message now because we are aborting.
+                _popupSystem.PopupEntity(Loc.GetString(msg, ("target", target)), user, Filter.Entities(user));// play message now because we are aborting.
                 return;
             }
             else if (refillableSolution.MaxVolume <= FixedPoint2.New(20)) // target container is too small (e.g. syringe)
             {
                 msg = "mopping-system-target-container-too-small";
-                user.PopupMessage(user, Loc.GetString(msg, ("target", target))); // play message now because we are aborting.
+                _popupSystem.PopupEntity(Loc.GetString(msg, ("target", target)), user, Filter.Entities(user)); // play message now because we are aborting.
                 return;
             }
             else
@@ -239,7 +240,7 @@ public sealed class MoppingSystem : EntitySystem
             else if (drainableSolution.CurrentVolume <= 0) // target container is empty (liquid source)
             {
                 msg = "mopping-system-target-container-empty";
-                user.PopupMessage(user, Loc.GetString(msg, ("target", target))); // play message now because we are returning.
+                _popupSystem.PopupEntity(Loc.GetString(msg, ("target", target)), user, Filter.Entities(user)); // play message now because we are returning.
                 return;
             }
             else
@@ -309,7 +310,7 @@ public sealed class MoppingSystem : EntitySystem
     {
         _audioSystem.Play(ev.Sound, Filter.Pvs(ev.User), ev.Tool); // Play the After SFX
 
-        ev.User.PopupMessage(ev.User, Loc.GetString(ev.Message, ("target", ev.Target), ("used", ev.Tool))); // Play the After popup message
+        _popupSystem.PopupEntity(Loc.GetString(ev.Message, ("target", ev.Target), ("used", ev.Tool)), ev.User, Filter.Entities(ev.User)); // Play the After popup message
 
         TryTransfer(ev.Donor, ev.Acceptor, ev.DonorSolutionName, ev.AcceptorSolutionName, ev.TransferAmount);
 

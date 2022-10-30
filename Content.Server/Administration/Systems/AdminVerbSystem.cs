@@ -24,6 +24,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using static Content.Shared.Configurable.SharedConfigurationComponent;
@@ -264,7 +265,7 @@ namespace Content.Server.Administration.Systems
                         var message = args.User.InRangeUnOccluded(args.Target)
                             ? Loc.GetString("in-range-unoccluded-verb-on-activate-not-occluded")
                             : Loc.GetString("in-range-unoccluded-verb-on-activate-occluded");
-                        args.Target.PopupMessage(args.User, message);
+                        _popupSystem.PopupEntity(message, args.Target, Filter.Entities(args.User));
                     }
                 };
                 args.Verbs.Add(verb);

@@ -7,6 +7,7 @@ using Content.Shared.Popups;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics;
+using Robust.Shared.Player;
 
 namespace Content.Server.Disposal.Tube.Components
 {
@@ -88,7 +89,8 @@ namespace Content.Server.Disposal.Tube.Components
         {
             var directions = string.Join(", ", ConnectableDirections());
 
-            Owner.PopupMessage(entity, Loc.GetString("disposal-tube-component-popup-directions-text", ("directions", directions)));
+            _entMan.EntitySysManager.GetEntitySystem<SharedPopupSystem>()
+                .PopupEntity(Loc.GetString("disposal-tube-component-popup-directions-text", ("directions", directions)), Owner, Filter.Entities(entity));
         }
 
         protected override void Initialize()

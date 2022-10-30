@@ -4,6 +4,7 @@ using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Robust.Shared.Player;
 
 namespace Content.Server.Repairable
 {
@@ -11,7 +12,8 @@ namespace Content.Server.Repairable
     {
         [Dependency] private readonly ToolSystem _toolSystem = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-        [Dependency] private readonly IAdminLogManager _adminLogger= default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
 
         public override void Initialize()
         {
@@ -47,10 +49,13 @@ namespace Content.Server.Repairable
             }
 
 
-            component.Owner.PopupMessage(args.User,
+            _popupSystem.PopupEntity(
                 Loc.GetString("comp-repairable-repair",
                     ("target", component.Owner),
-                    ("tool", args.Used)));
+                    ("tool", args.Used)),
+                component.Owner,
+                Filter.Entities(args.User)
+            );
 
             args.Handled = true;
         }

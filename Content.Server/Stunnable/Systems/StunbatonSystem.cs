@@ -27,6 +27,7 @@ namespace Content.Server.Stunnable.Systems
         [Dependency] private readonly SharedItemSystem _item = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
+        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
 
         public override void Initialize()
         {
@@ -113,7 +114,7 @@ namespace Content.Server.Stunnable.Systems
             if (!TryComp<BatteryComponent>(comp.Owner, out var battery) || battery.CurrentCharge < comp.EnergyPerUse)
             {
                 _audioSystem.Play(comp.TurnOnFailSound, playerFilter, comp.Owner, AudioParams.Default.WithVariation(0.25f));
-                user.PopupMessage(Loc.GetString("stunbaton-component-low-charge"));
+                _popupSystem.PopupEntity(Loc.GetString("stunbaton-component-low-charge"), user, Filter.Entities(user));
                 return;
             }
 

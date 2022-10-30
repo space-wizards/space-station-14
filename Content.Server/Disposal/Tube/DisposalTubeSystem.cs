@@ -22,6 +22,7 @@ namespace Content.Server.Disposal.Tube
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
 
         public override void Initialize()
         {
@@ -60,7 +61,7 @@ namespace Content.Server.Disposal.Tube
         {
             if (!TryComp<HandsComponent>(args.User, out var hands))
             {
-                uid.PopupMessage(args.User, Loc.GetString("disposal-router-window-tag-input-activate-no-hands"));
+                _popupSystem.PopupEntity(Loc.GetString("disposal-router-window-tag-input-activate-no-hands"), uid, Filter.Entities(args.User));
                 return;
             }
 
@@ -77,7 +78,7 @@ namespace Content.Server.Disposal.Tube
         {
             if (!TryComp<HandsComponent>(args.User, out var hands))
             {
-                uid.PopupMessage(args.User, Loc.GetString("disposal-tagger-window-activate-no-hands"));
+                _popupSystem.PopupEntity(Loc.GetString("disposal-tagger-window-activate-no-hands"), uid, Filter.Entities(args.User));
                 return;
             }
 

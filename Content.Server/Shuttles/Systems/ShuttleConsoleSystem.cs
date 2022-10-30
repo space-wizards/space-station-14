@@ -29,6 +29,7 @@ namespace Content.Server.Shuttles.Systems
         [Dependency] private readonly ShuttleSystem _shuttle = default!;
         [Dependency] private readonly TagSystem _tags = default!;
         [Dependency] private readonly UserInterfaceSystem _ui = default!;
+        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
 
         public override void Initialize()
         {
@@ -381,7 +382,11 @@ namespace Content.Server.Shuttles.Systems
 
             _alertsSystem.ClearAlert(pilotComponent.Owner, AlertType.PilotingShuttle);
 
-            pilotComponent.Owner.PopupMessage(Loc.GetString("shuttle-pilot-end"));
+            _popupSystem.PopupEntity(
+                    Loc.GetString("shuttle-pilot-end"),
+                    pilotComponent.Owner,
+                    Filter.Entities(pilotComponent.Owner)
+            );
 
             if (pilotComponent.LifeStage < ComponentLifeStage.Stopping)
                 EntityManager.RemoveComponent<PilotComponent>(pilotComponent.Owner);

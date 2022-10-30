@@ -9,6 +9,7 @@ using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Robust.Shared.Player;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
@@ -18,6 +19,7 @@ namespace Content.Server.Chemistry.EntitySystems
         [Dependency] private readonly IEntitySystemManager _sysMan = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
 
         /// <summary>
         ///     Default transfer amounts for the set-transfer verb.
@@ -61,7 +63,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 verb.Act = () =>
                 {
                     component.TransferAmount = FixedPoint2.New(amount);
-                    args.User.PopupMessage(Loc.GetString("comp-solution-transfer-set-amount", ("amount", amount)));
+                    _popupSystem.PopupEntity(Loc.GetString("comp-solution-transfer-set-amount", ("amount", amount)), args.User, Filter.Entities(args.User));
                 };
 
                 // we want to sort by size, not alphabetically by the verb text.
@@ -102,8 +104,11 @@ namespace Content.Server.Chemistry.EntitySystems
                         ? "comp-solution-transfer-fill-fully"
                         : "comp-solution-transfer-fill-normal";
 
-                    target.PopupMessage(args.User,
-                        Loc.GetString(msg, ("owner", args.Target), ("amount", transferred), ("target", uid)));
+                    _popupSystem.PopupEntity(
+                        Loc.GetString(msg, ("owner", args.Target), ("amount", transferred), ("target", uid)),
+                        target,
+                        Filter.Entities(args.User)
+                    );
 
                     args.Handled = true;
                     return;
@@ -125,10 +130,12 @@ namespace Content.Server.Chemistry.EntitySystems
 
                 if (transferred > 0)
                 {
-                    uid.PopupMessage(args.User,
+                    _popupSystem.PopupEntity(
                         Loc.GetString("comp-solution-transfer-transfer-solution",
                             ("amount", transferred),
-                            ("target", target)));
+                            ("target", target)),
+                        uid, Filter.Entities(args.User));
+
 
                     args.Handled = true;
                     return;
@@ -153,14 +160,16 @@ namespace Content.Server.Chemistry.EntitySystems
             RaiseLocalEvent(sourceEntity, transferAttempt, true);
             if (transferAttempt.Cancelled)
             {
-                sourceEntity.PopupMessage(user, transferAttempt.CancelReason!);
+                _popupSystem.PopupEntity(transferAttempt.CancelReason!, sourceEntity, Filter.Entities(user));
                 return FixedPoint2.Zero;
             }
 
             if (source.DrainAvailable == 0)
             {
-                sourceEntity.PopupMessage(user,
-                    Loc.GetString("comp-solution-transfer-is-empty", ("target", sourceEntity)));
+                _popupSystem.PopupEntity(
+                    Loc.GetString("comp-solution-transfer-is-empty", ("target", sourceEntity)),
+                    sourceEntity, Filter.Entities(user)
+                );
                 return FixedPoint2.Zero;
             }
 
@@ -168,14 +177,16 @@ namespace Content.Server.Chemistry.EntitySystems
             RaiseLocalEvent(targetEntity, transferAttempt, true);
             if (transferAttempt.Cancelled)
             {
-                sourceEntity.PopupMessage(user, transferAttempt.CancelReason!);
+                _popupSystem.PopupEntity(transferAttempt.CancelReason!, sourceEntity, Filter.Entities(user));
                 return FixedPoint2.Zero;
             }
 
             if (target.AvailableVolume == 0)
             {
-                targetEntity.PopupMessage(user,
-                    Loc.GetString("comp-solution-transfer-is-full", ("target", targetEntity)));
+                _popupSystem.PopupEntity(
+                    Loc.GetString("comp-solution-transfer-is-full", ("target", targetEntity)),
+                    targetEntity, Filter.Entities(user)
+                );
                 return FixedPoint2.Zero;
             }
 

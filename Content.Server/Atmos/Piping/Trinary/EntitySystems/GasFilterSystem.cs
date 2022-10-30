@@ -14,6 +14,7 @@ using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Timing;
+using Robust.Shared.Player;
 
 namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 {
@@ -26,6 +27,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
+        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
 
         public override void Initialize()
         {
@@ -111,7 +113,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             }
             else
             {
-                args.User.PopupMessageCursor(Loc.GetString("comp-gas-filter-ui-needs-anchor"));
+                _popupSystem.PopupCursor(Loc.GetString("comp-gas-filter-ui-needs-anchor"), Filter.Entities(args.User));
             }
 
             args.Handled = true;

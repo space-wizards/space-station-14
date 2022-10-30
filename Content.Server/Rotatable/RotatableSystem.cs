@@ -2,6 +2,7 @@ using Content.Shared.Popups;
 using Content.Shared.Rotatable;
 using Content.Shared.Verbs;
 using Robust.Shared.Physics;
+using Robust.Shared.Player;
 
 namespace Content.Server.Rotatable
 {
@@ -10,6 +11,8 @@ namespace Content.Server.Rotatable
     /// </summary>
     public sealed class RotatableSystem : EntitySystem
     {
+        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+
         public override void Initialize()
         {
             SubscribeLocalEvent<FlippableComponent, GetVerbsEvent<Verb>>(AddFlipVerb);
@@ -85,7 +88,7 @@ namespace Content.Server.Rotatable
             if (EntityManager.TryGetComponent(component.Owner, out IPhysBody? physics) &&
                 physics.BodyType == BodyType.Static)
             {
-                component.Owner.PopupMessage(user, Loc.GetString("flippable-component-try-flip-is-stuck"));
+                _popupSystem.PopupEntity(Loc.GetString("flippable-component-try-flip-is-stuck"), component.Owner, Filter.Entities(user));
                 return;
             }
 

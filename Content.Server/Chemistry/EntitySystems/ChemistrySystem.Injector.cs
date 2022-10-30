@@ -63,7 +63,7 @@ public sealed partial class ChemistrySystem
             verb.Act = () =>
             {
                 component.TransferAmount = FixedPoint2.New(amount);
-                args.User.PopupMessage(Loc.GetString("comp-solution-transfer-set-amount", ("amount", amount)));
+                _popup.PopupEntity(Loc.GetString("comp-solution-transfer-set-amount", ("amount", amount)), args.User, Filter.Entities(args.User));
             };
 
             // we want to sort by size, not alphabetically by the verb text.

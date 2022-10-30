@@ -7,6 +7,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
+using Robust.Shared.Player;
 
 namespace Content.Server.Chemistry.Components
 {
@@ -82,8 +83,13 @@ namespace Content.Server.Chemistry.Components
                     var amount = Math.Clamp(sval, MinimumTransferAmount.Float(),
                         MaximumTransferAmount.Float());
 
-                    serverMsg.Session.AttachedEntity.Value.PopupMessage(Loc.GetString("comp-solution-transfer-set-amount",
-                        ("amount", amount)));
+                    IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedPopupSystem>()
+                        .PopupEntity(
+                            Loc.GetString("comp-solution-transfer-set-amount",
+                                ("amount", amount)),
+                            serverMsg.Session.AttachedEntity.Value,
+                            Filter.Entities(serverMsg.Session.AttachedEntity.Value)
+                        );
                     SetTransferAmount(FixedPoint2.New(amount));
                     break;
             }

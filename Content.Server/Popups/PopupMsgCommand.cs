@@ -2,12 +2,15 @@
 using Content.Shared.Administration;
 using Content.Shared.Popups;
 using Robust.Shared.Console;
+using Robust.Shared.Player;
 
 namespace Content.Server.Popups
 {
     [AdminCommand(AdminFlags.Debug)]
     public sealed class PopupMsgCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
+
         public string Command => "srvpopupmsg";
         public string Description => "";
         public string Help => "";
@@ -18,7 +21,8 @@ namespace Content.Server.Popups
             var viewer = EntityUid.Parse(args[1]);
             var msg = args[2];
 
-            source.PopupMessage(viewer, msg);
+            _sysMan.GetEntitySystem<SharedPopupSystem>()
+                .PopupEntity(msg, source, Filter.Entities(viewer));
         }
     }
 }

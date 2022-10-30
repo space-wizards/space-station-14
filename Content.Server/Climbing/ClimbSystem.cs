@@ -181,20 +181,20 @@ public sealed class ClimbSystem : SharedClimbSystem
         {
             var othersMessage = Loc.GetString("comp-climbable-user-climbs-other", ("user", Identity.Entity(uid, EntityManager)),
                 ("climbable", climbable));
-            uid.PopupMessageOtherClients(othersMessage);
+            _popupSystem.PopupEntity(othersMessage, uid, Filter.PvsExcept(uid));
 
             var selfMessage = Loc.GetString("comp-climbable-user-climbs", ("climbable", climbable));
-            uid.PopupMessage(selfMessage);
+            _popupSystem.PopupEntity(selfMessage, uid, Filter.Entities(uid));
         }
         else
         {
             var othersMessage = Loc.GetString("comp-climbable-user-climbs-force-other", ("user", Identity.Entity(user, EntityManager)),
                 ("moved-user", Identity.Entity(uid, EntityManager)), ("climbable", climbable));
-            user.PopupMessageOtherClients(othersMessage);
+            _popupSystem.PopupEntity(othersMessage, user, Filter.PvsExcept(user));
 
             var selfMessage = Loc.GetString("comp-climbable-user-climbs-force", ("moved-user", Identity.Entity(uid, EntityManager)),
                 ("climbable", climbable));
-            user.PopupMessage(selfMessage);
+            _popupSystem.PopupEntity(selfMessage, user, Filter.Entities(user));
         }
     }
 

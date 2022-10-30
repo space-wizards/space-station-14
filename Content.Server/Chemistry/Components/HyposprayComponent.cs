@@ -58,29 +58,28 @@ namespace Content.Server.Chemistry.Components
 
             var sysMan = IoCManager.Resolve<IEntitySystemManager>();
             var solutionsSys = sysMan.GetEntitySystem<SolutionContainerSystem>();
+            var popupSystem = sysMan.GetEntitySystem<SharedPopupSystem>();
             solutionsSys.TryGetSolution(Owner, SolutionName, out var hypoSpraySolution);
 
             if (hypoSpraySolution == null || hypoSpraySolution.CurrentVolume == 0)
             {
-                user.PopupMessageCursor(Loc.GetString("hypospray-component-empty-message"));
+                popupSystem.PopupCursor(Loc.GetString("hypospray-component-empty-message"), Filter.Entities(user));
                 return true;
             }
 
             if (!solutionsSys.TryGetInjectableSolution(target.Value, out var targetSolution))
             {
-                user.PopupMessage(user,
-                    Loc.GetString("hypospray-cant-inject", ("target", Identity.Entity(target.Value, _entMan))));
+                popupSystem.PopupCursor(Loc.GetString("hypospray-cant-inject", ("target", Identity.Entity(target.Value, _entMan))), Filter.Entities(user));
                 return false;
             }
 
-            user.PopupMessage(Loc.GetString(msgFormat ?? "hypospray-component-inject-other-message",
-                ("other", target)));
+            popupSystem.PopupCursor(Loc.GetString(msgFormat ?? "hypospray-component-inject-other-message", ("other", target)), Filter.Entities(user));
             if (target != user)
             {
-                target.Value.PopupMessage(Loc.GetString("hypospray-component-feel-prick-message"));
-                var meleeSys = sysMan.GetEntitySystem<MeleeWeaponSystem>();
-                var angle = Angle.FromWorldVec(_entMan.GetComponent<TransformComponent>(target.Value).WorldPosition - _entMan.GetComponent<TransformComponent>(user).WorldPosition);
+                popupSystem.PopupEntity(Loc.GetString("hypospray-component-feel-prick-message"), target.Value, Filter.Entities(target.Value));
                 // TODO: This should just be using melee attacks...
+                // var meleeSys = sysMan.GetEntitySystem<MeleeWeaponSystem>();
+                // var angle = Angle.FromWorldVec(_entMan.GetComponent<TransformComponent>(target.Value).WorldPosition - _entMan.GetComponent<TransformComponent>(user).WorldPosition);
                 // meleeSys.SendLunge(angle, user);
             }
 
@@ -91,9 +90,7 @@ namespace Content.Server.Chemistry.Components
 
             if (realTransferAmount <= 0)
             {
-                user.PopupMessage(user,
-                    Loc.GetString("hypospray-component-transfer-already-full-message",
-                        ("owner", target)));
+                popupSystem.PopupCursor(Loc.GetString("hypospray-component-transfer-already-full-message", ("owner", target)), Filter.Entities(user));
                 return true;
             }
 

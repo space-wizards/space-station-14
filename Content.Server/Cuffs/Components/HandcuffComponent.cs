@@ -183,6 +183,7 @@ namespace Content.Server.Cuffs.Components
 
             // TODO these pop-ups need third-person variants (i.e. {$user} is cuffing {$target}!
 
+            var popupSystem = sysMan.GetEntitySystem<SharedPopupSystem>();
             if (result != DoAfterStatus.Cancelled)
             {
                 if (cuffs.TryAddNewCuffs(user, Owner))
@@ -190,13 +191,13 @@ namespace Content.Server.Cuffs.Components
                     audio.Play(EndCuffSound, Filter.Pvs(Owner), Owner);
                     if (target == user)
                     {
-                        user.PopupMessage(Loc.GetString("handcuff-component-cuff-self-success-message"));
+                        popupSystem.PopupEntity(Loc.GetString("handcuff-component-cuff-self-success-message"), user, Filter.Entities(user));
                         _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{_entities.ToPrettyString(user):player} has cuffed himself");
                     }
                     else
                     {
-                        user.PopupMessage(Loc.GetString("handcuff-component-cuff-other-success-message",("otherName", target)));
-                        target.PopupMessage(Loc.GetString("handcuff-component-cuff-by-other-success-message", ("otherName", user)));
+                        popupSystem.PopupEntity(Loc.GetString("handcuff-component-cuff-other-success-message", ("otherName", target)), target, Filter.Entities(user));
+                        popupSystem.PopupEntity(Loc.GetString("handcuff-component-cuff-by-other-success-message", ("otherName", user)), target, Filter.Entities(target));
                         _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{_entities.ToPrettyString(user):player} has cuffed {_entities.ToPrettyString(target):player}");
                     }
                 }
@@ -205,12 +206,12 @@ namespace Content.Server.Cuffs.Components
             {
                 if (target == user)
                 {
-                    user.PopupMessage(Loc.GetString("handcuff-component-cuff-interrupt-self-message"));
+                    popupSystem.PopupEntity(Loc.GetString("handcuff-component-cuff-interrupt-self-message"), target, Filter.Entities(user));
                 }
                 else
                 {
-                    user.PopupMessage(Loc.GetString("handcuff-component-cuff-interrupt-message",("targetName", target)));
-                    target.PopupMessage(Loc.GetString("handcuff-component-cuff-interrupt-other-message",("otherName", user)));
+                    popupSystem.PopupEntity(Loc.GetString("handcuff-component-cuff-interrupt-message", ("targetName", target)), target, Filter.Entities(user));
+                    popupSystem.PopupEntity(Loc.GetString("handcuff-component-cuff-interrupt-other-message", ("otherName", user)), target, Filter.Entities(target));
                 }
             }
         }

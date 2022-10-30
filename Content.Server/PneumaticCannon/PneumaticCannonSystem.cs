@@ -36,6 +36,7 @@ namespace Content.Server.PneumaticCannon
         [Dependency] private readonly StunSystem _stun = default!;
         [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
 
         private HashSet<PneumaticCannonComponent> _currentlyFiring = new();
 
@@ -100,8 +101,13 @@ namespace Content.Server.PneumaticCannon
                 && component.GasTankRequired)
             {
                 component.GasTankSlot.Insert(args.Used);
-                args.User.PopupMessage(Loc.GetString("pneumatic-cannon-component-gas-tank-insert",
-                    ("tank", args.Used), ("cannon", component.Owner)));
+                _popupSystem.PopupEntity(
+                    Loc.GetString("pneumatic-cannon-component-gas-tank-insert",
+                        ("tank", args.Used),
+                        ("cannon", component.Owner)),
+                    args.User,
+                    Filter.Entities(args.User)
+                );
                 UpdateAppearance(component);
                 return;
             }
@@ -114,8 +120,13 @@ namespace Content.Server.PneumaticCannon
                     var val = (int) component.Mode;
                     val = (val + 1) % (int) PneumaticCannonFireMode.Len;
                     component.Mode = (PneumaticCannonFireMode) val;
-                    args.User.PopupMessage(Loc.GetString("pneumatic-cannon-component-change-fire-mode",
-                        ("mode", component.Mode.ToString())));
+
+                    _popupSystem.PopupEntity(
+                        Loc.GetString("pneumatic-cannon-component-change-fire-mode",
+                            ("mode", component.Mode.ToString())),
+                        args.User,
+                        Filter.Entities(args.User)
+                    );
                     // sound
                     return;
                 }
@@ -125,8 +136,12 @@ namespace Content.Server.PneumaticCannon
                     var val = (int) component.Power;
                     val = (val + 1) % (int) PneumaticCannonPower.Len;
                     component.Power = (PneumaticCannonPower) val;
-                    args.User.PopupMessage(Loc.GetString("pneumatic-cannon-component-change-power",
-                        ("power", component.Power.ToString())));
+                    _popupSystem.PopupEntity(
+                        Loc.GetString("pneumatic-cannon-component-change-power",
+                            ("power", component.Power.ToString())),
+                        args.User,
+                        Filter.Entities(args.User)
+                    );
                     // sound
                     return;
                 }
@@ -141,13 +156,23 @@ namespace Content.Server.PneumaticCannon
                 if (_storageSystem.CanInsert(component.Owner, args.Used, out _, storage))
                 {
                     _storageSystem.Insert(component.Owner, args.Used, storage);
-                    args.User.PopupMessage(Loc.GetString("pneumatic-cannon-component-insert-item-success",
-                        ("item", args.Used), ("cannon", component.Owner)));
+                    _popupSystem.PopupEntity(
+                        Loc.GetString("pneumatic-cannon-component-insert-item-success",
+                            ("item", args.Used),
+                            ("cannon", component.Owner)),
+                        args.User,
+                        Filter.Entities(args.User)
+                    );
                 }
                 else
                 {
-                    args.User.PopupMessage(Loc.GetString("pneumatic-cannon-component-insert-item-failure",
-                        ("item", args.Used), ("cannon", component.Owner)));
+                    _popupSystem.PopupEntity(
+                        Loc.GetString("pneumatic-cannon-component-insert-item-failure",
+                            ("item", args.Used),
+                            ("cannon", component.Owner)),
+                        args.User,
+                        Filter.Entities(args.User)
+                    );
                 }
             }
         }
@@ -162,8 +187,12 @@ namespace Content.Server.PneumaticCannon
 
             if (!HasGas(component) && component.GasTankRequired)
             {
-                args.User.PopupMessage(Loc.GetString("pneumatic-cannon-component-fire-no-gas",
-                    ("cannon", component.Owner)));
+                _popupSystem.PopupEntity(
+                    Loc.GetString("pneumatic-cannon-component-fire-no-gas",
+                        ("cannon", component.Owner)),
+                    args.User,
+                    Filter.Entities(args.User)
+                );
                 _audioSystem.Play("/Audio/Items/hiss.ogg", Filter.Pvs(args.Used), args.Used, AudioParams.Default);
                 return;
             }
@@ -212,8 +241,12 @@ namespace Content.Server.PneumaticCannon
         {
             if (!HasGas(comp) && comp.GasTankRequired)
             {
-                data.User.PopupMessage(Loc.GetString("pneumatic-cannon-component-fire-no-gas",
-                    ("cannon", comp.Owner)));
+                _popupSystem.PopupEntity(
+                    Loc.GetString("pneumatic-cannon-component-fire-no-gas",
+                        ("cannon", comp.Owner)),
+                    data.User,
+                    Filter.Entities(data.User)
+                );
                 _audioSystem.Play("/Audio/Items/hiss.ogg", Filter.Pvs(comp.Owner), comp.Owner, AudioParams.Default);
                 return;
             }
@@ -244,8 +277,12 @@ namespace Content.Server.PneumaticCannon
             {
                 _stun.TryParalyze(data.User, TimeSpan.FromSeconds(comp.HighPowerStunTime), true, status);
 
-                data.User.PopupMessage(Loc.GetString("pneumatic-cannon-component-power-stun",
-                    ("cannon", comp.Owner)));
+                _popupSystem.PopupEntity(
+                    Loc.GetString("pneumatic-cannon-component-power-stun",
+                        ("cannon", comp.Owner)),
+                    data.User,
+                    Filter.Entities(data.User)
+                );
             }
 
             if (comp.GasTankSlot.ContainedEntity is {Valid: true} contained && comp.GasTankRequired)
@@ -312,8 +349,12 @@ namespace Content.Server.PneumaticCannon
         {
             if (component.GasTankSlot.ContainedEntity is not {Valid: true} contained)
             {
-                user.PopupMessage(Loc.GetString("pneumatic-cannon-component-gas-tank-none",
-                    ("cannon", component.Owner)));
+                _popupSystem.PopupEntity(
+                    Loc.GetString("pneumatic-cannon-component-gas-tank-none",
+                        ("cannon", component.Owner)),
+                    user,
+                    Filter.Entities(user)
+                );
                 return;
             }
 
@@ -321,8 +362,13 @@ namespace Content.Server.PneumaticCannon
             {
                 _handsSystem.TryPickupAnyHand(user, contained);
 
-                user.PopupMessage(Loc.GetString("pneumatic-cannon-component-gas-tank-remove",
-                    ("tank", contained), ("cannon", component.Owner)));
+                _popupSystem.PopupEntity(
+                    Loc.GetString("pneumatic-cannon-component-gas-tank-remove",
+                        ("tank", contained),
+                        ("cannon", component.Owner)),
+                    user,
+                    Filter.Entities(user)
+                );
                 UpdateAppearance(component);
             }
         }
@@ -337,8 +383,12 @@ namespace Content.Server.PneumaticCannon
                     _storageSystem.RemoveAndDrop(component.Owner, entity, storage);
                 }
 
-                user.PopupMessage(Loc.GetString("pneumatic-cannon-component-ejected-all",
-                    ("cannon", (component.Owner))));
+                _popupSystem.PopupEntity(
+                    Loc.GetString("pneumatic-cannon-component-ejected-all",
+                        ("cannon", (component.Owner))),
+                    user,
+                    Filter.Entities(user)
+                );
             }
         }
 

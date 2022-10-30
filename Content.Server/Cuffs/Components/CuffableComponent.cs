@@ -216,13 +216,14 @@ namespace Content.Server.Cuffs.Components
                 return;
             }
 
+            var popupSystem = _sysMan.GetEntitySystem<SharedPopupSystem>();
             if (!isOwner && !_sysMan.GetEntitySystem<SharedInteractionSystem>().InRangeUnobstructed(user, Owner))
             {
-                user.PopupMessage(Loc.GetString("cuffable-component-cannot-remove-cuffs-too-far-message"));
+                popupSystem.PopupEntity(Loc.GetString("cuffable-component-cannot-remove-cuffs-too-far-message"), user, Filter.Entities(user));
                 return;
             }
 
-            user.PopupMessage(Loc.GetString("cuffable-component-start-removing-cuffs-message"));
+            popupSystem.PopupEntity(Loc.GetString("cuffable-component-start-removing-cuffs-message"), user, Filter.Entities(user));
 
             var audioSystem = _sysMan.GetEntitySystem<SharedAudioSystem>();
             if (isOwner)
@@ -282,11 +283,11 @@ namespace Content.Server.Cuffs.Components
 
                 if (CuffedHandCount == 0)
                 {
-                    user.PopupMessage(Loc.GetString("cuffable-component-remove-cuffs-success-message"));
+                    popupSystem.PopupEntity(Loc.GetString("cuffable-component-remove-cuffs-success-message"), user, Filter.Entities(user));
 
                     if (!isOwner)
                     {
-                        user.PopupMessage(Owner, Loc.GetString("cuffable-component-remove-cuffs-by-other-success-message", ("otherName", user)));
+                        popupSystem.PopupEntity(Loc.GetString("cuffable-component-remove-cuffs-by-other-success-message"), user, Filter.Entities(Owner));
                     }
 
                     if (user == Owner)
@@ -303,22 +304,39 @@ namespace Content.Server.Cuffs.Components
                 {
                     if (!isOwner)
                     {
-                        user.PopupMessage(Loc.GetString("cuffable-component-remove-cuffs-partial-success-message",
-                                                        ("cuffedHandCount", CuffedHandCount),
-                                                        ("otherName", user)));
-                        user.PopupMessage(Owner, Loc.GetString("cuffable-component-remove-cuffs-by-other-partial-success-message",
-                                                               ("otherName", user),
-                                                               ("cuffedHandCount", CuffedHandCount)));
+                        popupSystem.PopupEntity(
+                            Loc.GetString("cuffable-component-remove-cuffs-partial-success-message",
+                                ("cuffedHandCount", CuffedHandCount),
+                                ("otherName", user)
+                            ),
+                            user,
+                            Filter.Entities(user)
+                        );
+
+                        popupSystem.PopupEntity(
+                            Loc.GetString("cuffable-component-remove-cuffs-by-other-partial-success-message",
+                                ("otherName", user),
+                                ("cuffedHandCount", CuffedHandCount)
+                            ),
+                            user,
+                            Filter.Entities(Owner)
+                        );
                     }
                     else
                     {
-                        user.PopupMessage(Loc.GetString("cuffable-component-remove-cuffs-partial-success-message", ("cuffedHandCount", CuffedHandCount)));
+                        popupSystem.PopupEntity(
+                            Loc.GetString("cuffable-component-remove-cuffs-partial-success-message", ("cuffedHandCount", CuffedHandCount)),
+                            user, Filter.Entities(user)
+                        );
                     }
                 }
             }
             else
             {
-                user.PopupMessage(Loc.GetString("cuffable-component-remove-cuffs-fail-message"));
+                popupSystem.PopupEntity(
+                    Loc.GetString("cuffable-component-remove-cuffs-fail-message"),
+                    user, Filter.Entities(user)
+                );
             }
 
             return;

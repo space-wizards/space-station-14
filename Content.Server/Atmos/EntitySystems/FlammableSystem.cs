@@ -20,6 +20,7 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Player;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -35,6 +36,7 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly FixtureSystem _fixture = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
+        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
 
         private const float MinimumFireStacks = -10f;
         private const float MaximumFireStacks = 20f;
@@ -239,7 +241,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             flammable.Resisting = true;
 
-            flammable.Owner.PopupMessage(Loc.GetString("flammable-component-resist-message"));
+            _popupSystem.PopupEntity(Loc.GetString("flammable-component-resist-message"), flammable.Owner, Filter.Entities(flammable.Owner));
             _stunSystem.TryParalyze(uid, TimeSpan.FromSeconds(2f), true);
 
             // TODO FLAMMABLE: Make this not use TimerComponent...

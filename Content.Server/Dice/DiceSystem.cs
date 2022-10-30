@@ -16,6 +16,7 @@ namespace Content.Server.Dice
     {
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
 
         public override void Initialize()
         {
@@ -75,7 +76,11 @@ namespace Content.Server.Dice
             var roll = _random.Next(1, die.Sides/die.Step+1) * die.Step;
             SetCurrentSide(uid, roll, die);
 
-            die.Owner.PopupMessageEveryone(Loc.GetString("dice-component-on-roll-land", ("die", die.Owner), ("currentSide", die.CurrentSide)));
+            _popupSystem.PopupEntity(
+                Loc.GetString("dice-component-on-roll-land", ("die", die.Owner), ("currentSide", die.CurrentSide)),
+                die.Owner,
+                Filter.PvsExcept(die.Owner)
+            );
             _audioSystem.Play(die.Sound, Filter.Pvs(die.Owner), die.Owner, AudioParams.Default.WithVariation(0.05f));
         }
     }

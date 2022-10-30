@@ -20,6 +20,7 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
         [Dependency] private readonly SpillableSystem _spillableSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
 
         public override void Initialize()
         {
@@ -42,8 +43,16 @@ namespace Content.Server.Nutrition.EntitySystems
 
         protected override void CreamedEntity(EntityUid uid, CreamPiedComponent creamPied, ThrowHitByEvent args)
         {
-            creamPied.Owner.PopupMessage(Loc.GetString("cream-pied-component-on-hit-by-message",("thrower", args.Thrown)));
-            creamPied.Owner.PopupMessageOtherClients(Loc.GetString("cream-pied-component-on-hit-by-message-others", ("owner", creamPied.Owner),("thrower", args.Thrown)));
+            _popupSystem.PopupEntity(
+                Loc.GetString("cream-pied-component-on-hit-by-message", ("thrower", args.Thrown)),
+                creamPied.Owner,
+                Filter.Entities(creamPied.Owner)
+            );
+            _popupSystem.PopupEntity(
+                Loc.GetString("cream-pied-component-on-hit-by-message-others", ("owner", creamPied.Owner),("thrower", args.Thrown)),
+                creamPied.Owner,
+                Filter.PvsExcept(creamPied.Owner)
+            );
         }
 
         private void OnRejuvenate(EntityUid uid, CreamPiedComponent component, RejuvenateEvent args)

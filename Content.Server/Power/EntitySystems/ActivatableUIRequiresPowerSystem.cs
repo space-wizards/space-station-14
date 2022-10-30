@@ -3,6 +3,7 @@ using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Server.Wires;
 using JetBrains.Annotations;
+using Robust.Shared.Player;
 
 namespace Content.Server.Power.EntitySystems
 {
@@ -10,6 +11,8 @@ namespace Content.Server.Power.EntitySystems
     internal sealed class ActivatableUIRequiresPowerSystem : EntitySystem
     {
         [Dependency] private readonly ActivatableUISystem _activatableUISystem = default!;
+        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -24,7 +27,7 @@ namespace Content.Server.Power.EntitySystems
             if (this.IsPowered(uid, EntityManager)) return;
             if (TryComp<WiresComponent>(uid, out var wires) && wires.IsPanelOpen)
                 return;
-            args.User.PopupMessageCursor(Loc.GetString("base-computer-ui-component-not-powered", ("machine", uid)));
+            _popupSystem.PopupCursor(Loc.GetString("base-computer-ui-component-not-powered", ("machine", uid)), Filter.Entities(args.User));
             args.Cancel();
         }
 

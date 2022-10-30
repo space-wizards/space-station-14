@@ -50,10 +50,10 @@ namespace Content.Server.Kitchen.EntitySystems
             args.SetHandled(SuicideKind.Piercing);
             var victim = args.Victim;
             var othersMessage = Loc.GetString("comp-kitchen-spike-suicide-other", ("victim", victim));
-            victim.PopupMessageOtherClients(othersMessage);
+            _popupSystem.PopupEntity(othersMessage, victim, Filter.PvsExcept(victim));
 
             var selfMessage = Loc.GetString("comp-kitchen-spike-suicide-self");
-            victim.PopupMessage(selfMessage);
+            _popupSystem.PopupEntity(selfMessage, victim, Filter.Entities(victim));
         }
 
         private void OnSpikingFail(EntityUid uid, KitchenSpikeComponent component, SpikingFailEvent args)

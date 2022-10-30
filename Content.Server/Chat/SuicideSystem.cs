@@ -11,6 +11,7 @@ using Content.Shared.MobState.Components;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Player;
 
 namespace Content.Server.Chat
 {
@@ -58,12 +59,15 @@ namespace Content.Server.Chat
         /// </summary>
         private static void DefaultSuicideHandler(EntityUid victim, SuicideEvent suicideEvent)
         {
-            if (suicideEvent.Handled) return;
+            if (suicideEvent.Handled)
+                return;
+
+            var popupSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedPopupSystem>();
             var othersMessage = Loc.GetString("suicide-command-default-text-others", ("name", victim));
-            victim.PopupMessageOtherClients(othersMessage);
+            popupSystem.PopupEntity(othersMessage, victim, Filter.PvsExcept(victim));
 
             var selfMessage = Loc.GetString("suicide-command-default-text-self");
-            victim.PopupMessage(selfMessage);
+            popupSystem.PopupEntity(selfMessage, victim, Filter.Entities(victim));
             suicideEvent.SetHandled(SuicideKind.Bloodloss);
         }
 

@@ -9,6 +9,7 @@ using Content.Shared.Doors.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
+using Robust.Shared.Player;
 
 namespace Content.Server.Doors.Systems
 {
@@ -17,6 +18,7 @@ namespace Content.Server.Doors.Systems
         [Dependency] private readonly WiresSystem _wiresSystem = default!;
         [Dependency] private readonly PowerReceiverSystem _power = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
+        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
 
         public override void Initialize()
         {
@@ -163,14 +165,14 @@ namespace Content.Server.Doors.Systems
         {
             if (component.IsBolted())
             {
-                component.Owner.PopupMessage(args.User, Loc.GetString("airlock-component-cannot-pry-is-bolted-message"));
+                _popupSystem.PopupEntity(Loc.GetString("airlock-component-cannot-pry-is-bolted-message"), component.Owner, Filter.Entities(args.User));
                 args.Cancel();
             }
             if (component.IsPowered())
             {
                 if (HasComp<ToolForcePoweredComponent>(args.Tool))
                     return;
-                component.Owner.PopupMessage(args.User, Loc.GetString("airlock-component-cannot-pry-is-powered-message"));
+                _popupSystem.PopupEntity(Loc.GetString("airlock-component-cannot-pry-is-powered-message"), component.Owner, Filter.Entities(args.User));
                 args.Cancel();
             }
         }

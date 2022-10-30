@@ -8,6 +8,7 @@ using Content.Shared.Radio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
+using Robust.Shared.Player;
 
 namespace Content.Server.Radio.Components
 {
@@ -70,7 +71,8 @@ namespace Content.Server.Radio.Components
 
             var message = Loc.GetString("handheld-radio-component-on-use",
                                         ("radioState", Loc.GetString(RadioOn ? "handheld-radio-component-on-state" : "handheld-radio-component-off-state")));
-            Owner.PopupMessage(user, message);
+            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedPopupSystem>()
+                .PopupEntity(message, Owner, Filter.Entities(user));
 
             return true;
         }

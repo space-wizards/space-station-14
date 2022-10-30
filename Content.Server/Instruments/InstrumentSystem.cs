@@ -6,6 +6,7 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
+using Robust.Shared.Player;
 
 namespace Content.Server.Instruments;
 
@@ -15,6 +16,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly StunSystem _stunSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
+    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
 
     public override void Initialize()
     {
@@ -142,12 +144,10 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
             {
                 if (instrument.LaggedBatches == (int) (MaxMidiLaggedBatches * (1 / 3d) + 1))
                 {
-                    attached.PopupMessage(
-                        Loc.GetString("instrument-component-finger-cramps-light-message"));
+                    _popupSystem.PopupEntity(Loc.GetString("instrument-component-finger-cramps-light-message"), attached, Filter.Entities(attached));
                 } else if (instrument.LaggedBatches == (int) (MaxMidiLaggedBatches * (2 / 3d) + 1))
                 {
-                    attached.PopupMessage(
-                        Loc.GetString("instrument-component-finger-cramps-serious-message"));
+                    _popupSystem.PopupEntity(Loc.GetString("instrument-component-finger-cramps-serious-message"), attached, Filter.Entities(attached));
                 }
             }
 
@@ -193,7 +193,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
                 {
                     _stunSystem.TryParalyze(mob, TimeSpan.FromSeconds(1), true);
 
-                    instrument.Owner.PopupMessage(mob, Loc.GetString("instrument-component-finger-cramps-max-message"));
+                    _popupSystem.PopupEntity(Loc.GetString("instrument-component-finger-cramps-max-message"), instrument.Owner, Filter.Entities(mob));
                 }
 
                 // Just in case

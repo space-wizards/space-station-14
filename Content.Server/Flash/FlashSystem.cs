@@ -28,6 +28,7 @@ namespace Content.Server.Flash
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
 
         public override void Initialize()
         {
@@ -75,7 +76,7 @@ namespace Content.Server.Flash
                     sprite.LayerSetState(0, "burnt");
 
                     _tagSystem.AddTag(comp.Owner, "Trash");
-                    comp.Owner.PopupMessage(user, Loc.GetString("flash-component-becomes-empty"));
+                    _popupSystem.PopupEntity(Loc.GetString("flash-component-becomes-empty"), comp.Owner, Filter.Entities(user));
                 }
                 else if (!comp.Flashing)
                 {
@@ -116,8 +117,10 @@ namespace Content.Server.Flash
 
             if (displayPopup && user != null && target != user && EntityManager.EntityExists(user.Value))
             {
-                user.Value.PopupMessage(target, Loc.GetString("flash-component-user-blinds-you",
-                    ("user", Identity.Entity(user.Value, EntityManager))));
+                _popupSystem.PopupEntity(
+                    Loc.GetString("flash-component-user-blinds-you", ("user", Identity.Entity(user.Value, EntityManager))),
+                    user.Value, Filter.Entities(target)
+                );
             }
         }
 

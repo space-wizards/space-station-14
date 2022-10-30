@@ -2,6 +2,7 @@
 using Content.Server.Popups;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
+using Robust.Shared.Player;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
@@ -9,6 +10,8 @@ namespace Content.Server.Chemistry.EntitySystems
     public sealed class RehydratableSystem : EntitySystem
     {
         [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -33,7 +36,11 @@ namespace Content.Server.Chemistry.EntitySystems
             }
 
             component.Expanding = true;
-            owner.PopupMessageEveryone(Loc.GetString("rehydratable-component-expands-message", ("owner", owner)));
+            _popupSystem.PopupEntity(
+                Loc.GetString("rehydratable-component-expands-message", ("owner", owner)),
+                owner,
+                Filter.PvsExcept(owner)
+            );
             if (!string.IsNullOrEmpty(component.TargetPrototype))
             {
                 var ent = EntityManager.SpawnEntity(component.TargetPrototype,

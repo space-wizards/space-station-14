@@ -143,13 +143,13 @@ namespace Content.Server.Strip
             {
                 if (userHands.ActiveHand?.HeldEntity is not { } held)
                 {
-                    user.PopupMessageCursor(Loc.GetString("strippable-component-not-holding-anything"));
+                    _popupSystem.PopupCursor(Loc.GetString("strippable-component-not-holding-anything"), Filter.Entities(user));
                     return false;
                 }
 
                 if (!_handsSystem.CanDropHeld(user, userHands.ActiveHand))
                 {
-                    user.PopupMessageCursor(Loc.GetString("strippable-component-cannot-drop"));
+                    _popupSystem.PopupCursor(Loc.GetString("strippable-component-cannot-drop"), Filter.Entities(user));
                     return false;
                 }
 
@@ -158,13 +158,13 @@ namespace Content.Server.Strip
 
                 if (_inventorySystem.TryGetSlotEntity(component.Owner, slot, out _))
                 {
-                    user.PopupMessageCursor(Loc.GetString("strippable-component-item-slot-occupied",("owner", component.Owner)));
+                    _popupSystem.PopupCursor(Loc.GetString("strippable-component-item-slot-occupied", ("owner", component.Owner)), Filter.Entities(user));
                     return false;
                 }
 
                 if (!_inventorySystem.CanEquip(user, component.Owner, held, slot, out _))
                 {
-                    user.PopupMessageCursor(Loc.GetString("strippable-component-cannot-equip-message",("owner", component.Owner)));
+                    _popupSystem.PopupCursor(Loc.GetString("strippable-component-cannot-equip-message", ("owner", component.Owner)), Filter.Entities(user));
                     return false;
                 }
 
@@ -225,20 +225,20 @@ namespace Content.Server.Strip
             {
                 if (userHands.ActiveHandEntity == null)
                 {
-                    user.PopupMessageCursor(Loc.GetString("strippable-component-not-holding-anything"));
+                    _popupSystem.PopupCursor(Loc.GetString("strippable-component-not-holding-anything"), Filter.Entities(user));
                     return false;
                 }
 
                 if (!_handsSystem.CanDropHeld(user, userHands.ActiveHand!))
                 {
-                    user.PopupMessageCursor(Loc.GetString("strippable-component-cannot-drop"));
+                    _popupSystem.PopupCursor(Loc.GetString("strippable-component-cannot-drop"), Filter.Entities(user));
                     return false;
                 }
 
                 if (!hands.Hands.TryGetValue(handName, out var hand)
                     || !_handsSystem.CanPickupToHand(component.Owner, userHands.ActiveHandEntity.Value, hand, checkActionBlocker: false, hands))
                 {
-                    user.PopupMessageCursor(Loc.GetString("strippable-component-cannot-put-message",("owner", component.Owner)));
+                    _popupSystem.PopupCursor(Loc.GetString("strippable-component-cannot-put-message", ("owner", component.Owner)), Filter.Entities(user));
                     return false;
                 }
 
@@ -288,13 +288,13 @@ namespace Content.Server.Strip
 
                 if (!_inventorySystem.TryGetSlotEntity(component.Owner, slot, out _))
                 {
-                    user.PopupMessageCursor(Loc.GetString("strippable-component-item-slot-free-message", ("owner", component.Owner)));
+                    _popupSystem.PopupCursor(Loc.GetString("strippable-component-item-slot-free-message", ("owner", component.Owner)), Filter.Entities(user));
                     return false;
                 }
 
                 if (!_inventorySystem.CanUnequip(user, component.Owner, slot, out _))
                 {
-                    user.PopupMessageCursor(Loc.GetString("strippable-component-cannot-unequip-message", ("owner", component.Owner)));
+                    _popupSystem.PopupCursor(Loc.GetString("strippable-component-cannot-unequip-message", ("owner", component.Owner)), Filter.Entities(user));
                     return false;
                 }
 
@@ -360,7 +360,7 @@ namespace Content.Server.Strip
             {
                 if (!hands.Hands.TryGetValue(handName, out var hand) || hand.HeldEntity == null)
                 {
-                    user.PopupMessageCursor(Loc.GetString("strippable-component-item-slot-free-message",("owner", component.Owner)));
+                    _popupSystem.PopupCursor(Loc.GetString("strippable-component-item-slot-free-message", ("owner", component.Owner)), Filter.Entities(user));
                     return false;
                 }
 
@@ -369,7 +369,7 @@ namespace Content.Server.Strip
 
                 if (!_handsSystem.CanDropHeld(component.Owner, hand, false))
                 {
-                    user.PopupMessageCursor(Loc.GetString("strippable-component-cannot-drop-message",("owner", component.Owner)));
+                    _popupSystem.PopupCursor(Loc.GetString("strippable-component-cannot-drop-message",("owner", component.Owner)), Filter.Entities(user));
                     return false;
                 }
 

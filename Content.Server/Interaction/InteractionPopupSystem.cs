@@ -17,6 +17,7 @@ public sealed class InteractionPopupSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+
     public override void Initialize()
     {
         base.Initialize();
