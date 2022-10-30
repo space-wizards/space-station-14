@@ -85,7 +85,7 @@ public partial class RadiationSystem
         }
 
         // raise broadcast event that radiation system has updated
-        RaiseLocalEvent(new OnRadiationSystemUpdated());
+        RaiseLocalEvent(new RadiationSystemUpdatedEvent());
     }
 
     private RadiationRay? Irradiate(EntityUid sourceUid, TransformComponent sourceTrs, Vector2 sourceWorld,

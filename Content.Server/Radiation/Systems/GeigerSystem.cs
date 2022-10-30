@@ -31,7 +31,7 @@ public sealed class GeigerSystem : SharedGeigerSystem
         SubscribeLocalEvent<GeigerComponent, GotUnequippedEvent>(OnUnequipped);
         SubscribeLocalEvent<GeigerComponent, GotUnequippedHandEvent>(OnUnequippedHand);
 
-        SubscribeLocalEvent<OnRadiationSystemUpdated>(OnUpdate);
+        SubscribeLocalEvent<RadiationSystemUpdatedEvent>(OnUpdate);
         SubscribeLocalEvent<GeigerComponent, ComponentGetState>(OnGetState);
     }
 
@@ -74,7 +74,7 @@ public sealed class GeigerSystem : SharedGeigerSystem
         SetUser(uid, component, null);
     }
 
-    private void OnUpdate(OnRadiationSystemUpdated ev)
+    private void OnUpdate(RadiationSystemUpdatedEvent ev)
     {
         var query = EntityQuery<GeigerComponent, RadiationReceiverComponent>();
         foreach (var (geiger, receiver) in query)
