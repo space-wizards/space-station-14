@@ -79,6 +79,9 @@ public sealed class GeigerSystem : SharedGeigerSystem
         var query = EntityQuery<GeigerComponent, RadiationReceiverComponent>();
         foreach (var (geiger, receiver) in query)
         {
+            if (!geiger.IsEnabled)
+                continue;
+
             var rads = receiver.CurrentRadiation;
             SetCurrentRadiation(geiger.Owner, geiger, rads);
         }
