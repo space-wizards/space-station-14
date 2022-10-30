@@ -73,10 +73,10 @@ namespace Content.Server.VendingMachineRestockPackage
             if (!TryComp<VendingMachineComponent>(args.Target, out var machineComponent))
                 return;
 
-            if (!TryMatchPackageToMachine(uid, component, machineComponent, args.User, args.Target.GetValueOrDefault()))
+            if (!TryMatchPackageToMachine(uid, component, machineComponent, args.User, args.Target.Value))
                 return;
 
-            if (!TryAccessMachine(uid, component, machineComponent, args.User, args.Target.GetValueOrDefault()))
+            if (!TryAccessMachine(uid, component, machineComponent, args.User, args.Target.Value))
                 return;
 
             component.CancelToken = new CancellationTokenSource();
