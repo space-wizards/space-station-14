@@ -484,7 +484,7 @@
     - type: MachineBoard
       prototype: KitchenMicrowave
       requirements:
-        MatterBin: 1
+        Capacitor: 1
         Laser: 1
       materialRequirements:
         Glass: 2
