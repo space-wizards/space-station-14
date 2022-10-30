@@ -19,6 +19,7 @@ public sealed class BeamSystem : SharedBeamSystem
 {
     [Dependency] private readonly FixtureSystem _fixture = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
 
     public override void Initialize()
     {
@@ -90,7 +91,7 @@ public sealed class BeamSystem : SharedBeamSystem
             };
 
             _fixture.TryCreateFixture(physics, fixture);
-            physics.BodyType = BodyType.Dynamic;
+            _physicsSystem.SetBodyType(physics, BodyType.Dynamic);
 
             var beamVisualizerEvent = new BeamVisualizerEvent(ent, distanceLength, userAngle, bodyState, shader);
             RaiseNetworkEvent(beamVisualizerEvent);

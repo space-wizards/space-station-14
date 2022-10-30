@@ -2,10 +2,12 @@ using System.Threading.Tasks;
 using Content.Server.Shuttles.Components;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Systems;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -34,7 +36,8 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(sEntities.TryGetComponent<PhysicsComponent>(gridEnt, out var physicsComponent));
                 Assert.That(physicsComponent!.BodyType, Is.EqualTo(BodyType.Dynamic));
                 Assert.That(sEntities.GetComponent<TransformComponent>(gridEnt).LocalPosition, Is.EqualTo(Vector2.Zero));
-                physicsComponent.ApplyLinearImpulse(Vector2.One);
+                IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedPhysicsSystem>()
+                    .ApplyLinearImpulse(physicsComponent, Vector2.One);
             });
 
             await server.WaitRunTicks(1);

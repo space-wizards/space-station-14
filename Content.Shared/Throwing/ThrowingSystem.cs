@@ -3,6 +3,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Movement.Components;
 using Content.Shared.Tag;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
 
@@ -22,6 +23,7 @@ public sealed class ThrowingSystem : EntitySystem
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly ThrownItemSystem _thrownSystem = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
 
     /// <summary>
     ///     Tries to throw the entity if it has a physics component, otherwise does nothing.
@@ -58,7 +60,7 @@ public sealed class ThrowingSystem : EntitySystem
         comp.Thrower = user;
         // Give it a l'il spin.
         if (!_tagSystem.HasTag(uid, "NoSpinOnThrow"))
-            physics.ApplyAngularImpulse(ThrowAngularImpulse);
+            _physicsSystem.ApplyAngularImpulse(physics, ThrowAngularImpulse);
         else
         {
             if (transform == null)
@@ -73,7 +75,7 @@ public sealed class ThrowingSystem : EntitySystem
             _interactionSystem.ThrownInteraction(user.Value, uid);
 
         var impulseVector = direction.Normalized * strength * physics.Mass;
-        physics.ApplyLinearImpulse(impulseVector);
+        _physicsSystem.ApplyLinearImpulse(physics, impulseVector);
 
         // Estimate time to arrival so we can apply OnGround status and slow it much faster.
         var time = (direction / strength).Length;
@@ -105,7 +107,7 @@ public sealed class ThrowingSystem : EntitySystem
             RaiseLocalEvent(physics.Owner, msg);
 
             if (!msg.Cancelled)
-                userPhysics.ApplyLinearImpulse(-impulseVector * pushbackRatio);
+                _physicsSystem.ApplyLinearImpulse(userPhysics, -impulseVector * pushbackRatio);
         }
     }
 }

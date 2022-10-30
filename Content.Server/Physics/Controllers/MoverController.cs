@@ -8,6 +8,7 @@ using Content.Shared.Shuttles.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 
 namespace Content.Server.Physics.Controllers
@@ -16,6 +17,7 @@ namespace Content.Server.Physics.Controllers
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly ThrusterSystem _thruster = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
 
         private Dictionary<ShuttleComponent, List<(PilotComponent, InputMoverComponent, TransformComponent)>> _shuttlePilots = new();
 
@@ -439,19 +441,19 @@ namespace Content.Server.Physics.Controllers
 
                 if (linearInput.Length.Equals(0f))
                 {
-                    body.SleepingAllowed = true;
+                    _physicsSystem.SetSleepingAllowed(body, true);
 
                     if (brakeInput.Equals(0f))
                         _thruster.DisableLinearThrusters(shuttle);
 
                     if (body.LinearVelocity.Length < 0.08)
                     {
-                        body.LinearVelocity = Vector2.Zero;
+                        _physicsSystem.SetLinearVelocity(body, Vector2.Zero);
                     }
                 }
                 else
                 {
-                    body.SleepingAllowed = false;
+                    _physicsSystem.SetSleepingAllowed(body, false);
                     var angle = linearInput.ToWorldAngle();
                     var linearDir = angle.GetDir();
                     var dockFlag = linearDir.AsFlag();
@@ -518,23 +520,23 @@ namespace Content.Server.Physics.Controllers
                     {
                         var accelSpeed = totalForce.Length * frameTime;
                         accelSpeed = MathF.Min(accelSpeed, addSpeed);
-                        body.ApplyLinearImpulse(shuttleNorthAngle.RotateVec(totalForce.Normalized * accelSpeed));
+                        _physicsSystem.ApplyLinearImpulse(body, shuttleNorthAngle.RotateVec(totalForce.Normalized * accelSpeed));
                     }
                 }
 
                 if (MathHelper.CloseTo(angularInput, 0f))
                 {
                     _thruster.SetAngularThrust(shuttle, false);
-                    body.SleepingAllowed = true;
+                    _physicsSystem.SetSleepingAllowed(body, true);
 
                     if (Math.Abs(body.AngularVelocity) < 0.01f)
                     {
-                        body.AngularVelocity = 0f;
+                        _physicsSystem.SetAngularVelocity(body, 0f);
                     }
                 }
                 else
                 {
-                    body.SleepingAllowed = false;
+                    _physicsSystem.SetSleepingAllowed(body, false);
                     var impulse = shuttle.AngularThrust * -angularInput;
                     var wishSpeed = MathF.PI;
 

@@ -231,13 +231,13 @@ namespace Content.Server.Atmos.EntitySystems
                     if (throwTarget != EntityCoordinates.Invalid)
                     {
                         var pos = ((throwTarget.ToMap(EntityManager).Position - xform.WorldPosition).Normalized + dirVec).Normalized;
-                        physics.ApplyLinearImpulse(pos * moveForce);
+                        _physics.ApplyLinearImpulse(physics, pos * moveForce);
                     }
 
                     else
                     {
                         moveForce = MathF.Min(moveForce, SpaceWindMaxPushForce);
-                        physics.ApplyLinearImpulse(dirVec * moveForce);
+                        _physics.ApplyLinearImpulse(physics, dirVec * moveForce);
                     }
 
                     component.LastHighPressureMovementAirCycle = cycle;

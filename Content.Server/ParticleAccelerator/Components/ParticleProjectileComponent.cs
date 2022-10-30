@@ -3,6 +3,7 @@ using Content.Server.Projectiles.Components;
 using Content.Server.Singularity.Components;
 using Content.Shared.Singularity.Components;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
 
 namespace Content.Server.ParticleAccelerator.Components
@@ -54,7 +55,7 @@ namespace Content.Server.ParticleAccelerator.Components
                 appearance.SetData(ParticleAcceleratorVisuals.VisualState, state);
             }
 
-            physicsComponent.LinearVelocity = angle.ToWorldVec() * 20f;
+            _entMan.EntitySysManager.GetEntitySystem<SharedPhysicsSystem>().SetLinearVelocity(physicsComponent, angle.ToWorldVec() * 20f);
 
             _entMan.GetComponent<TransformComponent>(Owner).LocalRotation = angle;
             Timer.Spawn(3000, () => _entMan.DeleteEntity(Owner));

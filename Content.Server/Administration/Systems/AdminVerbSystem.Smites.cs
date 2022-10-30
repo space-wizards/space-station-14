@@ -47,6 +47,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
@@ -74,6 +75,7 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly VomitSystem _vomitSystem = default!;
     [Dependency] private readonly WeldableSystem _weldableSystem = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifierSystem = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
 
     // All smite verbs have names so invokeverb works.
     private void AddSmiteVerbs(GetVerbsEvent<Verb> args)
@@ -424,20 +426,20 @@ public sealed partial class AdminVerbSystem
                     var xform = Transform(args.Target);
                     var fixtures = Comp<FixturesComponent>(args.Target);
                     xform.Anchored = false; // Just in case.
-                    physics.BodyType = BodyType.Dynamic;
+                    _physicsSystem.SetBodyType(physics, BodyType.Dynamic);
                     physics.BodyStatus = BodyStatus.InAir;
-                    physics.WakeBody();
+                    _physicsSystem.WakeBody(physics);
                     foreach (var (_, fixture) in fixtures.Fixtures)
                     {
                         if (!fixture.Hard)
                             continue;
-                        fixture.Restitution = 1.1f;
+                        _physicsSystem.SetRestitution(fixture, 1.1f);
                     }
 
-                    physics.LinearVelocity = _random.NextVector2(1.5f, 1.5f);
-                    physics.AngularVelocity = MathF.PI * 12;
-                    physics.LinearDamping = 0.0f;
-                    physics.AngularDamping = 0.0f;
+                    _physicsSystem.SetLinearVelocity(physics, _random.NextVector2(1.5f, 1.5f));
+                    _physicsSystem.SetAngularVelocity(physics, MathF.PI * 12);
+                    _physicsSystem.SetLinearDamping(physics, 0.0f);
+                    _physicsSystem.SetAngularDamping(physics, 0.0f);
                 },
                 Impact = LogImpact.Extreme,
                 Message = Loc.GetString("admin-smite-pinball-description")
@@ -454,18 +456,18 @@ public sealed partial class AdminVerbSystem
                     var xform = Transform(args.Target);
                     var fixtures = Comp<FixturesComponent>(args.Target);
                     xform.Anchored = false; // Just in case.
-                    physics.BodyType = BodyType.Dynamic;
+                    _physicsSystem.SetBodyType(physics, BodyType.Dynamic);
                     physics.BodyStatus = BodyStatus.InAir;
-                    physics.WakeBody();
+                    _physicsSystem.WakeBody(physics);
                     foreach (var (_, fixture) in fixtures.Fixtures)
                     {
                         fixture.Hard = false;
                     }
 
-                    physics.LinearVelocity = _random.NextVector2(8.0f, 8.0f);
-                    physics.AngularVelocity = MathF.PI * 12;
-                    physics.LinearDamping = 0.0f;
-                    physics.AngularDamping = 0.0f;
+                    _physicsSystem.SetLinearVelocity(physics, _random.NextVector2(8.0f, 8.0f));
+                    _physicsSystem.SetAngularVelocity(physics, MathF.PI * 12);
+                    _physicsSystem.SetLinearDamping(physics, 0.0f);
+                    _physicsSystem.SetAngularDamping(physics, 0.0f);
                 },
                 Impact = LogImpact.Extreme,
                 Message = Loc.GetString("admin-smite-yeet-description")

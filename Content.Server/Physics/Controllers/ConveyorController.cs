@@ -233,8 +233,8 @@ namespace Content.Server.Physics.Controllers
                 transform.LocalPosition = localPos;
 
                 // Force it awake for collisionwake reasons.
-                body.Awake = true;
-                body.SleepTime = 0f;
+                _physics.SetAwake(body, true);
+                _physics.SetSleepTime(body, 0f);
             }
         }
 

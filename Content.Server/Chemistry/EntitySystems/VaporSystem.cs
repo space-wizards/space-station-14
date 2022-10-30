@@ -12,6 +12,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.EntitySystems
@@ -23,6 +24,7 @@ namespace Content.Server.Chemistry.EntitySystems
         [Dependency] private readonly IPrototypeManager _protoManager = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly ThrowingSystem _throwing = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
 
         private const float ReactTime = 0.125f;
 
@@ -57,8 +59,8 @@ namespace Content.Server.Chemistry.EntitySystems
             // Set Move
             if (EntityManager.TryGetComponent(vapor.Owner, out PhysicsComponent? physics))
             {
-                physics.LinearDamping = 0f;
-                physics.AngularDamping = 0f;
+                _physicsSystem.SetLinearDamping(physics, 0f);
+                _physicsSystem.SetAngularDamping(physics, 0f);
 
                 _throwing.TryThrow(vapor.Owner, dir * speed, user: user, pushbackRatio: 50f);
 

@@ -677,8 +677,8 @@ public sealed partial class AdminVerbSystem
                 IconTexture = "/Textures/Interface/AdminActions/halt.png",
                 Act = () =>
                 {
-                    physics.LinearVelocity = Vector2.Zero;
-                    physics.AngularVelocity = 0.0f;
+                    _physicsSystem.SetLinearVelocity(physics, Vector2.Zero);
+                    _physicsSystem.SetAngularVelocity(physics, 0.0f);
                 },
                 Impact = LogImpact.Medium,
                 Message = Loc.GetString("admin-trick-halt-movement-description"),

@@ -11,6 +11,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
 
 namespace Content.Client.Power
@@ -18,6 +19,8 @@ namespace Content.Client.Power
     [GenerateTypedNameReferences]
     public sealed partial class SolarControlWindow : DefaultWindow, IComputerWindow<SolarControlConsoleBoundInterfaceState>
     {
+        [Dependency] private readonly IEntitySystemManager _systemManager = default!;
+
         private SolarControlConsoleBoundInterfaceState _lastState = new(0, 0, 0, 0);
 
         public SolarControlWindow()

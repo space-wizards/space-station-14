@@ -4,6 +4,7 @@ using Content.Shared.Body.Components;
 using Content.Shared.Item;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Systems;
 
 namespace Content.Server.Disposal.Unit.Components
 {

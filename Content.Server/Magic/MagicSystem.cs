@@ -19,6 +19,7 @@ using Content.Shared.Storage;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -40,6 +41,7 @@ public sealed class MagicSystem : EntitySystem
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
     [Dependency] private readonly GunSystem _gunSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
 
     public override void Initialize()
     {
@@ -276,7 +278,7 @@ public sealed class MagicSystem : EntitySystem
 
         var direction = Transform(ev.Target).MapPosition.Position - Transform(ev.Performer).MapPosition.Position;
         var impulseVector = direction * 10000;
-        Comp<PhysicsComponent>(ev.Target).ApplyLinearImpulse(impulseVector);
+        _physicsSystem.ApplyLinearImpulse(Comp<PhysicsComponent>(ev.Target), impulseVector);
 
         if (!TryComp<BodyComponent>(ev.Target, out var body))
             return;

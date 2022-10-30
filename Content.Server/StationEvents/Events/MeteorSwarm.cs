@@ -2,11 +2,15 @@ using Content.Server.GameTicking;
 using Content.Shared.Spawners.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Systems;
 
 namespace Content.Server.StationEvents.Events
 {
     public sealed class MeteorSwarm : StationEventSystem
     {
+        [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
+        [Dependency] private readonly EntityLookupSystem _lookup = default!;
+
         public override string Prototype => "MeteorSwarm";
 
         private float _cooldown;
@@ -71,7 +75,7 @@ namespace Content.Server.StationEvents.Events
             foreach (var grid in MapManager.GetAllGrids())
             {
                 if (grid.ParentMapId != mapId || !EntityManager.TryGetComponent(grid.GridEntityId, out PhysicsComponent? gridBody)) continue;
-                var aabb = gridBody.GetWorldAABB();
+                var aabb = _lookup.GetWorldAABB(grid.GridEntityId);
                 playableArea = playableArea?.Union(aabb) ?? aabb;
             }
 
@@ -94,10 +98,11 @@ namespace Content.Server.StationEvents.Events
                 var meteor = EntityManager.SpawnEntity("MeteorLarge", spawnPosition);
                 var physics = EntityManager.GetComponent<PhysicsComponent>(meteor);
                 physics.BodyStatus = BodyStatus.InAir;
-                physics.LinearDamping = 0f;
-                physics.AngularDamping = 0f;
-                physics.ApplyLinearImpulse(-offset.Normalized * MeteorVelocity * physics.Mass);
-                physics.ApplyAngularImpulse(
+                _physicsSystem.SetLinearDamping(physics, 0f);
+                _physicsSystem.SetAngularDamping(physics, 0f);
+                _physicsSystem.ApplyLinearImpulse(physics, -offset.Normalized * MeteorVelocity * physics.Mass);
+                _physicsSystem.ApplyAngularImpulse(
+                    physics,
                     // Get a random angular velocity.
                     physics.Mass * ((MaxAngularVelocity - MinAngularVelocity) * RobustRandom.NextFloat() +
                                     MinAngularVelocity));

@@ -10,6 +10,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Physics.Events;
 
 namespace Content.Server.Singularity.EntitySystems
@@ -21,6 +22,8 @@ namespace Content.Server.Singularity.EntitySystems
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;
         [Dependency] private readonly PVSOverrideSystem _pvs = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
+
         /// <summary>
         /// How much energy the singulo gains from destroying a tile.
         /// </summary>
@@ -212,7 +215,7 @@ namespace Content.Server.Singularity.EntitySystems
                 var speed = 1f / vec.Length * component.Level * collidableComponent.Mass * 10f;
 
                 // Because tile friction is so high we'll just multiply by mass so stuff like closets can even move.
-                collidableComponent.ApplyLinearImpulse(vec.Normalized * speed * frameTime);
+                _physicsSystem.ApplyLinearImpulse(collidableComponent, vec.Normalized * speed * frameTime);
             }
         }
 

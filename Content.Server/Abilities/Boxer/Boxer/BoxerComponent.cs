@@ -1,5 +1,6 @@
 using Content.Shared.Damage;
 
+
 namespace Content.Server.Abilities.Boxer
 {
     /// <summary>

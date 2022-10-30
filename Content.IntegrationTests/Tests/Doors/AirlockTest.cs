@@ -7,6 +7,7 @@ using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Systems;
 
 namespace Content.IntegrationTests.Tests.Doors
 {
@@ -115,6 +116,7 @@ namespace Content.IntegrationTests.Tests.Doors
 
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
+            var systemManager = server.ResolveDependency<IEntitySystemManager>();
 
             IPhysBody physBody = null;
             EntityUid physicsDummy = default;

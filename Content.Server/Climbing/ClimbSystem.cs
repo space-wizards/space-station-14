@@ -44,6 +44,7 @@ public sealed class ClimbSystem : SharedClimbSystem
     [Dependency] private readonly InteractionSystem _interactionSystem = default!;
     [Dependency] private readonly StunSystem _stunSystem = default!;
     [Dependency] private readonly AudioSystem _audioSystem = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
 
     private const string ClimbingFixtureName = "climb";
     private const int ClimbingCollisionGroup = (int) (CollisionGroup.TableLayer | CollisionGroup.LowImpassable);
@@ -395,8 +396,8 @@ public sealed class ClimbSystem : SharedClimbSystem
         // Since there are bodies with different masses:
         // mass * 10 seems enough to move entity
         // instead of launching cats like rockets against the walls with constant impulse value.
-        physics.ApplyLinearImpulse((to - from).Normalized * velocity * physics.Mass * 10);
-        physics.BodyType = BodyType.Dynamic;
+        _physicsSystem.ApplyLinearImpulse(physics, (to - from).Normalized * velocity * physics.Mass * 10);
+        _physicsSystem.SetBodyType(physics, BodyType.Dynamic);
         climbing.OwnerIsTransitioning = true;
         _actionBlockerSystem.UpdateCanMove(uid);
 
@@ -404,7 +405,7 @@ public sealed class ClimbSystem : SharedClimbSystem
         climbing.Owner.SpawnTimer((int) (SharedClimbingComponent.BufferTime * 1000), () =>
         {
             if (climbing.Deleted) return;
-            physics.BodyType = BodyType.KinematicController;
+            _physicsSystem.SetBodyType(physics, BodyType.KinematicController);
             climbing.OwnerIsTransitioning = false;
             _actionBlockerSystem.UpdateCanMove(uid);
         });

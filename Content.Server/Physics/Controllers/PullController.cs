@@ -4,6 +4,7 @@ using Content.Shared.Rotatable;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Controllers;
+using Robust.Shared.Physics.Systems;
 
 namespace Content.Server.Physics.Controllers
 {
@@ -36,6 +37,7 @@ namespace Content.Server.Physics.Controllers
         private const float MinimumMovementDistance = 0.005f;
 
         [Dependency] private readonly SharedPullingSystem _pullableSystem = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
 
         // TODO: Move this stuff to pullingsystem
         /// <summary>
@@ -73,7 +75,7 @@ namespace Content.Server.Physics.Controllers
                 return;
 
             if (TryComp<PhysicsComponent>(pullable.Owner, out var physics))
-                physics.WakeBody();
+                _physicsSystem.WakeBody(physics);
 
             _pullableSystem.StopMoveTo(pullable);
         }
@@ -161,7 +163,7 @@ namespace Content.Server.Physics.Controllers
 
                 if ((diffLength < MaximumSettleDistance) && (physics.LinearVelocity.Length < MaximumSettleVelocity))
                 {
-                    physics.LinearVelocity = Vector2.Zero;
+                    _physicsSystem.SetLinearVelocity(physics, Vector2.Zero);
                     _pullableSystem.StopMoveTo(pullable);
                     continue;
                 }
@@ -178,9 +180,9 @@ namespace Content.Server.Physics.Controllers
                     var scaling = (SettleShutdownDistance - diffLength) / SettleShutdownDistance;
                     accel -= physics.LinearVelocity * SettleShutdownMultiplier * scaling;
                 }
-                physics.WakeBody();
+                _physicsSystem.WakeBody(physics);
                 var impulse = accel * physics.Mass * frameTime;
-                physics.ApplyLinearImpulse(impulse);
+                _physicsSystem.ApplyLinearImpulse(physics, impulse);
             }
         }
     }

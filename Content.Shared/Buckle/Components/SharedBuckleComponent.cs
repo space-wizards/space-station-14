@@ -10,8 +10,8 @@ namespace Content.Shared.Buckle.Components
     [NetworkedComponent()]
     public abstract class SharedBuckleComponent : Component, IDraggable
     {
-        [Dependency] protected readonly IEntityManager EntMan = default!;
         [Dependency] private readonly IEntitySystemManager _sysMan = default!;
+        [Dependency] protected readonly IEntityManager EntMan = default!;
 
 
         /// <summary>

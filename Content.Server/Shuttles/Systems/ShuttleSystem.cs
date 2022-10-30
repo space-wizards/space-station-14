@@ -136,18 +136,18 @@ namespace Content.Server.Shuttles.Systems
 
         private void Enable(PhysicsComponent component)
         {
-            component.BodyType = BodyType.Dynamic;
+            _physics.SetBodyType(component, BodyType.Dynamic);
             component.BodyStatus = BodyStatus.InAir;
-            component.FixedRotation = false;
-            component.LinearDamping = ShuttleLinearDamping;
-            component.AngularDamping = ShuttleAngularDamping;
+            _physics.SetFixedRotation(component, false);
+            _physics.SetLinearDamping(component, ShuttleLinearDamping);
+            _physics.SetAngularDamping(component, ShuttleAngularDamping);
         }
 
         private void Disable(PhysicsComponent component)
         {
-            component.BodyType = BodyType.Static;
+            _physics.SetBodyType(component, BodyType.Static);
             component.BodyStatus = BodyStatus.OnGround;
-            component.FixedRotation = true;
+            _physics.SetFixedRotation(component, true);
         }
 
         private void OnShuttleShutdown(EntityUid uid, ShuttleComponent component, ComponentShutdown args)

@@ -11,6 +11,7 @@ public sealed class InjectorSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<InjectorComponent, ComponentHandleState>(OnHandleInjectorState);
         SubscribeLocalEvent<InjectorComponent, ItemStatusCollectMessage>(OnItemInjectorStatus);
         SubscribeLocalEvent<HyposprayComponent, ComponentHandleState>(OnHandleHyposprayState);

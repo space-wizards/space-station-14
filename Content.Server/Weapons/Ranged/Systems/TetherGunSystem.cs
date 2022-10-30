@@ -21,6 +21,7 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedJointSystem _joints = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
 
     private readonly Dictionary<ICommonSession, (EntityUid Entity, EntityUid Tether, Joint Joint)> _tethered = new();
     private readonly HashSet<ICommonSession> _draggers = new();
@@ -183,7 +184,7 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
             // Force it awake, always
             if (bodyQuery.TryGetComponent(entity.Entity, out var body))
             {
-                body.WakeBody();
+                _physicsSystem.WakeBody(body);
             }
         }
 

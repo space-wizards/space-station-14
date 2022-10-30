@@ -8,6 +8,7 @@ using Content.Shared.Pulling.Events;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Physics.Components;
 
 namespace Content.Shared.Pulling
@@ -18,6 +19,7 @@ namespace Content.Shared.Pulling
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interaction = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
 
         public bool CanPull(EntityUid puller, EntityUid pulled)
         {
@@ -99,7 +101,7 @@ namespace Content.Shared.Pulling
 
             if (TryComp<PhysicsComponent>(pullable.Owner, out var pullablePhysics))
             {
-                pullablePhysics.FixedRotation = pullable.PrevFixedRotation;
+                _physicsSystem.SetFixedRotation(pullablePhysics, pullable.PrevFixedRotation);
             }
 
             _pullSm.ForceRelationship(null, pullable);
@@ -195,7 +197,7 @@ namespace Content.Shared.Pulling
 
             _pullSm.ForceRelationship(puller, pullable);
             pullable.PrevFixedRotation = pullablePhysics.FixedRotation;
-            pullablePhysics.FixedRotation = pullable.FixedRotationOnPull;
+            _physicsSystem.SetFixedRotation(pullablePhysics, pullable.FixedRotationOnPull);
             return true;
         }
 

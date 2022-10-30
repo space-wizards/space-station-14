@@ -2,6 +2,7 @@ using Content.Server.Singularity.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Controllers;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
 
 namespace Content.Server.Physics.Controllers
@@ -9,6 +10,7 @@ namespace Content.Server.Physics.Controllers
     internal sealed class SingularityController : VirtualController
     {
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
 
         // SS13 has 10s but that's quite a while
         private const float MaxMoveCooldown = 5f;
@@ -46,9 +48,9 @@ namespace Content.Server.Physics.Controllers
             var pushAngle = _robustRandom.NextAngle();
             var pushStrength = _robustRandom.NextFloat(0.75f, 1.0f);
 
-            physics.LinearVelocity = Vector2.Zero;
+            _physicsSystem.SetLinearVelocity(physics, Vector2.Zero);
             physics.BodyStatus = BodyStatus.InAir;
-            physics.ApplyLinearImpulse(pushAngle.ToVec() * (pushStrength + 10f / Math.Min(singularity.Level, 4) * physics.Mass));
+            _physicsSystem.ApplyLinearImpulse(physics, pushAngle.ToVec() * (pushStrength + 10f / Math.Min(singularity.Level, 4) * physics.Mass));
             // TODO: Speedcap it probably?
         }
     }

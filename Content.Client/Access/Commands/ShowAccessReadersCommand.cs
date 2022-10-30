@@ -4,6 +4,7 @@ using Robust.Shared.Console;
 
 namespace Content.Client.Access.Commands;
 
+
 public sealed class ShowAccessReadersCommand : IConsoleCommand
 {
     public string Command => "showaccessreaders";
