@@ -1,9 +1,4 @@
 Entries:
-- author: Myctai
-  changes:
-  - {message: syndicate shoulder holster will now accept melee weapons, type: Fix}
-  id: 2046
-  time: '2022-07-31T02:48:05.0000000+00:00'
 - author: jessicamaybe
   changes:
   - {message: You can now see the station time in the lobby screen, type: Add}
@@ -2953,3 +2948,8 @@ Entries:
   - {message: Added machine upgrades for microwaves., type: Add}
   id: 2545
   time: '2022-10-30T07:14:20.0000000+00:00'
+- author: DeathCamel57
+  changes:
+  - {message: Console chat hotkey works again., type: Fix}
+  id: 2546
+  time: '2022-10-30T07:18:41.0000000+00:00'
