@@ -7,9 +7,9 @@
                       SetSize="600 320">
     <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True">
         <BoxContainer Margin="10 10 10 10" MinWidth="150" Orientation="Vertical" VerticalExpand="True" SizeFlagsStretchRatio="1">
-            <Button Text="Server"></Button>
+            <Button Name="ServerSelectionButton" Text="{Loc 'analysis-console-server-list-button'}"></Button>
             <BoxContainer MinHeight="5"></BoxContainer>
-            <Button Text="Scan"></Button>
+            <Button Name="ScanButton" Text="{Loc 'analysis-console-scan-button'}"></Button>
             <BoxContainer MinHeight="5"></BoxContainer>
             <Button Text="Destroy"></Button>
         </BoxContainer>
@@ -19,18 +19,20 @@
                 <gfx:StyleBoxFlat BackgroundColor="#000000FF" />
             </PanelContainer.PanelOverride>
             <BoxContainer Margin="10 10 10 10" Orientation="Horizontal">
-                <BoxContainer Orientation="Vertical" HorizontalExpand="True">
-                    <Label Text="DEPTH: 1"></Label>
-                    <Label Text="STIMULI: HEAT-BASED"></Label>
-                    <Label Text="EFFECT: UNKNOWN"></Label>
-                    <Label Text="NODE ID: 94821"></Label>
-                    <Label Text="TOTAL NODE COUNT: 5"></Label>
+                <BoxContainer Orientation="Vertical" HorizontalExpand="True" >
+                    <BoxContainer VerticalExpand="True">
+                        <RichTextLabel Name="Information"></RichTextLabel>
+                    </BoxContainer>
+                    <BoxContainer Orientation=" Horizontal">
+                        <Label Text="2:30"></Label>
+                        <ProgressBar Name="ProgressBar" MaxValue="100"></ProgressBar>
+                    </BoxContainer>
                 </BoxContainer>
                 <BoxContainer>
-                    <TextureRect
-                        TextureScale="2 2"
-                        TexturePath="Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi/ano1.png">
-                    </TextureRect>
+                    <SpriteView
+                        Name="ArtifactDisplay"
+                        Scale="2 2">
+                    </SpriteView>
                 </BoxContainer>
             </BoxContainer>
         </PanelContainer>

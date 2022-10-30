@@ -369,7 +369,7 @@
     priority: Low
   - type: ExtensionCableReceiver
   - type: Computer
-    board: ResearchComputerCircuitboard
+    board: AnalysisComputerCircuitboard
   - type: PointLight
     radius: 1.5
     energy: 1.6

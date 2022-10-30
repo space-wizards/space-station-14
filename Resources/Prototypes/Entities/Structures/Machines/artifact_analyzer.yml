@@ -7,7 +7,6 @@
   - type: Sprite
     noRot: true
     netsync: false
-    drawdepth: FloorTiles
     sprite: Structures/Machines/artifact_analyzer.rsi
     layers:
     - state: icon
@@ -16,7 +15,7 @@
       map: ["enum.PowerDeviceVisualLayers.Powered"]
   - type: Physics
     bodyType: Static
-    canCollide: false
+    canCollide: true
   - type: Fixtures
     fixtures:
       - shape:
@@ -24,10 +23,16 @@
           bounds: "-0.45,-0.45,0.45,0.00"
         density: 190
         mask:
-          - MachineMask
+        - MachineMask
+        layer:
+        - Impassable
+        - MidImpassable
+        - LowImpassable
+        hard: False
   - type: Transform
     anchored: true
     noRot: false
+  - type: ArtifactAnalyzer
   - type: DeviceNetwork
     deviceNetId: Wired
   - type: DeviceList

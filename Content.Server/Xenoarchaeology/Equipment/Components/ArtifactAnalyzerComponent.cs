@@ -4,7 +4,7 @@
 /// This is used for...
 /// </summary>
 [RegisterComponent]
-public sealed class ArtifactAnaylzerComponent : Component
+public sealed class ArtifactAnalyzerComponent : Component
 {
-    
+
 }
