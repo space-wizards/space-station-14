@@ -34,7 +34,7 @@ namespace Content.Server.Speech
             if (currentTime - component.LastTimeSoundPlayed < cooldown) return;
 
             // Play speech sound
-            string contextSound;
+            SoundSpecifier contextSound;
             var prototype = _protoManager.Index<SpeechSoundsPrototype>(component.SpeechSounds);
             var message = args.Message;
 
@@ -42,13 +42,13 @@ namespace Content.Server.Speech
             switch (args.Message[^1])
             {
                 case '?':
-                    contextSound = prototype.AskSound.GetSound();
+                    contextSound = prototype.AskSound;
                     break;
                 case '!':
-                    contextSound = prototype.ExclaimSound.GetSound();
+                    contextSound = prototype.ExclaimSound;
                     break;
                 default:
-                    contextSound = prototype.SaySound.GetSound();
+                    contextSound = prototype.SaySound;
                     break;
             }
 
@@ -60,7 +60,7 @@ namespace Content.Server.Speech
             }
             if (uppercaseCount > (message.Length / 2))
             {
-                contextSound = contextSound = prototype.ExclaimSound.GetSound();
+                contextSound = contextSound = prototype.ExclaimSound;
             }
 
             var scale = (float) _random.NextGaussian(1, prototype.Variation);

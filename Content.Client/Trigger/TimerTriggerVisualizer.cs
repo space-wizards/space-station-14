@@ -30,7 +30,10 @@ namespace Content.Client.Trigger
 		        {
                     var sound = new AnimationTrackPlaySound();
                     PrimingAnimation.AnimationTracks.Add(sound);
-                   	sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(_countdownSound.GetSound(), 0));
+                   	sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(
+                        IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedAudioSystem>().GetSound(_countdownSound),
+                        0
+                    ));
                 }
             }
         }

@@ -45,7 +45,7 @@ public sealed class InteractionPopupSystem : EntitySystem
         // TODO: Need to handle pausing with an accumulator.
 
         string msg = ""; // Stores the text to be shown in the popup message
-        string? sfx = null; // Stores the filepath of the sound to be played
+        SoundSpecifier? sfx = null; // Stores the filepath of the sound to be played
 
         if (_random.Prob(component.SuccessChance))
         {
@@ -53,7 +53,7 @@ public sealed class InteractionPopupSystem : EntitySystem
                 msg = Loc.GetString(component.InteractSuccessString, ("target", Identity.Entity(uid, EntityManager))); // Success message (localized).
 
             if (component.InteractSuccessSound != null)
-                sfx = component.InteractSuccessSound.GetSound();
+                sfx = component.InteractSuccessSound;
         }
         else
         {
@@ -61,7 +61,7 @@ public sealed class InteractionPopupSystem : EntitySystem
                 msg = Loc.GetString(component.InteractFailureString, ("target", Identity.Entity(uid, EntityManager))); // Failure message (localized).
 
             if (component.InteractFailureSound != null)
-                sfx = component.InteractFailureSound.GetSound();
+                sfx = component.InteractFailureSound;
         }
 
         if (component.MessagePerceivedByOthers != null)

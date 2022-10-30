@@ -120,7 +120,10 @@ namespace Content.Client.Light.Visualizers
                 {
                     KeyFrames =
                 {
-                    new AnimationTrackPlaySound.KeyFrame(_blinkingSound.GetSound(), 0.5f)
+                    new AnimationTrackPlaySound.KeyFrame(
+                        IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedAudioSystem>().GetSound(_blinkingSound),
+                        0.5f
+                    )
                 }
                 });
             }

@@ -336,7 +336,8 @@ namespace Content.Server.GameTicking
 
             RaiseNetworkEvent(new RoundEndMessageEvent(gamemodeTitle, roundEndText, roundDuration, RoundId,
                 listOfPlayerInfoFinal.Length, listOfPlayerInfoFinal, LobbySong,
-                new SoundCollectionSpecifier("RoundEnd").GetSound()));
+                IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedAudioSystem>()
+                    .GetSound(new SoundCollectionSpecifier("RoundEnd"))));
         }
 
         public void RestartRound()

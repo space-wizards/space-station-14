@@ -597,12 +597,12 @@ namespace Content.Server.Nuke
 
         private void NukeArmedAudio(NukeComponent component)
         {
-            _soundSystem.PlayGlobalOnStation(component.Owner, component.ArmSound.GetSound());
+            _soundSystem.PlayGlobalOnStation(component.Owner, _audioSystem.GetSound(component.ArmSound));
         }
 
         private void NukeDisarmedAudio(NukeComponent component)
         {
-            _soundSystem.PlayGlobalOnStation(component.Owner, component.DisarmSound.GetSound());
+            _soundSystem.PlayGlobalOnStation(component.Owner, _audioSystem.GetSound(component.DisarmSound));
             _soundSystem.StopStationEventMusic(component.Owner, StationEventMusicType.Nuke);
         }
     }

@@ -28,6 +28,7 @@ public abstract partial class InventorySystem
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly INetManager _netMan = default!;
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
     private void InitializeEquip()
     {
@@ -210,7 +211,7 @@ public abstract partial class InventorySystem
                     filter.RemoveWhereAttachedEntity(entity => entity == actor);
             }
 
-            SoundSystem.Play(clothing.EquipSound.GetSound(), filter, target, clothing.EquipSound.Params.WithVolume(-2f));
+            _audioSystem.Play(clothing.EquipSound, filter, target, clothing.EquipSound.Params.WithVolume(-2f));
         }
 
         inventory.Dirty();

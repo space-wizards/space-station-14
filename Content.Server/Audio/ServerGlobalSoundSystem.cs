@@ -58,7 +58,7 @@ public sealed class ServerGlobalSoundSystem : SharedGlobalSoundSystem
     public void DispatchStationEventMusic(EntityUid source, SoundSpecifier sound, StationEventMusicType type)
     {
         var audio = AudioParams.Default.WithVolume(-8);
-        var soundFile = sound.GetSound();
+        var soundFile = AudioSystem.GetSound(sound);
         var msg = new StationEventMusicEvent(soundFile, type, audio);
 
         var filter = GetStationAndPvs(source);

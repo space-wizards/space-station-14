@@ -8,6 +8,7 @@ namespace Content.Shared.Audio;
 /// </summary>
 public abstract class SharedGlobalSoundSystem : EntitySystem
 {
+    [Dependency] protected readonly SharedAudioSystem AudioSystem = default!;
 }
 
 [Virtual]
