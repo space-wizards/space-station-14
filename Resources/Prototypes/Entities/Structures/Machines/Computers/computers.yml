@@ -337,6 +337,40 @@
 
 - type: entity
   parent: BaseComputer
+  id: ComputerArtifactAnalyzerConsole
+  name: artifact analzyer console
+  description: A computer used to interface with the artifact analyzer.
+  components:
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer
+      key: rd_key
+      screen: rdcomp
+  - type: ResearchClient
+  - type: ResearchConsole
+  - type: TechnologyDatabase
+  - type: ActivatableUI
+    key: enum.ResearchConsoleUiKey.Key
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+    - key: enum.ResearchConsoleUiKey.Key
+      type: ResearchConsoleBoundUserInterface
+    - key: enum.ResearchClientUiKey.Key
+      type: ResearchClientBoundUserInterface
+  - type: ApcPowerReceiver
+    powerLoad: 1000
+    priority: Low
+  - type: ExtensionCableReceiver
+  - type: Computer
+    board: ResearchComputerCircuitboard
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#b53ca1"
+
+- type: entity
+  parent: BaseComputer
   id: ComputerId
   name: ID card computer
   description: Terminal for programming Nanotrasen employee ID cards to access parts of the station.
