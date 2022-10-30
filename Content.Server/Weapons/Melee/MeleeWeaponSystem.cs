@@ -161,7 +161,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         RaiseLocalEvent(ev.Target.Value, new AttackedEvent(component.Owner, user, targetXform.Coordinates));
 
         var modifiedDamage = DamageSpecifier.ApplyModifierSets(damage + hitEvent.BonusDamage + itemDamage.BonusDamage, hitEvent.ModifiersList);
-        var damageResult = _damageable.TryChangeDamage(ev.Target, modifiedDamage);
+        var damageResult = _damageable.TryChangeDamage(ev.Target, modifiedDamage, origin:user);
 
         if (damageResult != null && damageResult.Total > FixedPoint2.Zero)
         {
@@ -277,7 +277,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         {
             RaiseLocalEvent(entity, new AttackedEvent(component.Owner, user, ev.Coordinates));
 
-            var damageResult = _damageable.TryChangeDamage(entity, modifiedDamage);
+            var damageResult = _damageable.TryChangeDamage(entity, modifiedDamage, origin:user);
 
             if (damageResult != null && damageResult.Total > FixedPoint2.Zero)
             {
