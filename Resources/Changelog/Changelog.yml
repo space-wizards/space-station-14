@@ -1,44 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: 'Freon has been added. It is a refrigerant gas which reacts with nitrogen
-      to rapidly cool down areas, increasing in effectiveness with temperature. It''s
-      also a hallucinogenic, and you may feel woozy (and just a little brain damaged)
-      after breathing it in.', type: Add}
-  - {message: 'Freon can be produced by combining tritium, oxygen, and nitrogen as
-      catalyst at temperatures below 73.15 kelvin.', type: Add}
-  - {message: Miasma reacts with freon to subsume and convert it into more miasma.,
-    type: Add}
-  id: 2032
-  time: '2022-07-27T09:55:28.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: 'Ramens description points out you need to use boiling water, not just
-      any water.', type: Fix}
-  id: 2033
-  time: '2022-07-27T14:18:16.0000000+00:00'
-- author: FunkySphere
-  changes:
-  - {message: Fixed name of mime jumpskirt (previously "mime suit"), type: Fix}
-  id: 2034
-  time: '2022-07-27T23:15:04.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed missing inhand sprites for various syndicate duffel bags., type: Fix}
-  id: 2035
-  time: '2022-07-27T23:32:43.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed a bug preventing the Identity system from working for most players.,
-    type: Fix}
-  id: 2036
-  time: '2022-07-28T23:21:48.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Latejoiners are now eligible for traitor., type: Tweak}
-  - {message: Fixed missing kill objective icon., type: Fix}
-  id: 2037
-  time: '2022-07-29T00:59:45.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed various visuals for held & equipped items., type: Fix}
@@ -2953,3 +2913,35 @@ Entries:
   - {message: Removed split-station due to map rotation limits., type: Remove}
   id: 2531
   time: '2022-10-27T14:31:20.0000000+00:00'
+- author: JustinTrotter
+  changes:
+  - {message: Mice scream properly, type: Tweak}
+  id: 2532
+  time: '2022-10-28T00:42:36.0000000+00:00'
+- author: tsp01
+  changes:
+  - {message: The range from which you can hear players has been increased from 7
+      to 10 units., type: Tweak}
+  id: 2533
+  time: '2022-10-28T03:25:48.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a bug causing some entities not being interactable., type: Fix}
+  id: 2534
+  time: '2022-10-28T03:30:48.0000000+00:00'
+- author: Nairod
+  changes:
+  - {message: Changed it so lamps now spawn with power cells., type: Tweak}
+  id: 2535
+  time: '2022-10-28T05:22:09.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed being unable to interact with construction outlines / ghosts.,
+    type: Fix}
+  id: 2536
+  time: '2022-10-28T06:08:47.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Hopefully fix the server crashing very often., type: Fix}
+  id: 2537
+  time: '2022-10-29T16:22:22.417732+00:00'
