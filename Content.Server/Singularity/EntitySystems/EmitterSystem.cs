@@ -60,8 +60,10 @@ namespace Content.Server.Singularity.EntitySystems
                     SwitchOn(component);
                     _popup.PopupEntity(Loc.GetString("comp-emitter-turned-on",
                         ("target", component.Owner)), component.Owner, Filter.Entities(args.User));
+                }
                 else
                 {
+                    SwitchOff(component);
                     _popup.PopupEntity(Loc.GetString("comp-emitter-turned-off",
                         ("target", component.Owner)), uid, Filter.Entities(args.User));
                 }
