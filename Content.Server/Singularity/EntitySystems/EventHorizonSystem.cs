@@ -1,5 +1,6 @@
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Events;
+using Robust.Shared.Containers;
 
 using Content.Shared.Singularity.Components;
 using Content.Shared.Singularity.EntitySystems;
@@ -31,6 +32,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         SubscribeLocalEvent<EventHorizonComponent, StartCollideEvent>(OnStartCollide);
         SubscribeLocalEvent<EventHorizonComponent, EventHorizonAttemptConsumeEntityEvent>(OnAnotherEventHorizonAttemptConsumeThisEventHorizon);
         SubscribeLocalEvent<EventHorizonComponent, EventHorizonConsumedEntityEvent>(OnAnotherEventHorizonConsumedThisEventHorizon);
+        SubscribeLocalEvent<ContainerManagerComponent, EventHorizonConsumedEntityEvent>(OnContainerConsumed);
     }
 
     /// <summary>
@@ -118,10 +120,12 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         if(!Resolve(uid, ref xform) || !Resolve(uid, ref eventHorizon))
             return;
 
-        foreach(var entity in _lookup.GetEntitiesInRange(xform.MapPosition, range, flags: LookupFlags.Anchored))
+        foreach(var entity in _lookup.GetEntitiesInRange(xform.MapPosition, range, flags: LookupFlags.Uncontained))
         {
-            if (entity != uid)
-                AttemptConsumeEntity(entity, eventHorizon);
+            if (entity == uid)
+                continue;
+
+            AttemptConsumeEntity(entity, eventHorizon);
         }
     }
 
@@ -325,5 +329,31 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         comp.BeingConsumedByAnotherEventHorizon = true;
     }
 
+    /// <summary>
+    /// Recursively consumes all entities within a container that is consumed by the singularity.
+    /// If an entity within a consumed container cannot be consumed itself it is removed from the container.
+    /// </summary>
+    /// <param name="uid">The uid of the container being consumed.</param>
+    /// <param name="comp">The state of the container being consumed.</param>
+    /// <param name="args">The event arguments.</param>
+    private void OnContainerConsumed(EntityUid uid, ContainerManagerComponent comp, EventHorizonConsumedEntityEvent args)
+    {
+        foreach(var container in comp.GetAllContainers())
+        {
+            foreach(var contained in container.ContainedEntities)
+            {
+                if(!AttemptConsumeEntity(contained, args.EventHorizon))
+                {
+                    // Forcefully removes this entity from whatever container is has and places it on the ground.
+                    // We can't use container.Remove because that can place us in a parent container
+                    //  and we happen to be consuming all parent containers. It could also fail which
+                    //  doesn't make much sense when the containing entity is ceasing to exist and
+                    //  could cause entities that are immune to singularities to be deleted by
+                    //  singularities consuming their container.
+                    Transform(contained).AttachToGridOrMap();
+                }
+            }
+        }
+    }
 #endregion Event Handlers
 }
