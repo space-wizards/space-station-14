@@ -1,10 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Latejoiners are now eligible for traitor., type: Tweak}
-  - {message: Fixed missing kill objective icon., type: Fix}
-  id: 2037
-  time: '2022-07-29T00:59:45.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed various visuals for held & equipped items., type: Fix}
@@ -2946,3 +2940,8 @@ Entries:
     type: Fix}
   id: 2536
   time: '2022-10-28T06:08:47.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Hopefully fix the server crashing very often., type: Fix}
+  id: 2537
+  time: '2022-10-29T16:22:22.417732+00:00'
