@@ -369,13 +369,10 @@ public abstract partial class SharedGunSystem : EntitySystem
         CreateEffect(gun, ev, user);
     }
 
-    public void CauseImpulse(Vector2 direction, EntityUid? user = null, EntityQuery<PhysicsComponent>? physicsQuery = null)
+    public void CauseImpulse(Vector2 direction, EntityUid? user = null)
     {
-        if(user == null)
-            return;
-            
-        physicsQuery ??= GetEntityQuery<PhysicsComponent>();
-        if (physicsQuery.Value.TryGetComponent(user, out var userPhysics))
+        var physicsQuery = GetEntityQuery<PhysicsComponent>();
+        if (physicsQuery.TryGetComponent(user, out var userPhysics))
         {
             if (!Gravity.IsWeightless(user.Value, userPhysics))
                 return;
