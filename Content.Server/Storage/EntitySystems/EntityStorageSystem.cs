@@ -163,7 +163,7 @@ public sealed class EntityStorageSystem : EntitySystem
 
         var targetCoordinates = new EntityCoordinates(uid, component.EnteringOffset);
 
-        var entities = _lookup.GetEntitiesInRange(targetCoordinates, component.EnteringRange, LookupFlags.Approximate);
+        var entities = _lookup.GetEntitiesInRange(targetCoordinates, component.EnteringRange, LookupFlags.Approximate | LookupFlags.Dynamic | LookupFlags.Sundries);
 
         var ev = new StorageBeforeCloseEvent(uid, entities);
         RaiseLocalEvent(uid, ev, true);
@@ -269,7 +269,6 @@ public sealed class EntityStorageSystem : EntitySystem
         //Checks to see if the opening position, if offset, is inside of a wall.
         if (component.EnteringOffset != (0, 0) && !HasComp<WallMountComponent>(target)) //if the entering position is offset
         {
-            var targetXform = Transform(target);
             var newCoords = new EntityCoordinates(target, component.EnteringOffset);
             if (!_interactionSystem.InRangeUnobstructed(target, newCoords, 0, collisionMask: component.EnteringOffsetCollisionFlags))
             {
@@ -327,7 +326,7 @@ public sealed class EntityStorageSystem : EntitySystem
         if (attemptEvent.Cancelled)
             return false;
 
-        var targetIsMob = HasComp<SharedBodyComponent>(toInsert);
+        var targetIsMob = HasComp<BodyComponent>(toInsert);
         var storageIsItem = HasComp<ItemComponent>(container);
         var allowedToEat = whitelist?.IsValid(toInsert) ?? HasComp<ItemComponent>(toInsert);
 
@@ -385,6 +384,9 @@ public sealed class EntityStorageSystem : EntitySystem
 
     private void TakeGas(EntityUid uid, EntityStorageComponent component)
     {
+        if (!component.Airtight)
+            return;
+
         var tile = GetOffsetTileRef(uid, component);
 
         if (tile != null && _atmos.GetTileMixture(tile.Value.GridUid, null, tile.Value.GridIndices, true) is {} environment)
@@ -395,6 +397,9 @@ public sealed class EntityStorageSystem : EntitySystem
 
     private void ReleaseGas(EntityUid uid, EntityStorageComponent component)
     {
+        if (!component.Airtight)
+            return;
+
         var tile = GetOffsetTileRef(uid, component);
 
         if (tile != null && _atmos.GetTileMixture(tile.Value.GridUid, null, tile.Value.GridIndices, true) is {} environment)
@@ -420,7 +425,7 @@ public sealed class EntityStorageSystem : EntitySystem
 
     private void OnInsideInhale(EntityUid uid, InsideEntityStorageComponent component, InhaleLocationEvent args)
     {
-        if (TryComp<EntityStorageComponent>(component.Storage, out var storage))
+        if (TryComp<EntityStorageComponent>(component.Storage, out var storage) && storage.Airtight)
         {
             args.Gas = storage.Air;
         }
@@ -428,7 +433,7 @@ public sealed class EntityStorageSystem : EntitySystem
 
     private void OnInsideExhale(EntityUid uid, InsideEntityStorageComponent component, ExhaleLocationEvent args)
     {
-        if (TryComp<EntityStorageComponent>(component.Storage, out var storage))
+        if (TryComp<EntityStorageComponent>(component.Storage, out var storage) && storage.Airtight)
         {
             args.Gas = storage.Air;
         }
@@ -441,6 +446,9 @@ public sealed class EntityStorageSystem : EntitySystem
 
         if (TryComp<EntityStorageComponent>(component.Storage, out var storage))
         {
+            if (!storage.Airtight)
+                return;
+
             args.Gas = storage.Air;
         }
 

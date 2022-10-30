@@ -45,6 +45,19 @@ public sealed class SpeciesPrototype : IPrototype
     public string SpriteSet { get; } = default!;
 
     /// <summary>
+    ///     Default skin tone for this species. This applies for non-human skin tones.
+    /// </summary>
+    [DataField("defaultSkinTone")]
+    public Color DefaultSkinTone { get; } = Color.White;
+
+    /// <summary>
+    ///     Default human skin tone for this species. This applies for human skin tones.
+    ///     See <see cref="SkinColor.HumanSkinTone"/> for the valid range of skin tones.
+    /// </summary>
+    [DataField("defaultHumanSkinTone")]
+    public int DefaultHumanSkinTone { get; } = 20;
+
+    /// <summary>
     ///     The limit of body markings that you can place on this species.
     /// </summary>
     [DataField("markingLimits")]
@@ -79,6 +92,34 @@ public sealed class SpeciesPrototype : IPrototype
 
     [DataField("naming")]
     public SpeciesNaming Naming { get; } = SpeciesNaming.FirstLast;
+
+    [DataField("sexes")]
+    public List<Sex> Sexes { get; } = new List<Sex>(){ Sex.Male, Sex.Female };
+
+    /// <summary>
+    ///     Characters younger than this are too young to be hired by Nanotrasen.
+    /// <summary>
+    [DataField("minAge")]
+    public int MinAge = 18;
+
+    /// <summary>
+    ///     Characters younger than this appear young.
+    /// <summary>
+    [DataField("youngAge")]
+    public int YoungAge = 30;
+
+    /// <summary>
+    ///     Characters older than this appear old. Characters in between young and old age appear middle aged.
+    /// </summary>
+    [DataField("oldAge")]
+    public int OldAge = 60;
+
+    /// <summary>
+    ///     Characters cannot be older than this. Only used for restrictions...
+    ///     although imagine if ghosts could age people WYCI...
+    /// <summary>
+    [DataField("maxAge")]
+    public int MaxAge = 120;
 }
 
 public enum SpeciesNaming : byte

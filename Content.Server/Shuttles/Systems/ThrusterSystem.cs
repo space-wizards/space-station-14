@@ -64,9 +64,7 @@ namespace Content.Server.Shuttles.Systems
         private void OnThrusterExamine(EntityUid uid, ThrusterComponent component, ExaminedEvent args)
         {
             // Powered is already handled by other power components
-            var enabled = Loc.GetString("thruster-comp-enabled",
-                ("enabledColor", component.Enabled ? "green": "red"),
-                ("enabled", component.Enabled ? "on": "off"));
+            var enabled = Loc.GetString(component.Enabled ? "thruster-comp-enabled" : "thruster-comp-disabled");
 
             args.PushMarkup(enabled);
 
@@ -81,9 +79,7 @@ namespace Content.Server.Shuttles.Systems
 
                 var exposed = NozzleExposed(xform);
 
-                var nozzleText = Loc.GetString("thruster-comp-nozzle-exposed",
-                    ("exposedColor", exposed ? "green" : "red"),
-                    ("exposed", exposed ? "is": "is not"));
+                var nozzleText = Loc.GetString(exposed ? "thruster-comp-nozzle-exposed" : "thruster-comp-nozzle-not-exposed");
 
                 args.PushMarkup(nozzleText);
             }
@@ -227,7 +223,7 @@ namespace Content.Server.Shuttles.Systems
             DisableThruster(uid, component);
         }
 
-        private void OnPowerChange(EntityUid uid, ThrusterComponent component, PowerChangedEvent args)
+        private void OnPowerChange(EntityUid uid, ThrusterComponent component, ref PowerChangedEvent args)
         {
             if (args.Powered && CanEnable(uid, component))
             {

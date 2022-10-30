@@ -5,6 +5,9 @@
   - rmcomp
   - rmcompc
   - vv
+  - vvread
+  - vvwrite
+  - vvinvoke
   - scale
   - spin
 

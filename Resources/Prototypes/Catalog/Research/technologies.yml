@@ -66,6 +66,7 @@
     - Shovel
     - ButchCleaver
     - MicrowaveMachineCircuitboard
+    - SeedExtractorMachineCircuitboard
 
 - type: technology
   name: technologies-advanced-surgery
@@ -290,6 +291,7 @@
   unlockedRecipes:
     - ShuttleConsoleCircuitboard
     - Drone
+    - RadarConsoleCircuitboard
 
 # Electromagnetic Theory Technology Tree
 
@@ -316,9 +318,11 @@
     - SubstationMachineCircuitboard
     - HydroponicsTrayMachineCircuitboard
     - SolarControlComputerCircuitboard
+    - PowerComputerCircuitboard
     - GeneratorPlasmaMachineCircuitboard
     - Signaller
     - SignalTrigger
+    - VoiceTrigger
 
 - type: technology
   name: technologies-compact-power-technology
@@ -421,6 +425,25 @@
     - ProximitySensor
     - LeftArmBorg
     - RightArmBorg
+
+- type: technology
+  name: technologies-adv-parts-technology
+  id: AdvancedPartsTechnology
+  description: technologies-adv-parts-technology-description
+  icon:
+    sprite: Objects/Misc/stock_parts.rsi
+    state: adv_capacitor
+  requiredPoints: 8000
+  requiredTechnologies:
+    - BasicPartsTechnology
+    - IndustrialEngineering
+    - PowerCellBasic
+  unlockedRecipes:
+    - AdvancedCapacitorStockPart
+    - AdvancedMatterBinStockPart
+    - HighPowerMicroLaserStockPart
+    - NanoManipulatorStockPart
+    - AdvancedScanningModuleStockPart
 
 # Bluespace Theory Technology Tree
 

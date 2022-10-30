@@ -8,3 +8,7 @@
       sprite: Objects/Misc/module.rsi
       state: mainboard
       netsync: false
+    - type: Tag
+      tags:
+      - DroneUsable
+      - FirelockElectronics

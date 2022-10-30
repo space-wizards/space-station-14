@@ -1,0 +1,24 @@
+﻿<screens:DefaultGameScreen
+    xmlns="https://spacestation14.io"
+    xmlns:screens="clr-namespace:Content.Client.UserInterface.Screens"
+    xmlns:menuBar="clr-namespace:Content.Client.UserInterface.Systems.MenuBar.Widgets"
+    xmlns:actions="clr-namespace:Content.Client.UserInterface.Systems.Actions.Widgets"
+    xmlns:chat="clr-namespace:Content.Client.UserInterface.Systems.Chat.Widgets"
+    xmlns:alerts="clr-namespace:Content.Client.UserInterface.Systems.Alerts.Widgets"
+    xmlns:widgets="clr-namespace:Content.Client.UserInterface.Systems.Ghost.Widgets"
+    xmlns:hotbar="clr-namespace:Content.Client.UserInterface.Systems.Hotbar.Widgets"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    Name="DefaultHud"
+    VerticalExpand="False"
+    VerticalAlignment="Bottom"
+    HorizontalAlignment="Center">
+    <LayoutContainer Name="ViewportContainer" HorizontalExpand="True" VerticalExpand="True">
+        <controls:MainViewport Name="MainViewport"/>
+    </LayoutContainer>
+    <menuBar:GameTopMenuBar Name="TopBar" Access="Protected" />
+    <widgets:GhostGui Name="Ghost" Access="Protected" />
+    <hotbar:HotbarGui Name="Hotbar" Access="Protected" />
+    <actions:ActionsBar Name="Actions" Access="Protected" />
+    <chat:ResizableChatBox Name="Chat" Access="Protected" />
+    <alerts:AlertsUI Name="Alerts" Access="Protected" />
+</screens:DefaultGameScreen>

@@ -24,8 +24,6 @@ namespace Content.Shared.Preferences
     [Serializable, NetSerializable]
     public sealed class HumanoidCharacterProfile : ICharacterProfile
     {
-        public const int MinimumAge = 18;
-        public const int MaximumAge = 120;
         public const int MaxNameLength = 32;
         public const int MaxDescLength = 512;
 
@@ -99,13 +97,18 @@ namespace Content.Shared.Preferences
         {
         }
 
+        /// <summary>
+        ///     Get the default humanoid character profile, using internal constant values.
+        ///     Defaults to <see cref="SharedHumanoidSystem.DefaultSpecies"/> for the species.
+        /// </summary>
+        /// <returns></returns>
         public static HumanoidCharacterProfile Default()
         {
             return new(
                 "John Doe",
                 "",
                 SharedHumanoidSystem.DefaultSpecies,
-                MinimumAge,
+                18,
                 Sex.Male,
                 Gender.Male,
                 HumanoidCharacterAppearance.Default(),
@@ -120,6 +123,33 @@ namespace Content.Shared.Preferences
                 new List<string>());
         }
 
+        /// <summary>
+        ///     Return a default character profile, based on species.
+        /// </summary>
+        /// <param name="species">The species to use in this default profile. The default species is <see cref="SharedHumanoidSystem.DefaultSpecies"/>.</param>
+        /// <returns>Humanoid character profile with default settings.</returns>
+        public static HumanoidCharacterProfile DefaultWithSpecies(string species = SharedHumanoidSystem.DefaultSpecies)
+        {
+            return new(
+                "John Doe",
+                "",
+                species,
+                18,
+                Sex.Male,
+                Gender.Male,
+                HumanoidCharacterAppearance.DefaultWithSpecies(species),
+                ClothingPreference.Jumpsuit,
+                BackpackPreference.Backpack,
+                new Dictionary<string, JobPriority>
+                {
+                    {SharedGameTicker.FallbackOverflowJob, JobPriority.High}
+                },
+                PreferenceUnavailableMode.SpawnAsOverflow,
+                new List<string>(),
+                new List<string>());
+        }
+
+        // TODO: This should eventually not be a visual change only.
         public static HumanoidCharacterProfile Random(HashSet<string>? ignoredSpecies = null)
         {
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
@@ -130,11 +160,26 @@ namespace Content.Shared.Preferences
                 .Where(x => ignoredSpecies == null ? x.RoundStart : x.RoundStart && !ignoredSpecies.Contains(x.ID))
                 .ToArray()
             ).ID;
-            var sex = random.Prob(0.5f) ? Sex.Male : Sex.Female;
+
+            return RandomWithSpecies(species);
+        }
+
+        public static HumanoidCharacterProfile RandomWithSpecies(string species = SharedHumanoidSystem.DefaultSpecies)
+        {
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+            var random = IoCManager.Resolve<IRobustRandom>();
+
+            var sex = Sex.Unsexed;
+            var age = 18;
+            if (prototypeManager.TryIndex<SpeciesPrototype>(species, out var speciesPrototype))
+            {
+                sex = random.Pick(speciesPrototype.Sexes);
+                age = random.Next(speciesPrototype.MinAge, speciesPrototype.OldAge); // people don't look and keep making 119 year old characters with zero rp, cap it at middle aged
+            }
+
             var gender = sex == Sex.Male ? Gender.Male : Gender.Female;
 
-            var name = sex.GetName(species, prototypeManager, random);
-            var age = random.Next(MinimumAge, MaximumAge);
+            var name = GetName(species, gender);
 
             return new HumanoidCharacterProfile(name, "", species, age, sex, gender, HumanoidCharacterAppearance.Random(species, sex), ClothingPreference.Jumpsuit, BackpackPreference.Backpack,
                 new Dictionary<string, JobPriority>
@@ -308,14 +353,28 @@ namespace Content.Shared.Preferences
 
         public void EnsureValid()
         {
-            var age = Math.Clamp(Age, MinimumAge, MaximumAge);
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+
+            prototypeManager.TryIndex<SpeciesPrototype>(Species, out var speciesPrototype);
 
             var sex = Sex switch
             {
                 Sex.Male => Sex.Male,
                 Sex.Female => Sex.Female,
+                Sex.Unsexed => Sex.Unsexed,
                 _ => Sex.Male // Invalid enum values.
             };
+
+            // ensure the species can be that sex and their age fits the founds
+            var age = Age;
+            if (speciesPrototype != null)
+            {
+                if (!speciesPrototype.Sexes.Contains(sex))
+                {
+                    sex = speciesPrototype.Sexes[0];
+                }
+                age = Math.Clamp(Age, speciesPrototype.MinAge, speciesPrototype.MaxAge);
+            }
 
             var gender = Gender switch
             {
@@ -329,7 +388,7 @@ namespace Content.Shared.Preferences
             string name;
             if (string.IsNullOrEmpty(Name))
             {
-                name = Sex.GetName(Species);
+                name = GetName(Species, gender);
             }
             else if (Name.Length > MaxNameLength)
             {
@@ -358,7 +417,7 @@ namespace Content.Shared.Preferences
 
             if (string.IsNullOrEmpty(name))
             {
-                name = Sex.GetName(Species);
+                name = GetName(Species, gender);
             }
 
             string flavortext;
@@ -394,8 +453,6 @@ namespace Content.Shared.Preferences
                 BackpackPreference.Duffelbag => BackpackPreference.Duffelbag,
                 _ => BackpackPreference.Backpack // Invalid enum values.
             };
-
-            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
 
             var priorities = new Dictionary<string, JobPriority>(JobPriorities
                 .Where(p => prototypeManager.HasIndex<JobPrototype>(p.Key) && p.Value switch
@@ -438,6 +495,14 @@ namespace Content.Shared.Preferences
 
             _traitPreferences.Clear();
             _traitPreferences.AddRange(traits);
+        }
+
+        // sorry this is kind of weird and duplicated,
+        /// working inside these non entity systems is a bit wack
+        public static string GetName(string species, Gender gender)
+        {
+            var namingSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<NamingSystem>();
+            return namingSystem.GetName(species, gender);
         }
 
         public override bool Equals(object? obj)

@@ -39,6 +39,7 @@ public sealed partial class HumanoidSystem : SharedHumanoidSystem
             component.Species,
             component.CustomBaseLayers,
             component.SkinColor,
+            component.Sex,
             component.AllHiddenLayers.ToList(),
             component.CurrentMarkings.GetForwardEnumerator().ToList());
     }
@@ -50,26 +51,27 @@ public sealed partial class HumanoidSystem : SharedHumanoidSystem
             return;
         }
 
-        SetSpecies(uid, humanoid.Species, false, humanoid);
-
-        if (!string.IsNullOrEmpty(humanoid.Initial)
-            && _prototypeManager.TryIndex(humanoid.Initial, out HumanoidProfilePrototype? startingSet))
+        if (string.IsNullOrEmpty(humanoid.Initial)
+            || !_prototypeManager.TryIndex(humanoid.Initial, out HumanoidProfilePrototype? startingSet))
         {
-            // Do this first, because profiles currently do not support custom base layers
-            foreach (var (layer, info) in startingSet.CustomBaseLayers)
-            {
-                humanoid.CustomBaseLayers.Add(layer, info);
-            }
-
-            LoadProfile(uid, startingSet.Profile, humanoid);
+            LoadProfile(uid, HumanoidCharacterProfile.DefaultWithSpecies(humanoid.Species), humanoid);
+            return;
         }
+
+        // Do this first, because profiles currently do not support custom base layers
+        foreach (var (layer, info) in startingSet.CustomBaseLayers)
+        {
+            humanoid.CustomBaseLayers.Add(layer, info);
+        }
+
+        LoadProfile(uid, startingSet.Profile, humanoid);
     }
 
     private void OnExamined(EntityUid uid, HumanoidComponent component, ExaminedEvent args)
     {
         var identity = Identity.Entity(component.Owner, EntityManager);
         var species = GetSpeciesRepresentation(component.Species).ToLower();
-        var age = GetAgeRepresentation(component.Age);
+        var age = GetAgeRepresentation(component.Species, component.Age);
 
         args.PushText(Loc.GetString("humanoid-appearance-component-examine", ("user", identity), ("age", age), ("species", species)));
     }
@@ -108,7 +110,6 @@ public sealed partial class HumanoidSystem : SharedHumanoidSystem
         EnsureDefaultMarkings(uid, humanoid);
 
         humanoid.Gender = profile.Gender;
-
         if (TryComp<GrammarComponent>(uid, out var grammar))
         {
             grammar.Gender = profile.Gender;
@@ -141,6 +142,12 @@ public sealed partial class HumanoidSystem : SharedHumanoidSystem
         targetHumanoid.Sex = sourceHumanoid.Sex;
         targetHumanoid.CustomBaseLayers = new(sourceHumanoid.CustomBaseLayers);
         targetHumanoid.CurrentMarkings = new(sourceHumanoid.CurrentMarkings);
+
+        targetHumanoid.Gender = sourceHumanoid.Gender;
+        if (TryComp<GrammarComponent>(target, out var grammar))
+        {
+            grammar.Gender = sourceHumanoid.Gender;
+        }
 
         Synchronize(target, targetHumanoid);
     }
@@ -491,14 +498,27 @@ public sealed partial class HumanoidSystem : SharedHumanoidSystem
         }
     }
 
-    public string GetAgeRepresentation(int age)
+    public string GetAgeRepresentation(string species, int age)
     {
-        return age switch
+        _prototypeManager.TryIndex<SpeciesPrototype>(species, out var speciesPrototype);
+
+        if (speciesPrototype == null)
         {
-            <= 30 => Loc.GetString("identity-age-young"),
-            > 30 and <= 60 => Loc.GetString("identity-age-middle-aged"),
-            > 60 => Loc.GetString("identity-age-old")
-        };
+            Logger.Error("Tried to get age representation of species that couldn't be indexed: " + species);
+            return Loc.GetString("identity-age-young");
+        }
+
+        if (age < speciesPrototype.YoungAge)
+        {
+            return Loc.GetString("identity-age-young");
+        }
+
+        if (age < speciesPrototype.OldAge)
+        {
+            return Loc.GetString("identity-age-middle-aged");
+        }
+
+        return Loc.GetString("identity-age-old");
     }
 
     private void EnsureDefaultMarkings(EntityUid uid, HumanoidComponent? humanoid)

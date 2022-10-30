@@ -24,10 +24,11 @@ public abstract class SharedHumanoidSystem : EntitySystem
         string species,
         Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo> customBaseLayer,
         Color skinColor,
+        Sex sex,
         List<HumanoidVisualLayers> visLayers,
         List<Marking> markings)
     {
-        var data = new HumanoidVisualizerData(species, customBaseLayer, skinColor, visLayers, markings);
+        var data = new HumanoidVisualizerData(species, customBaseLayer, skinColor, sex, visLayers, markings);
 
         // Locally raise an event for this, because there might be some systems interested
         // in this.

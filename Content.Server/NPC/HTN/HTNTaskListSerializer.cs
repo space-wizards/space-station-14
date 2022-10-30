@@ -54,7 +54,8 @@ public sealed class HTNTaskListSerializer : ITypeSerializer<List<string>, Sequen
         return value;
     }
 
-    public DataNode Write(ISerializationManager serializationManager, List<string> value, bool alwaysWrite = false,
+    public DataNode Write(ISerializationManager serializationManager, List<string> value,
+        IDependencyCollection dependencies, bool alwaysWrite = false,
         ISerializationContext? context = null)
     {
         var sequence = new SequenceDataNode();

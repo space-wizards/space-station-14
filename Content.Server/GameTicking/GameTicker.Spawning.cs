@@ -65,9 +65,17 @@ namespace Content.Server.GameTicking
 
             // Calculate extended access for stations.
             var stationJobCounts = _stationSystem.Stations.ToDictionary(e => e, _ => 0);
-            foreach (var (_, (_, station)) in assignedJobs)
+            foreach (var (netUser, (job, station)) in assignedJobs)
             {
-                stationJobCounts[station] += 1;
+                if (job == null)
+                {
+                    var playerSession = _playerManager.GetSessionByUserId(netUser);
+                    _chatManager.DispatchServerMessage(playerSession, Loc.GetString("job-not-available-wait-in-lobby"));
+                }
+                else
+                {
+                    stationJobCounts[station] += 1;
+                }
             }
 
             _stationJobs.CalcExtendedAccess(stationJobCounts);
@@ -75,6 +83,9 @@ namespace Content.Server.GameTicking
             // Spawn everybody in!
             foreach (var (player, (job, station)) in assignedJobs)
             {
+                if (job == null)
+                    continue;
+
                 SpawnPlayer(_playerManager.GetSessionByUserId(player), profiles[player], station, job, false);
             }
 
@@ -207,6 +218,12 @@ namespace Content.Server.GameTicking
                     || jobPrototype.ExtendedAccessGroups.Count > 0))
             {
                 _chatManager.DispatchServerMessage(player, Loc.GetString("job-greet-crew-shortages"));
+            }
+
+            if (TryComp(station, out MetaDataComponent? metaData))
+            {
+                _chatManager.DispatchServerMessage(player,
+                    Loc.GetString("job-greet-station-name", ("stationName", metaData.EntityName)));
             }
 
             // We raise this event directed to the mob, but also broadcast it so game rules can do something now.

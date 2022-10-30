@@ -5,6 +5,7 @@
   id: BaseMobOrganic
   noSpawn: true
   components:
+  - type: LagCompensation
   - type: RangedDamageSound
     soundGroups:
       Brute:
@@ -147,7 +148,7 @@
       - shape:
           !type:PhysShapeCircle
           radius: 0.35
-        mass: 70
+        density: 185
         restitution: 0.0
         mask:
           - MobMask
@@ -174,10 +175,10 @@
   - type: Humanoid
     species: Human
   - type: Body
-    template: HumanoidTemplate
-    preset: HumanPreset
+    prototype: Human
   - type: Damageable
     damageContainer: Biological
+  - type: RadiationReceiver
   - type: ThermalRegulator
     metabolismHeat: 800
     radiatedHeat: 100
@@ -231,23 +232,22 @@
     normalState: Generic_mob_burning
     alternateState: Standing
     fireStackAlternateState: 3
-  - type: EnsnareableVisualizer
   - type: CombatMode
+    canDisarm: true
   - type: Climbing
   - type: Cuffable
   - type: Ensnareable
     sprite: Objects/Misc/ensnare.rsi
     state: icon
-  - type: CharacterInfo
   - type: AnimationPlayer
   - type: Buckle
   - type: MeleeWeapon
     hidden: true
-    hitSound:
+    soundHit:
       collection: Punch
-    range: 0.8
-    arcwidth: 30
-    arc: fist
+    angle: 30
+    animation: WeaponArcFist
+    attackRate: 1
     damage:
       types:
         Blunt: 5
@@ -258,6 +258,8 @@
   - type: Strippable
   - type: UserInterface
     interfaces:
+      - key: enum.VoiceMaskUIKey.Key
+        type: VoiceMaskBoundUserInterface
       - key: enum.HumanoidMarkingModifierKey.Key
         type: HumanoidMarkingModifierBoundUserInterface
       - key: enum.StrippingUiKey.Key
@@ -282,7 +284,6 @@
   - type: MobPrice
     price: 1500 # Kidnapping a living person and selling them for cred is a good move.
     deathPenalty: 0.01 # However they really ought to be living and intact, otherwise they're worth 100x less.
-  - type: Perishable
 
 - type: entity
   save: false
@@ -355,7 +356,7 @@
       - shape:
           !type:PhysShapeAabb
           bounds: "-0.35,-0.35,0.35,0.35"
-        mass: 70
+        density: 185
         restitution: 0.0
         mask:
         - MobMask
@@ -364,8 +365,7 @@
     - type: Humanoid
       species: Human
     - type: Body
-      template: HumanoidTemplate
-      preset: HumanPreset
+      prototype: Human
     - type: Damageable
       damageContainer: Biological
     - type: MobState

@@ -53,7 +53,7 @@ namespace Content.Server.Chemistry.EntitySystems
                     sprite?.LayerSetSprite(0, spriteSpec);
                 }
 
-                string val = proto.LocalizedName + " glass";
+                string val = Loc.GetString("transformable-container-component-glass", ("name", proto.LocalizedName));
                 EntityManager.GetComponent<MetaDataComponent>(owner).EntityName = val;
                 EntityManager.GetComponent<MetaDataComponent>(owner).EntityDescription = proto.LocalizedDescription;
                 component.CurrentReagent = proto;

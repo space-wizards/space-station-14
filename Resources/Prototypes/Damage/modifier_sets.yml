@@ -125,15 +125,17 @@
 - type: damageModifierSet
   id: Skeleton
   coefficients:
-    Blunt: 2.0
-    Slash: 1.5
-    Piercing: 1.2
+    Blunt: 1.1
+    Slash: 0.8
+    Piercing: 0.6
     Cold: 0.0
     Poison: 0.0
     Radiation: 0.0
     Asphyxiation: 0.0
     Bloodloss: 0.0
     Cellular: 0.0
+  flatReductions:
+    Blunt: 5
 
 # Represents which damage types should be modified
 # in relation to how they cause bloodloss damage.

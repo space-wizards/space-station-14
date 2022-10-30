@@ -23,7 +23,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: ToolboxMechanical
+      - id: ToolboxMechanicalFilled
         amount: 2
       - id: ToolboxElectricalFilled
         amount: 2
@@ -95,4 +95,13 @@
   - type: StorageFill
     contents:
       - id: JetpackBlue
+        amount: 2
+        
+- type: entity
+  id: CrateEngineeringMiniJetpack
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: JetpackMini
         amount: 2
