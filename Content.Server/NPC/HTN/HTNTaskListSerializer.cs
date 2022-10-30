@@ -73,7 +73,7 @@ public sealed class HTNTaskListSerializer : ITypeSerializer<List<string>, Sequen
         return sequence;
     }
 
-    public List<string> Copy(ISerializationManager serializationManager, List<string> source, List<string> target, bool skipHook,
+    public List<string> CreateCopy(ISerializationManager serializationManager, List<string> source, bool skipHook,
         ISerializationContext? context = null)
     {
         target.Clear();
