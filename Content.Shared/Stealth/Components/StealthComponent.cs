@@ -5,8 +5,9 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 namespace Content.Shared.Stealth.Components;
 /// <summary>
 /// Add this component to an entity that you want to be cloaked.
-/// It overlays a shader on the entity to give them an invisibility cloaked effect
-/// It also turns the entity invisible
+/// It overlays a shader on the entity to give them an invisibility cloaked effect.
+/// It also turns the entity invisible.
+/// Use other components (like StealthOnMove) to modify this component's visibility based on certain conditions.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedStealthSystem))]
@@ -35,6 +36,7 @@ public sealed class StealthComponent : Component
     /// outside of this range simply act as a buffer for the visual effect (i.e., a delay before turning invisible). To
     /// get the actual current visibility, use <see cref="SharedStealthSystem.GetVisibility(EntityUid,
     /// StealthComponent?)"/>
+    /// If you don't have anything else updating the stealth, this will just stay at a constant value, which can be useful.
     /// </summary>
     [DataField("lastVisibility")]
     [Access(typeof(SharedStealthSystem),  Other = AccessPermissions.None)]
@@ -47,18 +49,6 @@ public sealed class StealthComponent : Component
     /// </summary>
     [DataField("lastUpdate", customTypeSerializer:typeof(TimeOffsetSerializer))]
     public TimeSpan? LastUpdated;
-
-    /// <summary>
-    /// Rate that effects how fast an entity's visibility passively changes.
-    /// </summary>
-    [DataField("passiveVisibilityRate")]
-    public readonly float PassiveVisibilityRate = -0.15f;
-
-    /// <summary>
-    /// Rate for movement induced visibility changes. Scales with distance moved.
-    /// </summary>
-    [DataField("movementVisibilityRate")]
-    public readonly float MovementVisibilityRate = 0.2f;
 
     /// <summary>
     /// Minimum visibility. Note that the visual effect caps out at -1, but this value is allowed to be larger or smaller.
