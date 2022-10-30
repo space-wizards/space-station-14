@@ -371,6 +371,9 @@ public abstract partial class SharedGunSystem : EntitySystem
 
     public void CauseImpulse(Vector2 direction, EntityUid? user = null, EntityQuery<PhysicsComponent>? physicsQuery = null)
     {
+        if(user == null)
+            return;
+            
         physicsQuery ??= GetEntityQuery<PhysicsComponent>();
         if (physicsQuery.Value.TryGetComponent(user, out var userPhysics))
         {
