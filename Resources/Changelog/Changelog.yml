@@ -1,10 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Miasma is no longer visible until it's approaching dangerous levels.,
-    type: Tweak}
-  id: 2040
-  time: '2022-07-29T03:13:56.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed footsteps and bike horn honking sounds having the wrong pitch
@@ -2949,3 +2943,9 @@ Entries:
   - {message: Chairs are drawn correctly when rotated., type: Fix}
   id: 2539
   time: '2022-10-30T05:58:24.0000000+00:00'
+- author: Nairod
+  changes:
+  - {message: Added the mass scanner and power monitoring computer boards to the circuit
+      imprinter., type: Add}
+  id: 2540
+  time: '2022-10-30T06:00:00.0000000+00:00'
