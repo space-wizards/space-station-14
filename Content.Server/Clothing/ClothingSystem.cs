@@ -20,8 +20,7 @@ public sealed class ServerClothingSystem : ClothingSystem
         if (args.Slot == "head"
             && _tagSystem.HasTag(args.Equipment, "HidesHair"))
         {
-            _humanoidSystem.SetLayersVisibility(args.Equipee,
-                HumanoidVisualLayersExtension.Sublayers(HumanoidVisualLayers.Head), false);
+            _humanoidSystem.ToggleHiddenLayer(args.Equipee, HumanoidVisualLayers.Hair);
         }
     }
 
@@ -34,8 +33,7 @@ public sealed class ServerClothingSystem : ClothingSystem
         if (args.Slot == "head"
             && _tagSystem.HasTag(args.Equipment, "HidesHair"))
         {
-            _humanoidSystem.SetLayersVisibility(args.Equipee,
-                HumanoidVisualLayersExtension.Sublayers(HumanoidVisualLayers.Head), true);
+            _humanoidSystem.ToggleHiddenLayer(args.Equipee, HumanoidVisualLayers.Hair);
         }
     }
 }
