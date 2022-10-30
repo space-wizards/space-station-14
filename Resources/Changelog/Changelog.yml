@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Firesuits no longer protect against space., type: Fix}
-  id: 2045
-  time: '2022-07-31T02:44:50.0000000+00:00'
 - author: Myctai
   changes:
   - {message: syndicate shoulder holster will now accept melee weapons, type: Fix}
@@ -2953,3 +2948,8 @@ Entries:
       per print., type: Add}
   id: 2544
   time: '2022-10-30T07:12:11.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added machine upgrades for microwaves., type: Add}
+  id: 2545
+  time: '2022-10-30T07:14:20.0000000+00:00'
