@@ -168,6 +168,9 @@ namespace Content.Server.Physics.Controllers
 
         private void OnConveyorShutdown(EntityUid uid, ConveyorComponent component, ComponentShutdown args)
         {
+            if (MetaData(uid).EntityLifeStage >= EntityLifeStage.Terminating)
+                return;
+
             RemComp<ActiveConveyorComponent>(uid);
 
             if (!TryComp<PhysicsComponent>(uid, out var body))

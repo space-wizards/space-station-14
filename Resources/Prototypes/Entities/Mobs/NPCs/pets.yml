@@ -2,126 +2,6 @@
 #1D2L3U4R
 
 - type: entity
-  name: corgi
-  parent: SimpleMobBase
-  id: MobCorgi
-  description: Finally, a space corgi!
-  components:
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Pets/corgi.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: corgi
-  - type: Physics
-  - type: Fixtures
-    fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 30
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: corgi
-      Critical:
-        Base: corgi_dead
-      Dead:
-        Base: corgi_dead
-  - type: Appearance
-  - type: Butcherable
-    spawned:
-    - id: FoodMeat
-      amount: 2
-  - type: ReplacementAccent
-    accent: dog
-  - type: InteractionPopup
-    interactSuccessString: petting-success-dog
-    interactFailureString: petting-failure-generic
-    interactSuccessSound:
-      path: /Audio/Animals/small_dog_bark_happy.ogg
-  - type: Grammar
-    attributes:
-      gender: epicene
-  - type: SentienceTarget
-    flavorKind: corgi
-  - type: Puller
-  - type: MobPrice
-    price: 200
-
-- type: entity
-  name: corrupted corgi
-  parent: MobCorgi
-  id: MobCorgiNarsi
-  description: Ian! No!
-  components:
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Pets/corgi.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: narsian
-  - type: Appearance
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: narsian
-      Critical:
-        Base: narsian_dead
-      Dead:
-        Base: narsian_dead
-  - type: MeleeWeapon
-    hidden: true
-    angle: 0
-    animation: WeaponArcBite
-    damage:
-      types:
-        Piercing: 5
-        Slash: 5
-  - type: InputMover
-  - type: MobMover
-  - type: HTN
-    rootTask: SimpleHostileCompound
-  - type: Faction
-    factions:
-    - SimpleHostile
-  - type: InteractionPopup
-    successChance: 0 # Override the automatic success that would normally be inherited from MobCorgi.
-    interactSuccessString: petting-success-corrupted-corgi # Normally impossible but added an easter egg just in case.
-    interactFailureString: petting-failure-corrupted-corgi
-  - type: Grammar
-    attributes:
-      gender: epicene
-  - type: Bloodstream
-    bloodReagent: DemonsBlood
-    bloodlossDamage:
-      types:
-        Bloodloss:
-          1
-    bloodlossHealDamage:
-      types:
-        Bloodloss:
-          -0.25
-  - type: Damageable
-    damageContainer: Biological
-    damageModifierSet: Infernal
-  - type: Temperature
-    heatDamageThreshold: 4000 #They come from hell, so...
-    coldDamageThreshold: 260
-    currentTemperature: 310.15
-    coldDamage:
-      types:
-        Cold : 1 #per second, scales with temperature & other constants
-    specificHeat: 42
-    heatDamage:
-      types:
-        Heat : 1 #per second, scales with temperature & other constants
-
-- type: entity
   name: Ian
   parent: MobCorgi
   id: MobCorgiIan
@@ -204,81 +84,6 @@
       gender: female
 
 - type: entity
-  name: corgi puppy
-  parent: MobCorgi
-  id: MobCorgiPuppy
-  description: A little corgi! Aww...
-  components:
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Pets/corgi.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: puppy
-  - type: Appearance
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: puppy
-      Critical:
-        Base: puppy_dead
-      Dead:
-        Base: puppy_dead
-  - type: Grammar
-    attributes:
-      gender: epicene
-
-- type: entity
-  name: cat
-  parent: SimpleMobBase
-  id: MobCat
-  description: Feline pet, very funny.
-  components:
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Pets/cat.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: cat
-  - type: Physics
-  - type: Fixtures
-    fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 15
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
-  - type: Appearance
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: cat
-      Critical:
-        Base: cat_dead
-      Dead:
-        Base: cat_dead
-  - type: Butcherable
-    spawned:
-    - id: FoodMeat
-      amount: 3
-  - type: ReplacementAccent
-    accent: cat
-  - type: InteractionPopup
-    successChance: 0.7
-    interactSuccessString: petting-success-cat
-    interactFailureString: petting-failure-generic
-    interactSuccessSound:
-      path: /Audio/Animals/cat_meow.ogg
-  - type: Grammar
-    attributes:
-      gender: epicene
-  - type: MobPrice
-    price: 200
-
-- type: entity
   name: Runtime
   parent: MobCat
   id: MobCatRuntime
@@ -289,31 +94,6 @@
       gender: female
 
 - type: entity
-  name: calico cat
-  id: MobCatCalico
-  parent: MobCat
-  description: Feline pet, very funny.
-  components:
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Pets/cat.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: cat2
-  - type: Appearance
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: cat2
-      Critical:
-        Base: cat2_dead
-      Dead:
-        Base: cat2_dead
-  - type: Grammar
-    attributes:
-      gender: epicene
-
-- type: entity
   name: Exception
   id: MobCatException
   parent: MobCatCalico
@@ -322,62 +102,6 @@
   - type: Grammar
     attributes:
       gender: male
-
-- type: entity
-  name: space cat
-  id: MobCatSpace
-  parent: MobCat
-  description: Feline pet, prepared for the worst.
-  components:
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Pets/cat.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: spacecat
-  - type: Appearance
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: spacecat
-      Critical:
-        Base: spacecat_dead
-      Dead:
-        Base: spacecat_dead
-  - type: InteractionPopup
-    successChance: 0.7
-    interactSuccessString: petting-success-space-cat
-    interactFailureString: petting-failure-generic
-    interactSuccessSound:
-      path: /Audio/Animals/cat_meow.ogg
-  - type: Grammar
-    attributes:
-      gender: epicene
-
-- type: entity
-  name: caracal cat
-  id: MobCatCaracal
-  parent: MobCat
-  description: Hilarious.
-  components:
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Pets/caracal.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: caracal_flop
-  - type: Appearance
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: caracal_flop
-      Critical:
-        Base: caracal_dead
-      Dead:
-        Base: caracal_dead
-  - type: Grammar
-    attributes:
-      gender: epicene
 
 - type: entity
   name: Floppa
@@ -398,102 +122,6 @@
   - type: Grammar
     attributes:
       gender: male
-
-- type: entity
-  name: sloth
-  parent: SimpleMobBase
-  id: MobSloth
-  description: Very slow animal. For people with low energy.
-  components:
-  - type: MovementSpeedModifier
-    baseWalkSpeed : 1
-    baseSprintSpeed : 1
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Pets/sloth.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: sloth
-  - type: Physics
-  - type: Fixtures
-    fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 15
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
-  - type: Appearance
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: sloth
-      Critical:
-        Base: sloth_dead
-      Dead:
-        Base: sloth_dead
-  - type: Butcherable
-    spawned:
-    - id: FoodMeat
-      amount: 3
-  - type: InteractionPopup
-    successChance: 0.9
-    interactSuccessString: petting-success-sloth
-    interactFailureString: petting-failure-sloth
-    interactSuccessSound:
-      path: /Audio/Animals/sloth_squeak.ogg
-  - type: Grammar
-    attributes:
-      gender: epicene
-
-- type: entity
-  name: ferret
-  parent: SimpleMobBase
-  id: MobFerret
-  description: Just a silly little guy!
-  components:
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Pets/ferret.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: ferret
-  - type: Physics
-  - type: Fixtures
-    fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 5
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
-  - type: Appearance
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: ferret
-      Critical:
-        Base: ferret_dead
-      Dead:
-        Base: ferret_dead
-  - type: Butcherable
-    spawned:
-    - id: FoodMeat
-      amount: 3
-  - type: InteractionPopup
-    successChance: 0.8
-    interactDelay: 1.5 # Avoids overlapping SFX due to spam - these SFX are a little longer than the typical 1 second.
-    interactSuccessString: petting-success-soft-floofy
-    interactFailureString: petting-failure-generic
-    interactSuccessSound:
-      path: /Audio/Animals/ferret_happy.ogg
-  - type: Grammar
-    attributes:
-      gender: epicene
 
 - type: entity
   name: Bandito
@@ -682,3 +310,48 @@
     attributes:
       proper: true
       gender: male
+
+- type: entity
+  name: Morty
+  parent: MobPossum
+  id: MobPossumMorty
+  description: The station's resident Didelphis virginiana. A sensitive but resilient kind of guy.
+  components:
+  - type: InteractionPopup
+    successChance: 1.0 # Hey, c'mon, this is Morty we're talking about here.
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
+
+- type: entity
+  name: Morticia
+  parent: MobRaccoon
+  id: MobRaccoonMorticia
+  description: A powerful creature of the night. Her eyeshadow is always on point.
+  components:
+  - type: InteractionPopup
+    successChance: 0.7
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: female
+
+- type: entity
+  name: Renault
+  parent: MobFox
+  id: MobFoxRenault
+  description: The captain's trustworthy fox.
+  components:
+  - type: InteractionPopup
+    successChance: 1
+  - type: Butcherable
+    spawned:
+    - id: FoodMeat
+      amount: 3
+    - id: Telecrystal5
+      amount: 1
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: female
