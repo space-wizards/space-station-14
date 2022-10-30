@@ -1,9 +1,4 @@
 Entries:
-- author: corentt
-  changes:
-  - {message: Syringes can be put in medical belts, type: Add}
-  id: 2039
-  time: '2022-07-29T01:23:11.0000000+00:00'
 - author: Rane
   changes:
   - {message: Miasma is no longer visible until it's approaching dangerous levels.,
@@ -2949,3 +2944,8 @@ Entries:
     type: Fix}
   id: 2538
   time: '2022-10-30T05:54:03.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: Chairs are drawn correctly when rotated., type: Fix}
+  id: 2539
+  time: '2022-10-30T05:58:24.0000000+00:00'
