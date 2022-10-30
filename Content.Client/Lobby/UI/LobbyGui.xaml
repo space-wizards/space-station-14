@@ -28,7 +28,7 @@
                                            FontColorOverride="{x:Static maths:Color.DarkGray}"
                                            StyleClasses="LabelBig" HorizontalExpand="True" />
                                     <Button Name="ReadyButton" Access="Public" ToggleMode="True" Text="{Loc 'ui-lobby-ready-up-button'}"
-                                            StyleClasses="ButtonBig" />
+                                            StyleClasses="ButtonBig" MinWidth="137"/>
                                 </BoxContainer>
                             </controls:StripeBack>
                         </BoxContainer>
