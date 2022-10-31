@@ -43,16 +43,6 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
 
-#- type: entity
-#  name: target stake
-#  id: TargetStake
-#  parent: BaseTarget
-#  description: A shooting target stake.
-#  components:
-#  - type: Sprite
-#    sprite: Objects/Specific/Security/target.rsi
-#    state: target_stake
-
 - type: entity
   name: human target
   id: TargetHuman
