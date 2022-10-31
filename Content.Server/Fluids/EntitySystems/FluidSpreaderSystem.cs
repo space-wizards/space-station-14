@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Server.Fluids.Components;
 using Content.Shared;
 using Content.Shared.Directions;
@@ -48,6 +49,7 @@ public sealed class FluidSpreaderSystem : EntitySystem
         var puddles = new List<PuddleComponent>(4);
         var puddleQuery = GetEntityQuery<PuddleComponent>();
         var xFormQuery = GetEntityQuery<TransformComponent>();
+        
         foreach (var fluidMapData in EntityQuery<FluidMapDataComponent>())
         {
             if (fluidMapData.Puddles.Count == 0 || _gameTiming.CurTime <= fluidMapData.GoalTime)
@@ -80,7 +82,8 @@ public sealed class FluidSpreaderSystem : EntitySystem
                 _puddleSystem.EqualizePuddles(puddle.Owner, puddles, totalVolume, newIteration, puddle);
             }
 
-            fluidMapData.Puddles = newIteration;
+            fluidMapData.Puddles.Clear();
+            fluidMapData.Puddles.UnionWith(newIteration);
             fluidMapData.UpdateGoal(_gameTiming.CurTime);
         }
     }

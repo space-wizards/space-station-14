@@ -22,7 +22,7 @@ public sealed class FluidMapDataComponent : Component
     /// <summary>
     /// Puddles to be expanded.
     /// </summary>
-    public HashSet<EntityUid> Puddles = new();
+    [DataField("puddles")] public HashSet<EntityUid> Puddles = new();
 
     /// <summary>
     /// Convenience method for setting GoalTime to <paramref name="start"/> + <see cref="Delay"/>
