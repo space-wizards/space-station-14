@@ -1,3 +1,4 @@
+using System.Threading;
 using Content.Server.Body.Systems;
 using Content.Server.Chat.Systems;
 using Content.Server.Disease.Components;
@@ -21,7 +22,6 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Utility;
-using System.Threading;
 
 namespace Content.Server.Disease
 {
@@ -384,7 +384,7 @@ namespace Content.Server.Disease
                     return;
             }
 
-            var freshDisease = _serializationManager.Copy(addedDisease);
+            var freshDisease = _serializationManager.CreateCopy(addedDisease);
 
             if (freshDisease == null) return;
 

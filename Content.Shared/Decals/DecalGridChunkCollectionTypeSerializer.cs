@@ -57,14 +57,5 @@ namespace Content.Shared.Decals
         {
             return serializationManager.WriteValue(value.ChunkCollection, alwaysWrite, context);
         }
-
-        public DecalGridComponent.DecalGridChunkCollection CreateCopy(ISerializationManager serializationManager,
-            DecalGridComponent.DecalGridChunkCollection source,
-            bool skipHook, ISerializationContext? context = null)
-        {
-            var dict = target.ChunkCollection;
-            serializationManager.Copy(source.ChunkCollection, ref dict, context, skipHook);
-            return new DecalGridComponent.DecalGridChunkCollection(dict) {NextUid = source.NextUid};
-        }
     }
 }

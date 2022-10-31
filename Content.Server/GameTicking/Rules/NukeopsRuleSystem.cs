@@ -1,43 +1,38 @@
 using System.Linq;
+using Content.Server.Administration.Commands;
 using Content.Server.CharacterAppearance.Components;
 using Content.Server.Chat.Managers;
+using Content.Server.GameTicking.Rules.Components;
 using Content.Server.GameTicking.Rules.Configurations;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Ghost.Roles.Events;
+using Content.Server.Humanoid.Systems;
 using Content.Server.Mind.Components;
+using Content.Server.NPC.Systems;
 using Content.Server.Nuke;
+using Content.Server.Preferences.Managers;
 using Content.Server.RoundEnd;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
 using Content.Server.Spawners.Components;
+using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
-using Content.Shared.MobState;
+using Content.Server.Traitor;
 using Content.Shared.Dataset;
+using Content.Shared.MobState;
+using Content.Shared.MobState.Components;
+using Content.Shared.Nuke;
+using Content.Shared.Preferences;
 using Content.Shared.Roles;
+using Robust.Server.GameObjects;
 using Robust.Server.Maps;
 using Robust.Server.Player;
+using Robust.Shared.Configuration;
 using Robust.Shared.Map;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
-using Content.Server.Traitor;
-using Content.Shared.MobState.Components;
-using System.Data;
-using Content.Server.GameTicking.Rules.Components;
-using Content.Server.Station.Components;
-using Content.Shared.Chat;
-using Content.Shared.Nuke;
-using Robust.Server.GameObjects;
-using Content.Server.NPC.Components;
-using Content.Server.NPC.Systems;
-using Content.Server.Traitor.Uplink;
-using Robust.Shared.Audio;
-using Robust.Shared.Configuration;
-using Robust.Shared.Player;
-using Content.Server.Administration.Commands;
-using Content.Server.Humanoid.Systems;
-using Content.Shared.Preferences;
-using Content.Server.Preferences.Managers;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -846,7 +841,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         var query = EntityQuery<NukeOperativeComponent, MindComponent>(true);
         foreach (var (_, mindComp) in query)
         {
-            if (mindComp.Mind?.TryGetSession(out var session) == true)
+            if (mindComp.Mind != null && mindComp.Mind.TryGetSession(out var session) == true)
                 _operativePlayers.Add(session);
         }
 

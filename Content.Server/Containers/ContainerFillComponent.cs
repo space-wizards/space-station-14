@@ -62,15 +62,6 @@ public sealed class ContainerFillSerializer : ITypeSerializer<Dictionary<string,
         return new ValidatedMappingNode(mapping);
     }
 
-    public Dictionary<string, List<string>> CreateCopy(ISerializationManager serializationManager,
-        Dictionary<string, List<string>> source,
-        bool skipHook,
-        ISerializationContext? context = null)
-    {
-        serializationManager.Copy(source, ref target, context, skipHook);
-        return target;
-    }
-
     public Dictionary<string, List<string>> Read(
         ISerializationManager serializationManager,
         MappingDataNode node,

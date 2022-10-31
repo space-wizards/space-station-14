@@ -72,15 +72,4 @@ public sealed class HTNTaskListSerializer : ITypeSerializer<List<string>, Sequen
 
         return sequence;
     }
-
-    public List<string> CreateCopy(ISerializationManager serializationManager, List<string> source, bool skipHook,
-        ISerializationContext? context = null)
-    {
-        target.Clear();
-        target.EnsureCapacity(source.Capacity);
-
-        // Tasks are just prototypes soooo?
-        target.AddRange(source);
-        return target;
-    }
 }
