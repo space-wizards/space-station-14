@@ -1,15 +1,4 @@
 Entries:
-- author: Myctai
-  changes:
-  - {message: New Barozine overdose threshold is at 30 units (with same effects),
-    type: Tweak}
-  - {message: 'Space medipen now comes with 20 units of Barozine (and keeps it''s
-      10 units of Leporazine), giving you about extra 30 seconds to find spacesuit
-      of some kind, oxygen not included!', type: Tweak}
-  - {message: Poisoning and brute healing aspect of Barozine were replaced with very
-      minor burn damage, type: Tweak}
-  id: 2057
-  time: '2022-07-31T03:15:09.0000000+00:00'
 - author: ike709
   changes:
   - {message: 'Added a new space ambience song, "Drifting" by qwerty', type: Add}
@@ -2958,3 +2947,9 @@ Entries:
     type: Fix}
   id: 2556
   time: '2022-10-31T02:04:51.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed being unable to craft certain items., type: Fix}
+  - {message: Maybe fixed cargo shuttle not properly selling items., type: Fix}
+  id: 2557
+  time: '2022-10-31T02:26:05.0000000+00:00'
