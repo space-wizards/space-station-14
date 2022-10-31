@@ -1,10 +1,4 @@
 Entries:
-- author: notafet
-  changes:
-  - {message: Passive gates now equalize pressure instantly and come with a built-in
-      gas flow meter., type: Tweak}
-  id: 2053
-  time: '2022-07-31T03:00:35.0000000+00:00'
 - author: Rane
   changes:
   - {message: Added the syndicate reinforcement teleporter to the uplink., type: Add}
@@ -2957,3 +2951,8 @@ Entries:
       a bit more stable now., type: Fix}
   id: 2552
   time: '2022-10-30T23:17:28.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: skeletons can no longer have hair., type: Fix}
+  id: 2553
+  time: '2022-10-31T00:04:30.0000000+00:00'
