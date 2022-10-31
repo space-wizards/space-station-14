@@ -1,9 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Added the syndicate reinforcement teleporter to the uplink., type: Add}
-  id: 2054
-  time: '2022-07-31T03:01:29.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed some some hardsuit helmet icons not showing up in the inventory
@@ -2956,3 +2951,9 @@ Entries:
   - {message: skeletons can no longer have hair., type: Fix}
   id: 2553
   time: '2022-10-31T00:04:30.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Fixed the sprite modifications for female humanoids jumpsuit slot clothes.,
+    type: Fix}
+  id: 2554
+  time: '2022-10-31T00:06:17.0000000+00:00'
