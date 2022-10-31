@@ -38,7 +38,6 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             // Bound UI subscriptions
             SubscribeLocalEvent<GasFilterComponent, GasFilterChangeRateMessage>(OnTransferRateChangeMessage);
             SubscribeLocalEvent<GasFilterComponent, GasFilterSelectGasMessage>(OnSelectGasMessage);
-            SubscribeLocalEvent<GasFilterComponent, GasFilterDeselectGasMessage>(OnDeselectGasMessage);
             SubscribeLocalEvent<GasFilterComponent, GasFilterToggleStatusMessage>(OnToggleStatusMessage);
 
         }
@@ -152,17 +151,23 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 
         }
 
-        private void OnDeselectGasMessage(EntityUid uid, GasFilterComponent filter, GasFilterDeselectGasMessage args)
-        {
-            filter.FilteredGas = null;
-            DirtyUI(uid, filter);
-        }
-
         private void OnSelectGasMessage(EntityUid uid, GasFilterComponent filter, GasFilterSelectGasMessage args)
         {
-            if (Enum.TryParse<Gas>(args.ID.ToString(), true, out var parsedGas))
+            if (args.ID.HasValue)
             {
-                filter.FilteredGas = parsedGas;
+                if (Enum.TryParse<Gas>(args.ID.ToString(), true, out var parsedGas))
+                {
+                    filter.FilteredGas = parsedGas;
+                    DirtyUI(uid, filter);
+                }
+                else
+                {
+                    Logger.Warning("atmos", $"{ToPrettyString(uid)} received GasFilterSelectGasMessage with an invalid ID: {args.ID}");
+                }
+            }
+            else
+            {
+                filter.FilteredGas = null;
                 DirtyUI(uid, filter);
             }
         }
