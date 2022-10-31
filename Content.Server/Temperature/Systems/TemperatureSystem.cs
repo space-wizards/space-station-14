@@ -9,6 +9,7 @@ using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Inventory;
+using Content.Shared.Temperature;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -215,18 +216,6 @@ namespace Content.Server.Temperature.Systems
             CurrentTemperature = current;
             LastTemperature = last;
             TemperatureDelta = delta;
-        }
-    }
-
-    public sealed class ModifyChangedTemperatureEvent : EntityEventArgs, IInventoryRelayEvent
-    {
-        public SlotFlags TargetSlots { get; } = ~SlotFlags.POCKET;
-
-        public float TemperatureDelta;
-
-        public ModifyChangedTemperatureEvent(float temperature)
-        {
-            TemperatureDelta = temperature;
         }
     }
 }

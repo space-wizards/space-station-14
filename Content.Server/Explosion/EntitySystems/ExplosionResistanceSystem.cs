@@ -2,6 +2,7 @@ using Content.Server.Examine;
 using Content.Server.Explosion.Components;
 using Content.Shared.Examine;
 using Content.Shared.Explosion;
+using Content.Shared.Inventory;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 
@@ -23,6 +24,8 @@ namespace Content.Server.Explosion.EntitySystems
             SubscribeLocalEvent<ExplosionResistanceComponent, GetVerbsEvent<ExamineVerb>>(OnExamineVerb);
             SubscribeLocalEvent<ExplosionResistanceComponent, ExamineGroupEvent>(OnExamineStats);
 
+            // as long as explosion-resistance mice are never added, this should be fine (otherwise a mouse-hat will transfer it's power to the wearer).
+            SubscribeLocalEvent<ExplosionResistanceComponent, InventoryRelayedEvent<GetExplosionResistanceEvent>>((e, c, ev) => OnGetResistance(e, c, ev.Args));
         }
 
         private void OnExamineStats(EntityUid uid, ExplosionResistanceComponent component, ExamineGroupEvent args)

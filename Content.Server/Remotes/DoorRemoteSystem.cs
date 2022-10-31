@@ -84,8 +84,8 @@ namespace Content.Server.Remotes
                     _doorSystem.TryToggleDoor(doorComp.Owner, doorComp, args.Used);
                     break;
                 case OperatingMode.ToggleBolts:
-                    //TODO: What about cut wires...?
-                    airlockComp.SetBoltsWithAudio(!airlockComp.IsBolted());
+                    if (!airlockComp.BoltWireCut)
+                        airlockComp.SetBoltsWithAudio(!airlockComp.IsBolted());
                     break;
                 case OperatingMode.ToggleEmergencyAccess:
                     _sharedAirlockSystem.ToggleEmergencyAccess(airlockComp);

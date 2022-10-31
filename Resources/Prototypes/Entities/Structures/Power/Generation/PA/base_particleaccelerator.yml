@@ -14,7 +14,7 @@
       - shape:
           !type:PhysShapeAabb
           bounds: "-0.45,-0.45,0.45,0.45"
-        mass: 25
+        density: 190
         mask:
         - MachineMask
         layer:

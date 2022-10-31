@@ -32,7 +32,7 @@
         - shape:
             !type:PhysShapeAabb
             bounds: "-0.20,-0.10,0.25,0.35"
-          mass: 50
+          density: 250
           mask:
             - FullTileMask
           layer:
@@ -112,7 +112,7 @@
         - shape:
             !type:PhysShapeAabb
             bounds: "-0.75,-0.10,0.75,0.35"
-          mass: 50
+          density: 75
           mask:
             - FullTileMask
           layer:
@@ -159,6 +159,8 @@
     - type: WirelessNetworkConnection
       range: 200
     - type: DeviceNetworkRequiresPower
+    - type: Speech
+    - type: SurveillanceCameraSpeaker
     - type: SurveillanceCameraMonitor
     - type: ActivatableUI
       key: enum.SurveillanceCameraMonitorUiKey.Key

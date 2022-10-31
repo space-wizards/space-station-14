@@ -30,7 +30,7 @@
         - shape:
             !type:PhysShapeCircle
             radius: 0.40
-          mass: 40
+          density: 80
           mask:
             - MobMask
           layer:
@@ -56,7 +56,6 @@
           amount: 2
     - type: MeleeWeapon
       hidden: true
-      range: 1.5
       angle: 0
       animation: WeaponArcBite
       soundHit:
@@ -118,7 +117,7 @@
         - shape:
             !type:PhysShapeCircle
             radius: 0.40
-          mass: 5
+          density: 10
           mask:
             - MobMask
           layer:

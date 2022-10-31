@@ -1,14 +1,13 @@
-using System.Threading.Tasks;
-using Content.Server.Clothing.Components;
 using Content.Server.Inventory;
+using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Inventory;
-using Content.Shared.Item;
 using NUnit.Framework;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using System.Threading.Tasks;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -22,6 +21,8 @@ namespace Content.IntegrationTests.Tests
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
             var server = pairTracker.Pair.Server;
+            var testMap = await PoolManager.CreateTestMap(pairTracker);
+            var coordinates = testMap.GridCoords;
 
             await server.WaitAssertion(() =>
             {
@@ -29,15 +30,13 @@ namespace Content.IntegrationTests.Tests
                 var mapMan = IoCManager.Resolve<IMapManager>();
                 var invSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<InventorySystem>();
 
-                mapMan.CreateNewMapEntity(MapId.Nullspace);
-
                 var entMgr = IoCManager.Resolve<IEntityManager>();
-                var container = entMgr.SpawnEntity(null, MapCoordinates.Nullspace);
-                entMgr.AddComponent<ServerInventoryComponent>(container);
-                entMgr.AddComponent<ContainerManagerComponent>(container);
+                var container = entMgr.SpawnEntity(null, coordinates);
+                entMgr.EnsureComponent<ServerInventoryComponent>(container);
+                entMgr.EnsureComponent<ContainerManagerComponent>(container);
 
-                var child = entMgr.SpawnEntity(null, MapCoordinates.Nullspace);
-                var item = entMgr.AddComponent<ClothingComponent>(child);
+                var child = entMgr.SpawnEntity(null, coordinates);
+                var item = entMgr.EnsureComponent<ClothingComponent>(child);
 
                 IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ClothingSystem>().SetSlots(item.Owner, SlotFlags.HEAD, item);
 

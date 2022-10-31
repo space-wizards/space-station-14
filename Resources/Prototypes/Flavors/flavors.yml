@@ -643,3 +643,8 @@
   id: sax
   flavorType: Complex
   description: flavor-complex-sax
+
+- type: flavor
+  id: watermelon
+  flavorType: Complex
+  description: flavor-complex-watermelon

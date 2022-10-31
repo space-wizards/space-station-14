@@ -1,6 +1,8 @@
 using Content.Server.Atmos.Components;
 using Content.Server.Examine;
 using Content.Shared.Examine;
+using Content.Shared.Inventory;
+using Content.Shared.Temperature;
 using Content.Shared.Verbs;
 using Robust.Shared.Utility;
 
@@ -13,7 +15,7 @@ namespace Content.Server.Temperature.Systems
 
         public override void Initialize()
         {
-            SubscribeLocalEvent<TemperatureProtectionComponent, ModifyChangedTemperatureEvent>(OnTemperatureChangeAttempt);
+            SubscribeLocalEvent<TemperatureProtectionComponent, InventoryRelayedEvent<ModifyChangedTemperatureEvent>>(OnTemperatureChangeAttempt);
             SubscribeLocalEvent<TemperatureProtectionComponent, GetVerbsEvent<ExamineVerb>>(OnExamineVerb);
             SubscribeLocalEvent<TemperatureProtectionComponent, ExamineGroupEvent>(OnExamineStats);
         }
@@ -70,9 +72,9 @@ namespace Content.Server.Temperature.Systems
             _examineSystem.AddExamineGroupVerb(component.ExamineGroup, args);
         }
 
-        private void OnTemperatureChangeAttempt(EntityUid uid, TemperatureProtectionComponent component, ModifyChangedTemperatureEvent args)
+        private void OnTemperatureChangeAttempt(EntityUid uid, TemperatureProtectionComponent component, InventoryRelayedEvent<ModifyChangedTemperatureEvent> args)
         {
-            args.TemperatureDelta *= component.Coefficient;
+            args.Args.TemperatureDelta *= component.Coefficient;
         }
     }
 }

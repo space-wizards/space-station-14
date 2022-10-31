@@ -83,11 +83,12 @@ public sealed class MeleeWeaponComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public FixedPoint2 BluntStaminaDamageFactor { get; set; } = 0.5f;
 
+    // TODO: Temporarily 1.5 until interactionoutline is adjusted to use melee, then probably drop to 1.2
     /// <summary>
     /// Nearest edge range to hit an entity.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("range")]
-    public float Range = 1f;
+    public float Range = 1.5f;
 
     /// <summary>
     /// Total width of the angle for wide attacks.

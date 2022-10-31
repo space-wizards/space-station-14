@@ -94,8 +94,7 @@
     prototype: UniformPrinter
     requirements:
       MatterBin: 1
-      Manipulator: 1
-      Laser: 1
+      Laser: 2
 
 - type: entity
   id: VaccinatorMachineCircuitboard
@@ -182,10 +181,10 @@
     prototype: PortableScrubber
     requirements:
       MatterBin: 3
-      Laser: 2
-      ScanningModule: 1
+      Manipulator: 2
     materialRequirements:
       Cable: 5
+      Glass: 2
 
 - type: entity
   id: CloningPodMachineCircuitboard
@@ -307,6 +306,24 @@
           Amount: 2
           DefaultPrototype: Beaker
           ExamineName: Glass Beaker
+
+- type: entity
+  id: SeedExtractorMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: seed extractor machine board
+  description: A machine printed circuit board for a seed extractor
+  components:
+    - type: Sprite
+      state: service
+    - type: MachineBoard
+      prototype: SeedExtractor
+      requirements:
+        Manipulator: 2
+        Capacitor: 1
+      materialRequirements:
+        # replacing the console screen
+        Glass: 1
+        Cable: 2
 
 - type: entity
   id: SMESMachineCircuitboard
@@ -467,7 +484,7 @@
     - type: MachineBoard
       prototype: KitchenMicrowave
       requirements:
-        MatterBin: 1
+        Capacitor: 1
         Laser: 1
       materialRequirements:
         Glass: 2
