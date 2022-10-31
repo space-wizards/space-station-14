@@ -10,6 +10,7 @@
       sprite: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi
       netsync: false
       state: ano01
+      noRot: true
     - type: Physics
       bodyType: Dynamic
     - type: Transform

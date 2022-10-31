@@ -48,7 +48,7 @@ public sealed partial class ArtifactSystem
         var node = uninitializedNodes.First();
         uninitializedNodes.Remove(node);
 
-        node.Id = $"node-{_random.Next(0, 10000)}";
+        node.Id = _random.Next(0, 10000);
 
         //Generate the connected nodes
         var maxEdges = Math.Max(1, targetNodeAmount - tree.AllNodes.Count - uninitializedNodes.Count - 1);

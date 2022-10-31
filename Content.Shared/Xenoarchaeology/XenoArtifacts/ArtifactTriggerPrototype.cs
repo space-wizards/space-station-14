@@ -1,4 +1,5 @@
 ﻿using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Xenoarchaeology.XenoArtifacts;
 
@@ -13,9 +14,12 @@ public sealed class ArtifactTriggerPrototype : IPrototype
     [IdDataField]
     public string ID { get; } = default!;
 
-    [DataField("components")]
+    [DataField("components", serverOnly: true)]
     public EntityPrototype.ComponentRegistry Components = new();
 
     [DataField("targetDepth")]
     public int TargetDepth = 0;
+
+    [DataField("triggerHint")]
+    public string? TriggerHint;
 }

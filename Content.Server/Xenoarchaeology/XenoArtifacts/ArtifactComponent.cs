@@ -1,4 +1,5 @@
 using Content.Shared.Xenoarchaeology.XenoArtifacts;
+using Robust.Shared.Serialization;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts;
 
@@ -53,7 +54,7 @@ public sealed class ArtifactTree
 public sealed class ArtifactNode
 {
     [ViewVariables]
-    public string Id = string.Empty;
+    public int Id;
 
     [ViewVariables]
     public int Depth = 0;
