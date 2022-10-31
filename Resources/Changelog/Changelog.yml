@@ -1,9 +1,4 @@
 Entries:
-- author: Pancake
-  changes:
-  - {message: Beware the monkey wizard., type: Add}
-  id: 2056
-  time: '2022-07-31T03:12:06.0000000+00:00'
 - author: Myctai
   changes:
   - {message: New Barozine overdose threshold is at 30 units (with same effects),
@@ -2956,3 +2951,10 @@ Entries:
   - {message: Traitor mode will now work on its own rather than only in secret., type: Fix}
   id: 2555
   time: '2022-10-31T02:02:42.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'You can no longer use nettles, space snakes, and so on as injectors.
+      The only injecting melee weapon that lets you use your own reagents is spears.',
+    type: Fix}
+  id: 2556
+  time: '2022-10-31T02:04:51.0000000+00:00'
