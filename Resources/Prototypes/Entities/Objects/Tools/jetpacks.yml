@@ -180,6 +180,10 @@
       slots:
         - Back
         - suitStorage
+    - type: GasTank
+      outputPressure: 42.6
+      air:
+        volume: 4
 
 # Filled mini
 - type: entity
@@ -192,10 +196,10 @@
     outputPressure: 42.6
     air:
       temperature: 293.15
-      volume: 2
+      volume: 4
       moles:
-      - 0.161
-      - 0.161
+      - 0.747
+      - 0.747
 
 #Empty security
 - type: entity

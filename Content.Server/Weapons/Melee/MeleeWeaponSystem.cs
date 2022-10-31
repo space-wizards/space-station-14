@@ -155,13 +155,13 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
         // If the user is using a long-range weapon, this probably shouldn't be happening? But I'll interpret melee as a
         // somewhat messy scuffle. See also, heavy attacks.
-        _interaction.DoContactInteraction(user, ev.Target); 
+        _interaction.DoContactInteraction(user, ev.Target);
 
         // For stuff that cares about it being attacked.
         RaiseLocalEvent(ev.Target.Value, new AttackedEvent(component.Owner, user, targetXform.Coordinates));
 
         var modifiedDamage = DamageSpecifier.ApplyModifierSets(damage + hitEvent.BonusDamage + itemDamage.BonusDamage, hitEvent.ModifiersList);
-        var damageResult = _damageable.TryChangeDamage(ev.Target, modifiedDamage);
+        var damageResult = _damageable.TryChangeDamage(ev.Target, modifiedDamage, origin:user);
 
         if (damageResult != null && damageResult.Total > FixedPoint2.Zero)
         {
@@ -277,7 +277,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         {
             RaiseLocalEvent(entity, new AttackedEvent(component.Owner, user, ev.Coordinates));
 
-            var damageResult = _damageable.TryChangeDamage(entity, modifiedDamage);
+            var damageResult = _damageable.TryChangeDamage(entity, modifiedDamage, origin:user);
 
             if (damageResult != null && damageResult.Total > FixedPoint2.Zero)
             {
@@ -555,7 +555,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
     private void OnChemicalInjectorHit(EntityUid owner, MeleeChemicalInjectorComponent comp, MeleeHitEvent args)
     {
-        if (!_solutions.TryGetInjectableSolution(owner, out var solutionContainer))
+        if (!_solutions.TryGetSolution(owner, comp.Solution, out var solutionContainer))
             return;
 
         var hitBloodstreams = new List<BloodstreamComponent>();

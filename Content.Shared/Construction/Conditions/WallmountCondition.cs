@@ -51,7 +51,7 @@ namespace Content.Shared.Construction.Conditions
             // check that we didn't try to build wallmount that facing another adjacent wall
             var rAdjWall = new CollisionRay(objWorldPosition, directionWithOffset.Normalized, (int) CollisionGroup.Impassable);
             var adjWallRaycastResults = physics.IntersectRayWithPredicate(entManager.GetComponent<TransformComponent>(user).MapID, rAdjWall, maxLength: 0.5f,
-               predicate: (e) => e == targetWall.Value.HitEntity || !tagSystem.HasTag(e, "Wall"));
+               predicate: e => e == targetWall.Value.HitEntity || !tagSystem.HasTag(e, "Wall"));
 
             return !adjWallRaycastResults.Any();
         }
