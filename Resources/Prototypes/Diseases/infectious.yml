@@ -300,6 +300,7 @@
       min: 420 ## Reachable with a flamer
     - !type:DiseaseReagentCure
       reagent: Theobromine
+      min: 4
 
 - type: disease
   id: TongueTwister

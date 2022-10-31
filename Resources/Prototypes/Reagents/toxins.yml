@@ -342,6 +342,7 @@
   boilingPoint: 554 # I'm not a chemist, but it boils at 295, lower than melting point, idk how it works so I gave it higher value
   metabolisms:
     Poison:
+      metabolismRate: 0.05
       effects:
       - !type:HealthChange
         conditions:
@@ -351,9 +352,9 @@
           type: Animal # Applying damage to the mobs with lower metabolism capabilities
         damage:
           types:
-            Poison: 4
+            Poison: 0.4
       - !type:ChemVomit
-        probability: 0.04
+        probability: 0.04 #Scaled for time, not metabolismrate.
         conditions:
           - !type:ReagentThreshold
             min: 3
@@ -444,6 +445,7 @@
   color: "#F2E9D2"
   metabolisms:
     Poison:
+      metabolismRate: 0.05
       effects:
       - !type:HealthChange
         conditions:
@@ -453,7 +455,7 @@
           type: Animal
         damage:
           types:
-            Poison: 6
+            Poison: 0.06
 
 - type: reagent
   id: Pax

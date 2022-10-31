@@ -9,8 +9,12 @@
   metabolisms:
     Food:
       effects:
-      - !type:SatiateHunger
-        factor: 1
+      - !type:AdjustReagent
+        reagent: Sugar
+        amount: 0.4
+      - !type:AdjustReagent
+        reagent: Nutriment
+        amount: 0.1
 
 - type: reagent
   id: Oats
@@ -23,8 +27,12 @@
   metabolisms:
     Food:
       effects:
-      - !type:SatiateHunger
-        factor: 1
+      - !type:AdjustReagent
+        reagent: Sugar
+        amount: 0.2
+      - !type:AdjustReagent
+        reagent: Nutriment
+        amount: 0.3
 
 - type: reagent
   id: Enzyme
@@ -34,11 +42,6 @@
   physicalDesc: reagent-physical-desc-chalky
   flavor: bitter
   color: "#009900"
-  metabolisms:
-    Food:
-      effects:
-      - !type:SatiateHunger
-        nutritionFactor: 1
 
 - type: reagent
   id: Egg
@@ -51,31 +54,9 @@
   metabolisms:
     Food:
       effects:
-      - !type:SatiateHunger
-        factor: 1
-
-- type: reagent
-  id: Sugar
-  name: reagent-name-sugar
-  group: Foods
-  desc: reagent-desc-sugar
-  physicalDesc: reagent-physical-desc-sweet
-  flavor: sweet
-  color: white
-  meltingPoint: 146.0
-  metabolisms:
-    Food:
-      effects:
-      - !type:SatiateHunger
-        factor: 1
-  plantMetabolism:
-  - !type:PlantAdjustNutrition
-    amount: 0.1
-  - !type:PlantAdjustWeeds
-    amount: 2
-  - !type:PlantAdjustPests
-    amount: 2
-
+      - !type:AdjustReagent
+        reagent: Protein
+        amount: 0.5
 
 - type: reagent
   id: Blackpepper
@@ -85,11 +66,6 @@
   physicalDesc: reagent-physical-desc-grainy
   flavor: peppery
   color: black
-  metabolisms:
-    Food:
-      effects:
-      - !type:SatiateHunger
-        factor: 1
 
 - type: reagent
   id: Vinegar
@@ -102,8 +78,17 @@
   metabolisms:
     Food:
       effects:
-      - !type:SatiateHunger
-        factor: 1
+      - !type:AdjustReagent
+        reagent: Water
+        amount: 0.4
+      - !type:AdjustReagent
+        reagent: Vitamin
+        amount: 0.1
+      - !type:ChemVomit
+        probability: 0.1
+        conditions:
+          - !type:ReagentThreshold
+            min: 6
 
 - type: reagent
   id: Rice
@@ -116,7 +101,12 @@
   metabolisms:
     Food:
       effects:
-      - !type:SatiateHunger
+      - !type:AdjustReagent
+        reagent: Sugar
+        amount: 0.4
+      - !type:AdjustReagent
+        reagent: Nutriment
+        amount: 0.1
 
 - type: reagent
   id: OilOlive
@@ -129,8 +119,9 @@
   metabolisms:
     Food:
       effects:
-      - !type:SatiateHunger
-        factor: 1
+      - !type:AdjustReagent
+        reagent: Nutriment
+        amount: 0.75
 
 - type: reagent
   id: Oil
@@ -157,8 +148,9 @@
   metabolisms:
     Food:
       effects:
-        - !type:SatiateHunger # spicy foods satiate hunger better
-          factor: 1.5
+      - !type:AdjustReagent
+        reagent: Nutriment #Oils enhance nutrition
+        amount: 0.75
     Poison:
       effects:
         - !type:AdjustTemperature
