@@ -373,8 +373,8 @@ public abstract partial class SharedGunSystem : EntitySystem
     {
         if(user == null)
             return;
-        var physicsQuery = GetEntityQuery<PhysicsComponent>();
-        if (physicsQuery.TryGetComponent(user, out var userPhysics))
+
+        if (TryComp<PhysicsComponent>(user, out var userPhysics))
         {
             if (!Gravity.IsWeightless(user.Value, userPhysics))
                 return;
