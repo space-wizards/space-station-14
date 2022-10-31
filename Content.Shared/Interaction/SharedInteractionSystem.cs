@@ -1013,6 +1013,10 @@ namespace Content.Shared.Interaction
             if (uidB == null || args?.Handled == false)
                 return;
 
+            // Entities may no longer exist (banana was eaten, or human was exploded)?
+            if (!Exists(uidA) || !Exists(uidB))
+                return;
+
             RaiseLocalEvent(uidA, new ContactInteractionEvent(uidB.Value));
             RaiseLocalEvent(uidB.Value, new ContactInteractionEvent(uidA));
         }

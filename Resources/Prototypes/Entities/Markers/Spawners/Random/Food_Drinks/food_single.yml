@@ -1,0 +1,66 @@
+- type: entity
+  id: RandomFoodSingle
+  name: random food spawner
+  suffix: Single Serving
+  parent: MarkerBase
+  placement:
+    mode: AlignTileAny
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - texture: Objects/Consumable/Food/burger.rsi/plain.png
+  - type: RandomSpawner
+    prototypes:
+      - FoodBurgerJelly
+      - FoodBurgerCarp
+      - FoodBurgerTofu
+      - FoodBurgerXeno
+      - FoodBurgerBig
+      - FoodBurgerFive
+      - FoodBurgerRat
+      - FoodBurgerBacon
+      - FoodBurgerEmpowered
+      - FoodBurgerCrab
+      - FoodBurgerSoy
+      - FoodBurgerMcrib
+      - FoodBurgerMcguffin
+      - FoodBurgerChicken
+      - FoodBurgerDuck
+      - FoodBurgerCheese
+      - FoodMeatHawaiianKebab
+      - FoodMeatKebab
+      - FoodMeatFiestaKebab
+      - FoodNoodlesBoiled
+      - FoodNoodles
+      - FoodNoodlesCopy
+      - FoodNoodlesButter
+      - FoodPizzaMargheritaSlice
+      - FoodPizzaMeatSlice
+      - FoodPizzaMushroomSlice
+      - FoodPizzaVegetableSlice
+      - FoodPizzaDonkpocketSlice
+      - FoodPizzaDankSlice
+      - FoodPizzaSassysageSlice
+      - FoodPizzaPineappleSlice
+      - FoodPizzaMoldySlice
+    chance: 0.8
+    offset: 0.0
+    #rare
+    rarePrototypes:
+      - FoodBurgerAppendix
+      - FoodBurgerRobot
+      - FoodBurgerBear
+      - FoodBurgerClown
+      - FoodBurgerMime
+      - FoodBurgerBrain
+      - FoodBurgerGhost
+      - FoodBurgerSpell
+      - FoodBurgerSuper
+      - FoodBurgerCrazy
+      - FoodMeatHumanKebab
+      - FoodMeatLizardtailKebab
+      - FoodMeatRatKebab
+      - FoodMeatRatdoubleKebab
+      - FoodPizzaArnoldSlice
+    rareChance: 0.05

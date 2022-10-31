@@ -84,6 +84,10 @@ namespace Content.IntegrationTests.Tests.Disposal
   - type: Physics
     bodyType: KinematicController
   - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
   - type: DoAfter
 
 - type: entity
@@ -97,6 +101,10 @@ namespace Content.IntegrationTests.Tests.Disposal
   - type: Physics
     bodyType: Dynamic
   - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
   - type: DoAfter
 
 - type: entity
@@ -111,6 +119,10 @@ namespace Content.IntegrationTests.Tests.Disposal
   - type: Physics
     bodyType: Static
   - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
 
 - type: entity
   name: DisposalTrunkDummy

@@ -366,6 +366,7 @@
   unlockedRecipes:
     - ShuttleConsoleCircuitboard
     - Drone
+    - RadarConsoleCircuitboard
 
 # Electromagnetic Theory Technology Tree
 
