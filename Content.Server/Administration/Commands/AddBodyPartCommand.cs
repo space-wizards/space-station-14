@@ -1,4 +1,4 @@
-using Content.Server.Body.Components;
+using Content.Server.Body.Systems;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 
@@ -19,35 +19,28 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            if (!EntityUid.TryParse(args[0], out var entityUid))
+            if (!EntityUid.TryParse(args[0], out var childId))
             {
                 shell.WriteError(Loc.GetString("shell-entity-uid-must-be-number"));
                 return;
             }
 
-            if (!EntityUid.TryParse(args[1], out var storageUid))
+            if (!EntityUid.TryParse(args[1], out var parentId))
             {
                 shell.WriteError(Loc.GetString("shell-entity-uid-must-be-number"));
                 return;
             }
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
+            var bodySystem = entityManager.System<BodySystem>();
 
-            if (entityManager.TryGetComponent<BodyComponent>(storageUid, out var storage)
-                && entityManager.TryGetComponent<BodyPartComponent>(entityUid, out var bodyPart))
+            if (bodySystem.TryCreatePartSlotAndAttach(parentId, args[3], childId))
             {
-                if (storage.TryAddPart(args[3], bodyPart))
-                {
-                    shell.WriteLine($@"Added {entityUid} to {storageUid}.");
-                }
-                else
-                {
-                    shell.WriteError($@"Could not add {entityUid} to {storageUid}.");
-                }
+                shell.WriteLine($@"Added {childId} to {parentId}.");
             }
             else
             {
-                shell.WriteError("Could not insert.");
+                shell.WriteError($@"Could not add {childId} to {parentId}.");
             }
         }
     }

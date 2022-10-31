@@ -663,7 +663,6 @@ entities:
     parent: 943
     type: Transform
   - type: MapGrid
-  - type: EntityLookup
   - type: Broadphase
   - id: Bagel
     type: BecomesStation
@@ -31751,7 +31750,6 @@ entities:
   - type: Transform
   - index: 4
     type: Map
-  - type: EntityLookup
   - type: Broadphase
   - type: PhysicsMap
   - type: OccluderTree

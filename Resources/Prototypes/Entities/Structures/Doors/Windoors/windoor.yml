@@ -12,6 +12,7 @@
 
 # TODO remove these with parameterized prototypes/whatever we end up doing
 # Windoors (alphabetical)
+
 - type: entity
   parent: Windoor
   id: WindoorBarLocked
@@ -75,6 +76,14 @@
   components:
   - type: AccessReader
     access: [["Kitchen"], ["Hydroponics"]]
+    
+- type: entity
+  parent: Windoor
+  id: WindoorServiceLocked
+  suffix: Service, Locked
+  components:
+  - type: AccessReader
+    access: [["Service"]]
     
 - type: entity
   parent: Windoor
