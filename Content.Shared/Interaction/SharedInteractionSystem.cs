@@ -261,10 +261,10 @@ namespace Content.Shared.Interaction
                 if (target != null)
                 {
                     var ev = new InteractNoHandEvent(user, target.Value);
-                    RaiseLocalEvent(user, ev, true);
+                    RaiseLocalEvent(user, ev);
 
                     var interactedEv = new InteractedNoHandEvent(target.Value, user);
-                    RaiseLocalEvent(target.Value, interactedEv, true);
+                    RaiseLocalEvent(target.Value, interactedEv);
                     DoContactInteraction(user, target.Value, ev);
                 }
                 return;
