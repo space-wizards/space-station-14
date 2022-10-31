@@ -22,3 +22,6 @@ ent-CrateEngineeringElectricalSupplies = { ent-CrateElectrical }
 ent-CrateEngineeringJetpack = { ent-CrateGenericSteel }
     .desc = { ent-CrateGenericSteel.desc }
     .suffix = { "" }
+ent-CrateEngineeringMiniJetpack = { ent-CrateGenericSteel }
+    .desc = { ent-CrateGenericSteel.desc }
+    .suffix = { "" }
