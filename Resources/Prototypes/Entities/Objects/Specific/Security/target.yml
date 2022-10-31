@@ -52,7 +52,6 @@
   - type: Sprite
     sprite: Objects/Specific/Security/target.rsi
     state: target_h
-    netsync: false
   - type: Destructible
     thresholds:
     - trigger:
@@ -79,7 +78,6 @@
   - type: Sprite
     sprite: Objects/Specific/Security/target.rsi
     state: target_s
-    netsync: false
   - type: Destructible
     thresholds:
     - trigger:
@@ -106,7 +104,6 @@
   - type: Sprite
     sprite: Objects/Specific/Security/target.rsi
     state: target_c
-    netsync: false
   - type: Destructible
     thresholds:
     - trigger:
@@ -134,7 +131,6 @@
   - type: Sprite
     sprite: Objects/Specific/Security/target.rsi
     state: target_f
-    netsync: false
   - type: Destructible
     thresholds:
     - trigger:
