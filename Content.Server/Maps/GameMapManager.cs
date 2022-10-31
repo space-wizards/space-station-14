@@ -185,7 +185,6 @@ public sealed class GameMapManager : IGameMapManager
     {
         Logger.InfoS("mapsel", string.Join(", ", _previousMaps));
         var eligible = CurrentlyEligibleMaps()
-            .Where(x => x.Votable)
             .Select(x => (proto: x, weight: GetMapQueuePriority(x.ID)))
             .OrderByDescending(x => x.weight).ToArray();
         Logger.InfoS("mapsel", string.Join(", ", eligible.Select(x => (x.proto.ID, x.weight))));

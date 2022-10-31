@@ -3,7 +3,6 @@
   mapName: Empty
   mapPath: /Maps/Test/empty.yml
   minPlayers: 0
-  votable: false
   stations:
     Empty:
       mapNameTemplate: "Empty"
