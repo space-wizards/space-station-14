@@ -14,7 +14,7 @@
     sprite: Objects/Misc/fire_extinguisher.rsi
     state: fire_extinguisher_closed
   product: CrateEmergencyFire
-  cost: 1000
+  cost: 1200
   category: Emergency
   group: market
 
