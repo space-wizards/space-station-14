@@ -30,19 +30,8 @@ public abstract class SharedHumanoidSystem : EntitySystem
     {
         var data = new HumanoidVisualizerData(species, customBaseLayer, skinColor, sex, visLayers, markings);
 
-        // Locally raise an event for this, because there might be some systems interested
-        // in this.
-        RaiseLocalEvent(uid, new HumanoidAppearanceUpdateEvent(data), true);
+        // This should raise a HumanoidAppearanceUpdateEvent, but that requires this component to be made networked and
+        // I cbf doing that atm.
         _appearance.SetData(uid, HumanoidVisualizerKey.Key, data);
-    }
-}
-
-public sealed class HumanoidAppearanceUpdateEvent : EntityEventArgs
-{
-    public HumanoidVisualizerData Data { get; }
-
-    public HumanoidAppearanceUpdateEvent(HumanoidVisualizerData data)
-    {
-        Data = data;
     }
 }

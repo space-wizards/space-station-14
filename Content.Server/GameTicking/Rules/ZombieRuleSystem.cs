@@ -2,7 +2,7 @@ using System.Linq;
 using Content.Server.Actions;
 using Content.Server.Chat.Managers;
 using Content.Server.Disease;
-using Content.Server.GameTicking.Rules.Configurations;
+using Content.Server.Disease.Components;
 using Content.Server.Humanoid;
 using Content.Server.Mind.Components;
 using Content.Server.MobState;
@@ -14,7 +14,6 @@ using Content.Server.Traitor;
 using Content.Server.Zombies;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.CCVar;
-using Content.Shared.FixedPoint;
 using Content.Shared.MobState;
 using Content.Shared.MobState.Components;
 using Content.Shared.Preferences;
@@ -236,7 +235,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
         var prefList = new List<IPlayerSession>();
         foreach (var player in allPlayers)
         {
-            if (player.AttachedEntity != null)
+            if (player.AttachedEntity != null && HasComp<DiseaseCarrierComponent>(player.AttachedEntity))
             {
                 playerList.Add(player);
 
