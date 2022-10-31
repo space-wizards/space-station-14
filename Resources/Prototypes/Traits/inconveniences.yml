@@ -9,3 +9,15 @@
         params:
           variation: 0.2
       timeBetweenIncidents: 0.3, 300
+
+- type: trait
+  id: Hasty
+  name: Hasty
+  description: You walk faster, but can sometimes trip
+  components:
+    - type: Hasty
+      movementSpeedMultiplier: 1.2
+      trySlipInterval: 1
+      chanceOfSlip: 0.12
+      launchForwardsMultiplier: 1.2
+      stunDuration: 1, 3
