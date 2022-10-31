@@ -5,12 +5,8 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Maps;
 
 /// <summary>
-/// Prototype data for a game map.
+/// Prototype that holds a pool of maps that can be indexed based on the map pool CCVar.
 /// </summary>
-/// <remarks>
-/// Forks should not directly edit existing parts of this class.
-/// Make a new partial for your fancy new feature, it'll save you time later.
-/// </remarks>
 [Prototype("gameMapPool"), PublicAPI]
 public sealed class GameMapPoolPrototype : IPrototype
 {
