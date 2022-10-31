@@ -9,6 +9,7 @@ namespace Content.Server.Damage.Systems;
 public sealed class DamagePopupSystem : EntitySystem
 {
     [Dependency] private readonly PopupSystem _popupSystem = default!;
+    
     public override void Initialize()
     {
         base.Initialize();
