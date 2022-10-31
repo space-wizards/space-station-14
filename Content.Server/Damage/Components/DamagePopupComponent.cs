@@ -8,7 +8,12 @@ public sealed class DamagePopupComponent : Component
     /// <summary>
     /// String will be used to determine the type of damage popup displayed.
     /// </summary>
-    [DataField("damagePopupTypeString")]
-    [ViewVariables(VVAccess.ReadWrite)]
-    public string? DamagePopupTypeString;
+    [DataField("damagePopupType")] [ViewVariables(VVAccess.ReadWrite)]
+    public DamagePopupType Type = DamagePopupType.Combined;
 }
+public enum DamagePopupType
+{
+    Combined,
+    Total,
+    Delta,
+};
