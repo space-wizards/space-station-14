@@ -316,10 +316,12 @@ public sealed partial class CargoSystem
         foreach (var pallet in GetCargoPallets(component))
         {
             // Containers should already get the sell price of their children so can skip those.
-            foreach (var ent in _lookup.GetEntitiesIntersecting(pallet.Owner, LookupFlags.Anchored | LookupFlags.Approximate))
+            foreach (var ent in _lookup.GetEntitiesIntersecting(pallet.Owner, LookupFlags.Dynamic | LookupFlags.Sundries | LookupFlags.Approximate))
             {
-                // Don't re-sell anything, sell anything anchored (e.g. light fixtures), or anything blacklisted
-                // (e.g. players).
+                // Dont sell:
+                // - anything already being sold
+                // - anything anchored (e.g. light fixtures)
+                // - anything blacklisted (e.g. players).
                 if (toSell.Contains(ent) ||
                     (xformQuery.TryGetComponent(ent, out var xform) && xform.Anchored))
                     continue;
