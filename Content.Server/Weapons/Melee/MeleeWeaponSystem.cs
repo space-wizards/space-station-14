@@ -155,7 +155,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
         // If the user is using a long-range weapon, this probably shouldn't be happening? But I'll interpret melee as a
         // somewhat messy scuffle. See also, heavy attacks.
-        _interaction.DoContactInteraction(user, ev.Target); 
+        _interaction.DoContactInteraction(user, ev.Target);
 
         // For stuff that cares about it being attacked.
         RaiseLocalEvent(ev.Target.Value, new AttackedEvent(component.Owner, user, targetXform.Coordinates));
@@ -555,7 +555,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
     private void OnChemicalInjectorHit(EntityUid owner, MeleeChemicalInjectorComponent comp, MeleeHitEvent args)
     {
-        if (!_solutions.TryGetInjectableSolution(owner, out var solutionContainer))
+        if (!_solutions.TryGetSolution(owner, comp.Solution, out var solutionContainer))
             return;
 
         var hitBloodstreams = new List<BloodstreamComponent>();
