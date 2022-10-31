@@ -4,7 +4,6 @@ using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Tools.Components;
 using Content.Server.Weapons.Melee.Events;
-using Content.Shared.Audio;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
@@ -21,7 +20,10 @@ namespace Content.Server.Tools
 {
     public sealed partial class ToolSystem
     {
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+
         [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
         private readonly HashSet<EntityUid> _activeWelders = new();
 
@@ -115,7 +117,7 @@ namespace Content.Server.Tools
             if (light != null)
                 light.Enabled = true;
 
-            SoundSystem.Play(welder.WelderOnSounds.GetSound(), Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.125f).WithVolume(-5f));
+            _audioSystem.PlayPvs(welder.WelderOnSounds, uid, AudioParams.Default.WithVariation(0.125f).WithVolume(-5f));
 
             if (transform.GridUid is {} gridUid)
             {
@@ -123,7 +125,7 @@ namespace Content.Server.Tools
                 _atmosphereSystem.HotspotExpose(gridUid, position, 700, 50, true);
             }
 
-            welder.Dirty();
+            _entityManager.Dirty(welder);
 
             _activeWelders.Add(uid);
             return true;
@@ -153,17 +155,17 @@ namespace Content.Server.Tools
             if (light != null)
                 light.Enabled = false;
 
-            SoundSystem.Play(welder.WelderOffSounds.GetSound(), Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.125f).WithVolume(-5f));
+            _audioSystem.PlayPvs(welder.WelderOffSounds, uid, AudioParams.Default.WithVariation(0.125f).WithVolume(-5f));
 
-            welder.Dirty();
+            _entityManager.Dirty(welder);
 
             _activeWelders.Remove(uid);
             return true;
         }
 
-        private void OnWelderStartup(EntityUid uid, WelderComponent component, ComponentStartup args)
+        private void OnWelderStartup(EntityUid uid, WelderComponent welder, ComponentStartup args)
         {
-            component.Dirty();
+            _entityManager.Dirty(welder);
         }
 
         private void OnWelderIsHotEvent(EntityUid uid, WelderComponent welder, IsHotEvent args)
@@ -196,7 +198,7 @@ namespace Content.Server.Tools
 
         private void OnWelderSolutionChange(EntityUid uid, WelderComponent welder, SolutionChangedEvent args)
         {
-            welder.Dirty();
+            _entityManager.Dirty(welder);
         }
 
         private void OnWelderActivate(EntityUid uid, WelderComponent welder, ActivateInWorldEvent args)
@@ -224,7 +226,7 @@ namespace Content.Server.Tools
                 {
                     var drained = _solutionContainerSystem.Drain(target, targetSolution,  trans);
                     _solutionContainerSystem.TryAddSolution(uid, welderSolution, drained);
-                    SoundSystem.Play(welder.WelderRefill.GetSound(), Filter.Pvs(uid), uid);
+                    _audioSystem.PlayPvs(welder.WelderRefill, uid);
                     _popupSystem.PopupEntity(Loc.GetString("welder-component-after-interact-refueled-message"), uid, Filter.Entities(args.User));
                 }
                 else if (welderSolution.AvailableVolume <= 0)
@@ -290,7 +292,7 @@ namespace Content.Server.Tools
             }
 
             solution.RemoveReagent(welder.FuelReagent, neededFuel);
-            welder.Dirty();
+            _entityManager.Dirty(welder);
         }
 
         private void OnWelderShutdown(EntityUid uid, WelderComponent welder, ComponentShutdown args)
@@ -333,7 +335,7 @@ namespace Content.Server.Tools
                 if (solution.GetReagentQuantity(welder.FuelReagent) <= FixedPoint2.Zero)
                     TryTurnWelderOff(tool, null, welder);
 
-                welder.Dirty();
+                _entityManager.Dirty(welder);
             }
 
             _welderTimer -= WelderUpdateTimer;
