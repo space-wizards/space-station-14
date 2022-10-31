@@ -51,6 +51,66 @@
     },
     {
       "name": "checkerNWSE"
+    },
+    {
+      "name": "diagonal"
+    },
+    {
+      "name": "diagonal_checker_a"
+    },
+    {
+      "name": "diagonal_checker_b"
+    },
+    {
+      "name": "herringbone"
+    },
+    {
+      "name": "minitile"
+    },
+    {
+      "name": "minitile_checker_a"
+    },
+    {
+      "name": "minitile_checker_b"
+    },
+    {
+      "name": "minitile_diagonal"
+    },
+    {
+      "name": "minitile_diagonal_a"
+    },
+    {
+      "name": "minitile_diagonal_b"
+    },
+    {
+      "name": "mono"
+    },
+    {
+      "name": "offset"
+    },
+    {
+      "name": "offset_checker_a"
+    },
+    {
+      "name": "offset_checker_b"
+    },
+    {
+      "name": "pavement"
+    },
+    {
+      "name": "pavement_checker_a"
+    },
+    {
+      "name": "pavement_checker_b"
+    },
+    {
+      "name": "pavement_vertical"
+    },
+    {
+      "name": "pavement_vertical_checker_a"
+    },
+    {
+      "name": "pavement_vertical_checker_b"
     }
   ]
 }

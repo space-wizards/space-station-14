@@ -28,16 +28,6 @@
     state: "torso_m"
   - type: BodyPart
     partType: Torso
-    size: 14
-    compatibility: Biological
-    mechanisms:
-    - OrganAnimalHeart
-    - OrganHumanLungs
-    - OrganReptilianStomach
-    - OrganAnimalLiver
-    - OrganHumanKidneys
-#    criticalThreshold: 100
-#    deadThreshold: 150
 
 - type: entity
   id: HeadReptilian
@@ -53,14 +43,7 @@
     state: "head_m"
   - type: BodyPart
     partType: Head
-    size: 7
-    compatibility: Biological
     vital: true
-    mechanisms:
-    - OrganHumanBrain
-    - OrganHumanEyes
-#    criticalThreshold: 50
-#    deadThreshold: 120
   - type: Input
     context: "ghost"
   - type: MovementSpeedModifier
@@ -86,11 +69,7 @@
     state: "l_arm"
   - type: BodyPart
     partType: Arm
-    size: 5
-    compatibility: Biological
     symmetry: Left
-#    criticalThreshold: 40
-#    deadThreshold: 80
 
 - type: entity
   id: RightArmReptilian
@@ -106,11 +85,7 @@
     state: "r_arm"
   - type: BodyPart
     partType: Arm
-    size: 5
-    compatibility: Biological
     symmetry: Right
-#    criticalThreshold: 40
-#    deadThreshold: 80
 
 - type: entity
   id: LeftHandReptilian
@@ -126,11 +101,7 @@
     state: "l_hand"
   - type: BodyPart
     partType: Hand
-    size: 3
-    compatibility: Biological
     symmetry: Left
-#    criticalThreshold: 30
-#    deadThreshold: 60
 
 - type: entity
   id: RightHandReptilian
@@ -146,11 +117,7 @@
     state: "r_hand"
   - type: BodyPart
     partType: Hand
-    size: 3
-    compatibility: Biological
     symmetry: Right
-#    criticalThreshold: 30
-#    deadThreshold: 60
 
 - type: entity
   id: LeftLegReptilian
@@ -166,11 +133,7 @@
     state: "l_leg"
   - type: BodyPart
     partType: Leg
-    size: 6
-    compatibility: Biological
     symmetry: Left
-#    criticalThreshold: 45
-#    deadThreshold: 90
 
 - type: entity
   id: RightLegReptilian
@@ -186,11 +149,7 @@
     state: "r_leg"
   - type: BodyPart
     partType: Leg
-    size: 6
-    compatibility: Biological
     symmetry: Right
-#    criticalThreshold: 45
-#    deadThreshold: 90
 
 - type: entity
   id: LeftFootReptilian
@@ -206,11 +165,7 @@
     state: "l_foot"
   - type: BodyPart
     partType: Foot
-    size: 2
-    compatibility: Biological
     symmetry: Left
-#    criticalThreshold: 30
-#    deadThreshold: 60
 
 - type: entity
   id: RightFootReptilian
@@ -226,8 +181,4 @@
     state: "r_foot"
   - type: BodyPart
     partType: Foot
-    size: 2
-    compatibility: Biological
     symmetry: Right
-#    criticalThreshold: 30
-#    deadThreshold: 60

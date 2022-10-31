@@ -50,7 +50,7 @@ namespace Content.Server.Eye.Blinding.EyeProtection
 
         private void OnEquipped(EntityUid uid, EyeProtectionComponent component, GotEquippedEvent args)
         {
-            if (!TryComp<SharedClothingComponent>(uid, out var clothing) || clothing.Slots == SlotFlags.PREVENTEQUIP)
+            if (!TryComp<ClothingComponent>(uid, out var clothing) || clothing.Slots == SlotFlags.PREVENTEQUIP)
                 return;
 
             if (!clothing.Slots.HasFlag(args.SlotFlags))

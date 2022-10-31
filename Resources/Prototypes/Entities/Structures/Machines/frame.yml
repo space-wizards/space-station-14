@@ -29,6 +29,10 @@
     - type: Construction
       graph: Machine
       node: missingWires
+    - type: ContainerContainer
+      containers:
+        machine_board: !type:Container
+        machine_parts: !type:Container
     - type: Damageable
       damageContainer: Inorganic
       damageModifierSet: Metallic
@@ -76,6 +80,7 @@
     - type: Construction
       graph: Machine
       node: machineFrame
+      defaultTarget: machine
     - type: Damageable
       damageContainer: Inorganic
       damageModifierSet: Metallic
@@ -90,6 +95,10 @@
         - !type:DoActsBehavior
           acts: ["Destruction"]
     - type: MachineFrame
+    - type: ContainerContainer
+      containers:
+        machine_board: !type:Container
+        machine_parts: !type:Container
     - type: Sprite
       netsync: false
       sprite: Structures/Machines/parts.rsi
