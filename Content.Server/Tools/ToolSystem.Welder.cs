@@ -10,6 +10,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Temperature;
+using Content.Shared.Toggleable;
 using Content.Shared.Tools.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -20,6 +21,8 @@ namespace Content.Server.Tools
 {
     public sealed partial class ToolSystem
     {
+        [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
+
         private readonly HashSet<EntityUid> _activeWelders = new();
 
         private const float WelderUpdateTimer = 1f;
@@ -106,10 +109,8 @@ namespace Content.Server.Tools
             var ev = new WelderToggledEvent(true);
             RaiseLocalEvent(welder.Owner, ev, false);
 
-            if(item != null)
-                _itemSystem.SetHeldPrefix(uid, "on", item);
-
-            appearance?.SetData(WelderVisuals.Lit, true);
+            _appearanceSystem.SetData(uid, WelderVisuals.Lit, true);
+            _appearanceSystem.SetData(uid, ToggleableLightVisuals.Enabled, true);
 
             if (light != null)
                 light.Enabled = true;
@@ -145,12 +146,9 @@ namespace Content.Server.Tools
             var ev = new WelderToggledEvent(false);
             RaiseLocalEvent(welder.Owner, ev, false);
 
-            // TODO: Make all this use visualizers.
-            if (item != null)
-                _itemSystem.SetHeldPrefix(uid, "off", item);
-
             // Layer 1 is the flame.
-            appearance?.SetData(WelderVisuals.Lit, false);
+            _appearanceSystem.SetData(uid, WelderVisuals.Lit, false);
+            _appearanceSystem.SetData(uid, ToggleableLightVisuals.Enabled, false);
 
             if (light != null)
                 light.Enabled = false;
