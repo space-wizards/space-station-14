@@ -16,4 +16,5 @@ public enum DamagePopupType
     Combined,
     Total,
     Delta,
+    Hit,
 };
