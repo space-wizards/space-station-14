@@ -53,6 +53,7 @@ namespace Content.Server.Kitchen.EntitySystems
             SubscribeLocalEvent<MicrowaveComponent, BreakageEventArgs>(OnBreak);
             SubscribeLocalEvent<MicrowaveComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<MicrowaveComponent, SuicideEvent>(OnSuicide);
+            SubscribeLocalEvent<MicrowaveComponent, RefreshPartsEvent>(OnRefreshParts);
 
             SubscribeLocalEvent<MicrowaveComponent, MicrowaveStartCookMessage>((u,c,_) => Wzhzhzh(u,c));
             SubscribeLocalEvent<MicrowaveComponent, MicrowaveEjectMessage>(OnEjectMessage);
@@ -269,6 +270,12 @@ namespace Content.Server.Kitchen.EntitySystems
             UpdateUserInterfaceState(uid, component);
         }
 
+        private void OnRefreshParts(EntityUid uid, MicrowaveComponent component, RefreshPartsEvent args)
+        {
+            var cookRating = args.PartRatings[component.MachinePartCookTimeMultiplier];
+            component.CookTimeMultiplier = MathF.Pow(component.CookTimeScalingConstant, cookRating - 1);
+        }
+
         public void UpdateUserInterfaceState(EntityUid uid, MicrowaveComponent component)
         {
             var ui = _userInterface.GetUiOrNull(uid, MicrowaveUiKey.Key);
@@ -371,7 +378,7 @@ namespace Content.Server.Kitchen.EntitySystems
             _audio.PlayPvs(component.StartCookingSound, uid);
             var activeComp = AddComp<ActiveMicrowaveComponent>(uid); //microwave is now cooking
             activeComp.CookTimeRemaining = component.CurrentCookTimerTime * component.CookTimeMultiplier;
-            activeComp.TotalTime = component.CurrentCookTimerTime * component.CookTimeMultiplier;
+            activeComp.TotalTime = component.CurrentCookTimerTime; //this doesn't scale so that we can have the "actual" time
             activeComp.PortionedRecipe = portionedRecipe;
             UpdateUserInterfaceState(uid, component);
         }
