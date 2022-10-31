@@ -94,6 +94,7 @@
       0: Alive
       50: Critical
       100: Dead
+  - type: Stamina
   - type: Destructible
     thresholds:
     - trigger:
