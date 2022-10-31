@@ -1,0 +1,41 @@
+name: Build & Publish Docfx
+
+on:
+  schedule:
+    - cron: "0 0 * * 0"
+
+jobs:
+  docfx:
+   runs-on: ubuntu-latest
+   steps:
+    - uses: actions/checkout@v2
+    - name: Setup submodule
+      run: |
+        git submodule update --init --recursive
+    - name: Pull engine updates
+      uses: space-wizards/submodule-dependency@v0.1.5
+    - name: Update Engine Submodules
+      run: |
+        cd RobustToolbox/
+        git submodule update --init --recursive
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+
+    - name: Install dependencies
+      run: dotnet restore
+
+    - name: Build Project
+      run: dotnet build --no-restore /p:WarningsAsErrors=nullable
+
+    - name: Build DocFX
+      uses: nikeee/docfx-action@v1.0.0
+      with:
+        args: Content.Docfx/docfx.json
+
+    - name: Publish Docfx Documentation on GitHub Pages
+      uses: maxheld83/ghpages@master
+      env:
+        BUILD_DIR: Content.Docfx/_content-site
+        GH_PAT: ${{ secrets.GH_PAT }}

@@ -105,7 +105,6 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             }
 
             // Insert into next tube
-            holderTransform.Coordinates = new EntityCoordinates(toUid, Vector2.Zero);
             if (!to.Contents.Insert(holder.Owner))
             {
                 ExitDisposals(holderUid, holder, holderTransform);
@@ -117,7 +116,6 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 holder.PreviousTube = holder.CurrentTube;
                 holder.PreviousDirection = holder.CurrentDirection;
             }
-            holderTransform.Coordinates = toTransform.Coordinates;
             holder.CurrentTube = to;
             holder.CurrentDirection = to.NextDirection(holder);
             holder.StartingTime = 0.1f;
@@ -168,7 +166,8 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                     var destination = holder.CurrentDirection.ToVec();
                     var newPosition = destination * progress;
 
-                    EntityManager.GetComponent<TransformComponent>(holder.Owner).Coordinates = origin.Offset(newPosition);
+                    // This is some supreme shit code.
+                    EntityManager.GetComponent<TransformComponent>(holder.Owner).Coordinates = origin.Offset(newPosition).WithEntityId(currentTube.Owner); ;
 
                     continue;
                 }

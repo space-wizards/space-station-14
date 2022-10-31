@@ -1,115 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed various visuals for held & equipped items., type: Fix}
-  id: 2038
-  time: '2022-07-29T01:02:09.0000000+00:00'
-- author: corentt
-  changes:
-  - {message: Syringes can be put in medical belts, type: Add}
-  id: 2039
-  time: '2022-07-29T01:23:11.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Miasma is no longer visible until it's approaching dangerous levels.,
-    type: Tweak}
-  id: 2040
-  time: '2022-07-29T03:13:56.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed footsteps and bike horn honking sounds having the wrong pitch
-      scale., type: Fix}
-  id: 2041
-  time: '2022-07-29T16:22:19.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Bloodloss now makes you dizzy., type: Add}
-  id: 2042
-  time: '2022-07-31T02:24:24.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Adds a new salvage equipment vendor to be added to maps., type: Add}
-  id: 2043
-  time: '2022-07-31T02:31:51.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: The sound effect for walking in snow has been replaced., type: Tweak}
-  id: 2044
-  time: '2022-07-31T02:36:49.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Firesuits no longer protect against space., type: Fix}
-  id: 2045
-  time: '2022-07-31T02:44:50.0000000+00:00'
-- author: Myctai
-  changes:
-  - {message: syndicate shoulder holster will now accept melee weapons, type: Fix}
-  id: 2046
-  time: '2022-07-31T02:48:05.0000000+00:00'
-- author: jessicamaybe
-  changes:
-  - {message: You can now see the station time in the lobby screen, type: Add}
-  id: 2047
-  time: '2022-07-31T02:55:43.0000000+00:00'
-- author: CormosLemming
-  changes:
-  - {message: Popcorn sprite now has the proper number on it., type: Fix}
-  id: 2048
-  time: '2022-07-31T02:56:04.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed a bug that enabled people to keep breathing using gas tanks that
-      had been unequipped., type: Fix}
-  id: 2049
-  time: '2022-07-31T02:56:26.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Desk lamps and floodlights are now heavier., type: Tweak}
-  id: 2050
-  time: '2022-07-31T02:56:42.0000000+00:00'
-- author: GoodWheatley
-  changes:
-  - {message: nuke disk now takes up 5 space instead of 12, type: Tweak}
-  id: 2051
-  time: '2022-07-31T02:58:19.0000000+00:00'
-- author: Deahaka
-  changes:
-  - {message: Added donut-vend., type: Add}
-  id: 2052
-  time: '2022-07-31T02:58:57.0000000+00:00'
-- author: notafet
-  changes:
-  - {message: Passive gates now equalize pressure instantly and come with a built-in
-      gas flow meter., type: Tweak}
-  id: 2053
-  time: '2022-07-31T03:00:35.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Added the syndicate reinforcement teleporter to the uplink., type: Add}
-  id: 2054
-  time: '2022-07-31T03:01:29.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed some some hardsuit helmet icons not showing up in the inventory
-      and actions UI, type: Fix}
-  id: 2055
-  time: '2022-07-31T03:02:12.0000000+00:00'
-- author: Pancake
-  changes:
-  - {message: Beware the monkey wizard., type: Add}
-  id: 2056
-  time: '2022-07-31T03:12:06.0000000+00:00'
-- author: Myctai
-  changes:
-  - {message: New Barozine overdose threshold is at 30 units (with same effects),
-    type: Tweak}
-  - {message: 'Space medipen now comes with 20 units of Barozine (and keeps it''s
-      10 units of Leporazine), giving you about extra 30 seconds to find spacesuit
-      of some kind, oxygen not included!', type: Tweak}
-  - {message: Poisoning and brute healing aspect of Barozine were replaced with very
-      minor burn damage, type: Tweak}
-  id: 2057
-  time: '2022-07-31T03:15:09.0000000+00:00'
 - author: ike709
   changes:
   - {message: 'Added a new space ambience song, "Drifting" by qwerty', type: Add}
@@ -2945,3 +2834,122 @@ Entries:
   - {message: Hopefully fix the server crashing very often., type: Fix}
   id: 2537
   time: '2022-10-29T16:22:22.417732+00:00'
+- author: Scribbles0
+  changes:
+  - {message: A mini jetpack crate can now be found in cargo's ordering catalog.,
+    type: Add}
+  - {message: Mini jetpacks now have slightly more air capacity., type: Tweak}
+  - {message: Fixed certain mini jetpacks having the capacity of a normal jetpack.,
+    type: Fix}
+  id: 2538
+  time: '2022-10-30T05:54:03.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: Chairs are drawn correctly when rotated., type: Fix}
+  id: 2539
+  time: '2022-10-30T05:58:24.0000000+00:00'
+- author: Nairod
+  changes:
+  - {message: Added the mass scanner and power monitoring computer boards to the circuit
+      imprinter., type: Add}
+  id: 2540
+  time: '2022-10-30T06:00:00.0000000+00:00'
+- author: Mervill
+  changes:
+  - {message: Fixed Vending Machines not showing their damage sprite in most cases.,
+    type: Fix}
+  id: 2541
+  time: '2022-10-30T06:12:05.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added machine part upgrades for emitters. Have fun blasting holes into
+      things quicker., type: Add}
+  - {message: Slightly increased emitter power consumption and minimum burst delay.,
+    type: Tweak}
+  id: 2542
+  time: '2022-10-30T06:53:31.0000000+00:00'
+- author: Nairod
+  changes:
+  - {message: 'Added Norepinephric Acid, the blindness inducing chemical.', type: Add}
+  id: 2543
+  time: '2022-10-30T07:10:00.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Lathes can now be upgraded to print faster and to consume fewer materials
+      per print., type: Add}
+  id: 2544
+  time: '2022-10-30T07:12:11.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added machine upgrades for microwaves., type: Add}
+  id: 2545
+  time: '2022-10-30T07:14:20.0000000+00:00'
+- author: DeathCamel57
+  changes:
+  - {message: Console chat hotkey works again., type: Fix}
+  id: 2546
+  time: '2022-10-30T07:18:41.0000000+00:00'
+- author: JustinTrotter
+  changes:
+  - {message: added minor delay to curtain open/close time, type: Tweak}
+  id: 2547
+  time: '2022-10-30T07:34:01.0000000+00:00'
+- author: Carbonhell
+  changes:
+  - {message: Examining a humanoid with an age between 30 and 60 years old now properly
+      shows them as middle-aged instead of old., type: Fix}
+  id: 2548
+  time: '2022-10-30T18:54:20.0000000+00:00'
+- author: Interrobang01
+  changes:
+  - {message: Made it easier to see codewords in the character menu and syndicate
+      agent briefing., type: Tweak}
+  - {message: The Syndicate hates Nanotrasen slightly more., type: Tweak}
+  id: 2549
+  time: '2022-10-30T18:56:41.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Fixed several items of clothing making your entire head invisible.,
+    type: Fix}
+  id: 2550
+  time: '2022-10-30T18:58:36.0000000+00:00'
+- author: aklos
+  changes:
+  - {message: Flying mobs no longer run into mousetraps and glass shards, type: Fix}
+  id: 2551
+  time: '2022-10-30T19:55:07.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed some entity lookup / physics bugs. Hopefully the game should be
+      a bit more stable now., type: Fix}
+  id: 2552
+  time: '2022-10-30T23:17:28.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: skeletons can no longer have hair., type: Fix}
+  id: 2553
+  time: '2022-10-31T00:04:30.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Fixed the sprite modifications for female humanoids jumpsuit slot clothes.,
+    type: Fix}
+  id: 2554
+  time: '2022-10-31T00:06:17.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Traitor mode will now work on its own rather than only in secret., type: Fix}
+  id: 2555
+  time: '2022-10-31T02:02:42.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'You can no longer use nettles, space snakes, and so on as injectors.
+      The only injecting melee weapon that lets you use your own reagents is spears.',
+    type: Fix}
+  id: 2556
+  time: '2022-10-31T02:04:51.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed being unable to craft certain items., type: Fix}
+  - {message: Maybe fixed cargo shuttle not properly selling items., type: Fix}
+  id: 2557
+  time: '2022-10-31T02:26:05.0000000+00:00'

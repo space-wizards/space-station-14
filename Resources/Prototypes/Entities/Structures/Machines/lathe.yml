@@ -277,12 +277,14 @@
       - SurveillanceWirelessCameraAnchoredCircuitboard
       - HydroponicsTrayMachineCircuitboard
       - SolarControlComputerCircuitboard
+      - PowerComputerCircuitboard
       - AutolatheMachineCircuitboard
       - ProtolatheMachineCircuitboard
       - ReagentGrinderMachineCircuitboard
       - MicrowaveMachineCircuitboard
       - UniformPrinterMachineCircuitboard
       - ShuttleConsoleCircuitboard
+      - RadarConsoleCircuitboard
       - CircuitImprinterMachineCircuitboard
       - DawInstrumentMachineCircuitboard
       - CloningConsoleComputerCircuitboard
@@ -375,6 +377,7 @@
   - type: Lathe
     idleState: icon
     runningState: icon
+    machinePartPrintSpeed: Laser
     dynamicRecipes:
       - HandheldHealthAnalyzer
       - ClothingHandsGlovesLatex

@@ -94,8 +94,7 @@
     prototype: UniformPrinter
     requirements:
       MatterBin: 1
-      Manipulator: 1
-      Laser: 1
+      Laser: 2
 
 - type: entity
   id: VaccinatorMachineCircuitboard
@@ -485,7 +484,7 @@
     - type: MachineBoard
       prototype: KitchenMicrowave
       requirements:
-        MatterBin: 1
+        Capacitor: 1
         Laser: 1
       materialRequirements:
         Glass: 2
