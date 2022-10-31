@@ -16,3 +16,5 @@ reagent-name-nocturine = ноктюрин
 reagent-desc-nocturine = Заставляет вас чувствовать сильную усталость и неспособность встать. По сути, это сок, вызывающий боль в костях.
 reagent-name-mute-toxin = токсин немоты
 reagent-desc-mute-toxin = Лишает вас возможности разговаривать пока в организме.
+reagent-name-norepinephric-acid = норадреналинованая кислота
+reagent-desc-norepinephric-acid = Делает вас не способным видеть во время метаболизма

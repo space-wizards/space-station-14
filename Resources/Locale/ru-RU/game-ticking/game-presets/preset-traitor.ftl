@@ -34,5 +34,12 @@ traitor-death-match-end-round-description-entry = КПК { $originalName }, с {
 ## TraitorRole
 
 # TraitorRole
-traitor-role-greeting = Приветствуем, Агент
-traitor-role-codewords = Ваши кодовые слова: { $codewords }
+traitor-role-greeting =
+    Вы агент Синдиката.
+    Ваши цели и кодовые слова перечислены в меню персонажа.
+    Воспользуйтесь аплинком, встроенным в ваш КПК, чтобы приобрести всё необходимое для выполнения целей.
+    Смерть NanoTrasen!
+traitor-role-codewords =
+    Кодовые слова: {$codewords}.
+    Кодовые слова можно использовать в обычном разговоре, чтобы незаметно идентифицировать себя для других агентов Синдиката.
+    Слушайте их и держите их в секрете.

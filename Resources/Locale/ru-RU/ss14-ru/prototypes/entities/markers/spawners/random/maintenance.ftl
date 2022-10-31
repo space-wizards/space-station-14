@@ -1,9 +1,9 @@
-ent-MaintenanceFluffSpawner = Maint Loot Spawner
-    .suffix = Fluff+Clothes
+ent-MaintenanceFluffSpawner = спавнер добыча тех туннели
+    .suffix = Разное+Одежда
     .desc = { ent-MarkerBase.desc }
-ent-MaintenanceToolSpawner = Maint Loot Spawner
-    .suffix = Tools+Cells+Mats
+ent-MaintenanceToolSpawner = спавнер добыча тех туннели
+    .suffix = Инструменты+Батареи+Материалы
     .desc = { ent-MarkerBase.desc }
-ent-MaintenanceWeaponSpawner = Maint Loot Spawner
-    .suffix = Scrap+Weapons
+ent-MaintenanceWeaponSpawner = спавнер добыча тех туннели
+    .suffix = Хлам+Оружие
     .desc = { ent-MarkerBase.desc }

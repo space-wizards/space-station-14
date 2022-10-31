@@ -58,3 +58,5 @@ reagent-name-oculine = окулин
 reagent-desc-oculine = Излечивает повреждения глаз.
 reagent-name-ethylredoxrazine = этилредоксразин
 reagent-desc-ethylredoxrazine = Нейтрализует действие алкоголя в кровеносной системе. Несмотря на то, что он часто нужен, заказывают его редко.
+reagent-name-cognizine = когнизин
+reagent-desc-cognizine = Таинственное химическое вещество, способное сделать любое неразумное существо разумным.

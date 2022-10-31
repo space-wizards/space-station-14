@@ -47,7 +47,7 @@ ui-options-hud-theme-default = По умолчанию
 ui-options-hud-theme-modernized = Модернизированный
 ui-options-hud-theme-classic = Классический
 ui-options-vp-stretch = Растянуть изображение для соответствия окну игры
-ui-options-vp-scale = Фиксированный масштаб области просмотра: x{ $scale }
+ui-options-vp-scale = Фиксированный масштаб окна игры: x{ $scale }
 ui-options-vp-integer-scaling = Prefer integer scaling (might cause black bars/clipping)
 ui-options-vp-integer-scaling-tooltip =
     If this option is enabled, the viewport will be scaled using an integer value
@@ -57,7 +57,7 @@ ui-options-vp-integer-scaling-tooltip =
 ui-options-vp-low-res = Изображение низкого разрешения
 ui-options-parallax-low-quality = Низкокачественный параллакс (фон)
 ui-options-fps-counter = Показать счетчик FPS
-ui-options-vp-width = Ширина области просмотра: {$width}
+ui-options-vp-width = Ширина окна игры: { $width }
 ui-options-hud-layout = Внешний вид HUD:
 
 ## Controls menu
@@ -164,6 +164,7 @@ ui-options-function-shuttle-rotate-left = Поворот налево
 ui-options-function-shuttle-rotate-right = Поворот направо
 ui-options-function-shuttle-brake = Торможение
 ui-options-net-interp-ratio = Сетевое сглаживание
+ui-options-net-predict = Предугадывание на стороне клиента
 ui-options-net-interp-ratio-tooltip =
     Увеличение этого параметра, как правило, делает игру
     более устойчивой к потере пакетов, однако при этом
@@ -174,10 +175,15 @@ ui-options-net-predict-tick-bias-tooltip =
     Увеличение этого параметра, как правило, делает игру более устойчивой 
     к потере пакетов между клиентом и сервером, однако при этом 
     немного возрастает задержка, и клиенту требуется предугадывать
-    больше будущих тиков.
+    больше будущих тиков
+ui-options-net-pvs-spawn = Лимит появления PVS сущностей
+ui-options-net-pvs-spawn-tooltip =
+    Ограничение частоты отправки новых появившихся сущностей сервером на клиент. 
+    Снижение этого параметра может помочь уменьшить "захлебывания",
+    вызываемые спавном сущностей, но может привести к их резкому появлению.
 ui-options-net-pvs-entry = Лимит PVS сущностей
 ui-options-net-pvs-entry-tooltip =
-    Ограничение частоты отправки новых сущностей сервером на клиент. 
+    Ограничение частоты отправки новых видимых сущностей сервером на клиент. 
     Снижение этого параметра может помочь уменьшить "захлебывания",
     вызываемые спавном сущностей, но может привести к их резкому появлению.
 ui-options-net-pvs-leave = Частота удаления PVS

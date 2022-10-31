@@ -1,3 +1,3 @@
-ent-RandomPainting = random painting spawner
+ent-RandomPainting = спавнер случайная картина
     .desc = { ent-MarkerBase.desc }
     .suffix = { "" }

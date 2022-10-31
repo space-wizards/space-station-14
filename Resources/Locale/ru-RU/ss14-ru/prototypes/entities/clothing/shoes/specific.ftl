@@ -28,3 +28,6 @@ ent-ClothingShoesChameleon = чёрные туфли
 ent-ClothingShoesChameleonNoSlips = чёрные туфли
     .desc = Стильные чёрные туфли.
     .suffix = Нескользящие, Хамелеон
+ent-ClothingShoesJester = шутовские туфли
+    .desc = Туфли придворного шута, усовершенствованные с помощью современной технологии скрипа.
+    .suffix = { "" }
