@@ -1,37 +1,4 @@
 Entries:
-- author: notafet
-  changes:
-  - {message: Passive gates now equalize pressure instantly and come with a built-in
-      gas flow meter., type: Tweak}
-  id: 2053
-  time: '2022-07-31T03:00:35.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Added the syndicate reinforcement teleporter to the uplink., type: Add}
-  id: 2054
-  time: '2022-07-31T03:01:29.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed some some hardsuit helmet icons not showing up in the inventory
-      and actions UI, type: Fix}
-  id: 2055
-  time: '2022-07-31T03:02:12.0000000+00:00'
-- author: Pancake
-  changes:
-  - {message: Beware the monkey wizard., type: Add}
-  id: 2056
-  time: '2022-07-31T03:12:06.0000000+00:00'
-- author: Myctai
-  changes:
-  - {message: New Barozine overdose threshold is at 30 units (with same effects),
-    type: Tweak}
-  - {message: 'Space medipen now comes with 20 units of Barozine (and keeps it''s
-      10 units of Leporazine), giving you about extra 30 seconds to find spacesuit
-      of some kind, oxygen not included!', type: Tweak}
-  - {message: Poisoning and brute healing aspect of Barozine were replaced with very
-      minor burn damage, type: Tweak}
-  id: 2057
-  time: '2022-07-31T03:15:09.0000000+00:00'
 - author: ike709
   changes:
   - {message: 'Added a new space ambience song, "Drifting" by qwerty', type: Add}
@@ -2957,3 +2924,32 @@ Entries:
       a bit more stable now., type: Fix}
   id: 2552
   time: '2022-10-30T23:17:28.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: skeletons can no longer have hair., type: Fix}
+  id: 2553
+  time: '2022-10-31T00:04:30.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Fixed the sprite modifications for female humanoids jumpsuit slot clothes.,
+    type: Fix}
+  id: 2554
+  time: '2022-10-31T00:06:17.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Traitor mode will now work on its own rather than only in secret., type: Fix}
+  id: 2555
+  time: '2022-10-31T02:02:42.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'You can no longer use nettles, space snakes, and so on as injectors.
+      The only injecting melee weapon that lets you use your own reagents is spears.',
+    type: Fix}
+  id: 2556
+  time: '2022-10-31T02:04:51.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed being unable to craft certain items., type: Fix}
+  - {message: Maybe fixed cargo shuttle not properly selling items., type: Fix}
+  id: 2557
+  time: '2022-10-31T02:26:05.0000000+00:00'
