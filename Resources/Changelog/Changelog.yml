@@ -1,9 +1,4 @@
 Entries:
-- author: ike709
-  changes:
-  - {message: 'Added a new space ambience song, "Drifting" by qwerty', type: Add}
-  id: 2058
-  time: '2022-07-31T03:15:26.0000000+00:00'
 - author: UDaV73rus
   changes:
   - {message: Added robes for priest, type: Add}
@@ -2953,3 +2948,10 @@ Entries:
   - {message: Maybe fixed cargo shuttle not properly selling items., type: Fix}
   id: 2557
   time: '2022-10-31T02:26:05.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Deconstructing disposal tubes should no longer delete contained entities.,
+    type: Fix}
+  - {message: Fixed people getting trapped in disposal trunks., type: Fix}
+  id: 2558
+  time: '2022-10-31T23:53:06.0000000+00:00'
