@@ -10,7 +10,7 @@
     netsync: false
   - type: Repairable
   - type: DamagePopup
-    damagePopupTypeString: "damageCombined"
+    damagePopupType: Combined
   - type: Fixtures
     fixtures:
     - shape:
