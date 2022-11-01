@@ -24,7 +24,7 @@ namespace Content.Client.Atmos.EntitySystems
             SubscribeNetworkEvent<GasOverlayUpdateEvent>(HandleGasOverlayUpdate);
             SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoved);
 
-            _overlay = new GasTileOverlay(this, _resourceCache, ProtoMan, _spriteSys);
+            _overlay = new GasTileOverlay(this, EntityManager, _resourceCache, ProtoMan, _spriteSys);
             _overlayMan.AddOverlay(_overlay);
         }
 

@@ -50,7 +50,7 @@ namespace Content.Server.Atmos.EntitySystems
                 return true;
 
             var mapGrid = mapGridComp.Grid;
-            var mapUid = _mapManager.GetMapEntityIdOrThrow(mapGridComp.Grid.ParentMapId);
+            var mapUid = _mapManager.GetMapEntityIdOrThrow(Transform(mapGridComp.Owner).MapID);
 
             var volume = GetVolumeForTiles(mapGrid, 1);
 
