@@ -15,18 +15,18 @@
                         Text="{Loc 'analysis-console-scan-button'}"
                         ToolTip="{Loc 'analysis-console-scan-tooltip-info'}">
                 </Button>
-                <BoxContainer MinHeight="5"></BoxContainer>
+                <BoxContainer MinHeight="10"></BoxContainer>
                 <Button Name="DestroyButton"
                         Text="{Loc 'analysis-console-destroy-button'}"
                         ToolTip="{Loc 'analysis-console-destroy-button-info'}">
                 </Button>
             </BoxContainer>
             <BoxContainer Orientation="Vertical">
+                <Label Name="ProgressLabel"></Label>
                 <ProgressBar
                     Name="ProgressBar"
                     MinValue="0"
                     MaxValue="1"
-                    SetWidth="150"
                     SetHeight="20">
                 </ProgressBar>
             </BoxContainer>

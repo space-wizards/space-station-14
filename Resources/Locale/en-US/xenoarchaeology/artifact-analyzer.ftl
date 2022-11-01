@@ -18,4 +18,9 @@ analysis-console-info-trigger = REACTIONS: {$trigger}
 analysis-console-info-edges = EDGES: {$edges}
 analysis-console-info-completion = COMPLETION_PERCENTAGE: {$percentage}%
 
+analysis-console-progress-text = {$seconds ->
+    [one] T-{$seconds} second
+    *[other] T-{$seconds} seconds
+}
+
 analyzer-artifact-destroy-popup = The artifact disintegrated into energy!

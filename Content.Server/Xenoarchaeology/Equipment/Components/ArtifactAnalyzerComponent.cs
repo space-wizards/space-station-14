@@ -29,6 +29,9 @@ public sealed class ArtifactAnalyzerComponent : Component
     [ViewVariables]
     public EntityUid? Console;
 
+    [ViewVariables]
+    public HashSet<EntityUid> Contacts = new();
+
     #region Analysis Data
     [ViewVariables]
     public EntityUid? LastAnalyzedArtifact;

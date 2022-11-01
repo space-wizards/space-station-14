@@ -1,4 +1,6 @@
-﻿namespace Content.Server.Xenoarchaeology.Equipment.Components;
+﻿using Robust.Shared.Audio;
+
+namespace Content.Server.Xenoarchaeology.Equipment.Components;
 
 /// <summary>
 /// This is used for tracking artifacts that are currently
@@ -9,4 +11,6 @@ public sealed class ActiveScannedArtifactComponent : Component
 {
     [ViewVariables]
     public EntityUid Scanner;
+
+    public readonly SoundSpecifier ScanFailureSound = new SoundPathSpecifier("/Audio/Machines/custom_deny.ogg");
 }

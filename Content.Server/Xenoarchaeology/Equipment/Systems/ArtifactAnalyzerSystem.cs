@@ -90,10 +90,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         if (!Resolve(uid.Value, ref component, ref phys))
             return null;
 
-        var ent = _physics.GetContactingEntities(phys);
-
-        var validEnts = ent.Where(x => HasComp<ArtifactComponent>(x.Owner))
-            .Select(x => x.Owner).ToHashSet();
+        var validEnts = component.Contacts.Where(HasComp<ArtifactComponent>).ToHashSet();
         return validEnts.FirstOrNull();
     }
 
@@ -151,17 +148,18 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         ArtifactNode? node = null;
         float? completion = null;
         var totalTime = TimeSpan.Zero;
+        var canScan = false;
         if (component.AnalyzerEntity != null && TryComp<ArtifactAnalyzerComponent>(component.AnalyzerEntity, out var analyzer))
         {
             artifact = analyzer.LastAnalyzedArtifact;
             node = analyzer.LastAnalyzedNode;
             completion = analyzer.LastAnalyzedCompletion;
             totalTime = analyzer.AnalysisDuration * analyzer.AnalysisDurationMulitplier;
+            canScan = analyzer.Contacts.Any();
         }
 
         var analyzerConnected = component.AnalyzerEntity != null;
         var serverConnected = TryComp<ResearchClientComponent>(uid, out var client) && client.ConnectedToServer;
-        var canScan = component.AnalyzerEntity != null && GetArtifactForAnalysis(component.AnalyzerEntity) != null;
 
         var scanning = TryComp<ActiveArtifactAnalyzerComponent>(component.AnalyzerEntity, out var active);
         var remaining = active != null ? _timing.CurTime - active.StartTime : TimeSpan.Zero;
@@ -217,7 +215,8 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         client.Server.Points += _artifact.GetResearchPointValue(entToDestroy.Value);
         EntityManager.DeleteEntity(entToDestroy.Value);
 
-        _audio.PlayPvs(component.DestroySound, component.AnalyzerEntity.Value, AudioParams.Default);
+        _audio.PlayPvs(component.DestroySound, component.AnalyzerEntity.Value, AudioParams.Default.WithVolume(2f));
+
         _popup.PopupEntity(Loc.GetString("analyzer-artifact-destroy-popup"),
             component.AnalyzerEntity.Value, Filter.Pvs(component.AnalyzerEntity.Value), PopupType.Large);
 
@@ -237,8 +236,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         if (ents.Contains(otherPhys))
             return;
 
-        //Play sfx? idk
-        Logger.Debug("success");
+        _audio.PlayPvs(component.ScanFailureSound, component.Scanner, AudioParams.Default.WithVolume(3f));
 
         RemComp<ActiveArtifactAnalyzerComponent>(component.Scanner);
         if (TryComp<ArtifactAnalyzerComponent>(component.Scanner, out var analyzer) && analyzer.Console != null)
@@ -275,17 +273,19 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         if (!HasComp<ArtifactComponent>(otherEnt))
             return;
 
+        component.Contacts.Add(otherEnt);
+
         if (component.Console != null)
             UpdateUserInterface(component.Console.Value);
     }
 
-    //Todo: this doesn't actually properly update the ui. it's a minor bug tho
     private void OnEndCollide(EntityUid uid, ArtifactAnalyzerComponent component, ref EndCollideEvent args)
     {
         var otherEnt = args.OtherFixture.Body.Owner;
 
         if (!HasComp<ArtifactComponent>(otherEnt))
             return;
+        component.Contacts.Remove(otherEnt);
 
         if (component.Console != null)
             UpdateUserInterface(component.Console.Value);

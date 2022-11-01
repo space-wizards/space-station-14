@@ -33,7 +33,7 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
 
     public void SetScanButtonDisabled(AnalysisConsoleScanUpdateState state)
     {
-        var disabled = !state.AnalyzerConnected;
+        var disabled = !state.CanScan;
 
         ScanButton.Disabled = disabled;
     }
@@ -72,12 +72,16 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
     public void UpdateInformationDisplay(AnalysisConsoleScanUpdateState state)
     {
         var label = new FormattedMessage();
-        if (!state.AnalyzerConnected) //no analyzer connected
-            label.AddMarkup(Loc.GetString("analysis-console-info-no-scanner"));
-        else if (!state.CanScan) //no artifact
-            label.AddMarkup(Loc.GetString("analysis-console-info-no-artifact"));
-        else if (state.Artifact == null)//ready to go
-            label.AddMarkup(Loc.GetString("analysis-console-info-ready"));
+
+        if (state.Artifact == null)//no scan present
+        {
+            if (!state.AnalyzerConnected) //no analyzer connected
+                label.AddMarkup(Loc.GetString("analysis-console-info-no-scanner"));
+            else if (!state.CanScan) //no artifact
+                label.AddMarkup(Loc.GetString("analysis-console-info-no-artifact"));
+            else if (state.Artifact == null) //ready to go
+                label.AddMarkup(Loc.GetString("analysis-console-info-ready"));
+        }
 
         if (state.Id != null) //node id
             label.AddMarkup(Loc.GetString("analysis-console-info-id", ("id", state.Id))+"\n");
@@ -129,10 +133,13 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
     public void UpdateProgressBar(AnalysisConsoleScanUpdateState state)
     {
         ProgressBar.Visible = state.Scanning;
+        ProgressLabel.Visible = state.Scanning;
 
         if (!state.Scanning)
             return;
 
+        ProgressLabel.Text = Loc.GetString("analysis-console-progress-text",
+            ("seconds", (int) state.TotalTime.TotalSeconds - (int) state.TimeRemaining.TotalSeconds));
         ProgressBar.Value = (float) state.TimeRemaining.Divide(state.TotalTime);
     }
 }
