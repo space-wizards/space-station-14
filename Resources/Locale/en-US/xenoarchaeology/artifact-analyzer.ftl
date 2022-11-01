@@ -1,12 +1,13 @@
 analysis-console-menu-title = analysis console
 analysis-console-server-list-button = Server List
 analysis-console-scan-button = Scan
-analysis-console-scan-tooltip-help = Console must be linked to an artifact analyzer to be able to scan!
-analysis-console-scan-tooltip-info = Scan the artifact to learn information about its structure.
-
+analysis-console-scan-tooltip-info = Scan artifacts to learn information about their structure.
 analysis-console-destroy-button = Destroy
-analysis-console-destroy-button-help = Console must be connected to a server to be able to destroy artifacts!
-analysis-console-destroy-button-info = Destroy the artifact to generate points based on how much of it has been unlocked.
+analysis-console-destroy-button-info = Destroy artifacts to generate points based on how much has been unlocked.
+
+analysis-console-info-no-scanner = No analyzer connected! Please connect one using a multitool.
+analysis-console-info-no-artifact = No artifact present! Place one on the pad then scan for information.
+analysis-console-info-ready = Systems operational. Ready to scan.
 
 analysis-console-info-id = NODE_ID: {$id}
 analysis-console-info-depth = DEPTH: {$depth}
@@ -16,3 +17,5 @@ analysis-console-info-effect = STIMULI: {$effect}
 analysis-console-info-trigger = REACTIONS: {$trigger}
 analysis-console-info-edges = EDGES: {$edges}
 analysis-console-info-completion = COMPLETION_PERCENTAGE: {$percentage}%
+
+analyzer-artifact-destroy-popup = The artifact disintegrated into energy!

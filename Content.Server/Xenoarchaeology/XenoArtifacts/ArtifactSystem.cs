@@ -63,6 +63,15 @@ public sealed partial class ArtifactSystem : EntitySystem
         return price;
     }
 
+    public int GetResearchPointValue(EntityUid uid, ArtifactComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return 0;
+
+        //TODO: make this exist
+        return 10000;
+    }
+
     /// <summary>
     /// Randomize a given artifact.
     /// </summary>

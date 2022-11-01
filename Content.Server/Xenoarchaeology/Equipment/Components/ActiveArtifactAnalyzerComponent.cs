@@ -7,4 +7,7 @@ public sealed class ActiveArtifactAnalyzerComponent : Component
 {
     [DataField("startTime", customTypeSerializer: typeof(TimespanSerializer))]
     public TimeSpan StartTime;
+
+    [ViewVariables]
+    public EntityUid Artifact;
 }

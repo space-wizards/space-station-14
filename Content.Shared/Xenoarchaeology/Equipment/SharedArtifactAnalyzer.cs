@@ -33,6 +33,8 @@ public sealed class AnalysisConsoleScanUpdateState : BoundUserInterfaceState
 
     public bool ServerConnected;
 
+    public bool CanScan;
+
     public int? Id;
 
     public int? Depth;
@@ -47,12 +49,13 @@ public sealed class AnalysisConsoleScanUpdateState : BoundUserInterfaceState
 
     public float? Completion;
 
-    public AnalysisConsoleScanUpdateState(EntityUid? artifact, bool analyzerConnected, bool serverConnected,
+    public AnalysisConsoleScanUpdateState(EntityUid? artifact, bool analyzerConnected, bool serverConnected, bool canScan,
         int? id, int? depth, int? edges, bool? triggered, string? effectProto, string? triggerProto, float? completion)
     {
         Artifact = artifact;
         AnalyzerConnected = analyzerConnected;
         ServerConnected = serverConnected;
+        CanScan = canScan;
 
         Id = id;
         Depth = depth;

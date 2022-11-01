@@ -1,3 +1,4 @@
+using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Xenoarchaeology.Equipment;
 using Content.Shared.Xenoarchaeology.XenoArtifacts;
@@ -30,24 +31,27 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
         DestroyButton.OnPressed += a => OnDestroyButtonPressed?.Invoke(a);
     }
 
-    public void SetScanButtonDisabled(bool disabled)
+    public void SetScanButtonDisabled(AnalysisConsoleScanUpdateState state)
     {
-        ScanButton.Disabled = disabled;
+        var disabled = !state.AnalyzerConnected;
 
-        var tooltip = disabled
-            ? "analysis-console-scan-tooltip-help"
-            : "analysis-console-scan-tooltip-info";
-        ScanButton.ToolTip = Loc.GetString(tooltip);
+        ScanButton.Disabled = disabled;
     }
 
-    public void SetDestroyButtonDisabled(bool disabled)
+    public void SetDestroyButtonDisabled(AnalysisConsoleScanUpdateState state)
     {
+        var disabled = !state.ServerConnected || !state.AnalyzerConnected || state.Artifact == null;
+
         DestroyButton.Disabled = disabled;
 
-        var tooltip = disabled
-            ? "analysis-console-destroy-button-help"
-            : "analysis-console-destroy-button-info";
-        DestroyButton.ToolTip = Loc.GetString(tooltip);
+        if (disabled)
+        {
+            DestroyButton.RemoveStyleClass(StyleBase.ButtonCaution);
+        }
+        else
+        {
+            DestroyButton.AddStyleClass(StyleBase.ButtonCaution);
+        }
     }
 
     public void UpdateArtifactIcon(EntityUid? uid)
@@ -68,12 +72,19 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
     public void UpdateInformationDisplay(AnalysisConsoleScanUpdateState state)
     {
         var label = new FormattedMessage();
-        if (state.Id != null)
+        if (!state.AnalyzerConnected) //no analyzer connected
+            label.AddMarkup(Loc.GetString("analysis-console-info-no-scanner"));
+        else if (!state.CanScan) //no artifact
+            label.AddMarkup(Loc.GetString("analysis-console-info-no-artifact"));
+        else //ready to go
+            label.AddMarkup(Loc.GetString("analysis-console-info-ready"));
+
+        if (state.Id != null) //node id
             label.AddMarkup(Loc.GetString("analysis-console-info-id", ("id", state.Id))+"\n");
-        if (state.Depth != null)
+        if (state.Depth != null) //node depth
             label.AddMarkup(Loc.GetString("analysis-console-info-depth", ("depth", state.Depth))+"\n");
 
-        if (state.Triggered != null)
+        if (state.Triggered != null) //whether it has been triggered
         {
             var activated = state.Triggered.Value
                 ? "analysis-console-info-triggered-true"
@@ -82,27 +93,35 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
         }
 
         label.AddMarkup("\n");
-        if (state.EffectProto != null &&
+        var needSecondNewline = false;
+
+        if (state.EffectProto != null && //possible effects
             _proto.TryIndex<ArtifactEffectPrototype>(state.EffectProto, out var effect) &&
             effect.EffectHint != null)
         {
             label.AddMarkup(Loc.GetString("analysis-console-info-effect",
                 ("effect", Loc.GetString(effect.EffectHint))) + "\n");
+            needSecondNewline = true;
         }
 
-        if (state.TriggerProto != null &&
+        if (state.TriggerProto != null && //possible triggers
             _proto.TryIndex<ArtifactTriggerPrototype>(state.TriggerProto, out var trigger) &&
             trigger.TriggerHint != null)
         {
             label.AddMarkup(Loc.GetString("analysis-console-info-trigger",
                 ("trigger", Loc.GetString(trigger.TriggerHint))) + "\n");
+            needSecondNewline = true;
         }
 
-        label.AddMarkup("\n");
-        if (state.Edges != null)
+        if (needSecondNewline)
+            label.AddMarkup("\n");
+        if (state.Edges != null) //number of edges
             label.AddMarkup(Loc.GetString("analysis-console-info-edges", ("edges", state.Edges))+"\n");
-        if (state.Completion != null)
-            label.AddMarkup(Loc.GetString("analysis-console-info-completion", ("percentage", Math.Round(state.Completion.Value * 100)))+"\n");
+        if (state.Completion != null) //completion percentage
+        {
+            label.AddMarkup(Loc.GetString("analysis-console-info-completion",
+                ("percentage", Math.Round(state.Completion.Value * 100)))+"\n");
+        }
 
         Information.SetMessage(label);
     }

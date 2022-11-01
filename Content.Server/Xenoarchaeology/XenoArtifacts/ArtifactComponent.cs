@@ -1,5 +1,4 @@
 using Content.Shared.Xenoarchaeology.XenoArtifacts;
-using Robust.Shared.Serialization;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts;
 

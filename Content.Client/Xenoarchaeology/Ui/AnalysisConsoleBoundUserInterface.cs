@@ -50,8 +50,8 @@ public sealed class AnalysisConsoleBoundUserInterface : BoundUserInterface
         {
             case AnalysisConsoleScanUpdateState msg:
                 _consoleMenu.UpdateArtifactIcon(msg.Artifact);
-                _consoleMenu.SetDestroyButtonDisabled(!msg.ServerConnected);
-                _consoleMenu.SetScanButtonDisabled(!msg.AnalyzerConnected);
+                _consoleMenu.SetDestroyButtonDisabled(msg);
+                _consoleMenu.SetScanButtonDisabled(msg);
                 _consoleMenu.UpdateInformationDisplay(msg);
                 break;
         }

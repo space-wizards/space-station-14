@@ -1,4 +1,8 @@
-﻿namespace Content.Server.Xenoarchaeology.Equipment.Components;
+﻿using Content.Shared.MachineLinking;
+using Robust.Shared.Audio;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+
+namespace Content.Server.Xenoarchaeology.Equipment.Components;
 
 /// <summary>
 /// This is used for...
@@ -9,6 +13,9 @@ public sealed class AnalysisConsoleComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public EntityUid? AnalyzerEntity;
 
-    //TODO: figure this out later
-    public readonly string ConsolePort = "ArtifactAnalyzerSender";
+    [DataField("linkingPort", customTypeSerializer: typeof(PrototypeIdSerializer<TransmitterPortPrototype>))]
+    public readonly string LinkingPort = "ArtifactAnalyzerSender";
+
+    [DataField("destroySound")]
+    public SoundSpecifier DestroySound = new SoundPathSpecifier("/Audio/Effects/radpulse11.ogg");
 }
