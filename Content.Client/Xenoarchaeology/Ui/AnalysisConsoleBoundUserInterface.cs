@@ -7,13 +7,11 @@ namespace Content.Client.Xenoarchaeology.Ui;
 [UsedImplicitly]
 public sealed class AnalysisConsoleBoundUserInterface : BoundUserInterface
 {
-    public EntityUid AnalysisConsole;
-
     private AnalysisConsoleMenu? _consoleMenu;
 
     public AnalysisConsoleBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
     {
-        AnalysisConsole = owner.Owner;
+
     }
 
     protected override void Open()
@@ -43,16 +41,14 @@ public sealed class AnalysisConsoleBoundUserInterface : BoundUserInterface
     {
         base.UpdateState(state);
 
-        if (_consoleMenu == null)
-            return;
-
         switch (state)
         {
             case AnalysisConsoleScanUpdateState msg:
-                _consoleMenu.UpdateArtifactIcon(msg.Artifact);
-                _consoleMenu.SetDestroyButtonDisabled(msg);
-                _consoleMenu.SetScanButtonDisabled(msg);
-                _consoleMenu.UpdateInformationDisplay(msg);
+                _consoleMenu?.UpdateArtifactIcon(msg.Artifact);
+                _consoleMenu?.SetDestroyButtonDisabled(msg);
+                _consoleMenu?.SetScanButtonDisabled(msg);
+                _consoleMenu?.UpdateInformationDisplay(msg);
+                _consoleMenu?.UpdateProgressBar(msg);
                 break;
         }
     }

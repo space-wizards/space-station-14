@@ -1,5 +1,4 @@
-﻿using Content.Shared.Xenoarchaeology.XenoArtifacts;
-using Robust.Shared.Serialization;
+﻿using Robust.Shared.Serialization;
 
 namespace Content.Shared.Xenoarchaeology.Equipment;
 
@@ -49,8 +48,15 @@ public sealed class AnalysisConsoleScanUpdateState : BoundUserInterfaceState
 
     public float? Completion;
 
+    public bool Scanning;
+
+    public TimeSpan TimeRemaining;
+
+    public TimeSpan TotalTime;
+
     public AnalysisConsoleScanUpdateState(EntityUid? artifact, bool analyzerConnected, bool serverConnected, bool canScan,
-        int? id, int? depth, int? edges, bool? triggered, string? effectProto, string? triggerProto, float? completion)
+        int? id, int? depth, int? edges, bool? triggered, string? effectProto, string? triggerProto, float? completion,
+        bool scanning, TimeSpan timeRemaining, TimeSpan totalTime)
     {
         Artifact = artifact;
         AnalyzerConnected = analyzerConnected;
@@ -64,5 +70,9 @@ public sealed class AnalysisConsoleScanUpdateState : BoundUserInterfaceState
         EffectProto = effectProto;
         TriggerProto = triggerProto;
         Completion = completion;
+
+        Scanning = scanning;
+        TimeRemaining = timeRemaining;
+        TotalTime = totalTime;
     }
 }

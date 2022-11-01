@@ -40,7 +40,7 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
 
     public void SetDestroyButtonDisabled(AnalysisConsoleScanUpdateState state)
     {
-        var disabled = !state.ServerConnected || !state.AnalyzerConnected || state.Artifact == null;
+        var disabled = !state.ServerConnected || !state.CanScan;
 
         DestroyButton.Disabled = disabled;
 
@@ -124,6 +124,16 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
         }
 
         Information.SetMessage(label);
+    }
+
+    public void UpdateProgressBar(AnalysisConsoleScanUpdateState state)
+    {
+        ProgressBar.Visible = state.Scanning;
+
+        if (!state.Scanning)
+            return;
+
+        ProgressBar.Value = (float) state.TimeRemaining.Divide(state.TotalTime);
     }
 }
 

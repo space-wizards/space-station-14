@@ -7,18 +7,29 @@
                       SetSize="540 280">
     <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True">
         <BoxContainer Margin="10 10 10 10" MinWidth="150" Orientation="Vertical" VerticalExpand="True" SizeFlagsStretchRatio="1">
-            <Button Name="ServerSelectionButton"
-                    Text="{Loc 'analysis-console-server-list-button'}"></Button>
-            <BoxContainer MinHeight="5"></BoxContainer>
-            <Button Name="ScanButton"
-                    Text="{Loc 'analysis-console-scan-button'}"
-                    ToolTip="{Loc 'analysis-console-scan-tooltip-info'}">
-            </Button>
-            <BoxContainer MinHeight="5"></BoxContainer>
-            <Button Name="DestroyButton"
-                    Text="{Loc 'analysis-console-destroy-button'}"
-                    ToolTip="{Loc 'analysis-console-destroy-button-info'}">
-            </Button>
+            <BoxContainer Orientation="Vertical" VerticalExpand="True">
+                <Button Name="ServerSelectionButton"
+                        Text="{Loc 'analysis-console-server-list-button'}"></Button>
+                <BoxContainer MinHeight="5"></BoxContainer>
+                <Button Name="ScanButton"
+                        Text="{Loc 'analysis-console-scan-button'}"
+                        ToolTip="{Loc 'analysis-console-scan-tooltip-info'}">
+                </Button>
+                <BoxContainer MinHeight="5"></BoxContainer>
+                <Button Name="DestroyButton"
+                        Text="{Loc 'analysis-console-destroy-button'}"
+                        ToolTip="{Loc 'analysis-console-destroy-button-info'}">
+                </Button>
+            </BoxContainer>
+            <BoxContainer Orientation="Vertical">
+                <ProgressBar
+                    Name="ProgressBar"
+                    MinValue="0"
+                    MaxValue="1"
+                    SetWidth="150"
+                    SetHeight="20">
+                </ProgressBar>
+            </BoxContainer>
         </BoxContainer>
         <customControls:VSeparator StyleClasses="LowDivider"/>
         <PanelContainer Margin="10 10 10 10" HorizontalExpand="True" SizeFlagsStretchRatio="3">
