@@ -97,10 +97,21 @@ namespace Content.Shared.Eye.Blinding
 
             if (Add)
             {
+                if (blindable.Sources == 0)
+                {
+                    var ev = new BlindnessChangedEvent(true);
+                    RaiseLocalEvent(uid, ev, false);
+                }
+
                 blindable.Sources++;
             } else
             {
                 blindable.Sources--;
+                if (blindable.Sources == 0)
+                {
+                    var ev = new BlindnessChangedEvent(true);
+                    RaiseLocalEvent(uid, ev, false);
+                }
             }
 
             blindable.Sources = Math.Max(blindable.Sources, 0);
@@ -154,6 +165,19 @@ namespace Content.Shared.Eye.Blinding
         public BlurryVisionComponentState(float magnitude)
         {
             Magnitude = magnitude;
+        }
+    }
+
+    /// <summary>
+    ///     You became blind or lost blindess, not just changed # of sources.
+    /// </summary>
+    public sealed class BlindnessChangedEvent : EntityEventArgs
+    {
+        public bool Blind;
+
+        public BlindnessChangedEvent(bool blind)
+        {
+            Blind = blind;
         }
     }
 }
