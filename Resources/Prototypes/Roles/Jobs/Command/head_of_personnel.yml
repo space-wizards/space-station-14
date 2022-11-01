@@ -23,11 +23,8 @@
   access:
   - Command
   - HeadOfPersonnel
-  - Brig
+  - Bar
   - Service
-  - Quartermaster
-  - Salvage
-  - Cargo
   - Maintenance
   - Janitor
   - Theatre
