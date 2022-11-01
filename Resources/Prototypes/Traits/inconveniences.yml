@@ -16,11 +16,11 @@
   description: You walk faster, but can sometimes trip
   components:
     - type: Hasty
-      movementSpeedMultiplier: 1.2
+      movementSpeedMultiplier: 1.18
       trySlipInterval: 1
       chanceOfSlip: 0.12
       launchForwardsMultiplier: 1.2
-      stunDuration: 1, 3
+      stunDuration: 1, 4
 
 - type: trait
   id: Paracusia
@@ -28,7 +28,7 @@
   description: You hear sounds which aren't really there
   components:
     - type: Paracusia
-      timeBetweenIncidents: 0.1, 300
+      timeBetweenIncidents: 0.1, 259
       maxSoundDistance: 7
       sounds:
         #- /Audio/Effects/adminhelp.ogg
@@ -47,6 +47,10 @@
         - /Audio/Effects/bodyfall3.ogg
         - /Audio/Effects/bodyfall4.ogg
         - /Audio/Effects/Chemistry/bubbles.ogg
+        - /Audio/Machines/airlock_close.ogg
+        - /Audio/Machines/airlock_deny.ogg
+        - /Audio/Machines/airlock_open.ogg
+        - /Audio/Machines/airlock_ext_open.ogg
         - /Audio/Weapons/ebladeon.ogg
         - /Audio/Weapons/genhit1.ogg
         - /Audio/Weapons/Guns/Hits/bullet_hit.ogg
@@ -64,3 +68,4 @@
         - /Audio/Voice/Human/femalescream_2.ogg
         - /Audio/Voice/Human/femalescream_4.ogg
         - /Audio/Voice/Vox/shriek1.ogg
+        

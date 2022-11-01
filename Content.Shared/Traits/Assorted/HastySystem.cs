@@ -1,4 +1,4 @@
-using Content.Shared.Movement.Components;
+using Content.Shared.Gravity;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Stunnable;
 using Robust.Shared.Physics.Components;
@@ -11,6 +11,8 @@ public sealed class HastySystem : EntitySystem
     [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
     [Dependency] private readonly SharedStunSystem _stunnable = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly SharedGravitySystem _gravity = default!;
+
     [Dependency] private readonly IRobustRandom _random = default!;
 
     private bool _active = false;
@@ -48,6 +50,11 @@ public sealed class HastySystem : EntitySystem
         if (component.LastSlipAttemptTime.AddSeconds(component.TrySlipInterval) >= DateTime.UtcNow)
             return;
         component.LastSlipAttemptTime = DateTime.UtcNow;
+
+        // check if 0 gravity
+        // it would be really funny if you could slip in 0g
+        if (_gravity.IsWeightless(component.Owner))
+            return;
 
         if (_random.NextFloat(0, 1) > component.ChanceOfSlip)
             return;
