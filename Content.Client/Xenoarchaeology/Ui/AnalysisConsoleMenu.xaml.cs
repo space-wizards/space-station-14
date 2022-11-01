@@ -76,7 +76,7 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
             label.AddMarkup(Loc.GetString("analysis-console-info-no-scanner"));
         else if (!state.CanScan) //no artifact
             label.AddMarkup(Loc.GetString("analysis-console-info-no-artifact"));
-        else //ready to go
+        else if (state.Artifact == null)//ready to go
             label.AddMarkup(Loc.GetString("analysis-console-info-ready"));
 
         if (state.Id != null) //node id

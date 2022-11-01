@@ -1,7 +1,5 @@
 ﻿using Content.Server.Xenoarchaeology.XenoArtifacts;
 using Content.Shared.Construction.Prototypes;
-using Content.Shared.MachineLinking;
-using Content.Shared.Xenoarchaeology.XenoArtifacts;
 using Robust.Shared.Serialization.TypeSerializers.Implementations;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -17,7 +15,7 @@ public sealed class ArtifactAnalyzerComponent : Component
     /// How long it takes to analyze an artifact
     /// </summary>
     [DataField("analysisDuration", customTypeSerializer: typeof(TimespanSerializer))]
-    public TimeSpan AnalysisDuration = TimeSpan.FromSeconds(10); //TODO: change this back
+    public TimeSpan AnalysisDuration = TimeSpan.FromSeconds(60);
 
     [ViewVariables(VVAccess.ReadWrite)]
     public float AnalysisDurationMulitplier = 1;
@@ -27,10 +25,6 @@ public sealed class ArtifactAnalyzerComponent : Component
 
     [DataField("partRatingAnalysisDurationMultiplier")]
     public float PartRatingAnalysisDurationMultiplier = 0.75f;
-
-    [DataField("linkingPort", customTypeSerializer: typeof(PrototypeIdSerializer<ReceiverPortPrototype>))]
-    public readonly string LinkingPort = "ArtifactAnalyzerReceiver";
-
 
     [ViewVariables]
     public EntityUid? Console;
@@ -45,9 +39,4 @@ public sealed class ArtifactAnalyzerComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public float? LastAnalyzedCompletion;
     #endregion
-}
-
-public struct ArtifactAnalyzerScanFinishedEvent
-{
-
 }

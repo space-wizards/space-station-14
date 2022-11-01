@@ -15,6 +15,7 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
+using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -39,6 +40,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         SubscribeLocalEvent<ActiveArtifactAnalyzerComponent, ComponentShutdown>(OnAnalyzeEnd);
 
         SubscribeLocalEvent<ArtifactAnalyzerComponent, RefreshPartsEvent>(OnRefreshParts);
+        SubscribeLocalEvent<ArtifactAnalyzerComponent, StartCollideEvent>(OnCollide);
 
         SubscribeLocalEvent<AnalysisConsoleComponent, NewLinkEvent>(OnNewLink);
         SubscribeLocalEvent<AnalysisConsoleComponent, PortDisconnectedEvent>(OnPortDisconnected);
@@ -222,6 +224,9 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
 
     private void OnScannedMoved(EntityUid uid, ActiveScannedArtifactComponent component, ref MoveEvent args)
     {
+        if (!HasComp<TransformComponent>(uid))
+            return;
+
         var ents = _lookup.GetEntitiesIntersecting(component.Scanner,
             LookupFlags.Dynamic | LookupFlags.Sundries | LookupFlags.Approximate);
 
@@ -244,7 +249,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         UpdateAnalyzerInformation(uid, component);
 
         RemComp<ActiveScannedArtifactComponent>(active.Artifact);
-        RemCompDeferred(uid, active);
+        RemComp(uid, active);
         if (component.Console != null)
             UpdateUserInterface(component.Console.Value);
     }
@@ -254,6 +259,17 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         var analysisRating = args.PartRatings[component.MachinePartAnalysisDuration];
 
         component.AnalysisDurationMulitplier = MathF.Pow(component.PartRatingAnalysisDurationMultiplier, analysisRating - 1);
+    }
+
+    private void OnCollide(EntityUid uid, ArtifactAnalyzerComponent component, ref StartCollideEvent args)
+    {
+        var otherEnt = args.OtherFixture.Body.Owner;
+
+        if (!HasComp<ArtifactComponent>(otherEnt))
+            return;
+
+        if (component.Console != null)
+            UpdateUserInterface(component.Console.Value);
     }
 
     private void OnAnalyzeStart(EntityUid uid, ActiveArtifactAnalyzerComponent component, ComponentStartup args)
