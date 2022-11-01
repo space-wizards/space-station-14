@@ -15,8 +15,6 @@
           visible: false
     - type: Item
       sprite: Objects/Tools/geiger.rsi
-    - type: RadiationReceiver
-      canReceive: false
     - type: Geiger
       showControl: true
       showExamine: true
