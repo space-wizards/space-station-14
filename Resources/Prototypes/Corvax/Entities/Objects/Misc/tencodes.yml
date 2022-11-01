@@ -1,7 +1,8 @@
 - type: entity
   parent: Paper
   id: PaperTenCodes
-  name: security ten-code
+  name: security ten-codes
+  description: A list of brevity codes that are used to speed up the transmission of information.
   components:
     - type: Paper
       content: |

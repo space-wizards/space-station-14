@@ -16,5 +16,5 @@ ent-CrateEngineeringElectricalSupplies = ящик электромонтажно
     .desc = NT не несёт ответственности за любые рабочие конфликты, связанные с изолированными перчатками, входящими в комплект этих ящиков.
 ent-CrateEngineeringJetpack = ящик джетпаков
     .desc = Два джетпака для тех, кто не умеет пользоваться огнетушителями.
-ent-CrateEngineeringMiniJetpack = Mini jetpack crate
-    .desc = Two mini jetpacks for those who want an extra challenge.
+ent-CrateEngineeringMiniJetpack = ящик мини-джетпаков
+    .desc = Два мини-джетпака для тех, кому хочется вызова.

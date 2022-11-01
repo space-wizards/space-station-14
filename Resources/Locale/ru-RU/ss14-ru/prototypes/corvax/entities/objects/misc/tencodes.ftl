@@ -1,3 +1,3 @@
-ent-PaperTenCodes = тэн-кода СБ
-    .desc = { ent-Paper.desc }
+ent-PaperTenCodes = тэн-коды СБ
+    .desc = Список специальных сокращений, которые используются для ускорения передачи информации.
     .suffix = { "" }
