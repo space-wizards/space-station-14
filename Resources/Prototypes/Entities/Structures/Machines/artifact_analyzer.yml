@@ -20,7 +20,7 @@
     fixtures:
       - shape:
           !type:PhysShapeAabb
-          bounds: "-0.45,-0.45,0.45,0.00"
+          bounds: "-0.35,-0.35,0.35,0.35"
         density: 190
         mask:
         - MachineMask

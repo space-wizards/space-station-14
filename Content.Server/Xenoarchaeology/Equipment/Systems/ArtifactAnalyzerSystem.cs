@@ -15,6 +15,7 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
@@ -28,7 +29,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly PhysicsSystem _physics = default!;
     [Dependency] private readonly ArtifactSystem _artifact = default!;
 
     /// <inheritdoc/>
@@ -41,6 +42,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
 
         SubscribeLocalEvent<ArtifactAnalyzerComponent, RefreshPartsEvent>(OnRefreshParts);
         SubscribeLocalEvent<ArtifactAnalyzerComponent, StartCollideEvent>(OnCollide);
+        SubscribeLocalEvent<ArtifactAnalyzerComponent, EndCollideEvent>(OnEndCollide);
 
         SubscribeLocalEvent<AnalysisConsoleComponent, NewLinkEvent>(OnNewLink);
         SubscribeLocalEvent<AnalysisConsoleComponent, PortDisconnectedEvent>(OnPortDisconnected);
@@ -80,18 +82,18 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         UpdateAnalyzerInformation(uid, component);
     }
 
-    private EntityUid? GetArtifactForAnalysis(EntityUid? uid, ArtifactAnalyzerComponent? component = null)
+    private EntityUid? GetArtifactForAnalysis(EntityUid? uid, ArtifactAnalyzerComponent? component = null, PhysicsComponent? phys = null)
     {
         if (uid == null)
             return null;
 
-        if (!Resolve(uid.Value, ref component))
+        if (!Resolve(uid.Value, ref component, ref phys))
             return null;
 
-        var ent = _lookup.GetEntitiesIntersecting(uid.Value,
-            LookupFlags.Dynamic | LookupFlags.Sundries | LookupFlags.Approximate);
+        var ent = _physics.GetContactingEntities(phys);
 
-        var validEnts = ent.Where(HasComp<ArtifactComponent>).ToHashSet();
+        var validEnts = ent.Where(x => HasComp<ArtifactComponent>(x.Owner))
+            .Select(x => x.Owner).ToHashSet();
         return validEnts.FirstOrNull();
     }
 
@@ -224,19 +226,24 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
 
     private void OnScannedMoved(EntityUid uid, ActiveScannedArtifactComponent component, ref MoveEvent args)
     {
-        if (!HasComp<TransformComponent>(uid))
+        if (!TryComp<PhysicsComponent>(uid, out var phys))
             return;
 
-        var ents = _lookup.GetEntitiesIntersecting(component.Scanner,
-            LookupFlags.Dynamic | LookupFlags.Sundries | LookupFlags.Approximate);
+        if (!TryComp<PhysicsComponent>(component.Scanner, out var otherPhys))
+            return;
 
-        if (ents.Contains(uid))
+        var ents = _physics.GetContactingEntities(phys);
+
+        if (ents.Contains(otherPhys))
             return;
 
         //Play sfx? idk
-        Logger.Debug("thing was moved.");
+        Logger.Debug("success");
 
         RemComp<ActiveArtifactAnalyzerComponent>(component.Scanner);
+        if (TryComp<ArtifactAnalyzerComponent>(component.Scanner, out var analyzer) && analyzer.Console != null)
+            UpdateUserInterface(analyzer.Console.Value);
+
         RemCompDeferred(uid, component);
     }
 
@@ -262,6 +269,18 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
     }
 
     private void OnCollide(EntityUid uid, ArtifactAnalyzerComponent component, ref StartCollideEvent args)
+    {
+        var otherEnt = args.OtherFixture.Body.Owner;
+
+        if (!HasComp<ArtifactComponent>(otherEnt))
+            return;
+
+        if (component.Console != null)
+            UpdateUserInterface(component.Console.Value);
+    }
+
+    //Todo: this doesn't actually properly update the ui. it's a minor bug tho
+    private void OnEndCollide(EntityUid uid, ArtifactAnalyzerComponent component, ref EndCollideEvent args)
     {
         var otherEnt = args.OtherFixture.Body.Owner;
 
