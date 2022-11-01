@@ -28,7 +28,7 @@ public sealed class DamagePopupSystem : EntitySystem
                 DamagePopupType.Delta => damageDelta.ToString(),
                 DamagePopupType.Total => damageTotal.ToString(),
                 DamagePopupType.Combined => damageDelta + " | " + damageTotal,
-                DamagePopupType.Hit => "Hit!",
+                DamagePopupType.Hit => "!",
                 _ => "Invalid type",
             };
             _popupSystem.PopupEntity(msg, uid, Filter.Pvs(uid, 2F, EntityManager));
