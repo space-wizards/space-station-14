@@ -83,10 +83,10 @@ public sealed class SharpSystem : EntitySystem
         if (!TryComp<SharpComponent>(ev.Sharp, out var sharp))
             return;
 
+        sharp.Butchering.Remove(ev.Entity);
+
         if (_containerSystem.IsEntityInContainer(ev.Entity))
             return;
-
-        sharp.Butchering.Remove(ev.Entity);
 
         var spawnEntities = EntitySpawnCollection.GetSpawns(butcher.SpawnedEntities, _robustRandom);
         var coords = Transform(ev.Entity).MapPosition;
