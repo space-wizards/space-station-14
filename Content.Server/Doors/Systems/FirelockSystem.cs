@@ -92,8 +92,7 @@ namespace Content.Server.Doors.Systems
             DoorComponent? door = null,
             AirtightComponent? airtight = null,
             AppearanceComponent? appearance = null,
-            TransformComponent? xform = null,
-            ApcPowerReceiverComponent? power = null)
+            TransformComponent? xform = null)
         {
             if (!Resolve(uid, ref door, ref appearance, false))
                 return;
