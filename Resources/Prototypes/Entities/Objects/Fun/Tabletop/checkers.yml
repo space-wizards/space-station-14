@@ -11,7 +11,31 @@
   - type: TabletopGame
     boardName: tabletop-checkers-board-name
     size: 338, 274
-    setup: !type:TabletopCheckerSetup
+    setup:
+      pieces:
+        - p: BlackCheckerPiece
+        - P: WhiteCheckerPiece
+        - q: BlackCheckerQueen
+        - Q: WhiteCheckerQueen
+      pieceGrids:
+          # Reusing chess grid.
+        - id: ChessGrid
+          pieceString: 1p1p1p1p/p1p1p1p1/1p1p1p1p/8/8/P1P1P1P1/1P1P1P1P/P1P1P1P1
+      freePieces:
+          - piece: WhiteCheckerQueen
+            position: 3.78125, -1.0
+          - piece: WhiteCheckerQueen
+            position: 3.78125, 0.0
+          - piece: WhiteCheckerQueen
+            position: 3.78125, 1.0
+          - piece: BlackCheckerQueen
+            position: 4.78125, -1.0
+          - piece: BlackCheckerQueen
+            position: 4.78125, 0.0
+          - piece: BlackCheckerQueen
+            position: 4.78125, 1.0
+          - piece: CheckerBoardTabletop
+            position: -1.0, 0.0
 
 # Checkerboard tabletop item (item only visible in tabletop game)
 - type: entity

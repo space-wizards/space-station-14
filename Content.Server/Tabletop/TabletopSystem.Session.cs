@@ -29,7 +29,7 @@ namespace Content.Server.Tabletop
             tabletop.Session = session;
 
             // Since this is the first time opening this session, set up the game
-            tabletop.Setup.SetupTabletop(session, EntityManager);
+            tabletop.Setup.SetupTabletop(tabletop, session, EntityManager);
 
             Logger.Info($"Created tabletop session number {tabletop} at position {session.Position}.");
 

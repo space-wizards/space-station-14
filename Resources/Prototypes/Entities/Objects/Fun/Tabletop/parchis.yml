@@ -11,8 +11,30 @@
   - type: TabletopGame
     boardName: tabletop-parchis-board-name
     size: 574, 574
-    setup:
-      !type:TabletopParchisSetup
+    pieces:
+      r: RedTabletopPiece
+      g: GreenTabletopPiece
+      b: BlueTabletopPiece
+      y: YellowTabletopPiece
+    pieceGrids:
+      - id: redParchisGrid
+        startingPosition: -6.25, -6.25
+        separation: 2.0, 2.0
+        pieceString: rr/rr
+      - id: greenParchisGrid
+        startingPosition: 6.25, -6.25
+        separation: -2.0, 2.0
+        pieceString: gg/gg
+      - id: yellowParchisGrid
+        startingPosition: 6.25, 6.25
+        separation: -2.0, -2.0
+        pieceString: yy/yy
+      - id: blueParchisGrid
+        startingPosition: -6.25, 6.25
+        separation: 2.0, -2.0
+        pieceString: bb/bb
+    freePieces:
+      - piece: ParchisBoardTabletop
 
 # Parchís tabletop item (item only visible in tabletop game)
 - type: entity

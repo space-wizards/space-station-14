@@ -11,7 +11,29 @@
     boardName: tabletop-backgammon-board-name
     size: 550, 410
     setup:
-      !type:TabletopBackgammonSetup
+      boardPrototype: BackgammonBoardTabletop
+    pieces:
+      - p: BlackTabletopPiece
+      - P: WhiteTabletopPiece
+    pieceGrids:
+      - id: topLeftBackgammonGrid
+        startingPositon: -7.35, 5.60
+        separation: 1.25, -0.80
+        pieceString: p3P/p3P/p3P/p/p
+      - id: topRightBackgammonGrid
+        startingPositon: 7.35, 5.60
+        separation: -1.25, -0.80
+        pieceString: p4P/p4P/5P/5P/5P
+      - id: bottomLeftBackgammonGrid
+        startingPositon: -7.35, -5.60
+        separation: 1.25, 0.80
+        pieceString: P3p/P3p/P3p/P/P
+      - id: bottomRightBackgammonGrid
+        startingPositon: 7.35, -5.60
+        separation: -1.25, 0.80
+        pieceString: P4p/P4p/5p/5p/5p
+    freePieces:
+      - piece: BackgammonBoardTabletop
 
 - type: entity
   id: BackgammonBoardTabletop

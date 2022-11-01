@@ -11,7 +11,31 @@
   - type: TabletopGame
     boardName: tabletop-chess-board-name
     size: 338, 274
-    setup: !type:TabletopChessSetup
+    pieces:
+      - P: WhitePawn
+      - N: WhiteKnight
+      - B: WhiteBishop
+      - R: WhiteRook
+      - Q: WhiteQueen
+      - K: WhiteKing
+      - p: BlackPawn
+      - n: BlackKnight
+      - b: BlackBishop
+      - r: BlackRook
+      - q: BlackQueen
+      - k: BlackKing
+    pieceGrids:
+        - id: ChessGrid
+          startingPosition: -4.5, 3.5
+          PieceString: rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR
+    freePieces:
+      # 0.28125 = 9/32
+      - piece: BlackQueen
+        position: 4.78125, 0.5
+      - piece: WhiteQueen
+        position: 4.78125, -0.5
+      - piece: ChessBoardTabletop
+        position: -1.0, 0.0
 
 # Chessboard tabletop item (item only visible in tabletop game)
 - type: entity
