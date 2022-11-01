@@ -28,7 +28,7 @@
   description: You hear sounds which aren't really there
   components:
     - type: Paracusia
-      timeBetweenIncidents: 0.1, 259
+      timeBetweenIncidents: 0.1, 300
       maxSoundDistance: 7
       sounds:
         #- /Audio/Effects/adminhelp.ogg
