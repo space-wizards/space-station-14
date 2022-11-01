@@ -16,11 +16,12 @@ public sealed partial class DefaultGameScreen : UIScreen
         SetAnchorPreset(MainViewport, LayoutPreset.Wide);
         SetAnchorPreset(ViewportContainer, LayoutPreset.Wide);
         SetAnchorAndMarginPreset(TopBar, LayoutPreset.TopLeft, margin: 10);
-        SetAnchorAndMarginPreset(Actions, LayoutPreset.BottomLeft, margin: 10);
+        SetAnchorAndMarginPreset(Actions, LayoutPreset.BottomLeft, margin: 20);
         SetAnchorAndMarginPreset(Ghost, LayoutPreset.BottomWide, margin: 80);
         SetAnchorAndMarginPreset(Hotbar, LayoutPreset.BottomWide, margin: 5);
         SetAnchorAndMarginPreset(Chat, LayoutPreset.TopRight, margin: 10);
         SetAnchorAndMarginPreset(Alerts, LayoutPreset.TopRight, margin: 10);
+        SetAnchorAndMarginPreset(QuickExamine, LayoutPreset.BottomLeft, margin: 0);
 
         Chat.OnResized += ChatOnResized;
     }

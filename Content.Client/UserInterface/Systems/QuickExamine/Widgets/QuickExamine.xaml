@@ -1,0 +1,12 @@
+﻿<widgets:QuickExamine
+    xmlns="https://spacestation14.io"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:widgets="clr-namespace:Content.Client.UserInterface.Systems.QuickExamine.Widgets"
+    VerticalExpand="False"
+    Orientation="Horizontal"
+    HorizontalExpand="False"
+>
+    <PanelContainer>
+    <Label Text=" " Name="QuickExamineLabel" StyleClasses="StyleClassTooltipActionTitle"/>
+    </PanelContainer>
+</widgets:QuickExamine>
