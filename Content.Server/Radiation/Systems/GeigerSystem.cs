@@ -139,7 +139,7 @@ public sealed class GeigerSystem : SharedGeigerSystem
             component.DangerLevel = GeigerDangerLevel.None;
         }
 
-        _radiation.SetCanRecieve(uid, isEnabled);
+        _radiation.SetCanReceive(uid, isEnabled);
 
         UpdateAppearance(uid, component);
         UpdateGeigerSound(uid, component);

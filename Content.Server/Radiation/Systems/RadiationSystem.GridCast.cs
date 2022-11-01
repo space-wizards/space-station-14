@@ -41,8 +41,6 @@ public partial class RadiationSystem
         var receiversTotalRads = new ValueList<(RadiationReceiverComponent, float)>();
         foreach (var (dest, destTrs) in destinations)
         {
-            if (!dest.CanReceive)
-                continue;
             var destWorld = _transform.GetWorldPosition(destTrs, transformQuery);
 
             var rads = 0f;

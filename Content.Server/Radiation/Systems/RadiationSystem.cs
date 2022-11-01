@@ -45,11 +45,18 @@ public sealed partial class RadiationSystem : EntitySystem
         RaiseLocalEvent(uid, msg);
     }
 
-    public void SetCanRecieve(EntityUid uid, bool canReceive, RadiationReceiverComponent? receiver = null)
+    /// <summary>
+    ///     Marks entity to receive/ignore radiation rays.
+    /// </summary>
+    public void SetCanReceive(EntityUid uid, bool canReceive)
     {
-        if (!Resolve(uid, ref receiver))
-            return;
-        receiver.CanReceive = canReceive;
-        receiver.CurrentRadiation = 0f;
+        if (canReceive)
+        {
+            EnsureComp<RadiationReceiverComponent>(uid);
+        }
+        else
+        {
+            RemComp<RadiationReceiverComponent>(uid);
+        }
     }
 }

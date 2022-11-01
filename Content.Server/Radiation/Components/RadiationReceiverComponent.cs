@@ -11,13 +11,6 @@ namespace Content.Server.Radiation.Components;
 public sealed class RadiationReceiverComponent : Component
 {
     /// <summary>
-    ///     Does this object can receive radiation rays?
-    ///     If false will ignore any radiation sources.
-    /// </summary>
-    [DataField("canReceive")]
-    public bool CanReceive = true;
-
-    /// <summary>
     ///     Current radiation value in rads per second.
     ///     Periodically updated by radiation system.
     /// </summary>
