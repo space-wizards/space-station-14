@@ -134,7 +134,11 @@ namespace Content.Server.Lathe
 
             foreach (var (mat, amount) in recipe.RequiredMaterials)
             {
-                _materialStorage.TryChangeMaterialAmount(uid, mat, (int) (-amount * component.MaterialUseMultiplier));
+                var adjustedAmount = recipe.ApplyMaterialDiscount
+                    ? (int) (-amount * component.MaterialUseMultiplier)
+                    : -amount;
+
+                _materialStorage.TryChangeMaterialAmount(uid, mat, adjustedAmount);
             }
             component.Queue.Add(recipe);
 
