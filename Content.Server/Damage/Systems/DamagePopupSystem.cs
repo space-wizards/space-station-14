@@ -1,6 +1,5 @@
 ﻿using Content.Server.Damage.Components;
 using Content.Server.Popups;
-using Content.Server.Weapons.Melee.Events;
 using Content.Shared.Damage;
 using Robust.Shared.Player;
 
