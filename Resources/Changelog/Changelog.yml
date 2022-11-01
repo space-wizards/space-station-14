@@ -1,9 +1,4 @@
 Entries:
-- author: UDaV73rus
-  changes:
-  - {message: Added robes for priest, type: Add}
-  id: 2059
-  time: '2022-07-31T03:16:14.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Makeshift laser guns can no longer be constructed., type: Remove}
@@ -2955,3 +2950,9 @@ Entries:
   - {message: Fixed people getting trapped in disposal trunks., type: Fix}
   id: 2558
   time: '2022-10-31T23:53:06.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed an exploit for generating infinite materials from protolathes.,
+    type: Fix}
+  id: 2559
+  time: '2022-11-01T23:05:01.0000000+00:00'
