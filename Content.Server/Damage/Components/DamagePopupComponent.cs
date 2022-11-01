@@ -6,7 +6,7 @@ namespace Content.Server.Damage.Components;
 public sealed class DamagePopupComponent : Component
 {
     /// <summary>
-    /// String will be used to determine the type of damage popup displayed.
+    /// Enum that will be used to determine the type of damage popup displayed.
     /// </summary>
     [DataField("damagePopupType")] [ViewVariables(VVAccess.ReadWrite)]
     public DamagePopupType Type = DamagePopupType.Combined;

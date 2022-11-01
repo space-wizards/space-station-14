@@ -1,5 +1,6 @@
 ﻿using Content.Server.Damage.Components;
 using Content.Server.Popups;
+using Content.Server.Weapons.Melee.Events;
 using Content.Shared.Damage;
 using Robust.Shared.Player;
 
@@ -17,7 +18,7 @@ public sealed class DamagePopupSystem : EntitySystem
 
     private void OnDamageChange(EntityUid uid, DamagePopupComponent component, DamageChangedEvent args)
     {
-        if (args.DamageIncreased && args.DamageDelta != null)
+        if (args.DamageDelta != null)
         {
             var damageTotal = args.Damageable.TotalDamage;
             var damageDelta = args.DamageDelta.Total;
@@ -30,7 +31,6 @@ public sealed class DamagePopupSystem : EntitySystem
                 DamagePopupType.Hit => "Hit!",
                 _ => "Invalid type",
             };
-
             _popupSystem.PopupEntity(msg, uid, Filter.Pvs(uid, 2F, EntityManager));
         }
     }
