@@ -65,7 +65,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 if (duc != null)
                     duc.Container.Insert(entity, EntityManager, xform, meta: meta);
                 else
-                    xform.AttachParentToContainerOrGrid(EntityManager);
+                    xform.AttachToGridOrMap();
             }
 
             if (duc != null)
