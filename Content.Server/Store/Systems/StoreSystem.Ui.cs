@@ -200,8 +200,8 @@ public sealed partial class StoreSystem : EntitySystem
         {
             var cashId = proto.Cash[value];
             var amountToSpawn = (int) MathF.Floor((float) (amountRemaining / value));
-            var ent = _stack.SpawnMultiple(cashId, amountToSpawn, coordinates);
-            _hands.PickupOrDrop(buyer, ent);
+            var ents = _stack.SpawnMultiple(cashId, amountToSpawn, coordinates);
+            _hands.PickupOrDrop(buyer, ents.Last());
             amountRemaining -= value * amountToSpawn;
         }
 

@@ -90,21 +90,21 @@ namespace Content.Server.Stack
         ///     Say you want to spawn 97 stacks of something that has a max stack count of 30.
         ///     This would spawn 3 stacks of 30 and 1 stack of 7.
         /// </summary>
-        public EntityUid SpawnMultiple(string entityPrototype, int amount, EntityCoordinates spawnPosition)
+        public List<EntityUid> SpawnMultiple(string entityPrototype, int amount, EntityCoordinates spawnPosition)
         {
-            var entity = EntityUid.Invalid;
             var proto = _prototypeManager.Index<EntityPrototype>(entityPrototype);
             proto.TryGetComponent<StackComponent>(out var stack);
             var maxCountPerStack = GetMaxCount(stack);
+            var spawnedEnts = new List<EntityUid>();
             while (amount > 0)
             {
-                entity = Spawn(entityPrototype, spawnPosition);
-
+                var entity = Spawn(entityPrototype, spawnPosition);
+                spawnedEnts.Add(entity);
                 var countAmount = Math.Min(maxCountPerStack, amount);
                 SetCount(entity, countAmount);
                 amount -= countAmount;
             }
-            return entity;
+            return spawnedEnts;
         }
 
         private void OnStackAlternativeInteract(EntityUid uid, StackComponent stack, GetVerbsEvent<AlternativeVerb> args)
