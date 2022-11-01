@@ -335,8 +335,10 @@ namespace Content.Server.GameTicking
 
                 if (_mapManager.TryFindGridAt(toMap, out var foundGrid))
                 {
+                    var gridXform = Transform(foundGrid.GridEntityId);
+
                     return new EntityCoordinates(foundGrid.GridEntityId,
-                        foundGrid.InvWorldMatrix.Transform(toMap.Position));
+                        gridXform.InvWorldMatrix.Transform(toMap.Position));
                 }
 
                 return spawn;
