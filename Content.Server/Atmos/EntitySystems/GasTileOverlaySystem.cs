@@ -209,7 +209,7 @@ namespace Content.Server.Atmos.EntitySystems
             // Afterwards we reset all the chunk data for the next time we tick.
             var players = _playerManager.ServerSessions.Where(x => x.Status == SessionStatus.InGame).ToArray();
             var opts = new ParallelOptions { MaxDegreeOfParallelism = _parMan.ParallelProcessCount };
-            Parallel.For(0, players.Length, opts, i => UpdatePlayer(players[i], curTick));
+            Parallel.ForEach(players, opts, p => UpdatePlayer(p, curTick));
         }
 
         private void UpdatePlayer(IPlayerSession playerSession, GameTick curTick)

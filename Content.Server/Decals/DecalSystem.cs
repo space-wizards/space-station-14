@@ -401,7 +401,7 @@ namespace Content.Server.Decals
 
             var players = _playerManager.ServerSessions.Where(x => x.Status == SessionStatus.InGame).ToArray();
             var opts = new ParallelOptions { MaxDegreeOfParallelism = _parMan.ParallelProcessCount };
-            Parallel.For(0, players.Length, opts, i => UpdatePlayer(players[i]));
+            Parallel.ForEach(players, opts, UpdatePlayer);
             _dirtyChunks.Clear();
         }
 
