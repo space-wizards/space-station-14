@@ -12,10 +12,10 @@
       overflowJobs:
         - Passenger
       availableJobs:
-        CargoTechnician: [ 4, 4 ]
+        CargoTechnician: [ 5, 5 ]
         Passenger: [ -1, -1 ]
         Bartender: [ 1, 1 ]
-        Botanist: [ 4, 4 ]
+        Botanist: [ 3, 4 ]
         Chef: [ 1, 2 ]
         Clown: [ 1, 1 ]
         Janitor: [ 1, 2 ]
@@ -38,9 +38,10 @@
         Quartermaster: [ 1, 1 ]
         SalvageSpecialist: [ 3, 3 ]
         Musician: [ 2, 2 ]
-        AtmosphericTechnician: [ 1, 2 ]
-        TechnicalAssistant: [ 1, 2 ]
-        MedicalIntern: [ 1, 2 ]
-        ServiceWorker: [ 1, 2 ]
-        SecurityCadet: [ 1, 2 ]
+        AtmosphericTechnician: [ 2, 3 ]
+        TechnicalAssistant: [ 3, 3 ]
+        MedicalIntern: [ 3, 3 ]
+        ServiceWorker: [ 3, 3 ]
+        SecurityCadet: [ 3, 3 ]
+        Psychologist: [ 1, 1 ]
         Detective: [ 1, 1 ]
