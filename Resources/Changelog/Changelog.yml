@@ -1,9 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Makeshift laser guns can no longer be constructed., type: Remove}
-  id: 2060
-  time: '2022-07-31T03:34:51.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Hovering over lathe recipes now shows a tooltip that lists the required
@@ -2956,3 +2951,9 @@ Entries:
     type: Fix}
   id: 2559
   time: '2022-11-01T23:05:01.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Added a Toggle Ghosts button on the ghost GUI to get rid of those pesky
+      apparitions., type: Add}
+  id: 2560
+  time: '2022-11-02T01:14:06.0000000+00:00'
