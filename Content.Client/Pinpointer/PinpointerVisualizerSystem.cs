@@ -49,9 +49,11 @@ namespace Content.Client.Pinpointer
                     sprite.LayerSetRotation(PinpointerLayers.Screen, angle);
                     break;
                 case Distance.Far:
-                case Distance.Unknown:
                     sprite.LayerSetState(PinpointerLayers.Screen, "pinonfar");
                     sprite.LayerSetRotation(PinpointerLayers.Screen, angle);
+                    break;
+                case Distance.Unknown:
+                    sprite.LayerSetState(PinpointerLayers.Screen, "pinonnull");
                     break;
             }
         }
