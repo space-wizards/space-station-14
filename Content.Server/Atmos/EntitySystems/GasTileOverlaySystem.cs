@@ -99,28 +99,20 @@ namespace Content.Server.Atmos.EntitySystems
         {
             if (e.NewStatus != SessionStatus.InGame)
             {
-                if (_lastSentChunks.Remove(e.Session, out var set))
-                    ReturnToPool(set);
-                return;
+                if (_lastSentChunks.Remove(e.Session, out var sets))
+                {
+                    foreach (var set in sets.Values)
+                    {
+                        set.Clear();
+                        _chunkIndexPool.Return(set);
+                    }
+                }
             }
 
             if (!_lastSentChunks.ContainsKey(e.Session))
             {
-                _lastSentChunks[e.Session] = _chunkViewerPool.Get();
-                DebugTools.Assert(_lastSentChunks[e.Session].Count == 0);
+                _lastSentChunks[e.Session] = new();
             }
-        }
-
-        private void ReturnToPool(Dictionary<EntityUid, HashSet<Vector2i>> chunks)
-        {
-            foreach (var (_, previous) in chunks)
-            {
-                previous.Clear();
-                _chunkIndexPool.Return(previous);
-            }
-
-            chunks.Clear();
-            _chunkViewerPool.Return(chunks);
         }
 
         /// <summary>
@@ -296,11 +288,12 @@ namespace Content.Server.Atmos.EntitySystems
 
             foreach (var data in _lastSentChunks.Values)
             {
-                ReturnToPool(data);
-            }
+                foreach (var previous in data.Values)
+                {
+                    previous.Clear();
+                    _chunkIndexPool.Return(previous);
+                }
 
-            foreach (var data in _lastSentChunks.Values)
-            {
                 data.Clear();
             }
         }
