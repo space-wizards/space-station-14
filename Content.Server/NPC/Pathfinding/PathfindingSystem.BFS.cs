@@ -25,6 +25,12 @@ public sealed partial class PathfindingSystem
         // Re-validate nodes
         else
         {
+            // Theoretically this shouldn't be happening, but practically...
+            if (request.Frontier.Count == 0)
+            {
+                return PathResult.NoPath;
+            }
+
             (_, currentNode) = request.Frontier.Peek();
 
             if (!currentNode.IsValid())

@@ -1,5 +1,7 @@
 using System.Threading;
+using Content.Shared.Construction.Prototypes;
 using Robust.Shared.Audio;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Singularity.Components
 {
@@ -18,14 +20,102 @@ namespace Content.Server.Singularity.Components
         public const float Volume = 0.5f;
         public const float Distance = 6f;
 
-        [ViewVariables] public int FireShotCounter;
+        /// <summary>
+        /// counts the number of consecutive shots fired.
+        /// </summary>
+        [ViewVariables]
+        public int FireShotCounter;
 
-        [ViewVariables] [DataField("fireSound")] public SoundSpecifier FireSound = new SoundPathSpecifier("/Audio/Weapons/emitter.ogg");
-        [ViewVariables] [DataField("boltType")] public string BoltType = "EmitterBolt";
-        [ViewVariables] [DataField("powerUseActive")] public int PowerUseActive = 500;
-        [ViewVariables] [DataField("fireBurstSize")] public int FireBurstSize = 3;
-        [ViewVariables] [DataField("fireInterval")] public TimeSpan FireInterval = TimeSpan.FromSeconds(2);
-        [ViewVariables] [DataField("fireBurstDelayMin")] public TimeSpan FireBurstDelayMin = TimeSpan.FromSeconds(2);
-        [ViewVariables] [DataField("fireBurstDelayMax")] public TimeSpan FireBurstDelayMax = TimeSpan.FromSeconds(10);
+        [DataField("fireSound"), ViewVariables]
+        public SoundSpecifier FireSound = new SoundPathSpecifier("/Audio/Weapons/emitter.ogg");
+
+        /// <summary>
+        /// The entity that is spawned when the emitter fires.
+        /// </summary>
+        [DataField("boltType"), ViewVariables]
+        public string BoltType = "EmitterBolt";
+
+        /// <summary>
+        /// The current amount of power being used.
+        /// </summary>
+        [DataField("powerUseActive"), ViewVariables]
+        public int PowerUseActive = 600;
+
+        /// <summary>
+        /// The base amount of power that is consumed.
+        /// Used in machine part rating calculations.
+        /// </summary>
+        [DataField("basePowerUseActive"), ViewVariables(VVAccess.ReadWrite)]
+        public int BasePowerUseActive = 600;
+
+        /// <summary>
+        /// Multiplier that is applied to the basePowerUseActive
+        /// to get the actual power use.
+        /// </summary>
+        [DataField("powerUseMultiplier")]
+        public float PowerUseMultiplier = 0.75f;
+
+        /// <summary>
+        /// The machine part used to reduce the power use of the machine.
+        /// </summary>
+        [DataField("machinePartPowerUse", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
+        public string MachinePartPowerUse = "Capacitor";
+
+        /// <summary>
+        /// The amount of shots that are fired in a single "burst"
+        /// </summary>
+        [DataField("fireBurstSize"), ViewVariables]
+        public int FireBurstSize = 3;
+
+        /// <summary>
+        /// The time between each shot during a burst.
+        /// </summary>
+        [DataField("fireInterval"), ViewVariables]
+        public TimeSpan FireInterval = TimeSpan.FromSeconds(2);
+
+        /// <summary>
+        /// The base amount of time between each shot during a burst.
+        /// </summary>
+        [DataField("baseFireInterval"), ViewVariables(VVAccess.ReadWrite)]
+        public TimeSpan BaseFireInterval = TimeSpan.FromSeconds(2);
+
+        /// <summary>
+        /// The current minimum delay between bursts.
+        /// </summary>
+        [DataField("fireBurstDelayMin"), ViewVariables]
+        public TimeSpan FireBurstDelayMin = TimeSpan.FromSeconds(4);
+
+        /// <summary>
+        /// The current maximum delay between bursts.
+        /// </summary>
+        [DataField("fireBurstDelayMax"), ViewVariables]
+        public TimeSpan FireBurstDelayMax = TimeSpan.FromSeconds(10);
+
+        /// <summary>
+        /// The base minimum delay between shot bursts.
+        /// Used for machine part rating calculations.
+        /// </summary>
+        [DataField("baseFireBurstDelayMin"), ViewVariables]
+        public TimeSpan BaseFireBurstDelayMin = TimeSpan.FromSeconds(4);
+
+        /// <summary>
+        /// The base maximum delay between shot bursts.
+        /// Used for machine part rating calculations.
+        /// </summary>
+        [DataField("baseFireBurstDelayMax"), ViewVariables]
+        public TimeSpan BaseFireBurstDelayMax = TimeSpan.FromSeconds(10);
+
+        /// <summary>
+        /// The multiplier for the base delay between shot bursts as well as
+        /// the fire interval
+        /// </summary>
+        [DataField("fireRateMultiplier"), ViewVariables(VVAccess.ReadWrite)]
+        public float FireRateMultiplier = 0.8f;
+
+        /// <summary>
+        /// The machine part that affects burst delay.
+        /// </summary>
+        [DataField("machinePartFireRate", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
+        public string MachinePartFireRate = "Laser";
     }
 }

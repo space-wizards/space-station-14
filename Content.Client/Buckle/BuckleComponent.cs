@@ -46,7 +46,12 @@ namespace Content.Client.Buckle
                 return;
             }
 
+            // Adjust draw depth when the chair faces north so that the seat back is drawn over the player.
+            // Reset the draw depth when rotated in any other direction.
             // TODO when ECSing, make this a visualizer
+            // This code was written before rotatable viewports were introduced, so hard-coding Direction.North
+            // and comparing it against LocalRotation now breaks this in other rotations. This is a FIXME, but
+            // better to get it working for most people before we look at a more permanent solution.
             if (_buckled &&
                 LastEntityBuckledTo != null &&
                 EntMan.GetComponent<TransformComponent>(LastEntityBuckledTo.Value).LocalRotation.GetCardinalDir() == Direction.North &&
@@ -57,7 +62,8 @@ namespace Content.Client.Buckle
                 return;
             }
 
-            if (_originalDrawDepth.HasValue && !_buckled)
+            // If here, we're not turning north and should restore the saved draw depth.
+            if (_originalDrawDepth.HasValue)
             {
                 ownerSprite.DrawDepth = _originalDrawDepth.Value;
                 _originalDrawDepth = null;

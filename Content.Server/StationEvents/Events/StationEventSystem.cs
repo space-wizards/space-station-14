@@ -24,6 +24,7 @@ namespace Content.Server.StationEvents.Events
         [Dependency] protected readonly IAdminLogManager AdminLogManager = default!;
         [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
         [Dependency] protected readonly IMapManager MapManager = default!;
+        [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
         [Dependency] protected readonly ChatSystem ChatSystem = default!;
         [Dependency] protected readonly StationSystem StationSystem = default!;
 
@@ -146,12 +147,12 @@ namespace Content.Server.StationEvents.Events
 
             if (!TryComp<IMapGridComponent>(targetGrid, out var gridComp))
                 return false;
+
             var grid = gridComp.Grid;
 
-            var atmosphereSystem = Get<AtmosphereSystem>();
             var found = false;
-            var gridBounds = grid.WorldAABB;
-            var gridPos = grid.WorldPosition;
+            var (gridPos, _, gridMatrix) = Transform(targetGrid).GetWorldPositionRotationMatrix();
+            var gridBounds = gridMatrix.TransformBox(grid.LocalAABB);
 
             for (var i = 0; i < 10; i++)
             {
@@ -159,8 +160,13 @@ namespace Content.Server.StationEvents.Events
                 var randomY = RobustRandom.Next((int) gridBounds.Bottom, (int) gridBounds.Top);
 
                 tile = new Vector2i(randomX - (int) gridPos.X, randomY - (int) gridPos.Y);
-                if (atmosphereSystem.IsTileSpace(grid.GridEntityId, Transform(targetGrid).MapUid, tile, mapGridComp:gridComp)
-                    || atmosphereSystem.IsTileAirBlocked(grid.GridEntityId, tile, mapGridComp:gridComp)) continue;
+                if (_atmosphere.IsTileSpace(grid.GridEntityId, Transform(targetGrid).MapUid, tile,
+                        mapGridComp: gridComp)
+                    || _atmosphere.IsTileAirBlocked(grid.GridEntityId, tile, mapGridComp: gridComp))
+                {
+                    continue;
+                }
+
                 found = true;
                 targetCoords = grid.GridTileToLocal(tile);
                 break;
