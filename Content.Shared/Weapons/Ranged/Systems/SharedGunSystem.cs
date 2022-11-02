@@ -292,7 +292,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         if (TryComp<PhysicsComponent>(user, out var userPhysics))
         {
             if (Gravity.IsWeightless(user, userPhysics))
-                CauseImpulse(fromCoordinates, toCoordinates.Value, userPhysics, user);
+                CauseImpulse(fromCoordinates, toCoordinates.Value, userPhysics);
         }
         Dirty(gun);
     }
@@ -375,11 +375,8 @@ public abstract partial class SharedGunSystem : EntitySystem
         CreateEffect(gun, ev, user);
     }
 
-    public void CauseImpulse(EntityCoordinates fromCoordinates, EntityCoordinates toCoordinates, PhysicsComponent userPhysics, EntityUid? user = null)
+    public void CauseImpulse(EntityCoordinates fromCoordinates, EntityCoordinates toCoordinates, PhysicsComponent userPhysics)
     {
-        if(user == null)
-            return;
-
         var fromMap = fromCoordinates.ToMap(EntityManager);
         var toMap = toCoordinates.ToMapPos(EntityManager);
         var mapDirection = toMap - fromMap.Position;
