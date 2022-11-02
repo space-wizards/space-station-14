@@ -9,3 +9,56 @@
         params:
           variation: 0.2
       timeBetweenIncidents: 0.3, 300
+
+- type: trait
+  id: Paracusia
+  name: Paracusia
+  description: You hear sounds which aren't really there
+  components:
+    - type: Paracusia
+      timeBetweenIncidents: 0.1, 300
+      maxSoundDistance: 7
+      sounds:
+        #- /Audio/Effects/adminhelp.ogg
+        - /Audio/Effects/countdown.ogg
+        - /Audio/Effects/explosion1.ogg
+        - /Audio/Effects/explosion2.ogg
+        - /Audio/Effects/explosion3.ogg
+        - /Audio/Effects/explosion4.ogg
+        - /Audio/Effects/explosion5.ogg
+        - /Audio/Effects/explosion6.ogg
+        - /Audio/Effects/glass_break1.ogg
+        - /Audio/Effects/glass_break2.ogg
+        - /Audio/Effects/glass_break3.ogg
+        - /Audio/Effects/bodyfall1.ogg
+        - /Audio/Effects/bodyfall2.ogg
+        - /Audio/Effects/bodyfall3.ogg
+        - /Audio/Effects/bodyfall4.ogg
+        - /Audio/Effects/Chemistry/bubbles.ogg
+        - /Audio/Machines/airlock_close.ogg
+        - /Audio/Machines/airlock_deny.ogg
+        - /Audio/Machines/airlock_open.ogg
+        - /Audio/Machines/airlock_ext_open.ogg
+        - /Audio/Weapons/ebladeon.ogg
+        - /Audio/Weapons/smash.ogg
+        - /Audio/Weapons/bladeslice.ogg
+        - /Audio/Weapons/punch1.ogg
+        - /Audio/Weapons/punch2.ogg
+        - /Audio/Weapons/punch3.ogg
+        - /Audio/Weapons/punch4.ogg
+        - /Audio/Weapons/genhit1.ogg
+        - /Audio/Weapons/Guns/Hits/bullet_hit.ogg
+        - /Audio/Weapons/Guns/Hits/snap.ogg
+        - /Audio/Weapons/Guns/Gunshots/atreides.ogg
+        - /Audio/Weapons/Guns/Gunshots/c-20r.ogg
+        - /Audio/Weapons/Guns/Gunshots/pistol.ogg
+        - /Audio/Voice/Talk/lizard.ogg
+        - /Audio/Voice/Talk/pai.ogg
+        - /Audio/Voice/Talk/speak_1.ogg
+        - /Audio/Voice/Talk/speak_2_ask.ogg
+        - /Audio/Voice/Talk/speak_3_exclaim.ogg
+        - /Audio/Voice/Human/malescream_1.ogg
+        - /Audio/Voice/Human/malescream_6.ogg
+        - /Audio/Voice/Human/femalescream_2.ogg
+        - /Audio/Voice/Human/femalescream_4.ogg
+        - /Audio/Voice/Vox/shriek1.ogg
