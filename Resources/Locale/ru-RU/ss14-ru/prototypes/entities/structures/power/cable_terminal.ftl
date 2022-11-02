@@ -1,3 +1,3 @@
-ent-CableTerminal = кабельная клемма
+ent-CableTerminal = кабельный терминал
     .desc = { "" }
     .suffix = { "" }
