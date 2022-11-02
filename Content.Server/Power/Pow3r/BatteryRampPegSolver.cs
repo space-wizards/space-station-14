@@ -29,7 +29,7 @@ namespace Content.Server.Power.Pow3r
 
             // Each network height layer can be run in parallel without issues.
             var opts = new ParallelOptions { MaxDegreeOfParallelism = parallel };
-            for (var i = state.GroupedNets.Count - 1; i >= 0; i--)
+            foreach (var group in state.GroupedNets)
             {
                 // Note that many net-layers only have a handful of networks.
                 // E.g., the number of nets from lowest to heights for box and saltern are:
@@ -40,7 +40,7 @@ namespace Content.Server.Power.Pow3r
                 //
                 // TODO make GroupByNetworkDepth evaluate the TOTAL size of each layer (i.e. loads + chargers + suppliers + discharger)
                 // Then decide based on total layer size whether its worth parallelizing that layer?
-                Parallel.ForEach(state.GroupedNets[i], opts, net => UpdateNetwork(net, state, frameTime));
+                Parallel.ForEach(group, opts, net => UpdateNetwork(net, state, frameTime));
             }
 
             ClearBatteries(state);

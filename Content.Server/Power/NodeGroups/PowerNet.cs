@@ -1,12 +1,11 @@
-using System.Linq;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Power.Pow3r;
 using JetBrains.Annotations;
-using Prometheus.DotNetRuntime;
 using Robust.Shared.Utility;
+using System.Linq;
 
 namespace Content.Server.Power.NodeGroups
 {
