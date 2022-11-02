@@ -27,7 +27,7 @@ namespace Content.Shared.Pinpointer
         public EntityUid? Target = null;
         public bool IsActive = false;
         public Direction DirectionToTarget = Direction.Invalid;
-        public Distance DistanceToTarget = Distance.UNKNOWN;
+        public Distance DistanceToTarget = Distance.Unknown;
     }
 
     [Serializable, NetSerializable]
@@ -41,10 +41,10 @@ namespace Content.Shared.Pinpointer
     [Serializable, NetSerializable]
     public enum Distance : byte
     {
-        UNKNOWN,
-        REACHED,
-        CLOSE,
-        MEDIUM,
-        FAR
+        Unknown,
+        Reached,
+        Close,
+        Medium,
+        Far
     }
 }

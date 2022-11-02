@@ -85,14 +85,14 @@ namespace Content.Server.Pinpointer
 
             foreach (var comp in EntityManager.GetAllComponents(whitelist))
             {
-                if (!xformQuery.TryGetComponent(comp.Owner, out var compXform) ||
-                    compXform.MapID != mapId) continue;
+                if (!xformQuery.TryGetComponent(comp.Owner, out var compXform) || compXform.MapID != mapId)
+                    continue;
 
                 var dist = (_transform.GetWorldPosition(compXform, xformQuery) - worldPos).LengthSquared;
                 l.TryAdd(dist, comp.Owner);
             }
 
-            // return uid with a smallest distacne
+            // return uid with a smallest distance
             return l.Count > 0 ? l.First().Value : null;
         }
 
@@ -124,7 +124,7 @@ namespace Content.Server.Pinpointer
             if (target == null || !EntityManager.EntityExists(target.Value))
             {
                 SetDirection(uid, Direction.Invalid, pinpointer);
-                SetDistance(uid, Distance.UNKNOWN, pinpointer);
+                SetDistance(uid, Distance.Unknown, pinpointer);
                 return;
             }
 
@@ -139,14 +139,14 @@ namespace Content.Server.Pinpointer
             else
             {
                 SetDirection(uid, Direction.Invalid, pinpointer);
-                SetDistance(uid, Distance.UNKNOWN, pinpointer);
+                SetDistance(uid, Distance.Unknown, pinpointer);
             }
         }
 
         /// <summary>
         ///     Calculate direction from pinUid to trgUid
         /// </summary>
-        /// <returns>Null if failed to caluclate distance between two entities</returns>
+        /// <returns>Null if failed to calculate distance between two entities</returns>
         private Vector2? CalculateDirection(EntityUid pinUid, EntityUid trgUid)
         {
             var xformQuery = GetEntityQuery<TransformComponent>();
@@ -169,17 +169,17 @@ namespace Content.Server.Pinpointer
         private Distance CalculateDistance(EntityUid uid, Vector2 vec, PinpointerComponent? pinpointer = null)
         {
             if (!Resolve(uid, ref pinpointer))
-                return Distance.UNKNOWN;
+                return Distance.Unknown;
 
             var dist = vec.Length;
             if (dist <= pinpointer.ReachedDistance)
-                return Distance.REACHED;
+                return Distance.Reached;
             else if (dist <= pinpointer.CloseDistance)
-                return Distance.CLOSE;
+                return Distance.Close;
             else if (dist <= pinpointer.MediumDistance)
-                return Distance.MEDIUM;
+                return Distance.Medium;
             else
-                return Distance.FAR;
+                return Distance.Far;
         }
     }
 }

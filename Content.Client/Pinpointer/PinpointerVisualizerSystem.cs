@@ -33,23 +33,23 @@ namespace Content.Client.Pinpointer
 
             // check distance to target
             if (!args.Component.TryGetData(PinpointerVisuals.TargetDistance, out Distance dis))
-                dis = Distance.UNKNOWN;
+                dis = Distance.Unknown;
 
             switch (dis)
             {
-                case Distance.REACHED:
+                case Distance.Reached:
                     sprite.LayerSetState(PinpointerLayers.Screen, "pinondirect");
                     break;
-                case Distance.CLOSE:
+                case Distance.Close:
                     sprite.LayerSetState(PinpointerLayers.Screen, "pinonclose");
                     sprite.LayerSetRotation(PinpointerLayers.Screen, dir.ToAngle());
                     break;
-                case Distance.MEDIUM:
+                case Distance.Medium:
                     sprite.LayerSetState(PinpointerLayers.Screen, "pinonmedium");
                     sprite.LayerSetRotation(PinpointerLayers.Screen, dir.ToAngle());
                     break;
-                case Distance.FAR:
-                case Distance.UNKNOWN:
+                case Distance.Far:
+                case Distance.Unknown:
                     sprite.LayerSetState(PinpointerLayers.Screen, "pinonfar");
                     sprite.LayerSetRotation(PinpointerLayers.Screen, dir.ToAngle());
                     break;
