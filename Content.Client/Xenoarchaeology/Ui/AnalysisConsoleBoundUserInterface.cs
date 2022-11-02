@@ -44,7 +44,6 @@ public sealed class AnalysisConsoleBoundUserInterface : BoundUserInterface
         switch (state)
         {
             case AnalysisConsoleScanUpdateState msg:
-                _consoleMenu?.UpdateArtifactIcon(msg.Artifact);
                 _consoleMenu?.SetDestroyButtonDisabled(msg);
                 _consoleMenu?.SetScanButtonDisabled(msg);
                 _consoleMenu?.UpdateInformationDisplay(msg);

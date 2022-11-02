@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Serialization.TypeSerializers.Implementations;
+﻿using Robust.Shared.Audio;
+using Robust.Shared.Serialization.TypeSerializers.Implementations;
 
 namespace Content.Server.Xenoarchaeology.Equipment.Components;
 
@@ -10,4 +11,8 @@ public sealed class ActiveArtifactAnalyzerComponent : Component
 
     [ViewVariables]
     public EntityUid Artifact;
+
+    public SoundSpecifier ScanningSound = new SoundPathSpecifier("/Audio/Machines/scan_loop.ogg");
+    public SoundSpecifier ScanFinishedSound = new SoundPathSpecifier("/Audio/Machines/scan_finish.ogg");
+    public IPlayingAudioStream? LoopStream;
 }

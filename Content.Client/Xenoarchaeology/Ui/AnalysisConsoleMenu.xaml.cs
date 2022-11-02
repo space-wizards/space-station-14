@@ -71,63 +71,74 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
 
     public void UpdateInformationDisplay(AnalysisConsoleScanUpdateState state)
     {
-        var label = new FormattedMessage();
+        var message = new FormattedMessage();
+
+        if (state.Scanning)
+        {
+            message.AddMarkup(Loc.GetString("analysis-console-info-scanner"));
+            Information.SetMessage(message);
+            return;
+        }
+
+        //do this here
+        UpdateArtifactIcon(state.Artifact);
 
         if (state.Artifact == null)//no scan present
         {
             if (!state.AnalyzerConnected) //no analyzer connected
-                label.AddMarkup(Loc.GetString("analysis-console-info-no-scanner"));
+                message.AddMarkup(Loc.GetString("analysis-console-info-no-scanner"));
             else if (!state.CanScan) //no artifact
-                label.AddMarkup(Loc.GetString("analysis-console-info-no-artifact"));
+                message.AddMarkup(Loc.GetString("analysis-console-info-no-artifact"));
             else if (state.Artifact == null) //ready to go
-                label.AddMarkup(Loc.GetString("analysis-console-info-ready"));
+                message.AddMarkup(Loc.GetString("analysis-console-info-ready"));
         }
 
         if (state.Id != null) //node id
-            label.AddMarkup(Loc.GetString("analysis-console-info-id", ("id", state.Id))+"\n");
+            message.AddMarkup(Loc.GetString("analysis-console-info-id", ("id", state.Id))+"\n");
         if (state.Depth != null) //node depth
-            label.AddMarkup(Loc.GetString("analysis-console-info-depth", ("depth", state.Depth))+"\n");
+            message.AddMarkup(Loc.GetString("analysis-console-info-depth", ("depth", state.Depth))+"\n");
 
         if (state.Triggered != null) //whether it has been triggered
         {
             var activated = state.Triggered.Value
                 ? "analysis-console-info-triggered-true"
                 : "analysis-console-info-triggered-false";
-            label.AddMarkup(Loc.GetString(activated)+"\n");
+            message.AddMarkup(Loc.GetString(activated)+"\n");
         }
 
-        label.AddMarkup("\n");
+        message.AddMarkup("\n");
         var needSecondNewline = false;
-
-        if (state.EffectProto != null && //possible effects
-            _proto.TryIndex<ArtifactEffectPrototype>(state.EffectProto, out var effect) &&
-            effect.EffectHint != null)
-        {
-            label.AddMarkup(Loc.GetString("analysis-console-info-effect",
-                ("effect", Loc.GetString(effect.EffectHint))) + "\n");
-            needSecondNewline = true;
-        }
 
         if (state.TriggerProto != null && //possible triggers
             _proto.TryIndex<ArtifactTriggerPrototype>(state.TriggerProto, out var trigger) &&
             trigger.TriggerHint != null)
         {
-            label.AddMarkup(Loc.GetString("analysis-console-info-trigger",
+            message.AddMarkup(Loc.GetString("analysis-console-info-trigger",
                 ("trigger", Loc.GetString(trigger.TriggerHint))) + "\n");
             needSecondNewline = true;
         }
 
+        if (state.EffectProto != null && //possible effects
+            _proto.TryIndex<ArtifactEffectPrototype>(state.EffectProto, out var effect) &&
+            effect.EffectHint != null)
+        {
+            message.AddMarkup(Loc.GetString("analysis-console-info-effect",
+                ("effect", Loc.GetString(effect.EffectHint))) + "\n");
+            needSecondNewline = true;
+        }
+
         if (needSecondNewline)
-            label.AddMarkup("\n");
+            message.AddMarkup("\n");
+
         if (state.Edges != null) //number of edges
-            label.AddMarkup(Loc.GetString("analysis-console-info-edges", ("edges", state.Edges))+"\n");
+            message.AddMarkup(Loc.GetString("analysis-console-info-edges", ("edges", state.Edges))+"\n");
         if (state.Completion != null) //completion percentage
         {
-            label.AddMarkup(Loc.GetString("analysis-console-info-completion",
+            message.AddMarkup(Loc.GetString("analysis-console-info-completion",
                 ("percentage", Math.Round(state.Completion.Value * 100)))+"\n");
         }
 
-        Information.SetMessage(label);
+        Information.SetMessage(message);
     }
 
     public void UpdateProgressBar(AnalysisConsoleScanUpdateState state)

@@ -13,11 +13,12 @@ analysis-console-info-id = NODE_ID: {$id}
 analysis-console-info-depth = DEPTH: {$depth}
 analysis-console-info-triggered-true = ACTIVATED: TRUE
 analysis-console-info-triggered-false = ACTIVATED: FALSE
-analysis-console-info-effect = STIMULI: {$effect}
-analysis-console-info-trigger = REACTIONS: {$trigger}
+analysis-console-info-effect = REACTION: {$effect}
+analysis-console-info-trigger = STIMULUS: {$trigger}
 analysis-console-info-edges = EDGES: {$edges}
 analysis-console-info-completion = COMPLETION_PERCENTAGE: {$percentage}%
 
+analysis-console-info-scanner = Scanning...
 analysis-console-progress-text = {$seconds ->
     [one] T-{$seconds} second
     *[other] T-{$seconds} seconds

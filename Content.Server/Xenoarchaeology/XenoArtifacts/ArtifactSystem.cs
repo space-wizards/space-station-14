@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.Server.Cargo.Systems;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
-using Content.Shared.Xenoarchaeology.XenoArtifacts;
 using JetBrains.Annotations;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -12,6 +11,9 @@ public sealed partial class ArtifactSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+
+    private const int PricePerNode = 500;
+    private const int PointsPerNode = 4000;
 
     public override void Initialize()
     {
@@ -49,7 +51,7 @@ public sealed partial class ArtifactSystem : EntitySystem
         args.Price =+ price * fullyExploredBonus;
     }
 
-    private double GetNodePrice(ArtifactNode node)
+    private float GetNodePrice(ArtifactNode node)
     {
         if (!node.Discovered) //no money for undiscovered nodes.
             return 0;
@@ -59,17 +61,37 @@ public sealed partial class ArtifactSystem : EntitySystem
         //the danger is the average of node depth, effect danger, and trigger danger.
         var nodeDanger = (node.Depth + node.Effect.TargetDepth + node.Trigger.TargetDepth) / 3;
 
-        var price = MathF.Pow(2f, nodeDanger) * 500 * priceMultiplier;
+        var price = MathF.Pow(2f, nodeDanger) * PricePerNode * priceMultiplier;
         return price;
     }
 
+    /// <summary>
+    /// Calculates how many research points the artifact is worht
+    /// </summary>
+    /// <remarks>
+    /// Rebalance this shit at some point. Definitely OP.
+    /// </remarks>
     public int GetResearchPointValue(EntityUid uid, ArtifactComponent? component = null)
     {
-        if (!Resolve(uid, ref component))
+        if (!Resolve(uid, ref component) || component.NodeTree == null)
             return 0;
 
-        //TODO: make this exist
-        return 10000;
+        var sumValue = component.NodeTree.AllNodes.Sum(GetNodePointValue);
+        var fullyExploredBonus = component.NodeTree.AllNodes.Any(x => !x.Triggered) ? 1 : 1.25f;
+
+        var pointValue = (int) (sumValue * fullyExploredBonus);
+        return pointValue;
+    }
+
+    private float GetNodePointValue(ArtifactNode node)
+    {
+        if (!node.Discovered)
+            return 0;
+
+        var valueDeduction = !node.Triggered ? 0.5f : 1;
+        var nodeDanger = (node.Depth + node.Effect.TargetDepth + node.Trigger.TargetDepth) / 3;
+        
+        return (nodeDanger+1) * PointsPerNode * valueDeduction;
     }
 
     /// <summary>

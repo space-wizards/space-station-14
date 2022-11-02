@@ -51,9 +51,11 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         SubscribeLocalEvent<AnalysisConsoleComponent, AnalysisConsoleScanButtonPressedMessage>(OnScanButton);
         SubscribeLocalEvent<AnalysisConsoleComponent, AnalysisConsoleDestroyButtonPressedMessage>(OnDestroyButton);
 
-        SubscribeLocalEvent<AnalysisConsoleComponent, ResearchClientServerSelectedMessage>(UpdateUserInterface, after: new []{typeof(ResearchSystem)});
-        SubscribeLocalEvent<AnalysisConsoleComponent, ResearchClientServerDeselectedMessage>(UpdateUserInterface, after: new []{typeof(ResearchSystem)});
-        SubscribeLocalEvent<AnalysisConsoleComponent, BeforeActivatableUIOpenEvent>(UpdateUserInterface);
+        SubscribeLocalEvent<AnalysisConsoleComponent, ResearchClientServerSelectedMessage>((e,c,_) => UpdateUserInterface(e,c),
+            after: new []{typeof(ResearchSystem)});
+        SubscribeLocalEvent<AnalysisConsoleComponent, ResearchClientServerDeselectedMessage>((e,c,_) => UpdateUserInterface(e,c),
+            after: new []{typeof(ResearchSystem)});
+        SubscribeLocalEvent<AnalysisConsoleComponent, BeforeActivatableUIOpenEvent>((e,c,_) => UpdateUserInterface(e,c));
     }
 
     public override void Update(float frameTime)
@@ -139,7 +141,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         UpdateUserInterface(uid, component);
     }
 
-    private void UpdateUserInterface(EntityUid uid, AnalysisConsoleComponent? component = null, object? _ = null)
+    private void UpdateUserInterface(EntityUid uid, AnalysisConsoleComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
@@ -295,12 +297,17 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
     {
         if (TryComp<ApcPowerReceiverComponent>(uid, out var powa))
             powa.NeedsPower = true;
+
+        component.LoopStream = _audio.PlayPvs(component.ScanningSound, uid, AudioParams.Default.WithVolume(3).WithMaxDistance(5).WithLoop(true));
     }
 
     private void OnAnalyzeEnd(EntityUid uid, ActiveArtifactAnalyzerComponent component, ComponentShutdown args)
     {
         if (TryComp<ApcPowerReceiverComponent>(uid, out var powa))
             powa.NeedsPower = false;
+
+        component.LoopStream?.Stop();
+        _audio.PlayPvs(component.ScanFinishedSound, uid);
     }
 }
 

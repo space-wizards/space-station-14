@@ -410,6 +410,8 @@
     - MicroLaserStockPart
     - MicroManipulatorStockPart
     - ScanningModuleStockPart
+    - AnalysisComputerCircuitboard #these need a better place in the future
+    - ArtifactAnalyzerMachineCircuitboard
 
 - type: technology
   name: technologies-robotics-technology

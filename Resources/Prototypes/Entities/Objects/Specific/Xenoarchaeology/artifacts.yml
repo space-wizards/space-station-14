@@ -42,7 +42,7 @@
           nodeGroupID: MVPower
           # sadly, HVPower and Apc cables doesn't work right now
     - type: StaticPrice
-      price: 2000
+      price: 500
     - type: Electrified
       requirePower: true
       noWindowInTile: true
@@ -56,8 +56,8 @@
   suffix: Simple
   components:
   - type: Artifact
-    nodesMin: 1
-    nodesMax: 3
+    nodesMin: 2
+    nodesMax: 5
 
 - type: entity
   parent: BaseXenoArtifact
@@ -74,5 +74,5 @@
   suffix: Complex
   components:
   - type: Artifact
-    nodesMin: 7
+    nodesMin: 9
     nodesMax: 13
