@@ -226,8 +226,6 @@ public sealed partial class GunSystem : SharedGunSystem
         {
             FiredProjectiles = shotProjectiles,
         }, false);
-        // Projectiles cause impulses especially important in non gravity environments
-        CauseImpulse(mapDirection, user);
     }
 
     public void ShootProjectile(EntityUid uid, Vector2 direction, EntityUid? user = null, float speed = 20f)

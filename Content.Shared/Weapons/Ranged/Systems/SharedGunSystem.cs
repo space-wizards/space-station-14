@@ -288,6 +288,8 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         // Shoot confirmed - sounds also played here in case it's invalid (e.g. cartridge already spent).
         Shoot(gun, ev.Ammo, fromCoordinates, toCoordinates.Value, user);
+        // Projectiles cause impulses especially important in non gravity environments
+        CauseImpulse(fromCoordinates, toCoordinates.Value, user);
         Dirty(gun);
     }
 
@@ -369,17 +371,22 @@ public abstract partial class SharedGunSystem : EntitySystem
         CreateEffect(gun, ev, user);
     }
 
-    public void CauseImpulse(Vector2 direction, EntityUid? user = null)
+    public void CauseImpulse(EntityCoordinates fromCoordinates, EntityCoordinates toCoordinates, EntityUid? user = null)
     {
         if(user == null)
             return;
+
+        var fromMap = fromCoordinates.ToMap(EntityManager);
+        var toMap = toCoordinates.ToMapPos(EntityManager);
+        var mapDirection = toMap - fromMap.Position;
+        mapDirection = toMap - fromMap.Position;
 
         if (TryComp<PhysicsComponent>(user, out var userPhysics))
         {
             if (!Gravity.IsWeightless(user.Value, userPhysics))
                 return;
 
-            var impulseVector =  direction.Normalized * userPhysics.Mass;
+            var impulseVector =  mapDirection.Normalized * userPhysics.Mass;
             Physics.ApplyLinearImpulse(userPhysics, -impulseVector * 1.2f);
         }
     }
