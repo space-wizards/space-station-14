@@ -1,6 +1,7 @@
 ghost-gui-return-to-body-button = Вернуться в тело
 ghost-gui-ghost-warp-button = Телепорт призрака
 ghost-gui-ghost-roles-button = Роли призраков ({ $count })
+ghost-gui-toggle-ghost-visibility-button = Переключение видимости призраков
 ghost-target-window-title = Телепорт призрака
 ghost-target-window-current-button = Телепорт в: { $name }
 ghost-roles-window-title = Роли призраков
