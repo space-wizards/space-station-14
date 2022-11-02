@@ -7,6 +7,7 @@ using Content.Shared.Light;
 using Content.Shared.Light.Component;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameStates;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Timing;
 using static Robust.Client.GameObjects.SpriteComponent;
 
@@ -14,8 +15,8 @@ namespace Content.Client.Light
 {
     public sealed class RgbLightControllerSystem : SharedRgbLightControllerSystem
     {
-        [Dependency] private IGameTiming _gameTiming = default!;
-        [Dependency] private ItemSystem _itemSystem = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly ItemSystem _itemSystem = default!;
 
         public override void Initialize()
         {
@@ -189,6 +190,12 @@ namespace Content.Client.Light
                 {
                     holderSprite.LayerSetColor(layer, color);
                 }
+            }
+
+            foreach (var (rgb, map) in EntityQuery<RgbLightControllerComponent, MapLightComponent>())
+            {
+                var color = GetCurrentRgbColor(_gameTiming.RealTime, rgb.CreationTick.Value * _gameTiming.TickPeriod, rgb);
+                map.AmbientLightColor = color;
             }
         }
 
