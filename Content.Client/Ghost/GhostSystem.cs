@@ -155,5 +155,10 @@ namespace Content.Client.Ghost
         {
             _console.RemoteExecuteCommand(null, "ghostroles");
         }
+
+        public void ToggleGhostVisibility()
+        {
+            _console.RemoteExecuteCommand(null, "toggleghosts");
+        }
     }
 }

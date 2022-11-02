@@ -9,12 +9,6 @@ public sealed partial class GameMapPrototype
     public bool Fallback { get; }
 
     /// <summary>
-    /// Controls if the map can be voted for.
-    /// </summary>
-    [DataField("votable")]
-    public bool Votable { get; } = true;
-
-    /// <summary>
     /// Minimum players for the given map.
     /// </summary>
     [DataField("minPlayers", required: true)]

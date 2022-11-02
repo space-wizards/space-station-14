@@ -1,20 +1,4 @@
 Entries:
-- author: UDaV73rus
-  changes:
-  - {message: Added robes for priest, type: Add}
-  id: 2059
-  time: '2022-07-31T03:16:14.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Makeshift laser guns can no longer be constructed., type: Remove}
-  id: 2060
-  time: '2022-07-31T03:34:51.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Hovering over lathe recipes now shows a tooltip that lists the required
-      materials., type: Add}
-  id: 2061
-  time: '2022-07-31T03:35:11.0000000+00:00'
 - author: Rane
   changes:
   - {message: 'Disarm math now takes into account mass, damage, and stamina damage.',
@@ -2955,3 +2939,20 @@ Entries:
   - {message: Fixed people getting trapped in disposal trunks., type: Fix}
   id: 2558
   time: '2022-10-31T23:53:06.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed an exploit for generating infinite materials from protolathes.,
+    type: Fix}
+  id: 2559
+  time: '2022-11-01T23:05:01.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Added a Toggle Ghosts button on the ghost GUI to get rid of those pesky
+      apparitions., type: Add}
+  id: 2560
+  time: '2022-11-02T01:14:06.0000000+00:00'
+- author: Vordenburg
+  changes:
+  - {message: The flames of lit welders now look bright in the dark., type: Fix}
+  id: 2561
+  time: '2022-11-02T01:16:33.0000000+00:00'
