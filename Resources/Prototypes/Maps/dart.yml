@@ -3,7 +3,6 @@
   mapName: 'Dart ERT'
   mapPath: /Maps/dart.yml
   minPlayers: 0
-  votable: false
   stations:
     Dart:
       mapNameTemplate: '{0} Dart ERT {1}'
