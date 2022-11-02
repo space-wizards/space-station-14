@@ -25,7 +25,7 @@ namespace Content.Client.Pinpointer
             sprite.LayerSetVisible(PinpointerLayers.Screen, true);
             sprite.LayerSetRotation(PinpointerLayers.Screen, Angle.Zero);
 
-            if (!args.Component.TryGetData(PinpointerVisuals.TargetDirection, out Direction dir) || dir == Direction.Invalid)
+            if (!args.Component.TryGetData(PinpointerVisuals.TargetDirection, out Angle angle))
             {
                 sprite.LayerSetState(PinpointerLayers.Screen, "pinonnull");
                 return;
@@ -42,16 +42,16 @@ namespace Content.Client.Pinpointer
                     break;
                 case Distance.Close:
                     sprite.LayerSetState(PinpointerLayers.Screen, "pinonclose");
-                    sprite.LayerSetRotation(PinpointerLayers.Screen, dir.ToAngle());
+                    sprite.LayerSetRotation(PinpointerLayers.Screen, angle);
                     break;
                 case Distance.Medium:
                     sprite.LayerSetState(PinpointerLayers.Screen, "pinonmedium");
-                    sprite.LayerSetRotation(PinpointerLayers.Screen, dir.ToAngle());
+                    sprite.LayerSetRotation(PinpointerLayers.Screen, angle);
                     break;
                 case Distance.Far:
                 case Distance.Unknown:
                     sprite.LayerSetState(PinpointerLayers.Screen, "pinonfar");
-                    sprite.LayerSetRotation(PinpointerLayers.Screen, dir.ToAngle());
+                    sprite.LayerSetRotation(PinpointerLayers.Screen, angle);
                     break;
             }
         }

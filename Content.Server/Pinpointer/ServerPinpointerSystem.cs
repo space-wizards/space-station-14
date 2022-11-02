@@ -123,7 +123,6 @@ namespace Content.Server.Pinpointer
             var target = pinpointer.Target;
             if (target == null || !EntityManager.EntityExists(target.Value))
             {
-                SetDirection(uid, Direction.Invalid, pinpointer);
                 SetDistance(uid, Distance.Unknown, pinpointer);
                 return;
             }
@@ -131,14 +130,13 @@ namespace Content.Server.Pinpointer
             var dirVec = CalculateDirection(uid, target.Value);
             if (dirVec != null)
             {
-                var dir = dirVec.Value.GetDir();
-                SetDirection(uid, dir, pinpointer);
+                var angle = dirVec.Value.ToWorldAngle();
+                TrySetArrowAngle(uid, angle, pinpointer);
                 var dist = CalculateDistance(uid, dirVec.Value, pinpointer);
                 SetDistance(uid, dist, pinpointer);
             }
             else
             {
-                SetDirection(uid, Direction.Invalid, pinpointer);
                 SetDistance(uid, Distance.Unknown, pinpointer);
             }
         }

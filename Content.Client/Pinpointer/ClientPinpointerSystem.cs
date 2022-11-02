@@ -1,10 +1,7 @@
 using Content.Shared.Pinpointer;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 
 namespace Content.Client.Pinpointer
 {
@@ -41,7 +38,7 @@ namespace Content.Client.Pinpointer
                 return;
 
             SetActive(uid, state.IsActive, pinpointer);
-            SetDirection(uid, state.DirectionToTarget, pinpointer);
+            TrySetArrowAngle(uid, state.ArrowAngle, pinpointer);
             SetDistance(uid, state.DistanceToTarget, pinpointer);
         }
 
@@ -55,13 +52,13 @@ namespace Content.Client.Pinpointer
             _appearance.SetData(uid, PinpointerVisuals.TargetDistance, pinpointer.DistanceToTarget, appearance);
         }
 
-        private void UpdateDirAppearance(EntityUid uid, Direction dir,PinpointerComponent? pinpointer = null,
+        private void UpdateArrowAngle(EntityUid uid, Angle angle, PinpointerComponent? pinpointer = null,
             AppearanceComponent? appearance = null)
         {
             if (!Resolve(uid, ref pinpointer, ref appearance))
                 return;
 
-            _appearance.SetData(uid, PinpointerVisuals.TargetDirection, dir, appearance);
+            _appearance.SetData(uid, PinpointerVisuals.TargetDirection, angle, appearance);
         }
 
         /// <summary>
@@ -70,20 +67,12 @@ namespace Content.Client.Pinpointer
         /// </summary>
         private void UpdateEyeDir(EntityUid uid, PinpointerComponent? pinpointer = null)
         {
-            if (!Resolve(uid, ref pinpointer))
+            if (!Resolve(uid, ref pinpointer) || !pinpointer.HasTarget)
                 return;
-
-            var worldDir = pinpointer.DirectionToTarget;
-            if (worldDir == Direction.Invalid)
-            {
-                UpdateDirAppearance(uid, Direction.Invalid, pinpointer);
-                return;
-            }
 
             var eye = _eyeManager.CurrentEye;
-            var angle = worldDir.ToAngle() + eye.Rotation;
-            var eyeDir = angle.GetDir();
-            UpdateDirAppearance(uid, eyeDir, pinpointer);
+            var angle = pinpointer.ArrowAngle + eye.Rotation;
+            UpdateArrowAngle(uid, angle, pinpointer);
         }
     }
 }

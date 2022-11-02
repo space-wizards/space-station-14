@@ -18,7 +18,7 @@ namespace Content.Shared.Pinpointer
             args.State = new PinpointerComponentState
             {
                 IsActive = pinpointer.IsActive,
-                DirectionToTarget = pinpointer.DirectionToTarget,
+                ArrowAngle = pinpointer.ArrowAngle,
                 DistanceToTarget = pinpointer.DistanceToTarget
             };
         }
@@ -45,18 +45,22 @@ namespace Content.Shared.Pinpointer
         }
 
         /// <summary>
-        ///     Manually set pinpointer arrow direction
+        ///     Try to manually set pinpointer arrow direction.
+        ///     If difference between current angle and new angle is smaller than
+        ///     pinpointer precision, new value will be ignored and it will return false.
         /// </summary>
-        public void SetDirection(EntityUid uid, Direction directionToTarget, PinpointerComponent? pinpointer = null)
+        public bool TrySetArrowAngle(EntityUid uid, Angle arrowAngle, PinpointerComponent? pinpointer = null)
         {
             if (!Resolve(uid, ref pinpointer))
-                return;
+                return false;
 
-            if (directionToTarget == pinpointer.DirectionToTarget)
-                return;
+            if (pinpointer.ArrowAngle.EqualsApprox(arrowAngle, pinpointer.Precision))
+                return false;
 
-            pinpointer.DirectionToTarget = directionToTarget;
+            pinpointer.ArrowAngle = arrowAngle;
             Dirty(pinpointer);
+
+            return true;
         }
 
         /// <summary>

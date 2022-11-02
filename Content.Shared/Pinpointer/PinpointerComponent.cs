@@ -24,17 +24,24 @@ namespace Content.Shared.Pinpointer
         [DataField("reachedDistance")]
         public float ReachedDistance = 1f;
 
+        /// <summary>
+        ///     Pinpointer arrow precision in radians.
+        /// </summary>
+        [DataField("precision")]
+        public double Precision = 0.09;
+
         public EntityUid? Target = null;
         public bool IsActive = false;
-        public Direction DirectionToTarget = Direction.Invalid;
+        public Angle ArrowAngle;
         public Distance DistanceToTarget = Distance.Unknown;
+        public bool HasTarget => DistanceToTarget != Distance.Unknown;
     }
 
     [Serializable, NetSerializable]
     public sealed class PinpointerComponentState : ComponentState
     {
         public bool IsActive;
-        public Direction DirectionToTarget;
+        public Angle ArrowAngle;
         public Distance DistanceToTarget;
     }
 

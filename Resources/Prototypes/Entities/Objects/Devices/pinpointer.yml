@@ -20,8 +20,6 @@
     sprite: Objects/Devices/pinpointer.rsi
   - type: Pinpointer
   - type: Appearance
-    visuals:
-    - type: PinpointerVisualizer
 
 - type: entity
   name: pinpointer
