@@ -9,6 +9,7 @@ using Content.Server.Storage.Components;
 using Content.Server.Visible;
 using Content.Server.Warps;
 using Content.Shared.Actions;
+using Content.Shared.Administration;
 using Content.Shared.Examine;
 using Content.Shared.Follower;
 using Content.Shared.Ghost;
@@ -17,6 +18,7 @@ using Content.Shared.Movement.Events;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Console;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
 
@@ -294,6 +296,29 @@ namespace Content.Server.Ghost
             RaiseLocalEvent(target, ghostBoo, true);
 
             return ghostBoo.Handled;
+        }
+    }
+    
+    [AnyCommand]
+    public sealed class ToggleGhostVisibility : IConsoleCommand
+    {
+        public string Command => "toggleghosts";
+        public string Description => "Toggles ghost visibility";
+        public string Help => $"{Command}";
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        {
+            if (shell.Player == null)
+                shell.WriteLine("You can only open the ghost roles UI on a client.");
+
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+            
+            var uid = shell.Player?.AttachedEntity;
+            if (uid == null
+                || !entityManager.HasComponent<GhostComponent>(uid)
+                || !entityManager.TryGetComponent<EyeComponent>(uid, out var eyeComponent))
+                return;
+
+            eyeComponent.VisibilityMask ^= (uint) VisibilityFlags.Ghost;
         }
     }
 }
