@@ -4,6 +4,7 @@
     sprite: Objects/Materials/Sheets/metal.rsi
     state: steel
   result: SheetSteel1
+  applyMaterialDiscount: false
   completetime: 2
   materials:
     Steel: 100
@@ -24,6 +25,7 @@
     sprite: Objects/Materials/Sheets/glass.rsi
     state: glass
   result: SheetGlass1
+  applyMaterialDiscount: false
   completetime: 2
   materials:
     Glass: 100
@@ -44,6 +46,7 @@
     sprite: Objects/Materials/Sheets/glass.rsi
     state: rglass
   result: SheetRGlass1
+  applyMaterialDiscount: false
   completetime: 2
   materials:
     Glass: 100
@@ -129,6 +132,7 @@
     sprite: Objects/Materials/Sheets/other.rsi
     state: plastic
   result: SheetPlastic1
+  applyMaterialDiscount: false
   completetime: 2
   materials:
     Plastic: 100

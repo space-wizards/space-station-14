@@ -50,7 +50,11 @@ public abstract class SharedLatheSystem : EntitySystem
 
         foreach (var (material, needed) in recipe.RequiredMaterials)
         {
-            if (_materialStorage.GetMaterialAmount(component.Owner, material) < amount * needed * component.MaterialUseMultiplier)
+            var adjustedAmount = recipe.ApplyMaterialDiscount
+                ? (int) (amount * component.MaterialUseMultiplier)
+                : amount;
+
+            if (_materialStorage.GetMaterialAmount(component.Owner, material) < adjustedAmount * needed)
                 return false;
         }
         return true;

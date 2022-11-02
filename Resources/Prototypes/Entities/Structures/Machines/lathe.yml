@@ -160,7 +160,7 @@
     dynamicRecipes:
       - LightTube
       - LightBulb
-      - SheetSteel
+      - SheetSteel #these sheet recipe costs don't scale with upgrades
       - SheetGlass1
       - SheetRGlass
       - SheetPlastic
