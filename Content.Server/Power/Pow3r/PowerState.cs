@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -20,6 +20,7 @@ namespace Content.Server.Power.Pow3r
         public GenIdStorage<Network> Networks = new();
         public GenIdStorage<Load> Loads = new();
         public GenIdStorage<Battery> Batteries = new();
+        public List<List<Network>>? GroupedNets;
 
         public readonly struct NodeId : IEquatable<NodeId>
         {
@@ -448,11 +449,17 @@ namespace Content.Server.Power.Pow3r
             // "Supplying" means the network is connected to the OUTPUT port of the battery.
             [ViewVariables] public List<NodeId> BatteriesDischarging = new();
 
+            /// <summary>
+            ///     Available supply from sources WITHOUT discharging batteries.
+            /// </summary>
             [ViewVariables] public float LastAvailableSupplySum = 0f;
+
+            /// <summary>
+            ///     Available supply from sources INCLUDING discharging batteries.
+            /// </summary>
             [ViewVariables] public float LastMaxSupplySum = 0f;
 
             [ViewVariables] [JsonIgnore] public int Height;
-            [JsonIgnore] public bool HeightTouched;
         }
     }
 }

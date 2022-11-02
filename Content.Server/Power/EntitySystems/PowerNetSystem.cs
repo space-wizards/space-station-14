@@ -6,6 +6,7 @@ using Content.Server.Power.Pow3r;
 using JetBrains.Annotations;
 using Content.Shared.Power;
 using Robust.Server.GameObjects;
+using Robust.Shared.Threading;
 
 namespace Content.Server.Power.EntitySystems
 {
@@ -16,6 +17,7 @@ namespace Content.Server.Power.EntitySystems
     public sealed class PowerNetSystem : EntitySystem
     {
         [Dependency] private readonly AppearanceSystem _appearance = default!;
+        [Dependency] private readonly IParallelManager _parMan = default!;
 
         private readonly PowerState _powerState = new();
         private readonly HashSet<PowerNet> _powerNetReconnectQueue = new();
@@ -110,31 +112,37 @@ namespace Content.Server.Power.EntitySystems
         public void InitPowerNet(PowerNet powerNet)
         {
             AllocNetwork(powerNet.NetworkNode);
+            _powerState.GroupedNets = null;
         }
 
         public void DestroyPowerNet(PowerNet powerNet)
         {
             _powerState.Networks.Free(powerNet.NetworkNode.Id);
+            _powerState.GroupedNets = null;
         }
 
         public void QueueReconnectPowerNet(PowerNet powerNet)
         {
             _powerNetReconnectQueue.Add(powerNet);
+            _powerState.GroupedNets = null;
         }
 
         public void InitApcNet(ApcNet apcNet)
         {
             AllocNetwork(apcNet.NetworkNode);
+            _powerState.GroupedNets = null;
         }
 
         public void DestroyApcNet(ApcNet apcNet)
         {
             _powerState.Networks.Free(apcNet.NetworkNode.Id);
+            _powerState.GroupedNets = null;
         }
 
         public void QueueReconnectApcNet(ApcNet apcNet)
         {
             _apcNetReconnectQueue.Add(apcNet);
+            _powerState.GroupedNets = null;
         }
 
         public PowerStatistics GetStatistics()
@@ -233,7 +241,7 @@ namespace Content.Server.Power.EntitySystems
             RaiseLocalEvent(new NetworkBatteryPreSync());
 
             // Run power solver.
-            _solver.Tick(frameTime, _powerState);
+            _solver.Tick(frameTime, _powerState, _parMan.ParallelProcessCount);
 
             // Synchronize batteries, the other way around.
             RaiseLocalEvent(new NetworkBatteryPostSync());
