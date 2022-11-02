@@ -115,8 +115,8 @@ public partial class RadiationSystem
         // however we can do simplification and ignore that case
         if (GridcastSimplifiedSameGrid && sourceTrs.GridUid != null && sourceTrs.GridUid == destTrs.GridUid)
         {
-            // todo: entity queries doesn't support interface - use it when IMapGridComponent will be removed
-            if (!TryComp(sourceTrs.GridUid.Value, out IMapGridComponent? gridComponent))
+            // todo: entity queries doesn't support interface - use it when MapGridComponent will be removed
+            if (!TryComp(sourceTrs.GridUid.Value, out MapGridComponent? gridComponent))
                 return ray;
             return Gridcast(gridComponent.Grid, ray, saveVisitedTiles, resistanceQuery, sourceTrs, destTrs, transformQuery.GetComponent(sourceTrs.GridUid.Value));
         }
@@ -169,7 +169,7 @@ public partial class RadiationSystem
         Vector2 dstLocal = destTrs.ParentUid == grid.GridEntityId
             ? destTrs.LocalPosition
             : gridTrs.InvLocalMatrix.Transform(ray.Destination);
-        
+
         Vector2i sourceGrid = new(
             (int) Math.Floor(srcLocal.X / grid.TileSize),
             (int) Math.Floor(srcLocal.Y / grid.TileSize));

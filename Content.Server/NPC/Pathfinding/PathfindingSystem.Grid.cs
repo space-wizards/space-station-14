@@ -78,7 +78,7 @@ public sealed partial class PathfindingSystem
         {
             if (comp.DirtyChunks.Count == 0 ||
                 comp.NextUpdate < curTime ||
-                !TryComp<IMapGridComponent>(comp.Owner, out var mapGridComp))
+                !TryComp<MapGridComponent>(comp.Owner, out var mapGridComp))
             {
                 continue;
             }
@@ -237,7 +237,7 @@ public sealed partial class PathfindingSystem
     {
         if (!TryComp<PhysicsComponent>(ev.Sender, out var body) ||
             body.BodyType != BodyType.Static ||
-            HasComp<IMapGridComponent>(ev.Sender) ||
+            HasComp<MapGridComponent>(ev.Sender) ||
             ev.OldPosition.Equals(ev.NewPosition))
         {
             return;

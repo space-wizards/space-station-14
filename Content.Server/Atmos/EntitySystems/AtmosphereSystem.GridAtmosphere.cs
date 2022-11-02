@@ -46,7 +46,7 @@ public sealed partial class AtmosphereSystem
 
         gridAtmosphere.Tiles.Clear();
 
-        if (!TryComp(uid, out IMapGridComponent? mapGrid))
+        if (!TryComp(uid, out MapGridComponent? mapGrid))
             return;
 
         if (gridAtmosphere.TilesUniqueMixes != null)
@@ -341,7 +341,7 @@ public sealed partial class AtmosphereSystem
 
             adjacent.BlockedAirflow = GetBlockedDirections(mapGridComp.Grid, adjacent.GridIndices);
 
-            // Pass in IMapGridComponent so we don't have to resolve it for every adjacent direction.
+            // Pass in MapGridComponent so we don't have to resolve it for every adjacent direction.
             var tileBlockedEv = new IsTileAirBlockedMethodEvent(uid, tile.GridIndices, direction, mapGridComp);
             GridIsTileAirBlocked(uid, component, ref tileBlockedEv);
 
@@ -435,7 +435,7 @@ public sealed partial class AtmosphereSystem
         if (!adjEv.Handled || !component.Tiles.TryGetValue(args.Tile, out var tile))
             return;
 
-        if (!TryComp<IMapGridComponent>(uid, out var mapGridComp))
+        if (!TryComp<MapGridComponent>(uid, out var mapGridComp))
             return;
 
         var adjacent = adjEv.Result!.ToArray();
