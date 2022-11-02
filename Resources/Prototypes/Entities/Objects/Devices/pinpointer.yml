@@ -9,6 +9,7 @@
     noRot: True
   - type: Sprite
     netsync: false
+    noRot: True
     sprite: Objects/Devices/pinpointer.rsi
     layers:
     - state: pinpointer
