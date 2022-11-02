@@ -34,6 +34,7 @@ namespace Content.Server.GameTicking
             lock (_statusShellLock)
             {
                 jObject["name"] = _baseServer.ServerName;
+                jObject["fork_id"] = _baseServer.ForkID;
                 jObject["players"] = _playerManager.PlayerCount;
                 jObject["soft_max_players"] = _cfg.GetCVar(CCVars.SoftMaxPlayers);
                 jObject["run_level"] = (int) _runLevel;
