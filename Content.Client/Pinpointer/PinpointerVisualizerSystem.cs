@@ -1,26 +1,21 @@
 using Content.Shared.Pinpointer;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 
 namespace Content.Client.Pinpointer
 {
     [UsedImplicitly]
-    public sealed class PinpointerVisualizer : AppearanceVisualizer
+    public sealed class PinpointerVisualizerSystem : VisualizerSystem<PinpointerComponent>
     {
-        [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
-        public override void OnChangeData(AppearanceComponent component)
+        protected override void OnAppearanceChange(EntityUid uid, PinpointerComponent component, ref AppearanceChangeEvent args)
         {
-            base.OnChangeData(component);
+            base.OnAppearanceChange(uid, component, ref args);
 
-            var entities = IoCManager.Resolve<IEntityManager>();
-            if (!entities.TryGetComponent(component.Owner, out SpriteComponent? sprite))
+            if (!TryComp(component.Owner, out SpriteComponent? sprite))
                 return;
 
             // check if pinpointer screen is active
-            if (!component.TryGetData(PinpointerVisuals.IsActive, out bool isActive) || !isActive)
+            if (!args.Component.TryGetData(PinpointerVisuals.IsActive, out bool isActive) || !isActive)
             {
                 sprite.LayerSetVisible(PinpointerLayers.Screen, false);
                 return;
@@ -30,14 +25,14 @@ namespace Content.Client.Pinpointer
             sprite.LayerSetVisible(PinpointerLayers.Screen, true);
             sprite.LayerSetRotation(PinpointerLayers.Screen, Angle.Zero);
 
-            if (!component.TryGetData(PinpointerVisuals.TargetDirection, out Direction dir) || dir == Direction.Invalid)
+            if (!args.Component.TryGetData(PinpointerVisuals.TargetDirection, out Direction dir) || dir == Direction.Invalid)
             {
                 sprite.LayerSetState(PinpointerLayers.Screen, "pinonnull");
                 return;
             }
 
             // check distance to target
-            if (!component.TryGetData(PinpointerVisuals.TargetDistance, out Distance dis))
+            if (!args.Component.TryGetData(PinpointerVisuals.TargetDistance, out Distance dis))
                 dis = Distance.UNKNOWN;
 
             switch (dis)
