@@ -320,50 +320,17 @@ public sealed class TraitorRuleSystem : GameRuleSystem
         ev.AddLine(result);
     }
 
-    public List<Traitor.TraitorRole> GetOtherTraitorsAliveAndConnected(Mind.Mind ourMind)
+    public IEnumerable<Traitor.TraitorRole> GetOtherTraitorsAliveAndConnected(Mind.Mind ourMind)
     {
         var traitors = Traitors;
         List<Traitor.TraitorRole> removeList = new();
 
-        foreach (var traitor in traitors) // we remove if...
-        {
-            if (traitor.Mind == null) // no mind
-            {
-                removeList.Add(traitor);
-                continue;
-            }
-            if (traitor.Mind.OwnedEntity == null) // no entity
-            {
-                removeList.Add(traitor);
-                continue;
-            }
-            if (traitor.Mind.Session == null) // player disconnected
-            {
-                removeList.Add(traitor);
-                continue;
-            }
-            if (traitor.Mind == ourMind) // it's our mind
-            {
-                removeList.Add(traitor);
-                continue;
-            }
-            if (!_mobStateSystem.IsAlive(traitor.Mind.OwnedEntity.Value)) // they are dead
-            {
-                removeList.Add(traitor);
-                continue;
-            }
-            if (traitor.Mind.CurrentEntity != null && traitor.Mind.CurrentEntity != traitor.Mind.OwnedEntity) // they switched to another entity
-            {
-                removeList.Add(traitor);
-                continue;
-            }
-        }
-
-        foreach (var traitor in removeList)
-        {
-            traitors.Remove(traitor);
-        }
-
-        return traitors;
+        return Traitors // don't want
+            .Where(t => t.Mind is not null) // no mind
+            .Where(t => t.Mind.OwnedEntity is not null) // no entity
+            .Where(t => t.Mind.Session is not null) // player disconnected
+            .Where(t => t.Mind != ourMind) // ourselves
+            .Where(t => _mobStateSystem.IsAlive((EntityUid) t.Mind.OwnedEntity!)) // dead
+            .Where(t => t.Mind.CurrentEntity == t.Mind.OwnedEntity); // not in original body
     }
 }

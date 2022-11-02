@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Objectives.Interfaces;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
@@ -13,7 +14,7 @@ namespace Content.Server.Objectives.Conditions
         public IObjectiveCondition GetAssigned(Mind.Mind mind)
         {
             var entityMgr = IoCManager.Resolve<IEntityManager>();
-            var traitors = entityMgr.EntitySysManager.GetEntitySystem<TraitorRuleSystem>().GetOtherTraitorsAliveAndConnected(mind);
+            var traitors = entityMgr.EntitySysManager.GetEntitySystem<TraitorRuleSystem>().GetOtherTraitorsAliveAndConnected(mind).ToList();
 
             if (traitors.Count == 0) return new EscapeShuttleCondition{}; //You were made a traitor by admins, and are the first/only.
             return new RandomTraitorAliveCondition { _target = IoCManager.Resolve<IRobustRandom>().Pick(traitors).Mind };

@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Objectives.Interfaces;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
@@ -13,7 +14,7 @@ namespace Content.Server.Objectives.Conditions
         public IObjectiveCondition GetAssigned(Mind.Mind mind)
         {
             var entityMgr = IoCManager.Resolve<IEntityManager>();
-            var traitors = entityMgr.EntitySysManager.GetEntitySystem<TraitorRuleSystem>().GetOtherTraitorsAliveAndConnected(mind);
+            var traitors = entityMgr.EntitySysManager.GetEntitySystem<TraitorRuleSystem>().GetOtherTraitorsAliveAndConnected(mind).ToList();
             List<Traitor.TraitorRole> removeList = new();
 
             foreach (var traitor in traitors)
