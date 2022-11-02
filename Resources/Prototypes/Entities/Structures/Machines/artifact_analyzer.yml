@@ -32,9 +32,9 @@
   - type: Transform
     anchored: true
     noRot: false
-  - type: ApcPowerReceiver #only turns on when scanning
-    powerLoad: 4000
-    needsPower: false
+  - type: ApcPowerReceiver
+    powerLoad: 15000 #really freaking high
+    needsPower: false #only turns on when scanning
   - type: ArtifactAnalyzer
   - type: DeviceNetwork
     deviceNetId: Wired

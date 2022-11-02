@@ -320,6 +320,8 @@
     - SolarControlComputerCircuitboard
     - PowerComputerCircuitboard
     - GeneratorPlasmaMachineCircuitboard
+    - AnalysisComputerCircuitboard
+    - ArtifactAnalyzerMachineCircuitboard
     - Signaller
     - SignalTrigger
     - VoiceTrigger
@@ -410,8 +412,6 @@
     - MicroLaserStockPart
     - MicroManipulatorStockPart
     - ScanningModuleStockPart
-    - AnalysisComputerCircuitboard #these need a better place in the future
-    - ArtifactAnalyzerMachineCircuitboard
 
 - type: technology
   name: technologies-robotics-technology

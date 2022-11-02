@@ -1,0 +1,1 @@
+station-event-bluespace-artifact-announcement = Attention crew, our readings have determined an artifact of alien origin will shortly be appearing on the station. Please alert the research team if it is seen.

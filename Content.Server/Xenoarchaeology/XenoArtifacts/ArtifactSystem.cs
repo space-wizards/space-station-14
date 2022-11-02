@@ -90,7 +90,7 @@ public sealed partial class ArtifactSystem : EntitySystem
 
         var valueDeduction = !node.Triggered ? 0.5f : 1;
         var nodeDanger = (node.Depth + node.Effect.TargetDepth + node.Trigger.TargetDepth) / 3;
-        
+
         return (nodeDanger+1) * PointsPerNode * valueDeduction;
     }
 
