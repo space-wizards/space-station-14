@@ -299,7 +299,10 @@ namespace Content.Server.Atmos.EntitySystems
                 ReturnToPool(data);
             }
 
-            _lastSentChunks.Clear();
+            foreach (var data in _lastSentChunks.Values)
+            {
+                data.Clear();
+            }
         }
     }
 }
