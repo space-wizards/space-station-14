@@ -71,13 +71,6 @@ public sealed class TraitorRuleSystem : GameRuleSystem
         if (!RuleAdded)
             return;
 
-        // If the current preset doesn't explicitly contain the traitor game rule, just carry on and remove self.
-        if (_gameTicker.Preset?.Rules.Contains(Prototype) ?? false)
-        {
-            _gameTicker.EndGameRule(_prototypeManager.Index<GameRulePrototype>(Prototype));
-            return;
-        }
-
         var minPlayers = _cfg.GetCVar(CCVars.TraitorMinPlayers);
         if (!ev.Forced && ev.Players.Length < minPlayers)
         {

@@ -90,9 +90,12 @@ public sealed partial class ShuttleSystem
         reason = null;
 
         if (!TryComp<IMapGridComponent>(uid, out var grid) ||
-            !Resolve(uid.Value, ref xform)) return true;
+            !Resolve(uid.Value, ref xform))
+        {
+            return true;
+        }
 
-        var bounds = grid.Grid.WorldAABB.Enlarged(ShuttleFTLRange);
+        var bounds = xform.WorldMatrix.TransformBox(grid.Grid.LocalAABB).Enlarged(ShuttleFTLRange);
         var bodyQuery = GetEntityQuery<PhysicsComponent>();
 
         foreach (var other in _mapManager.FindGridsIntersecting(xform.MapID, bounds))

@@ -17,7 +17,7 @@ namespace Content.Server.Power.Pow3r
             }
         }
 
-        private Network[] _sortBuffer = Array.Empty<Network>();
+        private readonly PriorityQueue<int, Network> _sortBuffer = new(new HeightComparer());
 
         public void Tick(float frameTime, PowerState state)
         {
@@ -57,19 +57,13 @@ namespace Content.Server.Power.Pow3r
                 EstimateNetworkDepth(state, network);
             }
 
-            if (_sortBuffer.Length != state.Networks.Count)
-                _sortBuffer = new Network[state.Networks.Count];
-
-            var i = 0;
             foreach (var network in state.Networks.Values)
             {
-                _sortBuffer[i++] = network;
+                _sortBuffer.Enqueue(network.Height, network);
             }
 
-            Array.Sort(_sortBuffer, HeightComparer.Instance);
-
             // Go over every network.
-            foreach (var network in _sortBuffer)
+            while (_sortBuffer.TryDequeue(out _, out var network))
             {
                 // Add up demand in network.
                 var demand = 0f;

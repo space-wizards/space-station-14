@@ -80,9 +80,6 @@ public sealed class StationSystem : EntitySystem
             return;
 
         stationData.Grids.Remove(uid);
-
-        // TODO: Remove this when we find out what's mysteriously pulling the rug under us maps wise.
-        _sawmill.Debug($"Station grid is being deleted, trace is: {Environment.StackTrace}");
     }
 
     public override void Shutdown()
@@ -298,7 +295,7 @@ public sealed class StationSystem : EntitySystem
             bounds.Add(bound);
             if (!mapIds.Contains(mapId))
             {
-                mapIds.Add(grid.ParentMapId);
+                mapIds.Add(xform.MapID);
             }
         }
 

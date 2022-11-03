@@ -28,7 +28,7 @@ namespace Content.Server.Weapons.Melee.EnergySword
             base.Initialize();
 
             SubscribeLocalEvent<EnergySwordComponent, MapInitEvent>(OnMapInit);
-            SubscribeLocalEvent<EnergySwordComponent, ItemMeleeDamageEvent>(OnMeleeHit);
+            SubscribeLocalEvent<EnergySwordComponent, MeleeHitEvent>(OnMeleeHit);
             SubscribeLocalEvent<EnergySwordComponent, UseInHandEvent>(OnUseInHand);
             SubscribeLocalEvent<EnergySwordComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<EnergySwordComponent, IsHotEvent>(OnIsHotEvent);
@@ -40,7 +40,7 @@ namespace Content.Server.Weapons.Melee.EnergySword
                 comp.BladeColor = _random.Pick(comp.ColorOptions);
         }
 
-        private void OnMeleeHit(EntityUid uid, EnergySwordComponent comp, ItemMeleeDamageEvent args)
+        private void OnMeleeHit(EntityUid uid, EnergySwordComponent comp, MeleeHitEvent args)
         {
             if (!comp.Activated) return;
 
