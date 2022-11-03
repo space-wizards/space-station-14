@@ -33,10 +33,10 @@ namespace Content.Server.Stunnable.Systems
             SubscribeLocalEvent<StunbatonComponent, UseInHandEvent>(OnUseInHand);
             SubscribeLocalEvent<StunbatonComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<StunbatonComponent, StaminaDamageOnHitAttemptEvent>(OnStaminaHitAttempt);
-            SubscribeLocalEvent<StunbatonComponent, ItemMeleeDamageEvent>(OnMeleeHit);
+            SubscribeLocalEvent<StunbatonComponent, MeleeHitEvent>(OnMeleeHit);
         }
 
-        private void OnMeleeHit(EntityUid uid, StunbatonComponent component, ItemMeleeDamageEvent args)
+        private void OnMeleeHit(EntityUid uid, StunbatonComponent component, MeleeHitEvent args)
         {
             if (!component.Activated) return;
 
