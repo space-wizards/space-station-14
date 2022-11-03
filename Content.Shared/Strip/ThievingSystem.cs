@@ -17,6 +17,6 @@ public sealed class ThievingSystem : EntitySystem
     private void OnBeforeStrip(EntityUid uid, ThievingComponent component, BeforeStripEvent args)
     {
         args.Stealth |= component.Stealthy;
-        args.Additive -= component.StealTime;
+        args.Additive -= component.StripTimeReduction;
     }
 }
