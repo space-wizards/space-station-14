@@ -43,8 +43,6 @@ public sealed partial class AtmosphereSystem
     {
         base.Initialize();
 
-        gridAtmosphere.Tiles.Clear();
-
         if (!TryComp(uid, out MapGridComponent? mapGrid))
             return;
 
