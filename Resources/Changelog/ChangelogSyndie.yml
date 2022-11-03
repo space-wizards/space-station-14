@@ -2789,3 +2789,11 @@ Entries:
     type: Add
   id: 330
   time: '2022-11-02T23:08:36.0000000+00:00'
+- author: Bollo
+  changes:
+  - message: "\u041A\u0430\u0440\u0442\u0430 Delta station \u043F\u043E\u043B\u0443\
+      \u0447\u0438\u043B\u0430 \u043D\u043E\u0432\u044B\u0435 \u0438\u0437\u043C\u0435\
+      \u043D\u0435\u043D\u0438\u044F"
+    type: Tweak
+  id: 331
+  time: '2022-11-03T13:55:45.0000000+00:00'
