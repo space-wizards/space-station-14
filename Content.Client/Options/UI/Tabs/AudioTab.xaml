@@ -53,7 +53,7 @@
                     <Control MinSize="8 0" />
                     <Slider Name="LobbyVolumeSlider"
                             MinValue="0"
-                            MaxValue="300"
+                            MaxValue="200"
                             HorizontalExpand="True"
                             MinSize="80 0"
                             Rounded="True" />
