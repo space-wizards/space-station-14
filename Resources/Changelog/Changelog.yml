@@ -1,15 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: 'Disarm math now takes into account mass, damage, and stamina damage.',
-    type: Tweak}
-  id: 2062
-  time: '2022-07-31T03:41:30.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Proto-kinetic accelerators take slightly less time to recharge., type: Tweak}
-  id: 2063
-  time: '2022-07-31T03:43:45.0000000+00:00'
 - author: Level10Cybermancer
   changes:
   - {message: Thieving gloves now actually hide the stripping notification., type: Fix}
@@ -2956,3 +2945,17 @@ Entries:
   - {message: The flames of lit welders now look bright in the dark., type: Fix}
   id: 2561
   time: '2022-11-02T01:16:33.0000000+00:00'
+- author: Carbonhell
+  changes:
+  - {message: Wiki now displays the proper names and descriptions for chemistry recipes
+      and the rest instead of the localization keys., type: Fix}
+  id: 2562
+  time: '2022-11-02T20:38:56.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Fixed a bug that could result in collisions being disabled for entities
+      (e.g., after leaving disposal pipes).', type: Fix}
+  - {message: Fixed collision mispredictions when something like a locker or crates
+      get toggled open and closed., type: Fix}
+  id: 2563
+  time: '2022-11-03T02:03:36.0000000+00:00'
