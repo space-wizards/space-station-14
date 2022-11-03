@@ -387,10 +387,12 @@ public sealed partial class CargoSystem
         var center = new Vector2();
         var minRadius = 0f;
         Box2? aabb = null;
+        var xformQuery = GetEntityQuery<TransformComponent>();
 
         foreach (var grid in _mapManager.GetAllMapGrids(xform.MapID))
         {
-            aabb = aabb?.Union(grid.WorldAABB) ?? grid.WorldAABB;
+            var worldAABB = xformQuery.GetComponent(grid.GridEntityId).WorldMatrix.TransformBox(grid.LocalAABB);
+            aabb = aabb?.Union(worldAABB) ?? worldAABB;
         }
 
         if (aabb != null)
