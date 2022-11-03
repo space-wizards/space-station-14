@@ -241,8 +241,10 @@ namespace Content.Server.Power.Pow3r
                 battery.CurrentStorage -= frameTime * battery.CurrentSupply;
                 DebugTools.Assert(battery.CurrentStorage >= 0 || MathHelper.CloseTo(battery.CurrentStorage, 0));
 
-                // Each battery tries to ramp to meet the whole unmet supply all on its own (minus throughput from the source net)
-                battery.SupplyRampTarget = Math.Max(0, unmet - battery.CurrentReceiving * battery.Efficiency);
+                // TODO calculate this properly. Currently this is only initially non-zero if the ramp tolerance is
+                // non-zero then the ramp target grows as the ramp position does. Instead, batteries should just try to
+                // ramp to satisfy the demand.
+                battery.SupplyRampTarget = battery.CurrentSupply - battery.CurrentReceiving * battery.Efficiency;
             }
         }
 
