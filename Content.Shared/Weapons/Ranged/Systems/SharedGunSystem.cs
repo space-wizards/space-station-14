@@ -377,12 +377,13 @@ public abstract partial class SharedGunSystem : EntitySystem
 
     public void CauseImpulse(EntityCoordinates fromCoordinates, EntityCoordinates toCoordinates, PhysicsComponent userPhysics)
     {
-        var fromMap = fromCoordinates.ToMap(EntityManager);
+        var fromMap = fromCoordinates.ToMapPos(EntityManager);
         var toMap = toCoordinates.ToMapPos(EntityManager);
-        var mapDirection = toMap - fromMap.Position;
+        var shotDirection = (toMap - fromMap).Normalized;
 
-        var impulseVector =  mapDirection.Normalized * userPhysics.Mass;
-        Physics.ApplyLinearImpulse(userPhysics, -impulseVector * 1.2f);
+        const float impulseStrength = 85.0f; //The bullet impulse strength, TODO: In the future we might want to make it more projectile dependent
+        var impulseVector =  shotDirection * impulseStrength;
+        Physics.ApplyLinearImpulse(userPhysics, -impulseVector);
     }
     protected abstract void CreateEffect(EntityUid uid, MuzzleFlashEvent message, EntityUid? user = null);
 
