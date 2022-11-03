@@ -26,6 +26,9 @@ namespace Content.Server.Pinpointer
         private void OnLocateTarget(HyperspaceJumpCompletedEvent ev)
         {
             // This feels kind of expensive, but it only happens once per hyperspace jump
+
+            // todo: ideally, you would need to raise this event only on jumped entities
+            // this code update ALL pinpointers in game
             foreach (var pinpointer in EntityQuery<PinpointerComponent>())
             {
                 LocateTarget(pinpointer.Owner, pinpointer);
@@ -115,6 +118,9 @@ namespace Content.Server.Pinpointer
         private void UpdateDirectionToTarget(EntityUid uid, PinpointerComponent? pinpointer = null)
         {
             if (!Resolve(uid, ref pinpointer))
+                return;
+
+            if (!pinpointer.IsActive)
                 return;
 
             var target = pinpointer.Target;
