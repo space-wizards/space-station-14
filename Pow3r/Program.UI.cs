@@ -270,7 +270,7 @@ namespace Pow3r
                 {
                     if (battery.LinkedNetworkCharging == default && Button("Link as load"))
                     {
-                        _linking.BatteriesCharging.Add(battery.Id);
+                        _linking.BatteryLoads.Add(battery.Id);
                         _linking = null;
                         RefreshLinks();
                     }
@@ -279,7 +279,7 @@ namespace Pow3r
                         SameLine();
                         if (battery.LinkedNetworkDischarging == default && Button("Link as supply"))
                         {
-                            _linking.BatteriesDischarging.Add(battery.Id);
+                            _linking.BatterySupplies.Add(battery.Id);
                             _linking = null;
                             RefreshLinks();
                         }
@@ -290,7 +290,7 @@ namespace Pow3r
                     if (battery.LinkedNetworkCharging != default && Button("Unlink loading"))
                     {
                         var net = _state.Networks[battery.LinkedNetworkCharging];
-                        net.BatteriesCharging.Remove(battery.Id);
+                        net.BatteryLoads.Remove(battery.Id);
                         battery.LinkedNetworkCharging = default;
                     }
                     else
@@ -299,7 +299,7 @@ namespace Pow3r
                         if (battery.LinkedNetworkDischarging != default && Button("Unlink supplying"))
                         {
                             var net = _state.Networks[battery.LinkedNetworkDischarging];
-                            net.BatteriesDischarging.Remove(battery.Id);
+                            net.BatterySupplies.Remove(battery.Id);
                             battery.LinkedNetworkDischarging = default;
                         }
                     }
@@ -331,13 +331,13 @@ namespace Pow3r
                     DrawArrowLine(bgDrawList, load.CurrentWindowPos, displayNet.CurrentWindowPos, Color.Red);
                 }
 
-                foreach (var batteryId in network.BatteriesCharging)
+                foreach (var batteryId in network.BatteryLoads)
                 {
                     var battery = _displayBatteries[batteryId];
                     DrawArrowLine(bgDrawList, battery.CurrentWindowPos, displayNet.CurrentWindowPos, Color.Purple);
                 }
 
-                foreach (var batteryId in network.BatteriesDischarging)
+                foreach (var batteryId in network.BatterySupplies)
                 {
                     var battery = _displayBatteries[batteryId];
                     DrawArrowLine(bgDrawList, displayNet.CurrentWindowPos, battery.CurrentWindowPos, Color.Cyan);
@@ -374,8 +374,8 @@ namespace Pow3r
 
                     case Battery b:
                         _state.Batteries.Free(b.Id);
-                        _state.Networks.Values.ForEach(n => n.BatteriesCharging.Remove(b.Id));
-                        _state.Networks.Values.ForEach(n => n.BatteriesDischarging.Remove(b.Id));
+                        _state.Networks.Values.ForEach(n => n.BatteryLoads.Remove(b.Id));
+                        _state.Networks.Values.ForEach(n => n.BatterySupplies.Remove(b.Id));
                         _displayBatteries.Remove(b.Id);
                         break;
                 }

@@ -111,13 +111,13 @@ namespace Pow3r
                     supply.LinkedNetwork = network.Id;
                 }
 
-                foreach (var batteryId in network.BatteriesCharging)
+                foreach (var batteryId in network.BatteryLoads)
                 {
                     var battery = _state.Batteries[batteryId];
                     battery.LinkedNetworkCharging = network.Id;
                 }
 
-                foreach (var batteryId in network.BatteriesDischarging)
+                foreach (var batteryId in network.BatterySupplies)
                 {
                     var battery = _state.Batteries[batteryId];
                     battery.LinkedNetworkDischarging = network.Id;

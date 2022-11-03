@@ -167,7 +167,7 @@ namespace Content.Server.Power.EntitySystems
             // A full battery will still have the same max draw rate,
             //  but will likely have deliberately limited current draw rate.
             float consumptionW = network.Loads.Sum(s => _powerState.Loads[s].DesiredPower);
-            consumptionW += network.BatteriesCharging.Sum(s => _powerState.Batteries[s].CurrentReceiving);
+            consumptionW += network.BatteryLoads.Sum(s => _powerState.Batteries[s].CurrentReceiving);
 
             // This is interesting because LastMaxSupplySum seems to match LastAvailableSupplySum for some reason.
             // I suspect it's accounting for current supply rather than theoretical supply.
@@ -180,7 +180,7 @@ namespace Content.Server.Power.EntitySystems
             float supplyBatteriesW = 0.0f;
             float storageCurrentJ = 0.0f;
             float storageMaxJ = 0.0f;
-            foreach (var discharger in network.BatteriesDischarging)
+            foreach (var discharger in network.BatterySupplies)
             {
                 var nb = _powerState.Batteries[discharger];
                 supplyBatteriesW += nb.CurrentSupply;
@@ -191,7 +191,7 @@ namespace Content.Server.Power.EntitySystems
             // And charging
             float outStorageCurrentJ = 0.0f;
             float outStorageMaxJ = 0.0f;
-            foreach (var charger in network.BatteriesCharging)
+            foreach (var charger in network.BatteryLoads)
             {
                 var nb = _powerState.Batteries[charger];
                 outStorageCurrentJ += nb.CurrentStorage;
@@ -199,7 +199,7 @@ namespace Content.Server.Power.EntitySystems
             }
             return new()
             {
-                SupplyCurrent = network.LastMaxSupplySum,
+                SupplyCurrent = network.LastCombinedMaxSupply,
                 SupplyBatteries = supplyBatteriesW,
                 SupplyTheoretical = maxSupplyW,
                 Consumption = consumptionW,
@@ -324,8 +324,8 @@ namespace Content.Server.Power.EntitySystems
             var netNode = net.NetworkNode;
 
             netNode.Loads.Clear();
-            netNode.BatteriesDischarging.Clear();
-            netNode.BatteriesCharging.Clear();
+            netNode.BatterySupplies.Clear();
+            netNode.BatteryLoads.Clear();
             netNode.Supplies.Clear();
 
             foreach (var provider in net.Providers)
@@ -348,7 +348,7 @@ namespace Content.Server.Power.EntitySystems
             foreach (var apc in net.Apcs)
             {
                 var netBattery = batteryQuery.GetComponent(apc.Owner);
-                netNode.BatteriesDischarging.Add(netBattery.NetworkBattery.Id);
+                netNode.BatterySupplies.Add(netBattery.NetworkBattery.Id);
                 netBattery.NetworkBattery.LinkedNetworkDischarging = netNode.Id;
             }
         }
@@ -359,8 +359,8 @@ namespace Content.Server.Power.EntitySystems
 
             netNode.Loads.Clear();
             netNode.Supplies.Clear();
-            netNode.BatteriesCharging.Clear();
-            netNode.BatteriesDischarging.Clear();
+            netNode.BatteryLoads.Clear();
+            netNode.BatterySupplies.Clear();
 
             foreach (var consumer in net.Consumers)
             {
@@ -379,14 +379,14 @@ namespace Content.Server.Power.EntitySystems
             foreach (var charger in net.Chargers)
             {
                 var battery = batteryQuery.GetComponent(charger.Owner);
-                netNode.BatteriesCharging.Add(battery.NetworkBattery.Id);
+                netNode.BatteryLoads.Add(battery.NetworkBattery.Id);
                 battery.NetworkBattery.LinkedNetworkCharging = netNode.Id;
             }
 
             foreach (var discharger in net.Dischargers)
             {
                 var battery = batteryQuery.GetComponent(discharger.Owner);
-                netNode.BatteriesDischarging.Add(battery.NetworkBattery.Id);
+                netNode.BatterySupplies.Add(battery.NetworkBattery.Id);
                 battery.NetworkBattery.LinkedNetworkDischarging = netNode.Id;
             }
         }

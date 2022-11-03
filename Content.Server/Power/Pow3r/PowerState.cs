@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Robust.Shared.Utility;
+using static Content.Server.Power.Pow3r.PowerState;
 
 namespace Content.Server.Power.Pow3r
 {
@@ -353,20 +354,29 @@ namespace Content.Server.Power.Pow3r
 
             // == Runtime parameters ==
 
-            // Actual power supplied last network update.
+            /// <summary>
+            ///     Actual power supplied last network update.
+            /// </summary>
             [ViewVariables(VVAccess.ReadWrite)] public float CurrentSupply;
 
-            // The amount of power we WANT to be supplying to match grid load.
+            /// <summary>
+            ///     The amount of power we WANT to be supplying to match grid load.
+            /// </summary>
             [ViewVariables(VVAccess.ReadWrite)] [JsonIgnore]
             public float SupplyRampTarget;
 
-            // Position of the supply ramp.
+            /// <summary>
+            ///     Position of the supply ramp.
+            /// </summary>
             [ViewVariables(VVAccess.ReadWrite)] public float SupplyRampPosition;
 
             [ViewVariables] [JsonIgnore] public NodeId LinkedNetwork;
 
-            // In-tick max supply thanks to ramp. Used during calculations.
-            [JsonIgnore] public float EffectiveMaxSupply;
+            /// <summary>
+            ///     Supply available during a tick. The actual current supply will be less than or equal to this. Used
+            ///     during calculations.
+            /// </summary>
+            [JsonIgnore] public float AvailableSupply;
         }
 
         public sealed class Load
@@ -414,11 +424,11 @@ namespace Content.Server.Power.Pow3r
             [ViewVariables(VVAccess.ReadWrite)] [JsonIgnore]
             public bool LoadingMarked;
 
+            /// <summary>
+            ///     Amount of supply that the battery can provider this tick.
+            /// </summary>
             [ViewVariables(VVAccess.ReadWrite)] [JsonIgnore]
-            public bool LoadingDemandMarked;
-
-            [ViewVariables(VVAccess.ReadWrite)] [JsonIgnore]
-            public float TempMaxSupply;
+            public float AvailableSupply;
 
             [ViewVariables(VVAccess.ReadWrite)] [JsonIgnore]
             public float DesiredPower;
@@ -431,6 +441,13 @@ namespace Content.Server.Power.Pow3r
 
             [ViewVariables(VVAccess.ReadWrite)] [JsonIgnore]
             public NodeId LinkedNetworkDischarging;
+
+            /// <summary>
+            ///  Theoretical maximum effective supply, assuming the network providing power to this battery continues to supply it
+            ///  at the same rate.
+            /// </summary>
+            [ViewVariables] [JsonIgnore]
+            public float MaxEffectiveSupply => MaxSupply + CurrentReceiving * Efficiency;
         }
 
         // Readonly breaks json serialization.
@@ -439,25 +456,35 @@ namespace Content.Server.Power.Pow3r
         {
             [ViewVariables] public NodeId Id;
 
+            /// <summary>
+            ///     Power generators
+            /// </summary>
             [ViewVariables] public List<NodeId> Supplies = new();
 
+            /// <summary>
+            ///     Power consumers.
+            /// </summary>
             [ViewVariables] public List<NodeId> Loads = new();
 
-            // "Loading" means the network is connected to the INPUT port of the battery.
-            [ViewVariables] public List<NodeId> BatteriesCharging = new();
-
-            // "Supplying" means the network is connected to the OUTPUT port of the battery.
-            [ViewVariables] public List<NodeId> BatteriesDischarging = new();
+            /// <summary>
+            ///     Batteries that are draining power from this network (connected to the INPUT port of the battery).
+            /// </summary>
+            [ViewVariables] public List<NodeId> BatteryLoads = new();
 
             /// <summary>
-            ///     Available supply from sources WITHOUT discharging batteries.
+            ///     Batteries that are supplying power to this network (connected to the OUTPUT port of the battery).
             /// </summary>
-            [ViewVariables] public float LastAvailableSupplySum = 0f;
+            [ViewVariables] public List<NodeId> BatterySupplies = new();
 
             /// <summary>
-            ///     Available supply from sources INCLUDING discharging batteries.
+            ///     Available supply, including both normal supplies and batteries.
             /// </summary>
-            [ViewVariables] public float LastMaxSupplySum = 0f;
+            [ViewVariables] public float LastCombinedSupply = 0f;
+
+            /// <summary>
+            ///     Theoretical maximum supply, including both normal supplies and batteries.
+            /// </summary>
+            [ViewVariables] public float LastCombinedMaxSupply = 0f;
 
             [ViewVariables] [JsonIgnore] public int Height;
         }

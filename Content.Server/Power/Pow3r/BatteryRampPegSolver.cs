@@ -1,3 +1,4 @@
+using Pidgin;
 using Robust.Shared.Utility;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -75,7 +76,7 @@ namespace Content.Server.Power.Pow3r
             // this really shouldn't be hard to do.
             // except for maybe the paused/enabled guff. If its mostly false, I guess they could just be 0 multipliers?
 
-            // Add up demand in network.
+            // Add up demand from loads.
             var demand = 0f;
             foreach (var loadId in network.Loads)
             {
@@ -92,8 +93,8 @@ namespace Content.Server.Power.Pow3r
             // This would mean that charge rate would have no impact on throughput rate like it does currently.
             // Would require a second pass over the network, or something. Not sure.
 
-            // Loading batteries.
-            foreach (var batteryId in network.BatteriesCharging)
+            // Add demand from batteries
+            foreach (var batteryId in network.BatteryLoads)
             {
                 var battery = state.Batteries[batteryId];
                 if (!battery.Enabled || !battery.CanCharge || battery.Paused)
@@ -105,19 +106,16 @@ namespace Content.Server.Power.Pow3r
 
                 var chargeRate = battery.MaxChargeRate + battery.LoadingNetworkDemand / battery.Efficiency;
 
-                var batDemand = Math.Min(chargeRate, scaledSpace);
-
-                DebugTools.Assert(batDemand >= 0);
-
-                battery.DesiredPower = batDemand;
-                demand += batDemand;
+                battery.DesiredPower = Math.Min(chargeRate, scaledSpace);
+                DebugTools.Assert(battery.DesiredPower >= 0);
+                demand += battery.DesiredPower;
             }
 
             DebugTools.Assert(demand >= 0);
 
             // Add up supply in network.
-            var availableSupplySum = 0f;
-            var maxSupplySum = 0f;
+            var totalSupply = 0f;
+            var totalMaxSupply = 0f;
             foreach (var supplyId in network.Supplies)
             {
                 var supply = state.Supplies[supplyId];
@@ -130,26 +128,26 @@ namespace Content.Server.Power.Pow3r
                 DebugTools.Assert(effectiveSupply >= 0);
                 DebugTools.Assert(supply.MaxSupply >= 0);
 
-                supply.EffectiveMaxSupply = effectiveSupply;
-                availableSupplySum += effectiveSupply;
-                maxSupplySum += supply.MaxSupply;
+                supply.AvailableSupply = effectiveSupply;
+                totalSupply += effectiveSupply;
+                totalMaxSupply += supply.MaxSupply;
             }
 
-            var unmet = Math.Max(0, demand - availableSupplySum);
+            var unmet = Math.Max(0, demand - totalSupply);
+            DebugTools.Assert(totalSupply >= 0);
+            DebugTools.Assert(totalMaxSupply >= 0);
 
-            DebugTools.Assert(availableSupplySum >= 0);
-            DebugTools.Assert(maxSupplySum >= 0);
+            // Supplying batteries. Batteries need to go after local supplies so that local supplies are prioritized.
+            // Also, it makes demand-pulling of batteries. Because all batteries will desire the unmet demand of their
+            // loading network, there will be a "rush" of input current when a network powers on, before power
+            // stabilizes in the network. This is fine.
 
-            // Supplying batteries.
-            // Batteries need to go after local supplies so that local supplies are prioritized.
-            // Also, it makes demand-pulling of batteries
-            // Because all batteries will will desire the unmet demand of their loading network,
-            // there will be a "rush" of input current when a network powers on,
-            // before power stabilizes in the network.
-            // This is fine.
+            var totalBatterySupply = 0f;
+            var totalMaxBatterySupply = 0f;
             if (unmet > 0)
             {
-                foreach (var batteryId in network.BatteriesDischarging)
+                // determine supply available from batteries
+                foreach (var batteryId in network.BatterySupplies)
                 {
                     var battery = state.Batteries[batteryId];
                     if (!battery.Enabled || !battery.CanDischarge || battery.Paused)
@@ -159,42 +157,23 @@ namespace Content.Server.Power.Pow3r
                     var supplyCap = Math.Min(battery.MaxSupply,
                         battery.SupplyRampPosition + battery.SupplyRampTolerance);
                     var supplyAndPassthrough = supplyCap + battery.CurrentReceiving * battery.Efficiency;
-                    var tempSupply = Math.Min(scaledSpace, supplyAndPassthrough);
-                    // Clamp final supply to the unmet demand, so that batteries refrain from taking power away from supplies.
-                    var clampedSupply = Math.Min(unmet, tempSupply);
 
-                    DebugTools.Assert(clampedSupply >= 0);
-
-                    battery.TempMaxSupply = clampedSupply;
-                    availableSupplySum += clampedSupply;
-                    // TODO: Calculate this properly.
-                    maxSupplySum += clampedSupply;
-
+                    battery.AvailableSupply = Math.Min(scaledSpace, supplyAndPassthrough);
                     battery.LoadingNetworkDemand = unmet;
-                    battery.LoadingDemandMarked = true;
-                }
-            }
-            else
-            {
-                foreach (var batteryId in network.BatteriesDischarging)
-                {
-                    var battery = state.Batteries[batteryId];
-                    if (!battery.Enabled || !battery.CanDischarge || battery.Paused)
-                        continue;
 
-                    battery.TempMaxSupply = 0;
-                    battery.LoadingNetworkDemand = 0;
-                    battery.LoadingDemandMarked = true;
+                    totalBatterySupply += battery.AvailableSupply;
+                    totalMaxBatterySupply += battery.MaxEffectiveSupply;
                 }
             }
 
-            network.LastAvailableSupplySum = availableSupplySum;
-            network.LastMaxSupplySum = maxSupplySum;
+            network.LastCombinedSupply = totalSupply + totalBatterySupply;
+            network.LastCombinedMaxSupply = totalMaxSupply + totalMaxBatterySupply;
 
-            var met = Math.Min(demand, availableSupplySum);
-
-            if (met == 0)
+            var met = Math.Min(demand, network.LastCombinedSupply);
+            if (met == 0) 
                 return;
+
+            var supplyRatio = met / demand;
 
             // Distribute supply to loads.
             foreach (var loadId in network.Loads)
@@ -203,70 +182,67 @@ namespace Content.Server.Power.Pow3r
                 if (!load.Enabled || load.DesiredPower == 0 || load.Paused)
                     continue;
 
-                var ratio = load.DesiredPower / demand;
-                load.ReceivingPower = ratio * met;
+                load.ReceivingPower = load.DesiredPower * supplyRatio;
             }
 
-            // Loading batteries
-            foreach (var batteryId in network.BatteriesCharging)
+            // Distribute supply to batteries
+            foreach (var batteryId in network.BatteryLoads)
             {
                 var battery = state.Batteries[batteryId];
-
                 if (!battery.Enabled || battery.DesiredPower == 0 || battery.Paused)
                     continue;
 
-                var ratio = battery.DesiredPower / demand;
-                battery.CurrentReceiving = ratio * met;
-                var receivedPower = frameTime * battery.CurrentReceiving;
-                receivedPower *= battery.Efficiency;
-                battery.CurrentStorage = Math.Min(
-                    battery.Capacity,
-                    battery.CurrentStorage + receivedPower);
                 battery.LoadingMarked = true;
+                battery.CurrentReceiving = battery.DesiredPower * supplyRatio;
+                battery.CurrentStorage += frameTime * battery.CurrentReceiving * battery.Efficiency;
+
+                DebugTools.Assert(battery.CurrentStorage <= battery.Capacity || MathHelper.CloseTo(battery.CurrentStorage, battery.Capacity));
             }
 
-            // Load to supplies
-            foreach (var supplyId in network.Supplies)
+            // Target output capacity for supplies
+            var metSupply = Math.Min(demand, totalSupply);
+            if (metSupply > 0)
             {
-                var supply = state.Supplies[supplyId];
-                if (!supply.Enabled || supply.EffectiveMaxSupply == 0 || supply.Paused)
-                    continue;
+                var relativeSupplyOutput = metSupply / totalSupply;
+                var targetRelativeSupplyOutput = Math.Min(demand, totalMaxSupply) / totalMaxSupply;
 
-                var ratio = supply.EffectiveMaxSupply / availableSupplySum;
-                supply.CurrentSupply = ratio * met;
-
-                if (supply.MaxSupply != 0)
+                // Apply load to supplies
+                foreach (var supplyId in network.Supplies)
                 {
-                    var maxSupplyRatio = supply.MaxSupply / maxSupplySum;
+                    var supply = state.Supplies[supplyId];
+                    if (!supply.Enabled || supply.Paused)
+                        continue;
 
-                    supply.SupplyRampTarget = maxSupplyRatio * demand;
-                }
-                else
-                {
-                    supply.SupplyRampTarget = 0;
+                    supply.CurrentSupply = supply.AvailableSupply * relativeSupplyOutput;
+
+                    // Supply ramp assumes all supplies ramp at the same rate. If some generators spin up very slowly, in
+                    // principle the fast supplies should try over-shoot until they can settle back down. E.g., all supplies
+                    // need to reach 50% capacity, but it takes the nuclear reactor 1 hour to reach that, then our lil coal
+                    // furnaces should run at 100% for a while. But I guess this is good enough for now.
+                    supply.SupplyRampTarget = supply.MaxSupply * targetRelativeSupplyOutput;
                 }
             }
+            
+            if (unmet <= 0 || totalBatterySupply <= 0)
+                return;
 
-            // Load to supplying batteries
-            foreach (var batteryId in network.BatteriesDischarging)
+            // Target output capacity for batteries
+            var relativeBatteryOutput = Math.Min(unmet, totalBatterySupply) / totalBatterySupply;
+
+            // Apply load to supplying batteries
+            foreach (var batteryId in network.BatterySupplies)
             {
                 var battery = state.Batteries[batteryId];
-                if (!battery.Enabled || battery.TempMaxSupply == 0 || battery.Paused)
+                if (!battery.Enabled || battery.Paused)
                     continue;
 
-                var ratio = battery.TempMaxSupply / availableSupplySum;
-                battery.CurrentSupply = ratio * met;
-
-                battery.CurrentStorage = Math.Max(
-                    0,
-                    battery.CurrentStorage - frameTime * battery.CurrentSupply);
-
-                battery.SupplyRampTarget = battery.CurrentSupply - battery.CurrentReceiving * battery.Efficiency;
-
-                /*var maxSupplyRatio = supply.MaxSupply / maxSupplySum;
-
-                supply.SupplyRampTarget = maxSupplyRatio * demand;*/
                 battery.SupplyingMarked = true;
+                battery.CurrentSupply = battery.AvailableSupply * relativeBatteryOutput;
+                battery.CurrentStorage -= frameTime * battery.CurrentSupply;
+                DebugTools.Assert(battery.CurrentStorage >= 0 || MathHelper.CloseTo(battery.CurrentStorage, 0));
+
+                // Each battery tries to ramp to meet the whole unmet supply all on its own (minus throughput from the source net)
+                battery.SupplyRampTarget = Math.Max(0, unmet - battery.CurrentReceiving * battery.Efficiency);
             }
         }
 
@@ -280,17 +256,19 @@ namespace Content.Server.Power.Pow3r
                     continue;
 
                 if (!battery.SupplyingMarked)
+                {
                     battery.CurrentSupply = 0;
+                    battery.SupplyRampTarget = 0;
+                    battery.LoadingNetworkDemand = 0;
+                }
 
                 if (!battery.LoadingMarked)
+                {
                     battery.CurrentReceiving = 0;
-
-                if (!battery.LoadingDemandMarked)
-                    battery.LoadingNetworkDemand = 0;
+                }
 
                 battery.SupplyingMarked = false;
                 battery.LoadingMarked = false;
-                battery.LoadingDemandMarked = false;
             }
         }
 
@@ -316,7 +294,7 @@ namespace Content.Server.Power.Pow3r
             network.Height = -2;
             var height = -1;
 
-            foreach (var batteryId in network.BatteriesCharging)
+            foreach (var batteryId in network.BatteryLoads)
             {
                 var battery = state.Batteries[batteryId];
 
