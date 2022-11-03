@@ -60,8 +60,6 @@ namespace Content.IntegrationTests.Tests.Doors
 
             await server.WaitAssertion(() =>
             {
-                mapManager.CreateNewMapEntity(MapId.Nullspace);
-
                 airlock = entityManager.SpawnEntity("AirlockDummy", MapCoordinates.Nullspace);
 
                 Assert.True(entityManager.TryGetComponent(airlock, out doorComponent));

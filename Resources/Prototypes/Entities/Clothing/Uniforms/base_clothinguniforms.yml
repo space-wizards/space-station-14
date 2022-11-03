@@ -9,6 +9,10 @@
     slots: [innerclothing]
     equipSound:
       path: /Audio/Items/jumpsuit_equip.ogg
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        shader: StencilDraw
   - type: Butcherable
     butcheringType: Knife
     spawned:
