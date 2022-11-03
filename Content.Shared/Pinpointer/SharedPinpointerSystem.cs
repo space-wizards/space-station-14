@@ -4,13 +4,10 @@ namespace Content.Shared.Pinpointer
 {
     public abstract class SharedPinpointerSystem : EntitySystem
     {
-        protected readonly HashSet<EntityUid> ActivePinpointers = new();
-
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<PinpointerComponent, ComponentGetState>(GetCompState);
-            SubscribeLocalEvent<PinpointerComponent, ComponentShutdown>(OnPinpointerShutdown);
         }
 
         private void GetCompState(EntityUid uid, PinpointerComponent pinpointer, ref ComponentGetState args)
@@ -21,12 +18,6 @@ namespace Content.Shared.Pinpointer
                 ArrowAngle = pinpointer.ArrowAngle,
                 DistanceToTarget = pinpointer.DistanceToTarget
             };
-        }
-
-        private void OnPinpointerShutdown(EntityUid uid, PinpointerComponent component, ComponentShutdown _)
-        {
-            // no need to dirty it/etc: it's shutting down anyway!
-            ActivePinpointers.Remove(uid);
         }
 
         /// <summary>
@@ -72,13 +63,7 @@ namespace Content.Shared.Pinpointer
                 return;
             if (isActive == pinpointer.IsActive)
                 return;
-
-            // add-remove pinpointer from update list
-            if (isActive)
-                ActivePinpointers.Add(uid);
-            else
-                ActivePinpointers.Remove(uid);
-
+            
             pinpointer.IsActive = isActive;
             Dirty(pinpointer);
         }

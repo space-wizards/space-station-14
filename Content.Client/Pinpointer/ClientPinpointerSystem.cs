@@ -37,9 +37,9 @@ namespace Content.Client.Pinpointer
             if (args.Current is not PinpointerComponentState state)
                 return;
 
-            SetActive(uid, state.IsActive, pinpointer);
-            TrySetArrowAngle(uid, state.ArrowAngle, pinpointer);
-            SetDistance(uid, state.DistanceToTarget, pinpointer);
+            pinpointer.IsActive = state.IsActive;
+            pinpointer.ArrowAngle = state.ArrowAngle;
+            pinpointer.DistanceToTarget = state.DistanceToTarget;
         }
 
         private void UpdateAppearance(EntityUid uid, PinpointerComponent? pinpointer = null,

@@ -26,12 +26,9 @@ namespace Content.Server.Pinpointer
         private void OnLocateTarget(HyperspaceJumpCompletedEvent ev)
         {
             // This feels kind of expensive, but it only happens once per hyperspace jump
-            foreach (var uid in ActivePinpointers)
+            foreach (var pinpointer in EntityQuery<PinpointerComponent>())
             {
-                if (TryComp<PinpointerComponent>(uid, out var component))
-                {
-                    LocateTarget(uid, component);
-                }
+                LocateTarget(pinpointer.Owner, pinpointer);
             }
         }
 
@@ -58,9 +55,9 @@ namespace Content.Server.Pinpointer
 
             // because target or pinpointer can move
             // we need to update pinpointers arrow each frame
-            foreach (var uid in ActivePinpointers)
+            foreach (var pinpointer in EntityQuery<PinpointerComponent>())
             {
-                UpdateDirectionToTarget(uid);
+                UpdateDirectionToTarget(pinpointer.Owner, pinpointer);
             }
         }
 
