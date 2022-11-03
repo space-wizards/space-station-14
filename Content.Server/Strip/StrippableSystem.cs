@@ -245,7 +245,12 @@ namespace Content.Server.Strip
                 return true;
             }
 
-            var doAfterArgs = new DoAfterEventArgs(user, component.HandStripDelay, CancellationToken.None, component.Owner)
+            var userEv = new BeforeStripEvent(component.HandStripDelay);
+            RaiseLocalEvent(user, userEv);
+            var ev = new BeforeGettingStrippedEvent(userEv.Time, userEv.Stealth);
+            RaiseLocalEvent(component.Owner, ev);
+
+            var doAfterArgs = new DoAfterEventArgs(user, ev.Time, CancellationToken.None, component.Owner)
             {
                 ExtraCheck = Check,
                 BreakOnStun = true,
@@ -292,9 +297,9 @@ namespace Content.Server.Strip
                     return false;
                 }
 
-                if (!_inventorySystem.CanUnequip(user, component.Owner, slot, out _))
+                if (!_inventorySystem.CanUnequip(user, component.Owner, slot, out var reason))
                 {
-                    user.PopupMessageCursor(Loc.GetString("strippable-component-cannot-unequip-message", ("owner", component.Owner)));
+                    user.PopupMessageCursor(reason);
                     return false;
                 }
 
@@ -375,7 +380,6 @@ namespace Content.Server.Strip
 
                 return true;
             }
-
 
             var userEv = new BeforeStripEvent(component.HandStripDelay);
             RaiseLocalEvent(user, userEv);
