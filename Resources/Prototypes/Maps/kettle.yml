@@ -44,3 +44,4 @@
         ServiceWorker: [ 2, 2 ]
         SecurityCadet: [ 3, 4 ]
         Detective: [ 1, 1 ]
+        Zookeeper: [1, 1]

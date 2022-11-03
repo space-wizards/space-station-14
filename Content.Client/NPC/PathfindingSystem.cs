@@ -164,6 +164,7 @@ namespace Content.Client.NPC
             var mousePos = _inputManager.MouseScreenPosition;
             var mouseWorldPos = _eyeManager.ScreenToMap(mousePos);
             var aabb = new Box2(mouseWorldPos.Position - SharedPathfindingSystem.ChunkSize, mouseWorldPos.Position + SharedPathfindingSystem.ChunkSize);
+            var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
 
             if ((_system.Modes & PathfindingDebugMode.Crumb) != 0x0 &&
                 mouseWorldPos.MapId == args.MapId)
@@ -172,11 +173,11 @@ namespace Content.Client.NPC
 
                 foreach (var grid in _mapManager.FindGridsIntersecting(mouseWorldPos.MapId, aabb))
                 {
-                    if (found || !_system.Breadcrumbs.TryGetValue(grid.GridEntityId, out var crumbs))
+                    if (found || !_system.Breadcrumbs.TryGetValue(grid.GridEntityId, out var crumbs) || !xformQuery.TryGetComponent(grid.GridEntityId, out var gridXform))
                         continue;
 
-                    var localAABB = grid.InvWorldMatrix.TransformBox(aabb.Enlarged(float.Epsilon - SharedPathfindingSystem.ChunkSize));
-                    var worldMatrix = grid.WorldMatrix;
+                    var (_, _, worldMatrix, invWorldMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv();
+                    var localAABB = invWorldMatrix.TransformBox(aabb.Enlarged(float.Epsilon - SharedPathfindingSystem.ChunkSize));
 
                     foreach (var chunk in crumbs)
                     {
@@ -242,7 +243,7 @@ namespace Content.Client.NPC
             if ((_system.Modes & PathfindingDebugMode.Poly) != 0x0 &&
                 mouseWorldPos.MapId == args.MapId)
             {
-                if (!_mapManager.TryFindGridAt(mouseWorldPos, out var grid))
+                if (!_mapManager.TryFindGridAt(mouseWorldPos, out var grid) || !xformQuery.TryGetComponent(grid.GridEntityId, out var gridXform))
                     return;
 
                 var found = false;
@@ -261,7 +262,7 @@ namespace Content.Client.NPC
                     return;
                 }
 
-                var invGridMatrix = grid.InvWorldMatrix;
+                var invGridMatrix = gridXform.InvWorldMatrix;
                 DebugPathPoly? nearest = null;
                 var nearestDistance = float.MaxValue;
 
@@ -316,17 +317,20 @@ namespace Content.Client.NPC
             var mousePos = _inputManager.MouseScreenPosition;
             var mouseWorldPos = _eyeManager.ScreenToMap(mousePos);
             var aabb = new Box2(mouseWorldPos.Position - Vector2.One / 4f, mouseWorldPos.Position + Vector2.One / 4f);
+            var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
 
             if ((_system.Modes & PathfindingDebugMode.Breadcrumbs) != 0x0 &&
                 mouseWorldPos.MapId == args.MapId)
             {
                 foreach (var grid in _mapManager.FindGridsIntersecting(mouseWorldPos.MapId, aabb))
                 {
-                    if (!_system.Breadcrumbs.TryGetValue(grid.GridEntityId, out var crumbs))
+                    if (!_system.Breadcrumbs.TryGetValue(grid.GridEntityId, out var crumbs) ||
+                        !xformQuery.TryGetComponent(grid.GridEntityId, out var gridXform))
                         continue;
 
-                    worldHandle.SetTransform(grid.WorldMatrix);
-                    var localAABB = grid.InvWorldMatrix.TransformBox(aabb);
+                    var (_, _, worldMatrix, invWorldMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv();
+                    worldHandle.SetTransform(worldMatrix);
+                    var localAABB = invWorldMatrix.TransformBox(aabb);
 
                     foreach (var chunk in crumbs)
                     {
@@ -374,11 +378,13 @@ namespace Content.Client.NPC
             {
                 foreach (var grid in _mapManager.FindGridsIntersecting(args.MapId, aabb))
                 {
-                    if (!_system.Polys.TryGetValue(grid.GridEntityId, out var data))
+                    if (!_system.Polys.TryGetValue(grid.GridEntityId, out var data) ||
+                        !xformQuery.TryGetComponent(grid.GridEntityId, out var gridXform))
                         continue;
 
-                    worldHandle.SetTransform(grid.WorldMatrix);
-                    var localAABB = grid.InvWorldMatrix.TransformBox(aabb);
+                    var (_, _, worldMatrix, invWorldMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv();
+                    worldHandle.SetTransform(worldMatrix);
+                    var localAABB = invWorldMatrix.TransformBox(aabb);
 
                     foreach (var chunk in data)
                     {
@@ -407,7 +413,7 @@ namespace Content.Client.NPC
                 foreach (var grid in _mapManager.FindGridsIntersecting(args.MapId, aabb))
                 {
                     if (!_system.Polys.TryGetValue(grid.GridEntityId, out var data) ||
-                        !_entManager.TryGetComponent<TransformComponent>(grid.GridEntityId, out var gridXform))
+                        !xformQuery.TryGetComponent(grid.GridEntityId, out var gridXform))
                         continue;
 
                     var (_, _, worldMatrix, invMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv();
@@ -460,11 +466,13 @@ namespace Content.Client.NPC
             {
                 foreach (var grid in _mapManager.FindGridsIntersecting(args.MapId, args.WorldBounds))
                 {
-                    if (!_system.Breadcrumbs.TryGetValue(grid.GridEntityId, out var crumbs))
+                    if (!_system.Breadcrumbs.TryGetValue(grid.GridEntityId, out var crumbs) ||
+                        !xformQuery.TryGetComponent(grid.GridEntityId, out var gridXform))
                         continue;
 
-                    worldHandle.SetTransform(grid.WorldMatrix);
-                    var localAABB = grid.InvWorldMatrix.TransformBox(args.WorldBounds);
+                    var (_, _, worldMatrix, invWorldMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv();
+                    worldHandle.SetTransform(worldMatrix);
+                    var localAABB = invWorldMatrix.TransformBox(args.WorldBounds);
 
                     foreach (var chunk in crumbs)
                     {

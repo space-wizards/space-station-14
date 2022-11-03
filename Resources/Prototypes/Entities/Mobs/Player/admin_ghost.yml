@@ -101,3 +101,7 @@
     receiveFrequencyId: SuitSensor
   - type: WirelessNetworkConnection
     range: 500
+  - type: Thieving
+    stripTimeReduction: 9999
+    stealthy: true
+  - type: Stripping
