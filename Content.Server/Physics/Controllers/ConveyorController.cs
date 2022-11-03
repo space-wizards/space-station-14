@@ -7,11 +7,8 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.Recycling;
 using Content.Server.Recycling.Components;
 using Content.Shared.Conveyor;
-using Content.Shared.Item;
 using Content.Shared.Maps;
-using Content.Shared.Movement.Components;
 using Content.Shared.Physics;
-using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
@@ -95,7 +92,6 @@ namespace Content.Server.Physics.Controllers
 
         private void UpdateAppearance(ConveyorComponent component)
         {
-            if (!EntityManager.TryGetComponent<AppearanceComponent?>(component.Owner, out var appearance)) return;
             var isPowered = this.IsPowered(component.Owner, EntityManager);
             _appearance.SetData(component.Owner, ConveyorVisuals.State, isPowered ? component.State : ConveyorState.Off);
         }
