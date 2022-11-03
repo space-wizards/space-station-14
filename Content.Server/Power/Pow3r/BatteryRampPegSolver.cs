@@ -37,10 +37,13 @@ namespace Content.Server.Power.Pow3r
                 // Saltern: 1477, 11, 2, 2, 3.
                 // Box:     3308, 20, 1, 5.
                 //
-                // I have NFI what the overhead for a Parallel.ForEach is, and how it compares to computing differently sized nets.
+                // I have NFI what the overhead for a Parallel.ForEach is, and how it compares to computing differently
+                // sized nets. Basic benchmarking shows that this is better, but maybe the highest-tier nets should just
+                // be run sequentially? But then again, maybe they are 2-3 very BIG networks at the top? So maybe:
                 //
-                // TODO make GroupByNetworkDepth evaluate the TOTAL size of each layer (i.e. loads + chargers + suppliers + discharger)
-                // Then decide based on total layer size whether its worth parallelizing that layer?
+                // TODO make GroupByNetworkDepth evaluate the TOTAL size of each layer (i.e. loads + chargers +
+                // suppliers + discharger) Then decide based on total layer size whether its worth parallelizing that
+                // layer?
                 Parallel.ForEach(group, opts, net => UpdateNetwork(net, state, frameTime));
             }
 
