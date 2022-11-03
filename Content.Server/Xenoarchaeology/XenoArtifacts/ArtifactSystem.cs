@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Cargo.Systems;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
@@ -101,7 +102,6 @@ public sealed partial class ArtifactSystem : EntitySystem
     public void RandomizeArtifact(ArtifactComponent component)
     {
         var nodeAmount = _random.Next(component.NodesMin, component.NodesMax);
-        component.RandomSeed = _random.Next();
 
         component.NodeTree = new ArtifactTree();
 
@@ -120,7 +120,7 @@ public sealed partial class ArtifactSystem : EntitySystem
 
         // check if artifact isn't under cooldown
         var timeDif = _gameTiming.CurTime - component.LastActivationTime;
-        if (timeDif.TotalSeconds < component.CooldownTime)
+        if (timeDif < component.CooldownTime)
             return false;
 
         ForceActivateArtifact(uid, user, component);
@@ -147,5 +147,35 @@ public sealed partial class ArtifactSystem : EntitySystem
             var newNode = _random.Pick(component.CurrentNode.Edges);
             EnterNode(uid, ref newNode, component);
         }
+    }
+
+    public bool TryGetNodeData<T>(EntityUid uid, string key, [NotNullWhen(true)] out T data, ArtifactComponent? component = null)
+    {
+        data = default!;
+
+        if (!Resolve(uid, ref component))
+            return false;
+
+        if (component.CurrentNode == null)
+            return false;
+
+        if (component.CurrentNode.NodeData.TryGetValue(key, out var dat) && dat is T value)
+        {
+            data = value;
+            return true;
+        }
+
+        return false;
+    }
+
+    public void SetNodeData(EntityUid uid, string key, object value, ArtifactComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        if (component.CurrentNode == null)
+            return;
+
+        component.CurrentNode.NodeData[key] = value;
     }
 }

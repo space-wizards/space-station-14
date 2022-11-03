@@ -9,6 +9,9 @@ public sealed class SpawnArtifactSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+    [Dependency] private readonly ArtifactSystem _artifact = default!;
+
+    public const string NodeDataSpawnAmount = "nodeDataSpawnAmount";
 
     public override void Initialize()
     {
@@ -31,7 +34,11 @@ public sealed class SpawnArtifactSystem : EntitySystem
     {
         if (component.Prototype == null)
             return;
-        if (component.SpawnsCount >= component.MaxSpawns)
+
+        if (!_artifact.TryGetNodeData(uid, NodeDataSpawnAmount, out int amount))
+            amount = 0;
+
+        if (amount >= component.MaxSpawns)
             return;
 
         // select spawn position near artifact
@@ -42,7 +49,7 @@ public sealed class SpawnArtifactSystem : EntitySystem
 
         // spawn entity
         var spawned = EntityManager.SpawnEntity(component.Prototype, spawnCord);
-        component.SpawnsCount++;
+        _artifact.SetNodeData(uid, NodeDataSpawnAmount, amount+1);
 
         // if there is an user - try to put spawned item in their hands
         // doesn't work for spawners

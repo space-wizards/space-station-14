@@ -1,16 +1,9 @@
 - type: artifactTrigger
   id: TriggerElectricity
   targetDepth: 0
-  triggerHint: artifact-trigger-hint-energy-increase
+  triggerHint: artifact-trigger-hint-electricity
   components:
   - type: ArtifactElectricityTrigger
-
-- type: artifactTrigger
-  id: TriggerHeat
-  targetDepth: 0
-  triggerHint: artifact-trigger-hint-energy-increase
-  components:
-  - type: ArtifactHeatTrigger
 
 - type: artifactTrigger
   id: TriggerInteraction
@@ -20,6 +13,13 @@
   - type: ArtifactInteractionTrigger
 
 - type: artifactTrigger
+  id: TriggerHeat
+  targetDepth: 1
+  triggerHint: artifact-trigger-hint-heat
+  components:
+  - type: ArtifactHeatTrigger
+
+- type: artifactTrigger
   id: TriggerTimer
   targetDepth: 1
   components:
@@ -27,7 +27,7 @@
 
 - type: artifactTrigger
   id: TriggerGas
-  targetDepth: 2
+  targetDepth: 4
   triggerHint: artifact-trigger-hint-gas
   components:
   - type: ArtifactGasTrigger

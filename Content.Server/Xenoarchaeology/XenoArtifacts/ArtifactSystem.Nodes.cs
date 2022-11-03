@@ -176,7 +176,7 @@ public sealed partial class ArtifactSystem
         }
 
         if (activate)
-            RaiseLocalEvent(uid, new ArtifactNodeEnteredEvent(component.RandomSeed));
+            RaiseLocalEvent(uid, new ArtifactNodeEnteredEvent(component.CurrentNode.Id));
     }
 
     /// <summary>

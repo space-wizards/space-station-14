@@ -8,6 +8,10 @@ artifact-effect-hint-consumption = Energy consumption
 artifact-effect-hint-release = Energy release
 artifact-effect-hint-biochemical = Biochemical disruption
 
-artifact-trigger-hint-energy-increase = Net energy increase
+# the triggers should be more obvious than the effects
+# gives people an idea of what to do: don't be too specific (i.e. no "welders")
+
+artifact-trigger-hint-electricity = Electricity
+artifact-trigger-hint-heat = High temperatures
 artifact-trigger-hint-physical = Physical encouragement
 artifact-trigger-hint-gas = Gas

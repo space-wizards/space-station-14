@@ -26,6 +26,4 @@ public sealed class SpawnArtifactComponent : Component
 
     [DataField("maxSpawns")]
     public int MaxSpawns = 20;
-
-    public int SpawnsCount = 0;
 }
