@@ -2,7 +2,6 @@ using System.Linq;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.Reactions;
 using Content.Shared.Atmos;
-using Content.Shared.Maps;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
 
@@ -49,24 +48,10 @@ public sealed partial class AtmosphereSystem
         if (!TryComp(uid, out MapGridComponent? mapGrid))
             return;
 
-        if (gridAtmosphere.TilesUniqueMixes != null)
+        foreach (var (indices, tile) in gridAtmosphere.Tiles)
         {
-            foreach (var (indices, mix) in gridAtmosphere.TilesUniqueMixes)
-            {
-                try
-                {
-                    gridAtmosphere.Tiles.Add(indices, new TileAtmosphere(mapGrid.Owner, indices,
-                            gridAtmosphere.UniqueMixes![mix].Clone()));
-                }
-                catch (ArgumentOutOfRangeException)
-                {
-                    Logger.Error(
-                        $"Error during atmos serialization! Tile at {indices} points to an unique mix ({mix}) out of range!");
-                    throw;
-                }
-
-                gridAtmosphere.InvalidatedCoords.Add(indices);
-            }
+            gridAtmosphere.InvalidatedCoords.Add(indices);
+            tile.GridIndex = uid;
         }
 
         GridRepopulateTiles(mapGrid.Grid, gridAtmosphere);
@@ -334,7 +319,7 @@ public sealed partial class AtmosphereSystem
             {
                 adjacent = new TileAtmosphere(tile.GridIndex, otherIndices,
                     GetTileMixture(null, mapUid, otherIndices),
-                    space:IsTileSpace(null, mapUid, otherIndices, mapGridComp));
+                    space: IsTileSpace(null, mapUid, otherIndices, mapGridComp));
             }
 
             var oppositeDirection = direction.GetOpposite();
@@ -531,7 +516,7 @@ public sealed partial class AtmosphereSystem
         {
             if (!gridAtmosphere.Tiles.ContainsKey(tile.GridIndices))
                 gridAtmosphere.Tiles[tile.GridIndices] = new TileAtmosphere(tile.GridUid, tile.GridIndices,
-                    new GasMixture(volume) {Temperature = Atmospherics.T20C});
+                    new GasMixture(volume) { Temperature = Atmospherics.T20C });
 
             gridAtmosphere.InvalidatedCoords.Add(tile.GridIndices);
         }
