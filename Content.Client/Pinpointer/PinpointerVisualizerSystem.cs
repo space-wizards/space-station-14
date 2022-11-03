@@ -21,24 +21,22 @@ namespace Content.Client.Pinpointer
                 return;
             }
 
-            // check if it has direction to target
             sprite.LayerSetVisible(PinpointerLayers.Screen, true);
-            sprite.LayerSetRotation(PinpointerLayers.Screen, Angle.Zero);
 
-            if (!args.Component.TryGetData(PinpointerVisuals.TargetDirection, out Angle angle))
+            // check distance and direction to target
+            if (!args.Component.TryGetData(PinpointerVisuals.TargetDistance, out Distance dis) ||
+                !args.Component.TryGetData(PinpointerVisuals.ArrowAngle, out Angle angle))
             {
                 sprite.LayerSetState(PinpointerLayers.Screen, "pinonnull");
+                sprite.LayerSetRotation(PinpointerLayers.Screen, Angle.Zero);
                 return;
             }
-
-            // check distance to target
-            if (!args.Component.TryGetData(PinpointerVisuals.TargetDistance, out Distance dis))
-                dis = Distance.Unknown;
 
             switch (dis)
             {
                 case Distance.Reached:
                     sprite.LayerSetState(PinpointerLayers.Screen, "pinondirect");
+                    sprite.LayerSetRotation(PinpointerLayers.Screen, Angle.Zero);
                     break;
                 case Distance.Close:
                     sprite.LayerSetState(PinpointerLayers.Screen, "pinonclose");
@@ -54,6 +52,7 @@ namespace Content.Client.Pinpointer
                     break;
                 case Distance.Unknown:
                     sprite.LayerSetState(PinpointerLayers.Screen, "pinonnull");
+                    sprite.LayerSetRotation(PinpointerLayers.Screen, Angle.Zero);
                     break;
             }
         }

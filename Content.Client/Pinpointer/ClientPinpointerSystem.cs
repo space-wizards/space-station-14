@@ -58,7 +58,7 @@ namespace Content.Client.Pinpointer
             if (!Resolve(uid, ref pinpointer, ref appearance))
                 return;
 
-            _appearance.SetData(uid, PinpointerVisuals.TargetDirection, angle, appearance);
+            _appearance.SetData(uid, PinpointerVisuals.ArrowAngle, angle, appearance);
         }
 
         /// <summary>
