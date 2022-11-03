@@ -1,11 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\RobustToolbox\MSBuild\Robust.Common.props" />
   <PropertyGroup>
     <!-- Work around https://github.com/dotnet/project-system/issues/4314 -->
     <TargetFramework>$(TargetFramework)</TargetFramework>
     <LangVersion>11</LangVersion>
     <IsPackable>false</IsPackable>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <OutputPath>..\bin\Content.Client\</OutputPath>
+    <OutputPath>$(ContentBuildPrefix)\Content.Client</OutputPath>
     <OutputType Condition="'$(FullRelease)' != 'True'">Exe</OutputType>
     <WarningsAsErrors>nullable</WarningsAsErrors>
     <Nullable>enable</Nullable>

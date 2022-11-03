@@ -1,7 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\RobustToolbox\MSBuild\Robust.Common.props"/>
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <OutputPath>..\bin\Content.MapRenderer\</OutputPath>
+    <OutputPath>$(ContentBuildPrefix)\Content.MapRenderer</OutputPath>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <Nullable>enable</Nullable>
     <ServerGarbageCollection>true</ServerGarbageCollection>

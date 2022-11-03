@@ -1,11 +1,12 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\RobustToolbox\MSBuild\Robust.Common.props" />
   <PropertyGroup>
     <!-- Work around https://github.com/dotnet/project-system/issues/4314 -->
     <TargetFramework>$(TargetFramework)</TargetFramework>
     <LangVersion>11</LangVersion>
     <IsPackable>false</IsPackable>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <OutputPath>..\bin\Content.Server\</OutputPath>
+    <OutputPath>$(ContentBuildPrefix)\Content.Server</OutputPath>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <OutputType Condition="'$(FullRelease)' != 'True'">Exe</OutputType>
     <NoWarn>1998</NoWarn>

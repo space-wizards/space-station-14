@@ -1,9 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />
+  <Import Project="..\RobustToolbox\MSBuild\Robust.Common.props" />
   <PropertyGroup>
     <!-- Work around https://github.com/dotnet/project-system/issues/4314 -->
     <TargetFramework>$(TargetFramework)</TargetFramework>
-    <OutputPath>..\bin\Content.Benchmarks\</OutputPath>
+    <OutputPath>$(ContentBuildPrefix)\Content.Benchmarks</OutputPath>
     <IsPackable>false</IsPackable>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <OutputType>Exe</OutputType>
