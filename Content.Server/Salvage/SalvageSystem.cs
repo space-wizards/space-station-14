@@ -19,17 +19,18 @@ using Content.Server.Radio.EntitySystems;
 using Content.Server.Station.Systems;
 using Content.Shared.Chat;
 using Content.Shared.Radio;
+using Robust.Server.GameObjects;
 using Robust.Shared.Network;
 
 namespace Content.Server.Salvage
 {
     public sealed class SalvageSystem : EntitySystem
     {
-        [Dependency] private readonly IMapLoader _mapLoader = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly MapSystem _map = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly RadioSystem _radioSystem = default!;
 
@@ -300,7 +301,7 @@ namespace Content.Server.Salvage
                 Offset = spawnLocation
             };
 
-            var (_, salvageEntityId) = _mapLoader.LoadGrid(spl.MapId, map.MapPath.ToString(), opts);
+            var salvageEntityId = _map.LoadGrid(spl.MapId, map.MapPath.ToString(), opts);
             if (salvageEntityId == null)
             {
                 Report(component.Owner, component.SalvageChannel, "salvage-system-announcement-spawn-debris-disintegrated");
