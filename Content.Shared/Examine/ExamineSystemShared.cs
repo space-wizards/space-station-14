@@ -21,6 +21,7 @@ namespace Content.Shared.Examine
         public string ExamineGroup = "";
         public string Message = "";
         public string IconTexture = "";
+        public EntityUid User;
     }
     public sealed class ExamineEntry
     {

@@ -114,6 +114,9 @@ public sealed class StaminaSystem : EntitySystem
 
     private void OnHit(EntityUid uid, StaminaDamageOnHitComponent component, MeleeHitEvent args)
     {
+        if (!args.IsHit)
+            return;
+
         if (component.Damage <= 0f) return;
 
         var ev = new StaminaDamageOnHitAttemptEvent();

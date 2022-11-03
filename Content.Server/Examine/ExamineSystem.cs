@@ -102,7 +102,8 @@ namespace Content.Server.Examine
                     var ev = new ExamineGroupEvent
                     {
                         FirstLine = !string.IsNullOrEmpty(groupPrototype.FirstLine) ? Loc.GetString(groupPrototype.FirstLine) : string.Empty,
-                        ExamineGroup = examineGroup
+                        ExamineGroup = examineGroup,
+                        User = args.User,
                     };
                     RaiseLocalEvent(args.Target, ev);
                     SendExamineTooltip(args.User, args.Target, GetExamineGroupMessage(ev), false, false);

@@ -44,6 +44,15 @@ public sealed class MeleeHitEvent : HandledEntityEventArgs
     /// </summary>
     public EntityUid User { get; }
 
+    /// <summary>
+    /// Check if this is true before attempting to do something during a melee attack other than changing/adding bonus damage. <br/>
+    /// For example, do not spend charges unless <see cref="IsHit"/> equals true.
+    /// </summary>
+    /// <remarks>
+    /// Examining melee weapons calls this event, but with <see cref="IsHit"/> set to false.
+    /// </remarks>
+    public bool IsHit = true;
+
     public MeleeHitEvent(List<EntityUid> hitEntities, EntityUid user, DamageSpecifier baseDamage)
     {
         HitEntities = hitEntities;
