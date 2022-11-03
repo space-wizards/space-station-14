@@ -1342,6 +1342,14 @@
       layer:
       - MobLayer
   - type: Appearance
+  - type: Inventory
+    speciesId: possum
+    templateId: pet
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+    - key: enum.StrippingUiKey.Key
+      type: StrippableBoundUserInterface
   - type: DamageStateVisuals
     states:
       Alive:
@@ -1388,6 +1396,14 @@
       layer:
       - MobLayer
   - type: Appearance
+  - type: Inventory
+    speciesId: possum #close enough
+    templateId: pet
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+    - key: enum.StrippingUiKey.Key
+      type: StrippableBoundUserInterface
   - type: DamageStateVisuals
     states:
       Alive:
@@ -1434,6 +1450,14 @@
       layer:
       - MobLayer
   - type: Appearance
+  - type: Inventory
+    speciesId: fox
+    templateId: pet
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+    - key: enum.StrippingUiKey.Key
+      type: StrippableBoundUserInterface
   - type: DamageStateVisuals
     states:
       Alive:
@@ -1481,6 +1505,14 @@
       - MobMask
       layer:
       - MobLayer
+  - type: Inventory
+    speciesId: dog
+    templateId: pet
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+    - key: enum.StrippingUiKey.Key
+      type: StrippableBoundUserInterface
   - type: DamageStateVisuals
     states:
       Alive:
@@ -1591,6 +1623,9 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: puppy
   - type: Appearance
+  - type: Inventory
+    speciesId: puppy
+    templateId: pet
   - type: DamageStateVisuals
     states:
       Alive:
@@ -1627,6 +1662,14 @@
       layer:
       - MobLayer
   - type: Appearance
+  - type: Inventory
+    speciesId: cat
+    templateId: pet
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+    - key: enum.StrippingUiKey.Key
+      type: StrippableBoundUserInterface
   - type: DamageStateVisuals
     states:
       Alive:
@@ -1761,6 +1804,14 @@
       layer:
       - MobLayer
   - type: Appearance
+  - type: Inventory
+    speciesId: sloth
+    templateId: pet
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+    - key: enum.StrippingUiKey.Key
+      type: StrippableBoundUserInterface
   - type: DamageStateVisuals
     states:
       Alive:
@@ -1807,6 +1858,14 @@
       layer:
       - MobLayer
   - type: Appearance
+  - type: Inventory
+    speciesId: fox #close enough
+    templateId: pet
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+    - key: enum.StrippingUiKey.Key
+      type: StrippableBoundUserInterface
   - type: DamageStateVisuals
     states:
       Alive:

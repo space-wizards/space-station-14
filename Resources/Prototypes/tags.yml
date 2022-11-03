@@ -396,6 +396,9 @@
   id: PercussionInstrument
 
 - type: Tag
+  id: PetWearable
+
+- type: Tag
   id: Pickaxe
 
 - type: Tag
@@ -473,7 +476,7 @@
 
 - type: Tag
   id: Smokable
-  
+
 - type: Tag
   id: Soap
 
