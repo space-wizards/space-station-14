@@ -11,6 +11,7 @@
       netsync: false
       state: ano01
       noRot: true
+    - type: Damageable
     - type: Physics
       bodyType: Dynamic
     - type: Transform
@@ -32,23 +33,9 @@
     - type: Appearance
       visuals:
         - type: RandomArtifactVisualizer
-    - type: PowerConsumer
-      voltage: Medium
-      drawRate: 500
-    - type: NodeContainer
-      nodes:
-        medium:
-          !type:CableDeviceNode
-          nodeGroupID: MVPower
-          # sadly, HVPower and Apc cables doesn't work right now
+   
     - type: StaticPrice
       price: 500
-    - type: Electrified
-      requirePower: true
-      noWindowInTile: true
-      highVoltageNode: high
-      mediumVoltageNode: medium
-      lowVoltageNode: low
 
 - type: entity
   parent: BaseXenoArtifact

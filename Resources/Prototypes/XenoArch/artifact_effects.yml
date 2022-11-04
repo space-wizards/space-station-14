@@ -1,6 +1,6 @@
 - type: artifactEffect
   id: EffectBadFeeling
-  targetDepth: 1
+  targetDepth: 0
   effectHint: artifact-effect-hint-mental
   components:
   - type: TelepathicArtifact
@@ -72,7 +72,7 @@
 
 - type: artifactEffect #bornana
   id: EffectBananaSpawn
-  targetDepth: 0
+  targetDepth: 1
   effectHint: artifact-effect-hint-creation
   components:
   - type: SpawnArtifact
@@ -116,7 +116,15 @@
 
 - type: artifactEffect
   id: EffectDisease
-  targetDepth: 2
+  targetDepth: 3
   effectHint: artifact-effect-hint-biochemical
   components:
   - type: DiseaseArtifact
+    diseasePrototypes:
+    - VanAusdallsRobovirus
+    - OwOnavirus
+    - BleedersBite
+    - Ultragigacancer
+    - MemeticAmirmir
+    - TongueTwister
+    - AMIV

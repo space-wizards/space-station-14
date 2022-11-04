@@ -13,5 +13,10 @@ artifact-effect-hint-biochemical = Biochemical disruption
 
 artifact-trigger-hint-electricity = Electricity
 artifact-trigger-hint-heat = High temperatures
-artifact-trigger-hint-physical = Physical encouragement
+artifact-trigger-hint-physical = Physical interaction
+artifact-trigger-hint-brute-damage = Physical trauma
+artifact-trigger-hint-high-damage = Large-scale damage
+artifact-trigger-hint-magnet = Magnetic waves
+artifact-trigger-hint-death = Life essence
+artifact-trigger-hint-radiation = Radiation
 artifact-trigger-hint-gas = Gas

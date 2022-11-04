@@ -7,6 +7,7 @@ using Content.Server.Research.Components;
 using Content.Server.UserInterface;
 using Content.Server.Xenoarchaeology.Equipment.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts;
+using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
 using Content.Shared.MachineLinking.Events;
 using Content.Shared.Popups;
 using Content.Shared.Research.Components;
@@ -29,13 +30,13 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
-    [Dependency] private readonly PhysicsSystem _physics = default!;
     [Dependency] private readonly ArtifactSystem _artifact = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
         SubscribeLocalEvent<ActiveScannedArtifactComponent, MoveEvent>(OnScannedMoved);
+        SubscribeLocalEvent<ActiveScannedArtifactComponent, ArtifactActivatedEvent>(OnArtifactActivated);
 
         SubscribeLocalEvent<ActiveArtifactAnalyzerComponent, ComponentStartup>(OnAnalyzeStart);
         SubscribeLocalEvent<ActiveArtifactAnalyzerComponent, ComponentShutdown>(OnAnalyzeEnd);
@@ -225,26 +226,38 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         UpdateUserInterface(uid, component);
     }
 
+    private void OnArtifactActivated(EntityUid uid, ActiveScannedArtifactComponent component, ArtifactActivatedEvent args)
+    {
+        CancelScan(uid);
+    }
+
     private void OnScannedMoved(EntityUid uid, ActiveScannedArtifactComponent component, ref MoveEvent args)
     {
-        if (!TryComp<PhysicsComponent>(uid, out var phys))
+        if (!TryComp<ArtifactAnalyzerComponent>(component.Scanner, out var analyzer))
             return;
 
-        if (!TryComp<PhysicsComponent>(component.Scanner, out var otherPhys))
+        if (!analyzer.Contacts.Contains(uid))
             return;
 
-        var ents = _physics.GetContactingEntities(phys);
+        CancelScan(uid, component, analyzer);
+    }
 
-        if (ents.Contains(otherPhys))
+    [PublicAPI]
+    public void CancelScan(EntityUid artifact, ActiveScannedArtifactComponent? component = null, ArtifactAnalyzerComponent? analyzer = null)
+    {
+        if (!Resolve(artifact, ref component, false))
+            return;
+
+        if (!Resolve(component.Scanner, ref analyzer))
             return;
 
         _audio.PlayPvs(component.ScanFailureSound, component.Scanner, AudioParams.Default.WithVolume(3f));
 
         RemComp<ActiveArtifactAnalyzerComponent>(component.Scanner);
-        if (TryComp<ArtifactAnalyzerComponent>(component.Scanner, out var analyzer) && analyzer.Console != null)
+        if (analyzer.Console != null)
             UpdateUserInterface(analyzer.Console.Value);
 
-        RemCompDeferred(uid, component);
+        RemCompDeferred(artifact, component);
     }
 
     private void FinishScan(EntityUid uid, ArtifactAnalyzerComponent? component = null, ActiveArtifactAnalyzerComponent? active = null)

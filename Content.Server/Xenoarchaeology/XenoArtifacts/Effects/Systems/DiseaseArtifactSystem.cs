@@ -1,9 +1,9 @@
+using System.Linq;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 using Content.Shared.Disease;
 using Content.Server.Disease;
 using Content.Server.Disease.Components;
-using Robust.Shared.Random;
 using Robust.Shared.Prototypes;
 using Content.Shared.Interaction;
 
@@ -19,19 +19,6 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 
-        // TODO: YAML Serializer won't catch this.
-        [ViewVariables(VVAccess.ReadWrite)]
-        public readonly IReadOnlyList<string> ArtifactDiseases = new[]
-        {
-            "VanAusdallsRobovirus",
-            "OwOnavirus",
-            "BleedersBite",
-            "Ultragigacancer",
-            "MemeticAmirmir",
-            "TongueTwister",
-            "AMIV"
-        };
-
         public override void Initialize()
         {
             base.Initialize();
@@ -44,9 +31,9 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems
         /// </summary>
         private void OnNodeEntered(EntityUid uid, DiseaseArtifactComponent component, ArtifactNodeEnteredEvent args)
         {
-            if (component.SpawnDisease != null || ArtifactDiseases.Count == 0)
+            if (component.SpawnDisease != null || !component.DiseasePrototypes.Any())
                 return;
-            var diseaseName = ArtifactDiseases[args.RandomSeed % ArtifactDiseases.Count];
+            var diseaseName = component.DiseasePrototypes[args.RandomSeed % component.DiseasePrototypes.Count];
 
             if (!_prototypeManager.TryIndex<DiseasePrototype>(diseaseName, out var disease))
             {

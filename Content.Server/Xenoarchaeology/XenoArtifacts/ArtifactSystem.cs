@@ -131,6 +131,9 @@ public sealed partial class ArtifactSystem : EntitySystem
     {
         if (!Resolve(uid, ref component))
             return;
+        if (component.CurrentNode == null)
+            return;
+
         component.LastActivationTime = _gameTiming.CurTime;
 
         var ev = new ArtifactActivatedEvent
@@ -139,8 +142,6 @@ public sealed partial class ArtifactSystem : EntitySystem
         };
         RaiseLocalEvent(uid, ev, true);
 
-        if (component.CurrentNode == null)
-            return;
         component.CurrentNode.Triggered = true;
         if (component.CurrentNode.Edges.Any())
         {
@@ -149,6 +150,15 @@ public sealed partial class ArtifactSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// Try and get a data object from a node
+    /// </summary>
+    /// <param name="uid">The entity you're getting the data from</param>
+    /// <param name="key">The data's key</param>
+    /// <param name="data">The data you are trying to get.</param>
+    /// <param name="component"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public bool TryGetNodeData<T>(EntityUid uid, string key, [NotNullWhen(true)] out T data, ArtifactComponent? component = null)
     {
         data = default!;
