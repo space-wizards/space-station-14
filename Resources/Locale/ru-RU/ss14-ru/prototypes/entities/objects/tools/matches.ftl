@@ -7,3 +7,6 @@ ent-Matchstick = спичка
 ent-Matchbox = спичечный коробок
     .desc = Небольшой коробок Почти-Но-Не-Совсем-Плазменных-Премиум-Спичек.
     .suffix = { "" }
+ent-MatchstickSpent = { ent-Matchstick }
+    .desc = { ent-Matchstick.desc }
+    .suffix = использована

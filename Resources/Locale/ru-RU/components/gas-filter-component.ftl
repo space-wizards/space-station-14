@@ -6,4 +6,5 @@ comp-gas-filter-ui-filter-set-rate = Установить
 comp-gas-filter-ui-filter-gas-current = Сейчас фильтруется:
 comp-gas-filter-ui-filter-gas-select = Выберите газ для фильтрации:
 comp-gas-filter-ui-filter-gas-confirm = Выбрать газ
+comp-gas-filter-ui-filter-gas-none = Ничего
 comp-gas-filter-ui-needs-anchor = Сначала закрепите его!
