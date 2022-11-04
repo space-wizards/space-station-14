@@ -1,9 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed being unable to drag & drop entities into disposal units, type: Fix}
-  id: 2072
-  time: '2022-08-01T22:35:34.0000000+00:00'
 - author: JustinTrotter
   changes:
   - {message: accents carry over the radio again, type: Fix}
@@ -2960,3 +2955,9 @@ Entries:
   - {message: Alt-clicking can now be used on hands again., type: Fix}
   id: 2571
   time: '2022-11-04T01:36:45.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fixed the damage/death overlay being off-centre while using the "separated"
+      HUD layout., type: Fix}
+  id: 2572
+  time: '2022-11-04T01:44:51.0000000+00:00'
