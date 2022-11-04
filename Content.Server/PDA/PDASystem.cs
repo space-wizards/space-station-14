@@ -25,7 +25,7 @@ namespace Content.Server.PDA
         [Dependency] private readonly InstrumentSystem _instrumentSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly StationSystem _stationSystem = default!;
-        [Dependency] private readonly CartridgeLoaderSystem? _cartridgeLoaderSystem = default!;
+        [Dependency] private readonly CartridgeLoaderSystem _cartridgeLoaderSystem = default!;
         [Dependency] private readonly StoreSystem _storeSystem = default!;
 
         public override void Initialize()

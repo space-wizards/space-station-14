@@ -124,7 +124,7 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
         if (!Resolve(loaderUid, ref loader) || loader.InstalledPrograms.Count >= loader.DiskSpace)
             return false;
 
-        if (_containerSystem?.TryGetContainer(loaderUid, ContainerName, out var container) != true)
+        if (!_containerSystem.TryGetContainer(loaderUid, ContainerName, out var container))
             return false;
 
         //Prevent installing cartridges that have already been installed

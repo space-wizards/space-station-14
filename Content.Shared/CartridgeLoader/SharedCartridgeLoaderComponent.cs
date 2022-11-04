@@ -2,9 +2,8 @@
 
 namespace Content.Shared.CartridgeLoader;
 
-[Virtual]
 [Access(typeof(SharedCartridgeLoaderSystem))]
-public class SharedCartridgeLoaderComponent : Component
+public abstract class SharedCartridgeLoaderComponent : Component
 {
     public const string CartridgeSlotId = "Cartridge-Slot";
 
