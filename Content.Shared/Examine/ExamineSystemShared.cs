@@ -1,5 +1,4 @@
 using System.Linq;
-using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
 using Content.Shared.MobState.Components;
 using Content.Shared.Eye.Blinding;
@@ -10,10 +9,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Utility;
 using static Content.Shared.Interaction.SharedInteractionSystem;
-using Robust.Shared.GameObjects;
 using Content.Shared.Verbs;
-using Content.Shared.Damage;
-using Content.Shared.Inventory;
 
 namespace Content.Shared.Examine
 {
@@ -51,10 +47,18 @@ namespace Content.Shared.Examine
             SubscribeLocalEvent<GroupExamineComponent, GetVerbsEvent<ExamineVerb>>(OnGroupExamineVerb);
         }
 
+        /// <summary>
+        ///     Called when getting verbs on an object with the GroupExamine component. <br/>
+        ///     This checks if any of the ExamineGroups are relevant (has 2 or more of the relevant components on the entity)
+        ///     and if so, creates an ExamineVerb details button for the ExamineGroup.
+        /// </summary>
         private void OnGroupExamineVerb(EntityUid uid, GroupExamineComponent component, GetVerbsEvent<ExamineVerb> args)
         {
             foreach(var group in component.ExamineGroups)
             {
+                if (!EntityHasComponentsAmount(uid, group.Components, 2))
+                    continue;
+
                 var examineVerb = new ExamineVerb()
                 {
                     Act = () =>
@@ -72,13 +76,48 @@ namespace Content.Shared.Examine
             }
         }
 
+        /// <summary>
+        ///     Checks if the entity <paramref name="uid"/> has (<paramref name="amount"/>) or more components from among <paramref name="components"/>.
+        /// </summary>
+        public bool EntityHasComponentsAmount(EntityUid uid, List<string> components, int amount)
+        {
+            var counter = 0;
+
+            foreach (var comp in components)
+            {
+                if (!_componentFactory.TryGetRegistration(comp, out var componentRegistration))
+                    continue;
+
+                if (!HasComp(uid, componentRegistration.Type))
+                    continue;
+
+                counter++;
+
+                if (counter >= amount)
+                    return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        ///     Sends an ExamineTooltip based on the contents of <paramref name="group"/>
+        /// </summary>
         public void SendExamineGroup(EntityUid user, EntityUid target, ExamineGroup group)
         {
-            var message = GetFormattedMessageFromExamineEntries(group.Entries);
+            var message = new FormattedMessage();
 
+            if (group.Title != null)
+            {
+                message.AddMessage(group.Title);
+                message.PushNewline();
+            }
+            message.AddMessage(GetFormattedMessageFromExamineEntries(group.Entries));
+            
             SendExamineTooltip(user, target, message, false, false);
         }
 
+        /// <returns>A FormattedMessage based on all <paramref name="entries"/>, sorted.</returns>
         public FormattedMessage GetFormattedMessageFromExamineEntries(List<ExamineEntry> entries)
         {
             var formattedMessage = new FormattedMessage();
@@ -96,42 +135,37 @@ namespace Content.Shared.Examine
                 {
                     first = false;
                 }
+
                 formattedMessage.AddMessage(entry.Message);
             }
+
             return formattedMessage;
         }
 
         /// <summary>
-        ///     Creates a new examine tooltip with arbitrary info.
+        ///     Either sends the details to a GroupExamineComponent if it finds one, or adds a details examine verb itself.
         /// </summary>
-        public abstract void SendExamineTooltip(EntityUid player, EntityUid target, FormattedMessage message, bool getVerbs, bool centerAtCursor);
-
-        /// <summary>
-        ///     examine group things.
-        /// </summary>
-        /// <params>
-        /// </params>
         public void AddDetailedExamineVerb(GetVerbsEvent<ExamineVerb> verbsEvent, Component component, List<ExamineEntry> entries, string verbText, string iconTexture = "/Textures/Interface/VerbIcons/dot.svg.192dpi.png", string hoverMessage = "")
         {
             if (TryComp<GroupExamineComponent>(verbsEvent.Target, out var groupExamine))
             {
                 var componentName = _componentFactory.GetComponentName(component.GetType());
 
-                foreach(var examineGroup in groupExamine.ExamineGroups)
+                foreach (var examineGroup in groupExamine.ExamineGroups)
                 {
                     if (examineGroup.Components.Contains(componentName))
                     {
-                        // check if the entity contains any other component in this group as well - that means there is actual reason to Group Examines
 
-                        // checks if this is already added to the entries
+                        if (!EntityHasComponentsAmount(verbsEvent.Target, examineGroup.Components, 2))
+                            continue;
+
                         foreach (var entry in examineGroup.Entries)
                         {
                             if (entry.ComponentName == componentName)
                                 return;
                         }
 
-                        //do logic here
-                        foreach(var entry in entries)
+                        foreach (var entry in entries)
                         {
                             examineGroup.Entries.Add(entry);
                         }
@@ -139,9 +173,7 @@ namespace Content.Shared.Examine
                     }
                 }
             }
-            //handle adding a simple examineverb here
 
-            //entries to formatted message here
             var formattedMessage = GetFormattedMessageFromExamineEntries(entries);
 
             var examineVerb = new ExamineVerb()
@@ -160,7 +192,7 @@ namespace Content.Shared.Examine
         }
 
         /// <summary>
-        ///     examine group things.
+        ///     Either adds a details examine verb, or sends the details to a GroupExamineComponent if it finds one.
         /// </summary>
         public void AddDetailedExamineVerb(GetVerbsEvent<ExamineVerb> verbsEvent, Component component, ExamineEntry entry, string verbText, string iconTexture = "/Textures/Interface/VerbIcons/dot.svg.192dpi.png", string hoverMessage = "")
         {
@@ -168,13 +200,18 @@ namespace Content.Shared.Examine
         }
 
         /// <summary>
-        ///     examine group things.
+        ///     Either adds a details examine verb, or sends the details to a GroupExamineComponent if it finds one.
         /// </summary>
         public void AddDetailedExamineVerb(GetVerbsEvent<ExamineVerb> verbsEvent, Component component, FormattedMessage message, string verbText, string iconTexture = "/Textures/Interface/VerbIcons/dot.svg.192dpi.png", string hoverMessage = "")
         {
             var componentName = _componentFactory.GetComponentName(component.GetType());
             AddDetailedExamineVerb(verbsEvent, component, new ExamineEntry(componentName, 0f, message), verbText, iconTexture, hoverMessage);
         }
+
+        /// <summary>
+        ///     Creates a new examine tooltip with arbitrary info.
+        /// </summary>
+        public abstract void SendExamineTooltip(EntityUid player, EntityUid target, FormattedMessage message, bool getVerbs, bool centerAtCursor);
 
         public bool IsInDetailsRange(EntityUid examiner, EntityUid entity)
         {

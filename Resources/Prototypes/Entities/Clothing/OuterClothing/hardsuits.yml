@@ -57,6 +57,7 @@
     damageCoefficient: 0.5
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitCap
+  - type: GroupExamine
 
 - type: entity
   parent: ClothingOuterHardsuitBase
