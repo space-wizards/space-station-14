@@ -1,10 +1,4 @@
 Entries:
-- author: DogZeroX
-  changes:
-  - {message: 'Lizards now use their claws in unarmed combat, giving their attacks
-      a bleeding chance.', type: Tweak}
-  id: 2071
-  time: '2022-08-01T15:34:50.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed being unable to drag & drop entities into disposal units, type: Fix}
@@ -2961,3 +2955,8 @@ Entries:
   - {message: Allowed gas filters to be reset to filter no gases., type: Add}
   id: 2570
   time: '2022-11-04T01:27:20.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Alt-clicking can now be used on hands again., type: Fix}
+  id: 2571
+  time: '2022-11-04T01:36:45.0000000+00:00'
