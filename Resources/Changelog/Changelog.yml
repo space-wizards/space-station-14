@@ -1,16 +1,4 @@
 Entries:
-- author: Level10Cybermancer
-  changes:
-  - {message: Thieving gloves now actually hide the stripping notification., type: Fix}
-  - {message: Thieving gloves now get the same benefits when placing items as they
-      do when taking them., type: Tweak}
-  id: 2064
-  time: '2022-07-31T06:02:28.0000000+00:00'
-- author: jessicamaybe
-  changes:
-  - {message: You can now drink out of mop buckets and the janitor trolley, type: Tweak}
-  id: 2065
-  time: '2022-07-31T08:09:12.0000000+00:00'
 - author: Anthemic
   changes:
   - {message: You can now pet bots., type: Add}
@@ -2959,3 +2947,15 @@ Entries:
       get toggled open and closed., type: Fix}
   id: 2563
   time: '2022-11-03T02:03:36.0000000+00:00'
+- author: ashtronaut
+  changes:
+  - {message: Added a volume slider for the lobby & round-end music so you can enjoy
+      it without blowing out your eardrums., type: Add}
+  id: 2564
+  time: '2022-11-04T00:15:38.0000000+00:00'
+- author: JustinTrotter
+  changes:
+  - {message: Overdrawing with a syringe no longer destroys the transferred solution,
+    type: Fix}
+  id: 2565
+  time: '2022-11-04T00:16:32.0000000+00:00'
