@@ -19,6 +19,7 @@ namespace Content.Server.Kitchen.EntitySystems;
 public sealed class SharpSystem : EntitySystem
 {
     [Dependency] private readonly BodySystem _bodySystem = default!;
+    [Dependency] private readonly SharedDestructibleSystem _destructibleSystem = default!;
     [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly ContainerSystem _containerSystem = default!;
@@ -108,11 +109,10 @@ public sealed class SharpSystem : EntitySystem
         _popupSystem.PopupEntity(Loc.GetString("butcherable-knife-butchered-success", ("target", ev.Entity), ("knife", ev.Sharp)),
             popupEnt, Filter.Entities(ev.User), popupType);
 
-        // since this doubles as harvestable, and we are e.g. harvesting a tree someone has climbed,
-        // we want to pass the destruction event so it can drop them
-        var args = new DestructionEventArgs();
-        RaiseLocalEvent(ev.Entity, args, false);
-        QueueDel(ev.Entity);
+        if (hasBody)
+            _bodySystem.GibBody(body!.Owner, body: body);
+
+        _destructibleSystem.DestroyEntity(ev.Entity);
     }
 
     private void OnDoafterCancelled(SharpButcherDoafterCancelled ev)
