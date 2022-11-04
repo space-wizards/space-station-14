@@ -279,7 +279,7 @@ namespace Content.Server.Power.Pow3r
 
         private List<List<Network>> GroupByNetworkDepth(PowerState state)
         {
-            List<List<Network>> groupedNetworks = new() { new() };
+            List<List<Network>> groupedNetworks = new();
             foreach (var network in state.Networks.Values)
             {
                 network.Height = -1;

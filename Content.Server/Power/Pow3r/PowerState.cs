@@ -170,6 +170,9 @@ namespace Content.Server.Power.Pow3r
                 storage.Count = cache.Length;
                 storage._nextFree = nextFree;
 
+                // I think there is some issue with Pow3er's Save & Load to json leading to it constructing invalid GenIdStorages from json?
+                DebugTools.Assert(storage.Values.Count() == storage.Count);
+
                 return storage;
             }
 

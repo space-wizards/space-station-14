@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using ImGuiNET;
 using Robust.Shared.Maths;
@@ -52,6 +52,7 @@ namespace Pow3r
             {
                 var network = new Network();
                 _state.Networks.Allocate(out network.Id) = network;
+                _state.GroupedNets = null;
                 _displayNetworks.Add(network.Id, new DisplayNetwork());
             }
 
@@ -60,6 +61,7 @@ namespace Pow3r
                 var battery = new Battery();
                 _state.Batteries.Allocate(out battery.Id) = battery;
                 _displayBatteries.Add(battery.Id, new DisplayBattery());
+                _state.GroupedNets = null;
             }
 
             Checkbox("Paused", ref _paused);
@@ -271,6 +273,7 @@ namespace Pow3r
                     if (battery.LinkedNetworkCharging == default && Button("Link as load"))
                     {
                         _linking.BatteryLoads.Add(battery.Id);
+                        _state.GroupedNets = null;
                         _linking = null;
                         RefreshLinks();
                     }
@@ -280,6 +283,7 @@ namespace Pow3r
                         if (battery.LinkedNetworkDischarging == default && Button("Link as supply"))
                         {
                             _linking.BatterySupplies.Add(battery.Id);
+                            _state.GroupedNets = null;
                             _linking = null;
                             RefreshLinks();
                         }
@@ -291,6 +295,7 @@ namespace Pow3r
                     {
                         var net = _state.Networks[battery.LinkedNetworkCharging];
                         net.BatteryLoads.Remove(battery.Id);
+                        _state.GroupedNets = null;
                         battery.LinkedNetworkCharging = default;
                     }
                     else
@@ -300,6 +305,7 @@ namespace Pow3r
                         {
                             var net = _state.Networks[battery.LinkedNetworkDischarging];
                             net.BatterySupplies.Remove(battery.Id);
+                            _state.GroupedNets = null;
                             battery.LinkedNetworkDischarging = default;
                         }
                     }
@@ -357,6 +363,7 @@ namespace Pow3r
                     case Network n:
                         _state.Networks.Free(n.Id);
                         _displayNetworks.Remove(n.Id);
+                        _state.GroupedNets = null;
                         reLink = true;
                         break;
 
@@ -377,6 +384,7 @@ namespace Pow3r
                         _state.Networks.Values.ForEach(n => n.BatteryLoads.Remove(b.Id));
                         _state.Networks.Values.ForEach(n => n.BatterySupplies.Remove(b.Id));
                         _displayBatteries.Remove(b.Id);
+                        _state.GroupedNets = null;
                         break;
                 }
             }
