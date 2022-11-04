@@ -1,8 +1,6 @@
 ﻿- type: entity
   parent: BaseItem
   id: NotekeeperCartridge
-  name: Notekeeper Cartridge
-  description: A program for keeping notes
   components:
   - type: Sprite
     sprite: Objects/Devices/cartridge.rsi
@@ -14,7 +12,7 @@
   - type: CartridgeUi
     ui: !type:NotekeeperUi
   - type: Cartridge
-    programName: Notekeeper
+    programName: notekeeper-program-name
     icon:
       sprite:  Objects/Misc/books.rsi
       state: book6

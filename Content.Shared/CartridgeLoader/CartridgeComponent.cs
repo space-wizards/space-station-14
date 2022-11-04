@@ -12,7 +12,7 @@ namespace Content.Shared.CartridgeLoader;
 public sealed class CartridgeComponent : Component
 {
     [DataField("programName", required: true)]
-    public string ProgramName = string.Empty;
+    public string ProgramName = "default-program-name";
 
     [DataField("icon")]
     public SpriteSpecifier? Icon;

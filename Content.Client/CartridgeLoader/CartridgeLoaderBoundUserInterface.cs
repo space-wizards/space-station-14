@@ -46,7 +46,7 @@ public abstract class CartridgeLoaderBoundUserInterface : BoundUserInterface
 
         if (control is not null && _activeProgram.HasValue)
         {
-            AttachCartridgeUI(control, comp?.ProgramName);
+            AttachCartridgeUI(control, Loc.GetString(comp?.ProgramName ?? "default-program-name"));
             SendCartridgeUiReadyEvent(_activeProgram.Value);
         }
 

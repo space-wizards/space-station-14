@@ -161,7 +161,7 @@ namespace Content.Client.PDA
                         break;
                 }
 
-                item.ProgramName.Text = component.ProgramName;
+                item.ProgramName.Text = Loc.GetString(component.ProgramName);
                 item.SetHeight = 20;
                 row.AddChild(item);
 
