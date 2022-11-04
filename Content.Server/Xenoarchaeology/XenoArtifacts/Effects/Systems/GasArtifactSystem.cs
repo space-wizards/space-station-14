@@ -2,14 +2,12 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
-using Robust.Shared.Random;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems;
 
 public sealed class GasArtifactSystem : EntitySystem
 {
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-    [Dependency] private readonly IRobustRandom _random = default!; //TODO: kille
 
     public override void Initialize()
     {

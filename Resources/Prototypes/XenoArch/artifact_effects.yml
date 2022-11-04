@@ -70,6 +70,13 @@
     - RandomInstruments
     - ToySpawner
 
+- type: artifactEffect
+  id: EffectLightFlicker
+  targetDepth: 0
+  effectHint: artifact-effect-hint-electrical-interference
+  components:
+  - type: LightFlickerArtifact
+
 - type: artifactEffect #bornana
   id: EffectBananaSpawn
   targetDepth: 1
@@ -87,6 +94,13 @@
   components:
   - type: TemperatureArtifact
     targetTemp: 150
+
+- type: artifactEffect
+  id: EffectThrow
+  targetDepth: 1
+  effectHint: artifact-effect-hint-environment
+  components:
+  - type: ThrowArtifact
 
 - type: artifactEffect
   id: EffectAngryCarpSpawn
@@ -108,11 +122,25 @@
     intensity: 2
 
 - type: artifactEffect
+  id: EffectKnock
+  targetDepth: 2
+  effectHint: artifact-effect-hint-electrical-interference
+  components:
+  - type: KnockArtifact
+
+- type: artifactEffect
   id: EffectGas
   targetDepth: 2
   effectHint: artifact-effect-hint-environment
   components:
   - type: GasArtifact
+
+- type: artifactEffect
+  id: EffectBlink
+  targetDepth: 3
+  effectHint: artifact-effect-hint-displacement
+  components:
+  - type: RandomTeleportArtifact
 
 - type: artifactEffect
   id: EffectDisease

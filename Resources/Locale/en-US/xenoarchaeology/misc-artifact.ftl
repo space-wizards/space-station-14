@@ -1,0 +1,1 @@
+blink-artifact-popup = The artifact disappeared in an instant!

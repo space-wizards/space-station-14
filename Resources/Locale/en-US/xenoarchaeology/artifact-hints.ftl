@@ -3,6 +3,8 @@
 
 artifact-effect-hint-mental = Cerebral influence
 artifact-effect-hint-environment = Environmental disruption
+artifact-effect-hint-electrical-interference = Electrical interference
+artifact-effect-hint-displacement = Metaphysical displacement
 artifact-effect-hint-creation = Matter creation
 artifact-effect-hint-consumption = Energy consumption
 artifact-effect-hint-release = Energy release

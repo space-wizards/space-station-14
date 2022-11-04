@@ -1,4 +1,4 @@
-using System.Linq;
+﻿using System.Linq;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 using Content.Shared.Disease;
