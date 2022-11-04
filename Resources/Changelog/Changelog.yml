@@ -1,9 +1,4 @@
 Entries:
-- author: JustinTrotter
-  changes:
-  - {message: accents carry over the radio again, type: Fix}
-  id: 2073
-  time: '2022-08-02T02:33:30.0000000+00:00'
 - author: Myctai
   changes:
   - {message: Thieving Gloves will not reveal your fingerprints to detective, type: Fix}
@@ -2961,3 +2956,9 @@ Entries:
       HUD layout., type: Fix}
   id: 2572
   time: '2022-11-04T01:44:51.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Objectives involving other traitors should be more reliable at providing
+      traitors that are alive and not SSD., type: Fix}
+  id: 2573
+  time: '2022-11-04T02:58:19.0000000+00:00'
