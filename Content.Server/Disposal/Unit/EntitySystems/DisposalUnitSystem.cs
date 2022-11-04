@@ -511,7 +511,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             }
 
             var xform = Transform(component.Owner);
-            if (!TryComp(xform.GridUid, out IMapGridComponent? grid))
+            if (!TryComp(xform.GridUid, out MapGridComponent? grid))
                 return false;
 
             var coords = xform.Coordinates;

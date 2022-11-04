@@ -70,7 +70,7 @@ namespace Content.Server.Chemistry.Components
             var xform = _entities.GetComponent<TransformComponent>(Owner);
             var solSys = _systems.GetEntitySystem<SolutionContainerSystem>();
 
-            if (!_entities.TryGetComponent(xform.GridUid, out IMapGridComponent? gridComp))
+            if (!_entities.TryGetComponent(xform.GridUid, out MapGridComponent? gridComp))
                 return;
 
             var grid = gridComp.Grid;

@@ -3,13 +3,11 @@ using Content.Server.Chat.Managers;
 using Content.Server.Objectives.Interfaces;
 using Content.Server.Players;
 using Content.Server.Roles;
-using Content.Server.Store.Systems;
 using Content.Server.Traitor;
 using Content.Server.Traitor.Uplink;
+using Content.Server.MobState;
 using Content.Shared.CCVar;
 using Content.Shared.Dataset;
-using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Inventory;
 using Content.Shared.Roles;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
@@ -29,10 +27,9 @@ public sealed class TraitorRuleSystem : GameRuleSystem
     [Dependency] private readonly IObjectivesManager _objectivesManager = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
-    [Dependency] private readonly InventorySystem _inventorySystem = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly StoreSystem _store = default!;
+    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly UplinkSystem _uplink = default!;
+
 
     public override string Prototype => "Traitor";
 
@@ -321,5 +318,19 @@ public sealed class TraitorRuleSystem : GameRuleSystem
             }
         }
         ev.AddLine(result);
+    }
+
+    public IEnumerable<Traitor.TraitorRole> GetOtherTraitorsAliveAndConnected(Mind.Mind ourMind)
+    {
+        var traitors = Traitors;
+        List<Traitor.TraitorRole> removeList = new();
+
+        return Traitors // don't want
+            .Where(t => t.Mind is not null) // no mind
+            .Where(t => t.Mind.OwnedEntity is not null) // no entity
+            .Where(t => t.Mind.Session is not null) // player disconnected
+            .Where(t => t.Mind != ourMind) // ourselves
+            .Where(t => _mobStateSystem.IsAlive((EntityUid) t.Mind.OwnedEntity!)) // dead
+            .Where(t => t.Mind.CurrentEntity == t.Mind.OwnedEntity); // not in original body
     }
 }

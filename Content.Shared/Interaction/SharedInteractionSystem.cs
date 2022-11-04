@@ -262,6 +262,9 @@ namespace Content.Shared.Interaction
                 {
                     var ev = new InteractNoHandEvent(user, target.Value);
                     RaiseLocalEvent(user, ev);
+
+                    var interactedEv = new InteractedNoHandEvent(target.Value, user);
+                    RaiseLocalEvent(target.Value, interactedEv);
                     DoContactInteraction(user, target.Value, ev);
                 }
                 return;
