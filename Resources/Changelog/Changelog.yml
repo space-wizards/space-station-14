@@ -1,10 +1,4 @@
 Entries:
-- author: eclips_e
-  changes:
-  - {message: 'Rotating and Strafing keybinds have been swapped. Use E/Q to rotate
-      the shuttle, A/D to strafe.', type: Tweak}
-  id: 2077
-  time: '2022-08-02T13:02:28.0000000+00:00'
 - author: JustinTrotter
   changes:
   - {message: backpack and duffels no longer only display default gray when held,
@@ -2967,3 +2961,8 @@ Entries:
   - {message: You can now link airlocks and windoors to buttons and levers!, type: Add}
   id: 2576
   time: '2022-11-04T04:00:34.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Pinpointer arrow should be more accurate., type: Tweak}
+  id: 2577
+  time: '2022-11-04T04:15:24.0000000+00:00'
