@@ -115,6 +115,8 @@
     - Pacified
   - type: Body
     prototype: Animal
+  - type: InjectableSolution
+    solution: chemicals
   - type: Examiner
   - type: MeleeWeapon
     hidden: true
