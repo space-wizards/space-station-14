@@ -1,9 +1,4 @@
 Entries:
-- author: Anthemic
-  changes:
-  - {message: Decreased traitor count. Hail NanoTrasen!, type: Tweak}
-  id: 2070
-  time: '2022-08-01T09:36:01.0000000+00:00'
 - author: DogZeroX
   changes:
   - {message: 'Lizards now use their claws in unarmed combat, giving their attacks
@@ -2961,3 +2956,8 @@ Entries:
   - {message: Fixed an issue where crates would clip through firelocks., type: Fix}
   id: 2569
   time: '2022-11-04T01:18:59.0000000+00:00'
+- author: Vordenburg
+  changes:
+  - {message: Allowed gas filters to be reset to filter no gases., type: Add}
+  id: 2570
+  time: '2022-11-04T01:27:20.0000000+00:00'
