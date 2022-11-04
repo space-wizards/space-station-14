@@ -45,7 +45,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             var uid = atmosphere.Owner;
 
-            if (!TryComp(uid, out IMapGridComponent? mapGridComp))
+            if (!TryComp(uid, out MapGridComponent? mapGridComp))
                 return true;
 
             var mapGrid = mapGridComp.Grid;
@@ -161,7 +161,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             var uid = atmosphere.Owner;
 
-            if (!TryComp(uid, out IMapGridComponent? mapGridComp))
+            if (!TryComp(uid, out MapGridComponent? mapGridComp))
                 throw new Exception("Tried to process a grid atmosphere on an entity that isn't a grid!");
 
             var mapGrid = mapGridComp.Grid;

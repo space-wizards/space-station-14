@@ -32,7 +32,7 @@ namespace Content.Server.Objectives.Conditions
 
             var entMan = IoCManager.Resolve<IEntityManager>();
 
-            if (!entMan.TryGetComponent<IMapGridComponent>(shuttle, out var shuttleGrid) ||
+            if (!entMan.TryGetComponent<MapGridComponent>(shuttle, out var shuttleGrid) ||
                 !entMan.TryGetComponent<TransformComponent>(shuttle, out var shuttleXform))
             {
                 return false;
