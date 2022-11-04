@@ -1,9 +1,4 @@
 Entries:
-- author: Anthemic
-  changes:
-  - {message: You can now pet bots., type: Add}
-  id: 2066
-  time: '2022-07-31T15:18:06.0000000+00:00'
 - author: JustinTrotter
   changes:
   - {message: 'clown, mime, and plague doctor masks can now block identities', type: Fix}
@@ -2959,3 +2954,9 @@ Entries:
     type: Fix}
   id: 2565
   time: '2022-11-04T00:16:32.0000000+00:00'
+- author: ashtronaut
+  changes:
+  - {message: The Lobby's ready button now clearly states whether you are ready not.
+      Hopefully this reduces confusion!, type: Tweak}
+  id: 2566
+  time: '2022-11-04T00:51:26.0000000+00:00'
