@@ -1,9 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Added new cave floors. Check them out in a future mapping update., type: Add}
-  id: 2075
-  time: '2022-08-02T12:55:30.0000000+00:00'
 - author: Rane
   changes:
   - {message: 'Added allicins to aliums. Animals can''t eat onions, garlic or leeks!',
@@ -2967,3 +2962,9 @@ Entries:
       boxes., type: Fix}
   id: 2574
   time: '2022-11-04T03:16:24.0000000+00:00'
+- author: 25203
+  changes:
+  - {message: Upgradeable machines can now be examined to show the effects that the
+      upgrades have., type: Add}
+  id: 2575
+  time: '2022-11-04T03:27:47.0000000+00:00'
