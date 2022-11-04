@@ -35,7 +35,6 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
         SubscribeLocalEvent<CardboardBoxComponent, InteractedNoHandEvent>(OnNoHandInteracted);
 
         SubscribeLocalEvent<CardboardBoxComponent, DamageChangedEvent>(OnDamage);
-        SubscribeLocalEvent<CardboardBoxComponent, DamageModifyEvent>(OnDamageModified);
     }
 
     private void OnNoHandInteracted(EntityUid uid, CardboardBoxComponent component, InteractedNoHandEvent args)
@@ -104,16 +103,5 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
         {
             _damageable.TryChangeDamage(component.Mover, args.DamageDelta, origin: args.Origin);
         }
-    }
-
-    //Modify damage if applicable
-    private void OnDamageModified(EntityUid uid, CardboardBoxComponent component, DamageModifyEvent args)
-    {
-        if (!TryComp<DamageableComponent>(uid, out var damageable) ||
-            damageable.DamageModifierSetId == null ||
-            !_proto.TryIndex(damageable.DamageModifierSetId, out DamageModifierSetPrototype? modifier))
-            return;
-
-        args.Damage = DamageSpecifier.ApplyModifierSet(args.Damage, modifier);
     }
 }
