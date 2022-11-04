@@ -43,6 +43,9 @@ namespace Content.Server.Flash
 
         private void OnFlashMeleeHit(EntityUid uid, FlashComponent comp, MeleeHitEvent args)
         {
+            if (!args.IsHit)
+                return;
+
             if (!UseFlash(comp, args.User))
                 return;
 

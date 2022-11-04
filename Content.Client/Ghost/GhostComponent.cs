@@ -1,6 +1,7 @@
-using Content.Client.UserInterface.Systems.Ghost;
+using Content.Shared.Actions;
+using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Ghost;
-using Robust.Client.Player;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Ghost
 {
@@ -8,24 +9,18 @@ namespace Content.Client.Ghost
     [ComponentReference(typeof(SharedGhostComponent))]
     public sealed class GhostComponent : SharedGhostComponent
     {
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-
-        public GhostGui? Gui { get; set; }
         public bool IsAttached { get; set; }
 
-        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
+        public InstantAction DisableLightingAction = new()
         {
-            base.HandleComponentState(curState, nextState);
-
-            if (curState is not GhostComponentState)
-            {
-                return;
-            }
-
-            if (Owner == _playerManager.LocalPlayer?.ControlledEntity)
-            {
-                Gui?.Update();
-            }
-        }
+            Icon = new SpriteSpecifier.Texture(new ResourcePath("Interface/VerbIcons/light.svg.192dpi.png")),
+            DisplayName = "ghost-gui-toggle-lighting-manager-name",
+            Description = "ghost-gui-toggle-lighting-manager-desc",
+            ClientExclusive = true,
+            CheckCanInteract = false,
+            Event = new DisableLightingActionEvent(),
+        };
     }
+
+    public sealed class DisableLightingActionEvent : InstantActionEvent { };
 }

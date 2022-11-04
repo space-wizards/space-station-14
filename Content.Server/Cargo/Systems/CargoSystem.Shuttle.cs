@@ -311,19 +311,22 @@ public sealed partial class CargoSystem
         double amount = 0;
         var toSell = new HashSet<EntityUid>();
         var xformQuery = GetEntityQuery<TransformComponent>();
+        var blacklistQuery = GetEntityQuery<CargoSellBlacklistComponent>();
 
         foreach (var pallet in GetCargoPallets(component))
         {
             // Containers should already get the sell price of their children so can skip those.
-            foreach (var ent in _lookup.GetEntitiesIntersecting(pallet.Owner, LookupFlags.Anchored))
+            foreach (var ent in _lookup.GetEntitiesIntersecting(pallet.Owner, LookupFlags.Dynamic | LookupFlags.Sundries | LookupFlags.Approximate))
             {
-                // Don't re-sell anything, sell anything anchored (e.g. light fixtures), or anything blacklisted
-                // (e.g. players).
+                // Dont sell:
+                // - anything already being sold
+                // - anything anchored (e.g. light fixtures)
+                // - anything blacklisted (e.g. players).
                 if (toSell.Contains(ent) ||
                     (xformQuery.TryGetComponent(ent, out var xform) && xform.Anchored))
                     continue;
 
-                if (HasComp<CargoSellBlacklistComponent>(ent))
+                if (blacklistQuery.HasComponent(ent))
                     continue;
 
                 var price = _pricing.GetPrice(ent);
@@ -384,10 +387,12 @@ public sealed partial class CargoSystem
         var center = new Vector2();
         var minRadius = 0f;
         Box2? aabb = null;
+        var xformQuery = GetEntityQuery<TransformComponent>();
 
         foreach (var grid in _mapManager.GetAllMapGrids(xform.MapID))
         {
-            aabb = aabb?.Union(grid.WorldAABB) ?? grid.WorldAABB;
+            var worldAABB = xformQuery.GetComponent(grid.GridEntityId).WorldMatrix.TransformBox(grid.LocalAABB);
+            aabb = aabb?.Union(worldAABB) ?? worldAABB;
         }
 
         if (aabb != null)
@@ -397,7 +402,7 @@ public sealed partial class CargoSystem
         }
 
         var offset = 0f;
-        if (TryComp<IMapGridComponent>(orderDatabase.Shuttle, out var shuttleGrid))
+        if (TryComp<MapGridComponent>(orderDatabase.Shuttle, out var shuttleGrid))
         {
             var bounds = shuttleGrid.Grid.LocalAABB;
             offset = MathF.Max(bounds.Width, bounds.Height) / 2f;
@@ -423,21 +428,22 @@ public sealed partial class CargoSystem
         var pads = GetCargoPallets(component);
         DebugTools.Assert(orders.Sum(o => o.Amount) <= pads.Count);
 
-        for (var i = 0; i < orders.Count; i++)
+        for (var i = 0; i < pads.Count; i++)
         {
-            var order = orders[i];
+            if (orders.Count == 0)
+                break;
 
+            var order = orders[0];
             var coordinates = new EntityCoordinates(component.Owner, xformQuery.GetComponent(_random.PickAndTake(pads).Owner).LocalPosition);
-
             var item = Spawn(_protoMan.Index<CargoProductPrototype>(order.ProductId).Product, coordinates);
             SpawnAndAttachOrderManifest(item, order, coordinates, component);
             order.Amount--;
 
             if (order.Amount == 0)
             {
-                orders.RemoveSwap(i);
+                // Yes this is functioning as a stack, I was too lazy to re-jig the shuttle state event.
+                orders.RemoveSwap(0);
                 orderDatabase.Orders.Remove(order.OrderNumber);
-                i--;
             }
             else
             {

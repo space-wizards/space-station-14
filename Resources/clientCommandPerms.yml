@@ -25,6 +25,9 @@
     - gcf
     - gc
     - gc_mode
+    - resetent
+    - resetallents
+    - cvar
 
 - Flags: DEBUG
   Commands:
@@ -52,6 +55,9 @@
     - showmarkers
     - nodevis
     - nodevisfilter
+    - detachent
+    - localdelete
+    - fullstatereset
 
 - Flags: MAPPING
   Commands:
