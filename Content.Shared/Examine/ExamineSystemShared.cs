@@ -49,14 +49,14 @@ namespace Content.Shared.Examine
 
         /// <summary>
         ///     Called when getting verbs on an object with the GroupExamine component. <br/>
-        ///     This checks if any of the ExamineGroups are relevant (has 2 or more of the relevant components on the entity)
+        ///     This checks if any of the ExamineGroups are relevant (has 1 or more of the relevant components on the entity)
         ///     and if so, creates an ExamineVerb details button for the ExamineGroup.
         /// </summary>
         private void OnGroupExamineVerb(EntityUid uid, GroupExamineComponent component, GetVerbsEvent<ExamineVerb> args)
         {
             foreach(var group in component.ExamineGroups)
             {
-                if (!EntityHasComponentsAmount(uid, group.Components, 2))
+                if (!EntityHasComponent(uid, group.Components))
                     continue;
 
                 var examineVerb = new ExamineVerb()
@@ -77,12 +77,10 @@ namespace Content.Shared.Examine
         }
 
         /// <summary>
-        ///     Checks if the entity <paramref name="uid"/> has (<paramref name="amount"/>) or more components from among <paramref name="components"/>.
+        ///     Checks if the entity <paramref name="uid"/> has any of the listed <paramref name="components"/>.
         /// </summary>
-        public bool EntityHasComponentsAmount(EntityUid uid, List<string> components, int amount)
+        public bool EntityHasComponent(EntityUid uid, List<string> components)
         {
-            var counter = 0;
-
             foreach (var comp in components)
             {
                 if (!_componentFactory.TryGetRegistration(comp, out var componentRegistration))
@@ -91,12 +89,8 @@ namespace Content.Shared.Examine
                 if (!HasComp(uid, componentRegistration.Type))
                     continue;
 
-                counter++;
-
-                if (counter >= amount)
-                    return true;
+                return true;
             }
-
             return false;
         }
 
@@ -147,32 +141,36 @@ namespace Content.Shared.Examine
         /// </summary>
         public void AddDetailedExamineVerb(GetVerbsEvent<ExamineVerb> verbsEvent, Component component, List<ExamineEntry> entries, string verbText, string iconTexture = "/Textures/Interface/VerbIcons/dot.svg.192dpi.png", string hoverMessage = "")
         {
+            // If the entity has the GroupExamineComponent
             if (TryComp<GroupExamineComponent>(verbsEvent.Target, out var groupExamine))
             {
+                // Make sure we have the component name as a string
                 var componentName = _componentFactory.GetComponentName(component.GetType());
+                Logger.Debug("AddDetailedExamineVerb -> Found GroupExamineComponent -> Finding componentName... " + componentName);
 
                 foreach (var examineGroup in groupExamine.ExamineGroups)
                 {
+                    // If any of the examine groups list of components contain this componentname
                     if (examineGroup.Components.Contains(componentName))
                     {
-
-                        if (!EntityHasComponentsAmount(verbsEvent.Target, examineGroup.Components, 2))
-                            continue;
-
                         foreach (var entry in examineGroup.Entries)
                         {
+                            // If any of the entries already are from your component, dont do anything else - no doubles!
                             if (entry.ComponentName == componentName)
                                 return;
                         }
 
                         foreach (var entry in entries)
                         {
+                            // Otherwise, just add all information to the examine groups entries, and stop there.
                             examineGroup.Entries.Add(entry);
                         }
                         return;
                     }
                 }
             }
+
+            Logger.Debug("AddDetailedExamineVerb adding verb now (group examine not viable)");
 
             var formattedMessage = GetFormattedMessageFromExamineEntries(entries);
 
