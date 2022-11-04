@@ -1,0 +1,11 @@
+﻿namespace Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
+
+[RegisterComponent]
+public sealed class ArtifactMusicTriggerComponent : Component
+{
+    /// <summary>
+    /// how close does the artifact have to be to the instrument to activate
+    /// </summary>
+    [DataField("range")]
+    public float Range = 5;
+}

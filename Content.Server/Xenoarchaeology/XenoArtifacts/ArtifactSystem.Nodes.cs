@@ -115,8 +115,8 @@ public sealed partial class ArtifactSystem
         foreach (var d in depths)
         {
             //TODO: is this equation sus? idk. -emo
-            // 0.2 / (|depth - nodeDepth| + 1)^2
-            var w = 0.2f / MathF.Pow(Math.Abs(d - targetDepth) + 1, 2);
+            // 0.3 / (|current_iterated_depth - our_actual_depth| + 1)^2
+            var w = 0.3f / MathF.Pow(Math.Abs(d - targetDepth) + 1, 2);
             weights.Add(d, w);
         }
         return weights;
@@ -141,11 +141,8 @@ public sealed partial class ArtifactSystem
                 return key;
             }
         }
-
         return _random.Pick(weights.Keys); //shouldn't happen
     }
-
-    //TODO: this needs to be deffered
 
     /// <summary>
     /// Enter a node: attach the relevant components

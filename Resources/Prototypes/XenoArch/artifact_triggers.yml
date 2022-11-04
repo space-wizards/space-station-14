@@ -12,9 +12,16 @@
   - type: ArtifactTimerTrigger
 
 - type: artifactTrigger
+  id: TriggerMusic
+  targetDepth: 0
+  triggerHint: artifact-trigger-hint-music
+  components:
+  - type: ArtifactMusicTrigger
+
+- type: artifactTrigger
   id: TriggerAnchor
   targetDepth: 0
-  triggerHint: artifact-trigger-hint-physical
+  triggerHint: artifact-trigger-hint-tool
   components:
   - type: ArtifactAnchorTrigger
 
@@ -60,6 +67,18 @@
   - type: ArtifactHeatTrigger
 
 - type: artifactTrigger
+  id: TriggerWater
+  targetDepth: 1
+  triggerHint: artifact-trigger-hint-water
+  components:
+  - type: Reactive
+    reactions:
+    - reagents: [ Water ]
+      methods: [ Touch ]
+      effects:
+      - !type:ActivateArtifact
+
+- type: artifactTrigger
   id: TriggerDeath
   targetDepth: 2
   triggerHint: artifact-trigger-hint-death
@@ -74,7 +93,15 @@
   - type: ArtifactMagnetTrigger
 
 - type: artifactTrigger
-  id: TriggerBruteDamage
+  id: TriggerLowPressure
+  targetDepth: 2
+  triggerHint: artifact-trigger-hint-pressure-high
+  components:
+  - type: ArtifactPressureTrigger
+    maxPressureThreshold: 50
+
+- type: artifactTrigger
+  id: TriggerHighDamage
   targetDepth: 3
   triggerHint: artifact-trigger-hint-high-damage
   components:
@@ -93,8 +120,19 @@
   - type: RadiationReceiver
 
 - type: artifactTrigger
+  id: TriggerHighPressure
+  targetDepth: 3
+  triggerHint: artifact-trigger-hint-pressure-high
+  components:
+  - type: ArtifactPressureTrigger
+    maxPressureThreshold: 385
+
+- type: artifactTrigger
   id: TriggerGas
-  targetDepth: 4
+  targetDepth: 3
   triggerHint: artifact-trigger-hint-gas
   components:
   - type: ArtifactGasTrigger
+
+#don't add in new targetdepth values until you have a few
+#or else it will skew heavily towards a few options.
