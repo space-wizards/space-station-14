@@ -31,7 +31,7 @@ public sealed class BackgroundAudioSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly IStateManager _stateManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    
+
     private readonly AudioParams _ambientParams = new(-10f, 1, "Master", 0, 0, 0, true, 0f);
     private readonly AudioParams _lobbyParams = new(-5f, 1, "Master", 0, 0, 0, true, 0f);
 
@@ -70,6 +70,7 @@ public sealed class BackgroundAudioSystem : EntitySystem
 
         _configManager.OnValueChanged(CCVars.AmbienceVolume, AmbienceCVarChanged);
         _configManager.OnValueChanged(CCVars.LobbyMusicEnabled, LobbyMusicCVarChanged);
+        _configManager.OnValueChanged(CCVars.LobbyMusicVolume, LobbyMusicVolumeCVarChanged);
         _configManager.OnValueChanged(CCVars.StationAmbienceEnabled, StationAmbienceCVarChanged);
         _configManager.OnValueChanged(CCVars.SpaceAmbienceEnabled, SpaceAmbienceCVarChanged);
 
@@ -103,6 +104,7 @@ public sealed class BackgroundAudioSystem : EntitySystem
 
         _configManager.UnsubValueChanged(CCVars.AmbienceVolume, AmbienceCVarChanged);
         _configManager.UnsubValueChanged(CCVars.LobbyMusicEnabled, LobbyMusicCVarChanged);
+        _configManager.UnsubValueChanged(CCVars.LobbyMusicVolume, LobbyMusicVolumeCVarChanged);
         _configManager.UnsubValueChanged(CCVars.StationAmbienceEnabled, StationAmbienceCVarChanged);
         _configManager.UnsubValueChanged(CCVars.SpaceAmbienceEnabled, SpaceAmbienceCVarChanged);
 
@@ -139,7 +141,7 @@ public sealed class BackgroundAudioSystem : EntitySystem
     {
         if (_currentCollection == newAmbience)
             return;
-        
+
         _timerCancelTokenSource.Cancel();
         _currentCollection = newAmbience;
         _timerCancelTokenSource = new CancellationTokenSource();
@@ -248,6 +250,14 @@ public sealed class BackgroundAudioSystem : EntitySystem
         }
     }
 
+    private void LobbyMusicVolumeCVarChanged(float volume)
+    {
+        if (_stateManager.CurrentState is LobbyState)
+        {
+            RestartLobbyMusic();
+        }
+    }
+
     private void LobbyMusicCVarChanged(bool musicEnabled)
     {
         if (!musicEnabled)
@@ -294,7 +304,8 @@ public sealed class BackgroundAudioSystem : EntitySystem
             return;
         }
 
-        _lobbyStream = _audio.PlayGlobal(file, Filter.Local(), _lobbyParams);
+        _lobbyStream = _audio.PlayGlobal(file, Filter.Local(),
+            _lobbyParams.WithVolume(_lobbyParams.Volume + _configManager.GetCVar(CCVars.LobbyMusicVolume)));
     }
 
     private void EndLobbyMusic()
