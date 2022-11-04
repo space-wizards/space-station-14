@@ -53,7 +53,7 @@ public abstract class SharedLatheSystem : EntitySystem
             var adjustedAmount = recipe.ApplyMaterialDiscount
                 ? (int) (needed * component.MaterialUseMultiplier)
                 : needed;
-            
+
             if (_materialStorage.GetMaterialAmount(component.Owner, material) < adjustedAmount * amount)
                 return false;
         }
