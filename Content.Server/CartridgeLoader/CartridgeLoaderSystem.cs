@@ -337,6 +337,10 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
 
         foreach (var program in loader.BackgroundPrograms)
         {
+            //Prevent programs registered as running in the background receiving events twice if they are active
+            if (loader.ActiveProgram.HasValue && loader.ActiveProgram.Value.Equals(program))
+                continue;
+
             RaiseLocalEvent(program, args);
         }
     }
