@@ -1,9 +1,4 @@
 Entries:
-- author: JustinTrotter
-  changes:
-  - {message: 'clown, mime, and plague doctor masks can now block identities', type: Fix}
-  id: 2067
-  time: '2022-08-01T05:29:03.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed gas tanks not being disconnected when dropped (again)., type: Fix}
@@ -2960,3 +2955,9 @@ Entries:
       Hopefully this reduces confusion!, type: Tweak}
   id: 2566
   time: '2022-11-04T00:51:26.0000000+00:00'
+- author: Carbonhell
+  changes:
+  - {message: Ghosts can now toggle the lighting manager to be able to better observe
+      dark areas., type: Add}
+  id: 2567
+  time: '2022-11-04T00:56:30.0000000+00:00'
