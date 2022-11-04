@@ -1,10 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: 'Added allicins to aliums. Animals can''t eat onions, garlic or leeks!',
-    type: Add}
-  id: 2076
-  time: '2022-08-02T13:01:15.0000000+00:00'
 - author: eclips_e
   changes:
   - {message: 'Rotating and Strafing keybinds have been swapped. Use E/Q to rotate
@@ -2968,3 +2962,8 @@ Entries:
       upgrades have., type: Add}
   id: 2575
   time: '2022-11-04T03:27:47.0000000+00:00'
+- author: rolfero
+  changes:
+  - {message: You can now link airlocks and windoors to buttons and levers!, type: Add}
+  id: 2576
+  time: '2022-11-04T04:00:34.0000000+00:00'
