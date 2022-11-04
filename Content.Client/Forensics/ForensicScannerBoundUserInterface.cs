@@ -17,24 +17,31 @@ namespace Content.Client.Forensics
             _window = new ForensicScannerMenu();
             _window.OnClose += Close;
             _window.Print.OnPressed += _ => Print();
+            _window.Clear.OnPressed += _ => Clear();
             _window.OpenCentered();
         }
 
         private void Print()
         {
             SendMessage(new ForensicScannerPrintMessage());
-            _window?.Close();
         }
 
-        protected override void ReceiveMessage(BoundUserInterfaceMessage message)
+        private void Clear()
         {
+            SendMessage(new ForensicScannerClearMessage());
+        }
+
+        protected override void UpdateState(BoundUserInterfaceState state)
+        {
+            base.UpdateState(state);
+
             if (_window == null)
                 return;
 
-            if (message is not ForensicScannerUserMessage cast)
+            if (state is not ForensicScannerBoundUserInterfaceState cast)
                 return;
 
-            _window.Populate(cast);
+            _window.UpdateState(cast);
         }
 
         protected override void Dispose(bool disposing)

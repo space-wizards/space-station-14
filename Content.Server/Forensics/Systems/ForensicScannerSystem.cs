@@ -4,6 +4,7 @@ using System.Threading;
 using Content.Server.DoAfter;
 using Content.Server.Paper;
 using Content.Server.Popups;
+using Content.Server.UserInterface;
 using Content.Shared.Forensics;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
@@ -28,10 +29,27 @@ namespace Content.Server.Forensics
 
             SubscribeLocalEvent<ForensicScannerComponent, AfterInteractEvent>(OnAfterInteract);
             SubscribeLocalEvent<ForensicScannerComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
+            SubscribeLocalEvent<ForensicScannerComponent, BeforeActivatableUIOpenEvent>(OnBeforeActivatableUIOpen);
             SubscribeLocalEvent<ForensicScannerComponent, GetVerbsEvent<UtilityVerb>>(OnUtilityVerb);
             SubscribeLocalEvent<ForensicScannerComponent, ForensicScannerPrintMessage>(OnPrint);
+            SubscribeLocalEvent<ForensicScannerComponent, ForensicScannerClearMessage>(OnClear);
             SubscribeLocalEvent<TargetScanSuccessfulEvent>(OnTargetScanSuccessful);
             SubscribeLocalEvent<ScanCancelledEvent>(OnScanCancelled);
+        }
+
+        private void UpdateUserInterface(EntityUid uid, ForensicScannerComponent component)
+        {
+            var state = new ForensicScannerBoundUserInterfaceState(
+                component.Fingerprints,
+                component.Fibers,
+                component.LastScannedName
+                );
+
+            if (!_uiSystem.TrySetUiState(uid, ForensicScannerUiKey.Key, state))
+            {
+                Logger.Warning($"Forensic scanner {ToPrettyString(uid)} was unable to set UI state.");
+                return;
+            }
         }
 
         private void OnScanCancelled(ScanCancelledEvent ev)
@@ -49,11 +67,18 @@ namespace Content.Server.Forensics
             scanner.CancelToken = null;
 
             if (!TryComp<ForensicsComponent>(ev.Target, out var forensics))
-              return;
+            {
+                scanner.Fingerprints = new();
+                scanner.Fibers = new();
+            }
+            else
+            {
+                scanner.Fingerprints = forensics.Fingerprints.ToList();
+                scanner.Fibers = forensics.Fibers.ToList();
+            }
 
-            scanner.Fingerprints = forensics.Fingerprints.ToList();
-            scanner.Fibers = forensics.Fibers.ToList();
-            scanner.LastScanned = MetaData(ev.Target).EntityName;
+            scanner.LastScannedName = MetaData(ev.Target).EntityName;
+
             OpenUserInterface(ev.User, scanner);
         }
 
@@ -77,6 +102,7 @@ namespace Content.Server.Forensics
                         NeedHand = true
                     });
                 },
+                IconEntity = uid,
                 Text = Loc.GetString("forensic-scanner-verb-text"),
                 Message = Loc.GetString("forensic-scanner-verb-message")
             };
@@ -133,15 +159,19 @@ namespace Content.Server.Forensics
             _popupSystem.PopupEntity(Loc.GetString("forensic-scanner-match-none"), uid, Filter.Entities(args.User));
         }
 
+        private void OnBeforeActivatableUIOpen(EntityUid uid, ForensicScannerComponent component, BeforeActivatableUIOpenEvent args)
+        {
+            UpdateUserInterface(uid, component);
+        }
+
         private void OpenUserInterface(EntityUid user, ForensicScannerComponent component)
         {
             if (!TryComp<ActorComponent>(user, out var actor))
                 return;
 
-            var bui = _uiSystem.GetUi(component.Owner, ForensicScannerUiKey.Key);
+            UpdateUserInterface(component.Owner, component);
 
-            _uiSystem.OpenUi(bui, actor.PlayerSession);
-            _uiSystem.SendUiMessage(bui, new ForensicScannerUserMessage(component.Fingerprints, component.Fibers, component.LastScanned));
+            _uiSystem.TryOpen(component.Owner, ForensicScannerUiKey.Key, actor.PlayerSession);
         }
 
         private void OnPrint(EntityUid uid, ForensicScannerComponent component, ForensicScannerPrintMessage args)
@@ -156,7 +186,7 @@ namespace Content.Server.Forensics
             if (!TryComp<PaperComponent>(printed, out var paper))
                 return;
 
-            MetaData(printed).EntityName = Loc.GetString("forensic-scanner-report-title", ("entity", component.LastScanned));
+            MetaData(printed).EntityName = Loc.GetString("forensic-scanner-report-title", ("entity", component.LastScannedName));
 
             var text = new StringBuilder();
 
@@ -173,6 +203,18 @@ namespace Content.Server.Forensics
             }
 
             _paperSystem.SetContent(printed, text.ToString());
+        }
+
+        private void OnClear(EntityUid uid, ForensicScannerComponent component, ForensicScannerClearMessage args)
+        {
+            if (!args.Session.AttachedEntity.HasValue)
+                return;
+
+            component.Fingerprints = new();
+            component.Fibers = new();
+            component.LastScannedName = string.Empty;
+
+            UpdateUserInterface(uid, component);
         }
 
         private sealed class ScanCancelledEvent : EntityEventArgs

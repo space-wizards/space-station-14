@@ -14,9 +14,19 @@ namespace Content.Client.Forensics
             RobustXamlLoader.Load(this);
         }
 
-        public void Populate(ForensicScannerUserMessage msg)
+        public void UpdateState(ForensicScannerBoundUserInterfaceState msg)
         {
+            if (string.IsNullOrEmpty(msg.LastScannedName))
+            {
+                Print.Disabled = true;
+                Clear.Disabled = true;
+                Diagnostics.Text = string.Empty;
+                return;
+            }
+
             Print.Disabled = false;
+            Clear.Disabled = false;
+
             var text = new StringBuilder();
 
             text.AppendLine(Loc.GetString("forensic-scanner-interface-fingerprints"));
@@ -31,7 +41,6 @@ namespace Content.Client.Forensics
                 text.AppendLine(fiber);
             }
             Diagnostics.Text = text.ToString();
-            SetSize = (350, 600);
         }
     }
 }
