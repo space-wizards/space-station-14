@@ -1,14 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed gas tanks not being disconnected when dropped (again)., type: Fix}
-  id: 2068
-  time: '2022-08-01T07:43:21.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Early launches are now disabled by default., type: Tweak}
-  id: 2069
-  time: '2022-08-01T08:26:25.0000000+00:00'
 - author: Anthemic
   changes:
   - {message: Decreased traitor count. Hail NanoTrasen!, type: Tweak}
@@ -2961,3 +2951,13 @@ Entries:
       dark areas., type: Add}
   id: 2567
   time: '2022-11-04T00:56:30.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Melee weapon cooldown now resets when swapping hands., type: Fix}
+  id: 2568
+  time: '2022-11-04T01:18:01.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: Fixed an issue where crates would clip through firelocks., type: Fix}
+  id: 2569
+  time: '2022-11-04T01:18:59.0000000+00:00'
