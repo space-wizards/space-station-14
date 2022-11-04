@@ -2,6 +2,9 @@
   id: Blindness
   name: Blindness
   description: You lack vision
+  whitelist:
+    components:
+      - Blindable
   components:
     - type: PermanentBlindness
 

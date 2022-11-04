@@ -102,7 +102,7 @@ public partial class RadiationSystem
 
         // check if it's on a grid
         var trs = Transform(uid);
-        if (!trs.Anchored || !TryComp(trs.GridUid, out IMapGridComponent? grid))
+        if (!trs.Anchored || !TryComp(trs.GridUid, out MapGridComponent? grid))
             return;
 
         // save resistance into rad protection grid
