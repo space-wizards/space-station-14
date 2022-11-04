@@ -7,11 +7,8 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.Recycling;
 using Content.Server.Recycling.Components;
 using Content.Shared.Conveyor;
-using Content.Shared.Item;
 using Content.Shared.Maps;
-using Content.Shared.Movement.Components;
 using Content.Shared.Physics;
-using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
@@ -32,6 +29,7 @@ namespace Content.Server.Physics.Controllers
         [Dependency] private readonly RecyclerSystem _recycler = default!;
         [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         public const string ConveyorFixture = "conveyor";
 
@@ -94,9 +92,8 @@ namespace Content.Server.Physics.Controllers
 
         private void UpdateAppearance(ConveyorComponent component)
         {
-            if (!EntityManager.TryGetComponent<AppearanceComponent?>(component.Owner, out var appearance)) return;
             var isPowered = this.IsPowered(component.Owner, EntityManager);
-            appearance.SetData(ConveyorVisuals.State, isPowered ? component.State : ConveyorState.Off);
+            _appearance.SetData(component.Owner, ConveyorVisuals.State, isPowered ? component.State : ConveyorState.Off);
         }
 
         private void OnSignalReceived(EntityUid uid, ConveyorComponent component, SignalReceivedEvent args)
@@ -154,9 +151,7 @@ namespace Content.Server.Physics.Controllers
                         continue;
 
                     if (physics.BodyType != BodyType.Static)
-                    {
                         _physics.WakeBody(physics);
-                    }
                 }
             }
         }
