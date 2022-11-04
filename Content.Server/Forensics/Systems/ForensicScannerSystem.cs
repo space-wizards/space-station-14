@@ -9,7 +9,6 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
 using Robust.Shared.Player;
 
 namespace Content.Server.Forensics
@@ -21,6 +20,7 @@ namespace Content.Server.Forensics
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly PaperSystem _paperSystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
         public override void Initialize()
         {
@@ -113,7 +113,7 @@ namespace Content.Server.Forensics
             {
                 if (fiber == pad.Sample)
                 {
-                    SoundSystem.Play("/Audio/Machines/Nuke/angry_beep.ogg", Filter.Pvs(uid), uid);
+                    _audioSystem.PlayPvs(component.SoundMatch, uid);
                     _popupSystem.PopupEntity(Loc.GetString("forensic-scanner-match-fiber"), uid, Filter.Entities(args.User));
                     return;
                 }
@@ -123,12 +123,13 @@ namespace Content.Server.Forensics
             {
                 if (fingerprint == pad.Sample)
                 {
-                    SoundSystem.Play("/Audio/Machines/Nuke/angry_beep.ogg", Filter.Pvs(uid), uid);
+                    _audioSystem.PlayPvs(component.SoundMatch, uid);
                     _popupSystem.PopupEntity(Loc.GetString("forensic-scanner-match-fingerprint"), uid, Filter.Entities(args.User));
                     return;
                 }
             }
-            SoundSystem.Play("/Audio/Machines/airlock_deny.ogg", Filter.Pvs(uid), uid);
+
+            _audioSystem.PlayPvs(component.SoundNoMatch, uid);
             _popupSystem.PopupEntity(Loc.GetString("forensic-scanner-match-none"), uid, Filter.Entities(args.User));
         }
 
@@ -137,15 +138,16 @@ namespace Content.Server.Forensics
             if (!TryComp<ActorComponent>(user, out var actor))
                 return;
 
-            var ui = _uiSystem.GetUi(component.Owner, ForensicScannerUiKey.Key);
+            var bui = _uiSystem.GetUi(component.Owner, ForensicScannerUiKey.Key);
 
-            ui.Open(actor.PlayerSession);
-            ui.SendMessage(new ForensicScannerUserMessage(component.Fingerprints, component.Fibers, component.LastScanned));
+            _uiSystem.OpenUi(bui, actor.PlayerSession);
+            _uiSystem.SendUiMessage(bui, new ForensicScannerUserMessage(component.Fingerprints, component.Fibers, component.LastScanned));
         }
 
         private void OnPrint(EntityUid uid, ForensicScannerComponent component, ForensicScannerPrintMessage args)
         {
-            if (!args.Session.AttachedEntity.HasValue || (component.Fibers.Count == 0 && component.Fingerprints.Count == 0)) return;
+            if (!args.Session.AttachedEntity.HasValue || (component.Fibers.Count == 0 && component.Fingerprints.Count == 0))
+                return;
 
             // spawn a piece of paper.
             var printed = EntityManager.SpawnEntity("Paper", Transform(args.Session.AttachedEntity.Value).Coordinates);

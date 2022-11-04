@@ -1,4 +1,5 @@
 using System.Threading;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Forensics
 {
@@ -12,6 +13,7 @@ namespace Content.Server.Forensics
         /// </summary>
         [ViewVariables(VVAccess.ReadOnly)]
         public List<string> Fingerprints = new();
+
         /// <summary>
         /// A list of glove fibers that the forensic scanner found from the <see cref="ForensicsComponent"/> on an entity.
         /// </summary>
@@ -25,5 +27,19 @@ namespace Content.Server.Forensics
         /// </summary>
         [DataField("scanDelay")]
         public float ScanDelay = 3.0f;
+
+        /// <summary>
+        /// The sound that's played when there's a match between a scan and an
+        /// inserted forensic pad.
+        /// </summary>
+        [DataField("soundMatch")]
+        public SoundSpecifier SoundMatch = new SoundPathSpecifier("/Audio/Machines/Nuke/angry_beep.ogg");
+
+        /// <summary>
+        /// The sound that's played when there's no match between a scan and an
+        /// inserted forensic pad.
+        /// </summary>
+        [DataField("soundNoMatch")]
+        public SoundSpecifier SoundNoMatch = new SoundPathSpecifier("/Audio/Machines/airlock_deny.ogg");
     }
 }
