@@ -59,6 +59,7 @@ namespace Content.Client.Physics.Controllers
                     if (TryComp<InputMoverComponent>(player, out var mover) &&
                         TryComp<InputMoverComponent>(relayMover.RelayEntity, out var relayed))
                     {
+                        relayed.CanMove = mover.CanMove;
                         relayed.RelativeEntity = mover.RelativeEntity;
                         relayed.RelativeRotation = mover.RelativeRotation;
                         relayed.TargetRelativeRotation = mover.RelativeRotation;
