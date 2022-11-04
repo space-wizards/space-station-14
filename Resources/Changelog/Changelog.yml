@@ -1,9 +1,4 @@
 Entries:
-- author: Myctai
-  changes:
-  - {message: Thieving Gloves will not reveal your fingerprints to detective, type: Fix}
-  id: 2074
-  time: '2022-08-02T12:55:09.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Added new cave floors. Check them out in a future mapping update., type: Add}
@@ -2962,3 +2957,13 @@ Entries:
       traitors that are alive and not SSD., type: Fix}
   id: 2573
   time: '2022-11-04T02:58:19.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: Stealth boxes are now available via traitor uplinks., type: Add}
+  - {message: 'Stealth boxes have been rebalanced. They now require players to move
+      slower to stay hidden, collide with bullets, and can no longer trap simple mobs.',
+    type: Tweak}
+  - {message: Fixed a bug that allowed sleeping mobs to still control vehicles and
+      boxes., type: Fix}
+  id: 2574
+  time: '2022-11-04T03:16:24.0000000+00:00'
