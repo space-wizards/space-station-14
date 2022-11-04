@@ -180,7 +180,7 @@ namespace Content.Client.Lobby
             else
             {
                 _lobby!.StartTime.Text = string.Empty;
-                _lobby!.ReadyButton.Text =  Loc.GetString(_lobby!.ReadyButton.Pressed ? "lobby-state-player-status-ready": "lobby-state-player-status-not-ready");
+                _lobby!.ReadyButton.Text = Loc.GetString(_lobby!.ReadyButton.Pressed ? "lobby-state-player-status-ready": "lobby-state-player-status-not-ready");
                 _lobby!.ReadyButton.ToggleMode = true;
                 _lobby!.ReadyButton.Disabled = false;
                 _lobby!.ReadyButton.Pressed = _gameTicker.AreWeReady;
