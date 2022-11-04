@@ -9,6 +9,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Systems;
 
 namespace Content.Shared.Slippery
 {
@@ -20,6 +21,7 @@ namespace Content.Shared.Slippery
         [Dependency] private readonly SharedStunSystem _stunSystem = default!;
         [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
         public override void Initialize()
         {
@@ -28,6 +30,8 @@ namespace Content.Shared.Slippery
             SubscribeLocalEvent<SlipperyComponent, StepTriggerAttemptEvent>(HandleAttemptCollide);
             SubscribeLocalEvent<SlipperyComponent, StepTriggeredEvent>(HandleStepTrigger);
             SubscribeLocalEvent<NoSlipComponent, SlipAttemptEvent>(OnNoSlipAttempt);
+            // as long as slip-resistant mice are never added, this should be fine (otherwise a mouse-hat will transfer it's power to the wearer).
+            SubscribeLocalEvent<NoSlipComponent, InventoryRelayedEvent<SlipAttemptEvent>>((e, c, ev) => OnNoSlipAttempt(e, c, ev.Args));
             SubscribeLocalEvent<SlipperyComponent, ComponentGetState>(OnSlipperyGetState);
             SubscribeLocalEvent<SlipperyComponent, ComponentHandleState>(OnSlipperyHandleState);
         }
@@ -43,7 +47,7 @@ namespace Content.Shared.Slippery
 
         private void OnSlipperyGetState(EntityUid uid, SlipperyComponent component, ref ComponentGetState args)
         {
-            args.State = new SlipperyComponentState(component.ParalyzeTime, component.LaunchForwardsMultiplier, component.SlipSound.GetSound());
+            args.State = new SlipperyComponentState(component.ParalyzeTime, component.LaunchForwardsMultiplier, _audio.GetSound(component.SlipSound));
         }
 
         private void HandleStepTrigger(EntityUid uid, SlipperyComponent component, ref StepTriggeredEvent args)
@@ -81,7 +85,7 @@ namespace Content.Shared.Slippery
                 return;
 
             if (TryComp(other, out PhysicsComponent? physics))
-                physics.LinearVelocity *= component.LaunchForwardsMultiplier;
+                _physics.SetLinearVelocity(physics, physics.LinearVelocity * component.LaunchForwardsMultiplier);
 
             var playSound = !_statusEffectsSystem.HasStatusEffect(other, "KnockedDown");
 

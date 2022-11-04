@@ -45,7 +45,7 @@ namespace Content.Server.Doors.Systems
             }
         }
 
-        private void OnPowerChanged(EntityUid uid, AirlockComponent component, PowerChangedEvent args)
+        private void OnPowerChanged(EntityUid uid, AirlockComponent component, ref PowerChangedEvent args)
         {
             if (TryComp<AppearanceComponent>(uid, out var appearanceComponent))
             {
@@ -63,6 +63,8 @@ namespace Content.Server.Doors.Systems
             }
             else
             {
+                if (component.BoltWireCut)
+                    component.SetBoltsWithAudio(true);
                 UpdateAutoClose(uid, door: door);
             }
 

@@ -136,16 +136,19 @@ public class DockingControl : Control
         Matrix3.Multiply(in gridInvMatrix, in matrix, out var invMatrix);
 
         // TODO: Getting some overdraw so need to fix that.
+        var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
 
         foreach (var grid in _mapManager.FindGridsIntersecting(gridXform.MapID,
                      new Box2(worldPos - _range, worldPos + _range)))
         {
-            if (grid.GridEntityId == GridEntity) continue;
+            if (grid.GridEntityId == GridEntity)
+                continue;
 
             // Draw the fixtures before drawing any docks in range.
-            if (!_entManager.TryGetComponent<FixturesComponent>(grid.GridEntityId, out var gridFixtures)) continue;
+            if (!_entManager.TryGetComponent<FixturesComponent>(grid.GridEntityId, out var gridFixtures))
+                continue;
 
-            var gridMatrix = grid.WorldMatrix;
+            var gridMatrix = xformQuery.GetComponent(grid.GridEntityId).WorldMatrix;
 
             Matrix3.Multiply(in gridMatrix, in invMatrix, out var matty);
 

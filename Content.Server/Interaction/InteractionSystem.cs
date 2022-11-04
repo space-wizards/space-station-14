@@ -28,7 +28,6 @@ namespace Content.Server.Interaction
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
-        [Dependency] private readonly PullingSystem _pullSystem = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
@@ -37,17 +36,6 @@ namespace Content.Server.Interaction
             base.Initialize();
 
             SubscribeNetworkEvent<DragDropRequestEvent>(HandleDragDropRequestEvent);
-
-            CommandBinds.Builder
-                .Bind(ContentKeyFunctions.TryPullObject,
-                    new PointerInputCmdHandler(HandleTryPullObject))
-                .Register<InteractionSystem>();
-        }
-
-        public override void Shutdown()
-        {
-            CommandBinds.Unregister<InteractionSystem>();
-            base.Shutdown();
         }
 
         public override bool CanAccessViaStorage(EntityUid user, EntityUid target)
@@ -125,28 +113,5 @@ namespace Content.Server.Interaction
             }
         }
         #endregion
-
-        private bool HandleTryPullObject(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
-        {
-            if (!ValidateClientInput(session, coords, uid, out var userEntity))
-            {
-                Logger.InfoS("system.interaction", $"TryPullObject input validation failed");
-                return true;
-            }
-
-            if (userEntity.Value == uid)
-                return false;
-
-            if (Deleted(uid))
-                return false;
-
-            if (!InRangeUnobstructed(userEntity.Value, uid, popup: true))
-                return false;
-
-            if (!TryComp(uid, out SharedPullableComponent? pull))
-                return false;
-
-            return _pullSystem.TogglePull(userEntity.Value, pull);
-        }
     }
 }

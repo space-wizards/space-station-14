@@ -58,7 +58,7 @@ public sealed class BlockingUserSystem : EntitySystem
     {
         if (args.DamageDelta != null && args.DamageIncreased)
         {
-            _damageable.TryChangeDamage(component.BlockingItem, args.DamageDelta);
+            _damageable.TryChangeDamage(component.BlockingItem, args.DamageDelta, origin: args.Origin);
         }
     }
 

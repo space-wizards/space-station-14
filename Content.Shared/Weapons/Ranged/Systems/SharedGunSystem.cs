@@ -316,8 +316,6 @@ public abstract partial class SharedGunSystem : EntitySystem
         Shoot(gun, new List<IShootable>(1) { ammo }, fromCoordinates, toCoordinates, user);
     }
 
-    protected abstract void PlaySound(EntityUid gun, string? sound, EntityUid? user = null);
-
     protected abstract void Popup(string message, EntityUid? uid, EntityUid? user);
 
     /// <summary>

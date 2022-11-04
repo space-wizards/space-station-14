@@ -1,5 +1,4 @@
 using Content.Server.Actions;
-using Content.Server.MobState;
 using Content.Server.Popups;
 using Content.Server.Sound.Components;
 using Content.Shared.Actions.ActionTypes;
@@ -26,7 +25,6 @@ namespace Content.Server.Bed.Sleep
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly ActionsSystem _actionsSystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
 
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
@@ -141,7 +139,15 @@ namespace Content.Server.Bed.Sleep
         private void OnInteractHand(EntityUid uid, SleepingComponent component, InteractHandEvent args)
         {
             args.Handled = true;
+
+            var curTime = _gameTiming.CurTime;
+            if (curTime < component.CoolDownEnd)
+            {
+                return;
+            }
+
             TryWaking(args.Target, user: args.User);
+            component.CoolDownEnd = curTime + component.Cooldown;
         }
 
         private void OnExamined(EntityUid uid, SleepingComponent component, ExaminedEvent args)

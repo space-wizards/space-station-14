@@ -7,6 +7,7 @@ using Content.IntegrationTests;
 using Robust.Client.GameObjects;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
@@ -24,7 +25,12 @@ namespace Content.MapRenderer.Painters
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings(){ Map = map });
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
+            {
+                Fresh = true,
+                Map = map
+            });
+
             var server = pairTracker.Pair.Server;
             var client = pairTracker.Pair.Client;
 
@@ -54,6 +60,7 @@ namespace Content.MapRenderer.Painters
             var tilePainter = new TilePainter(client, server);
             var entityPainter = new GridPainter(client, server);
             IMapGrid[] grids = null!;
+            var xformQuery = sEntityManager.GetEntityQuery<TransformComponent>();
 
             await server.WaitPost(() =>
             {
@@ -64,11 +71,13 @@ namespace Content.MapRenderer.Painters
                     sEntityManager.DeleteEntity(playerEntity.Value);
                 }
 
-                grids = sMapManager.GetAllMapGrids(new MapId(1)).ToArray();
+                var mapId = sMapManager.GetAllMapIds().Last();
+                grids = sMapManager.GetAllMapGrids(mapId).ToArray();
 
                 foreach (var grid in grids)
                 {
-                    grid.WorldRotation = Angle.Zero;
+                    var gridXform = xformQuery.GetComponent(grid.GridEntityId);
+                    gridXform.WorldRotation = Angle.Zero;
                 }
             });
 
@@ -107,9 +116,11 @@ namespace Content.MapRenderer.Painters
                     gridCanvas.Mutate(e => e.Flip(FlipMode.Vertical));
                 });
 
-                var renderedImage = new RenderedGridImage<Rgba32>(gridCanvas);
-                renderedImage.GridUid = grid.GridEntityId;
-                renderedImage.Offset = grid.WorldPosition;
+                var renderedImage = new RenderedGridImage<Rgba32>(gridCanvas)
+                {
+                    GridUid = grid.GridEntityId,
+                    Offset = xformQuery.GetComponent(grid.GridEntityId).WorldPosition
+                };
 
                 yield return renderedImage;
             }

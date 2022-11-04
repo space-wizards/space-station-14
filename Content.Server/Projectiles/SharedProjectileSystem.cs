@@ -43,7 +43,7 @@ namespace Content.Server.Projectiles
 
             var otherEntity = args.OtherFixture.Body.Owner;
             var direction = args.OurFixture.Body.LinearVelocity.Normalized;
-            var modifiedDamage = _damageableSystem.TryChangeDamage(otherEntity, component.Damage, component.IgnoreResistances);
+            var modifiedDamage = _damageableSystem.TryChangeDamage(otherEntity, component.Damage, component.IgnoreResistances, origin: component.Shooter);
             component.DamagedEntity = true;
 
             if (modifiedDamage is not null && EntityManager.EntityExists(component.Shooter))

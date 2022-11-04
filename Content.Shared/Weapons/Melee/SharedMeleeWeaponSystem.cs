@@ -1,14 +1,17 @@
 using Content.Shared.ActionBlocker;
+using Content.Shared.Clothing.Components;
 using Content.Shared.CombatMode;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Popups;
 using Content.Shared.Weapons.Melee.Events;
 using JetBrains.Annotations;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
+using Robust.Shared.Players;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -21,6 +24,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
     [Dependency] protected readonly ActionBlockerSystem Blocker = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] protected readonly SharedCombatModeSystem CombatMode = default!;
+    [Dependency] protected readonly InventorySystem Inventory = default!;
     [Dependency] protected readonly SharedPopupSystem PopupSystem = default!;
 
     protected ISawmill Sawmill = default!;
@@ -38,6 +42,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         SubscribeLocalEvent<MeleeWeaponComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<MeleeWeaponComponent, ComponentHandleState>(OnHandleState);
         SubscribeLocalEvent<MeleeWeaponComponent, HandDeselectedEvent>(OnMeleeDropped);
+        SubscribeLocalEvent<MeleeWeaponComponent, HandSelectedEvent>(OnMeleeSelected);
 
         SubscribeAllEvent<LightAttackEvent>(OnLightAttack);
         SubscribeAllEvent<StartHeavyAttackEvent>(OnStartHeavyAttack);
@@ -45,6 +50,22 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         SubscribeAllEvent<HeavyAttackEvent>(OnHeavyAttack);
         SubscribeAllEvent<DisarmAttackEvent>(OnDisarmAttack);
         SubscribeAllEvent<StopAttackEvent>(OnStopAttack);
+    }
+
+    private void OnMeleeSelected(EntityUid uid, MeleeWeaponComponent component, HandSelectedEvent args)
+    {
+        if (component.AttackRate.Equals(0f))
+            return;
+
+        // If someone swaps to this weapon then reset its cd.
+        var curTime = Timing.CurTime;
+        var minimum = curTime + TimeSpan.FromSeconds(1 / component.AttackRate);
+
+        if (minimum < component.NextAttack)
+            return;
+
+        component.NextAttack = minimum;
+        Dirty(component);
     }
 
     private void OnMeleeDropped(EntityUid uid, MeleeWeaponComponent component, HandDeselectedEvent args)
@@ -106,7 +127,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         if (weapon?.Owner != msg.Weapon)
             return;
 
-        AttemptAttack(args.SenderSession.AttachedEntity!.Value, weapon, msg);
+        AttemptAttack(args.SenderSession.AttachedEntity!.Value, weapon, msg, args.SenderSession);
     }
 
     private void OnStopHeavyAttack(StopHeavyAttackEvent msg, EntitySessionEventArgs args)
@@ -144,7 +165,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         if (userWeapon != weapon)
             return;
 
-        AttemptAttack(args.SenderSession.AttachedEntity.Value, weapon, msg);
+        AttemptAttack(args.SenderSession.AttachedEntity.Value, weapon, msg, args.SenderSession);
     }
 
     private void OnDisarmAttack(DisarmAttackEvent msg, EntitySessionEventArgs args)
@@ -159,7 +180,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         if (userWeapon == null)
             return;
 
-        AttemptAttack(args.SenderSession.AttachedEntity.Value, userWeapon, msg);
+        AttemptAttack(args.SenderSession.AttachedEntity.Value, userWeapon, msg, args.SenderSession);
     }
 
     private void OnGetState(EntityUid uid, MeleeWeaponComponent component, ref ComponentGetState args)
@@ -195,6 +216,14 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             return null;
         }
 
+        // Use hands clothing if applicable.
+        if (Inventory.TryGetSlotEntity(entity, "gloves", out var gloves) &&
+            TryComp<MeleeWeaponComponent>(gloves, out var glovesMelee))
+        {
+            return glovesMelee;
+        }
+
+        // Use our own melee
         if (TryComp(entity, out melee))
         {
             return melee;
@@ -208,7 +237,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         if (!TryComp<TransformComponent>(target, out var targetXform))
             return;
 
-        AttemptAttack(user, weapon, new LightAttackEvent(target, weapon.Owner, targetXform.Coordinates));
+        AttemptAttack(user, weapon, new LightAttackEvent(target, weapon.Owner, targetXform.Coordinates), null);
     }
 
     public void AttemptDisarmAttack(EntityUid user, MeleeWeaponComponent weapon, EntityUid target)
@@ -216,13 +245,13 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         if (!TryComp<TransformComponent>(target, out var targetXform))
             return;
 
-        AttemptAttack(user, weapon, new DisarmAttackEvent(target, targetXform.Coordinates));
+        AttemptAttack(user, weapon, new DisarmAttackEvent(target, targetXform.Coordinates), null);
     }
 
     /// <summary>
     /// Called when a windup is finished and an attack is tried.
     /// </summary>
-    private void AttemptAttack(EntityUid user, MeleeWeaponComponent weapon, AttackEvent attack)
+    private void AttemptAttack(EntityUid user, MeleeWeaponComponent weapon, AttackEvent attack, ICommonSession? session)
     {
         var curTime = Timing.CurTime;
 
@@ -243,23 +272,26 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         weapon.NextAttack += TimeSpan.FromSeconds(1f / weapon.AttackRate);
 
         // Attack confirmed
-        // Play a sound to give instant feedback; same with playing the animations
-        Audio.PlayPredicted(weapon.SwingSound, weapon.Owner, user);
 
         switch (attack)
         {
             case LightAttackEvent light:
-                DoLightAttack(user, light, weapon);
+                DoLightAttack(user, light, weapon, session);
                 break;
             case DisarmAttackEvent disarm:
-                DoDisarm(user, disarm, weapon);
+                if (!DoDisarm(user, disarm, weapon, session))
+                    return;
+
                 break;
             case HeavyAttackEvent heavy:
-                DoHeavyAttack(user, heavy, weapon);
+                DoHeavyAttack(user, heavy, weapon, session);
                 break;
             default:
                 throw new NotImplementedException();
         }
+
+        // Play a sound to give instant feedback; same with playing the animations
+        Audio.PlayPredicted(weapon.SwingSound, weapon.Owner, user);
 
         DoLungeAnimation(user, weapon.Angle, attack.Coordinates.ToMap(EntityManager), weapon.Animation);
         weapon.Attacking = true;
@@ -300,17 +332,17 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         return (float) fraction * component.HeavyDamageModifier.Float();
     }
 
-    protected virtual void DoLightAttack(EntityUid user, LightAttackEvent ev, MeleeWeaponComponent component)
+    protected virtual void DoLightAttack(EntityUid user, LightAttackEvent ev, MeleeWeaponComponent component, ICommonSession? session)
     {
 
     }
 
-    protected virtual void DoHeavyAttack(EntityUid user, HeavyAttackEvent ev, MeleeWeaponComponent component)
+    protected virtual void DoHeavyAttack(EntityUid user, HeavyAttackEvent ev, MeleeWeaponComponent component, ICommonSession? session)
     {
 
     }
 
-    protected virtual bool DoDisarm(EntityUid user, DisarmAttackEvent ev, MeleeWeaponComponent component)
+    protected virtual bool DoDisarm(EntityUid user, DisarmAttackEvent ev, MeleeWeaponComponent component, ICommonSession? session)
     {
         if (Deleted(ev.Target) ||
             user == ev.Target)

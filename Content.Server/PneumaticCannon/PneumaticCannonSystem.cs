@@ -303,6 +303,7 @@ namespace Content.Server.PneumaticCannon
             Verb ejectItems = new();
             ejectItems.Act = () => TryEjectAllItems(component, args.User);
             ejectItems.Text = Loc.GetString("pneumatic-cannon-component-verb-eject-items-name");
+            ejectItems.DoContactInteraction = true;
             args.Verbs.Add(ejectItems);
         }
 

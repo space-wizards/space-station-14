@@ -3,6 +3,7 @@
   abstract: true
   id: MobSiliconBase
   components:
+  - type: LagCompensation
   - type: Reactive
     groups:
       Acidic: [Touch]
@@ -88,8 +89,7 @@
   - type: InputMover
   - type: MobMover
   - type: Body
-    template: BotTemplate
-    preset: BotPreset
+    prototype: Bot
 
 - type: entity
   parent: MobSiliconBase

@@ -44,7 +44,7 @@
             - !type:EntityAnchored
               anchored: true
           steps:
-            - prototype: DoorElectronics
+            - tag: DoorElectronics
               name: Door Electronics
               icon:
                 sprite: "Objects/Misc/module.rsi"
@@ -148,7 +148,7 @@
           steps:
             - tool: Anchoring
               doAfter: 1
-              
+
     - node: ShuttersRadiationFrame
       edges:
         - to: ShuttersRadiation

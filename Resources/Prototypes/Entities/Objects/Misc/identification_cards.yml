@@ -527,6 +527,18 @@
 
 - type: entity
   parent: IDCardStandard
+  id: ZookeeperIDCard
+  name: zookeeper ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idzookeeper
+  - type: PresetIdCard
+    job: Zookeeper
+    
+- type: entity
+  parent: IDCardStandard
   id: DetectiveIDCard
   name: detective ID card
   components:
