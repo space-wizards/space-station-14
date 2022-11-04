@@ -24,4 +24,6 @@ analysis-console-progress-text = {$seconds ->
     *[other] T-{$seconds} seconds
 }
 
+analyzer-artifact-component-upgrade-analysis = analysis duration
+
 analyzer-artifact-destroy-popup = The artifact disintegrated into energy!

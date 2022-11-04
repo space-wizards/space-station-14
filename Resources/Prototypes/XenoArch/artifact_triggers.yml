@@ -12,13 +12,6 @@
   - type: ArtifactTimerTrigger
 
 - type: artifactTrigger
-  id: TriggerMusic
-  targetDepth: 0
-  triggerHint: artifact-trigger-hint-music
-  components:
-  - type: ArtifactMusicTrigger
-
-- type: artifactTrigger
   id: TriggerAnchor
   targetDepth: 0
   triggerHint: artifact-trigger-hint-tool
@@ -27,7 +20,7 @@
 
 - type: artifactTrigger
   id: TriggerElectricity
-  targetDepth: 1
+  targetDepth: 0
   triggerHint: artifact-trigger-hint-electricity
   components:
   - type: ArtifactElectricityTrigger
@@ -46,6 +39,13 @@
         !type:CableDeviceNode
         nodeGroupID: MVPower
         # sadly, HVPower and Apc cables doesn't work right now
+
+- type: artifactTrigger
+  id: TriggerMusic
+  targetDepth: 1
+  triggerHint: artifact-trigger-hint-music
+  components:
+  - type: ArtifactMusicTrigger
 
 - type: artifactTrigger
   id: TriggerBruteDamage
