@@ -1,79 +1,4 @@
 Entries:
-- author: Level10Cybermancer
-  changes:
-  - {message: Thieving gloves now actually hide the stripping notification., type: Fix}
-  - {message: Thieving gloves now get the same benefits when placing items as they
-      do when taking them., type: Tweak}
-  id: 2064
-  time: '2022-07-31T06:02:28.0000000+00:00'
-- author: jessicamaybe
-  changes:
-  - {message: You can now drink out of mop buckets and the janitor trolley, type: Tweak}
-  id: 2065
-  time: '2022-07-31T08:09:12.0000000+00:00'
-- author: Anthemic
-  changes:
-  - {message: You can now pet bots., type: Add}
-  id: 2066
-  time: '2022-07-31T15:18:06.0000000+00:00'
-- author: JustinTrotter
-  changes:
-  - {message: 'clown, mime, and plague doctor masks can now block identities', type: Fix}
-  id: 2067
-  time: '2022-08-01T05:29:03.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed gas tanks not being disconnected when dropped (again)., type: Fix}
-  id: 2068
-  time: '2022-08-01T07:43:21.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Early launches are now disabled by default., type: Tweak}
-  id: 2069
-  time: '2022-08-01T08:26:25.0000000+00:00'
-- author: Anthemic
-  changes:
-  - {message: Decreased traitor count. Hail NanoTrasen!, type: Tweak}
-  id: 2070
-  time: '2022-08-01T09:36:01.0000000+00:00'
-- author: DogZeroX
-  changes:
-  - {message: 'Lizards now use their claws in unarmed combat, giving their attacks
-      a bleeding chance.', type: Tweak}
-  id: 2071
-  time: '2022-08-01T15:34:50.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed being unable to drag & drop entities into disposal units, type: Fix}
-  id: 2072
-  time: '2022-08-01T22:35:34.0000000+00:00'
-- author: JustinTrotter
-  changes:
-  - {message: accents carry over the radio again, type: Fix}
-  id: 2073
-  time: '2022-08-02T02:33:30.0000000+00:00'
-- author: Myctai
-  changes:
-  - {message: Thieving Gloves will not reveal your fingerprints to detective, type: Fix}
-  id: 2074
-  time: '2022-08-02T12:55:09.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Added new cave floors. Check them out in a future mapping update., type: Add}
-  id: 2075
-  time: '2022-08-02T12:55:30.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: 'Added allicins to aliums. Animals can''t eat onions, garlic or leeks!',
-    type: Add}
-  id: 2076
-  time: '2022-08-02T13:01:15.0000000+00:00'
-- author: eclips_e
-  changes:
-  - {message: 'Rotating and Strafing keybinds have been swapped. Use E/Q to rotate
-      the shuttle, A/D to strafe.', type: Tweak}
-  id: 2077
-  time: '2022-08-02T13:02:28.0000000+00:00'
 - author: JustinTrotter
   changes:
   - {message: backpack and duffels no longer only display default gray when held,
@@ -2959,3 +2884,85 @@ Entries:
       get toggled open and closed., type: Fix}
   id: 2563
   time: '2022-11-03T02:03:36.0000000+00:00'
+- author: ashtronaut
+  changes:
+  - {message: Added a volume slider for the lobby & round-end music so you can enjoy
+      it without blowing out your eardrums., type: Add}
+  id: 2564
+  time: '2022-11-04T00:15:38.0000000+00:00'
+- author: JustinTrotter
+  changes:
+  - {message: Overdrawing with a syringe no longer destroys the transferred solution,
+    type: Fix}
+  id: 2565
+  time: '2022-11-04T00:16:32.0000000+00:00'
+- author: ashtronaut
+  changes:
+  - {message: The Lobby's ready button now clearly states whether you are ready not.
+      Hopefully this reduces confusion!, type: Tweak}
+  id: 2566
+  time: '2022-11-04T00:51:26.0000000+00:00'
+- author: Carbonhell
+  changes:
+  - {message: Ghosts can now toggle the lighting manager to be able to better observe
+      dark areas., type: Add}
+  id: 2567
+  time: '2022-11-04T00:56:30.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Melee weapon cooldown now resets when swapping hands., type: Fix}
+  id: 2568
+  time: '2022-11-04T01:18:01.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: Fixed an issue where crates would clip through firelocks., type: Fix}
+  id: 2569
+  time: '2022-11-04T01:18:59.0000000+00:00'
+- author: Vordenburg
+  changes:
+  - {message: Allowed gas filters to be reset to filter no gases., type: Add}
+  id: 2570
+  time: '2022-11-04T01:27:20.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Alt-clicking can now be used on hands again., type: Fix}
+  id: 2571
+  time: '2022-11-04T01:36:45.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fixed the damage/death overlay being off-centre while using the "separated"
+      HUD layout., type: Fix}
+  id: 2572
+  time: '2022-11-04T01:44:51.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Objectives involving other traitors should be more reliable at providing
+      traitors that are alive and not SSD., type: Fix}
+  id: 2573
+  time: '2022-11-04T02:58:19.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: Stealth boxes are now available via traitor uplinks., type: Add}
+  - {message: 'Stealth boxes have been rebalanced. They now require players to move
+      slower to stay hidden, collide with bullets, and can no longer trap simple mobs.',
+    type: Tweak}
+  - {message: Fixed a bug that allowed sleeping mobs to still control vehicles and
+      boxes., type: Fix}
+  id: 2574
+  time: '2022-11-04T03:16:24.0000000+00:00'
+- author: 25203
+  changes:
+  - {message: Upgradeable machines can now be examined to show the effects that the
+      upgrades have., type: Add}
+  id: 2575
+  time: '2022-11-04T03:27:47.0000000+00:00'
+- author: rolfero
+  changes:
+  - {message: You can now link airlocks and windoors to buttons and levers!, type: Add}
+  id: 2576
+  time: '2022-11-04T04:00:34.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Pinpointer arrow should be more accurate., type: Tweak}
+  id: 2577
+  time: '2022-11-04T04:15:24.0000000+00:00'
