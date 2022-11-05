@@ -1,6 +1,9 @@
 using System.Linq;
 using System.Text; // todo: remove this stinky LINQy
 using System.Threading;
+using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Content.Server.DoAfter;
 using Content.Server.Paper;
@@ -10,8 +13,6 @@ using Content.Shared.Forensics;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Verbs;
-using Robust.Server.GameObjects;
-using Robust.Shared.Player;
 
 namespace Content.Server.Forensics
 {
@@ -215,6 +216,12 @@ namespace Content.Server.Forensics
             }
 
             _paperSystem.SetContent(printed, text.ToString());
+            _audioSystem.PlayPvs(component.SoundPrint, uid,
+                AudioParams.Default
+                .WithVariation(0.25f)
+                .WithVolume(3f)
+                .WithAttenuation(Attenuation.LinearDistance)
+                .WithMaxDistance(7f));
 
             component.PrintReadyAt = _gameTiming.CurTime + component.PrintCooldown;
         }

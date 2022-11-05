@@ -60,5 +60,11 @@ namespace Content.Server.Forensics
         /// </summary>
         [DataField("soundNoMatch")]
         public SoundSpecifier SoundNoMatch = new SoundPathSpecifier("/Audio/Machines/airlock_deny.ogg");
+
+        /// <summary>
+        /// The sound that's played when the scanner prints off a report.
+        /// </summary>
+        [DataField("soundPrint")]
+        public SoundSpecifier SoundPrint = new SoundPathSpecifier("/Audio/Machines/short_print_and_rip.ogg");
     }
 }
