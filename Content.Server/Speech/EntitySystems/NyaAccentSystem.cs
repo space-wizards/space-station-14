@@ -10,7 +10,6 @@ public sealed class NyaAccentSystem : EntitySystem
     
     private static readonly Dictionary<string, string> DirectReplacements = new() {
         {"fuck you", "hiiiss" },
-        {"fucked", "fished" },
         {"fuck", "fish" },
         {"fck", "fsh" },
         {"shit", "damn" },
@@ -21,11 +20,11 @@ public sealed class NyaAccentSystem : EntitySystem
         {"machine", "meochine"},
         {"magic", "mewgic"},
 
-        {"maints", "meoints"},
+        {"maint", "meoint"},
         {"maintenance", "meowintenance"},
         {"manifest", "meownifest"},
 
-        {"syndicate", "syndicat"},
+        {"syndicate", "syndiCat"},
         {"nanotrasen", "nyanotrasen"},
         {"drugs", "cat mint"}
         
@@ -34,7 +33,6 @@ public sealed class NyaAccentSystem : EntitySystem
     private static readonly IReadOnlyList<string> Ending = new List<string> {
         "nya",
         "meow",
-        "mewl",
         "mew",
         "mrrr"
     }.AsReadOnly();
@@ -87,21 +85,26 @@ public sealed class NyaAccentSystem : EntitySystem
         // Direct replacements
         foreach (var (first, replace) in DirectReplacements)
         {
-            final_msg = Regex.Replace(final_msg, $@"(?<!\w){first}(?!\w)", replace, RegexOptions.IgnoreCase);
+            //final_msg = Regex.Replace(final_msg, $@"(?<!\w){first}(?!\w)", replace, RegexOptions.IgnoreCase);
+            final_msg = final_msg.Replace(first, replace, true, null);
         }
 
         //Some word parts replacements
-        final_msg = Regex.Replace(final_msg, "per|pro", "purr");
-        final_msg = Regex.Replace(final_msg, "Per|Pro", "Purr");
+        final_msg = final_msg.Replace("per", "pro");
+        final_msg = final_msg.Replace("Per", "Pro");
+
+        final_msg = final_msg.Replace("pro", "pro");
+        final_msg = final_msg.Replace("Pro", "Pro");
         
-        final_msg = Regex.Replace(final_msg, "Mor", "Murr");
-        final_msg = Regex.Replace(final_msg, "mor", "murr");
+        final_msg = final_msg.Replace("mor", "murr");
+        final_msg = final_msg.Replace("Mur", "Murr");
 
-        final_msg = Regex.Replace(final_msg, "Mo", "Meo");
-        final_msg = Regex.Replace(final_msg, "mo", "meo");
+        final_msg = final_msg.Replace("mo", "meo");
+        final_msg = final_msg.Replace("Mo", "Meo");
 
-        // Trimming
+        // Some things
         final_msg = final_msg.Trim();
+        final_msg = char.ToUpper(final_msg[0]) + final_msg.Substring(1);
 
         return final_msg;
     }
