@@ -27,7 +27,7 @@ public sealed class NyaAccentSystem : EntitySystem
 
         {"syndicate", "syndicat"},
         {"nanotrasen", "nyanotrasen"},
-        {"space drugs", "cat mint"}
+        {"drugs", "cat mint"}
         
     };
 
