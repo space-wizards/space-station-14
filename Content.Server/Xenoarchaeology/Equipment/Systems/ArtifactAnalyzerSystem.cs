@@ -394,7 +394,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         _audio.PlayPvs(component.ScanFinishedSound, uid);
     }
 
-    private void OnPowerChanged(EntityUid uid, ActiveArtifactAnalyzerComponent component, PowerChangedEvent args)
+    private void OnPowerChanged(EntityUid uid, ActiveArtifactAnalyzerComponent component, ref PowerChangedEvent args)
     {
         if (!args.Powered)
             CancelScan(component.Artifact);
