@@ -9,6 +9,7 @@ artifact-effect-hint-creation = Matter creation
 artifact-effect-hint-consumption = Energy consumption
 artifact-effect-hint-release = Energy release
 artifact-effect-hint-biochemical = Biochemical disruption
+artifact-effect-hint-destruction = Station-wide destruction
 
 # the triggers should be more obvious than the effects
 # gives people an idea of what to do: don't be too specific (i.e. no "welders")
