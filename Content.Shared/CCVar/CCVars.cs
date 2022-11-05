@@ -75,6 +75,12 @@ namespace Content.Shared.CCVar
             CVarDef.Create("ambience.volume", 0.0f, CVar.ARCHIVE | CVar.CLIENTONLY);
 
         /// <summary>
+        /// Lobby / round end music volume.
+        /// </summary>
+        public static readonly CVarDef<float> LobbyMusicVolume =
+            CVarDef.Create("ambience.lobby_music_volume", 0.0f, CVar.ARCHIVE | CVar.CLIENTONLY);
+
+        /// <summary>
         /// Whether to play the station ambience (humming) sound
         /// </summary>
         public static readonly CVarDef<bool> StationAmbienceEnabled =
@@ -96,9 +102,8 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<string> StatusMoMMIPassword =
             CVarDef.Create("status.mommipassword", "", CVar.SERVERONLY | CVar.CONFIDENTIAL);
 
-
         /*
-         * Game
+         * Events
          */
 
         /// <summary>
@@ -106,6 +111,24 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool>
             EventsEnabled = CVarDef.Create("events.enabled", true, CVar.ARCHIVE | CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Average time (in minutes) for when the ramping event scheduler should stop increasing the chaos modifier.
+        ///     Close to how long you expect a round to last, so you'll probably have to tweak this on downstreams.
+        /// </summary>
+        public static readonly CVarDef<float>
+            EventsRampingAverageEndTime = CVarDef.Create("events.ramping_average_end_time", 40f, CVar.ARCHIVE | CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Average ending chaos modifier for the ramping event scheduler.
+        ///     Max chaos chosen for a round will deviate from this
+        /// </summary>
+        public static readonly CVarDef<float>
+            EventsRampingAverageChaos = CVarDef.Create("events.ramping_average_chaos", 6f, CVar.ARCHIVE | CVar.SERVERONLY);
+
+        /*
+         * Game
+         */
 
         /// <summary>
         ///     Disables most functionality in the GameTicker.
@@ -166,6 +189,12 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<string>
             GameMap = CVarDef.Create("game.map", "Saltern", CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Prototype to use for map pool.
+        /// </summary>
+        public static readonly CVarDef<string>
+            GameMapPool = CVarDef.Create("game.map_pool", "DefaultMapPool", CVar.SERVERONLY);
 
         /// <summary>
         ///     Controls if the game should obey map criteria or not. Overriden if a map vote or similar occurs.
@@ -1072,6 +1101,24 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<bool> ViewportScaleRender =
             CVarDef.Create("viewport.scale_render", true, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+        public static readonly CVarDef<int> ViewportMinimumWidth =
+            CVarDef.Create("viewport.minimum_width", 15, CVar.REPLICATED);
+
+        public static readonly CVarDef<int> ViewportMaximumWidth =
+            CVarDef.Create("viewport.maximum_width", 21, CVar.REPLICATED);
+
+        public static readonly CVarDef<int> ViewportWidth =
+            CVarDef.Create("viewport.width", 21, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+        /*
+         * UI
+         */
+
+        public static readonly CVarDef<string> UILayout =
+            CVarDef.Create("ui.layout", "Default", CVar.CLIENTONLY | CVar.ARCHIVE);
+
+
 
         /*
          * CHAT

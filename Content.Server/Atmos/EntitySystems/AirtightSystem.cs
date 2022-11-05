@@ -56,7 +56,7 @@ namespace Content.Server.Atmos.EntitySystems
         {
             var xform = Transform(uid);
 
-            if (!TryComp(xform.GridUid, out IMapGridComponent? grid))
+            if (!TryComp(xform.GridUid, out MapGridComponent? grid))
                 return;
 
             var gridId = xform.GridUid;
@@ -91,6 +91,9 @@ namespace Content.Server.Atmos.EntitySystems
 
         public void SetAirblocked(AirtightComponent airtight, bool airblocked, TransformComponent? xform = null)
         {
+            if (airtight.AirBlocked == airblocked)
+                return;
+
             if (!Resolve(airtight.Owner, ref xform)) return;
 
             airtight.AirBlocked = airblocked;

@@ -113,8 +113,6 @@
         value: false
       - !type:WirePanel {}
       - !type:AllWiresCut
-        ignoreTypes:
-          - !type:DoorBoltWireAction
       completed:
       - !type:EmptyAllContainers {}
       steps:
@@ -216,8 +214,6 @@
       - !type:ContainerNotEmpty # TODO ShadowCommander: Remove when map gets updated
         container: board
       - !type:AllWiresCut
-        ignoreTypes:
-          - !type:DoorBoltWireAction
       completed:
       - !type:EmptyAllContainers {}
       steps:

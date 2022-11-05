@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Shared.Tag;
@@ -57,7 +57,6 @@ namespace Content.IntegrationTests.Tests.Tag
 
             await server.WaitPost(() =>
             {
-                sMapManager.CreateNewMapEntity(MapId.Nullspace);
                 sTagDummy = sEntityManager.SpawnEntity(TagEntityId, MapCoordinates.Nullspace);
                 sTagComponent = sEntityManager.GetComponent<TagComponent>(sTagDummy);
             });

@@ -14,12 +14,15 @@ namespace Content.Server.Construction.Completions
 
         public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {
-            if (SpriteSpecifier == null || SpriteSpecifier == SpriteSpecifier.Invalid) return;
+            if (SpriteSpecifier == null || SpriteSpecifier == SpriteSpecifier.Invalid)
+                return;
 
-            if (!entityManager.TryGetComponent(uid, out SpriteComponent? sprite)) return;
+            if (!entityManager.TryGetComponent(uid, out SpriteComponent? sprite))
+                return;
 
             // That layer doesn't exist, we do nothing.
-            if (sprite.LayerCount <= Layer) return;
+            if (sprite.LayerCount <= Layer)
+                return;
 
             sprite.LayerSetSprite(Layer, SpriteSpecifier);
         }

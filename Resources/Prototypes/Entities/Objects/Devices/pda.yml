@@ -36,7 +36,7 @@
       event: !type:ToggleActionEvent
   - type: PointLight
     enabled: false
-    radius: 2.5
+    radius: 1.5
     softness: 5
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
@@ -44,6 +44,7 @@
   - type: ActivatableUI
     key: enum.PDAUiKey.Key
     singleUser: true
+    closeOnHandDeselect: false
   - type: UserInterface
     interfaces:
     - key: enum.PDAUiKey.Key
@@ -686,6 +687,21 @@
         state: pda-reporter
   - type: Icon
     state: pda-reporter
+
+- type: entity
+  parent: BasePDA
+  id: ZookeeperPDA
+  name: zookeeper PDA
+  description: Made with genuine synthetic leather. Crikey!
+  components:
+  - type: PDA
+    id: ZookeeperIDCard
+  - type: Appearance
+    visuals:
+      - type: PDAVisualizer
+        state: pda-zookeeper
+  - type: Icon
+    state: pda-zookeeper
 
 - type: entity
   parent: BasePDA

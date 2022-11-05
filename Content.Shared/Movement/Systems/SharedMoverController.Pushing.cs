@@ -43,14 +43,17 @@ public abstract partial class SharedMoverController
     /// </summary>
     private void OnMobCollision(Fixture ourFixture, Fixture otherFixture, float frameTime, Vector2 worldNormal)
     {
-        if (!_pushingEnabled) return;
+        if (!_pushingEnabled)
+            return;
 
         var otherBody = otherFixture.Body;
 
-        if (otherBody.BodyType != BodyType.Dynamic || !otherFixture.Hard) return;
+        if (otherBody.BodyType != BodyType.Dynamic || !otherFixture.Hard)
+            return;
 
-        if (!EntityManager.TryGetComponent(ourFixture.Body.Owner, out MobMoverComponent? mobMover) || worldNormal == Vector2.Zero) return;
+        if (!EntityManager.TryGetComponent(ourFixture.Body.Owner, out MobMoverComponent? mobMover) || worldNormal == Vector2.Zero)
+            return;
 
-        otherBody.ApplyLinearImpulse(-worldNormal * mobMover.PushStrengthVV * frameTime);
+        PhysicsSystem.ApplyLinearImpulse(otherBody, -worldNormal * mobMover.PushStrengthVV * frameTime);
     }
 }
