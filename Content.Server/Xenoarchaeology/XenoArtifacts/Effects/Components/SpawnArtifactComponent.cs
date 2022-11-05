@@ -11,8 +11,12 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 [RegisterComponent]
 public sealed class SpawnArtifactComponent : Component
 {
-    [DataField("random")]
-    public bool RandomPrototype = true;
+    /// <summary>
+    /// Whether or not the artifact spawns the same entity every time
+    /// or picks through the list each time.
+    /// </summary>
+    [DataField("consistentSpawn")]
+    public bool ConsistentSpawn = true;
 
     [DataField("possiblePrototypes", customTypeSerializer:typeof(PrototypeIdListSerializer<EntityPrototype>))]
     public List<string> PossiblePrototypes = new();

@@ -64,9 +64,18 @@
   components:
   - type: SpawnArtifact
     maxSpawns: 10
+    consistentSpawns: false
     possiblePrototypes:
     - FoodPacketSyndiTrash
     - FoodPacketSemkiTrash
+    - FoodPacketBoritosTrash
+    - FoodPacketCheesieTrash
+    - FoodPacketChipsTrash
+    - FoodPacketChocolateTrash
+    - FoodPacketChowMeinTrash
+    - FoodPacketEnergyTrash
+    - FoodPacketPopcornTrash
+    - FoodPacketRaisinsTrash
     - RandomInstruments
     - ToySpawner
 
@@ -103,6 +112,34 @@
   - type: ThrowArtifact
 
 - type: artifactEffect
+  id: EffectFoamMild
+  targetDepth: 1
+  effectHint: artifact-effect-hint-biochemical
+  components:
+  - type: FoamArtifacts
+    reagents:
+    - Oxygen
+    - Plasma
+    - Blood
+    - SpaceCleaner
+    - Nutriment
+    - SpaceLube
+    - Ethanol
+    - Mercury
+    - VentCrud
+    - WeldingFuel
+
+- type: artifactEffect
+  id: EffectInstrumentSpawn
+  targetDepth: 1
+  effectHint: artifact-effect-hint-creation
+  components:
+  - type: SpawnArtifact
+    maxSpawns: 5
+    possiblePrototypes:
+    - RandomInstruments
+
+- type: artifactEffect
   id: EffectAngryCarpSpawn
   targetDepth: 2
   effectHint: artifact-effect-hint-environment
@@ -129,8 +166,32 @@
   - type: KnockArtifact
 
 - type: artifactEffect
-  id: EffectGas
+  id: EffectShatterWindows
   targetDepth: 2
+  effectHint: Environmental disruption
+  components:
+  - type: DamageNearbyArtifact
+    whitelist:
+      tags:
+      - Window
+    damage:
+      types:
+        Structural: 100
+
+- type: artifactEffect
+  id: EffectShuffle
+  targetDepth: 3
+  effectHint: artifact-effect-hint-displacement
+  components:
+  - type: ShuffleArtifact
+  - type: TelepathicArtifact
+    range: 7.5
+    messages:
+    - shuffle-artifact-popup
+
+- type: artifactEffect
+  id: EffectGas
+  targetDepth: 3
   effectHint: artifact-effect-hint-environment
   components:
   - type: GasArtifact
@@ -156,3 +217,32 @@
     - MemeticAmirmir
     - TongueTwister
     - AMIV
+
+- type: artifactEffect
+  id: EffectHeat
+  targetDepth: 4
+  effectHint: artifact-effect-hint-release
+  components:
+  - type: TemperatureArtifact
+    targetTemp: 450
+
+- type: artifactEffect
+  id: EffectFoamDangerous
+  targetDepth: 4
+  effectHint: artifact-effect-hint-biochemical
+  components:
+  - type: FoamArtifacts
+    spreadDuration: 0.5
+    duration: 5
+    reagents:
+    - Tritium
+    - Plasma
+    - SulfuricAcid
+    - SpaceDrugs
+    - Nocturine
+    - MuteToxin
+    - Napalm
+    - CarpoToxin
+    - ChloralHydrate
+    - Mold
+    - Amatoxin

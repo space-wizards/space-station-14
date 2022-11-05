@@ -21,7 +21,7 @@ public sealed class TelepathicArtifactComponent : Component
     /// </summary>
     [DataField("drastic")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public List<string> DrasticMessages = default!;
+    public List<string>? DrasticMessages;
 
     /// <summary>
     ///     Probability to pick drastic version of message.

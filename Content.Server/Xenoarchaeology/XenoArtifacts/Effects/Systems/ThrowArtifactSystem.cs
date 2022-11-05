@@ -42,7 +42,7 @@ public sealed class ThrowArtifactSystem : EntitySystem
         {
             var tempXform = Transform(ent);
 
-            var foo = xform.Coordinates.Position - tempXform.Coordinates.Position;
+            var foo = xform.MapPosition.Position - tempXform.MapPosition.Position;
             _throwing.TryThrow(ent, foo*2, component.ThrowStrength, uid, 0);
         }
     }

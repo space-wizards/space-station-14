@@ -21,8 +21,6 @@ public sealed class SpawnArtifactSystem : EntitySystem
     }
     private void OnNodeEntered(EntityUid uid, SpawnArtifactComponent component, ArtifactNodeEnteredEvent args)
     {
-        if (!component.RandomPrototype)
-            return;
         if (component.PossiblePrototypes.Count == 0)
             return;
 
@@ -41,6 +39,10 @@ public sealed class SpawnArtifactSystem : EntitySystem
         if (amount >= component.MaxSpawns)
             return;
 
+        var toSpawn = component.Prototype;
+        if (!component.ConsistentSpawn)
+            toSpawn = _random.Pick(component.PossiblePrototypes);
+
         // select spawn position near artifact
         var artifactCord = Transform(uid).Coordinates;
         var dx = _random.NextFloat(-component.Range, component.Range);
@@ -48,7 +50,7 @@ public sealed class SpawnArtifactSystem : EntitySystem
         var spawnCord = artifactCord.Offset(new Vector2(dx, dy));
 
         // spawn entity
-        var spawned = EntityManager.SpawnEntity(component.Prototype, spawnCord);
+        var spawned = EntityManager.SpawnEntity(toSpawn, spawnCord);
         _artifact.SetNodeData(uid, NodeDataSpawnAmount, amount+1);
 
         // if there is an user - try to put spawned item in their hands

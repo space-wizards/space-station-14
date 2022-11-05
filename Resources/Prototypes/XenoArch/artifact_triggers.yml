@@ -12,6 +12,12 @@
   - type: ArtifactTimerTrigger
 
 - type: artifactTrigger
+  id: TriggerExamine
+  targetDepth: 0
+  components:
+  - type: ArtifactExamineTrigger
+
+- type: artifactTrigger
   id: TriggerAnchor
   targetDepth: 0
   triggerHint: artifact-trigger-hint-tool
