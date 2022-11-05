@@ -432,6 +432,99 @@ namespace Content.IntegrationTests.Tests.Power
 
 
         [Test]
+        public async Task TestNoDemandRampdown()
+        {
+            // checks that batteries and supplies properly ramp down if the load is disconnected/disabled.
+
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true, ExtraPrototypes = Prototypes });
+            var server = pairTracker.Pair.Server;
+            var mapManager = server.ResolveDependency<IMapManager>();
+            var entityManager = server.ResolveDependency<IEntityManager>();
+            var gameTiming = server.ResolveDependency<IGameTiming>();
+            PowerSupplierComponent supplier = default!;
+            PowerNetworkBatteryComponent netBattery = default!;
+            BatteryComponent battery = default!;
+            PowerConsumerComponent consumer = default!;
+
+            var rampRate = 500;
+            var rampTol = 100;
+            var draw = 1000;
+
+            await server.WaitAssertion(() =>
+            {
+                var map = mapManager.CreateMap();
+                var grid = mapManager.CreateGrid(map);
+
+                // Power only works when anchored
+                for (var i = 0; i < 3; i++)
+                {
+                    grid.SetTile(new Vector2i(0, i), new Tile(1));
+                    entityManager.SpawnEntity("CableHV", grid.ToCoordinates(0, i));
+                }
+
+                var generatorEnt = entityManager.SpawnEntity("GeneratorDummy", grid.ToCoordinates());
+                var consumerEnt = entityManager.SpawnEntity("ConsumerDummy", grid.ToCoordinates(0, 1));
+                var batteryEnt = entityManager.SpawnEntity("DischargingBatteryDummy", grid.ToCoordinates(0,2));
+                netBattery = entityManager.GetComponent<PowerNetworkBatteryComponent>(batteryEnt);
+                battery = entityManager.GetComponent<BatteryComponent>(batteryEnt);
+                supplier = entityManager.GetComponent<PowerSupplierComponent>(generatorEnt);
+                consumer = entityManager.GetComponent<PowerConsumerComponent>(consumerEnt);
+
+                consumer.DrawRate = draw;
+
+                supplier.MaxSupply = draw/2;
+                supplier.SupplyRampRate = rampRate;
+                supplier.SupplyRampTolerance = rampTol;
+                
+                battery.MaxCharge = 100_000;
+                battery.CurrentCharge = 100_000;
+                netBattery.MaxSupply = draw/2;
+                netBattery.SupplyRampRate = rampRate;
+                netBattery.SupplyRampTolerance = rampTol;
+            });
+
+            server.RunTicks(1);
+
+            await server.WaitAssertion(() =>
+            {
+                Assert.That(supplier.CurrentSupply, Is.EqualTo(rampTol).Within(0.1));
+                Assert.That(netBattery.CurrentSupply, Is.EqualTo(rampTol).Within(0.1));
+                Assert.That(consumer.ReceivedPower, Is.EqualTo(rampTol*2).Within(0.1));
+            });
+
+            server.RunTicks(60);
+
+            await server.WaitAssertion(() =>
+            {
+                // After 15 ticks (0.25 seconds), supply ramp pos should be at 100 W and supply at 100, approx.
+                Assert.That(supplier.CurrentSupply, Is.EqualTo(draw/2).Within(0.1));
+                Assert.That(supplier.SupplyRampPosition, Is.EqualTo(draw/2).Within(0.1));
+                Assert.That(netBattery.CurrentSupply, Is.EqualTo(draw / 2).Within(0.1));
+                Assert.That(netBattery.SupplyRampPosition, Is.EqualTo(draw / 2).Within(0.1));
+                Assert.That(consumer.ReceivedPower, Is.EqualTo(draw).Within(0.1));
+            });
+
+            // now we disconnect the load;
+            consumer.NetworkLoad.Enabled = false;
+
+            server.RunTicks(60);
+
+            await server.WaitAssertion(() =>
+            {
+                // After 1 second total, ramp should be at 400 and supply should be at 400, everybody happy.
+                Assert.That(supplier.CurrentSupply, Is.EqualTo(0).Within(0.1));
+                Assert.That(supplier.SupplyRampPosition, Is.EqualTo(0).Within(0.1));
+                Assert.That(netBattery.CurrentSupply, Is.EqualTo(0).Within(0.1));
+                Assert.That(netBattery.SupplyRampPosition, Is.EqualTo(0).Within(0.1));
+                Assert.That(consumer.ReceivedPower, Is.EqualTo(0).Within(0.1));
+            });
+
+            await pairTracker.CleanReturnAsync();
+        }
+
+
+
+        [Test]
         public async Task TestSimpleBatteryChargeDeficit()
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
