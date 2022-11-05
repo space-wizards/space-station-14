@@ -27,6 +27,15 @@ public sealed partial class PathfindingSystem
     public const int PathfindingCollisionMask = (int) CollisionGroup.MobMask;
     public const int PathfindingCollisionLayer = (int) CollisionGroup.MobLayer;
 
+    /// <summary>
+    ///     If true, UpdateGrid() will not process grids.
+    /// </summary>
+    /// <remarks>
+    ///     Useful if something like a large explosion is in the process of shredding the grid, as it avoids uneccesary
+    ///     updating.
+    /// </remarks>
+    public bool PauseUpdating = false;
+
     private readonly Stopwatch _stopwatch = new();
 
     // Probably can't pool polys as there might be old pathfinding refs to them.
@@ -66,6 +75,9 @@ public sealed partial class PathfindingSystem
 
     private void UpdateGrid()
     {
+        if (PauseUpdating)
+            return;
+
         var curTime = _timing.CurTime;
 #if DEBUG
         var updateCount = 0;
@@ -78,7 +90,7 @@ public sealed partial class PathfindingSystem
         {
             if (comp.DirtyChunks.Count == 0 ||
                 comp.NextUpdate < curTime ||
-                !TryComp<IMapGridComponent>(comp.Owner, out var mapGridComp))
+                !TryComp<MapGridComponent>(comp.Owner, out var mapGridComp))
             {
                 continue;
             }
@@ -237,7 +249,7 @@ public sealed partial class PathfindingSystem
     {
         if (!TryComp<PhysicsComponent>(ev.Sender, out var body) ||
             body.BodyType != BodyType.Static ||
-            HasComp<IMapGridComponent>(ev.Sender) ||
+            HasComp<MapGridComponent>(ev.Sender) ||
             ev.OldPosition.Equals(ev.NewPosition))
         {
             return;

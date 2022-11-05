@@ -242,6 +242,16 @@ namespace Content.Client.Hands.Systems
 
             _verbs.VerbMenu.OpenVerbMenu(entity);
         }
+        
+        public void UIHandAltActivateItem(string handName)
+        {
+            if (!TryGetPlayerHands(out var hands)
+                || !hands.Hands.TryGetValue(handName, out var hand)
+                || hand.HeldEntity is not { Valid: true } entity)
+                return;
+
+            EntityManager.RaisePredictiveEvent(new RequestHandAltInteractEvent(entity));
+        }
 
         #region visuals
 
