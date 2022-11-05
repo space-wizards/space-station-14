@@ -70,6 +70,7 @@ namespace Content.Server.Physics.Controllers
                 {
                     if (moverQuery.TryGetComponent(relayed.RelayEntity, out var relayMover))
                     {
+                        relayMover.CanMove = mover.CanMove;
                         relayMover.RelativeEntity = mover.RelativeEntity;
                         relayMover.RelativeRotation = mover.RelativeRotation;
                         relayMover.TargetRelativeRotation = mover.TargetRelativeRotation;

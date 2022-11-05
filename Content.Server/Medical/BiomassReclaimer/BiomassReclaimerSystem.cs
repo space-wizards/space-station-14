@@ -94,6 +94,7 @@ namespace Content.Server.Medical.BiomassReclaimer
             SubscribeLocalEvent<BiomassReclaimerComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
             SubscribeLocalEvent<BiomassReclaimerComponent, ClimbedOnEvent>(OnClimbedOn);
             SubscribeLocalEvent<BiomassReclaimerComponent, RefreshPartsEvent>(OnRefreshParts);
+            SubscribeLocalEvent<BiomassReclaimerComponent, UpgradeExamineEvent>(OnUpgradeExamine);
             SubscribeLocalEvent<BiomassReclaimerComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<BiomassReclaimerComponent, SuicideEvent>(OnSuicide);
             SubscribeLocalEvent<ReclaimSuccessfulEvent>(OnReclaimSuccessful);
@@ -104,7 +105,7 @@ namespace Content.Server.Medical.BiomassReclaimer
         {
             if (args.Handled)
                 return;
-            
+
             if (HasComp<ActiveBiomassReclaimerComponent>(uid))
                 return;
 
@@ -192,6 +193,12 @@ namespace Content.Server.Medical.BiomassReclaimer
             // Yield slopes upwards with part rating.
             component.YieldPerUnitMass =
                 component.BaseYieldPerUnitMass * MathF.Pow(component.PartRatingYieldAmountMultiplier, manipRating - 1);
+        }
+
+        private void OnUpgradeExamine(EntityUid uid, BiomassReclaimerComponent component, UpgradeExamineEvent args)
+        {
+            args.AddPercentageUpgrade("biomass-reclaimer-component-upgrade-speed", component.BaseProcessingTimePerUnitMass / component.ProcessingTimePerUnitMass);
+            args.AddPercentageUpgrade("biomass-reclaimer-component-upgrade-biomass-yield", component.YieldPerUnitMass / component.BaseYieldPerUnitMass);
         }
 
         private void OnReclaimSuccessful(ReclaimSuccessfulEvent args)

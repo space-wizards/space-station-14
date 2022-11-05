@@ -2,6 +2,9 @@
   id: UncontrollableSneezing
   name: Runny nose
   description: You sneeze and cough uncontrollably
+  whitelist:
+    components:
+      - DiseaseCarrier
   components:
     - type: UncontrollableSnough
       snoughSound:
