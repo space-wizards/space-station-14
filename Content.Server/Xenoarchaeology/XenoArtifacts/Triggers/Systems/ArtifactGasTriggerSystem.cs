@@ -2,7 +2,6 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
 using Robust.Server.GameObjects;
-using Robust.Shared.Random;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Systems;
 

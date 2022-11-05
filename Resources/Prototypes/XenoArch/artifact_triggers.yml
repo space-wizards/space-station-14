@@ -104,7 +104,7 @@
   triggerHint: artifact-trigger-hint-pressure
   components:
   - type: ArtifactPressureTrigger
-    maxPressureThreshold: 50
+    minPressureThreshold: 50
 
 - type: artifactTrigger
   id: TriggerHighDamage
