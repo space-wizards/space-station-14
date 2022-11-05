@@ -245,8 +245,9 @@ namespace Content.Server.Power.Pow3r
                 battery.CurrentSupply = battery.AvailableSupply * relativeBatteryOutput;
                 // Note that because available supply is always greater than or equal to the current ramp target, if you
                 // have multiple batteries running at less than 100% output, then batteries with greater ramp tolerances
-                // will contribute a larger relative fraction of output power as they have a larger available supply.
-                // IMO this is undesirable, but I can't think of an easy fix ATM.
+                // will contribute a larger relative fraction of output power. This is because while they will both ramp
+                // to the same relative maximum output, the larger tolerance will mean that one will have a larger
+                // available supply. IMO this is undesirable, but I can't think of an easy fix ATM.
 
                 battery.CurrentStorage -= frameTime * battery.CurrentSupply;
                 DebugTools.Assert(battery.CurrentStorage >= 0 || MathHelper.CloseTo(battery.CurrentStorage, 0));
@@ -254,7 +255,7 @@ namespace Content.Server.Power.Pow3r
                 battery.SupplyRampTarget = battery.MaxEffectiveSupply * relativeTargetBatteryOutput - battery.CurrentReceiving * battery.Efficiency;
 
                 DebugTools.Assert(battery.SupplyRampTarget + battery.CurrentReceiving * battery.Efficiency <= battery.LoadingNetworkDemand
-                    || MathHelper.CloseTo(battery.SupplyRampTarget + battery.CurrentReceiving * battery.Efficiency, battery.LoadingNetworkDemand));
+                    || MathHelper.CloseTo(battery.SupplyRampTarget + battery.CurrentReceiving * battery.Efficiency, battery.LoadingNetworkDemand, 0.01));
             }
         }
 
