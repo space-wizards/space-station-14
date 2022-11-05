@@ -1,6 +1,5 @@
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
-using YamlDotNet.Core.Tokens;
 
 namespace Content.Shared.Examine
 {
@@ -10,13 +9,14 @@ namespace Content.Shared.Examine
     [RegisterComponent]
     public sealed class GroupExamineComponent : Component
     {
+        /// <summary>
+        ///     A list of ExamineGroups.
+        /// </summary>
         [DataField("group")]
         public List<ExamineGroup> ExamineGroups = new()
         {
             new ExamineGroup()
             {
-                // Identifier = "armor",
-                //Title = FormattedMessage.FromMarkup(Loc.GetString("examine-group-armor-title")),
                 Components = new()
                 {
                     "Armor",
@@ -29,18 +29,12 @@ namespace Content.Shared.Examine
     [DataDefinition]
     public sealed class ExamineGroup
     {
-        private FormattedMessage? _title = null;
-
         /// <summary>
-        ///     The title of the Examine Group, the first FormattedMessage.
+        ///     The title of the Examine Group, the .
         /// </summary>
         [DataField("title")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public FormattedMessage? Title
-        {
-            get => _title;
-            set => _title = (value != null) ? FormattedMessage.FromMarkup(Loc.GetString(value.ToString())) : null;
-        }
+        public string? Title;
 
         /// <summary>
         ///     A list of ExamineEntries, containing which component it belongs to, which priority it has, and what FormattedMessage it holds.

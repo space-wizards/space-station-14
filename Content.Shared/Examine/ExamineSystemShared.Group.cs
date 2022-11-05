@@ -72,7 +72,7 @@ namespace Content.Shared.Examine
 
             if (group.Title != null)
             {
-                message.AddMessage(group.Title);
+                message.AddMarkup(Loc.GetString(group.Title));
                 message.PushNewline();
             }
             message.AddMessage(GetFormattedMessageFromExamineEntries(group.Entries));
