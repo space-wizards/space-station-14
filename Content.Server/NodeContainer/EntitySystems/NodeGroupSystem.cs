@@ -45,7 +45,14 @@ namespace Content.Server.NodeContainer.EntitySystems
         private int _gen = 1;
         private int _groupNetIdCounter = 1;
 
-        public bool Snoozing = false;
+        /// <summary>
+        ///     If true, UpdateGrid() will not process grids.
+        /// </summary>
+        /// <remarks>
+        ///     Useful if something like a large explosion is in the process of shredding the grid, as it avoids uneccesary
+        ///     updating.
+        /// </remarks>
+        public bool PauseUpdating = false;
 
         public override void Initialize()
         {
@@ -135,7 +142,7 @@ namespace Content.Server.NodeContainer.EntitySystems
         {
             base.Update(frameTime);
 
-            if (!Snoozing)
+            if (!PauseUpdating)
             {
                 DoGroupUpdates();
                 VisDoUpdate(frameTime);

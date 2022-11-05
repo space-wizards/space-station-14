@@ -620,9 +620,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 88
   type: ChairOfficeLight
   components:
@@ -664,9 +661,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 94
   type: Autolathe
   components:
@@ -1159,9 +1153,6 @@ entities:
     type: ApcPowerReceiver
   - enabled: False
     type: AmbientSound
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 164
   type: Poweredlight
   components:
@@ -1171,9 +1162,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 165
   type: WallSolid
   components:
@@ -1191,9 +1179,6 @@ entities:
     type: ApcPowerReceiver
   - enabled: False
     type: AmbientSound
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 167
   type: PoweredSmallLight
   components:
@@ -1205,9 +1190,6 @@ entities:
     type: ApcPowerReceiver
   - enabled: False
     type: AmbientSound
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 168
   type: WallSolid
   components:
@@ -2931,9 +2913,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 382
   type: SheetSteel
   components:
@@ -2984,9 +2963,6 @@ entities:
     type: ApcPowerReceiver
   - enabled: False
     type: AmbientSound
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 389
   type: WardrobeScience
   components:
@@ -3184,9 +3160,6 @@ entities:
     type: ApcPowerReceiver
   - enabled: False
     type: AmbientSound
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 418
   type: WallSolid
   components:
@@ -3620,9 +3593,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 483
   type: PoweredSmallLight
   components:
@@ -3634,9 +3604,6 @@ entities:
     type: ApcPowerReceiver
   - enabled: False
     type: AmbientSound
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 484
   type: WallSolid
   components:
@@ -3989,9 +3956,6 @@ entities:
     type: ApcPowerReceiver
   - enabled: False
     type: AmbientSound
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 535
   type: Poweredlight
   components:
@@ -4000,9 +3964,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 536
   type: Poweredlight
   components:
@@ -4012,9 +3973,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 537
   type: CableApcStack
   components:
@@ -4793,9 +4751,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 661
   type: Poweredlight
   components:
@@ -4805,9 +4760,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 662
   type: Poweredlight
   components:
@@ -4817,9 +4769,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 663
   type: Poweredlight
   components:
@@ -4828,9 +4777,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 664
   type: Poweredlight
   components:
@@ -4840,9 +4786,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 665
   type: Poweredlight
   components:
@@ -4852,9 +4795,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 666
   type: Poweredlight
   components:
@@ -4864,9 +4804,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 667
   type: Poweredlight
   components:
@@ -4876,9 +4813,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 668
   type: Poweredlight
   components:
@@ -4888,9 +4822,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 669
   type: Poweredlight
   components:
@@ -4900,9 +4831,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 670
   type: Poweredlight
   components:
@@ -4912,9 +4840,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 671
   type: Poweredlight
   components:
@@ -4923,9 +4848,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 672
   type: Poweredlight
   components:
@@ -4934,9 +4856,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 673
   type: Poweredlight
   components:
@@ -4946,9 +4865,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 674
   type: Poweredlight
   components:
@@ -4958,9 +4874,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 675
   type: Poweredlight
   components:
@@ -4970,9 +4883,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 676
   type: Poweredlight
   components:
@@ -4982,9 +4892,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 677
   type: Poweredlight
   components:
@@ -4994,9 +4901,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 678
   type: Poweredlight
   components:
@@ -5006,9 +4910,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 679
   type: Poweredlight
   components:
@@ -5018,9 +4919,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 680
   type: Poweredlight
   components:
@@ -5030,9 +4928,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 681
   type: Poweredlight
   components:
@@ -5042,9 +4937,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 682
   type: Poweredlight
   components:
@@ -5053,9 +4945,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 683
   type: Poweredlight
   components:
@@ -5065,7 +4954,4 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 ...

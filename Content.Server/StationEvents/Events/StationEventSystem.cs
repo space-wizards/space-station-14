@@ -145,7 +145,7 @@ namespace Content.Server.StationEvents.Events
 
             targetGrid = RobustRandom.Pick(possibleTargets);
 
-            if (!TryComp<IMapGridComponent>(targetGrid, out var gridComp))
+            if (!TryComp<MapGridComponent>(targetGrid, out var gridComp))
                 return false;
 
             var grid = gridComp.Grid;
