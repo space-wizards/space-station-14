@@ -93,7 +93,7 @@ public sealed class SpraySystem : EntitySystem
 
             var newSolution = _solutionContainerSystem.SplitSolution(uid, solution, component.TransferAmount);
 
-            if (newSolution.TotalVolume <= FixedPoint2.Zero)
+            if (newSolution.CurrentVolume <= FixedPoint2.Zero)
                 break;
 
             // Spawn the vapor cloud onto the grid/map the user is present on. Offset the start position based on how far the target destination is.
@@ -105,7 +105,7 @@ public sealed class SpraySystem : EntitySystem
 
             if (TryComp(vapor, out AppearanceComponent? appearance))
             {
-                appearance.SetData(VaporVisuals.Color, solution.Color.WithAlpha(1f));
+                appearance.SetData(VaporVisuals.Color, solution.GetColor().WithAlpha(1f));
                 appearance.SetData(VaporVisuals.State, true);
             }
 

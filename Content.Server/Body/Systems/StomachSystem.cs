@@ -47,7 +47,7 @@ namespace Content.Server.Body.Systems
                     delta.Increment(stomach.UpdateInterval);
                     if (delta.Lifetime > stomach.DigestionDelay)
                     {
-                        if (stomachSolution.ContainsReagent(delta.ReagentId, out var quant))
+                        if (stomachSolution.TryGetReagent(delta.ReagentId, out var quant))
                         {
                             if (quant > delta.Quantity)
                                 quant = delta.Quantity;

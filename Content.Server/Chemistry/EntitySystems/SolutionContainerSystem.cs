@@ -45,8 +45,8 @@ public sealed partial class SolutionContainerSystem : EntitySystem
             solutionHolder.Name = name;
             if (solutionHolder.MaxVolume == FixedPoint2.Zero)
             {
-                solutionHolder.MaxVolume = solutionHolder.TotalVolume > solutionHolder.InitialMaxVolume
-                    ? solutionHolder.TotalVolume
+                solutionHolder.MaxVolume = solutionHolder.CurrentVolume > solutionHolder.InitialMaxVolume
+                    ? solutionHolder.CurrentVolume
                     : solutionHolder.InitialMaxVolume;
             }
 
@@ -77,7 +77,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
             return;
         }
 
-        var colorHex = solutionHolder.Color
+        var colorHex = solutionHolder.GetColor()
             .ToHexNoAlpha(); //TODO: If the chem has a dark color, the examine text becomes black on a black background, which is unreadable.
         var messageString = "shared-solution-container-component-on-examine-main-text";
 
@@ -98,7 +98,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
 
         var filledVolumePercent = Math.Min(1.0f, solution.CurrentVolume.Float() / solution.MaxVolume.Float());
         appearanceComponent.SetData(SolutionContainerVisuals.VisualState,
-            new SolutionContainerVisualState(solution.Color, filledVolumePercent));
+            new SolutionContainerVisualState(solution.GetColor(), filledVolumePercent));
     }
 
     /// <summary>
@@ -214,7 +214,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     public bool TryAddSolution(EntityUid targetUid, Solution? targetSolution, Solution addedSolution)
     {
         if (targetSolution == null
-            || !targetSolution.CanAddSolution(addedSolution) || addedSolution.TotalVolume == 0)
+            || !targetSolution.CanAddSolution(addedSolution) || addedSolution.CurrentVolume == 0)
             return false;
 
         targetSolution.AddSolution(addedSolution);
@@ -239,7 +239,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         FixedPoint2 overflowThreshold,
         [NotNullWhen(true)] out Solution? overflowingSolution)
     {
-        if (addedSolution.TotalVolume == 0 || overflowThreshold > targetSolution.MaxVolume)
+        if (addedSolution.CurrentVolume == 0 || overflowThreshold > targetSolution.MaxVolume)
         {
             overflowingSolution = null;
             return false;

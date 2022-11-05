@@ -66,7 +66,7 @@ public sealed class SolutionSpikableSystem : EntitySystem
                 targetSolution.MaxVolume,
                 out var overflow))
         {
-            if (overflow.TotalVolume > 0)
+            if (overflow.CurrentVolume > 0)
             {
                 RaiseLocalEvent(target, new SolutionSpikeOverflowEvent(overflow));
             }

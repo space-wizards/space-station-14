@@ -178,7 +178,7 @@ namespace Content.Server.Botany.Systems
 
                 var split =_solutionSystem.Drain(solutionEntity, solution, amount);
 
-                if (split.TotalVolume == 0)
+                if (split.CurrentVolume == 0)
                 {
                     _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-no-plant-message",
                         ("owner", args.Used)), Filter.Entities(args.User));
@@ -187,7 +187,7 @@ namespace Content.Server.Botany.Systems
 
                 _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-spray-message",
                     ("owner", uid),
-                    ("amount", split.TotalVolume)), Filter.Entities(args.User), PopupType.Medium);
+                    ("amount", split.CurrentVolume)), Filter.Entities(args.User), PopupType.Medium);
 
                _solutionSystem.TryAddSolution(targetEntity, targetSolution, split);
 
@@ -250,7 +250,7 @@ namespace Content.Server.Botany.Systems
                 {
                     // This deliberately discards overfill.
                    _solutionSystem.TryAddSolution(args.Used, solution2,
-                       _solutionSystem.SplitSolution(args.Used, solution2, solution2.TotalVolume));
+                       _solutionSystem.SplitSolution(args.Used, solution2, solution2.CurrentVolume));
 
                     component.ForceUpdateByExternalCause();
                 }

@@ -128,7 +128,7 @@ namespace Content.Shared.Chemistry.Reaction
                 var reactantName = reactantData.Key;
                 var reactantCoefficient = reactantData.Value.Amount;
 
-                if (!solution.ContainsReagent(reactantName, out var reactantQuantity))
+                if (!solution.TryGetReagent(reactantName, out var reactantQuantity))
                     return false;
 
                 if (reactantData.Value.Catalyst)
@@ -240,12 +240,12 @@ namespace Content.Shared.Chemistry.Reaction
             // Remove any reactions that were not applicable. Avoids re-iterating over them in future.
             reactions.Except(toRemove);
 
-            if (products.TotalVolume <= 0)
+            if (products.CurrentVolume <= 0)
                 return true;
 
             // remove excess product
             // TODO spill excess?
-            var excessVolume = solution.TotalVolume + products.TotalVolume - maxVolume;
+            var excessVolume = solution.CurrentVolume + products.CurrentVolume - maxVolume;
             if (excessVolume > 0)
                 products.RemoveSolution(excessVolume);
 

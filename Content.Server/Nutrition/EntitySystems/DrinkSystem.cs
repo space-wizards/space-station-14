@@ -160,7 +160,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 component.Opened = true;
                 UpdateAppearance(component);
 
-                var solution = _solutionContainerSystem.Drain(uid, interactions, interactions.DrainAvailable);
+                var solution = _solutionContainerSystem.Drain(uid, interactions, interactions.CurrentVolume);
                 _spillableSystem.SpillAt(uid, solution, "PuddleSmear");
 
                 SoundSystem.Play(component.BurstSound.GetSound(), Filter.Pvs(uid), uid, AudioParams.Default.WithVolume(-4));
@@ -236,7 +236,7 @@ namespace Content.Server.Nutrition.EntitySystems
             }
 
             if (!_solutionContainerSystem.TryGetDrainableSolution(drink.Owner, out var drinkSolution) ||
-                drinkSolution.DrainAvailable <= 0)
+                drinkSolution.CurrentVolume <= 0)
             {
                 _popupSystem.PopupEntity(Loc.GetString("drink-component-try-use-drink-is-empty",
                     ("entity", EntityManager.GetComponent<MetaDataComponent>(drink.Owner).EntityName)), drink.Owner, Filter.Entities(user));
@@ -292,7 +292,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 return;
 
             args.Drink.CancelToken = null;
-            var transferAmount = FixedPoint2.Min(args.Drink.TransferAmount, args.DrinkSolution.DrainAvailable);
+            var transferAmount = FixedPoint2.Min(args.Drink.TransferAmount, args.DrinkSolution.CurrentVolume);
             var drained = _solutionContainerSystem.Drain(args.Drink.Owner, args.DrinkSolution, transferAmount);
 
             var forceDrink = uid != args.User;

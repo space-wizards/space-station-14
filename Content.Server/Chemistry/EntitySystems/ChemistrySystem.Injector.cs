@@ -319,7 +319,7 @@ public sealed partial class ChemistrySystem
         removedSolution.DoEntityReaction(targetBloodstream.Owner, ReactionMethod.Injection);
 
         _popup.PopupEntity(Loc.GetString("injector-component-inject-success-message",
-                ("amount", removedSolution.TotalVolume),
+                ("amount", removedSolution.CurrentVolume),
                 ("target", Identity.Entity(targetBloodstream.Owner, EntityManager))), component.Owner, Filter.Entities(user));
 
         Dirty(component);
@@ -359,7 +359,7 @@ public sealed partial class ChemistrySystem
         }
 
         _popup.PopupEntity(Loc.GetString("injector-component-transfer-success-message",
-                ("amount", removedSolution.TotalVolume),
+                ("amount", removedSolution.CurrentVolume),
                 ("target", Identity.Entity(targetEntity, EntityManager))), component.Owner, Filter.Entities(user));
 
         Dirty(component);
@@ -395,7 +395,7 @@ public sealed partial class ChemistrySystem
         }
 
         // Get transfer amount. May be smaller than _transferAmount if not enough room, also make sure there's room in the injector
-        var realTransferAmount = FixedPoint2.Min(component.TransferAmount, targetSolution.DrawAvailable, solution.AvailableVolume);
+        var realTransferAmount = FixedPoint2.Min(component.TransferAmount, targetSolution.CurrentVolume, solution.AvailableVolume);
 
         if (realTransferAmount <= 0)
         {
@@ -420,7 +420,7 @@ public sealed partial class ChemistrySystem
         }
 
         _popup.PopupEntity(Loc.GetString("injector-component-draw-success-message",
-                ("amount", removedSolution.TotalVolume),
+                ("amount", removedSolution.CurrentVolume),
                 ("target", Identity.Entity(targetEntity, EntityManager))), component.Owner, Filter.Entities(user));
 
         Dirty(component);

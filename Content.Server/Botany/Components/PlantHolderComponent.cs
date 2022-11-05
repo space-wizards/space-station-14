@@ -557,7 +557,7 @@ namespace Content.Server.Botany.Components
             if (!solutionSystem.TryGetSolution(Owner, SoilSolutionName, out var solution))
                 return;
 
-            if (solution.TotalVolume > 0 && MutationLevel < 25)
+            if (solution.CurrentVolume > 0 && MutationLevel < 25)
             {
                 var amt = FixedPoint2.New(1);
                 foreach (var (reagentId, quantity) in solutionSystem.RemoveEachReagent(Owner, solution, amt))

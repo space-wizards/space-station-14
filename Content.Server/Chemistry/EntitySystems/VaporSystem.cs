@@ -70,7 +70,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
         internal bool TryAddSolution(VaporComponent vapor, Solution solution)
         {
-            if (solution.TotalVolume == 0)
+            if (solution.CurrentVolume == 0)
             {
                 return false;
             }

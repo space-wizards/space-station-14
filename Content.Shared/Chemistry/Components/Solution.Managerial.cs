@@ -6,7 +6,6 @@ namespace Content.Shared.Chemistry.Components
 {
     public sealed partial class Solution
     {
-
         /// <summary>
         ///     If reactions will be checked for when adding reagents to the container.
         /// </summary>
@@ -18,10 +17,7 @@ namespace Content.Shared.Chemistry.Components
         ///     Volume needed to fill this container.
         /// </summary>
         [ViewVariables]
-        public FixedPoint2 AvailableVolume => MaxVolume - CurrentVolume;
-
-        public FixedPoint2 DrawAvailable => CurrentVolume;
-        public FixedPoint2 DrainAvailable => CurrentVolume;
+        public FixedPoint2 AvailableVolume => MaxVolume == null ? FixedPoint2.MaxValue : MaxVolume.Value - CurrentVolume;
 
         /// <summary>
         ///     Checks if a solution can fit into the container.
@@ -30,62 +26,56 @@ namespace Content.Shared.Chemistry.Components
         /// <returns>If the solution can be fully added.</returns>
         public bool CanAddSolution(Solution solution)
         {
-            return solution.TotalVolume <= AvailableVolume;
+            return solution.CurrentVolume <= AvailableVolume;
         }
 
         [DataField("maxSpillRefill")]
         public FixedPoint2 MaxSpillRefill { get; set; }
 
         /// <summary>
-        /// Initially set <see cref="MaxVolume"/>. If empty will be calculated based
-        /// on sum of <see cref="Contents"/> fixed units.
+        ///     Max volume. If null, there is no limit. If zero, maximum will be inferred from initial volume.
         /// </summary>
-        [DataField("maxVol")] public FixedPoint2 InitialMaxVolume;
-
+        [DataField("maxVol")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public FixedPoint2 MaxVolume { get; set; } = FixedPoint2.Zero;
+        public FixedPoint2? MaxVolume { get; set; } = FixedPoint2.Zero;
 
-        [ViewVariables]
-        public FixedPoint2 CurrentVolume => TotalVolume;
-
-        /// <summary>
-        ///     The total heat capacity of all reagents in the solution.
-        /// </summary>
-        [ViewVariables]
-        public float HeatCapacity => GetHeatCapacity();
+        private float _heatCapacity;
+        private bool _heatCapacityDirty;
 
         /// <summary>
-        ///     The average specific heat of all reagents in the solution.
+        ///     Sets the total thermal energy of the reagents in the solution.
         /// </summary>
-        [ViewVariables]
-        public float SpecificHeat => HeatCapacity / (float) TotalVolume;
-
-        /// <summary>
-        ///     The total thermal energy of the reagents in the solution.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float ThermalEnergy {
-            get { return Temperature * HeatCapacity; }
-            set { Temperature = ((HeatCapacity == 0.0f) ? 0.0f : (value / HeatCapacity)); }
+        public void SetThermalEnergy(float value, IPrototypeManager? protoMan)
+        {
+            IoCManager.Resolve(ref protoMan);
+            var heatCap = GetHeatCapacity(protoMan);
+            Temperature = heatCap == 0 ? 0 : value / heatCap;
         }
+
+        /// <summary>
+        ///     Gets total thermal energy of the reagents in the solution.
+        /// </summary>
+        public float GetThermalEnergy(IPrototypeManager? protoMan) => Temperature * GetHeatCapacity(protoMan);
 
         /// <summary>
         ///     Returns the total heat capacity of the reagents in this solution.
         /// </summary>
         /// <returns>The total heat capacity of the reagents in this solution.</returns>
-        private float GetHeatCapacity()
+        private float GetHeatCapacity(IPrototypeManager? protoMan)
         {
-            var heatCapacity = 0.0f;
+            if (!_heatCapacityDirty)
+                return _heatCapacity;
+
+            _heatCapacityDirty = false;
+            _heatCapacity = 0;
+
+            IoCManager.Resolve(ref protoMan);
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            foreach(var reagent in Contents)
+            foreach (var (id, quantity) in Contents)
             {
-                if (!prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype? proto))
-                    proto = new ReagentPrototype();
-
-                heatCapacity += (float) reagent.Quantity * proto.SpecificHeat;
+                _heatCapacity += (float) quantity * prototypeManager.Index<ReagentPrototype>(id).SpecificHeat;
             }
-
-            return heatCapacity;
+            return _heatCapacity;
         }
     }
 }

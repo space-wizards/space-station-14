@@ -1,4 +1,4 @@
-﻿using Content.Server.Body.Components;
+using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Chemistry;
@@ -21,7 +21,7 @@ namespace Content.Server.Chemistry.Components
             if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance) &&
                 EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
             {
-                appearance.SetData(SmokeVisuals.Color, solution.Color);
+                appearance.SetData(SmokeVisuals.Color, solution.GetColor());
             }
         }
 
@@ -39,7 +39,7 @@ namespace Content.Server.Chemistry.Components
 
             var chemistry = EntitySystem.Get<ReactiveSystem>();
             var cloneSolution = solution.Clone();
-            var transferAmount = FixedPoint2.Min(cloneSolution.TotalVolume * solutionFraction, bloodstream.ChemicalSolution.AvailableVolume);
+            var transferAmount = FixedPoint2.Min(cloneSolution.CurrentVolume * solutionFraction, bloodstream.ChemicalSolution.AvailableVolume);
             var transferSolution = cloneSolution.SplitSolution(transferAmount);
 
             foreach (var reagentQuantity in transferSolution.Contents.ToArray())

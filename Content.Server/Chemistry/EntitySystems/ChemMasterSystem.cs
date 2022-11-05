@@ -260,7 +260,7 @@ namespace Content.Server.Chemistry.EntitySystems
             }
 
             var filter = user.HasValue ? Filter.Entities(user.Value) : Filter.Empty();
-            if (solution.TotalVolume == 0)
+            if (solution.CurrentVolume == 0)
             {
                 _popupSystem.PopupCursor(Loc.GetString("chem-master-window-buffer-empty-text"), filter);
                 return false;
@@ -313,12 +313,12 @@ namespace Content.Server.Chemistry.EntitySystems
             if (!TryComp(container, out ServerStorageComponent? storage))
                 return null;
 
-            var pills = storage.Storage?.ContainedEntities.Select(pill =>
+            var pills = storage.Storage?.ContainedEntities.Select((Func<EntityUid, (string, FixedPoint2 quantity)>) (pill =>
             {
                 _solutionContainerSystem.TryGetSolution(pill, SharedChemMaster.PillSolutionName, out var solution);
                 var quantity = solution?.CurrentVolume ?? FixedPoint2.Zero;
-                return (Name(pill), quantity);
-            }).ToList();
+                return ((string, FixedPoint2 quantity))(Name(pill), quantity:(FixedPoint2) quantity);
+            })).ToList();
 
             return pills is null
                 ? null

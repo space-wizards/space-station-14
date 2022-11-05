@@ -568,9 +568,9 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
             return;
 
         var removedSolution = solutionContainer.SplitSolution(comp.TransferAmount * hitBloodstreams.Count);
-        var removedVol = removedSolution.TotalVolume;
+        var removedVol = removedSolution.CurrentVolume;
         var solutionToInject = removedSolution.SplitSolution(removedVol * comp.TransferEfficiency);
-        var volPerBloodstream = solutionToInject.TotalVolume * (1 / hitBloodstreams.Count);
+        var volPerBloodstream = solutionToInject.CurrentVolume * (1 / hitBloodstreams.Count);
 
         foreach (var bloodstream in hitBloodstreams)
         {

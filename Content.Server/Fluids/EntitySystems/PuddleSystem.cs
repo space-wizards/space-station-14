@@ -66,7 +66,7 @@ namespace Content.Server.Fluids.EntitySystems
                                     && canEvaporate);
 
             appearanceComponent.SetData(PuddleVisuals.VolumeScale, volumeScale);
-            appearanceComponent.SetData(PuddleVisuals.SolutionColor, puddleSolution.Color);
+            appearanceComponent.SetData(PuddleVisuals.SolutionColor, puddleSolution.GetColor());
             appearanceComponent.SetData(PuddleVisuals.ForceWetFloorSprite, changeToWetFloor);
         }
 
@@ -138,7 +138,7 @@ namespace Content.Server.Fluids.EntitySystems
             if (!Resolve(puddleUid, ref puddleComponent))
                 return false;
 
-            if (addedSolution.TotalVolume == 0 ||
+            if (addedSolution.CurrentVolume == 0 ||
                 !_solutionContainerSystem.TryGetSolution(puddleComponent.Owner, puddleComponent.SolutionName,
                     out var puddleSolution))
             {
@@ -183,7 +183,7 @@ namespace Content.Server.Fluids.EntitySystems
             if (!Resolve(uid, ref puddle))
                 return false;
 
-            return puddle.CurrentVolume + solution.TotalVolume > puddle.OverflowVolume;
+            return puddle.CurrentVolume + solution.CurrentVolume > puddle.OverflowVolume;
         }
     }
 }

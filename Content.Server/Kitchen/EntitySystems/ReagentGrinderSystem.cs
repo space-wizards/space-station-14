@@ -83,7 +83,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
                     if (TryComp<StackComponent>(item, out var stack))
                     {
-                        var totalVolume = solution.TotalVolume * stack.Count;
+                        var totalVolume = solution.CurrentVolume * stack.Count;
                         if (totalVolume <= 0)
                             continue;
 
@@ -93,12 +93,12 @@ namespace Content.Server.Kitchen.EntitySystems
                         if (fitsCount <= 0)
                             continue;
 
-                        solution.ScaleSolution(fitsCount);
+                        solution = solution.ScaleSolution(fitsCount);
                         _stackSystem.SetCount(item, stack.Count - fitsCount); // Setting to 0 will QueueDel
                     }
                     else
                     {
-                        if (solution.TotalVolume > containerSolution.AvailableVolume)
+                        if (solution.CurrentVolume > containerSolution.AvailableVolume)
                             continue;
 
                         QueueDel(item);

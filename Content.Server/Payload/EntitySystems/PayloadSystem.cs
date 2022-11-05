@@ -148,8 +148,8 @@ public sealed class PayloadSystem : EntitySystem
             || !TryComp(beakerB, out FitsInDispenserComponent? compB)
             || !_solutionSystem.TryGetSolution(beakerA, compA.Solution, out var solutionA)
             || !_solutionSystem.TryGetSolution(beakerB, compB.Solution, out var solutionB)
-            || solutionA.TotalVolume == 0
-            || solutionB.TotalVolume == 0)
+            || solutionA.CurrentVolume == 0
+            || solutionB.CurrentVolume == 0)
         {
             return;
         }

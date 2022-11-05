@@ -304,7 +304,7 @@ namespace Content.Server.Dragon
             //Humanoid devours allow dragon to get eggs, corpses included
             if (!EntityManager.HasComponent<HumanoidComponent>(args.Target))
             {
-                ichorInjection.ScaleSolution(0.5f);
+                ichorInjection = ichorInjection.ScaleSolution(0.5f);
             }
 
             _bloodstreamSystem.TryAddToChemicals(uid, ichorInjection);

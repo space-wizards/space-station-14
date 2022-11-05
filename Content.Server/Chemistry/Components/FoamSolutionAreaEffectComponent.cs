@@ -1,4 +1,4 @@
-﻿using Content.Server.Body.Components;
+using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.FixedPoint;
@@ -22,7 +22,7 @@ namespace Content.Server.Chemistry.Components
             if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance) &&
                 EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
             {
-                appearance.SetData(FoamVisuals.Color, solution.Color.WithAlpha(0.80f));
+                appearance.SetData(FoamVisuals.Color, solution.GetColor().WithAlpha(0.80f));
             }
         }
 
@@ -57,7 +57,7 @@ namespace Content.Server.Chemistry.Components
             var bloodstreamSys = EntitySystem.Get<BloodstreamSystem>();
 
             var cloneSolution = solution.Clone();
-            var transferAmount = FixedPoint2.Min(cloneSolution.TotalVolume * solutionFraction * (1 - protection),
+            var transferAmount = FixedPoint2.Min(cloneSolution.CurrentVolume * solutionFraction * (1 - protection),
                 bloodstream.ChemicalSolution.AvailableVolume);
             var transferSolution = cloneSolution.SplitSolution(transferAmount);
 
