@@ -38,19 +38,6 @@ public sealed class PrototypeSaveTest
         // TODO fix more prototypes
         // The rest of these prototypes (probably) shouldn't be getting ignored.
         // There should be an issue up tracking all of these prototypes, indicating that still need to get fixed.
-        "WeaponProtoKineticAccelerator",
-        "WeaponStaffHealing",
-        "WeaponStaffPolymorphDoor",
-        "WeaponWandPolymorphCarp",
-        "WeaponWandPolymorphMonkey",
-        "WeaponWandFireball",
-        "WeaponWandDeath",
-        "WeaponWandPolymorphDoor",
-        "GlowstickBase",
-        "GlowstickRed",
-        "GlowstickPurple",
-        "GlowstickYellow",
-        "GlowstickBlue",
         "Thruster",
         "Gyroscope",
         "JawsOfLife",
