@@ -169,7 +169,7 @@ public abstract class SharedStealthSystem : EntitySystem
     /// <summary>
     private sealed class GetVisibilityModifiersEvent : EntityEventArgs
     {
-        public readonly StealthComponent Stealth = default!;
+        public readonly StealthComponent Stealth;
         public readonly float SecondsSinceUpdate;
 
         /// <summary>

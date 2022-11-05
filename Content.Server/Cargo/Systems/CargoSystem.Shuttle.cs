@@ -387,10 +387,12 @@ public sealed partial class CargoSystem
         var center = new Vector2();
         var minRadius = 0f;
         Box2? aabb = null;
+        var xformQuery = GetEntityQuery<TransformComponent>();
 
         foreach (var grid in _mapManager.GetAllMapGrids(xform.MapID))
         {
-            aabb = aabb?.Union(grid.WorldAABB) ?? grid.WorldAABB;
+            var worldAABB = xformQuery.GetComponent(grid.GridEntityId).WorldMatrix.TransformBox(grid.LocalAABB);
+            aabb = aabb?.Union(worldAABB) ?? worldAABB;
         }
 
         if (aabb != null)
@@ -400,7 +402,7 @@ public sealed partial class CargoSystem
         }
 
         var offset = 0f;
-        if (TryComp<IMapGridComponent>(orderDatabase.Shuttle, out var shuttleGrid))
+        if (TryComp<MapGridComponent>(orderDatabase.Shuttle, out var shuttleGrid))
         {
             var bounds = shuttleGrid.Grid.LocalAABB;
             offset = MathF.Max(bounds.Width, bounds.Height) / 2f;

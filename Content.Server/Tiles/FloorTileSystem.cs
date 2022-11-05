@@ -75,7 +75,8 @@ namespace Content.Server.Tiles
                 else if (HasBaseTurf(currentTileDefinition, ContentTileDefinition.SpaceID))
                 {
                     mapGrid = _mapManager.CreateGrid(locationMap.MapId);
-                    mapGrid.WorldPosition = locationMap.Position;
+                    var gridXform = Transform(mapGrid.GridEntityId);
+                    gridXform.WorldPosition = locationMap.Position;
                     location = new EntityCoordinates(mapGrid.GridEntityId, Vector2.Zero);
                     PlaceAt(mapGrid, location, _tileDefinitionManager[component.OutputTiles[0]].TileId, component.PlaceTileSound, mapGrid.TileSize / 2f);
                 }
