@@ -23,7 +23,7 @@ namespace Content.Shared.Examine
         /// </summary>
         private void OnGroupExamineVerb(EntityUid uid, GroupExamineComponent component, GetVerbsEvent<ExamineVerb> args)
         {
-            foreach(var group in component.ExamineGroups)
+            foreach (var group in component.ExamineGroups)
             {
                 if (!EntityHasComponent(uid, group.Components))
                     continue;

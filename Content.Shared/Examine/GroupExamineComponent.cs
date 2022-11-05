@@ -77,7 +77,6 @@ namespace Content.Shared.Examine
     ///     An entry used when showing examine details
     /// </summary>
     [Serializable, NetSerializable]
-    [DataDefinition]
     public sealed class ExamineEntry
     {
         /// <summary>
