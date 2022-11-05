@@ -1,3 +1,9 @@
 ent-Present = подарок
     .desc = Маленькая коробочка с невероятными сюрпризами внутри.
     .suffix = { "" }
+ent-PresentRandom = Present
+    .desc = A little box with incredible surprises inside.
+    .suffix = Filled Random
+ent-PresentTrash = Wrapping Paper
+    .desc = Carefully folded, taped, and tied with a bow. Then ceremoniously ripped apart and tossed on the floor.
+    .suffix = { "" }

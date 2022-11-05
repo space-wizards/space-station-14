@@ -34,3 +34,6 @@ ent-ChairCursed = cursed chair
 ent-ChairFolding = folding chair
     .desc = If you carry six of these you become the coolest kid at church.
     .suffix = { "" }
+ent-ChairFoldingSpawnFolded = { ent-ChairFolding }
+    .suffix = folded
+    .desc = { ent-ChairFolding.desc }
