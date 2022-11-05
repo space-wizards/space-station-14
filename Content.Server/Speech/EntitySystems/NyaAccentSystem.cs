@@ -9,17 +9,32 @@ public sealed class NyaAccentSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     
     private static readonly Dictionary<string, string> DirectReplacements = new() {
-        { "fuck you", "hiiiss" },
-        { "fucked", "fished" },
-        { "fuck", "fish" },
-        { "fck", "fsh" },
-        { "shit", "damn" },
-        { "stupid", "baka" }
+        {"fuck you", "hiiiss" },
+        {"fucked", "fished" },
+        {"fuck", "fish" },
+        {"fck", "fsh" },
+        {"shit", "damn" },
+        {"stupid", "baka" },
+
+        {"now", "nyow"},
+        {"many", "meuny"},
+        {"machine", "meochine"},
+        {"magic", "mewgic"},
+
+        {"maints", "meoints"},
+        {"maintenance", "meowitenace"},
+        {"manifest", "meownifest"},
+
+        {"syndicate", "syndicat"},
+        {"nanotrasen", "nyanotrasen"},
+        {"space drugs", "cat mint"}
+        
     };
 
     private static readonly IReadOnlyList<string> Ending = new List<string> {
         "nya",
         "meow",
+        "mewl",
         "mew",
         "mrrr"
     }.AsReadOnly();
@@ -41,7 +56,7 @@ public sealed class NyaAccentSystem : EntitySystem
 
             if (!string.IsNullOrWhiteSpace(new_s) && _random.Prob(0.5f))
             {   
-                Logger.DebugS("nya", $"SENTENCE: {new_s}");
+                // Logger.DebugS("nya", $"SENTENCE: {new_s}");
 
                 string last_sym = new_s.Substring(new_s.Length-1);
                 string punct_mark = "";
@@ -75,7 +90,17 @@ public sealed class NyaAccentSystem : EntitySystem
             final_msg = Regex.Replace(final_msg, $@"(?<!\w){first}(?!\w)", replace, RegexOptions.IgnoreCase);
         }
 
-        // Trim
+        //Some word parts replacements
+        final_msg = Regex.Replace(final_msg, "per|pro", "purr");
+        final_msg = Regex.Replace(final_msg, "Per|Pro", "Purr");
+        
+        final_msg = Regex.Replace(final_msg, "Mor", "Murr");
+        final_msg = Regex.Replace(final_msg, "mor", "murr");
+
+        final_msg = Regex.Replace(final_msg, "Mo", "Meo");
+        final_msg = Regex.Replace(final_msg, "mo", "meo");
+
+        // Trimming
         final_msg = final_msg.Trim();
 
         return final_msg;
