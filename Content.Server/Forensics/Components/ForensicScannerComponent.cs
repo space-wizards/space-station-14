@@ -23,6 +23,9 @@ namespace Content.Server.Forensics
         /// <summary>
         /// What is the name of the entity that was scanned last?
         /// </summary>
+        /// <remarks>
+        /// This will be used for the title of the printout and displayed to players.
+        /// </remarks>
         [ViewVariables(VVAccess.ReadOnly)]
         public string LastScannedName = string.Empty;
 
