@@ -1,6 +1,4 @@
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Chemistry.Components
 {
@@ -39,43 +37,20 @@ namespace Content.Shared.Chemistry.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public FixedPoint2? MaxVolume { get; set; } = FixedPoint2.Zero;
 
-        private float _heatCapacity;
-        private bool _heatCapacityDirty;
+        [DataField("heatCapacity")]
+        public float HeatCapacity { get; private set; }
 
         /// <summary>
-        ///     Sets the total thermal energy of the reagents in the solution.
+        ///     The total thermal energy of the reagents in the solution.
         /// </summary>
-        public void SetThermalEnergy(float value, IPrototypeManager? protoMan)
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float ThermalEnergy
         {
-            IoCManager.Resolve(ref protoMan);
-            var heatCap = GetHeatCapacity(protoMan);
-            Temperature = heatCap == 0 ? 0 : value / heatCap;
-        }
-
-        /// <summary>
-        ///     Gets total thermal energy of the reagents in the solution.
-        /// </summary>
-        public float GetThermalEnergy(IPrototypeManager? protoMan) => Temperature * GetHeatCapacity(protoMan);
-
-        /// <summary>
-        ///     Returns the total heat capacity of the reagents in this solution.
-        /// </summary>
-        /// <returns>The total heat capacity of the reagents in this solution.</returns>
-        private float GetHeatCapacity(IPrototypeManager? protoMan)
-        {
-            if (!_heatCapacityDirty)
-                return _heatCapacity;
-
-            _heatCapacityDirty = false;
-            _heatCapacity = 0;
-
-            IoCManager.Resolve(ref protoMan);
-            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            foreach (var (id, quantity) in Contents)
+            get => Temperature * HeatCapacity;
+            set
             {
-                _heatCapacity += (float) quantity * prototypeManager.Index<ReagentPrototype>(id).SpecificHeat;
+                Temperature = HeatCapacity == 0 ? 0 : value / HeatCapacity;
             }
-            return _heatCapacity;
         }
     }
 }

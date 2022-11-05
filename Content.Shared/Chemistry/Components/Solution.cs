@@ -1,10 +1,12 @@
 using Content.Shared.Atmos;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
+using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 using Robust.Shared.Utility;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Content.Shared.Chemistry.Components
@@ -20,6 +22,8 @@ namespace Content.Shared.Chemistry.Components
         [ViewVariables]
         [DataField("reagents", customTypeSerializer:typeof(PrototypeIdDictionarySerializer<FixedPoint2, ReagentPrototype>))]
         public Dictionary<string, FixedPoint2> Contents = new(2);
+
+        public FixedPoint2 this[string id] => Contents[id];
 
         /// <summary>
         ///     The calculated total volume of all reagents in the solution (ex. Total volume of liquid in beaker).
@@ -49,9 +53,20 @@ namespace Content.Shared.Chemistry.Components
         /// </summary>
         /// <param name="reagentId">The prototype ID of the reagent to add.</param>
         /// <param name="quantity">The quantity in milli-units.</param>
-        public Solution(string reagentId, FixedPoint2 quantity)
+        public Solution(string reagentId, FixedPoint2 quantity, IPrototypeManager? proto)
         {
-            AddReagent(reagentId, quantity);
+            IoCManager.Resolve(ref proto);
+            AddReagent(proto.Index<ReagentPrototype>(reagentId), quantity);
+        }
+
+        /// <summary>
+        ///     Constructs a solution containing 100% of a reagent (ex. A beaker of pure water).
+        /// </summary>
+        /// <param name="proto">The prototype ID of the reagent to add.</param>
+        /// <param name="quantity">The quantity in milli-units.</param>
+        public Solution(ReagentPrototype proto, FixedPoint2 quantity)
+        {
+            AddReagent(proto, quantity);
         }
 
         void ISerializationHooks.AfterDeserialization()
@@ -60,6 +75,7 @@ namespace Content.Shared.Chemistry.Components
             CurrentVolume = Contents.Values.Sum();
             if (MaxVolume == FixedPoint2.Zero)
                 MaxVolume = CurrentVolume;
+            ValidateSolution();
         }
 
         public bool ContainsReagent(string reagentId) => Contents.ContainsKey(reagentId);
@@ -85,77 +101,64 @@ namespace Content.Shared.Chemistry.Components
         }
 
         /// <summary>
-        ///     Adds a given quantity of a reagent directly into the solution. Does not modify the temperature of the
-        ///     solution.
+        ///     Adds a quantity of a reagent at some specific temperature directly into the solution.
         /// </summary>
-        public FixedPoint2 AddReagent(ReagentPrototype proto, FixedPoint2 quantity) => AddReagent(proto.ID, quantity);
+        public FixedPoint2 AddReagent(string reagentId, FixedPoint2 quantity, float? temperature = null, IPrototypeManager? protoMan)
+        {
+            IoCManager.Resolve(ref protoMan);
+            return AddReagent(protoMan.Index<ReagentPrototype>(reagentId), quantity, temperature);
+        }
 
         /// <summary>
-        ///     Adds a given quantity of a reagent directly into the solution. Does not modify the temperature of the
-        ///     solution.
+        ///     Adds a quantity of a reagent at some specific temperature directly into the solution.
         /// </summary>
-        public FixedPoint2 AddReagent(string reagentId, FixedPoint2 quantity)
+        public FixedPoint2 AddReagent(ReagentPrototype proto, FixedPoint2 quantity, float? temperature = null)
         {
-            if (quantity <= 0)
-                return;
-
             quantity = FixedPoint2.Min(quantity, AvailableVolume);
+            if (quantity <= 0)
+                return FixedPoint2.Zero;
 
-            DebugTools.Assert(IoCManager.Resolve<IPrototypeManager>().HasIndex<ReagentPrototype>(reagentId));
-
-            Contents[reagentId] = Contents.TryGetValue(reagentId, out var existing)
+            Contents[proto.ID] = Contents.TryGetValue(proto.ID, out var existing)
                 ? quantity + existing
                 : quantity;
 
             CurrentVolume += quantity;
-            _heatCapacityDirty = true;
-            DebugTools.Assert(CurrentVolume == Contents.Values.Sum());
-            return quantity;
-        }
-
-        /// <summary>
-        ///     Adds a quantity of a reagent at some specific temperature directly into the solution.
-        /// </summary>
-        public FixedPoint2 AddReagent(string reagentId, FixedPoint2 quantity, float temperature, IPrototypeManager? protoMan)
-        {
-            IoCManager.Resolve(ref protoMan);
-            return AddReagent(protoMan.Index<ReagentPrototype>(reagentId), quantity, temperature, protoMan);
-        }
-
-        /// <summary>
-        ///     Adds a quantity of a reagent at some specific temperature directly into the solution.
-        /// </summary>
-        public FixedPoint2 AddReagent(ReagentPrototype proto, FixedPoint2 quantity, float temperature, IPrototypeManager? protoMan)
-        {
-            if (quantity <= 0)
-                return FixedPoint2.Zero;
-
-            IoCManager.Resolve(ref protoMan);
-
-            var termalEnergy = Temperature * GetHeatCapacity(protoMan);
-            quantity = AddReagent(proto.ID, quantity);
 
             var addedHeatCap = (float) quantity * proto.SpecificHeat;
-            termalEnergy += addedHeatCap * temperature;
-            _heatCapacity += addedHeatCap;
-            _heatCapacityDirty = false;
-            Temperature = termalEnergy / _heatCapacity;
+            var termalEnergy = ThermalEnergy + addedHeatCap * (temperature ?? Temperature);
+            HeatCapacity += addedHeatCap;
+            Temperature = termalEnergy / HeatCapacity;
+
+            ValidateSolution();
             return quantity;
 
+        }
+
+        /// <summary>
+        ///     Returns the total heat capacity of the reagents in this solution.
+        /// </summary>
+        /// <returns>The total heat capacity of the reagents in this solution.</returns>
+        private void UpdateHeatCapacity(IPrototypeManager? protoMan)
+        {
+            IoCManager.Resolve(ref protoMan);
+            HeatCapacity = 0;
+            foreach (var (id, quantity) in Contents)
+            {
+                HeatCapacity += (float) quantity * protoMan.Index<ReagentPrototype>(id).SpecificHeat;
+            }
         }
 
         /// <summary>
         ///     Scales the amount of solution. Currently only supports solutions that have no maximum volume.
         /// </summary>
         /// <param name="scale">The scalar to modify the solution by.</param>
-        public void ScaleSolution(float scale)
+        public void ScaleSolution(float scale, IPrototypeManager? protoMan)
         {
             DebugTools.AssertNull(MaxVolume);
 
             if (scale.Equals(1f))
                 return;
 
-            _heatCapacityDirty = true;
             CurrentVolume = 0;
 
             foreach(var (id, quantity) in Contents)
@@ -164,6 +167,7 @@ namespace Content.Shared.Chemistry.Components
                 Contents[id] = newQuant;
                 CurrentVolume += newQuant;
             }
+            UpdateHeatCapacity(protoMan);
         }
 
         /// <summary>
@@ -179,47 +183,58 @@ namespace Content.Shared.Chemistry.Components
         /// <param name="reagentId">The reagent to be removed.</param>
         /// <param name="quantity">The amount of reagent to remove.</param>
         /// <returns>How much reagent was actually removed. Zero if the reagent is not present on the solution.</returns>
-        public FixedPoint2 RemoveReagent(string reagentId, FixedPoint2 quantity)
+        public FixedPoint2 RemoveReagent(string reagentId, FixedPoint2 quantity, IPrototypeManager? protoMan)
         {
-            if(quantity <= 0 || !Contents.TryGetValue(reagentId, out var existing))
-                return FixedPoint2.Zero;
-
-            if (quantity >= existing)
-            {
-                Contents.Remove(reagentId);
-                CurrentVolume -= existing;
-                return existing;
-            }
-
-            Contents[reagentId] = existing - quantity; ;
-            CurrentVolume -= quantity;
-            _heatCapacityDirty = true;
-            return quantity;
+            IoCManager.Resolve(ref protoMan);
+            return RemoveReagent(protoMan.Index<ReagentPrototype>(reagentId), quantity);
         }
 
         /// <summary>
         ///     Attempts to remove an amount of reagent from the solution.
         /// </summary>
-        /// <param name="reagentId">The reagent to be removed.</param>
+        /// <param name="proto">The reagent to be removed.</param>
         /// <param name="quantity">The amount of reagent to remove.</param>
         /// <returns>How much reagent was actually removed. Zero if the reagent is not present on the solution.</returns>
         public FixedPoint2 RemoveReagent(ReagentPrototype proto, FixedPoint2 quantity)
         {
-            var rem = RemoveReagent(proto.ID, quantity);
-            if (rem > 0)
+            if (quantity <= 0 || !Contents.TryGetValue(proto.ID, out var existing))
+                return FixedPoint2.Zero;
+
+            if (quantity >= existing)
             {
-                _heatCapacityDirty = false;
-                _heatCapacity -= rem.Float() * proto.SpecificHeat;
+                Contents.Remove(proto.ID);
+                CurrentVolume -= existing;
+                HeatCapacity -= proto.SpecificHeat * existing.Float();
+                ValidateSolution();
+                return existing;
             }
 
-            return rem;
+            Contents[proto.ID] = existing - quantity; ;
+            CurrentVolume -= quantity;
+            HeatCapacity -= proto.SpecificHeat * quantity.Float();
+            ValidateSolution();
+            return quantity;
+
+        }
+
+        [Conditional("DEBUG")]
+        [AssertionMethod]
+        private void ValidateSolution(IPrototypeManager? protoMan = null)
+        {
+            DebugTools.Assert(CurrentVolume == Contents.Values.Sum());
+            DebugTools.Assert(AvailableVolume >= FixedPoint2.Zero);
+            DebugTools.Assert(!Contents.Values.Any(x => x == FixedPoint2.Zero));
+
+            var oldCap = HeatCapacity;
+            UpdateHeatCapacity(protoMan);
+            DebugTools.Assert(oldCap == HeatCapacity);
         }
 
         /// <summary>
         /// Remove the specified quantity from this solution.
         /// </summary>
         /// <param name="toTake">The quantity of this solution to remove</param>
-        public void RemoveSolution(FixedPoint2 toTake, IPrototypeManager? protoMan = null)
+        public void RemoveSolution(FixedPoint2 toTake, IPrototypeManager? protoMan)
         {
             if(toTake >= CurrentVolume)
             {
@@ -240,21 +255,19 @@ namespace Content.Shared.Chemistry.Components
                     Contents[id] = quantity - taken;
             }
 
-            if (protoMan != null)
-                GetHeatCapacity(protoMan);
-            else
-                _heatCapacityDirty = true;
+            UpdateHeatCapacity(protoMan);
+            ValidateSolution(protoMan);
         }
 
         public void RemoveAllSolution()
         {
             Contents.Clear();
             CurrentVolume = FixedPoint2.New(0);
-            _heatCapacityDirty = false;
-            _heatCapacity = 0;
+            HeatCapacity = 0;
+            ValidateSolution();
         }
 
-        public Solution SplitSolution(FixedPoint2 toTake, IPrototypeManager? protoMan = null)
+        public Solution SplitSolution(FixedPoint2 toTake, IPrototypeManager? protoMan)
         {
             if (toTake <= 0)
                 return new Solution();
@@ -264,17 +277,16 @@ namespace Content.Shared.Chemistry.Components
             {
                 newSolution = Clone();
                 RemoveAllSolution();
+                newSolution.ValidateSolution(protoMan);
                 return newSolution;
             }
 
             newSolution = new()
             {
                 Contents = new(Contents.Count),
-                _heatCapacityDirty = true,
                 Temperature = Temperature
             };
 
-            _heatCapacityDirty = true;
             foreach (var (id, quantity) in Contents)
             {
                 var taken = quantity * toTake / CurrentVolume;
@@ -290,25 +302,74 @@ namespace Content.Shared.Chemistry.Components
                     Contents[id] = quantity - taken;
             }
 
-            if (protoMan != null)
-            {
-                GetHeatCapacity(protoMan);
-                newSolution.GetHeatCapacity(protoMan);
-            }
+            IoCManager.Resolve(ref protoMan);
+            UpdateHeatCapacity(protoMan);
+            newSolution.UpdateHeatCapacity(protoMan);
+
+            ValidateSolution(protoMan);
+            newSolution.ValidateSolution(protoMan);
 
             return newSolution;
         }
 
         /// <summary>
-        ///     Add another solution to this one. This ignores max-volume.
+        ///     Removes an amount from all reagents in a solution, adding it to a new solution.
         /// </summary>
-        public void AddSolution(Solution otherSolution, IPrototypeManager? protoMan = null)
+        /// <param name="uid">The entity containing the solution.</param>
+        /// <param name="solution">The solution to remove reagents from.</param>
+        /// <param name="quantity">The amount to remove from every reagent in the solution.</param>
+        /// <returns>A new solution containing every removed reagent from the original solution.</returns>
+        public Solution RemoveEachReagent(FixedPoint2 toTake, IPrototypeManager? protoMan)
+        {
+            if (toTake <= 0)
+                return new Solution();
+
+            Solution newSolution;
+
+            newSolution = new()
+            {
+                Contents = new(Contents.Count),
+                Temperature = Temperature
+            };
+
+            foreach (var (id, quantity) in Contents)
+            {
+                if (toTake >= quantity)
+                {
+                    CurrentVolume -= quantity;
+                    Contents.Remove(id);
+                    newSolution.CurrentVolume += quantity;
+                    newSolution.Contents[id] = quantity;
+                }
+                else
+                {
+                    CurrentVolume -= toTake;
+                    newSolution.CurrentVolume += toTake;
+                    newSolution.Contents[id] = toTake;
+                    Contents[id] = quantity - toTake;
+                }
+            }
+
+            IoCManager.Resolve(ref protoMan);
+            UpdateHeatCapacity(protoMan);
+            newSolution.UpdateHeatCapacity(protoMan);
+
+            ValidateSolution(protoMan);
+            newSolution.ValidateSolution(protoMan);
+
+            return newSolution;
+        }
+
+        /// <summary>
+        ///     Add another solution to this one. This ignores max-volume. Does not modify the other solution
+        /// </summary>
+        public void AddSolution(Solution otherSolution)
         {
             if (otherSolution.CurrentVolume <= FixedPoint2.Zero)
                 return;
 
-            var totalThermalEnergy = GetThermalEnergy(protoMan) + otherSolution.GetThermalEnergy(protoMan);
-            _heatCapacity = _heatCapacity + otherSolution._heatCapacity;
+            var totalThermalEnergy = ThermalEnergy + otherSolution.ThermalEnergy;
+            HeatCapacity = HeatCapacity + otherSolution.HeatCapacity;
 
             CurrentVolume += otherSolution.CurrentVolume;
 
@@ -320,7 +381,8 @@ namespace Content.Shared.Chemistry.Components
             }
 
             CurrentVolume += otherSolution.CurrentVolume;
-            Temperature = totalThermalEnergy / _heatCapacity;
+            Temperature = totalThermalEnergy / HeatCapacity;
+            ValidateSolution();
         }
 
         private Color GetColor(IPrototypeManager? protoMan)
@@ -358,8 +420,7 @@ namespace Content.Shared.Chemistry.Components
             return new Solution()
             {
                 Contents = Contents.ShallowClone(),
-                _heatCapacity = _heatCapacity,
-                _heatCapacityDirty = _heatCapacityDirty, // CBF making this require IPrototypeManager;
+                HeatCapacity = HeatCapacity,
                 CurrentVolume = CurrentVolume,
                 Temperature = Temperature
             };

@@ -5,6 +5,7 @@ using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Smoking;
+using System.Linq;
 
 namespace Content.Server.Chemistry.Components
 {
@@ -42,10 +43,9 @@ namespace Content.Server.Chemistry.Components
             var transferAmount = FixedPoint2.Min(cloneSolution.CurrentVolume * solutionFraction, bloodstream.ChemicalSolution.AvailableVolume);
             var transferSolution = cloneSolution.SplitSolution(transferAmount);
 
-            foreach (var reagentQuantity in transferSolution.Contents.ToArray())
+            foreach (var (id, quantity) in transferSolution.Contents.ToArray())
             {
-                if (reagentQuantity.Quantity == FixedPoint2.Zero) continue;
-                chemistry.ReactionEntity(entity, ReactionMethod.Ingestion, reagentQuantity.ReagentId, reagentQuantity.Quantity, transferSolution);
+                chemistry.ReactionEntity(entity, ReactionMethod.Ingestion, id, quantity, transferSolution);
             }
 
             var bloodstreamSys = EntitySystem.Get<BloodstreamSystem>();
