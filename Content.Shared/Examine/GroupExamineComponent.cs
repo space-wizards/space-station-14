@@ -58,7 +58,7 @@ namespace Content.Shared.Examine
         ///     The icon path for the Examine Group.
         /// </summary>
         [DataField("icon")]
-        public string Icon = "/Textures/Interface/VerbIcons/dot.svg.192dpi.png";
+        public string Icon = "/Textures/Interface/examine-star.png";
 
         /// <summary>
         ///     The text shown in the context verb menu.
