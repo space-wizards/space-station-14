@@ -228,8 +228,8 @@ namespace Content.Server.Forensics
                 AudioParams.Default
                 .WithVariation(0.25f)
                 .WithVolume(3f)
-                .WithAttenuation(Attenuation.LinearDistance)
-                .WithMaxDistance(7f));
+                .WithRolloffFactor(2.8f)
+                .WithMaxDistance(4.5f));
 
             component.PrintReadyAt = _gameTiming.CurTime + component.PrintCooldown;
         }
