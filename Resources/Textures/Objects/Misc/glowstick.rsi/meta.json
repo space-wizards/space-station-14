@@ -8,19 +8,19 @@
   },
   "states": [
     {
-      "name": "off-inhand-left",
+      "name": "unlit-inhand-left",
       "directions": 4
     },
     {
-      "name": "off-inhand-right",
+      "name": "unlit-inhand-right",
       "directions": 4
     },
     {
-      "name": "on-inhand-left",
+      "name": "lit-inhand-left",
       "directions": 4
     },
     {
-      "name": "on-inhand-right",
+      "name": "lit-inhand-right",
       "directions": 4
     },
     {
