@@ -23,7 +23,7 @@ public sealed class MappingSystem : EntitySystem
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IResourceManager _resMan = default!;
-    [Dependency] private readonly MapSystem _map = default!;
+    [Dependency] private readonly MapLoaderSystem _map = default!;
 
     // Not a comp because I don't want to deal with this getting saved onto maps ever
     /// <summary>

@@ -11,7 +11,7 @@ namespace Content.Server.Administration.Systems;
 public sealed class AdminTestArenaSystem : EntitySystem
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly MapSystem _map = default!;
+    [Dependency] private readonly MapLoaderSystem _map = default!;
 
     public const string ArenaMapPath = "/Maps/Test/admin_test_arena.yml";
 

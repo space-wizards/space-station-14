@@ -56,7 +56,7 @@ namespace Content.IntegrationTests.Tests.Body
 
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
-            var mapLoader = entityManager.System<MapSystem>();
+            var mapLoader = entityManager.System<MapLoaderSystem>();
             RespiratorSystem respSys = default;
             MetabolizerSystem metaSys = default;
 
@@ -133,7 +133,7 @@ namespace Content.IntegrationTests.Tests.Body
 
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
-            var mapLoader = entityManager.System<MapSystem>();
+            var mapLoader = entityManager.System<MapLoaderSystem>();
 
             MapId mapId;
             EntityUid? grid = null;

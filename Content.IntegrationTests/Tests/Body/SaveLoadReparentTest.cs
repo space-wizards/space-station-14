@@ -34,7 +34,7 @@ public sealed class SaveLoadReparentTest
 
         var entities = server.ResolveDependency<IEntityManager>();
         var maps = server.ResolveDependency<IMapManager>();
-        var mapLoader = entities.System<MapSystem>();
+        var mapLoader = entities.System<MapLoaderSystem>();
         var bodySystem = entities.System<SharedBodySystem>();
 
         await server.WaitAssertion(() =>

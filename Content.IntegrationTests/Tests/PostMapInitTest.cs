@@ -53,7 +53,7 @@ namespace Content.IntegrationTests.Tests
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
             var server = pairTracker.Pair.Server;
 
-            var mapLoader = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<MapSystem>();
+            var mapLoader = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<MapLoaderSystem>();
             var mapManager = server.ResolveDependency<IMapManager>();
 
             await server.WaitPost(() =>
@@ -178,7 +178,7 @@ namespace Content.IntegrationTests.Tests
 
             var mapManager = server.ResolveDependency<IMapManager>();
             var entManager = server.ResolveDependency<IEntityManager>();
-            var mapLoader = entManager.System<MapSystem>();
+            var mapLoader = entManager.System<MapLoaderSystem>();
             var protoManager = server.ResolveDependency<IPrototypeManager>();
             var ticker = entManager.EntitySysManager.GetEntitySystem<GameTicker>();
             var shuttleSystem = entManager.EntitySysManager.GetEntitySystem<ShuttleSystem>();
@@ -332,7 +332,7 @@ namespace Content.IntegrationTests.Tests
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
             var server = pairTracker.Pair.Server;
 
-            var mapLoader = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<MapSystem>();
+            var mapLoader = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<MapLoaderSystem>();
             var mapManager = server.ResolveDependency<IMapManager>();
 
             await server.WaitPost(() =>

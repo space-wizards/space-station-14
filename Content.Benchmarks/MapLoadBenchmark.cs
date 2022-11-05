@@ -39,6 +39,6 @@ public class MapLoadBenchmark
     [Benchmark]
     public void LoadMap()
     {
-        _pair.Pair.Server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<MapSystem>().LoadMap(new MapId(10), Paths[Map]);
+        _pair.Pair.Server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<MapLoaderSystem>().LoadMap(new MapId(10), Paths[Map]);
     }
 }

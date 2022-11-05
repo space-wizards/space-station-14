@@ -36,7 +36,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem
     [Dependency] private readonly StationSpawningSystem _stationSpawningSystem = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly PricingSystem _pricingSystem = default!;
-    [Dependency] private readonly MapSystem _map = default!;
+    [Dependency] private readonly MapLoaderSystem _map = default!;
     [Dependency] private readonly NamingSystem _namingSystem = default!;
 
     [ViewVariables]

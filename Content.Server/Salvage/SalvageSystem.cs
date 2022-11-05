@@ -1,4 +1,3 @@
-using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Shared.CCVar;
 using Content.Shared.Examine;
@@ -12,15 +11,10 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using System.Linq;
-using Content.Server.Chat;
-using Content.Server.Chat.Systems;
 using Content.Server.Ghost.Components;
 using Content.Server.Radio.EntitySystems;
-using Content.Server.Station.Systems;
-using Content.Shared.Chat;
 using Content.Shared.Radio;
 using Robust.Server.GameObjects;
-using Robust.Shared.Network;
 
 namespace Content.Server.Salvage
 {
@@ -30,7 +24,7 @@ namespace Content.Server.Salvage
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly MapSystem _map = default!;
+        [Dependency] private readonly MapLoaderSystem _map = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly RadioSystem _radioSystem = default!;
 

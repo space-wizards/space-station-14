@@ -23,7 +23,7 @@ namespace Content.IntegrationTests.Tests
             var server = pairTracker.Pair.Server;
             var mapManager = server.ResolveDependency<IMapManager>();
             var sEntities = server.ResolveDependency<IEntityManager>();
-            var mapLoader = sEntities.System<MapSystem>();
+            var mapLoader = sEntities.System<MapLoaderSystem>();
             var resManager = server.ResolveDependency<IResourceManager>();
 
             await server.WaitPost(() =>

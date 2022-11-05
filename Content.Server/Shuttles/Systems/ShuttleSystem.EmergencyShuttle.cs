@@ -37,7 +37,7 @@ public sealed partial class ShuttleSystem
    [Dependency] private readonly ChatSystem _chatSystem = default!;
    [Dependency] private readonly CommunicationsConsoleSystem _commsConsole = default!;
    [Dependency] private readonly DockingSystem _dockSystem = default!;
-   [Dependency] private readonly MapSystem _map = default!;
+   [Dependency] private readonly MapLoaderSystem _map = default!;
    [Dependency] private readonly StationSystem _station = default!;
 
    public MapId? CentComMap { get; private set; }

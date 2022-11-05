@@ -33,7 +33,7 @@ namespace Content.Server.GameTicking
 {
     public sealed partial class GameTicker : SharedGameTicker
     {
-        [Dependency] private readonly MapSystem _map = default!;
+        [Dependency] private readonly MapLoaderSystem _map = default!;
 
         [ViewVariables] private bool _initialized;
         [ViewVariables] private bool _postInitialized;

@@ -23,7 +23,7 @@ namespace Content.IntegrationTests.Tests
         {
             await using var pairTracker = await PoolManager.GetServerClient(new (){Fresh = true, Disconnected = true});
             var server = pairTracker.Pair.Server;
-            var mapLoader = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<MapSystem>();
+            var mapLoader = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<MapLoaderSystem>();
             var mapManager = server.ResolveDependency<IMapManager>();
             await server.WaitPost(() =>
             {
@@ -84,7 +84,7 @@ namespace Content.IntegrationTests.Tests
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
             var server = pairTracker.Pair.Server;
-            var mapLoader = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<MapSystem>();
+            var mapLoader = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<MapLoaderSystem>();
             var mapManager = server.ResolveDependency<IMapManager>();
 
             MapId mapId = default;
