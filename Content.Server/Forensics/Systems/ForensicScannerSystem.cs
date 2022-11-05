@@ -181,8 +181,12 @@ namespace Content.Server.Forensics
 
         private void OnPrint(EntityUid uid, ForensicScannerComponent component, ForensicScannerPrintMessage args)
         {
-            if (!args.Session.AttachedEntity.HasValue || (component.Fibers.Count == 0 && component.Fingerprints.Count == 0))
+            if (!args.Session.AttachedEntity.HasValue)
+            {
+                _sawmill.Warning($"{ToPrettyString(uid)} got OnPrint without Session.AttachedEntity");
                 return;
+            }
+
             var user = args.Session.AttachedEntity.Value;
 
             if (_gameTiming.CurTime < component.PrintReadyAt)
