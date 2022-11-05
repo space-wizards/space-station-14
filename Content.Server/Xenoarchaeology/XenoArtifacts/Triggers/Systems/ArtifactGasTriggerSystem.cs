@@ -8,7 +8,6 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Systems;
 
 public sealed class ArtifactGasTriggerSystem : EntitySystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
     [Dependency] private readonly ArtifactSystem _artifactSystem = default!;
     [Dependency] private readonly TransformSystem _transformSystem = default!;
@@ -21,11 +20,11 @@ public sealed class ArtifactGasTriggerSystem : EntitySystem
 
     private void OnRandomizeTrigger(EntityUid uid, ArtifactGasTriggerComponent component, ArtifactNodeEnteredEvent args)
     {
-        if (component.ActivationGas == null)
-        {
-            var gas = _random.Pick(component.PossibleGases);
-            component.ActivationGas = gas;
-        }
+        if (component.ActivationGas != null)
+            return;
+
+        var gas = component.PossibleGases[args.RandomSeed % component.PossibleGases.Count];
+        component.ActivationGas = gas;
     }
 
     public override void Update(float frameTime)

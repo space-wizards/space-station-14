@@ -147,7 +147,7 @@ public sealed partial class ArtifactSystem
     /// <summary>
     /// Enter a node: attach the relevant components
     /// </summary>
-    private void EnterNode(EntityUid uid, ref ArtifactNode node, ArtifactComponent? component = null, bool activate = true)
+    private void EnterNode(EntityUid uid, ref ArtifactNode node, ArtifactComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
@@ -172,8 +172,7 @@ public sealed partial class ArtifactSystem
             EntityManager.AddComponent(uid, (Component) temp!, true);
         }
 
-        if (activate)
-            RaiseLocalEvent(uid, new ArtifactNodeEnteredEvent(component.CurrentNode.Id));
+        RaiseLocalEvent(uid, new ArtifactNodeEnteredEvent(component.CurrentNode.Id));
     }
 
     /// <summary>
