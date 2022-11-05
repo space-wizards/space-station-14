@@ -24,16 +24,16 @@
       "directions": 4
     },
     {
-      "name": "glowstick_base",
+      "name": "glowstick_base"
     },
     {
-      "name": "glowstick_lit",
+      "name": "glowstick_lit"
     },
     {
-      "name": "glowstick_glow",
+      "name": "glowstick_glow"
     },
     {
-      "name": "glowstick_unlit",
+      "name": "glowstick_unlit"
     }
   ]
 }
