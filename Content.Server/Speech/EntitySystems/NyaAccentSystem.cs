@@ -22,7 +22,7 @@ public sealed class NyaAccentSystem : EntitySystem
         {"magic", "mewgic"},
 
         {"maints", "meoints"},
-        {"maintenance", "meowitenace"},
+        {"maintenance", "meowintenance"},
         {"manifest", "meownifest"},
 
         {"syndicate", "syndicat"},
