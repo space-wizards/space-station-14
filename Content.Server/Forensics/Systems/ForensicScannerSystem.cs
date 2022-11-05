@@ -26,9 +26,13 @@ namespace Content.Server.Forensics
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
+        private ISawmill _sawmill = default!;
+
         public override void Initialize()
         {
             base.Initialize();
+
+            _sawmill = Logger.GetSawmill("forensics.scanner");
 
             SubscribeLocalEvent<ForensicScannerComponent, AfterInteractEvent>(OnAfterInteract);
             SubscribeLocalEvent<ForensicScannerComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
@@ -51,7 +55,7 @@ namespace Content.Server.Forensics
 
             if (!_uiSystem.TrySetUiState(uid, ForensicScannerUiKey.Key, state))
             {
-                Logger.Warning($"Forensic scanner {ToPrettyString(uid)} was unable to set UI state.");
+                _sawmill.Warning($"{ToPrettyString(uid)} was unable to set UI state.");
                 return;
             }
         }
@@ -60,6 +64,7 @@ namespace Content.Server.Forensics
         {
             if (!EntityManager.TryGetComponent(ev.Scanner, out ForensicScannerComponent? scanner))
                 return;
+
             scanner.CancelToken = null;
         }
 
@@ -197,7 +202,10 @@ namespace Content.Server.Forensics
             _handsSystem.PickupOrDrop(args.Session.AttachedEntity, printed, checkActionBlocker: false);
 
             if (!TryComp<PaperComponent>(printed, out var paper))
+            {
+                _sawmill.Error("Printed paper did not have PaperComponent.");
                 return;
+            }
 
             MetaData(printed).EntityName = Loc.GetString("forensic-scanner-report-title", ("entity", component.LastScannedName));
 
