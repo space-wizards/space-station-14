@@ -159,7 +159,7 @@ namespace Content.Shared.Chemistry
         /// <summary>
         /// A list of the reagents and their amounts within the buffer, if applicable.
         /// </summary>
-        public readonly IReadOnlyList<Solution.ReagentQuantity> BufferReagents;
+        public readonly Dictionary<string, FixedPoint2> BufferReagents;
 
         public readonly ChemMasterMode Mode;
 
@@ -172,7 +172,7 @@ namespace Content.Shared.Chemistry
 
         public ChemMasterBoundUserInterfaceState(
             ChemMasterMode mode, ContainerInfo? inputContainerInfo, ContainerInfo? outputContainerInfo,
-            IReadOnlyList<Solution.ReagentQuantity> bufferReagents, FixedPoint2 bufferCurrentVolume,
+            Dictionary<string, FixedPoint2> bufferReagents, FixedPoint2 bufferCurrentVolume,
             uint selectedPillType, uint pillDosageLimit, bool updateLabel)
         {
             InputContainerInfo = inputContainerInfo;

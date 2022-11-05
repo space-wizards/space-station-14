@@ -26,7 +26,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                     return;
 
                 // Scale the explosion intensity based on the remaining volume of solution
-                var explosionScaleFactor = (explodingSolution.CurrentVolume.Float() / explodingSolution.MaxVolume.Float());
+                var explosionScaleFactor = explodingSolution.FillRatio;
 
                 // TODO: Perhaps some of the liquid should be discarded as if it's being consumed by the explosion
 

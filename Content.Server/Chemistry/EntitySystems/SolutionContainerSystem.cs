@@ -43,13 +43,6 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         foreach (var (name, solutionHolder) in component.Solutions)
         {
             solutionHolder.Name = name;
-            if (solutionHolder.MaxVolume == FixedPoint2.Zero)
-            {
-                solutionHolder.MaxVolume = solutionHolder.CurrentVolume > solutionHolder.InitialMaxVolume
-                    ? solutionHolder.CurrentVolume
-                    : solutionHolder.InitialMaxVolume;
-            }
-
             UpdateAppearance(uid, solutionHolder);
         }
     }
@@ -77,7 +70,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
             return;
         }
 
-        var colorHex = solutionHolder.GetColor()
+        var colorHex = solutionHolder.GetColor(_prototypeManager)
             .ToHexNoAlpha(); //TODO: If the chem has a dark color, the examine text becomes black on a black background, which is unreadable.
         var messageString = "shared-solution-container-component-on-examine-main-text";
 
@@ -96,9 +89,9 @@ public sealed partial class SolutionContainerSystem : EntitySystem
             || !Resolve(uid, ref appearanceComponent, false))
             return;
 
-        var filledVolumePercent = Math.Min(1.0f, solution.CurrentVolume.Float() / solution.MaxVolume.Float());
+        var filledVolumePercent = solution.FillRatio;
         appearanceComponent.SetData(SolutionContainerVisuals.VisualState,
-            new SolutionContainerVisualState(solution.GetColor(), filledVolumePercent));
+            new SolutionContainerVisualState(solution.GetColor(_prototypeManager), filledVolumePercent));
     }
 
     /// <summary>
@@ -110,7 +103,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     /// <returns>The solution that was removed.</returns>
     public Solution SplitSolution(EntityUid targetUid, Solution solutionHolder, FixedPoint2 quantity)
     {
-        var splitSol = solutionHolder.SplitSolution(quantity);
+        var splitSol = solutionHolder.SplitSolution(quantity, _prototypeManager);
         UpdateChemicals(targetUid, solutionHolder);
         return splitSol;
     }
@@ -120,7 +113,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         // Process reactions
         if (needsReactionsProcessing && solutionHolder.CanReact)
         {
-            _chemistrySystem.FullyReactSolution(solutionHolder, uid, solutionHolder.MaxVolume);
+            _chemistrySystem.FullyReactSolution(solutionHolder, uid, solutionHolder.MaxVolume ?? FixedPoint2.MaxValue);
         }
 
         UpdateAppearance(uid, solutionHolder);
@@ -160,7 +153,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
 
         targetSolution.MaxVolume = capacity;
         if (capacity < targetSolution.CurrentVolume)
-            targetSolution.RemoveSolution(targetSolution.CurrentVolume - capacity);
+            targetSolution.RemoveSolution(targetSolution.CurrentVolume - capacity, _prototypeManager);
 
         UpdateChemicals(targetUid, targetSolution);
     }
@@ -178,7 +171,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         out FixedPoint2 acceptedQuantity, float? temperature = null)
     {
         acceptedQuantity = targetSolution.AvailableVolume > quantity ? quantity : targetSolution.AvailableVolume;
-        targetSolution.AddReagent(reagentId, acceptedQuantity, temperature);
+        targetSolution.AddReagent(reagentId, acceptedQuantity, _prototypeManager, temperature);
 
         if (acceptedQuantity > 0)
             UpdateChemicals(targetUid, targetSolution, true);
@@ -199,7 +192,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         if (container == null || !container.ContainsReagent(reagentId))
             return false;
 
-        container.RemoveReagent(reagentId, quantity);
+        container.RemoveReagent(reagentId, quantity, _prototypeManager);
         UpdateChemicals(targetUid, container);
         return true;
     }
@@ -248,7 +241,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         targetSolution.AddSolution(addedSolution);
         UpdateChemicals(targetUid, targetSolution, true);
         overflowingSolution = targetSolution.SplitSolution(FixedPoint2.Max(FixedPoint2.Zero,
-            targetSolution.CurrentVolume - overflowThreshold));
+            targetSolution.CurrentVolume - overflowThreshold), _prototypeManager);
         return true;
     }
 
@@ -298,22 +291,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     /// <returns>A new solution containing every removed reagent from the original solution.</returns>
     public Solution RemoveEachReagent(EntityUid uid, Solution solution, FixedPoint2 quantity)
     {
-        if (quantity <= 0)
-            return new Solution();
-
-        var removedSolution = new Solution();
-
-        // RemoveReagent does a RemoveSwap, meaning we don't have to copy the list if we iterate it backwards.
-        for (var i = solution.Contents.Count-1; i >= 0; i--)
-        {
-            var (reagentId, _) = solution.Contents[i];
-
-            var removedQuantity = solution.RemoveReagent(reagentId, quantity);
-
-            if(removedQuantity > 0)
-                removedSolution.AddReagent(reagentId, removedQuantity);
-        }
-
+        var removedSolution = solution.RemoveEachReagent(quantity, _prototypeManager);
         UpdateChemicals(uid, solution);
         return removedSolution;
     }

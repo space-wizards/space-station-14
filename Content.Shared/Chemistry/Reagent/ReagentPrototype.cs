@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Serialization;
+using System.Text.Json.Serialization;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.Chemistry.Components;
@@ -123,14 +123,14 @@ namespace Content.Shared.Chemistry.Reagent
             return removed;
         }
 
-        public void ReactionPlant(EntityUid? plantHolder, Solution.ReagentQuantity amount, Solution solution)
+        public void ReactionPlant(EntityUid? plantHolder, FixedPoint2 quantity, Solution solution)
         {
             if (plantHolder == null)
                 return;
 
             var entMan = IoCManager.Resolve<IEntityManager>();
             var random = IoCManager.Resolve<IRobustRandom>();
-            var args = new ReagentEffectArgs(plantHolder.Value, null, solution, this, amount.Quantity, entMan, null, null);
+            var args = new ReagentEffectArgs(plantHolder.Value, null, solution, this, quantity, entMan, null, null);
             foreach (var plantMetabolizable in PlantMetabolisms)
             {
                 if (!plantMetabolizable.ShouldApply(args, random))

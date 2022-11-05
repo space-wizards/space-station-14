@@ -10,6 +10,7 @@ using Content.Shared.StepTrigger.Systems;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Fluids.EntitySystems
 {
@@ -19,6 +20,7 @@ namespace Content.Server.Fluids.EntitySystems
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly FluidSpreaderSystem _fluidSpreaderSystem = default!;
         [Dependency] private readonly StepTriggerSystem _stepTrigger = default!;
+        [Dependency] private readonly IPrototypeManager _proto = default!;
 
         public override void Initialize()
         {
@@ -66,7 +68,7 @@ namespace Content.Server.Fluids.EntitySystems
                                     && canEvaporate);
 
             appearanceComponent.SetData(PuddleVisuals.VolumeScale, volumeScale);
-            appearanceComponent.SetData(PuddleVisuals.SolutionColor, puddleSolution.GetColor());
+            appearanceComponent.SetData(PuddleVisuals.SolutionColor, puddleSolution.GetColor(_proto));
             appearanceComponent.SetData(PuddleVisuals.ForceWetFloorSprite, changeToWetFloor);
         }
 

@@ -20,7 +20,7 @@ namespace Content.Shared.Chemistry
 
         public void ReactionEntity(EntityUid uid, ReactionMethod method, Solution solution)
         {
-            foreach (var (id, quantity) in solution)
+            foreach (var (id, quantity) in solution.Contents)
             {
                 ReactionEntity(uid, method, id, quantity, solution);
             }

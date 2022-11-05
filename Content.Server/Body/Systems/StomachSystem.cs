@@ -1,15 +1,16 @@
-﻿using Content.Server.Body.Components;
+using Content.Server.Body.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Body.Organ;
 using Content.Shared.Chemistry.Components;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Body.Systems
 {
     public sealed class StomachSystem : EntitySystem
     {
-        [Dependency] private readonly BodySystem _bodySystem = default!;
+        [Dependency] private readonly IPrototypeManager _proto = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
 
         public const string DefaultSolutionName = "stomach";
@@ -54,7 +55,7 @@ namespace Content.Server.Body.Systems
 
                             _solutionContainerSystem.TryRemoveReagent((stomach).Owner, stomachSolution,
                                 delta.ReagentId, quant);
-                            transferSolution.AddReagent(delta.ReagentId, quant);
+                            transferSolution.AddReagent(delta.ReagentId, quant, _proto);
                         }
 
                         queue.Add(delta);
@@ -124,7 +125,7 @@ namespace Content.Server.Body.Systems
             // Add each reagent to ReagentDeltas. Used to track how long each reagent has been in the stomach
             foreach (var reagent in solution.Contents)
             {
-                stomach.ReagentDeltas.Add(new StomachComponent.ReagentDelta(reagent.ReagentId, reagent.Quantity));
+                stomach.ReagentDeltas.Add(new StomachComponent.ReagentDelta(reagent.Key, reagent.Value));
             }
 
             return true;

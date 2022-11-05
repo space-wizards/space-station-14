@@ -25,16 +25,6 @@ namespace Content.Shared.Kitchen.Components
     }
 
     [Serializable, NetSerializable]
-    public sealed class MicrowaveVaporizeReagentIndexedMessage : BoundUserInterfaceMessage
-    {
-        public Solution.ReagentQuantity ReagentQuantity;
-        public MicrowaveVaporizeReagentIndexedMessage(Solution.ReagentQuantity reagentQuantity)
-        {
-            ReagentQuantity = reagentQuantity;
-        }
-    }
-
-    [Serializable, NetSerializable]
     public sealed class MicrowaveSelectCookTimeMessage : BoundUserInterfaceMessage
     {
         public int ButtonIndex;

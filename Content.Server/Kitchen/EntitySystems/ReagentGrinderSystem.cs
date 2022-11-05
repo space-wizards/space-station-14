@@ -16,6 +16,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Kitchen.EntitySystems
@@ -23,6 +24,7 @@ namespace Content.Server.Kitchen.EntitySystems
     [UsedImplicitly]
     internal sealed class ReagentGrinderSystem : EntitySystem
     {
+        [Dependency] private readonly IPrototypeManager _proto = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
         [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
@@ -93,7 +95,7 @@ namespace Content.Server.Kitchen.EntitySystems
                         if (fitsCount <= 0)
                             continue;
 
-                        solution = solution.ScaleSolution(fitsCount);
+                        solution.ScaleSolution(fitsCount, _proto);
                         _stackSystem.SetCount(item, stack.Count - fitsCount); // Setting to 0 will QueueDel
                     }
                     else
@@ -185,7 +187,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 canJuice,
                 canGrind,
                 inputContainer.ContainedEntities.Select(item => item).ToArray(),
-                containerSolution?.Contents.ToArray()
+                containerSolution?.Contents
             );
             _userInterfaceSystem.TrySetUiState(uid, ReagentGrinderUiKey.Key, state);
         }

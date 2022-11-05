@@ -22,6 +22,7 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
 using Content.Server.NPC.Systems;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Dragon
 {
@@ -30,6 +31,7 @@ namespace Content.Server.Dragon
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDef = default!;
+        [Dependency] private readonly IPrototypeManager _proto = default!;
         [Dependency] private readonly ChatSystem _chat = default!;
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
@@ -299,12 +301,12 @@ namespace Content.Server.Dragon
         private void OnDragonDevourComplete(EntityUid uid, DragonComponent component, DragonDevourComplete args)
         {
             component.CancelToken = null;
-            var ichorInjection = new Solution(component.DevourChem, component.DevourHealRate);
+            var ichorInjection = new Solution(component.DevourChem, component.DevourHealRate, _proto);
 
             //Humanoid devours allow dragon to get eggs, corpses included
             if (!EntityManager.HasComponent<HumanoidComponent>(args.Target))
             {
-                ichorInjection = ichorInjection.ScaleSolution(0.5f);
+                ichorInjection.ScaleSolution(0.5f, _proto);
             }
 
             _bloodstreamSystem.TryAddToChemicals(uid, ichorInjection);

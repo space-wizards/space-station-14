@@ -12,6 +12,7 @@ using Content.Shared.Vapor;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Fluids.EntitySystems;
@@ -19,6 +20,7 @@ namespace Content.Server.Fluids.EntitySystems;
 public sealed class SpraySystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly VaporSystem _vaporSystem = default!;
@@ -105,7 +107,7 @@ public sealed class SpraySystem : EntitySystem
 
             if (TryComp(vapor, out AppearanceComponent? appearance))
             {
-                appearance.SetData(VaporVisuals.Color, solution.GetColor().WithAlpha(1f));
+                appearance.SetData(VaporVisuals.Color, solution.GetColor(_proto).WithAlpha(1f));
                 appearance.SetData(VaporVisuals.State, true);
             }
 

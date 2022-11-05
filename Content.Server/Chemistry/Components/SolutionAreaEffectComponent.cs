@@ -163,16 +163,15 @@ namespace Content.Server.Chemistry.Components
             var solutionFraction = 1 / Math.Floor(averageExposures);
             var ents = lookup.GetEntitiesIntersecting(tile, LookupFlags.Uncontained).ToArray();
 
-            foreach (var reagentQuantity in solution.Contents.ToArray())
+            foreach (var (id, quant) in solution.Contents.ToArray())
             {
-                if (reagentQuantity.Quantity == FixedPoint2.Zero) continue;
-                var reagent = PrototypeManager.Index<ReagentPrototype>(reagentQuantity.ReagentId);
+                var reagent = PrototypeManager.Index<ReagentPrototype>(id);
 
                 // React with the tile the effect is on
                 // We don't multiply by solutionFraction here since the tile is only ever reacted once
                 if (!ReactedTile)
                 {
-                    reagent.ReactionTile(tile, reagentQuantity.Quantity);
+                    reagent.ReactionTile(tile, quant);
                     ReactedTile = true;
                 }
 
@@ -180,7 +179,7 @@ namespace Content.Server.Chemistry.Components
                 foreach (var entity in ents)
                 {
                     chemistry.ReactionEntity(entity, ReactionMethod.Touch, reagent,
-                        reagentQuantity.Quantity * solutionFraction, solution);
+                        quant * solutionFraction, solution);
                 }
             }
 

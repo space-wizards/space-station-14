@@ -560,10 +560,10 @@ namespace Content.Server.Botany.Components
             if (solution.CurrentVolume > 0 && MutationLevel < 25)
             {
                 var amt = FixedPoint2.New(1);
-                foreach (var (reagentId, quantity) in solutionSystem.RemoveEachReagent(Owner, solution, amt))
+                foreach (var (reagentId, quantity) in solutionSystem.RemoveEachReagent(Owner, solution, amt).Contents)
                 {
                     var reagentProto = _prototypeManager.Index<ReagentPrototype>(reagentId);
-                    reagentProto.ReactionPlant(Owner, new Solution.ReagentQuantity(reagentId, quantity), solution);
+                    reagentProto.ReactionPlant(Owner, quantity, solution);
                 }
             }
 

@@ -221,9 +221,12 @@ public sealed class SpillableSystem : EntitySystem
                 var proto = _prototypeManager.Index<ReagentPrototype>(reagentId);
                 var removed = proto.ReactionTile(tileRef, quantity);
                 if (removed <= FixedPoint2.Zero) continue;
-                solution.RemoveReagent(reagentId, removed);
+                solution.RemoveReagentNoUpdate(reagentId, removed);
             }
         }
+
+        solution.UpdateHeatCapacity();
+        solution.ValidateSolution();
 
         // Tile reactions used up everything.
         if (solution.CurrentVolume == FixedPoint2.Zero)

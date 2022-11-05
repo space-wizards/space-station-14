@@ -31,6 +31,8 @@ namespace Content.Shared.Chemistry.Components
         [ViewVariables]
         public FixedPoint2 CurrentVolume { get; set; }
 
+        public float FillRatio => MaxVolume == null ? 1 : CurrentVolume.Float() / MaxVolume.Value.Float();
+
         /// <summary>
         ///     The temperature of the reagents in the solution.
         /// </summary>
@@ -47,6 +49,7 @@ namespace Content.Shared.Chemistry.Components
         ///     Constructs an empty solution (ex. an empty beaker).
         /// </summary>
         public Solution() { }
+
 
         /// <summary>
         ///     Constructs a solution containing 100% of a reagent (ex. A beaker of pure water).
@@ -101,16 +104,33 @@ namespace Content.Shared.Chemistry.Components
         }
 
         /// <summary>
-        ///     Adds a quantity of a reagent at some specific temperature directly into the solution.
+        ///     Adds a quantity of a reagent directly into the solution without updating heat capacity or temperature.
         /// </summary>
-        public FixedPoint2 AddReagent(string reagentId, FixedPoint2 quantity, float? temperature = null, IPrototypeManager? protoMan)
+        public FixedPoint2 AddReagentNoUpdate(string reagentId, FixedPoint2 quantity)
+        {
+            quantity = FixedPoint2.Min(quantity, AvailableVolume);
+            if (quantity <= 0)
+                return FixedPoint2.Zero;
+
+            Contents[reagentId] = Contents.TryGetValue(reagentId, out var existing)
+                ? quantity + existing
+                : quantity;
+
+            CurrentVolume += quantity;
+            return quantity;
+        }
+
+        /// <summary>
+        ///     Adds a quantity of a reagent directly into the solution.
+        /// </summary>
+        public FixedPoint2 AddReagent(string reagentId, FixedPoint2 quantity, IPrototypeManager? protoMan, float? temperature = null)
         {
             IoCManager.Resolve(ref protoMan);
             return AddReagent(protoMan.Index<ReagentPrototype>(reagentId), quantity, temperature);
         }
 
         /// <summary>
-        ///     Adds a quantity of a reagent at some specific temperature directly into the solution.
+        ///     Adds a quantity of a reagent directly into the solution.
         /// </summary>
         public FixedPoint2 AddReagent(ReagentPrototype proto, FixedPoint2 quantity, float? temperature = null)
         {
@@ -138,7 +158,7 @@ namespace Content.Shared.Chemistry.Components
         ///     Returns the total heat capacity of the reagents in this solution.
         /// </summary>
         /// <returns>The total heat capacity of the reagents in this solution.</returns>
-        private void UpdateHeatCapacity(IPrototypeManager? protoMan)
+        public void UpdateHeatCapacity(IPrototypeManager? protoMan)
         {
             IoCManager.Resolve(ref protoMan);
             HeatCapacity = 0;
@@ -176,6 +196,27 @@ namespace Content.Shared.Chemistry.Components
         /// <param name="reagentId">The prototype ID of the reagent to add.</param>
         /// <returns>The quantity in milli-units.</returns>
         public FixedPoint2 GetReagentQuantity(string reagentId) => Contents.GetValueOrDefault(reagentId);
+
+        /// <summary>
+        ///     Attempts to remove an amount of reagent from the solution without updating the solution's heat capacity.
+        /// </summary>
+        public FixedPoint2 RemoveReagentNoUpdate(string reagentId, FixedPoint2 quantity)
+        {
+            if (quantity <= 0 || !Contents.TryGetValue(reagentId, out var existing))
+                return FixedPoint2.Zero;
+
+            if (quantity >= existing)
+            {
+                Contents.Remove(reagentId);
+                CurrentVolume -= existing;
+                ValidateSolution();
+                return existing;
+            }
+
+            Contents[reagentId] = existing - quantity; ;
+            CurrentVolume -= quantity;
+            return quantity;
+        }
 
         /// <summary>
         ///     Attempts to remove an amount of reagent from the solution.
@@ -219,7 +260,7 @@ namespace Content.Shared.Chemistry.Components
 
         [Conditional("DEBUG")]
         [AssertionMethod]
-        private void ValidateSolution(IPrototypeManager? protoMan = null)
+        public void ValidateSolution(IPrototypeManager? protoMan = null)
         {
             DebugTools.Assert(CurrentVolume == Contents.Values.Sum());
             DebugTools.Assert(AvailableVolume >= FixedPoint2.Zero);
@@ -385,7 +426,7 @@ namespace Content.Shared.Chemistry.Components
             ValidateSolution();
         }
 
-        private Color GetColor(IPrototypeManager? protoMan)
+        public Color GetColor(IPrototypeManager? protoMan)
         {
             if (CurrentVolume == 0)
             {

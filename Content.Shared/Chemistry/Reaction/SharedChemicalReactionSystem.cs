@@ -171,16 +171,22 @@ namespace Content.Shared.Chemistry.Reaction
                 if (!reactant.Value.Catalyst)
                 {
                     var amountToRemove = unitReactions * reactant.Value.Amount;
-                    solution.RemoveReagent(reactant.Key, amountToRemove);
+                    solution.RemoveReagentNoUpdate(reactant.Key, amountToRemove);
                 }
             }
+
+            solution.UpdateHeatCapacity(_prototypeManager);
+            solution.ValidateSolution();
 
             //Create products
             var products = new Solution();
             foreach (var product in reaction.Products)
             {
-                products.AddReagent(product.Key, product.Value * unitReactions);
+                products.AddReagentNoUpdate(product.Key, product.Value * unitReactions);
             }
+
+            products.UpdateHeatCapacity(_prototypeManager);
+            products.ValidateSolution();
 
             // Trigger reaction effects
             OnReaction(solution, reaction, randomReagent, owner, unitReactions);
@@ -247,13 +253,13 @@ namespace Content.Shared.Chemistry.Reaction
             // TODO spill excess?
             var excessVolume = solution.CurrentVolume + products.CurrentVolume - maxVolume;
             if (excessVolume > 0)
-                products.RemoveSolution(excessVolume);
+                products.RemoveSolution(excessVolume, _prototypeManager);
 
             // Add any reactions associated with the new products. This may re-add reactions that were already iterated
             // over previously. The new product may mean the reactions are applicable again and need to be processed.
-            foreach (var reactant in products.Contents)
+            foreach (var id in products.Contents.Keys)
             {
-                if (_reactions.TryGetValue(reactant.ReagentId, out var reactantReactions))
+                if (_reactions.TryGetValue(id, out var reactantReactions))
                     reactions.UnionWith(reactantReactions);
             }
 
@@ -274,9 +280,9 @@ namespace Content.Shared.Chemistry.Reaction
         {
             // construct the initial set of reactions to check.
             SortedSet<ReactionPrototype> reactions = new();
-            foreach (var reactant in solution.Contents)
+            foreach (var id in solution.Contents.Keys)
             {
-                if (_reactions.TryGetValue(reactant.ReagentId, out var reactantReactions))
+                if (_reactions.TryGetValue(id, out var reactantReactions))
                     reactions.UnionWith(reactantReactions);
             }
 

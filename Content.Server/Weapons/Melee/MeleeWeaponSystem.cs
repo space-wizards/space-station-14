@@ -567,14 +567,14 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         if (!hitBloodstreams.Any())
             return;
 
-        var removedSolution = solutionContainer.SplitSolution(comp.TransferAmount * hitBloodstreams.Count);
+        var removedSolution = solutionContainer.SplitSolution(comp.TransferAmount * hitBloodstreams.Count, _protoManager);
         var removedVol = removedSolution.CurrentVolume;
-        var solutionToInject = removedSolution.SplitSolution(removedVol * comp.TransferEfficiency);
+        var solutionToInject = removedSolution.SplitSolution(removedVol * comp.TransferEfficiency, _protoManager);
         var volPerBloodstream = solutionToInject.CurrentVolume * (1 / hitBloodstreams.Count);
 
         foreach (var bloodstream in hitBloodstreams)
         {
-            var individualInjection = solutionToInject.SplitSolution(volPerBloodstream);
+            var individualInjection = solutionToInject.SplitSolution(volPerBloodstream, _protoManager);
             _bloodstream.TryAddToChemicals((bloodstream).Owner, individualInjection, bloodstream);
         }
     }

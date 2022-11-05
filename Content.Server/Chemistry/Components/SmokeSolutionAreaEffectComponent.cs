@@ -5,6 +5,7 @@ using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Smoking;
+using Robust.Shared.Prototypes;
 using System.Linq;
 
 namespace Content.Server.Chemistry.Components
@@ -14,6 +15,7 @@ namespace Content.Server.Chemistry.Components
     public sealed class SmokeSolutionAreaEffectComponent : SolutionAreaEffectComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
+        [Dependency] private readonly IPrototypeManager _proto = default!;
 
         public new const string SolutionName = "solutionArea";
 
@@ -22,7 +24,7 @@ namespace Content.Server.Chemistry.Components
             if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance) &&
                 EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
             {
-                appearance.SetData(SmokeVisuals.Color, solution.GetColor());
+                appearance.SetData(SmokeVisuals.Color, solution.GetColor(_proto));
             }
         }
 
@@ -41,7 +43,7 @@ namespace Content.Server.Chemistry.Components
             var chemistry = EntitySystem.Get<ReactiveSystem>();
             var cloneSolution = solution.Clone();
             var transferAmount = FixedPoint2.Min(cloneSolution.CurrentVolume * solutionFraction, bloodstream.ChemicalSolution.AvailableVolume);
-            var transferSolution = cloneSolution.SplitSolution(transferAmount);
+            var transferSolution = cloneSolution.SplitSolution(transferAmount, _proto);
 
             foreach (var (id, quantity) in transferSolution.Contents.ToArray())
             {
