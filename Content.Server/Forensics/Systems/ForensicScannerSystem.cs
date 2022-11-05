@@ -91,6 +91,23 @@ namespace Content.Server.Forensics
             OpenUserInterface(ev.User, scanner);
         }
 
+        /// <remarks>
+        /// Hosts logic common between OnUtilityVerb and OnAfterInteract.
+        /// </remarks>
+        private void StartScan(EntityUid uid, ForensicScannerComponent component, EntityUid user, EntityUid target)
+        {
+            component.CancelToken = new CancellationTokenSource();
+            _doAfterSystem.DoAfter(new DoAfterEventArgs(user, component.ScanDelay, component.CancelToken.Token, target: target)
+            {
+                BroadcastFinishedEvent = new TargetScanSuccessfulEvent(user, (EntityUid) target, component.Owner),
+                BroadcastCancelledEvent = new ScanCancelledEvent(component.Owner),
+                BreakOnTargetMove = true,
+                BreakOnUserMove = true,
+                BreakOnStun = true,
+                NeedHand = true
+            });
+        }
+
         private void OnUtilityVerb(EntityUid uid, ForensicScannerComponent component, GetVerbsEvent<UtilityVerb> args)
         {
             if (!args.CanInteract || !args.CanAccess || component.CancelToken != null)
@@ -98,19 +115,7 @@ namespace Content.Server.Forensics
 
             var verb = new UtilityVerb()
             {
-                Act = () =>
-                {
-                    component.CancelToken = new CancellationTokenSource();
-                    _doAfterSystem.DoAfter(new DoAfterEventArgs(args.User, component.ScanDelay, component.CancelToken.Token, target: args.Target)
-                    {
-                        BroadcastFinishedEvent = new TargetScanSuccessfulEvent(args.User, (EntityUid) args.Target, component.Owner),
-                        BroadcastCancelledEvent = new ScanCancelledEvent(component.Owner),
-                        BreakOnTargetMove = true,
-                        BreakOnUserMove = true,
-                        BreakOnStun = true,
-                        NeedHand = true
-                    });
-                },
+                Act = () => StartScan(uid, component, args.User, args.Target),
                 IconEntity = uid,
                 Text = Loc.GetString("forensic-scanner-verb-text"),
                 Message = Loc.GetString("forensic-scanner-verb-message")
@@ -124,16 +129,7 @@ namespace Content.Server.Forensics
             if (component.CancelToken != null || args.Target == null || !args.CanReach)
                 return;
 
-            component.CancelToken = new CancellationTokenSource();
-            _doAfterSystem.DoAfter(new DoAfterEventArgs(args.User, component.ScanDelay, component.CancelToken.Token, target: args.Target)
-            {
-                BroadcastFinishedEvent = new TargetScanSuccessfulEvent(args.User, (EntityUid) args.Target, component.Owner),
-                BroadcastCancelledEvent = new ScanCancelledEvent(component.Owner),
-                BreakOnTargetMove = true,
-                BreakOnUserMove = true,
-                BreakOnStun = true,
-                NeedHand = true
-            });
+            StartScan(uid, component, args.User, args.Target.Value);
         }
 
         private void OnAfterInteractUsing(EntityUid uid, ForensicScannerComponent component, AfterInteractUsingEvent args)
