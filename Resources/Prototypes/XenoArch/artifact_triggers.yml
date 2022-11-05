@@ -56,7 +56,7 @@
 - type: artifactTrigger
   id: TriggerBruteDamage
   targetDepth: 1
-  triggerHint: artifact-trigger-hint-brute-damage
+  triggerHint: artifact-trigger-hint-physical
   components:
   - type: ArtifactDamageTrigger
     damageTypes:
@@ -101,7 +101,7 @@
 - type: artifactTrigger
   id: TriggerLowPressure
   targetDepth: 2
-  triggerHint: artifact-trigger-hint-pressure-high
+  triggerHint: artifact-trigger-hint-pressure
   components:
   - type: ArtifactPressureTrigger
     maxPressureThreshold: 50
@@ -109,7 +109,7 @@
 - type: artifactTrigger
   id: TriggerHighDamage
   targetDepth: 3
-  triggerHint: artifact-trigger-hint-high-damage
+  triggerHint: artifact-trigger-hint-physical
   components:
   - type: ArtifactDamageTrigger
     damageThreshold: 500 #make it go boom or w/e
@@ -128,7 +128,7 @@
 - type: artifactTrigger
   id: TriggerHighPressure
   targetDepth: 3
-  triggerHint: artifact-trigger-hint-pressure-high
+  triggerHint: artifact-trigger-hint-pressure
   components:
   - type: ArtifactPressureTrigger
     maxPressureThreshold: 385

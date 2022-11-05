@@ -1,5 +1,8 @@
 ﻿namespace Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
 
+/// <summary>
+/// Triggers when a nearby entity dies
+/// </summary>
 [RegisterComponent]
 public sealed class ArtifactDeathTriggerComponent : Component
 {

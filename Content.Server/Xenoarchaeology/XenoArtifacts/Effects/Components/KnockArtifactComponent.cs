@@ -6,6 +6,9 @@
 [RegisterComponent]
 public sealed class KnockArtifactComponent : Component
 {
+    /// <summary>
+    /// The range of the spell
+    /// </summary>
     [DataField("knockRange")]
     public float KnockRange = 4f;
 }

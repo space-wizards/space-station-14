@@ -9,8 +9,14 @@ namespace Content.Server.Xenoarchaeology.Equipment.Components;
 [RegisterComponent]
 public sealed class ActiveScannedArtifactComponent : Component
 {
+    /// <summary>
+    /// The scanner that is scanning this artifact
+    /// </summary>
     [ViewVariables]
     public EntityUid Scanner;
 
+    /// <summary>
+    /// The sound that plays when the scan fails
+    /// </summary>
     public readonly SoundSpecifier ScanFailureSound = new SoundPathSpecifier("/Audio/Machines/custom_deny.ogg");
 }

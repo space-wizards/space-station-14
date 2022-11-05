@@ -1,5 +1,9 @@
 ﻿namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 
+/// <summary>
+/// Throws all nearby entities backwards.
+/// Also pries nearby tiles.
+/// </summary>
 [RegisterComponent]
 public sealed class ThrowArtifactComponent : Component
 {

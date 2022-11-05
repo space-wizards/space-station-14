@@ -53,6 +53,9 @@ public sealed class ArtifactComponent : Component
     public TimeSpan LastActivationTime;
 }
 
+/// <summary>
+/// A tree of nodes.
+/// </summary>
 [DataDefinition]
 public sealed class ArtifactTree
 {
@@ -69,6 +72,9 @@ public sealed class ArtifactTree
     public readonly List<ArtifactNode> AllNodes = new();
 }
 
+/// <summary>
+/// A single "node" of an artifact that contains various data about it.
+/// </summary>
 [DataDefinition]
 public sealed class ArtifactNode
 {

@@ -1,5 +1,8 @@
 ﻿namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 
+/// <summary>
+/// Flickers all the lights within a certain radius.
+/// </summary>
 [RegisterComponent]
 public sealed class LightFlickerArtifactComponent : Component
 {

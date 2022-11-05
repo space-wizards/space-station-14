@@ -1,5 +1,8 @@
 ﻿namespace Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
 
+/// <summary>
+/// Triggers when an instrument is played nearby
+/// </summary>
 [RegisterComponent]
 public sealed class ArtifactMusicTriggerComponent : Component
 {

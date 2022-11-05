@@ -34,8 +34,7 @@ public sealed class ArtifactDeathTriggerSystem : EntitySystem
 
         foreach (var a in toActivate)
         {
-            //we force it just because we don't want to waste deaths
-            _artifact.ForceActivateArtifact(a.Owner);
+            _artifact.TryActivateArtifact(a.Owner);
         }
     }
 }

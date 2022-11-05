@@ -16,7 +16,6 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
-using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
@@ -24,6 +23,10 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Xenoarchaeology.Equipment.Systems;
 
+/// <summary>
+/// This system is used for managing the artifact analyzer as well as the analysis console.
+/// It also hanadles scanning and ui updates for both systems.
+/// </summary>
 public sealed class ArtifactAnalyzerSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
@@ -40,6 +43,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
 
         SubscribeLocalEvent<ActiveArtifactAnalyzerComponent, ComponentStartup>(OnAnalyzeStart);
         SubscribeLocalEvent<ActiveArtifactAnalyzerComponent, ComponentShutdown>(OnAnalyzeEnd);
+        SubscribeLocalEvent<ActiveArtifactAnalyzerComponent, PowerChangedEvent>(OnPowerChanged);
 
         SubscribeLocalEvent<ArtifactAnalyzerComponent, UpgradeExamineEvent>(OnUpgradeExamine);
         SubscribeLocalEvent<ArtifactAnalyzerComponent, RefreshPartsEvent>(OnRefreshParts);
@@ -76,6 +80,11 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// Resets the current scan on the artifact analyzer
+    /// </summary>
+    /// <param name="uid">The analyzer being reset</param>
+    /// <param name="component"></param>
     [PublicAPI]
     public void ResetAnalyzer(EntityUid uid, ArtifactAnalyzerComponent? component = null)
     {
@@ -86,18 +95,31 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         UpdateAnalyzerInformation(uid, component);
     }
 
-    private EntityUid? GetArtifactForAnalysis(EntityUid? uid, ArtifactAnalyzerComponent? component = null, PhysicsComponent? phys = null)
+    /// <summary>
+    /// Goes through the current contacts on
+    /// the analyzer and returns a valid artifact
+    /// </summary>
+    /// <param name="uid"></param>
+    /// <param name="component"></param>
+    /// <returns></returns>
+    private EntityUid? GetArtifactForAnalysis(EntityUid? uid, ArtifactAnalyzerComponent? component = null)
     {
         if (uid == null)
             return null;
 
-        if (!Resolve(uid.Value, ref component, ref phys))
+        if (!Resolve(uid.Value, ref component))
             return null;
 
         var validEnts = component.Contacts.Where(HasComp<ArtifactComponent>).ToHashSet();
         return validEnts.FirstOrNull();
     }
 
+    /// <summary>
+    /// Updates the current scan information based on
+    /// the last artifact that was scanned.
+    /// </summary>
+    /// <param name="uid"></param>
+    /// <param name="component"></param>
     private void UpdateAnalyzerInformation(EntityUid uid, ArtifactAnalyzerComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -176,11 +198,23 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         _ui.SetUiState(bui, state);
     }
 
+    /// <summary>
+    /// opens the server selection menu.
+    /// </summary>
+    /// <param name="uid"></param>
+    /// <param name="component"></param>
+    /// <param name="args"></param>
     private void OnServerSelectionMessage(EntityUid uid, AnalysisConsoleComponent component, AnalysisConsoleServerSelectionMessage args)
     {
         _ui.TryOpen(uid, ResearchClientUiKey.Key, (IPlayerSession) args.Session);
     }
 
+    /// <summary>
+    /// Starts scanning the artifact.
+    /// </summary>
+    /// <param name="uid"></param>
+    /// <param name="component"></param>
+    /// <param name="args"></param>
     private void OnScanButton(EntityUid uid, AnalysisConsoleComponent component, AnalysisConsoleScanButtonPressedMessage args)
     {
         if (component.AnalyzerEntity == null)
@@ -201,6 +235,12 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         activeArtifact.Scanner = component.AnalyzerEntity.Value;
     }
 
+    /// <summary>
+    /// destroys the artifact and updates the server points
+    /// </summary>
+    /// <param name="uid"></param>
+    /// <param name="component"></param>
+    /// <param name="args"></param>
     private void OnDestroyButton(EntityUid uid, AnalysisConsoleComponent component, AnalysisConsoleDestroyButtonPressedMessage args)
     {
         if (!TryComp<ResearchClientComponent>(uid, out var client) || client.Server == null || component.AnalyzerEntity == null)
@@ -227,11 +267,23 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         UpdateUserInterface(uid, component);
     }
 
+    /// <summary>
+    /// Cancels scans if the artifact changes nodes (is activated) during the scan.
+    /// </summary>
+    /// <param name="uid"></param>
+    /// <param name="component"></param>
+    /// <param name="args"></param>
     private void OnArtifactActivated(EntityUid uid, ActiveScannedArtifactComponent component, ArtifactActivatedEvent args)
     {
         CancelScan(uid);
     }
 
+    /// <summary>
+    /// Checks to make sure that the currently scanned artifact isn't moved off of the scanner
+    /// </summary>
+    /// <param name="uid"></param>
+    /// <param name="component"></param>
+    /// <param name="args"></param>
     private void OnScannedMoved(EntityUid uid, ActiveScannedArtifactComponent component, ref MoveEvent args)
     {
         if (!TryComp<ArtifactAnalyzerComponent>(component.Scanner, out var analyzer))
@@ -243,6 +295,12 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         CancelScan(uid, component, analyzer);
     }
 
+    /// <summary>
+    /// Stops the current scan
+    /// </summary>
+    /// <param name="artifact">The artifact being scanned</param>
+    /// <param name="component"></param>
+    /// <param name="analyzer">The artifact analyzer component</param>
     [PublicAPI]
     public void CancelScan(EntityUid artifact, ActiveScannedArtifactComponent? component = null, ArtifactAnalyzerComponent? analyzer = null)
     {
@@ -261,7 +319,14 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         RemCompDeferred(artifact, component);
     }
 
-    private void FinishScan(EntityUid uid, ArtifactAnalyzerComponent? component = null, ActiveArtifactAnalyzerComponent? active = null)
+    /// <summary>
+    /// Finishes the current scan.
+    /// </summary>
+    /// <param name="uid">The analyzer that is scanning</param>
+    /// <param name="component"></param>
+    /// <param name="active"></param>
+    [PublicAPI]
+    public void FinishScan(EntityUid uid, ArtifactAnalyzerComponent? component = null, ActiveArtifactAnalyzerComponent? active = null)
     {
         if (!Resolve(uid, ref component, ref active))
             return;
@@ -327,6 +392,12 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
 
         component.LoopStream?.Stop();
         _audio.PlayPvs(component.ScanFinishedSound, uid);
+    }
+
+    private void OnPowerChanged(EntityUid uid, ActiveArtifactAnalyzerComponent component, PowerChangedEvent args)
+    {
+        if (!args.Powered)
+            CancelScan(component.Artifact);
     }
 }
 

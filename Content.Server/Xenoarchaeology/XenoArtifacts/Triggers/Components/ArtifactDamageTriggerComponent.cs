@@ -3,6 +3,9 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
 
+/// <summary>
+/// Triggers when a certain threshold of damage of certain types is reached
+/// </summary>
 [RegisterComponent]
 public sealed class ArtifactDamageTriggerComponent : Component
 {

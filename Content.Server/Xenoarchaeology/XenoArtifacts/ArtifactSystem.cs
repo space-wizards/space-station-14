@@ -14,7 +14,7 @@ public sealed partial class ArtifactSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
 
     private const int PricePerNode = 500;
-    private const int PointsPerNode = 4000;
+    private const int PointsPerNode = 5000;
 
     public override void Initialize()
     {
@@ -109,6 +109,13 @@ public sealed partial class ArtifactSystem : EntitySystem
         EnterNode(component.Owner, ref component.NodeTree.StartNode, component, false);
     }
 
+    /// <summary>
+    /// Tries to activate the artifact
+    /// </summary>
+    /// <param name="uid"></param>
+    /// <param name="user"></param>
+    /// <param name="component"></param>
+    /// <returns></returns>
     public bool TryActivateArtifact(EntityUid uid, EntityUid? user = null, ArtifactComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -127,6 +134,12 @@ public sealed partial class ArtifactSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    /// Forces an artifact to activate
+    /// </summary>
+    /// <param name="uid"></param>
+    /// <param name="user"></param>
+    /// <param name="component"></param>
     public void ForceActivateArtifact(EntityUid uid, EntityUid? user = null, ArtifactComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -178,6 +191,13 @@ public sealed partial class ArtifactSystem : EntitySystem
         return false;
     }
 
+    /// <summary>
+    /// Sets the node data to a certain value
+    /// </summary>
+    /// <param name="uid">The artifact</param>
+    /// <param name="key">The key being set</param>
+    /// <param name="value">The value it's being set to</param>
+    /// <param name="component"></param>
     public void SetNodeData(EntityUid uid, string key, object value, ArtifactComponent? component = null)
     {
         if (!Resolve(uid, ref component))

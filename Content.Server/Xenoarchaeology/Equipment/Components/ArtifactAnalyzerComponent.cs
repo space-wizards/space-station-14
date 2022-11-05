@@ -6,7 +6,8 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Xenoarchaeology.Equipment.Components;
 
 /// <summary>
-/// This is used for...
+/// A machine that is combined and linked to the <see cref="AnalysisConsoleComponent"/>
+/// in order to analyze and destroy artifacts.
 /// </summary>
 [RegisterComponent]
 public sealed class ArtifactAnalyzerComponent : Component
@@ -17,18 +18,35 @@ public sealed class ArtifactAnalyzerComponent : Component
     [DataField("analysisDuration", customTypeSerializer: typeof(TimespanSerializer))]
     public TimeSpan AnalysisDuration = TimeSpan.FromSeconds(60);
 
+    /// <summary>
+    /// A mulitplier on the duration of analysis.
+    /// Used for machine upgrading.
+    /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     public float AnalysisDurationMulitplier = 1;
 
+    /// <summary>
+    /// The machine part that modifies analysis duration.
+    /// </summary>
     [DataField("machinePartAnalysisDuration", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
     public string MachinePartAnalysisDuration = "ScanningModule";
 
+    /// <summary>
+    /// The modifier raised to the part rating to determine the duration multiplier.
+    /// </summary>
     [DataField("partRatingAnalysisDurationMultiplier")]
     public float PartRatingAnalysisDurationMultiplier = 0.75f;
 
+    /// <summary>
+    /// The corresponding console entity.
+    /// Can be null if not linked.
+    /// </summary>
     [ViewVariables]
     public EntityUid? Console;
 
+    /// <summary>
+    /// All of the valid artifacts currently touching the analyzer.
+    /// </summary>
     [ViewVariables]
     public HashSet<EntityUid> Contacts = new();
 
