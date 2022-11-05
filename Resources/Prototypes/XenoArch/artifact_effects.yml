@@ -194,6 +194,7 @@
   components:
   - type: SpawnArtifact
     maxSpawns: 5
+    consistentSpawn: false
     possiblePrototypes:
     - SheetGlass
     - SheetSteel
@@ -209,6 +210,21 @@
     range: 7.5
     messages:
     - shuffle-artifact-popup
+
+- type: artifactEffect
+  id: EffectT3PartsSpawn
+  targetDepth: 3
+  effectHint: artifact-effect-hint-creation
+  components:
+  - type: SpawnArtifact
+    maxSpawns: 10
+    consistentSpawn: false
+    possiblePrototypes:
+    - SuperCapacitorStockPart
+    - PhasicScanningModuleStockPart
+    - PicoManipulatorStockPart
+    - UltraHighPowerMicroLaserStockPart
+    - SuperMatterBinStockPart
 
 - type: artifactEffect
   id: EffectGas
@@ -246,11 +262,20 @@
   components:
   - type: SpawnArtifact
     maxSpawns: 5
+    consistentSpawn: false
     possiblePrototypes:
     - SilverOre1
     - PlasmaOre1
     - GoldOre1
     - UraniumOre1
+
+- type: artifactEffect
+  id: EffectPowerGen20K
+  targetDepth: 4
+  effectHint: artifact-effect-hint-release
+  components:
+  - type: PowerSupplier
+    supplyRate: 20000
 
 - type: artifactEffect
   id: EffectHeat
