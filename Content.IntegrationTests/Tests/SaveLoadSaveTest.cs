@@ -21,18 +21,20 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task SaveLoadSave()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new (){Fresh = true, Disconnected = true});
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings {Fresh = true, Disconnected = true});
             var server = pairTracker.Pair.Server;
             var mapLoader = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<MapLoaderSystem>();
             var mapManager = server.ResolveDependency<IMapManager>();
+
             await server.WaitPost(() =>
             {
+                var mapId0 = mapManager.CreateMap();
                 // TODO: Properly find the "main" station grid.
-                var grid0 = mapManager.GetAllGrids().First();
+                var grid0 = mapManager.CreateGrid(mapId0);
                 mapLoader.Save(grid0.GridEntityId, "save load save 1.yml");
-                var mapId = mapManager.CreateMap();
-                var grid = mapLoader.LoadGrid(mapId, "save load save 1.yml", new MapLoadOptions() {LoadMap = false});
-                mapLoader.Save(grid!.Value, "save load save 2.yml");
+                var mapId1 = mapManager.CreateMap();
+                var grid1 = mapLoader.LoadGrid(mapId1, "save load save 1.yml", new MapLoadOptions() {LoadMap = false});
+                mapLoader.Save(grid1!.Value, "save load save 2.yml");
             });
 
             await server.WaitIdleAsync();
@@ -42,17 +44,17 @@ namespace Content.IntegrationTests.Tests
             string two;
 
             var rp1 = new ResourcePath("/save load save 1.yml");
-            using (var stream = userData.Open(rp1, FileMode.Open))
+            await using (var stream = userData.Open(rp1, FileMode.Open))
             using (var reader = new StreamReader(stream))
             {
-                one = reader.ReadToEnd();
+                one = await reader.ReadToEndAsync();
             }
 
             var rp2 = new ResourcePath("/save load save 2.yml");
-            using (var stream = userData.Open(rp2, FileMode.Open))
+            await using (var stream = userData.Open(rp2, FileMode.Open))
             using (var reader = new StreamReader(stream))
             {
-                two = reader.ReadToEnd();
+                two = await reader.ReadToEndAsync();
             }
 
             Assert.Multiple(() => {
