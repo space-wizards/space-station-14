@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Barratry has been removed., type: Remove}
-  id: 2080
-  time: '2022-08-03T23:44:11.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Emergency light alarm now uses the correct sound., type: Fix}
@@ -2966,3 +2961,8 @@ Entries:
       inside!, type: Tweak}
   id: 2579
   time: '2022-11-04T19:24:29.0000000+00:00'
+- author: Salex08
+  changes:
+  - {message: Shot Projectiles cause impulses like it was supposed to, type: Fix}
+  id: 2580
+  time: '2022-11-05T03:08:32.0000000+00:00'
