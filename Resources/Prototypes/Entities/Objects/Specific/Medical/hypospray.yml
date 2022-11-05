@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   name: hypospray
   parent: BaseItem
   description: A sterile injector for rapid administration of drugs to patients.
