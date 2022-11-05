@@ -1,15 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed an issue preventing lathes from being unanchored using a wrench.,
-    type: Fix}
-  id: 2082
-  time: '2022-08-04T00:38:56.0000000+00:00'
-- author: Veritius
-  changes:
-  - {message: The admin announcement UI auto-closing is now optional., type: Tweak}
-  id: 2083
-  time: '2022-08-04T00:39:10.0000000+00:00'
 - author: jessicamaybe
   changes:
   - {message: Muting lobby music will now also mute the restart sound (APC DESTROYED),
@@ -2966,3 +2955,14 @@ Entries:
   - {message: Glowstick sprites inhand are now visible, type: Fix}
   id: 2581
   time: '2022-11-05T15:28:44.0000000+00:00'
+- author: Cripes
+  changes:
+  - {message: Construction menu displays correct icon for air injector, type: Fix}
+  id: 2582
+  time: '2022-11-05T15:31:22.0000000+00:00'
+- author: Daemon
+  changes:
+  - {message: Added security target dummies., type: Add}
+  - {message: Added practice laser gun., type: Add}
+  id: 2583
+  time: '2022-11-05T15:32:00.0000000+00:00'
