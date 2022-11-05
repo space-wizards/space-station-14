@@ -1,37 +1,4 @@
 Entries:
-- author: JustinTrotter
-  changes:
-  - {message: backpack and duffels no longer only display default gray when held,
-    type: Fix}
-  id: 2078
-  time: '2022-08-02T21:30:05.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: NPCs no longer move at half speed., type: Fix}
-  - {message: NPCs shouldn't get stuck going back and forth anymore., type: Fix}
-  id: 2079
-  time: '2022-08-03T06:02:50.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Barratry has been removed., type: Remove}
-  id: 2080
-  time: '2022-08-03T23:44:11.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Emergency light alarm now uses the correct sound., type: Fix}
-  id: 2081
-  time: '2022-08-04T00:37:20.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed an issue preventing lathes from being unanchored using a wrench.,
-    type: Fix}
-  id: 2082
-  time: '2022-08-04T00:38:56.0000000+00:00'
-- author: Veritius
-  changes:
-  - {message: The admin announcement UI auto-closing is now optional., type: Tweak}
-  id: 2083
-  time: '2022-08-04T00:39:10.0000000+00:00'
 - author: jessicamaybe
   changes:
   - {message: Muting lobby music will now also mute the restart sound (APC DESTROYED),
@@ -2966,3 +2933,36 @@ Entries:
   - {message: Pinpointer arrow should be more accurate., type: Tweak}
   id: 2577
   time: '2022-11-04T04:15:24.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed a bug allowing lathes to infinitely print items when upgraded.,
+    type: Fix}
+  id: 2578
+  time: '2022-11-04T19:13:07.0000000+00:00'
+- author: checkraze
+  changes:
+  - {message: changed the presents to be boxes and made a new present that has a surprise
+      inside!, type: Tweak}
+  id: 2579
+  time: '2022-11-04T19:24:29.0000000+00:00'
+- author: Salex08
+  changes:
+  - {message: Shot Projectiles cause impulses like it was supposed to, type: Fix}
+  id: 2580
+  time: '2022-11-05T03:08:32.0000000+00:00'
+- author: rolfero
+  changes:
+  - {message: Glowstick sprites inhand are now visible, type: Fix}
+  id: 2581
+  time: '2022-11-05T15:28:44.0000000+00:00'
+- author: Cripes
+  changes:
+  - {message: Construction menu displays correct icon for air injector, type: Fix}
+  id: 2582
+  time: '2022-11-05T15:31:22.0000000+00:00'
+- author: Daemon
+  changes:
+  - {message: Added security target dummies., type: Add}
+  - {message: Added practice laser gun., type: Add}
+  id: 2583
+  time: '2022-11-05T15:32:00.0000000+00:00'
