@@ -164,6 +164,7 @@ namespace Content.Server.Power.Pow3r
                     battery.AvailableSupply = Math.Min(scaledSpace, supplyAndPassthrough);
                     battery.LoadingNetworkDemand = unmet;
 
+                    battery.MaxEffectiveSupply = Math.Min(battery.CurrentStorage / frameTime, battery.MaxSupply + battery.CurrentReceiving * battery.Efficiency); 
                     totalBatterySupply += battery.AvailableSupply;
                     totalMaxBatterySupply += battery.MaxEffectiveSupply;
                 }
@@ -231,6 +232,7 @@ namespace Content.Server.Power.Pow3r
 
             // Target output capacity for batteries
             var relativeBatteryOutput = Math.Min(unmet, totalBatterySupply) / totalBatterySupply;
+            var relativeTargetBatteryOutput = Math.Min(unmet, totalMaxBatterySupply) / totalMaxBatterySupply;
 
             // Apply load to supplying batteries
             foreach (var batteryId in network.BatterySupplies)
@@ -241,13 +243,18 @@ namespace Content.Server.Power.Pow3r
 
                 battery.SupplyingMarked = true;
                 battery.CurrentSupply = battery.AvailableSupply * relativeBatteryOutput;
+                // Note that because available supply is always greater than or equal to the current ramp target, if you
+                // have multiple batteries running at less than 100% output, then batteries with greater ramp tolerances
+                // will contribute a larger relative fraction of output power as they have a larger available supply.
+                // IMO this is undesirable, but I can't think of an easy fix ATM.
+
                 battery.CurrentStorage -= frameTime * battery.CurrentSupply;
                 DebugTools.Assert(battery.CurrentStorage >= 0 || MathHelper.CloseTo(battery.CurrentStorage, 0));
 
-                // TODO calculate this properly. Currently this is only initially non-zero if the ramp tolerance is
-                // non-zero then the ramp target grows as the ramp position does. Instead, batteries should just try to
-                // ramp to satisfy the demand.
-                battery.SupplyRampTarget = battery.CurrentSupply - battery.CurrentReceiving * battery.Efficiency;
+                battery.SupplyRampTarget = battery.MaxEffectiveSupply * relativeTargetBatteryOutput - battery.CurrentReceiving * battery.Efficiency;
+
+                DebugTools.Assert(battery.SupplyRampTarget + battery.CurrentReceiving * battery.Efficiency <= battery.LoadingNetworkDemand
+                    || MathHelper.CloseTo(battery.SupplyRampTarget + battery.CurrentReceiving * battery.Efficiency, battery.LoadingNetworkDemand));
             }
         }
 

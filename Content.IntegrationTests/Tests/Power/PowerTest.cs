@@ -430,7 +430,6 @@ namespace Content.IntegrationTests.Tests.Power
             await pairTracker.CleanReturnAsync();
         }
 
-
         [Test]
         public async Task TestNoDemandRampdown()
         {
@@ -440,7 +439,6 @@ namespace Content.IntegrationTests.Tests.Power
             var server = pairTracker.Pair.Server;
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
-            var gameTiming = server.ResolveDependency<IGameTiming>();
             PowerSupplierComponent supplier = default!;
             PowerNetworkBatteryComponent netBattery = default!;
             BatteryComponent battery = default!;
@@ -496,7 +494,6 @@ namespace Content.IntegrationTests.Tests.Power
 
             await server.WaitAssertion(() =>
             {
-                // After 15 ticks (0.25 seconds), supply ramp pos should be at 100 W and supply at 100, approx.
                 Assert.That(supplier.CurrentSupply, Is.EqualTo(draw/2).Within(0.1));
                 Assert.That(supplier.SupplyRampPosition, Is.EqualTo(draw/2).Within(0.1));
                 Assert.That(netBattery.CurrentSupply, Is.EqualTo(draw / 2).Within(0.1));
@@ -511,7 +508,6 @@ namespace Content.IntegrationTests.Tests.Power
 
             await server.WaitAssertion(() =>
             {
-                // After 1 second total, ramp should be at 400 and supply should be at 400, everybody happy.
                 Assert.That(supplier.CurrentSupply, Is.EqualTo(0).Within(0.1));
                 Assert.That(supplier.SupplyRampPosition, Is.EqualTo(0).Within(0.1));
                 Assert.That(netBattery.CurrentSupply, Is.EqualTo(0).Within(0.1));
@@ -521,8 +517,6 @@ namespace Content.IntegrationTests.Tests.Power
 
             await pairTracker.CleanReturnAsync();
         }
-
-
 
         [Test]
         public async Task TestSimpleBatteryChargeDeficit()

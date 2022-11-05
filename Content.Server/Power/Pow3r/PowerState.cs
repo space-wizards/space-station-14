@@ -410,7 +410,15 @@ namespace Content.Server.Power.Pow3r
             [ViewVariables(VVAccess.ReadWrite)] public float MaxChargeRate;
             [ViewVariables(VVAccess.ReadWrite)] public float MaxThroughput; // 0 = infinite cuz imgui
             [ViewVariables(VVAccess.ReadWrite)] public float MaxSupply;
+
+            /// <summary>
+            ///     The batteries supply ramp tolerance. This is an always available supply added to the ramped supply.
+            /// </summary>
+            /// <remarks>
+            ///     Note that this MUST BE GREATER THAN ZERO, otherwise the current battery ramping calculation will not work.
+            /// </remarks>
             [ViewVariables(VVAccess.ReadWrite)] public float SupplyRampTolerance = 5000;
+
             [ViewVariables(VVAccess.ReadWrite)] public float SupplyRampRate = 5000;
             [ViewVariables(VVAccess.ReadWrite)] public float Efficiency = 1;
 
@@ -449,8 +457,8 @@ namespace Content.Server.Power.Pow3r
             ///  Theoretical maximum effective supply, assuming the network providing power to this battery continues to supply it
             ///  at the same rate.
             /// </summary>
-            [ViewVariables] [JsonIgnore]
-            public float MaxEffectiveSupply => MaxSupply + CurrentReceiving * Efficiency;
+            [ViewVariables]
+            public float MaxEffectiveSupply;
         }
 
         // Readonly breaks json serialization.
