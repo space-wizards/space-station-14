@@ -1,9 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Emergency light alarm now uses the correct sound., type: Fix}
-  id: 2081
-  time: '2022-08-04T00:37:20.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed an issue preventing lathes from being unanchored using a wrench.,
@@ -2966,3 +2961,8 @@ Entries:
   - {message: Shot Projectiles cause impulses like it was supposed to, type: Fix}
   id: 2580
   time: '2022-11-05T03:08:32.0000000+00:00'
+- author: rolfero
+  changes:
+  - {message: Glowstick sprites inhand are now visible, type: Fix}
+  id: 2581
+  time: '2022-11-05T15:28:44.0000000+00:00'
