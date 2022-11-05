@@ -3,10 +3,8 @@ using Content.Shared.Verbs;
 
 namespace Content.Shared.Examine
 {
-    public abstract class GroupExamineSystem : EntitySystem
+    public abstract partial class ExamineSystemShared : EntitySystem
     {
-
-        [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
         [Dependency] private readonly IComponentFactory _componentFactory = default!;
 
         public override void Initialize()
@@ -77,7 +75,7 @@ namespace Content.Shared.Examine
             }
             message.AddMessage(GetFormattedMessageFromExamineEntries(group.Entries));
 
-            _examineSystem.SendExamineTooltip(user, target, message, false, false);
+            SendExamineTooltip(user, target, message, false, false);
         }
 
         /// <returns>A FormattedMessage based on all <paramref name="entries"/>, sorted.</returns>
@@ -147,7 +145,7 @@ namespace Content.Shared.Examine
             {
                 Act = () =>
                 {
-                    _examineSystem.SendExamineTooltip(verbsEvent.User, verbsEvent.Target, formattedMessage, false, false);
+                    SendExamineTooltip(verbsEvent.User, verbsEvent.Target, formattedMessage, false, false);
                 },
                 Text = verbText,
                 Message = hoverMessage,
