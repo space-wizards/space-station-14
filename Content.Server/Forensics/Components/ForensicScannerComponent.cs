@@ -27,10 +27,22 @@ namespace Content.Server.Forensics
         public string LastScannedName = string.Empty;
 
         /// <summary>
+        /// When will the scanner be ready to print again?
+        /// </summary>
+        [ViewVariables(VVAccess.ReadOnly)]
+        public TimeSpan PrintReadyAt = TimeSpan.Zero;
+
+        /// <summary>
         /// The time (in seconds) that it takes to scan an entity.
         /// </summary>
         [DataField("scanDelay")]
         public float ScanDelay = 3.0f;
+
+        /// <summary>
+        /// How often can the scanner print out reports?
+        /// </summary>
+        [DataField("printCooldown")]
+        public TimeSpan PrintCooldown = TimeSpan.FromSeconds(5);
 
         /// <summary>
         /// The sound that's played when there's a match between a scan and an

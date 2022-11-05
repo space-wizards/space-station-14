@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Text; // todo: remove this stinky LINQy
 using System.Threading;
+using Robust.Shared.Timing;
 using Content.Server.DoAfter;
 using Content.Server.Paper;
 using Content.Server.Popups;
@@ -16,6 +17,7 @@ namespace Content.Server.Forensics
 {
     public sealed class ForensicScannerSystem : EntitySystem
     {
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
@@ -42,8 +44,9 @@ namespace Content.Server.Forensics
             var state = new ForensicScannerBoundUserInterfaceState(
                 component.Fingerprints,
                 component.Fibers,
-                component.LastScannedName
-                );
+                component.LastScannedName,
+                component.PrintCooldown,
+                component.PrintReadyAt);
 
             if (!_uiSystem.TrySetUiState(uid, ForensicScannerUiKey.Key, state))
             {
@@ -178,9 +181,18 @@ namespace Content.Server.Forensics
         {
             if (!args.Session.AttachedEntity.HasValue || (component.Fibers.Count == 0 && component.Fingerprints.Count == 0))
                 return;
+            var user = args.Session.AttachedEntity.Value;
 
-            // spawn a piece of paper.
-            var printed = EntityManager.SpawnEntity("Paper", Transform(args.Session.AttachedEntity.Value).Coordinates);
+            if (_gameTiming.CurTime < component.PrintReadyAt)
+            {
+                // This shouldn't occur due to the UI guarding against it, but
+                // if it does, tell the user why nothing happened.
+                _popupSystem.PopupEntity(Loc.GetString("forensic-scanner-printer-not-ready"), uid, Filter.Entities(user));
+                return;
+            }
+
+            // Spawn a piece of paper.
+            var printed = EntityManager.SpawnEntity("Paper", Transform(uid).Coordinates);
             _handsSystem.PickupOrDrop(args.Session.AttachedEntity, printed, checkActionBlocker: false);
 
             if (!TryComp<PaperComponent>(printed, out var paper))
@@ -203,6 +215,8 @@ namespace Content.Server.Forensics
             }
 
             _paperSystem.SetContent(printed, text.ToString());
+
+            component.PrintReadyAt = _gameTiming.CurTime + component.PrintCooldown;
         }
 
         private void OnClear(EntityUid uid, ForensicScannerComponent component, ForensicScannerClearMessage args)

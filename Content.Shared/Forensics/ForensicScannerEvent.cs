@@ -8,12 +8,21 @@ namespace Content.Shared.Forensics
         public readonly List<string> Fingerprints = new();
         public readonly List<string> Fibers = new();
         public readonly string LastScannedName = string.Empty;
+        public readonly TimeSpan PrintCooldown = TimeSpan.Zero;
+        public readonly TimeSpan PrintReadyAt = TimeSpan.Zero;
 
-        public ForensicScannerBoundUserInterfaceState(List<string> fingerprints, List<string> fibers, string lastScannedName)
+        public ForensicScannerBoundUserInterfaceState(
+            List<string> fingerprints,
+            List<string> fibers,
+            string lastScannedName,
+            TimeSpan printCooldown,
+            TimeSpan printReadyAt)
         {
             Fingerprints = fingerprints;
             Fibers = fibers;
             LastScannedName = lastScannedName;
+            PrintCooldown = printCooldown;
+            PrintReadyAt = printReadyAt;
         }
     }
 
