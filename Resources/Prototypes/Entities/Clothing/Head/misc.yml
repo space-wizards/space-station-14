@@ -152,4 +152,4 @@
   - type: Clothing
     sprite: Clothing/Head/Hats/catears.rsi
   - type: AddAccentClothing
-    accent: OwOAccent
+    accent: NyaAccent
