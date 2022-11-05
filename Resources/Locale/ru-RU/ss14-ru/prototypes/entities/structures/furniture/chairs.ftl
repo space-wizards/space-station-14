@@ -35,5 +35,5 @@ ent-ChairFolding = раскладной стул
     .desc = Если вы унесёте шесть за раз - вы станете самым крутым парнем в актовом зале.
     .suffix = { "" }
 ent-ChairFoldingSpawnFolded = { ent-ChairFolding }
-    .desc = { ChairFolding.desc }
+    .desc = { ent-ChairFolding.desc }
     .suffix = сложенный
