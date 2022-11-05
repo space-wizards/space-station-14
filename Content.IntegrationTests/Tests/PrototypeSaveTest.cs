@@ -100,7 +100,6 @@ public sealed class PrototypeSaveTest
         "PoweredLightPostSmallEmpty",
         "PoweredLightPostSmall",
         "DeployableBarrier",
-        "CrateArtifactContainer",
         "CloningPod",
         "DrinkColaCan",
         "WeaponImprovisedPneumaticCannon",

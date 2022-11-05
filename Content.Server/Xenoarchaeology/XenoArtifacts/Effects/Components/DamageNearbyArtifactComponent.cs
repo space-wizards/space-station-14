@@ -15,6 +15,9 @@ public sealed class DamageNearbyArtifactComponent : Component
     [DataField("damage", required: true)]
     public DamageSpecifier Damage = default!;
 
+    [DataField("damageChance")]
+    public float DamageChance = 1f;
+
     [DataField("ignoreResistances")]
-    public bool IgnoreResistances = false;
+    public bool IgnoreResistances;
 }

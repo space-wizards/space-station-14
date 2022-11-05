@@ -177,9 +177,10 @@
 - type: artifactEffect
   id: EffectShatterWindows
   targetDepth: 2
-  effectHint: Environmental disruption
+  effectHint: artifact-effect-hint-environment
   components:
   - type: DamageNearbyArtifact
+    damageChance: 0.75
     whitelist:
       tags:
       - Window

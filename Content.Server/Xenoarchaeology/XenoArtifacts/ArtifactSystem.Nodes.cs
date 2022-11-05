@@ -160,6 +160,8 @@ public sealed partial class ArtifactSystem
         component.CurrentNode = node;
         node.Discovered = true;
 
+        Logger.Info(component.CurrentNode.Effect.ID);
+
         var allComponents = node.Effect.Components.Concat(node.Effect.PermanentComponents).Concat(node.Trigger.Components);
         foreach (var (name, entry) in allComponents)
         {

@@ -44,6 +44,7 @@
     - type: Weldable
     - type: SuppressArtifactContainer
     - type: PlaceableSurface
+      isPlaceable: false
     - type: Damageable
       damageContainer: Inorganic
       damageModifierSet: Metallic
