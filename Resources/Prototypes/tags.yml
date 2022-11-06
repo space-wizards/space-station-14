@@ -378,6 +378,9 @@
   id: NoSpinOnThrow
 
 - type: Tag
+  id: NoBlockAnchoring
+
+- type: Tag
   id: NukeOpsUplink
 
 - type: Tag
@@ -488,6 +491,18 @@
 
 - type: Tag
   id: Spear
+
+- type: Tag
+  id: SpeedLoaderCap
+
+- type: Tag
+  id: SpeedLoaderMagnum
+
+- type: Tag
+  id: SpeedLoaderPistol
+
+- type: Tag
+  id: SpeedLoaderRifle
 
 - type: Tag
   id: StringInstrument

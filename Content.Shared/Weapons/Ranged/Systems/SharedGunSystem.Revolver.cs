@@ -6,6 +6,8 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
+using System;
+using System.Linq;
 
 namespace Content.Shared.Weapons.Ranged.Systems;
 
@@ -73,23 +75,70 @@ public partial class SharedGunSystem
 
     public bool TryRevolverInsert(RevolverAmmoProviderComponent component, EntityUid uid, EntityUid? user)
     {
-        if (component.Whitelist?.IsValid(uid, EntityManager) == false) return false;
+        if (component.Whitelist?.IsValid(uid, EntityManager) == false)
+            return false;
 
         for (var i = 0; i < component.Capacity; i++)
         {
-            var index = (component.CurrentIndex + i) % component.Capacity;
+            if (EntityManager.HasComponent<BallisticAmmoProviderComponent>(uid))
+            {
+                var index = (component.CurrentIndex + i) % component.Capacity;
 
-            if (component.AmmoSlots[index] != null ||
-                component.Chambers[index] != null) continue;
+                if (component.AmmoSlots[index] != null ||
+                    component.Chambers[index] != null) continue;
 
-            component.AmmoSlots[index] = uid;
-            component.AmmoContainer.Insert(uid);
-            Audio.PlayPredicted(component.SoundInsert, component.Owner, user);
-            Popup(Loc.GetString("gun-revolver-insert"), component.Owner, user);
-            UpdateRevolverAppearance(component);
-            UpdateAmmoCount(uid);
-            Dirty(component);
-            return true;
+                var ammoComp = EntityManager.GetComponent<BallisticAmmoProviderComponent>(uid);
+
+                if (ammoComp.UnspawnedCount + ammoComp.Entities.Count == 0) // Checks if there's any ammo left in the speedloader
+                {
+                    Popup(Loc.GetString("gun-speedloader-empty"), component.Owner, user);
+                    return true;
+                }
+
+                var xform = EntityManager.GetComponent<TransformComponent>(uid);
+
+                var bullet = EntityUid.Invalid;
+
+                if (ammoComp.Container.ContainedEntities.Count == 0)
+                {
+                    ammoComp.UnspawnedCount -= 1;
+                    bullet = Spawn(ammoComp.FillProto, xform.MapPosition);
+                }
+                else
+                {
+                    bullet = ammoComp.Container.ContainedEntities.FirstOrNull()!.Value;
+                    ammoComp.Entities.Remove(bullet);
+                }
+
+                Audio.PlayPredicted(component.SoundInsert, component.Owner, user);
+                component.AmmoSlots[index] = bullet;
+                component.AmmoContainer.Insert(bullet);
+                UpdateBallisticAppearance(ammoComp);
+                UpdateRevolverAppearance(component);
+                UpdateAmmoCount(bullet);
+                Dirty(component);
+                if (i == component.Capacity - 1)
+                {
+                    Popup(Loc.GetString("gun-revolver-insert"), component.Owner, user);
+                    return true;
+                }
+            }
+            else
+            {
+                var index = (component.CurrentIndex + i) % component.Capacity;
+
+                if (component.AmmoSlots[index] != null ||
+                    component.Chambers[index] != null) continue;
+
+                component.AmmoSlots[index] = uid;
+                component.AmmoContainer.Insert(uid);
+                Audio.PlayPredicted(component.SoundInsert, component.Owner, user);
+                Popup(Loc.GetString("gun-revolver-insert"), component.Owner, user);
+                UpdateRevolverAppearance(component);
+                UpdateAmmoCount(uid);
+                Dirty(component);
+                return true;
+            }
         }
 
         Popup(Loc.GetString("gun-revolver-full"), component.Owner, user);
