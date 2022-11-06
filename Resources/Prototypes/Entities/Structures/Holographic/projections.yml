@@ -9,6 +9,7 @@
     anchored: true
   - type: Physics
     bodyType: Static
+    canCollide: false
   - type: Sprite
     sprite: Structures/Holo/wetfloor.rsi
     state: icon
