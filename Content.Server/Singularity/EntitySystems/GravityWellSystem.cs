@@ -79,7 +79,7 @@ public sealed class GravityWellSystem : SharedGravityWellSystem
     {
         return !(
             EntityManager.HasComponent<GhostComponent>(entity) ||
-            EntityManager.HasComponent<IMapGridComponent>(entity) ||
+            EntityManager.HasComponent<MapGridComponent>(entity) ||
             EntityManager.HasComponent<MapComponent>(entity) ||
             EntityManager.HasComponent<GravityWellComponent>(entity)
         );

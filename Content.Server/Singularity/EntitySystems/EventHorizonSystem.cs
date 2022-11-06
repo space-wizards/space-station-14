@@ -26,7 +26,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<IMapGridComponent, EventHorizonAttemptConsumeEntityEvent>(PreventConsume);
+        SubscribeLocalEvent<MapGridComponent, EventHorizonAttemptConsumeEntityEvent>(PreventConsume);
         SubscribeLocalEvent<GhostComponent, EventHorizonAttemptConsumeEntityEvent>(PreventConsume);
         SubscribeLocalEvent<StationDataComponent, EventHorizonAttemptConsumeEntityEvent>(PreventConsume);
         SubscribeLocalEvent<EventHorizonComponent, StartCollideEvent>(OnStartCollide);

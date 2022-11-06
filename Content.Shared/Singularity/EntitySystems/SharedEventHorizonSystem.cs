@@ -203,7 +203,7 @@ public abstract class SharedEventHorizonSystem : EntitySystem
         var otherUid = args.BodyB.Owner;
 
         // For prediction reasons always want the client to ignore these.
-        if (EntityManager.HasComponent<IMapGridComponent>(otherUid) ||
+        if (EntityManager.HasComponent<MapGridComponent>(otherUid) ||
             EntityManager.HasComponent<SharedGhostComponent>(otherUid))
         {
             args.Cancelled = true;
