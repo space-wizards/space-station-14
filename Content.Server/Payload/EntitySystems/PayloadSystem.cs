@@ -165,7 +165,7 @@ public sealed class PayloadSystem : EntitySystem
         _solutionSystem.RemoveAllSolution(beakerB, solutionB);
 
         // The grenade might be a dud. Redistribute solution:
-        var tmpSol = _solutionSystem.SplitSolution(beakerA, solutionA, solutionA.CurrentVolume * solutionB.MaxVolume / solutionA.MaxVolume);
+        var tmpSol = _solutionSystem.SplitSolution(beakerA, solutionA, solutionA.TotalVolume * solutionB.MaxVolume / solutionA.MaxVolume);
         _solutionSystem.TryAddSolution(beakerB, solutionB, tmpSol);
         solutionA.MaxVolume -= solutionB.MaxVolume;
         _solutionSystem.UpdateChemicals(beakerA, solutionA, false);

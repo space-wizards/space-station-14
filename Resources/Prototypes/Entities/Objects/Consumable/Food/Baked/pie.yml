@@ -21,7 +21,7 @@
         - ReagentId: Nutriment
           Quantity: 11
         - ReagentId: Vitamin
-          Quanity: 5
+          Quantity: 5
   - type: SliceableFood
     count: 4
   - type: Tag

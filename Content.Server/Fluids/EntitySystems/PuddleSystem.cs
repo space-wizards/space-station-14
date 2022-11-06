@@ -10,12 +10,14 @@ using Content.Shared.StepTrigger.Systems;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Fluids.EntitySystems
 {
     [UsedImplicitly]
     public sealed class PuddleSystem : EntitySystem
     {
+        [Dependency] private readonly IPrototypeManager _proto = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly FluidSpreaderSystem _fluidSpreaderSystem = default!;
         [Dependency] private readonly StepTriggerSystem _stepTrigger = default!;
@@ -66,7 +68,7 @@ namespace Content.Server.Fluids.EntitySystems
                                     && canEvaporate);
 
             appearanceComponent.SetData(PuddleVisuals.VolumeScale, volumeScale);
-            appearanceComponent.SetData(PuddleVisuals.SolutionColor, puddleSolution.Color);
+            appearanceComponent.SetData(PuddleVisuals.SolutionColor, puddleSolution.GetColor(_proto));
             appearanceComponent.SetData(PuddleVisuals.ForceWetFloorSprite, changeToWetFloor);
         }
 
@@ -116,7 +118,7 @@ namespace Content.Server.Fluids.EntitySystems
 
             return _solutionContainerSystem.TryGetSolution(puddleComponent.Owner, puddleComponent.SolutionName,
                 out var solution)
-                ? solution.CurrentVolume
+                ? solution.TotalVolume
                 : FixedPoint2.Zero;
         }
 

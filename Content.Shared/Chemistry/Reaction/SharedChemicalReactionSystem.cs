@@ -128,7 +128,7 @@ namespace Content.Shared.Chemistry.Reaction
                 var reactantName = reactantData.Key;
                 var reactantCoefficient = reactantData.Value.Amount;
 
-                if (!solution.ContainsReagent(reactantName, out var reactantQuantity))
+                if (!solution.TryGetReagent(reactantName, out var reactantQuantity))
                     return false;
 
                 if (reactantData.Value.Catalyst)
@@ -257,7 +257,7 @@ namespace Content.Shared.Chemistry.Reaction
                     reactions.UnionWith(reactantReactions);
             }
 
-            solution.AddSolution(products);
+            solution.AddSolution(products, _prototypeManager);
             return true;
         }
 

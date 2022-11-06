@@ -1,10 +1,11 @@
-﻿using Content.Server.Body.Components;
+using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Smoking;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.Components
 {
@@ -13,6 +14,7 @@ namespace Content.Server.Chemistry.Components
     public sealed class SmokeSolutionAreaEffectComponent : SolutionAreaEffectComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
+        [Dependency] private readonly IPrototypeManager _proto = default!;
 
         public new const string SolutionName = "solutionArea";
 
@@ -21,7 +23,7 @@ namespace Content.Server.Chemistry.Components
             if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance) &&
                 EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
             {
-                appearance.SetData(SmokeVisuals.Color, solution.Color);
+                appearance.SetData(SmokeVisuals.Color, solution.GetColor(_proto));
             }
         }
 

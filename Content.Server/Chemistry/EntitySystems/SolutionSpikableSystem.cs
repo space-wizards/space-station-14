@@ -54,7 +54,7 @@ public sealed class SolutionSpikableSystem : EntitySystem
             return;
         }
 
-        if (targetSolution.CurrentVolume == 0 && !spikableSource.IgnoreEmpty)
+        if (targetSolution.TotalVolume == 0 && !spikableSource.IgnoreEmpty)
         {
             _popupSystem.PopupEntity(Loc.GetString(spikableSource.PopupEmpty, ("spiked-entity", target), ("spike-entity", source)), user, Filter.Entities(user));
             return;

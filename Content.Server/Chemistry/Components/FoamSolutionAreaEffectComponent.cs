@@ -1,9 +1,10 @@
-﻿using Content.Server.Body.Components;
+using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Foam;
 using Content.Shared.Inventory;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.Components
 {
@@ -12,6 +13,7 @@ namespace Content.Server.Chemistry.Components
     public sealed class FoamSolutionAreaEffectComponent : SolutionAreaEffectComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
+        [Dependency] private readonly IPrototypeManager _proto = default!;
 
         public new const string SolutionName = "solutionArea";
 
@@ -22,7 +24,7 @@ namespace Content.Server.Chemistry.Components
             if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance) &&
                 EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
             {
-                appearance.SetData(FoamVisuals.Color, solution.Color.WithAlpha(0.80f));
+                appearance.SetData(FoamVisuals.Color, solution.GetColor(_proto).WithAlpha(0.80f));
             }
         }
 

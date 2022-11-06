@@ -111,10 +111,10 @@ public sealed class FluidSpreaderSystem : EntitySystem
         ExpandPuddle(suid, visitedTiles, mapGrid, nextToExpand);
 
         while (nextToExpand.Count > 0
-               && spreader.OverflownSolution.CurrentVolume > FixedPoint2.Zero)
+               && spreader.OverflownSolution.TotalVolume > FixedPoint2.Zero)
         {
             // we need to clamp to prevent spreading 0u fluids, while never going over spill limit
-            var divided = FixedPoint2.Clamp(spreader.OverflownSolution.CurrentVolume / nextToExpand.Count,
+            var divided = FixedPoint2.Clamp(spreader.OverflownSolution.TotalVolume / nextToExpand.Count,
                 FixedPoint2.Epsilon, puddleComponent.OverflowVolume);
 
             foreach (var posAndUid in nextToExpand)
@@ -137,7 +137,7 @@ public sealed class FluidSpreaderSystem : EntitySystem
                     false, false, puddle);
 
                 // if solution is spent do not explore
-                if (spreader.OverflownSolution.CurrentVolume <= FixedPoint2.Zero)
+                if (spreader.OverflownSolution.TotalVolume <= FixedPoint2.Zero)
                     return;
             }
 

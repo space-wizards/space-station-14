@@ -119,7 +119,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 }
             }
 
-            if (contents.CurrentVolume == 0)
+            if (contents.TotalVolume == 0)
             {
                 // Delete this
                 EntityManager.QueueDeleteEntity(entity);

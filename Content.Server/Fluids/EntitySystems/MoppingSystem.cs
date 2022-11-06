@@ -53,7 +53,7 @@ public sealed class MoppingSystem : EntitySystem
         }
 
         var toolAvailableVolume = absorbedSolution.AvailableVolume;
-        var toolCurrentVolume = absorbedSolution.CurrentVolume;
+        var toolCurrentVolume = absorbedSolution.TotalVolume;
 
         // For adding liquid to an empty floor tile
         if (args.Target is null) // if a tile is clicked
@@ -81,7 +81,7 @@ public sealed class MoppingSystem : EntitySystem
             TileRef tile = mapGrid.GetTileRef(clickLocation);
 
             // Drop some of the absorbed liquid onto the ground
-            var releaseAmount = FixedPoint2.Min(absorbent.ResidueAmount, absorbedSolution.CurrentVolume); // The release amount specified on the absorbent component, or the amount currently absorbed (whichever is less).
+            var releaseAmount = FixedPoint2.Min(absorbent.ResidueAmount, absorbedSolution.TotalVolume); // The release amount specified on the absorbent component, or the amount currently absorbed (whichever is less).
             var releasedSolution = _solutionSystem.SplitSolution(absorbent.Owner, absorbedSolution, releaseAmount); // Remove releaseAmount of solution from the absorbent component
             _spillableSystem.SpillAt(tile, releasedSolution, puddlePrototypeId);                                    // And spill it onto the tile.
         }
@@ -235,7 +235,7 @@ public sealed class MoppingSystem : EntitySystem
             {
                 return;
             }
-            else if (drainableSolution.CurrentVolume <= 0) // target container is empty (liquid source)
+            else if (drainableSolution.TotalVolume <= 0) // target container is empty (liquid source)
             {
                 msg = "mopping-system-target-container-empty";
                 user.PopupMessage(user, Loc.GetString(msg, ("target", target))); // play message now because we are returning.
@@ -244,7 +244,7 @@ public sealed class MoppingSystem : EntitySystem
             else
             {
                 // Determine transferAmount
-                transferAmount = FixedPoint2.Min(availableVolume * 0.5, drainableSolution.CurrentVolume); // Let's transfer up to to half the tool's available capacity to the tool.
+                transferAmount = FixedPoint2.Min(availableVolume * 0.5, drainableSolution.TotalVolume); // Let's transfer up to to half the tool's available capacity to the tool.
 
                 donor = target; // the drainable container's Uid
                 donorSolutionName = drainable.Solution;

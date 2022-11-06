@@ -54,8 +54,8 @@ public sealed class SolutionSystemTests
             Assert.That(containerSystem
                 .TryAddSolution(beaker, solution, oilAdded));
 
-            solution.ContainsReagent("Water", out var water);
-            solution.ContainsReagent("Oil", out var oil);
+            solution.TryGetReagent("Water", out var water);
+            solution.TryGetReagent("Oil", out var oil);
             Assert.That(water, Is.EqualTo(waterQuantity));
             Assert.That(oil, Is.EqualTo(oilQuantity));
         });
@@ -95,8 +95,8 @@ public sealed class SolutionSystemTests
             Assert.That(containerSystem
                 .TryAddSolution(beaker, solution, oilAdded), Is.False);
 
-            solution.ContainsReagent("Water", out var water);
-            solution.ContainsReagent("Oil", out var oil);
+            solution.TryGetReagent("Water", out var water);
+            solution.TryGetReagent("Oil", out var oil);
             Assert.That(water, Is.EqualTo(waterQuantity));
             Assert.That(oil, Is.EqualTo(FixedPoint2.Zero));
         });
@@ -119,7 +119,7 @@ public sealed class SolutionSystemTests
 
         EntityUid beaker;
 
-        await server.WaitAssertion(() =>
+        await server.WaitAssertion((System.Action)(() =>
         {
             int ratio = 9;
             int threshold = 20;
@@ -137,18 +137,18 @@ public sealed class SolutionSystemTests
             Assert.That(containerSystem
                 .TryMixAndOverflow(beaker, solution, oilAdded, threshold, out var overflowingSolution));
 
-            Assert.That(solution.CurrentVolume, Is.EqualTo(FixedPoint2.New(threshold)));
-            solution.ContainsReagent("Water", out var waterMix);
-            solution.ContainsReagent("Oil", out var oilMix);
+            Assert.That((FixedPoint2) solution.TotalVolume, Is.EqualTo(FixedPoint2.New(threshold)));
+            solution.TryGetReagent("Water", out var waterMix);
+            solution.TryGetReagent("Oil", out var oilMix);
             Assert.That(waterMix, Is.EqualTo(FixedPoint2.New(threshold / (ratio + 1))));
             Assert.That(oilMix, Is.EqualTo(FixedPoint2.New(threshold / (ratio + 1) * ratio)));
 
-            Assert.That(overflowingSolution.CurrentVolume, Is.EqualTo(FixedPoint2.New(80)));
-            overflowingSolution.ContainsReagent("Water", out var waterOverflow);
-            overflowingSolution.ContainsReagent("Oil", out var oilOverFlow);
+            Assert.That((FixedPoint2) overflowingSolution.TotalVolume, Is.EqualTo(FixedPoint2.New(80)));
+            overflowingSolution.TryGetReagent("Water", out var waterOverflow);
+            overflowingSolution.TryGetReagent("Oil", out var oilOverFlow);
             Assert.That(waterOverflow, Is.EqualTo(waterQuantity - waterMix));
             Assert.That(oilOverFlow, Is.EqualTo(oilQuantity - oilMix));
-        });
+        }));
 
         await pairTracker.CleanReturnAsync();
     }

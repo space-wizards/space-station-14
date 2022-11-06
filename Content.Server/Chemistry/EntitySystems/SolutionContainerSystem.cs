@@ -43,13 +43,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         foreach (var (name, solutionHolder) in component.Solutions)
         {
             solutionHolder.Name = name;
-            if (solutionHolder.MaxVolume == FixedPoint2.Zero)
-            {
-                solutionHolder.MaxVolume = solutionHolder.TotalVolume > solutionHolder.InitialMaxVolume
-                    ? solutionHolder.TotalVolume
-                    : solutionHolder.InitialMaxVolume;
-            }
-
+            solutionHolder.ValidateSolution();
             UpdateAppearance(uid, solutionHolder);
         }
     }
@@ -77,7 +71,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
             return;
         }
 
-        var colorHex = solutionHolder.Color
+        var colorHex = solutionHolder.GetColor(_prototypeManager)
             .ToHexNoAlpha(); //TODO: If the chem has a dark color, the examine text becomes black on a black background, which is unreadable.
         var messageString = "shared-solution-container-component-on-examine-main-text";
 
@@ -96,9 +90,9 @@ public sealed partial class SolutionContainerSystem : EntitySystem
             || !Resolve(uid, ref appearanceComponent, false))
             return;
 
-        var filledVolumePercent = Math.Min(1.0f, solution.CurrentVolume.Float() / solution.MaxVolume.Float());
+        var filledVolumePercent = solution.FillFraction * 100;
         appearanceComponent.SetData(SolutionContainerVisuals.VisualState,
-            new SolutionContainerVisualState(solution.Color, filledVolumePercent));
+            new SolutionContainerVisualState(solution.GetColor(_prototypeManager), filledVolumePercent));
     }
 
     /// <summary>
@@ -129,7 +123,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
 
     public void RemoveAllSolution(EntityUid uid, Solution solutionHolder)
     {
-        if (solutionHolder.CurrentVolume == 0)
+        if (solutionHolder.TotalVolume == 0)
             return;
 
         solutionHolder.RemoveAllSolution();
@@ -159,8 +153,8 @@ public sealed partial class SolutionContainerSystem : EntitySystem
             return;
 
         targetSolution.MaxVolume = capacity;
-        if (capacity < targetSolution.CurrentVolume)
-            targetSolution.RemoveSolution(targetSolution.CurrentVolume - capacity);
+        if (capacity < targetSolution.TotalVolume)
+            targetSolution.RemoveSolution(targetSolution.TotalVolume - capacity);
 
         UpdateChemicals(targetUid, targetSolution);
     }
@@ -178,13 +172,19 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         out FixedPoint2 acceptedQuantity, float? temperature = null)
     {
         acceptedQuantity = targetSolution.AvailableVolume > quantity ? quantity : targetSolution.AvailableVolume;
-        targetSolution.AddReagent(reagentId, acceptedQuantity, temperature);
 
-        if (acceptedQuantity > 0)
-            UpdateChemicals(targetUid, targetSolution, true);
+        if (acceptedQuantity <= 0)
+            return quantity == 0;
 
+        if (temperature == null)
+            targetSolution.AddReagent(reagentId, acceptedQuantity);
+        else
+            targetSolution.AddReagent(_prototypeManager.Index<ReagentPrototype>(reagentId), acceptedQuantity, temperature.Value, _prototypeManager);
+
+        UpdateChemicals(targetUid, targetSolution, true);
         return acceptedQuantity == quantity;
     }
+
 
     /// <summary>
     ///     Removes reagent of an Id to the container.
@@ -217,7 +217,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
             || !targetSolution.CanAddSolution(addedSolution) || addedSolution.TotalVolume == 0)
             return false;
 
-        targetSolution.AddSolution(addedSolution);
+        targetSolution.AddSolution(addedSolution, _prototypeManager);
         UpdateChemicals(targetUid, targetSolution, true);
         return true;
     }
@@ -245,10 +245,10 @@ public sealed partial class SolutionContainerSystem : EntitySystem
             return false;
         }
 
-        targetSolution.AddSolution(addedSolution);
+        targetSolution.AddSolution(addedSolution, _prototypeManager);
         UpdateChemicals(targetUid, targetSolution, true);
         overflowingSolution = targetSolution.SplitSolution(FixedPoint2.Max(FixedPoint2.Zero,
-            targetSolution.CurrentVolume - overflowThreshold));
+            targetSolution.TotalVolume - overflowThreshold));
         return true;
     }
 
@@ -280,15 +280,34 @@ public sealed partial class SolutionContainerSystem : EntitySystem
             solutionsMgr = EntityManager.EnsureComponent<SolutionContainerManagerComponent>(uid);
         }
 
-        if (!solutionsMgr.Solutions.ContainsKey(name))
+        if (!solutionsMgr.Solutions.TryGetValue(name, out var existing))
         {
             var newSolution = new Solution() { Name = name };
             solutionsMgr.Solutions.Add(name, newSolution);
+            return newSolution;
         }
 
-        return solutionsMgr.Solutions[name];
+        return existing;
     }
 
+    public Solution EnsureSolution(EntityUid uid, string name,
+        IEnumerable<Solution.ReagentQuantity> reagents,
+        bool setMaxVol = true,
+        SolutionContainerManagerComponent? solutionsMgr = null)
+    {
+        if (!Resolve(uid, ref solutionsMgr, false))
+            solutionsMgr = EntityManager.EnsureComponent<SolutionContainerManagerComponent>(uid);
+        
+        if (!solutionsMgr.Solutions.TryGetValue(name, out var existing))
+        {
+            var newSolution = new Solution(reagents, setMaxVol);
+            solutionsMgr.Solutions.Add(name, newSolution);
+            return newSolution;
+        }
+
+        existing.SetContents(reagents, setMaxVol);
+        return existing;
+    }
     /// <summary>
     ///     Removes an amount from all reagents in a solution, adding it to a new solution.
     /// </summary>
@@ -361,10 +380,8 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     /// <param name="thermalEnergy">The new value to set the thermal energy to.</param>
     public void SetThermalEnergy(EntityUid owner, Solution solution, float thermalEnergy)
     {
-        if (thermalEnergy == solution.ThermalEnergy)
-            return;
-
-        solution.ThermalEnergy = thermalEnergy;
+        var heatCap = solution.GetHeatCapacity(_prototypeManager);
+        solution.Temperature = heatCap == 0 ? 0 : thermalEnergy / heatCap;
         UpdateChemicals(owner, solution, true);
     }
 
@@ -379,7 +396,8 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         if (thermalEnergy == 0.0f)
             return;
 
-        solution.ThermalEnergy += thermalEnergy;
+        var heatCap = solution.GetHeatCapacity(_prototypeManager);
+        solution.Temperature += heatCap == 0 ? 0 : thermalEnergy / heatCap;
         UpdateChemicals(owner, solution, true);
     }
 

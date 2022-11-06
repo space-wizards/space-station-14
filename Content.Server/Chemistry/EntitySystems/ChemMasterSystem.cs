@@ -63,7 +63,7 @@ namespace Content.Server.Chemistry.EntitySystems
             var outputContainer = _itemSlotsSystem.GetItemOrNull(chemMaster.Owner, SharedChemMaster.OutputSlotName);
 
             var bufferReagents = bufferSolution.Contents;
-            var bufferCurrentVolume = bufferSolution.CurrentVolume;
+            var bufferCurrentVolume = bufferSolution.TotalVolume;
 
             var state = new ChemMasterBoundUserInterfaceState(
                 chemMaster.Mode, BuildInputContainerInfo(inputContainer), BuildOutputContainerInfo(outputContainer),
@@ -267,7 +267,7 @@ namespace Content.Server.Chemistry.EntitySystems
             }
 
             // ReSharper disable once InvertIf
-            if (neededVolume > solution.CurrentVolume)
+            if (neededVolume > solution.TotalVolume)
             {
                 _popupSystem.PopupCursor(Loc.GetString("chem-master-window-buffer-low-text"), filter);
                 return false;
@@ -313,12 +313,12 @@ namespace Content.Server.Chemistry.EntitySystems
             if (!TryComp(container, out ServerStorageComponent? storage))
                 return null;
 
-            var pills = storage.Storage?.ContainedEntities.Select(pill =>
+            var pills = storage.Storage?.ContainedEntities.Select((Func<EntityUid, (string, FixedPoint2 quantity)>) (pill =>
             {
                 _solutionContainerSystem.TryGetSolution(pill, SharedChemMaster.PillSolutionName, out var solution);
-                var quantity = solution?.CurrentVolume ?? FixedPoint2.Zero;
-                return (Name(pill), quantity);
-            }).ToList();
+                var quantity = solution?.TotalVolume ?? FixedPoint2.Zero;
+                return ((string, FixedPoint2 quantity))(Name(pill), quantity:(FixedPoint2) quantity);
+            })).ToList();
 
             return pills is null
                 ? null
@@ -330,7 +330,7 @@ namespace Content.Server.Chemistry.EntitySystems
             var reagents = solution.Contents
                 .Select(reagent => (reagent.ReagentId, reagent.Quantity)).ToList();
 
-            return new ContainerInfo(name, true, solution.CurrentVolume, solution.MaxVolume, reagents);
+            return new ContainerInfo(name, true, solution.TotalVolume, solution.MaxVolume, reagents);
         }
     }
 }

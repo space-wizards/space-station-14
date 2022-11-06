@@ -58,7 +58,7 @@ namespace Content.Server.Chemistry.Components
             var solutionsSys = EntitySystem.Get<SolutionContainerSystem>();
             solutionsSys.TryGetSolution(Owner, SolutionName, out var hypoSpraySolution);
 
-            if (hypoSpraySolution == null || hypoSpraySolution.CurrentVolume == 0)
+            if (hypoSpraySolution == null || hypoSpraySolution.TotalVolume == 0)
             {
                 user.PopupMessageCursor(Loc.GetString("hypospray-component-empty-message"));
                 return true;
@@ -125,7 +125,7 @@ namespace Content.Server.Chemistry.Components
         {
             var solutionSys = _entMan.EntitySysManager.GetEntitySystem<SolutionContainerSystem>();
             return solutionSys.TryGetSolution(Owner, SolutionName, out var solution)
-                ? new HyposprayComponentState(solution.CurrentVolume, solution.MaxVolume)
+                ? new HyposprayComponentState(solution.TotalVolume, solution.MaxVolume)
                 : new HyposprayComponentState(FixedPoint2.Zero, FixedPoint2.Zero);
         }
     }

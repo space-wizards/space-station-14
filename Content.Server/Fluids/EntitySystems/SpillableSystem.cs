@@ -71,7 +71,7 @@ public sealed class SpillableSystem : EntitySystem
             return;
 
         // spill all solution on the player
-        var drainedSolution = _solutionContainerSystem.Drain(uid, solution, solution.DrainAvailable);
+        var drainedSolution = _solutionContainerSystem.Drain(uid, solution, solution.TotalVolume);
         SpillAt(args.Equipee, drainedSolution, "PuddleSmear");
     }
 
@@ -108,7 +108,7 @@ public sealed class SpillableSystem : EntitySystem
                 $"{ToPrettyString(uid):entity} spilled a solution {SolutionContainerSystem.ToPrettyString(solution):solution} on landing");
         }
 
-        var drainedSolution = _solutionContainerSystem.Drain(uid, solution, solution.DrainAvailable);
+        var drainedSolution = _solutionContainerSystem.Drain(uid, solution, solution.TotalVolume);
         SpillAt(drainedSolution, EntityManager.GetComponent<TransformComponent>(uid).Coordinates, "PuddleSmear");
     }
 
@@ -123,7 +123,7 @@ public sealed class SpillableSystem : EntitySystem
         if (TryComp<DrinkComponent>(args.Target, out var drink) && (!drink.Opened))
             return;
 
-        if (solution.DrainAvailable == FixedPoint2.Zero)
+        if (solution.TotalVolume == FixedPoint2.Zero)
             return;
 
         Verb verb = new();
@@ -134,7 +134,7 @@ public sealed class SpillableSystem : EntitySystem
             verb.Act = () =>
             {
                 var puddleSolution = _solutionContainerSystem.SplitSolution(args.Target,
-                    solution, solution.DrainAvailable);
+                    solution, solution.TotalVolume);
                 SpillAt(puddleSolution, Transform(args.Target).Coordinates, "PuddleSmear");
             };
         }
@@ -226,7 +226,7 @@ public sealed class SpillableSystem : EntitySystem
         }
 
         // Tile reactions used up everything.
-        if (solution.CurrentVolume == FixedPoint2.Zero)
+        if (solution.TotalVolume == FixedPoint2.Zero)
             return null;
 
         // Get normalized co-ordinate for spill location and spill it in the centre
@@ -268,11 +268,11 @@ public sealed class SpillableSystem : EntitySystem
         component.CancelToken = null;
 
         //solution gone by other means before doafter completes
-        if (ev.Solution == null || ev.Solution.CurrentVolume == 0)
+        if (ev.Solution == null || ev.Solution.TotalVolume == 0)
             return;
 
         var puddleSolution = _solutionContainerSystem.SplitSolution(uid,
-            ev.Solution, ev.Solution.DrainAvailable);
+            ev.Solution, ev.Solution.TotalVolume);
 
         SpillAt(puddleSolution, Transform(component.Owner).Coordinates, "PuddleSmear");
     }

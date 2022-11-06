@@ -11,7 +11,7 @@ namespace Content.Shared.FixedPoint
     [Serializable]
     public struct FixedPoint2 : ISelfSerialize, IComparable<FixedPoint2>, IEquatable<FixedPoint2>, IFormattable
     {
-        private int _value;
+        public int Value;
         private const int Shift = 2;
 
         public static FixedPoint2 MaxValue { get; } = new(int.MaxValue);
@@ -20,12 +20,12 @@ namespace Content.Shared.FixedPoint
 
         private readonly double ShiftDown()
         {
-            return _value / Math.Pow(10, Shift);
+            return Value / Math.Pow(10, Shift);
         }
 
         private FixedPoint2(int value)
         {
-            _value = value;
+            Value = value;
         }
 
         public static FixedPoint2 New(int value)
@@ -60,13 +60,13 @@ namespace Content.Shared.FixedPoint
 
         public static FixedPoint2 operator +(FixedPoint2 a) => a;
 
-        public static FixedPoint2 operator -(FixedPoint2 a) => new(-a._value);
+        public static FixedPoint2 operator -(FixedPoint2 a) => new(-a.Value);
 
         public static FixedPoint2 operator +(FixedPoint2 a, FixedPoint2 b)
-            => new(a._value + b._value);
+            => new(a.Value + b.Value);
 
         public static FixedPoint2 operator -(FixedPoint2 a, FixedPoint2 b)
-            => new(a._value - b._value);
+            => new(a.Value - b.Value);
 
         public static FixedPoint2 operator *(FixedPoint2 a, FixedPoint2 b)
         {
@@ -89,12 +89,12 @@ namespace Content.Shared.FixedPoint
 
         public static FixedPoint2 operator *(FixedPoint2 a, int b)
         {
-            return new(a._value * b);
+            return new(a.Value * b);
         }
 
         public static FixedPoint2 operator /(FixedPoint2 a, FixedPoint2 b)
         {
-            if (b._value == 0)
+            if (b.Value == 0)
             {
                 throw new DivideByZeroException();
             }
@@ -150,22 +150,22 @@ namespace Content.Shared.FixedPoint
 
         public static bool operator <=(FixedPoint2 a, FixedPoint2 b)
         {
-            return a._value <= b._value;
+            return a.Value <= b.Value;
         }
 
         public static bool operator >=(FixedPoint2 a, FixedPoint2 b)
         {
-            return a._value >= b._value;
+            return a.Value >= b.Value;
         }
 
         public static bool operator <(FixedPoint2 a, FixedPoint2 b)
         {
-            return a._value < b._value;
+            return a.Value < b.Value;
         }
 
         public static bool operator >(FixedPoint2 a, FixedPoint2 b)
         {
-            return a._value > b._value;
+            return a.Value > b.Value;
         }
 
         public readonly float Float()
@@ -209,7 +209,7 @@ namespace Content.Shared.FixedPoint
 
         public static FixedPoint2 Abs(FixedPoint2 a)
         {
-            return FixedPoint2.New(Math.Abs(a._value));
+            return FixedPoint2.New(Math.Abs(a.Value));
         }
 
         public static FixedPoint2 Dist(FixedPoint2 a, FixedPoint2 b)
@@ -230,18 +230,18 @@ namespace Content.Shared.FixedPoint
         public override readonly bool Equals(object? obj)
         {
             return obj is FixedPoint2 unit &&
-                   _value == unit._value;
+                   Value == unit.Value;
         }
 
         public override readonly int GetHashCode()
         {
             // ReSharper disable once NonReadonlyMemberInGetHashCode
-            return HashCode.Combine(_value);
+            return HashCode.Combine(Value);
         }
 
         public void Deserialize(string value)
         {
-            _value = FromFloat(FloatFromString(value));
+            Value = FromFloat(FloatFromString(value));
         }
 
         public override readonly string ToString() => $"{ShiftDown().ToString(CultureInfo.InvariantCulture)}";
@@ -258,16 +258,16 @@ namespace Content.Shared.FixedPoint
 
         public readonly bool Equals(FixedPoint2 other)
         {
-            return _value == other._value;
+            return Value == other.Value;
         }
 
         public readonly int CompareTo(FixedPoint2 other)
         {
-            if (other._value > _value)
+            if (other.Value > Value)
             {
                 return -1;
             }
-            if (other._value < _value)
+            if (other.Value < Value)
             {
                 return 1;
             }

@@ -145,7 +145,7 @@ public sealed partial class ChemistrySystem
     {
         _solutions.TryGetSolution(uid, InjectorComponent.SolutionName, out var solution);
 
-        var currentVolume = solution?.CurrentVolume ?? FixedPoint2.Zero;
+        var currentVolume = solution?.TotalVolume ?? FixedPoint2.Zero;
         var maxVolume = solution?.MaxVolume ?? FixedPoint2.Zero;
 
         args.State = new SharedInjectorComponent.InjectorComponentState(currentVolume, maxVolume, component.ToggleState);
@@ -329,7 +329,7 @@ public sealed partial class ChemistrySystem
     private void TryInject(InjectorComponent component, EntityUid targetEntity, Solution targetSolution, EntityUid user, bool asRefill)
     {
         if (!_solutions.TryGetSolution(component.Owner, InjectorComponent.SolutionName, out var solution)
-            || solution.CurrentVolume == 0)
+            || solution.TotalVolume == 0)
         {
             return;
         }
@@ -370,7 +370,7 @@ public sealed partial class ChemistrySystem
     {
         // Automatically set syringe to draw after completely draining it.
         if (_solutions.TryGetSolution(component.Owner, InjectorComponent.SolutionName, out var solution)
-            && solution.CurrentVolume == 0)
+            && solution.TotalVolume == 0)
         {
             component.ToggleState = SharedInjectorComponent.InjectorToggleMode.Draw;
         }
@@ -395,7 +395,7 @@ public sealed partial class ChemistrySystem
         }
 
         // Get transfer amount. May be smaller than _transferAmount if not enough room, also make sure there's room in the injector
-        var realTransferAmount = FixedPoint2.Min(component.TransferAmount, targetSolution.DrawAvailable, solution.AvailableVolume);
+        var realTransferAmount = FixedPoint2.Min(component.TransferAmount, targetSolution.TotalVolume, solution.AvailableVolume);
 
         if (realTransferAmount <= 0)
         {
@@ -432,7 +432,7 @@ public sealed partial class ChemistrySystem
         var drawAmount = (float) transferAmount;
         var bloodAmount = drawAmount;
         var chemAmount = 0f;
-        if (stream.ChemicalSolution.CurrentVolume > 0f) // If they have stuff in their chem stream, we'll draw some of that
+        if (stream.ChemicalSolution.TotalVolume > 0f) // If they have stuff in their chem stream, we'll draw some of that
         {
             bloodAmount = drawAmount * 0.85f;
             chemAmount = drawAmount * 0.15f;
