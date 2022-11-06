@@ -9,6 +9,9 @@ using Content.Shared.Doors.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
+using Robust.Shared.Map;
+using Content.Shared.Access.Components;
 
 namespace Content.Server.Doors.Systems
 {
@@ -28,6 +31,31 @@ namespace Content.Server.Doors.Systems
             SubscribeLocalEvent<AirlockComponent, ActivateInWorldEvent>(OnActivate, before: new [] {typeof(DoorSystem)});
             SubscribeLocalEvent<AirlockComponent, DoorGetPryTimeModifierEvent>(OnGetPryMod);
             SubscribeLocalEvent<AirlockComponent, BeforeDoorPryEvent>(OnDoorPry);
+            SubscribeLocalEvent<AirlockComponent, MapInitEvent>(OnInit);
+        }
+
+        private void OnInit(EntityUid uid, AirlockComponent component, EntityEventArgs args)
+        {
+            // should ensure there is a container named "board" with an door electronics in it that gets its access updated to this access
+            var containerManager = EnsureComp<ContainerManagerComponent>(uid);
+
+            if (!containerManager.TryGetContainer("board", out var boardContainer))
+                boardContainer = containerManager.MakeContainer<Container>("board");
+
+            var xform = Transform(uid);
+            var coords = new EntityCoordinates(uid, Vector2.Zero);
+
+            var ent = Spawn("DoorElectronics", coords);
+
+            if (!boardContainer.Insert(ent, EntityManager, null, xform))
+                Transform(ent).AttachToGridOrMap();
+
+            if (TryComp<AccessReaderComponent>(uid, out var accessReader))
+            {
+                var boardAccessComp = EnsureComp<AccessReaderComponent>(boardContainer.ContainedEntities[0]);
+
+                boardAccessComp.AccessLists = accessReader.AccessLists;
+            }
         }
 
         private void OnPowerChanged(EntityUid uid, AirlockComponent component, ref PowerChangedEvent args)

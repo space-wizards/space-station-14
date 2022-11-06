@@ -145,7 +145,7 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
                     return false;
                 }
 
-                var access = entManager.EntitySysManager.GetEntitySystem<AccessReaderSystem>();
+                var access = entManager.EntitySysManager.GetEntitySystem<SharedAccessReaderSystem>();
                 value = access.FindAccessTags(owner);
                 return true;
             case CanMove:

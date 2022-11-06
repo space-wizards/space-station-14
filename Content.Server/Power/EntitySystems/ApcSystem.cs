@@ -22,7 +22,7 @@ namespace Content.Server.Power.EntitySystems
     [UsedImplicitly]
     internal sealed class ApcSystem : EntitySystem
     {
-        [Dependency] private readonly AccessReaderSystem _accessReader = default!;
+        [Dependency] private readonly SharedAccessReaderSystem _accessReader = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;

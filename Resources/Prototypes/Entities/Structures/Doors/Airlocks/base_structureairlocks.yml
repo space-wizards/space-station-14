@@ -41,9 +41,6 @@
       - FullTileMask
       layer:
       - AirlockLayer
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronics ]
   - type: Door
     crushDamage:
       types:

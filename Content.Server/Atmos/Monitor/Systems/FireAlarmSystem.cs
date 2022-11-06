@@ -21,7 +21,7 @@ public sealed class FireAlarmSystem : EntitySystem
     [Dependency] private readonly AtmosDeviceNetworkSystem _atmosDevNet = default!;
     [Dependency] private readonly AtmosAlarmableSystem _atmosAlarmable = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
-    [Dependency] private readonly AccessReaderSystem _access = default!;
+    [Dependency] private readonly SharedAccessReaderSystem _access = default!;
     [Dependency] private readonly IConfigurationManager _configManager = default!;
 
     public override void Initialize()

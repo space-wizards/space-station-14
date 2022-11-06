@@ -20,7 +20,7 @@ namespace Content.Server.Lock
     [UsedImplicitly]
     public sealed class LockSystem : EntitySystem
     {
-        [Dependency] private readonly AccessReaderSystem _accessReader = default!;
+        [Dependency] private readonly SharedAccessReaderSystem _accessReader = default!;
         [Dependency] private readonly SharedPopupSystem _sharedPopupSystem = default!;
 
         /// <inheritdoc />

@@ -7,10 +7,13 @@ using Content.Shared.Access.Components;
 using Robust.Shared.Prototypes;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.MachineLinking.Events;
+using Robust.Shared.Containers;
+using Robust.Shared.Map;
+using Content.Shared.Doors.Components;
 
 namespace Content.Shared.Access.Systems
 {
-    public sealed class AccessReaderSystem : EntitySystem
+    public abstract class SharedAccessReaderSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;

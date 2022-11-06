@@ -36,7 +36,7 @@ public sealed class AirAlarmSystem : EntitySystem
     [Dependency] private readonly AtmosDeviceNetworkSystem _atmosDevNetSystem = default!;
     [Dependency] private readonly AtmosAlarmableSystem _atmosAlarmable = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-    [Dependency] private readonly AccessReaderSystem _accessSystem = default!;
+    [Dependency] private readonly SharedAccessReaderSystem _accessSystem = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 

@@ -26,7 +26,7 @@ namespace Content.Server.Doors.Systems;
 
 public sealed class DoorSystem : SharedDoorSystem
 {
-    [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
+    [Dependency] private readonly SharedAccessReaderSystem _accessReaderSystem = default!;
     [Dependency] private readonly AirtightSystem _airtightSystem = default!;
     [Dependency] private readonly ConstructionSystem _constructionSystem = default!;
     [Dependency] private readonly ToolSystem _toolSystem = default!;
@@ -239,6 +239,17 @@ public sealed class DoorSystem : SharedDoorSystem
 
         if (!Resolve(uid, ref access, false))
             return true;
+
+        // if the door has a board with an accessreaderlevel, use that instead
+        if (TryComp<ContainerManagerComponent>(uid, out var containerManager))
+        {
+            if (containerManager.TryGetContainer("board", out var boardContainer))
+            {
+                if (boardContainer.ContainedEntities.Count > 0)
+                    if (TryComp<AccessReaderComponent>(boardContainer.ContainedEntities[0], out var boardAccess))
+                        access = boardAccess;
+            }
+        }
 
         var isExternal = access.AccessLists.Any(list => list.Contains("External"));
 

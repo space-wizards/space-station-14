@@ -24,7 +24,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
     [Dependency] private readonly DeviceListSystem _deviceListSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-    [Dependency] private readonly AccessReaderSystem _accessSystem = default!;
+    [Dependency] private readonly SharedAccessReaderSystem _accessSystem = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 
 

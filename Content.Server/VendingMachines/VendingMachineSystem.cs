@@ -25,7 +25,7 @@ namespace Content.Server.VendingMachines
         [Dependency] private readonly IComponentFactory _factory = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly AccessReaderSystem _accessReader = default!;
+        [Dependency] private readonly SharedAccessReaderSystem _accessReader = default!;
         [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
         [Dependency] private readonly AudioSystem _audioSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
