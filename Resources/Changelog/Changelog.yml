@@ -1,10 +1,4 @@
 Entries:
-- author: jessicamaybe
-  changes:
-  - {message: Muting lobby music will now also mute the restart sound (APC DESTROYED),
-    type: Tweak}
-  id: 2084
-  time: '2022-08-04T00:43:54.0000000+00:00'
 - author: JustinTrotter
   changes:
   - {message: crew monitoring console now has proper window size, type: Fix}
@@ -2966,3 +2960,8 @@ Entries:
   - {message: Added practice laser gun., type: Add}
   id: 2583
   time: '2022-11-05T15:32:00.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Stunned individuals can no longer attack., type: Fix}
+  id: 2584
+  time: '2022-11-06T16:31:23.0000000+00:00'
