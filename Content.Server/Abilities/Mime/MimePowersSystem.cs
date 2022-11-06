@@ -37,7 +37,7 @@ namespace Content.Server.Abilities.Mime
                 if (!mime.VowBroken || mime.ReadyToRepent)
                     continue;
 
-                if (_timingSystem.CurTime < mime.VowRepentTime)
+                if (_timing.CurTime < mime.VowRepentTime)
                     continue;
 
                 mime.ReadyToRepent = true;
@@ -103,7 +103,7 @@ namespace Content.Server.Abilities.Mime
 
             mimePowers.Enabled = false;
             mimePowers.VowBroken = true;
-            mimePowers.VowRepentTime = _timingSystem.CurTime + mimePowers.VowCooldown;
+            mimePowers.VowRepentTime = _timing.CurTime + mimePowers.VowCooldown;
             _alertsSystem.ClearAlert(uid, AlertType.VowOfSilence);
             _alertsSystem.ShowAlert(uid, AlertType.VowBroken);
             _actionsSystem.RemoveAction(uid, mimePowers.InvisibleWallAction);
