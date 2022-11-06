@@ -43,9 +43,7 @@ namespace Content.Server.Holosign
                 !battery.TryUseCharge(component.ChargeUse))
                 return;
 
-            // TODO: Too tired to deal
-            var holo = EntityManager.SpawnEntity(component.SignProto, Transform(args.User).Coordinates.SnapToGrid(EntityManager));
-            Transform(holo).Anchored = true;
+            EntityManager.SpawnEntity(component.SignProto, Transform(args.User).Coordinates.SnapToGrid(EntityManager));
 
             args.Handled = true;
         }
