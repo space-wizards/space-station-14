@@ -237,19 +237,20 @@ public sealed class DoorSystem : SharedDoorSystem
         if (TryComp<SharedAirlockComponent>(uid, out var airlock) && airlock.EmergencyAccess)
             return true;
 
-        if (!Resolve(uid, ref access, false))
-            return true;
+        Resolve(uid, ref access, false);
 
-        // if the door has a board with an accessreaderlevel, use that instead
-        if (TryComp<ContainerManagerComponent>(uid, out var containerManager))
+        // if the door has a board with an accessreaderlevel with changed accesses, use that instead
+        if (_containerSystem.TryGetContainer(uid, "board", out var boardContainer))
         {
-            if (containerManager.TryGetContainer("board", out var boardContainer))
+            foreach (var entity in boardContainer.ContainedEntities)
             {
-                if (boardContainer.ContainedEntities.Count > 0)
-                    if (TryComp<AccessReaderComponent>(boardContainer.ContainedEntities[0], out var boardAccess))
-                        access = boardAccess;
+                if (TryComp<AccessReaderComponent>(entity, out var newAccess) && newAccess.AccessLists.Count != 0)
+                    access = newAccess;
             }
         }
+
+        if (access == null)
+            return true;
 
         var isExternal = access.AccessLists.Any(list => list.Contains("External"));
 
