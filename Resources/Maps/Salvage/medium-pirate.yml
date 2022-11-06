@@ -749,7 +749,7 @@ entities:
     parent: 52
     type: Transform
 - uid: 79
-  type: AngryMobsSpawnArtifact
+  type: RandomArtifactSpawner
   components:
   - pos: -0.5,-0.5
     parent: 52

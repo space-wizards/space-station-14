@@ -31,7 +31,9 @@ namespace Content.Shared.StatusEffect
             base.Update(frameTime);
 
             var curTime = _gameTiming.CurTime;
-            foreach (var (_, status) in EntityManager.EntityQuery<ActiveStatusEffectsComponent, StatusEffectsComponent>())
+            var enumerator = EntityQueryEnumerator<ActiveStatusEffectsComponent, StatusEffectsComponent>();
+
+            while (enumerator.MoveNext(out _, out var status))
             {
                 foreach (var state in status.ActiveEffects.ToArray())
                 {
