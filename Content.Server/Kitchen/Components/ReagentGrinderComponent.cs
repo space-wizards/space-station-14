@@ -15,9 +15,17 @@ namespace Content.Server.Kitchen.Components
     [Access(typeof(ReagentGrinderSystem)), RegisterComponent]
     public sealed class ReagentGrinderComponent : Component
     {
-        //YAML serialization vars
-        [DataField("storageMaxEntities"), ViewVariables(VVAccess.ReadWrite)]
-        public int StorageMaxEntities = 16;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public int StorageMaxEntities = 6;
+
+        [DataField("baseStorageMaxEntities"), ViewVariables(VVAccess.ReadWrite)]
+        public int BaseStorageMaxEntities = 4;
+
+        [DataField("machinePartStorageMax", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
+        public string MachinePartStorageMax = "MatterBin";
+
+        [DataField("storagePerPartRating")]
+        public int StoragePerPartRating = 4;
 
         [DataField("workTime"), ViewVariables(VVAccess.ReadWrite)]
         public TimeSpan WorkTime = TimeSpan.FromSeconds(3.5); // Roughly matches the grind/juice sounds.

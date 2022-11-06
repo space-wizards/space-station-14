@@ -426,6 +426,7 @@
       prototype: KitchenReagentGrinder
       requirements:
         Capacitor: 1
+        MatterBin: 2
         Manipulator: 2
       tagRequirements:
         GlassBeaker:

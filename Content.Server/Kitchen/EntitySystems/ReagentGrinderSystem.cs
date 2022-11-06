@@ -170,13 +170,16 @@ namespace Content.Server.Kitchen.EntitySystems
         private void OnRefreshParts(EntityUid uid, ReagentGrinderComponent component, RefreshPartsEvent args)
         {
             var ratingWorkTime = args.PartRatings[component.MachinePartWorkTime];
+            var ratingStorage = args.PartRatings[component.MachinePartStorageMax];
 
             component.WorkTimeMultiplier = MathF.Pow(component.PartRatingWorkTimerMulitplier, ratingWorkTime - 1);
+            component.StorageMaxEntities = component.BaseStorageMaxEntities + (int) (component.StoragePerPartRating * (ratingStorage - 1));
         }
 
         private void OnUpgradeExamine(EntityUid uid, ReagentGrinderComponent component, UpgradeExamineEvent args)
         {
             args.AddPercentageUpgrade("reagent-grinder-component-upgrade-work-time", component.WorkTimeMultiplier);
+            args.AddNumberUpgrade("reagent-grinder-component-upgrade-storage", component.StorageMaxEntities - component.BaseStorageMaxEntities);
         }
 
         private void UpdateUiState(EntityUid uid)
