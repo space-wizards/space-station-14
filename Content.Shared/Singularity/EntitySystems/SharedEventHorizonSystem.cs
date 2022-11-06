@@ -57,6 +57,7 @@ public abstract class SharedEventHorizonSystem : EntitySystem
             return;
 
         eventHorizon.Radius = value;
+        EntityManager.Dirty(eventHorizon);
         if (updateFixture)
             UpdateEventHorizonFixture(eventHorizon);
     }
@@ -75,6 +76,7 @@ public abstract class SharedEventHorizonSystem : EntitySystem
             return;
 
         eventHorizon.CanBreachContainment = value;
+        EntityManager.Dirty(eventHorizon);
         if (updateFixture)
             UpdateEventHorizonFixture(eventHorizon);
     }
@@ -93,6 +95,7 @@ public abstract class SharedEventHorizonSystem : EntitySystem
             return;
 
         eventHorizon.HorizonFixtureId = value;
+        EntityManager.Dirty(eventHorizon);
         if (updateFixture)
             UpdateEventHorizonFixture(eventHorizon);
     }
@@ -115,6 +118,7 @@ public abstract class SharedEventHorizonSystem : EntitySystem
         var shape = (PhysShapeCircle)fixture.Shape;
         shape.Radius = eventHorizon.Radius;
         fixture.Hard = !eventHorizon.CanBreachContainment;
+        EntityManager.Dirty(fixtures);
     }
 #region VV
     /// <summary>
