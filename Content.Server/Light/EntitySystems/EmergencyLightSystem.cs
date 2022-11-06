@@ -33,6 +33,9 @@ namespace Content.Server.Light.EntitySystems
 
         private void OnEmergencyPower(EntityUid uid, EmergencyLightComponent component, ref PowerChangedEvent args)
         {
+            if (MetaData(uid).EntityLifeStage >= EntityLifeStage.Terminating)
+                return;
+
             UpdateState(component);
         }
 
