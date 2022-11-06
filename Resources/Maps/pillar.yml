@@ -64110,13 +64110,13 @@ entities:
     parent: 8
     type: Transform
 - uid: 5019
-  type: AirlockMaint
+  type: AirlockHydroponicsLocked
   components:
   - pos: 37.5,20.5
     parent: 8
     type: Transform
 - uid: 5020
-  type: AirlockMaint
+  type: AirlockHydroponicsLocked
   components:
   - pos: 38.5,20.5
     parent: 8
