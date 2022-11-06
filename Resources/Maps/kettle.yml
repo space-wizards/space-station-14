@@ -207974,7 +207974,7 @@ entities:
     parent: 82
     type: Transform
 - uid: 25103
-  type: JunkSpawnArtifact
+  type: RandomArtifactSpawner
   components:
   - pos: -69.5,-47.5
     parent: 82

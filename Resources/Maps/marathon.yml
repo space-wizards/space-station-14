@@ -129076,7 +129076,7 @@ entities:
     parent: 30
     type: Transform
 - uid: 15282
-  type: BananaSpawnArtifact
+  type: RandomArtifactSpawner
   components:
   - pos: 36.5,12.5
     parent: 30

@@ -39,7 +39,6 @@ public sealed class PrototypeSaveTest
         // The rest of these prototypes (probably) shouldn't be getting ignored.
         // There should be an issue up tracking all of these prototypes, indicating that still need to get fixed.
         "HeadSkeleton",
-        "CrateArtifactContainer",
         // The followjng are all fixture-less phsyics entities that set can-collide to false on init.
         "CarpRift",
         "GasMinerOxygen",

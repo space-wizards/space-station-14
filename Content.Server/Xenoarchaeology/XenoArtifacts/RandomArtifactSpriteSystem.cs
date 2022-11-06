@@ -1,5 +1,6 @@
 ﻿using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
 using Content.Shared.Xenoarchaeology.XenoArtifacts;
+using Robust.Server.GameObjects;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -9,6 +10,7 @@ public sealed class RandomArtifactSpriteSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IGameTiming _time = default!;
+    [Dependency] private readonly AppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
@@ -29,7 +31,7 @@ public sealed class RandomArtifactSpriteSystem : EntitySystem
             var timeDif = _time.CurTime - component.ActivationStart.Value;
             if (timeDif.Seconds >= component.ActivationTime)
             {
-                appearance.SetData(SharedArtifactsVisuals.IsActivated, false);
+                _appearance.SetData(appearance.Owner, SharedArtifactsVisuals.IsActivated, false, appearance);
                 component.ActivationStart = null;
             }
         }
@@ -37,19 +39,13 @@ public sealed class RandomArtifactSpriteSystem : EntitySystem
 
     private void OnMapInit(EntityUid uid, RandomArtifactSpriteComponent component, MapInitEvent args)
     {
-        if (!TryComp(uid, out AppearanceComponent? appearance))
-            return;
-
         var randomSprite = _random.Next(component.MinSprite, component.MaxSprite + 1);
-        appearance.SetData(SharedArtifactsVisuals.SpriteIndex, randomSprite);
+        _appearance.SetData(uid, SharedArtifactsVisuals.SpriteIndex, randomSprite);
     }
 
     private void OnActivated(EntityUid uid, RandomArtifactSpriteComponent component, ArtifactActivatedEvent args)
     {
-        if (!TryComp(uid, out AppearanceComponent? appearance))
-            return;
-
-        appearance.SetData(SharedArtifactsVisuals.IsActivated, true);
+        _appearance.SetData(uid, SharedArtifactsVisuals.IsActivated, true);
         component.ActivationStart = _time.CurTime;
     }
 }
