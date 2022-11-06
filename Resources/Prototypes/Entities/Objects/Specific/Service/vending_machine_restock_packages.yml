@@ -1,14 +1,18 @@
 - type: entity
   parent: BaseItem
-  id: VendingMachineRestockPackage
-  name: vending machine restock package
-  description: A restocking package of corporate goodies.
+  id: BaseVendingMachineRestock
+  abstract: true
+  name: vending machine restock box
+  description: A box for restocking vending machines with corporate goodies.
   components:
-  - type: VendingMachineRestockPackage
+  - type: VendingMachineRestock
   - type: Sprite
     netsync: false
-    sprite: Objects/Specific/Janitorial/vending_restock_package.rsi
-    state: icon
+    sprite: Objects/Specific/Service/vending_restock_package.rsi
+    layers:
+    - state: base
+    - state: green_bit
+      shader: unshaded
   - type: ItemCooldown
   - type: MeleeWeapon
     damage:
@@ -37,87 +41,325 @@
         acts: [ "Destruction" ]
 
 - type: entity
-  parent: VendingMachineRestockPackage
-  id: VendingMachineRestockDiscountDans
-  name: mega snack package
-  description: A box full of salt and starch. Why suffer Quality when you can have Quantity? Discount Dan's!
+  parent: BaseVendingMachineRestock
+  id: VendingMachineRestockBooze
+  name: Booze-O-Mat restock box
+  description: Slot into your Booze-O-Mat to start the party! Not for sale to passengers below the legal age.
   components:
-  - type: VendingMachineRestockPackage
+  - type: VendingMachineRestock
     canRestock:
-    - DiscountDansInventory
+    - BoozeOMatInventory
   - type: Sprite
     layers:
-    - state: icon
-    - state: discount
+    - state: base
+    - state: green_bit
+      shader: unshaded
+    - state: refill_booze
 
 - type: entity
-  parent: VendingMachineRestockPackage
+  parent: BaseVendingMachineRestock
   id: VendingMachineRestockChang
-  name: noodle package
+  name: Mr. Chang's restock box
   description: A box covered in white labels with bold red Chinese characters, ready to be loaded into the nearest Mr. Chang's vending machine.
   components:
-  - type: VendingMachineRestockPackage
+  - type: VendingMachineRestock
     canRestock:
     - ChangInventory
   - type: Sprite
     layers:
-    - state: icon
-    - state: chinese
+    - state: base
+    - state: green_bit
+      shader: unshaded
+    - state: refill_chinese
 
 - type: entity
-  parent: VendingMachineRestockPackage
-  id: VendingMachineRestockDonut
-  name: donut package
-  description: A box full of toroidal bundles of fried dough for restocking a vending machine.
+  parent: BaseVendingMachineRestock
+  id: VendingMachineRestockClothes
+  name: ClothesMate restock box
+  description: It's time to step up your fashion! Place inside the ClothesMate restock slot to begin.
   components:
-  - type: VendingMachineRestockPackage
+  - type: VendingMachineRestock
+    canRestock:
+    - ClothesMateInventory
+  - type: Sprite
+    layers:
+    - state: base
+    - state: green_bit
+      shader: unshaded
+    - state: refill_clothes
+
+- type: entity
+  parent: BaseVendingMachineRestock
+  id: VendingMachineRestockCostumes
+  name: AutoDrobe restock box
+  description: A panoply of NanoTrasen employees are prancing about a colorful theater in a tragicomedy. You can join them too! Load this into your nearest AutoDrobe vending machine.
+  components:
+  - type: VendingMachineRestock
+    canRestock:
+    - AutoDrobeInventory
+  - type: Sprite
+    layers:
+    - state: base
+    - state: green_bit
+      shader: unshaded
+    - state: refill_costume
+
+- type: entity
+  parent: BaseVendingMachineRestock
+  id: VendingMachineRestockDinnerware
+  name: Plasteel Chef's restock box
+  description: It's never raw in this kitchen! Drop into the restock slot on the Plasteel Chef to begin.
+  components:
+  - type: VendingMachineRestock
+    canRestock:
+    - DinnerwareInventory
+  - type: Sprite
+    layers:
+    - state: base
+    - state: green_bit
+      shader: unshaded
+    - state: refill_dinner
+
+- type: entity
+  parent: BaseVendingMachineRestock
+  id: VendingMachineRestockDiscountDans
+  name: Discount Dan's restock box
+  description: A box full of salt and starch. Why suffer Quality when you can have Quantity? Discount Dan's!
+  components:
+  - type: VendingMachineRestock
+    canRestock:
+    - DiscountDansInventory
+  - type: Sprite
+    layers:
+    - state: base
+    - state: green_bit
+      shader: unshaded
+    - state: refill_discount
+
+- type: entity
+  parent: BaseVendingMachineRestock
+  id: VendingMachineRestockDonut
+  name: Robust Donuts box
+  description: A box full of toroidal bundles of fried dough for restocking a vending machine. Use only as directed by Robust Industries, LLC.
+  components:
+  - type: VendingMachineRestock
     canRestock:
     - DonutInventory
   - type: Sprite
     layers:
-    - state: icon
-    - state: donuts
+    - state: base
+    - state: green_bit
+      shader: unshaded
+    - state: refill_donuts
 
 - type: entity
-  parent: VendingMachineRestockPackage
-  id: VendingMachineRestockGetmoreChocolateCorp
-  name: GetMore Chocolate package
-  description: A package loaded with the finest ersatz cacao. Only to be used in official Getmore Chocolate vending machines.
+  parent: BaseVendingMachineRestock
+  id: VendingMachineRestockEngineering
+  name: EngiVend resupply box
+  description: Only to be used by certified professionals.
   components:
-  - type: VendingMachineRestockPackage
+  - type: VendingMachineRestock
+    canRestock:
+    - EngiVendInventory
+    - YouToolInventory
+  - type: Sprite
+    layers:
+    - state: base
+    - state: green_bit
+      shader: unshaded
+    - state: refill_engi
+
+- type: entity
+  parent: BaseVendingMachineRestock
+  id: VendingMachineRestockGames
+  name: Good Clean Fun restock box
+  description: It's time to roll for initiative, dice dragons! Load up at the Good Clean Fun vending machine!
+  components:
+  - type: VendingMachineRestock
+    canRestock:
+    - GoodCleanFunInventory
+  - type: Sprite
+    layers:
+    - state: base
+    - state: green_bit
+      shader: unshaded
+    - state: refill_games
+
+- type: entity
+  parent: BaseVendingMachineRestock
+  id: VendingMachineRestockGetmoreChocolateCorp
+  name: GetMore Chocolate restock box
+  description: A box loaded with the finest ersatz cacao. Only to be used in official Getmore Chocolate vending machines.
+  components:
+  - type: VendingMachineRestock
     canRestock:
     - GetmoreChocolateCorpInventory
   - type: Sprite
     layers:
-    - state: icon
-    - state: chocolate
+    - state: base
+    - state: green_bit
+      shader: unshaded
+    - state: refill_snack
 
 - type: entity
-  parent: VendingMachineRestockPackage
+  parent: BaseVendingMachineRestock
+  id: VendingMachineRestockHotDrinks
+  name: Solar's Best restock box
+  description: Toasty! For use in Solar's Best Hot Drinks or other affiliate vending machines.
+  components:
+  - type: VendingMachineRestock
+    canRestock:
+    - HotDrinksMachineInventory
+  - type: Sprite
+    layers:
+    - state: base
+    - state: green_bit
+      shader: unshaded
+    - state: refill_joe
+
+- type: entity
+  parent: BaseVendingMachineRestock
+  id: VendingMachineRestockMedical
+  name: NanoMed resupply box
+  description: Slot into your department's NanoMed or NanoMedPlus to dispense. Handle with care.
+  components:
+  - type: VendingMachineRestock
+    canRestock:
+      - NanoMedInventory
+      - NanoMedPlusInventory
+  - type: Sprite
+    layers:
+    - state: base
+    - state: green_bit
+      shader: unshaded
+    - state: refill_medical
+
+- type: entity
+  parent: BaseVendingMachineRestock
+  id: VendingMachineRestockNutriMax
+  name: NutriMax restock box
+  description: We'll make your thumbs green with our tools. Let's get to harvesting! Load into a NutriMax vending machine.
+  components:
+  - type: VendingMachineRestock
+    canRestock:
+    - NutriMaxInventory
+  - type: Sprite
+    layers:
+    - state: base
+    - state: green_bit
+      shader: unshaded
+    - state: refill_plant
+
+- type: entity
+  parent: BaseVendingMachineRestock
+  id: VendingMachineRestockPTech
+  name: PTech resupply box
+  description: All the bureaucracy you can handle, and more! Load into the PTech vending machine to get started.
+  components:
+  - type: VendingMachineRestock
+    canRestock:
+    - PTechInventory
+  - type: Sprite
+    layers:
+    - state: base
+    - state: green_bit
+      shader: unshaded
+    - state: refill_ptech
+
+- type: entity
+  parent: BaseVendingMachineRestock
   id: VendingMachineRestockRobustSoftdrinks
-  name: cola can cooler
+  name: Robust Softdrinks box
   description: A cold, clunky container of colliding chilly cylinders. Use only as directed by Robust Industries, LLC.
   components:
-  - type: VendingMachineRestockPackage
+  - type: VendingMachineRestock
     canRestock:
     - RobustSoftdrinksInventory
     - BodaInventory
   - type: Sprite
     layers:
-    - state: icon
-    - state: cola
+    - state: base
+    - state: green_bit
+      shader: unshaded
+    - state: refill_cola
 
 - type: entity
-  parent: VendingMachineRestockPackage
-  id: VendingMachineRestockHotDrinks
-  name: box of liquid caffeine
-  description: Toasty! For use in Solar's Best Hot Drinks or other affiliate vending machines.
+  parent: BaseVendingMachineRestock
+  id: VendingMachineRestockSecTech
+  name: SecTech resupply box
+  description: Communists beware: the reinforcements have arrived! A label reads SECURITY PERSONNEL ONLY.
   components:
-  - type: VendingMachineRestockPackage
+  - type: VendingMachineRestock
     canRestock:
-    - HotDrinksMachineInventory
+    - SecTechInventory
   - type: Sprite
     layers:
-    - state: icon
-    - state: coffee
+    - state: base
+    - state: green_bit
+      shader: unshaded
+    - state: refill_sec
 
+- type: entity
+  parent: BaseVendingMachineRestock
+  id: VendingMachineRestockSalvageEquipment
+  name: salvage resupply box
+  description: Strike the earth ere the space carp nip your behind! Slam into a salvage vendor to begin.
+  components:
+  - type: VendingMachineRestock
+    canRestock:
+    - SalvageEquipmentInventory
+  - type: Sprite
+    layers:
+    - state: base
+    - state: green_bit
+      shader: unshaded
+    - state: refill_salvage
+
+- type: entity
+  parent: BaseVendingMachineRestock
+  id: VendingMachineRestockSeeds
+  name: MegaSeed restock box
+  description: A label says they're heirloom seeds, passed down from our ancestors. Pack it into the MegaSeed Servitor!
+  components:
+  - type: VendingMachineRestock
+    canRestock:
+      - MegaSeedServitorInventory
+  - type: Sprite
+    layers:
+    - state: base
+    - state: green_bit
+      shader: unshaded
+    - state: refill_plant
+
+- type: entity
+  parent: BaseVendingMachineRestock
+  id: VendingMachineRestockSmokes
+  name: ShadyCigs restock box
+  description: It's hard to see anything under all the Surgeon General warnings, but it mentions loading it into a vending machine.
+  components:
+  - type: VendingMachineRestock
+    canRestock:
+    - CigaretteMachineInventory
+  - type: Sprite
+    layers:
+    - state: base
+    - state: green_bit
+      shader: unshaded
+    - state: refill_smoke
+
+- type: entity
+  parent: BaseVendingMachineRestock
+  id: VendingMachineRestockTankDispenser
+  name: tank dispenser resupply box
+  description: Capable of replacing tanks in a gas tank dispenser. Handle with care.
+  components:
+  - type: VendingMachineRestock
+    canRestock:
+    - TankDispenserEVAInventory
+    - TankDispenserEngineeringInventory
+  - type: Sprite
+    layers:
+    - state: base
+    - state: green_bit
+      shader: unshaded
+    - state: refill_tanks
