@@ -23,6 +23,7 @@
         - Flare
         - CableCoil
         - CigPack
+        - HolofanProjector
       components:
         - AirlockPainter
         - SignalLinker
@@ -188,6 +189,7 @@
         - Flashlight
         - CigPack
         - TrashBag
+        - WetFloorSign
       components:
         - LightReplacer
   - type: ItemMapper
