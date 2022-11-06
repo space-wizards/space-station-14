@@ -15,6 +15,7 @@ using Content.Shared.Damage;
 using Content.Shared.Emag.Systems;
 using Content.Server.Construction;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Bed
 {
@@ -26,6 +27,7 @@ namespace Content.Server.Bed
         [Dependency] private readonly SleepingSystem _sleepingSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
+        [Dependency] private readonly IGameTiming _timing = default!;
 
         public override void Initialize()
         {
@@ -54,7 +56,7 @@ namespace Content.Server.Bed
 
             _sleepingSystem.TryWaking(args.BuckledEntity);
             RemComp<HealOnBuckleHealingComponent>(uid);
-            component.Accumulator = 0;
+            component.NextHealTime = null;
         }
 
         public override void Update(float frameTime)
@@ -63,12 +65,12 @@ namespace Content.Server.Bed
 
             foreach (var (_, bedComponent, strapComponent) in EntityQuery<HealOnBuckleHealingComponent, HealOnBuckleComponent, StrapComponent>())
             {
-                bedComponent.Accumulator += frameTime;
+                bedComponent.NextHealTime ??= _timing.CurTime + TimeSpan.FromSeconds(bedComponent.HealTime);
 
-                if (bedComponent.Accumulator < bedComponent.HealTime)
+                if (_timing.CurTime < bedComponent.NextHealTime)
                     continue;
 
-                bedComponent.Accumulator -= bedComponent.HealTime;
+                bedComponent.NextHealTime = bedComponent.NextHealTime + TimeSpan.FromSeconds(bedComponent.HealTime);
 
                 if (strapComponent.BuckledEntities.Count == 0) continue;
 
