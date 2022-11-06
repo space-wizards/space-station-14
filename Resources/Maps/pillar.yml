@@ -56534,7 +56534,7 @@ entities:
   components:
   - type: MetaData
   - type: Transform
-  - index: 3
+  - index: 2
     type: Map
   - type: PhysicsMap
   - type: Broadphase
@@ -200074,4 +200074,10 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+- uid: 24461
+  type: CableApcExtension
+  components:
+  - pos: -78.5,1.5
+    parent: 8
+    type: Transform
 ...
