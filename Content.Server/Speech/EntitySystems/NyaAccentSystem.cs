@@ -26,13 +26,15 @@ public sealed class NyaAccentSystem : EntitySystem
 
         {"syndicate", "syndiCat"},
         {"nanotrasen", "nyanotrasen"},
-        {"drugs", "cat mint"}
+        {"drugs", "cat mint"},
+        {"cargonia", "catgonia"}
         
     };
 
     private static readonly IReadOnlyList<string> Ending = new List<string> {
         "nya",
         "meow",
+        "mewp",
         "mew",
         "mrrr"
     }.AsReadOnly();
@@ -60,7 +62,7 @@ public sealed class NyaAccentSystem : EntitySystem
                 string punct_mark = "";
                 string insert = _random.Pick(Ending);
 
-                // Checking punctuation at end of the sentence
+                // Checking end of the sentence to spaces and punctuation marks
                 if(Regex.Matches(last_sym, "[!?.]").Count > 0)
                 {
                     punct_mark = last_sym;
@@ -97,12 +99,12 @@ public sealed class NyaAccentSystem : EntitySystem
         final_msg = final_msg.Replace("Pro", "Pro");
         
         final_msg = final_msg.Replace("mor", "murr");
-        final_msg = final_msg.Replace("Mur", "Murr");
+        final_msg = final_msg.Replace("Mor", "Murr");
 
         final_msg = final_msg.Replace("mo", "meo");
         final_msg = final_msg.Replace("Mo", "Meo");
 
-        // Some things
+        // Trimming and uppering first char (Because it can be replaced with lower char)
         final_msg = final_msg.Trim();
         final_msg = char.ToUpper(final_msg[0]) + final_msg.Substring(1);
 
