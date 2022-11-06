@@ -95,6 +95,11 @@
     - type: PoweredLightVisualizer
       blinkingSound:
         path: "/Audio/Machines/light_tube_on.ogg"
+  - type: SignalReceiver
+    inputs:
+      On: []
+      Off: []
+      Toggle: []
 
 - type: entity
   id: PoweredLightPostSmall

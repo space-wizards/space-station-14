@@ -248,6 +248,7 @@
       anchored: true
     - type: Physics
       bodyType: Static
+      canCollide: false
     - type: Drain
     - type: AmbientSound
       enabled: false
@@ -261,4 +262,4 @@
           maxVol: 500
     - type: DrainableSolution
       solution: drainBuffer
-
+      
