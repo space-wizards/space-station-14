@@ -268,8 +268,8 @@ public sealed class StaminaSystem : EntitySystem
                 continue;
             }
 
-            var pauseTime = _metadata.GetPauseTime(active.Owner, metaQuery.GetComponent(active.Owner));
-            var nextUpdate = comp.NextUpdate + pauseTime;
+            // Shouldn't need to consider paused time as we're only iterating non-paused stamina components.
+            var nextUpdate = comp.NextUpdate;
 
             if (nextUpdate > curTime)
                 continue;
