@@ -425,9 +425,8 @@
     - type: MachineBoard
       prototype: KitchenReagentGrinder
       requirements:
-        Laser: 1
-        ScanningModule: 1
-        MatterBin: 2
+        Capacitor: 1
+        Manipulator: 2
       tagRequirements:
         GlassBeaker:
           Amount: 1
