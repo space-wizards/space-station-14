@@ -8,4 +8,4 @@ comp-emitter-turned-off = { $target } отключается.
 # Shows if the user attempts to activate the emitter while it's un-anchored.
 comp-emitter-not-anchored = { $target } не закреплён!
 # Upgrades
-emitter-component-upgrade-fire-rate = fire rate
+emitter-component-upgrade-fire-rate = скорострельность

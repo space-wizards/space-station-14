@@ -1,2 +1,2 @@
-lathe-component-upgrade-speed = speed
-lathe-component-upgrade-material-use = material use
+lathe-component-upgrade-speed = скорость печати
+lathe-component-upgrade-material-use = потребление материалов
