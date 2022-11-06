@@ -353,7 +353,7 @@
     stampState: "paper_stamp-approve"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
-    state: stamp-iaa
+    state: stamp-approve
 
 - type: entity
   name: head of personnel's rubber stamp
