@@ -160,7 +160,7 @@
     dynamicRecipes:
       - LightTube
       - LightBulb
-      - SheetSteel
+      - SheetSteel #these sheet recipe costs don't scale with upgrades
       - SheetGlass1
       - SheetRGlass
       - SheetPlastic
@@ -353,6 +353,9 @@
       - CartridgeCaselessRifleRubber
       - CartridgeLightRifleRubber
       - CartridgeRifleRubber
+      - TargetHuman
+      - TargetSyndicate
+      - TargetClown
   - type: MaterialStorage
     whitelist:
       tags:

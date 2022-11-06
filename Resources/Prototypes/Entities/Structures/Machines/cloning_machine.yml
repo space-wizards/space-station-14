@@ -65,3 +65,8 @@
   - type: Climbable
   - type: StaticPrice
     price: 1000
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container
+      clonepod-bodyContainer: !type:ContainerSlot
