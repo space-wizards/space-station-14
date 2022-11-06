@@ -1,5 +1,6 @@
 using Robust.Shared.Collections;
 using Content.Server.Damage.Components;
+using Content.Shared.Damage.Components;
 
 namespace Content.Server.Damage.Events;
 

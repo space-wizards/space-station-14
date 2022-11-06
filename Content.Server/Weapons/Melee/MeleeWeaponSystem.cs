@@ -17,6 +17,7 @@ using Content.Server.Weapons.Melee.Components;
 using Content.Server.Weapons.Melee.Events;
 using Content.Shared.CombatMode;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.IdentityManagement;

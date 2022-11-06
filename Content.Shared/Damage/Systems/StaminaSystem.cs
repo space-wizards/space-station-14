@@ -1,55 +1,78 @@
-using Content.Server.Damage.Components;
-using Content.Server.Damage.Events;
-using Content.Server.Popups;
-using Content.Server.Administration.Logs;
-using Content.Server.CombatMode;
-using Content.Server.Weapons.Melee.Events;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
-using Content.Shared.Rounding;
-using Content.Shared.Stunnable;
+using Content.Shared.Damage.Components;
 using Content.Shared.Database;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
+using Content.Shared.Rounding;
+using Content.Shared.Stunnable;
 using Robust.Shared.Collections;
-using Robust.Shared.Physics.Dynamics;
-using Robust.Shared.Player;
-using Robust.Shared.Timing;
-using Robust.Shared.Audio;
-using Robust.Shared.Random;
+using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Events;
+using Robust.Shared.Player;
+using Robust.Shared.Random;
+using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 
-
-namespace Content.Server.Damage.Systems;
+namespace Content.Shared.Damage.Systems;
 
 public sealed class StaminaSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedStunSystem _stunSystem = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-
-    private const float UpdateCooldown = 2f;
-    private float _accumulator;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
     private const string CollideFixture = "projectile";
 
     /// <summary>
     /// How much of a buffer is there between the stun duration and when stuns can be re-applied.
     /// </summary>
-    private const float StamCritBufferTime = 3f;
-
-    private readonly List<EntityUid> _dirtyEntities = new();
+    private static readonly TimeSpan StamCritBufferTime = TimeSpan.FromSeconds(3f);
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<StaminaComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<StaminaComponent, ComponentShutdown>(OnShutdown);
+        SubscribeLocalEvent<StaminaComponent, ComponentGetState>(OnStamGetState);
+        SubscribeLocalEvent<StaminaComponent, ComponentHandleState>(OnStamHandleState);
         SubscribeLocalEvent<StaminaComponent, DisarmedEvent>(OnDisarmed);
         SubscribeLocalEvent<StaminaDamageOnCollideComponent, StartCollideEvent>(OnCollide);
         SubscribeLocalEvent<StaminaDamageOnHitComponent, MeleeHitEvent>(OnHit);
+    }
+
+    private void OnStamGetState(EntityUid uid, StaminaComponent component, ref ComponentGetState args)
+    {
+        args.State = new StaminaComponentState()
+        {
+            Critical = component.Critical,
+            Decay = component.Decay,
+            CritThreshold = component.CritThreshold,
+            DecayCooldown = component.DecayCooldown,
+            LastUpdate = component.NextUpdate,
+            StaminaDamage = component.StaminaDamage,
+        };
+    }
+
+    private void OnStamHandleState(EntityUid uid, StaminaComponent component, ref ComponentHandleState args)
+    {
+        if (args.Current is not StaminaComponentState state)
+            return;
+
+        component.Critical = state.Critical;
+        component.Decay = state.Decay;
+        component.CritThreshold = state.CritThreshold;
+        component.DecayCooldown = state.DecayCooldown;
+        component.NextUpdate = state.LastUpdate;
+        component.StaminaDamage = state.StaminaDamage;
+
+        if (component.Critical)
+            EnterStamCrit(uid, component);
+        else
+            ExitStamCrit(uid, component);
     }
 
     private void OnShutdown(EntityUid uid, StaminaComponent component, ComponentShutdown args)
@@ -60,6 +83,15 @@ public sealed class StaminaSystem : EntitySystem
     private void OnStartup(EntityUid uid, StaminaComponent component, ComponentStartup args)
     {
         SetStaminaAlert(uid, component);
+    }
+
+    public float GetStamina(EntityUid uid, StaminaComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return 0f;
+
+        var curTime = _timing.CurTime;
+        return MathF.Max(0f, component.StaminaDamage - MathF.Max(0f, (float) (curTime - component.NextUpdate).TotalSeconds * component.Decay));
     }
 
     private void OnDisarmed(EntityUid uid, StaminaComponent component, DisarmedEvent args)
@@ -155,7 +187,8 @@ public sealed class StaminaSystem : EntitySystem
 
     public void TakeStaminaDamage(EntityUid uid, float value, StaminaComponent? component = null)
     {
-        if (!Resolve(uid, ref component, false) || component.Critical) return;
+        if (!Resolve(uid, ref component, false) || component.Critical)
+            return;
 
         var oldDamage = component.StaminaDamage;
         component.StaminaDamage = MathF.Max(0f, component.StaminaDamage + value);
@@ -163,7 +196,10 @@ public sealed class StaminaSystem : EntitySystem
         // Reset the decay cooldown upon taking damage.
         if (oldDamage < component.StaminaDamage)
         {
-            component.StaminaDecayAccumulator = component.DecayCooldown;
+            var nextUpdate = _timing.CurTime + TimeSpan.FromSeconds(component.DecayCooldown);
+
+            if (component.NextUpdate < nextUpdate)
+                component.NextUpdate = nextUpdate;
         }
 
         var slowdownThreshold = component.CritThreshold / 2f;
@@ -176,9 +212,6 @@ public sealed class StaminaSystem : EntitySystem
         }
 
         SetStaminaAlert(uid, component);
-
-        // Can't do it here as resetting prediction gets cooked.
-        _dirtyEntities.Add(uid);
 
         if (!component.Critical)
         {
@@ -194,6 +227,8 @@ public sealed class StaminaSystem : EntitySystem
                 ExitStamCrit(uid, component);
             }
         }
+
+        Dirty(component);
     }
 
     public override void Update(float frameTime)
@@ -202,21 +237,8 @@ public sealed class StaminaSystem : EntitySystem
 
         if (!_timing.IsFirstTimePredicted) return;
 
-        _accumulator -= frameTime;
-
-        if (_accumulator > 0f) return;
-
         var stamQuery = GetEntityQuery<StaminaComponent>();
-
-        foreach (var uid in _dirtyEntities)
-        {
-            // Don't need to RemComp as they will get handled below.
-            if (!stamQuery.TryGetComponent(uid, out var comp) || comp.StaminaDamage <= 0f) continue;
-            EnsureComp<ActiveStaminaComponent>(uid);
-        }
-
-        _dirtyEntities.Clear();
-        _accumulator += UpdateCooldown;
+        var curTime = _timing.CurTime;
 
         foreach (var active in EntityQuery<ActiveStaminaComponent>())
         {
@@ -228,9 +250,8 @@ public sealed class StaminaSystem : EntitySystem
                 continue;
             }
 
-            comp.StaminaDecayAccumulator -= UpdateCooldown;
-
-            if (comp.StaminaDecayAccumulator > 0f) continue;
+            if (comp.NextUpdate > curTime)
+                continue;
 
             // We were in crit so come out of it and continue.
             if (comp.Critical)
@@ -239,8 +260,9 @@ public sealed class StaminaSystem : EntitySystem
                 continue;
             }
 
-            comp.StaminaDecayAccumulator = 0f;
-            TakeStaminaDamage(comp.Owner, -comp.Decay * UpdateCooldown, comp);
+            comp.NextUpdate += TimeSpan.FromSeconds(1f);
+            TakeStaminaDamage(comp.Owner, -comp.Decay, comp);
+            Dirty(comp);
         }
     }
 
@@ -254,13 +276,13 @@ public sealed class StaminaSystem : EntitySystem
 
         component.Critical = true;
         component.StaminaDamage = component.CritThreshold;
-        component.StaminaDecayAccumulator = 0f;
 
         var stunTime = TimeSpan.FromSeconds(6);
         _stunSystem.TryParalyze(uid, stunTime, true);
 
         // Give them buffer before being able to be re-stunned
-        component.StaminaDecayAccumulator = (float) stunTime.TotalSeconds + StamCritBufferTime;
+        component.NextUpdate = stunTime + StamCritBufferTime;
+        Dirty(component);
     }
 
     private void ExitStamCrit(EntityUid uid, StaminaComponent? component = null)
@@ -271,5 +293,17 @@ public sealed class StaminaSystem : EntitySystem
         component.Critical = false;
         component.StaminaDamage = 0f;
         SetStaminaAlert(uid, component);
+        Dirty(component);
+    }
+
+    [Serializable, NetSerializable]
+    private sealed class StaminaComponentState : ComponentState
+    {
+        public bool Critical;
+        public float Decay;
+        public float DecayCooldown;
+        public float StaminaDamage;
+        public float CritThreshold;
+        public TimeSpan LastUpdate;
     }
 }

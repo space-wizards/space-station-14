@@ -1,12 +1,11 @@
-using Content.Server.Damage.Systems;
 using Robust.Shared.GameStates;
 
-namespace Content.Server.Damage.Components;
+namespace Content.Shared.Damage.Components;
 
 /// <summary>
 /// Add to an entity to paralyze it whenever it reaches critical amounts of Stamina DamageType.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed class StaminaComponent : Component
 {
     /// <summary>
@@ -40,8 +39,8 @@ public sealed class StaminaComponent : Component
     public float CritThreshold = 100f;
 
     /// <summary>
-    /// Next time we're allowed to decrease stamina damage. Refreshes whenever the stam damage is changed.
+    /// To avoid continuously updating our data we track the last time we updated so we can extrapolate our current stamina.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("decayAccumulator")]
-    public float StaminaDecayAccumulator;
+    [ViewVariables, DataField("lastUpdate")]
+    public TimeSpan NextUpdate = TimeSpan.Zero;
 }
