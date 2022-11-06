@@ -19,7 +19,7 @@ namespace Content.Server.Abilities.Mime
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
 
-        [Dependency] private readonly IGameTiming _timingSystem = default!;
+        [Dependency] private readonly IGameTiming _timing = default!;
 
         public override void Initialize()
         {
