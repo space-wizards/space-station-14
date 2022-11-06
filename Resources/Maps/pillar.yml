@@ -200037,4 +200037,44 @@ entities:
   - pos: 61.5,44.5
     parent: 8
     type: Transform
+- uid: 24456
+  type: GasMinerOxygen
+  components:
+  - pos: 44.5,36.5
+    parent: 8
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 24457
+  type: GasMinerNitrogen
+  components:
+  - pos: 44.5,38.5
+    parent: 8
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 24458
+  type: GasMinerCarbonDioxide
+  components:
+  - pos: 44.5,40.5
+    parent: 8
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 24459
+  type: GasMinerWaterVapor
+  components:
+  - pos: 44.5,44.5
+    parent: 8
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 24460
+  type: GasMinerPlasma
+  components:
+  - pos: 61.5,40.5
+    parent: 8
+    type: Transform
+  - canCollide: False
+    type: Physics
 ...
