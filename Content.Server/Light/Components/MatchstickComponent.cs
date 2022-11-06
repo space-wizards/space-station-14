@@ -12,6 +12,7 @@ namespace Content.Server.Light.Components
         /// Current state to matchstick. Can be <code>Unlit</code>, <code>Lit</code> or <code>Burnt</code>.
         /// </summary>
         [ViewVariables]
+        [DataField("state")]
         public SmokableState CurrentState = SmokableState.Unlit;
 
         /// <summary>

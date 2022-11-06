@@ -27,6 +27,7 @@
     - gc_mode
     - resetent
     - resetallents
+    - cvar
 
 - Flags: DEBUG
   Commands:
