@@ -151,34 +151,4 @@ public sealed class AccessReaderSystem : SharedAccessReaderSystem
 
         args.Handled = true;
     }
-
-    private void OnInit(EntityUid uid, AccessReaderComponent component, EntityEventArgs args)
-    {
-        if (!HasComp<AirlockComponent>(uid))
-            return;
-
-        // should ensure there is a container named "board" with an door electronics in it that gets its access updated to this access
-        var containerManager = EnsureComp<ContainerManagerComponent>(uid);
-
-        if (!containerManager.TryGetContainer("board", out var board))
-        {
-            board = containerManager.MakeContainer<Container>("board");
-        }
-        if (board.ContainedEntities.Count == 0)
-        {
-            var xform = Transform(uid);
-            var coords = new EntityCoordinates(uid, Vector2.Zero);
-
-            var ent = Spawn("DoorElectronics", coords);
-            if (!board.Insert(ent, EntityManager, null, xform))
-            {
-                Logger.Error($"Entity {ToPrettyString(uid)} with a {nameof(AccessReaderComponent)} failed to insert an entity: {ToPrettyString(ent)}.");
-                Transform(ent).AttachToGridOrMap();
-            }
-        }
-
-        var boardAccessComp = EnsureComp<AccessReaderComponent>(board.ContainedEntities[0]);
-
-        boardAccessComp.AccessLists = component.AccessLists;
-    }
 }
