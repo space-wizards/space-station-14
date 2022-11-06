@@ -124,7 +124,7 @@ namespace Content.Server.GameTicking
 
             var gridIds = _map.LoadMap(targetMapId, ev.GameMap.MapPath.ToString(), ev.Options);
 
-            var gridUids = gridIds.Select(g => g).ToList();
+            var gridUids = gridIds.ToList();
             RaiseLocalEvent(new PostGameMapLoad(map, targetMapId, gridUids, stationName));
 
             return gridUids;
