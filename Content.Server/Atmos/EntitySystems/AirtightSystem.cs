@@ -31,11 +31,7 @@ namespace Content.Server.Atmos.EntitySystems
                 var moveEvent = new MoveEvent(airtight.Owner, default, default, Angle.Zero, xform.LocalRotation, xform, false);
                 OnAirtightRotated(uid, airtight, ref moveEvent);
             }
-
-            // Adding this component will immediately anchor the entity, because the atmos system
-            // requires airtight entities to be anchored for performance.
-            xform.Anchored = true;
-
+            
             UpdatePosition(airtight);
         }
 
