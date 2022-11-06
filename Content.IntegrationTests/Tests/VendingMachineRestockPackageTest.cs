@@ -23,9 +23,7 @@ namespace Content.IntegrationTests.Tests
   components:
   - type: Hands
   - type: Body
-    template: HumanoidTemplate
-    preset: HumanPreset
-    centerSlot: torso
+    prototype: Human
 
 - type: entity
   parent: BaseItem
