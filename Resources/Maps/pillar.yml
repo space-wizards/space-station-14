@@ -193914,8 +193914,7 @@ entities:
     pos: 49.5,36.5
     parent: 8
     type: Transform
-  - targetPressure: 4500
-    enabled: False
+  - enabled: False
     type: GasPressurePump
 - uid: 23491
   type: GasPipeStraight
@@ -193945,8 +193944,7 @@ entities:
     pos: 49.5,38.5
     parent: 8
     type: Transform
-  - targetPressure: 4500
-    enabled: False
+  - enabled: False
     type: GasPressurePump
 - uid: 23495
   type: GasPort
@@ -194030,9 +194028,8 @@ entities:
   - pos: 52.5,36.5
     parent: 8
     type: Transform
-  - inletTwoConcentration: 0.82
-    inletOneConcentration: 0.18
-    targetPressure: 310
+  - inletTwoConcentration: 0.22000003
+    inletOneConcentration: 0.78
     enabled: False
     type: GasMixer
   - color: '#0055CCFF'
