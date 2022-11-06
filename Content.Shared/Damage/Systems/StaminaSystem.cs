@@ -1,12 +1,14 @@
 using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
+using Content.Shared.CombatMode;
 using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Events;
 using Content.Shared.Database;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
 using Content.Shared.Rounding;
 using Content.Shared.Stunnable;
-using Robust.Shared.Collections;
+using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
@@ -134,7 +136,7 @@ public sealed class StaminaSystem : EntitySystem
 
         args.HitSoundOverride = ev.HitSoundOverride;
         var stamQuery = GetEntityQuery<StaminaComponent>();
-        var toHit = new ValueList<StaminaComponent>();
+        var toHit = new List<StaminaComponent>();
 
         // Split stamina damage between all eligible targets.
         foreach (var ent in args.HitEntities)
@@ -244,7 +246,7 @@ public sealed class StaminaSystem : EntitySystem
         {
             // Just in case we have active but not stamina we'll check and account for it.
             if (!stamQuery.TryGetComponent(active.Owner, out var comp) ||
-                comp.StaminaDamage <= 0f)
+                comp.StaminaDamage <= 0f && !comp.Critical)
             {
                 RemComp<ActiveStaminaComponent>(active.Owner);
                 continue;
@@ -281,7 +283,8 @@ public sealed class StaminaSystem : EntitySystem
         _stunSystem.TryParalyze(uid, stunTime, true);
 
         // Give them buffer before being able to be re-stunned
-        component.NextUpdate = stunTime + StamCritBufferTime;
+        component.NextUpdate = _timing.CurTime + stunTime + StamCritBufferTime;
+        EnsureComp<ActiveStaminaComponent>(uid);
         Dirty(component);
     }
 
@@ -292,7 +295,9 @@ public sealed class StaminaSystem : EntitySystem
 
         component.Critical = false;
         component.StaminaDamage = 0f;
+        component.NextUpdate = _timing.CurTime;
         SetStaminaAlert(uid, component);
+        RemComp<ActiveStaminaComponent>(uid);
         Dirty(component);
     }
 

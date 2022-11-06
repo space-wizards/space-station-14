@@ -1,6 +1,6 @@
 using Robust.Shared.Audio;
 
-namespace Content.Server.Damage.Events;
+namespace Content.Shared.Damage.Events;
 
 /// <summary>
 /// Attempting to apply stamina damage on a melee hit to an entity.
@@ -10,4 +10,10 @@ public struct StaminaDamageOnHitAttemptEvent
 {
     public bool Cancelled;
     public SoundSpecifier? HitSoundOverride;
+
+    public StaminaDamageOnHitAttemptEvent(bool cancelled, SoundSpecifier? hitSoundOverride)
+    {
+        Cancelled = cancelled;
+        HitSoundOverride = hitSoundOverride;
+    }
 }

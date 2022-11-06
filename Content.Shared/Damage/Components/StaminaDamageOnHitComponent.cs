@@ -1,6 +1,4 @@
-using Robust.Shared.Audio;
-
-namespace Content.Server.Damage.Components;
+namespace Content.Shared.Damage.Components;
 
 [RegisterComponent]
 public sealed class StaminaDamageOnHitComponent : Component

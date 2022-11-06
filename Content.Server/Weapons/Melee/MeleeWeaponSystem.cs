@@ -14,7 +14,6 @@ using Content.Server.Examine;
 using Content.Server.Hands.Components;
 using Content.Server.Movement.Systems;
 using Content.Server.Weapons.Melee.Components;
-using Content.Server.Weapons.Melee.Events;
 using Content.Shared.CombatMode;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;

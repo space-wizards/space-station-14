@@ -1,6 +1,4 @@
-using Robust.Shared.GameStates;
-
-namespace Content.Server.Damage.Components;
+namespace Content.Shared.Damage.Components;
 
 /// <summary>
 /// Applies stamina damage when colliding with an entity.

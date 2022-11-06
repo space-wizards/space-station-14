@@ -1,8 +1,7 @@
-using Robust.Shared.Collections;
-using Content.Server.Damage.Components;
 using Content.Shared.Damage.Components;
+using Robust.Shared.Collections;
 
-namespace Content.Server.Damage.Events;
+namespace Content.Shared.Damage.Events;
 
 /// <summary>
 /// The components in the list are going to be hit,
@@ -12,9 +11,10 @@ public sealed class StaminaMeleeHitEvent : HandledEntityEventArgs
 {
     /// <summary>
     /// List of hit stamina components.
-    public ValueList<StaminaComponent> HitList;
+    /// </summary>
+    public List<StaminaComponent> HitList;
 
-    /// <summmary>
+    /// <summary>
     /// The multiplier. Generally, try to use *= or /= instead of overwriting.
     /// </summary>
     public float Multiplier = 1;
@@ -24,7 +24,7 @@ public sealed class StaminaMeleeHitEvent : HandledEntityEventArgs
     /// </summary>
     public float FlatModifier = 0;
 
-    public StaminaMeleeHitEvent(ValueList<StaminaComponent> hitList)
+    public StaminaMeleeHitEvent(List<StaminaComponent> hitList)
     {
         HitList = hitList;
     }

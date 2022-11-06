@@ -1,4 +1,4 @@
-namespace Content.Server.CombatMode
+namespace Content.Shared.CombatMode
 {
     public sealed class DisarmedEvent : HandledEntityEventArgs
     {
