@@ -61,3 +61,9 @@
   name: signal-port-name-timer-start
   description: signal-port-description-timer-start
   defaultLinks: [ Close, Off ]
+
+- type: transmitterPort
+  id: ArtifactAnalyzerSender
+  name: signal-port-name-artifact-analyzer-sender
+  description: signal-port-description-artifact-analyzer-sender
+  defaultLinks: [ ArtifactAnalyzerReceiver ]

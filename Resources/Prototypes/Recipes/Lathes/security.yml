@@ -170,3 +170,33 @@
     Plastic: 15
     Steel: 10
     Glass: 5
+
+- type: latheRecipe
+  id: TargetHuman
+  icon:
+    sprite: Objects/Specific/Security/target.rsi
+    state: target_h
+  result: TargetHuman
+  completetime: 5
+  materials:
+    Steel: 10
+
+- type: latheRecipe
+  id: TargetClown
+  icon:
+    sprite: Objects/Specific/Security/target.rsi
+    state: target_c
+  result: TargetClown
+  completetime: 5
+  materials:
+    Steel: 10
+
+- type: latheRecipe
+  id: TargetSyndicate
+  icon:
+    sprite: Objects/Specific/Security/target.rsi
+    state: target_s
+  result: TargetSyndicate
+  completetime: 5
+  materials:
+    Steel: 10

@@ -553,9 +553,6 @@ entities:
     type: ApcPowerReceiver
   - enabled: False
     type: AmbientSound
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 37
   type: PoweredSmallLight
   components:
@@ -566,9 +563,6 @@ entities:
     type: ApcPowerReceiver
   - enabled: False
     type: AmbientSound
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 38
   type: CableApcExtension
   components:
