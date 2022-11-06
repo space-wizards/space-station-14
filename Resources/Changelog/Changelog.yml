@@ -1,11 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: 'Nukes can no longer be unanchored once they are armed, without disarming
-      the nuke.', type: Fix}
-  - {message: The nuke and disk can no longer be sold to cargo., type: Fix}
-  id: 2087
-  time: '2022-08-04T03:01:14.0000000+00:00'
 - author: DogZeroX
   changes:
   - {message: Removed the tiny fans from the nukie planet as it has atmos., type: Tweak}
@@ -2965,3 +2958,18 @@ Entries:
   - {message: Holofans and tiny fans are airtight again., type: Fix}
   id: 2586
   time: '2022-11-06T19:34:07.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Artifacts now generate with multiple randomly generated effects and
+      triggers. Have fun exploring the hundreds of different possibilities., type: Add}
+  - {message: 'Added the artifact analyzer and analysis console: two machines capable
+      of interfacing with artifacts. Make sure you link them.', type: Add}
+  - {message: Artifacts can be destroyed at the analyzer to generate research points
+      based on how many effects have been activated., type: Add}
+  - {message: Artifacts can now be purchased from Cargo and can occasionally teleport
+      onto the station., type: Add}
+  - {message: Artifact price is now based on how many of its effects have been activated.,
+    type: Tweak}
+  - {message: Decreased passive research point generation., type: Tweak}
+  id: 2587
+  time: '2022-11-06T23:05:44.0000000+00:00'
