@@ -1,5 +1,6 @@
 ﻿using Content.Server.Xenoarchaeology.XenoArtifacts;
 using Content.Shared.Construction.Prototypes;
+using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -49,6 +50,9 @@ public sealed class ArtifactAnalyzerComponent : Component
     /// </summary>
     [ViewVariables]
     public HashSet<EntityUid> Contacts = new();
+
+    [DataField("scanFinishedSound")]
+    public readonly SoundSpecifier ScanFinishedSound = new SoundPathSpecifier("/Audio/Machines/scan_finish.ogg");
 
     #region Analysis Data
     [ViewVariables]

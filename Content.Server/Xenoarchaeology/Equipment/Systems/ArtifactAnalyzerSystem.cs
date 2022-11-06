@@ -8,6 +8,7 @@ using Content.Server.UserInterface;
 using Content.Server.Xenoarchaeology.Equipment.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
+using Content.Shared.Audio;
 using Content.Shared.MachineLinking.Events;
 using Content.Shared.Popups;
 using Content.Shared.Research.Components;
@@ -132,7 +133,8 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         }
         else if (TryComp<ArtifactComponent>(component.LastAnalyzedArtifact, out var artifact))
         {
-            component.LastAnalyzedNode = artifact.CurrentNode;
+            var lastNode = (ArtifactNode?) artifact.CurrentNode?.Clone();
+            component.LastAnalyzedNode = lastNode;
 
             if (artifact.NodeTree != null)
             {
@@ -289,7 +291,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         if (!TryComp<ArtifactAnalyzerComponent>(component.Scanner, out var analyzer))
             return;
 
-        if (!analyzer.Contacts.Contains(uid))
+        if (analyzer.Contacts.Contains(uid))
             return;
 
         CancelScan(uid, component, analyzer);
@@ -331,6 +333,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         if (!Resolve(uid, ref component, ref active))
             return;
 
+        _audio.PlayPvs(component.ScanFinishedSound, uid);
         component.LastAnalyzedArtifact = active.Artifact;
         UpdateAnalyzerInformation(uid, component);
 
@@ -382,7 +385,11 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         if (TryComp<ApcPowerReceiverComponent>(uid, out var powa))
             powa.NeedsPower = true;
 
-        component.LoopStream = _audio.PlayPvs(component.ScanningSound, uid, AudioParams.Default.WithVolume(3).WithMaxDistance(5).WithLoop(true));
+        if (TryComp<AmbientSoundComponent>(uid, out var ambientSound))
+        {
+            ambientSound.Enabled = true;
+            Dirty(ambientSound);
+        }
     }
 
     private void OnAnalyzeEnd(EntityUid uid, ActiveArtifactAnalyzerComponent component, ComponentShutdown args)
@@ -390,8 +397,11 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         if (TryComp<ApcPowerReceiverComponent>(uid, out var powa))
             powa.NeedsPower = false;
 
-        component.LoopStream?.Stop();
-        _audio.PlayPvs(component.ScanFinishedSound, uid);
+        if (TryComp<AmbientSoundComponent>(uid, out var ambientSound))
+        {
+            ambientSound.Enabled = false;
+            Dirty(ambientSound);
+        }
     }
 
     private void OnPowerChanged(EntityUid uid, ActiveArtifactAnalyzerComponent component, ref PowerChangedEvent args)

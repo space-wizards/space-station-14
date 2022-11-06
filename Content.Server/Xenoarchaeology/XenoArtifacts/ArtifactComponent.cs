@@ -76,7 +76,7 @@ public sealed class ArtifactTree
 /// A single "node" of an artifact that contains various data about it.
 /// </summary>
 [DataDefinition]
-public sealed class ArtifactNode
+public sealed class ArtifactNode : ICloneable
 {
     /// <summary>
     /// A numeric id corresponding to each node. used for display purposes
@@ -94,7 +94,7 @@ public sealed class ArtifactNode
     /// A list of surrounding nodes. Used for tree traversal
     /// </summary>
     [ViewVariables]
-    public readonly List<ArtifactNode> Edges = new();
+    public List<ArtifactNode> Edges = new();
 
     /// <summary>
     /// Whether or not the node has been entered
@@ -125,4 +125,19 @@ public sealed class ArtifactNode
     /// </summary>
     [ViewVariables]
     public Dictionary<string, object> NodeData = new();
+
+    public object Clone()
+    {
+        return new ArtifactNode
+        {
+            Id = Id,
+            Depth = Depth,
+            Edges = Edges,
+            Discovered = Discovered,
+            Trigger = Trigger,
+            Triggered = Triggered,
+            Effect = Effect,
+            NodeData = NodeData
+        };
+    }
 }

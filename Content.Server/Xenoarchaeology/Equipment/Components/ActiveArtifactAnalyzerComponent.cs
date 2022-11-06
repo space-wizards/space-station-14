@@ -21,8 +21,4 @@ public sealed class ActiveArtifactAnalyzerComponent : Component
     /// </summary>
     [ViewVariables]
     public EntityUid Artifact;
-
-    public readonly SoundSpecifier ScanningSound = new SoundPathSpecifier("/Audio/Machines/scan_loop.ogg");
-    public readonly SoundSpecifier ScanFinishedSound = new SoundPathSpecifier("/Audio/Machines/scan_finish.ogg");
-    public IPlayingAudioStream? LoopStream;
 }

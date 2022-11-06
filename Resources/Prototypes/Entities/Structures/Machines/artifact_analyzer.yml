@@ -8,6 +8,7 @@
     noRot: true
     netsync: false
     sprite: Structures/Machines/artifact_analyzer.rsi
+    drawdepth: FloorObjects
     layers:
     - state: icon
     - state: unshaded
@@ -16,6 +17,12 @@
   - type: Physics
     bodyType: Static
     canCollide: true
+  - type: AmbientSound
+    enabled: false
+    sound: 
+      path: /Audio/Machines/scan_loop.ogg
+    range: 5
+    volume: -8
   - type: Fixtures
     fixtures:
       - shape:

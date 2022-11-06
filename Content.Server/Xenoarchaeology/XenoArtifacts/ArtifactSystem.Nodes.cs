@@ -93,15 +93,15 @@ public sealed partial class ArtifactSystem
 
     private ArtifactEffectPrototype GetRandomEffect(ref ArtifactNode node)
     {
-        var allTriggers = _prototype.EnumeratePrototypes<ArtifactEffectPrototype>().ToList();
-        var validDepth = allTriggers.Select(x => x.TargetDepth).Distinct().ToList();
+        var allEffects = _prototype.EnumeratePrototypes<ArtifactEffectPrototype>().ToList();
+        var validDepth = allEffects.Select(x => x.TargetDepth).Distinct().ToList();
 
         var weights = GetDepthWeights(validDepth, node.Depth);
         var selectedRandomTargetDepth = GetRandomTargetDepth(weights);
-        var targetTriggers = allTriggers.Where(x =>
+        var targetEffects = allEffects.Where(x =>
             x.TargetDepth == selectedRandomTargetDepth).ToList();
 
-        return _random.Pick(targetTriggers);
+        return _random.Pick(targetEffects);
     }
 
     /// <remarks>
