@@ -10,12 +10,4 @@ namespace Content.Client.Singularity.Components;
 [RegisterComponent]
 [ComponentReference(typeof(SharedSingularityComponent))]
 public sealed class SingularityComponent : SharedSingularityComponent
-{
-    public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
-    {
-        if (curState is not SingularityComponentState state)
-            return;
-
-        IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SingularitySystem>().SetLevel(this, state.Level);
-    }
-}
+{}

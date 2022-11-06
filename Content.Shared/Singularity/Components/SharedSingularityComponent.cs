@@ -1,5 +1,4 @@
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization;
 
 using Content.Shared.Singularity.EntitySystems;
 
@@ -30,23 +29,4 @@ public abstract class SharedSingularityComponent : Component
     [Access(friends:typeof(SharedSingularitySystem), Other=AccessPermissions.Read, Self=AccessPermissions.Read)]
     [ViewVariables(VVAccess.ReadWrite)]
     public float RadsPerLevel = 2f;
-
-#region Serialization
-    /// <summary>
-    /// A state wrapper used to sync the singularity between the server and client.
-    /// </summary>
-    [Serializable, NetSerializable]
-    public sealed class SingularityComponentState : ComponentState
-    {
-        /// <summary>
-        /// The level of the singularity to sync.
-        /// </summary>
-        public readonly byte Level;
-
-        public SingularityComponentState(byte level)
-        {
-            Level = level;
-        }
-    }
-#endregion Serialization
 }

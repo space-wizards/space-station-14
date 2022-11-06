@@ -1,3 +1,4 @@
+using Robust.Shared.GameStates;
 using Robust.Shared.Player;
 using Robust.Server.GameStates;
 
@@ -45,6 +46,7 @@ public sealed class SingularitySystem : SharedSingularitySystem
         SubscribeLocalEvent<SingularityComponent, EntityConsumedByEventHorizonEvent>(OnConsumedEntity);
         SubscribeLocalEvent<SingularityComponent, TilesConsumedByEventHorizonEvent>(OnConsumedTiles);
         SubscribeLocalEvent<SingularityComponent, SingularityLevelChangedEvent>(UpdateEnergyDrain);
+        SubscribeLocalEvent<SingularityComponent, ComponentGetState>(HandleSingularityState);
 
         // TODO: Figure out where all this coupling should be handled.
         SubscribeLocalEvent<RandomWalkComponent, SingularityLevelChangedEvent>(UpdateRandomWalk);
@@ -70,8 +72,8 @@ public sealed class SingularitySystem : SharedSingularitySystem
     {
         foreach(var singularity in EntityManager.EntityQuery<SingularityComponent>())
         {
-            if ((singularity._timeSinceLastUpdate += frameTime) > singularity.UpdatePeriod)
-                Update(singularity, singularity._timeSinceLastUpdate);
+            if ((singularity.TimeSinceLastUpdate += frameTime) > singularity.UpdatePeriod)
+                Update(singularity, singularity.TimeSinceLastUpdate);
         }
     }
 
@@ -82,7 +84,7 @@ public sealed class SingularitySystem : SharedSingularitySystem
     /// <param name="frameTime">The amount of time to consider as having passed since the last update.</param>
     public void Update(SingularityComponent singularity, float frameTime)
     {
-        singularity._timeSinceLastUpdate = 0.0f;
+        singularity.TimeSinceLastUpdate = 0.0f;
         AdjustEnergy(singularity, -singularity.EnergyDrain * frameTime);
     }
 
@@ -91,7 +93,7 @@ public sealed class SingularitySystem : SharedSingularitySystem
     /// </summary>
     /// <param name="singularity">The singularity to update the energy of</param>
     public void Update(SingularityComponent singularity)
-        => Update(singularity, singularity._timeSinceLastUpdate);
+        => Update(singularity, singularity.TimeSinceLastUpdate);
 
 #region Getters/Setters
     /// <summary>
@@ -170,6 +172,18 @@ public sealed class SingularitySystem : SharedSingularitySystem
     }
 
     /// <summary>
+    /// Makes entities that have the singularity distortion visual warping always get their state shared with the client.
+    /// This prevents some major popin with large distortion ranges.
+    /// </summary>
+    /// <param name="uid">The entity UID of the entity that is gaining the shader.</param>
+    /// <param name="comp">The component of the shader that the entity is gaining.</param>
+    /// <param name="args">The event arguments.</param>
+    public void OnDistortionStartup(EntityUid uid, SingularityDistortionComponent comp, ComponentStartup args)
+    {
+        _pvs.AddGlobalOverride(uid);
+    }
+
+    /// <summary>
     /// Handles playing the shutdown sounds when a singulo dissipates.
     /// Always stops the ambiant singularity rumble.
     /// The dissipations sound only plays if the singularity is being destroyed.
@@ -187,15 +201,14 @@ public sealed class SingularitySystem : SharedSingularitySystem
     }
 
     /// <summary>
-    /// Makes entities that have the singularity distortion visual warping always get their state shared with the client.
-    /// This prevents some major popin with large distortion ranges.
+    /// Handles wrapping the state of a singularity for server-client syncing.
     /// </summary>
-    /// <param name="uid">The entity UID of the entity that is gaining the shader.</param>
-    /// <param name="comp">The component of the shader that the entity is gaining.</param>
+    /// <param name="uid">The uid of the singularity that is being synced.</param>
+    /// <param name="comp">The state of the singularity that is being synced.</param>
     /// <param name="args">The event arguments.</param>
-    public void OnDistortionStartup(EntityUid uid, SingularityDistortionComponent comp, ComponentStartup args)
+    private void HandleSingularityState(EntityUid uid, SingularityComponent comp, ref ComponentGetState args)
     {
-        _pvs.AddGlobalOverride(uid);
+        args.State = new SingularityComponentState(comp);
     }
 
     /// <summary>

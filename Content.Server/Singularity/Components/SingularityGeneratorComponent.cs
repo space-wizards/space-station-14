@@ -1,4 +1,7 @@
-﻿using Content.Server.Singularity.EntitySystems;
+﻿using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+
+using Content.Server.Singularity.EntitySystems;
 
 namespace Content.Server.Singularity.Components;
 
@@ -10,7 +13,7 @@ public sealed class SingularityGeneratorComponent : Component
     /// If you want to set this use <see  cref="SingularityGeneratorSystem.SetPower"/>
     /// </summary>
     [DataField("power")]
-    [Access(friends:typeof(SingularityGeneratorSystem), Self=AccessPermissions.Read, Other=AccessPermissions.Read)]
+    [Access(friends:typeof(SingularityGeneratorSystem))]
     public float Power = 0;
 
     /// <summary>
@@ -18,13 +21,13 @@ public sealed class SingularityGeneratorComponent : Component
     /// If you want to set this use <see  cref="SingularityGeneratorSystem.SetThreshold"/>
     /// </summary>
     [DataField("threshold")]
-    [Access(friends:typeof(SingularityGeneratorSystem), Self=AccessPermissions.Read, Other=AccessPermissions.Read)]
+    [Access(friends:typeof(SingularityGeneratorSystem))]
     public float Threshold = 16;
 
     /// <summary>
     ///     The prototype ID used to spawn a singularity.
     /// </summary>
-    [DataField("spawnId")]
+    [DataField("spawnId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     [ViewVariables(VVAccess.ReadWrite)]
-    public string SpawnId = "Singularity";
+    public string? SpawnPrototype = "Singularity";
 }

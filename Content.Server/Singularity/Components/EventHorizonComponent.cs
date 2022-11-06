@@ -28,6 +28,6 @@ public sealed class EventHorizonComponent : SharedEventHorizonComponent
     /// The amount of time that has passed since the last moment when the event horizon consumed eveything it overlapped in seconds.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
-    [Access(friends:typeof(EventHorizonSystem), Other=AccessPermissions.Read, Self=AccessPermissions.Read)]
-    public float _timeSinceLastConsumeWave = float.PositiveInfinity;
+    [Access(friends:typeof(EventHorizonSystem))]
+    public float TimeSinceLastConsumeWave = float.PositiveInfinity;
 }

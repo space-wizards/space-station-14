@@ -44,7 +44,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     {
         foreach(var (eventHorizon, xform) in EntityManager.EntityQuery<EventHorizonComponent, TransformComponent>())
         {
-            if ((eventHorizon._timeSinceLastConsumeWave += frameTime) > eventHorizon.ConsumePeriod)
+            if ((eventHorizon.TimeSinceLastConsumeWave += frameTime) > eventHorizon.ConsumePeriod)
                 Update(eventHorizon, xform);
         }
     }
@@ -56,7 +56,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// <param name="xform">The transform of the event horizon.</param>
     public void Update(EventHorizonComponent eventHorizon, TransformComponent? xform)
     {
-        eventHorizon._timeSinceLastConsumeWave = 0.0f;
+        eventHorizon.TimeSinceLastConsumeWave = 0.0f;
         if(!Resolve(eventHorizon.Owner, ref xform))
             return;
         if (eventHorizon.Radius < 0.0f || eventHorizon.BeingConsumedByAnotherEventHorizon)

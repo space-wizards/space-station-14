@@ -1,6 +1,6 @@
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.ViewVariables;
+using Robust.Shared.Serialization;
 
 using Content.Shared.Radiation.Components;
 using Content.Shared.Singularity.Components;
@@ -236,6 +236,25 @@ public abstract class SharedSingularitySystem : EntitySystem
         };
     }
 #endregion Derivations
+
+#region Serialization
+    /// <summary>
+    /// A state wrapper used to sync the singularity between the server and client.
+    /// </summary>
+    [Serializable, NetSerializable]
+    protected sealed class SingularityComponentState : ComponentState
+    {
+        /// <summary>
+        /// The level of the singularity to sync.
+        /// </summary>
+        public readonly byte Level;
+
+        public SingularityComponentState(SharedSingularityComponent singulo)
+        {
+            Level = singulo.Level;
+        }
+    }
+#endregion Serialization
 
 #region EventHandlers
     /// <summary>

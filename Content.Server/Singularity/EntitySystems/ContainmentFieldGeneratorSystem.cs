@@ -24,7 +24,6 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly PhysicsSystem _physics = default!;
     [Dependency] private readonly AppearanceSystem _visualizer = default!;
-    [Dependency] private readonly EventHorizonSystem _horizons = default!;
 
     public override void Initialize()
     {
@@ -396,7 +395,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     {
         if (args.Cancelled)
             return;
-        if (comp.IsConnected)
-            _horizons.PreventBreach(uid, comp, args);
+        if (comp.IsConnected && !args.EventHorizon.CanBreachContainment)
+            args.Cancel();
     }
 }

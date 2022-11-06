@@ -8,8 +8,7 @@ namespace Content.Server.Singularity.Components;
 /// Primarily managed by <see cref="GravityWellSystem"/>.
 /// </summary>
 [RegisterComponent]
-[ComponentReference(typeof(SharedGravityWellComponent))]
-public sealed class GravityWellComponent : SharedGravityWellComponent
+public sealed class GravityWellComponent : Component
 {
     /// <summary>
     /// The maximum range at which the gravity well can push/pull entities.
@@ -52,5 +51,6 @@ public sealed class GravityWellComponent : SharedGravityWellComponent
     /// The time elapsed since the last gravitational pulse this emitted.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
-    public float _timeSinceLastGravPulse = 0.0f;
+    [Access(friends:typeof(GravityWellSystem))]
+    public float TimeSinceLastGravPulse = 0.0f;
 }

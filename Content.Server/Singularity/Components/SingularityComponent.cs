@@ -17,7 +17,7 @@ public sealed class SingularityComponent : SharedSingularityComponent
     /// If you want to set this go through <see cref="SingularitySystem.SetEnergy"/>
     /// </summary>
     [DataField("energy")]
-    [Access(friends:typeof(SingularitySystem), Other=AccessPermissions.Read, Self=AccessPermissions.Read)]
+    [Access(friends:typeof(SingularitySystem))]
     public float Energy = 180f;
 
     /// <summary>
@@ -38,7 +38,8 @@ public sealed class SingularityComponent : SharedSingularityComponent
     /// The amount of time that has elapsed since the last energy level update.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
-    public float _timeSinceLastUpdate = 0f;
+    [Access(friends:typeof(SingularitySystem))]
+    public float TimeSinceLastUpdate = 0f;
 
 #region Audio
     /// <summary>
@@ -74,11 +75,4 @@ public sealed class SingularityComponent : SharedSingularityComponent
         AudioParams.Default
     );
 #endregion Audio
-
-#region Serialization
-    public override ComponentState GetComponentState()
-    {
-        return new SingularityComponentState(Level);
-    }
-#endregion Serialization
 }

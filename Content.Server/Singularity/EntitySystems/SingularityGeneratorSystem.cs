@@ -44,7 +44,7 @@ public sealed class SingularityGeneratorSystem : EntitySystem
             return;
 
         SetPower(comp, 0);
-        EntityManager.SpawnEntity(comp.SpawnId, Transform(comp.Owner).Coordinates);
+        EntityManager.SpawnEntity(comp.SpawnPrototype, Transform(comp.Owner).Coordinates);
     }
 
 #region Getters/Setters

@@ -37,7 +37,7 @@ public sealed class GravityWellSystem : SharedGravityWellSystem
     {
         foreach(var (gravWell, xform) in EntityManager.EntityQuery<GravityWellComponent, TransformComponent>())
         {
-            if ((gravWell._timeSinceLastGravPulse += frameTime) > gravWell.GravPulsePeriod)
+            if ((gravWell.TimeSinceLastGravPulse += frameTime) > gravWell.GravPulsePeriod)
                 Update(gravWell, xform);
         }
     }
@@ -50,7 +50,7 @@ public sealed class GravityWellSystem : SharedGravityWellSystem
     /// <param name="xform">The transform of the gravity well entity.</param>
     private void Update(GravityWellComponent gravWell, float frameTime, TransformComponent? xform = null)
     {
-        gravWell._timeSinceLastGravPulse = 0.0f;
+        gravWell.TimeSinceLastGravPulse = 0.0f;
         if(!Resolve(gravWell.Owner, ref xform))
             return;
         if (gravWell.MaxRange < 0.0f)
@@ -66,7 +66,7 @@ public sealed class GravityWellSystem : SharedGravityWellSystem
     /// <param name="gravWell">The gravity well to make pulse.</param>
     /// <param name="xform">The transform of the gravity well.</param>
     private void Update(GravityWellComponent gravWell, TransformComponent? xform = null)
-        => Update(gravWell, gravWell._timeSinceLastGravPulse, xform);
+        => Update(gravWell, gravWell.TimeSinceLastGravPulse, xform);
 
 #region GravPulse
 

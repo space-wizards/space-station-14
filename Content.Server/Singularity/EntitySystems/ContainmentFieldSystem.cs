@@ -15,14 +15,13 @@ public sealed class ContainmentFieldSystem : EntitySystem
 {
     [Dependency] private readonly ThrowingSystem _throwing = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
-    [Dependency] private readonly EventHorizonSystem _horizons = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<ContainmentFieldComponent, StartCollideEvent>(HandleFieldCollide);
-        SubscribeLocalEvent<ContainmentFieldComponent, EventHorizonAttemptConsumeEntityEvent>(_horizons.PreventBreach);
+        SubscribeLocalEvent<ContainmentFieldComponent, EventHorizonAttemptConsumeEntityEvent>(HandleEventHorizon);
     }
 
     private void HandleFieldCollide(EntityUid uid, ContainmentFieldComponent component, ref StartCollideEvent args)
@@ -42,5 +41,11 @@ public sealed class ContainmentFieldSystem : EntitySystem
 
             _throwing.TryThrow(otherBody, playerDir-fieldDir, strength: component.ThrowForce);
         }
+    }
+
+    private void HandleEventHorizon(EntityUid uid, ContainmentFieldComponent component, EventHorizonAttemptConsumeEntityEvent args)
+    {
+        if(!args.Cancelled && !args.EventHorizon.CanBreachContainment)
+            args.Cancel();
     }
 }

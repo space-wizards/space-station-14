@@ -15,7 +15,7 @@ public abstract class SharedEventHorizonComponent : Component
     /// If you want to set this go through <see cref="SharedEventHorizonSystem.SetRadius"/>.
     /// </summary>
     [DataField("radius")]
-    [Access(friends:typeof(SharedEventHorizonSystem), Other=AccessPermissions.Read, Self=AccessPermissions.Read)]
+    [Access(friends:typeof(SharedEventHorizonSystem))]
     public float Radius;
 
     /// <summary>
@@ -23,7 +23,7 @@ public abstract class SharedEventHorizonComponent : Component
     /// If you want to set this go through <see cref="SharedEventHorizonSystem.SetCanBreachContainment"/>.
     /// </summary>
     [DataField("canBreachContainment")]
-    [Access(friends:typeof(SharedEventHorizonSystem), Other=AccessPermissions.Read, Self=AccessPermissions.Read)]
+    [Access(friends:typeof(SharedEventHorizonSystem))]
     public bool CanBreachContainment = false;
 
     /// <summary>
@@ -32,6 +32,6 @@ public abstract class SharedEventHorizonComponent : Component
     /// If you want to set this go through <see cref="SharedEventHorizonSystem.SetHorizonFixtureId"/>.
     /// </summary>
     [DataField("horizonFixtureId")]
-    [Access(friends:typeof(SharedEventHorizonSystem), Other=AccessPermissions.Read, Self=AccessPermissions.Read)]
+    [Access(friends:typeof(SharedEventHorizonSystem))]
     public string? HorizonFixtureId = "EventHorizon";
 }
