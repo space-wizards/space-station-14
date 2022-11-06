@@ -115,16 +115,16 @@ namespace Content.IntegrationTests.Tests
             string one;
             string two;
 
-            using (var stream = userData.Open(new ResourcePath("/load save ticks save 1.yml"), FileMode.Open))
+            await using (var stream = userData.Open(new ResourcePath("/load save ticks save 1.yml"), FileMode.Open))
             using (var reader = new StreamReader(stream))
             {
-                one = reader.ReadToEnd();
+                one = await reader.ReadToEndAsync();
             }
 
-            using (var stream = userData.Open(new ResourcePath("/load save ticks save 2.yml"), FileMode.Open))
+            await using (var stream = userData.Open(new ResourcePath("/load save ticks save 2.yml"), FileMode.Open))
             using (var reader = new StreamReader(stream))
             {
-                two = reader.ReadToEnd();
+                two = await reader.ReadToEndAsync();
             }
 
             Assert.Multiple(() => {
