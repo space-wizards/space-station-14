@@ -71,8 +71,6 @@ public abstract class SharedSingularitySystem : EntitySystem
 
         singularity.Level = value;
         UpdateSingularityLevel(singularity, oldValue);
-        if(!singularity.Deleted)
-            singularity.Dirty();
     }
 
     /// <summary>
