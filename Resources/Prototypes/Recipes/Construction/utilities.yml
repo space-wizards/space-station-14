@@ -430,8 +430,8 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
-    sprite: Structures/Piping/Atmospherics/pipe.rsi
-    state: pipeHalf
+    sprite: Structures/Piping/Atmospherics/outletinjector.rsi
+    state: injector
   conditions:
     - !type:TileNotBlocked {}
 

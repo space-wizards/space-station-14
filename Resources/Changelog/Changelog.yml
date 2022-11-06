@@ -1,66 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: 'Added allicins to aliums. Animals can''t eat onions, garlic or leeks!',
-    type: Add}
-  id: 2076
-  time: '2022-08-02T13:01:15.0000000+00:00'
-- author: eclips_e
-  changes:
-  - {message: 'Rotating and Strafing keybinds have been swapped. Use E/Q to rotate
-      the shuttle, A/D to strafe.', type: Tweak}
-  id: 2077
-  time: '2022-08-02T13:02:28.0000000+00:00'
-- author: JustinTrotter
-  changes:
-  - {message: backpack and duffels no longer only display default gray when held,
-    type: Fix}
-  id: 2078
-  time: '2022-08-02T21:30:05.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: NPCs no longer move at half speed., type: Fix}
-  - {message: NPCs shouldn't get stuck going back and forth anymore., type: Fix}
-  id: 2079
-  time: '2022-08-03T06:02:50.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Barratry has been removed., type: Remove}
-  id: 2080
-  time: '2022-08-03T23:44:11.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Emergency light alarm now uses the correct sound., type: Fix}
-  id: 2081
-  time: '2022-08-04T00:37:20.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed an issue preventing lathes from being unanchored using a wrench.,
-    type: Fix}
-  id: 2082
-  time: '2022-08-04T00:38:56.0000000+00:00'
-- author: Veritius
-  changes:
-  - {message: The admin announcement UI auto-closing is now optional., type: Tweak}
-  id: 2083
-  time: '2022-08-04T00:39:10.0000000+00:00'
-- author: jessicamaybe
-  changes:
-  - {message: Muting lobby music will now also mute the restart sound (APC DESTROYED),
-    type: Tweak}
-  id: 2084
-  time: '2022-08-04T00:43:54.0000000+00:00'
-- author: JustinTrotter
-  changes:
-  - {message: crew monitoring console now has proper window size, type: Fix}
-  - {message: id card console limits name and job lengths to 30 characters, type: Fix}
-  id: 2085
-  time: '2022-08-04T00:46:03.0000000+00:00'
-- author: jessicamaybe
-  changes:
-  - {message: You can no longer spill closed drinks, type: Tweak}
-  id: 2086
-  time: '2022-08-04T00:47:14.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: 'Nukes can no longer be unanchored once they are armed, without disarming
@@ -2968,3 +2906,62 @@ Entries:
       upgrades have., type: Add}
   id: 2575
   time: '2022-11-04T03:27:47.0000000+00:00'
+- author: rolfero
+  changes:
+  - {message: You can now link airlocks and windoors to buttons and levers!, type: Add}
+  id: 2576
+  time: '2022-11-04T04:00:34.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Pinpointer arrow should be more accurate., type: Tweak}
+  id: 2577
+  time: '2022-11-04T04:15:24.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed a bug allowing lathes to infinitely print items when upgraded.,
+    type: Fix}
+  id: 2578
+  time: '2022-11-04T19:13:07.0000000+00:00'
+- author: checkraze
+  changes:
+  - {message: changed the presents to be boxes and made a new present that has a surprise
+      inside!, type: Tweak}
+  id: 2579
+  time: '2022-11-04T19:24:29.0000000+00:00'
+- author: Salex08
+  changes:
+  - {message: Shot Projectiles cause impulses like it was supposed to, type: Fix}
+  id: 2580
+  time: '2022-11-05T03:08:32.0000000+00:00'
+- author: rolfero
+  changes:
+  - {message: Glowstick sprites inhand are now visible, type: Fix}
+  id: 2581
+  time: '2022-11-05T15:28:44.0000000+00:00'
+- author: Cripes
+  changes:
+  - {message: Construction menu displays correct icon for air injector, type: Fix}
+  id: 2582
+  time: '2022-11-05T15:31:22.0000000+00:00'
+- author: Daemon
+  changes:
+  - {message: Added security target dummies., type: Add}
+  - {message: Added practice laser gun., type: Add}
+  id: 2583
+  time: '2022-11-05T15:32:00.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Stunned individuals can no longer attack., type: Fix}
+  id: 2584
+  time: '2022-11-06T16:31:23.0000000+00:00'
+- author: rolfero
+  changes:
+  - {message: You can now inspect/strip someone through the examine tooltip again.,
+    type: Fix}
+  id: 2585
+  time: '2022-11-06T16:33:17.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Holofans and tiny fans are airtight again., type: Fix}
+  id: 2586
+  time: '2022-11-06T19:34:07.0000000+00:00'

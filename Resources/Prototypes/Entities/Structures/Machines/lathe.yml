@@ -349,6 +349,9 @@
       - CartridgeCaselessRifleRubber
       - CartridgeLightRifleRubber
       - CartridgeRifleRubber
+      - TargetHuman
+      - TargetSyndicate
+      - TargetClown
   - type: MaterialStorage
     whitelist:
       tags:
