@@ -1,4 +1,6 @@
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization.TypeSerializers.Implementations;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Damage.Components;
 
@@ -41,6 +43,6 @@ public sealed class StaminaComponent : Component
     /// <summary>
     /// To avoid continuously updating our data we track the last time we updated so we can extrapolate our current stamina.
     /// </summary>
-    [ViewVariables, DataField("lastUpdate")]
+    [ViewVariables, DataField("lastUpdate", customTypeSerializer:typeof(TimeOffsetSerializer))]
     public TimeSpan NextUpdate = TimeSpan.Zero;
 }

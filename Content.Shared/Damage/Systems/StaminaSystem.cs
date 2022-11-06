@@ -9,6 +9,7 @@ using Content.Shared.Popups;
 using Content.Shared.Rounding;
 using Content.Shared.Stunnable;
 using Content.Shared.Weapons.Melee.Events;
+using JetBrains.Annotations;
 using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
@@ -22,6 +23,7 @@ public sealed class StaminaSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
+    [Dependency] private readonly MetaDataSystem _metadata = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedStunSystem _stunSystem = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -74,11 +76,21 @@ public sealed class StaminaSystem : EntitySystem
         if (component.Critical)
             EnterStamCrit(uid, component);
         else
+        {
+            if (component.StaminaDamage > 0f)
+                EnsureComp<ActiveStaminaComponent>(uid);
+
             ExitStamCrit(uid, component);
+        }
     }
 
     private void OnShutdown(EntityUid uid, StaminaComponent component, ComponentShutdown args)
     {
+        if (MetaData(uid).EntityLifeStage < EntityLifeStage.Terminating)
+        {
+            RemCompDeferred<ActiveStaminaComponent>(uid);
+        }
+
         SetStaminaAlert(uid);
     }
 
@@ -87,13 +99,15 @@ public sealed class StaminaSystem : EntitySystem
         SetStaminaAlert(uid, component);
     }
 
-    public float GetStamina(EntityUid uid, StaminaComponent? component = null)
+    [PublicAPI]
+    public float GetStaminaDamage(EntityUid uid, StaminaComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return 0f;
 
         var curTime = _timing.CurTime;
-        return MathF.Max(0f, component.StaminaDamage - MathF.Max(0f, (float) (curTime - component.NextUpdate).TotalSeconds * component.Decay));
+        var pauseTime = _metadata.GetPauseTime(uid);
+        return MathF.Max(0f, component.StaminaDamage - MathF.Max(0f, (float) (curTime - (component.NextUpdate + pauseTime)).TotalSeconds * component.Decay));
     }
 
     private void OnDisarmed(EntityUid uid, StaminaComponent component, DisarmedEvent args)
@@ -230,6 +244,7 @@ public sealed class StaminaSystem : EntitySystem
             }
         }
 
+        EnsureComp<ActiveStaminaComponent>(uid);
         Dirty(component);
     }
 
@@ -239,6 +254,7 @@ public sealed class StaminaSystem : EntitySystem
 
         if (!_timing.IsFirstTimePredicted) return;
 
+        var metaQuery = GetEntityQuery<MetaDataComponent>();
         var stamQuery = GetEntityQuery<StaminaComponent>();
         var curTime = _timing.CurTime;
 
@@ -252,7 +268,10 @@ public sealed class StaminaSystem : EntitySystem
                 continue;
             }
 
-            if (comp.NextUpdate > curTime)
+            var pauseTime = _metadata.GetPauseTime(active.Owner, metaQuery.GetComponent(active.Owner));
+            var nextUpdate = comp.NextUpdate + pauseTime;
+
+            if (nextUpdate > curTime)
                 continue;
 
             // We were in crit so come out of it and continue.
