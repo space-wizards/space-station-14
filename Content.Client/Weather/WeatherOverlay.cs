@@ -53,6 +53,8 @@ public sealed class WeatherOverlay : Overlay
             return;
         }
 
+        // var a = args.Viewport.
+
         switch (args.Space)
         {
             case OverlaySpace.WorldSpaceBelowWorld:
@@ -68,8 +70,7 @@ public sealed class WeatherOverlay : Overlay
     {
         var eyeRotation = args.Viewport.Eye?.Rotation ?? Angle.Zero;
         var worldHandle = args.WorldHandle;
-        worldHandle.SetTransform(Matrix3.CreateRotation(eyeRotation));
-        worldHandle.UseShader(null);
+        worldHandle.UseShader(_protoManager.Index<ShaderPrototype>("unshaded").Instance());
 
         var sprite = _sprite.Frame0(weatherProto.Sprite);
         var worldWidth = sprite.Width / EyeManager.PixelsPerMeter;
@@ -80,7 +81,7 @@ public sealed class WeatherOverlay : Overlay
             for (var y = args.WorldAABB.Bottom; y < args.WorldAABB.Top; y += worldHeight)
             {
                 var tile = new Box2(new Vector2(x, y), new Vector2(x + worldWidth, y + worldHeight));
-                worldHandle.DrawTextureRect(sprite, tile);
+                worldHandle.DrawTextureRect(sprite, new Box2Rotated(tile, -eyeRotation, tile.Center));
             }
         }
 
@@ -99,6 +100,8 @@ public sealed class WeatherOverlay : Overlay
             // TODO: For each tile on grid.
             foreach (var tile in grid.GetTilesIntersecting(args.WorldBounds))
             {
+                // TODO: Exclusivity
+
                 worldHandle.DrawTextureRect(_sprite.Frame0(weatherProto.Sprite), new Box2(tile.GridIndices * grid.TileSize, (tile.GridIndices + Vector2i.One) * grid.TileSize));
             }
         }
