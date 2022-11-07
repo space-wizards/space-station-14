@@ -127,7 +127,10 @@ namespace Content.Server.VendingMachines.Restock
                 Filter.Pvs(ev.User),
                 PopupType.Medium);
 
-            _audioSystem.Play(package.SoundRestockDone, Filter.Pvs(package.Owner), package.Owner, AudioParams.Default.WithVolume(-2f).WithVariation(0.2f));
+            _audioSystem.PlayPvs(package.SoundRestockDone, package.Owner,
+                AudioParams.Default
+                .WithVolume(-2f)
+                .WithVariation(0.2f));
 
             QueueDel(ev.Package);
         }
