@@ -99,7 +99,10 @@ namespace Content.Server.VendingMachines.Restock
                 Filter.Pvs(args.User),
                 PopupType.Medium);
 
-            _audioSystem.Play(component.SoundRestockStart, Filter.Pvs(component.Owner), component.Owner, AudioParams.Default.WithVolume(-2f).WithVariation(0.2f));
+            _audioSystem.PlayPvs(component.SoundRestockStart, component.Owner,
+                AudioParams.Default
+                .WithVolume(-2f)
+                .WithVariation(0.2f));
         }
 
         private void OnRestockCancelled(RestockCancelledEvent ev)
