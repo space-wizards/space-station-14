@@ -8,7 +8,7 @@
   - type: VendingMachineRestock
   - type: Sprite
     netsync: false
-    sprite: Objects/Specific/Service/vending_restock_package.rsi
+    sprite: Objects/Specific/Service/vending_machine_restock.rsi
     layers:
     - state: base
     - state: green_bit

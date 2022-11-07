@@ -5,15 +5,15 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using Content.Shared.VendingMachines;
-using Content.Server.VendingMachineRestockPackage;
 using Content.Server.VendingMachines;
+using Content.Server.VendingMachines.Restock;
 using Content.Server.Wires;
+using Content.Shared.VendingMachines;
 
 namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
-    [TestOf(typeof(VendingMachineRestockPackageComponent))]
+    [TestOf(typeof(VendingMachineRestockComponent))]
     public sealed class VendingMachineRestockTest : EntitySystem
     {
         private const string Prototypes = @"
@@ -45,7 +45,7 @@ namespace Content.IntegrationTests.Tests
   id: TestRestockWrong
   name: TestRestockWrong
   components:
-  - type: VendingMachineRestockPackage
+  - type: VendingMachineRestock
     canRestock:
     - OtherTestInventory
 
@@ -54,7 +54,7 @@ namespace Content.IntegrationTests.Tests
   id: TestRestockCorrect
   name: TestRestockCorrect
   components:
-  - type: VendingMachineRestockPackage
+  - type: VendingMachineRestock
     canRestock:
     - TestInventory
 
@@ -80,7 +80,7 @@ namespace Content.IntegrationTests.Tests
             {
                 foreach (var proto in protoManager.EnumeratePrototypes<EntityPrototype>())
                 {
-                    if (!proto.TryGetComponent<VendingMachineRestockPackageComponent>(out var package))
+                    if (!proto.TryGetComponent<VendingMachineRestockComponent>(out var package))
                         continue;
 
                     foreach(var vendingInventory in package.CanRestock)
@@ -104,8 +104,8 @@ namespace Content.IntegrationTests.Tests
             EntityUid machine;
             EntityUid user;
             VendingMachineComponent machineComponent;
-            VendingMachineRestockPackageComponent restockRightComponent;
-            VendingMachineRestockPackageComponent restockWrongComponent;
+            VendingMachineRestockComponent restockRightComponent;
+            VendingMachineRestockComponent restockWrongComponent;
             WiresComponent machineWires;
 
             await server.WaitAssertion(() =>
@@ -124,11 +124,11 @@ namespace Content.IntegrationTests.Tests
 
                 // Test for components existing
                 Assert.True(entityManager.TryGetComponent(machine, out machineComponent!), $"Machine has no {nameof(VendingMachineComponent)}");
-                Assert.True(entityManager.TryGetComponent(packageRight, out restockRightComponent!), $"Correct package has no {nameof(VendingMachineRestockPackageComponent)}");
-                Assert.True(entityManager.TryGetComponent(packageWrong, out restockWrongComponent!), $"Wrong package has no {nameof(VendingMachineRestockPackageComponent)}");
+                Assert.True(entityManager.TryGetComponent(packageRight, out restockRightComponent!), $"Correct package has no {nameof(VendingMachineRestockComponent)}");
+                Assert.True(entityManager.TryGetComponent(packageWrong, out restockWrongComponent!), $"Wrong package has no {nameof(VendingMachineRestockComponent)}");
                 Assert.True(entityManager.TryGetComponent(machine, out machineWires), $"Machine has no {nameof(WiresComponent)}");
 
-                var systemRestock = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<VendingMachineRestockPackageSystem>();
+                var systemRestock = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<VendingMachineRestockSystem>();
                 var systemMachine = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<VendingMachineSystem>();
 
                 // test that panel needs to be opened first

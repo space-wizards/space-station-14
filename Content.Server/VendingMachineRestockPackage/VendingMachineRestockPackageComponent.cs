@@ -1,10 +1,10 @@
 using System.Threading;
 using Robust.Shared.Audio;
 
-namespace Content.Server.VendingMachineRestockPackage
+namespace Content.Server.VendingMachines.Restock
 {
     [RegisterComponent]
-    public sealed class VendingMachineRestockPackageComponent : Component
+    public sealed class VendingMachineRestockComponent : Component
     {
         public CancellationTokenSource? CancelToken;
 

@@ -1,5 +1,5 @@
 using Content.Server.Stack;
-using Content.Server.VendingMachineRestockPackage;
+using Content.Server.VendingMachines.Restock;
 using Content.Shared.Prototypes;
 using Content.Shared.VendingMachines;
 
@@ -7,7 +7,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
 {
     /// <summary>
     ///     Spawns a portion of the total items from one of the
-    ///     canRestock inventory entries on a VendingMachineRestockPackage.
+    ///     canRestock inventory entries on a VendingMachineRestock component.
     /// </summary>
     [Serializable]
     [DataDefinition]
@@ -25,7 +25,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
 
         public void Execute(EntityUid owner, DestructibleSystem system)
         {
-            if (!system.EntityManager.TryGetComponent<VendingMachineRestockPackageComponent>(owner, out var packagecomp) ||
+            if (!system.EntityManager.TryGetComponent<VendingMachineRestockComponent>(owner, out var packagecomp) ||
                 !system.EntityManager.TryGetComponent<TransformComponent>(owner, out var xform))
                 return;
 

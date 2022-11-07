@@ -3,15 +3,14 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Content.Server.DoAfter;
-using Content.Server.VendingMachines;
 using Content.Server.Wires;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.VendingMachines;
 
-namespace Content.Server.VendingMachineRestockPackage
+namespace Content.Server.VendingMachines.Restock
 {
-    public sealed class VendingMachineRestockPackageSystem : EntitySystem
+    public sealed class VendingMachineRestockSystem : EntitySystem
     {
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
@@ -21,20 +20,20 @@ namespace Content.Server.VendingMachineRestockPackage
         {
             base.Initialize();
 
-            SubscribeLocalEvent<VendingMachineRestockPackageComponent, AfterInteractEvent>(OnAfterInteract);
+            SubscribeLocalEvent<VendingMachineRestockComponent, AfterInteractEvent>(OnAfterInteract);
 
             SubscribeLocalEvent<RestockSuccessfulEvent>(OnRestockSuccessful);
             SubscribeLocalEvent<RestockCancelledEvent>(OnRestockCancelled);
         }
 
         public bool TryAccessMachine(EntityUid uid,
-            VendingMachineRestockPackageComponent component,
+            VendingMachineRestockComponent component,
             VendingMachineComponent machineComponent,
             EntityUid user,
             EntityUid target)
         {
             if (!TryComp<WiresComponent>(target, out var wires) || !wires.IsPanelOpen) {
-                _popupSystem.PopupCursor(Loc.GetString("vending-machine-restock-package-needs-panel-open",
+                _popupSystem.PopupCursor(Loc.GetString("vending-machine-restock-needs-panel-open",
                         ("this", uid),
                         ("user", user),
                         ("target", target)
@@ -47,13 +46,13 @@ namespace Content.Server.VendingMachineRestockPackage
         }
 
         public bool TryMatchPackageToMachine(EntityUid uid,
-            VendingMachineRestockPackageComponent component,
+            VendingMachineRestockComponent component,
             VendingMachineComponent machineComponent,
             EntityUid user,
             EntityUid target)
         {
             if (!component.CanRestock.Contains(machineComponent.PackPrototypeId)) {
-                _popupSystem.PopupCursor(Loc.GetString("vending-machine-restock-package-invalid-inventory",
+                _popupSystem.PopupCursor(Loc.GetString("vending-machine-restock-invalid-inventory",
                         ("this", uid),
                         ("user", user),
                         ("target", target)
@@ -65,7 +64,7 @@ namespace Content.Server.VendingMachineRestockPackage
             return true;
         }
 
-        private void OnAfterInteract(EntityUid uid, VendingMachineRestockPackageComponent component, AfterInteractEvent args)
+        private void OnAfterInteract(EntityUid uid, VendingMachineRestockComponent component, AfterInteractEvent args)
         {
             if (component.CancelToken != null || args.Target == null || !args.CanReach)
                 return;
@@ -91,7 +90,7 @@ namespace Content.Server.VendingMachineRestockPackage
                 NeedHand = true
             });
 
-            _popupSystem.PopupEntity(Loc.GetString("vending-machine-restock-package-start",
+            _popupSystem.PopupEntity(Loc.GetString("vending-machine-restock-start",
                     ("this", uid),
                     ("user", args.User),
                     ("target", args.Target)
@@ -105,21 +104,21 @@ namespace Content.Server.VendingMachineRestockPackage
 
         private void OnRestockCancelled(RestockCancelledEvent ev)
         {
-            if (!EntityManager.TryGetComponent(ev.Package, out VendingMachineRestockPackageComponent? package))
+            if (!EntityManager.TryGetComponent(ev.Package, out VendingMachineRestockComponent? package))
                 return;
             package.CancelToken = null;
         }
 
         private void OnRestockSuccessful(RestockSuccessfulEvent ev)
         {
-            if (!EntityManager.TryGetComponent(ev.Package, out VendingMachineRestockPackageComponent? package))
+            if (!EntityManager.TryGetComponent(ev.Package, out VendingMachineRestockComponent? package))
                 return;
 
             package.CancelToken = null;
 
             RaiseLocalEvent(ev.Target, new VendingMachineRestockEvent(), false);
 
-            _popupSystem.PopupEntity(Loc.GetString("vending-machine-restock-package-done",
+            _popupSystem.PopupEntity(Loc.GetString("vending-machine-restock-done",
                     ("this", ev.Package),
                     ("user", ev.User),
                     ("target", ev.Target)

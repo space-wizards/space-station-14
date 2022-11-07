@@ -40,10 +40,16 @@
       "name": "refill_custom"
     },
     {
+      "name": "refill_dinner"
+    },
+    {
       "name": "refill_discount"
     },
     {
       "name": "refill_donksoft"
+    },
+    {
+      "name": "refill_donuts"
     },
     {
       "name": "refill_engi"
@@ -64,6 +70,12 @@
       "name": "refill_plant"
     },
     {
+      "name": "refill_ptech"
+    },
+    {
+      "name": "refill_salvage"
+    },
+    {
       "name": "refill_sec"
     },
     {
@@ -71,6 +83,9 @@
     },
     {
       "name": "refill_snack"
+    },
+    {
+      "name": "refill_tanks"
     }
   ]
 }
