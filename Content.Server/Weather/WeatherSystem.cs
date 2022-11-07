@@ -1,3 +1,5 @@
+using Content.Server.Administration;
+using Content.Shared.Administration;
 using Content.Shared.Weather;
 using Robust.Shared.Console;
 using Robust.Shared.GameStates;
@@ -25,8 +27,11 @@ public sealed class WeatherSystem : SharedWeatherSystem
     }
 }
 
+[AdminCommand(AdminFlags.Fun)]
 public sealed class WeatherCommand : IConsoleCommand
 {
+    // Wouldn't you like to know, weather boy.
+
     public string Command => "weather";
     public string Description => $"Sets the weather for the current map";
     public string Help => $"weather <mapId> <prototype / null>";

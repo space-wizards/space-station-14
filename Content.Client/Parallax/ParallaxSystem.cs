@@ -15,6 +15,7 @@ public sealed class ParallaxSystem : SharedParallaxSystem
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
 
     private const string Fallback = "Default";
+    public const int ParallaxZIndex = 0;
 
     public override void Initialize()
     {

@@ -21,6 +21,7 @@ public sealed class ParallaxOverlay : Overlay
 
     public ParallaxOverlay()
     {
+        ZIndex = ParallaxSystem.ParallaxZIndex;
         IoCManager.InjectDependencies(this);
         _parallax = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ParallaxSystem>();
 

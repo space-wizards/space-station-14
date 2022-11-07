@@ -1,4 +1,5 @@
 using Content.Shared.Weather;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.GameStates;
@@ -13,7 +14,7 @@ public sealed class WeatherSystem : SharedWeatherSystem
     {
         base.Initialize();
         var overlayManager = IoCManager.Resolve<IOverlayManager>();
-        overlayManager.AddOverlay(new WeatherOverlay());
+        overlayManager.AddOverlay(new WeatherOverlay(EntityManager.System<SpriteSystem>()));
         SubscribeLocalEvent<WeatherComponent, ComponentHandleState>(OnWeatherHandleState);
     }
 
