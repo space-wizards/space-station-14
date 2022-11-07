@@ -1,12 +1,14 @@
 - type: entity
-  name: Food & Drink Vending Machine Restock Package Spawner
-  id: SpawnFoodDrinkVendingMachineRestockPackage
+  id: SpawnVendingMachineRestockFoodDrink
+  name: Vending Machine Restock
+  suffix: "food or drink"
   parent: MarkerBase
   components:
   - type: Sprite
     layers:
       - state: green
-      - texture: Objects/Specific/Janitorial/vending_restock_package.rsi/icon.png
+      - texture: Objects/Specific/Service/vending_machine_restock.rsi/base.png
+      - texture: Objects/Specific/Service/vending_machine_restock.rsi/refill_discount.png
   - type: ConditionalSpawner
     prototypes:
       - VendingMachineRestockDiscountDans
@@ -16,3 +18,36 @@
       - VendingMachineRestockRobustSoftdrinks
       - VendingMachineRestockHotDrinks
 
+- type: entity
+  id: SpawnVendingMachineRestockFood
+  name: Vending Machine Restock
+  suffix: "food"
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - texture: Objects/Specific/Service/vending_machine_restock.rsi/base.png
+      - texture: Objects/Specific/Service/vending_machine_restock.rsi/refill_donuts.png
+  - type: ConditionalSpawner
+    prototypes:
+      - VendingMachineRestockDiscountDans
+      - VendingMachineRestockChang
+      - VendingMachineRestockDonut
+      - VendingMachineRestockGetmoreChocolateCorp
+
+- type: entity
+  id: SpawnVendingMachineRestockDrink
+  name: Vending Machine Restock
+  suffix: "drink"
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - texture: Objects/Specific/Service/vending_machine_restock.rsi/base.png
+      - texture: Objects/Specific/Service/vending_machine_restock.rsi/refill_cola.png
+  - type: ConditionalSpawner
+    prototypes:
+      - VendingMachineRestockRobustSoftdrinks
+      - VendingMachineRestockHotDrinks
