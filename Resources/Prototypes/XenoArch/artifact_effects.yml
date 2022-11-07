@@ -262,7 +262,7 @@
   effectHint: artifact-effect-hint-creation
   components:
   - type: SpawnArtifact
-    maxSpawns: 5
+    maxSpawns: 15
     consistentSpawn: false
     possiblePrototypes:
     - SilverOre1

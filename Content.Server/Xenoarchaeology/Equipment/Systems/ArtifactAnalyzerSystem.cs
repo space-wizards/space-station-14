@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Content.Server.Construction;
 using Content.Server.MachineLinking.Events;
+using Content.Server.Paper;
 using Content.Server.Power.Components;
 using Content.Server.Research;
 using Content.Server.Research.Components;
@@ -35,6 +36,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly ArtifactSystem _artifact = default!;
+    [Dependency] private readonly PaperSystem _paper = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -56,6 +58,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
 
         SubscribeLocalEvent<AnalysisConsoleComponent, AnalysisConsoleServerSelectionMessage>(OnServerSelectionMessage);
         SubscribeLocalEvent<AnalysisConsoleComponent, AnalysisConsoleScanButtonPressedMessage>(OnScanButton);
+        SubscribeLocalEvent<AnalysisConsoleComponent, AnalysisConsolePrintButtonPressedMessage>(OnPrintButton);
         SubscribeLocalEvent<AnalysisConsoleComponent, AnalysisConsoleDestroyButtonPressedMessage>(OnDestroyButton);
 
         SubscribeLocalEvent<AnalysisConsoleComponent, ResearchClientServerSelectedMessage>((e,c,_) => UpdateUserInterface(e,c),
@@ -93,6 +96,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
             return;
 
         component.LastAnalyzedArtifact = null;
+        component.ReadyToPrint = false;
         UpdateAnalyzerInformation(uid, component);
     }
 
@@ -177,6 +181,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         float? completion = null;
         var totalTime = TimeSpan.Zero;
         var canScan = false;
+        var canPrint = false;
         if (component.AnalyzerEntity != null && TryComp<ArtifactAnalyzerComponent>(component.AnalyzerEntity, out var analyzer))
         {
             artifact = analyzer.LastAnalyzedArtifact;
@@ -184,6 +189,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
             completion = analyzer.LastAnalyzedCompletion;
             totalTime = analyzer.AnalysisDuration * analyzer.AnalysisDurationMulitplier;
             canScan = analyzer.Contacts.Any();
+            canPrint = analyzer.ReadyToPrint;
         }
 
         var analyzerConnected = component.AnalyzerEntity != null;
@@ -192,7 +198,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         var scanning = TryComp<ActiveArtifactAnalyzerComponent>(component.AnalyzerEntity, out var active);
         var remaining = active != null ? _timing.CurTime - active.StartTime : TimeSpan.Zero;
 
-        var state = new AnalysisConsoleScanUpdateState(artifact, analyzerConnected, serverConnected, canScan,
+        var state = new AnalysisConsoleScanUpdateState(artifact, analyzerConnected, serverConnected, canScan, canPrint,
             node?.Id, node?.Depth, node?.Edges.Count, node?.Triggered, node?.Effect.ID, node?.Trigger.ID, completion,
             scanning, remaining, totalTime);
 
@@ -235,6 +241,68 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
 
         var activeArtifact = EnsureComp<ActiveScannedArtifactComponent>(ent.Value);
         activeArtifact.Scanner = component.AnalyzerEntity.Value;
+    }
+
+    private void OnPrintButton(EntityUid uid, AnalysisConsoleComponent component, AnalysisConsolePrintButtonPressedMessage args)
+    {
+        if (component.AnalyzerEntity == null)
+            return;
+
+        if (!TryComp<ArtifactAnalyzerComponent>(component.AnalyzerEntity, out var analyzer) ||
+            analyzer.LastAnalyzedNode == null ||
+            analyzer.LastAnalyzedCompletion == null ||
+            !analyzer.ReadyToPrint)
+        {
+            return;
+        }
+
+        analyzer.ReadyToPrint = false;
+        var n = analyzer.LastAnalyzedNode;
+
+        var report = Spawn(component.ReportEntityId, Transform(uid).Coordinates);
+        MetaData(report).EntityName = Loc.GetString("analysis-report-title", ("id", n.Id));
+
+        var msg = new FormattedMessage();
+
+        msg.AddMarkup(Loc.GetString("analysis-console-info-id", ("id", n.Id)));
+        msg.PushNewline();
+        msg.AddMarkup(Loc.GetString("analysis-console-info-depth", ("depth", n.Depth)));
+        msg.PushNewline();
+
+        var activated = n.Triggered
+            ? "analysis-console-info-triggered-true"
+            : "analysis-console-info-triggered-false";
+        msg.AddMarkup(Loc.GetString(activated));
+        msg.PushNewline();
+
+        msg.PushNewline();
+        var needSecondNewline = false;
+        if (n.Trigger.TriggerHint != null)
+        {
+            msg.AddMarkup(Loc.GetString("analysis-console-info-trigger",
+                ("trigger", Loc.GetString(n.Trigger.TriggerHint))) + "\n");
+            needSecondNewline = true;
+        }
+
+        if (n.Effect.EffectHint != null)
+        {
+            msg.AddMarkup(Loc.GetString("analysis-console-info-effect",
+                ("effect", Loc.GetString(n.Effect.EffectHint))) + "\n");
+            needSecondNewline = true;
+        }
+
+        if (needSecondNewline)
+            msg.PushNewline();
+
+        msg.AddMarkup(Loc.GetString("analysis-console-info-edges", ("edges", n.Edges.Count)));
+        msg.PushNewline();
+
+        msg.AddMarkup(Loc.GetString("analysis-console-info-completion",
+            ("percentage", Math.Round(analyzer.LastAnalyzedCompletion.Value * 100))));
+
+        _popup.PopupEntity(Loc.GetString("analysis-console-print-popup"), uid, Filter.Pvs(uid));
+        _paper.SetContent(report, msg.ToMarkup());
+        UpdateUserInterface(uid, component);
     }
 
     /// <summary>
@@ -333,6 +401,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         if (!Resolve(uid, ref component, ref active))
             return;
 
+        component.ReadyToPrint = true;
         _audio.PlayPvs(component.ScanFinishedSound, uid);
         component.LastAnalyzedArtifact = active.Artifact;
         UpdateAnalyzerInformation(uid, component);
