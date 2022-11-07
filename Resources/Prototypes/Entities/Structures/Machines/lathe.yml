@@ -298,6 +298,8 @@
       - EmitterCircuitboard
       - GasRecyclerMachineCircuitboard
       - SeedExtractorMachineCircuitboard
+      - AnalysisComputerCircuitboard
+      - ArtifactAnalyzerMachineCircuitboard
   - type: MaterialStorage
     whitelist:
       tags:

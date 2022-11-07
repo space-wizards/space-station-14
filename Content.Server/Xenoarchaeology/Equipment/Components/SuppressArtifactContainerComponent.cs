@@ -1,4 +1,4 @@
-﻿namespace Content.Server.Xenoarchaeology.XenoArtifacts.Equipment.Components;
+﻿namespace Content.Server.Xenoarchaeology.Equipment.Components;
 
 /// <summary>
 ///     Suppress artifact activation, when entity is placed inside this container.
