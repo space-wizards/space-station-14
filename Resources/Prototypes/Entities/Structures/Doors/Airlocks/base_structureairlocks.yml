@@ -80,13 +80,11 @@
       Open: []
       Close: []
       Toggle: []
+      AutoClose: []
   - type: UserInterface
     interfaces:
     - key: enum.WiresUiKey.Key
       type: WiresBoundUserInterface
-  - type: SignalReceiver
-    inputs:
-      AutoClose: []
   - type: Airtight
     fixVacuum: true
     noAirWhenFullyAirBlocked: false
