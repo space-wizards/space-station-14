@@ -287,7 +287,7 @@
   parent: BaseVendingMachineRestock
   id: VendingMachineRestockSecTech
   name: SecTech resupply box
-  description: Communists beware: the reinforcements have arrived! A label reads SECURITY PERSONNEL ONLY.
+  description: "Communists beware: the reinforcements have arrived! A label reads SECURITY PERSONNEL ONLY."
   components:
   - type: VendingMachineRestock
     canRestock:
