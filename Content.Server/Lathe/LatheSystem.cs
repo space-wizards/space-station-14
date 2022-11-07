@@ -1,26 +1,29 @@
 using System.Diagnostics.CodeAnalysis;
-using Content.Server.Lathe.Components;
-using Content.Shared.Lathe;
-using Content.Shared.Materials;
-using Content.Shared.Research.Prototypes;
-using Content.Server.Research.Components;
-using Content.Server.Research;
-using Content.Shared.Research.Components;
-using Robust.Server.GameObjects;
-using Robust.Shared.Prototypes;
-using JetBrains.Annotations;
 using System.Linq;
+using Content.Server.Construction;
+using Content.Server.Lathe.Components;
 using Content.Server.Materials;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Server.Research;
+using Content.Server.Research.Components;
 using Content.Server.UserInterface;
+using Content.Shared.Lathe;
+using Content.Shared.Materials;
+using Content.Shared.Research.Components;
+using Content.Shared.Research.Prototypes;
+using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Lathe
 {
     [UsedImplicitly]
     public sealed class LatheSystem : SharedLatheSystem
     {
+        [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IPrototypeManager _proto = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -35,6 +38,8 @@ namespace Content.Server.Lathe
             SubscribeLocalEvent<LatheComponent, GetMaterialWhitelistEvent>(OnGetWhitelist);
             SubscribeLocalEvent<LatheComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<LatheComponent, PowerChangedEvent>(OnPowerChanged);
+            SubscribeLocalEvent<LatheComponent, RefreshPartsEvent>(OnPartsRefresh);
+            SubscribeLocalEvent<LatheComponent, UpgradeExamineEvent>(OnUpgradeExamine);
 
             SubscribeLocalEvent<LatheComponent, LatheQueueRecipeMessage>(OnLatheQueueRecipeMessage);
             SubscribeLocalEvent<LatheComponent, LatheSyncRequestMessage>(OnLatheSyncRequestMessage);
@@ -65,9 +70,7 @@ namespace Content.Server.Lathe
                 if (lathe.CurrentRecipe == null)
                     continue;
 
-                comp.AccumulatedTime += frameTime;
-
-                if (comp.AccumulatedTime >= (float) lathe.CurrentRecipe.CompleteTime.TotalSeconds)
+                if ( _timing.CurTime - comp.StartTime >= comp.ProductionLength)
                     FinishProducing(comp.Owner, lathe);
             }
         }
@@ -132,7 +135,11 @@ namespace Content.Server.Lathe
 
             foreach (var (mat, amount) in recipe.RequiredMaterials)
             {
-                _materialStorage.TryChangeMaterialAmount(uid, mat, -amount);
+                var adjustedAmount = recipe.ApplyMaterialDiscount
+                    ? (int) (-amount * component.MaterialUseMultiplier)
+                    : -amount;
+
+                _materialStorage.TryChangeMaterialAmount(uid, mat, adjustedAmount);
             }
             component.Queue.Add(recipe);
 
@@ -149,7 +156,9 @@ namespace Content.Server.Lathe
             var recipe = component.Queue.First();
             component.Queue.RemoveAt(0);
 
-            EnsureComp<LatheProducingComponent>(uid);
+            var lathe = EnsureComp<LatheProducingComponent>(uid);
+            lathe.StartTime = _timing.CurTime;
+            lathe.ProductionLength = recipe.CompleteTime * component.TimeMultiplier;
             component.CurrentRecipe = recipe;
 
             _audio.PlayPvs(component.ProducingSound, component.Owner);
@@ -166,7 +175,7 @@ namespace Content.Server.Lathe
             if (comp.CurrentRecipe != null)
                 Spawn(comp.CurrentRecipe.Result, Transform(uid).Coordinates);
             comp.CurrentRecipe = null;
-            prodComp.AccumulatedTime = 0;
+            prodComp.StartTime = _timing.CurTime;
 
             if (!TryStartProducing(uid, comp))
             {
@@ -194,8 +203,9 @@ namespace Content.Server.Lathe
                 return;
 
             //gets all of the techs that are unlocked and also in the DynamicRecipes list
-            var allTechs = (from tech in component.Technologies
-                from recipe in tech.UnlockedRecipes
+            var allTechs = (from technology in from tech in component.TechnologyIds
+                    select _proto.Index<TechnologyPrototype>(tech)
+                from recipe in technology.UnlockedRecipes
                 where latheComponent.DynamicRecipes.Contains(recipe)
                 select recipe).ToList();
 
@@ -255,6 +265,22 @@ namespace Content.Server.Lathe
                 EnsureComp<LatheProducingComponent>(uid);
                 TryStartProducing(uid, component);
             }
+        }
+
+        private void OnPartsRefresh(EntityUid uid, LatheComponent component, RefreshPartsEvent args)
+        {
+            var printTimeRating = args.PartRatings[component.MachinePartPrintTime];
+            var materialUseRating = args.PartRatings[component.MachinePartMaterialUse];
+
+            component.TimeMultiplier = MathF.Pow(component.PartRatingPrintTimeMultiplier, printTimeRating - 1);
+            component.MaterialUseMultiplier = MathF.Pow(component.PartRatingMaterialUseMultiplier, materialUseRating - 1);
+            Dirty(component);
+        }
+
+        private void OnUpgradeExamine(EntityUid uid, LatheComponent component, UpgradeExamineEvent args)
+        {
+            args.AddPercentageUpgrade("lathe-component-upgrade-speed", 1 / component.TimeMultiplier);
+            args.AddPercentageUpgrade("lathe-component-upgrade-material-use", component.MaterialUseMultiplier);
         }
 
         protected override bool HasRecipe(EntityUid uid, LatheRecipePrototype recipe, LatheComponent component)

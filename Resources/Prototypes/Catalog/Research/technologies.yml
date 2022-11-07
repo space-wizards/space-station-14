@@ -66,6 +66,7 @@
     - Shovel
     - ButchCleaver
     - MicrowaveMachineCircuitboard
+    - SeedExtractorMachineCircuitboard
 
 - type: technology
   name: technologies-advanced-surgery
@@ -290,6 +291,7 @@
   unlockedRecipes:
     - ShuttleConsoleCircuitboard
     - Drone
+    - RadarConsoleCircuitboard
 
 # Electromagnetic Theory Technology Tree
 
@@ -316,9 +318,13 @@
     - SubstationMachineCircuitboard
     - HydroponicsTrayMachineCircuitboard
     - SolarControlComputerCircuitboard
+    - PowerComputerCircuitboard
     - GeneratorPlasmaMachineCircuitboard
+    - AnalysisComputerCircuitboard
+    - ArtifactAnalyzerMachineCircuitboard
     - Signaller
     - SignalTrigger
+    - VoiceTrigger
 
 - type: technology
   name: technologies-compact-power-technology

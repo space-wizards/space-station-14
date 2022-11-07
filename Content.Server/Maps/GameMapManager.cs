@@ -77,7 +77,22 @@ public sealed class GameMapManager : IGameMapManager
 
     public IEnumerable<GameMapPrototype> AllVotableMaps()
     {
-        return _prototypeManager.EnumeratePrototypes<GameMapPrototype>().Where(x => x.Votable);
+        if (_prototypeManager.TryIndex<GameMapPoolPrototype>(_configurationManager.GetCVar(CCVars.GameMapPool), out var pool))
+        {
+            foreach (var map in pool.Maps)
+            {
+                if (!_prototypeManager.TryIndex<GameMapPrototype>(map, out var mapProto))
+                {
+                    Logger.Error("Couldn't index map " + map + " in pool " + pool.ID);
+                    continue;
+                }
+
+                yield return mapProto;
+            }
+        } else
+        {
+            throw new Exception("Could not index map pool prototype " + _configurationManager.GetCVar(CCVars.GameMapPool) + "!");
+        }
     }
 
     public IEnumerable<GameMapPrototype> AllMaps()
@@ -179,6 +194,9 @@ public sealed class GameMapManager : IGameMapManager
             .ToArray();
 
         Logger.InfoS("mapsel", $"eligible queue: {string.Join(", ", eligible.Select(x => (x.proto.ID, x.weight)))}");
+        
+        if (eligible.Length is 0)
+            return null;
 
         var weight = eligible[0].weight;
         return eligible.Where(x => x.Item2 == weight)

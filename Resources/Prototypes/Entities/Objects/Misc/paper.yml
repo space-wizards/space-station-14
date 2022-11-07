@@ -18,6 +18,7 @@
   - type: Paper
   - type: ActivatableUI
     key: enum.PaperUiKey.Key
+    closeOnHandDeselect: false
   - type: UserInterface
     interfaces:
     - key: enum.PaperUiKey.Key

@@ -172,7 +172,7 @@ namespace Content.Server.Construction
                 ChangeNode(uid, user, edge.Target, true, construction);
 
                 if (ev is ConstructionDoAfterComplete event1 && event1.WrappedEvent is InteractUsingEvent event2)
-                    _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(event2.User):player} changed {ToPrettyString(uid):entity}'s node to {edge.Target}");
+                    _adminLogger.Add(LogType.Construction, LogImpact.Low, $"{ToPrettyString(event2.User):player} changed {ToPrettyString(uid):entity}'s node to {edge.Target}");
             }
 
             return HandleResult.True;
@@ -340,7 +340,7 @@ namespace Content.Server.Construction
                         construction.Containers.Add(store);
 
                         // The container doesn't necessarily need to exist, so we ensure it.
-                        _containerSystem.EnsureContainer<Container>(uid, store).Insert(insert);
+                        _container.EnsureContainer<Container>(uid, store).Insert(insert);
                     }
                     else
                     {

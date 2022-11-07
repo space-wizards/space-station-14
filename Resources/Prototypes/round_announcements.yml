@@ -2,7 +2,7 @@
   id: Welcome
   sound: /Audio/Announcements/welcome.ogg
   presets:
-  - Extended
+  - Survival
   - Sandbox
   - Secret
   - Traitor

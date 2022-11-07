@@ -31,6 +31,11 @@
   - type: Construction
     graph: PneumaticCannon
     node: cannon
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
+      PneumaticCannon-gasTank: !type:ContainerSlot
 
 - type: entity
   name: pie cannon
@@ -60,3 +65,8 @@
     quickEquip: false
     slots:
     - Back
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
+      PneumaticCannon-gasTank: !type:ContainerSlot

@@ -202,7 +202,7 @@
     fiberMaterial: fibers-nanomachines
   - type: FingerprintMask
   - type: Thieving
-    stealTime: 1
+    stripTimeReduction: 1
     stealthy: true
 
 - type: entity
@@ -251,7 +251,7 @@
     - type: Clothing
       sprite: Clothing/Hands/Gloves/Color/black.rsi
     - type: Thieving
-      stealTime: 1.5
+      stripTimeReduction: 1.5
       stealthy: true
     - type: Fiber
       fiberMaterial: fibers-synthetic

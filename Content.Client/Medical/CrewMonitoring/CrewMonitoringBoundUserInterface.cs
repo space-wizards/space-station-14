@@ -27,7 +27,7 @@ namespace Content.Client.Medical.CrewMonitoring
             switch (state)
             {
                 case CrewMonitoringState st:
-                    _menu?.ShowSensors(st.Sensors, st.WorldPosition, st.WorldRotation, st.Snap, st.Precision);
+                    _menu?.ShowSensors(st.Sensors, st.WorldPosition, st.Snap, st.Precision);
                     break;
             }
         }
