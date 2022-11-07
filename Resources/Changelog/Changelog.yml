@@ -1,11 +1,6 @@
 Entries:
 - author: DogZeroX
   changes:
-  - {message: Removed the tiny fans from the nukie planet as it has atmos., type: Tweak}
-  id: 2088
-  time: '2022-08-04T03:02:51.0000000+00:00'
-- author: DogZeroX
-  changes:
   - {message: Cargo can now dock properly on delta., type: Tweak}
   id: 2089
   time: '2022-08-04T03:03:08.0000000+00:00'
@@ -2973,3 +2968,8 @@ Entries:
   - {message: Decreased passive research point generation., type: Tweak}
   id: 2587
   time: '2022-11-06T23:05:44.0000000+00:00'
+- author: checkraze
+  changes:
+  - {message: Added Xenoarcheology Laboratory to Kettle station., type: Add}
+  id: 2588
+  time: '2022-11-07T02:00:22.0000000+00:00'
