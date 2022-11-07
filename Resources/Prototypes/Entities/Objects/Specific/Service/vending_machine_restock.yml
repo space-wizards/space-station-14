@@ -225,8 +225,8 @@
   components:
   - type: VendingMachineRestock
     canRestock:
-      - NanoMedInventory
-      - NanoMedPlusInventory
+    - NanoMedInventory
+    - NanoMedPlusInventory
   - type: Sprite
     layers:
     - state: base
@@ -323,7 +323,7 @@
   components:
   - type: VendingMachineRestock
     canRestock:
-      - MegaSeedServitorInventory
+    - MegaSeedServitorInventory
   - type: Sprite
     layers:
     - state: base

@@ -1,10 +1,159 @@
 - type: cargoProduct
-  id: FoodVendingMachineRestock
+  id: CrateVendingMachineRestockBooze
   icon:
-    sprite: Objects/Specific/Janitorial/vending_restock_package.rsi
-    state: icon
-  product: CrateFoodVendingMachineRestock
-  cost: 4000
-  category: Food
+    sprite: Objects/Specific/Service/vending_machine_restock.rsi
+    state: base
+  product: CrateVendingMachineRestockBoozeFilled
+  cost: 3000
+  category: Service
   group: market
 
+- type: cargoProduct
+  id: CrateVendingMachineRestockClothes
+  icon:
+    sprite: Objects/Specific/Service/vending_machine_restock.rsi
+    state: base
+  product: CrateVendingMachineRestockClothesFilled
+  cost: 2000
+  category: Service
+  group: market
+
+- type: cargoProduct
+  id: CrateVendingMachineRestockDinnerware
+  icon:
+    sprite: Objects/Specific/Service/vending_machine_restock.rsi
+    state: base
+  product: CrateVendingMachineRestockDinnerwareFilled
+  cost: 1000
+  category: Service
+  group: market
+
+- type: cargoProduct
+  id: CrateVendingMachineRestockEngineering
+  icon:
+    sprite: Objects/Specific/Service/vending_machine_restock.rsi
+    state: base
+  product: CrateVendingMachineRestockEngineeringFilled
+  cost: 3000
+  category: Engineering
+  group: market
+
+- type: cargoProduct
+  id: CrateVendingMachineRestockGames
+  icon:
+    sprite: Objects/Specific/Service/vending_machine_restock.rsi
+    state: base
+  product: CrateVendingMachineRestockGamesFilled
+  cost: 500
+  category: Service
+  group: market
+
+- type: cargoProduct
+  id: CrateVendingMachineRestockHotDrinks
+  icon:
+    sprite: Objects/Specific/Service/vending_machine_restock.rsi
+    state: base
+  product: CrateVendingMachineRestockHotDrinksFilled
+  cost: 1500
+  category: Service
+  group: market
+
+- type: cargoProduct
+  id: CrateVendingMachineRestockMedical
+  icon:
+    sprite: Objects/Specific/Service/vending_machine_restock.rsi
+    state: base
+  product: CrateVendingMachineRestockMedicalFilled
+  cost: 3000
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: CrateVendingMachineRestockNutriMax
+  icon:
+    sprite: Objects/Specific/Service/vending_machine_restock.rsi
+    state: base
+  product: CrateVendingMachineRestockNutriMaxFilled
+  cost: 2000
+  category: Hydroponics
+  group: market
+
+- type: cargoProduct
+  id: CrateVendingMachineRestockPTech
+  icon:
+    sprite: Objects/Specific/Service/vending_machine_restock.rsi
+    state: base
+  product: CrateVendingMachineRestockPTechFilled
+  cost: 1500
+  category: Service
+  group: market
+
+- type: cargoProduct
+  id: CrateVendingMachineRestockRobustSoftdrinks
+  icon:
+    sprite: Objects/Specific/Service/vending_machine_restock.rsi
+    state: base
+  product: CrateVendingMachineRestockRobustSoftdrinksFilled
+  cost: 2000
+  category: Service
+  group: market
+
+- type: cargoProduct
+  id: CrateVendingMachineRestockSalvageEquipment
+  icon:
+    sprite: Objects/Specific/Service/vending_machine_restock.rsi
+    state: base
+  product: CrateVendingMachineRestockSalvageEquipmentFilled
+  cost: 2000
+  category: Engineering
+  group: market
+
+- type: cargoProduct
+  id: CrateVendingMachineRestockSecTech
+  icon:
+    sprite: Objects/Specific/Service/vending_machine_restock.rsi
+    state: base
+  product: CrateVendingMachineRestockSecTechFilled
+  cost: 3000
+  category: Security
+  group: market
+
+- type: cargoProduct
+  id: CrateVendingMachineRestockSeeds
+  icon:
+    sprite: Objects/Specific/Service/vending_machine_restock.rsi
+    state: base
+  product: CrateVendingMachineRestockSeedsFilled
+  cost: 2000
+  category: Hydroponics
+  group: market
+
+- type: cargoProduct
+  id: CrateVendingMachineRestockSmokes
+  icon:
+    sprite: Objects/Specific/Service/vending_machine_restock.rsi
+    state: base
+  product: CrateVendingMachineRestockSmokesFilled
+  cost: 2500
+  category: Service
+  group: market
+
+- type: cargoProduct
+  id: CrateVendingMachineRestockSnacks
+  icon:
+    sprite: Objects/Specific/Service/vending_machine_restock.rsi
+    state: base
+  product: CrateVendingMachineRestockSnacksFilled
+  cost: 3000
+  category: Service
+  group: market
+
+- type: cargoProduct
+  id: CrateVendingMachineRestockTankDispenser
+  icon:
+    sprite: Objects/Specific/Service/vending_machine_restock.rsi
+    state: base
+  product: CrateVendingMachineRestockTankDispenserFilled
+  cost: 2500
+  category: Atmospherics
+  group: market
