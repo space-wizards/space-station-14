@@ -17,6 +17,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
         SubscribeAllEvent<RequestHandInteractUsingEvent>(HandleInteractUsingInHand);
         SubscribeAllEvent<RequestUseInHandEvent>(HandleUseInHand);
         SubscribeAllEvent<RequestMoveHandItemEvent>(HandleMoveItemFromHand);
+        SubscribeAllEvent<RequestHandAltInteractEvent>(HandleHandAltInteract);
 
         SubscribeLocalEvent<SharedHandsComponent, ExaminedEvent>(HandleExamined);
 
@@ -63,6 +64,12 @@ public abstract partial class SharedHandsSystem : EntitySystem
     {
         if (args.SenderSession.AttachedEntity != null)
             TryInteractHandWithActiveHand(args.SenderSession.AttachedEntity.Value, msg.HandName);
+    }
+
+    private void HandleHandAltInteract(RequestHandAltInteractEvent msg, EntitySessionEventArgs args)
+    {
+        if (args.SenderSession.AttachedEntity != null)
+            TryUseItemInHand(args.SenderSession.AttachedEntity.Value, true);
     }
 
     private void SwapHandsPressed(ICommonSession? session)

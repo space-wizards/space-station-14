@@ -7,6 +7,7 @@ using Content.IntegrationTests;
 using Robust.Client.GameObjects;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
@@ -59,6 +60,7 @@ namespace Content.MapRenderer.Painters
             var tilePainter = new TilePainter(client, server);
             var entityPainter = new GridPainter(client, server);
             IMapGrid[] grids = null!;
+            var xformQuery = sEntityManager.GetEntityQuery<TransformComponent>();
 
             await server.WaitPost(() =>
             {
@@ -74,7 +76,8 @@ namespace Content.MapRenderer.Painters
 
                 foreach (var grid in grids)
                 {
-                    grid.WorldRotation = Angle.Zero;
+                    var gridXform = xformQuery.GetComponent(grid.GridEntityId);
+                    gridXform.WorldRotation = Angle.Zero;
                 }
             });
 
@@ -116,7 +119,7 @@ namespace Content.MapRenderer.Painters
                 var renderedImage = new RenderedGridImage<Rgba32>(gridCanvas)
                 {
                     GridUid = grid.GridEntityId,
-                    Offset = grid.WorldPosition
+                    Offset = xformQuery.GetComponent(grid.GridEntityId).WorldPosition
                 };
 
                 yield return renderedImage;

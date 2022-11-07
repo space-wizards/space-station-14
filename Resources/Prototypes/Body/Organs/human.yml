@@ -99,6 +99,15 @@
     groups:
     - id: Gas
       rateModifier: 100.0
+  - type: SolutionContainerManager
+    solutions:
+      organ:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+      Lung:
+        maxVol: 100.0
+        canReact: false
 
 - type: entity
   id: OrganHumanHeart

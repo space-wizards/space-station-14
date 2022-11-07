@@ -1,18 +1,16 @@
-using System.Text;
+using Content.Server.Construction.Completions;
 using Content.Server.Disposal.Tube.Components;
-using Content.Server.UserInterface;
 using Content.Server.Hands.Components;
+using Content.Server.UserInterface;
 using Content.Shared.Destructible;
 using Content.Shared.Disposal.Components;
-using Content.Shared.Movement;
 using Content.Shared.Movement.Events;
-using Content.Shared.Verbs;
 using Content.Shared.Popups;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
+using System.Text;
 
 namespace Content.Server.Disposal.Tube
 {
@@ -32,6 +30,12 @@ namespace Content.Server.Disposal.Tube
             SubscribeLocalEvent<DisposalRouterComponent, ActivatableUIOpenAttemptEvent>(OnOpenRouterUIAttempt);
             SubscribeLocalEvent<DisposalTaggerComponent, ActivatableUIOpenAttemptEvent>(OnOpenTaggerUIAttempt);
             SubscribeLocalEvent<DisposalTubeComponent, ComponentStartup>(OnStartup);
+            SubscribeLocalEvent<DisposalTubeComponent, ConstructionBeforeDeleteEvent>(OnDeconstruct);
+        }
+
+        private void OnDeconstruct(EntityUid uid, DisposalTubeComponent component, ConstructionBeforeDeleteEvent args)
+        {
+            component.Disconnect();
         }
 
         private void OnStartup(EntityUid uid, DisposalTubeComponent component, ComponentStartup args)
