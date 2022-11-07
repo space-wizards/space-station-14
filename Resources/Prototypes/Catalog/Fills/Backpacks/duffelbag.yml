@@ -236,6 +236,16 @@
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
+  id: ClothingBackpackDuffelSyndicateEliteHardsuitBundle
+  name: syndicate elite hardsuit bundle
+  description: "Contains the Syndicate's elite version of their signature hardsuit."
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingOuterHardsuitSyndicateElite
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelZombieBundle
   name: syndicate zombie bundle
   description: "An all-in-one kit for unleashing the undead upon a station."
