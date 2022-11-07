@@ -67,3 +67,5 @@
     state: Open
   - type: Occluder
     enabled: false
+  - type: Physics
+    canCollide: false

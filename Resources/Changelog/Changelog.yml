@@ -1,54 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Emergency light alarm now uses the correct sound., type: Fix}
-  id: 2081
-  time: '2022-08-04T00:37:20.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed an issue preventing lathes from being unanchored using a wrench.,
-    type: Fix}
-  id: 2082
-  time: '2022-08-04T00:38:56.0000000+00:00'
-- author: Veritius
-  changes:
-  - {message: The admin announcement UI auto-closing is now optional., type: Tweak}
-  id: 2083
-  time: '2022-08-04T00:39:10.0000000+00:00'
-- author: jessicamaybe
-  changes:
-  - {message: Muting lobby music will now also mute the restart sound (APC DESTROYED),
-    type: Tweak}
-  id: 2084
-  time: '2022-08-04T00:43:54.0000000+00:00'
-- author: JustinTrotter
-  changes:
-  - {message: crew monitoring console now has proper window size, type: Fix}
-  - {message: id card console limits name and job lengths to 30 characters, type: Fix}
-  id: 2085
-  time: '2022-08-04T00:46:03.0000000+00:00'
-- author: jessicamaybe
-  changes:
-  - {message: You can no longer spill closed drinks, type: Tweak}
-  id: 2086
-  time: '2022-08-04T00:47:14.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Nukes can no longer be unanchored once they are armed, without disarming
-      the nuke.', type: Fix}
-  - {message: The nuke and disk can no longer be sold to cargo., type: Fix}
-  id: 2087
-  time: '2022-08-04T03:01:14.0000000+00:00'
-- author: DogZeroX
-  changes:
-  - {message: Removed the tiny fans from the nukie planet as it has atmos., type: Tweak}
-  id: 2088
-  time: '2022-08-04T03:02:51.0000000+00:00'
-- author: DogZeroX
-  changes:
-  - {message: Cargo can now dock properly on delta., type: Tweak}
-  id: 2089
-  time: '2022-08-04T03:03:08.0000000+00:00'
 - author: jessicamaybe
   changes:
   - {message: 'Janitors can now throw away more things, including empty teacups and
@@ -2966,3 +2916,60 @@ Entries:
   - {message: Shot Projectiles cause impulses like it was supposed to, type: Fix}
   id: 2580
   time: '2022-11-05T03:08:32.0000000+00:00'
+- author: rolfero
+  changes:
+  - {message: Glowstick sprites inhand are now visible, type: Fix}
+  id: 2581
+  time: '2022-11-05T15:28:44.0000000+00:00'
+- author: Cripes
+  changes:
+  - {message: Construction menu displays correct icon for air injector, type: Fix}
+  id: 2582
+  time: '2022-11-05T15:31:22.0000000+00:00'
+- author: Daemon
+  changes:
+  - {message: Added security target dummies., type: Add}
+  - {message: Added practice laser gun., type: Add}
+  id: 2583
+  time: '2022-11-05T15:32:00.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Stunned individuals can no longer attack., type: Fix}
+  id: 2584
+  time: '2022-11-06T16:31:23.0000000+00:00'
+- author: rolfero
+  changes:
+  - {message: You can now inspect/strip someone through the examine tooltip again.,
+    type: Fix}
+  id: 2585
+  time: '2022-11-06T16:33:17.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Holofans and tiny fans are airtight again., type: Fix}
+  id: 2586
+  time: '2022-11-06T19:34:07.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Artifacts now generate with multiple randomly generated effects and
+      triggers. Have fun exploring the hundreds of different possibilities., type: Add}
+  - {message: 'Added the artifact analyzer and analysis console: two machines capable
+      of interfacing with artifacts. Make sure you link them.', type: Add}
+  - {message: Artifacts can be destroyed at the analyzer to generate research points
+      based on how many effects have been activated., type: Add}
+  - {message: Artifacts can now be purchased from Cargo and can occasionally teleport
+      onto the station., type: Add}
+  - {message: Artifact price is now based on how many of its effects have been activated.,
+    type: Tweak}
+  - {message: Decreased passive research point generation., type: Tweak}
+  id: 2587
+  time: '2022-11-06T23:05:44.0000000+00:00'
+- author: checkraze
+  changes:
+  - {message: Added Xenoarcheology Laboratory to Kettle station., type: Add}
+  id: 2588
+  time: '2022-11-07T02:00:22.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: Computer's hitbox is now smaller., type: Tweak}
+  id: 2589
+  time: '2022-11-07T07:17:39.0000000+00:00'

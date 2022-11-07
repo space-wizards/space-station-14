@@ -298,6 +298,8 @@
       - EmitterCircuitboard
       - GasRecyclerMachineCircuitboard
       - SeedExtractorMachineCircuitboard
+      - AnalysisComputerCircuitboard
+      - ArtifactAnalyzerMachineCircuitboard
   - type: MaterialStorage
     whitelist:
       tags:
@@ -347,6 +349,9 @@
       - CartridgeCaselessRifleRubber
       - CartridgeLightRifleRubber
       - CartridgeRifleRubber
+      - TargetHuman
+      - TargetSyndicate
+      - TargetClown
   - type: MaterialStorage
     whitelist:
       tags:
