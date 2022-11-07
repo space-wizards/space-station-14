@@ -17,7 +17,7 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
     [Dependency] private readonly IEntityManager _ent = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
 
-    private AnalysisDestroyWindow? _analysisDestroyWindow;
+    public AnalysisDestroyWindow? AnalysisDestroyWindow;
 
     public event Action<BaseButton.ButtonEventArgs>? OnServerSelectionButtonPressed;
     public event Action<BaseButton.ButtonEventArgs>? OnScanButtonPressed;
@@ -38,17 +38,17 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
     private void OnDestroyButton()
     {
         // check if window is already open
-        if (_analysisDestroyWindow is { IsOpen: true })
+        if (AnalysisDestroyWindow is { IsOpen: true })
         {
-            _analysisDestroyWindow.MoveToFront();
+            AnalysisDestroyWindow.MoveToFront();
             return;
         }
 
         // open a new one
-        _analysisDestroyWindow = new ();
-        _analysisDestroyWindow.OpenCentered();
+        AnalysisDestroyWindow = new ();
+        AnalysisDestroyWindow.OpenCentered();
 
-        _analysisDestroyWindow.OnYesButton += a =>
+        AnalysisDestroyWindow.OnYesButton += a =>
         {
             OnDestroyButtonPressed?.Invoke(a);
         };
@@ -172,6 +172,13 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
         ProgressLabel.Text = Loc.GetString("analysis-console-progress-text",
             ("seconds", (int) state.TotalTime.TotalSeconds - (int) state.TimeRemaining.TotalSeconds));
         ProgressBar.Value = (float) state.TimeRemaining.Divide(state.TotalTime);
+    }
+
+    public override void Close()
+    {
+        base.Close();
+
+        AnalysisDestroyWindow?.Close();
     }
 }
 
