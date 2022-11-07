@@ -4,6 +4,7 @@
   abstract: true
   components:
     - type: AmbientSound
+      enabled: false
       range: 4
       volume: -4
       sound:

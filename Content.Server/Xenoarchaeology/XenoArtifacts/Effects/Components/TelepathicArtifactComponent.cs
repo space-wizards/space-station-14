@@ -13,7 +13,7 @@ public sealed class TelepathicArtifactComponent : Component
     /// </summary>
     [DataField("messages")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public string[] Messages = default!;
+    public List<string> Messages = default!;
 
     /// <summary>
     ///     Loc string ids of telepathic messages (spooky version).
@@ -21,7 +21,7 @@ public sealed class TelepathicArtifactComponent : Component
     /// </summary>
     [DataField("drastic")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public string[] DrasticMessages = default!;
+    public List<string>? DrasticMessages;
 
     /// <summary>
     ///     Probability to pick drastic version of message.

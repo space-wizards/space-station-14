@@ -40,6 +40,7 @@
       type: TransferAmountBoundUserInterface
   - type: Drink
     isOpen: true
+    solution: beaker
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 6
