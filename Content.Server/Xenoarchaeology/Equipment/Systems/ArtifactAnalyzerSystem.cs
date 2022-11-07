@@ -300,6 +300,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         msg.AddMarkup(Loc.GetString("analysis-console-info-completion",
             ("percentage", Math.Round(analyzer.LastAnalyzedCompletion.Value * 100))));
 
+        _popup.PopupEntity(Loc.GetString("analysis-console-print-popup"), uid, Filter.Pvs(uid));
         _paper.SetContent(report, msg.ToMarkup());
         UpdateUserInterface(uid, component);
     }
