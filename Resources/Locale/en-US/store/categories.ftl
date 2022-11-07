@@ -1,16 +1,16 @@
 ﻿# Uplink
-storage-category-debug = debug category
-storage-category-debug2 = debug category 2
-storage-category-weapons = Weapons
-storage-category-ammo = Ammo
-storage-category-explosives = Explosives
-storage-category-misc = Misc
-storage-category-bundles = Bundles
-storage-category-tools = Tools
-storage-category-utility = Utility
-storage-category-job = Job
-storage-category-armor = Armor
-storage-category-pointless = Pointless
+store-category-debug = debug category
+store-category-debug2 = debug category 2
+store-category-weapons = Weapons
+store-category-ammo = Ammo
+store-category-explosives = Explosives
+store-category-misc = Misc
+store-category-bundles = Bundles
+store-category-tools = Tools
+store-category-utility = Utility
+store-category-job = Job
+store-category-armor = Armor
+store-category-pointless = Pointless
 
 # Revenant
-storage-category-abilities = Abilities
+store-category-abilities = Abilities
