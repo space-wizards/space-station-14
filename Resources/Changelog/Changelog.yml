@@ -1,10 +1,4 @@
 Entries:
-- author: jessicamaybe
-  changes:
-  - {message: 'Janitors can now throw away more things, including empty teacups and
-      empty ketchup packets!', type: Tweak}
-  id: 2090
-  time: '2022-08-04T08:52:08.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: The Rat King seems to have been getting swole..., type: Add}
@@ -2973,3 +2967,9 @@ Entries:
   - {message: Computer's hitbox is now smaller., type: Tweak}
   id: 2589
   time: '2022-11-07T07:17:39.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Artifact node traversal now favors undiscovered nodes., type: Tweak}
+  - {message: You can now print out artifact analyzer scans., type: Add}
+  id: 2590
+  time: '2022-11-07T21:57:30.0000000+00:00'
