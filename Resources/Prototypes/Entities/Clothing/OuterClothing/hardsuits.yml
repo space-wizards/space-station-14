@@ -522,21 +522,23 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/syndiecommander.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.05
+    highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
   - type: ClothingSpeedModifier
     walkModifier: 1.0
     sprintModifier: 1.0
+  - type: TemperatureProtection
+    coefficient: 0.001
   - type: Armor
     modifiers:
       coefficients:
         Blunt: 0.4
         Slash: 0.4
         Piercing: 0.3
-        Heat: 0.3
+        Heat: 0.2
         Radiation: 0.20
   - type: ExplosionResistance
-    damageCoefficient: 0.5
+    damageCoefficient: 0.3
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSyndieCommander
 
@@ -551,7 +553,7 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/syndieelite.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.02
+    highPressureMultiplier: 0.03
     lowPressureMultiplier: 1000
   - type: ClothingSpeedModifier
     walkModifier: 1.0
@@ -564,10 +566,10 @@
         Blunt: 0.5
         Slash: 0.5
         Piercing: 0.4
-        Heat: 0.2
+        Heat: 0.3
         Radiation: 0.20
   - type: ExplosionResistance
-    damageCoefficient: 0.3
+    damageCoefficient: 0.4
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSyndieElite
 
