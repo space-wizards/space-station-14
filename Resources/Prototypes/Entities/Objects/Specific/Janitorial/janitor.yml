@@ -248,6 +248,7 @@
       anchored: true
     - type: Physics
       bodyType: Static
+      canCollide: false
     - type: Drain
     - type: AmbientSound
       enabled: false

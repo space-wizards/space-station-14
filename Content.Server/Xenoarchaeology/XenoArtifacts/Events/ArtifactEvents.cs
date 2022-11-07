@@ -12,3 +12,20 @@ public sealed class ArtifactActivatedEvent : EntityEventArgs
     /// </summary>
     public EntityUid? Activator;
 }
+
+/// <summary>
+///     Force to randomize artifact triggers.
+/// </summary>
+public sealed class ArtifactNodeEnteredEvent : EntityEventArgs
+{
+    /// <summary>
+    /// An entity-specific seed that can be used to
+    /// generate random values.
+    /// </summary>
+    public readonly int RandomSeed;
+
+    public ArtifactNodeEnteredEvent(int randomSeed)
+    {
+        RandomSeed = randomSeed;
+    }
+}
