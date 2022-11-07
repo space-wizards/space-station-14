@@ -242,7 +242,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingOuterHardsuitSyndicateElite
+      - id: ClothingOuterHardsuitSyndieElite
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
