@@ -1,4 +1,6 @@
 machine-insert-item = { $user } помещает { $item } в { $machine }.
+machine-upgrade-examinable-verb-text = Upgrades
+machine-upgrade-examinable-verb-message = Examine the machine upgrades.
 machine-upgrade-increased-by-percentage = Параметр [color=yellow]{ $upgraded }[/color] увеличен на { $percent }%.
 machine-upgrade-decreased-by-percentage = Параметр [color=yellow]{ $upgraded }[/color] уменьшен на { $percent }%.
 machine-upgrade-increased-by-amount = Параметр [color=yellow]{ $upgraded }[/color] увеличен на { $difference }.
