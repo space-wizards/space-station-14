@@ -12,16 +12,19 @@ public sealed class WeatherComponent : Component
     public string? Weather;
 
     /// <summary>
+    /// When the weather started.
+    /// </summary>
+    [ViewVariables, DataField("startTime")]
+    public TimeSpan StartTime = TimeSpan.Zero;
+
+    /// <summary>
     /// When the applied weather will end.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("endTime")]
     public TimeSpan EndTime = TimeSpan.Zero;
 
-    /// <summary>
-    /// How long the weather will last in total from when first run.
-    /// </summary>
     [ViewVariables]
-    public TimeSpan Duration = TimeSpan.Zero;
+    public TimeSpan Duration => EndTime - StartTime;
 
     [ViewVariables]
     public WeatherState State = WeatherState.Starting;

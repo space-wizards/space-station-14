@@ -44,7 +44,7 @@ public sealed class WeatherSystem : SharedWeatherSystem
 
         component.EndTime = state.EndTime;
         component.Weather = state.Weather;
-        component.Duration = state.Duration;
+        component.StartTime = state.StartTime;
     }
 
     public override void Shutdown()

@@ -1,0 +1,5 @@
+- type: weather
+  id: Rain
+  sprite: /Textures/Effects/weather.rsi
+  state: rain
+  # sound:

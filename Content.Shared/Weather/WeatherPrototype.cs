@@ -1,5 +1,7 @@
+using Content.Shared.Maps;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Weather;
@@ -31,4 +33,10 @@ public sealed class WeatherPrototype : IPrototype
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("sound")]
     public SoundSpecifier? Sound;
+
+    /// <summary>
+    /// Tiles that also have weather applied.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("tiles", customTypeSerializer:typeof(PrototypeIdListSerializer<ContentTileDefinition>))]
+    public List<string> Tiles = new();
 }
