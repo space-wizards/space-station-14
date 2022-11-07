@@ -11,7 +11,7 @@ namespace Content.Shared.FixedPoint
     [Serializable]
     public struct FixedPoint2 : ISelfSerialize, IComparable<FixedPoint2>, IEquatable<FixedPoint2>, IFormattable
     {
-        public int Value;
+        public int Value { get; private set; }
         private const int Shift = 2;
 
         public static FixedPoint2 MaxValue { get; } = new(int.MaxValue);
@@ -32,6 +32,8 @@ namespace Content.Shared.FixedPoint
         {
             return new(value * (int) Math.Pow(10, Shift));
         }
+
+        public static FixedPoint2 FromCents(int value) => new(value);
 
         public static FixedPoint2 New(float value)
         {

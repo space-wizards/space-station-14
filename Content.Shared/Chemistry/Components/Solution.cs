@@ -163,10 +163,12 @@ namespace Content.Shared.Chemistry.Components
             return new Solution(this);
         }
 
-        [Conditional("DEBUG")]
+
         [AssertionMethod]
         public void ValidateSolution()
         {
+            // sandbox forbids: [Conditional("DEBUG")]
+#if DEBUG
             // Correct volume
             DebugTools.Assert(Contents.Select(x => x.Quantity).Sum() == TotalVolume);
 
@@ -184,6 +186,7 @@ namespace Content.Shared.Chemistry.Components
                 UpdateHeatCapacity(null);
                 DebugTools.Assert(MathHelper.CloseTo(_heatCapacity, cur));
             }
+#endif
         }
 
         void ISerializationHooks.AfterDeserialization()
@@ -378,7 +381,8 @@ namespace Content.Shared.Chemistry.Components
         /// <returns>How much reagent was actually removed. Zero if the reagent is not present on the solution.</returns>
         public FixedPoint2 RemoveReagent(string reagentId, FixedPoint2 quantity)
         {
-            DebugTools.Assert(quantity > 0);
+            if (quantity <= FixedPoint2.Zero)
+                return FixedPoint2.Zero;
 
             for (var i = 0; i < Contents.Count; i++)
             {
@@ -419,7 +423,9 @@ namespace Content.Shared.Chemistry.Components
 
         public Solution SplitSolution(FixedPoint2 toTake)
         {
-            DebugTools.Assert(toTake > 0);
+            if (toTake <= FixedPoint2.Zero)
+                return new Solution();
+
             Solution newSolution;
 
             if (toTake >= TotalVolume)
@@ -437,10 +443,11 @@ namespace Content.Shared.Chemistry.Components
                 var reagent = Contents[i];
 
                 // This is set up such that integer rounding will tend to take more reagents.
-                var newQuantity = FixedPoint2.New(reagent.Quantity.Value * (TotalVolume.Value - toTake.Value) / TotalVolume.Value);
+                var newQuantity = FixedPoint2.FromCents(reagent.Quantity.Value * (TotalVolume.Value - toTake.Value) / TotalVolume.Value);
+
                 var splitQuantity = reagent.Quantity - newQuantity;
 
-                if (newQuantity > 0)
+                if (newQuantity > FixedPoint2.Zero)
                     Contents[i] = new ReagentQuantity(reagent.ReagentId, newQuantity);
                 else
                     Contents.RemoveAt(i);
@@ -470,7 +477,8 @@ namespace Content.Shared.Chemistry.Components
         /// <param name="quantity">The quantity of this solution to remove</param>
         public void RemoveSolution(FixedPoint2 toTake)
         {
-            DebugTools.Assert(toTake > 0);
+            if (toTake <= FixedPoint2.Zero)
+                return;
 
             if (toTake >= TotalVolume)
             {
@@ -483,10 +491,11 @@ namespace Content.Shared.Chemistry.Components
                 var reagent = Contents[i];
 
                 // This is set up such that integer rounding will tend to take more reagents.
-                var newQuantity = FixedPoint2.New(reagent.Quantity.Value * (TotalVolume.Value - toTake.Value) / TotalVolume.Value);
+                var newQuantity = FixedPoint2.FromCents(reagent.Quantity.Value * (TotalVolume.Value - toTake.Value) / TotalVolume.Value);
+
                 var splitQuantity = reagent.Quantity - newQuantity;
 
-                if (newQuantity > 0)
+                if (newQuantity > FixedPoint2.Zero)
                     Contents[i] = new ReagentQuantity(reagent.ReagentId, newQuantity);
                 else
                     Contents.RemoveAt(i);
@@ -503,7 +512,8 @@ namespace Content.Shared.Chemistry.Components
 
         public void AddSolution(Solution otherSolution, IPrototypeManager? protoMan)
         {
-            DebugTools.Assert(otherSolution.TotalVolume > 0);
+            if (otherSolution.TotalVolume <= FixedPoint2.Zero)
+                return;
 
             TotalVolume += otherSolution.TotalVolume;
             var totalThermalEnergy = _heatCapacity * Temperature + otherSolution._heatCapacity * otherSolution.Temperature;
@@ -553,7 +563,7 @@ namespace Content.Shared.Chemistry.Components
 
         public Color GetColor(IPrototypeManager? protoMan)
         {
-            if (TotalVolume == 0)
+            if (TotalVolume == FixedPoint2.Zero)
             {
                 return Color.Transparent;
             }
