@@ -497,6 +497,25 @@
     Telecrystal: 8
   categories:
   - UplinkArmor
+  conditions:
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+      - NukeOpsUplink # for 8 TC they can buy a better version of their hardsuits, making this redundant.
+
+- type: listing
+  id: UplinkEliteHardsuitSyndie
+  description: The elite version of the Syndicate's infamous blood red hardsuit, featuring superior armor and a tacticool black paintjob.
+  productEntity: ClothingBackpackDuffelSyndicateEliteHardsuitBundle
+  cost:
+    Telecrystal: 8
+  categories:
+  - UplinkArmor
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
 
 - type: listing
   id: UplinkClothingShoesBootsMagSyndie
