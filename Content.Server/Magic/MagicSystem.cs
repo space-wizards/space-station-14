@@ -232,7 +232,7 @@ public sealed class MagicSystem : EntitySystem
 
         var transform = Transform(args.Performer);
 
-        if (transform.MapID != args.Target.MapId) return;
+        if (transform.MapID != args.Target.GetMapId(EntityManager)) return;
 
         transform.WorldPosition = args.Target.Position;
         transform.AttachToGridOrMap();
@@ -323,14 +323,14 @@ public sealed class MagicSystem : EntitySystem
     /// offset
     /// </remarks>
     /// <param name="entityEntries"> The list of Entities to spawn in</param>
-    /// <param name="mapCoords"> Map Coordinates where the entities will spawn</param>
+    /// <param name="entityCoords"> Map Coordinates where the entities will spawn</param>
     /// <param name="lifetime"> Check to see if the entities should self delete</param>
     /// <param name="offsetVector2"> A Vector2 offset that the entities will spawn in</param>
-    private void SpawnSpellHelper(List<EntitySpawnEntry> entityEntries, MapCoordinates mapCoords, float? lifetime, Vector2 offsetVector2)
+    private void SpawnSpellHelper(List<EntitySpawnEntry> entityEntries, EntityCoordinates entityCoords, float? lifetime, Vector2 offsetVector2)
     {
         var getProtos = EntitySpawnCollection.GetSpawns(entityEntries, _random);
 
-        var offsetCoords = mapCoords;
+        var offsetCoords = entityCoords;
         foreach (var proto in getProtos)
         {
             // TODO: Share this code with instant because they're both doing similar things for positioning.

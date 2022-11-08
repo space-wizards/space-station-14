@@ -156,27 +156,27 @@ public abstract class SharedActionsSystem : EntitySystem
 
             case WorldTargetAction worldAction:
 
-                if (ev.MapTarget is not MapCoordinates mapTarget)
+                if (ev.EntityCoordinatesTarget is not EntityCoordinates entityCoordinatesTarget)
                 {
                     Logger.Error($"Attempted to perform a map-targeted action without a target! Action: {worldAction.DisplayName}");
                     return;
                 }
 
-                _rotateToFaceSystem.TryFaceCoordinates(user, mapTarget.Position);
+                _rotateToFaceSystem.TryFaceCoordinates(user, entityCoordinatesTarget.Position);
 
-                if (!ValidateWorldTarget(user, mapTarget, worldAction))
+                if (!ValidateWorldTarget(user, entityCoordinatesTarget, worldAction))
                     return;
 
                 if (act.Provider == null)
                     _adminLogger.Add(LogType.Action,
-                        $"{ToPrettyString(user):user} is performing the {name:action} action targeted at {mapTarget:target}.");
+                        $"{ToPrettyString(user):user} is performing the {name:action} action targeted at {entityCoordinatesTarget:target}.");
                 else
                     _adminLogger.Add(LogType.Action,
-                        $"{ToPrettyString(user):user} is performing the {name:action} action (provided by {ToPrettyString(act.Provider.Value):provider}) targeted at {mapTarget:target}.");
+                        $"{ToPrettyString(user):user} is performing the {name:action} action (provided by {ToPrettyString(act.Provider.Value):provider}) targeted at {entityCoordinatesTarget:target}.");
 
                 if (worldAction.Event != null)
                 {
-                    worldAction.Event.Target = mapTarget;
+                    worldAction.Event.Target = entityCoordinatesTarget;
                     performEvent = worldAction.Event;
                 }
 
@@ -243,9 +243,9 @@ public abstract class SharedActionsSystem : EntitySystem
         return _interactionSystem.CanAccessViaStorage(user, target);
     }
 
-    public bool ValidateWorldTarget(EntityUid user, MapCoordinates coords, WorldTargetAction action)
+    public bool ValidateWorldTarget(EntityUid user, EntityCoordinates coords, WorldTargetAction action)
     {
-        if (coords == MapCoordinates.Nullspace)
+        if (coords == EntityCoordinates.Invalid)
             return false;
 
         if (action.CheckCanInteract && !_actionBlockerSystem.CanInteract(user, null))
@@ -256,7 +256,7 @@ public abstract class SharedActionsSystem : EntitySystem
             // even if we don't check for obstructions, we may still need to check the range.
             var xform = Transform(user);
 
-            if (xform.MapID != coords.MapId)
+            if (xform.MapID != coords.GetMapId(EntityManager))
                 return false;
 
             if (action.Range <= 0)
