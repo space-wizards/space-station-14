@@ -2,7 +2,6 @@ using System.Globalization;
 using System.Linq;
 using Content.Server.Ghost;
 using Content.Server.Ghost.Components;
-using Content.Shared.IdentityManagement;
 using Content.Server.Players;
 using Content.Server.Spawners.Components;
 using Content.Server.Speech.Components;
@@ -196,7 +195,7 @@ namespace Content.Server.GameTicking
                 _chatSystem.DispatchStationAnnouncement(station,
                     Loc.GetString(
                         "latejoin-arrival-announcement",
-                    ("character", Identity.Entity(mob, EntityManager)),
+                    ("character", MetaData(mob).EntityName),
                     ("job", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(job.Name))
                     ), Loc.GetString("latejoin-arrival-sender"),
                     playDefaultSound: false);
