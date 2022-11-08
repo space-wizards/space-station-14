@@ -1,9 +1,4 @@
 Entries:
-- author: notafet
-  changes:
-  - {message: Robust harvest is significantly more effective., type: Tweak}
-  id: 2119
-  time: '2022-08-08T08:51:41.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: The objective to steal the Captain's jetpack no longer says "Captain's
@@ -2951,3 +2946,11 @@ Entries:
     type: Fix}
   id: 2618
   time: '2022-11-08T20:57:13.0000000+00:00'
+- author: eclips_e
+  changes:
+  - {message: 'Nanotrasen''s R&D department has harnessed the power of talking to
+      the god''s, essentially, you can pray at altars now! Nanotrasen Inc. is not
+      responsible for injury, death or catgirl-ification.', type: Add}
+  - {message: Added the ability for chaplain's to pray at their bible., type: Add}
+  id: 2619
+  time: '2022-11-08T21:02:15.0000000+00:00'
