@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: The objective to steal the Captain's jetpack no longer says "Captain's
-      Captain's Jetpack", type: Fix}
-  id: 2120
-  time: '2022-08-08T08:55:51.0000000+00:00'
 - author: Anthemic
   changes:
   - {message: Holofan projectors can now be printed in protolathes., type: Add}
@@ -2954,3 +2948,10 @@ Entries:
   - {message: Added the ability for chaplain's to pray at their bible., type: Add}
   id: 2619
   time: '2022-11-08T21:02:15.0000000+00:00'
+- author: JustinTrotter
+  changes:
+  - {message: You can toggle other crew's internals via right click menu, type: Add}
+  - {message: Pets can wear breath/medical masks and air tanks. Save those pets!,
+    type: Add}
+  id: 2620
+  time: '2022-11-08T21:04:07.0000000+00:00'
