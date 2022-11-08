@@ -303,7 +303,7 @@ namespace Content.Shared.MobState.EntitySystems
         private void SetMobState(MobStateComponent component, DamageState? old, (DamageState state, FixedPoint2 threshold)? current, EntityUid? origin = null)
         {
             //if it got deleted instantly in a nuke or something
-            if (!Exists(component.Owner) || Deleted(component.Owner))
+            if (!Exists(component.Owner) || Deleted(component.Owner) || Terminating(component.Owner))
                 return;
 
             if (!current.HasValue)
