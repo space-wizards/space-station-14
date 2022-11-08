@@ -2,6 +2,8 @@ analysis-console-menu-title = analysis console
 analysis-console-server-list-button = Server List
 analysis-console-scan-button = Scan
 analysis-console-scan-tooltip-info = Scan artifacts to learn information about their structure.
+analysis-console-print-button = Print
+analysis-console-print-tooltip-info = Print out the current information about the artifact.
 analysis-console-destroy-button = Destroy
 analysis-console-destroy-button-info = Destroy artifacts to generate points based on how much has been unlocked.
 
@@ -24,6 +26,14 @@ analysis-console-progress-text = {$seconds ->
     *[other] T-{$seconds} seconds
 }
 
+analysis-destroy-window-title = Confirm Destruction
+analysis-destroy-window-text = Destroy the artifact, converting it into research points?
+analysis-destroy-window-yes = Yes
+analysis-destroy-window-no = No
+
 analyzer-artifact-component-upgrade-analysis = analysis duration
 
+analysis-console-print-popup = The console printed out a report.
 analyzer-artifact-destroy-popup = The artifact disintegrated into energy!
+
+analysis-report-title = Artifact Report: Node {$id}

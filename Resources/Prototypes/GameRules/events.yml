@@ -36,6 +36,8 @@
     startAnnouncement: station-event-disease-outbreak-announcement
     startAudio:
       path: /Audio/Announcements/outbreak7.ogg
+      params:
+        volume: -4
     id: DiseaseOutbreak
     weight: 5
     endAfter: 1
@@ -117,6 +119,8 @@
       path: /Audio/Announcements/meteors_start.ogg
     endAudio:
       path: /Audio/Announcements/meteors_end.ogg
+      params:
+        volume: -4
     startAfter: 30
 
 - type: gameRule
@@ -141,6 +145,8 @@
     endAnnouncement: station-event-power-grid-check-end-announcement
     startAudio:
       path: /Audio/Announcements/power_off.ogg
+      params:
+       volume: -4
     startAfter: 12
 
 - type: gameRule
