@@ -1,6 +1,5 @@
 using System.Linq;
 using Content.Server.Chemistry.Components;
-using Content.Server.Weapons.Melee.Events;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Weapons.Melee;

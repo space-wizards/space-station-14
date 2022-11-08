@@ -13,6 +13,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
@@ -25,6 +26,8 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         [Dependency] private IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
+        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
 
         public override void Initialize()
         {
@@ -110,7 +113,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             }
             else
             {
-                args.User.PopupMessageCursor(Loc.GetString("comp-gas-filter-ui-needs-anchor"));
+                _popupSystem.PopupCursor(Loc.GetString("comp-gas-filter-ui-needs-anchor"), Filter.Entities(args.User));
             }
 
             args.Handled = true;
@@ -125,12 +128,12 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
                 new GasFilterBoundUserInterfaceState(EntityManager.GetComponent<MetaDataComponent>(filter.Owner).EntityName, filter.TransferRate, filter.Enabled, filter.FilteredGas));
         }
 
-        private void UpdateAppearance(EntityUid uid, GasFilterComponent? filter = null, AppearanceComponent? appearance = null)
+        private void UpdateAppearance(EntityUid uid, GasFilterComponent? filter = null)
         {
-            if (!Resolve(uid, ref filter, ref appearance, false))
+            if (!Resolve(uid, ref filter, false))
                 return;
 
-            appearance.SetData(FilterVisuals.Enabled, filter.Enabled);
+            _appearanceSystem.SetData(uid, FilterVisuals.Enabled, filter.Enabled);
         }
 
         private void OnToggleStatusMessage(EntityUid uid, GasFilterComponent filter, GasFilterToggleStatusMessage args)
@@ -153,12 +156,23 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 
         private void OnSelectGasMessage(EntityUid uid, GasFilterComponent filter, GasFilterSelectGasMessage args)
         {
-            if (Enum.TryParse<Gas>(args.ID.ToString(), true, out var parsedGas))
+            if (args.ID.HasValue)
             {
-                filter.FilteredGas = parsedGas;
+                if (Enum.TryParse<Gas>(args.ID.ToString(), true, out var parsedGas))
+                {
+                    filter.FilteredGas = parsedGas;
+                    DirtyUI(uid, filter);
+                }
+                else
+                {
+                    Logger.Warning("atmos", $"{ToPrettyString(uid)} received GasFilterSelectGasMessage with an invalid ID: {args.ID}");
+                }
+            }
+            else
+            {
+                filter.FilteredGas = null;
                 DirtyUI(uid, filter);
             }
-
         }
 
         /// <summary>

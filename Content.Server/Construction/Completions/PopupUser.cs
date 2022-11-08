@@ -9,7 +9,7 @@ namespace Content.Server.Construction.Completions
     [DataDefinition]
     public sealed class PopupUser : IGraphAction
     {
-        [DataField("cursor")] public bool Cursor { get; } = false;
+        [DataField("cursor")] public bool Cursor { get; }
         [DataField("text")] public string Text { get; } = string.Empty;
 
         public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)

@@ -243,3 +243,13 @@
   - type: Construction
     graph: Seat
     node: chairFolding
+
+- type: entity
+  parent: ChairFolding
+  id: ChairFoldingSpawnFolded
+  suffix: folded
+  placement:
+    mode: PlaceFree
+  components:
+  - type: Foldable
+    folded: true

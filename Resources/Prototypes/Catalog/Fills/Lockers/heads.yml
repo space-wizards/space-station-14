@@ -157,6 +157,8 @@
       - id: DoorRemoteResearch
       - id: RubberStampRd
       - id: ClothingHeadsetAltScience
+      - id: AnalysisComputerCircuitboard
+      - id: ArtifactAnalyzerMachineCircuitboard
 
 - type: entity
   id: LockerHeadOfSecurityFilled

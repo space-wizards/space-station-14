@@ -11,13 +11,14 @@ namespace Content.Server.Chemistry.ReagentEffects
     public sealed class ChemHealEyeDamage : ReagentEffect
     {
         /// <summary>
-        /// Add or remove eye damage?
-        [DataField("add")]
-        public bool Add = false;
+        /// How much eye damage to remove.
+        /// </summary>
+        [DataField("amount")]
+        public int Amount = -1;
 
         public override void Effect(ReagentEffectArgs args)
         {
-            EntitySystem.Get<SharedBlindingSystem>().AdjustEyeDamage(args.SolutionEntity, Add);
+            args.EntityManager.EntitySysManager.GetEntitySystem<SharedBlindingSystem>().AdjustEyeDamage(args.SolutionEntity, Amount);
         }
     }
 }

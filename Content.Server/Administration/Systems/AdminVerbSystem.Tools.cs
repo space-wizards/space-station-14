@@ -687,7 +687,7 @@ public sealed partial class AdminVerbSystem
             args.Verbs.Add(haltMovement);
         }
 
-        if (TryComp<IMapComponent>(args.Target, out var map))
+        if (TryComp<MapComponent>(args.Target, out var map))
         {
             if (_adminManager.HasAdminFlag(player, AdminFlags.Mapping))
             {
@@ -800,7 +800,7 @@ public sealed partial class AdminVerbSystem
 
     private bool TryGetGridChildren(EntityUid target, [NotNullWhen(true)] out IEnumerable<EntityUid>? enumerator)
     {
-        if (!HasComp<IMapComponent>(target) && !HasComp<IMapGridComponent>(target) &&
+        if (!HasComp<MapComponent>(target) && !HasComp<MapGridComponent>(target) &&
             !HasComp<StationDataComponent>(target))
         {
             enumerator = null;
@@ -827,7 +827,7 @@ public sealed partial class AdminVerbSystem
             yield break;
         }
 
-        else if (HasComp<IMapComponent>(target))
+        else if (HasComp<MapComponent>(target))
         {
             foreach (var possibleGrid in Transform(target).ChildEntities)
             {

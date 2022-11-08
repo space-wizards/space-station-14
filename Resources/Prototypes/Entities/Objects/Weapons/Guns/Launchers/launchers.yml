@@ -16,6 +16,10 @@
     size: 60
   - type: StaticPrice
     price: 500
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
 
 - type: entity
   name: china lake
@@ -128,9 +132,6 @@
       tags:
         - CartridgeRocket
     proto: MeteorLarge
-  - type: ContainerContainer
-    containers:
-      ballistic-ammo: !type:Container
 
 - type: entity
   name: immovable rod launcher

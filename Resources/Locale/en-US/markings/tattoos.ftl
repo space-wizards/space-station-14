@@ -22,4 +22,10 @@ marking-TattooCampbellLeftLeg = Left Leg Tattoo (Campbelle)
 marking-TattooCampbellRightLeg-campbellrightleg = Right Leg Tattoo (Campbelle)
 marking-TattooCampbellRightLeg = Right Leg Tattoo (Campbelle)
 
+marking-TattooEyeRight-eyeright = Right Eye
+marking-TattooEyeRight = Right Eye
+
+marking-TattooEyeLeft-eyeleft = Left Eye
+marking-TattooEyeLeft = Left Eye
+
 

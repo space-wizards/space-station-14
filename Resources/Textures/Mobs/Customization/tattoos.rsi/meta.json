@@ -38,6 +38,14 @@
     {
       "name": "tattoo_silverburgh_l_leg",
       "directions": 4
+    },
+    {
+      "name": "tattoo_eye_r",
+      "directions": 4
+    },
+    {
+      "name": "tattoo_eye_l",
+      "directions": 4
     }
   ]
 }

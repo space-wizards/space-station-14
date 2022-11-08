@@ -9,5 +9,5 @@ namespace Content.Shared.Movement.Components;
 public sealed class ActiveJetpackComponent : Component
 {
     public float EffectCooldown = 0.3f;
-    public float Accumulator = 0f;
+    public TimeSpan TargetTime = TimeSpan.Zero;
 }
