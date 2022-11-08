@@ -1,28 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Dragons are now a proper station event and can spawn additional rifts.,
-    type: Add}
-  - {message: Space mobs are now subject to weightlessness movement but aren't required
-      to be touching the grid., type: Tweak}
-  - {message: Holoparasites and carps can now spawn with varying colors., type: Tweak}
-  id: 2106
-  time: '2022-08-08T00:18:14.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: PA controls now much less jank., type: Fix}
-  id: 2107
-  time: '2022-08-08T00:31:53.0000000+00:00'
-- author: notafet
-  changes:
-  - {message: Gas canisters can now be sold for money., type: Add}
-  id: 2108
-  time: '2022-08-08T01:49:06.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Added a ton of instruments., type: Add}
-  id: 2109
-  time: '2022-08-08T02:21:54.0000000+00:00'
 - author: Morb0
   changes:
   - {message: 'Now the nuke ops will definitely remember their task, thanks to new
@@ -2957,3 +2933,27 @@ Entries:
   - {message: Allowed Proto-Kinetic Accelerators to be stored in the belt slot., type: Tweak}
   id: 2605
   time: '2022-11-08T20:19:04.0000000+00:00'
+- author: checkraze
+  changes:
+  - {message: Added a practice disabler, type: Add}
+  id: 2606
+  time: '2022-11-08T20:21:14.0000000+00:00'
+- author: JustinTrotter
+  changes:
+  - {message: fixed windoor hacking, type: Tweak}
+  id: 2607
+  time: '2022-11-08T20:22:00.0000000+00:00'
+- author: Mervill
+  changes:
+  - {message: Docking ports on shuttles no longer force welded doors open. Have fun
+      welding the shuttle doors shut., type: Fix}
+  id: 2608
+  time: '2022-11-08T20:22:50.0000000+00:00'
+- author: corentt
+  changes:
+  - {message: Your gas tank's output pressure will not decrease anymore when the tank
+      is almost empty, type: Tweak}
+  - {message: The internals alert will blink again when your gas tank need to be refilled,
+    type: Fix}
+  id: 2609
+  time: '2022-11-08T20:23:41.0000000+00:00'
