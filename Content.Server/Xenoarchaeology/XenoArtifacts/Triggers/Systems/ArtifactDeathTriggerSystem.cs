@@ -19,7 +19,7 @@ public sealed class ArtifactDeathTriggerSystem : EntitySystem
             return;
 
         var deathXform = Transform(ev.Entity);
-        
+
         var toActivate = new List<ArtifactDeathTriggerComponent>();
         foreach (var (trigger, xform) in EntityQuery<ArtifactDeathTriggerComponent, TransformComponent>())
         {
