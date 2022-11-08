@@ -1,9 +1,4 @@
 Entries:
-- author: notafet
-  changes:
-  - {message: Plants correctly metabolize clonexadone., type: Fix}
-  id: 2097
-  time: '2022-08-07T01:09:52.0000000+00:00'
 - author: keronshb
   changes:
   - {message: Containment Fields throw entities less further now to prevent clipping
@@ -2959,3 +2954,8 @@ Entries:
   - {message: Added flashlights to the YouTool and SecTech, type: Add}
   id: 2596
   time: '2022-11-08T02:41:00.0000000+00:00'
+- author: Nairod
+  changes:
+  - {message: 'Added forensic pads, zipties and glasses to the secfab', type: Add}
+  id: 2597
+  time: '2022-11-08T02:42:29.0000000+00:00'
