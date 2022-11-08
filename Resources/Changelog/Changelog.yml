@@ -1,10 +1,4 @@
 Entries:
-- author: Myctai
-  changes:
-  - {message: 'Red oxygen tanks were removed, red color is now reserved for nitrogen
-      tanks.', type: Remove}
-  id: 2111
-  time: '2022-08-08T02:28:52.0000000+00:00'
 - author: moony
   changes:
   - {message: The game no longer has a 50% chance of calling a chair a chr., type: Fix}
@@ -2958,3 +2952,9 @@ Entries:
       from fires., type: Add}
   id: 2610
   time: '2022-11-08T20:27:00.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Melee effect animations have been tweaked to be more accurate to range.,
+    type: Tweak}
+  id: 2611
+  time: '2022-11-08T20:28:50.0000000+00:00'
