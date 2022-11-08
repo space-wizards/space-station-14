@@ -14,14 +14,14 @@ artifact-effect-hint-destruction = Station-wide destruction
 # the triggers should be more obvious than the effects
 # gives people an idea of what to do: don't be too specific (i.e. no "welders")
 
-artifact-trigger-hint-electricity = Electricity
-artifact-trigger-hint-heat = High temperatures
-artifact-trigger-hint-physical = Physical trauma
-artifact-trigger-hint-tool = Tool usage
-artifact-trigger-hint-music = Sonic vibrations
-artifact-trigger-hint-water = Hydro-reactive
-artifact-trigger-hint-magnet = Magnetic waves
-artifact-trigger-hint-death = Life essence
-artifact-trigger-hint-radiation = Radiation
-artifact-trigger-hint-pressure = Extreme pressure
-artifact-trigger-hint-gas = Gas
+artifact-trigger-hint-electricity = Электричество
+artifact-trigger-hint-heat = Высокая температура
+artifact-trigger-hint-physical = Физические повреждения
+artifact-trigger-hint-tool = Использование инструментов
+artifact-trigger-hint-music = Звуковые вибрации
+artifact-trigger-hint-water = Водочувствительность
+artifact-trigger-hint-magnet = Магнитные волны
+artifact-trigger-hint-death = Эссенция жизни
+artifact-trigger-hint-radiation = Радиация
+artifact-trigger-hint-pressure = Экстремальное давление
+artifact-trigger-hint-gas = Газ

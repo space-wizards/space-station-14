@@ -1,25 +1,26 @@
-analysis-console-menu-title = analysis console
-analysis-console-server-list-button = Server List
-analysis-console-scan-button = Scan
-analysis-console-scan-tooltip-info = Scan artifacts to learn information about their structure.
-analysis-console-destroy-button = Destroy
-analysis-console-destroy-button-info = Destroy artifacts to generate points based on how much has been unlocked.
-analysis-console-info-no-scanner = No analyzer connected! Please connect one using a multitool.
-analysis-console-info-no-artifact = No artifact present! Place one on the pad then scan for information.
-analysis-console-info-ready = Systems operational. Ready to scan.
+analysis-console-menu-title = аналитическая консоль
+analysis-console-server-list-button = Список серверов
+analysis-console-scan-button = Сканировать
+analysis-console-scan-tooltip-info = Сканируйте артефакты, чтобы получить данные об их структуре.
+analysis-console-destroy-button = Разрушить
+analysis-console-destroy-button-info = Уничтожайте артефакты, чтобы получить очки исследований в зависимости от того, сколько их было разблокировано.
+analysis-console-info-no-scanner = Анализатор не подключен! Пожалуйста, подключите его с помощью мультитула.
+analysis-console-info-no-artifact = Артефакт не найден! Поместите артефакт на платформу, затем просканируйте для получения данных.
+analysis-console-info-ready = Все системы запущены. Сканирование готово.
 analysis-console-info-id = NODE_ID: { $id }
-analysis-console-info-depth = DEPTH: { $depth }
-analysis-console-info-triggered-true = ACTIVATED: TRUE
-analysis-console-info-triggered-false = ACTIVATED: FALSE
-analysis-console-info-effect = REACTION: { $effect }
-analysis-console-info-trigger = STIMULUS: { $trigger }
-analysis-console-info-edges = EDGES: { $edges }
-analysis-console-info-completion = COMPLETION_PERCENTAGE: { $percentage }%
-analysis-console-info-scanner = Scanning...
+analysis-console-info-depth = ГЛУБИНА: { $depth }
+analysis-console-info-triggered-true = АКТИВИРОВАН: ДА
+analysis-console-info-triggered-false = АКТИВИРОВАН: НЕТ
+analysis-console-info-effect = РЕАКЦИЯ: { $effect }
+analysis-console-info-trigger = СТИМУЛЯТОР: { $trigger }
+analysis-console-info-edges = ГРАНИ: { $edges }
+analysis-console-info-completion = ПРОЦЕНТ_ЗАВЕРШЕНИЯ: { $percentage }%
+analysis-console-info-scanner = Сканирование...
 analysis-console-progress-text =
     { $seconds ->
-        [one] T-{ $seconds } second
-       *[other] T-{ $seconds } seconds
+        [one] T-{ $seconds } секунда
+        [few] T-{ $seconds } секунды
+       *[other] T-{ $seconds } секунд
     }
-analyzer-artifact-component-upgrade-analysis = analysis duration
-analyzer-artifact-destroy-popup = The artifact disintegrated into energy!
+analyzer-artifact-component-upgrade-analysis = длительность анализа
+analyzer-artifact-destroy-popup = Артефакт распадается на энергию!

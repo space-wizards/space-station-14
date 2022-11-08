@@ -1,3 +1,3 @@
-blink-artifact-popup = The artifact disappeared in an instant!
-foam-artifact-popup = Strange foam pours out of the artifact!
-shuffle-artifact-popup = You feel yourself teleport instantly!
+blink-artifact-popup = Артефакт моментально исчезает!
+foam-artifact-popup = Странная пена вытекает из артефакта!
+shuffle-artifact-popup = Вы чувствуете, как мгновенно телепортируетесь!
