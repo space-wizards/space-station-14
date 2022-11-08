@@ -1,7 +1,6 @@
 using Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Physics.Pull;
-using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Systems;
