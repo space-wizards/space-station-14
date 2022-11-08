@@ -1,9 +1,4 @@
 Entries:
-- author: lapatison
-  changes:
-  - {message: Tranquilizer shell now can be printed in security techfab, type: Add}
-  id: 2114
-  time: '2022-08-08T02:52:15.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Zombies now have proper groaning sounds when they scream., type: Add}
@@ -2953,3 +2948,8 @@ Entries:
   - {message: Clarified machine missing messages for the cloner., type: Tweak}
   id: 2613
   time: '2022-11-08T20:35:09.0000000+00:00'
+- author: Nairod
+  changes:
+  - {message: Tweaked the HoP's starting access to be more uniform., type: Tweak}
+  id: 2614
+  time: '2022-11-08T20:39:49.0000000+00:00'
