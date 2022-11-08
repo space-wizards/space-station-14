@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Asteroid rocks are no longer guaranteed to spawn ores each time they
-      are mined., type: Fix}
-  id: 2096
-  time: '2022-08-06T03:16:17.0000000+00:00'
 - author: notafet
   changes:
   - {message: Plants correctly metabolize clonexadone., type: Fix}
@@ -2960,3 +2954,8 @@ Entries:
       old-school security helmets to protect you now!, type: Tweak}
   id: 2595
   time: '2022-11-08T02:38:39.0000000+00:00'
+- author: Nairod
+  changes:
+  - {message: Added flashlights to the YouTool and SecTech, type: Add}
+  id: 2596
+  time: '2022-11-08T02:41:00.0000000+00:00'
