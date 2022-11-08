@@ -1,12 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: Harvesting off of kitchen spikes now works with all sharp objects.,
-    type: Fix}
-  id: 2095
-  time: '2022-08-06T01:09:33.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: Asteroid rocks are no longer guaranteed to spawn ores each time they
       are mined., type: Fix}
   id: 2096
@@ -2960,3 +2954,9 @@ Entries:
   - {message: Changed the laser crate to now require armory access., type: Tweak}
   id: 2594
   time: '2022-11-08T02:37:08.0000000+00:00'
+- author: BurninDreamer
+  changes:
+  - {message: Nanotrasen has finally ditched the paper helmet scheme! Expect your
+      old-school security helmets to protect you now!, type: Tweak}
+  id: 2595
+  time: '2022-11-08T02:38:39.0000000+00:00'
