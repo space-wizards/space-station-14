@@ -1,11 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Zombies now have proper groaning sounds when they scream., type: Add}
-  - {message: Zombies will occasionally audibly groan or say a voice line., type: Add}
-  - {message: Zombies now groan when they are hit., type: Add}
-  id: 2115
-  time: '2022-08-08T03:16:43.0000000+00:00'
 - author: LarryRussian
   changes:
   - {message: now HoS has combat gloves from the beginning of the round, type: Add}
@@ -2953,3 +2946,8 @@ Entries:
   - {message: Tweaked the HoP's starting access to be more uniform., type: Tweak}
   id: 2614
   time: '2022-11-08T20:39:49.0000000+00:00'
+- author: Bright0
+  changes:
+  - {message: pill containers now have unique sfx, type: Add}
+  id: 2615
+  time: '2022-11-08T20:53:10.0000000+00:00'
