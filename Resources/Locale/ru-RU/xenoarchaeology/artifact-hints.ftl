@@ -1,15 +1,15 @@
 # you shouldn't be creating new hints for every effect/trigger
 # try and reuse them so that a hint isn't a dead giveaway. -emo
 
-artifact-effect-hint-mental = Cerebral influence
-artifact-effect-hint-environment = Environmental disruption
-artifact-effect-hint-electrical-interference = Electrical interference
-artifact-effect-hint-displacement = Metaphysical displacement
-artifact-effect-hint-creation = Matter creation
-artifact-effect-hint-consumption = Energy consumption
-artifact-effect-hint-release = Energy release
-artifact-effect-hint-biochemical = Biochemical disruption
-artifact-effect-hint-destruction = Station-wide destruction
+artifact-effect-hint-mental = Мозговое воздействие
+artifact-effect-hint-environment = Воздействие на окружение
+artifact-effect-hint-electrical-interference = Электрическое воздействие
+artifact-effect-hint-displacement = Метафизическое перемещение
+artifact-effect-hint-creation = Создание материи
+artifact-effect-hint-consumption = Потребление энергии
+artifact-effect-hint-release = Высвобождение энергии
+artifact-effect-hint-biochemical = Биохимическое воздействие
+artifact-effect-hint-destruction = Полномасштабные разрушения
 
 # the triggers should be more obvious than the effects
 # gives people an idea of what to do: don't be too specific (i.e. no "welders")
