@@ -87,6 +87,9 @@ namespace Content.Client.Actions
                 added.Add(action);
             }
 
+            if (_playerManager.LocalPlayer?.ControlledEntity != uid)
+                return;
+
             foreach (var action in removed)
             {
                 ActionRemoved?.Invoke(action);

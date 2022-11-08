@@ -70,21 +70,17 @@ namespace Content.Shared.FixedPoint
 
         public static FixedPoint2 operator *(FixedPoint2 a, FixedPoint2 b)
         {
-            var aD = a.ShiftDown();
-            var bD = b.ShiftDown();
-            return New(aD * bD);
+            return new((int) MathF.Round(b._value * a._value / MathF.Pow(10, Shift), MidpointRounding.AwayFromZero));
         }
 
         public static FixedPoint2 operator *(FixedPoint2 a, float b)
         {
-            var aD = (float) a.ShiftDown();
-            return New(aD * b);
+            return new((int) MathF.Round(a._value * b, MidpointRounding.AwayFromZero));
         }
 
         public static FixedPoint2 operator *(FixedPoint2 a, double b)
         {
-            var aD = a.ShiftDown();
-            return New(aD * b);
+            return new((int) Math.Round(a._value * b, MidpointRounding.AwayFromZero));
         }
 
         public static FixedPoint2 operator *(FixedPoint2 a, int b)
@@ -94,18 +90,12 @@ namespace Content.Shared.FixedPoint
 
         public static FixedPoint2 operator /(FixedPoint2 a, FixedPoint2 b)
         {
-            if (b._value == 0)
-            {
-                throw new DivideByZeroException();
-            }
-            var aD = a.ShiftDown();
-            var bD = b.ShiftDown();
-            return New(aD / bD);
+            return new((int) MathF.Round((MathF.Pow(10, Shift) * a._value) / b._value, MidpointRounding.AwayFromZero));
         }
 
         public static FixedPoint2 operator /(FixedPoint2 a, float b)
         {
-            return a / FixedPoint2.New(b);
+            return new((int) MathF.Round(a._value / b, MidpointRounding.AwayFromZero));
         }
 
         public static bool operator <=(FixedPoint2 a, int b)

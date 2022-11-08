@@ -2356,9 +2356,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 228
   type: Poweredlight
   components:
@@ -2367,9 +2364,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 229
   type: Poweredlight
   components:
@@ -2379,9 +2373,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 230
   type: Poweredlight
   components:
@@ -2391,9 +2382,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 231
   type: Poweredlight
   components:
@@ -2403,9 +2391,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 232
   type: PoweredlightSodium
   components:
@@ -2414,9 +2399,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 233
   type: SignElectricalMed
   components:
@@ -2438,9 +2420,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 236
   type: SignDangerMed
   components:
@@ -2455,9 +2434,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 238
   type: CableApcExtension
   components:
@@ -2567,9 +2543,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 251
   type: Poweredlight
   components:
@@ -2578,9 +2551,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 252
   type: Poweredlight
   components:
@@ -2590,9 +2560,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 253
   type: Poweredlight
   components:
@@ -2602,9 +2569,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 254
   type: SpawnMobBearSalvage
   components:

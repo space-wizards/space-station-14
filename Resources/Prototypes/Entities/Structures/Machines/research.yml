@@ -52,7 +52,7 @@
       map: ["enum.PowerDeviceVisualLayers.Powered"]
   - type: ResearchClient
   - type: ResearchPointSource
-    pointspersecond: 100
+    pointspersecond: 25
     active: true
   - type: PointLight
     radius: 1.5

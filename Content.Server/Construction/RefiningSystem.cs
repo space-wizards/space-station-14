@@ -19,7 +19,7 @@ namespace Content.Server.Construction
         private async void OnInteractUsing(EntityUid uid, WelderRefinableComponent component, InteractUsingEvent args)
         {
             // check if object is welder
-            if (!TryComp(args.Used, out ToolComponent? tool))
+            if (!HasComp<ToolComponent>(args.Used))
                 return;
 
             // check if someone is already welding object

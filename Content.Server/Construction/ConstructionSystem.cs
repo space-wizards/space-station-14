@@ -4,7 +4,7 @@ using Content.Server.Stack;
 using Content.Server.Tools;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
-using Robust.Shared.Containers;
+using Robust.Server.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -20,7 +20,7 @@ namespace Content.Server.Construction
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
-        [Dependency] private readonly SharedContainerSystem _container = default!;
+        [Dependency] private readonly ContainerSystem _container = default!;
         [Dependency] private readonly StackSystem _stackSystem = default!;
         [Dependency] private readonly ToolSystem _toolSystem = default!;
 

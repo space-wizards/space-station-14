@@ -115,6 +115,8 @@
     - Pacified
   - type: Body
     prototype: Animal
+  - type: InjectableSolution
+    solution: chemicals
   - type: Examiner
   - type: MeleeWeapon
     hidden: true
@@ -136,7 +138,6 @@
   - type: Polymorphable
   - type: Pullable
   - type: Buckle
-  - type: DiseaseCarrier
   - type: Recyclable
     safe: false
   - type: StandingState
