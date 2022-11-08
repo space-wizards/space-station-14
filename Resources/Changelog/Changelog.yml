@@ -1,10 +1,4 @@
 Entries:
-- author: Morb0
-  changes:
-  - {message: 'Now the nuke ops will definitely remember their task, thanks to new
-      spawn sound.', type: Add}
-  id: 2110
-  time: '2022-08-08T02:27:08.0000000+00:00'
 - author: Myctai
   changes:
   - {message: 'Red oxygen tanks were removed, red color is now reserved for nitrogen
@@ -2957,3 +2951,10 @@ Entries:
     type: Fix}
   id: 2609
   time: '2022-11-08T20:23:41.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added the Diona species. This is a group of slow-moving plant people
+      who just want to help out. Be kind to them on the station and keep them away
+      from fires., type: Add}
+  id: 2610
+  time: '2022-11-08T20:27:00.0000000+00:00'
