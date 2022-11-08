@@ -1,7 +1,10 @@
+using System.Linq;
 using System.Threading;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
+using Content.Server.Cargo.Systems;
 using Content.Server.DoAfter;
 using Content.Server.Wires;
 using Content.Shared.Interaction;
@@ -12,15 +15,19 @@ namespace Content.Server.VendingMachines.Restock
 {
     public sealed class VendingMachineRestockSystem : EntitySystem
     {
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly AudioSystem _audioSystem = default!;
+        [Dependency] private readonly PricingSystem _pricingSystem = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
             SubscribeLocalEvent<VendingMachineRestockComponent, AfterInteractEvent>(OnAfterInteract);
+            SubscribeLocalEvent<VendingMachineRestockComponent, PriceCalculationEvent>(OnPriceCalculation);
 
             SubscribeLocalEvent<RestockSuccessfulEvent>(OnRestockSuccessful);
             SubscribeLocalEvent<RestockCancelledEvent>(OnRestockCancelled);
@@ -103,6 +110,30 @@ namespace Content.Server.VendingMachines.Restock
                 AudioParams.Default
                 .WithVolume(-2f)
                 .WithVariation(0.2f));
+        }
+
+        private void OnPriceCalculation(EntityUid uid, VendingMachineRestockComponent component, ref PriceCalculationEvent args)
+        {
+            List<double> priceSets = new();
+
+            // Find the most expensive inventory and use that as the highest price.
+            foreach (var vendingInventory in component.CanRestock)
+            {
+                double total = 0;
+
+                if (_prototypeManager.TryIndex(vendingInventory, out VendingMachineInventoryPrototype? inventoryPrototype))
+                {
+                    foreach (var (item, amount) in inventoryPrototype.StartingInventory)
+                    {
+                        if (_prototypeManager.TryIndex(item, out EntityPrototype? entity))
+                            total += _pricingSystem.GetEstimatedPrice(entity) * amount;
+                    }
+                }
+
+                priceSets.Add(total);
+            }
+
+            args.Price += priceSets.Max();
         }
 
         private void OnRestockCancelled(RestockCancelledEvent ev)
