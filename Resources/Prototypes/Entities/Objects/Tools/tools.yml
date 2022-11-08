@@ -317,6 +317,11 @@
     size: 20
   - type: TilePrying
   - type: SignalLinker
+    requiredQuality: Pulsing
+  - type: UserInterface
+    interfaces:
+      - key: enum.SignalLinkerUiKey.Key
+        type: SignalPortSelectorBoundUserInterface
   - type: Tool
     qualities:
       - Screwing

@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Server.MachineLinking.Components;
 using Content.Server.MachineLinking.Events;
 using Content.Server.Power.Components;
+using Content.Server.Tools;
 using Content.Shared.Interaction;
 using Content.Shared.MachineLinking;
 using Content.Shared.Popups;
@@ -19,6 +20,7 @@ namespace Content.Server.MachineLinking.System
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly IPrototypeManager _protoMan = default!;
+        [Dependency] private readonly ToolSystem _tools = default!;
 
         public override void Initialize()
         {
@@ -69,7 +71,8 @@ namespace Content.Server.MachineLinking.System
             if (!args.CanAccess || !args.CanInteract)
                 return;
 
-            if (!TryComp(args.Using, out SignalLinkerComponent? linker))
+            if (!TryComp(args.Using, out SignalLinkerComponent? linker) ||
+                !IsLinkerInteractable(args.Using.Value, linker))
                 return;
 
             AlternativeVerb verb = new()
@@ -100,7 +103,8 @@ namespace Content.Server.MachineLinking.System
             if (!args.CanAccess || !args.CanInteract)
                 return;
 
-            if (!TryComp(args.Using, out SignalLinkerComponent? linker))
+            if (!TryComp(args.Using, out SignalLinkerComponent? linker)
+                || !IsLinkerInteractable(args.Using.Value, linker))
                 return;
 
             AlternativeVerb verb = new()
@@ -200,7 +204,7 @@ namespace Content.Server.MachineLinking.System
         {
             if (args.Handled) return;
 
-            if (!TryComp(args.Used, out SignalLinkerComponent? linker) ||
+            if (!TryComp(args.Used, out SignalLinkerComponent? linker) || !IsLinkerInteractable(args.Used, linker) ||
                 !TryComp(args.User, out ActorComponent? actor))
                 return;
 
@@ -226,7 +230,7 @@ namespace Content.Server.MachineLinking.System
         {
             if (args.Handled) return;
 
-            if (!TryComp(args.Used, out SignalLinkerComponent? linker) ||
+            if (!TryComp(args.Used, out SignalLinkerComponent? linker) || !IsLinkerInteractable(args.Used, linker) ||
                 !TryComp(args.User, out ActorComponent? actor))
                 return;
 
@@ -472,6 +476,12 @@ namespace Content.Server.MachineLinking.System
 
             return Comp<TransformComponent>(transmitterComponent.Owner).MapPosition.InRange(
                    Comp<TransformComponent>(receiverComponent.Owner).MapPosition, transmitterComponent.TransmissionRange);
+        }
+
+        private bool IsLinkerInteractable(EntityUid uid, SignalLinkerComponent linkerComponent)
+        {
+            var quality = linkerComponent.RequiredQuality;
+            return quality == null || _tools.HasQuality(uid, quality);
         }
     }
 }
