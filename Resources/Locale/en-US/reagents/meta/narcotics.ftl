@@ -4,6 +4,9 @@ reagent-desc-desoxyephedrine = Desoxyephedrine is a potent stimulant with danger
 reagent-name-ephedrine = ephedrine
 reagent-desc-ephedrine = Increases stun resistance and movement speed, giving you hand cramps. Overdose deals toxin damage and inhibits breathing.
 
+reagent-name-stimulants = stimulants
+reagent-desc-stimulants = A chemical cocktail developed by Donk Co. that allows agents to recover from stuns faster and move more quickly, while also passively repairing bodily injuries. Due to the complex nature of the chemical, it is much harder for the body to purge naturally.
+
 reagent-name-thc = THC
 reagent-desc-thc = The main psychoactive compound in cannabis.
 
