@@ -598,6 +598,16 @@
   - UplinkMisc
 
 - type: listing
+  id: UplinkStimpack
+  name: Stimpack
+  description: The legendary chemical produced by Donk Co. for the Syndicate. Injecting yourself with this will increase your run speed, make you recover from stuns faster, and passively heal you for 5 minutes.
+  productEntity: Stimpack
+  cost:
+    Telecrystal: 6
+  categories:
+  - UplinkMisc
+
+- type: listing
   id: UplinkSyndicateSegwayCrate
   name: syndicate segway
   description: Be an enemy of the corporation, in style!
