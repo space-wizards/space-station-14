@@ -1,21 +1,4 @@
 Entries:
-- author: Morb0
-  changes:
-  - {message: Added bare footstep sounds for different surfaces, type: Add}
-  id: 2122
-  time: '2022-08-08T09:03:56.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed broken names in traitor steal conditions., type: Fix}
-  id: 2123
-  time: '2022-08-09T00:32:17.0000000+00:00'
-- author: vulppine
-  changes:
-  - {message: 'NanoTrasen has finally bought a license for SpaceDB, and is sharing
-      it with its stations for crew record management. We only have the one license.
-      Don''t tell them what we''re doing.', type: Add}
-  id: 2124
-  time: '2022-08-09T05:10:01.0000000+00:00'
 - author: Rane
   changes:
   - {message: Escape inventory doafter bars now stop after you are set down., type: Fix}
@@ -2957,3 +2940,20 @@ Entries:
   - {message: The forensic scanner makes a sound when printing., type: Add}
   id: 2621
   time: '2022-11-08T21:06:09.0000000+00:00'
+- author: PixelTK
+  changes:
+  - {message: 'After a very long time, speed loaders have finally been fixed.', type: Fix}
+  id: 2622
+  time: '2022-11-08T21:09:38.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: You can no longer use machines which require vision while blind., type: Fix}
+  id: 2623
+  time: '2022-11-08T21:10:14.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Animals are no longer immune to shoving., type: Fix}
+  - {message: You now shove people rather than "disarm" them if they aren't holding
+      anything., type: Fix}
+  id: 2624
+  time: '2022-11-08T21:11:00.0000000+00:00'
