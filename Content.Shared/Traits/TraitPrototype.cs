@@ -1,3 +1,4 @@
+using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 using static Robust.Shared.Prototypes.EntityPrototype; // don't worry about it
 
@@ -24,6 +25,18 @@ namespace Content.Shared.Traits
         /// </summary>
         [DataField("description")]
         public string? Description { get; }
+
+        /// <summary>
+        ///     Don't apply this trait to entities this whitelist IS NOT valid for.
+        /// </summary>
+        [DataField("whitelist")]
+        public EntityWhitelist? Whitelist;
+
+        /// <summary>
+        ///     Don't apply this trait to entities this whitelist IS valid for. (hence, a blacklist)
+        /// </summary>
+        [DataField("blacklist")]
+        public EntityWhitelist? Blacklist;
 
         /// <summary>
         ///     The components that get added to the player, when they pick this trait.

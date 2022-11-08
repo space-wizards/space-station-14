@@ -15,7 +15,7 @@ public sealed class DamageOverlay : Overlay
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
 
-    public override OverlaySpace Space => OverlaySpace.ScreenSpace;
+    public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
     private readonly ShaderInstance _critShader;
     private readonly ShaderInstance _oxygenShader;
@@ -71,8 +71,8 @@ public sealed class DamageOverlay : Overlay
          * The crit overlay also occasionally reduces its alpha as a "blink"
          */
 
-        var viewport = args.ViewportBounds;
-        var handle = args.ScreenHandle;
+        var viewport = args.WorldAABB;
+        var handle = args.WorldHandle;
         var distance = args.ViewportBounds.Width;
 
         var time = (float) _timing.RealTime.TotalSeconds;

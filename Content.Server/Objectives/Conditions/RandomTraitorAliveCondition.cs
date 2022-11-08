@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Objectives.Interfaces;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
@@ -13,27 +14,7 @@ namespace Content.Server.Objectives.Conditions
         public IObjectiveCondition GetAssigned(Mind.Mind mind)
         {
             var entityMgr = IoCManager.Resolve<IEntityManager>();
-            var traitors = EntitySystem.Get<TraitorRuleSystem>().Traitors;
-            List<Traitor.TraitorRole> removeList = new();
-
-            foreach (var traitor in traitors)
-            {
-                if (traitor.Mind == null)
-                {
-                    removeList.Add(traitor);
-                    continue;
-                }
-                if (traitor.Mind == mind) // we have different objectives for defending ourselves.
-                {
-                    removeList.Add(traitor);
-                    continue;
-                }
-            }
-
-            foreach (var traitor in removeList)
-            {
-                traitors.Remove(traitor);
-            }
+            var traitors = entityMgr.EntitySysManager.GetEntitySystem<TraitorRuleSystem>().GetOtherTraitorsAliveAndConnected(mind).ToList();
 
             if (traitors.Count == 0) return new EscapeShuttleCondition{}; //You were made a traitor by admins, and are the first/only.
             return new RandomTraitorAliveCondition { _target = IoCManager.Resolve<IRobustRandom>().Pick(traitors).Mind };
@@ -49,9 +30,7 @@ namespace Content.Server.Objectives.Conditions
                 if (_target == null)
                     return Loc.GetString("objective-condition-other-traitor-alive-title", ("targetName", targetName), ("job", jobName));
 
-                if (_target.CharacterName != null)
-                    targetName = _target.CharacterName;
-                else if (_target.OwnedEntity is {Valid: true} owned)
+                if (_target.OwnedEntity is {Valid: true} owned)
                     targetName = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(owned).EntityName;
 
                 return Loc.GetString("objective-condition-other-traitor-alive-title", ("targetName", targetName), ("job", jobName));

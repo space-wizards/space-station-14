@@ -394,8 +394,8 @@ public sealed partial class ChemistrySystem
             return;
         }
 
-        // Get transfer amount. May be smaller than _transferAmount if not enough room
-        var realTransferAmount = FixedPoint2.Min(component.TransferAmount, targetSolution.DrawAvailable);
+        // Get transfer amount. May be smaller than _transferAmount if not enough room, also make sure there's room in the injector
+        var realTransferAmount = FixedPoint2.Min(component.TransferAmount, targetSolution.DrawAvailable, solution.AvailableVolume);
 
         if (realTransferAmount <= 0)
         {
