@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: IFF labels on the shuttle console now look fancier., type: Tweak}
-  id: 2126
-  time: '2022-08-10T17:48:32.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Anchorable now checks if the tile has something that can collide first
       before allowing anchoring., type: Tweak}
   id: 2127
@@ -2955,3 +2950,9 @@ Entries:
   - {message: Added a armory door remote for the warden., type: Add}
   id: 2625
   time: '2022-11-08T21:13:56.0000000+00:00'
+- author: Scribbles0
+  changes:
+  - {message: 'Heterochromia is now available through the markings tab, located under
+      the head section.', type: Add}
+  id: 2626
+  time: '2022-11-08T21:16:13.0000000+00:00'
