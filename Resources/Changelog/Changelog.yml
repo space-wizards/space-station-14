@@ -1,20 +1,4 @@
 Entries:
-- author: LarryRussian
-  changes:
-  - {message: now HoS has combat gloves from the beginning of the round, type: Add}
-  id: 2116
-  time: '2022-08-08T03:22:38.0000000+00:00'
-- author: JustinTrotter
-  changes:
-  - {message: Activated pinpointers now automatically target the disk after completing
-      a FTL jump., type: Add}
-  id: 2117
-  time: '2022-08-08T04:27:30.0000000+00:00'
-- author: Myctai
-  changes:
-  - {message: 'Ointments heal 5 points of Burn damage per use, instead of 3.33', type: Fix}
-  id: 2118
-  time: '2022-08-08T08:47:15.0000000+00:00'
 - author: notafet
   changes:
   - {message: Robust harvest is significantly more effective., type: Tweak}
@@ -2951,3 +2935,19 @@ Entries:
   - {message: pill containers now have unique sfx, type: Add}
   id: 2615
   time: '2022-11-08T20:53:10.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Resprited the Detective's Coat., type: Tweak}
+  id: 2616
+  time: '2022-11-08T20:56:14.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: Ore processors and lathes require power to process materials., type: Fix}
+  id: 2617
+  time: '2022-11-08T20:56:53.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: You can inject all animals with syringes now. Veterinarians rejoice!,
+    type: Fix}
+  id: 2618
+  time: '2022-11-08T20:57:13.0000000+00:00'
