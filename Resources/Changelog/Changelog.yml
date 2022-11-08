@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed items not getting removed from the lathe queue when there are
-      insufficient resources., type: Fix}
-  id: 2092
-  time: '2022-08-04T23:19:31.0000000+00:00'
 - author: keronshb
   changes:
   - {message: Sprite layers were added to the field gens to give them more soul, type: Add}
@@ -2974,3 +2968,8 @@ Entries:
     type: Fix}
   id: 2591
   time: '2022-11-08T00:06:51.0000000+00:00'
+- author: rolfero
+  changes:
+  - {message: Armor prices are calculated based on damage reduction., type: Add}
+  id: 2592
+  time: '2022-11-08T00:36:53.0000000+00:00'
