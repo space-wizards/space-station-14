@@ -83,9 +83,13 @@
     startAnnouncement: station-event-gas-leak-start-announcement
     startAudio:
       path: /Audio/Announcements/gasleak_start.ogg
+      params:
+        volume: -4
     endAnnouncement: station-event-gas-leak-end-announcement
     endAudio:
       path: /Audio/Announcements/gasleak_end.ogg
+      params:
+        volume: -4
     earliestStart: 10
     minimumPlayers: 5
     weight: 5
@@ -117,6 +121,8 @@
     endAnnouncement: station-event-meteor-swarm-end-announcement
     startAudio:
       path: /Audio/Announcements/meteors_start.ogg
+      params:
+        volume: -4
     endAudio:
       path: /Audio/Announcements/meteors_end.ogg
       params:
@@ -158,6 +164,8 @@
     endAfter: 1
     startAudio:
       path: /Audio/Announcements/sentience.ogg
+      params:
+        volume: -4
 
 - type: gameRule
   id: VentClog
@@ -167,6 +175,8 @@
     startAnnouncement: station-event-vent-clog-start-announcement
     startAudio:
       path: /Audio/Announcements/ventclog.ogg
+      params:
+        volume: -4
     earliestStart: 15
     minimumPlayers: 15
     weight: 5
