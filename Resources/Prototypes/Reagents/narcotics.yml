@@ -81,6 +81,39 @@
         probability: 0.05
 
 - type: reagent
+  id: Stimulants
+  name: reagent-name-stimulants
+  group: Narcotics
+  desc: reagent-desc-stimulants
+  physicalDesc: reagant-physical-desc-energized
+  flavor: liquid courage
+  color: "#9A040E"
+  boilingPoint: 212.0
+  meltingPoint: 170.0
+  transferAmount: 0.2
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Brute: -0.4
+            Burn: -0.4
+    Narcotic:
+      effects:
+      - !type:MovementSpeedModifier
+        walkSpeedModifier: 1.3
+        sprintSpeedModifier: 1.3
+      - !type:GenericStatusEffect
+        key: Stun
+        time: 2
+        type: Remove
+      - !type:GenericStatusEffect
+        key: KnockedDown
+        time: 2
+        type: Remove
+  
+- type: reagent
   id: THC
   name: reagent-name-thc
   group: Narcotics
