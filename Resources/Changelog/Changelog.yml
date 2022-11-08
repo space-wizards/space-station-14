@@ -1,10 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: 'Buckets, mop buckets, and the janitorial trolley now properly visualize
-      their solution contents in beautiful Technicolor.', type: Add}
-  id: 2104
-  time: '2022-08-07T08:50:52.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Cargo shuttle calls work again., type: Fix}
@@ -2956,3 +2950,10 @@ Entries:
   - {message: Added gas miners to Pillar. Crew can now enjoy breathing!, type: Tweak}
   id: 2603
   time: '2022-11-08T20:12:52.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The reagent grinder can now be upgraded. Revel in the blessed efficiency
+      of your blender., type: Add}
+  - {message: Decreased how many items can fit in a reagent grinder., type: Tweak}
+  id: 2604
+  time: '2022-11-08T20:15:50.0000000+00:00'
