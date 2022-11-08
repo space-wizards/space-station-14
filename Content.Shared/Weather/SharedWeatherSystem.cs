@@ -94,8 +94,9 @@ public abstract class SharedWeatherSystem : EntitySystem
     {
         Sawmill.Debug($"Starting weather {weather.ID}");
         component.Weather = weather.ID;
-        var duration = _random.Next(weather.DurationMinimum, weather.DurationMaximum);
-        component.EndTime = _timing.CurTime + duration;
+        // TODO: ENGINE PR
+        var duration = _random.NextDouble(weather.DurationMinimum.TotalSeconds, weather.DurationMaximum.TotalSeconds);
+        component.EndTime = _timing.CurTime + TimeSpan.FromSeconds(duration);
         component.StartTime = _timing.CurTime;
         Dirty(component);
     }

@@ -17,11 +17,16 @@ public sealed class WeatherOverlay : Overlay
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace | OverlaySpace.WorldSpaceBelowWorld;
 
+    private IRenderTexture _blep;
+
     public WeatherOverlay(SpriteSystem sprite)
     {
         ZIndex = ParallaxSystem.ParallaxZIndex + 1;
         _sprite = sprite;
         IoCManager.InjectDependencies(this);
+
+        var clyde = IoCManager.Resolve<IClyde>();
+        _blep = clyde.CreateRenderTarget(clyde.ScreenSize, new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb), name: "weather");
     }
 
     // TODO: WeatherComponent on the map.
@@ -53,12 +58,10 @@ public sealed class WeatherOverlay : Overlay
             return;
         }
 
-        // var a = args.Viewport.
-
         switch (args.Space)
         {
             case OverlaySpace.WorldSpaceBelowWorld:
-                DrawUnderGrid(args, weatherProto);
+                // DrawUnderGrid(args, weatherProto);
                 break;
             case OverlaySpace.WorldSpace:
                 DrawWorld(args, weatherProto);
@@ -91,22 +94,29 @@ public sealed class WeatherOverlay : Overlay
     private void DrawWorld(in OverlayDrawArgs args, WeatherPrototype weatherProto)
     {
         var worldHandle = args.WorldHandle;
+        var mapId = args.MapId;
+        var worldBounds = args.WorldBounds;
 
-        foreach (var grid in _mapManager.FindGridsIntersecting(args.MapId, args.WorldBounds))
+        worldHandle.RenderInRenderTarget(_blep, () =>
         {
-            var matrix = _entManager.GetComponent<TransformComponent>(grid.GridEntityId).WorldMatrix;
-            worldHandle.SetTransform(matrix);
-
-            // TODO: For each tile on grid.
-            foreach (var tile in grid.GetTilesIntersecting(args.WorldBounds))
+            foreach (var grid in _mapManager.FindGridsIntersecting(mapId, worldBounds))
             {
-                // TODO: Exclusivity
+                var matrix = _entManager.GetComponent<TransformComponent>(grid.GridEntityId).WorldMatrix;
+                worldHandle.SetTransform(matrix);
+                // TODO: Need to transfer to worldspace in viewport.
 
-                worldHandle.DrawTextureRect(_sprite.Frame0(weatherProto.Sprite), new Box2(tile.GridIndices * grid.TileSize, (tile.GridIndices + Vector2i.One) * grid.TileSize));
+                // TODO: For each tile on grid.
+                foreach (var tile in grid.GetTilesIntersecting(worldBounds))
+                {
+                    // TODO: Exclusivity
+
+                    worldHandle.DrawTextureRect(_sprite.Frame0(weatherProto.Sprite), new Box2(tile.GridIndices * grid.TileSize, (tile.GridIndices + Vector2i.One) * grid.TileSize));
+                }
             }
-        }
 
-        // TODO: Draw.
-        worldHandle.SetTransform(Matrix3.Identity);
+            worldHandle.SetTransform(Matrix3.Identity);
+        }, Color.Transparent);
+
+        worldHandle.DrawTextureRect(_blep.Texture, args.WorldAABB);
     }
 }
