@@ -67,9 +67,10 @@ public sealed class RoundNotificationsSystem : EntitySystem
             return;
 
         var map = _gameMapManager.GetSelectedMap();
+        var mapName = map?.MapName ?? Loc.GetString("discord-round-unknown-map");
         var text = Loc.GetString("discord-round-start",
             ("id", e.RoundId),
-            ("map", map.MapName));
+            ("map", mapName));
         var payload = new WebhookPayload() { Content = text };
 
         SendDiscordMessage(payload);

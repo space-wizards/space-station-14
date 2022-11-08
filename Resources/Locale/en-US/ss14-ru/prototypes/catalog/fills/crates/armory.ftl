@@ -4,3 +4,6 @@ ent-CrateArmorySMG = { ent-CrateWeaponSecure }
 ent-CrateArmoryShotgun = { ent-CrateWeaponSecure }
     .desc = { ent-CrateWeaponSecure.desc }
     .suffix = { "" }
+ent-CrateArmoryLaser = { ent-CrateWeaponSecure }
+    .desc = { ent-CrateWeaponSecure.desc }
+    .suffix = { "" }
