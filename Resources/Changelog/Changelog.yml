@@ -1,21 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: 'The durathread crafting recipe now gives the proper amount (5, not
-      1).', type: Fix}
-  id: 2101
-  time: '2022-08-07T01:15:32.0000000+00:00'
-- author: notafet
-  changes:
-  - {message: Eggs from egg-plants now contain real eggs., type: Fix}
-  id: 2102
-  time: '2022-08-07T01:16:26.0000000+00:00'
-- author: Sammy Boy
-  changes:
-  - {message: Stun batons are back to having a distinct stun sound when stuning!,
-    type: Fix}
-  id: 2103
-  time: '2022-08-07T07:10:40.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: 'Buckets, mop buckets, and the janitorial trolley now properly visualize
@@ -2957,3 +2940,19 @@ Entries:
       phase., type: Add}
   id: 2600
   time: '2022-11-08T20:02:07.0000000+00:00'
+- author: Mervill
+  changes:
+  - {message: Lawyers and Librarians can spawn with the Satchel and Duffelbag variants.,
+    type: Fix}
+  id: 2601
+  time: '2022-11-08T20:11:39.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: The coughing sounds are shorter., type: Tweak}
+  id: 2602
+  time: '2022-11-08T20:11:54.0000000+00:00'
+- author: Cripes
+  changes:
+  - {message: Added gas miners to Pillar. Crew can now enjoy breathing!, type: Tweak}
+  id: 2603
+  time: '2022-11-08T20:12:52.0000000+00:00'
