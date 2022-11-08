@@ -151,7 +151,7 @@
     graph: CleanBot
     node: bot
   - type: SentienceTarget
-    flavorKind: mechanical
+    flavorKind: station-event-random-sentience-flavor-mechanical
   - type: SolutionContainerManager
     solutions:
       drainBuffer:

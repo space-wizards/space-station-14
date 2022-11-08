@@ -48,7 +48,7 @@
     interactSuccessSound:
       path: /Audio/Animals/fox_squeak.ogg
   - type: SentienceTarget
-    flavorKind: organic
+    flavorKind: station-event-random-sentience-flavor-organic
   - type: Bloodstream
     bloodMaxVolume: 50
   - type: ReplacementAccent
@@ -199,7 +199,7 @@
   - type: ReplacementAccent
     accent: chicken
   - type: SentienceTarget
-    flavorKind: organic
+    flavorKind: station-event-random-sentience-flavor-organic
 
 - type: entity
   name: mallard duck #Quack
@@ -250,7 +250,7 @@
   - type: ReplacementAccent
     accent: duck
   - type: SentienceTarget
-    flavorKind: organic
+    flavorKind: station-event-random-sentience-flavor-organic
 
 - type: entity
   name: white duck #Quack
@@ -682,7 +682,7 @@
   - type: NameIdentifier
     group: Monkey
   - type: SentienceTarget
-    flavorKind: primate
+    flavorKind: station-event-random-sentience-flavor-primate
   - type: Inventory
     templateId: monkey
   - type: Fixtures
@@ -1539,7 +1539,7 @@
     attributes:
       gender: epicene
   - type: SentienceTarget
-    flavorKind: corgi
+    flavorKind: station-event-random-sentience-flavor-corgi
   - type: Puller
   - type: MobPrice
     price: 200
