@@ -7,9 +7,6 @@ ent-SecurityHelmet = { ent-CrateSecurityHelmet }
 ent-SecurityNonLethal = { ent-CrateSecurityNonlethal }
     .desc = { ent-CrateSecurityNonlethal.desc }
 
-ent-SecurityLaser = { ent-CrateSecurityLaser }
-    .desc = { ent-CrateSecurityLaser.desc }
-
 ent-SecurityRiot = { ent-CrateSecurityRiot }
     .desc = { ent-CrateSecurityRiot.desc }
 

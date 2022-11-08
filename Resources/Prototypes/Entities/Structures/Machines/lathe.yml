@@ -160,7 +160,7 @@
     dynamicRecipes:
       - LightTube
       - LightBulb
-      - SheetSteel
+      - SheetSteel #these sheet recipe costs don't scale with upgrades
       - SheetGlass1
       - SheetRGlass
       - SheetPlastic
@@ -278,12 +278,14 @@
       - SurveillanceWirelessCameraAnchoredCircuitboard
       - HydroponicsTrayMachineCircuitboard
       - SolarControlComputerCircuitboard
+      - PowerComputerCircuitboard
       - AutolatheMachineCircuitboard
       - ProtolatheMachineCircuitboard
       - ReagentGrinderMachineCircuitboard
       - MicrowaveMachineCircuitboard
       - UniformPrinterMachineCircuitboard
       - ShuttleConsoleCircuitboard
+      - RadarConsoleCircuitboard
       - CircuitImprinterMachineCircuitboard
       - DawInstrumentMachineCircuitboard
       - CloningConsoleComputerCircuitboard
@@ -297,6 +299,8 @@
       - EmitterCircuitboard
       - GasRecyclerMachineCircuitboard
       - SeedExtractorMachineCircuitboard
+      - AnalysisComputerCircuitboard
+      - ArtifactAnalyzerMachineCircuitboard
   - type: MaterialStorage
     whitelist:
       tags:
@@ -332,7 +336,10 @@
       - Flash
       - FlashPayload
       - Handcuffs
+      - Zipties
       - Stunbaton
+      - ForensicPad
+      - ClothingEyesGlassesSecurity
       - RiotShield
       - CartridgePistol
       - CartridgeMagnum
@@ -346,6 +353,9 @@
       - CartridgeCaselessRifleRubber
       - CartridgeLightRifleRubber
       - CartridgeRifleRubber
+      - TargetHuman
+      - TargetSyndicate
+      - TargetClown
   - type: MaterialStorage
     whitelist:
       tags:
@@ -376,6 +386,7 @@
   - type: Lathe
     idleState: icon
     runningState: icon
+    machinePartPrintSpeed: Laser
     dynamicRecipes:
       - HandheldHealthAnalyzer
       - ClothingHandsGlovesLatex

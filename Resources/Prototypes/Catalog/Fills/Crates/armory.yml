@@ -28,3 +28,12 @@
     contents:
       - id: TrackingImplanter
         amount: 5
+
+- type: entity
+  id: CrateArmoryLaser
+  parent: CrateWeaponSecure
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponLaserGun
+        amount: 3
