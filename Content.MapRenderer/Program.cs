@@ -26,7 +26,10 @@ namespace Content.MapRenderer
         internal static async Task Main(string[] args)
         {
 
-            if (args.Length == 0)
+            if (!CommandLineArguments.TryParse(args, out var arguments))
+                return;
+
+            if (arguments.Maps.Count == 0)
             {
                 Console.WriteLine("Didn't specify any maps to paint! Loading the map list...");
 
@@ -88,9 +91,7 @@ namespace Content.MapRenderer
                     selectedMapPrototypes.Add(mapIds[id]);
                 }
 
-                var argsLength = args.Length;
-                Array.Resize(ref args, argsLength + selectedMapPrototypes.Count);
-                selectedMapPrototypes.CopyTo(args, argsLength);
+                arguments.Maps.AddRange(selectedMapPrototypes);
 
                 if (selectedMapPrototypes.Count == 0)
                 {
@@ -100,9 +101,6 @@ namespace Content.MapRenderer
 
                 Console.WriteLine($"Selected maps: {string.Join(", ", selectedMapPrototypes)}");
             }
-
-            if (!CommandLineArguments.TryParse(args, out var arguments))
-                return;
 
             if (arguments.ArgumentsAreFileNames)
             {

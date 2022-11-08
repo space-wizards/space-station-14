@@ -20,7 +20,8 @@ public sealed class CommandLineArguments
         if (args.Count == 0)
         {
             PrintHelp();
-            return false;
+            //Returns true here so the user can select what maps they want to render
+            return true;
         }
 
         using var enumerator = args.GetEnumerator();
@@ -67,6 +68,13 @@ public sealed class CommandLineArguments
                     parsed.Maps.Add(argument);
                     break;
             }
+        }
+
+        if (parsed.ArgumentsAreFileNames && parsed.Maps.Count == 0)
+        {
+            Console.WriteLine("No file names specified!");
+            PrintHelp();
+            return false;
         }
 
         return true;
