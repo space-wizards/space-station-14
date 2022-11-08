@@ -61,7 +61,7 @@ public sealed class WeatherOverlay : Overlay
         switch (args.Space)
         {
             case OverlaySpace.WorldSpaceBelowWorld:
-                // DrawUnderGrid(args, weatherProto);
+                DrawUnderGrid(args, weatherProto);
                 break;
             case OverlaySpace.WorldSpace:
                 DrawWorld(args, weatherProto);
@@ -71,22 +71,29 @@ public sealed class WeatherOverlay : Overlay
 
     private void DrawUnderGrid(in OverlayDrawArgs args, WeatherPrototype weatherProto)
     {
-        var eyeRotation = args.Viewport.Eye?.Rotation ?? Angle.Zero;
         var worldHandle = args.WorldHandle;
-        worldHandle.UseShader(_protoManager.Index<ShaderPrototype>("unshaded").Instance());
+        var mapId = args.MapId;
+        var worldAABB = args.WorldAABB;
+        var worldBounds = args.WorldBounds;
+        var invMatrix = args.Viewport.GetWorldToLocalMatrix();
 
-        var sprite = _sprite.Frame0(weatherProto.Sprite);
-        var worldWidth = sprite.Width / EyeManager.PixelsPerMeter;
-        var worldHeight = sprite.Height / EyeManager.PixelsPerMeter;
-
-        for (var x = args.WorldAABB.Left; x < args.WorldAABB.Right; x += worldWidth)
+        worldHandle.RenderInRenderTarget(_blep, () =>
         {
-            for (var y = args.WorldAABB.Bottom; y < args.WorldAABB.Top; y += worldHeight)
+            var sprite = _sprite.Frame0(weatherProto.Sprite);
+            // TODO: Handle this shit
+            worldHandle.SetTransform(invMatrix);
+
+            for (var x = worldAABB.Left; x <= worldAABB.Right; x+= (float) sprite.Width / EyeManager.PixelsPerMeter)
             {
-                var tile = new Box2(new Vector2(x, y), new Vector2(x + worldWidth, y + worldHeight));
-                worldHandle.DrawTextureRect(sprite, new Box2Rotated(tile, -eyeRotation, tile.Center));
+                for (var y = worldAABB.Bottom; y <= worldAABB.Top; y+= (float) sprite.Height / EyeManager.PixelsPerMeter)
+                {
+                    var box = new Box2(new Vector2(x, y), new Vector2(x + sprite.Width, y + sprite.Height));
+
+                    worldHandle.DrawTextureRect(sprite, box);
+                }
             }
-        }
+
+        }, Color.Transparent);
 
         worldHandle.SetTransform(Matrix3.Identity);
     }
@@ -95,28 +102,34 @@ public sealed class WeatherOverlay : Overlay
     {
         var worldHandle = args.WorldHandle;
         var mapId = args.MapId;
+        var worldAABB = args.WorldAABB;
         var worldBounds = args.WorldBounds;
+        var invMatrix = args.Viewport.GetWorldToLocalMatrix();
 
         worldHandle.RenderInRenderTarget(_blep, () =>
         {
-            foreach (var grid in _mapManager.FindGridsIntersecting(mapId, worldBounds))
-            {
-                var matrix = _entManager.GetComponent<TransformComponent>(grid.GridEntityId).WorldMatrix;
-                worldHandle.SetTransform(matrix);
-                // TODO: Need to transfer to worldspace in viewport.
+            var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
+            var sprite = _sprite.Frame0(weatherProto.Sprite);
 
-                // TODO: For each tile on grid.
-                foreach (var tile in grid.GetTilesIntersecting(worldBounds))
+            foreach (var grid in _mapManager.FindGridsIntersecting(mapId, worldAABB))
+            {
+                var (_, worldRot, matrix) = xformQuery.GetComponent(grid.GridEntityId).GetWorldPositionRotationMatrix();
+                Matrix3.Multiply(in matrix, in invMatrix, out var matty);
+                worldHandle.SetTransform(matty);
+
+                foreach (var tile in grid.GetTilesIntersecting(worldAABB))
                 {
                     // TODO: Exclusivity
+                    var gridTile = new Box2(tile.GridIndices * grid.TileSize,
+                        (tile.GridIndices + Vector2i.One) * grid.TileSize);
 
-                    worldHandle.DrawTextureRect(_sprite.Frame0(weatherProto.Sprite), new Box2(tile.GridIndices * grid.TileSize, (tile.GridIndices + Vector2i.One) * grid.TileSize));
+                    worldHandle.DrawTextureRect(sprite, new Box2Rotated(gridTile, -worldRot, gridTile.Center));
                 }
             }
 
-            worldHandle.SetTransform(Matrix3.Identity);
-        }, Color.Transparent);
+        }, null);
 
-        worldHandle.DrawTextureRect(_blep.Texture, args.WorldAABB);
+        worldHandle.SetTransform(Matrix3.Identity);
+        worldHandle.DrawTextureRect(_blep.Texture, worldAABB);
     }
 }
