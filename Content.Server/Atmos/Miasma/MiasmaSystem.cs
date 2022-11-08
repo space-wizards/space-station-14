@@ -161,7 +161,7 @@ namespace Content.Server.Atmos.Miasma
         {
             if (HasComp<BodyPreservedComponent>(uid))
                 return;
-            bool decompose = (args.CurrentTemperature > 274f);
+            bool decompose = (args.CurrentTemperature > Atmospherics.T0C + 0.85f);
             ToggleDecomposition(uid, decompose);
         }
 
@@ -246,7 +246,7 @@ namespace Content.Server.Atmos.Miasma
 
         public void ToggleDecomposition(EntityUid uid, bool decompose, PerishableComponent? perishable = null)
         {
-            if (Terminating(uid) || !Resolve(uid, ref perishable))
+            if (Terminating(uid) || !Resolve(uid, ref perishable, false))
                 return;
 
             if (decompose == perishable.Progressing) // Saved a few cycles
