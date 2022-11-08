@@ -1,12 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: You no longer automatically place down items when clicking on closed
-      lockers and crates., type: Fix}
-  id: 2094
-  time: '2022-08-05T23:49:16.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: Harvesting off of kitchen spikes now works with all sharp objects.,
     type: Fix}
   id: 2095
@@ -2961,3 +2955,8 @@ Entries:
   - {message: Events are now quieter., type: Tweak}
   id: 2593
   time: '2022-11-08T02:35:11.0000000+00:00'
+- author: Nairod
+  changes:
+  - {message: Changed the laser crate to now require armory access., type: Tweak}
+  id: 2594
+  time: '2022-11-08T02:37:08.0000000+00:00'
