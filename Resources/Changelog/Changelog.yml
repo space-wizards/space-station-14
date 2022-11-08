@@ -1,14 +1,4 @@
 Entries:
-- author: Level10Cybermancer
-  changes:
-  - {message: Blunt melee weapons now deal stamina damage, type: Add}
-  - {message: 'After new research has demonstrated that most security personnel lack
-      the mental capability to operate the big red "on/off" button on their issued
-      stun batons, NanoTrasen has made some fundamental tweaks to their design. Disabled
-      stun batons now deal twice as much stamina damage as they do blunt damage.',
-    type: Tweak}
-  id: 2113
-  time: '2022-08-08T02:38:04.0000000+00:00'
 - author: lapatison
   changes:
   - {message: Tranquilizer shell now can be printed in security techfab, type: Add}
@@ -2958,3 +2948,8 @@ Entries:
   - {message: The puking noise has been removed., type: Tweak}
   id: 2612
   time: '2022-11-08T20:33:06.0000000+00:00'
+- author: Vordenburg
+  changes:
+  - {message: Clarified machine missing messages for the cloner., type: Tweak}
+  id: 2613
+  time: '2022-11-08T20:35:09.0000000+00:00'
