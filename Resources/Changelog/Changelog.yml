@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Meat spikes can now be properly deconstructed., type: Fix}
-  id: 2099
-  time: '2022-08-07T01:11:55.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: New grass and dirt tiles coming to a station near you soon(TM)., type: Add}
@@ -2957,3 +2952,9 @@ Entries:
   - {message: Fix damage effect persisting indefinitely., type: Fix}
   id: 2598
   time: '2022-11-08T19:58:21.0000000+00:00'
+- author: juliangiebel
+  changes:
+  - {message: a fancy new PDA UI, type: Add}
+  - {message: cartridges containing Programs for your PDA, type: Add}
+  id: 2599
+  time: '2022-11-08T20:00:21.0000000+00:00'
