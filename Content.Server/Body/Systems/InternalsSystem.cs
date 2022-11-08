@@ -113,7 +113,9 @@ public sealed class InternalsSystem : EntitySystem
     {
         if (component.BreathToolEntity == null || !AreInternalsWorking(component)) return 2;
 
-        if (TryComp<GasTankComponent>(component.GasTankEntity, out var gasTank) && gasTank.Air.Volume < Atmospherics.BreathVolume)
+        // What we are checking here is if there is more moles in tank than we need.
+        if (TryComp<GasTankComponent>(component.GasTankEntity, out var gasTank)
+            && (gasTank.OutputPressure * Atmospherics.BreathVolume / Atmospherics.R * gasTank.Air.Temperature) >= gasTank.Air.TotalMoles)
             return 0;
 
         return 1;
