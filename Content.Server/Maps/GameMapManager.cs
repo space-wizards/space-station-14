@@ -1,7 +1,6 @@
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Server.Chat.Managers;
-using Content.Server.GameTicking;
 using Content.Shared.CCVar;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
@@ -20,9 +19,9 @@ public sealed class GameMapManager : IGameMapManager
     [ViewVariables(VVAccess.ReadOnly)]
     private readonly Queue<string> _previousMaps = new();
     [ViewVariables(VVAccess.ReadOnly)]
-    private GameMapPrototype? _configSelectedMap = default!;
+    private GameMapPrototype? _configSelectedMap = default;
     [ViewVariables(VVAccess.ReadOnly)]
-    private GameMapPrototype? _selectedMap = default!; // Don't change this value during a round!
+    private GameMapPrototype? _selectedMap = default; // Don't change this value during a round!
     [ViewVariables(VVAccess.ReadOnly)]
     private bool _mapRotationEnabled;
     [ViewVariables(VVAccess.ReadOnly)]
@@ -194,9 +193,9 @@ public sealed class GameMapManager : IGameMapManager
             .ToArray();
 
         Logger.InfoS("mapsel", $"eligible queue: {string.Join(", ", eligible.Select(x => (x.proto.ID, x.weight)))}");
-        
-        if (eligible.Length is 0)
-            return null;
+
+        // YML "should" be configured with at least one fallback map
+        Debug.Assert(eligible.Length != 0, $"couldn't select a map with {nameof(GetFirstInRotationQueue)}()! No eligible maps and no fallback maps!");
 
         var weight = eligible[0].weight;
         return eligible.Where(x => x.Item2 == weight)
