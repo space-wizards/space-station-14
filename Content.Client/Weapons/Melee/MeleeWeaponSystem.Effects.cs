@@ -22,6 +22,9 @@ public sealed partial class MeleeWeaponSystem
 
     private void OnEffectAnimation(EntityUid uid, DamageEffectComponent component, AnimationCompletedEvent args)
     {
+        if (args.Key != DamageAnimationKey)
+            return;
+
         if (TryComp<SpriteComponent>(uid, out var sprite))
         {
             sprite.Color = component.Color;
