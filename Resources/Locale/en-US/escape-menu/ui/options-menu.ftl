@@ -15,6 +15,7 @@ ui-options-default = Default
 ui-options-master-volume = Master Volume:
 ui-options-midi-volume = MIDI (Instrument) Volume:
 ui-options-ambience-volume = Ambience volume:
+ui-options-lobby-volume = Lobby & Round-end volume:
 ui-options-ambience-max-sounds = Ambience simultaneous sounds:
 ui-options-lobby-music = Lobby & Round-end Music
 ui-options-restart-sounds = Round Restart Sounds
@@ -178,6 +179,8 @@ ui-options-function-shuttle-brake = Brake
 
 ## Network menu
 
+ui-options-net-predict = Client-side prediction
+
 ui-options-net-interp-ratio = State buffer size
 ui-options-net-interp-ratio-tooltip = Increasing this will generally make the game more resistant
                                       to server->client packet-loss, however in doing so it
@@ -190,10 +193,15 @@ ui-options-net-predict-tick-bias-tooltip = Increasing this will generally make t
                                            effectively adds slightly more latency and requires the
                                            client to predict more future ticks.
 
-ui-options-net-pvs-entry = PVS entity budget
-ui-options-net-pvs-entry-tooltip = This limits the rate at which the server will send new
+ui-options-net-pvs-spawn = PVS entity spawn budget
+ui-options-net-pvs-spawn-tooltip = This limits the rate at which the server will send newly spawned
                                        entities to the client. Lowering this can help reduce
                                        stuttering due to entity spawning, but can lead to pop-in.
+
+ui-options-net-pvs-entry = PVS entity budget
+ui-options-net-pvs-entry-tooltip = This limits the rate at which the server will send newly visible
+                                       entities to the client. Lowering this can help reduce
+                                       stuttering, but can lead to pop-in.
 
 ui-options-net-pvs-leave = PVS detach rate
 ui-options-net-pvs-leave-tooltip = This limits the rate at which the client will remove

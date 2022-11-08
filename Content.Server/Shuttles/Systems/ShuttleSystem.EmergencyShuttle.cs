@@ -112,7 +112,7 @@ public sealed partial class ShuttleSystem
    /// <summary>
    /// Checks whether the emergency shuttle can warp to the specified position.
    /// </summary>
-   private bool ValidSpawn(IMapGridComponent grid, Box2 area)
+   private bool ValidSpawn(MapGridComponent grid, Box2 area)
    {
        return !grid.Grid.GetLocalTilesIntersecting(area).Any();
    }
@@ -124,13 +124,13 @@ public sealed partial class ShuttleSystem
        if (gridDocks.Count <= 0) return null;
 
        var xformQuery = GetEntityQuery<TransformComponent>();
-       var targetGridGrid = Comp<IMapGridComponent>(targetGrid);
+       var targetGridGrid = Comp<MapGridComponent>(targetGrid);
        var targetGridXform = xformQuery.GetComponent(targetGrid);
        var targetGridAngle = targetGridXform.WorldRotation.Reduced();
        var targetGridRotation = targetGridAngle.ToVec();
 
        var shuttleDocks = GetDocks(component.Owner);
-       var shuttleAABB = Comp<IMapGridComponent>(component.Owner).Grid.LocalAABB;
+       var shuttleAABB = Comp<MapGridComponent>(component.Owner).Grid.LocalAABB;
 
        var validDockConfigs = new List<DockingConfig>();
 
@@ -310,7 +310,7 @@ public sealed partial class ShuttleSystem
        TransformComponent gridXform,
        Vector2 targetGridRotation,
        Box2 shuttleAABB,
-       IMapGridComponent grid,
+       MapGridComponent grid,
        [NotNullWhen(true)] out Box2? shuttleDockedAABB,
        out Matrix3 matty,
        out Vector2 gridRotation)

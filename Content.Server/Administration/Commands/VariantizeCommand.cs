@@ -32,7 +32,7 @@ public sealed class VariantizeCommand : IConsoleCommand
             return;
         }
 
-        if (!entMan.TryGetComponent(euid, out IMapGridComponent? gridComp))
+        if (!entMan.TryGetComponent(euid, out MapGridComponent? gridComp))
         {
             shell.WriteError($"Euid '{euid}' does not exist or is not a grid.");
             return;

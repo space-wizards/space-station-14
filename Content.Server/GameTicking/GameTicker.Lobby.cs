@@ -1,9 +1,12 @@
 using System.Linq;
 using Content.Shared.GameTicking;
+using Content.Server.Station.Systems;
+using Content.Server.Station.Components;
 using Robust.Server.Player;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
+using System.Text;
 
 namespace Content.Server.GameTicking
 {
@@ -43,12 +46,32 @@ namespace Content.Server.GameTicking
 
             var playerCount = $"{_playerManager.PlayerCount}";
             var readyCount = _playerGameStatuses.Values.Count(x => x == PlayerGameStatus.ReadyToPlay);
-            var map = _gameMapManager.GetSelectedMap();
-            var mapName = map?.MapName ?? Loc.GetString("game-ticker-no-map-selected");
+
+            StringBuilder stationNames = new StringBuilder();
+            if (_stationSystem.Stations.Count != 0)
+            {
+                foreach (EntityUid entUID in _stationSystem.Stations)
+                {
+                    StationDataComponent? stationData = null;
+                    MetaDataComponent? metaData = null;
+                    if (Resolve(entUID, ref stationData, ref metaData, logMissing: true))
+                    {
+                        if (stationNames.Length > 0)
+                            stationNames.Append('\n');
+
+                        stationNames.Append(metaData.EntityName);
+                    }
+                }
+            }
+            else
+            {
+                stationNames.Append(Loc.GetString("game-ticker-no-map-selected"));
+            }
+
             var gmTitle = Loc.GetString(Preset.ModeTitle);
             var desc = Loc.GetString(Preset.Description);
             return Loc.GetString(RunLevel == GameRunLevel.PreRoundLobby ? "game-ticker-get-info-preround-text" : "game-ticker-get-info-text",
-                ("roundId", RoundId), ("playerCount", playerCount), ("readyCount", readyCount), ("mapName", mapName), ("gmTitle", gmTitle), ("desc", desc));
+                ("roundId", RoundId), ("playerCount", playerCount), ("readyCount", readyCount), ("mapName", stationNames.ToString()),("gmTitle", gmTitle),("desc", desc));
         }
 
         private TickerLobbyReadyEvent GetStatusSingle(ICommonSession player, PlayerGameStatus gameStatus)

@@ -54,6 +54,16 @@ namespace Content.Server.Salvage
     {
         public static readonly MagnetState Inactive = new (MagnetStateType.Inactive, TimeSpan.Zero);
     };
+
+    public sealed class SalvageMagnetActivatedEvent : EntityEventArgs
+    {
+        public EntityUid Magnet;
+
+        public SalvageMagnetActivatedEvent(EntityUid magnet)
+        {
+            Magnet = magnet;
+        }
+    }
     public enum MagnetStateType
     {
         Inactive,

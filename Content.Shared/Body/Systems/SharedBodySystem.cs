@@ -7,7 +7,7 @@ namespace Content.Shared.Body.Systems;
 
 public abstract partial class SharedBodySystem : EntitySystem
 {
-    private const string BodyContainerId = "BodyContainer";
+    protected const string BodyContainerId = "BodyContainer";
 
     [Dependency] protected readonly IPrototypeManager Prototypes = default!;
 
