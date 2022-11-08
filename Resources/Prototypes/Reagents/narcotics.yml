@@ -90,8 +90,8 @@
   color: "#9A040E"
   boilingPoint: 212.0
   meltingPoint: 170.0
-  rateModifier: 0.2
   metabolisms:
+      metabolismRate: 0.2
     Medicine:
       effects:
       - !type:HealthChange
