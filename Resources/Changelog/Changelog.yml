@@ -1,9 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: The game no longer has a 50% chance of calling a chair a chr., type: Fix}
-  id: 2112
-  time: '2022-08-08T02:29:31.0000000+00:00'
 - author: Level10Cybermancer
   changes:
   - {message: Blunt melee weapons now deal stamina damage, type: Add}
@@ -2958,3 +2953,8 @@ Entries:
     type: Tweak}
   id: 2611
   time: '2022-11-08T20:28:50.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: The puking noise has been removed., type: Tweak}
+  id: 2612
+  time: '2022-11-08T20:33:06.0000000+00:00'
