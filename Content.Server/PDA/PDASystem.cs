@@ -1,3 +1,5 @@
+using Content.Server.CartridgeLoader;
+using Content.Server.DeviceNetwork.Components;
 using Content.Server.Instruments;
 using Content.Server.Light.Components;
 using Content.Server.Light.EntitySystems;
@@ -23,6 +25,7 @@ namespace Content.Server.PDA
         [Dependency] private readonly InstrumentSystem _instrumentSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly StationSystem _stationSystem = default!;
+        [Dependency] private readonly CartridgeLoaderSystem _cartridgeLoaderSystem = default!;
         [Dependency] private readonly StoreSystem _storeSystem = default!;
 
         public override void Initialize()
@@ -101,10 +104,11 @@ namespace Content.Server.PDA
             if (!_uiSystem.TryGetUi(pda.Owner, PDAUiKey.Key, out var ui))
                 return;
 
+            var address = GetDeviceNetAddress(pda.Owner);
             var hasInstrument = HasComp<InstrumentComponent>(pda.Owner);
-            var state = new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo, pda.StationName, false, hasInstrument);
+            var state = new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo, pda.StationName, false, hasInstrument, address);
 
-            ui.SetState(state);
+            _cartridgeLoaderSystem?.UpdateUiState(pda.Owner, state);
 
             // TODO UPLINK RINGTONES/SECRETS This is just a janky placeholder way of hiding uplinks from non syndicate
             // players. This should really use a sort of key-code entry system that selects an account which is not directly tied to
@@ -113,7 +117,7 @@ namespace Content.Server.PDA
             if (!TryComp<StoreComponent>(pda.Owner, out var storeComponent))
                 return;
 
-            var uplinkState = new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo, pda.StationName, true, hasInstrument);
+            var uplinkState = new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo, pda.StationName, true, hasInstrument, address);
 
             foreach (var session in ui.SubscribedSessions)
             {
@@ -122,7 +126,7 @@ namespace Content.Server.PDA
 
                 if (storeComponent.AccountOwner == user || (TryComp<MindComponent>(session.AttachedEntity, out var mindcomp) && mindcomp.Mind != null &&
                     mindcomp.Mind.HasRole<TraitorRole>()))
-                    ui.SetState(uplinkState, session);
+                    _cartridgeLoaderSystem?.UpdateUiState(pda.Owner, uplinkState, session);
             }
         }
 
@@ -190,9 +194,21 @@ namespace Content.Server.PDA
                 JobTitle = pda.ContainedID?.JobTitle
             };
 
-            var state = new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo, pda.StationName, true, HasComp<InstrumentComponent>(pda.Owner));
+            var state = new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo, pda.StationName, true, HasComp<InstrumentComponent>(pda.Owner), GetDeviceNetAddress(pda.Owner));
 
-            ui.SetState(state, args.Session);
+            _cartridgeLoaderSystem?.UpdateUiState(uid, state, args.Session);
+        }
+
+        private string? GetDeviceNetAddress(EntityUid uid)
+        {
+            string? address = null;
+
+            if (TryComp(uid, out DeviceNetworkComponent? deviceNetworkComponent))
+            {
+                address = deviceNetworkComponent?.Address;
+            }
+
+            return address;
         }
     }
 }
