@@ -1,6 +1,7 @@
 using Content.Shared.MachineLinking;
 using Robust.Shared.Audio;
 using Robust.Shared.Physics;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.MachineLinking.Components
@@ -18,7 +19,7 @@ namespace Content.Server.MachineLinking.Components
         /// <summary>
         ///     The time the timer triggers.
         /// </summary>
-        [DataField("triggerTime")]
+        [DataField("triggerTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
         public TimeSpan TriggerTime;
 
         [DataField("user")]

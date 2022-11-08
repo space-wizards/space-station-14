@@ -1,4 +1,6 @@
 using Content.Shared.TextScreen;
+using Robust.Shared.Serialization.TypeSerializers.Implementations;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Client.TextScreen
 {
@@ -31,7 +33,7 @@ namespace Content.Client.TextScreen
         /// <summary>
         ///     The time it is counting to or from.
         /// </summary>
-        [DataField("targetTime")]
+        [DataField("targetTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
         public TimeSpan TargetTime = TimeSpan.Zero;
 
         /// <summary>
