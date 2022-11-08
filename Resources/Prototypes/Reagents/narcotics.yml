@@ -92,13 +92,6 @@
   meltingPoint: 170.0
   metabolisms:
       metabolismRate: 0.2
-    Medicine:
-      effects:
-      - !type:HealthChange
-        damage:
-          types:
-            Brute: -0.1
-            Burn: -0.1
     Narcotic:
       effects:
       - !type:MovementSpeedModifier
