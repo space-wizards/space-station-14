@@ -1,3 +1,5 @@
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+
 namespace Content.Server.Atmos.Miasma
 {
     [RegisterComponent]
@@ -16,7 +18,7 @@ namespace Content.Server.Atmos.Miasma
         /// <summary>
         /// How long this creature has been dead.
         /// </summary>
-        [DataField("timeOfDeath")]
+        [DataField("timeOfDeath", customTypeSerializer: typeof(TimeOffsetSerializer))]
         [ViewVariables(VVAccess.ReadWrite)]
         public TimeSpan TimeOfDeath = TimeSpan.Zero;
 
@@ -28,7 +30,7 @@ namespace Content.Server.Atmos.Miasma
         /// <summary>
         /// Gasses are released, this is when the next gas release update will be.
         /// </summary>
-        [DataField("rotNextUpdate")]
+        [DataField("rotNextUpdate", customTypeSerializer: typeof(TimeOffsetSerializer))]
         public TimeSpan RotNextUpdate = TimeSpan.Zero;
 
         /// <summary>

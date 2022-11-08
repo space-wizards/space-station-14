@@ -46,6 +46,7 @@ namespace Content.Server.Bed
             if (args.Buckling)
             {
                 AddComp<HealOnBuckleHealingComponent>(uid);
+                component.NextHealTime = _timing.CurTime + TimeSpan.FromSeconds(component.HealTime);
                 if (sleepAction != null)
                     _actionsSystem.AddAction(args.BuckledEntity, new InstantAction(sleepAction), null);
                 return;
@@ -56,7 +57,6 @@ namespace Content.Server.Bed
 
             _sleepingSystem.TryWaking(args.BuckledEntity);
             RemComp<HealOnBuckleHealingComponent>(uid);
-            component.NextHealTime = null;
         }
 
         public override void Update(float frameTime)
@@ -65,12 +65,10 @@ namespace Content.Server.Bed
 
             foreach (var (_, bedComponent, strapComponent) in EntityQuery<HealOnBuckleHealingComponent, HealOnBuckleComponent, StrapComponent>())
             {
-                bedComponent.NextHealTime ??= _timing.CurTime + TimeSpan.FromSeconds(bedComponent.HealTime);
-
                 if (_timing.CurTime < bedComponent.NextHealTime)
                     continue;
 
-                bedComponent.NextHealTime = bedComponent.NextHealTime + TimeSpan.FromSeconds(bedComponent.HealTime);
+                bedComponent.NextHealTime += TimeSpan.FromSeconds(bedComponent.HealTime);
 
                 if (strapComponent.BuckledEntities.Count == 0) continue;
 

@@ -21,6 +21,7 @@ namespace Content.Server.Atmos.Miasma
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly SharedMobStateSystem _mobState = default!;
+        [Dependency] private readonly MetaDataSystem _metaDataSystem = default!;
 
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
@@ -87,12 +88,12 @@ namespace Content.Server.Atmos.Miasma
             }
 
             // Rotting
-            foreach (var (rotting, perishable) in EntityQuery<RottingComponent, PerishableComponent>())
+            foreach (var (rotting, perishable, metadata) in EntityQuery<RottingComponent, PerishableComponent, MetaDataComponent>())
             {
                 if (!perishable.Progressing)
                     continue;
 
-                if (!IsRotting(perishable))
+                if (!IsRotting(perishable, metadata))
                     continue;
 
                 if (_timing.CurTime < perishable.RotNextUpdate) // This is where it starts to get noticable on larger animals, no need to run every second
@@ -176,9 +177,9 @@ namespace Content.Server.Atmos.Miasma
         /// <summary>
         ///     Has enough time passed for <paramref name="perishable"/> to start rotting?
         /// </summary>
-        private bool IsRotting(PerishableComponent perishable)
+        private bool IsRotting(PerishableComponent perishable, MetaDataComponent? metadata = null)
         {
-            if (_timing.CurTime >= perishable.TimeOfDeath + perishable.RotAfter)
+            if (_timing.CurTime >= perishable.TimeOfDeath + perishable.RotAfter + _metaDataSystem.GetPauseTime(perishable.Owner, metadata))
                 return true;
             return false;
         }
