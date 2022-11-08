@@ -29,16 +29,6 @@
   group: market
 
 - type: cargoProduct
-  id: SecurityLaser
-  icon:
-    sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
-    state: icon
-  product: CrateSecurityLaser
-  cost: 1600
-  category: Security
-  group: market
-
-- type: cargoProduct
   id: SecurityRiot
   icon:
     sprite: Clothing/OuterClothing/Armor/riot.rsi
