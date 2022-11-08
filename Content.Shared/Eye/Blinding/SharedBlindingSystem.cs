@@ -1,6 +1,7 @@
 using Content.Shared.Clothing.Components;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Inventory;
+using Content.Shared.Rejuvenate;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using JetBrains.Annotations;
@@ -23,6 +24,8 @@ namespace Content.Shared.Eye.Blinding
 
             SubscribeLocalEvent<TemporaryBlindnessComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<TemporaryBlindnessComponent, ComponentShutdown>(OnShutdown);
+
+            SubscribeLocalEvent<BlindableComponent, RejuvenateEvent>(OnRejuvenate);
         }
 
         private void OnEquipped(EntityUid uid, BlindfoldComponent component, GotEquippedEvent args)
@@ -36,7 +39,7 @@ namespace Content.Shared.Eye.Blinding
             component.IsActive = true;
             if (!TryComp<BlindableComponent>(args.Equipee, out var blindComp))
                 return;
-            AdjustBlindSources(args.Equipee, true, blindComp);
+            AdjustBlindSources(args.Equipee, 1, blindComp);
         }
 
         private void OnUnequipped(EntityUid uid, BlindfoldComponent component, GotUnequippedEvent args)
@@ -46,7 +49,7 @@ namespace Content.Shared.Eye.Blinding
             component.IsActive = false;
             if (!TryComp<BlindableComponent>(args.Equipee, out var blindComp))
                 return;
-            AdjustBlindSources(args.Equipee, false, blindComp);
+            AdjustBlindSources(args.Equipee, -1, blindComp);
         }
 
         private void OnGlassesEquipped(EntityUid uid, VisionCorrectionComponent component, GotEquippedEvent args)
@@ -81,52 +84,45 @@ namespace Content.Shared.Eye.Blinding
 
         private void OnInit(EntityUid uid, TemporaryBlindnessComponent component, ComponentInit args)
         {
-            AdjustBlindSources(uid, true);
+            AdjustBlindSources(uid, 1);
         }
 
         private void OnShutdown(EntityUid uid, TemporaryBlindnessComponent component, ComponentShutdown args)
         {
-            AdjustBlindSources(uid, false);
+            AdjustBlindSources(uid, -1);
+        }
+
+        private void OnRejuvenate(EntityUid uid, BlindableComponent component, RejuvenateEvent args)
+        {
+            AdjustEyeDamage(uid, -component.EyeDamage, component);
         }
 
         [PublicAPI]
-        public void AdjustBlindSources(EntityUid uid, bool Add, BlindableComponent? blindable = null)
+        public void AdjustBlindSources(EntityUid uid, int amount, BlindableComponent? blindable = null)
         {
             if (!Resolve(uid, ref blindable, false))
                 return;
 
-            if (Add)
-            {
-                blindable.Sources++;
-            } else
-            {
-                blindable.Sources--;
-            }
-
+            blindable.Sources += amount;
             blindable.Sources = Math.Max(blindable.Sources, 0);
 
             Dirty(blindable);
         }
 
-        public void AdjustEyeDamage(EntityUid uid, bool add, BlindableComponent? blindable = null)
+        public void AdjustEyeDamage(EntityUid uid, int amount, BlindableComponent? blindable = null)
         {
             if (!Resolve(uid, ref blindable, false))
                 return;
 
-            if (add)
-            {
-                blindable.EyeDamage++;
-            } else
-            {
-                blindable.EyeDamage--;
-            }
+            blindable.EyeDamage += amount;
 
             if (blindable.EyeDamage > 0)
             {
                 var blurry = EnsureComp<BlurryVisionComponent>(uid);
                 blurry.Magnitude = (9 - blindable.EyeDamage);
                 blurry.Dirty();
-            } else
+            }
+            else
             {
                 RemComp<BlurryVisionComponent>(uid);
             }
@@ -134,12 +130,12 @@ namespace Content.Shared.Eye.Blinding
             if (!blindable.EyeTooDamaged && blindable.EyeDamage >= 8)
             {
                 blindable.EyeTooDamaged = true;
-                AdjustBlindSources(uid, true, blindable);
+                AdjustBlindSources(uid, 1, blindable);
             }
             if (blindable.EyeTooDamaged && blindable.EyeDamage < 8)
             {
                 blindable.EyeTooDamaged = false;
-                AdjustBlindSources(uid, false, blindable);
+                AdjustBlindSources(uid, -1, blindable);
             }
 
             blindable.EyeDamage = Math.Clamp(blindable.EyeDamage, 0, 8);
