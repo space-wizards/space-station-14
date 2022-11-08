@@ -86,11 +86,11 @@
   group: Narcotics
   desc: reagent-desc-stimulants
   physicalDesc: reagant-physical-desc-energized
-  flavor: liquid courage
+  flavor: sharp
   color: "#9A040E"
   boilingPoint: 212.0
   meltingPoint: 170.0
-  transferAmount: 0.2
+  rateModifier: 0.2
   metabolisms:
     Medicine:
       effects:
