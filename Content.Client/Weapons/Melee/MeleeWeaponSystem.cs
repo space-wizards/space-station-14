@@ -5,6 +5,7 @@ using Content.Client.Weapons.Melee.Components;
 using Content.Shared.MobState.Components;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
+using Content.Shared.StatusEffect;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -218,9 +219,13 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
             return false;
         }
 
-        // If target doesn't have hands then we can't disarm so will let the player know it's pointless.
+        // They need to either have hands...
         if (!HasComp<HandsComponent>(ev.Target!.Value))
         {
+            // or just be able to be shoved over.
+            if (TryComp<StatusEffectsComponent>(ev.Target!.Value, out var status) && status.AllowedEffects.Contains("KnockedDown"))
+                return true;
+
             if (Timing.IsFirstTimePredicted && HasComp<MobStateComponent>(ev.Target.Value))
                 PopupSystem.PopupEntity(Loc.GetString("disarm-action-disarmable", ("targetName", ev.Target.Value)), ev.Target.Value, Filter.Local());
 

@@ -98,6 +98,8 @@
       0: Alive
       5: Critical
       10: Dead
+  - type: Stamina
+    excess: 10
   - type: Appearance
   - type: DamageStateVisuals
     rotate: true
