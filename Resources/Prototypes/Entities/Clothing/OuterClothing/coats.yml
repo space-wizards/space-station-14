@@ -72,6 +72,17 @@
 
 - type: entity
   parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatAgent
+  name: agent's coat
+  description: A long overcoat. It makes you feel moved by the plight of the Tibetans.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/agent_coat.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/agent_coat.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
   id: ClothingOuterCoatJensen
   name: jensen coat
   description: A jensen coat.
