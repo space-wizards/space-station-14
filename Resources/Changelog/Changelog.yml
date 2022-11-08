@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Cargo shuttle calls work again., type: Fix}
-  id: 2105
-  time: '2022-08-07T23:22:46.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Dragons are now a proper station event and can spawn additional rifts.,
     type: Add}
   - {message: Space mobs are now subject to weightlessness movement but aren't required
@@ -2957,3 +2952,8 @@ Entries:
   - {message: Decreased how many items can fit in a reagent grinder., type: Tweak}
   id: 2604
   time: '2022-11-08T20:15:50.0000000+00:00'
+- author: civilCornball
+  changes:
+  - {message: Allowed Proto-Kinetic Accelerators to be stored in the belt slot., type: Tweak}
+  id: 2605
+  time: '2022-11-08T20:19:04.0000000+00:00'
