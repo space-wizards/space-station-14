@@ -10,8 +10,8 @@ public sealed class CommandLineArguments
     public List<string> Maps { get; set; } = new();
     public OutputFormat Format { get; set; } = OutputFormat.png;
     public bool ExportViewerJson { get; set; } = false;
-
     public string OutputPath { get; set; } = DirectoryExtensions.MapImages().FullName;
+    public bool ArgumentsAreFileNames { get; set; } = false;
 
     public static bool TryParse(IReadOnlyList<string> args, [NotNullWhen(true)] out CommandLineArguments? parsed)
     {
@@ -53,6 +53,11 @@ public sealed class CommandLineArguments
                     parsed.OutputPath = enumerator.Current;
                     break;
 
+                case "-f":
+                case "--files":
+                    parsed.ArgumentsAreFileNames = true;
+                    break;
+
                 case "-h":
                 case "--help":
                     PrintHelp();
@@ -80,6 +85,9 @@ Options:
     -o / --output <output path>
         Changes the path the rendered maps will get saved to.
         Defaults to Resources/MapImages
+    -f / --files
+        This option tells the map renderer that you supplied a list of map file names instead of their ids.
+        Example: Content.MapRenderer -f box.yml bagel.yml
     -h / --help
         Displays this help text");
     }

@@ -25,10 +25,11 @@ namespace Content.MapRenderer
 
         internal static async Task Main(string[] args)
         {
+
             if (args.Length == 0)
             {
                 Console.WriteLine("Didn't specify any maps to paint! Loading the map list...");
-                
+
                 await using var server = await PoolManager.GetServerClient();
                 var mapIds = server.Pair.Server
                     .ResolveDependency<IPrototypeManager>()
@@ -103,6 +104,38 @@ namespace Content.MapRenderer
             if (!CommandLineArguments.TryParse(args, out var arguments))
                 return;
 
+            if (arguments.ArgumentsAreFileNames)
+            {
+                Console.WriteLine("Retrieving map ids by map file names...");
+
+                Console.Write("Fetching map prototypes... ");
+                await using var server = await PoolManager.GetServerClient();
+                var mapPrototypes = server.Pair.Server
+                    .ResolveDependency<IPrototypeManager>()
+                    .EnumeratePrototypes<GameMapPrototype>()
+                    .ToArray();
+                Console.WriteLine("[Done]");
+
+                var ids = new List<string>();
+
+                foreach (var mapPrototype in mapPrototypes)
+                {
+                    if (arguments.Maps.Contains(mapPrototype.MapPath.Filename))
+                    {
+                        ids.Add(mapPrototype.ID);
+                        Console.WriteLine($"Found map: {mapPrototype.MapName}");
+                    }
+                }
+
+                if (ids.Count == 0)
+                {
+                    await Console.Error.WriteLineAsync("Found no maps for the given file names!");
+                    return;
+                }
+
+                arguments.Maps = ids;
+            }
+
             await Run(arguments);
         }
 
@@ -123,7 +156,7 @@ namespace Content.MapRenderer
 
                 mapViewerData.ParallaxLayers.Add(LayerGroup.DefaultParallax());
                 var directory = Path.Combine(arguments.OutputPath, map);
-                
+
                 var i = 0;
                 try
                 {
