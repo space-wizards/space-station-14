@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using NUnit.Framework;
@@ -10,6 +11,8 @@ using Content.Server.VendingMachines;
 using Content.Server.VendingMachines.Restock;
 using Content.Server.Wires;
 using Content.Shared.Cargo.Prototypes;
+using Content.Shared.Damage;
+using Content.Shared.Damage.Prototypes;
 using Content.Shared.VendingMachines;
 
 namespace Content.IntegrationTests.Tests
@@ -29,7 +32,7 @@ namespace Content.IntegrationTests.Tests
     prototype: Human
 
 - type: entity
-  parent: BaseItem
+  parent: FoodSnackBase
   id: TestRamen
   name: TestRamen
 
@@ -43,8 +46,13 @@ namespace Content.IntegrationTests.Tests
   startingInventory:
     TestRamen: 3
 
+- type: vendingMachineInventory
+  id: BigTestInventory
+  startingInventory:
+    TestRamen: 4
+
 - type: entity
-  parent: BaseItem
+  parent: BaseVendingMachineRestock
   id: TestRestockWrong
   name: TestRestockWrong
   components:
@@ -53,13 +61,22 @@ namespace Content.IntegrationTests.Tests
     - OtherTestInventory
 
 - type: entity
-  parent: BaseItem
+  parent: BaseVendingMachineRestock
   id: TestRestockCorrect
   name: TestRestockCorrect
   components:
   - type: VendingMachineRestock
     canRestock:
     - TestInventory
+
+- type: entity
+  parent: BaseVendingMachineRestock
+  id: TestRestockExplode
+  name: TestRestockExplode
+  components:
+  - type: VendingMachineRestock
+    canRestock:
+    - BigTestInventory
 
 - type: entity
   parent: VendingMachine
@@ -133,7 +150,7 @@ namespace Content.IntegrationTests.Tests
                     List<string> restockStore = new();
                     foreach (var spawnEntry in storage.Contents)
                     {
-                        if (restocks.Contains(spawnEntry.PrototypeId))
+                        if (spawnEntry.PrototypeId != null && restocks.Contains(spawnEntry.PrototypeId))
                             restockStore.Add(spawnEntry.PrototypeId);
                     }
 
@@ -201,7 +218,7 @@ namespace Content.IntegrationTests.Tests
                 Assert.True(entityManager.TryGetComponent(machine, out machineComponent!), $"Machine has no {nameof(VendingMachineComponent)}");
                 Assert.True(entityManager.TryGetComponent(packageRight, out restockRightComponent!), $"Correct package has no {nameof(VendingMachineRestockComponent)}");
                 Assert.True(entityManager.TryGetComponent(packageWrong, out restockWrongComponent!), $"Wrong package has no {nameof(VendingMachineRestockComponent)}");
-                Assert.True(entityManager.TryGetComponent(machine, out machineWires), $"Machine has no {nameof(WiresComponent)}");
+                Assert.True(entityManager.TryGetComponent(machine, out machineWires!), $"Machine has no {nameof(WiresComponent)}");
 
                 var systemRestock = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<VendingMachineRestockSystem>();
                 var systemMachine = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<VendingMachineSystem>();
@@ -235,9 +252,75 @@ namespace Content.IntegrationTests.Tests
                 systemMachine.TryRestockInventory(machine, machineComponent);
                 Assert.That(systemMachine.GetAvailableInventory(machine, machineComponent).Count, Is.GreaterThan(0),
                     "Machine available inventory count is not greater than zero after restock.");
+
+                mapManager.DeleteMap(testMap.MapId);
             });
 
+            await pairTracker.CleanReturnAsync();
+        }
+
+        [Test]
+        public async Task TestRestockBreaksOpen()
+        {
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
+            var server = pairTracker.Pair.Server;
+            await server.WaitIdleAsync();
+
+            var prototypeManager = server.ResolveDependency<IPrototypeManager>();
+            var mapManager = server.ResolveDependency<IMapManager>();
+            var entityManager = server.ResolveDependency<IEntityManager>();
+            var entitySystemManager = server.ResolveDependency<IEntitySystemManager>();
+
+            var damageableSystem = entitySystemManager.GetEntitySystem<DamageableSystem>();
+
+            var testMap = await PoolManager.CreateTestMap(pairTracker);
+
+            EntityUid restock = default;
+
+            await server.WaitAssertion(() =>
+            {
+                var coordinates = testMap.GridCoords;
+
+                var totalStartingRamen = 0;
+
+                foreach (var meta in entityManager.EntityQuery<MetaDataComponent>())
+                    if (!meta.Deleted && meta.EntityPrototype?.ID == "TestRamen")
+                        totalStartingRamen++;
+
+                Assert.That(totalStartingRamen, Is.EqualTo(0),
+                    "Did not start with zero ramen.");
+
+                restock = entityManager.SpawnEntity("TestRestockExplode", coordinates);
+                var damageSpec = new DamageSpecifier(prototypeManager.Index<DamageTypePrototype>("Blunt"), 100);
+                var damageResult = damageableSystem.TryChangeDamage(restock, damageSpec);
+
+                Assert.IsNotNull(damageResult,
+                    "Received null damageResult when attempting to damage restock box.");
+
+                Assert.That((int) damageResult!.Total, Is.GreaterThan(0),
+                    "Box damage result was not greater than 0.");
+            });
+            await server.WaitRunTicks(15);
+            await server.WaitAssertion(() =>
+            {
+                Assert.That(entityManager.Deleted(restock),
+                    "Restock box was not deleted after being damaged.");
+
+                var totalRamen = 0;
+
+                foreach (var meta in entityManager.EntityQuery<MetaDataComponent>())
+                    if (!meta.Deleted && meta.EntityPrototype?.ID == "TestRamen")
+                        totalRamen++;
+
+                Assert.That(totalRamen, Is.EqualTo(2),
+                    "Did not find enough ramen after destroying restock box.");
+
+                mapManager.DeleteMap(testMap.MapId);
+            });
+
+            await pairTracker.CleanReturnAsync();
         }
     }
 }
 
+#nullable disable
