@@ -97,8 +97,8 @@
       - !type:HealthChange
         damage:
           types:
-            Brute: -0.4
-            Burn: -0.4
+            Brute: -0.1
+            Burn: -0.1
     Narcotic:
       effects:
       - !type:MovementSpeedModifier
