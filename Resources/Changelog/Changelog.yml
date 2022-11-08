@@ -1,11 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: New grass and dirt tiles coming to a station near you soon(TM)., type: Add}
-  - {message: 'Minor Splitstation QOL update, durathread for HoP, lv wire in cafe
-      fixed, altar for chaplain + cloner consoles in med.', type: Tweak}
-  id: 2100
-  time: '2022-08-07T01:13:35.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: 'The durathread crafting recipe now gives the proper amount (5, not
@@ -2958,3 +2951,9 @@ Entries:
   - {message: cartridges containing Programs for your PDA, type: Add}
   id: 2599
   time: '2022-11-08T20:00:21.0000000+00:00'
+- author: ashtronaut
+  changes:
+  - {message: Added a current readied player count to the lobby info during the pre-game
+      phase., type: Add}
+  id: 2600
+  time: '2022-11-08T20:02:07.0000000+00:00'
