@@ -42,10 +42,10 @@ namespace Content.Server.Tools
             SubscribeLocalEvent<WelderComponent, ToolUseFinishAttemptEvent>(OnWelderToolUseFinishAttempt);
             SubscribeLocalEvent<WelderComponent, ComponentShutdown>(OnWelderShutdown);
             SubscribeLocalEvent<WelderComponent, ComponentGetState>(OnWelderGetState);
-            SubscribeLocalEvent<WelderComponent, ItemMeleeDamageEvent>(OnMeleeHit);
+            SubscribeLocalEvent<WelderComponent, MeleeHitEvent>(OnMeleeHit);
         }
 
-        private void OnMeleeHit(EntityUid uid, WelderComponent component, ItemMeleeDamageEvent args)
+        private void OnMeleeHit(EntityUid uid, WelderComponent component, MeleeHitEvent args)
         {
             if (!args.Handled && component.Lit)
                 args.BonusDamage += component.LitMeleeDamageBonus;

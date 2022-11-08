@@ -29,7 +29,7 @@ public sealed partial class DragonSystem
 
     public override void Started()
     {
-        var spawnLocations = EntityManager.EntityQuery<IMapGridComponent, TransformComponent>().ToList();
+        var spawnLocations = EntityManager.EntityQuery<MapGridComponent, TransformComponent>().ToList();
 
         if (spawnLocations.Count == 0)
             return;

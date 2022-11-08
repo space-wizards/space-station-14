@@ -11,3 +11,5 @@
     layers:
     - texture: Structures/catwalk.rsi/catwalk_preview.png
   - type: CollideOnAnchor
+  - type: Physics
+    canCollide: false

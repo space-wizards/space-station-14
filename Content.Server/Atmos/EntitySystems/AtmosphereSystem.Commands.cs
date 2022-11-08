@@ -72,7 +72,7 @@ public sealed partial class AtmosphereSystem
                return;
            }
 
-           if (!TryComp(euid, out IMapGridComponent? gridComp))
+           if (!TryComp(euid, out MapGridComponent? gridComp))
            {
                shell.WriteError($"Euid '{euid}' does not exist or is not a grid.");
                return;

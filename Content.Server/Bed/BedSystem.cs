@@ -35,6 +35,7 @@ namespace Content.Server.Bed
             SubscribeLocalEvent<StasisBedComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<StasisBedComponent, GotEmaggedEvent>(OnEmagged);
             SubscribeLocalEvent<StasisBedComponent, RefreshPartsEvent>(OnRefreshParts);
+            SubscribeLocalEvent<StasisBedComponent, UpgradeExamineEvent>(OnUpgradeExamine);
         }
 
         private void ManageUpdateList(EntityUid uid, HealOnBuckleComponent component, BuckleChangeEvent args)
@@ -141,6 +142,11 @@ namespace Content.Server.Bed
             component.Multiplier = component.BaseMultiplier * metabolismRating; //linear scaling so it's not OP
             if (component.Emagged)
                 component.Multiplier = 1f / component.Multiplier;
+        }
+
+        private void OnUpgradeExamine(EntityUid uid, StasisBedComponent component, UpgradeExamineEvent args)
+        {
+            args.AddPercentageUpgrade("stasis-bed-component-upgrade-stasis", component.Multiplier / component.BaseMultiplier);
         }
     }
 }
