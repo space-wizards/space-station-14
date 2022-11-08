@@ -36,6 +36,5 @@ public abstract class SharedAnchorableSystem : EntitySystem
         ToolComponent? usingTool = null)
     {
         // Thanks tool system.
-        return;
     }
 }

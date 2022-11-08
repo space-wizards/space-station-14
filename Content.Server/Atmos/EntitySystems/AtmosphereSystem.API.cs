@@ -121,7 +121,7 @@ public partial class AtmosphereSystem
         return ev.Result;
     }
 
-    public bool IsTileAirBlocked(EntityUid gridUid, Vector2i tile, AtmosDirection directions = AtmosDirection.All, IMapGridComponent? mapGridComp = null)
+    public bool IsTileAirBlocked(EntityUid gridUid, Vector2i tile, AtmosDirection directions = AtmosDirection.All, MapGridComponent? mapGridComp = null)
     {
         var ev = new IsTileAirBlockedMethodEvent(gridUid, tile, directions, mapGridComp);
         RaiseLocalEvent(gridUid, ref ev);
@@ -130,7 +130,7 @@ public partial class AtmosphereSystem
         return ev.Result;
     }
 
-    public bool IsTileSpace(EntityUid? gridUid, EntityUid? mapUid, Vector2i tile, IMapGridComponent? mapGridComp = null)
+    public bool IsTileSpace(EntityUid? gridUid, EntityUid? mapUid, Vector2i tile, MapGridComponent? mapGridComp = null)
     {
         var ev = new IsTileSpaceMethodEvent(gridUid, mapUid, tile, mapGridComp);
 
@@ -178,7 +178,7 @@ public partial class AtmosphereSystem
         return ev.Result ?? Enumerable.Empty<GasMixture>();
     }
 
-    public void UpdateAdjacent(EntityUid gridUid, Vector2i tile, IMapGridComponent? mapGridComp = null)
+    public void UpdateAdjacent(EntityUid gridUid, Vector2i tile, MapGridComponent? mapGridComp = null)
     {
         var ev = new UpdateAdjacentMethodEvent(gridUid, tile, mapGridComp);
         RaiseLocalEvent(gridUid, ref ev);
@@ -263,10 +263,10 @@ public partial class AtmosphereSystem
         (EntityUid GridId, Vector2i Tile, ReactionResult Result = default, bool Handled = false);
 
     [ByRefEvent] private record struct IsTileAirBlockedMethodEvent
-        (EntityUid Grid, Vector2i Tile, AtmosDirection Direction = AtmosDirection.All, IMapGridComponent? MapGridComponent = null, bool Result = false, bool Handled = false);
+        (EntityUid Grid, Vector2i Tile, AtmosDirection Direction = AtmosDirection.All, MapGridComponent? MapGridComponent = null, bool Result = false, bool Handled = false);
 
     [ByRefEvent] private record struct IsTileSpaceMethodEvent
-        (EntityUid? Grid, EntityUid? Map, Vector2i Tile, IMapGridComponent? MapGridComponent = null, bool Result = true, bool Handled = false);
+        (EntityUid? Grid, EntityUid? Map, Vector2i Tile, MapGridComponent? MapGridComponent = null, bool Result = true, bool Handled = false);
 
     [ByRefEvent] private record struct GetAdjacentTilesMethodEvent
         (EntityUid Grid, Vector2i Tile, IEnumerable<Vector2i>? Result = null, bool Handled = false);
@@ -276,7 +276,7 @@ public partial class AtmosphereSystem
             IEnumerable<GasMixture>? Result = null, bool Handled = false);
 
     [ByRefEvent] private record struct UpdateAdjacentMethodEvent
-        (EntityUid Grid, Vector2i Tile, IMapGridComponent? MapGridComponent = null, bool Handled = false);
+        (EntityUid Grid, Vector2i Tile, MapGridComponent? MapGridComponent = null, bool Handled = false);
 
     [ByRefEvent] private record struct HotspotExposeMethodEvent
         (EntityUid Grid, Vector2i Tile, float ExposedTemperature, float ExposedVolume, bool soh, bool Handled = false);

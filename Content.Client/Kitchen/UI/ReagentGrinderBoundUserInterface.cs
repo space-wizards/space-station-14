@@ -1,11 +1,8 @@
 using Content.Shared.Containers.ItemSlots;
-using Content.Shared.Kitchen.Components;
+using Content.Shared.Kitchen;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
-using static Content.Shared.Chemistry.Components.Solution;
 
 namespace Content.Client.Kitchen.UI
 {
@@ -55,10 +52,10 @@ namespace Content.Client.Kitchen.UI
             _menu?.HandleMessage(message);
         }
 
-        public void StartGrinding(BaseButton.ButtonEventArgs? args = null) => SendMessage(new SharedReagentGrinderComponent.ReagentGrinderGrindStartMessage());
-        public void StartJuicing(BaseButton.ButtonEventArgs? args = null) => SendMessage(new SharedReagentGrinderComponent.ReagentGrinderJuiceStartMessage());
-        public void EjectAll(BaseButton.ButtonEventArgs? args = null) => SendMessage(new SharedReagentGrinderComponent.ReagentGrinderEjectChamberAllMessage());
-        public void EjectBeaker(BaseButton.ButtonEventArgs? args = null) => SendMessage(new ItemSlotButtonPressedEvent(SharedReagentGrinderComponent.BeakerSlotId));
-        public void EjectChamberContent(EntityUid uid) => SendMessage(new SharedReagentGrinderComponent.ReagentGrinderEjectChamberContentMessage(uid));
+        public void StartGrinding(BaseButton.ButtonEventArgs? args = null) => SendMessage(new ReagentGrinderStartMessage(GrinderProgram.Grind));
+        public void StartJuicing(BaseButton.ButtonEventArgs? args = null) => SendMessage(new ReagentGrinderStartMessage(GrinderProgram.Juice));
+        public void EjectAll(BaseButton.ButtonEventArgs? args = null) => SendMessage(new ReagentGrinderEjectChamberAllMessage());
+        public void EjectBeaker(BaseButton.ButtonEventArgs? args = null) => SendMessage(new ItemSlotButtonPressedEvent(SharedReagentGrinder.BeakerSlotId));
+        public void EjectChamberContent(EntityUid uid) => SendMessage(new ReagentGrinderEjectChamberContentMessage(uid));
     }
 }

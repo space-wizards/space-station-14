@@ -14,6 +14,7 @@ public sealed partial class GhostGui : UIWidget
     public event Action? RequestWarpsPressed;
     public event Action? ReturnToBodyPressed;
     public event Action? GhostRolesPressed;
+    public event Action? ToggleGhostVisibility;
 
     public GhostGui()
     {
@@ -26,6 +27,7 @@ public sealed partial class GhostGui : UIWidget
         GhostWarpButton.OnPressed += _ => RequestWarpsPressed?.Invoke();
         ReturnToBodyButton.OnPressed += _ => ReturnToBodyPressed?.Invoke();
         GhostRolesButton.OnPressed += _ => GhostRolesPressed?.Invoke();
+        ToggleGhostVisibilityButton.OnPressed += _ => ToggleGhostVisibility?.Invoke();
     }
 
     public void Hide()

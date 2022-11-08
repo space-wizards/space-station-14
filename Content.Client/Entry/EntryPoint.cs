@@ -115,6 +115,7 @@ namespace Content.Client.Entry
             _prototypeManager.RegisterIgnore("htnCompound");
             _prototypeManager.RegisterIgnore("htnPrimitive");
             _prototypeManager.RegisterIgnore("gameMap");
+            _prototypeManager.RegisterIgnore("gameMapPool");
             _prototypeManager.RegisterIgnore("faction");
             _prototypeManager.RegisterIgnore("lobbyBackground");
             _prototypeManager.RegisterIgnore("advertisementsPack");
@@ -142,7 +143,6 @@ namespace Content.Client.Entry
             _ghostKick.Initialize();
             _extendedDisconnectInformation.Initialize();
             _playTimeTracking.Initialize();
-            _baseClient.PlayerJoinedServer += (_, _) => { _mapManager.CreateNewMapEntity(MapId.Nullspace);};
 
             //AUTOSCALING default Setup!
             _configManager.SetCVar("interface.resolutionAutoScaleUpperCutoffX", 1080);

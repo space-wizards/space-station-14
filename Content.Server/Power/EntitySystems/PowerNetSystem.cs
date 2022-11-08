@@ -206,28 +206,7 @@ namespace Content.Server.Power.EntitySystems
         {
             base.Update(frameTime);
 
-            // Reconnect networks.
-            {
-                foreach (var apcNet in _apcNetReconnectQueue)
-                {
-                    if (apcNet.Removed)
-                        continue;
-
-                    DoReconnectApcNet(apcNet);
-                }
-
-                _apcNetReconnectQueue.Clear();
-
-                foreach (var powerNet in _powerNetReconnectQueue)
-                {
-                    if (powerNet.Removed)
-                        continue;
-
-                    DoReconnectPowerNet(powerNet);
-                }
-
-                _powerNetReconnectQueue.Clear();
-            }
+            ReconnectNetworks();
 
             // Synchronize batteries
             RaiseLocalEvent(new NetworkBatteryPreSync());
@@ -241,53 +220,90 @@ namespace Content.Server.Power.EntitySystems
             // Send events where necessary.
             // TODO: Instead of querying ALL power components every tick, and then checking if an event needs to be
             // raised, should probably assemble a list of entity Uids during the actual solver steps.
+            UpdateApcPowerReceiver();
+            UpdatePowerConsumer();
+            UpdateNetworkBattery();
+        }
+
+        private void ReconnectNetworks()
+        {
+            foreach (var apcNet in _apcNetReconnectQueue)
             {
-                var appearanceQuery = GetEntityQuery<AppearanceComponent>();
-                foreach (var apcReceiver in EntityManager.EntityQuery<ApcPowerReceiverComponent>())
+                if (apcNet.Removed)
+                    continue;
+
+                DoReconnectApcNet(apcNet);
+            }
+
+            _apcNetReconnectQueue.Clear();
+
+            foreach (var powerNet in _powerNetReconnectQueue)
+            {
+                if (powerNet.Removed)
+                    continue;
+
+                DoReconnectPowerNet(powerNet);
+            }
+
+            _powerNetReconnectQueue.Clear();
+        }
+
+        private void UpdateApcPowerReceiver()
+        {
+            var appearanceQuery = GetEntityQuery<AppearanceComponent>();
+            var enumerator = EntityQueryEnumerator<ApcPowerReceiverComponent>();
+            while (enumerator.MoveNext(out var apcReceiver))
+            {
+                var powered = apcReceiver.Powered;
+                if (powered == apcReceiver.PoweredLastUpdate)
+                    continue;
+
+                apcReceiver.PoweredLastUpdate = powered;
+                var ev = new PowerChangedEvent(apcReceiver.Powered, apcReceiver.NetworkLoad.ReceivingPower);
+
+                RaiseLocalEvent(apcReceiver.Owner, ref ev);
+
+                if (appearanceQuery.TryGetComponent(apcReceiver.Owner, out var appearance))
+                    _appearance.SetData(appearance.Owner, PowerDeviceVisuals.Powered, powered, appearance);
+            }
+        }
+
+        private void UpdatePowerConsumer()
+        {
+            var enumerator = EntityQueryEnumerator<PowerConsumerComponent>();
+            while (enumerator.MoveNext(out var consumer))
+            {
+                var newRecv = consumer.NetworkLoad.ReceivingPower;
+                ref var lastRecv = ref consumer.LastReceived;
+                if (MathHelper.CloseToPercent(lastRecv, newRecv))
+                    continue;
+
+                lastRecv = newRecv;
+                var msg = new PowerConsumerReceivedChanged(newRecv, consumer.DrawRate);
+                RaiseLocalEvent(consumer.Owner, ref msg);
+            }
+        }
+
+        private void UpdateNetworkBattery()
+        {
+            var enumerator = EntityQueryEnumerator<PowerNetworkBatteryComponent>();
+            while (enumerator.MoveNext(out var powerNetBattery))
+            {
+                var lastSupply = powerNetBattery.LastSupply;
+                var currentSupply = powerNetBattery.CurrentSupply;
+
+                if (lastSupply == 0f && currentSupply != 0f)
                 {
-                    var powered = apcReceiver.Powered;
-                    if (powered == apcReceiver.PoweredLastUpdate)
-                        continue;
-
-                    apcReceiver.PoweredLastUpdate = powered;
-                    var ev = new PowerChangedEvent(apcReceiver.Powered, apcReceiver.NetworkLoad.ReceivingPower);
-
-                    RaiseLocalEvent(apcReceiver.Owner, ref ev);
-
-                    if (appearanceQuery.TryGetComponent(apcReceiver.Owner, out var appearance))
-                        _appearance.SetData(appearance.Owner, PowerDeviceVisuals.Powered, powered, appearance);
+                    var ev = new PowerNetBatterySupplyEvent(true);
+                    RaiseLocalEvent(powerNetBattery.Owner, ref ev);
+                }
+                else if (lastSupply > 0f && currentSupply == 0f)
+                {
+                    var ev = new PowerNetBatterySupplyEvent(false);
+                    RaiseLocalEvent(powerNetBattery.Owner, ref ev);
                 }
 
-                foreach (var consumer in EntityManager.EntityQuery<PowerConsumerComponent>())
-                {
-                    var newRecv = consumer.NetworkLoad.ReceivingPower;
-                    ref var lastRecv = ref consumer.LastReceived;
-                    if (MathHelper.CloseToPercent(lastRecv, newRecv))
-                        continue;
-
-                    lastRecv = newRecv;
-                    var msg = new PowerConsumerReceivedChanged(newRecv, consumer.DrawRate);
-                    RaiseLocalEvent(consumer.Owner, ref msg);
-                }
-
-                foreach (var powerNetBattery in EntityManager.EntityQuery<PowerNetworkBatteryComponent>())
-                {
-                    var lastSupply = powerNetBattery.LastSupply;
-                    var currentSupply = powerNetBattery.CurrentSupply;
-
-                    if (lastSupply == 0f && currentSupply != 0f)
-                    {
-                        var ev = new PowerNetBatterySupplyEvent(true);
-                        RaiseLocalEvent(powerNetBattery.Owner, ref ev);
-                    }
-                    else if (lastSupply > 0f && currentSupply == 0f)
-                    {
-                        var ev = new PowerNetBatterySupplyEvent(false);
-                        RaiseLocalEvent(powerNetBattery.Owner, ref ev);
-                    }
-
-                    powerNetBattery.LastSupply = currentSupply;
-                }
+                powerNetBattery.LastSupply = currentSupply;
             }
         }
 

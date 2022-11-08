@@ -8,12 +8,14 @@ namespace Content.Server.Construction.Completions
     [DataDefinition]
     public sealed class SnapToGrid : IGraphAction
     {
-        [DataField("southRotation")] public bool SouthRotation { get; private set; } = false;
+        [DataField("southRotation")] public bool SouthRotation { get; private set; }
 
         public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {
             var transform = entityManager.GetComponent<TransformComponent>(uid);
-            transform.Coordinates = transform.Coordinates.SnapToGrid(entityManager);
+
+            if (!transform.Anchored)
+                transform.Coordinates = transform.Coordinates.SnapToGrid(entityManager);
 
             if (SouthRotation)
             {

@@ -1,6 +1,9 @@
 using System.Threading;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.FixedPoint;
+using Content.Server.UserInterface;
+using Robust.Server.GameObjects;
+using Content.Shared.Chemistry;
 
 namespace Content.Server.Chemistry.Components
 {
@@ -21,6 +24,20 @@ namespace Content.Server.Chemistry.Components
         [ViewVariables]
         [DataField("injectOnly")]
         public bool InjectOnly;
+
+        /// <summary>
+        ///     The minimum amount of solution that can be transferred at once from this solution.
+        /// </summary>
+        [DataField("minTransferAmount")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public FixedPoint2 MinimumTransferAmount { get; set; } = FixedPoint2.New(5);
+
+        /// <summary>
+        ///     The maximum amount of solution that can be transferred at once from this solution.
+        /// </summary>
+        [DataField("maxTransferAmount")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public FixedPoint2 MaximumTransferAmount { get; set; } = FixedPoint2.New(50);
 
         /// <summary>
         /// Amount to inject or draw on each usage. If the injector is inject only, it will

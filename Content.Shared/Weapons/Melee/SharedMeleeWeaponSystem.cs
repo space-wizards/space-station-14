@@ -42,6 +42,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         SubscribeLocalEvent<MeleeWeaponComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<MeleeWeaponComponent, ComponentHandleState>(OnHandleState);
         SubscribeLocalEvent<MeleeWeaponComponent, HandDeselectedEvent>(OnMeleeDropped);
+        SubscribeLocalEvent<MeleeWeaponComponent, HandSelectedEvent>(OnMeleeSelected);
 
         SubscribeAllEvent<LightAttackEvent>(OnLightAttack);
         SubscribeAllEvent<StartHeavyAttackEvent>(OnStartHeavyAttack);
@@ -49,6 +50,22 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         SubscribeAllEvent<HeavyAttackEvent>(OnHeavyAttack);
         SubscribeAllEvent<DisarmAttackEvent>(OnDisarmAttack);
         SubscribeAllEvent<StopAttackEvent>(OnStopAttack);
+    }
+
+    private void OnMeleeSelected(EntityUid uid, MeleeWeaponComponent component, HandSelectedEvent args)
+    {
+        if (component.AttackRate.Equals(0f))
+            return;
+
+        // If someone swaps to this weapon then reset its cd.
+        var curTime = Timing.CurTime;
+        var minimum = curTime + TimeSpan.FromSeconds(1 / component.AttackRate);
+
+        if (minimum < component.NextAttack)
+            return;
+
+        component.NextAttack = minimum;
+        Dirty(component);
     }
 
     private void OnMeleeDropped(EntityUid uid, MeleeWeaponComponent component, HandDeselectedEvent args)
