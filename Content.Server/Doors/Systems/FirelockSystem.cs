@@ -233,7 +233,7 @@ namespace Content.Server.Doors.Systems
             if (!TryComp(xform.ParentUid, out GridAtmosphereComponent? gridAtmosphere))
                 return (false, false);
 
-            var grid = Comp<IMapGridComponent>(xform.ParentUid).Grid;
+            var grid = Comp<MapGridComponent>(xform.ParentUid).Grid;
             var pos = grid.CoordinatesToTile(xform.Coordinates);
             var minPressure = float.MaxValue;
             var maxPressure = float.MinValue;
