@@ -1,11 +1,4 @@
 Entries:
-- author: keronshb
-  changes:
-  - {message: Containment Fields throw entities less further now to prevent clipping
-      issues., type: Tweak}
-  - {message: Fields won't spawn through singularity generators anymore., type: Fix}
-  id: 2098
-  time: '2022-08-07T01:10:37.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Meat spikes can now be properly deconstructed., type: Fix}
@@ -2959,3 +2952,8 @@ Entries:
   - {message: 'Added forensic pads, zipties and glasses to the secfab', type: Add}
   id: 2597
   time: '2022-11-08T02:42:29.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix damage effect persisting indefinitely., type: Fix}
+  id: 2598
+  time: '2022-11-08T19:58:21.0000000+00:00'
