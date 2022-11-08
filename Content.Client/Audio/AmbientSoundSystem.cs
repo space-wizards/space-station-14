@@ -36,7 +36,7 @@ namespace Content.Client.Audio
         private bool _overlayEnabled;
         private float _maxAmbientRange;
         private float _cooldown;
-        private TimeSpan? _targetTime;
+        private TimeSpan _targetTime = TimeSpan.Zero;
         private float _ambienceVolume = 0.0f;
 
         /// <summary>
