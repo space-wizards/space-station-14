@@ -72,7 +72,7 @@
     angle: 0
     soundHit:
      collection: AlienClaw
-    animation: WeaponArcClaw
+    animation: WeaponArcBite
     damage:
       groups:
         Brute: 12
