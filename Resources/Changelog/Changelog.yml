@@ -1,21 +1,4 @@
 Entries:
-- author: keronshb
-  changes:
-  - {message: Sprite layers were added to the field gens to give them more soul, type: Add}
-  - {message: Field bouncing was added. Anything that collides with a field will be
-      thrown back a bit., type: Add}
-  - {message: Added examine text for players to check to see if a containment field
-      generator is toggled on or not., type: Add}
-  - {message: You now need less field generators to establish a full connection (4
-      instead of 8), type: Tweak}
-  - {message: 'Saltern''s singulo area now starts with less Emitters, Field Generators
-      and Rad Collectors.', type: Tweak}
-  - {message: Field Generators can now be put in a 1x1 pattern without any weird issues,
-    type: Fix}
-  - {message: Level 4 singulos can be contained without any weird escaping issues.,
-    type: Fix}
-  id: 2093
-  time: '2022-08-05T04:22:37.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: You no longer automatically place down items when clicking on closed
@@ -2973,3 +2956,8 @@ Entries:
   - {message: Armor prices are calculated based on damage reduction., type: Add}
   id: 2592
   time: '2022-11-08T00:36:53.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: Events are now quieter., type: Tweak}
+  id: 2593
+  time: '2022-11-08T02:35:11.0000000+00:00'
