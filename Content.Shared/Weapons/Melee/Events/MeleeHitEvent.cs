@@ -1,7 +1,7 @@
 using Content.Shared.Damage;
 using Robust.Shared.Audio;
 
-namespace Content.Server.Weapons.Melee.Events;
+namespace Content.Shared.Weapons.Melee.Events;
 
 /// <summary>
 ///     Raised directed on the melee weapon entity used to attack something in combat mode,
