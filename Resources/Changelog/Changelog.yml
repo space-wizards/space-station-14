@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: The Rat King seems to have been getting swole..., type: Add}
-  id: 2091
-  time: '2022-08-04T21:55:20.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed items not getting removed from the lathe queue when there are
@@ -2973,3 +2968,9 @@ Entries:
   - {message: You can now print out artifact analyzer scans., type: Add}
   id: 2590
   time: '2022-11-07T21:57:30.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a bug causing duplicate actions to appear in the actions bar/menu.,
+    type: Fix}
+  id: 2591
+  time: '2022-11-08T00:06:51.0000000+00:00'
