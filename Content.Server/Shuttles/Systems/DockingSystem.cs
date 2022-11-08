@@ -90,17 +90,19 @@ namespace Content.Server.Shuttles.Systems
             var enlargedAABB = aabb.Value.Enlarged(DockingRadius * 1.5f);
 
             // Get any docking ports in range on other grids.
-            _mapManager.FindGridsIntersectingEnumerator(dockingXform.MapID, enlargedAABB, out var enumerator);
-
-            while (enumerator.MoveNext(out var otherGrid))
+            foreach (var otherGrid in _mapManager.FindGridsIntersecting(dockingXform.MapID, enlargedAABB))
             {
-                if (otherGrid.GridEntityId == dockingXform.GridUid) continue;
+                if (otherGrid.GridEntityId == dockingXform.GridUid)
+                    continue;
 
                 foreach (var ent in otherGrid.GetAnchoredEntities(enlargedAABB))
                 {
                     if (!TryComp(ent, out DockingComponent? otherDocking) ||
                         !otherDocking.Enabled ||
-                        !TryComp(ent, out PhysicsComponent? otherBody)) continue;
+                        !TryComp(ent, out PhysicsComponent? otherBody))
+                    {
+                        continue;
+                    }
 
                     var otherTransform = otherBody.GetTransform();
                     var otherDockingFixture = _fixtureSystem.GetFixtureOrNull(otherBody, DockingFixture);

@@ -34,6 +34,7 @@ namespace Content.Server.Voting.Managers
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IGameMapManager _gameMapManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private int _nextVoteId = 1;
 

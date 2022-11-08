@@ -132,6 +132,22 @@
       Cable: 5
 
 - type: entity
+  id: ArtifactAnalyzerMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: artifact analyzer machine board
+  description: A machine printed circuit board for an artifact analyzer
+  components:
+    - type: Sprite
+      state: science
+    - type: MachineBoard
+      prototype: MachineArtifactAnalyzer
+      requirements:
+        ScanningModule: 3
+        Capacitor: 1
+      materialRequirements:
+        Glass: 5
+
+- type: entity
   id: ThermomachineFreezerMachineCircuitBoard
   parent: BaseMachineCircuitboard
   name: freezer thermomachine machine board

@@ -116,6 +116,16 @@
     fireCost: 62.5
 
 - type: entity
+  name: practice laser gun
+  parent: WeaponLaserCarbine
+  id: WeaponLaserCarbinePractice
+  description: A modified version of the basic laser gun, this one fires less concentrated energy bolts designed for target practice.
+  components:
+  - type: HitscanBatteryAmmoProvider
+    proto: RedLaserPractice
+    fireCost: 62.5
+
+- type: entity
   name: pulse pistol
   parent: BaseWeaponBatterySmall
   id: WeaponPulsePistol
