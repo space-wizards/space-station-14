@@ -1,4 +1,5 @@
-﻿using Content.Server.Atmos;
+﻿using System.Threading;
+using Content.Server.Atmos;
 using Content.Shared.Atmos;
 using Robust.Shared.Containers;
 
@@ -34,17 +35,15 @@ public sealed class CryoPodComponent: Component, IGasMixtureHolder
     public string SolutionContainerName { get; set; } = "beakerSlot";
 
     /// <summary>
-    /// Accumulator used to keep track of when to inject chemicals from the inserted beaker to the mob inside the pod.
-    /// </summary>
-    [DataField("accumulator")]
-    public float Accumulator = 0f;
-
-    /// <summary>
     /// How often (seconds) are chemicals transferred from the beaker to the body?
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("beakerTransferTime")]
     public float BeakerTransferTime = 1f;
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("nextInjectionTime")]
+    public TimeSpan? NextInjectionTime;
 
     /// <summary>
     /// How many units to transfer per tick from the beaker to the mob?
@@ -82,4 +81,6 @@ public sealed class CryoPodComponent: Component, IGasMixtureHolder
     public bool PermaLocked { get; set; }
 
     public bool IsPrying { get; set; }
+
+    public CancellationTokenSource? DragDropCancelToken;
 }

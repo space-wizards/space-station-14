@@ -36,7 +36,7 @@
           - MachineLayer
   - type: ContainerContainer
     containers:
-      scanner-bodyContainer:
+      scanner-body:
         !type:ContainerSlot
         showEnts: true
       beakerSlot: !type:ContainerSlot {}
@@ -96,7 +96,7 @@
     enabled: false
   - type: EmptyOnMachineDeconstruct
     containers:
-      - scanner-bodyContainer
+      - scanner-body
   - type: CryoPod
   - type: ContainerTemperatureDamageThresholds
     coldDamageThreshold: 10

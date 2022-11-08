@@ -10,11 +10,11 @@ public sealed class CryoPodSystem: VisualizerSystem<CryoPodVisualsComponent>
     {
         base.Initialize();
 
-        SubscribeLocalEvent<InsideCryoPodComponent, ComponentAdd>(OnCryoPodInsertion);
+        SubscribeLocalEvent<InsideCryoPodComponent, ComponentStartup>(OnCryoPodInsertion);
         SubscribeLocalEvent<InsideCryoPodComponent, ComponentRemove>(OnCryoPodRemoval);
     }
 
-    private void OnCryoPodInsertion(EntityUid uid, InsideCryoPodComponent component, ComponentAdd args)
+    private void OnCryoPodInsertion(EntityUid uid, InsideCryoPodComponent component, ComponentStartup args)
     {
         if (!TryComp<SpriteComponent>(uid, out var spriteComponent))
         {

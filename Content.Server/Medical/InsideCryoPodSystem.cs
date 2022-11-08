@@ -5,10 +5,10 @@ using Content.Shared.Standing;
 
 namespace Content.Server.Medical
 {
-    public sealed class InsideCryoPodSystem: EntitySystem
+    public sealed partial class CryoPodSystem
     {
 
-        public override void Initialize()
+        public void InitializeInsideCryoPod()
         {
             base.Initialize();
             // Atmos overrides

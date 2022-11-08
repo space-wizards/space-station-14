@@ -1,4 +1,5 @@
-﻿using Content.Server.Atmos;
+﻿using System.Threading;
+using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.Unary.EntitySystems;
@@ -34,10 +35,11 @@ using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Medical;
 
-public sealed class CryoPodSystem: EntitySystem
+public sealed partial class CryoPodSystem: EntitySystem
 {
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
     [Dependency] private readonly GasCanisterSystem _gasCanisterSystem = default!;
@@ -54,6 +56,7 @@ public sealed class CryoPodSystem: EntitySystem
     [Dependency] private readonly ToolSystem _toolSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
 
     public override void Initialize()
     {
@@ -74,12 +77,14 @@ public sealed class CryoPodSystem: EntitySystem
         SubscribeLocalEvent<CryoPodComponent, GasAnalyzerScanEvent>(OnGasAnalyzed);
         SubscribeLocalEvent<CryoPodComponent, ActivatableUIOpenAttemptEvent>(OnActivateUIAttempt);
         SubscribeLocalEvent<CryoPodComponent, AfterActivatableUIOpenEvent>(OnActivateUI);
+
+        InitializeInsideCryoPod();
     }
 
     private void OnComponentInit(EntityUid uid, CryoPodComponent cryoPodComponent, ComponentInit args)
     {
         base.Initialize();
-        cryoPodComponent.BodyContainer = _containerSystem.EnsureContainer<ContainerSlot>(uid, $"scanner-bodyContainer");
+        cryoPodComponent.BodyContainer = _containerSystem.EnsureContainer<ContainerSlot>(uid, "scanner-body");
     }
 
     private void UpdateAppearance(EntityUid uid, CryoPodComponent? cryoPod = null)
@@ -103,12 +108,9 @@ public sealed class CryoPodSystem: EntitySystem
         base.Update(frameTime);
         foreach (var (_, cryoPod) in EntityQuery<ActiveCryoPodComponent, CryoPodComponent>())
         {
-            cryoPod.Accumulator += frameTime;
-
-            if (cryoPod.Accumulator < cryoPod.BeakerTransferTime)
+            if (_gameTiming.CurTime < cryoPod.NextInjectionTime)
                 continue;
-
-            cryoPod.Accumulator -= cryoPod.BeakerTransferTime;
+            cryoPod.NextInjectionTime = _gameTiming.CurTime + TimeSpan.FromSeconds(cryoPod.BeakerTransferTime);
 
             var container = _itemSlotsSystem.GetItemOrNull(cryoPod.Owner, cryoPod.SolutionContainerName);
             var patient = cryoPod.BodyContainer.ContainedEntity;
@@ -197,7 +199,15 @@ public sealed class CryoPodSystem: EntitySystem
             return;
         }
 
-        var doAfterArgs = new DoAfterEventArgs(args.User, cryoPodComponent.EntryDelay, default, uid, args.Dragged)
+        if (cryoPodComponent.DragDropCancelToken != null)
+        {
+            cryoPodComponent.DragDropCancelToken.Cancel();
+            cryoPodComponent.DragDropCancelToken = null;
+            return;
+        }
+
+        cryoPodComponent.DragDropCancelToken = new CancellationTokenSource();
+        var doAfterArgs = new DoAfterEventArgs(args.User, cryoPodComponent.EntryDelay, cryoPodComponent.DragDropCancelToken.Token, uid, args.Dragged)
         {
             BreakOnDamage = true,
             BreakOnStun = true,
