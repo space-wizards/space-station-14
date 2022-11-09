@@ -82,6 +82,18 @@ public sealed class WeatherOverlay : Overlay
         var invMatrix = args.Viewport.GetWorldToLocalMatrix();
         var rotation = args.Viewport.Eye?.Rotation ?? Angle.Zero;
         var position = args.Viewport.Eye?.Position.Position ?? Vector2.Zero;
+        var invMatrix2 = Matrix3.CreateInverseTransform(position, rotation);
+        var clyde = IoCManager.Resolve<IClyde>();
+
+        if (_blep.Texture.Size != args.Viewport.Size)
+        {
+            _blep = clyde.CreateRenderTarget(args.Viewport.Size, new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb), name: "weather-stencil");
+        }
+
+        if (_blep2.Texture.Size != args.Viewport.Size)
+        {
+            _blep2 = clyde.CreateRenderTarget(args.Viewport.Size, new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb), name: "weather");
+        }
 
         // Cut out the irrelevant bits via stencil
         // This is why we don't just use parallax; we might want specific tiles to get drawn over
@@ -146,10 +158,15 @@ public sealed class WeatherOverlay : Overlay
                 throw new NotImplementedException();
         }
 
+        var viewport = args.Viewport;
+
         // Draw the rain
         worldHandle.RenderInRenderTarget(_blep2, () =>
         {
             worldHandle.SetTransform(invMatrix);
+
+            var fakePoint = invMatrix.Transform(Vector2.Zero);
+            var actualPoint = viewport.WorldToLocal(Vector2.Zero);
 
             // var layers = _parallax.GetParallaxLayers(args.MapId);
             // var realTime = (float) _timing.RealTime.TotalSeconds;
@@ -186,10 +203,14 @@ public sealed class WeatherOverlay : Overlay
             // Re-offset.
             flooredBL += originBL;
 
+
             for (var x = flooredBL.X; x < worldAABB.Right; x += size.X)
             {
                 for (var y = flooredBL.Y; y < worldAABB.Top; y += size.Y)
                 {
+                    var box = Box2.FromDimensions((x, y), size);
+                    var invBox = invMatrix.TransformBox(box);
+
                     worldHandle.DrawTextureRect(sprite, Box2.FromDimensions((x, y), size));
                 }
             }
