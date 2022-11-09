@@ -45,19 +45,21 @@ namespace Content.Server.MachineLinking.System
 
         private void OnAfterActivatableUIOpen(EntityUid uid, SignalTimerComponent component, AfterActivatableUIOpenEvent args)
         {
+            var time = TryComp<ActiveSignalTimerComponent>(uid, out var active) ? active.TriggerTime : TimeSpan.Zero;
+
             if (_ui.TryGetUi(component.Owner, SignalTimerUiKey.Key, out var bui))
                 _ui.SetUiState(bui, new SignalTimerBoundUserInterfaceState(component.Label,
                     TimeSpan.FromSeconds(component.Delay).Minutes.ToString("D2"),
                     TimeSpan.FromSeconds(component.Delay).Seconds.ToString("D2"),
                     component.CanEditLabel,
-                    component.TriggerTime,
-                    component.Activated,
+                    time,
+                    active != null,
                     _accessReader.IsAllowed(args.User, uid)));
         }
 
         public bool Trigger(EntityUid uid, SignalTimerComponent signalTimer)
         {
-            signalTimer.Activated = false;
+            RemComp<ActiveSignalTimerComponent>(uid);
 
             _signalSystem.InvokePort(uid, signalTimer.TriggerPort);
 
@@ -68,8 +70,8 @@ namespace Content.Server.MachineLinking.System
                                 TimeSpan.FromSeconds(signalTimer.Delay).Minutes.ToString("D2"),
                                 TimeSpan.FromSeconds(signalTimer.Delay).Seconds.ToString("D2"),
                                 signalTimer.CanEditLabel,
-                                signalTimer.TriggerTime,
-                                signalTimer.Activated,
+                                TimeSpan.Zero,
+                                HasComp<ActiveSignalTimerComponent>(uid),
                                 null));
 
             return true;
@@ -83,12 +85,9 @@ namespace Content.Server.MachineLinking.System
 
         private void UpdateTimer()
         {
-            foreach (var timer in EntityQuery<SignalTimerComponent>())
+            foreach (var (active, timer) in EntityQuery<ActiveSignalTimerComponent, SignalTimerComponent>())
             {
-                if (!timer.Activated)
-                    continue;
-
-                if (timer.TriggerTime <= _gameTiming.CurTime)
+                if (active.TriggerTime <= _gameTiming.CurTime)
                 {
                     Trigger(timer.Owner, timer);
 
@@ -141,14 +140,14 @@ namespace Content.Server.MachineLinking.System
             if (!IsMessageValid(uid, args))
                 return;
 
-            if (!component.Activated)
+            if (!HasComp<ActiveSignalTimerComponent>(uid))
             {
-                component.TriggerTime = _gameTiming.CurTime + TimeSpan.FromSeconds(component.Delay);
+                var activeTimer = EnsureComp<ActiveSignalTimerComponent>(uid);
+                activeTimer.TriggerTime = _gameTiming.CurTime + TimeSpan.FromSeconds(component.Delay);
                 component.User = args.User;
-                component.Activated = true;
 
                 _appearanceSystem.SetData(uid, TextScreenVisuals.Mode, TextScreenMode.Timer);
-                _appearanceSystem.SetData(uid, TextScreenVisuals.TargetTime, component.TriggerTime);
+                _appearanceSystem.SetData(uid, TextScreenVisuals.TargetTime, activeTimer.TriggerTime);
                 _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, component.Label);
 
                 _signalSystem.InvokePort(uid, component.StartPort);
@@ -156,7 +155,7 @@ namespace Content.Server.MachineLinking.System
             else
             {
                 component.User = args.User;
-                component.Activated = false;
+                RemComp<ActiveSignalTimerComponent>(uid);
 
                 _appearanceSystem.SetData(uid, TextScreenVisuals.Mode, TextScreenMode.Text);
                 _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, component.Label);

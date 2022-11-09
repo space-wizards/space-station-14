@@ -13,15 +13,6 @@ namespace Content.Server.MachineLinking.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public double Delay = 5;
 
-        [DataField("activated")]
-        public bool Activated = false;
-
-        /// <summary>
-        ///     The time the timer triggers.
-        /// </summary>
-        [DataField("triggerTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
-        public TimeSpan TriggerTime;
-
         [DataField("user")]
         public EntityUid? User;
 
