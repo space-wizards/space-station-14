@@ -8,10 +8,14 @@ using Content.Shared.Slippery;
 using Content.Shared.StepTrigger.Components;
 using Content.Shared.StepTrigger.Systems;
 using JetBrains.Annotations;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
+using Robust.Shared.Serialization.Manager;
 using Solution = Content.Shared.Chemistry.Components.Solution;
 
 namespace Content.Server.Fluids.EntitySystems
@@ -22,9 +26,7 @@ namespace Content.Server.Fluids.EntitySystems
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly FluidSpreaderSystem _fluidSpreaderSystem = default!;
         [Dependency] private readonly StepTriggerSystem _stepTrigger = default!;
-        [Dependency] private readonly SlipperySystem _slipSystem = default!;
-        [Dependency] private readonly EvaporationSystem _evaporationSystem = default!;
-        
+        [Dependency] private readonly ISerializationManager _serializationManager = default!;
 
         public override void Initialize()
         {
@@ -244,70 +246,113 @@ namespace Content.Server.Fluids.EntitySystems
             return CurrentVolume(uid, puddle) > puddle.OverflowVolume;
         }
 
-        public PuddleComponent SpawnPuddle(EntityUid srcUid, EntityCoordinates pos, PuddleComponent? srcPuddleComponent = null)
+        public PuddleComponent SpawnPuddle(EntityUid srcUid, EntityCoordinates pos,
+            PuddleComponent? srcPuddleComponent = null)
         {
-            MetaDataComponent? metadata = null;
-            string? prototype = null;
-            if (Resolve(srcUid, ref srcPuddleComponent, ref metadata))
+            MetaDataComponent? srcMetadata = null;
+            PuddleComponent destPuddleComp = new PuddleComponent();
+            Resolve(srcUid, ref srcPuddleComponent, /*ref srcMetadata,*/ false);
+
+            if (srcMetadata != null)
             {
-                prototype = metadata.EntityPrototype?.ID;
+                var prototype = srcMetadata?.EntityPrototype?.ID;
+                var destUid = EntityManager.SpawnEntity(prototype, pos);
+                destPuddleComp = EntityManager.EnsureComponent<PuddleComponent>(destUid);
             }
-
-            var destUid = EntityManager.SpawnEntity(prototype, pos);
-            var destPuddle = EntityManager.EnsureComponent<PuddleComponent>(destUid);
-
-            
             // if this is metadata-less component we do special puddle spawning
-            if (srcPuddleComponent != null && metadata == null)
+            else if (srcPuddleComponent != null && srcMetadata == null)
             {
-                // Copy puddle values
-                destPuddle.SlipThreshold = srcPuddleComponent.SlipThreshold;
-                destPuddle.WetFloorEffectThreshold = srcPuddleComponent.WetFloorEffectThreshold;
-                destPuddle.SpillSound = srcPuddleComponent.SpillSound;
-                destPuddle.OverflowVolume = srcPuddleComponent.OverflowVolume;
-                destPuddle.OpacityModifier = srcPuddleComponent.OpacityModifier;
-                destPuddle.SolutionName = srcPuddleComponent.SolutionName;
-                
-                // Copy SolutionContainer properties
-                EntityManager.EnsureComponent<SolutionContainerManagerComponent>(destUid);
-                _solutionContainerSystem.EnsureSolution(destUid, srcPuddleComponent.SolutionName);
-                
+                // create copy Entity
+                var destUid = EntityManager.CreateEntityUninitialized(null);
+
                 // Copy visuals
+                // TODO change when visuals PR lands (atm its PR https://github.com/space-wizards/space-station-14/pull/11941)
                 var spriteQuery = EntityManager.GetEntityQuery<SpriteComponent>();
-                if (spriteQuery.TryGetComponent(srcUid, out var srcSprite))
+                var appearanceQuery = EntityManager.GetEntityQuery<AppearanceComponent>();
+
+
+                if (spriteQuery.TryGetComponent(srcUid, out var srcSprite) &&
+                    appearanceQuery.TryGetComponent(srcUid, out var srcAppearance))
                 {
-                    var destSprite = EntityManager.EnsureComponent<SpriteComponent>(destUid);
-                    destSprite.Visible = srcSprite.Visible;
-                    destSprite.DrawDepth = srcSprite.DrawDepth;
-                    destSprite.Scale = srcSprite.Scale;
-                    destSprite.Rotation = srcSprite.Rotation;
-                    destSprite.Offset = srcSprite.Offset;
-                    destSprite.Color = srcSprite.Color;
-                    destSprite.DrawDepth = srcSprite.DrawDepth;
-                    destSprite.RenderOrder = srcSprite.RenderOrder;
-                    destSprite.BaseRSIPath = srcSprite.BaseRSIPath;
+                    var destSpriteComp = new SpriteComponent
+                    {
+                        Owner = destUid
+                    };
+                    AppearanceComponent appeareanceComp = new ServerAppearanceComponent
+                    {
+                        Owner = destUid
+                    };
+                    _serializationManager.Copy(srcSprite, ref destSpriteComp);
+                    _serializationManager.Copy(srcAppearance, ref appeareanceComp);
+                    EntityManager.AddComponent(destUid, destSpriteComp);
+                    EntityManager.AddComponent(destUid, appeareanceComp);
                 }
-                
+
+                // Copy physics & fixtures
+                var physicsQuery = EntityManager.GetEntityQuery<PhysicsComponent>();
+                var fixtureQuery = EntityManager.GetEntityQuery<FixturesComponent>();
+                if (physicsQuery.TryGetComponent(srcUid, out var srcPhys)
+                    && fixtureQuery.TryGetComponent(srcUid, out var srcFixture))
+                {
+                    var destFixtureComp = new FixturesComponent()
+                    {
+                        Owner = destUid
+                    };
+                    var destPhysComp = new PhysicsComponent()
+                    {
+                        Owner = destUid
+                    };
+                    _serializationManager.Copy(srcPhys, ref destPhysComp);
+                    _serializationManager.Copy(srcFixture, ref destFixtureComp);
+                    EntityManager.AddComponent(destUid, destPhysComp);
+                    EntityManager.AddComponent(destUid, destFixtureComp);
+                }
+
                 // Copy Slip and Step properties
                 var slipQuery = EntityManager.GetEntityQuery<SlipperyComponent>();
                 var stepQuery = EntityManager.GetEntityQuery<StepTriggerComponent>();
-                if (slipQuery.TryGetComponent(srcUid, out var srcSlip) 
+
+
+                if (slipQuery.TryGetComponent(srcUid, out var srcSlip)
                     && stepQuery.TryGetComponent(srcUid, out var srcStep))
                 {
-                    _slipSystem.CopyConstruct(destUid, srcSlip);
-                    _stepTrigger.CopyConstruct(destUid, srcStep);
+                    var destSlipComp = new SlipperyComponent
+                    {
+                        Owner = destUid
+                    };
+                    var destTriggerComp = new StepTriggerComponent()
+                    {
+                        Owner = destUid
+                    };
+                    _serializationManager.Copy(srcSlip, ref destSlipComp);
+                    _serializationManager.Copy(srcStep, ref destTriggerComp);
+                    EntityManager.AddComponent(destUid, destSlipComp!);
+                    EntityManager.AddComponent(destUid, destTriggerComp!);
                 }
-                
+
                 // Copy Evaporation
                 var evaporationQuery = EntityManager.GetEntityQuery<EvaporationComponent>();
+
                 if (evaporationQuery.TryGetComponent(srcUid, out var srcEvaporation))
                 {
-                    _evaporationSystem.CopyConstruct(destUid, srcEvaporation);
-                    
+                    var evaporationComp = new EvaporationComponent()
+                    {
+                        Owner = destUid
+                    };
+
+                    _serializationManager.Copy(srcEvaporation, ref evaporationComp);
+                    EntityManager.AddComponent(destUid, evaporationComp!);
                 }
+
+                _serializationManager.Copy(srcPuddleComponent, ref destPuddleComp);
+                destPuddleComp.Owner = destUid;
+                EntityManager.AddComponent(destUid, destPuddleComp);
+                EntityManager.EnsureComponent<SolutionContainerManagerComponent>(destUid);
+                var solution = _solutionContainerSystem.EnsureSolution(destUid, destPuddleComp!.SolutionName);
+                solution.MaxVolume = FixedPoint2.New(1000);
             }
 
-            return destPuddle;
+            return destPuddleComp!;
         }
     }
 }
