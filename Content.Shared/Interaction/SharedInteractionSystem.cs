@@ -280,6 +280,7 @@ namespace Content.Shared.Interaction
             {
                 if (inRangeUnobstructed && target != null)
                     InteractHand(user, target.Value);
+
                 return;
             }
 
