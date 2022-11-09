@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   abstract: true
   parent: BaseItem
   id: GasTankBase
@@ -44,6 +44,7 @@
     air:
       volume: 70
       temperature: 293.15
+    lowPressure: 75
   - type: Clothing
     sprite: Objects/Tanks/oxygen.rsi
     slots:
