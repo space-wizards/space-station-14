@@ -664,17 +664,17 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         switch (spawnNumber)
         {
             case 0:
-                name = $"Commander " + _random.PickAndTake(_operativeNames[_nukeopsRuleConfig.EliteNames]);
+                name = Loc.GetString("nukeops-role-commander") + " " + _random.PickAndTake(_operativeNames[_nukeopsRuleConfig.EliteNames]);
                 role = _nukeopsRuleConfig.CommanderRolePrototype;
                 gear = _nukeopsRuleConfig.CommanderStartGearPrototype;
                 break;
             case 1:
-                name = $"Agent " + _random.PickAndTake(_operativeNames[_nukeopsRuleConfig.NormalNames]);
+                name = Loc.GetString("nukeops-role-agent") + " " + _random.PickAndTake(_operativeNames[_nukeopsRuleConfig.NormalNames]);
                 role = _nukeopsRuleConfig.OperativeRoleProto;
                 gear = _nukeopsRuleConfig.MedicStartGearPrototype;
                 break;
             default:
-                name = $"Operator " + _random.PickAndTake(_operativeNames[_nukeopsRuleConfig.NormalNames]);
+                name = Loc.GetString("nukeops-role-operator") + " " + _random.PickAndTake(_operativeNames[_nukeopsRuleConfig.NormalNames]);
                 role = _nukeopsRuleConfig.OperativeRoleProto;
                 gear = _nukeopsRuleConfig.OperativeStartGearPrototype;
                 break;

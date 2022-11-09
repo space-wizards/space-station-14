@@ -11,8 +11,22 @@
     - type: EffectVisuals
     - type: WeaponArcVisuals
 
-# TODO: Camera recoil (try it as a shake, i.e. zoom out and then rotate slightly maybe)
-# See https://github.com/gasgiant/Camera-Shake
+- type: entity
+  # Plays the state animation then disappears with no fade or swing
+  id: WeaponArcAnimated
+  noSpawn: true
+  components:
+    - type: Sprite
+      sprite: Effects/arcs.rsi
+      state: disarm
+      netsync: false
+      drawdepth: Effects
+    - type: EffectVisuals
+    - type: WeaponArcVisuals
+      fadeOut: false
+
+
+# Uses TimedDespawn instead of EffectVisuals because auto animation is easier but doesn't raise an animation complete event.
 
 - type: entity
   id: WeaponArcThrust
@@ -21,8 +35,6 @@
   components:
     - type: WeaponArcVisuals
       animation: Thrust
-
-  # TODO: Hold for 0.1, thrust out n distance, then fade out
 
 - type: entity
   id: WeaponArcSlash
@@ -38,24 +50,36 @@
   parent: WeaponArcStatic
   noSpawn: true
   components:
+    - type: WeaponArcVisuals
+      fadeOut: false
     - type: Sprite
       state: bite
+    - type: TimedDespawn
+      lifetime: 0.399
 
 - type: entity
   id: WeaponArcClaw
   parent: WeaponArcStatic
   noSpawn: true
   components:
+    - type: WeaponArcVisuals
+      fadeOut: false
     - type: Sprite
       state: claw
+    - type: TimedDespawn
+      lifetime: 0.399
 
 - type: entity
   id: WeaponArcDisarm
-  parent: WeaponArcStatic
+  parent: WeaponArcAnimated
   noSpawn: true
   components:
+    - type: WeaponArcVisuals
+      fadeOut: false
     - type: Sprite
       state: disarm
+    - type: TimedDespawn
+      lifetime: 0.299
 
 - type: entity
   id: WeaponArcFist
@@ -64,3 +88,39 @@
   components:
     - type: Sprite
       state: fist
+
+- type: entity
+  id: WeaponArcPunch
+  parent: WeaponArcStatic
+  noSpawn: true
+  components:
+    - type: WeaponArcVisuals
+      fadeOut: false
+    - type: Sprite
+      state: punch
+    - type: TimedDespawn
+      lifetime: 0.499
+
+- type: entity
+  id: WeaponArcKick
+  parent: WeaponArcStatic
+  noSpawn: true
+  components:
+    - type: WeaponArcVisuals
+      fadeOut: false
+    - type: Sprite
+      state: kick
+    - type: TimedDespawn
+      lifetime: 0.299
+
+- type: entity
+  id: WeaponArcSmash
+  parent: WeaponArcStatic
+  noSpawn: true
+  components:
+    - type: WeaponArcVisuals
+      fadeOut: false
+    - type: Sprite
+      state: smash
+    - type: TimedDespawn
+      lifetime: 0.299
