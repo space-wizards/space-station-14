@@ -34,7 +34,7 @@ namespace Content.Shared.Materials
         /// </summary>
         [ViewVariables]
         [DataField("stackProto", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string? StackProto { get; } = null;
+        public string StackProto { get; } = "";
 
         [ViewVariables]
         [DataField("name")]

@@ -1,6 +1,7 @@
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using Content.Shared.Verbs;
+using Content.Shared.Materials;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
@@ -87,38 +88,66 @@ namespace Content.Server.Stack
         ///     Say you want to spawn 97 stacks of something that has a max stack count of 30.
         ///     This would spawn 3 stacks of 30 and 1 stack of 7.
         /// </summary>
-        public void SpawnMultiple(int amount, int maxCountPerStack, StackPrototype prototype, EntityCoordinates spawnPosition)
+        public void SpawnMultiple(int amount, MaterialPrototype materialProto, EntityCoordinates coordinates)
         {
+            if (amount <= 0)
+                return;
+
+            // At least 1 is being spawned, we'll use the first to extract the max count.
+            var firstSpawn = Spawn(materialProto.StackProto, coordinates);
+
+            if (!TryComp<StackComponent>(firstSpawn, out var stack))
+                return;
+
+            if (!TryComp<MaterialComponent>(firstSpawn, out var material))
+                return;
+
+            var maxCountPerStack = stack.MaxCount;
+            var materialPerStack = material._materials[materialProto.ID];
+
+            if (amount < materialPerStack)
+                return;
+
+            if (amount > (maxCountPerStack * materialPerStack))
+            {
+                SetCount(firstSpawn, maxCountPerStack, stack);
+                amount -= maxCountPerStack * materialPerStack;
+            } else
+            {
+                SetCount(firstSpawn, (amount / materialPerStack), stack);
+                amount = 0;
+            }
+
             while (amount > 0)
             {
                 if (amount > maxCountPerStack)
                 {
-                    var entity = Spawn("MaterialBiomass", spawnPosition);
-                    var stack = Comp<StackComponent>(entity);
+                    var entity = Spawn(materialProto.StackProto, coordinates);
+                    var nextStack = Comp<StackComponent>(entity);
 
-                    SetCount(entity, maxCountPerStack, stack);
+                    SetCount(entity, maxCountPerStack, nextStack);
                     amount -= maxCountPerStack;
                 }
                 else
                 {
-                    var entity = Spawn("MaterialBiomass", spawnPosition);
-                    var stack = Comp<StackComponent>(entity);
+                    var entity = Spawn(materialProto.StackProto, coordinates);
+                    var nextStack = Comp<StackComponent>(entity);
 
-                    SetCount(entity, amount, stack);
+                    SetCount(entity, amount, nextStack);
                     amount = 0;
                 }
             }
         }
 
-        public void SpawnMultiple(int amount, int maxCountPerStack, string prototype, EntityCoordinates spawnPosition)
+        public void SpawnMultipleFromMaterial(int amount, string material, EntityCoordinates coordinates)
         {
-            if (!_prototypeManager.TryIndex<StackPrototype>(prototype, out var stackType))
+            if (!_prototypeManager.TryIndex<MaterialPrototype>(material, out var stackType))
             {
-                Logger.Error("Failed to index stack prototype " + prototype);
+                Logger.Error("Failed to index material prototype " + material);
                 return;
             }
 
-            SpawnMultiple(amount, maxCountPerStack, stackType, spawnPosition);
+            SpawnMultiple(amount, stackType, coordinates);
         }
 
         private void OnStackAlternativeInteract(EntityUid uid, StackComponent stack, GetVerbsEvent<AlternativeVerb> args)

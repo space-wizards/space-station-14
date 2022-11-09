@@ -66,7 +66,6 @@ namespace Content.Server.Cloning.Systems
             SubscribeLocalEvent<CloningPodComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<CloningPodComponent, RefreshPartsEvent>(OnPartsRefreshed);
             SubscribeLocalEvent<CloningPodComponent, UpgradeExamineEvent>(OnUpgradeExamine);
-            SubscribeLocalEvent<CloningPodComponent, MachineDeconstructedEvent>(OnDeconstruct);
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<BeingClonedComponent, MindAddedMessage>(HandleMindAdded);
             SubscribeLocalEvent<CloningPodComponent, PortDisconnectedEvent>(OnPortDisconnected);
@@ -93,11 +92,6 @@ namespace Content.Server.Cloning.Systems
         {
             args.AddPercentageUpgrade("cloning-pod-component-upgrade-speed", component.BaseCloningTime / component.CloningTime);
             args.AddPercentageUpgrade("cloning-pod-component-upgrade-biomass-requirement", component.BiomassRequirementMultiplier);
-        }
-
-        private void OnDeconstruct(EntityUid uid, CloningPodComponent component, MachineDeconstructedEvent args)
-        {
-            _serverStackSystem.SpawnMultiple(_material.GetMaterialAmount(uid, "Biomass"), 100, "Biomass", Transform(uid).Coordinates);
         }
 
         internal void TransferMindToClone(Mind.Mind mind)
