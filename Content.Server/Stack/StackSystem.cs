@@ -98,11 +98,14 @@ namespace Content.Server.Stack
                 return list;
 
             // At least 1 is being spawned, we'll use the first to extract otherwise inaccessible information
+            // ??TODO??: Indexing the entity proto and extracting from its component registry could possibly be better?
+            // it doesn't look like it would save LOC even compressing this to a single loop and I'm not sure what other issues it might introduce
             var firstSpawn = Spawn(materialProto.StackEntity, coordinates);
 
             if (!TryComp<StackComponent>(firstSpawn, out var stack) || stack.StackTypeId == null)
                 return list;
 
+            // yes every time you want to get a max count on a stack component you have to index a prototype
             if (!_prototypeManager.TryIndex<StackPrototype>(stack.StackTypeId, out var stackProto) || stackProto.MaxCount == null)
                 return list;
 
@@ -114,6 +117,7 @@ namespace Content.Server.Stack
 
             var materialPerMaxCount = maxCountPerStack * materialPerStack;
 
+            // no material duping for you
             if (amount < materialPerStack)
             {
                 Del(firstSpawn);
