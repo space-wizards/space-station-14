@@ -208,12 +208,12 @@ public sealed class InternalsSystem : EntitySystem
     {
         if (component.BreathToolEntity == null || !AreInternalsWorking(component)) return 2;
 
-        // Check if pressure in the tank is above low pressure threshhold
+        // If pressure in the tank is below low pressure threshhold, flash warning on internals UI
         if (TryComp<GasTankComponent>(component.GasTankEntity, out var gasTank)
-            && (gasTank.Air.Pressure > gasTank.TankLowPressure))
-            return 1;
+            && gasTank.IsLowPressure)
+                return 0;
 
-        return 0;
+        return 1;
     }
 
     public GasTankComponent? FindBestGasTank(InternalsComponent component)
