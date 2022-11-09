@@ -98,7 +98,7 @@ namespace Content.Server.Stack
                 return list;
 
             // At least 1 is being spawned, we'll use the first to extract otherwise inaccessible information
-            var firstSpawn = Spawn(materialProto.StackProto, coordinates);
+            var firstSpawn = Spawn(materialProto.StackEntity, coordinates);
 
             if (!TryComp<StackComponent>(firstSpawn, out var stack) || stack.StackTypeId == null)
                 return list;
@@ -134,7 +134,7 @@ namespace Content.Server.Stack
             {
                 if (amount > materialPerMaxCount)
                 {
-                    var entity = Spawn(materialProto.StackProto, coordinates);
+                    var entity = Spawn(materialProto.StackEntity, coordinates);
                     list.Add(entity);
                     var nextStack = Comp<StackComponent>(entity);
 
@@ -143,7 +143,7 @@ namespace Content.Server.Stack
                 }
                 else
                 {
-                    var entity = Spawn(materialProto.StackProto, coordinates);
+                    var entity = Spawn(materialProto.StackEntity, coordinates);
                     list.Add(entity);
                     var nextStack = Comp<StackComponent>(entity);
 
@@ -154,6 +154,10 @@ namespace Content.Server.Stack
             return list;
         }
 
+        /// <summary>
+        ///     Spawn an amount of a material in stack entities. Note the 'amount' is material dependent. 1 biomass = 1 biomass in its stack,
+        ///     but 100 plasma = 1 sheet of plasma, etc.
+        /// </summary>
         public List<EntityUid> SpawnMultipleFromMaterial(int amount, string material, EntityCoordinates coordinates)
         {
             if (!_prototypeManager.TryIndex<MaterialPrototype>(material, out var stackType))

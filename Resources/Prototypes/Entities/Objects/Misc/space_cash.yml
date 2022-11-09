@@ -44,7 +44,7 @@
 - type: material
   id: Credit
   name: spacebuck
-  stackProto: SpaceCash
+  stackEntity: SpaceCash
   icon: /Textures/Objects/Economy/cash.rsi/cash.png
   price: 1
 

@@ -1,6 +1,6 @@
 - type: material
   id: Biomass
-  stackProto: MaterialBiomass
+  stackEntity: MaterialBiomass
   name: materials-biomass
   icon: /Textures/Objects/Misc/monkeycube.rsi/cube.png
   color: "#8A9A5B"
@@ -8,7 +8,7 @@
 
 - type: material
   id: Cloth
-  stackProto: MaterialCloth
+  stackEntity: MaterialCloth
   name: materials-cloth
   icon: /Textures/Objects/Materials/materials.rsi/cloth.png
   color: "#e7e7de"
@@ -16,7 +16,7 @@
 
 - type: material
   id: Durathread
-  stackProto: MaterialDurathread
+  stackEntity: MaterialDurathread
   name: materials-durathread
   icon: /Textures/Objects/Materials/materials.rsi/durathread.png
   color: "#8291a1"
@@ -24,7 +24,7 @@
 
 - type: material
   id: Plasma
-  stackProto: SheetPlasma
+  stackEntity: SheetPlasma
   name: materials-plasma
   icon: Objects/Materials/Sheets/other.rsi/plasma.png
   color: "#7e009e"
@@ -32,7 +32,7 @@
 
 - type: material
   id: Plastic
-  stackProto: SheetPlastic
+  stackEntity: SheetPlastic
   name: materials-plastic
   icon: Objects/Materials/Sheets/other.rsi/plastic.png
   color: "#d9d9d9"
@@ -40,7 +40,7 @@
 
 - type: material
   id: Wood
-  stackProto: MaterialWoodPlank
+  stackEntity: MaterialWoodPlank
   name: materials-wood
   icon: Objects/Materials/materials.rsi/wood.png
   color: "#966F33"
@@ -48,7 +48,7 @@
 
 - type: material
   id: Uranium
-  stackProto: SheetUranium
+  stackEntity: SheetUranium
   name: materials-uranium
   icon: Objects/Materials/Sheets/other.rsi/uranium.png
   color: "#32a852"
