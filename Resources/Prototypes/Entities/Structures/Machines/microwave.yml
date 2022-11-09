@@ -9,6 +9,8 @@
   - type: ItemCooldown
   - type: MeleeWeapon
     attackRate: 0.5
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
     damage:
       types:
         Blunt: 20
