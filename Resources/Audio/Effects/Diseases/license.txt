@@ -1,5 +1,7 @@
-cough1.ogg taken from freesound (deleted user)
-cough2.ogg taken from https://freesound.org/people/Harris85/sounds/208761/
+cough1.ogg taken from
+https://github.com/Citadel-Station-13/Citadel-Station-13-RP/blob/2121c7ad8c91a7a1d5229631019bf467cb217578/sound/effects/mob_effects/m_cougha.ogg
+cough2.ogg taken from
+https://github.com/Citadel-Station-13/Citadel-Station-13-RP/blob/2121c7ad8c91a7a1d5229631019bf467cb217578/sound/effects/mob_effects/m_coughb.ogg
 sneeze.ogg taken from https://freesound.org/people/sherby168/sounds/540771/
 beepboop.ogg taken from https://freesound.org/people/Fidjo20/sounds/503526/
 monkey1.ogg taken from https://freesound.org/people/TRAVELcandies/sounds/423396/

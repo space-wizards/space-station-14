@@ -1,3 +1,5 @@
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+
 namespace Content.Server.Atmos.Miasma
 {
     [RegisterComponent]
@@ -16,22 +18,20 @@ namespace Content.Server.Atmos.Miasma
         /// <summary>
         /// How long this creature has been dead.
         /// </summary>
-        [DataField("deathAccumulator")]
+        [DataField("timeOfDeath", customTypeSerializer: typeof(TimeOffsetSerializer))]
         [ViewVariables(VVAccess.ReadWrite)]
-        public float DeathAccumulator = 0f;
+        public TimeSpan TimeOfDeath = TimeSpan.Zero;
 
         /// <summary>
         /// When DeathAccumulator is greater than this, start rotting.
         /// </summary>
         public TimeSpan RotAfter = TimeSpan.FromMinutes(5);
 
-        public bool Rotting => (DeathAccumulator > RotAfter.TotalSeconds);
-
         /// <summary>
-        /// Gasses are released every second.
+        /// Gasses are released, this is when the next gas release update will be.
         /// </summary>
-        [DataField("rotAccumulator")]
-        public float RotAccumulator = 0f;
+        [DataField("rotNextUpdate", customTypeSerializer: typeof(TimeOffsetSerializer))]
+        public TimeSpan RotNextUpdate = TimeSpan.Zero;
 
         /// <summary>
         /// How many moles of gas released per second, per unit of mass.

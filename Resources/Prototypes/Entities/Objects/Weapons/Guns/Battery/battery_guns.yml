@@ -300,6 +300,29 @@
     - type: Appearance
 
 - type: entity
+  name: practice disabler
+  parent: WeaponDisabler
+  id: WeaponDisablerPractice
+  description: A self-defense weapon that exhausts organic targets, weakening them until they collapse. This one has been undertuned for cadets.
+  components:
+    - type: Sprite
+      sprite: Objects/Weapons/Guns/Battery/practice_disabler.rsi
+      layers:
+        - state: base
+          map: ["enum.GunVisualLayers.Base"]
+        - state: mag-unshaded-0
+          map: ["enum.GunVisualLayers.MagUnshaded"]
+          shader: unshaded
+    - type: Clothing
+      sprite: Objects/Weapons/Guns/Battery/practice_disabler.rsi
+      quickEquip: false
+      slots:
+        - Belt
+    - type: ProjectileBatteryAmmoProvider
+      proto: BulletDisablerPractice
+      fireCost: 100
+      
+- type: entity
   name: taser
   parent: BaseWeaponBatterySmall
   id: WeaponTaser

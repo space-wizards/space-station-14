@@ -26,11 +26,16 @@ namespace Content.Shared.Humanoid
 
             switch (speciesProto.Naming)
             {
+                case SpeciesNaming.TheFirstofLast:
+                    return Loc.GetString("namepreset-thefirstoflast",
+                        ("first", GetFirstName(speciesProto, gender)), ("last", GetLastName(speciesProto, gender)));
                 case SpeciesNaming.FirstDashFirst:
-                    return $"{GetFirstName(speciesProto, gender)}-{GetFirstName(speciesProto, gender)}";
+                    return Loc.GetString("namepreset-firstdashfirst",
+                        ("first1", GetFirstName(speciesProto, gender)), ("first2", GetFirstName(speciesProto, gender)));
                 case SpeciesNaming.FirstLast:
                 default:
-                    return $"{GetFirstName(speciesProto, gender)} {GetLastName(speciesProto, gender)}";
+                    return Loc.GetString("namepreset-firstlast",
+                        ("first", GetFirstName(speciesProto, gender)), ("last", GetLastName(speciesProto, gender)));
             }
         }
 

@@ -1,186 +1,4 @@
 Entries:
-- author: keronshb
-  changes:
-  - {message: Containment Fields throw entities less further now to prevent clipping
-      issues., type: Tweak}
-  - {message: Fields won't spawn through singularity generators anymore., type: Fix}
-  id: 2098
-  time: '2022-08-07T01:10:37.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Meat spikes can now be properly deconstructed., type: Fix}
-  id: 2099
-  time: '2022-08-07T01:11:55.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: New grass and dirt tiles coming to a station near you soon(TM)., type: Add}
-  - {message: 'Minor Splitstation QOL update, durathread for HoP, lv wire in cafe
-      fixed, altar for chaplain + cloner consoles in med.', type: Tweak}
-  id: 2100
-  time: '2022-08-07T01:13:35.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: 'The durathread crafting recipe now gives the proper amount (5, not
-      1).', type: Fix}
-  id: 2101
-  time: '2022-08-07T01:15:32.0000000+00:00'
-- author: notafet
-  changes:
-  - {message: Eggs from egg-plants now contain real eggs., type: Fix}
-  id: 2102
-  time: '2022-08-07T01:16:26.0000000+00:00'
-- author: Sammy Boy
-  changes:
-  - {message: Stun batons are back to having a distinct stun sound when stuning!,
-    type: Fix}
-  id: 2103
-  time: '2022-08-07T07:10:40.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Buckets, mop buckets, and the janitorial trolley now properly visualize
-      their solution contents in beautiful Technicolor.', type: Add}
-  id: 2104
-  time: '2022-08-07T08:50:52.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Cargo shuttle calls work again., type: Fix}
-  id: 2105
-  time: '2022-08-07T23:22:46.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Dragons are now a proper station event and can spawn additional rifts.,
-    type: Add}
-  - {message: Space mobs are now subject to weightlessness movement but aren't required
-      to be touching the grid., type: Tweak}
-  - {message: Holoparasites and carps can now spawn with varying colors., type: Tweak}
-  id: 2106
-  time: '2022-08-08T00:18:14.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: PA controls now much less jank., type: Fix}
-  id: 2107
-  time: '2022-08-08T00:31:53.0000000+00:00'
-- author: notafet
-  changes:
-  - {message: Gas canisters can now be sold for money., type: Add}
-  id: 2108
-  time: '2022-08-08T01:49:06.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Added a ton of instruments., type: Add}
-  id: 2109
-  time: '2022-08-08T02:21:54.0000000+00:00'
-- author: Morb0
-  changes:
-  - {message: 'Now the nuke ops will definitely remember their task, thanks to new
-      spawn sound.', type: Add}
-  id: 2110
-  time: '2022-08-08T02:27:08.0000000+00:00'
-- author: Myctai
-  changes:
-  - {message: 'Red oxygen tanks were removed, red color is now reserved for nitrogen
-      tanks.', type: Remove}
-  id: 2111
-  time: '2022-08-08T02:28:52.0000000+00:00'
-- author: moony
-  changes:
-  - {message: The game no longer has a 50% chance of calling a chair a chr., type: Fix}
-  id: 2112
-  time: '2022-08-08T02:29:31.0000000+00:00'
-- author: Level10Cybermancer
-  changes:
-  - {message: Blunt melee weapons now deal stamina damage, type: Add}
-  - {message: 'After new research has demonstrated that most security personnel lack
-      the mental capability to operate the big red "on/off" button on their issued
-      stun batons, NanoTrasen has made some fundamental tweaks to their design. Disabled
-      stun batons now deal twice as much stamina damage as they do blunt damage.',
-    type: Tweak}
-  id: 2113
-  time: '2022-08-08T02:38:04.0000000+00:00'
-- author: lapatison
-  changes:
-  - {message: Tranquilizer shell now can be printed in security techfab, type: Add}
-  id: 2114
-  time: '2022-08-08T02:52:15.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Zombies now have proper groaning sounds when they scream., type: Add}
-  - {message: Zombies will occasionally audibly groan or say a voice line., type: Add}
-  - {message: Zombies now groan when they are hit., type: Add}
-  id: 2115
-  time: '2022-08-08T03:16:43.0000000+00:00'
-- author: LarryRussian
-  changes:
-  - {message: now HoS has combat gloves from the beginning of the round, type: Add}
-  id: 2116
-  time: '2022-08-08T03:22:38.0000000+00:00'
-- author: JustinTrotter
-  changes:
-  - {message: Activated pinpointers now automatically target the disk after completing
-      a FTL jump., type: Add}
-  id: 2117
-  time: '2022-08-08T04:27:30.0000000+00:00'
-- author: Myctai
-  changes:
-  - {message: 'Ointments heal 5 points of Burn damage per use, instead of 3.33', type: Fix}
-  id: 2118
-  time: '2022-08-08T08:47:15.0000000+00:00'
-- author: notafet
-  changes:
-  - {message: Robust harvest is significantly more effective., type: Tweak}
-  id: 2119
-  time: '2022-08-08T08:51:41.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: The objective to steal the Captain's jetpack no longer says "Captain's
-      Captain's Jetpack", type: Fix}
-  id: 2120
-  time: '2022-08-08T08:55:51.0000000+00:00'
-- author: Anthemic
-  changes:
-  - {message: Holofan projectors can now be printed in protolathes., type: Add}
-  id: 2121
-  time: '2022-08-08T08:57:39.0000000+00:00'
-- author: Morb0
-  changes:
-  - {message: Added bare footstep sounds for different surfaces, type: Add}
-  id: 2122
-  time: '2022-08-08T09:03:56.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed broken names in traitor steal conditions., type: Fix}
-  id: 2123
-  time: '2022-08-09T00:32:17.0000000+00:00'
-- author: vulppine
-  changes:
-  - {message: 'NanoTrasen has finally bought a license for SpaceDB, and is sharing
-      it with its stations for crew record management. We only have the one license.
-      Don''t tell them what we''re doing.', type: Add}
-  id: 2124
-  time: '2022-08-09T05:10:01.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Escape inventory doafter bars now stop after you are set down., type: Fix}
-  - {message: Escape inventory doafter length when held in a hand is now based on
-      relative mass. Escaping from anything but hands remains the same length., type: Tweak}
-  id: 2125
-  time: '2022-08-10T08:37:21.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: IFF labels on the shuttle console now look fancier., type: Tweak}
-  id: 2126
-  time: '2022-08-10T17:48:32.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Anchorable now checks if the tile has something that can collide first
-      before allowing anchoring., type: Tweak}
-  id: 2127
-  time: '2022-08-11T02:11:30.0000000+00:00'
-- author: Elijahrane
-  changes:
-  - {message: You can get more hints about how long something has been rotten., type: Tweak}
-  id: 2128
-  time: '2022-08-11T02:43:19.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Ore Processor deconstruction now works properly., type: Fix}
@@ -2959,3 +2777,183 @@ Entries:
   - {message: 'Added forensic pads, zipties and glasses to the secfab', type: Add}
   id: 2597
   time: '2022-11-08T02:42:29.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix damage effect persisting indefinitely., type: Fix}
+  id: 2598
+  time: '2022-11-08T19:58:21.0000000+00:00'
+- author: juliangiebel
+  changes:
+  - {message: a fancy new PDA UI, type: Add}
+  - {message: cartridges containing Programs for your PDA, type: Add}
+  id: 2599
+  time: '2022-11-08T20:00:21.0000000+00:00'
+- author: ashtronaut
+  changes:
+  - {message: Added a current readied player count to the lobby info during the pre-game
+      phase., type: Add}
+  id: 2600
+  time: '2022-11-08T20:02:07.0000000+00:00'
+- author: Mervill
+  changes:
+  - {message: Lawyers and Librarians can spawn with the Satchel and Duffelbag variants.,
+    type: Fix}
+  id: 2601
+  time: '2022-11-08T20:11:39.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: The coughing sounds are shorter., type: Tweak}
+  id: 2602
+  time: '2022-11-08T20:11:54.0000000+00:00'
+- author: Cripes
+  changes:
+  - {message: Added gas miners to Pillar. Crew can now enjoy breathing!, type: Tweak}
+  id: 2603
+  time: '2022-11-08T20:12:52.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The reagent grinder can now be upgraded. Revel in the blessed efficiency
+      of your blender., type: Add}
+  - {message: Decreased how many items can fit in a reagent grinder., type: Tweak}
+  id: 2604
+  time: '2022-11-08T20:15:50.0000000+00:00'
+- author: civilCornball
+  changes:
+  - {message: Allowed Proto-Kinetic Accelerators to be stored in the belt slot., type: Tweak}
+  id: 2605
+  time: '2022-11-08T20:19:04.0000000+00:00'
+- author: checkraze
+  changes:
+  - {message: Added a practice disabler, type: Add}
+  id: 2606
+  time: '2022-11-08T20:21:14.0000000+00:00'
+- author: JustinTrotter
+  changes:
+  - {message: fixed windoor hacking, type: Tweak}
+  id: 2607
+  time: '2022-11-08T20:22:00.0000000+00:00'
+- author: Mervill
+  changes:
+  - {message: Docking ports on shuttles no longer force welded doors open. Have fun
+      welding the shuttle doors shut., type: Fix}
+  id: 2608
+  time: '2022-11-08T20:22:50.0000000+00:00'
+- author: corentt
+  changes:
+  - {message: Your gas tank's output pressure will not decrease anymore when the tank
+      is almost empty, type: Tweak}
+  - {message: The internals alert will blink again when your gas tank need to be refilled,
+    type: Fix}
+  id: 2609
+  time: '2022-11-08T20:23:41.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added the Diona species. This is a group of slow-moving plant people
+      who just want to help out. Be kind to them on the station and keep them away
+      from fires., type: Add}
+  id: 2610
+  time: '2022-11-08T20:27:00.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Melee effect animations have been tweaked to be more accurate to range.,
+    type: Tweak}
+  id: 2611
+  time: '2022-11-08T20:28:50.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: The puking noise has been removed., type: Tweak}
+  id: 2612
+  time: '2022-11-08T20:33:06.0000000+00:00'
+- author: Vordenburg
+  changes:
+  - {message: Clarified machine missing messages for the cloner., type: Tweak}
+  id: 2613
+  time: '2022-11-08T20:35:09.0000000+00:00'
+- author: Nairod
+  changes:
+  - {message: Tweaked the HoP's starting access to be more uniform., type: Tweak}
+  id: 2614
+  time: '2022-11-08T20:39:49.0000000+00:00'
+- author: Bright0
+  changes:
+  - {message: pill containers now have unique sfx, type: Add}
+  id: 2615
+  time: '2022-11-08T20:53:10.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Resprited the Detective's Coat., type: Tweak}
+  id: 2616
+  time: '2022-11-08T20:56:14.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: Ore processors and lathes require power to process materials., type: Fix}
+  id: 2617
+  time: '2022-11-08T20:56:53.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: You can inject all animals with syringes now. Veterinarians rejoice!,
+    type: Fix}
+  id: 2618
+  time: '2022-11-08T20:57:13.0000000+00:00'
+- author: eclips_e
+  changes:
+  - {message: 'Nanotrasen''s R&D department has harnessed the power of talking to
+      the god''s, essentially, you can pray at altars now! Nanotrasen Inc. is not
+      responsible for injury, death or catgirl-ification.', type: Add}
+  - {message: Added the ability for chaplain's to pray at their bible., type: Add}
+  id: 2619
+  time: '2022-11-08T21:02:15.0000000+00:00'
+- author: JustinTrotter
+  changes:
+  - {message: You can toggle other crew's internals via right click menu, type: Add}
+  - {message: Pets can wear breath/medical masks and air tanks. Save those pets!,
+    type: Add}
+  id: 2620
+  time: '2022-11-08T21:04:07.0000000+00:00'
+- author: Vordenburg
+  changes:
+  - {message: The forensic scanner prints properly if it's not in your active hand.,
+    type: Fix}
+  - {message: The forensic scanner makes a sound when printing., type: Add}
+  id: 2621
+  time: '2022-11-08T21:06:09.0000000+00:00'
+- author: PixelTK
+  changes:
+  - {message: 'After a very long time, speed loaders have finally been fixed.', type: Fix}
+  id: 2622
+  time: '2022-11-08T21:09:38.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: You can no longer use machines which require vision while blind., type: Fix}
+  id: 2623
+  time: '2022-11-08T21:10:14.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Animals are no longer immune to shoving., type: Fix}
+  - {message: You now shove people rather than "disarm" them if they aren't holding
+      anything., type: Fix}
+  id: 2624
+  time: '2022-11-08T21:11:00.0000000+00:00'
+- author: Nairod
+  changes:
+  - {message: Added a armory door remote for the warden., type: Add}
+  id: 2625
+  time: '2022-11-08T21:13:56.0000000+00:00'
+- author: Scribbles0
+  changes:
+  - {message: 'Heterochromia is now available through the markings tab, located under
+      the head section.', type: Add}
+  id: 2626
+  time: '2022-11-08T21:16:13.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Names show during the join announcement again., type: Fix}
+  id: 2627
+  time: '2022-11-09T00:04:51.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Hopefully fixed an issue that was causing entities to sometimes not
+      appear (e.g., "invisible walls"). Please re-report if it reoccurs on updated
+      servers.', type: Fix}
+  id: 2628
+  time: '2022-11-09T00:41:26.0000000+00:00'

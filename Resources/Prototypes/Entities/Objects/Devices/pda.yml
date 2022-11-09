@@ -21,6 +21,8 @@
     containers:
       PDA-id: !type:ContainerSlot {}
       PDA-pen: !type:ContainerSlot {}
+      Cartridge-Slot: !type:ContainerSlot {}
+      program-container: !type:Container
   - type: ItemSlots
   - type: Clothing
     quickEquip: false
@@ -41,6 +43,24 @@
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
   - type: Ringer
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: PDA
+    prefix: device-address-prefix-console
+  - type: WirelessNetworkConnection
+    range: 500
+  - type: CartridgeLoader
+    uiKey: enum.PDAUiKey.Key
+    preinstalled:
+      - NotekeeperCartridge
+    cartridgeSlot:
+      priority: -1
+      name: Cartridge
+      ejectSound: /Audio/Machines/id_swipe.ogg
+      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+      whitelist:
+        components:
+          - Cartridge
   - type: ActivatableUI
     key: enum.PDAUiKey.Key
     singleUser: true
@@ -87,6 +107,8 @@
   components:
   - type: PDA
     id: PassengerIDCard
+  - type: PDABorderColor
+    borderColor: "#717059"
 
 - type: entity
   parent: BasePDA
@@ -162,6 +184,8 @@
     visuals:
     - type: PDAVisualizer
       state: pda-cook
+  - type: PDABorderColor
+    borderColor: "#d7d7d0"
   - type: Icon
     state: pda-cook
 
@@ -200,6 +224,8 @@
     visuals:
       - type: PDAVisualizer
         state: pda-clown
+  - type: PDABorderColor
+    borderColor: "#C18199"
   - type: Icon
     state: pda-clown
   - type: Slippery
@@ -258,6 +284,8 @@
     visuals:
       - type: PDAVisualizer
         state: pda-chaplain
+  - type: PDABorderColor
+    borderColor: "#333333"
   - type: Icon
     state: pda-chaplain
 
@@ -363,6 +391,8 @@
     visuals:
       - type: PDAVisualizer
         state: pda-janitor
+  - type: PDABorderColor
+    borderColor: "#5D2D56"
   - type: Icon
     state: pda-janitor
 
@@ -384,6 +414,8 @@
     visuals:
       - type: PDAVisualizer
         state: pda-captain
+  - type: PDABorderColor
+    borderColor: "#7C5D00"
   - type: Icon
     state: pda-captain
 
@@ -416,6 +448,9 @@
   components:
   - type: PDA
     id: CEIDCard
+  - type: PDABorderColor
+    borderColor: "#949137"
+    accentHColor: "#447987"
   - type: Appearance
     visuals:
       - type: PDAVisualizer
@@ -450,6 +485,10 @@
     visuals:
       - type: PDAVisualizer
         state: pda-cmo
+  - type: PDABorderColor
+    borderColor: "#d7d7d0"
+    accentHColor: "#447987"
+    accentVColor: "#447987"
   - type: Icon
     state: pda-cmo
   - type: HealthAnalyzer
@@ -467,6 +506,9 @@
     visuals:
       - type: PDAVisualizer
         state: pda-medical
+  - type: PDABorderColor
+    borderColor: "#d7d7d0"
+    accentVColor: "#447987"
   - type: Icon
     state: pda-medical
   - type: HealthAnalyzer
@@ -484,6 +526,9 @@
     visuals:
       - type: PDAVisualizer
         state: pda-chemistry
+  - type: PDABorderColor
+    borderColor: "#d7d7d0"
+    accentVColor: "#B34200"
   - type: Icon
     state: pda-chemistry
 
@@ -529,6 +574,9 @@
     visuals:
       - type: PDAVisualizer
         state: pda-hos
+  - type: PDABorderColor
+    borderColor: "#A32D26"
+    accentHColor: "#447987"
   - type: Icon
     state: pda-hos
 
@@ -642,6 +690,9 @@
   components:
   - type: PDA
     id: ERTLeaderIDCard
+  - type: PDABorderColor
+    borderColor: "#A32D26"
+    accentHColor: "#447987"
   - type: Appearance
     visuals:
     - type: PDAVisualizer
@@ -657,6 +708,9 @@
   components:
   - type: PDA
     id: CBURNIDcard
+  - type: PDABorderColor
+    borderColor: "#A32D26"
+    accentHColor: "#447987"
 
 - type: entity
   parent: BasePDA
@@ -670,6 +724,9 @@
     visuals:
       - type: PDAVisualizer
         state: pda-medical
+  - type: PDABorderColor
+    borderColor: "#d7d7d0"
+    accentVColor: "#447987"
   - type: Icon
     state: pda-medical
 
@@ -715,6 +772,9 @@
     visuals:
       - type: PDAVisualizer
         state: pda-boxer
+  - type: PDABorderColor
+    borderColor: "#333333"
+    borderVColor: "#390504"
   - type: Icon
     state: pda-boxer
 
@@ -730,5 +790,7 @@
     visuals:
       - type: PDAVisualizer
         state: pda-detective
+  - type: PDABorderColor
+    borderColor: "#774705"
   - type: Icon
     state: pda-detective
