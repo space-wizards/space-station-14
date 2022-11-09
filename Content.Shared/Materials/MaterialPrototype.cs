@@ -27,9 +27,14 @@ namespace Content.Shared.Materials
         [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
+        /// <summary>
+        ///     For material storage to be able to convert back and forth
+        ///     between the material and physical entities you can carry,
+        ///     include which stack we should spawn by default.
+        /// </summary>
         [ViewVariables]
-        [DataField("stack", customTypeSerializer:typeof(PrototypeIdSerializer<StackPrototype>))]
-        public string? StackId { get; } = null;
+        [DataField("stackProto", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
+        public string? StackProto { get; } = null;
 
         [ViewVariables]
         [DataField("name")]
