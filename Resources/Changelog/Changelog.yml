@@ -1,15 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Anchorable now checks if the tile has something that can collide first
-      before allowing anchoring., type: Tweak}
-  id: 2127
-  time: '2022-08-11T02:11:30.0000000+00:00'
-- author: Elijahrane
-  changes:
-  - {message: You can get more hints about how long something has been rotten., type: Tweak}
-  id: 2128
-  time: '2022-08-11T02:43:19.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Ore Processor deconstruction now works properly., type: Fix}
@@ -2956,3 +2945,15 @@ Entries:
       the head section.', type: Add}
   id: 2626
   time: '2022-11-08T21:16:13.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Names show during the join announcement again., type: Fix}
+  id: 2627
+  time: '2022-11-09T00:04:51.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Hopefully fixed an issue that was causing entities to sometimes not
+      appear (e.g., "invisible walls"). Please re-report if it reoccurs on updated
+      servers.', type: Fix}
+  id: 2628
+  time: '2022-11-09T00:41:26.0000000+00:00'

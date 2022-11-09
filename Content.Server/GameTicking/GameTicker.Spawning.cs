@@ -198,8 +198,8 @@ namespace Content.Server.GameTicking
                 _chatSystem.DispatchStationAnnouncement(station,
                     Loc.GetString(
                         "latejoin-arrival-announcement",
-                    ("character", Identity.Entity(mob, EntityManager)),
-                    ("name", character.Name), // Fix announces, bitches
+                    ("character", MetaData(mob).EntityName),
+                    ("gender", character.Gender),
                     ("job", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(job.Name))
                     ), Loc.GetString("latejoin-arrival-sender"),
                     playDefaultSound: false);
