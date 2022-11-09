@@ -320,6 +320,52 @@ namespace Content.IntegrationTests.Tests
 
             await pairTracker.CleanReturnAsync();
         }
+
+        [Test]
+        public async Task TestRestockInventoryBounds()
+        {
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
+            var server = pairTracker.Pair.Server;
+            await server.WaitIdleAsync();
+
+            var mapManager = server.ResolveDependency<IMapManager>();
+            var entityManager = server.ResolveDependency<IEntityManager>();
+            var entitySystemManager = server.ResolveDependency<IEntitySystemManager>();
+
+            var vendingMachineSystem = entitySystemManager.GetEntitySystem<SharedVendingMachineSystem>();
+
+            var testMap = await PoolManager.CreateTestMap(pairTracker);
+
+            await server.WaitAssertion(() =>
+            {
+                var coordinates = testMap.GridCoords;
+
+                EntityUid machine = entityManager.SpawnEntity("VendingMachineTest", coordinates);
+
+                Assert.That(vendingMachineSystem.GetAvailableInventory(machine).Count, Is.EqualTo(1),
+                    "Machine's available inventory did not contain one entry.");
+
+                Assert.That(vendingMachineSystem.GetAvailableInventory(machine)[0].Amount, Is.EqualTo(1),
+                    "Machine's available inventory is not the expected amount.");
+
+                vendingMachineSystem.RestockInventoryFromPrototype(machine);
+
+                Assert.That(vendingMachineSystem.GetAvailableInventory(machine)[0].Amount, Is.EqualTo(2),
+                    "Machine's available inventory is not double its starting amount after a restock.");
+
+                vendingMachineSystem.RestockInventoryFromPrototype(machine);
+
+                Assert.That(vendingMachineSystem.GetAvailableInventory(machine)[0].Amount, Is.EqualTo(3),
+                    "Machine's available inventory is not triple its starting amount after two restocks.");
+
+                vendingMachineSystem.RestockInventoryFromPrototype(machine);
+
+                Assert.That(vendingMachineSystem.GetAvailableInventory(machine)[0].Amount, Is.EqualTo(3),
+                    "Machine's available inventory did not stay the same after a third restock.");
+            });
+
+            await pairTracker.CleanReturnAsync();
+        }
     }
 }
 
