@@ -61,6 +61,12 @@ public sealed class StealthComponent : Component
     /// </summary>
     [DataField("maxVisibility")]
     public readonly float MaxVisibility = 1.5f;
+
+    /// <summary>
+    ///     Localization string for how you'd like to describe this effect.
+    /// </summary>
+    [DataField("examinedDesc")]
+    public string ExaminedDesc = "stealth-visual-effect";
 }
 
 [Serializable, NetSerializable]

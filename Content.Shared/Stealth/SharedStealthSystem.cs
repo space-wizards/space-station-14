@@ -19,10 +19,11 @@ public abstract class SharedStealthSystem : EntitySystem
         SubscribeLocalEvent<StealthOnMoveComponent, GetVisibilityModifiersEvent>(OnGetVisibilityModifiers);
         SubscribeLocalEvent<StealthComponent, EntityPausedEvent>(OnPaused);
         SubscribeLocalEvent<StealthComponent, ComponentInit>(OnInit);
-        SubscribeLocalEvent<StealthComponent, ExamineAttemptEvent>(OnExamine);
+        SubscribeLocalEvent<StealthComponent, ExamineAttemptEvent>(OnExamineAttempt);
+        SubscribeLocalEvent<StealthComponent, ExaminedEvent>(OnExamined);
     }
 
-    private void OnExamine(EntityUid uid, StealthComponent component, ExamineAttemptEvent args)
+    private void OnExamineAttempt(EntityUid uid, StealthComponent component, ExamineAttemptEvent args)
     {
         if (!component.Enabled || GetVisibility(uid, component) > component.ExamineThreshold)
             return;
@@ -39,6 +40,12 @@ public abstract class SharedStealthSystem : EntitySystem
         while (source.IsValid());
 
         args.Cancel();
+    }
+
+    private void OnExamined(EntityUid uid, StealthComponent component, ExaminedEvent args)
+    {
+        if (component.Enabled)
+            args.PushMarkup(Loc.GetString(component.ExaminedDesc, ("target", uid)));
     }
 
     public virtual void SetEnabled(EntityUid uid, bool value, StealthComponent? component = null)
