@@ -1,6 +1,7 @@
 - type: job
   id: Warden
   name: job-name-warden
+  description: job-description-warden
   playTimeTracker: JobWarden
   requirements:
     - !type:DepartmentTimeRequirement

@@ -1,7 +1,7 @@
 - type: job
   id: Quartermaster
   name: job-name-qm
-  description: job-description-quartermaster
+  description: job-description-qm
   playTimeTracker: JobQuartermaster
   requirements:
     - !type:RoleTimeRequirement

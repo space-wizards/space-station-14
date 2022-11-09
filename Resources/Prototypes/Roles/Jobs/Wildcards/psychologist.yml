@@ -1,6 +1,7 @@
 - type: job
   id: Psychologist
   name: job-name-psychologist
+  description: job-description-psychologist
   playTimeTracker: JobPsychologist
   startingGear: PsychologistGear
   icon: "Psychologist"
