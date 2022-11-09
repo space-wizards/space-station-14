@@ -34,6 +34,14 @@ public sealed class ItemComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("sprite")]
     public string? RsiPath;
+
+    /// <summary>
+    ///     Ignore combat mode when holding this item (ie. handcuffs)
+    /// </summary>
+    [Access(typeof(SharedItemSystem))]
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("ignoreCombat")]
+    public bool IgnoreCombat = false;
 }
 
 [Serializable, NetSerializable]
