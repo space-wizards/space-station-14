@@ -1,10 +1,4 @@
 Entries:
-- author: vulppine
-  changes:
-  - {message: 'Nanotrasen has found where all the microphones for handheld radios
-      went. Enjoy your usage of handheld radio technology, today!', type: Tweak}
-  id: 2130
-  time: '2022-08-11T09:25:29.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: A console to toggle IFF (radar labels) has been added., type: Add}
@@ -2957,3 +2951,9 @@ Entries:
   - {message: Fixed vehicles not working., type: Fix}
   id: 2629
   time: '2022-11-09T06:31:43.0000000+00:00'
+- author: checkraze
+  changes:
+  - {message: Added XenoSci things and a mass scanner for salvage crew to Lighthouse,
+    type: Add}
+  id: 2630
+  time: '2022-11-09T07:06:34.0000000+00:00'
