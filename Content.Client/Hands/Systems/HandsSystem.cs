@@ -245,12 +245,7 @@ namespace Content.Client.Hands.Systems
         
         public void UIHandAltActivateItem(string handName)
         {
-            if (!TryGetPlayerHands(out var hands)
-                || !hands.Hands.TryGetValue(handName, out var hand)
-                || hand.HeldEntity is not { Valid: true } entity)
-                return;
-
-            EntityManager.RaisePredictiveEvent(new RequestHandAltInteractEvent(entity));
+            RaisePredictiveEvent(new RequestHandAltInteractEvent(handName));
         }
 
         #region visuals
