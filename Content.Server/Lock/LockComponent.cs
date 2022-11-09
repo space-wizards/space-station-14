@@ -19,7 +19,6 @@ public struct LockToggleAttemptEvent
 {
     public bool Silent = false;
     public bool Cancelled = false;
-    public bool Cancelled = false;
     public EntityUid User;
 
     public LockToggleAttemptEvent(EntityUid user, bool silent = false)
