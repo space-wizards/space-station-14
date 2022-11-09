@@ -224,8 +224,7 @@ namespace Content.Shared.Interaction
             bool checkAccess = true,
             bool checkCanUse = true)
         {
-            if (target == null
-                || Deleted(target.Value)
+            if ((target != null && Deleted(target.Value))
                 || !ValidateInteractAndFace(user, coordinates)
                 || !(TryComp(user, out SharedHandsComponent? hands)))
                 return;
@@ -238,7 +237,7 @@ namespace Content.Shared.Interaction
                 return;
             }
 
-            if (altInteract)
+            if (altInteract && target != null )
             {
                 // Perform alternative interactions, using context menu verbs.
                 // These perform their own range, can-interact, and accessibility checks.
@@ -252,6 +251,7 @@ namespace Content.Shared.Interaction
             // Check if interacted entity is in the same container, the direct child, or direct parent of the user.
             // Also checks if the item is accessible via some storage UI (e.g., open backpack)
             if (checkAccess
+                && target != null
                 && !_containerSystem.IsInSameOrParentContainer(user, target.Value)
                 && !CanAccessViaStorage(user, target.Value))
                 return;
@@ -259,21 +259,26 @@ namespace Content.Shared.Interaction
             // Does the user have hands?
             if (hands.ActiveHand == null)
             {
+                if (target != null)
+                {
                   var ev = new InteractNoHandEvent(user, target.Value);
                   RaiseLocalEvent(user, ev);
 
                   var interactedEv = new InteractedNoHandEvent(target.Value, user);
                   RaiseLocalEvent(target.Value, interactedEv);
                   DoContactInteraction(user, target.Value, ev);
+                }
                 return;
             }
 
-            var inRangeUnobstructed = !checkAccess || InRangeUnobstructed(user, target.Value); // permits interactions with wall mounted entities
+            var inRangeUnobstructed = target == null
+              ? !checkAccess || InRangeUnobstructed(user, coordinates)
+              : !checkAccess || InRangeUnobstructed(user, target.Value); // permits interactions with wall mounted entities
 
             // empty-hand interactions
             if (hands.ActiveHandEntity is not { } held)
             {
-                if (inRangeUnobstructed)
+                if (inRangeUnobstructed && target != null)
                     InteractHand(user, target.Value);
                 return;
             }
@@ -288,7 +293,7 @@ namespace Content.Shared.Interaction
                 return;
             }
 
-            if (inRangeUnobstructed)
+            if (inRangeUnobstructed && target != null)
             {
                 InteractUsing(
                     user,
