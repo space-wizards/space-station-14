@@ -109,7 +109,6 @@ public sealed class WeatherOverlay : Overlay
         worldHandle.RenderInRenderTarget(_blep, () =>
         {
             var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
-            var sprite = _sprite.Frame0(weatherProto.Sprite);
 
             foreach (var grid in _mapManager.FindGridsIntersecting(mapId, worldAABB))
             {
@@ -123,13 +122,22 @@ public sealed class WeatherOverlay : Overlay
                     var gridTile = new Box2(tile.GridIndices * grid.TileSize,
                         (tile.GridIndices + Vector2i.One) * grid.TileSize);
 
-                    worldHandle.DrawTextureRect(sprite, new Box2Rotated(gridTile, -worldRot, gridTile.Center));
+                    worldHandle.DrawRect(new Box2Rotated(gridTile, -worldRot, gridTile.Center), Color.Black);
                 }
             }
 
-        }, null);
+        }, Color.Transparent);
+
+        var rotation = args.Viewport.Eye?.Rotation ?? Angle.Zero;
+        var rotty = Matrix3.CreateRotation(rotation);
+        worldHandle.SetTransform(rotty);
+
+        for (var x = 0; x < worldBounds.Box.Width; x++)
+        {
+
+        }
 
         worldHandle.SetTransform(Matrix3.Identity);
-        worldHandle.DrawTextureRect(_blep.Texture, worldAABB);
+        worldHandle.DrawTextureRect(_blep.Texture, worldBounds);
     }
 }
