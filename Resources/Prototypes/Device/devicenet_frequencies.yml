@@ -69,3 +69,8 @@
   id: MailingUnit
   name: device-frequency-prototype-name-mailing-units
   frequency: 2300
+
+- type: deviceFrequency
+  id: PDA
+  name: device-frequency-prototype-name-pdas
+  frequency: 2202

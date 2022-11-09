@@ -243,6 +243,8 @@ namespace Content.Server.GameTicking
             ReqWindowAttentionAll();
             UpdateLateJoinStatus();
             AnnounceRound();
+            UpdateInfoText();
+
             var roundStartedEvent = new RoundStartedEvent(RoundId);
             RaiseLocalEvent(roundStartedEvent);
 #if EXCEPTION_TOLERANCE
