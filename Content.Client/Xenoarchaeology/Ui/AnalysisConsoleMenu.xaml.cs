@@ -17,8 +17,11 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
     [Dependency] private readonly IEntityManager _ent = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
 
+    public AnalysisDestroyWindow? AnalysisDestroyWindow;
+
     public event Action<BaseButton.ButtonEventArgs>? OnServerSelectionButtonPressed;
     public event Action<BaseButton.ButtonEventArgs>? OnScanButtonPressed;
+    public event Action<BaseButton.ButtonEventArgs>? OnPrintButtonPressed;
     public event Action<BaseButton.ButtonEventArgs>? OnDestroyButtonPressed;
 
     public AnalysisConsoleMenu()
@@ -28,18 +31,34 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
 
         ServerSelectionButton.OnPressed += a => OnServerSelectionButtonPressed?.Invoke(a);
         ScanButton.OnPressed += a => OnScanButtonPressed?.Invoke(a);
-        DestroyButton.OnPressed += a => OnDestroyButtonPressed?.Invoke(a);
+        PrintButton.OnPressed += a => OnPrintButtonPressed?.Invoke(a);
+        DestroyButton.OnPressed += _ => OnDestroyButton();
     }
 
-    public void SetScanButtonDisabled(AnalysisConsoleScanUpdateState state)
+    private void OnDestroyButton()
     {
-        var disabled = !state.CanScan;
+        // check if window is already open
+        if (AnalysisDestroyWindow is { IsOpen: true })
+        {
+            AnalysisDestroyWindow.MoveToFront();
+            return;
+        }
 
-        ScanButton.Disabled = disabled;
+        // open a new one
+        AnalysisDestroyWindow = new ();
+        AnalysisDestroyWindow.OpenCentered();
+
+        AnalysisDestroyWindow.OnYesButton += a =>
+        {
+            OnDestroyButtonPressed?.Invoke(a);
+        };
     }
 
-    public void SetDestroyButtonDisabled(AnalysisConsoleScanUpdateState state)
+    public void SetButtonsDisabled(AnalysisConsoleScanUpdateState state)
     {
+        ScanButton.Disabled = !state.CanScan;
+        PrintButton.Disabled = !state.CanPrint;
+
         var disabled = !state.ServerConnected || !state.CanScan;
 
         DestroyButton.Disabled = disabled;
@@ -77,6 +96,7 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
         {
             message.AddMarkup(Loc.GetString("analysis-console-info-scanner"));
             Information.SetMessage(message);
+            UpdateArtifactIcon(null); //set it to blank
             return;
         }
 
@@ -152,6 +172,13 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
         ProgressLabel.Text = Loc.GetString("analysis-console-progress-text",
             ("seconds", (int) state.TotalTime.TotalSeconds - (int) state.TimeRemaining.TotalSeconds));
         ProgressBar.Value = (float) state.TimeRemaining.Divide(state.TotalTime);
+    }
+
+    public override void Close()
+    {
+        base.Close();
+
+        AnalysisDestroyWindow?.Close();
     }
 }
 

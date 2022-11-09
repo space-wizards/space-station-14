@@ -28,3 +28,9 @@ station-event-random-sentience-announcement = Based on { $data }, we believe tha
 ## Ghost role description
 
 station-event-random-sentience-role-description = You are a sentient { $name }, brought to life through space magic.
+
+# Flavors
+station-event-random-sentience-flavor-mechanical = mechanical
+station-event-random-sentience-flavor-organic = organic
+station-event-random-sentience-flavor-corgi = corgi
+station-event-random-sentience-flavor-primate = primate

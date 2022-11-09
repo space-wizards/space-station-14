@@ -3,6 +3,9 @@
   name: "speed loader (.30 rifle)"
   parent: BaseItem
   components:
+  - type: Tag
+    tags:
+      - SpeedLoaderRifle
   - type: BallisticAmmoProvider
     whitelist:
       tags:

@@ -14,9 +14,9 @@ using Content.Server.Examine;
 using Content.Server.Hands.Components;
 using Content.Server.Movement.Systems;
 using Content.Server.Weapons.Melee.Components;
-using Content.Server.Weapons.Melee.Events;
 using Content.Shared.CombatMode;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.IdentityManagement;
@@ -25,6 +25,7 @@ using Content.Shared.Physics;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
+using Content.Shared.StatusEffect;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
@@ -328,8 +329,8 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
         if (!TryComp<HandsComponent>(ev.Target.Value, out var targetHandsComponent))
         {
-            // Client will have already predicted this.
-            return false;
+            if (!TryComp<StatusEffectsComponent>(ev.Target!.Value, out var status) || !status.AllowedEffects.Contains("KnockedDown"))
+                return false;
         }
 
         if (!InRange(user, ev.Target.Value, component.Range, session))
@@ -339,7 +340,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
         EntityUid? inTargetHand = null;
 
-        if (targetHandsComponent.ActiveHand is { IsEmpty: false })
+        if (targetHandsComponent?.ActiveHand is { IsEmpty: false })
         {
             inTargetHand = targetHandsComponent.ActiveHand.HeldEntity!.Value;
         }
@@ -368,13 +369,17 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         }
 
         var filterOther = Filter.Pvs(user, entityManager: EntityManager).RemoveWhereAttachedEntity(e => e == user);
+        var msgPrefix = "disarm-action-";
+
+        if (inTargetHand == null)
+            msgPrefix = "disarm-action-shove-";
 
         var msgOther = Loc.GetString(
-                "disarm-action-popup-message-other-clients",
+                msgPrefix + "popup-message-other-clients",
                 ("performerName", Identity.Entity(user, EntityManager)),
                 ("targetName", Identity.Entity(target, EntityManager)));
 
-        var msgUser = Loc.GetString("disarm-action-popup-message-cursor", ("targetName", Identity.Entity(target, EntityManager)));
+       var msgUser = Loc.GetString(msgPrefix + "popup-message-cursor", ("targetName", Identity.Entity(target, EntityManager)));
 
         PopupSystem.PopupEntity(msgOther, user, filterOther);
         PopupSystem.PopupEntity(msgUser, target, Filter.Entities(user));

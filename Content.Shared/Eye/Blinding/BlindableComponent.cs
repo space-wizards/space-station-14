@@ -26,7 +26,7 @@ namespace Content.Shared.Eye.Blinding
 
         /// <summary>
         /// Whether eye damage has accumulated enough to blind them.
-        /// <summary>
+        /// </summary>
         [ViewVariables]
         public bool EyeTooDamaged = false;
 

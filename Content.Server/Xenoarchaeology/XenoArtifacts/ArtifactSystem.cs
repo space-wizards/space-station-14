@@ -158,7 +158,13 @@ public sealed partial class ArtifactSystem : EntitySystem
         component.CurrentNode.Triggered = true;
         if (component.CurrentNode.Edges.Any())
         {
+            var undiscoveredNodes = component.CurrentNode.Edges.Where(x => !x.Discovered).ToList();
+
             var newNode = _random.Pick(component.CurrentNode.Edges);
+            if (undiscoveredNodes.Any() && _random.Prob(0.75f))
+            {
+                newNode = _random.Pick(undiscoveredNodes);
+            }
             EnterNode(uid, ref newNode, component);
         }
     }
