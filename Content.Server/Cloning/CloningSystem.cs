@@ -143,7 +143,7 @@ namespace Content.Server.Cloning.Systems
             if (!args.IsInDetailsRange || !_powerReceiverSystem.IsPowered(uid))
                 return;
 
-            args.PushMarkup(Loc.GetString("cloning-pod-biomass", ("number", _material.GetMaterialAmount(uid, "Biomass"))));
+            args.PushMarkup(Loc.GetString("cloning-pod-biomass", ("number", _material.GetMaterialAmount(uid, component.RequiredMaterial))));
         }
 
         public bool TryCloning(EntityUid uid, EntityUid bodyToClone, Mind.Mind mind, CloningPodComponent? clonePod)
@@ -187,7 +187,7 @@ namespace Content.Server.Cloning.Systems
                 cloningCost = (int) Math.Round(cloningCost * EasyModeCloningCost);
 
             // biomass checks
-            var biomassAmount = _material.GetMaterialAmount(uid, "Biomass");
+            var biomassAmount = _material.GetMaterialAmount(uid, clonePod.RequiredMaterial);
 
             if (biomassAmount < cloningCost)
             {
@@ -196,7 +196,7 @@ namespace Content.Server.Cloning.Systems
                 return false;
             }
 
-            _material.TryChangeMaterialAmount(uid, "Biomass", -cloningCost);
+            _material.TryChangeMaterialAmount(uid, clonePod.RequiredMaterial, -cloningCost);
             clonePod.UsedBiomass = cloningCost;
             // end of biomass checks
 
@@ -313,8 +313,7 @@ namespace Content.Server.Cloning.Systems
             }
             _spillableSystem.SpillAt(uid, bloodSolution, "PuddleBlood");
 
-            var biomassStack = Spawn("MaterialBiomass", transform.Coordinates);
-            _stackSystem.SetCount(biomassStack, _robustRandom.Next(1, (int) (clonePod.UsedBiomass / 2.5)));
+            _serverStackSystem.SpawnMultipleFromMaterial(_robustRandom.Next(1, (int) (clonePod.UsedBiomass / 2.5)), clonePod.RequiredMaterial, Transform(uid).Coordinates);
 
             clonePod.UsedBiomass = 0;
             RemCompDeferred<ActiveCloningPodComponent>(uid);

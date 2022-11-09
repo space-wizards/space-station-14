@@ -26,7 +26,6 @@
   components:
   - type: Stack
     stackType: LeavesCannabisDried
-    max: 5
     count: 1
   - type: SolutionContainerManager
     solutions:
@@ -46,7 +45,6 @@
   components:
   - type: Stack
     stackType: GroundCannabis
-    max: 5
     count: 1
   - type: SolutionContainerManager
     solutions:
@@ -84,7 +82,6 @@
   components:
   - type: Stack
     stackType: LeavesTobaccoDried
-    max: 5
     count: 1
   - type: SolutionContainerManager
     solutions:
@@ -104,7 +101,6 @@
   components:
   - type: Stack
     stackType: GroundTobacco
-    max: 5
     count: 1
   - type: SolutionContainerManager
     solutions:

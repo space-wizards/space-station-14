@@ -29,7 +29,7 @@ namespace Content.Server.Stack
 
         public override void SetCount(EntityUid uid, int amount, SharedStackComponent? component = null)
         {
-            if (!Resolve(uid, ref component))
+            if (!Resolve(uid, ref component, false))
                 return;
 
             base.SetCount(uid, amount, component);
@@ -45,6 +45,9 @@ namespace Content.Server.Stack
         public EntityUid? Split(EntityUid uid, int amount, EntityCoordinates spawnPosition, SharedStackComponent? stack = null)
         {
             if (!Resolve(uid, ref stack))
+                return null;
+
+            if (stack.StackTypeId == null)
                 return null;
 
             // Get a prototype ID to spawn the new entity. Null is also valid, although it should rarely be picked...
@@ -88,25 +91,29 @@ namespace Content.Server.Stack
         ///     Say you want to spawn 97 stacks of something that has a max stack count of 30.
         ///     This would spawn 3 stacks of 30 and 1 stack of 7.
         /// </summary>
-        public void SpawnMultiple(int amount, MaterialPrototype materialProto, EntityCoordinates coordinates)
+        public List<EntityUid> SpawnMultiple(int amount, MaterialPrototype materialProto, EntityCoordinates coordinates)
         {
+            var list = new List<EntityUid>();
             if (amount <= 0)
-                return;
+                return list;
 
             // At least 1 is being spawned, we'll use the first to extract the max count.
             var firstSpawn = Spawn(materialProto.StackProto, coordinates);
 
-            if (!TryComp<StackComponent>(firstSpawn, out var stack))
-                return;
+            if (!TryComp<StackComponent>(firstSpawn, out var stack) || stack.StackTypeId == null)
+                return list;
+
+            if (!_prototypeManager.TryIndex<StackPrototype>(stack.StackTypeId, out var stackProto) || stackProto.MaxCount == null)
+                return list;
 
             if (!TryComp<MaterialComponent>(firstSpawn, out var material))
-                return;
+                return list;
 
-            var maxCountPerStack = stack.MaxCount;
+            int maxCountPerStack = (int) stackProto.MaxCount;
             var materialPerStack = material._materials[materialProto.ID];
 
             if (amount < materialPerStack)
-                return;
+                return list;
 
             if (amount > (maxCountPerStack * materialPerStack))
             {
@@ -117,12 +124,14 @@ namespace Content.Server.Stack
                 SetCount(firstSpawn, (amount / materialPerStack), stack);
                 amount = 0;
             }
+            list.Add(firstSpawn);
 
             while (amount > 0)
             {
                 if (amount > maxCountPerStack)
                 {
                     var entity = Spawn(materialProto.StackProto, coordinates);
+                    list.Add(entity);
                     var nextStack = Comp<StackComponent>(entity);
 
                     SetCount(entity, maxCountPerStack, nextStack);
@@ -131,23 +140,25 @@ namespace Content.Server.Stack
                 else
                 {
                     var entity = Spawn(materialProto.StackProto, coordinates);
+                    list.Add(entity);
                     var nextStack = Comp<StackComponent>(entity);
 
                     SetCount(entity, amount, nextStack);
                     amount = 0;
                 }
             }
+            return list;
         }
 
-        public void SpawnMultipleFromMaterial(int amount, string material, EntityCoordinates coordinates)
+        public List<EntityUid> SpawnMultipleFromMaterial(int amount, string material, EntityCoordinates coordinates)
         {
             if (!_prototypeManager.TryIndex<MaterialPrototype>(material, out var stackType))
             {
                 Logger.Error("Failed to index material prototype " + material);
-                return;
+                return new List<EntityUid>();
             }
 
-            SpawnMultiple(amount, stackType, coordinates);
+            return SpawnMultiple(amount, stackType, coordinates);
         }
 
         private void OnStackAlternativeInteract(EntityUid uid, StackComponent stack, GetVerbsEvent<AlternativeVerb> args)

@@ -1,6 +1,7 @@
 using Content.Shared.Storage;
 using System.Threading;
 using Content.Shared.Construction.Prototypes;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Medical.BiomassReclaimer
@@ -35,7 +36,7 @@ namespace Content.Server.Medical.BiomassReclaimer
         /// This is calculated from the YieldPerUnitMass.
         /// </summary>
         [ViewVariables]
-        public uint CurrentExpectedYield = default;
+        public int CurrentExpectedYield = default;
 
         /// <summary>
         /// The reagent that will be spilled while processing a mob.

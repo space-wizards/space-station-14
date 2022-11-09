@@ -467,7 +467,7 @@ public sealed partial class AdminVerbSystem
                 Act = () =>
                 {
                     // Unbounded intentionally.
-                    _quickDialog.OpenDialog(player, "Adjust stack", $"Amount (max {stack.MaxCount})", (int newAmount) =>
+                    _quickDialog.OpenDialog(player, "Adjust stack", $"Amount (max {_stackSystem.GetMaxCount(stack)})", (int newAmount) =>
                     {
                         _stackSystem.SetCount(args.Target, newAmount, stack);
                     });
@@ -485,7 +485,7 @@ public sealed partial class AdminVerbSystem
                 IconTexture = "/Textures/Interface/AdminActions/fill-stack.png",
                 Act = () =>
                 {
-                    _stackSystem.SetCount(args.Target, stack.MaxCount, stack);
+                    _stackSystem.SetCount(args.Target, _stackSystem.GetMaxCount(stack), stack);
                 },
                 Impact = LogImpact.Medium,
                 Message = Loc.GetString("admin-trick-fill-stack-description"),
