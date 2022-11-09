@@ -78,6 +78,12 @@ namespace Content.Server.Atmos.Components
         [DataField("tankFragmentScale")]
         public float TankFragmentScale { get; set; }    = 10 * Atmospherics.OneAtmosphere;
 
+        /// <summary>
+        ///     Pressure at which tank should be considered 'low' such as for internals.
+        /// </summary>
+        [DataField("tankLowPressure")]
+        public float TankLowPressure { get; set; } = 0;
+
         [DataField("toggleAction", required: true)]
         public InstantAction ToggleAction = new();
     }
