@@ -1,11 +1,16 @@
+using System.Linq;
 using Content.Client.Parallax;
 using Content.Shared.Weather;
 using OpenToolkit.Graphics.ES11;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
+using Robust.Client.ResourceManagement;
+using Robust.Client.Utility;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Weather;
 
@@ -79,6 +84,8 @@ public sealed class WeatherOverlay : Overlay
         var position = args.Viewport.Eye?.Position.Position ?? Vector2.Zero;
 
         // Cut out the irrelevant bits via stencil
+        // This is why we don't just use parallax; we might want specific tiles to get drawn over
+        // particularly for planet maps or stations.
         worldHandle.RenderInRenderTarget(_blep, () =>
         {
             var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
@@ -94,7 +101,7 @@ public sealed class WeatherOverlay : Overlay
                     var gridTile = new Box2(tile.GridIndices * grid.TileSize,
                         (tile.GridIndices + Vector2i.One) * grid.TileSize);
 
-                    worldHandle.DrawRect(new Box2Rotated(gridTile, -worldRot, gridTile.Center), Color.White);
+                    worldHandle.DrawRect(gridTile, Color.White);
                 }
             }
 
@@ -103,11 +110,45 @@ public sealed class WeatherOverlay : Overlay
         worldHandle.SetTransform(Matrix3.Identity);
         worldHandle.UseShader(_protoManager.Index<ShaderPrototype>("StencilMask").Instance());
         worldHandle.DrawTextureRect(_blep.Texture, worldBounds);
+        Texture? sprite = null;
+        var curTime = IoCManager.Resolve<IGameTiming>().RealTime;
+        // TODO: Cache this shit.
+
+        switch (weatherProto.Sprite)
+        {
+            case SpriteSpecifier.Rsi rsi:
+                var rsiActual = IoCManager.Resolve<IResourceCache>().GetResource<RSIResource>(rsi.RsiPath).RSI;
+                rsiActual.TryGetState(rsi.RsiState, out var state);
+                var frames = state!.GetFrames(RSI.State.Direction.South);
+                var delays = state.GetDelays();
+                var totalDelay = delays.Sum();
+                var time = curTime.TotalSeconds % totalDelay;
+                var delaySum = 0f;
+
+                for (var i = 0; i < delays.Length; i++)
+                {
+                    var delay = delays[i];
+                    delaySum += delay;
+
+                    if (time > delaySum)
+                        continue;
+
+                    sprite = frames[i];
+                    break;
+                }
+
+                sprite ??= _sprite.Frame0(weatherProto.Sprite);
+                break;
+            case SpriteSpecifier.Texture texture:
+                sprite = texture.GetTexture(IoCManager.Resolve<IResourceCache>());
+                break;
+            default:
+                throw new NotImplementedException();
+        }
 
         // Draw the rain
         worldHandle.RenderInRenderTarget(_blep2, () =>
         {
-            var sprite = _sprite.Frame0(weatherProto.Sprite);
             worldHandle.SetTransform(invMatrix);
 
             // var layers = _parallax.GetParallaxLayers(args.MapId);
