@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Ore Processor deconstruction now works properly., type: Fix}
-  id: 2129
-  time: '2022-08-11T04:24:04.0000000+00:00'
 - author: vulppine
   changes:
   - {message: 'Nanotrasen has found where all the microphones for handheld radios
@@ -2957,3 +2952,8 @@ Entries:
       servers.', type: Fix}
   id: 2628
   time: '2022-11-09T00:41:26.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed vehicles not working., type: Fix}
+  id: 2629
+  time: '2022-11-09T06:31:43.0000000+00:00'
