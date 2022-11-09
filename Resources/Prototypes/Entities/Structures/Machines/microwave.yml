@@ -4,6 +4,14 @@
   name: microwave
   description: It's magic.
   components:
+  - type: Item
+    size: 60
+  - type: ItemCooldown
+  - type: MeleeWeapon
+    attackRate: 0.5
+    damage:
+      types:
+        Blunt: 20
   - type: Microwave
   - type: Appearance
   - type: GenericVisualizer
