@@ -76,12 +76,11 @@ public sealed class GeigerSystem : SharedGeigerSystem
 
     private void OnUpdate(RadiationSystemUpdatedEvent ev)
     {
+        // update only active geiger counters
+        // deactivated shouldn't have rad receiver component
         var query = EntityQuery<GeigerComponent, RadiationReceiverComponent>();
         foreach (var (geiger, receiver) in query)
         {
-            if (!geiger.IsEnabled)
-                continue;
-
             var rads = receiver.CurrentRadiation;
             SetCurrentRadiation(geiger.Owner, geiger, rads);
         }
