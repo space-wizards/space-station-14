@@ -11,6 +11,9 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Fluids.EntitySystems;
 
+/// <summary>
+/// Component that governs overflowing puddles. Controls how Puddles spread and updat
+/// </summary>
 [UsedImplicitly]
 public sealed class FluidSpreaderSystem : EntitySystem
 {
@@ -19,7 +22,7 @@ public sealed class FluidSpreaderSystem : EntitySystem
     [Dependency] private readonly PuddleSystem _puddleSystem = default!;
 
     /// <summary>
-    /// Adds an overflow component to the map data tracking overflowing puddles
+    /// Adds an overflow component to the map data component tracking overflowing puddles
     /// </summary>
     /// <param name="puddleUid">EntityUid of overflowing puddle</param>
     /// <param name="puddle">Optional PuddleComponent</param>
@@ -49,7 +52,7 @@ public sealed class FluidSpreaderSystem : EntitySystem
         var puddles = new List<PuddleComponent>(4);
         var puddleQuery = GetEntityQuery<PuddleComponent>();
         var xFormQuery = GetEntityQuery<TransformComponent>();
-        
+
         foreach (var fluidMapData in EntityQuery<FluidMapDataComponent>())
         {
             if (fluidMapData.Puddles.Count == 0 || _gameTiming.CurTime <= fluidMapData.GoalTime)
@@ -129,7 +132,7 @@ public sealed class FluidSpreaderSystem : EntitySystem
             // if not puddle is this tile blocked by an object like wall or door
             if (TryComp(entity, out PhysicsComponent? physComponent)
                 && physComponent.CanCollide
-                && ((physComponent.CollisionLayer + physComponent.CollisionMask) & (int) CollisionGroup.MobMask) != 0)
+                && (physComponent.CollisionLayer & (int) CollisionGroup.MobMask) != 0)
             {
                 puddle = null;
                 return false;
@@ -137,6 +140,6 @@ public sealed class FluidSpreaderSystem : EntitySystem
         }
 
         puddle = _puddleSystem.SpawnPuddle(srcUid, pos, srcPuddle);
-        return true;
+        return puddle != null;
     }
 }

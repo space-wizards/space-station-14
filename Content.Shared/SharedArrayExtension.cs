@@ -9,7 +9,7 @@ public static class SharedArrayExtension
     /// </summary>
     /// <param name="array">array being randomized</param>
     /// <param name="random">source of randomization</param>
-    /// <typeparam name="T">type of array ellement</typeparam>
+    /// <typeparam name="T">type of array element</typeparam>
     public static void Shuffle<T>(this Span<T> array, IRobustRandom? random = null)
     {
         var n = array.Length;
