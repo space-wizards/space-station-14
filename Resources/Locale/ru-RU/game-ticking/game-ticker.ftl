@@ -31,7 +31,7 @@ player-join-message = Игрок { $name } присоединился к сер�
 # Displayed in chat to admins when a player leaves
 player-leave-message = Игрок { $name } покинул сервер!
 latejoin-arrival-announcement =
-    { $name } ({ $job }) { GENDER($character) ->
+    { $character } ({ $job }) { $gender ->
         [male] прибыл
         [female] прибыла
         [epicene] прибыли
