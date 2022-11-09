@@ -1,6 +1,5 @@
 using Robust.Shared.Prototypes;
 using System.Linq;
-using static Content.Shared.VendingMachines.SharedVendingMachineComponent;
 
 namespace Content.Shared.VendingMachines;
 
