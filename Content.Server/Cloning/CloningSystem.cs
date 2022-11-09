@@ -22,7 +22,9 @@ using Content.Server.Construction.Components;
 using Content.Server.Materials;
 using Content.Server.Stack;
 using Content.Server.Jobs;
+using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
+using Content.Shared.Zombies;
 using Robust.Server.GameObjects;
 using Robust.Server.Containers;
 using Robust.Server.Player;
@@ -227,7 +229,22 @@ namespace Content.Server.Cloning.Systems
             var mob = Spawn(speciesPrototype.Prototype, Transform(clonePod.Owner).MapPosition);
             _humanoidSystem.CloneAppearance(bodyToClone, mob);
 
-            MetaData(mob).EntityName = MetaData(bodyToClone).EntityName;
+            //handle zombie's name and color changes by restoring data previously saved into ZombieComponent
+            if (TryComp<ZombieComponent>(bodyToClone, out var zombiecomp))
+            {
+                foreach (var (layer, info) in zombiecomp.BeforeZombifiedCustomBaseLayers)
+                {
+                    _humanoidSystem.SetBaseLayerColor(mob, layer, info.Color);
+                    _humanoidSystem.SetBaseLayerId(mob, layer, info.ID);
+                }
+                _humanoidSystem.SetSkinColor(mob, zombiecomp.BeforeZombifiedSkinColor);
+
+                MetaData(mob).EntityName = zombiecomp.BeforeZombifiedEntityName;
+            }
+            else
+            {
+                MetaData(mob).EntityName = MetaData(bodyToClone).EntityName;
+            }
 
             var cloneMindReturn = EntityManager.AddComponent<BeingClonedComponent>(mob);
             cloneMindReturn.Mind = mind;
