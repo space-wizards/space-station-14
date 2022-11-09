@@ -154,7 +154,7 @@ namespace Content.Server.Lock
                 return false;
 
             var ev = new LockToggleAttemptEvent(user, quiet);
-            RaiseLocalEvent(uid, ev, true);
+            RaiseLocalEvent(uid, ref ev, true);
             return !ev.Cancelled;
         }
 
