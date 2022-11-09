@@ -1,7 +1,7 @@
 ﻿- type: trait
   id: UncontrollableSneezing
-  name: Runny nose
-  description: You sneeze and cough uncontrollably
+  name: trait-sneezing-name
+  description: trait-sneezing-desc
   whitelist:
     components:
       - DiseaseCarrier
