@@ -14,3 +14,15 @@ namespace Content.Server.Storage.Components
         [ViewVariables(VVAccess.ReadWrite)] [DataField("lockingSound")] public SoundSpecifier LockSound { get; set; } = new SoundPathSpecifier("/Audio/Machines/door_lock_on.ogg");
     }
 }
+public sealed class LockToggleAttemptEvent : CancellableEntityEventArgs
+{
+    public bool Silent = false;
+    public EntityUid User;
+
+    public LockToggleAttemptEvent(EntityUid user, bool silent = false)
+    {
+        User = user;
+        Silent = silent;
+    }
+}
+public sealed class LockToggleAttemptArgs : EventArgs { }
