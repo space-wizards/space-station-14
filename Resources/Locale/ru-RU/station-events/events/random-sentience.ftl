@@ -31,3 +31,8 @@ station-event-random-sentience-announcement =
 ## Ghost role description
 
 station-event-random-sentience-role-description = Вы разумный { $name }, оживший благодаря космической магии.
+# Flavors
+station-event-random-sentience-flavor-mechanical = mechanical
+station-event-random-sentience-flavor-organic = organic
+station-event-random-sentience-flavor-corgi = corgi
+station-event-random-sentience-flavor-primate = primate
