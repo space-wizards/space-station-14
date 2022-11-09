@@ -88,7 +88,7 @@ namespace Content.Server.Stack
         }
 
         /// <summary>
-        ///     Say you want to spawn 97 stacks of something that has a max stack count of 30.
+        ///     Say you want to spawn 97 units of something that has a max stack count of 30.
         ///     This would spawn 3 stacks of 30 and 1 stack of 7.
         /// </summary>
         public List<EntityUid> SpawnMultiple(int amount, MaterialPrototype materialProto, EntityCoordinates coordinates)
@@ -97,7 +97,7 @@ namespace Content.Server.Stack
             if (amount <= 0)
                 return list;
 
-            // At least 1 is being spawned, we'll use the first to extract the max count.
+            // At least 1 is being spawned, we'll use the first to extract otherwise inaccessible information
             var firstSpawn = Spawn(materialProto.StackProto, coordinates);
 
             if (!TryComp<StackComponent>(firstSpawn, out var stack) || stack.StackTypeId == null)
@@ -112,30 +112,34 @@ namespace Content.Server.Stack
             int maxCountPerStack = (int) stackProto.MaxCount;
             var materialPerStack = material._materials[materialProto.ID];
 
-            if (amount < materialPerStack)
-                return list;
+            var materialPerMaxCount = maxCountPerStack * materialPerStack;
 
-            if (amount > (maxCountPerStack * materialPerStack))
+            if (amount < materialPerStack)
+            {
+                Del(firstSpawn);
+                return list;
+            }
+
+            if (amount > materialPerMaxCount)
             {
                 SetCount(firstSpawn, maxCountPerStack, stack);
-                amount -= maxCountPerStack * materialPerStack;
+                amount -= materialPerMaxCount;
             } else
             {
                 SetCount(firstSpawn, (amount / materialPerStack), stack);
                 amount = 0;
             }
-            list.Add(firstSpawn);
 
             while (amount > 0)
             {
-                if (amount > maxCountPerStack)
+                if (amount > materialPerMaxCount)
                 {
                     var entity = Spawn(materialProto.StackProto, coordinates);
                     list.Add(entity);
                     var nextStack = Comp<StackComponent>(entity);
 
-                    SetCount(entity, maxCountPerStack, nextStack);
-                    amount -= maxCountPerStack;
+                    SetCount(entity, materialPerMaxCount, nextStack);
+                    amount -= materialPerMaxCount;
                 }
                 else
                 {
@@ -143,7 +147,7 @@ namespace Content.Server.Stack
                     list.Add(entity);
                     var nextStack = Comp<StackComponent>(entity);
 
-                    SetCount(entity, amount, nextStack);
+                    SetCount(entity, (amount / materialPerStack), nextStack);
                     amount = 0;
                 }
             }
