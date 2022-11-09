@@ -190,6 +190,7 @@
         - CigPack
         - TrashBag
         - WetFloorSign
+        - HolosignProjector
       components:
         - LightReplacer
   - type: ItemMapper

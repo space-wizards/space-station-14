@@ -24,7 +24,7 @@
     netsync: false
   - type: Tag
     tags:
-      - WetFloorSign
+      - HolosignProjector
 
 - type: entity
   parent: Holoprojector
