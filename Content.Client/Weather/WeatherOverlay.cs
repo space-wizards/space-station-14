@@ -15,7 +15,7 @@ public sealed class WeatherOverlay : Overlay
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     private readonly SpriteSystem _sprite;
 
-    public override OverlaySpace Space => OverlaySpace.WorldSpace | OverlaySpace.WorldSpaceBelowWorld;
+    public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
     private IRenderTexture _blep;
 
@@ -60,42 +60,10 @@ public sealed class WeatherOverlay : Overlay
 
         switch (args.Space)
         {
-            case OverlaySpace.WorldSpaceBelowWorld:
-                DrawUnderGrid(args, weatherProto);
-                break;
             case OverlaySpace.WorldSpace:
                 DrawWorld(args, weatherProto);
                 break;
         }
-    }
-
-    private void DrawUnderGrid(in OverlayDrawArgs args, WeatherPrototype weatherProto)
-    {
-        var worldHandle = args.WorldHandle;
-        var mapId = args.MapId;
-        var worldAABB = args.WorldAABB;
-        var worldBounds = args.WorldBounds;
-        var invMatrix = args.Viewport.GetWorldToLocalMatrix();
-
-        worldHandle.RenderInRenderTarget(_blep, () =>
-        {
-            var sprite = _sprite.Frame0(weatherProto.Sprite);
-            // TODO: Handle this shit
-            worldHandle.SetTransform(invMatrix);
-
-            for (var x = worldAABB.Left; x <= worldAABB.Right; x+= (float) sprite.Width / EyeManager.PixelsPerMeter)
-            {
-                for (var y = worldAABB.Bottom; y <= worldAABB.Top; y+= (float) sprite.Height / EyeManager.PixelsPerMeter)
-                {
-                    var box = new Box2(new Vector2(x, y), new Vector2(x + sprite.Width, y + sprite.Height));
-
-                    worldHandle.DrawTextureRect(sprite, box);
-                }
-            }
-
-        }, Color.Transparent);
-
-        worldHandle.SetTransform(Matrix3.Identity);
     }
 
     private void DrawWorld(in OverlayDrawArgs args, WeatherPrototype weatherProto)
@@ -105,7 +73,39 @@ public sealed class WeatherOverlay : Overlay
         var worldAABB = args.WorldAABB;
         var worldBounds = args.WorldBounds;
         var invMatrix = args.Viewport.GetWorldToLocalMatrix();
+        var rotation = args.Viewport.Eye?.Rotation ?? Angle.Zero;
+        var position = args.Viewport.Eye?.Position.Position ?? Vector2.Zero;
+        worldHandle.SetTransform(Matrix3.Identity);
 
+        /*
+         * NOTE!
+         * Render targets are in screenspace.
+         */
+        worldHandle.SetTransform(Matrix3.CreateRotation(-rotation));
+
+        // Draw the rain
+        worldHandle.RenderInRenderTarget(_blep, () =>
+        {
+            var sprite = _sprite.Frame0(weatherProto.Sprite);
+            // worldHandle.SetTransform(Matrix3.Identity);
+            var spriteDimensions = (Vector2) sprite.Size / EyeManager.PixelsPerMeter;
+            var textureDimensions = (Vector2) _blep.Texture.Size / EyeManager.PixelsPerMeter;
+
+            for (var x = 0f; x < _blep.Texture.Width; x += sprite.Width)
+            {
+                for (var y = 0f; y < _blep.Texture.Height; y += sprite.Height)
+                {
+                    var botLeft = new Vector2(x, y);
+                    var box = Box2.FromDimensions(botLeft, botLeft + spriteDimensions);
+                    worldHandle.DrawTextureRect(sprite, box);
+                }
+            }
+
+        }, Color.Transparent);
+
+        // Cut out the irrelevant bits.
+
+        /*
         worldHandle.RenderInRenderTarget(_blep, () =>
         {
             var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
@@ -127,17 +127,10 @@ public sealed class WeatherOverlay : Overlay
             }
 
         }, Color.Transparent);
-
-        var rotation = args.Viewport.Eye?.Rotation ?? Angle.Zero;
-        var rotty = Matrix3.CreateRotation(rotation);
-        worldHandle.SetTransform(rotty);
-
-        for (var x = 0; x < worldBounds.Box.Width; x++)
-        {
-
-        }
+        */
 
         worldHandle.SetTransform(Matrix3.Identity);
         worldHandle.DrawTextureRect(_blep.Texture, worldBounds);
+        worldHandle.SetTransform(Matrix3.Identity);
     }
 }
