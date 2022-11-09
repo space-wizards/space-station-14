@@ -1,0 +1,44 @@
+- type: marking
+  id: DionaThornsHead
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Diona]
+  sprites:
+  - sprite: Mobs/Customization/diona.rsi
+    state: thorns_head
+
+- type: marking
+  id: DionaThornsBody
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Diona]
+  sprites:
+  - sprite: Mobs/Customization/diona.rsi
+    state: thorns_body
+
+- type: marking
+  id: DionaFlowersHead
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Diona]
+  sprites:
+  - sprite: Mobs/Customization/diona.rsi
+    state: flowers_head
+
+- type: marking
+  id: DionaFlowersBody
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Diona]
+  sprites:
+  - sprite: Mobs/Customization/diona.rsi
+    state: flowers_body
+
+- type: marking
+  id: DionaLeafCover
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Diona]
+  sprites:
+  - sprite: Mobs/Customization/diona.rsi
+    state: leaf_cover

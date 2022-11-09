@@ -1,24 +1,16 @@
-using System.Linq;
-using Content.Server.Damage.Components;
-using Content.Server.Damage.Events;
 using Content.Server.Power.Components;
 using Content.Server.Power.Events;
-using Content.Server.Speech.EntitySystems;
 using Content.Server.Stunnable.Components;
-using Content.Server.Weapons.Melee.Events;
 using Content.Shared.Audio;
+using Content.Shared.Damage.Events;
 using Content.Shared.Examine;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
-using Content.Shared.Jittering;
 using Content.Shared.Popups;
-using Content.Shared.StatusEffect;
-using Content.Shared.Throwing;
 using Content.Shared.Toggleable;
-using Robust.Server.GameObjects;
+using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
-using Robust.Shared.Random;
 
 namespace Content.Server.Stunnable.Systems
 {
@@ -33,10 +25,10 @@ namespace Content.Server.Stunnable.Systems
             SubscribeLocalEvent<StunbatonComponent, UseInHandEvent>(OnUseInHand);
             SubscribeLocalEvent<StunbatonComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<StunbatonComponent, StaminaDamageOnHitAttemptEvent>(OnStaminaHitAttempt);
-            SubscribeLocalEvent<StunbatonComponent, ItemMeleeDamageEvent>(OnMeleeHit);
+            SubscribeLocalEvent<StunbatonComponent, MeleeHitEvent>(OnMeleeHit);
         }
 
-        private void OnMeleeHit(EntityUid uid, StunbatonComponent component, ItemMeleeDamageEvent args)
+        private void OnMeleeHit(EntityUid uid, StunbatonComponent component, MeleeHitEvent args)
         {
             if (!component.Activated) return;
 

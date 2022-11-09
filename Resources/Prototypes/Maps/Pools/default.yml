@@ -1,0 +1,13 @@
+- type: gameMapPool
+  id: DefaultMapPool
+  maps:
+  - Bagel
+  - Box
+  - Cluster
+  - Kettle
+  - Lighthouse
+  - Marathon
+  - Omega
+  - Origin
+  - Pillar
+  - Saltern

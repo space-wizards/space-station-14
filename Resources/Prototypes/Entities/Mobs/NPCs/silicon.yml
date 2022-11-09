@@ -76,6 +76,8 @@
     thresholds:
       0: Alive
       120: Dead
+  - type: Stamina
+    excess: 120
   - type: Destructible
     thresholds:
     - trigger:
@@ -89,8 +91,7 @@
   - type: InputMover
   - type: MobMover
   - type: Body
-    template: BotTemplate
-    preset: BotPreset
+    prototype: Bot
 
 - type: entity
   parent: MobSiliconBase
@@ -150,7 +151,7 @@
     graph: CleanBot
     node: bot
   - type: SentienceTarget
-    flavorKind: mechanical
+    flavorKind: station-event-random-sentience-flavor-mechanical
   - type: SolutionContainerManager
     solutions:
       drainBuffer:

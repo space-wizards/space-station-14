@@ -69,17 +69,25 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
             return;
         }
 
-        if (args.Function == ContentKeyFunctions.ExamineEntity)
+        if (args.Function == EngineKeyFunctions.UIClick)
         {
-            _handsSystem.UIInventoryExamine(hand.SlotName);
+            _handsSystem.UIHandClick(_playerHandsComponent, hand.SlotName);
         }
         else if (args.Function == EngineKeyFunctions.UseSecondary)
         {
             _handsSystem.UIHandOpenContextMenu(hand.SlotName);
         }
-        else if (args.Function == EngineKeyFunctions.UIClick)
+        else if (args.Function == ContentKeyFunctions.ActivateItemInWorld)
         {
-            _handsSystem.UIHandClick(_playerHandsComponent, hand.SlotName);
+            _handsSystem.UIHandActivate(hand.SlotName);
+        }
+        else if (args.Function == ContentKeyFunctions.AltActivateItemInWorld)
+        {
+            _handsSystem.UIHandAltActivateItem(hand.SlotName);
+        }
+        else if (args.Function == ContentKeyFunctions.ExamineEntity)
+        {
+            _handsSystem.UIInventoryExamine(hand.SlotName);
         }
     }
 
@@ -108,7 +116,17 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
         foreach (var (name, hand) in handsComp.Hands)
         {
             var handButton = AddHand(name, hand.Location);
-            handButton.SpriteView.Sprite = _entities.GetComponentOrNull<SpriteComponent>(hand.HeldEntity);
+
+            if (_entities.TryGetComponent(hand.HeldEntity, out HandVirtualItemComponent? virt))
+            {
+                handButton.SpriteView.Sprite = _entities.GetComponentOrNull<SpriteComponent>(virt.BlockingEntity);
+                handButton.Blocked = true;
+            }
+            else
+            {
+                handButton.SpriteView.Sprite = _entities.GetComponentOrNull<SpriteComponent>(hand.HeldEntity);
+                handButton.Blocked = false;
+            }
         }
 
         var activeHand = handsComp.ActiveHand;
@@ -149,9 +167,16 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
         var hand = GetHand(name);
         if (hand == null)
             return;
-        if (_entities.TryGetComponent(entity, out ISpriteComponent? sprite))
+
+        if (_entities.TryGetComponent(entity, out HandVirtualItemComponent? virt))
         {
-            hand.SpriteView.Sprite = sprite;
+            hand.SpriteView.Sprite = _entities.GetComponentOrNull<SpriteComponent>(virt.BlockingEntity);
+            hand.Blocked = true;
+        }
+        else
+        {
+            hand.SpriteView.Sprite = _entities.GetComponentOrNull<SpriteComponent>(entity);
+            hand.Blocked = false;
         }
 
         if (_playerHandsComponent?.ActiveHand?.Name == name)

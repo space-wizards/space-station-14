@@ -125,19 +125,6 @@
 
 - type: entity
   parent: SurveillanceCameraBase
-  id: SurveillanceCameraScience
-  name: camera
-  suffix: Science
-  components:
-  - type: DeviceNetwork
-    deviceNetId: Wired
-    receiveFrequencyId: SurveillanceCameraScience
-    transmitFrequencyId: SurveillanceCamera
-  - type: SurveillanceCamera
-    networkSet: true
-
-- type: entity
-  parent: SurveillanceCameraBase
   id: SurveillanceCameraCommand
   name: camera
   suffix: Command

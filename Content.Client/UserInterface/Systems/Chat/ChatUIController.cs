@@ -291,7 +291,8 @@ public sealed class ChatUIController : UIController
             return;
         }
 
-        var messages = SplitMessage(FormattedMessage.RemoveMarkup(msg.Message));
+        // msg.Message should be the string that a user sent over text, without any added markup.
+        var messages = SplitMessage(msg.Message);
 
         foreach (var message in messages)
         {
@@ -436,7 +437,7 @@ public sealed class ChatUIController : UIController
             CanSendChannels |= ChatSelectChannel.Admin;
         }
 
-        SelectableChannels = CanSendChannels & ~ChatSelectChannel.Console;
+        SelectableChannels = CanSendChannels;
 
         // Necessary so that we always have a channel to fall back to.
         DebugTools.Assert((CanSendChannels & ChatSelectChannel.OOC) != 0, "OOC must always be available");

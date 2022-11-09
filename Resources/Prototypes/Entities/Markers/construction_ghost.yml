@@ -6,6 +6,5 @@
   - type: Sprite
     color: '#3F38'
   - type: ConstructionGhost
-  - type: Physics
   - type: Clickable
   - type: InteractionOutline
