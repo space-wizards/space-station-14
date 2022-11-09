@@ -158,7 +158,7 @@ public abstract class SharedActionsSystem : EntitySystem
 
                 if (ev.EntityCoordinatesTarget is not EntityCoordinates entityCoordinatesTarget)
                 {
-                    Logger.Error($"Attempted to perform a map-targeted action without a target! Action: {worldAction.DisplayName}");
+                    Logger.Error($"Attempted to perform a world-targeted action without a target! Action: {worldAction.DisplayName}");
                     return;
                 }
 
@@ -245,9 +245,6 @@ public abstract class SharedActionsSystem : EntitySystem
 
     public bool ValidateWorldTarget(EntityUid user, EntityCoordinates coords, WorldTargetAction action)
     {
-        if (coords == EntityCoordinates.Invalid)
-            return false;
-
         if (action.CheckCanInteract && !_actionBlockerSystem.CanInteract(user, null))
             return false;
 
@@ -262,7 +259,7 @@ public abstract class SharedActionsSystem : EntitySystem
             if (action.Range <= 0)
                 return true;
 
-            return (xform.WorldPosition - coords.Position).Length <= action.Range;
+            return coords.InRange(EntityManager, Transform(user).Coordinates, action.Range);
         }
 
         return _interactionSystem.InRangeUnobstructed(user, coords, range: action.Range);

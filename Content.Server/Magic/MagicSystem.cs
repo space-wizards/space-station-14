@@ -39,7 +39,7 @@ public sealed class MagicSystem : EntitySystem
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
     [Dependency] private readonly GunSystem _gunSystem = default!;
-
+    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -159,7 +159,7 @@ public sealed class MagicSystem : EntitySystem
         foreach (var pos in GetSpawnPositions(xform, ev.Pos))
         {
             var ent = Spawn(ev.Prototype, pos.SnapToGrid(EntityManager, _mapManager));
-            _gunSystem.ShootProjectile(ent,ev.Target.Position - Transform(ent).MapPosition.Position, ev.Performer);
+            _gunSystem.ShootProjectile(ent, ev.Target.Position - Transform(ent).Coordinates.Position, ev.Performer);
         }
     }
 
@@ -234,7 +234,7 @@ public sealed class MagicSystem : EntitySystem
 
         if (transform.MapID != args.Target.GetMapId(EntityManager)) return;
 
-        transform.WorldPosition = args.Target.Position;
+        _transformSystem.SetCoordinates(args.Performer, args.Target);
         transform.AttachToGridOrMap();
         SoundSystem.Play(args.BlinkSound.GetSound(), Filter.Pvs(args.Target), args.Performer, AudioParams.Default.WithVolume(args.BlinkVolume));
         args.Handled = true;
