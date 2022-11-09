@@ -261,19 +261,19 @@ namespace Content.Shared.Interaction
             {
                 if (target != null)
                 {
-                  var ev = new InteractNoHandEvent(user, target.Value);
-                  RaiseLocalEvent(user, ev);
+                    var ev = new InteractNoHandEvent(user, target.Value);
+                    RaiseLocalEvent(user, ev);
 
-                  var interactedEv = new InteractedNoHandEvent(target.Value, user);
-                  RaiseLocalEvent(target.Value, interactedEv);
-                  DoContactInteraction(user, target.Value, ev);
+                    var interactedEv = new InteractedNoHandEvent(target.Value, user);
+                    RaiseLocalEvent(target.Value, interactedEv);
+                    DoContactInteraction(user, target.Value, ev);
                 }
                 return;
             }
 
             var inRangeUnobstructed = target == null
-              ? !checkAccess || InRangeUnobstructed(user, coordinates)
-              : !checkAccess || InRangeUnobstructed(user, target.Value); // permits interactions with wall mounted entities
+                ? !checkAccess || InRangeUnobstructed(user, coordinates)
+                : !checkAccess || InRangeUnobstructed(user, target.Value); // permits interactions with wall mounted entities
 
             // empty-hand interactions
             if (hands.ActiveHandEntity is not { } held)
