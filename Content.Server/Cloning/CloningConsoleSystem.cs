@@ -1,5 +1,6 @@
 using JetBrains.Annotations;
 using Robust.Shared.Timing;
+using Content.Server.Administration.Logs;
 using Content.Server.Medical.Components;
 using Content.Server.Cloning.Components;
 using Content.Server.Power.Components;
@@ -14,6 +15,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Content.Shared.Cloning.CloningConsole;
 using Content.Shared.Cloning;
+using Content.Shared.Database;
 using Content.Shared.MachineLinking.Events;
 using Content.Shared.IdentityManagement;
 
@@ -23,6 +25,7 @@ namespace Content.Server.Cloning.Systems
     public sealed class CloningConsoleSystem : EntitySystem
     {
         [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly CloningSystem _cloningSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
@@ -141,7 +144,9 @@ namespace Content.Server.Cloning.Systems
             if (mind == null || mind.UserId.HasValue == false || mind.Session == null)
                 return;
 
-            bool cloningSuccessful = _cloningSystem.TryCloning(cloningPodUid, scannerComp.BodyContainer.ContainedEntity.Value, mind, cloningPod);
+            if (_cloningSystem.TryCloning(cloningPodUid, scannerComp.BodyContainer.ContainedEntity.Value, mind, cloningPod))
+                _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(uid)} successfully cloned {ToPrettyString(scannerComp.BodyContainer.ContainedEntity.Value)}.");
+
         }
 
         public void RecheckConnections(EntityUid console, EntityUid? cloningPod, EntityUid? scanner, CloningConsoleComponent? consoleComp = null)
