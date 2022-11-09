@@ -90,9 +90,8 @@
   color: "#9A040E"
   boilingPoint: 212.0
   meltingPoint: 170.0
+  metabolismRate: 0.2
   metabolisms:
-      - !type:MetabolismRateModifier
-        metabolismRate: 0.2
     Narcotic:
       effects:
       - !type:MovementSpeedModifier
