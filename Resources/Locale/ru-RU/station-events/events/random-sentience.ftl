@@ -32,7 +32,7 @@ station-event-random-sentience-announcement =
 
 station-event-random-sentience-role-description = Вы разумный { $name }, оживший благодаря космической магии.
 # Flavors
-station-event-random-sentience-flavor-mechanical = mechanical
-station-event-random-sentience-flavor-organic = organic
-station-event-random-sentience-flavor-corgi = corgi
-station-event-random-sentience-flavor-primate = primate
+station-event-random-sentience-flavor-mechanical = механизмы
+station-event-random-sentience-flavor-organic = органики
+station-event-random-sentience-flavor-corgi = корги
+station-event-random-sentience-flavor-primate = приматы

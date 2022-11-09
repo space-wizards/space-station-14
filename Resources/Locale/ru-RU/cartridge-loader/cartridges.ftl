@@ -1,4 +1,4 @@
-default-program-name = Program
-ent-notekeeper-cartridge = notekeeper cartridge
-    .desc = A program for keeping notes
-notekeeper-program-name = Notekeeper
+default-program-name = Программа
+ent-notekeeper-cartridge = картридж Заметки
+    .desc = Программа для хранения заметок
+notekeeper-program-name = Заметки

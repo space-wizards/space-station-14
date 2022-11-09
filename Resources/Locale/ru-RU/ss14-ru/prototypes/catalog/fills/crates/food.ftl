@@ -1,9 +1,9 @@
-ent-CrateFoodPizza = экстренная доставка пиццы
-    .desc = Внесите свой вклад в борьбу с голодом на станции, доставляя пиццу в отделы с недостаточным финансированием!
+ent-CrateFoodPizza = { ent-CratePlastic }
+    .desc = { ent-CratePlastic.desc }
     .suffix = { "" }
-ent-CrateFoodMRE = ящик ИРП
-    .desc = Армейские обеды, которыми можно накормить целый отдел.
+ent-CrateFoodMRE = { ent-CratePlastic }
+    .desc = { ent-CratePlastic.desc }
     .suffix = { "" }
-ent-CrateFoodCooking = ящик кухонных припасов
-    .desc = Дополнительные кухонные припасы на случай отсутствия ботаников.
+ent-CrateFoodCooking = { ent-CratePlastic }
+    .desc = { ent-CratePlastic.desc }
     .suffix = { "" }
