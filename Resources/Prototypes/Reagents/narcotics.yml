@@ -91,8 +91,9 @@
   boilingPoint: 212.0
   meltingPoint: 170.0
   metabolisms:
+      - !type:MetabolismRateModifier
+        metabolismRate: 0.2
     Narcotic:
-      metabolismRate: 0.2
       effects:
       - !type:MovementSpeedModifier
         walkSpeedModifier: 1.3
