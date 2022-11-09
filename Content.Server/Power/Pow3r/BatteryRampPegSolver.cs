@@ -178,6 +178,7 @@ namespace Content.Server.Power.Pow3r
                 return;
 
             var supplyRatio = met / demand;
+            // if supply ratio == 1 (or is close to) we could skip some math for each load & battery.
 
             // Distribute supply to loads.
             foreach (var loadId in network.Loads)
@@ -200,7 +201,8 @@ namespace Content.Server.Power.Pow3r
                 battery.CurrentReceiving = battery.DesiredPower * supplyRatio;
                 battery.CurrentStorage += frameTime * battery.CurrentReceiving * battery.Efficiency;
 
-                DebugTools.Assert(battery.CurrentStorage <= battery.Capacity || MathHelper.CloseTo(battery.CurrentStorage, battery.Capacity));
+                DebugTools.Assert(battery.CurrentStorage <= battery.Capacity || MathHelper.CloseTo(battery.CurrentStorage, battery.Capacity, 1e-5));
+                battery.CurrentStorage = MathF.Min(battery.CurrentStorage, battery.Capacity);
             }
 
             // Target output capacity for supplies
@@ -250,7 +252,8 @@ namespace Content.Server.Power.Pow3r
                 // available supply. IMO this is undesirable, but I can't think of an easy fix ATM.
 
                 battery.CurrentStorage -= frameTime * battery.CurrentSupply;
-                DebugTools.Assert(battery.CurrentStorage >= 0 || MathHelper.CloseTo(battery.CurrentStorage, 0));
+                DebugTools.Assert(battery.CurrentStorage >= 0 || MathHelper.CloseTo(battery.CurrentStorage, 0, 1e-5));
+                battery.CurrentStorage = MathF.Max(0, battery.CurrentStorage);
 
                 battery.SupplyRampTarget = battery.MaxEffectiveSupply * relativeTargetBatteryOutput - battery.CurrentReceiving * battery.Efficiency;
 
