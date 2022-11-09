@@ -1,4 +1,5 @@
 using Content.Shared.Roles;
+using Content.Shared.Humanoid;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -60,5 +61,21 @@ namespace Content.Shared.Zombies
         /// </summary>
         [ViewVariables, DataField("zombieRoldId", customTypeSerializer: typeof(PrototypeIdSerializer<AntagPrototype>))]
         public readonly string ZombieRoleId = "Zombie";
+
+        /// <summary>
+        /// The EntityName of the humanoid to restore in case of cloning
+        /// </summary>
+        [ViewVariables]
+        public string BeforeZombifiedEntityName = String.Empty;
+
+        /// <summary>
+        /// The CustomBaseLayers of the humanoid to restore in case of cloning
+        /// </summary>
+        public Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo> BeforeZombifiedCustomBaseLayers = new ();
+
+        /// <summary>
+        /// The skin color of the humanoid to restore in case of cloning
+        /// </summary>
+        public Color BeforeZombifiedSkinColor;
     }
 }
