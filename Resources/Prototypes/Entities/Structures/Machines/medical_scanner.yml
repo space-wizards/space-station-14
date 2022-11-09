@@ -64,6 +64,9 @@
   - type: Climbable
   - type: ApcPowerReceiver
     powerLoad: 200 #Receives most of its power from the console
+  - type: UpgradePowerDraw #upgrade it for the meme?
+    powerDrawMultiplier: 0.75
+    scaling: Exponential
   - type: EmptyOnMachineDeconstruct
     containers:
     - scanner-bodyContainer
