@@ -68,7 +68,7 @@
     priority: Low
   - type: Actions
   - type: SentienceTarget
-    flavorKind: mechanical
+    flavorKind: station-event-random-sentience-flavor-mechanical
   - type: StaticPrice
     price: 200
   - type: Appearance

@@ -2,6 +2,9 @@
   id: UncontrollableSneezing
   name: trait-sneezing-name
   description: trait-sneezing-desc
+  whitelist:
+    components:
+      - DiseaseCarrier
   components:
     - type: UncontrollableSnough
       snoughSound:

@@ -125,6 +125,9 @@
   - type: IngestionBlocker
   - type: DiseaseProtection
     protection: 0.10
+  - type: Tag
+    tags:
+    - PetWearable
 
 - type: entity
   parent: ClothingMaskPullableBase
@@ -140,6 +143,9 @@
   - type: IngestionBlocker
   - type: DiseaseProtection
     protection: 0.05
+  - type: Tag
+    tags:
+    - PetWearable
 
 - type: entity
   parent: ClothingMaskBase

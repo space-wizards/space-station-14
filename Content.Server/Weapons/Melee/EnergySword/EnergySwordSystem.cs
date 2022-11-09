@@ -1,7 +1,6 @@
 using Content.Server.CombatMode.Disarm;
 using Content.Server.Kitchen.Components;
 using Content.Server.Weapons.Melee.EnergySword.Components;
-using Content.Server.Weapons.Melee.Events;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
@@ -11,6 +10,7 @@ using Content.Shared.Temperature;
 using Content.Shared.Toggleable;
 using Content.Shared.Tools.Components;
 using Content.Shared.Weapons.Melee;
+using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -28,7 +28,7 @@ namespace Content.Server.Weapons.Melee.EnergySword
             base.Initialize();
 
             SubscribeLocalEvent<EnergySwordComponent, MapInitEvent>(OnMapInit);
-            SubscribeLocalEvent<EnergySwordComponent, ItemMeleeDamageEvent>(OnMeleeHit);
+            SubscribeLocalEvent<EnergySwordComponent, MeleeHitEvent>(OnMeleeHit);
             SubscribeLocalEvent<EnergySwordComponent, UseInHandEvent>(OnUseInHand);
             SubscribeLocalEvent<EnergySwordComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<EnergySwordComponent, IsHotEvent>(OnIsHotEvent);
@@ -40,7 +40,7 @@ namespace Content.Server.Weapons.Melee.EnergySword
                 comp.BladeColor = _random.Pick(comp.ColorOptions);
         }
 
-        private void OnMeleeHit(EntityUid uid, EnergySwordComponent comp, ItemMeleeDamageEvent args)
+        private void OnMeleeHit(EntityUid uid, EnergySwordComponent comp, MeleeHitEvent args)
         {
             if (!comp.Activated) return;
 

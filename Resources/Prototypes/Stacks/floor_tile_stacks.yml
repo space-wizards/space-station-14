@@ -224,11 +224,6 @@
   spawn: FloorTileItemSilver
 
 - type: stack
-  id: FloorTileGCircuit
-  name: gcircuit floor tile
-  spawn: FloorTileItemGCircuit
-
-- type: stack
   id: FloorTileBCircuit
   name: bcircuit floor tile
   spawn: FloorTileItemBCircuit

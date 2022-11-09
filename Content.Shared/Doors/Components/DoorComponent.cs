@@ -1,8 +1,8 @@
 using Content.Shared.Damage;
 using Content.Shared.Tools;
+using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -146,26 +146,27 @@ public sealed class DoorComponent : Component, ISerializationHooks
     ///     Time until next state change. Because apparently <see cref="IGameTiming.CurTime"/> might not get saved/restored.
     /// </summary>
     [DataField("SecondsUntilStateChange")]
-    private float? _secondsUntilStateChange;
-
-    void ISerializationHooks.BeforeSerialization()
+    private float? SecondsUntilStateChange
     {
-        if (NextStateChange == null)
+        [UsedImplicitly]
+        get
         {
-            _secondsUntilStateChange = null;
-            return;
-        };
+            if (NextStateChange == null)
+            {
+                return null;
+            }
 
-        var curTime = IoCManager.Resolve<IGameTiming>().CurTime;
-        _secondsUntilStateChange = (float) (NextStateChange.Value - curTime).TotalSeconds;
-    }
+            var curTime = IoCManager.Resolve<IGameTiming>().CurTime;
+            return (float) (NextStateChange.Value - curTime).TotalSeconds;
+        }
+        set
+        {
+            if (value == null || value.Value > 0)
+                return;
 
-    void ISerializationHooks.AfterDeserialization()
-    {
-        if (_secondsUntilStateChange == null || _secondsUntilStateChange.Value > 0)
-            return;
+            NextStateChange = IoCManager.Resolve<IGameTiming>().CurTime + TimeSpan.FromSeconds(value.Value);
 
-        NextStateChange = IoCManager.Resolve<IGameTiming>().CurTime + TimeSpan.FromSeconds(_secondsUntilStateChange.Value);
+        }
     }
     #endregion
 
