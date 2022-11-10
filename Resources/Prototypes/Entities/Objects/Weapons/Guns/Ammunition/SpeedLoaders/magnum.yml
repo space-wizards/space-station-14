@@ -60,7 +60,7 @@
   - type: Appearance
 
 - type: entity
-  id: SpeedLoaderMagnum
+  id: SpeedLoaderMagnumHC
   name: "speed loader (.45 magnum)"
   parent: BaseSpeedLoaderMagnum
   components:
@@ -80,7 +80,7 @@
   - type: Appearance
 
 - type: entity
-  id: SpeedLoaderMagnumHighVelocity
+  id: SpeedLoaderMagnumHCHighVelocity
   name: "speed loader (.45 magnum high-velocity)"
   parent: BaseSpeedLoaderMagnum
   components:
