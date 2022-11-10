@@ -123,6 +123,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             Verb verb = new()
             {
                 Act = () => TryInsert(component.Owner, args.User, args.User),
+                DoContactInteraction = true,
                 Text = Loc.GetString("disposal-self-insert-verb-get-data-text")
             };
             // TODO VERN ICON
@@ -319,7 +320,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             RemComp<ActiveDisposalUnitComponent>(uid);
         }
 
-        private void HandlePowerChange(EntityUid uid, DisposalUnitComponent component, PowerChangedEvent args)
+        private void HandlePowerChange(EntityUid uid, DisposalUnitComponent component, ref PowerChangedEvent args)
         {
             if (!component.Running)
                 return;
@@ -375,6 +376,9 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
         private void OnAnchorChanged(EntityUid uid, DisposalUnitComponent component, ref AnchorStateChangedEvent args)
         {
+            if (Terminating(uid))
+                return;
+
             UpdateVisualState(component);
             if (!args.Anchored)
                 TryEjectContents(component);

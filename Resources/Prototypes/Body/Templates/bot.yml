@@ -1,6 +1,0 @@
-- type: bodyTemplate
-  id: BotTemplate
-  name: "bot"
-  centerSlot: "torso"
-  slots:
-    hand 1: hand

@@ -38,7 +38,8 @@ job-name-ertengineer = ERT engineer
 job-name-ertsecurity = ERT security
 job-name-ertmedic = ERT medic
 job-name-ertjanitor = ERT janitor
-job-name-boxer = Boxer
+job-name-boxer = boxer
+job-name-zookeeper = zookeeper
 
 # Role timers - Make these alphabetical or I cut you
 JobAtmosphericTechnician = atmospheric technician
@@ -82,3 +83,4 @@ JobStationEngineer = station engineer
 JobTechnicalAssistant = technical assistant
 JobWarden = warden
 JobBoxer = boxer
+JobZookeeper = zookeeper

@@ -156,9 +156,9 @@
     state: bearpelt
   - type: Item
     sprite: Clothing/Head/Misc/hides.rsi
+    heldPrefix: bear
   - type: Clothing
     sprite: Clothing/Head/Misc/hides.rsi
-    heldPrefix: bear
     slots:
       - HEAD
 
