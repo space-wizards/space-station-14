@@ -122,6 +122,7 @@ namespace Content.Server.Zombies
             melee.ClickAnimation = zombiecomp.AttackAnimation;
             melee.WideAnimation = zombiecomp.AttackAnimation;
             melee.Range = 1.5f;
+            Dirty(melee);
 
             //We have specific stuff for humanoid zombies because they matter more
             if (TryComp<HumanoidComponent>(target, out var huApComp)) //huapcomp
@@ -208,7 +209,6 @@ namespace Content.Server.Zombies
             RaiseLocalEvent(new EntityZombifiedEvent(target));
             //zombies get slowdown once they convert
             _movementSpeedModifier.RefreshMovementSpeedModifiers(target);
-            Dirty(target);
         }
     }
 }
