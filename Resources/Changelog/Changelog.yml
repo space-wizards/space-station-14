@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Audio occlusion is working again, type: Fix}
-  id: 2136
-  time: '2022-08-12T02:53:28.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Fixed inverted combat mode toggle., type: Fix}
@@ -2956,3 +2951,9 @@ Entries:
       is currently selected., type: Fix}
   id: 2635
   time: '2022-11-10T01:04:47.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Gas recyclers can now be upgrades to reduce the minimum required temperature
+      and pressure., type: Add}
+  id: 2636
+  time: '2022-11-10T01:11:23.0000000+00:00'
