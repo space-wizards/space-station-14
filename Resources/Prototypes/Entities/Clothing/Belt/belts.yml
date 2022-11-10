@@ -87,6 +87,7 @@
         - Powerdrill
         - JawsOfLife
         - CigPack
+        - HolofanProjector
       components:
         - AirlockPainter
         - SignalLinker
