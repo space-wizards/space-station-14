@@ -13,7 +13,7 @@
             <BoxContainer Orientation="Vertical"
                           HorizontalExpand="True"
                           VerticalExpand="True">
-                <Label Text="{Loc 'vaccine-machinne-menu-known-diseases-label'}" />
+                <Label Text="{Loc 'vaccine-machine-menu-known-diseases-label'}" />
                 <ItemList Name="UnlockedTechnologies"
                           SelectMode="Button"
                           HorizontalExpand="False"
@@ -35,20 +35,17 @@
                           HorizontalExpand="True"
                           VerticalExpand="True"
                           SizeFlagsStretchRatio="3">
-                <Label Name="TechnologyName" />
-                <Label Name="TechnologyDescription" />
-                <Label Name="TechnologyRequirements" />
             </BoxContainer>
             <BoxContainer Orientation="Vertical"
                           HorizontalExpand="True"
                           VerticalExpand="True"
                           SizeFlagsStretchRatio="1">
-                <Label Name="PointLabel" />
-                <Label Name="PointsPerSecondLabel" />
                 <BoxContainer Orientation="Vertical"
                               Align="End"
                               HorizontalExpand="True"
                               VerticalExpand="True">
+                    <Label Text="{Loc 'vaccine-machine-menu-biomass-cost'}"  />
+                    <Label Text="{Loc 'vaccine-machine-menu-biomass-current'}" />
                     <Button Name="ServerSelectionButton"
                             Access="Public"
                             Text="{Loc 'research-console-menu-server-selection-button'}" />
@@ -57,7 +54,7 @@
                             Text="{Loc 'research-console-menu-server-sync-button'}" />
                     <Button Name="CreateButton"
                             Access="Public"
-                            Text="{Loc 'disease-console-menu-create-vaccine-button'}" />
+                            Text="{Loc 'vaccine-machine-menu-create-vaccine-button'}" />
                 </BoxContainer>
             </BoxContainer>
         </BoxContainer>
