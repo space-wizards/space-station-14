@@ -16,19 +16,23 @@ namespace Content.Client.Weather;
 
 public sealed class WeatherOverlay : Overlay
 {
+    [Dependency] private readonly IClyde _clyde = default!;
     [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     private readonly SpriteSystem _sprite;
+    private readonly WeatherSystem _weather;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
 
     private IRenderTexture _blep;
     private IRenderTexture _blep2;
 
-    public WeatherOverlay(SpriteSystem sprite)
+    public WeatherOverlay(SpriteSystem sprite, WeatherSystem weather)
     {
         ZIndex = ParallaxSystem.ParallaxZIndex + 1;
+        _weather = weather;
         _sprite = sprite;
         IoCManager.InjectDependencies(this);
 
@@ -58,22 +62,20 @@ public sealed class WeatherOverlay : Overlay
 
     protected override void Draw(in OverlayDrawArgs args)
     {
-        if (!_entManager.TryGetComponent<WeatherComponent>(_mapManager.GetMapEntityId(args.MapId), out var weather) ||
+        var mapUid = _mapManager.GetMapEntityId(args.MapId);
+
+        if (!_entManager.TryGetComponent<WeatherComponent>(mapUid, out var weather) ||
             weather.Weather == null ||
             !_protoManager.TryIndex<WeatherPrototype>(weather.Weather, out var weatherProto))
         {
             return;
         }
 
-        switch (args.Space)
-        {
-            case OverlaySpace.WorldSpaceBelowFOV:
-                DrawWorld(args, weatherProto);
-                break;
-        }
+        var alpha = _weather.GetPercent(weather, mapUid, weatherProto);
+        DrawWorld(args, weatherProto, alpha);
     }
 
-    private void DrawWorld(in OverlayDrawArgs args, WeatherPrototype weatherProto)
+    private void DrawWorld(in OverlayDrawArgs args, WeatherPrototype weatherProto, float alpha)
     {
         var worldHandle = args.WorldHandle;
         var mapId = args.MapId;
@@ -82,17 +84,17 @@ public sealed class WeatherOverlay : Overlay
         var invMatrix = args.Viewport.GetWorldToLocalMatrix();
         var rotation = args.Viewport.Eye?.Rotation ?? Angle.Zero;
         var position = args.Viewport.Eye?.Position.Position ?? Vector2.Zero;
-        var invMatrix2 = Matrix3.CreateInverseTransform(position, rotation);
-        var clyde = IoCManager.Resolve<IClyde>();
 
         if (_blep.Texture.Size != args.Viewport.Size)
         {
-            _blep = clyde.CreateRenderTarget(args.Viewport.Size, new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb), name: "weather-stencil");
+            _blep.Dispose();
+            _blep = _clyde.CreateRenderTarget(args.Viewport.Size, new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb), name: "weather-stencil");
         }
 
         if (_blep2.Texture.Size != args.Viewport.Size)
         {
-            _blep2 = clyde.CreateRenderTarget(args.Viewport.Size, new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb), name: "weather");
+            _blep2.Dispose();
+            _blep2 = _clyde.CreateRenderTarget(args.Viewport.Size, new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb), name: "weather");
         }
 
         // Cut out the irrelevant bits via stencil
@@ -183,7 +185,7 @@ public sealed class WeatherOverlay : Overlay
             var scrolled = 0f; //layer.Config.Scrolling * realTime;
 
             // Origin - start with the parallax shift itself.
-            var originBL = (position - home) * 1f + scrolled;
+            var originBL = (position - home) * 0.1f + scrolled;
 
             // Place at the home.
             originBL += home;
@@ -220,7 +222,8 @@ public sealed class WeatherOverlay : Overlay
         worldHandle.SetTransform(Matrix3.Identity);
 
         worldHandle.UseShader(_protoManager.Index<ShaderPrototype>("StencilDraw").Instance());
-        worldHandle.DrawTextureRect(_blep2.Texture, worldBounds);
+
+        worldHandle.DrawTextureRect(_blep2.Texture, worldBounds, Color.White.WithAlpha(alpha));
         worldHandle.UseShader(null);
     }
 }

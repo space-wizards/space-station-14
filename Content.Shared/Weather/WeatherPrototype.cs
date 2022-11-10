@@ -21,8 +21,10 @@ public sealed class WeatherPrototype : IPrototype
     /// </summary>
     public TimeSpan DurationMaximum = TimeSpan.FromSeconds(300);
 
+    [ViewVariables(VVAccess.ReadWrite), DataField("startupTime")]
     public TimeSpan StartupTime = TimeSpan.FromSeconds(30);
 
+    [ViewVariables(VVAccess.ReadWrite), DataField("endTime")]
     public TimeSpan ShutdownTime = TimeSpan.FromSeconds(30);
 
     [ViewVariables(VVAccess.ReadWrite), DataField("sprite", required: true)]

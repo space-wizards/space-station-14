@@ -3,4 +3,7 @@
   sprite:
     sprite: /Textures/Effects/weather.rsi
     state: rain
-  # sound:
+  sound:
+    path: /Audio/Effects/Weather/rain.ogg
+    params:
+      loop: true

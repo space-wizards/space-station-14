@@ -1,3 +1,4 @@
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Weather;
@@ -10,6 +11,9 @@ public sealed class WeatherComponent : Component
     /// </summary>
     [ViewVariables, DataField("weather")]
     public string? Weather;
+
+    // now
+    public IPlayingAudioStream? Stream;
 
     /// <summary>
     /// When the weather started.
@@ -27,11 +31,12 @@ public sealed class WeatherComponent : Component
     public TimeSpan Duration => EndTime - StartTime;
 
     [ViewVariables]
-    public WeatherState State = WeatherState.Starting;
+    public WeatherState State = WeatherState.Invalid;
 }
 
 public enum WeatherState : byte
 {
+    Invalid = 0,
     Starting,
     Running,
     Ending,

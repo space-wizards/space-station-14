@@ -3,14 +3,15 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Weather;
 
 public abstract class SharedWeatherSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] protected readonly IGameTiming _timing = default!;
     [Dependency] protected readonly IMapManager MapManager = default!;
-    [Dependency] private readonly IPrototypeManager _protoMan = default!;
+    [Dependency] protected readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly MetaDataSystem _metadata = default!;
 
@@ -60,22 +61,22 @@ public abstract class SharedWeatherSystem : EntitySystem
             // Shutting down
             if (remainingTime < weatherProto.ShutdownTime)
             {
-                SetState(comp, WeatherState.Ending);
-                continue;
+                SetState(comp, WeatherState.Ending, weatherProto);
             }
-
-            var startTime = comp.StartTime + pauseTime;
-            var elapsed = _timing.CurTime - startTime;
-
             // Starting up
-            if (elapsed < weatherProto.StartupTime)
+            else
             {
-                SetState(comp, WeatherState.Starting);
-                continue;
+                var startTime = comp.StartTime + pauseTime;
+                var elapsed = _timing.CurTime - startTime;
+
+                if (elapsed < weatherProto.StartupTime)
+                {
+                    SetState(comp, WeatherState.Starting, weatherProto);
+                }
             }
 
-            // Running
-            Run(weatherProto, comp.State);
+            // Run whatever code we need.
+            Run(comp, weatherProto, comp.State);
         }
     }
 
@@ -88,9 +89,12 @@ public abstract class SharedWeatherSystem : EntitySystem
             StartWeather(weatherComp, weather);
     }
 
-    protected virtual void Run(WeatherPrototype weather, WeatherState state) {}
+    /// <summary>
+    /// Run every tick when the weather is running.
+    /// </summary>
+    protected virtual void Run(WeatherComponent component, WeatherPrototype weather, WeatherState state) {}
 
-    private void StartWeather(WeatherComponent component, WeatherPrototype weather)
+    protected void StartWeather(WeatherComponent component, WeatherPrototype weather)
     {
         Sawmill.Debug($"Starting weather {weather.ID}");
         component.Weather = weather.ID;
@@ -98,26 +102,30 @@ public abstract class SharedWeatherSystem : EntitySystem
         var duration = _random.NextDouble(weather.DurationMinimum.TotalSeconds, weather.DurationMaximum.TotalSeconds);
         component.EndTime = _timing.CurTime + TimeSpan.FromSeconds(duration);
         component.StartTime = _timing.CurTime;
+        DebugTools.Assert(component.State == WeatherState.Invalid);
         Dirty(component);
     }
 
-    private void EndWeather(WeatherComponent component)
+    protected void EndWeather(WeatherComponent component)
     {
+        component.Stream?.Stop();
+        component.Stream = null;
         Sawmill.Debug($"Stopping weather {component.Weather}");
         component.Weather = null;
         component.StartTime = TimeSpan.Zero;
         component.EndTime = TimeSpan.Zero;
+        component.State = WeatherState.Invalid;
         Dirty(component);
     }
 
-    private void SetState(WeatherComponent component, WeatherState state)
+    protected virtual bool SetState(WeatherComponent component, WeatherState state, WeatherPrototype prototype)
     {
         if (component.State.Equals(state))
-            return;
+            return false;
 
         component.State = state;
-        // TODO: Run specific logic.
         Sawmill.Debug($"Set weather state for {ToPrettyString(component.Owner)} to {state}");
+        return true;
     }
 
     [Serializable, NetSerializable]
