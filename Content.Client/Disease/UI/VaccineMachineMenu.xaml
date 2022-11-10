@@ -15,32 +15,18 @@
                           VerticalExpand="True">
                 <Label Text="{Loc 'vaccine-machine-menu-known-diseases-label'}" />
                 <ItemList Name="KnownDiseases"
-                          SelectMode="Button"
+                          SelectMode="Single"
                           HorizontalExpand="False"
                           VerticalExpand="True">
                     <!-- Diseases are are added here by code from the disease server -->
                 </ItemList>
             </BoxContainer>
-        </BoxContainer>
-        <BoxContainer Orientation="Horizontal"
-                      HorizontalExpand="True"
-                      VerticalExpand="True"
-                      SizeFlagsStretchRatio="1">
-            <BoxContainer Orientation="Vertical"
-                          HorizontalExpand="True"
-                          VerticalExpand="True"
-                          SizeFlagsStretchRatio="3">
-                <Label Name="DiseaseName" />
-                <Label Name="DiseaseResistance" />
-            </BoxContainer>
-            <BoxContainer Orientation="Vertical"
-                          HorizontalExpand="True"
-                          VerticalExpand="True"
-                          SizeFlagsStretchRatio="1">
                 <BoxContainer Orientation="Vertical"
-                              Align="End"
+                              Align="Center"
                               HorizontalExpand="True"
                               VerticalExpand="True">
+                    <Label Name="DiseaseName" />
+                    <Label Name="DiseaseResistance" />
                     <Label Text="{Loc 'vaccine-machine-menu-biomass-cost'}"  />
                     <Label Text="{Loc 'vaccine-machine-menu-biomass-current'}" />
                     <Button Name="ServerSelectionButton"
@@ -54,7 +40,6 @@
                             Text="{Loc 'vaccine-machine-menu-create-vaccine-button'}"
                             Disabled="True" />
                 </BoxContainer>
-            </BoxContainer>
         </BoxContainer>
     </BoxContainer>
 </DefaultWindow>
