@@ -187,8 +187,8 @@ public sealed class WeatherOverlay : Overlay
 
             // 0f means it never changes, 1f means it matches the eye.
             // TODO:
-            var slowness = 0f;
-            var offset = position * slowness;
+            var slowness = 1f;
+            var offset = rotation.RotateVec(position) * slowness;
             var offsetClamped = new Vector2(offset.X % size.X, offset.Y % size.Y);
 
             var topRight = worldDimensions / 2f + offsetClamped;

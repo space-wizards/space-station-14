@@ -62,6 +62,7 @@ public sealed class WeatherSystem : SharedWeatherSystem
                 var weatherTiles = 0;
 
                 // TODO: Floodfill out and determine if we should occlude.
+                // TODO: Floodfill distance to nearest tile determines volume, too.
 
                 foreach (var tile in MapManager.GetGrid(entXform.GridUid.Value).GetTilesIntersecting(circle))
                 {
@@ -73,7 +74,8 @@ public sealed class WeatherSystem : SharedWeatherSystem
                     }
                 }
 
-                var ratio = Math.Clamp(tiles == 0 ? 1f : (weatherTiles + targetTiles - tiles) / (float) tiles, 0f, 1f);
+                var totalWeather = Math.Max(0, weatherTiles + targetTiles - tiles);
+                var ratio = Math.Clamp(tiles == 0 ? 1f : totalWeather / (float) tiles, 0f, 1f);
                 alpha *= ratio;
             }
             // Full volume if not on grid
