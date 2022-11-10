@@ -20,7 +20,6 @@ device-frequency-prototype-name-surveillance-camera-entertainment = Камеры
 device-address-prefix-sensor = Сенс-
 device-address-prefix-fire-alarm = Пож-
 #PDAs and terminals
-# PDAs and terminals
 device-address-prefix-console = Конс-
 device-address-prefix-air-alarm = Возд-
 device-address-examine-message = Адрес устройства: { $address }.
