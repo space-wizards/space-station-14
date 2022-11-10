@@ -178,7 +178,7 @@
         - ReagentId: CoffeeLiqueur
           Quantity: 100
   - type: Sprite
-    sprite: Objects/Consumable/Drinks/kahluabottle.rsi
+    sprite: Objects/Consumable/Drinks/coffeeliqueurbottle.rsi
 
 - type: entity
   parent: DrinkBottleBaseFull

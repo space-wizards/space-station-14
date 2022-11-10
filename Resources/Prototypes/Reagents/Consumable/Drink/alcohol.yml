@@ -150,7 +150,7 @@
   physicalDesc: reagent-physical-desc-cloudy
   flavor: coffeeliquor
   color: "#664300"
-  spritePath: kahluaglass.rsi
+  spritePath: coffeeliqueurglass.rsi
 
 - type: reagent
   id: MelonLiquor

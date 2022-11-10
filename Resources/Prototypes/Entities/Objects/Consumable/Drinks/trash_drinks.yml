@@ -134,7 +134,7 @@
   id: DrinkBottleCoffeeLiqueur
   components:
   - type: Sprite
-    sprite: Objects/Consumable/TrashDrinks/kahluabottle_empty.rsi
+    sprite: Objects/Consumable/TrashDrinks/coffeeliqueurbottle_empty.rsi
 
 
 - type: entity
