@@ -189,8 +189,7 @@ namespace Content.Client.UserInterface.Systems.Atmos.GasTank
             _lblPressure.SetMarkup(Loc.GetString("gas-tank-window-tank-pressure-text", ("tankPressure", $"{state.TankPressure:0.##}")));
             _btnInternals.Disabled = !state.CanConnectInternals;
             _lblInternals.SetMarkup(Loc.GetString("gas-tank-window-internal-text",
-                ("colorName" ,state.InternalsConnected ? "green" : "red"),
-                ("status", state.InternalsConnected ? "Connected" : "Disconnected")));
+                ("status", state.InternalsConnected ? Loc.GetString("gas-tank-window-internal-connected") : Loc.GetString("gas-tank-window-internal-disconnected"))));
             if (state.OutputPressure.HasValue)
             {
                 _spbPressure.Value = state.OutputPressure.Value;
