@@ -246,7 +246,7 @@ namespace Content.Server.Electrocution
             Node? TryNode(string? id)
             {
                 if (id != null && nodeContainer.TryGetNode<Node>(id, out var tryNode)
-                               && tryNode.NodeGroup is IBasePowerNet { NetworkNode: { LastAvailableSupplySum: >0 } })
+                               && tryNode.NodeGroup is IBasePowerNet { NetworkNode: { LastCombinedSupply: >0 } })
                 {
                     return tryNode;
                 }

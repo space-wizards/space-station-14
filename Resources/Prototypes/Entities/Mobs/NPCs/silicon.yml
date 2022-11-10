@@ -76,6 +76,8 @@
     thresholds:
       0: Alive
       120: Dead
+  - type: Stamina
+    excess: 120
   - type: Destructible
     thresholds:
     - trigger:
@@ -149,7 +151,7 @@
     graph: CleanBot
     node: bot
   - type: SentienceTarget
-    flavorKind: mechanical
+    flavorKind: station-event-random-sentience-flavor-mechanical
   - type: SolutionContainerManager
     solutions:
       drainBuffer:

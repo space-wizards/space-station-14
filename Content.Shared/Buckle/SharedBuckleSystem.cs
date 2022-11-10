@@ -4,6 +4,7 @@ using Content.Shared.Movement;
 using Content.Shared.Movement.Events;
 using Content.Shared.Standing;
 using Content.Shared.Throwing;
+using Content.Shared.Vehicle.Components;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Timing;
@@ -81,7 +82,8 @@ namespace Content.Shared.Buckle
             if (component.LifeStage > ComponentLifeStage.Running)
                 return;
 
-            if (component.Buckled)
+            if (component.Buckled &&
+                !HasComp<VehicleComponent>(Transform(uid).ParentUid)) // buckle+vehicle shitcode
                 args.Cancel();
         }
 

@@ -1,4 +1,14 @@
 ﻿- type: gameRule
+  id: BluespaceArtifact
+  config:
+    !type:StationEventRuleConfiguration
+    id: BluespaceArtifact
+    weight: 5
+    maxOccurrences: 5
+    startAfter: 30
+    endAfter: 35
+
+- type: gameRule
   id: BreakerFlip
   config:
     !type:StationEventRuleConfiguration
@@ -28,6 +38,8 @@
     startAnnouncement: station-event-disease-outbreak-announcement
     startAudio:
       path: /Audio/Announcements/outbreak7.ogg
+      params:
+        volume: -4
     id: DiseaseOutbreak
     weight: 5
     endAfter: 1
@@ -107,8 +119,12 @@
     endAnnouncement: station-event-meteor-swarm-end-announcement
     startAudio:
       path: /Audio/Announcements/meteors_start.ogg
+      params:
+        volume: -4
     endAudio:
       path: /Audio/Announcements/meteors_end.ogg
+      params:
+        volume: -4
     startAfter: 30
 
 - type: gameRule
@@ -133,6 +149,8 @@
     endAnnouncement: station-event-power-grid-check-end-announcement
     startAudio:
       path: /Audio/Announcements/power_off.ogg
+      params:
+       volume: -4
     startAfter: 12
 
 - type: gameRule

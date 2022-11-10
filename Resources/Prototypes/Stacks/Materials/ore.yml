@@ -3,33 +3,39 @@
   name: gold ore
   icon: /Textures/Objects/Materials/ore.rsi/gold.png
   spawn: GoldOre1
+  maxCount: 30
 
 - type: stack
   id: SteelOre
   name: steel ore
   icon: /Textures/Objects/Materials/ore.rsi/iron.png
   spawn: SteelOre1
+  maxCount: 30
 
 - type: stack
   id: PlasmaOre
   name: plasma ore
   icon: /Textures/Objects/Materials/ore.rsi/plasma.png
   spawn: PlasmaOre1
+  maxCount: 30
 
 - type: stack
   id: SilverOre
   name: silver ore
   icon: /Textures/Objects/Materials/ore.rsi/silver.png
   spawn: SilverOre1
+  maxCount: 30
 
 - type: stack
   id: SpaceQuartz
   name: space quartz
   icon: /Textures/Objects/Materials/ore.rsi/spacequartz.png
   spawn: SpaceQuartz1
+  maxCount: 30
 
 - type: stack
   id: UraniumOre
   name: uranium ore
   icon: /Textures/Objects/Materials/ore.rsi/uranium.png
   spawn: UraniumOre1
+  maxCount: 30
