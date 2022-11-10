@@ -88,8 +88,8 @@ namespace Content.Server.Chemistry.EntitySystems
                 return false;
             }
 
-            _popup.PopupCursor(Loc.GetString(msgFormat ?? "hypospray-component-inject-other-message",
-                                            ("other", target)), Filter.Entities(user));
+            _popup.PopupCursor(Loc.GetString(msgFormat ?? "hypospray-component-inject-other-message", ("other", target)), Filter.Entities(user));
+
             if (target != user)
             {
                 _popup.PopupCursor(Loc.GetString("hypospray-component-feel-prick-message"), Filter.Entities(target.Value));
@@ -101,7 +101,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
             _audio.PlayPvs(component.InjectSound, user);
 
-            // Get transfer amount. May be smaller than _transferAmount if not enough room
+            // Get transfer amount. May be smaller than component.TransferAmount if not enough room
             var realTransferAmount = FixedPoint2.Min(component.TransferAmount, targetSolution.AvailableVolume);
 
             if (realTransferAmount <= 0)
@@ -111,20 +111,16 @@ namespace Content.Server.Chemistry.EntitySystems
             }
 
             // Move units from attackSolution to targetSolution
-            var removedSolution =
-            _solutions.SplitSolution(component.Owner, hypoSpraySolution, realTransferAmount);
+            var removedSolution = _solutions.SplitSolution(component.Owner, hypoSpraySolution, realTransferAmount);
 
             if (!targetSolution.CanAddSolution(removedSolution))
             {
                 return true;
             }
-
             _reactiveSystem.DoEntityReaction(target.Value, removedSolution, ReactionMethod.Injection);
-
             _solutions.TryAddSolution(target.Value, targetSolution, removedSolution);
 
-            _adminLogger.Add(LogType.ForceFeed,
-                             $"{_entMan.ToPrettyString(user):user} injected {_entMan.ToPrettyString(target.Value):target} with a solution {SolutionContainerSystem.ToPrettyString(removedSolution):removedSolution} using a {_entMan.ToPrettyString(component.Owner):using}");
+            _adminLogger.Add(LogType.ForceFeed, $"{_entMan.ToPrettyString(user):user} injected {_entMan.ToPrettyString(target.Value):target} with a solution {SolutionContainerSystem.ToPrettyString(removedSolution):removedSolution} using a {_entMan.ToPrettyString(component.Owner):using}");
 
             return true;
         }
@@ -135,7 +131,7 @@ namespace Content.Server.Chemistry.EntitySystems
             // In SS13 the hypospray ONLY works on mobs, NOT beakers or anything else.
 
             return entMan.HasComponent<SolutionContainerManagerComponent>(entity)
-            && entMan.HasComponent<MobStateComponent>(entity);
+                && entMan.HasComponent<MobStateComponent>(entity);
         }
     }
 }
