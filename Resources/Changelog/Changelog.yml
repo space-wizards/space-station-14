@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: do_after progress bars now show on cameras., type: Fix}
-  id: 2138
-  time: '2022-08-13T04:32:23.0000000+00:00'
 - author: lapatison
   changes:
   - {message: Kvass tank from cargo now come unpackaged., type: Tweak}
@@ -2957,3 +2952,8 @@ Entries:
   - {message: Mousetraps no longer autokill cardboard box users, type: Fix}
   id: 2637
   time: '2022-11-10T01:18:37.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: CentCom now calls the shuttle automatically after a long round., type: Add}
+  id: 2638
+  time: '2022-11-10T04:20:36.0000000+00:00'
