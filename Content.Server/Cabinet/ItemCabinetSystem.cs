@@ -65,11 +65,11 @@ namespace Content.Server.Cabinet
                 UpdateAppearance(uid, cabinet);
         }
 
-        private void OnLockToggleAttempt(EntityUid uid, ItemCabinetComponent cabinet, LockToggleAttemptEvent args)
+        private void OnLockToggleAttempt(EntityUid uid, ItemCabinetComponent cabinet, ref LockToggleAttemptEvent args)
         {
             // Cannot lock or unlock while open.
             if (cabinet.Opened)
-                args.Cancel();
+                args.Cancelled = true;
         }
 
         private void AddToggleOpenVerb(EntityUid uid, ItemCabinetComponent cabinet, GetVerbsEvent<ActivationVerb> args)

@@ -51,6 +51,7 @@ public sealed class EntityStorageSystem : EntitySystem
         SubscribeLocalEvent<InsideEntityStorageComponent, InhaleLocationEvent>(OnInsideInhale);
         SubscribeLocalEvent<InsideEntityStorageComponent, ExhaleLocationEvent>(OnInsideExhale);
         SubscribeLocalEvent<InsideEntityStorageComponent, AtmosExposedGetAirEvent>(OnInsideExposed);
+
     }
 
     private void OnInit(EntityUid uid, EntityStorageComponent component, ComponentInit args)
@@ -103,15 +104,15 @@ public sealed class EntityStorageSystem : EntitySystem
         component.IsWeldedShut = args.IsWelded;
     }
 
-    private void OnLockToggleAttempt(EntityUid uid, EntityStorageComponent target, LockToggleAttemptEvent args)
+    private void OnLockToggleAttempt(EntityUid uid, EntityStorageComponent target, ref LockToggleAttemptEvent args)
     {
         // Cannot (un)lock open lockers.
         if (target.Open)
-            args.Cancel();
+            args.Cancelled = true;
 
         // Cannot (un)lock from the inside. Maybe a bad idea? Security jocks could trap nerds in lockers?
         if (target.Contents.Contains(args.User))
-            args.Cancel();
+            args.Cancelled = true;
     }
 
     private void OnDestroy(EntityUid uid, EntityStorageComponent component, DestructionEventArgs args)
