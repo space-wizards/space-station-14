@@ -1,6 +1,7 @@
 using System.Threading;
 using Content.Server.Disease.Components;
 using Content.Shared.Disease;
+using Content.Shared.Disease.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Examine;

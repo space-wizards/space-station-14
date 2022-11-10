@@ -1,4 +1,4 @@
-using Content.Server.Research.Components;
+using Content.Shared.Disease.Components;
 
 namespace Content.Server.Disease.Components
 {

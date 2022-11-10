@@ -14,11 +14,11 @@
                           HorizontalExpand="True"
                           VerticalExpand="True">
                 <Label Text="{Loc 'vaccine-machine-menu-known-diseases-label'}" />
-                <ItemList Name="UnlockedTechnologies"
+                <ItemList Name="KnownDiseases"
                           SelectMode="Button"
                           HorizontalExpand="False"
                           VerticalExpand="True">
-                    <!-- Unlocked technologies are added here by code -->
+                    <!-- Diseases are are added here by code from the disease server -->
                 </ItemList>
             </BoxContainer>
         </BoxContainer>
@@ -26,15 +26,12 @@
                       HorizontalExpand="True"
                       VerticalExpand="True"
                       SizeFlagsStretchRatio="1">
-            <TextureRect Name="TechnologyIcon"
-                         HorizontalExpand="True"
-                         VerticalExpand="True"
-                         SizeFlagsStretchRatio="1"
-                         Stretch="KeepAspectCentered" />
             <BoxContainer Orientation="Vertical"
                           HorizontalExpand="True"
                           VerticalExpand="True"
                           SizeFlagsStretchRatio="3">
+                <Label Name="DiseaseName" />
+                <Label Name="DiseaseResistance" />
             </BoxContainer>
             <BoxContainer Orientation="Vertical"
                           HorizontalExpand="True"
@@ -54,7 +51,8 @@
                             Text="{Loc 'research-console-menu-server-sync-button'}" />
                     <Button Name="CreateButton"
                             Access="Public"
-                            Text="{Loc 'vaccine-machine-menu-create-vaccine-button'}" />
+                            Text="{Loc 'vaccine-machine-menu-create-vaccine-button'}"
+                            Disabled="True" />
                 </BoxContainer>
             </BoxContainer>
         </BoxContainer>

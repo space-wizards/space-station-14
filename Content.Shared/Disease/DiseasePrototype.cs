@@ -74,7 +74,7 @@ namespace Content.Shared.Disease
         /// used as a reference and it has 0.15 chance, this is
         /// a base 33% reduction in cure chance
         /// </summary>
-        [DataField("cureResist", serverOnly: true)]
+        [DataField("cureResist")]
         public float CureResist = 0.05f;
         /// <summary>
         /// Whether the disease can infect other people.
@@ -83,7 +83,7 @@ namespace Content.Shared.Disease
         /// This also affects things like the vaccine machine.
         /// You can't print a cancer vaccine
         /// </summary>
-        [DataField("infectious", serverOnly: true)]
+        [DataField("infectious")]
         public bool Infectious = true;
     }
 }
