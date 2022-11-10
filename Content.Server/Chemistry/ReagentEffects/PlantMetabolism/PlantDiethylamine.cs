@@ -1,4 +1,5 @@
 using Content.Server.Botany.Components;
+using Content.Server.Botany.Systems;
 using Content.Shared.Chemistry.Reagent;
 using JetBrains.Annotations;
 using Robust.Shared.Random;
@@ -16,17 +17,20 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
                                     plantHolderComp.Seed.Immutable)
                 return;
 
+
+            var plantHolder = args.EntityManager.System<PlantHolderSystem>();
+
             var random = IoCManager.Resolve<IRobustRandom>();
 
             if (random.Prob(0.1f))
             {
-                plantHolderComp.EnsureUniqueSeed();
+                plantHolder.EnsureUniqueSeed(args.SolutionEntity, plantHolderComp);
                 plantHolderComp.Seed.Lifespan++;
             }
 
             if (random.Prob(0.1f))
             {
-                plantHolderComp.EnsureUniqueSeed();
+                plantHolder.EnsureUniqueSeed(args.SolutionEntity, plantHolderComp);
                 plantHolderComp.Seed.Endurance++;
             }
         }

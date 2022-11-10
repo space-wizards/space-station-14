@@ -14,6 +14,7 @@ namespace Content.Server.Botany.Systems
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
 
         private float _timer = 0f;
 
@@ -34,9 +35,9 @@ namespace Content.Server.Botany.Systems
 
             _timer -= 3f;
 
-            foreach (var plantHolder in EntityManager.EntityQuery<PlantHolderComponent>())
+            foreach (var plantHolder in EntityQuery<PlantHolderComponent>())
             {
-                plantHolder.Update();
+                _plantHolder.Update(plantHolder.Owner, plantHolder);
             }
         }
     }
