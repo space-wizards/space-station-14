@@ -41,31 +41,28 @@ public abstract partial class SharedGunSystem
 
         if (GetBallisticShots(component) >= component.Capacity) return;
 
-        if (EntityManager.HasComponent<BallisticAmmoProviderComponent>(args.Used))
+        if (TryComp<BallisticAmmoProviderComponent>(args.Used, out var ammoComp))
         {
-            var ammoComp = EntityManager.GetComponent<BallisticAmmoProviderComponent>(args.Used);
-
-            if (ammoComp.UnspawnedCount + ammoComp.Entities.Count == 0) return;
+            if (GetBallisticShots(ammoComp) == 0) return;
 
             while (GetBallisticShots(component) < component.Capacity && GetBallisticShots(ammoComp) > 0)
             {
                 var xform = EntityManager.GetComponent<TransformComponent>(uid);
-                EntityUid bullet; // empty var that is guarenteed to be filled
 
                 if (ammoComp.Entities.Count == 0) // If the entity doesn't have any spawned bullets
                 {
                     ammoComp.UnspawnedCount -= 1;
-                    bullet = Spawn(ammoComp.FillProto, xform.MapPosition); // Spawn it in
+                    component.UnspawnedCount += 1; // simple preformance trick
                 }
                 else
                 {
-                    bullet = ammoComp.Entities.FirstOrNull()!.Value;
-                    ammoComp.Entities.Remove(bullet); // Remove the bullet from the container, ensures no bugs happen with the quickloader.
+                    var bullet = ammoComp.Entities.FirstOrNull()!.Value;
+                    ammoComp.Entities.Remove(bullet); // Remove the bullet from the container, ensures no bugs happen with the speedloader.
+                    component.Entities.Add(bullet);
+                    component.Container.Insert(bullet);
                 }
-                component.Entities.Add(bullet);
-                component.Container.Insert(bullet);
-                UpdateBallisticAppearance(ammoComp); // This one is for the speedloader
             }
+            UpdateBallisticAppearance(ammoComp); // This one is for the speedloader
         }
         else
         {
