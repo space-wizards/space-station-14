@@ -18,7 +18,7 @@ analysis-console-info-triggered-false = ACTIVATED: FALSE
 analysis-console-info-effect = REACTION: {$effect}
 analysis-console-info-trigger = STIMULUS: {$trigger}
 analysis-console-info-edges = EDGES: {$edges}
-analysis-console-info-completion = COMPLETION_PERCENTAGE: {$percentage}%
+analysis-console-info-value = CURRENT_VALUE: {$value}
 
 analysis-console-info-scanner = Scanning...
 analysis-console-progress-text = {$seconds ->

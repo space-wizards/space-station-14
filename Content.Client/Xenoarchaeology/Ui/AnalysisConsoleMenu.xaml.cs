@@ -114,19 +114,26 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
         }
 
         if (state.Id != null) //node id
-            message.AddMarkup(Loc.GetString("analysis-console-info-id", ("id", state.Id))+"\n");
+        {
+            message.AddMarkup(Loc.GetString("analysis-console-info-id", ("id", state.Id)));
+            message.PushNewline();
+        }
         if (state.Depth != null) //node depth
-            message.AddMarkup(Loc.GetString("analysis-console-info-depth", ("depth", state.Depth))+"\n");
+        {
+            message.AddMarkup(Loc.GetString("analysis-console-info-depth", ("depth", state.Depth)));
+            message.PushNewline();
+        }
 
         if (state.Triggered != null) //whether it has been triggered
         {
             var activated = state.Triggered.Value
                 ? "analysis-console-info-triggered-true"
                 : "analysis-console-info-triggered-false";
-            message.AddMarkup(Loc.GetString(activated)+"\n");
+            message.AddMarkup(Loc.GetString(activated));
+            message.PushNewline();
         }
 
-        message.AddMarkup("\n");
+        message.PushNewline();
         var needSecondNewline = false;
 
         if (state.TriggerProto != null && //possible triggers
@@ -134,7 +141,8 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
             trigger.TriggerHint != null)
         {
             message.AddMarkup(Loc.GetString("analysis-console-info-trigger",
-                ("trigger", Loc.GetString(trigger.TriggerHint))) + "\n");
+                ("trigger", Loc.GetString(trigger.TriggerHint))));
+            message.PushNewline();
             needSecondNewline = true;
         }
 
@@ -143,21 +151,24 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
             effect.EffectHint != null)
         {
             message.AddMarkup(Loc.GetString("analysis-console-info-effect",
-                ("effect", Loc.GetString(effect.EffectHint))) + "\n");
+                ("effect", Loc.GetString(effect.EffectHint))));
+            message.PushNewline();
             needSecondNewline = true;
         }
 
         if (needSecondNewline)
-            message.AddMarkup("\n");
+            message.PushNewline();
 
         if (state.Edges != null) //number of edges
-            message.AddMarkup(Loc.GetString("analysis-console-info-edges", ("edges", state.Edges))+"\n");
-        if (state.Completion != null) //completion percentage
         {
-            message.AddMarkup(Loc.GetString("analysis-console-info-completion",
-                ("percentage", Math.Round(state.Completion.Value * 100)))+"\n");
+            message.AddMarkup(Loc.GetString("analysis-console-info-edges", ("edges", state.Edges)));
+            message.PushNewline();
         }
-
+        if (state.PointValue != null) //completion percentage
+        {
+            message.AddMarkup(Loc.GetString("analysis-console-info-value", ("value", state.PointValue)));
+            message.PushNewline();
+        }
         Information.SetMessage(message);
     }
 
