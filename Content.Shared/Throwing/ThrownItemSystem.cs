@@ -151,6 +151,7 @@ namespace Content.Shared.Throwing
             // TODO: Just pass in the bodies directly
             RaiseLocalEvent(target.Owner, new ThrowHitByEvent(user, thrown.Owner, target.Owner), true);
             RaiseLocalEvent(thrown.Owner, new ThrowDoHitEvent(user, thrown.Owner, target.Owner), true);
+            // if (thrown item has tag "StopOnCollide") stop thrown item
         }
     }
 }

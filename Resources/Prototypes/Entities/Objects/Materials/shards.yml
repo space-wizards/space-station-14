@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   abstract: true
   parent: BaseItem
   id: ShardBase
@@ -24,6 +24,8 @@
     damage:
       types:
         Slash: 3.5
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
   - type: Item
     sprite: Objects/Materials/Shards/shard.rsi
   - type: CollisionWake
