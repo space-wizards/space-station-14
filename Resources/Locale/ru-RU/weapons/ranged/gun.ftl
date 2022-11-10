@@ -25,3 +25,4 @@ gun-revolver-full = Револьвер полностью заряжен
 gun-revolver-insert = Заряжен
 gun-revolver-spin = Вращать барабан
 gun-revolver-spun = Барабан вращается
+gun-speedloader-empty = Скоростной загрузчик пуст

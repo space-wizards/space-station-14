@@ -30,3 +30,9 @@ signal-port-name-med-scanner-sender = Медицинский сканер
 signal-port-description-med-scanner-sender = Передатчик сигнала медицинского сканера
 signal-port-name-med-scanner-receiver = Медицинский сканер
 signal-port-description-med-scanner-receiver = Приёмник сигнала медицинского сканера
+
+signal-port-name-artifact-analyzer-sender = Консоль
+signal-port-description-artifact-analyzer-sender = Передатчик сигнала аналитической консоли
+
+signal-port-name-artifact-analyzer-receiver = Платформа
+signal-port-description-artifact-analyzer-receiver = Приёмник сигнала анализатора артефактов

@@ -3,6 +3,7 @@ device-frequency-prototype-name-atmos = Атмосферные приборы
 device-frequency-prototype-name-suit-sensors = Сенсоры костюмов
 device-frequency-prototype-name-lights = Умное освещение
 device-frequency-prototype-name-mailing-units = Почтовый блок
+device-frequency-prototype-name-pdas = КПК
 # prefixes for randomly generated device addresses
 device-address-prefix-vent = Вент-
 device-address-prefix-scrubber = Скр-
@@ -18,5 +19,7 @@ device-frequency-prototype-name-surveillance-camera-general = Камеры (Об
 device-frequency-prototype-name-surveillance-camera-entertainment = Камеры (Развлечения)
 device-address-prefix-sensor = Сенс-
 device-address-prefix-fire-alarm = Пож-
+#PDAs and terminals
+device-address-prefix-console = Конс-
 device-address-prefix-air-alarm = Возд-
 device-address-examine-message = Адрес устройства: { $address }.

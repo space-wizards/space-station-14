@@ -14,6 +14,16 @@ game-ticker-get-info-text =
     Текущая карта: [color=white]{ $mapName }[/color]
     Текущий режим игры: [color=white]{ $gmTitle }[/color]
     >[color=yellow]{ $desc }[/color]
+game-ticker-get-info-preround-text =
+    Привет и добро пожаловать в [color=white]Space Station 14![/color]
+    Текущий раунд: [color=white]#{ $roundId }[/color]
+    Текущее количество игроков: [color=white]{ $playerCount }[/color] ([color=white]{ $readyCount }[/color] { $readyCount ->
+        [one] готов
+       *[other] готовы
+    })
+    Текущая карта: [color=white]{ $mapName }[/color]
+    Текущий режим игры: [color=white]{ $gmTitle }[/color]
+    >[color=yellow]{ $desc }[/color]
 game-ticker-no-map-selected = [color=red]Карта не выбрана![/color]
 game-ticker-player-no-jobs-available-when-joining = При попытке присоединиться к игре ни одной роли не было доступно.
 # Displayed in chat to admins when a player joins
