@@ -28,12 +28,15 @@
     containers:
       machine_board: !type:Container
       machine_parts: !type:Container
+  - type: ResearchClient
   - type: VaccineMachine
-  - type: MaterialStorage
   - type: ActivatableUI
-    key: enum.ResearchClientUiKey.Key
+    key: enum.VaccineMachineUiKey.Key
   - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
-    - key: enum.ResearchClientUiKey.Key
-      type: ResearchClientBoundUserInterface
+    - key: enum.VaccineMachineUiKey.Key
+      type: VaccineMachineBoundUserInterface
+  - type: MaterialStorage
+    materialWhiteList:
+    - Biomass
