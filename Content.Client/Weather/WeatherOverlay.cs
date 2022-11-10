@@ -28,7 +28,6 @@ public sealed class WeatherOverlay : Overlay
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
 
     private IRenderTexture? _blep;
-    private IRenderTexture? _blep2;
 
     public WeatherOverlay(SpriteSystem sprite, WeatherSystem weather)
     {
@@ -36,8 +35,6 @@ public sealed class WeatherOverlay : Overlay
         _weather = weather;
         _sprite = sprite;
         IoCManager.InjectDependencies(this);
-
-        var clyde = IoCManager.Resolve<IClyde>();
     }
 
     // TODO: WeatherComponent on the map.
@@ -88,12 +85,6 @@ public sealed class WeatherOverlay : Overlay
         {
             _blep?.Dispose();
             _blep = _clyde.CreateRenderTarget(args.Viewport.Size, new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb), name: "weather-stencil");
-        }
-
-        if (_blep2?.Texture.Size != args.Viewport.Size)
-        {
-            _blep2?.Dispose();
-            _blep2 = _clyde.CreateRenderTarget(args.Viewport.Size, new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb), name: "weather");
         }
 
         // Cut out the irrelevant bits via stencil
@@ -172,42 +163,55 @@ public sealed class WeatherOverlay : Overlay
                 throw new NotImplementedException();
         }
 
-        var viewport = args.Viewport;
-
         // Draw the rain
-        worldHandle.RenderInRenderTarget(_blep2, () =>
+        worldHandle.UseShader(_protoManager.Index<ShaderPrototype>("StencilDraw").Instance());
+
+        // TODO: This is very similar to parallax but we need stencil support but we can probably combine these somehow
+        // and not make it spaghetti, while getting the advantages of not-duped code?
+        // TODO: Realtime above.
+
+        var scale = 1f;
+        // Size of the texture in world units.
+        var size = sprite.Size / (float) EyeManager.PixelsPerMeter * scale;
+
+        // 0f means it never changes in world-terms, 1f means it matches the eye.
+        var slowness = 0f;
+        var scrolling = 0f;
+        var scrolled = (float) (scrolling * curTime.TotalSeconds);
+
+        // Origin - start with the parallax shift itself.
+        var originBL = position * slowness + scrolled;
+
+        // Centre the image.
+        originBL -= size / 2;
+
+        // Remove offset so we can floor.
+        var flooredBL = args.WorldAABB.BottomLeft - originBL;
+
+        // Floor to background size.
+        flooredBL = (flooredBL / size).Floored() * size;
+
+        // Re-offset.
+        flooredBL += originBL;
+
+        var mat = Matrix3.CreateTransform(position, -rotation);
+        var invMat = mat.Invert();
+        worldHandle.SetTransform(invMat);
+        var boxSize = worldBounds.Box.Size;
+        var BL = invMat.Transform(flooredBL);
+
+        // Slight overdraw because I'm done but uhh don't worry about it.
+        for (var x = BL.X; x < boxSize.X / 2f; x += size.X)
         {
-            var matrix = Matrix3.CreateTransform(position, -rotation);
-            Matrix3.Multiply(in matrix, in invMatrix, out var matty);
-            worldHandle.SetTransform(matty);
-
-            // Size of the texture in world units.
-            var size = sprite.Size / (float) EyeManager.PixelsPerMeter;
-            var worldDimensions = _blep2.Texture.Size / EyeManager.PixelsPerMeter;
-
-            // 0f means it never changes, 1f means it matches the eye.
-            // TODO:
-            var slowness = 1f;
-            var offset = rotation.RotateVec(position) * slowness;
-            var offsetClamped = new Vector2(offset.X % size.X, offset.Y % size.Y);
-
-            var topRight = worldDimensions / 2f + offsetClamped;
-            var botLeft = -topRight;
-
-            for (var x = botLeft.X; x <= topRight.X; x += size.X)
+            for (var y = BL.Y; y < boxSize.Y / 2f; y += size.Y)
             {
-                for (var y = botLeft.Y; y <= topRight.Y; y += size.Y)
-                {
-                    var box = Box2.FromDimensions((x, y), size);
-                    worldHandle.DrawTextureRect(sprite, box, weatherProto.Color);
-                }
+                // Yes I spent a while making sure no texture holes when the eye is rotating.
+                var box = Box2.FromDimensions((x, y), size);
+                worldHandle.DrawTextureRect(sprite, box, (weatherProto.Color ?? Color.White).WithAlpha(alpha));
             }
-
-        }, Color.Transparent);
+        }
 
         worldHandle.SetTransform(Matrix3.Identity);
-        worldHandle.UseShader(_protoManager.Index<ShaderPrototype>("StencilDraw").Instance());
-        worldHandle.DrawTextureRect(_blep2.Texture, worldBounds, Color.White.WithAlpha(alpha));
         worldHandle.UseShader(null);
     }
 }
