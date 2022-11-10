@@ -76,6 +76,18 @@
     {
       "name": "old-radio-inhand-right",
       "directions": 4
+    },
+    {
+      "name": "syndibackupcaller"
+    },
+    {
+      "name": "syndibackupcaller-calling",
+      "delays": [
+        [
+          0.8,
+          0.8
+        ]
+      ]
     }
   ]
 }

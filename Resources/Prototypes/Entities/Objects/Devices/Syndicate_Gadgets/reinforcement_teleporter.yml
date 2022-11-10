@@ -7,7 +7,9 @@
   - type: Sprite
     sprite: Objects/Devices/communication.rsi
     layers:
-    - state: old-radio
+    - state: syndibackupcaller
+    - state: syndibackupcaller-calling
+      shader: unshaded
     netsync: false
   - type: GhostRoleTraitorReinforcement
     randomHumanoidSettings: SyndicateAgent
