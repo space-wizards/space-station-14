@@ -82,6 +82,8 @@
       - PosterContrabandBeachStarYamamoto
       - PosterContrabandHighEffectEngineering
       - PosterContrabandNuclearDeviceInformational
+      - PosterContrabandRevolt
+      - PosterContrabandRise
     chance: 1
 
 - type: entity
@@ -134,4 +136,5 @@
       - PosterLegitDickGumshue
       - PosterLegitThereIsNoGasGiant
       - PosterLegitJustAWeekAway
+      - PosterLegitSecWatch
     chance: 1

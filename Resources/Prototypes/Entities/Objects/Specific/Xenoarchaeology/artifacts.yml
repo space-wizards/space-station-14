@@ -10,6 +10,8 @@
       sprite: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi
       netsync: false
       state: ano01
+      noRot: true
+    - type: Damageable
     - type: Physics
       bodyType: Dynamic
     - type: Transform
@@ -31,152 +33,34 @@
     - type: Appearance
       visuals:
         - type: RandomArtifactVisualizer
-    - type: PowerConsumer
-      voltage: Medium
-      drawRate: 500
-    - type: NodeContainer
-      nodes:
-        medium:
-          !type:CableDeviceNode
-          nodeGroupID: MVPower
-          # sadly, HVPower and Apc cables doesn't work right now
+   
     - type: StaticPrice
-      price: 2000
-    - type: Electrified
-      requirePower: true
-      noWindowInTile: true
-      highVoltageNode: high
-      mediumVoltageNode: medium
-      lowVoltageNode: low
-
-# Telepathic
-- type: entity
-  parent: BaseXenoArtifact
-  id: BadfeelingArtifact
-  suffix: Badfeeling
-  components:
-    - type: TelepathicArtifact
-      messages:
-        - badfeeling-artifact-1
-        - badfeeling-artifact-2
-        - badfeeling-artifact-3
-        - badfeeling-artifact-4
-        - badfeeling-artifact-5
-        - badfeeling-artifact-6
-        - badfeeling-artifact-7
-        - badfeeling-artifact-8
-        - badfeeling-artifact-9
-        - badfeeling-artifact-10
-        - badfeeling-artifact-11
-        - badfeeling-artifact-12
-        - badfeeling-artifact-13
-        - badfeeling-artifact-14
-        - badfeeling-artifact-15
-      drastic:
-        - badfeeling-artifact-drastic-1
-        - badfeeling-artifact-drastic-2
-        - badfeeling-artifact-drastic-3
-        - badfeeling-artifact-drastic-4
-        - badfeeling-artifact-drastic-5
-        - badfeeling-artifact-drastic-6
+      price: 500
 
 - type: entity
   parent: BaseXenoArtifact
-  id: GoodfeelingArtifact
-  suffix: Goodfeeling
+  id: SimpleXenoArtifact
+  suffix: Simple
   components:
-    - type: TelepathicArtifact
-      messages:
-        - goodfeeling-artifact-1
-        - goodfeeling-artifact-2
-        - goodfeeling-artifact-3
-        - goodfeeling-artifact-4
-        - goodfeeling-artifact-5
-        - goodfeeling-artifact-6
-        - goodfeeling-artifact-7
-        - goodfeeling-artifact-8
-        - goodfeeling-artifact-9
-        - goodfeeling-artifact-10
-        - goodfeeling-artifact-11
-        - goodfeeling-artifact-12
-        - goodfeeling-artifact-13
-        - goodfeeling-artifact-14
-      drastic:
-        - goodfeeling-artifact-drastic-1
-        - goodfeeling-artifact-drastic-2
-        - goodfeeling-artifact-drastic-3
-        - goodfeeling-artifact-drastic-4
-        - goodfeeling-artifact-drastic-5
-        - goodfeeling-artifact-drastic-6
-
-# Spawners
-- type: entity
-  parent: BaseXenoArtifact
-  id: AngryMobsSpawnArtifact
-  suffix: Angry Mobs Spawn
-  components:
-    - type: SpawnArtifact
-      maxSpawns: 5
-      possiblePrototypes:
-        - MobCarpHolo
-        - MobCarpMagic
+  - type: Artifact
+    nodesMin: 2
+    nodesMax: 5
 
 - type: entity
   parent: BaseXenoArtifact
-  id: JunkSpawnArtifact
-  suffix: Junk Spawn
+  id: MediumXenoArtifact
+  suffix: Medium
   components:
-    - type: SpawnArtifact
-      maxSpawns: 10
-      possiblePrototypes:
-        - FoodPacketSyndiTrash
-        - FoodPacketSemkiTrash
-        - RandomInstruments
-        - ToySpawner
+  - type: Artifact
+    nodesMin: 5
+    nodesMax: 9
 
 - type: entity
   parent: BaseXenoArtifact
-  id: BananaSpawnArtifact
-  suffix: Banana Spawn
+  id: ComplexXenoArtifact
+  suffix: Complex
   components:
-    - type: SpawnArtifact
-      maxSpawns: 20
-      possiblePrototypes:
-        - FoodBanana
+  - type: Artifact
+    nodesMin: 9
+    nodesMax: 13
 
-- type: entity
-  parent: BaseXenoArtifact
-  id: HeatArtifact
-  suffix: Heat
-  components:
-    - type: TemperatureArtifact
-      targetTemp: 400 # around 125 celsius
-
-- type: entity
-  parent: BaseXenoArtifact
-  id: ColdArtifact
-  suffix: Cold
-  components:
-    - type: TemperatureArtifact
-      targetTemp: 150 # around -125 celsius
-
-- type: entity
-  parent: BaseXenoArtifact
-  id: RadiateArtifact
-  suffix: Radiation
-  components:
-    - type: RadiateArtifact
-
-- type: entity
-  parent: BaseXenoArtifact
-  id: GasArtifact
-  suffix: Gas
-  components:
-    - type: GasArtifact
-
-- type: entity
-  parent: BaseXenoArtifact
-  id: DiseaseArtifact
-  suffix: Disease
-  components:
-    - type: DiseaseArtifact

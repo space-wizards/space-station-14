@@ -24,8 +24,7 @@
     ignorePaused: true
     bodyType: Kinematic
   - type: Body
-    template: AGhostTemplate
-    preset: HumanPreset
+    prototype: Aghost
   - type: Access
     groups:
     - AllAccess
@@ -102,3 +101,7 @@
     receiveFrequencyId: SuitSensor
   - type: WirelessNetworkConnection
     range: 500
+  - type: Thieving
+    stripTimeReduction: 9999
+    stealthy: true
+  - type: Stripping

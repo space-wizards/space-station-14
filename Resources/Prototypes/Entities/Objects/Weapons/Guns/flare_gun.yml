@@ -31,3 +31,8 @@
     containers:
       ballistic-ammo: !type:Container
         ents: []
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Shotguns/flaregun.rsi
+    quickEquip: false
+    slots:
+    - Belt

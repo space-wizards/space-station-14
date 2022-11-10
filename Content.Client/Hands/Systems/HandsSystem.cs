@@ -130,6 +130,16 @@ namespace Content.Client.Hands.Systems
         }
         #endregion
 
+        public void ReloadHandButtons()
+        {
+            if (!TryGetPlayerHands(out var hands))
+            {
+                return;
+            }
+
+            OnPlayerHandsAdded?.Invoke(hands);
+        }
+
         public override void DoDrop(EntityUid uid, Hand hand, bool doDropInteraction = true, SharedHandsComponent? hands = null)
         {
             base.DoDrop(uid, hand, doDropInteraction, hands);
@@ -232,6 +242,11 @@ namespace Content.Client.Hands.Systems
 
             _verbs.VerbMenu.OpenVerbMenu(entity);
         }
+        
+        public void UIHandAltActivateItem(string handName)
+        {
+            RaisePredictiveEvent(new RequestHandAltInteractEvent(handName));
+        }
 
         #region visuals
 
@@ -274,6 +289,10 @@ namespace Content.Client.Hands.Systems
         {
             if (!Resolve(uid, ref handComp, ref sprite, false))
                 return;
+
+            // visual update might involve changes to the entity's effective sprite -> need to update hands GUI.
+            if (uid == _playerManager.LocalPlayer?.ControlledEntity)
+                OnPlayerItemAdded?.Invoke(hand.Name, held);
 
             if (!handComp.ShowInHands)
                 return;
@@ -351,8 +370,7 @@ namespace Content.Client.Hands.Systems
 
         private void HandlePlayerAttached(EntityUid uid, HandsComponent component, PlayerAttachedEvent args)
         {
-            if (_playerManager.LocalPlayer?.ControlledEntity == uid)
-                OnPlayerHandsAdded?.Invoke(component);
+            OnPlayerHandsAdded?.Invoke(component);
         }
 
         private void HandlePlayerDetached(EntityUid uid, HandsComponent component, PlayerDetachedEvent args)

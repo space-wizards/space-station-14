@@ -126,7 +126,7 @@ namespace Content.Shared.Containers.ItemSlots
                 Dirty(itemSlots);
         }
 
-        public bool TryGetSlotById(EntityUid uid, string slotId, [NotNullWhen(true)] out ItemSlot? itemSlot, ItemSlotsComponent? component = null)
+        public bool TryGetSlot(EntityUid uid, string slotId, [NotNullWhen(true)] out ItemSlot? itemSlot, ItemSlotsComponent? component = null)
         {
             itemSlot = null;
 

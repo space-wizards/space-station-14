@@ -15,13 +15,22 @@ using Content.Shared.MobState.Components;
 using Robust.Shared.GameStates;
 using Robust.Shared.Player;
 using System.Threading;
+using Content.Shared.Verbs;
+using Robust.Server.GameObjects;
+using Content.Shared.Popups;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
 public sealed partial class ChemistrySystem
 {
+
+    /// <summary>
+    ///     Default transfer amounts for the set-transfer verb.
+    /// </summary>
+    public static readonly List<int> TransferAmounts = new() {1, 5, 10, 15};
     private void InitializeInjector()
     {
+        SubscribeLocalEvent<InjectorComponent, GetVerbsEvent<AlternativeVerb>>(AddSetTransferVerbs);
         SubscribeLocalEvent<InjectorComponent, SolutionChangedEvent>(OnSolutionChange);
         SubscribeLocalEvent<InjectorComponent, HandDeselectedEvent>(OnInjectorDeselected);
         SubscribeLocalEvent<InjectorComponent, ComponentStartup>(OnInjectorStartup);
@@ -31,6 +40,38 @@ public sealed partial class ChemistrySystem
 
         SubscribeLocalEvent<InjectionCompleteEvent>(OnInjectionComplete);
         SubscribeLocalEvent<InjectionCancelledEvent>(OnInjectionCancelled);
+    }
+
+    private void AddSetTransferVerbs(EntityUid uid, InjectorComponent component, GetVerbsEvent<AlternativeVerb> args)
+    {
+        if (!args.CanAccess || !args.CanInteract || args.Hands == null)
+            return;
+
+        if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
+            return;
+
+        // Add specific transfer verbs according to the container's size
+        var priority = 0;
+        foreach (var amount in TransferAmounts)
+        {
+            if ( amount < component.MinimumTransferAmount.Int() || amount > component.MaximumTransferAmount.Int())
+                continue;
+
+            AlternativeVerb verb = new();
+            verb.Text = Loc.GetString("comp-solution-transfer-verb-amount", ("amount", amount));
+            verb.Category = VerbCategory.SetTransferAmount;
+            verb.Act = () =>
+            {
+                component.TransferAmount = FixedPoint2.New(amount);
+                args.User.PopupMessage(Loc.GetString("comp-solution-transfer-set-amount", ("amount", amount)));
+            };
+
+            // we want to sort by size, not alphabetically by the verb text.
+            verb.Priority = priority;
+            priority--;
+
+            args.Verbs.Add(verb);
+        }
     }
 
     private static void OnInjectionCancelled(InjectionCancelledEvent ev)
@@ -132,6 +173,10 @@ public sealed partial class ChemistrySystem
         if (HasComp<MobStateComponent>(target) ||
             HasComp<BloodstreamComponent>(target))
         {
+            // Are use using an injector capible of targeting a mob?
+            if (component.IgnoreMobs)
+                return;
+
             InjectDoAfter(component, args.User, target);
             args.Handled = true;
             return;
@@ -196,6 +241,10 @@ public sealed partial class ChemistrySystem
             return;
 
         var actualDelay = MathF.Max(component.Delay, 1f);
+
+        // Injections take 1 second longer per additional 5u
+        actualDelay += (float) component.TransferAmount / component.Delay - 1;
+
         if (user != target)
         {
             // Create a pop-up for the target
@@ -349,8 +398,8 @@ public sealed partial class ChemistrySystem
             return;
         }
 
-        // Get transfer amount. May be smaller than _transferAmount if not enough room
-        var realTransferAmount = FixedPoint2.Min(component.TransferAmount, targetSolution.DrawAvailable);
+        // Get transfer amount. May be smaller than _transferAmount if not enough room, also make sure there's room in the injector
+        var realTransferAmount = FixedPoint2.Min(component.TransferAmount, targetSolution.DrawAvailable, solution.AvailableVolume);
 
         if (realTransferAmount <= 0)
         {

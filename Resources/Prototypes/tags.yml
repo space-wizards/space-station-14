@@ -366,6 +366,9 @@
   id: MicrowaveSelfUnsafe
 
 - type: Tag
+  id: MindTransferTarget
+
+- type: Tag
   id: MonkeyCube
 
 - type: Tag
@@ -373,6 +376,9 @@
 
 - type: Tag
   id: NoSpinOnThrow
+
+- type: Tag
+  id: NoBlockAnchoring
 
 - type: Tag
   id: NukeOpsUplink
@@ -391,6 +397,9 @@
 
 - type: Tag
   id: PercussionInstrument
+
+- type: Tag
+  id: PetWearable
 
 - type: Tag
   id: Pickaxe
@@ -466,8 +475,11 @@
   id: Shovel
 
 - type: Tag
+  id: SkeletonMotorcycleKeys
+
+- type: Tag
   id: Smokable
-  
+
 - type: Tag
   id: Soap
 
@@ -482,6 +494,18 @@
 
 - type: Tag
   id: Spear
+
+- type: Tag
+  id: SpeedLoaderCap
+
+- type: Tag
+  id: SpeedLoaderMagnum
+
+- type: Tag
+  id: SpeedLoaderPistol
+
+- type: Tag
+  id: SpeedLoaderRifle
 
 - type: Tag
   id: StringInstrument

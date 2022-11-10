@@ -48,6 +48,8 @@ namespace Content.Server.Doors.Systems
             }
             else
             {
+                if (component.BoltWireCut)
+                    component.SetBoltsWithAudio(true);
                 UpdateAutoClose(uid, door: door);
             }
 
