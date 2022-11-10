@@ -387,6 +387,12 @@ namespace Content.Server.Disease
             // spawn a vaccine
             var vaxx = Spawn(args.Machine.MachineOutput, Transform(uid).Coordinates);
 
+            if (args.Machine.Disease == null)
+                return;
+
+            MetaData(vaxx).EntityName = Loc.GetString("vaccine-name", ("disease", args.Machine.Disease.Name));
+            MetaData(vaxx).EntityDescription = Loc.GetString("vaccine-desc", ("disease", args.Machine.Disease.Name));
+
             if (!TryComp<DiseaseVaccineComponent>(vaxx, out var vaxxComp))
                 return;
 
