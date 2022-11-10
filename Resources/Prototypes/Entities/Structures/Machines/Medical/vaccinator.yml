@@ -28,3 +28,12 @@
     containers:
       machine_board: !type:Container
       machine_parts: !type:Container
+  - type: VaccineMachine
+  - type: MaterialStorage
+  - type: ActivatableUI
+    key: enum.ResearchClientUiKey.Key
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+    - key: enum.ResearchClientUiKey.Key
+      type: ResearchClientBoundUserInterface
