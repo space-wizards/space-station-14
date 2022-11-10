@@ -120,7 +120,7 @@ namespace Content.Server.Zombies
                 else if (mobState.CurrentState == DamageState.Alive) //heals when zombies bite live entities
                 {
                     var healingSolution = new Solution();
-                    healingSolution.AddReagent("Bicaridine", 1.00); //if OP, reduce/change chem
+                    healingSolution.AddReagent("Omnizine", 5.00); //if OP, reduce/change chem
                     _bloodstream.TryAddToChemicals(args.User, healingSolution);
                 }
             }
