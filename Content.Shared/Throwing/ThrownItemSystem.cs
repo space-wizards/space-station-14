@@ -152,6 +152,7 @@ namespace Content.Shared.Throwing
             RaiseLocalEvent(target.Owner, new ThrowHitByEvent(user, thrown.Owner, target.Owner), true);
             RaiseLocalEvent(thrown.Owner, new ThrowDoHitEvent(user, thrown.Owner, target.Owner), true);
             // if (thrown item has tag "StopOnCollide") stop thrown item
+            //thrown.LinearVelocity = (0,0);
         }
     }
 }

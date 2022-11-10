@@ -4,6 +4,7 @@ using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.MobState.Components;
 using Content.Shared.Throwing;
+using Robust.Shared.Player;
 
 namespace Content.Server.Damage.Systems
 {
@@ -11,6 +12,7 @@ namespace Content.Server.Damage.Systems
     {
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger= default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
 
         public override void Initialize()
         {
@@ -24,6 +26,9 @@ namespace Content.Server.Damage.Systems
             // Log damage only for mobs. Useful for when people throw spears at each other, but also avoids log-spam when explosions send glass shards flying.
             if (dmg != null && HasComp<MobStateComponent>(args.Target))
                 _adminLogger.Add(LogType.ThrowHit, $"{ToPrettyString(args.Target):target} received {dmg.Total:damage} damage from collision");
+
+            // Play hit sound on target
+            _audio.Play(component.HitSound, Filter.Pvs(args.Target), args.Target);
         }
     }
 }

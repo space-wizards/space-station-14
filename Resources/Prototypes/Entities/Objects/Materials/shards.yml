@@ -49,6 +49,7 @@
     damage:
       types:
         Slash: 2
+    soundHit: /Audio/Weapons/bladeslice.ogg
   - type: Tag
     tags:
     - Trash

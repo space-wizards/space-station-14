@@ -39,7 +39,7 @@ namespace Content.Shared.Throwing
     }
 
     /// <summary>
-    ///     Raised directed on the thrown entity that hits another.
+    ///     Raised directed on the thrown entity that hits another. 'User' is whoever threw it.
     /// </summary>
     public sealed class ThrowDoHitEvent : ThrowEvent
     {

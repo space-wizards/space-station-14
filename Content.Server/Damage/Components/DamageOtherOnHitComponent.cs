@@ -1,5 +1,6 @@
 using Content.Server.Damage.Systems;
 using Content.Shared.Damage;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Damage.Components
 {
@@ -15,5 +16,8 @@ namespace Content.Server.Damage.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public DamageSpecifier Damage = default!;
 
+        [DataField("soundHit")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public SoundSpecifier? HitSound { get; set; } = new SoundPathSpecifier("/Audio/Weapons/genhit1.ogg");
     }
 }
