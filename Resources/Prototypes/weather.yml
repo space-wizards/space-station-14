@@ -3,6 +3,14 @@
   sprite:
     sprite: /Textures/Effects/weather.rsi
     state: rain
+  tiles:
+    - FloorCave
+    - FloorCaveDrought
+    - FloorGrassLight
+    - FloorGrassDark
+    - FloorGrassJungle
+    - FloorDirt
+    - FloorTileGrass
   sound:
     path: /Audio/Effects/Weather/rain.ogg
     params:
