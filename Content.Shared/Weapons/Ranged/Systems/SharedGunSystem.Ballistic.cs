@@ -41,15 +41,43 @@ public abstract partial class SharedGunSystem
 
         if (GetBallisticShots(component) >= component.Capacity) return;
 
-        component.Entities.Add(args.Used);
-        component.Container.Insert(args.Used);
+        if (EntityManager.HasComponent<BallisticAmmoProviderComponent>(args.Used))
+        {
+            var ammoComp = EntityManager.GetComponent<BallisticAmmoProviderComponent>(args.Used);
+
+            if (ammoComp.UnspawnedCount + ammoComp.Entities.Count == 0) return;
+
+            while (GetBallisticShots(component) < component.Capacity && GetBallisticShots(ammoComp) > 0)
+            {
+                var xform = EntityManager.GetComponent<TransformComponent>(uid);
+                EntityUid bullet; // empty var that is guarenteed to be filled
+
+                if (ammoComp.Entities.Count == 0) // If the entity doesn't have any spawned bullets
+                {
+                    ammoComp.UnspawnedCount -= 1;
+                    bullet = Spawn(ammoComp.FillProto, xform.MapPosition); // Spawn it in
+                }
+                else
+                {
+                    bullet = ammoComp.Entities.FirstOrNull()!.Value;
+                    ammoComp.Entities.Remove(bullet); // Remove the bullet from the container, ensures no bugs happen with the quickloader.
+                }
+                component.Entities.Add(bullet);
+                component.Container.Insert(bullet);
+                UpdateBallisticAppearance(ammoComp); // This one is for the speedloader
+            }
+        }
+        else
+        {
+            component.Entities.Add(args.Used);
+            component.Container.Insert(args.Used);
+        }
         // Not predicted so
         Audio.PlayPredicted(component.SoundInsert, uid, args.User);
         args.Handled = true;
         UpdateBallisticAppearance(component);
         Dirty(component);
     }
-
     private void OnBallisticVerb(EntityUid uid, BallisticAmmoProviderComponent component, GetVerbsEvent<Verb> args)
     {
         if (!args.CanAccess || !args.CanInteract || args.Hands == null) return;
