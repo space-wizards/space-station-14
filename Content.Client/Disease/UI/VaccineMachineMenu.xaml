@@ -13,34 +13,12 @@
             <BoxContainer Orientation="Vertical"
                           HorizontalExpand="True"
                           VerticalExpand="True">
-                <Label Text="{Loc 'research-console-menu-unlocked-technologies-label'}" />
+                <Label Text="{Loc 'vaccine-machinne-menu-known-diseases-label'}" />
                 <ItemList Name="UnlockedTechnologies"
                           SelectMode="Button"
-                          HorizontalExpand="True"
+                          HorizontalExpand="False"
                           VerticalExpand="True">
                     <!-- Unlocked technologies are added here by code -->
-                </ItemList>
-            </BoxContainer>
-            <BoxContainer Orientation="Vertical"
-                          HorizontalExpand="True"
-                          VerticalExpand="True">
-                <Label Text="{Loc 'research-console-menu-unlockable-technologies-label'}" />
-                <ItemList Name="UnlockableTechnologies"
-                          SelectMode="Button"
-                          HorizontalExpand="True"
-                          VerticalExpand="True">
-                    <!-- Unlockable technologies are added here by code -->
-                </ItemList>
-            </BoxContainer>
-            <BoxContainer Orientation="Vertical"
-                          HorizontalExpand="True"
-                          VerticalExpand="True">
-                <Label Text="{Loc 'research-console-menu-future-technologies-label'}" />
-                <ItemList Name="FutureTechnologies"
-                          SelectMode="Button"
-                          HorizontalExpand="True"
-                          VerticalExpand="True">
-                    <!-- Future technologies are added here by code -->
                 </ItemList>
             </BoxContainer>
         </BoxContainer>
@@ -77,9 +55,9 @@
                     <Button Name="ServerSyncButton"
                             Access="Public"
                             Text="{Loc 'research-console-menu-server-sync-button'}" />
-                    <Button Name="UnlockButton"
+                    <Button Name="CreateButton"
                             Access="Public"
-                            Disabled="True" />
+                            Text="{Loc 'disease-console-menu-create-vaccine-button'}" />
                 </BoxContainer>
             </BoxContainer>
         </BoxContainer>
