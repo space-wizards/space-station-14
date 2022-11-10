@@ -74,6 +74,7 @@ namespace Content.Server.Cloning.Systems
             SubscribeLocalEvent<CloningPodComponent, PortDisconnectedEvent>(OnPortDisconnected);
             SubscribeLocalEvent<CloningPodComponent, AnchorStateChangedEvent>(OnAnchor);
             SubscribeLocalEvent<CloningPodComponent, ExaminedEvent>(OnExamined);
+            SubscribeLocalEvent<ZombieComponent, CloningEvent>(OnZombieCloning);
         }
 
         private void OnComponentInit(EntityUid uid, CloningPodComponent clonePod, ComponentInit args)
@@ -229,22 +230,11 @@ namespace Content.Server.Cloning.Systems
             var mob = Spawn(speciesPrototype.Prototype, Transform(clonePod.Owner).MapPosition);
             _humanoidSystem.CloneAppearance(bodyToClone, mob);
 
-            //handle zombie's name and color changes by restoring data previously saved into ZombieComponent
-            if (TryComp<ZombieComponent>(bodyToClone, out var zombiecomp))
-            {
-                foreach (var (layer, info) in zombiecomp.BeforeZombifiedCustomBaseLayers)
-                {
-                    _humanoidSystem.SetBaseLayerColor(mob, layer, info.Color);
-                    _humanoidSystem.SetBaseLayerId(mob, layer, info.ID);
-                }
-                _humanoidSystem.SetSkinColor(mob, zombiecomp.BeforeZombifiedSkinColor);
+            var ev = new CloningEvent(bodyToClone, mob);
+            RaiseLocalEvent(bodyToClone, ref ev);
 
-                MetaData(mob).EntityName = zombiecomp.BeforeZombifiedEntityName;
-            }
-            else
-            {
+            if (!ev.NameHandled)
                 MetaData(mob).EntityName = MetaData(bodyToClone).EntityName;
-            }
 
             var cloneMindReturn = EntityManager.AddComponent<BeingClonedComponent>(mob);
             cloneMindReturn.Mind = mind;
@@ -269,6 +259,19 @@ namespace Content.Server.Cloning.Systems
             }
 
             return true;
+        }
+
+        private void OnZombieCloning(EntityUid uid, ZombieComponent zombiecomp, ref CloningEvent args)
+        {
+            foreach (var (layer, info) in zombiecomp.BeforeZombifiedCustomBaseLayers)
+            {
+                _humanoidSystem.SetBaseLayerColor(args.Target, layer, info.Color);
+                _humanoidSystem.SetBaseLayerId(args.Target, layer, info.ID);
+            }
+            _humanoidSystem.SetSkinColor(args.Target, zombiecomp.BeforeZombifiedSkinColor);
+
+            MetaData(args.Target).EntityName = zombiecomp.BeforeZombifiedEntityName;
+            args.NameHandled = true;
         }
 
         public void UpdateStatus(CloningPodStatus status, CloningPodComponent cloningPod)
@@ -346,6 +349,23 @@ namespace Content.Server.Cloning.Systems
         public void Reset(RoundRestartCleanupEvent ev)
         {
             ClonesWaitingForMind.Clear();
+        }
+    }
+
+    /// <summary>
+    /// Raised after a new mob got spawned when cloning a humanoid
+    /// </summary>
+    [ByRefEvent]
+    public struct CloningEvent
+    {
+        public bool NameHandled = false;
+
+        public EntityUid Source;
+        public EntityUid Target;
+
+        public CloningEvent(EntityUid source, EntityUid target) {
+            Source = source;
+            Target = target;
         }
     }
 }
