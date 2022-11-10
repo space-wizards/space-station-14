@@ -8,6 +8,10 @@
   },
   "states": [
     {
+      "name": "unpowered",
+      "directions": 4
+    },
+    {
       "name": "ready",
       "directions": 4,
       "delays": [
