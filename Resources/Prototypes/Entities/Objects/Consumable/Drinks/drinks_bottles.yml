@@ -169,7 +169,7 @@
   parent: DrinkBottleBaseFull
   id: DrinkCoffeeLiqueurBottleFull
   name: coffee liqueur bottle
-  description: A widely known, Mexican coffee-flavoured liqueur. In production since 1936, HONK.
+  description: The great taste of coffee with none of the benifits.
   components:
   - type: SolutionContainerManager
     solutions:
