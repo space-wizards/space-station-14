@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed inverted combat mode toggle., type: Fix}
-  id: 2137
-  time: '2022-08-13T00:27:14.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: do_after progress bars now show on cameras., type: Fix}
@@ -2957,3 +2952,8 @@ Entries:
       and pressure., type: Add}
   id: 2636
   time: '2022-11-10T01:11:23.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: Mousetraps no longer autokill cardboard box users, type: Fix}
+  id: 2637
+  time: '2022-11-10T01:18:37.0000000+00:00'
