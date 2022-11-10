@@ -57,7 +57,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
     private void HandleActivateItemInHand(RequestActivateInHandEvent msg, EntitySessionEventArgs args)
     {
         if (args.SenderSession.AttachedEntity != null)
-            TryActivateItemInHand(args.SenderSession.AttachedEntity.Value);
+            TryActivateItemInHand(args.SenderSession.AttachedEntity.Value, null, msg.HandName);
     }
 
     private void HandleInteractUsingInHand(RequestHandInteractUsingEvent msg, EntitySessionEventArgs args)
@@ -69,7 +69,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
     private void HandleHandAltInteract(RequestHandAltInteractEvent msg, EntitySessionEventArgs args)
     {
         if (args.SenderSession.AttachedEntity != null)
-            TryUseItemInHand(args.SenderSession.AttachedEntity.Value, true);
+            TryUseItemInHand(args.SenderSession.AttachedEntity.Value, true, handName: msg.HandName);
     }
 
     private void SwapHandsPressed(ICommonSession? session)
@@ -96,15 +96,19 @@ public abstract partial class SharedHandsSystem : EntitySystem
     }
     #endregion
 
-    public bool TryActivateItemInHand(EntityUid uid, SharedHandsComponent? handsComp = null)
+    public bool TryActivateItemInHand(EntityUid uid, SharedHandsComponent? handsComp = null, string? handName = null)
     {
         if (!Resolve(uid, ref handsComp, false))
             return false;
 
-        if (handsComp.ActiveHandEntity == null)
-            return false;
+        Hand? hand;
+        if (handName == null || !handsComp.Hands.TryGetValue(handName, out hand))
+            hand = handsComp.ActiveHand;
 
-        return _interactionSystem.InteractionActivate(uid, handsComp.ActiveHandEntity.Value);
+        if (hand?.HeldEntity is not { } held)
+            return false;
+        
+        return _interactionSystem.InteractionActivate(uid, held);
     }
 
     public bool TryInteractHandWithActiveHand(EntityUid uid, string handName, SharedHandsComponent? handsComp = null)
@@ -125,18 +129,22 @@ public abstract partial class SharedHandsSystem : EntitySystem
         return true;
     }
 
-    public bool TryUseItemInHand(EntityUid uid, bool altInteract = false, SharedHandsComponent? handsComp = null)
+    public bool TryUseItemInHand(EntityUid uid, bool altInteract = false, SharedHandsComponent? handsComp = null, string? handName = null)
     {
         if (!Resolve(uid, ref handsComp, false))
             return false;
 
-        if (handsComp.ActiveHandEntity == null)
+        Hand? hand;
+        if (handName == null || !handsComp.Hands.TryGetValue(handName, out hand))
+            hand = handsComp.ActiveHand;
+
+        if (hand?.HeldEntity is not { } held)
             return false;
 
         if (altInteract)
-            return _interactionSystem.AltInteract(uid, handsComp.ActiveHandEntity.Value);
+            return _interactionSystem.AltInteract(uid, held);
         else
-            return _interactionSystem.UseInHandInteraction(uid, handsComp.ActiveHandEntity.Value);
+            return _interactionSystem.UseInHandInteraction(uid, held);
     }
 
     /// <summary>
