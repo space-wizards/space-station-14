@@ -163,8 +163,8 @@
 # For the mosin
 - type: listing
   id: UplinkMosinAmmo
-  description: A box of cartridges for the surplus rifle.
-  productEntity: BoxMagazineLightRifle
+  description: A box of speedloaders for the surplus rifle.
+  productEntity: BoxSpeedLoaderLightRifle
   cost:
     Telecrystal: 2
   categories:

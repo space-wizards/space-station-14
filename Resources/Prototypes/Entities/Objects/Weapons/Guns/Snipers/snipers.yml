@@ -32,6 +32,7 @@
     whitelist:
       tags:
       - CartridgeLightRifle
+      - SpeedLoaderRifle
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container

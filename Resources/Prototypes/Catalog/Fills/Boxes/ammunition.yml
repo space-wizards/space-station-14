@@ -46,6 +46,17 @@
 
 # LightRifle
 - type: entity
+  name: box of .30 rifle speedloaders
+  parent: BoxCardboard
+  id: BoxSpeedLoaderLightRifle
+  description: A box full of .30 rifle speedloaders.
+  components:
+  - type: StorageFill
+    contents:
+      - id: SpeedLoaderLightRifle
+        amount: 6
+
+- type: entity
   name: box of .30 rifle magazines
   parent: BoxCardboard
   id: BoxMagazineLightRifle
