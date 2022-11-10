@@ -26,17 +26,40 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
 
     private Options.UI.EscapeMenu? _escapeWindow;
 
-    private MenuButton? _escapeButton;
+    private MenuButton? EscapeButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.EscapeButton;
+
+    public void UnloadButton()
+    {
+        if (EscapeButton == null)
+        {
+            return;
+        }
+
+        EscapeButton.Pressed = false;
+        EscapeButton.OnPressed -= EscapeButtonOnOnPressed;
+    }
+
+    public void LoadButton()
+    {
+        if (EscapeButton == null)
+        {
+            return;
+        }
+
+        EscapeButton.OnPressed += EscapeButtonOnOnPressed;
+    }
+
+    private void ActivateButton() => EscapeButton!.Pressed = true;
+    private void DeactivateButton() => EscapeButton!.Pressed = false;
 
     public void OnStateEntered(GameplayState state)
     {
         DebugTools.Assert(_escapeWindow == null);
-        _escapeButton = UIManager.GetActiveUIWidget<MenuBar.Widgets.GameTopMenuBar>().EscapeButton;
-        _escapeButton.OnPressed += EscapeButtonOnOnPressed;
 
         _escapeWindow = UIManager.CreateWindow<Options.UI.EscapeMenu>();
-        _escapeWindow.OnClose += () => { _escapeButton.Pressed = false; };
-        _escapeWindow.OnOpen +=  () => { _escapeButton.Pressed = true; };
+
+        _escapeWindow.OnClose += DeactivateButton;
+        _escapeWindow.OnOpen += ActivateButton;
 
         _escapeWindow.ChangelogButton.OnPressed += _ =>
         {
@@ -87,13 +110,6 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
             _escapeWindow = null;
         }
 
-        if (_escapeButton != null)
-        {
-            _escapeButton.OnPressed -= EscapeButtonOnOnPressed;
-            _escapeButton.Pressed = false;
-            _escapeButton = null;
-        }
-
         CommandBinds.Unregister<EscapeUIController>();
     }
 
@@ -115,11 +131,12 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
         if (_escapeWindow.IsOpen)
         {
             CloseEscapeWindow();
+            EscapeButton!.Pressed = false;
         }
         else
         {
             _escapeWindow.OpenCentered();
-            _escapeButton!.Pressed = true;
+            EscapeButton!.Pressed = true;
         }
     }
 }

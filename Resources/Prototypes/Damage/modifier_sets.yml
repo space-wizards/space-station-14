@@ -110,6 +110,14 @@
     Poison: 0.9
 
 - type: damageModifierSet
+  id: Diona
+  coefficients:
+    Blunt: 0.7
+    Slash: 0.8
+    Heat: 1.5
+    Shock: 1.2
+
+- type: damageModifierSet
   id: Zombie #Blunt resistent and immune to biological threats, but can be hacked apart and burned
   coefficients:
     Blunt: 0.5

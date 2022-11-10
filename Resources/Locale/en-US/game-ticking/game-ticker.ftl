@@ -13,7 +13,16 @@ game-ticker-get-info-text = Hi and welcome to [color=white]Space Station 14![/co
                             The current map is: [color=white]{$mapName}[/color]
                             The current game mode is: [color=white]{$gmTitle}[/color]
                             >[color=yellow]{$desc}[/color]
-game-ticker-no-map-selected = [color=red]No map selected![/color]
+game-ticker-get-info-preround-text = Hi and welcome to [color=white]Space Station 14![/color]
+                            The current round is: [color=white]#{$roundId}[/color]
+                            The current player count is: [color=white]{$playerCount}[/color] ([color=white]{$readyCount}[/color] {$readyCount ->
+                                [one] is
+                                *[other] are
+                            } ready)
+                            The current map is: [color=white]{$mapName}[/color]
+                            The current game mode is: [color=white]{$gmTitle}[/color]
+                            >[color=yellow]{$desc}[/color]
+game-ticker-no-map-selected = [color=yellow]Map not yet selected![/color]
 game-ticker-player-no-jobs-available-when-joining = When attempting to join to the game, no jobs were available.
 
 # Displayed in chat to admins when a player joins

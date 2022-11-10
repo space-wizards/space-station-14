@@ -63,7 +63,7 @@ namespace Content.Server.Construction.Commands
             }
 
             var changed = 0;
-            var tagSystem = EntitySystem.Get<TagSystem>();
+            var tagSystem = entityManager.EntitySysManager.GetEntitySystem<TagSystem>();
 
             foreach (var child in xformQuery.GetComponent(grid.GridEntityId).ChildEntities)
             {

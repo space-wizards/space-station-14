@@ -3,21 +3,25 @@
   name: paper
   icon: /Textures/Objects/Materials/Sheets/other.rsi/paper.png
   spawn: SheetPaper1
+  maxCount: 30
 
 - type: stack
   id: Plasma
   name: plasma
   icon: /Textures/Objects/Materials/Sheets/other.rsi/plasma.png
   spawn: SheetPlasma1
+  maxCount: 30
 
 - type: stack
   id: Plastic
   name: plastic
   icon: /Textures/Objects/Materials/Sheets/other.rsi/plastic.png
   spawn: SheetPlastic1
+  maxCount: 30
 
 - type: stack
   id: Uranium
   name: uranium
   icon: /Textures/Objects/Materials/Sheets/other.rsi/uranium.png
   spawn: SheetUranium1
+  maxCount: 30

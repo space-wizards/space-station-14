@@ -37,6 +37,7 @@ namespace Content.Server.Strip
             base.Initialize();
 
             SubscribeLocalEvent<StrippableComponent, GetVerbsEvent<Verb>>(AddStripVerb);
+            SubscribeLocalEvent<StrippableComponent, GetVerbsEvent<ExamineVerb>>(AddStripExamineVerb);
 
             // BUI
             SubscribeLocalEvent<StrippableComponent, StrippingSlotButtonPressed>(OnStripButtonPressed);
@@ -129,6 +130,25 @@ namespace Content.Server.Strip
                 IconTexture = "/Textures/Interface/VerbIcons/outfit.svg.192dpi.png",
                 Act = () => StartOpeningStripper(args.User, component, true),
             };
+            args.Verbs.Add(verb);
+        }
+
+        private void AddStripExamineVerb(EntityUid uid, StrippableComponent component, GetVerbsEvent<ExamineVerb> args)
+        {
+            if (args.Hands == null || !args.CanAccess || !args.CanInteract || args.Target == args.User)
+                return;
+
+            if (!HasComp<ActorComponent>(args.User))
+                return;
+
+            ExamineVerb verb = new()
+            {
+                Text = Loc.GetString("strip-verb-get-data-text"),
+                IconTexture = "/Textures/Interface/VerbIcons/outfit.svg.192dpi.png",
+                Act = () => StartOpeningStripper(args.User, component, true),
+                Category = VerbCategory.Examine,
+            };
+
             args.Verbs.Add(verb);
         }
 
@@ -245,7 +265,12 @@ namespace Content.Server.Strip
                 return true;
             }
 
-            var doAfterArgs = new DoAfterEventArgs(user, component.HandStripDelay, CancellationToken.None, component.Owner)
+            var userEv = new BeforeStripEvent(component.HandStripDelay);
+            RaiseLocalEvent(user, userEv);
+            var ev = new BeforeGettingStrippedEvent(userEv.Time, userEv.Stealth);
+            RaiseLocalEvent(component.Owner, ev);
+
+            var doAfterArgs = new DoAfterEventArgs(user, ev.Time, CancellationToken.None, component.Owner)
             {
                 ExtraCheck = Check,
                 BreakOnStun = true,
@@ -292,9 +317,9 @@ namespace Content.Server.Strip
                     return false;
                 }
 
-                if (!_inventorySystem.CanUnequip(user, component.Owner, slot, out _))
+                if (!_inventorySystem.CanUnequip(user, component.Owner, slot, out var reason))
                 {
-                    user.PopupMessageCursor(Loc.GetString("strippable-component-cannot-unequip-message", ("owner", component.Owner)));
+                    user.PopupMessageCursor(reason);
                     return false;
                 }
 
@@ -375,7 +400,6 @@ namespace Content.Server.Strip
 
                 return true;
             }
-
 
             var userEv = new BeforeStripEvent(component.HandStripDelay);
             RaiseLocalEvent(user, userEv);

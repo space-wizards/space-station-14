@@ -18,10 +18,11 @@ public sealed class RandomSentience : StationEventSystem
         base.Started();
         HashSet<EntityUid> stationsToNotify = new();
 
+        var mod = GetSeverityModifier();
         var targetList = EntityManager.EntityQuery<SentienceTargetComponent>().ToList();
         RobustRandom.Shuffle(targetList);
 
-        var toMakeSentient = RobustRandom.Next(2, 5);
+        var toMakeSentient = (int) (RobustRandom.Next(2, 5) * Math.Sqrt(mod));
         var groups = new HashSet<string>();
 
         foreach (var target in targetList)
@@ -33,7 +34,7 @@ public sealed class RandomSentience : StationEventSystem
             var comp = EntityManager.AddComponent<GhostTakeoverAvailableComponent>(target.Owner);
             comp.RoleName = EntityManager.GetComponent<MetaDataComponent>(target.Owner).EntityName;
             comp.RoleDescription = Loc.GetString("station-event-random-sentience-role-description", ("name", comp.RoleName));
-            groups.Add(target.FlavorKind);
+            groups.Add(Loc.GetString(target.FlavorKind));
         }
 
         if (groups.Count == 0)

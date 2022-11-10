@@ -11,8 +11,7 @@
     sprite: Mobs/Species/Skeleton/parts.rsi
     state: full
   - type: Body
-    template: HumanoidTemplate
-    preset: SkeletonPreset
+    prototype: Skeleton
     gibSound: /Audio/Effects/bone_rattle.ogg
   - type: Damageable
     damageContainer: Biological
@@ -48,6 +47,7 @@
       60: 0.9
       80: 0.7
   - type: Speech
+  - type: SkeletonAccent
   - type: Fixtures
     fixtures:
       - shape:

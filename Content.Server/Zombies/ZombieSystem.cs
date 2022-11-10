@@ -12,9 +12,9 @@ using Content.Server.Inventory;
 using Robust.Shared.Prototypes;
 using Content.Server.Speech;
 using Content.Server.Chat.Systems;
-using Content.Server.Weapons.Melee.Events;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Damage;
+using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Zombies;
 
 namespace Content.Server.Zombies

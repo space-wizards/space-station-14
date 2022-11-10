@@ -25,7 +25,7 @@ namespace Content.Server.Atmos.Commands
                || !float.TryParse(args[4], out var moles)) return;
 
             var entMan = IoCManager.Resolve<IEntityManager>();
-            if (!entMan.HasComponent<IMapGridComponent>(euid))
+            if (!entMan.HasComponent<MapGridComponent>(euid))
             {
                 shell.WriteError($"Euid '{euid}' does not exist or is not a grid.");
                 return;

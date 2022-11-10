@@ -186,6 +186,22 @@ public sealed class ChatUIController : UIController
             InputCmdHandler.FromDelegate(_ => CycleChatChannel(false)));
     }
 
+    public void SetMainChat(bool setting)
+    {
+        // This isn't very nice to look at.
+        var widget = UIManager.ActiveScreen?.GetWidget<ChatBox>();
+        if (widget == null)
+        {
+            widget = UIManager.ActiveScreen?.GetWidget<ResizableChatBox>();
+            if (widget == null)
+            {
+                return;
+            }
+        }
+
+        widget.Main = setting;
+    }
+
     private void FocusChat()
     {
         foreach (var chat in _chats)
@@ -230,13 +246,13 @@ public sealed class ChatUIController : UIController
         }
 
         UpdateChannelPermissions();
+    }
 
-        if (_speechBubbleRoot.Parent == UIManager.StateRoot)
-            return;
-
+    public void SetSpeechBubbleRoot(LayoutContainer root)
+    {
         _speechBubbleRoot.Orphan();
+        root.AddChild(_speechBubbleRoot);
         LayoutContainer.SetAnchorPreset(_speechBubbleRoot, LayoutContainer.LayoutPreset.Wide);
-        UIManager.StateRoot.AddChild(_speechBubbleRoot);
         _speechBubbleRoot.SetPositionLast();
     }
 
@@ -275,7 +291,8 @@ public sealed class ChatUIController : UIController
             return;
         }
 
-        var messages = SplitMessage(FormattedMessage.RemoveMarkup(msg.Message));
+        // msg.Message should be the string that a user sent over text, without any added markup.
+        var messages = SplitMessage(msg.Message);
 
         foreach (var message in messages)
         {
@@ -420,7 +437,7 @@ public sealed class ChatUIController : UIController
             CanSendChannels |= ChatSelectChannel.Admin;
         }
 
-        SelectableChannels = CanSendChannels & ~ChatSelectChannel.Console;
+        SelectableChannels = CanSendChannels;
 
         // Necessary so that we always have a channel to fall back to.
         DebugTools.Assert((CanSendChannels & ChatSelectChannel.OOC) != 0, "OOC must always be available");
@@ -699,6 +716,11 @@ public sealed class ChatUIController : UIController
     public ChatSelectChannel GetPreferredChannel()
     {
         return MapLocalIfGhost(PreferredChannel);
+    }
+
+    public void NotifyChatTextChange()
+    {
+        _typingIndicator?.ClientChangedChatText();
     }
 
     private readonly record struct SpeechBubbleData(string Message, SpeechBubble.SpeechType Type);

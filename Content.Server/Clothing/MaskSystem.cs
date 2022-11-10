@@ -1,8 +1,3 @@
-using Content.Shared.Actions;
-using Content.Shared.Toggleable;
-using Content.Shared.Inventory;
-using Content.Shared.Inventory.Events;
-using Content.Shared.Item;
 using Content.Server.Actions;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
@@ -14,8 +9,12 @@ using Content.Server.IdentityManagement;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Popups;
 using Content.Server.VoiceMask;
+using Content.Shared.Actions;
+using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.IdentityManagement.Components;
+using Content.Shared.Inventory;
+using Content.Shared.Inventory.Events;
 using Robust.Shared.Player;
 
 namespace Content.Server.Clothing

@@ -3,6 +3,7 @@ forensic-scanner-interface-fingerprints = Fingerprints
 forensic-scanner-interface-fibers = Fibers
 forensic-scanner-interface-no-data = No scan data available
 forensic-scanner-interface-print = Print
+forensic-scanner-interface-clear = Clear
 forensic-scanner-report-title = Forensics Report: {$entity}
 forensic-pad-unused = It hasn't been used.
 forensic-pad-sample = It has a sample: {$sample}
@@ -13,6 +14,7 @@ forensic-pad-already-used = This pad has already been used.
 forensic-scanner-match-fiber = Match in fiber found!
 forensic-scanner-match-fingerprint = Match in fingerprint found!
 forensic-scanner-match-none = No matches found!
+forensic-scanner-printer-not-ready = Printer is not ready yet.
 forensic-scanner-verb-text = Scan
 forensic-scanner-verb-message = Perform a forensic scan
 

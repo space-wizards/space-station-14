@@ -15,4 +15,13 @@ namespace Content.Server.Construction.Components
         [ViewVariables]
         public Container PartContainer = default!;
     }
+
+    /// <summary>
+    /// The different types of scaling that are available for machine upgrades
+    /// </summary>
+    public enum MachineUpgradeScalingType : byte
+    {
+        Linear,
+        Exponential
+    }
 }

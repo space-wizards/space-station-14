@@ -1,9 +1,9 @@
+﻿using System.Linq;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 using Content.Shared.Disease;
 using Content.Server.Disease;
 using Content.Server.Disease.Components;
-using Robust.Shared.Random;
 using Robust.Shared.Prototypes;
 using Content.Shared.Interaction;
 
@@ -15,38 +15,25 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems
     public sealed class DiseaseArtifactSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly DiseaseSystem _disease = default!;
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 
-        // TODO: YAML Serializer won't catch this.
-        [ViewVariables(VVAccess.ReadWrite)]
-        public readonly IReadOnlyList<string> ArtifactDiseases = new[]
-        {
-            "VanAusdallsRobovirus",
-            "OwOnavirus",
-            "BleedersBite",
-            "Ultragigacancer",
-            "MemeticAmirmir",
-            "TongueTwister",
-            "AMIV"
-        };
-
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<DiseaseArtifactComponent, MapInitEvent>(OnMapInit);
+            SubscribeLocalEvent<DiseaseArtifactComponent, ArtifactNodeEnteredEvent>(OnNodeEntered);
             SubscribeLocalEvent<DiseaseArtifactComponent, ArtifactActivatedEvent>(OnActivate);
         }
 
         /// <summary>
         /// Makes sure this artifact is assigned a disease
         /// </summary>
-        private void OnMapInit(EntityUid uid, DiseaseArtifactComponent component, MapInitEvent args)
+        private void OnNodeEntered(EntityUid uid, DiseaseArtifactComponent component, ArtifactNodeEnteredEvent args)
         {
-            if (component.SpawnDisease != null || ArtifactDiseases.Count == 0) return;
-            var diseaseName = _random.Pick(ArtifactDiseases);
+            if (component.SpawnDisease != null || !component.DiseasePrototypes.Any())
+                return;
+            var diseaseName = component.DiseasePrototypes[args.RandomSeed % component.DiseasePrototypes.Count];
 
             if (!_prototypeManager.TryIndex<DiseasePrototype>(diseaseName, out var disease))
             {

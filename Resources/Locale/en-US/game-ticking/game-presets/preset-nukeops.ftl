@@ -1,7 +1,9 @@
 ﻿nukeops-title = Nuclear Operatives
 nukeops-description = Nuclear operatives have targeted the station. Try to keep them from arming and detonating the nuke by protecting the nuke disk!
 
-nukeops-welcome = You are a nuclear operative. Your goal is to blow up {$station}, and ensure that it is nothing but a pile of rubble. Your bosses, the Syndicate, have provided you with the tools you'll need for the task.
+nukeops-welcome =
+    You are a nuclear operative. Your goal is to blow up {$station}, and ensure that it is nothing but a pile of rubble. Your bosses, the Syndicate, have provided you with the tools you'll need for the task.
+    Death to Nanotrasen!
 
 nukeops-opsmajor = Syndicate major victory!
 nukeops-opsminor = Syndicate minor victory!
@@ -24,3 +26,7 @@ nukeops-cond-allnukiesalive = No nuclear operatives died.
 nukeops-list-start = The nuke ops were:
 nukeops-not-enough-ready-players = Not enough players readied up for the game! There were {$readyPlayersCount} players readied up out of {$minimumPlayers} needed. Can't start Nukeops.
 nukeops-no-one-ready = No players readied up! Can't start Nukeops.
+
+nukeops-role-commander = Commander
+nukeops-role-agent = Agent
+nukeops-role-operator = Operator
