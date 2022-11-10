@@ -2,8 +2,6 @@
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Popups;
-using Robust.Shared.Player;
 
 namespace Content.Shared.Item;
 
@@ -15,6 +13,7 @@ public abstract class SharedMultiHandedItemSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<MultiHandedItemComponent, GettingPickedUpAttemptEvent>((e,c,a) => OnAttemptPickup(e,c,a));
+        SubscribeLocalEvent<MultiHandedItemComponent, VirtualItemDeletedEvent>(OnVirtualItemDeleted);
         SubscribeLocalEvent<MultiHandedItemComponent, GotEquippedHandEvent>(OnEquipped);
         SubscribeLocalEvent<MultiHandedItemComponent, GotUnequippedHandEvent>(OnUnequipped);
     }
@@ -45,5 +44,13 @@ public abstract class SharedMultiHandedItemSystem : EntitySystem
         }
 
         return true;
+    }
+
+    private void OnVirtualItemDeleted(EntityUid uid, MultiHandedItemComponent component, VirtualItemDeletedEvent args)
+    {
+        if (args.BlockingEntity != uid)
+            return;
+
+        _hands.TryDrop(args.User, uid);
     }
 }
