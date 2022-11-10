@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Lathes no longer can become stuck not producing anything with items
-      in the queue., type: Fix}
-  id: 2135
-  time: '2022-08-12T01:33:32.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Audio occlusion is working again, type: Fix}
@@ -2956,3 +2950,9 @@ Entries:
   - {message: internals tanks with air no longer flash warning, type: Fix}
   id: 2634
   time: '2022-11-10T01:02:15.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed being unable to interact with items held in hands unless the hand
+      is currently selected., type: Fix}
+  id: 2635
+  time: '2022-11-10T01:04:47.0000000+00:00'
