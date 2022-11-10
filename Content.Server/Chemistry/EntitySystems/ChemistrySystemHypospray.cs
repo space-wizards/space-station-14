@@ -2,7 +2,6 @@ using System.Linq;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
-using Content.Server.Interaction.Components;
 using Content.Server.Weapons.Melee;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
@@ -11,8 +10,6 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.MobState.Components;
-using Content.Shared.Popups;
-using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Player;
 
