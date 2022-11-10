@@ -9,7 +9,8 @@
   skinColoration: TintedHues
   maleFirstNames: DionaFirst
   femaleFirstNames: DionaFirst
-  lastNames: DionaLast
+  maleLastNames: DionaLast
+  femaleLastNames: DionaLast
   naming: TheFirstofLast
 
 - type: speciesBaseSprites
