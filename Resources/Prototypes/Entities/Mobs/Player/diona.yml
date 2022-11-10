@@ -32,3 +32,4 @@
     - type: Faction
       factions:
         - NanoTrasen
+    - type: Pacified # Corvax
