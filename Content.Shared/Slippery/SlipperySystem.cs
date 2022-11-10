@@ -1,4 +1,5 @@
 using Content.Shared.Administration.Logs;
+using Content.Shared.Bed.Sleep;
 using Content.Shared.Database;
 using Content.Shared.Inventory;
 using Content.Shared.StatusEffect;
@@ -76,7 +77,7 @@ namespace Content.Shared.Slippery
 
         private void TrySlip(SlipperyComponent component, EntityUid other)
         {
-            if (HasComp<KnockedDownComponent>(other))
+            if (HasComp<KnockedDownComponent>(other) || HasComp<SleepingComponent>(other) || HasComp<ForcedSleepingComponent>(other))
                 return;
 
             var ev = new SlipAttemptEvent();
