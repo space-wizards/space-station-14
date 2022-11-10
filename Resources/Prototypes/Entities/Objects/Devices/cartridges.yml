@@ -1,6 +1,8 @@
 ﻿- type: entity
   parent: BaseItem
   id: NotekeeperCartridge
+  name: notekeeper cartridge
+  description: A program for keeping notes
   components:
   - type: Sprite
     sprite: Objects/Devices/cartridge.rsi

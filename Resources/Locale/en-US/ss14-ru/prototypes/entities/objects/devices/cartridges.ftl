@@ -1,3 +1,3 @@
-ent-NotekeeperCartridge = { ent-BaseItem }
-    .desc = { ent-BaseItem.desc }
+ent-NotekeeperCartridge = notekeeper cartridge
+    .desc = A program for keeping notes
     .suffix = { "" }
