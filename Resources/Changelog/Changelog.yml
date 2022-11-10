@@ -1,12 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: The popup for not being able to wield an item is now grammatically correct.,
-    type: Fix}
-  id: 2134
-  time: '2022-08-11T22:53:36.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: Lathes no longer can become stuck not producing anything with items
       in the queue., type: Fix}
   id: 2135
@@ -2957,3 +2951,8 @@ Entries:
   - {message: Droppers behave more like injectors., type: Tweak}
   id: 2633
   time: '2022-11-10T00:59:54.0000000+00:00'
+- author: Bright0
+  changes:
+  - {message: internals tanks with air no longer flash warning, type: Fix}
+  id: 2634
+  time: '2022-11-10T01:02:15.0000000+00:00'
