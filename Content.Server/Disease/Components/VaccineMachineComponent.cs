@@ -8,7 +8,7 @@ namespace Content.Server.Disease.Components
     ///     on its connected server and print vaccines of the diseases stored there.
     /// </summary>
     [RegisterComponent]
-    public sealed class VaccineMachineComponent : Component
+    public sealed class DiseaseVaccineCreatorComponent : Component
     {
         public DiseaseServerComponent? DiseaseServer = null;
     }

@@ -1,4 +1,5 @@
 using Content.Shared.Disease.Components;
+using Content.Shared.Disease;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 
@@ -21,6 +22,11 @@ namespace Content.Client.Disease.UI
             _consoleMenu.OnClose += Close;
 
             _consoleMenu.OpenCentered();
+        }
+
+        public void CreateVaccineMessage(DiseasePrototype disease)
+        {
+            SendMessage(new CreateVaccineMessage(disease));
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)

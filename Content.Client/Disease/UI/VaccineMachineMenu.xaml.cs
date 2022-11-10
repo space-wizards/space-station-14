@@ -30,6 +30,10 @@ namespace Content.Client.Disease.UI
             Owner = owner;
 
             KnownDiseases.OnItemSelected += KnownDiseaseSelected;
+            CreateButton.OnPressed += _ =>
+            {
+                CreateVaccine();
+            };
 
             Populate();
         }
@@ -43,6 +47,17 @@ namespace Content.Client.Disease.UI
             CreateButton.Disabled = false;
 
             PopulateSelectedDisease();
+        }
+
+        /// <summary>
+        ///     Sends a message to create a vaccine from the selected technology.
+        /// </summary>
+        private void CreateVaccine()
+        {
+            if (DiseaseSelected == null)
+                return;
+
+            Owner.CreateVaccineMessage(DiseaseSelected);
         }
 
         /// <summary>

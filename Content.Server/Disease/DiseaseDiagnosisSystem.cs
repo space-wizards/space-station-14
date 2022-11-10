@@ -41,7 +41,7 @@ namespace Content.Server.Disease
             SubscribeLocalEvent<DiseaseSwabComponent, AfterInteractEvent>(OnAfterInteract);
             SubscribeLocalEvent<DiseaseSwabComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<DiseaseDiagnoserComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
-            SubscribeLocalEvent<DiseaseVaccineCreatorComponent, AfterInteractUsingEvent>(OnAfterInteractUsingVaccine);
+            SubscribeLocalEvent<DiseaseVaccineCreatorComponent, CreateVaccineMessage>(OnCreateVaccineMessageReceived);
             // Visuals
             SubscribeLocalEvent<DiseaseMachineComponent, PowerChangedEvent>(OnPowerChanged);
             // Private Events
@@ -172,30 +172,15 @@ namespace Content.Server.Disease
         }
 
         /// <summary>
-        /// This handles the vaccinator machine up
-        /// until it's turned on. It has some slight
-        /// differences in checks from the diagnoser.
+        /// Creates a vaccine, if possible, when sent a UI message to do so.
         /// </summary>
-        private void OnAfterInteractUsingVaccine(EntityUid uid, DiseaseVaccineCreatorComponent component, AfterInteractUsingEvent args)
+        private void OnCreateVaccineMessageReceived(EntityUid uid, DiseaseVaccineCreatorComponent component, CreateVaccineMessage args)
         {
-            if (args.Handled || !args.CanReach)
-                return;
-
             if (HasComp<DiseaseMachineRunningComponent>(uid) || !this.IsPowered(uid, EntityManager))
                 return;
 
-            if (!HasComp<HandsComponent>(args.User) || HasComp<ToolComponent>(args.Used)) //This check ensures tools don't break without yaml ordering jank
-                return;
-
-            if (!TryComp<DiseaseSwabComponent>(args.Used, out var swab) || swab.Disease == null || !swab.Disease.Infectious)
-            {
-                _popupSystem.PopupEntity(Loc.GetString("diagnoser-cant-use-swab", ("machine", uid), ("swab", args.Used)), uid, Filter.Entities(args.User));
-                return;
-            }
-            _popupSystem.PopupEntity(Loc.GetString("machine-insert-item", ("machine", uid), ("item", args.Used), ("user", args.User)), uid, Filter.Entities(args.User));
             var machine = Comp<DiseaseMachineComponent>(uid);
-            machine.Disease = swab.Disease;
-            EntityManager.DeleteEntity(args.Used);
+            machine.Disease = args.Disease;
 
             AddQueue.Enqueue(uid);
             UpdateAppearance(uid, true, true);

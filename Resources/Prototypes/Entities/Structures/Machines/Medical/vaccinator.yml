@@ -15,7 +15,6 @@
       shader: unshaded
       map: ["enum.DiseaseMachineVisualLayers.IsOn"]
     netsync: false
-  - type: DiseaseVaccineCreator
   - type: DiseaseMachine
     machineOutput: Vaccine
   - type: Appearance
@@ -29,7 +28,7 @@
       machine_board: !type:Container
       machine_parts: !type:Container
   - type: ResearchClient
-  - type: VaccineMachine
+  - type: DiseaseVaccineCreator
   - type: ActivatableUI
     key: enum.VaccineMachineUiKey.Key
   - type: ActivatableUIRequiresPower

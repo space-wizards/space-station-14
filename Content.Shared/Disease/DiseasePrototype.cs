@@ -9,6 +9,7 @@ namespace Content.Shared.Disease
     /// </summary>
     [Prototype("disease")]
     [DataDefinition]
+    [Serializable]
     public sealed class DiseasePrototype : IPrototype, IInheritingPrototype
     {
         private string _name = string.Empty;
