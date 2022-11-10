@@ -4,3 +4,4 @@ ent-notekeeper-cartridge = notekeeper cartridge
     .desc = A program for keeping notes
 
 notekeeper-program-name = Notekeeper
+net-probe-program-name = NetProbe
