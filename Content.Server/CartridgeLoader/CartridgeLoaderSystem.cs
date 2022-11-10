@@ -109,7 +109,7 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
         //This will eventually be replaced by serializing and deserializing the cartridge to copy it when something needs
         //the data on the cartridge to carry over when installing
         var prototypeId = Prototype(cartridgeUid)?.ID;
-        return prototypeId != null && InstallProgram(loaderUid, prototypeId, loader);
+        return prototypeId != null && InstallProgram(loaderUid, prototypeId, loader: loader);
     }
 
     /// <summary>
@@ -117,9 +117,10 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
     /// </summary>
     /// <param name="loaderUid">The cartridge loader uid</param>
     /// <param name="prototype">The prototype name</param>
+    /// <param name="deinstallable">Whether the program can be deinstalled or not</param>
     /// <param name="loader">The cartridge loader component</param>
     /// <returns>Whether installing the cartridge was successful</returns>
-    public bool InstallProgram(EntityUid loaderUid, string prototype, CartridgeLoaderComponent? loader  = default!)
+    public bool InstallProgram(EntityUid loaderUid, string prototype, bool deinstallable = true, CartridgeLoaderComponent? loader  = default!)
     {
         if (!Resolve(loaderUid, ref loader) || loader.InstalledPrograms.Count >= loader.DiskSpace)
             return false;
@@ -134,7 +135,7 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
         var installedProgram = Spawn(prototype, new EntityCoordinates(loaderUid, 0, 0));
         container?.Insert(installedProgram);
 
-        UpdateCartridgeInstallationStatus(installedProgram, InstallationStatus.Installed);
+        UpdateCartridgeInstallationStatus(installedProgram, deinstallable ? InstallationStatus.Installed : InstallationStatus.Readonly);
         loader.InstalledPrograms.Add(installedProgram);
 
         RaiseLocalEvent(installedProgram, new CartridgeAddedEvent(loaderUid));
@@ -270,7 +271,7 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
     {
         foreach (var prototype in component.PreinstalledPrograms)
         {
-            InstallProgram(uid, prototype);
+            InstallProgram(uid, prototype, deinstallable: false);
         }
     }
 
