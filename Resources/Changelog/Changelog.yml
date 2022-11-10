@@ -1,58 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Ore Processor deconstruction now works properly., type: Fix}
-  id: 2129
-  time: '2022-08-11T04:24:04.0000000+00:00'
-- author: vulppine
-  changes:
-  - {message: 'Nanotrasen has found where all the microphones for handheld radios
-      went. Enjoy your usage of handheld radio technology, today!', type: Tweak}
-  id: 2130
-  time: '2022-08-11T09:25:29.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: A console to toggle IFF (radar labels) has been added., type: Add}
-  id: 2131
-  time: '2022-08-11T16:58:44.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Disarming no longer deselects after a usage., type: Remove}
-  id: 2132
-  time: '2022-08-11T20:08:23.0000000+00:00'
-- author: notafet
-  changes:
-  - {message: 'Add pneumatic valves, which control gas flow based on control pressure.',
-    type: Add}
-  id: 2133
-  time: '2022-08-11T21:19:32.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: The popup for not being able to wield an item is now grammatically correct.,
-    type: Fix}
-  id: 2134
-  time: '2022-08-11T22:53:36.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Lathes no longer can become stuck not producing anything with items
-      in the queue., type: Fix}
-  id: 2135
-  time: '2022-08-12T01:33:32.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Audio occlusion is working again, type: Fix}
-  id: 2136
-  time: '2022-08-12T02:53:28.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed inverted combat mode toggle., type: Fix}
-  id: 2137
-  time: '2022-08-13T00:27:14.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: do_after progress bars now show on cameras., type: Fix}
-  id: 2138
-  time: '2022-08-13T04:32:23.0000000+00:00'
 - author: lapatison
   changes:
   - {message: Kvass tank from cargo now come unpackaged., type: Tweak}
@@ -2957,3 +2903,57 @@ Entries:
       servers.', type: Fix}
   id: 2628
   time: '2022-11-09T00:41:26.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed vehicles not working., type: Fix}
+  id: 2629
+  time: '2022-11-09T06:31:43.0000000+00:00'
+- author: checkraze
+  changes:
+  - {message: Added XenoSci things and a mass scanner for salvage crew to Lighthouse,
+    type: Add}
+  id: 2630
+  time: '2022-11-09T07:06:34.0000000+00:00'
+- author: checkraze
+  changes:
+  - {message: Added target dummies and some practice weapons to Kettle, type: Add}
+  id: 2631
+  time: '2022-11-09T07:11:00.0000000+00:00'
+- author: juliangiebel
+  changes:
+  - {message: "An update to Robust#OS\u2122 now prevents deinstalling preinstalled\
+      \ programs.", type: Tweak}
+  id: 2632
+  time: '2022-11-10T00:59:16.0000000+00:00'
+- author: JustinTrotter
+  changes:
+  - {message: Droppers behave more like injectors., type: Tweak}
+  id: 2633
+  time: '2022-11-10T00:59:54.0000000+00:00'
+- author: Bright0
+  changes:
+  - {message: internals tanks with air no longer flash warning, type: Fix}
+  id: 2634
+  time: '2022-11-10T01:02:15.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed being unable to interact with items held in hands unless the hand
+      is currently selected., type: Fix}
+  id: 2635
+  time: '2022-11-10T01:04:47.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Gas recyclers can now be upgrades to reduce the minimum required temperature
+      and pressure., type: Add}
+  id: 2636
+  time: '2022-11-10T01:11:23.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: Mousetraps no longer autokill cardboard box users, type: Fix}
+  id: 2637
+  time: '2022-11-10T01:18:37.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: CentCom now calls the shuttle automatically after a long round., type: Add}
+  id: 2638
+  time: '2022-11-10T04:20:36.0000000+00:00'
