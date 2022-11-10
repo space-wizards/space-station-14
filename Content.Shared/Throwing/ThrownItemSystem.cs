@@ -151,8 +151,12 @@ namespace Content.Shared.Throwing
             // TODO: Just pass in the bodies directly
             RaiseLocalEvent(target.Owner, new ThrowHitByEvent(user, thrown.Owner, target.Owner), true);
             RaiseLocalEvent(thrown.Owner, new ThrowDoHitEvent(user, thrown.Owner, target.Owner), true);
-            // if (thrown item has tag "StopOnCollide") stop thrown item
-            //thrown.LinearVelocity = (0,0);
+
+            // If still being "thrown", remove ThrownItemComponent. after, remove velocity to prevent more collisions
+            // TODO: if an item shouldn't care, add tag to check for
+            if (TryComp<ThrownItemComponent>(thrown.Owner, out var comp))
+                StopThrow(thrown.Owner, comp);
+            thrown.LinearVelocity = (0,0);
         }
     }
 }

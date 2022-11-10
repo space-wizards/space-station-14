@@ -27,8 +27,9 @@ namespace Content.Server.Damage.Systems
             if (dmg != null && HasComp<MobStateComponent>(args.Target))
                 _adminLogger.Add(LogType.ThrowHit, $"{ToPrettyString(args.Target):target} received {dmg.Total:damage} damage from collision");
 
-            // Play hit sound on target
-            _audio.Play(component.HitSound, Filter.Pvs(args.Target), args.Target);
+            // Play hit sound on target if it's damageable
+            if (HasComp<DamageableComponent>(args.Target))
+                _audio.Play(component.HitSound, Filter.Pvs(args.Target), args.Target);
         }
     }
 }
