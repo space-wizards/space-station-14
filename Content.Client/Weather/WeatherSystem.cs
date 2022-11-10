@@ -2,7 +2,6 @@ using Content.Shared.Weather;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
-using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Player;
 
@@ -32,9 +31,10 @@ public sealed class WeatherSystem : SharedWeatherSystem
             return;
 
         var mapUid = Transform(component.Owner).MapUid;
+        var entXform = Transform(ent.Value);
 
         // Maybe have the viewports manage this?
-        if (mapUid == null || Transform(ent.Value).MapUid != mapUid)
+        if (mapUid == null || entXform.MapUid != mapUid)
         {
             component.Stream?.Stop();
             component.Stream = null;
@@ -51,6 +51,32 @@ public sealed class WeatherSystem : SharedWeatherSystem
             alpha = MathF.Pow(alpha, 4f);
             // TODO: Fade-out needs to be slower
             // TODO: HELPER PLZ
+            var circle = new Circle(entXform.WorldPosition, 3f);
+
+            // Work out tiles nearby to also determine volume.
+            if (entXform.GridUid != null)
+            {
+                // If the tile count is less than target tiles we just assume the difference is weather-affected.
+                var targetTiles = 25;
+                var tiles = 0;
+                var weatherTiles = 0;
+
+                // TODO: Floodfill out and determine if we should occlude.
+
+                foreach (var tile in MapManager.GetGrid(entXform.GridUid.Value).GetTilesIntersecting(circle))
+                {
+                    tiles++;
+
+                    if (weather.Tiles.Contains(_tileDefManager[tile.Tile.TypeId].ID))
+                    {
+                        weatherTiles++;
+                    }
+                }
+
+                var ratio = Math.Clamp(tiles == 0 ? 1f : (weatherTiles + targetTiles - tiles) / (float) tiles, 0f, 1f);
+                alpha *= ratio;
+            }
+            // Full volume if not on grid
 
             stream.Gain = alpha;
         }

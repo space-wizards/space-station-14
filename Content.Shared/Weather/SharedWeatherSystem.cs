@@ -13,6 +13,7 @@ public abstract class SharedWeatherSystem : EntitySystem
     [Dependency] protected readonly IMapManager MapManager = default!;
     [Dependency] protected readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] protected readonly ITileDefinitionManager _tileDefManager = default!;
     [Dependency] private readonly MetaDataSystem _metadata = default!;
 
     protected ISawmill Sawmill = default!;

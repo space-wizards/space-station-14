@@ -27,8 +27,8 @@ public sealed class WeatherOverlay : Overlay
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
 
-    private IRenderTexture _blep;
-    private IRenderTexture _blep2;
+    private IRenderTexture? _blep;
+    private IRenderTexture? _blep2;
 
     public WeatherOverlay(SpriteSystem sprite, WeatherSystem weather)
     {
@@ -38,8 +38,6 @@ public sealed class WeatherOverlay : Overlay
         IoCManager.InjectDependencies(this);
 
         var clyde = IoCManager.Resolve<IClyde>();
-        _blep = clyde.CreateRenderTarget(clyde.ScreenSize, new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb), name: "weather-stencil");
-        _blep2 = clyde.CreateRenderTarget(clyde.ScreenSize, new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb), name: "weather");
     }
 
     // TODO: WeatherComponent on the map.
@@ -86,15 +84,15 @@ public sealed class WeatherOverlay : Overlay
         var rotation = args.Viewport.Eye?.Rotation ?? Angle.Zero;
         var position = args.Viewport.Eye?.Position.Position ?? Vector2.Zero;
 
-        if (_blep.Texture.Size != args.Viewport.Size)
+        if (_blep?.Texture.Size != args.Viewport.Size)
         {
-            _blep.Dispose();
+            _blep?.Dispose();
             _blep = _clyde.CreateRenderTarget(args.Viewport.Size, new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb), name: "weather-stencil");
         }
 
-        if (_blep2.Texture.Size != args.Viewport.Size)
+        if (_blep2?.Texture.Size != args.Viewport.Size)
         {
-            _blep2.Dispose();
+            _blep2?.Dispose();
             _blep2 = _clyde.CreateRenderTarget(args.Viewport.Size, new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb), name: "weather");
         }
 
@@ -117,7 +115,14 @@ public sealed class WeatherOverlay : Overlay
 
                     // Ignored tiles for stencil
                     if (weatherProto.Tiles.Contains(tileDef.ID))
-                        continue;
+                    {
+                        var anchoredEnts = grid.GetAnchoredEntitiesEnumerator(tile.GridIndices);
+
+                        if (!anchoredEnts.MoveNext(out _))
+                        {
+                            continue;
+                        }
+                    }
 
                     var gridTile = new Box2(tile.GridIndices * grid.TileSize,
                         (tile.GridIndices + Vector2i.One) * grid.TileSize);
@@ -132,7 +137,7 @@ public sealed class WeatherOverlay : Overlay
         worldHandle.UseShader(_protoManager.Index<ShaderPrototype>("StencilMask").Instance());
         worldHandle.DrawTextureRect(_blep.Texture, worldBounds);
         Texture? sprite = null;
-        var curTime = IoCManager.Resolve<IGameTiming>().RealTime;
+        var curTime = _timing.RealTime;
         // TODO: Cache this shit.
 
         switch (weatherProto.Sprite)
@@ -172,59 +177,36 @@ public sealed class WeatherOverlay : Overlay
         // Draw the rain
         worldHandle.RenderInRenderTarget(_blep2, () =>
         {
-            worldHandle.SetTransform(invMatrix);
-
-            // var layers = _parallax.GetParallaxLayers(args.MapId);
-            // var realTime = (float) _timing.RealTime.TotalSeconds;
+            var matrix = Matrix3.CreateTransform(position, -rotation);
+            Matrix3.Multiply(in matrix, in invMatrix, out var matty);
+            worldHandle.SetTransform(matty);
 
             // Size of the texture in world units.
             var size = sprite.Size / (float) EyeManager.PixelsPerMeter;
+            var worldDimensions = _blep2.Texture.Size / EyeManager.PixelsPerMeter;
 
-            // The "home" position is the effective origin of this layer.
-            // Parallax shifting is relative to the home, and shifts away from the home and towards the Eye centre.
-            // The effects of this are such that a slowness of 1 anchors the layer to the centre of the screen, while a slowness of 0 anchors the layer to the world.
-            // (For values 0.0 to 1.0 this is in effect a lerp, but it's deliberately unclamped.)
-            // The ParallaxAnchor adapts the parallax for station positioning and possibly map-specific tweaks.
-            var home = Vector2.Zero; // layer.Config.WorldHomePosition + _manager.ParallaxAnchor;
-            var scrolled = 0f; //layer.Config.Scrolling * realTime;
+            // 0f means it never changes, 1f means it matches the eye.
+            // TODO:
+            var slowness = 0f;
+            var offset = position * slowness;
+            var offsetClamped = new Vector2(offset.X % size.X, offset.Y % size.Y);
 
-            // Origin - start with the parallax shift itself.
-            var originBL = (position - home) * 0.1f + scrolled;
+            var topRight = worldDimensions / 2f + offsetClamped;
+            var botLeft = -topRight;
 
-            // Place at the home.
-            originBL += home;
-
-            // Adjust.
-            // originBL += layer.Config.WorldAdjustPosition;
-
-            // Centre the image.
-            originBL -= size / 2;
-
-            // Remove offset so we can floor.
-            var flooredBL = worldAABB.BottomLeft - originBL;
-
-            // Floor to background size.
-            flooredBL = (flooredBL / size).Floored() * size;
-
-            // Re-offset.
-            flooredBL += originBL;
-
-
-            for (var x = flooredBL.X; x < worldAABB.Right; x += size.X)
+            for (var x = botLeft.X; x <= topRight.X; x += size.X)
             {
-                for (var y = flooredBL.Y; y < worldAABB.Top; y += size.Y)
+                for (var y = botLeft.Y; y <= topRight.Y; y += size.Y)
                 {
                     var box = Box2.FromDimensions((x, y), size);
-                    worldHandle.DrawTextureRect(sprite, Box2.FromDimensions((x, y), size));
+                    worldHandle.DrawTextureRect(sprite, box, weatherProto.Color);
                 }
             }
 
         }, Color.Transparent);
 
         worldHandle.SetTransform(Matrix3.Identity);
-
         worldHandle.UseShader(_protoManager.Index<ShaderPrototype>("StencilDraw").Instance());
-
         worldHandle.DrawTextureRect(_blep2.Texture, worldBounds, Color.White.WithAlpha(alpha));
         worldHandle.UseShader(null);
     }

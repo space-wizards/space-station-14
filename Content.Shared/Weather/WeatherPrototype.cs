@@ -30,6 +30,9 @@ public sealed class WeatherPrototype : IPrototype
     [ViewVariables(VVAccess.ReadWrite), DataField("sprite", required: true)]
     public SpriteSpecifier Sprite = default!;
 
+    [ViewVariables(VVAccess.ReadWrite), DataField("color")]
+    public Color? Color;
+
     /// <summary>
     /// Sound to play on the affected areas.
     /// </summary>
