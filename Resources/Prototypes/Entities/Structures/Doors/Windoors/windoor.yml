@@ -20,7 +20,7 @@
   components:
   - type: AccessReader
     access: [["Bar"]]
-    
+
 - type: entity
   parent: Windoor
   id: WindoorBarKitchenLocked
@@ -28,7 +28,7 @@
   components:
   - type: AccessReader
     access: [["Bar"], ["Kitchen"]]
-    
+
 - type: entity
   parent: Windoor
   id: WindoorCargoLocked
@@ -68,7 +68,7 @@
   components:
   - type: AccessReader
     access: [["Kitchen"]]
-    
+
 - type: entity
   parent: Windoor
   id: WindoorKitchenHydroponicsLocked
@@ -76,7 +76,7 @@
   components:
   - type: AccessReader
     access: [["Kitchen"], ["Hydroponics"]]
-    
+
 - type: entity
   parent: Windoor
   id: WindoorServiceLocked
@@ -84,7 +84,7 @@
   components:
   - type: AccessReader
     access: [["Service"]]
-    
+
 - type: entity
   parent: Windoor
   id: WindoorTheatreLocked
@@ -134,7 +134,7 @@
   components:
   - type: AccessReader
     access: [["Chemistry"]]
-    
+
 - type: entity
   parent: WindoorSecure
   id: WindoorCommandLocked
@@ -142,8 +142,6 @@
   components:
   - type: AccessReader
     access: [["Command"]]
-  - type: Wires
-    LayoutId: WindoorCommand
 
 - type: entity
   parent: WindoorSecure
@@ -152,7 +150,7 @@
   components:
   - type: AccessReader
     access: [["Engineering"]]
-    
+
 - type: entity
   parent: WindoorSecure
   id: WindoorExternalLocked
@@ -200,8 +198,6 @@
   components:
   - type: AccessReader
     access: [["Security"]]
-  - type: Wires
-    LayoutId: WindoorSecurity
 
 - type: entity
   parent: WindoorSecure

@@ -25,3 +25,10 @@
   - Armory
   - Brig
   # - Detective
+
+- type: accessGroup
+  id: Armory
+  tags:
+  - Security
+  - Armory
+  - Brig

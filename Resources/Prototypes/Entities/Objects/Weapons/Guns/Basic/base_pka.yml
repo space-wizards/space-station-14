@@ -31,3 +31,10 @@
   - type: BasicEntityAmmoProvider
     proto: BulletKinetic
     capacity: 1
+    count: 1
+  - type: Clothing
+    #sprite: WRITEMEWRITEMEWRITEME
+    quickEquip: false
+    slots:
+    - suitStorage
+    - Belt

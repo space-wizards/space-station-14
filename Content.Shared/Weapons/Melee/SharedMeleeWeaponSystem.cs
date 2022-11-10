@@ -1,14 +1,10 @@
 using Content.Shared.ActionBlocker;
-using Content.Shared.Clothing.Components;
 using Content.Shared.CombatMode;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
-using Content.Shared.Inventory.Events;
 using Content.Shared.Popups;
 using Content.Shared.Weapons.Melee.Events;
-using JetBrains.Annotations;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
@@ -272,19 +268,23 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         weapon.NextAttack += TimeSpan.FromSeconds(1f / weapon.AttackRate);
 
         // Attack confirmed
+        string animation;
 
         switch (attack)
         {
             case LightAttackEvent light:
                 DoLightAttack(user, light, weapon, session);
+                animation = weapon.ClickAnimation;
                 break;
             case DisarmAttackEvent disarm:
                 if (!DoDisarm(user, disarm, weapon, session))
                     return;
 
+                animation = weapon.ClickAnimation;
                 break;
             case HeavyAttackEvent heavy:
                 DoHeavyAttack(user, heavy, weapon, session);
+                animation = weapon.WideAnimation;
                 break;
             default:
                 throw new NotImplementedException();
@@ -293,7 +293,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         // Play a sound to give instant feedback; same with playing the animations
         Audio.PlayPredicted(weapon.SwingSound, weapon.Owner, user);
 
-        DoLungeAnimation(user, weapon.Angle, attack.Coordinates.ToMap(EntityManager), weapon.Animation);
+        DoLungeAnimation(user, weapon.Angle, attack.Coordinates.ToMap(EntityManager), weapon.Range, animation);
         weapon.Attacking = true;
         Dirty(weapon);
     }
@@ -351,7 +351,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         return true;
     }
 
-    private void DoLungeAnimation(EntityUid user, Angle angle, MapCoordinates coordinates, string? animation)
+    private void DoLungeAnimation(EntityUid user, Angle angle, MapCoordinates coordinates, float length, string? animation)
     {
         // TODO: Assert that offset eyes are still okay.
         if (!TryComp<TransformComponent>(user, out var userXform))
@@ -364,6 +364,14 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             return;
 
         localPos = userXform.LocalRotation.RotateVec(localPos);
+
+        // We'll play the effect just short visually so it doesn't look like we should be hitting but actually aren't.
+        const float BufferLength = 0.2f;
+        var visualLength = length - BufferLength;
+
+        if (localPos.Length > visualLength)
+            localPos = localPos.Normalized * visualLength;
+
         DoLunge(user, angle, localPos, animation);
     }
 

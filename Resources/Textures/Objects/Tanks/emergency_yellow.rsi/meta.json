@@ -15,6 +15,36 @@
       "directions": 4
     },
     {
+      "name": "equipped-SUITSTORAGE-dog",
+      "directions": 4,
+      "delays": [[1],[1],[1],[1]]
+    },
+    {
+      "name": "equipped-SUITSTORAGE-puppy",
+      "directions": 4,
+      "delays": [[1],[1],[1],[1]]
+    },
+    {
+      "name": "equipped-SUITSTORAGE-fox",
+      "directions": 4,
+      "delays": [[1],[1],[1],[1]]
+    },
+    {
+      "name": "equipped-SUITSTORAGE-cat",
+      "directions": 4,
+      "delays": [[1],[1],[1],[1]]
+    },
+    {
+      "name": "equipped-SUITSTORAGE-sloth",
+      "directions": 4,
+      "delays": [[1],[1],[1],[1]]
+    },
+    {
+      "name": "equipped-SUITSTORAGE-possum",
+      "directions": 4,
+      "delays": [[1],[1],[1],[1]]
+    },
+    {
       "name": "inhand-left",
       "directions": 4
     },

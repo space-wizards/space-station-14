@@ -566,6 +566,7 @@
     whitelist:
       tags:
         - CartridgeCap
+        - SpeedLoaderCap
     proto: CartridgeCap
     capacity: 6
     chambers: [ True, True, True, True, True, True ]

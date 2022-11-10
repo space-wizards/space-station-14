@@ -73,6 +73,7 @@
   - type: Pullable
   - type: Drink
     isOpen: true
+    solution: bucket
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 3
@@ -221,6 +222,13 @@
         type: StorageBoundUserInterface
     - type: Drink
       isOpen: true
+      solution: bucket
+    - type: ContainerContainer
+      containers:
+        storagebase: !type:Container
+          ents: []
+        mop_slot: !type:ContainerSlot {}
+        trashbag_slot: !type:ContainerSlot {}
 
 - type: entity
   id: FloorDrain
@@ -240,6 +248,7 @@
       anchored: true
     - type: Physics
       bodyType: Static
+      canCollide: false
     - type: Drain
     - type: AmbientSound
       enabled: false
@@ -253,4 +262,17 @@
           maxVol: 500
     - type: DrainableSolution
       solution: drainBuffer
-
+    - type: Damageable
+      damageContainer: Inorganic
+      damageModifierSet: Metallic
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 100
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound:
+                path: /Audio/Effects/metalbreak.ogg

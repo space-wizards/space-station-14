@@ -46,6 +46,17 @@
         type: WiresBoundUserInterface
   - type: StaticPrice
     price: 200
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 100
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:PlaySoundBehavior
+            sound:
+              path: /Audio/Effects/metalbreak.ogg
   placement:
     mode: SnapgridCenter
     snap:
@@ -119,19 +130,6 @@
   - type: DeviceNetwork
     deviceNetId: Wired
     receiveFrequencyId: SurveillanceCameraSupply
-    transmitFrequencyId: SurveillanceCamera
-  - type: SurveillanceCamera
-    networkSet: true
-
-- type: entity
-  parent: SurveillanceCameraBase
-  id: SurveillanceCameraScience
-  name: camera
-  suffix: Science
-  components:
-  - type: DeviceNetwork
-    deviceNetId: Wired
-    receiveFrequencyId: SurveillanceCameraScience
     transmitFrequencyId: SurveillanceCamera
   - type: SurveillanceCamera
     networkSet: true

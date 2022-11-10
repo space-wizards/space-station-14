@@ -27,6 +27,11 @@
     groups:
     - id: Gas
       rateModifier: 100.0
+  - type: SolutionContainerManager
+    solutions:
+      Lung:
+        maxVol: 100.0
+        canReact: false
 
 - type: entity
   id: OrganAnimalStomach
