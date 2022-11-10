@@ -1,17 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: Disarming no longer deselects after a usage., type: Remove}
-  id: 2132
-  time: '2022-08-11T20:08:23.0000000+00:00'
-- author: notafet
-  changes:
-  - {message: 'Add pneumatic valves, which control gas flow based on control pressure.',
-    type: Add}
-  id: 2133
-  time: '2022-08-11T21:19:32.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: The popup for not being able to wield an item is now grammatically correct.,
     type: Fix}
   id: 2134
@@ -2957,3 +2946,14 @@ Entries:
   - {message: Added target dummies and some practice weapons to Kettle, type: Add}
   id: 2631
   time: '2022-11-09T07:11:00.0000000+00:00'
+- author: juliangiebel
+  changes:
+  - {message: "An update to Robust#OS\u2122 now prevents deinstalling preinstalled\
+      \ programs.", type: Tweak}
+  id: 2632
+  time: '2022-11-10T00:59:16.0000000+00:00'
+- author: JustinTrotter
+  changes:
+  - {message: Droppers behave more like injectors., type: Tweak}
+  id: 2633
+  time: '2022-11-10T00:59:54.0000000+00:00'
