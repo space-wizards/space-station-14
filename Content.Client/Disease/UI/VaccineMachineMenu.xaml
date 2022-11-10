@@ -24,9 +24,12 @@
                 <BoxContainer Orientation="Vertical"
                               Align="Center"
                               HorizontalExpand="True"
-                              VerticalExpand="True">
-                    <Label Name="DiseaseName" />
-                    <Label Name="DiseaseResistance" />
+                              VerticalExpand="True"
+                              SeparationOverride="10">
+                    <Label Name="DiseaseName"
+                           Text="{Loc 'vaccine-machine-menu-none-selected'}"/>
+                    <Label Name="DiseaseResistance"
+                           Text="{Loc 'vaccine-machine-menu-spaceacillin-resist-none'}"/>
                     <Label Text="{Loc 'vaccine-machine-menu-biomass-cost'}"  />
                     <Label Text="{Loc 'vaccine-machine-menu-biomass-current'}" />
                     <Button Name="ServerSelectionButton"
@@ -38,7 +41,11 @@
                     <Button Name="CreateButton"
                             Access="Public"
                             Text="{Loc 'vaccine-machine-menu-create-vaccine-button'}"
+                            VerticalExpand="True"
                             Disabled="True" />
+                    <SpinBox Name="CreateAmount"
+                                Access="Public"
+                                Value="1" />
                 </BoxContainer>
         </BoxContainer>
     </BoxContainer>

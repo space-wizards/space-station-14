@@ -10,3 +10,6 @@ vaccine-machine-menu-known-diseases-label = Known Diseases
 vaccine-machine-menu-create-vaccine-button = Create Vaccine
 vaccine-machine-menu-biomass-cost = Biomass Cost: 4
 vaccine-machine-menu-biomass-current = Current: 100
+vaccine-machine-menu-none-selected = Select a Disease!
+vaccine-machine-menu-spaceacillin-resist-none = Spaceacillin resistance will go here.
+vaccine-machine-menu-spaceacillin-resist = Resistance: {$value}

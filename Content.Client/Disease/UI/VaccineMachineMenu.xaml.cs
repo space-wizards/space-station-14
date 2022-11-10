@@ -90,13 +90,13 @@ namespace Content.Client.Disease.UI
         {
             if (DiseaseSelected == null)
             {
-                DiseaseName.Text = string.Empty;
-                DiseaseResistance.Text = string.Empty;
+                DiseaseName.Text = Loc.GetString("vaccine-machine-menu-none-selected");
+                DiseaseResistance.Text = Loc.GetString("vaccine-machine-menu-spaceacillin-resist-none");
                 return;
             }
 
             DiseaseName.Text = DiseaseSelected.Name;
-            DiseaseResistance.Text = DiseaseSelected.CureResist.ToString();
+            DiseaseResistance.Text = Loc.GetString("vaccine-machine-menu-spaceacillin-resist", ("value", DiseaseSelected.CureResist.ToString()));
         }
     }
 }
