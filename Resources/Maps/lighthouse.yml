@@ -138512,7 +138512,7 @@ entities:
     parent: 100
     type: Transform
   - content: >
-      Brave Bull - Tequila 2, Kahlua 1
+      Brave Bull - Tequila 2, Coffee Liqueur 1
 
       Moonshine - Vodka 1, Tequila 1, Whiskey 1
 
@@ -138526,7 +138526,7 @@ entities:
 
       Starkist - Cola 1, OJ 2
 
-      Black Russian - Vodka 2, Kahlua 1
+      Black Russian - Vodka 2, Coffee Liqueur 1
     type: Paper
 - uid: 16611
   type: PosterLegitObey
