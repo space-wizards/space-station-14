@@ -46,6 +46,17 @@
         type: WiresBoundUserInterface
   - type: StaticPrice
     price: 200
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 100
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:PlaySoundBehavior
+            sound:
+              path: /Audio/Effects/metalbreak.ogg
   placement:
     mode: SnapgridCenter
     snap:
