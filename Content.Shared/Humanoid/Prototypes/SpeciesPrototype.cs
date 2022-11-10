@@ -93,6 +93,9 @@ public sealed class SpeciesPrototype : IPrototype
     [DataField("femaleLastNames")]
     public string FemaleLastNames { get; } = "names_last_female";
 
+    [DataField("lastNames")]
+    public string LastNames { get; } = "names_last";
+
     [DataField("naming")]
     public SpeciesNaming Naming { get; } = SpeciesNaming.FirstLast;
 

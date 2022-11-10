@@ -41,7 +41,12 @@ namespace Content.Tests.Server.Preferences
 - type: dataset
   id: names_last_female
   values:
-  - Ackerla";
+  - Ackerla
+
+- type: dataset
+  id: names_last
+  values:
+  - Ackerley";
 
         private static HumanoidCharacterProfile CharlieCharlieson()
         {
