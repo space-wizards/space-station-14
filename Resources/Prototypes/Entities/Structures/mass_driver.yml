@@ -1,0 +1,34 @@
+- type: entity
+  id: BaseMassDriver
+  abstract: true
+  name: mass driver
+  description: The finest in spring-loaded piston toy technology, now on a space station near you.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: AnimationPlayer
+  - type: Appearance
+  - type: Clickable
+  - type: Rotatable
+    rotateWhileAnchored: true
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: MassDriver
+  # - type: ApcPowerReceiver
+  #   powerLoad: 200
+  # - type: ExtensionCableReceiver
+  - type: Sprite
+    sprite: Structures/Machines/mass_driver.rsi
+    netsync: false
+    layers:
+      - map: [ "enum.MassDriverVisualLayers.Base" ]
+        state: ready
+  - type: SignalReceiver
+    inputs:
+      Trigger: []
+
+- type: entity
+  id: MassDriver
+  parent: BaseMassDriver
