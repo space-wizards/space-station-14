@@ -2,3 +2,18 @@
   license: "CC0-1.0"
   copyright: "receipt printing.wav by 13F_Panska_Tlolkova_Matilda. This version is cleaned up, shortened, and converted to OGG."
   source: "https://freesound.org/people/13F_Panska_Tlolkova_Matilda/sounds/378331"
+
+- files: ["mass_driver_launch.ogg"]
+  license: "CC0-1.0"
+  copyright: "480870__c3sabertooth__launch-futuristic.aiff by C3Sabertooth. This version has one sound effect selected out of the three, converted to OGG."
+  source: "https://freesound.org/people/C3Sabertooth/sounds/480870/"
+
+- files: ["mass_driver_retract.ogg"]
+  license: "CC0-1.0"
+  copyright: "403075__chainsaw-dinner-party__homemade-hydraulic-hoist.aiff by chainsaw_dinner_party. This version has had a portion edited down, cleaned up, converted to OGG."
+  source: "https://freesound.org/people/chainsaw_dinner_party/sounds/403075/"
+
+- files: ["mass_driver_ready.ogg"]
+  license: "CC0-1.0"
+  copyright: "457294__brunoboselli__air-or-steam-pressure-release.wav by brunoboselli. This version has been cut and converted to OGG."
+  source: "https://freesound.org/people/brunoboselli/sounds/457294/"
