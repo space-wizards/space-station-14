@@ -33,7 +33,8 @@ public sealed class WeatherSystem : SharedWeatherSystem
 
         var mapUid = Transform(component.Owner).MapUid;
 
-        if (mapUid == null)
+        // Maybe have the viewports manage this?
+        if (mapUid == null || Transform(ent.Value).MapUid != mapUid)
         {
             component.Stream?.Stop();
             component.Stream = null;

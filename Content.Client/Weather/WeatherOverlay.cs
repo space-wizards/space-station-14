@@ -21,6 +21,7 @@ public sealed class WeatherOverlay : Overlay
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
+    [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
     private readonly SpriteSystem _sprite;
     private readonly WeatherSystem _weather;
 
@@ -106,12 +107,18 @@ public sealed class WeatherOverlay : Overlay
 
             foreach (var grid in _mapManager.FindGridsIntersecting(mapId, worldAABB))
             {
-                var (_, worldRot, matrix) = xformQuery.GetComponent(grid.GridEntityId).GetWorldPositionRotationMatrix();
+                var matrix = xformQuery.GetComponent(grid.GridEntityId).WorldMatrix;
                 Matrix3.Multiply(in matrix, in invMatrix, out var matty);
                 worldHandle.SetTransform(matty);
 
                 foreach (var tile in grid.GetTilesIntersecting(worldAABB))
                 {
+                    var tileDef = _tileDefManager[tile.Tile.TypeId];
+
+                    // Ignored tiles for stencil
+                    if (weatherProto.Tiles.Contains(tileDef.ID))
+                        continue;
+
                     var gridTile = new Box2(tile.GridIndices * grid.TileSize,
                         (tile.GridIndices + Vector2i.One) * grid.TileSize);
 
@@ -167,9 +174,6 @@ public sealed class WeatherOverlay : Overlay
         {
             worldHandle.SetTransform(invMatrix);
 
-            var fakePoint = invMatrix.Transform(Vector2.Zero);
-            var actualPoint = viewport.WorldToLocal(Vector2.Zero);
-
             // var layers = _parallax.GetParallaxLayers(args.MapId);
             // var realTime = (float) _timing.RealTime.TotalSeconds;
 
@@ -211,8 +215,6 @@ public sealed class WeatherOverlay : Overlay
                 for (var y = flooredBL.Y; y < worldAABB.Top; y += size.Y)
                 {
                     var box = Box2.FromDimensions((x, y), size);
-                    var invBox = invMatrix.TransformBox(box);
-
                     worldHandle.DrawTextureRect(sprite, Box2.FromDimensions((x, y), size));
                 }
             }
