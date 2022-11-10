@@ -10,7 +10,9 @@
       sprite: Markers/jobs.rsi
       state: ertleader
     - type: RandomMetadata
-      nameSegments: [ NamesFirstMilitaryLeader ]
+      nameSegments:
+      - NamesFirstMilitaryLeader
+      - names_last
     - type: RandomHumanoidSpawner
       settings: ERTLeader
 
@@ -24,7 +26,9 @@
     - type: Loadout
       prototypes: [ ERTLeaderGear ]
     - type: RandomMetadata
-      nameSegments: [ NamesFirstMilitaryLeader ]
+      nameSegments:
+      - NamesFirstMilitaryLeader
+      - names_last
 
 - type: entity
   id: RandomHumanoidSpawnerERTLeaderEVA
@@ -42,6 +46,9 @@
   id: ERTLeaderEVA
   parent: ERTLeader
   components:
+    - type: GhostTakeoverAvailable
+      name: ERT Leader
+      description: Lead a team of specialists to resolve the stations issues.
     - type: Loadout
       prototypes: [ ERTLeaderGearEVA ]
 
@@ -55,6 +62,10 @@
     - type: Icon
       sprite: Markers/jobs.rsi
       state: ertjanitor
+    - type: RandomMetadata
+      nameSegments:
+      - NamesFirstMilitary
+      - names_last
     - type: RandomHumanoidSpawner
       settings: ERTJanitor
 
@@ -65,6 +76,10 @@
     - type: GhostTakeoverAvailable
       name: ERT Janitor
       description: Assist with custodial efforts to resolve the stations issues.
+    - type: RandomMetadata
+      nameSegments:
+      - NamesFirstMilitary
+      - names_last
     - type: Loadout
       prototypes: [ ERTJanitorGear ]
 
@@ -84,6 +99,9 @@
   id: ERTJanitorEVA
   parent: ERTJanitor
   components:
+    - type: GhostTakeoverAvailable
+      name: ERT Janitor
+      description: Assist with custodial efforts to resolve the stations issues.
     - type: Loadout
       prototypes: [ ERTJanitorGearEVA ]
 
@@ -97,6 +115,10 @@
     - type: Icon
       sprite: Markers/jobs.rsi
       state: ertengineer
+    - type: RandomMetadata
+      nameSegments:
+      - NamesFirstMilitary
+      - names_last
     - type: RandomHumanoidSpawner
       settings: ERTEngineer
 
@@ -107,6 +129,10 @@
     - type: GhostTakeoverAvailable
       name: ERT Engineer
       description: Assist with engineering efforts to resolve the stations issues.
+    - type: RandomMetadata
+      nameSegments:
+      - NamesFirstMilitary
+      - names_last
     - type: Loadout
       prototypes: [ ERTEngineerGear ]
 
@@ -126,6 +152,9 @@
   id: ERTEngineerEVA
   parent: ERTEngineer
   components:
+    - type: GhostTakeoverAvailable
+      name: ERT Engineer
+      description: Assist with engineering efforts to resolve the stations issues.
     - type: Loadout
       prototypes: [ ERTEngineerGearEVA ]
 
@@ -139,6 +168,10 @@
     - type: Icon
       sprite: Markers/jobs.rsi
       state: ertsecurity
+    - type: RandomMetadata
+      nameSegments:
+      - NamesFirstMilitary
+      - names_last
     - type: RandomHumanoidSpawner
       settings: ERTSecurity
 
@@ -149,6 +182,10 @@
     - type: GhostTakeoverAvailable
       name: ERT Security
       description: Assist with security efforts to resolve the stations issues.
+    - type: RandomMetadata
+      nameSegments:
+      - NamesFirstMilitary
+      - names_last
     - type: Loadout
       prototypes: [ ERTSecurityGear ]
 
@@ -168,6 +205,9 @@
   id: ERTSecurityEVA
   parent: ERTSecurity
   components:
+    - type: GhostTakeoverAvailable
+      name: ERT Security
+      description: Assist with security efforts to resolve the stations issues.
     - type: Loadout
       prototypes: [ ERTSecurityGearEVA ]
 
@@ -181,6 +221,10 @@
     - type: Icon
       sprite: Markers/jobs.rsi
       state: ertmedical
+    - type: RandomMetadata
+      nameSegments:
+      - NamesFirstMilitary
+      - names_last
     - type: RandomHumanoidSpawner
       settings: ERTMedical
 
@@ -191,6 +235,10 @@
     - type: GhostTakeoverAvailable
       name: ERT Medical
       description: Assist with medicaling efforts to resolve the stations issues.
+    - type: RandomMetadata
+      nameSegments:
+      - NamesFirstMilitary
+      - names_last
     - type: Loadout
       prototypes: [ ERTMedicalGear ]
 
@@ -210,6 +258,9 @@
   id: ERTMedicalEVA
   parent: ERTMedical
   components:
+    - type: GhostTakeoverAvailable
+      name: ERT Medical
+      description: Assist with medicaling efforts to resolve the stations issues.
     - type: Loadout
       prototypes: [ ERTMedicalGearEVA ]
 
@@ -230,7 +281,10 @@
     - type: GhostTakeoverAvailable
       name: CBURN Agent
       description: A highly trained CentCom agent, capable of dealing with various threats.
-
+    - type: RandomMetadata
+      nameSegments:
+      - NamesFirstMilitary
+      - names_last
 ## Central Command
 
 - type: entity

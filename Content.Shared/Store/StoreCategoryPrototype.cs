@@ -10,12 +10,18 @@ namespace Content.Shared.Store;
 [Serializable, NetSerializable, DataDefinition]
 public sealed class StoreCategoryPrototype : IPrototype
 {
+    private string _name = string.Empty;
+
     [ViewVariables]
     [IdDataField]
     public string ID { get; } = default!;
 
     [DataField("name")]
-    public string Name { get; } = string.Empty;
+    public string Name
+    {
+        get => _name;
+        private set => _name = Loc.GetString(value);
+    }
 
     [DataField("priority")]
     public int Priority { get; } = 0;

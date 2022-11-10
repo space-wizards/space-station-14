@@ -83,21 +83,13 @@ namespace Content.Client.Administration.UI
 
             ChannelSelector.Comparison = (a, b) =>
             {
-                var aChannelExists = _adminAHelpHelper.TryGetChannel(a.SessionId, out var ach);
-                var bChannelExists = _adminAHelpHelper.TryGetChannel(b.SessionId, out var bch);
-                if (!aChannelExists && !bChannelExists)
-                    return 0;
-
-                if (!aChannelExists)
-                    return 1;
-
-                if (!bChannelExists)
-                    return -1;
+                var ach = _adminAHelpHelper.EnsurePanel(a.SessionId);
+                var bch = _adminAHelpHelper.EnsurePanel(b.SessionId);
 
                 // First, sort by unread. Any chat with unread messages appears first. We just sort based on unread
                 // status, not number of unread messages, so that more recent unread messages take priority.
-                var aUnread = ach!.Unread > 0;
-                var bUnread = bch!.Unread > 0;
+                var aUnread = ach.Unread > 0;
+                var bUnread = bch.Unread > 0;
                 if (aUnread != bUnread)
                     return aUnread ? -1 : 1;
 
@@ -156,6 +148,8 @@ namespace Content.Client.Administration.UI
                 if (_currentPlayer is not null)
                     _console.ExecuteCommand($"respawn \"{_currentPlayer.Username}\"");
             };
+
+            OnOpen += () => ChannelSelector.PopulateList();
         }
 
         private Dictionary<Control, (CancellationTokenSource cancellation, string? originalText)> Confirmations { get; } = new();

@@ -21,6 +21,7 @@ public sealed partial class AtmosphereSystem
         SubscribeLocalEvent<GridAtmosphereComponent, GetAllMixturesMethodEvent>(GridGetAllMixtures);
         SubscribeLocalEvent<GridAtmosphereComponent, InvalidateTileMethodEvent>(GridInvalidateTile);
         SubscribeLocalEvent<GridAtmosphereComponent, GetTileMixtureMethodEvent>(GridGetTileMixture);
+        SubscribeLocalEvent<GridAtmosphereComponent, GetTileMixturesMethodEvent>(GridGetTileMixtures);
         SubscribeLocalEvent<GridAtmosphereComponent, ReactTileMethodEvent>(GridReactTile);
         SubscribeLocalEvent<GridAtmosphereComponent, IsTileAirBlockedMethodEvent>(GridIsTileAirBlocked);
         SubscribeLocalEvent<GridAtmosphereComponent, IsTileSpaceMethodEvent>(GridIsTileSpace);
@@ -176,6 +177,28 @@ public sealed partial class AtmosphereSystem
 
         args.Mixture = tile.Air;
         args.Handled = true;
+    }
+
+    private void GridGetTileMixtures(EntityUid uid, GridAtmosphereComponent component,
+        ref GetTileMixturesMethodEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        args.Handled = true;
+        args.Mixtures = new GasMixture?[args.Tiles.Count];
+
+        for (var i = 0; i < args.Tiles.Count; i++)
+        {
+            var tile = args.Tiles[i];
+            if (!component.Tiles.TryGetValue(tile, out var atmosTile))
+                continue;
+
+            if (args.Excite)
+                component.InvalidatedCoords.Add(tile);
+
+            args.Mixtures[i] = atmosTile.Air;
+        }
     }
 
     private void GridReactTile(EntityUid uid, GridAtmosphereComponent component, ref ReactTileMethodEvent args)
