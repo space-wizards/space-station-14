@@ -33,9 +33,9 @@ namespace Content.Client.Disease.UI
             _machineMenu?.PopulateBiomass(Machine);
         }
 
-        public void CreateVaccineMessage(string disease)
+        public void CreateVaccineMessage(string disease, int amount)
         {
-            SendMessage(new CreateVaccineMessage(disease));
+            SendMessage(new CreateVaccineMessage(disease, amount));
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
@@ -47,6 +47,7 @@ namespace Content.Client.Disease.UI
                 case VaccineMachineUpdateState msg:
                     _machineMenu?.PopulateDiseases(msg.Diseases);
                     _machineMenu?.PopulateBiomass(Machine);
+                    _machineMenu?.UpdateCost();
                     break;
             }
         }

@@ -20,6 +20,7 @@ namespace Content.Client.Disease.UI
         private List<(string id, string name)> _knownDiseasePrototypes = new();
         public (string id, string name) DiseaseSelected;
         public bool Enough = false;
+        public int Cost => CreateAmount.Value * 4;
 
         public VaccineMachineMenu(VaccineMachineBoundUserInterface owner)
         {
@@ -32,6 +33,7 @@ namespace Content.Client.Disease.UI
             ServerSelectionButton.OnPressed += a => OnServerSelectionButtonPressed?.Invoke(a);
             DiseaseSelected = ("", "");
             KnownDiseases.OnItemSelected += KnownDiseaseSelected;
+            CreateAmount.ValueChanged += HandleAmountChanged;
             CreateButton.OnPressed += _ =>
             {
                 CreateVaccine();
@@ -57,7 +59,10 @@ namespace Content.Client.Disease.UI
             if (DiseaseSelected == ("", ""))
                 return;
 
-            Owner.CreateVaccineMessage(DiseaseSelected.id);
+            if (CreateAmount.Value <= 0)
+                return;
+
+            Owner.CreateVaccineMessage(DiseaseSelected.id, CreateAmount.Value);
         }
 
         public void PopulateDiseases(List<(string id, string name)> diseases)
@@ -71,6 +76,16 @@ namespace Content.Client.Disease.UI
                 KnownDiseases.AddItem(disease.name);
                 _knownDiseasePrototypes.Add((disease.id, disease.name));
             }
+        }
+
+        public void UpdateCost()
+        {
+            BiomassCost.Text = Loc.GetString("vaccine-machine-menu-biomass-cost", ("value", Cost));
+        }
+
+        private void HandleAmountChanged(object? sender, ValueChangedEventArgs args)
+        {
+            UpdateCost();
         }
 
         public void PopulateSelectedDisease()
@@ -88,7 +103,7 @@ namespace Content.Client.Disease.UI
         public void PopulateBiomass(EntityUid machine)
         {
             var amt = _storage.GetMaterialAmount(machine, "Biomass");
-            Enough = (amt > 4);
+            Enough = (amt > Cost);
             BiomassCurrent.Text = Loc.GetString("vaccine-machine-menu-biomass-current", ("value", amt));
 
             if (DiseaseSelected != ("", ""))

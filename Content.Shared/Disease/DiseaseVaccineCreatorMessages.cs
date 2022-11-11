@@ -15,10 +15,12 @@ namespace Content.Shared.Disease.Components
     public sealed class CreateVaccineMessage : BoundUserInterfaceMessage
     {
         public string Disease;
+        public int Amount;
 
-        public CreateVaccineMessage(string disease)
+        public CreateVaccineMessage(string disease, int amount)
         {
             Disease = disease;
+            Amount = amount;
         }
     }
 
