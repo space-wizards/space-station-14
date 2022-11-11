@@ -107,9 +107,12 @@ public partial class AtmosphereSystem
         else
             RaiseLocalEvent(ref ev);
 
+        if (ev.Handled)
+            return ev.Mixtures;
+
         // Default to a space mixture... This is a space game, after all!
         ev.Mixtures ??= new GasMixture?[tiles.Count];
-        for (int i = 0; i < tiles.Count; i++)
+        for (var i = 0; i < tiles.Count; i++)
         {
             ev.Mixtures[i] ??= GasMixture.SpaceGas;
         }
