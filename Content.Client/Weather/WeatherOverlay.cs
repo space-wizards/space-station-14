@@ -181,9 +181,9 @@ public sealed class WeatherOverlay : Overlay
         var viewBox = args.WorldBounds.Box;
 
         // Slight overdraw because I'm done but uhh don't worry about it.
-        for (var x = -viewBox.Width / 2f - 1f; x <= viewBox.Width / 2f; x += size.X * scale)
+        for (var x = -viewBox.Width / 2f - 1f; x <= viewBox.Width / 2f + 1f; x += size.X * scale)
         {
-            for (var y = -viewBox.Height - 1f; y <= viewBox.Height; y += size.Y * scale)
+            for (var y = -viewBox.Height - 1f; y <= viewBox.Height / 2f + 1f; y += size.Y * scale)
             {
                 var boxPosition = new Vector2(x - offset.X, y - offset.Y);
 

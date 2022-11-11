@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Weather;
@@ -75,5 +76,23 @@ public sealed class WeatherCommand : IConsoleCommand
         }
 
         // TODO: Autocomplete
+    }
+
+    public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    {
+        var options = new List<CompletionOption>();
+
+        if (args.Length == 1)
+        {
+            var mapManager = IoCManager.Resolve<IMapManager>();
+            options.AddRange(mapManager.GetAllMapIds().Select(mapId => new CompletionOption(mapId.ToString())));
+            return CompletionResult.FromHintOptions(options, "Map Id");
+        }
+        else
+        {
+            var protoManager = IoCManager.Resolve<IPrototypeManager>();
+            options.AddRange(protoManager.EnumeratePrototypes<WeatherPrototype>().Select(o => new CompletionOption(o.ID)));
+            return CompletionResult.FromHintOptions(options, "Weather prototype");
+        }
     }
 }
