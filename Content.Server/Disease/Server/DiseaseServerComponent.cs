@@ -1,6 +1,7 @@
 using Content.Shared.Disease;
 
-namespace Content.Shared.Disease.Components
+
+namespace Content.Server.Disease.Components
 {
     [RegisterComponent]
     public sealed class DiseaseServerComponent : Component

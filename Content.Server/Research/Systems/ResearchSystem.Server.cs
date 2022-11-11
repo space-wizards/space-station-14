@@ -1,8 +1,8 @@
 using Content.Server.Power.EntitySystems;
 using Content.Server.Research.Components;
 using Content.Server.Station.Systems;
+using Content.Server.Disease.Components;
 using Content.Shared.Research.Prototypes;
-using Content.Shared.Disease.Components;
 
 namespace Content.Server.Research;
 

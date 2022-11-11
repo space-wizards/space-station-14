@@ -1,14 +1,12 @@
 using Content.Server.Body.Systems;
 using Content.Server.Chat.Systems;
 using Content.Server.Disease.Components;
-using Content.Server.DoAfter;
 using Content.Server.MobState;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Popups;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Disease;
 using Content.Shared.Disease.Components;
-using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
@@ -21,7 +19,6 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Utility;
-using System.Threading;
 
 namespace Content.Server.Disease
 {
@@ -34,7 +31,6 @@ namespace Content.Server.Disease
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly ISerializationManager _serializationManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
@@ -50,13 +46,8 @@ namespace Content.Server.Disease
             SubscribeLocalEvent<DiseasedComponent, EntitySpokeEvent>(OnEntitySpeak);
             SubscribeLocalEvent<DiseaseProtectionComponent, GotEquippedEvent>(OnEquipped);
             SubscribeLocalEvent<DiseaseProtectionComponent, GotUnequippedEvent>(OnUnequipped);
-            SubscribeLocalEvent<DiseaseVaccineComponent, AfterInteractEvent>(OnAfterInteract);
-            SubscribeLocalEvent<DiseaseVaccineComponent, ExaminedEvent>(OnExamined);
             // Handling stuff from other systems
             SubscribeLocalEvent<DiseaseCarrierComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
-            // Private events stuff
-            SubscribeLocalEvent<TargetVaxxSuccessfulEvent>(OnTargetVaxxSuccessful);
-            SubscribeLocalEvent<VaxxCancelledEvent>(OnVaxxCancelled);
         }
 
         private Queue<EntityUid> AddQueue = new();
@@ -268,66 +259,6 @@ namespace Content.Server.Disease
             }
         }
 
-        /// <summary>
-        /// Called when a vaccine is used on someone
-        /// to handle the vaccination doafter
-        /// </summary>
-        private void OnAfterInteract(EntityUid uid, DiseaseVaccineComponent vaxx, AfterInteractEvent args)
-        {
-            if (vaxx.CancelToken != null)
-            {
-                vaxx.CancelToken.Cancel();
-                vaxx.CancelToken = null;
-                return;
-            }
-            if (args.Target == null)
-                return;
-
-            if (!args.CanReach)
-                return;
-
-            if (vaxx.CancelToken != null)
-                return;
-
-            if (!TryComp<DiseaseCarrierComponent>(args.Target, out var carrier))
-                return;
-
-            if (vaxx.Used)
-            {
-                _popupSystem.PopupEntity(Loc.GetString("vaxx-already-used"), args.User, Filter.Entities(args.User));
-                return;
-            }
-
-            vaxx.CancelToken = new CancellationTokenSource();
-            _doAfterSystem.DoAfter(new DoAfterEventArgs(args.User, vaxx.InjectDelay, vaxx.CancelToken.Token, target: args.Target)
-            {
-                BroadcastFinishedEvent = new TargetVaxxSuccessfulEvent(args.User, args.Target, vaxx, carrier),
-                BroadcastCancelledEvent = new VaxxCancelledEvent(vaxx),
-                BreakOnTargetMove = true,
-                BreakOnUserMove = true,
-                BreakOnStun = true,
-                NeedHand = true
-            });
-        }
-
-        /// <summary>
-        /// Called when a vaccine is examined.
-        /// Currently doesn't do much because
-        /// vaccines don't have unique art with a seperate
-        /// state visualizer.
-        /// </summary>
-        private void OnExamined(EntityUid uid, DiseaseVaccineComponent vaxx, ExaminedEvent args)
-        {
-            if (args.IsInDetailsRange)
-            {
-                if (vaxx.Used)
-                    args.PushMarkup(Loc.GetString("vaxx-used"));
-                else
-                    args.PushMarkup(Loc.GetString("vaxx-unused"));
-            }
-        }
-
-
     private void OnApplyMetabolicMultiplier(EntityUid uid, DiseaseCarrierComponent component, ApplyMetabolicMultiplierEvent args)
     {
         if (args.Apply)
@@ -457,68 +388,6 @@ namespace Content.Server.Disease
                     !_interactionSystem.InRangeUnobstructed(uid, entity)) continue;
 
                 TryInfect(carrier, disease, 0.3f);
-            }
-        }
-
-        /// <summary>
-        /// Adds a disease to the carrier's
-        /// past diseases to give them immunity
-        /// IF they don't already have the disease.
-        /// </summary>
-        public void Vaccinate(DiseaseCarrierComponent carrier, DiseasePrototype disease)
-        {
-            foreach (var currentDisease in carrier.Diseases)
-            {
-                if (currentDisease.ID == disease.ID) //ID because of the way protoypes work
-                    return;
-            }
-            carrier.PastDiseases.Add(disease);
-        }
-
-        ///
-        /// Private Events Stuff
-        ///
-
-        /// <summary>
-        /// Injects the vaccine into the target
-        /// if the doafter is completed
-        /// </summary>
-        private void OnTargetVaxxSuccessful(TargetVaxxSuccessfulEvent args)
-        {
-            if (args.Vaxx.Disease == null)
-                return;
-            Vaccinate(args.Carrier, args.Vaxx.Disease);
-            EntityManager.DeleteEntity(args.Vaxx.Owner);
-        }
-
-        /// <summary>
-        /// Cancels the vaccine doafter
-        /// </summary>
-        private static void OnVaxxCancelled(VaxxCancelledEvent args)
-        {
-            args.Vaxx.CancelToken = null;
-        }
-        /// These two are standard doafter stuff you can ignore
-        private sealed class VaxxCancelledEvent : EntityEventArgs
-        {
-            public readonly DiseaseVaccineComponent Vaxx;
-            public VaxxCancelledEvent(DiseaseVaccineComponent vaxx)
-            {
-                Vaxx = vaxx;
-            }
-        }
-        private sealed class TargetVaxxSuccessfulEvent : EntityEventArgs
-        {
-            public EntityUid User { get; }
-            public EntityUid? Target { get; }
-            public DiseaseVaccineComponent Vaxx { get; }
-            public DiseaseCarrierComponent Carrier { get; }
-            public TargetVaxxSuccessfulEvent(EntityUid user, EntityUid? target, DiseaseVaccineComponent vaxx, DiseaseCarrierComponent carrier)
-            {
-                User = user;
-                Target = target;
-                Vaxx = vaxx;
-                Carrier = carrier;
             }
         }
     }
