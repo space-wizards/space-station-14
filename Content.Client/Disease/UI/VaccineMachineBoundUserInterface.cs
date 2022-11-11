@@ -33,7 +33,7 @@ namespace Content.Client.Disease.UI
             _machineMenu?.PopulateBiomass(Machine);
         }
 
-        public void CreateVaccineMessage(DiseasePrototype disease)
+        public void CreateVaccineMessage(string disease)
         {
             SendMessage(new CreateVaccineMessage(disease));
         }

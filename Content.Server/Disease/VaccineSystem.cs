@@ -1,13 +1,14 @@
+using Content.Shared.Disease;
 using Content.Shared.Disease.Components;
 using Content.Shared.Materials;
 using Content.Shared.Research.Components;
-using Content.Shared.Disease;
 using Content.Server.Disease.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Research;
 using Content.Server.UserInterface;
 using Robust.Shared.Player;
 using Robust.Shared.Audio;
+using Robust.Shared.Prototypes;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 
@@ -19,6 +20,7 @@ namespace Content.Server.Disease
         [Dependency] private readonly SharedMaterialStorageSystem _storageSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSys = default!;
         [Dependency] private readonly ResearchSystem _research = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -41,8 +43,14 @@ namespace Content.Server.Disease
             if (_storageSystem.GetMaterialAmount(uid, "Biomass") < component.BiomassCost)
                 return;
 
+            if (!_prototypeManager.TryIndex<DiseasePrototype>(args.Disease, out var disease))
+                return;
+
+            if (!disease.Infectious)
+                return;
+
             var machine = Comp<DiseaseMachineComponent>(uid);
-            machine.Disease = args.Disease;
+            machine.Disease = disease;
 
             _diseaseDiagnosisSystem.AddQueue.Enqueue(uid);
             _diseaseDiagnosisSystem.UpdateAppearance(uid, true, true);
@@ -113,9 +121,19 @@ namespace Content.Server.Disease
             var ui = _uiSys.GetUi(uid, VaccineMachineUiKey.Key);
             var biomass = _storageSystem.GetMaterialAmount(uid, "Biomass");
 
-            Logger.Error("Passing " + component.DiseaseServer?.Diseases.Count + " diseases.");
+            var diseases = new List<(string id, string name)>();
 
-            var state = new VaccineMachineUpdateState(biomass, component.DiseaseServer?.Diseases ?? new List<DiseasePrototype>());
+            if (component.DiseaseServer != null)
+            {
+                foreach (var disease in component.DiseaseServer.Diseases)
+                {
+                    if (!disease.Infectious)
+                        continue;
+
+                    diseases.Add((disease.ID, disease.Name));
+                }
+            }
+            var state = new VaccineMachineUpdateState(biomass, diseases);
             _uiSys.SetUiState(ui, state);
         }
     }

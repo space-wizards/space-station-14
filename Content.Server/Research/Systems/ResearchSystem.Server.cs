@@ -2,6 +2,7 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.Research.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Research.Prototypes;
+using Content.Shared.Disease.Components;
 
 namespace Content.Server.Research;
 
@@ -47,6 +48,14 @@ public sealed partial class ResearchSystem
             if (component.PointSources.Contains(source)) return false;
             component.PointSources.Add(source);
             source.Server = component;
+        }
+
+        // as another note post bulldoze, registration and the server id stuff sucks but whatever does register them
+        // should probably be an event
+        if (TryComp<DiseaseVaccineCreatorComponent>(clientComponent.Owner, out var creator)
+            && TryComp<DiseaseServerComponent>(component.Owner, out var diseaseServer))
+        {
+            creator.DiseaseServer = diseaseServer;
         }
 
         if (component.Clients.Contains(clientComponent)) return false;

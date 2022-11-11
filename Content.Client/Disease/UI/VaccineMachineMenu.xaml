@@ -28,8 +28,6 @@
                               SeparationOverride="10">
                     <Label Name="DiseaseName"
                            Text="{Loc 'vaccine-machine-menu-none-selected'}"/>
-                    <Label Name="DiseaseResistance"
-                           Text="{Loc 'vaccine-machine-menu-spaceacillin-resist-none'}"/>
                     <Label Text="{Loc 'vaccine-machine-menu-biomass-cost'}"  />
                     <Label Name="BiomassCurrent" />
                     <Button Name="ServerSelectionButton"

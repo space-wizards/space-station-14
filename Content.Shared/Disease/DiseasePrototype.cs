@@ -9,7 +9,6 @@ namespace Content.Shared.Disease
     /// </summary>
     [Prototype("disease")]
     [DataDefinition]
-    [Serializable]
     public sealed class DiseasePrototype : IPrototype, IInheritingPrototype
     {
         private string _name = string.Empty;
@@ -75,7 +74,7 @@ namespace Content.Shared.Disease
         /// used as a reference and it has 0.15 chance, this is
         /// a base 33% reduction in cure chance
         /// </summary>
-        [DataField("cureResist")]
+        [DataField("cureResist", serverOnly: true)]
         public float CureResist = 0.05f;
         /// <summary>
         /// Whether the disease can infect other people.
@@ -84,7 +83,7 @@ namespace Content.Shared.Disease
         /// This also affects things like the vaccine machine.
         /// You can't print a cancer vaccine
         /// </summary>
-        [DataField("infectious")]
+        [DataField("infectious", serverOnly: true)]
         public bool Infectious = true;
     }
 }

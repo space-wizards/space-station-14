@@ -31,9 +31,9 @@ namespace Content.Shared.Disease.Components
     [Serializable, NetSerializable]
     public sealed class CreateVaccineMessage : BoundUserInterfaceMessage
     {
-        public DiseasePrototype Disease;
+        public string Disease;
 
-        public CreateVaccineMessage(DiseasePrototype disease)
+        public CreateVaccineMessage(string disease)
         {
             Disease = disease;
         }
@@ -44,9 +44,9 @@ namespace Content.Shared.Disease.Components
     {
         public int Biomass;
 
-        public List<DiseasePrototype> Diseases;
+        public List<(string id, string name)> Diseases;
 
-        public VaccineMachineUpdateState(int biomass, List<DiseasePrototype> diseases)
+        public VaccineMachineUpdateState(int biomass, List<(string id, string name)> diseases)
         {
             Biomass = biomass;
             Diseases = diseases;
