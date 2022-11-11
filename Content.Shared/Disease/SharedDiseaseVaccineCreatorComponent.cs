@@ -23,6 +23,17 @@ namespace Content.Shared.Disease.Components
     }
 
     [Serializable, NetSerializable]
+    public sealed class VaccineMachineUpdateState : BoundUserInterfaceState
+    {
+        public int Biomass;
+
+        public VaccineMachineUpdateState(int biomass)
+        {
+            Biomass = biomass;
+        }
+    }
+
+    [Serializable, NetSerializable]
     public sealed class VaccineMachineBoundInterfaceState : BoundUserInterfaceState
     {}
 }

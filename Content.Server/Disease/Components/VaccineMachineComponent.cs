@@ -11,5 +11,11 @@ namespace Content.Server.Disease.Components
     public sealed class DiseaseVaccineCreatorComponent : Component
     {
         public DiseaseServerComponent? DiseaseServer = null;
+
+        /// <summary>
+        /// Biomass cost per vaccine.
+        /// </summary>
+        [DataField("BiomassCost")]
+        public int BiomassCost = 4;
     }
 }

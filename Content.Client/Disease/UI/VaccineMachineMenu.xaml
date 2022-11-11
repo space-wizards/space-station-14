@@ -31,7 +31,7 @@
                     <Label Name="DiseaseResistance"
                            Text="{Loc 'vaccine-machine-menu-spaceacillin-resist-none'}"/>
                     <Label Text="{Loc 'vaccine-machine-menu-biomass-cost'}"  />
-                    <Label Text="{Loc 'vaccine-machine-menu-biomass-current'}" />
+                    <Label Name="BiomassCurrent" />
                     <Button Name="ServerSelectionButton"
                             Access="Public"
                             Text="{Loc 'research-console-menu-server-selection-button'}" />

@@ -8,20 +8,24 @@ namespace Content.Client.Disease.UI
     [UsedImplicitly]
     public sealed class VaccineMachineBoundUserInterface : BoundUserInterface
     {
-        private VaccineMachineMenu? _consoleMenu;
+        private VaccineMachineMenu? _machineMenu;
+
+        public EntityUid Machine;
         public VaccineMachineBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
+            Machine = owner.Owner;
         }
 
         protected override void Open()
         {
             base.Open();
 
-            _consoleMenu = new VaccineMachineMenu(this);
+            _machineMenu = new VaccineMachineMenu(this);
 
-            _consoleMenu.OnClose += Close;
+            _machineMenu.OnClose += Close;
 
-            _consoleMenu.OpenCentered();
+            _machineMenu.OpenCentered();
+            _machineMenu?.PopulateBiomass(Machine);
         }
 
         public void CreateVaccineMessage(DiseasePrototype disease)
@@ -33,14 +37,20 @@ namespace Content.Client.Disease.UI
         {
             base.UpdateState(state);
 
-            var castState = (VaccineMachineBoundInterfaceState)state;
+            switch (state)
+            {
+                case VaccineMachineUpdateState msg:
+                    _machineMenu?.PopulateDiseases();
+                    _machineMenu?.PopulateBiomass(Machine);
+                    break;
+            }
         }
 
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
             if (!disposing) return;
-            _consoleMenu?.Dispose();
+            _machineMenu?.Dispose();
         }
     }
 }
