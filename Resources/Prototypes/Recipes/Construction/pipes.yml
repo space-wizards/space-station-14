@@ -1,0 +1,98 @@
+# DISPOSALS
+- type: construction
+  name: disposal pipe
+  id: DisposalPipe
+  description: A huge pipe segment used for constructing disposal systems.
+  graph: DisposalPipe
+  startNode: start
+  targetNode: pipe
+  category: construction-category-pipes
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+  icon:
+    sprite: Structures/Piping/disposal.rsi
+    state: conpipe-s
+
+- type: construction
+  name: disposal tagger
+  description: A pipe that tags entities for routing.
+  id: DisposalTagger
+  graph: DisposalPipe
+  startNode: start
+  targetNode: tagger
+  category: construction-category-pipes
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/disposal.rsi
+    state: conpipe-tagger
+
+- type: construction
+  name: disposal trunk
+  description: A pipe trunk used as an entry point for disposal systems.
+  id: DisposalTrunk
+  graph: DisposalPipe
+  startNode: start
+  targetNode: trunk
+  category: construction-category-pipes
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/disposal.rsi
+    state: conpipe-t
+
+- type: construction
+  name: disposal router
+  description: A three-way router. Entities with matching tags get routed to the side.
+  id: DisposalRouter
+  graph: DisposalPipe
+  startNode: start
+  targetNode: router
+  category: construction-category-pipes
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/disposal.rsi
+    state: conpipe-j1s
+
+- type: construction
+  name: disposal junction
+  description: A three-way junction. The arrow indicates where items exit.
+  id: DisposalJunction
+  graph: DisposalPipe
+  startNode: start
+  targetNode: junction
+  category: construction-category-pipes
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/disposal.rsi
+    state: conpipe-j1
+
+- type: construction
+  name: disposal Y junction
+  description: A three-way junction with another exit point.
+  id: DisposalYJunction
+  graph: DisposalPipe
+  startNode: start
+  targetNode: yJunction
+  category: construction-category-pipes
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/disposal.rsi
+    state: conpipe-y
+
+- type: construction
+  name: disposal bend
+  description: A tube bent at a 90 degree angle.
+  id: DisposalBend
+  graph: DisposalPipe
+  startNode: start
+  targetNode: bend
+  category: construction-category-pipes
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/disposal.rsi
+    state: conpipe-c
