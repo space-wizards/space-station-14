@@ -1,4 +1,95 @@
 - type: weather
+  id: Ashfall
+  sprite:
+    sprite: /Textures/Effects/weather.rsi
+    state: ashfall
+  tiles:
+    - FloorCave
+    - FloorCaveDrought
+    - FloorGrassLight
+    - FloorGrassDark
+    - FloorGrassJungle
+    - FloorDirt
+    - FloorTileGrass
+  sound:
+    path: /Audio/Effects/Weather/snowstorm_weak.ogg
+    params:
+      loop: true
+
+- type: weather
+  id: AshfallLight
+  sprite:
+    sprite: /Textures/Effects/weather.rsi
+    state: ashfall_light
+  tiles:
+    - FloorCave
+    - FloorCaveDrought
+    - FloorGrassLight
+    - FloorGrassDark
+    - FloorGrassJungle
+    - FloorDirt
+    - FloorTileGrass
+  sound:
+    path: /Audio/Effects/Weather/snowstorm_weak.ogg
+    params:
+      loop: true
+
+- type: weather
+  id: AshfallHeavy
+  sprite:
+    sprite: /Textures/Effects/weather.rsi
+    state: ashfall_heavy
+  tiles:
+    - FloorCave
+    - FloorCaveDrought
+    - FloorGrassLight
+    - FloorGrassDark
+    - FloorGrassJungle
+    - FloorDirt
+    - FloorTileGrass
+  sound:
+    path: /Audio/Effects/Weather/snowstorm.ogg
+    params:
+      loop: true
+
+- type: weather
+  id: Fallout
+  sprite:
+    sprite: /Textures/Effects/weather.rsi
+    state: fallout
+  tiles:
+    - FloorCave
+    - FloorCaveDrought
+    - FloorGrassLight
+    - FloorGrassDark
+    - FloorGrassJungle
+    - FloorDirt
+    - FloorTileGrass
+  sound:
+    path: /Audio/Effects/Weather/snowstorm_weak.ogg
+    params:
+      loop: true
+
+- type: weather
+  id: Hail
+  sprite:
+    sprite: /Textures/Effects/weather.rsi
+    state: hail
+  tiles:
+    - FloorCave
+    - FloorCaveDrought
+    - FloorGrassLight
+    - FloorGrassDark
+    - FloorGrassJungle
+    - FloorDirt
+    - FloorTileGrass
+  sound:
+    path:
+      /Audio/Effects/Weather/rain.ogg
+    params:
+      loop: true
+
+- type: weather
   id: Rain
   sprite:
     sprite: /Textures/Effects/weather.rsi
@@ -12,6 +103,120 @@
     - FloorDirt
     - FloorTileGrass
   sound:
-    path: /Audio/Effects/Weather/rain.ogg
+    collection: Rain
+    params:
+      loop: true
+
+- type: soundCollection
+  id: Rain
+  files:
+    - /Audio/Effects/Weather/rain.ogg
+    - /Audio/Effects/Weather/rain2.ogg
+
+- type: weather
+  id: Sandstorm
+  sprite:
+    sprite: /Textures/Effects/weather.rsi
+    state: sandstorm
+  tiles:
+    - FloorCave
+    - FloorCaveDrought
+    - FloorGrassLight
+    - FloorGrassDark
+    - FloorGrassJungle
+    - FloorDirt
+    - FloorTileGrass
+  sound:
+    path: /Audio/Effects/Weather/snowstorm_weak.ogg
+    params:
+      loop: true
+
+- type: weather
+  id: SandstormHeavy
+  sprite:
+    sprite: /Textures/Effects/weather.rsi
+    state: sandstorm_heavy
+  tiles:
+    - FloorCave
+    - FloorCaveDrought
+    - FloorGrassLight
+    - FloorGrassDark
+    - FloorGrassJungle
+    - FloorDirt
+    - FloorTileGrass
+  sound:
+    path: /Audio/Effects/Weather/snowstorm.ogg
+    params:
+      loop: true
+
+- type: weather
+  id: SnowfallLight
+  sprite:
+    sprite: /Textures/Effects/weather.rsi
+    state: snowfall_light
+  tiles:
+    - FloorCave
+    - FloorCaveDrought
+    - FloorGrassLight
+    - FloorGrassDark
+    - FloorGrassJungle
+    - FloorDirt
+    - FloorTileGrass
+  sound:
+    path: /Audio/Effects/Weather/snowstorm_weak.ogg
+    params:
+      loop: true
+
+- type: weather
+  id: SnowfallMedium
+  sprite:
+    sprite: /Textures/Effects/weather.rsi
+    state: snowfall_med
+  tiles:
+    - FloorCave
+    - FloorCaveDrought
+    - FloorGrassLight
+    - FloorGrassDark
+    - FloorGrassJungle
+    - FloorDirt
+    - FloorTileGrass
+  sound:
+    path: /Audio/Effects/Weather/snowstorm_weak.ogg
+    params:
+      loop: true
+
+- type: weather
+  id: SnowfallHeavy
+  sprite:
+    sprite: /Textures/Effects/weather.rsi
+    state: snowfall_heavy
+  tiles:
+    - FloorCave
+    - FloorCaveDrought
+    - FloorGrassLight
+    - FloorGrassDark
+    - FloorGrassJungle
+    - FloorDirt
+    - FloorTileGrass
+  sound:
+    path: /Audio/Effects/Weather/snowstorm.ogg
+    params:
+      loop: true
+
+- type: weather
+  id: Storm
+  sprite:
+    sprite: /Textures/Effects/weather.rsi
+    state: storm
+  tiles:
+    - FloorCave
+    - FloorCaveDrought
+    - FloorGrassLight
+    - FloorGrassDark
+    - FloorGrassJungle
+    - FloorDirt
+    - FloorTileGrass
+  sound:
+    path: /Audio/Effects/Weather/rain_heavy.ogg
     params:
       loop: true

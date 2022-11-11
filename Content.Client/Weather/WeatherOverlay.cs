@@ -170,22 +170,21 @@ public sealed class WeatherOverlay : Overlay
         // and not make it spaghetti, while getting the advantages of not-duped code?
 
         // Get position offset but rotated around
-        var offset = new Vector2(position.X % 1, position.Y % 1);
+        var offset = new Vector2(-position.X % 1, -position.Y % 1);
         offset = rotation.RotateVec(offset);
 
         var scale = 1.0f;
         var size = sprite.Size / (float) EyeManager.PixelsPerMeter * scale;
-
-        var mat = Matrix3.CreateTransform(position, -rotation);
-        worldHandle.SetTransform(mat);
-        var viewBox = args.WorldBounds.Box;
+        worldHandle.SetTransform(Matrix3.CreateTransform(position, -rotation));
+        var localAABB = args.WorldAABB.Translated(-position);
+        var BL = (Vector2) (localAABB.BottomLeft).Floored() + offset;
 
         // Slight overdraw because I'm done but uhh don't worry about it.
-        for (var x = -viewBox.Width / 2f - 1f; x <= viewBox.Width / 2f + 1f; x += size.X * scale)
+        for (var x = BL.X; x <= localAABB.Right; x += size.X * scale)
         {
-            for (var y = -viewBox.Height - 1f; y <= viewBox.Height / 2f + 1f; y += size.Y * scale)
+            for (var y = BL.Y; y <= localAABB.Top; y += size.Y * scale)
             {
-                var boxPosition = new Vector2(x - offset.X, y - offset.Y);
+                var boxPosition = new Vector2(x, y);
 
                 // Yes I spent a while making sure no texture holes when the eye is rotating.
                 var box = Box2.FromDimensions(boxPosition, size * scale);
