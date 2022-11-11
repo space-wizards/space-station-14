@@ -6,8 +6,8 @@ vaccine-name = {$disease} vaccine
 vaccine-desc = Injecting this will make you unable to catch {$disease} if you do not already have it.
 
 vaccine-machine-menu-title = Vaccinator
-vaccine-machine-menu-known-diseases-label = Known Diseases
-vaccine-machine-menu-create-vaccine-button = Create Vaccine
+vaccine-machine-menu-known-diseases-label = Known diseases
+vaccine-machine-menu-create-vaccine-button = Create vaccine
 vaccine-machine-menu-biomass-cost = Biomass Cost: {$value}
 vaccine-machine-menu-biomass-current = Current: {$value}
-vaccine-machine-menu-none-selected = Select a Disease!
+vaccine-machine-menu-none-selected = Select a disease!
