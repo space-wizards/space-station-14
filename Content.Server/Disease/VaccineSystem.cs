@@ -1,10 +1,14 @@
 using Content.Shared.Disease.Components;
 using Content.Shared.Materials;
+using Content.Shared.Research.Components;
+using Content.Shared.Disease;
 using Content.Server.Disease.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Server.Research;
 using Robust.Shared.Player;
 using Robust.Shared.Audio;
 using Robust.Server.GameObjects;
+using Robust.Server.Player;
 
 namespace Content.Server.Disease
 {
@@ -13,12 +17,15 @@ namespace Content.Server.Disease
         [Dependency] private readonly DiseaseDiagnosisSystem _diseaseDiagnosisSystem = default!;
         [Dependency] private readonly SharedMaterialStorageSystem _storageSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSys = default!;
+        [Dependency] private readonly ResearchSystem _research = default!;
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<DiseaseVaccineCreatorComponent, CreateVaccineMessage>(OnCreateVaccineMessageReceived);
             SubscribeLocalEvent<DiseaseVaccineCreatorComponent, DiseaseMachineFinishedEvent>(OnVaccinatorFinished);
             SubscribeLocalEvent<DiseaseVaccineCreatorComponent, MaterialAmountChangedEvent>(OnVaccinatorAmountChanged);
+            SubscribeLocalEvent<DiseaseVaccineCreatorComponent, ResearchClientServerSelectedMessage>(OnServerSelected);
+            SubscribeLocalEvent<DiseaseVaccineCreatorComponent, VaccinatorServerSelectionMessage>(OpenServerList);
         }
 
         /// <summary>
@@ -72,6 +79,25 @@ namespace Content.Server.Disease
             UpdateUserInterfaceState(uid, component);
         }
 
+        private void OnServerSelected(EntityUid uid, DiseaseVaccineCreatorComponent component, ResearchClientServerSelectedMessage args)
+        {
+            var server = _research.GetServerById(args.ServerId);
+
+            if (server == null)
+                return;
+
+            if (!TryComp<DiseaseServerComponent>(server.Owner, out var diseaseServer))
+                return;
+
+            Logger.Error("Adding disease server...");
+            component.DiseaseServer = diseaseServer;
+        }
+
+        private void OpenServerList(EntityUid uid, DiseaseVaccineCreatorComponent component, VaccinatorServerSelectionMessage args)
+        {
+            _uiSys.TryOpen(uid, ResearchClientUiKey.Key, (IPlayerSession) args.Session);
+        }
+
         public void UpdateUserInterfaceState(EntityUid uid, DiseaseVaccineCreatorComponent? component = null)
         {
             if (!Resolve(uid, ref component))
@@ -80,7 +106,9 @@ namespace Content.Server.Disease
             var ui = _uiSys.GetUi(uid, VaccineMachineUiKey.Key);
             var biomass = _storageSystem.GetMaterialAmount(uid, "Biomass");
 
-            var state = new VaccineMachineUpdateState(biomass);
+            Logger.Error("Passing " + component.DiseaseServer?.Diseases.Count + " diseases.");
+
+            var state = new VaccineMachineUpdateState(biomass, component.DiseaseServer?.Diseases ?? new List<DiseasePrototype>());
             _uiSys.SetUiState(ui, state);
         }
     }

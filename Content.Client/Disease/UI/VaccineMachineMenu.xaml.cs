@@ -18,7 +18,7 @@ namespace Content.Client.Disease.UI
 
         public VaccineMachineBoundUserInterface Owner { get; }
 
-        public EntityUid Machine;
+        public event Action<BaseButton.ButtonEventArgs>? OnServerSelectionButtonPressed;
 
         private readonly List<DiseasePrototype> _knownDiseasePrototypes = new();
 
@@ -32,6 +32,8 @@ namespace Content.Client.Disease.UI
             _storage = _entityManager.EntitySysManager.GetEntitySystem<SharedMaterialStorageSystem>();
 
             Owner = owner;
+
+            ServerSelectionButton.OnPressed += a => OnServerSelectionButtonPressed?.Invoke(a);
 
             KnownDiseases.OnItemSelected += KnownDiseaseSelected;
             CreateButton.OnPressed += _ =>

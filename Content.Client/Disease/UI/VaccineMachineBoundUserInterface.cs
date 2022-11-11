@@ -24,6 +24,11 @@ namespace Content.Client.Disease.UI
 
             _machineMenu.OnClose += Close;
 
+            _machineMenu.OnServerSelectionButtonPressed += _ =>
+            {
+                SendMessage(new VaccinatorServerSelectionMessage());
+            };
+
             _machineMenu.OpenCentered();
             _machineMenu?.PopulateBiomass(Machine);
         }
