@@ -10,3 +10,4 @@ construction-category-tiles = Tiles
 construction-category-utilities = Utilities
 construction-category-misc = Misc
 construction-category-pipes = Pipes
+construction-category-doors = Doors
