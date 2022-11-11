@@ -2948,3 +2948,9 @@ Entries:
     type: Add
   id: 351
   time: '2022-11-11T15:34:51.0000000+00:00'
+- author: no_mad
+  changes:
+  - message: "\u041E\u0431\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u0435 Delta station"
+    type: Tweak
+  id: 352
+  time: '2022-11-11T18:11:16.0000000+00:00'
