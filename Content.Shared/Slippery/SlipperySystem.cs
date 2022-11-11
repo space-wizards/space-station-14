@@ -1,5 +1,4 @@
 using Content.Shared.Administration.Logs;
-using Content.Shared.Bed.Sleep;
 using Content.Shared.Database;
 using Content.Shared.Inventory;
 using Content.Shared.StatusEffect;
