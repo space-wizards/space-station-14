@@ -1,0 +1,39 @@
+#conveyor
+- type: construction
+  name: conveyor belt
+  id: ConveyorBelt
+  graph: ConveyorGraph
+  startNode: start
+  targetNode: entity
+  category: construction-category-floors
+  description: A conveyor belt, commonly used to transport large numbers of items elsewhere quite quickly.
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/conveyor.rsi
+    state: conveyor_stopped_cw
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: catwalk
+  id: Catwalk
+  graph: Catwalk
+  startNode: start
+  targetNode: Catwalk
+  category: construction-category-floors
+  description: Just like a lattice. Except it looks better.
+  conditions:
+    - !type:TileNotBlocked
+    - !type:TileType
+      targets:
+        - Lattice
+        - Plating
+        - UnderPlating
+  icon:
+    sprite: Structures/catwalk.rsi
+    state: catwalk_preview
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
