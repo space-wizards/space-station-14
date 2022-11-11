@@ -2933,3 +2933,10 @@ Entries:
     type: Fix
   id: 349
   time: '2022-11-10T23:43:59.0000000+00:00'
+- author: lapatison
+  changes:
+  - message: "\u0418\u0441\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u044B \u043F\u0435\
+      \u0440\u0435\u0432\u043E\u0434\u044B"
+    type: Tweak
+  id: 350
+  time: '2022-11-11T14:49:45.0000000+00:00'
