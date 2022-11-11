@@ -16,10 +16,6 @@
         Blunt: 5
     soundHit:
       path: /Audio/Effects/hit_kick.ogg
-  - type: DamageOtherOnHit
-    damage:
-      types:
-        Blunt: 0 # no owies, just for the sound
   - type: CollisionWake
   - type: TileFrictionModifier
     modifier: 0.5

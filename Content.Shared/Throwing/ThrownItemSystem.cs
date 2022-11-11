@@ -1,4 +1,5 @@
 using Content.Shared.Administration.Logs;
+using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.Physics;
@@ -22,6 +23,7 @@ namespace Content.Shared.Throwing
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
         [Dependency] private readonly FixtureSystem _fixtures = default!;
+        [Dependency] private readonly EntityManager _entityManager = default!;
 
         private const string ThrowingFixture = "throw-fixture";
 
@@ -72,7 +74,7 @@ namespace Content.Shared.Throwing
 
         private void HandleCollision(EntityUid uid, ThrownItemComponent component, ref StartCollideEvent args)
         {
-            if (args.OtherFixture.Hard == false)
+            if (args.OtherFixture.Hard == false || component.StopColliding)
                 return;
 
             var thrower = component.Thrower;
@@ -102,6 +104,9 @@ namespace Content.Shared.Throwing
                 StopThrow(message.Pulled.Owner, thrownItemComponent);
         }
 
+        /// <summary>
+        ///     Finish up a throw and raise StopThrowEvent.
+        /// </summary>
         private void StopThrow(EntityUid uid, ThrownItemComponent thrownItemComponent)
         {
             if (EntityManager.TryGetComponent(uid, out PhysicsComponent? physicsComponent))
@@ -118,11 +123,14 @@ namespace Content.Shared.Throwing
             EntityManager.RemoveComponent<ThrownItemComponent>(uid);
         }
 
-        public void LandComponent(ThrownItemComponent thrownItem)
+        public void LandComponent(ThrownItemComponent thrownItem, bool stopMoving = false)
         {
             if (thrownItem.Deleted || Deleted(thrownItem.Owner) || _containerSystem.IsEntityInContainer(thrownItem.Owner)) return;
 
             var landing = thrownItem.Owner;
+
+            if (stopMoving && _entityManager.TryGetComponent(landing, out IPhysBody? physics))
+                physics.LinearVelocity = (0, 0);
 
             // Unfortunately we can't check for hands containers as they have specific names.
             if (thrownItem.Owner.TryGetContainerMan(out var containerManager) &&
@@ -151,12 +159,6 @@ namespace Content.Shared.Throwing
             // TODO: Just pass in the bodies directly
             RaiseLocalEvent(target.Owner, new ThrowHitByEvent(user, thrown.Owner, target.Owner), true);
             RaiseLocalEvent(thrown.Owner, new ThrowDoHitEvent(user, thrown.Owner, target.Owner), true);
-
-            // If still being "thrown", remove ThrownItemComponent. after, remove velocity to prevent more collisions
-            // TODO: if an item shouldn't care, add tag to check for
-            if (TryComp<ThrownItemComponent>(thrown.Owner, out var comp))
-                StopThrow(thrown.Owner, comp);
-            thrown.LinearVelocity = (0,0);
         }
     }
 }

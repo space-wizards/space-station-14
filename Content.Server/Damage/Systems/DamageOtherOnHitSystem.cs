@@ -1,5 +1,6 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Damage.Components;
+using Content.Server.Weapons.Melee.Components;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.MobState.Components;
@@ -13,6 +14,7 @@ namespace Content.Server.Damage.Systems
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger= default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly ThrownItemSystem _thrownItemSystem = default!;
 
         public override void Initialize()
         {
@@ -27,9 +29,15 @@ namespace Content.Server.Damage.Systems
             if (dmg != null && HasComp<MobStateComponent>(args.Target))
                 _adminLogger.Add(LogType.ThrowHit, $"{ToPrettyString(args.Target):target} received {dmg.Total:damage} damage from collision");
 
-            // Play hit sound on target if it's damageable
-            if (HasComp<DamageableComponent>(args.Target))
+            // Only play hitsound of thrown item and signal to stop when hitting mobs
+            if (HasComp<MobStateComponent>(args.Target))
+            {
                 _audio.Play(component.HitSound, Filter.Pvs(args.Target), args.Target);
+
+                if (TryComp<ThrownItemComponent>(component.Owner, out var thrown))
+                    _thrownItemSystem.LandComponent(thrown, component.StopOnHit);
+            }
+
         }
     }
 }

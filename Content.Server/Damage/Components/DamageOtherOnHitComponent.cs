@@ -12,6 +12,10 @@ namespace Content.Server.Damage.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public bool IgnoreResistances = false;
 
+        [DataField("stopOnHit")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool StopOnHit = true;
+
         [DataField("damage", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
         public DamageSpecifier Damage = default!;
