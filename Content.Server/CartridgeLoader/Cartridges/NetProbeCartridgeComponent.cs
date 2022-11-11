@@ -1,4 +1,5 @@
 ﻿using Content.Shared.CartridgeLoader.Cartridges;
+using Robust.Shared.Audio;
 
 namespace Content.Server.CartridgeLoader.Cartridges;
 
@@ -10,6 +11,9 @@ public sealed class NetProbeCartridgeComponent : Component
     /// </summary>
     [DataField("probedDevices")]
     public List<ProbedNetworkDevice> ProbedDevices = new();
+
+    [DataField("soundScan")]
+    public SoundSpecifier SoundScan = new SoundPathSpecifier("/Audio/Machines/scan_finish.ogg");
 }
 
 
