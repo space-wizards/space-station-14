@@ -1,4 +1,5 @@
 using Content.Server.DeviceNetwork.Components;
+using Robust.Shared.Utility;
 
 namespace Content.Server.DeviceNetwork
 {
@@ -53,16 +54,19 @@ namespace Content.Server.DeviceNetwork
         }
 
         /// <summary>
-        /// Either returns the string representation of the corresponding <see cref="DeviceNetworkComponent.DeviceNetIdDefaults"/>
+        /// Either returns the localized name representation of the corresponding <see cref="DeviceNetworkComponent.DeviceNetIdDefaults"/>
         /// or converts the id to string
         /// </summary>
-        public static string DeviceNetIdToString(this int id)
+        public static string DeviceNetIdToLocalizedName(this int id)
         {
-            var result = Enum.IsDefined(typeof(DeviceNetworkComponent.DeviceNetIdDefaults), id)
-                ? ((DeviceNetworkComponent.DeviceNetIdDefaults)id).ToString()
-                : id.ToString();
 
-            return result;
+            if (!Enum.IsDefined(typeof(DeviceNetworkComponent.DeviceNetIdDefaults), id))
+                return id.ToString();
+
+            var result = ((DeviceNetworkComponent.DeviceNetIdDefaults) id).ToString();
+            var resultKebab = "device-net-id-" + CaseConversion.PascalToKebab(result);
+
+            return !Loc.TryGetString(resultKebab, out var name) ? result : name;
         }
 
         #endregion

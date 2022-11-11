@@ -63,7 +63,7 @@ public sealed class NetProbeCartridgeSystem : EntitySystem
             Name(target),
             networkComponent.Address,
             networkComponent.ReceiveFrequency?.FrequencyToString() ?? string.Empty,
-            networkComponent.DeviceNetId.DeviceNetIdToString()
+            networkComponent.DeviceNetId.DeviceNetIdToLocalizedName()
         );
 
         component.ProbedDevices.Add(device);
