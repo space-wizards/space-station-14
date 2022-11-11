@@ -39,10 +39,12 @@ public sealed class HTNTaskListSerializer : ITypeSerializer<List<string>, Sequen
         return new ValidatedSequenceNode(list);
     }
 
-    public List<string> Read(ISerializationManager serializationManager, SequenceDataNode node, IDependencyCollection dependencies,
-        bool skipHook, ISerializationContext? context = null, List<string>? value = default)
+    public List<string> Read(ISerializationManager serializationManager, SequenceDataNode node,
+        IDependencyCollection dependencies,
+        bool skipHook, ISerializationContext? context = null,
+        ISerializationManager.InstantiationDelegate<List<string>>? instanceProvider = null)
     {
-        value ??= new List<string>();
+        var value = instanceProvider != null ? instanceProvider() : new List<string>();
         foreach (var data in node.Sequence)
         {
             var mapping = (MappingDataNode) data;

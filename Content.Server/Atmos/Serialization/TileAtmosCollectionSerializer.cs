@@ -14,8 +14,10 @@ public sealed class TileAtmosCollectionSerializer : ITypeSerializer<Dictionary<V
         return serializationManager.ValidateNode<TileAtmosData>(node, context);
     }
 
-    public Dictionary<Vector2i, TileAtmosphere> Read(ISerializationManager serializationManager, MappingDataNode node, IDependencyCollection dependencies,
-        bool skipHook, ISerializationContext? context = null, Dictionary<Vector2i, TileAtmosphere>? value = default)
+    public Dictionary<Vector2i, TileAtmosphere> Read(ISerializationManager serializationManager, MappingDataNode node,
+        IDependencyCollection dependencies,
+        bool skipHook, ISerializationContext? context = null,
+        ISerializationManager.InstantiationDelegate<Dictionary<Vector2i, TileAtmosphere>>? instanceProvider = null)
     {
         var data = serializationManager.Read<TileAtmosData>(node, context, skipHook);
         var tiles = new Dictionary<Vector2i, TileAtmosphere>();

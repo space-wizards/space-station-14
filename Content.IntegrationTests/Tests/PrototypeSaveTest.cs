@@ -328,7 +328,7 @@ public sealed class PrototypeSaveTest
             ValueDataNode node,
             IDependencyCollection dependencies,
             bool skipHook,
-            ISerializationContext? context, EntityUid _)
+            ISerializationContext? context, ISerializationManager.InstantiationDelegate<EntityUid>? instanceProvider = null)
         {
             return EntityUid.Invalid;
         }

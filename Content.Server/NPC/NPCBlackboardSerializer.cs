@@ -45,10 +45,12 @@ public sealed class NPCBlackboardSerializer : ITypeReader<NPCBlackboard, Mapping
         return new ValidatedSequenceNode(validated);
     }
 
-    public NPCBlackboard Read(ISerializationManager serializationManager, MappingDataNode node, IDependencyCollection dependencies,
-        bool skipHook, ISerializationContext? context = null, NPCBlackboard? value = default)
+    public NPCBlackboard Read(ISerializationManager serializationManager, MappingDataNode node,
+        IDependencyCollection dependencies,
+        bool skipHook, ISerializationContext? context = null,
+        ISerializationManager.InstantiationDelegate<NPCBlackboard>? instanceProvider = null)
     {
-        value ??= new NPCBlackboard();
+        var value = instanceProvider != null ? instanceProvider() : new NPCBlackboard();
 
         if (node.Count > 0)
         {

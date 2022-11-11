@@ -15,10 +15,12 @@ namespace Content.Shared.Decals
             return serializationManager.ValidateNode<Dictionary<Vector2i, Dictionary<uint, Decal>>>(node, context);
         }
 
-        public DecalGridComponent.DecalGridChunkCollection Read(ISerializationManager serializationManager, MappingDataNode node,
-            IDependencyCollection dependencies, bool skipHook, ISerializationContext? context = null, DecalGridComponent.DecalGridChunkCollection? _ = null)
+        public DecalGridComponent.DecalGridChunkCollection Read(ISerializationManager serializationManager,
+            MappingDataNode node,
+            IDependencyCollection dependencies, bool skipHook, ISerializationContext? context = null,
+            ISerializationManager.InstantiationDelegate<DecalGridComponent.DecalGridChunkCollection>? _ = default)
         {
-            var dictionary = serializationManager.Read<Dictionary<Vector2i, Dictionary<uint, Decal>>>(node, context, skipHook: skipHook);
+            var dictionary = serializationManager.Read<Dictionary<Vector2i, Dictionary<uint, Decal>>>(node, context, skipHook);
 
             var uids = new SortedSet<uint>();
             var uidChunkMap = new Dictionary<uint, Vector2i>();
