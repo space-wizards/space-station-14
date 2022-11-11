@@ -37,7 +37,7 @@ namespace Content.Client.Gameplay
         {
             // VVs the currently hovered entity. For a nifty vv keybinding you can use:
             //
-            // /bind v command "vv /c/hover"
+            // /bind v command "vv /c/enthover"
             // /svbind
             //
             // Though you probably want to include a modifier like alt, as otherwise this would open VV even when typing
@@ -61,14 +61,14 @@ namespace Content.Client.Gameplay
 
         protected override void Startup()
         {
-            _vvm.RegisterDomain("hover", ResolveVVHoverObject, ListVVHoverPaths);
+            _vvm.RegisterDomain("enthover", ResolveVVHoverObject, ListVVHoverPaths);
             _inputManager.KeyBindStateChanged += OnKeyBindStateChanged;
             _comparer = new ClickableEntityComparer(_entityManager);
         }
 
         protected override void Shutdown()
         {
-            _vvm.UnregisterDomain("hover");
+            _vvm.UnregisterDomain("enthover");
             _inputManager.KeyBindStateChanged -= OnKeyBindStateChanged;
         }
 
