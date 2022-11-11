@@ -20,8 +20,7 @@ namespace Content.Client.Disease.UI
 
         public event Action<BaseButton.ButtonEventArgs>? OnServerSelectionButtonPressed;
 
-        private readonly List<DiseasePrototype> _knownDiseasePrototypes = new();
-
+        private List<DiseasePrototype> _knownDiseasePrototypes = new();
         public DiseasePrototype? DiseaseSelected;
         public bool Enough = false;
 
@@ -40,8 +39,6 @@ namespace Content.Client.Disease.UI
             {
                 CreateVaccine();
             };
-
-            Populate();
         }
 
         /// <summary>
@@ -66,23 +63,13 @@ namespace Content.Client.Disease.UI
             Owner.CreateVaccineMessage(DiseaseSelected);
         }
 
-        /// <summary>
-        ///     Updates the whole user interface.
-        /// </summary>
-        public void Populate()
-        {
-            PopulateDiseases();
-        }
-
-        public void PopulateDiseases()
+        public void PopulateDiseases(List<DiseasePrototype> diseases)
         {
             KnownDiseases.Clear();
 
             _knownDiseasePrototypes.Clear();
 
-            var prototypeMan = IoCManager.Resolve<IPrototypeManager>();
-
-            foreach (var disease in prototypeMan.EnumeratePrototypes<DiseasePrototype>())
+            foreach (var disease in diseases)
             {
                 if (!disease.Infectious)
                     continue;

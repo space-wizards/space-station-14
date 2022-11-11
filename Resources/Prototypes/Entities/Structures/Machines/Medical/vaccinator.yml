@@ -36,6 +36,8 @@
     interfaces:
     - key: enum.VaccineMachineUiKey.Key
       type: VaccineMachineBoundUserInterface
+    - key: enum.ResearchClientUiKey.Key
+      type: ResearchClientBoundUserInterface
   - type: MaterialStorage
     materialWhiteList:
     - Biomass

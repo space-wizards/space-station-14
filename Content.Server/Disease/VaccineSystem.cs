@@ -5,6 +5,7 @@ using Content.Shared.Disease;
 using Content.Server.Disease.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Research;
+using Content.Server.UserInterface;
 using Robust.Shared.Player;
 using Robust.Shared.Audio;
 using Robust.Server.GameObjects;
@@ -26,6 +27,7 @@ namespace Content.Server.Disease
             SubscribeLocalEvent<DiseaseVaccineCreatorComponent, MaterialAmountChangedEvent>(OnVaccinatorAmountChanged);
             SubscribeLocalEvent<DiseaseVaccineCreatorComponent, ResearchClientServerSelectedMessage>(OnServerSelected);
             SubscribeLocalEvent<DiseaseVaccineCreatorComponent, VaccinatorServerSelectionMessage>(OpenServerList);
+            SubscribeLocalEvent<DiseaseVaccineCreatorComponent, AfterActivatableUIOpenEvent>(AfterUIOpen);
         }
 
         /// <summary>
@@ -89,13 +91,18 @@ namespace Content.Server.Disease
             if (!TryComp<DiseaseServerComponent>(server.Owner, out var diseaseServer))
                 return;
 
-            Logger.Error("Adding disease server...");
             component.DiseaseServer = diseaseServer;
+            UpdateUserInterfaceState(uid, component);
         }
 
         private void OpenServerList(EntityUid uid, DiseaseVaccineCreatorComponent component, VaccinatorServerSelectionMessage args)
         {
             _uiSys.TryOpen(uid, ResearchClientUiKey.Key, (IPlayerSession) args.Session);
+        }
+
+        private void AfterUIOpen(EntityUid uid, DiseaseVaccineCreatorComponent component, AfterActivatableUIOpenEvent args)
+        {
+            UpdateUserInterfaceState(uid, component);
         }
 
         public void UpdateUserInterfaceState(EntityUid uid, DiseaseVaccineCreatorComponent? component = null)

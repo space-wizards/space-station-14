@@ -45,7 +45,7 @@ namespace Content.Client.Disease.UI
             switch (state)
             {
                 case VaccineMachineUpdateState msg:
-                    _machineMenu?.PopulateDiseases();
+                    _machineMenu?.PopulateDiseases(msg.Diseases);
                     _machineMenu?.PopulateBiomass(Machine);
                     break;
             }
