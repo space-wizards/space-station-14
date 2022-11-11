@@ -127,7 +127,7 @@
   graph: AirAlarm
   startNode: start
   targetNode: air_alarm
-  category: construction-category-structures
+  category: construction-category-utilities
   description: An air alarm. Alarms... air?
   icon:
     sprite: Structures/Wallmounts/air_monitors.rsi
@@ -145,7 +145,7 @@
   graph: FireAlarm
   startNode: start
   targetNode: fire_alarm
-  category: construction-category-structures
+  category: construction-category-utilities
   description: A fire alarm. Spicy!
   icon:
     sprite: Structures/Wallmounts/air_monitors.rsi
@@ -163,7 +163,7 @@
   graph: AirSensor
   startNode: start
   targetNode: sensor
-  category: construction-category-structures
+  category: construction-category-utilities
   description: An air sensor. Senses air.
   icon:
     sprite: Structures/Specific/Atmospherics/sensor.rsi
@@ -171,3 +171,62 @@
   placementMode: SnapgridCenter
   objectType: Structure
   canRotate: true
+
+#lighting
+- type: construction
+  name: wall light
+  id: LightTubeFixture
+  graph: LightFixture
+  startNode: start
+  targetNode: tubeLight
+  category: construction-category-utilities
+  description: A wall light fixture. Use light tubes.
+  icon:
+    sprite: Structures/Wallmounts/Lighting/light_tube.rsi
+    state: off
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: true
+  canBuildInImpassable: false
+  conditions:
+  # Need an *additional* condition here that forces there to be a wall in the opposite direction to the one used for placement.
+  # Also see below. Didn't add it b/c construction ECS work going on. Cheers, - 20kdc
+    - !type:TileNotBlocked
+
+- type: construction
+  name: small wall light
+  id: LightSmallFixture
+  graph: LightFixture
+  startNode: start
+  targetNode: bulbLight
+  category: construction-category-utilities
+  description: A wall light fixture. Use light bulbs.
+  icon:
+    sprite: Structures/Wallmounts/Lighting/light_small.rsi
+    state: off
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: true
+  canBuildInImpassable: false
+  conditions:
+  # Same here. - 20kdc
+    - !type:TileNotBlocked
+
+- type: construction
+  name: ground light post
+  id: LightGroundFixture
+  graph: LightFixture
+  startNode: start
+  targetNode: groundLight
+  category: construction-category-utilities
+  description: A ground light fixture. Use light bulbs.
+  icon:
+    sprite: Structures/Lighting/LightPosts/small_light_post.rsi
+    state: off
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+

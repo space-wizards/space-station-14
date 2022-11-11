@@ -362,8 +362,6 @@
   objectType: Structure
   placementMode: SnapgridCenter
 
-
-
 - type: construction
   name: catwalk
   id: Catwalk
@@ -453,64 +451,6 @@
   canBuildInImpassable: false
   conditions:
   - !type:TileNotBlocked
-
-#lighting
-- type: construction
-  name: wall light
-  id: LightTubeFixture
-  graph: LightFixture
-  startNode: start
-  targetNode: tubeLight
-  category: construction-category-structures
-  description: A wall light fixture. Use light tubes.
-  icon:
-    sprite: Structures/Wallmounts/Lighting/light_tube.rsi
-    state: off
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canRotate: true
-  canBuildInImpassable: false
-  conditions:
-  # Need an *additional* condition here that forces there to be a wall in the opposite direction to the one used for placement.
-  # Also see below. Didn't add it b/c construction ECS work going on. Cheers, - 20kdc
-    - !type:TileNotBlocked
-
-- type: construction
-  name: small wall light
-  id: LightSmallFixture
-  graph: LightFixture
-  startNode: start
-  targetNode: bulbLight
-  category: construction-category-structures
-  description: A wall light fixture. Use light bulbs.
-  icon:
-    sprite: Structures/Wallmounts/Lighting/light_small.rsi
-    state: off
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canRotate: true
-  canBuildInImpassable: false
-  conditions:
-  # Same here. - 20kdc
-    - !type:TileNotBlocked
-
-- type: construction
-  name: ground light post
-  id: LightGroundFixture
-  graph: LightFixture
-  startNode: start
-  targetNode: groundLight
-  category: construction-category-structures
-  description: A ground light fixture. Use light bulbs.
-  icon:
-    sprite: Structures/Lighting/LightPosts/small_light_post.rsi
-    state: off
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canRotate: false
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
 
 #conveyor
 - type: construction
