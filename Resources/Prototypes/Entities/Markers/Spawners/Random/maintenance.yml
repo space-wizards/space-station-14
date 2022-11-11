@@ -59,6 +59,7 @@
         - lanternextrabright
         - PowerCellHigh
         - PowerCellMicroreactor
+        - NetProbeCartridge
       rareChance: 0.08
       prototypes:
         - FlashlightLantern
