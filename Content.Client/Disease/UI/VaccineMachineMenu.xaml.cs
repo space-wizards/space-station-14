@@ -20,6 +20,7 @@ namespace Content.Client.Disease.UI
         private List<(string id, string name)> _knownDiseasePrototypes = new();
         public (string id, string name) DiseaseSelected;
         public bool Enough = false;
+        public bool Locked = false;
         public int Cost => CreateAmount.Value * 4;
 
         public VaccineMachineMenu(VaccineMachineBoundUserInterface owner)
@@ -46,7 +47,7 @@ namespace Content.Client.Disease.UI
         private void KnownDiseaseSelected(ItemList.ItemListSelectedEventArgs obj)
         {
             DiseaseSelected = _knownDiseasePrototypes[obj.ItemIndex];
-            CreateButton.Disabled = !Enough;
+            CreateButton.Disabled = !Enough || Locked;
 
             PopulateSelectedDisease();
         }
@@ -83,6 +84,11 @@ namespace Content.Client.Disease.UI
             BiomassCost.Text = Loc.GetString("vaccine-machine-menu-biomass-cost", ("value", Cost));
         }
 
+        public void UpdateLocked(bool locked)
+        {
+            Locked = locked;
+        }
+
         private void HandleAmountChanged(object? sender, ValueChangedEventArgs args)
         {
             UpdateCost();
@@ -107,7 +113,7 @@ namespace Content.Client.Disease.UI
             BiomassCurrent.Text = Loc.GetString("vaccine-machine-menu-biomass-current", ("value", amt));
 
             if (DiseaseSelected != ("", ""))
-                CreateButton.Disabled = !Enough;
+                CreateButton.Disabled = !Enough || Locked;
         }
     }
 }

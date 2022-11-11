@@ -45,6 +45,7 @@ namespace Content.Client.Disease.UI
             switch (state)
             {
                 case VaccineMachineUpdateState msg:
+                    _machineMenu?.UpdateLocked(msg.Locked);
                     _machineMenu?.PopulateDiseases(msg.Diseases);
                     _machineMenu?.PopulateBiomass(Machine);
                     _machineMenu?.UpdateCost();

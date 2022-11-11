@@ -55,7 +55,7 @@ namespace Content.Server.Disease
             if (HasComp<DiseaseMachineRunningComponent>(uid) || !this.IsPowered(uid, EntityManager))
                 return;
 
-            if (_storageSystem.GetMaterialAmount(uid, "Biomass") < component.BiomassCost)
+            if (_storageSystem.GetMaterialAmount(uid, "Biomass") < component.BiomassCost * args.Amount)
                 return;
 
             if (!_prototypeManager.TryIndex<DiseasePrototype>(args.Disease, out var disease))
@@ -64,9 +64,17 @@ namespace Content.Server.Disease
             if (!disease.Infectious)
                 return;
 
-            var machine = Comp<DiseaseMachineComponent>(uid);
-            machine.Disease = disease;
+            component.Queued = args.Amount;
+            QueueNext(uid, component, disease);
+            UpdateUserInterfaceState(uid, component, true);
+        }
 
+        private void QueueNext(EntityUid uid, DiseaseVaccineCreatorComponent component, DiseasePrototype disease, DiseaseMachineComponent? machine = null)
+        {
+            if (!Resolve(uid, ref machine))
+                return;
+
+            machine.Disease = disease;
             _diseaseDiagnosisSystem.AddQueue.Enqueue(uid);
             _diseaseDiagnosisSystem.UpdateAppearance(uid, true, true);
             _audioSystem.PlayPvs(component.RunningSoundPath, uid);
@@ -83,7 +91,6 @@ namespace Content.Server.Disease
             if (!_storageSystem.TryChangeMaterialAmount(uid, "Biomass", (0 - component.BiomassCost)))
                 return;
 
-            UpdateUserInterfaceState(uid, component);
             // spawn a vaccine
             var vaxx = Spawn(args.Machine.MachineOutput, Transform(uid).Coordinates);
 
@@ -97,6 +104,18 @@ namespace Content.Server.Disease
                 return;
 
             vaxxComp.Disease = args.Machine.Disease;
+
+            component.Queued--;
+            if (component.Queued > 0)
+            {
+                args.Dequeue = false;
+                QueueNext(uid, component, args.Machine.Disease, args.Machine);
+                UpdateUserInterfaceState(uid, component);
+            }
+            else
+            {
+                UpdateUserInterfaceState(uid, component, false);
+            }
         }
 
         private void OnVaccinatorAmountChanged(EntityUid uid, DiseaseVaccineCreatorComponent component, MaterialAmountChangedEvent args)
@@ -128,7 +147,7 @@ namespace Content.Server.Disease
             UpdateUserInterfaceState(uid, component);
         }
 
-        public void UpdateUserInterfaceState(EntityUid uid, DiseaseVaccineCreatorComponent? component = null)
+        public void UpdateUserInterfaceState(EntityUid uid, DiseaseVaccineCreatorComponent? component = null, bool? overrideLocked = null)
         {
             if (!Resolve(uid, ref component))
                 return;
@@ -148,7 +167,7 @@ namespace Content.Server.Disease
                     diseases.Add((disease.ID, disease.Name));
                 }
             }
-            var state = new VaccineMachineUpdateState(biomass, diseases);
+            var state = new VaccineMachineUpdateState(biomass, diseases, overrideLocked ?? HasComp<DiseaseMachineRunningComponent>(uid));
             _uiSys.SetUiState(ui, state);
         }
 

@@ -31,10 +31,13 @@ namespace Content.Shared.Disease.Components
 
         public List<(string id, string name)> Diseases;
 
-        public VaccineMachineUpdateState(int biomass, List<(string id, string name)> diseases)
+        public bool Locked;
+
+        public VaccineMachineUpdateState(int biomass, List<(string id, string name)> diseases, bool locked)
         {
             Biomass = biomass;
             Diseases = diseases;
+            Locked = locked;
         }
     }
 

@@ -76,9 +76,10 @@ namespace Content.Server.Disease
                 while (diseaseMachine.Accumulator >= diseaseMachine.Delay)
                 {
                     diseaseMachine.Accumulator -= diseaseMachine.Delay;
-                    var ev = new DiseaseMachineFinishedEvent(diseaseMachine);
+                    var ev = new DiseaseMachineFinishedEvent(diseaseMachine, true);
                     RaiseLocalEvent(diseaseMachine.Owner, ev);
-                    RemoveQueue.Enqueue(diseaseMachine.Owner);
+                    if (ev.Dequeue)
+                        RemoveQueue.Enqueue(diseaseMachine.Owner);
                 }
             }
         }
@@ -397,9 +398,11 @@ namespace Content.Server.Disease
     public sealed class DiseaseMachineFinishedEvent : EntityEventArgs
     {
         public DiseaseMachineComponent Machine {get;}
-        public DiseaseMachineFinishedEvent(DiseaseMachineComponent machine)
+        public bool Dequeue = true;
+        public DiseaseMachineFinishedEvent(DiseaseMachineComponent machine, bool dequeue)
         {
             Machine = machine;
+            Dequeue = dequeue;
         }
     }
 }

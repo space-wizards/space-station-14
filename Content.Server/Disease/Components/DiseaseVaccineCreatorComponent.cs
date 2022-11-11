@@ -18,6 +18,11 @@ public sealed class DiseaseVaccineCreatorComponent : Component
     [DataField("BiomassCost")]
     public int BiomassCost = 4;
 
+    /// <summary>
+    /// Current vaccines queued.
+    /// </summary>
+    public int Queued = 0;
+
     [DataField("runningSound")]
     public SoundSpecifier RunningSoundPath = new SoundPathSpecifier("/Audio/Machines/vaccinator_running.ogg");
 
