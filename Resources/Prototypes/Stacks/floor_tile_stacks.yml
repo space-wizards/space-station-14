@@ -269,12 +269,6 @@
   maxCount: 30
 
 - type: stack
-  id: FloorTileGCircuit
-  name: gcircuit floor tile
-  spawn: FloorTileItemGCircuit
-  maxCount: 30
-
-- type: stack
   id: FloorTileBCircuit
   name: bcircuit floor tile
   spawn: FloorTileItemBCircuit

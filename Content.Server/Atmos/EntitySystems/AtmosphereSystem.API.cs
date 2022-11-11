@@ -107,8 +107,16 @@ public partial class AtmosphereSystem
         else
             RaiseLocalEvent(ref ev);
 
+        if (ev.Handled)
+            return ev.Mixtures;
+
         // Default to a space mixture... This is a space game, after all!
-        return ev.Mixtures ?? new GasMixture?[tiles.Count];
+        ev.Mixtures ??= new GasMixture?[tiles.Count];
+        for (var i = 0; i < tiles.Count; i++)
+        {
+            ev.Mixtures[i] ??= GasMixture.SpaceGas;
+        }
+        return ev.Mixtures;
     }
 
     public GasMixture? GetTileMixture(EntityUid? gridUid, EntityUid? mapUid, Vector2i tile, bool excite = false)

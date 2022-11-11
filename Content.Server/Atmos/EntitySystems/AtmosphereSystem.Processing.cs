@@ -67,8 +67,15 @@ namespace Content.Server.Atmos.EntitySystems
                 GridIsTileAirBlocked(uid, atmosphere, ref airBlockedEv);
                 var isAirBlocked = airBlockedEv.Result;
 
+                var oldBlocked = tile.BlockedAirflow;
                 var updateAdjacentEv = new UpdateAdjacentMethodEvent(uid, indices, mapGridComp);
                 GridUpdateAdjacent(uid, atmosphere, ref updateAdjacentEv);
+
+                // Blocked airflow changed, rebuild excited groups!
+                if (tile.Excited && tile.BlockedAirflow != oldBlocked)
+                {
+                    RemoveActiveTile(atmosphere, tile);
+                }
 
                 // Call this instead of the grid method as the map has a say on whether the tile is space or not.
                 if ((!mapGrid.TryGetTileRef(indices, out var t) || t.IsSpace(_tileDefinitionManager)) && !isAirBlocked)

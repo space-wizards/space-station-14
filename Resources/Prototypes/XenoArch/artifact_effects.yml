@@ -97,7 +97,7 @@
 
 - type: artifactEffect #bornana
   id: EffectBananaSpawn
-  targetDepth: 1
+  targetDepth: 0
   effectHint: artifact-effect-hint-creation
   components:
   - type: SpawnArtifact
@@ -189,6 +189,20 @@
         Structural: 100
 
 - type: artifactEffect
+  id: EffectGas
+  targetDepth: 2
+  effectHint: artifact-effect-hint-environment
+  components:
+  - type: GasArtifact
+
+- type: artifactEffect
+  id: EffectBlink
+  targetDepth: 2
+  effectHint: artifact-effect-hint-displacement
+  components:
+  - type: RandomTeleportArtifact
+
+- type: artifactEffect
   id: EffectMaterialSpawn
   targetDepth: 3
   effectHint: artifact-effect-hint-creation
@@ -227,19 +241,6 @@
     - UltraHighPowerMicroLaserStockPart
     - SuperMatterBinStockPart
 
-- type: artifactEffect
-  id: EffectGas
-  targetDepth: 3
-  effectHint: artifact-effect-hint-environment
-  components:
-  - type: GasArtifact
-
-- type: artifactEffect
-  id: EffectBlink
-  targetDepth: 3
-  effectHint: artifact-effect-hint-displacement
-  components:
-  - type: RandomTeleportArtifact
 
 - type: artifactEffect
   id: EffectDisease
@@ -258,7 +259,7 @@
 
 - type: artifactEffect
   id: EffectRareMaterialSpawn
-  targetDepth: 4
+  targetDepth: 3
   effectHint: artifact-effect-hint-creation
   components:
   - type: SpawnArtifact
@@ -272,7 +273,7 @@
 
 - type: artifactEffect
   id: EffectPowerGen20K
-  targetDepth: 4
+  targetDepth: 3
   effectHint: artifact-effect-hint-release
   components:
   - type: PowerSupplier
@@ -280,7 +281,7 @@
 
 - type: artifactEffect
   id: EffectHeat
-  targetDepth: 4
+  targetDepth: 3
   effectHint: artifact-effect-hint-release
   components:
   - type: TemperatureArtifact
@@ -288,7 +289,7 @@
 
 - type: artifactEffect
   id: EffectFoamDangerous
-  targetDepth: 4
+  targetDepth: 3
   effectHint: artifact-effect-hint-biochemical
   components:
   - type: FoamArtifact

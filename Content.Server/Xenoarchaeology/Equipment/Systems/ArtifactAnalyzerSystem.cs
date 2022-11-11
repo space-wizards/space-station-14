@@ -132,19 +132,14 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
 
         if (component.LastAnalyzedArtifact == null)
         {
-            component.LastAnalyzedCompletion = null;
+            component.LastAnalyzerPointValue = null;
             component.LastAnalyzedNode = null;
         }
         else if (TryComp<ArtifactComponent>(component.LastAnalyzedArtifact, out var artifact))
         {
             var lastNode = (ArtifactNode?) artifact.CurrentNode?.Clone();
             component.LastAnalyzedNode = lastNode;
-
-            if (artifact.NodeTree != null)
-            {
-                var discoveredNodes = artifact.NodeTree.AllNodes.Count(x => x.Discovered && x.Triggered);
-                component.LastAnalyzedCompletion = (float) discoveredNodes / artifact.NodeTree.AllNodes.Count;
-            }
+            component.LastAnalyzerPointValue = _artifact.GetResearchPointValue(component.LastAnalyzedArtifact.Value, artifact);
         }
     }
 
@@ -178,7 +173,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
 
         EntityUid? artifact = null;
         ArtifactNode? node = null;
-        float? completion = null;
+        int? pointValue = null;
         var totalTime = TimeSpan.Zero;
         var canScan = false;
         var canPrint = false;
@@ -186,7 +181,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         {
             artifact = analyzer.LastAnalyzedArtifact;
             node = analyzer.LastAnalyzedNode;
-            completion = analyzer.LastAnalyzedCompletion;
+            pointValue = analyzer.LastAnalyzerPointValue;
             totalTime = analyzer.AnalysisDuration * analyzer.AnalysisDurationMulitplier;
             canScan = analyzer.Contacts.Any();
             canPrint = analyzer.ReadyToPrint;
@@ -199,7 +194,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         var remaining = active != null ? _timing.CurTime - active.StartTime : TimeSpan.Zero;
 
         var state = new AnalysisConsoleScanUpdateState(artifact, analyzerConnected, serverConnected, canScan, canPrint,
-            node?.Id, node?.Depth, node?.Edges.Count, node?.Triggered, node?.Effect.ID, node?.Trigger.ID, completion,
+            node?.Id, node?.Depth, node?.Edges.Count, node?.Triggered, node?.Effect.ID, node?.Trigger.ID, pointValue,
             scanning, remaining, totalTime);
 
         var bui = _ui.GetUi(uid, ArtifactAnalzyerUiKey.Key);
@@ -250,7 +245,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
 
         if (!TryComp<ArtifactAnalyzerComponent>(component.AnalyzerEntity, out var analyzer) ||
             analyzer.LastAnalyzedNode == null ||
-            analyzer.LastAnalyzedCompletion == null ||
+            analyzer.LastAnalyzerPointValue == null ||
             !analyzer.ReadyToPrint)
         {
             return;
@@ -297,8 +292,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         msg.AddMarkup(Loc.GetString("analysis-console-info-edges", ("edges", n.Edges.Count)));
         msg.PushNewline();
 
-        msg.AddMarkup(Loc.GetString("analysis-console-info-completion",
-            ("percentage", Math.Round(analyzer.LastAnalyzedCompletion.Value * 100))));
+        msg.AddMarkup(Loc.GetString("analysis-console-info-value", ("value", analyzer.LastAnalyzerPointValue)));
 
         _popup.PopupEntity(Loc.GetString("analysis-console-print-popup"), uid, Filter.Pvs(uid));
         _paper.SetContent(report, msg.ToMarkup());
