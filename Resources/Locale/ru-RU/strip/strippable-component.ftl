@@ -10,7 +10,7 @@ strippable-component-alert-owner = { $user } снимает с вас { $item }!
 strippable-component-alert-owner-hidden = Вы чувствуете, как кто-то копается в вашем { $slot }!
 strippable-component-alert-owner-insert = { $user } надевает на вас { $item }!
 # StripVerb
-strip-verb-get-data-text = Раздеть
+strip-verb-get-data-text = Обыскать
 
 ## UI
 
