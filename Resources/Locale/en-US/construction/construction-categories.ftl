@@ -11,3 +11,4 @@ construction-category-utilities = Utilities
 construction-category-misc = Misc
 construction-category-pipes = Pipes
 construction-category-doors = Doors
+construction-category-bots = Bots
