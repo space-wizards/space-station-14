@@ -42,7 +42,7 @@ public partial class AtmosphereSystem
 
         for (var i = 0; i < args.Tiles.Count; i++)
         {
-            args.Mixtures[i] = component.Mixture.Clone();
+            args.Mixtures[i] ??= component.Mixture.Clone();
         }
     }
 }
