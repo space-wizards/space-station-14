@@ -29,7 +29,7 @@
   - type: RevolverAmmoProvider
     whitelist:
       tags:
-        - CartridgeMagnumHC
+        - BulletMagnumHC
         - SpeedLoaderMagnumHC
     proto: CartridgeMagnumHC
     capacity: 7
