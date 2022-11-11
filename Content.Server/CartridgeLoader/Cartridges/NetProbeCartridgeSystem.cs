@@ -56,7 +56,7 @@ public sealed class NetProbeCartridgeSystem : EntitySystem
 
         //Limit the amount of saved probe results to 9
         //This is hardcoded because the UI doesn't support a dynamic number of results
-        if (component.ProbedDevices.Count >= 9)
+        if (component.ProbedDevices.Count >= component.MaxSavedDevices)
             component.ProbedDevices.RemoveAt(0);
 
         var device = new ProbedNetworkDevice(
