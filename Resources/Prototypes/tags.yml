@@ -97,6 +97,9 @@
   id: CartridgeMagnum
 
 - type: Tag
+  id: CartridgeMagnumHC
+
+- type: Tag
   id: CartridgePistol
 
 - type: Tag
