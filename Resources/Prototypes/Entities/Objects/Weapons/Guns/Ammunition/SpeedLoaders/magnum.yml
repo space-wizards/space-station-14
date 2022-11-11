@@ -65,7 +65,7 @@
   parent: BaseSpeedLoaderMagnum
   components:
   - type: BallisticAmmoProvider
-    proto: CartridgeMagnumHC
+    proto: BulletMagnumHC
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_speed_loader.rsi
     layers:
@@ -85,7 +85,7 @@
   parent: BaseSpeedLoaderMagnum
   components:
   - type: BallisticAmmoProvider
-    proto: CartridgeMagnumHCHighVelocity
+    proto: BulletMagnumHCHighVelocity
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_speed_loader.rsi
     layers:
