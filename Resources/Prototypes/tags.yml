@@ -505,6 +505,9 @@
   id: SpeedLoaderMagnum
 
 - type: Tag
+  id: SpeedLoaderMagnumHC
+
+- type: Tag
   id: SpeedLoaderPistol
 
 - type: Tag
