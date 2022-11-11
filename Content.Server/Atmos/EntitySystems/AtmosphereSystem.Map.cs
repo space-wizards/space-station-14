@@ -32,17 +32,14 @@ public partial class AtmosphereSystem
 
     private void MapGetTileMixtures(EntityUid uid, MapAtmosphereComponent component, ref GetTileMixturesMethodEvent args)
     {
-        if (args.Handled)
+        if (args.Handled || component.Mixture == null)
             return;
         args.Handled = true;
-        args.Mixtures = new GasMixture?[args.Tiles.Count];
-
-        if (component.Mixture == null)
-            return;
+        args.Mixtures ??= new GasMixture?[args.Tiles.Count];
 
         for (var i = 0; i < args.Tiles.Count; i++)
         {
-            args.Mixtures[i] = component.Mixture.Clone();
+            args.Mixtures[i] ??= component.Mixture.Clone();
         }
     }
 }

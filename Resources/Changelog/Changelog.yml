@@ -1,15 +1,4 @@
 Entries:
-- author: lapatison
-  changes:
-  - {message: Kvass tank from cargo now come unpackaged., type: Tweak}
-  id: 2139
-  time: '2022-08-13T12:06:15.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: 'Added the Revenant, a ghost capable of causing all sorts of wacky chaos.',
-    type: Add}
-  id: 2140
-  time: '2022-08-13T13:49:41.0000000+00:00'
 - author: Ablankmann
   changes:
   - {message: The Outlaw's Hat now looks nicer., type: Tweak}
@@ -2957,3 +2946,18 @@ Entries:
   - {message: CentCom now calls the shuttle automatically after a long round., type: Add}
   id: 2638
   time: '2022-11-10T04:20:36.0000000+00:00'
+- author: Mervill
+  changes:
+  - {message: 'Some common objects that where indestructible now have proper  destructible
+      data, including Air Alarms, Surveillance Cameras and Extinguisher Cabinets',
+    type: Fix}
+  id: 2639
+  time: '2022-11-10T14:32:53.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The artifact analyzer now reports the amount of points an artifact is
+      worth rather than how much of it is completed., type: Tweak}
+  - {message: Artifacts and artifact containers are now easier to drag., type: Tweak}
+  - {message: Increased the likelihood of seeing certain rare artifact effects., type: Tweak}
+  id: 2640
+  time: '2022-11-11T04:18:51.0000000+00:00'

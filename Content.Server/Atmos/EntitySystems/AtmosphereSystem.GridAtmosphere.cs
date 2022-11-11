@@ -192,7 +192,11 @@ public sealed partial class AtmosphereSystem
         {
             var tile = args.Tiles[i];
             if (!component.Tiles.TryGetValue(tile, out var atmosTile))
+            {
+                // need to get map atmosphere
+                args.Handled = false;
                 continue;
+            }
 
             if (args.Excite)
                 component.InvalidatedCoords.Add(tile);

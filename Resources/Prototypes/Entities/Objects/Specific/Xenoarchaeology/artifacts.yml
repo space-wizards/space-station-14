@@ -21,7 +21,7 @@
       - shape:
           !type:PhysShapeCircle
           radius: 0.45
-        density: 235
+        density: 75
         layer: # doesn't collide with artifact storage
         - Opaque
         - BulletImpassable
