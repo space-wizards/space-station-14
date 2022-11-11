@@ -77,7 +77,7 @@ namespace Content.Shared.Slippery
 
         private void TrySlip(SlipperyComponent component, EntityUid other)
         {
-            if (HasComp<KnockedDownComponent>(other) || HasComp<SleepingComponent>(other) || HasComp<ForcedSleepingComponent>(other))
+            if (HasComp<KnockedDownComponent>(other))
                 return;
 
             var ev = new SlipAttemptEvent();

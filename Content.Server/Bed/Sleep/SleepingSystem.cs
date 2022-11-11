@@ -10,6 +10,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.MobState;
 using Content.Shared.MobState.Components;
+using Content.Shared.Slippery;
 using Content.Shared.Stunnable;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
@@ -39,7 +40,13 @@ namespace Content.Server.Bed.Sleep
             SubscribeLocalEvent<SleepingComponent, GetVerbsEvent<AlternativeVerb>>(AddWakeVerb);
             SubscribeLocalEvent<SleepingComponent, InteractHandEvent>(OnInteractHand);
             SubscribeLocalEvent<SleepingComponent, ExaminedEvent>(OnExamined);
+            SubscribeLocalEvent<SleepingComponent, SlipAttemptEvent>(OnSlip);
             SubscribeLocalEvent<ForcedSleepingComponent, ComponentInit>(OnInit);
+        }
+
+        private void OnSlip(EntityUid uid, SleepingComponent component, SlipAttemptEvent args)
+        {
+            args.Cancel();
         }
 
         /// <summary>
@@ -168,9 +175,6 @@ namespace Content.Server.Bed.Sleep
         public bool TrySleeping(EntityUid uid)
         {
             if (!HasComp<MobStateComponent>(uid))
-                return false;
-
-            if (HasComp<KnockedDownComponent>(uid))
                 return false;
 
             if (_prototypeManager.TryIndex<InstantActionPrototype>("Sleep", out var sleepAction))
