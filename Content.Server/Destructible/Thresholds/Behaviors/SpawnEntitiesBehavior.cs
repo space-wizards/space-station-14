@@ -20,7 +20,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
 
         public void Execute(EntityUid owner, DestructibleSystem system)
         {
-            var position = system.EntityManager.GetComponent<TransformComponent>(owner).MapPosition;
+            var position = system.EntityManager.GetComponent<TransformComponent>(owner).Coordinates;
 
             var getRandomVector = () => new Vector2(system.Random.NextFloat(-Offset, Offset), system.Random.NextFloat(-Offset, Offset));
 
