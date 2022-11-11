@@ -5,7 +5,7 @@
   graph: Firelock
   startNode: start
   targetNode: Firelock
-  category: construction-category-structures
+  category: construction-category-doors
   description: This is a firelock - it locks an area when a fire alarm in the area is triggered. Don't get squished!
   icon:
     sprite: Structures/Doors/Airlocks/Standard/firelock.rsi
@@ -22,7 +22,7 @@
   graph: Firelock
   startNode: start
   targetNode: FirelockGlass
-  category: construction-category-structures
+  category: construction-category-doors
   description: This is a firelock - it locks an area when a fire alarm in the area is triggered. Don't get squished!
   icon:
     sprite: Structures/Doors/Airlocks/Glass/firelock.rsi
@@ -40,7 +40,7 @@
   graph: Airlock
   startNode: start
   targetNode: airlock
-  category: construction-category-structures
+  category: construction-category-doors
   description: It opens, it closes, and maybe crushes you.
   icon:
     sprite: Structures/Doors/Airlocks/Standard/basic.rsi
@@ -57,7 +57,7 @@
   graph: AirlockShuttle
   startNode: start
   targetNode: airlock
-  category: construction-category-structures
+  category: construction-category-doors
   description: It opens, it closes, and maybe crushes you. Necessary for connecting two space craft together.
   icon:
     sprite: Structures/Doors/Airlocks/Glass/shuttle.rsi
@@ -76,7 +76,7 @@
   graph: Windoor
   startNode: start
   targetNode: windoor
-  category: construction-category-structures
+  category: construction-category-doors
   description: It opens, it closes, and you can see through it!
   icon:
     sprite: Structures/Doors/Windoors/windoor.rsi
@@ -93,7 +93,7 @@
   graph: Windoor
   startNode: start
   targetNode: windoorSecure
-  category: construction-category-structures
+  category: construction-category-doors
   description: It opens, it closes, and you can see through it! This one looks tough.
   icon:
     sprite: Structures/Doors/Windoors/windoor.rsi
@@ -111,7 +111,7 @@
   graph: DoorGraph
   startNode: start
   targetNode: metalDoor
-  category: construction-category-structures
+  category: construction-category-doors
   description: A primitive door with manual operation like the cavemen used.
   objectType: Structure
   placementMode: SnapgridCenter
@@ -128,7 +128,7 @@
   graph: DoorGraph
   startNode: start
   targetNode: woodDoor
-  category: construction-category-structures
+  category: construction-category-doors
   description: A primitive door with manual operation like the cavemen used.
   objectType: Structure
   placementMode: SnapgridCenter
@@ -145,7 +145,7 @@
   graph: DoorGraph
   startNode: start
   targetNode: plasmaDoor
-  category: construction-category-structures
+  category: construction-category-doors
   description: A primitive door with manual operation like the cavemen used.
   objectType: Structure
   placementMode: SnapgridCenter
@@ -162,7 +162,7 @@
   graph: DoorGraph
   startNode: start
   targetNode: goldDoor
-  category: construction-category-structures
+  category: construction-category-doors
   description: A primitive door with manual operation like the cavemen used.
   objectType: Structure
   placementMode: SnapgridCenter
@@ -179,7 +179,7 @@
   graph: DoorGraph
   startNode: start
   targetNode: silverDoor
-  category: construction-category-structures
+  category: construction-category-doors
   description: A primitive door with manual operation like the cavemen used.
   objectType: Structure
   placementMode: SnapgridCenter
@@ -196,7 +196,7 @@
   graph: DoorGraph
   startNode: start
   targetNode: paperDoor
-  category: construction-category-structures
+  category: construction-category-doors
   description: A primitive door with manual operation like the cavemen used.
   objectType: Structure
   placementMode: SnapgridCenter
@@ -212,7 +212,7 @@
   graph: Shutters
   startNode: start
   targetNode: Shutters
-  category: construction-category-structures
+  category: construction-category-doors
   description: This is a shutter - connect it to a button to open and close it.
   icon:
     sprite: Structures/Doors/Shutters/shutters.rsi
