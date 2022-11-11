@@ -51,8 +51,18 @@ public abstract partial class SharedGunSystem
 
                 if (ammoComp.Entities.Count == 0) // If the entity doesn't have any spawned bullets
                 {
+                    if (GetBallisticShots(component) == 0) // If the gun doesn't have any ammo
+                        component.FillProto = ammoComp.FillProto;
+
                     ammoComp.UnspawnedCount -= 1;
-                    component.UnspawnedCount += 1; // simple preformance trick
+                    if (ammoComp.FillProto == component.FillProto) // We don't want the game just changing the ammo into a different type
+                        component.UnspawnedCount += 1; // simple preformance trick
+                    else // Unfortunately, this is nessecary, as it would just not work with other bullet types otherwise
+                    { // However, there aren't any other speedloaders for non-revolver weapons right now, so this may not even be used
+                        var bullet = Spawn(ammoComp.FillProto, xform.Coordinates);
+                        component.Entities.Add(bullet);
+                        component.Container.Insert(bullet);
+                    }
                 }
                 else
                 {
