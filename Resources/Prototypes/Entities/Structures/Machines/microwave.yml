@@ -5,7 +5,7 @@
   description: It's magic.
   components:
   - type: Item
-    size: 60
+    size: 121
   - type: ItemCooldown
   - type: MeleeWeapon
     attackRate: 0.5
