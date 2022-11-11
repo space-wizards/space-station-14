@@ -44,11 +44,6 @@ namespace Content.Server.Bed.Sleep
             SubscribeLocalEvent<ForcedSleepingComponent, ComponentInit>(OnInit);
         }
 
-        private void OnSlip(EntityUid uid, SleepingComponent component, SlipAttemptEvent args)
-        {
-            args.Cancel();
-        }
-
         /// <summary>
         /// when sleeping component is added or removed, we do some stuff with other components.
         /// </summary>
@@ -164,6 +159,12 @@ namespace Content.Server.Bed.Sleep
                 args.PushMarkup(Loc.GetString("sleep-examined", ("target", Identity.Entity(uid, EntityManager))));
             }
         }
+
+        private void OnSlip(EntityUid uid, SleepingComponent component, SlipAttemptEvent args)
+        {
+            args.Cancel();
+        }
+
         private void OnInit(EntityUid uid, ForcedSleepingComponent component, ComponentInit args)
         {
             TrySleeping(uid);
