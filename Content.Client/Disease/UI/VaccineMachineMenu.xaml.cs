@@ -23,6 +23,7 @@ namespace Content.Client.Disease.UI
         private readonly List<DiseasePrototype> _knownDiseasePrototypes = new();
 
         public DiseasePrototype? DiseaseSelected;
+        public bool Enough = false;
 
         public VaccineMachineMenu(VaccineMachineBoundUserInterface owner)
         {
@@ -47,7 +48,7 @@ namespace Content.Client.Disease.UI
         private void KnownDiseaseSelected(ItemList.ItemListSelectedEventArgs obj)
         {
             DiseaseSelected = _knownDiseasePrototypes[obj.ItemIndex];
-            CreateButton.Disabled = false;
+            CreateButton.Disabled = !Enough;
 
             PopulateSelectedDisease();
         }
@@ -93,6 +94,7 @@ namespace Content.Client.Disease.UI
         {
             if (DiseaseSelected == null)
             {
+                CreateButton.Disabled = true;
                 DiseaseName.Text = Loc.GetString("vaccine-machine-menu-none-selected");
                 DiseaseResistance.Text = Loc.GetString("vaccine-machine-menu-spaceacillin-resist-none");
                 return;
@@ -104,7 +106,12 @@ namespace Content.Client.Disease.UI
 
         public void PopulateBiomass(EntityUid machine)
         {
-            BiomassCurrent.Text = Loc.GetString("vaccine-machine-menu-biomass-current", ("value", _storage.GetMaterialAmount(machine, "Biomass")));
+            var amt = _storage.GetMaterialAmount(machine, "Biomass");
+            Enough = (amt > 4);
+            BiomassCurrent.Text = Loc.GetString("vaccine-machine-menu-biomass-current", ("value", amt));
+
+            if (DiseaseSelected != null)
+                CreateButton.Disabled = !Enough;
         }
     }
 }
