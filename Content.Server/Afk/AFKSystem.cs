@@ -6,6 +6,7 @@ using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Player;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Afk;
 
@@ -17,10 +18,11 @@ public sealed class AFKSystem : EntitySystem
     [Dependency] private readonly IAfkManager _afkManager = default!;
     [Dependency] private readonly IConfigurationManager _configManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly GameTicker _ticker = default!;
 
     private float _checkDelay;
-    private float _accumulator;
+    private TimeSpan _checkTime;
 
     private readonly HashSet<IPlayerSession> _afkPlayers = new();
 
@@ -50,7 +52,6 @@ public sealed class AFKSystem : EntitySystem
     {
         base.Shutdown();
         _afkPlayers.Clear();
-        _accumulator = 0f;
         _playerManager.PlayerStatusChanged -= OnPlayerChange;
         _configManager.UnsubValueChanged(CCVars.AfkTime, SetAfkDelay);
     }
@@ -62,16 +63,15 @@ public sealed class AFKSystem : EntitySystem
         if (_ticker.RunLevel != GameRunLevel.InRound)
         {
             _afkPlayers.Clear();
-            _accumulator = 0f;
+            _checkTime = TimeSpan.Zero;
             return;
         }
 
-        _accumulator += frameTime;
-
         // TODO: Should also listen to the input events for more accurate timings.
-        if (_accumulator < _checkDelay) return;
+        if (_timing.CurTime < _checkTime)
+            return;
 
-        _accumulator -= _checkDelay;
+        _checkTime = _timing.CurTime + TimeSpan.FromSeconds(_checkDelay);
 
         foreach (var session in Filter.GetAllPlayers())
         {

@@ -53,6 +53,8 @@
     energy: 2
   - type: ToggleableLightVisuals
   - type: Appearance
+  - type: Physics
+    canCollide: false
 
 - type: entity
   name: lamp

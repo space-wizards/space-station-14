@@ -168,13 +168,6 @@ namespace Content.Server.Atmos.EntitySystems
             if (component.Air == null)
                 return new GasMixture(volume);
 
-            var tankPressure = component.Air.Pressure;
-            if (tankPressure < component.OutputPressure)
-            {
-                component.OutputPressure = tankPressure;
-                UpdateUserInterface(component);
-            }
-
             var molesNeeded = component.OutputPressure * volume / (Atmospherics.R * component.Air.Temperature);
 
             var air = RemoveAir(component, molesNeeded);

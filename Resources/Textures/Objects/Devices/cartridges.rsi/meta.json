@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/0c15d9dbcf0f2beb230eba5d9d889ef2d1945bb8",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "insert_overlay"
+    },
+    {
+      "name": "cart"
+    },
+    {
+      "name": "cart-e"
+    },
+    {
+      "name": "cart-m"
+    },
+    {
+      "name": "cart-chem"
+    },
+    {
+      "name": "cart-c"
+    },
+    {
+      "name": "cart-h"
+    },
+    {
+      "name": "cart-s"
+    },
+    {
+      "name": "cart-clown"
+    },
+    {
+      "name": "cart-a"
+    },
+    {
+      "name": "cart-j"
+    },
+    {
+      "name": "cart-q"
+    },
+    {
+      "name": "cart-ord"
+    },
+    {
+      "name": "cart-tear"
+    },
+    {
+      "name": "cart-b"
+    },
+    {
+      "name": "cart-lib"
+    },
+    {
+      "name": "cart-eye"
+    },
+    {
+      "name": "cart-mi"
+    },
+    {
+      "name": "cart-hos"
+    },
+    {
+      "name": "cart-ce"
+    },
+    {
+      "name": "cart-cmo"
+    },
+    {
+      "name": "cart-rd"
+    }
+  ]
+}

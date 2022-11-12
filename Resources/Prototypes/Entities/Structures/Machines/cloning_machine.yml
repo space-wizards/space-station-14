@@ -29,6 +29,13 @@
   - type: Construction
     graph: Machine
     node: machine
+    containers:
+     - machine_board
+     - machine_parts
+     - clonepod-bodyContainer
+  - type: SignalReceiver
+    inputs:
+      CloningPodReceiver: []
   - type: EmptyOnMachineDeconstruct
     containers:
       - clonepod-bodyContainer
