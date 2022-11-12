@@ -19,3 +19,10 @@
   name: Pacifist
   components:
     - type: Pacifist
+
+- type: trait
+  id: Amputee
+  name: Amputee
+  description: you lost an arm somehow???
+  Components:
+    -type: Amputee
