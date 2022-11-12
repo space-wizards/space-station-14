@@ -165,29 +165,45 @@ public sealed class WeatherOverlay : Overlay
         // TODO: This is very similar to parallax but we need stencil support but we can probably combine these somehow
         // and not make it spaghetti, while getting the advantages of not-duped code?
 
-        // Get position offset but rotated around
-        var offset = new Vector2(position.X % 1, position.Y % 1);
-        offset = rotation.RotateVec(offset);
 
-        var scale = 1.0f;
-        var size = sprite.Size / (float) EyeManager.PixelsPerMeter * scale;
+        // Okay I have spent like 5 hours on this at this point and afaict you have one of the following comprises:
+        // - No scrolling so the weather is always centered on the player
+        // - Crappy looking rotation but strafing looks okay and scrolls
+        // - Crappy looking strafing but rotation looks okay.
+        // - No rotation
+        // - Storing state across frames to do scrolling and just having it always do topdown.
 
-        var mat = Matrix3.CreateTransform(position, -rotation);
-        worldHandle.SetTransform(mat);
-        var viewBox = args.WorldBounds.Box;
+        var scale = 1f;
+        var slowness = 0f;
+        var scrolling = Vector2.Zero;
 
-        // Slight overdraw because I'm done but uhh don't worry about it.
-        for (var x = -viewBox.Width / 2f - 1f; x <= viewBox.Width / 2f; x += size.X * scale)
+        // Size of the texture in world units.
+        var size = (sprite.Size / (float) EyeManager.PixelsPerMeter) * scale;
+        var scrolled = scrolling * (float) curTime.TotalSeconds;
+
+        // Origin - start with the parallax shift itself.
+        var originBL = (position) * slowness + scrolled;
+
+        // Centre the image.
+        originBL -= size / 2;
+
+        // Remove offset so we can floor.
+        var flooredBL = args.WorldAABB.BottomLeft - originBL;
+
+        // Floor to background size.
+        flooredBL = (flooredBL / size).Floored() * size;
+
+        // Re-offset.
+        flooredBL += originBL;
+
+        for (var x = flooredBL.X; x < args.WorldAABB.Right; x += size.X)
         {
-            for (var y = -viewBox.Height - 1f; y <= viewBox.Height; y += size.Y * scale)
+            for (var y = flooredBL.Y; y < args.WorldAABB.Top; y += size.Y)
             {
-                var boxPosition = new Vector2(x - offset.X, y - offset.Y);
+                var box = Box2.FromDimensions((x, y), size);
+                // var boxR = new Box2Rotated(box, -rotation, box.Center);
 
-                // Yes I spent a while making sure no texture holes when the eye is rotating.
-                var box = Box2.FromDimensions(boxPosition, size * scale);
                 worldHandle.DrawTextureRect(sprite, box, (weatherProto.Color ?? Color.White).WithAlpha(alpha));
-                // Deadcode but very useful for debugging to check there's no overlap or dead spots.
-                // worldHandle.DrawRect(box, Color.Red.WithAlpha(alpha));
             }
         }
 

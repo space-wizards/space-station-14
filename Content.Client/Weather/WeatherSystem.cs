@@ -56,6 +56,7 @@ public sealed class WeatherSystem : SharedWeatherSystem
             var stream = (AudioSystem.PlayingStream) component.Stream;
             var alpha = GetPercent(component, mapUid.Value, weather);
             alpha = MathF.Pow(alpha, 2f);
+            // TODO: Lerp this occlusion.
             var occlusion = 0f;
             // TODO: Fade-out needs to be slower
             // TODO: HELPER PLZ
