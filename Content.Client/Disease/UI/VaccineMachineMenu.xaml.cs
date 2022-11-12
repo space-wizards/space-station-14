@@ -32,12 +32,18 @@ namespace Content.Client.Disease.UI
             Owner = owner;
 
             ServerSelectionButton.OnPressed += a => OnServerSelectionButtonPressed?.Invoke(a);
-            DiseaseSelected = ("", "");
+            DiseaseSelected = ("", ""); // nullability was a bit sussy so
+
             KnownDiseases.OnItemSelected += KnownDiseaseSelected;
             CreateAmount.ValueChanged += HandleAmountChanged;
+
             CreateButton.OnPressed += _ =>
             {
                 CreateVaccine();
+            };
+            ServerSyncButton.OnPressed += _ =>
+            {
+                RequestSync();
             };
         }
 
@@ -53,7 +59,7 @@ namespace Content.Client.Disease.UI
         }
 
         /// <summary>
-        ///     Sends a message to create a vaccine from the selected technology.
+        ///     Sends a message to create a vaccine of the selected disease.
         /// </summary>
         private void CreateVaccine()
         {
@@ -64,6 +70,11 @@ namespace Content.Client.Disease.UI
                 return;
 
             Owner.CreateVaccineMessage(DiseaseSelected.id, CreateAmount.Value);
+        }
+
+        private void RequestSync()
+        {
+            Owner.RequestSync();
         }
 
         public void PopulateDiseases(List<(string id, string name)> diseases)

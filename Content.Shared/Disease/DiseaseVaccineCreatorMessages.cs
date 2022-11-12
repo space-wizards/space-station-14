@@ -24,6 +24,16 @@ namespace Content.Shared.Disease.Components
         }
     }
 
+    /// <summary>
+    ///     Just manual UI update.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public sealed class VaccinatorSyncRequestMessage : BoundUserInterfaceMessage
+    {
+        public VaccinatorSyncRequestMessage()
+        {}
+    }
+
     [Serializable, NetSerializable]
     public sealed class VaccineMachineUpdateState : BoundUserInterfaceState
     {

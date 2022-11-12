@@ -38,6 +38,11 @@ namespace Content.Client.Disease.UI
             SendMessage(new CreateVaccineMessage(disease, amount));
         }
 
+        public void RequestSync()
+        {
+            SendMessage(new VaccinatorSyncRequestMessage());
+        }
+
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);

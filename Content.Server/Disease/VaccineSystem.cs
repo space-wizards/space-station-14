@@ -36,6 +36,7 @@ namespace Content.Server.Disease
             SubscribeLocalEvent<DiseaseVaccineCreatorComponent, DiseaseMachineFinishedEvent>(OnVaccinatorFinished);
             SubscribeLocalEvent<DiseaseVaccineCreatorComponent, MaterialAmountChangedEvent>(OnVaccinatorAmountChanged);
             SubscribeLocalEvent<DiseaseVaccineCreatorComponent, ResearchClientServerSelectedMessage>(OnServerSelected);
+            SubscribeLocalEvent<DiseaseVaccineCreatorComponent, VaccinatorSyncRequestMessage>(OnSyncRequest);
             SubscribeLocalEvent<DiseaseVaccineCreatorComponent, VaccinatorServerSelectionMessage>(OpenServerList);
             SubscribeLocalEvent<DiseaseVaccineCreatorComponent, AfterActivatableUIOpenEvent>(AfterUIOpen);
 
@@ -134,6 +135,11 @@ namespace Content.Server.Disease
                 return;
 
             component.DiseaseServer = diseaseServer;
+            UpdateUserInterfaceState(uid, component);
+        }
+
+        private void OnSyncRequest(EntityUid uid, DiseaseVaccineCreatorComponent component, VaccinatorSyncRequestMessage args)
+        {
             UpdateUserInterfaceState(uid, component);
         }
 
