@@ -45,18 +45,18 @@ public sealed class SingularityComponent : SharedSingularityComponent
     /// <summary>
     /// The sound that this singularity produces by existing.
     /// </summary>
-    [DataField("ambiantSound")]
+    [DataField("ambientSound")]
     [ViewVariables(VVAccess.ReadOnly)]
-    public SoundSpecifier? AmbiantSound = new SoundPathSpecifier(
+    public SoundSpecifier? AmbientSound = new SoundPathSpecifier(
         "/Audio/Effects/singularity_form.ogg",
         AudioParams.Default.WithVolume(5).WithLoop(true).WithMaxDistance(20f)
     );
 
     /// <summary>
-    /// The audio stream that plays the sound specified by <see cref="AmbiantSound"> on loop.
+    /// The audio stream that plays the sound specified by <see cref="AmbientSound"> on loop.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    public IPlayingAudioStream? AmbiantSoundStream = null;
+    public IPlayingAudioStream? AmbientSoundStream = null;
 
     /// <summary>
     ///     The sound that the singularity produces when it forms.

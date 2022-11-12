@@ -155,7 +155,7 @@ public sealed class SingularitySystem : SharedSingularitySystem
 #region Event Handlers
     /// <summary>
     /// Handles playing the startup sounds when a singulo forms.
-    /// Always sets up the ambiant singularity rumble.
+    /// Always sets up the ambient singularity rumble.
     /// The formation sound only plays if the singularity is being created.
     /// </summary>
     /// <param name="uid">The entity UID of the singularity that is forming.</param>
@@ -167,7 +167,7 @@ public sealed class SingularitySystem : SharedSingularitySystem
         if (Resolve(uid, ref metaData) && metaData.EntityLifeStage <= EntityLifeStage.Initializing)
             _audio.Play(comp.FormationSound, Filter.Pvs(comp.Owner), comp.Owner);
 
-        comp.AmbiantSoundStream = _audio.Play(comp.AmbiantSound, Filter.Pvs(comp.Owner), comp.Owner);
+        comp.AmbientSoundStream = _audio.Play(comp.AmbientSound, Filter.Pvs(comp.Owner), comp.Owner);
         UpdateSingularityLevel(comp);
     }
 
@@ -185,7 +185,7 @@ public sealed class SingularitySystem : SharedSingularitySystem
 
     /// <summary>
     /// Handles playing the shutdown sounds when a singulo dissipates.
-    /// Always stops the ambiant singularity rumble.
+    /// Always stops the ambient singularity rumble.
     /// The dissipations sound only plays if the singularity is being destroyed.
     /// </summary>
     /// <param name="uid">The entity UID of the singularity that is dissipating.</param>
@@ -193,11 +193,11 @@ public sealed class SingularitySystem : SharedSingularitySystem
     /// <param name="args">The event arguments.</param>
     public void OnSingularityShutdown(EntityUid uid, SingularityComponent comp, ComponentShutdown args)
     {
+        comp.AmbientSoundStream?.Stop();
+
         MetaDataComponent? metaData = null;
         if (Resolve(uid, ref metaData) && metaData.EntityLifeStage >= EntityLifeStage.Terminating)
             _audio.Play(comp.DissipationSound, Filter.Pvs(comp.Owner), comp.Owner);
-
-        comp.AmbiantSoundStream?.Stop();
     }
 
     /// <summary>
