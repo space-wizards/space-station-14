@@ -148,11 +148,9 @@ namespace Content.Server.StationEvents.Events
             if (!TryComp<MapGridComponent>(targetGrid, out var gridComp))
                 return false;
 
-            var grid = gridComp.Grid;
-
             var found = false;
             var (gridPos, _, gridMatrix) = Transform(targetGrid).GetWorldPositionRotationMatrix();
-            var gridBounds = gridMatrix.TransformBox(grid.LocalAABB);
+            var gridBounds = gridMatrix.TransformBox(gridComp.LocalAABB);
 
             for (var i = 0; i < 10; i++)
             {
@@ -160,15 +158,15 @@ namespace Content.Server.StationEvents.Events
                 var randomY = RobustRandom.Next((int) gridBounds.Bottom, (int) gridBounds.Top);
 
                 tile = new Vector2i(randomX - (int) gridPos.X, randomY - (int) gridPos.Y);
-                if (_atmosphere.IsTileSpace(grid.Owner, Transform(targetGrid).MapUid, tile,
+                if (_atmosphere.IsTileSpace(gridComp.Owner, Transform(targetGrid).MapUid, tile,
                         mapGridComp: gridComp)
-                    || _atmosphere.IsTileAirBlocked(grid.Owner, tile, mapGridComp: gridComp))
+                    || _atmosphere.IsTileAirBlocked(gridComp.Owner, tile, mapGridComp: gridComp))
                 {
                     continue;
                 }
 
                 found = true;
-                targetCoords = grid.GridTileToLocal(tile);
+                targetCoords = gridComp.GridTileToLocal(tile);
                 break;
             }
 

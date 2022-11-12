@@ -53,7 +53,7 @@ public sealed partial class AtmosphereSystem
             tile.GridIndex = uid;
         }
 
-        GridRepopulateTiles(mapGrid.Grid, gridAtmosphere);
+        GridRepopulateTiles(mapGrid, gridAtmosphere);
     }
 
     private void OnGridSplit(EntityUid uid, GridAtmosphereComponent originalGridAtmos, ref GridSplitEvent args)
@@ -230,7 +230,7 @@ public sealed partial class AtmosphereSystem
 
         var directions = AtmosDirection.Invalid;
 
-        var enumerator = GetObstructingComponentsEnumerator(mapGridComp.Grid, args.Tile);
+        var enumerator = GetObstructingComponentsEnumerator(mapGridComp, args.Tile);
 
         while (enumerator.MoveNext(out var obstructingComponent))
         {
@@ -332,7 +332,7 @@ public sealed partial class AtmosphereSystem
             return;
 
         tile.AdjacentBits = AtmosDirection.Invalid;
-        tile.BlockedAirflow = GetBlockedDirections(mapGridComp.Grid, tile.GridIndices);
+        tile.BlockedAirflow = GetBlockedDirections(mapGridComp, tile.GridIndices);
 
         for (var i = 0; i < Atmospherics.Directions; i++)
         {
@@ -349,7 +349,7 @@ public sealed partial class AtmosphereSystem
 
             var oppositeDirection = direction.GetOpposite();
 
-            adjacent.BlockedAirflow = GetBlockedDirections(mapGridComp.Grid, adjacent.GridIndices);
+            adjacent.BlockedAirflow = GetBlockedDirections(mapGridComp, adjacent.GridIndices);
 
             // Pass in MapGridComponent so we don't have to resolve it for every adjacent direction.
             var tileBlockedEv = new IsTileAirBlockedMethodEvent(uid, tile.GridIndices, direction, mapGridComp);
@@ -456,7 +456,7 @@ public sealed partial class AtmosphereSystem
 
         tile.Air = new GasMixture
         {
-            Volume = GetVolumeForTiles(mapGridComp.Grid, 1),
+            Volume = GetVolumeForTiles(mapGridComp, 1),
             Temperature = Atmospherics.T20C
         };
 

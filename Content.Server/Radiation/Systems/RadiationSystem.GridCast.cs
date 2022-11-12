@@ -118,7 +118,7 @@ public partial class RadiationSystem
         {
             if (!gridQuery.TryGetComponent(sourceTrs.GridUid.Value, out var gridComponent))
                 return ray;
-            return Gridcast(gridComponent.Grid, ray, saveVisitedTiles, resistanceQuery, sourceTrs, destTrs, transformQuery.GetComponent(sourceTrs.GridUid.Value));
+            return Gridcast(gridComponent, ray, saveVisitedTiles, resistanceQuery, sourceTrs, destTrs, transformQuery.GetComponent(sourceTrs.GridUid.Value));
         }
 
         // lets check how many grids are between source and destination

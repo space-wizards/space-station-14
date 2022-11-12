@@ -100,7 +100,7 @@ public sealed partial class AtmosphereSystem
 
                tile.Clear();
                var mixtureId = 0;
-               foreach (var entUid in gridComp.Grid.GetAnchoredEntities(indices))
+               foreach (var entUid in gridComp.GetAnchoredEntities(indices))
                {
                    if (!TryComp(entUid, out AtmosFixMarkerComponent? afm))
                        continue;

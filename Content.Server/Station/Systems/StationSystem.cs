@@ -243,10 +243,10 @@ public sealed class StationSystem : EntitySystem
         foreach (var gridUid in component.Grids)
         {
             if (!TryComp<MapGridComponent>(gridUid, out var grid) ||
-                grid.Grid.LocalAABB.Size.LengthSquared < largestBounds.Size.LengthSquared)
+                grid.LocalAABB.Size.LengthSquared < largestBounds.Size.LengthSquared)
                 continue;
 
-            largestBounds = grid.Grid.LocalAABB;
+            largestBounds = grid.LocalAABB;
             largestGrid = gridUid;
         }
 
@@ -393,9 +393,9 @@ public sealed class StationSystem : EntitySystem
             throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
 
         if (!string.IsNullOrEmpty(name))
-            MetaData(MapGridComponent).EntityName = name;
+            MetaData(mapGrid).EntityName = name;
 
-        var stationMember = AddComp<StationMemberComponent>(MapGridComponent);
+        var stationMember = AddComp<StationMemberComponent>(mapGrid);
         stationMember.Station = station;
         stationData.Grids.Add(gridComponent.Owner);
 
@@ -419,7 +419,7 @@ public sealed class StationSystem : EntitySystem
         if (!Resolve(station, ref stationData))
             throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
 
-        RemComp<StationMemberComponent>(MapGridComponent);
+        RemComp<StationMemberComponent>(mapGrid);
         stationData.Grids.Remove(gridComponent.Owner);
 
         RaiseLocalEvent(station, new StationGridRemovedEvent(gridComponent.Owner), true);
