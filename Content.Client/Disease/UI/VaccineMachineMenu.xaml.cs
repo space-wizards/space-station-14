@@ -21,7 +21,8 @@ namespace Content.Client.Disease.UI
         public (string id, string name) DiseaseSelected;
         public bool Enough = false;
         public bool Locked = false;
-        public int Cost => CreateAmount.Value * 4;
+        public int Cost => CreateAmount.Value * CostPer;
+        public int CostPer = 4;
 
         public VaccineMachineMenu(VaccineMachineBoundUserInterface owner)
         {
@@ -90,8 +91,9 @@ namespace Content.Client.Disease.UI
             }
         }
 
-        public void UpdateCost()
+        public void UpdateCost(int costPer)
         {
+            CostPer = costPer;
             BiomassCost.Text = Loc.GetString("vaccine-machine-menu-biomass-cost", ("value", Cost));
         }
 
@@ -102,7 +104,7 @@ namespace Content.Client.Disease.UI
 
         private void HandleAmountChanged(object? sender, ValueChangedEventArgs args)
         {
-            UpdateCost();
+            UpdateCost(CostPer);
         }
 
         public void PopulateSelectedDisease()

@@ -160,6 +160,7 @@ namespace Content.Server.Disease
             int costRating = (int) args.PartRatings[component.MachinePartCost];
 
             component.BiomassCost = component.BaseBiomassCost - costRating;
+            UpdateUserInterfaceState(uid, component);
         }
 
         private void OnUpgradeExamine(EntityUid uid, DiseaseVaccineCreatorComponent component, UpgradeExamineEvent args)
@@ -187,7 +188,7 @@ namespace Content.Server.Disease
                     diseases.Add((disease.ID, disease.Name));
                 }
             }
-            var state = new VaccineMachineUpdateState(biomass, diseases, overrideLocked ?? HasComp<DiseaseMachineRunningComponent>(uid));
+            var state = new VaccineMachineUpdateState(biomass, component.BiomassCost, diseases, overrideLocked ?? HasComp<DiseaseMachineRunningComponent>(uid));
             _uiSys.SetUiState(ui, state);
         }
 

@@ -53,7 +53,7 @@ namespace Content.Client.Disease.UI
                     _machineMenu?.UpdateLocked(msg.Locked);
                     _machineMenu?.PopulateDiseases(msg.Diseases);
                     _machineMenu?.PopulateBiomass(Machine);
-                    _machineMenu?.UpdateCost();
+                    _machineMenu?.UpdateCost(msg.BiomassCost);
                     break;
             }
         }
