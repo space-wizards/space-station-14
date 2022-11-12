@@ -27,5 +27,14 @@
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi
     netsync: false
-    state: salpen
+    layers:
+    - state: salpen
+      map: [ "enum.ToggleVisuals.Layer" ]
   - type: DiseaseVaccine
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+     enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
+          True: {state: salpen}
+          False: {state: salpen_empty}

@@ -5,6 +5,9 @@ vaxx-unused = It hasn't been spent.
 vaccine-name = {$disease} vaccine
 vaccine-desc = Injecting this will make you unable to catch {$disease} if you do not already have it.
 
+vaccine-inject-start-agent = You start injecting {THE($target)} with {THE($vaccine)}.
+vaccine-inject-start-patient = {CAPITALIZE(THE($user))} starts injecting you with {INDEFINITE($vaccine)} {$vaccine}.
+
 vaccine-machine-menu-title = Vaccinator
 vaccine-machine-menu-known-diseases-label = Known diseases
 vaccine-machine-menu-create-vaccine-button = Create vaccine

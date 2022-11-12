@@ -5,6 +5,8 @@ using Content.Shared.Materials;
 using Content.Shared.Research.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Tag;
+using Content.Shared.Toggleable;
 using Content.Server.Disease.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.DoAfter;
@@ -29,6 +31,8 @@ namespace Content.Server.Disease
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly AudioSystem _audioSystem = default!;
+        [Dependency] private readonly TagSystem _tagSystem = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -224,6 +228,9 @@ namespace Content.Server.Disease
                 return;
             }
 
+            _popupSystem.PopupEntity(Loc.GetString("vaccine-inject-start-agent", ("target", args.Target), ("vaccine", args.Used)), args.Target.Value, Filter.Entities(args.User));
+            _popupSystem.PopupEntity(Loc.GetString("vaccine-inject-start-patient", ("user", args.User), ("vaccine", args.Used)), args.Target.Value, Filter.Entities(args.Target.Value), Shared.Popups.PopupType.SmallCaution);
+
             vaxx.CancelToken = new CancellationTokenSource();
             _doAfterSystem.DoAfter(new DoAfterEventArgs(args.User, vaxx.InjectDelay, vaxx.CancelToken.Token, target: args.Target)
             {
@@ -280,8 +287,14 @@ namespace Content.Server.Disease
         {
             if (args.Vaxx.Disease == null)
                 return;
+
             Vaccinate(args.Carrier, args.Vaxx.Disease);
-            EntityManager.DeleteEntity(args.Vaxx.Owner);
+
+            _tagSystem.AddTag(args.Vaxx.Owner, "Trash");
+            args.Vaxx.Used = true;
+
+            if (TryComp<AppearanceComponent>(args.Vaxx.Owner, out var appearance))
+                _appearance.SetData(args.Vaxx.Owner, ToggleVisuals.Toggled, false, appearance);
         }
 
         /// <summary>
