@@ -5,15 +5,15 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Engineering
-      time: 36000
+      time: 54000
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 36000
+      time: 54000
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 36000
+      time: 54000
     - !type:OverallPlaytimeRequirement
-      time: 216000
+      time: 324000
   weight: 20
   startingGear: CaptainGear
   icon: "Captain"

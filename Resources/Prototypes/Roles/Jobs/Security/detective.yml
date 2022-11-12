@@ -5,7 +5,7 @@
   requirements:
   - !type:DepartmentTimeRequirement
     department: Security
-    time: 7200
+    time: 36000
   startingGear: DetectiveGear
   icon: "Detective"
   supervisors: job-supervisors-hos

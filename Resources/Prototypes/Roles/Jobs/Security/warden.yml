@@ -5,7 +5,7 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 21600
+      time: 54000
   startingGear: WardenGear
   icon: "Warden"
   supervisors: job-supervisors-hos

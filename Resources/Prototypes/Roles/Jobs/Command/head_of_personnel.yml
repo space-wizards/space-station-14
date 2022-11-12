@@ -5,15 +5,15 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Engineering
-      time: 7200
+      time: 18000
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 7200
+      time: 18000
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 7200
+      time: 18000
     - !type:OverallPlaytimeRequirement
-      time: 108000
+      time: 180000
   weight: 20
   startingGear: HoPGear
   icon: "HeadOfPersonnel"

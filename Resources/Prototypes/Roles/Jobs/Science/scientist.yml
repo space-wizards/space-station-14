@@ -2,6 +2,9 @@
   id: Scientist
   name: job-name-scientist
   playTimeTracker: JobScientist
+  requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 18000
   startingGear: ScientistGear
   icon: "Scientist"
   supervisors: job-supervisors-rd

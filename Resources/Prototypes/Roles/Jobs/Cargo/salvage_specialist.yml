@@ -5,7 +5,7 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Cargo
-      time: 7200
+      time: 10800
   icon: "ShaftMiner"
   startingGear: SalvageSpecialistGear
   supervisors: job-supervisors-hop-qm
