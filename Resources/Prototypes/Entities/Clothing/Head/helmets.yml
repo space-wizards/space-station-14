@@ -81,7 +81,7 @@
         Heat: 0.8
 
 - type: entity
-  parent: ClothingHeadBase
+  parent: ClothingHeadHelmetHelmet
   id: ClothingHeadHelmetHelmetOld
   name: helmet
   description: An old usual helmet.

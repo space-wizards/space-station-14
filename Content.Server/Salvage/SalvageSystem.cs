@@ -164,6 +164,7 @@ namespace Content.Server.Salvage
                     }
                     gridState.ActiveMagnets.Add(component);
                     component.MagnetState = new MagnetState(MagnetStateType.Attaching, gridState.CurrentTime + AttachingTime);
+                    RaiseLocalEvent(new SalvageMagnetActivatedEvent(component.Owner));
                     Report(component.Owner, component.SalvageChannel, "salvage-system-report-activate-success");
                     break;
                 case MagnetStateType.Attaching:

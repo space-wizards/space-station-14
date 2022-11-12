@@ -29,8 +29,15 @@ public sealed class TelepathicArtifactSystem : EntitySystem
                 continue;
 
             // roll if msg should be usual or drastic
-            var isDrastic = _random.NextFloat() <= component.DrasticMessageProb;
-            var msgArr = isDrastic ? component.DrasticMessages : component.Messages;
+            List<string> msgArr;
+            if (_random.NextFloat() <= component.DrasticMessageProb && component.DrasticMessages != null)
+            {
+                msgArr = component.DrasticMessages;
+            }
+            else
+            {
+                msgArr = component.Messages;
+            }
 
             // pick a random message
             var msgId = _random.Pick(msgArr);

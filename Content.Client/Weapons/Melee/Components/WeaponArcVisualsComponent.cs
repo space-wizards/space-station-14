@@ -8,6 +8,9 @@ public sealed class WeaponArcVisualsComponent : Component
 {
     [ViewVariables, DataField("animation")]
     public WeaponArcAnimation Animation = WeaponArcAnimation.None;
+
+    [ViewVariables(VVAccess.ReadWrite), DataField("fadeOut")]
+    public bool Fadeout = true;
 }
 
 public enum WeaponArcAnimation : byte

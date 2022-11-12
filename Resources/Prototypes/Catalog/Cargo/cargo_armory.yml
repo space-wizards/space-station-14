@@ -17,3 +17,13 @@
   cost: 2500
   category: Armory
   group: market
+
+- type: cargoProduct
+  id: ArmoryLaser
+  icon:
+    sprite: Objects/Weapons/Guns/Battery/laser_retro.rsi
+    state: icon
+  product: CrateArmoryLaser
+  cost: 1600
+  category: Armory
+  group: market

@@ -50877,7 +50877,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 6533
-  type: CrateSecurityLaser
+  type: CrateArmoryLaser
   components:
   - pos: -7.5,22.5
     parent: 0

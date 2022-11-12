@@ -10,6 +10,7 @@ using Content.Server.Storage.EntitySystems;
 using Content.Server.Strip;
 using Content.Server.Stunnable;
 using Content.Shared.ActionBlocker;
+using Content.Shared.CombatMode;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -92,15 +93,6 @@ namespace Content.Server.Hands.Systems
 
             if (!_handsSystem.TryDrop(uid, component.ActiveHand!, null, checkActionBlocker: false))
                 return;
-
-            var targEnt = Identity.Entity(args.Target, EntityManager);
-            var msgOther = Loc.GetString("hands-component-disarm-success-others-message",
-                ("disarmer", Identity.Entity(args.Source, EntityManager)), ("disarmed", targEnt));
-            var msgUser = Loc.GetString("hands-component-disarm-success-message", ("disarmed", targEnt));
-
-            var filter = Filter.Pvs(args.Source).RemoveWhereAttachedEntity(e => e == args.Source);
-            _popupSystem.PopupEntity(msgOther, args.Source, filter);
-            _popupSystem.PopupEntity(msgUser, args.Source, Filter.Entities(args.Source));
 
             args.Handled = true; // no shove/stun.
         }

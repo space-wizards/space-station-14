@@ -267,7 +267,7 @@ public sealed partial class HumanoidSystem : SharedHumanoidSystem
     /// <param name="humanoid">Humanoid component of the entity</param>
     public void ToggleHiddenLayer(EntityUid uid, HumanoidVisualLayers layer, HumanoidComponent? humanoid = null)
     {
-        if (!Resolve(uid, ref humanoid))
+        if (!Resolve(uid, ref humanoid, false))
         {
             return;
         }

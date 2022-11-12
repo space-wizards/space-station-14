@@ -6,6 +6,7 @@ using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Shared.GameStates;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Stacks
@@ -13,6 +14,7 @@ namespace Content.Shared.Stacks
     [UsedImplicitly]
     public abstract class SharedStackSystem : EntitySystem
     {
+        [Dependency] private readonly IPrototypeManager _prototype = default!;
         [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
         [Dependency] protected readonly SharedPopupSystem PopupSystem = default!;
         [Dependency] protected readonly SharedHandsSystem HandsSystem = default!;
@@ -72,7 +74,7 @@ namespace Content.Shared.Stacks
                 case > 0:
                     PopupSystem.PopupCoordinates($"+{transfered}", popupPos, Filter.Local());
 
-                    if (recipientStack.AvailableSpace == 0)
+                    if (GetAvailableSpace(recipientStack) == 0)
                     {
                         PopupSystem.PopupCoordinates(Loc.GetString("comp-stack-becomes-full"),
                             popupPos.Offset(new Vector2(0, -0.5f)), Filter.Local());
@@ -80,7 +82,7 @@ namespace Content.Shared.Stacks
 
                     break;
 
-                case 0 when recipientStack.AvailableSpace == 0:
+                case 0 when GetAvailableSpace(recipientStack) == 0:
                     PopupSystem.PopupCoordinates(Loc.GetString("comp-stack-already-full"), popupPos, Filter.Local());
                     break;
             }
@@ -97,10 +99,10 @@ namespace Content.Shared.Stacks
             if (!Resolve(recipient, ref recipientStack, false) || !Resolve(donor, ref donorStack, false))
                 return false;
 
-            if (!recipientStack.StackTypeId.Equals(donorStack.StackTypeId))
+            if (recipientStack.StackTypeId == null || !recipientStack.StackTypeId.Equals(donorStack.StackTypeId))
                 return false;
 
-            transfered = Math.Min(donorStack.Count, recipientStack.AvailableSpace);
+            transfered = Math.Min(donorStack.Count, GetAvailableSpace(recipientStack));
             SetCount(donor, donorStack.Count - transfered, donorStack);
             SetCount(recipient, recipientStack.Count + transfered, recipientStack);
             return true;
@@ -154,21 +156,14 @@ namespace Content.Shared.Stacks
             var old = component.Count;
 
             // Clamp the value.
-            if (amount > component.MaxCount)
-            {
-                amount = component.MaxCount;
-            }
-
-            if (amount < 0)
-            {
-                amount = 0;
-            }
+            amount = Math.Min(amount, GetMaxCount(component));
+            amount = Math.Max(amount, 0);
 
             component.Count = amount;
             Dirty(component);
 
             Appearance.SetData(uid, StackVisuals.Actual, component.Count);
-            RaiseLocalEvent(uid, new StackCountChangedEvent(old, component.Count), false);
+            RaiseLocalEvent(uid, new StackCountChangedEvent(old, component.Count));
         }
 
         /// <summary>
@@ -195,19 +190,83 @@ namespace Content.Shared.Stacks
             return true;
         }
 
+        /// <summary>
+        /// Gets the max count for a given entity prototype
+        /// </summary>
+        /// <param name="entityId"></param>
+        /// <returns></returns>
+        [PublicAPI]
+        public int GetMaxCount(string entityId)
+        {
+            var entProto = _prototype.Index<EntityPrototype>(entityId);
+            entProto.TryGetComponent<SharedStackComponent>(out var stackComp);
+            return GetMaxCount(stackComp);
+        }
+
+        /// <summary>
+        /// Gets the max count for a given entity
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <returns></returns>
+        [PublicAPI]
+        public int GetMaxCount(EntityUid uid)
+        {
+            return GetMaxCount(CompOrNull<SharedStackComponent>(uid));
+        }
+
+        /// <summary>
+        /// Gets the maximum amount that can be fit on a stack.
+        /// </summary>
+        /// <remarks>
+        /// <p>
+        /// if there's no stackcomp, this equals 1. Otherwise, if there's a max
+        /// count override, it equals that. It then checks for a max count value
+        /// on the prototype. If there isn't one, it defaults to the max integer
+        /// value (unlimimted).
+        /// </p>
+        /// </remarks>
+        /// <param name="component"></param>
+        /// <returns></returns>
+        public int GetMaxCount(SharedStackComponent? component)
+        {
+            if (component == null)
+                return 1;
+
+            if (component.MaxCountOverride != null)
+                return component.MaxCountOverride.Value;
+
+            if (component.StackTypeId == null)
+                return 1;
+
+            var stackProto = _prototype.Index<StackPrototype>(component.StackTypeId);
+
+            return stackProto.MaxCount ?? int.MaxValue;
+        }
+
+        /// <summary>
+        /// Gets the remaining space in a stack.
+        /// </summary>
+        /// <param name="component"></param>
+        /// <returns></returns>
+        [PublicAPI]
+        public int GetAvailableSpace(SharedStackComponent component)
+        {
+            return GetMaxCount(component) - component.Count;
+        }
+
         private void OnStackStarted(EntityUid uid, SharedStackComponent component, ComponentStartup args)
         {
             if (!TryComp(uid, out AppearanceComponent? appearance))
                 return;
 
             Appearance.SetData(uid, StackVisuals.Actual, component.Count, appearance);
-            Appearance.SetData(uid, StackVisuals.MaxCount, component.MaxCount, appearance);
+            Appearance.SetData(uid, StackVisuals.MaxCount, GetMaxCount(component), appearance);
             Appearance.SetData(uid, StackVisuals.Hide, false, appearance);
         }
 
         private void OnStackGetState(EntityUid uid, SharedStackComponent component, ref ComponentGetState args)
         {
-            args.State = new StackComponentState(component.Count, component.MaxCount);
+            args.State = new StackComponentState(component.Count, GetMaxCount(component));
         }
 
         private void OnStackHandleState(EntityUid uid, SharedStackComponent component, ref ComponentHandleState args)
@@ -215,7 +274,7 @@ namespace Content.Shared.Stacks
             if (args.Current is not StackComponentState cast)
                 return;
 
-            component.MaxCount = cast.MaxCount;
+            component.MaxCountOverride = cast.MaxCount;
             // This will change the count and call events.
             SetCount(uid, cast.Count, component);
         }
@@ -242,12 +301,12 @@ namespace Content.Shared.Stacks
         /// <summary>
         ///     The old stack count.
         /// </summary>
-        public int OldCount { get; }
+        public int OldCount;
 
         /// <summary>
         ///     The new stack count.
         /// </summary>
-        public int NewCount { get; }
+        public int NewCount;
 
         public StackCountChangedEvent(int oldCount, int newCount)
         {

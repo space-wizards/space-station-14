@@ -46,10 +46,11 @@ public sealed class JetpackSystem : SharedJetpackSystem
 
         foreach (var comp in EntityQuery<ActiveJetpackComponent>())
         {
-            comp.Accumulator += frameTime;
+            if (_timing.CurTime < comp.TargetTime)
+                continue;
 
-            if (comp.Accumulator < comp.EffectCooldown) continue;
-            comp.Accumulator -= comp.EffectCooldown;
+            comp.TargetTime = _timing.CurTime + TimeSpan.FromSeconds(comp.EffectCooldown);
+
             CreateParticles(comp.Owner);
         }
     }

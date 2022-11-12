@@ -19,6 +19,7 @@
       - id: ClothingOuterCoatWarden
       - id: ClothingOuterWinterWarden
       - id: RubberStampWarden
+      - id: DoorRemoteArmory
 
 - type: entity
   id: LockerSecurityFilled

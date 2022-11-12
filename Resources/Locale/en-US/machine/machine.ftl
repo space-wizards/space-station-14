@@ -1,5 +1,7 @@
 machine-insert-item = {THE($user)} inserted {THE($item)} into {THE($machine)}.
 
+machine-upgrade-examinable-verb-text = Upgrades
+machine-upgrade-examinable-verb-message = Examine the machine upgrades.
 machine-upgrade-increased-by-percentage = [color=yellow]{CAPITALIZE($upgraded)}[/color] increased by {$percent}%.
 machine-upgrade-decreased-by-percentage = [color=yellow]{CAPITALIZE($upgraded)}[/color] decreased by {$percent}%.
 machine-upgrade-increased-by-amount = [color=yellow]{CAPITALIZE($upgraded)}[/color] increased by {$difference}.

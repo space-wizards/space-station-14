@@ -40,6 +40,7 @@ public sealed class ClientClothingSystem : ClothingSystem
         {"id", "IDCARD"},
         {"pocket1", "POCKET1"},
         {"pocket2", "POCKET2"},
+        {"suitstorage", "SUITSTORAGE"},
     };
 
     [Dependency] private readonly IResourceCache _cache = default!;
@@ -296,6 +297,11 @@ public sealed class ClientClothingSystem : ClothingSystem
             {
                 layer.SetRsi(clothingSprite.BaseRSI);
             }
+
+            // Another "temporary" fix for clothing stencil masks.
+            // Sprite layer redactor when
+            if (slot == "jumpsuit")
+                layerData.Shader ??= "StencilDraw";
 
             sprite.LayerSetData(index, layerData);
             layer.Offset += slotDef.Offset;

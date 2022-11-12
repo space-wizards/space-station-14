@@ -3,9 +3,11 @@
   name: steel
   icon: /Textures/Objects/Materials/Sheets/metal.rsi/steel.png
   spawn: SheetSteel1
+  maxCount: 30
 
 - type: stack
   id: Plasteel
   name: plasteel
   icon: /Textures/Objects/Materials/Sheets/metal.rsi/plasteel.png
   spawn: SheetPlasteel1
+  maxCount: 30
