@@ -240,8 +240,8 @@ public abstract partial class InventorySystem
             return true;
 
         // Is the actor currently stripping the target? Here we could check if the actor has the stripping UI open, but
-        // that requires server/client specific code. so lets just check if they **could** open the stripping UI.
-        // Note that this doesn't check that the item is equipped by the target, as this is done elsewhere.
+        // that requires server/client specific code.
+        // Uhhh TODO, fix this. This doesn't even fucking check if the target item is IN the targets inventory.
         return actor != target &&
             HasComp<SharedStrippableComponent>(target) &&
             HasComp<SharedStrippingComponent>(actor) &&

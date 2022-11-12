@@ -37,7 +37,6 @@ namespace Content.IntegrationTests.Tests.DoAfter
             await server.WaitPost(() =>
             {
                 var tickTime = 1.0f / IoCManager.Resolve<IGameTiming>().TickRate;
-                mapManager.CreateNewMapEntity(MapId.Nullspace);
                 var mob = entityManager.SpawnEntity("Dummy", MapCoordinates.Nullspace);
                 var cancelToken = new CancellationTokenSource();
                 var args = new DoAfterEventArgs(mob, tickTime / 2, cancelToken.Token);
@@ -67,7 +66,6 @@ namespace Content.IntegrationTests.Tests.DoAfter
             await server.WaitPost(() =>
             {
                 var tickTime = 1.0f / IoCManager.Resolve<IGameTiming>().TickRate;
-                mapManager.CreateNewMapEntity(MapId.Nullspace);
 
                 var mob = entityManager.SpawnEntity("Dummy", MapCoordinates.Nullspace);
                 var cancelToken = new CancellationTokenSource();

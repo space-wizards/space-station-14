@@ -1,14 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Client.CombatMode;
 using Content.Client.ContextMenu.UI;
 using Content.Client.Examine;
 using Content.Client.Gameplay;
 using Content.Client.Popups;
 using Content.Client.Verbs.UI;
-using Content.Client.Viewport;
 using Content.Shared.Examine;
 using Content.Shared.GameTicking;
 using Content.Shared.Tag;
@@ -18,11 +13,10 @@ using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Client.State;
-using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Content.Client.Verbs
 {
@@ -77,9 +71,9 @@ namespace Content.Client.Verbs
             VerbMenu?.Dispose();
         }
 
-        public override void Update(float frameTime)
+        public override void FrameUpdate(float frameTime)
         {
-            base.Update(frameTime);
+            base.FrameUpdate(frameTime);
             EntityMenu?.Update();
         }
 

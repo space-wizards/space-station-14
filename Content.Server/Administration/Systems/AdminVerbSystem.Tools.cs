@@ -467,7 +467,7 @@ public sealed partial class AdminVerbSystem
                 Act = () =>
                 {
                     // Unbounded intentionally.
-                    _quickDialog.OpenDialog(player, "Adjust stack", $"Amount (max {stack.MaxCount})", (int newAmount) =>
+                    _quickDialog.OpenDialog(player, "Adjust stack", $"Amount (max {_stackSystem.GetMaxCount(stack)})", (int newAmount) =>
                     {
                         _stackSystem.SetCount(args.Target, newAmount, stack);
                     });
@@ -485,7 +485,7 @@ public sealed partial class AdminVerbSystem
                 IconTexture = "/Textures/Interface/AdminActions/fill-stack.png",
                 Act = () =>
                 {
-                    _stackSystem.SetCount(args.Target, stack.MaxCount, stack);
+                    _stackSystem.SetCount(args.Target, _stackSystem.GetMaxCount(stack), stack);
                 },
                 Impact = LogImpact.Medium,
                 Message = Loc.GetString("admin-trick-fill-stack-description"),
@@ -687,7 +687,7 @@ public sealed partial class AdminVerbSystem
             args.Verbs.Add(haltMovement);
         }
 
-        if (TryComp<IMapComponent>(args.Target, out var map))
+        if (TryComp<MapComponent>(args.Target, out var map))
         {
             if (_adminManager.HasAdminFlag(player, AdminFlags.Mapping))
             {
@@ -800,7 +800,7 @@ public sealed partial class AdminVerbSystem
 
     private bool TryGetGridChildren(EntityUid target, [NotNullWhen(true)] out IEnumerable<EntityUid>? enumerator)
     {
-        if (!HasComp<IMapComponent>(target) && !HasComp<IMapGridComponent>(target) &&
+        if (!HasComp<MapComponent>(target) && !HasComp<MapGridComponent>(target) &&
             !HasComp<StationDataComponent>(target))
         {
             enumerator = null;
@@ -827,7 +827,7 @@ public sealed partial class AdminVerbSystem
             yield break;
         }
 
-        else if (HasComp<IMapComponent>(target))
+        else if (HasComp<MapComponent>(target))
         {
             foreach (var possibleGrid in Transform(target).ChildEntities)
             {

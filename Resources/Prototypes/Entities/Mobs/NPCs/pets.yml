@@ -157,6 +157,14 @@
       layer:
       - MobLayer
   - type: Appearance
+  - type: Inventory
+    speciesId: cat
+    templateId: pet
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+    - key: enum.StrippingUiKey.Key
+      type: StrippableBoundUserInterface
   - type: DamageStateVisuals
     states:
       Alive:
@@ -203,6 +211,14 @@
       layer:
       - MobLayer
   - type: Appearance
+  - type: Inventory
+    speciesId: puppy
+    templateId: pet
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+    - key: enum.StrippingUiKey.Key
+      type: StrippableBoundUserInterface
   - type: DamageStateVisuals
     states:
       Alive:
@@ -286,6 +302,14 @@
       layer:
       - MobLayer
   - type: Appearance
+  - type: Inventory
+    speciesId: dog
+    templateId: pet
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+    - key: enum.StrippingUiKey.Key
+      type: StrippableBoundUserInterface
   - type: DamageStateVisuals
     states:
       Alive:

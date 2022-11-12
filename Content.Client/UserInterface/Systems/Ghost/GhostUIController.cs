@@ -99,6 +99,7 @@ public sealed class GhostUIController : UIController, IOnSystemChanged<GhostSyst
         Gui.RequestWarpsPressed += RequestWarps;
         Gui.ReturnToBodyPressed += ReturnToBody;
         Gui.GhostRolesPressed += GhostRolesPressed;
+        Gui.ToggleGhostVisibility += ToggleGhostVisibility;
         Gui.TargetWindow.WarpClicked += OnWarpClicked;
 
         UpdateGui();
@@ -112,6 +113,7 @@ public sealed class GhostUIController : UIController, IOnSystemChanged<GhostSyst
         Gui.RequestWarpsPressed -= RequestWarps;
         Gui.ReturnToBodyPressed -= ReturnToBody;
         Gui.GhostRolesPressed -= GhostRolesPressed;
+        Gui.ToggleGhostVisibility -= ToggleGhostVisibility;
         Gui.TargetWindow.WarpClicked -= OnWarpClicked;
 
         Gui.Hide();
@@ -132,5 +134,10 @@ public sealed class GhostUIController : UIController, IOnSystemChanged<GhostSyst
     private void GhostRolesPressed()
     {
         _system?.OpenGhostRoles();
+    }
+
+    private void ToggleGhostVisibility()
+    {
+        _system?.ToggleGhostVisibility();
     }
 }

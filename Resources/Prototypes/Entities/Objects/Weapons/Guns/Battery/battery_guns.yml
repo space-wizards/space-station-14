@@ -116,6 +116,16 @@
     fireCost: 62.5
 
 - type: entity
+  name: practice laser gun
+  parent: WeaponLaserCarbine
+  id: WeaponLaserCarbinePractice
+  description: A modified version of the basic laser gun, this one fires less concentrated energy bolts designed for target practice.
+  components:
+  - type: HitscanBatteryAmmoProvider
+    proto: RedLaserPractice
+    fireCost: 62.5
+
+- type: entity
   name: pulse pistol
   parent: BaseWeaponBatterySmall
   id: WeaponPulsePistol
@@ -289,6 +299,29 @@
       zeroVisible: true
     - type: Appearance
 
+- type: entity
+  name: practice disabler
+  parent: WeaponDisabler
+  id: WeaponDisablerPractice
+  description: A self-defense weapon that exhausts organic targets, weakening them until they collapse. This one has been undertuned for cadets.
+  components:
+    - type: Sprite
+      sprite: Objects/Weapons/Guns/Battery/practice_disabler.rsi
+      layers:
+        - state: base
+          map: ["enum.GunVisualLayers.Base"]
+        - state: mag-unshaded-0
+          map: ["enum.GunVisualLayers.MagUnshaded"]
+          shader: unshaded
+    - type: Clothing
+      sprite: Objects/Weapons/Guns/Battery/practice_disabler.rsi
+      quickEquip: false
+      slots:
+        - Belt
+    - type: ProjectileBatteryAmmoProvider
+      proto: BulletDisablerPractice
+      fireCost: 100
+      
 - type: entity
   name: taser
   parent: BaseWeaponBatterySmall

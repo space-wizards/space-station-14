@@ -37,6 +37,9 @@
       layer:
       - MachineLayer
   - type: InteractionOutline
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
 
 - type: entity
   name: tall cabinet
@@ -90,3 +93,6 @@
       layer:
       - MachineLayer
   - type: InteractionOutline
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container

@@ -9,6 +9,7 @@ using Content.Server.Stunnable;
 using Content.Server.Weapons.Melee;
 using Content.Server.Weapons.Ranged.Components;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Weapons.Melee;

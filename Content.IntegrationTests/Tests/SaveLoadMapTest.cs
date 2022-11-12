@@ -53,24 +53,32 @@ namespace Content.IntegrationTests.Tests
             await server.WaitPost(() =>
             {
                 Assert.Multiple(() => mapLoader.LoadMap(new MapId(10), mapPath));
-                
+
             });
             await server.WaitIdleAsync();
             await server.WaitAssertion(() =>
             {
                 {
-                    if (!mapManager.TryFindGridAt(new MapId(10), new Vector2(10, 10), out var mapGrid))
+                    if (!mapManager.TryFindGridAt(new MapId(10), new Vector2(10, 10), out var mapGrid) ||
+                        !sEntities.TryGetComponent<TransformComponent>(mapGrid.GridEntityId, out var gridXform))
+                    {
                         Assert.Fail();
+                        return;
+                    }
 
-                    Assert.That(mapGrid.WorldPosition, Is.EqualTo(new Vector2(10, 10)));
+                    Assert.That(gridXform.WorldPosition, Is.EqualTo(new Vector2(10, 10)));
 
                     Assert.That(mapGrid.GetTileRef(new Vector2i(0, 0)).Tile, Is.EqualTo(new Tile(1, (TileRenderFlag)1, 255)));
                 }
                 {
-                    if (!mapManager.TryFindGridAt(new MapId(10), new Vector2(-8, -8), out var mapGrid))
+                    if (!mapManager.TryFindGridAt(new MapId(10), new Vector2(-8, -8), out var mapGrid) ||
+                        !sEntities.TryGetComponent<TransformComponent>(mapGrid.GridEntityId, out var gridXform))
+                    {
                         Assert.Fail();
+                        return;
+                    }
 
-                    Assert.That(mapGrid.WorldPosition, Is.EqualTo(new Vector2(-8, -8)));
+                    Assert.That(gridXform.WorldPosition, Is.EqualTo(new Vector2(-8, -8)));
                     Assert.That(mapGrid.GetTileRef(new Vector2i(0, 0)).Tile, Is.EqualTo(new Tile(2, (TileRenderFlag)1, 254)));
                 }
             });

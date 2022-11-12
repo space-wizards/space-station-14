@@ -239,6 +239,16 @@
   categories:
   - UplinkUtility
 
+- type: listing
+  id: UplinkStealthBox
+  name: Stealth Box
+  description: A box outfitted with stealth technology, sneak around with this and don't move too fast now!
+  productEntity: StealthBox
+  cost:
+    Telecrystal: 10
+  categories:
+    - UplinkUtility
+
 #TODO: Increase the price of this to 4-5/remove it when we get encrpytion keys
 - type: listing
   id: UplinkHeadset

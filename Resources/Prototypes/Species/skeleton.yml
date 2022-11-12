@@ -14,8 +14,6 @@
   id: MobSkeletonSprites
   sprites:
     Head: MobSkeletonHead
-    Hair: MobHumanoidAnyMarking
-    FacialHair: MobHumanoidAnyMarking
     Chest: MobSkeletonTorso
     LArm: MobSkeletonLArm
     RArm: MobSkeletonRArm

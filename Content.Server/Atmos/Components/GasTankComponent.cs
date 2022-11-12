@@ -8,9 +8,11 @@ namespace Content.Server.Atmos.Components
     public sealed class GasTankComponent : Component, IGasMixtureHolder
     {
         public const float MaxExplosionRange = 14f;
+        private const float DefaultLowPressure = 0f;
         private const float DefaultOutputPressure = Atmospherics.OneAtmosphere;
 
         public int Integrity = 3;
+        public bool IsLowPressure => (Air?.Pressure ?? 0F) <= TankLowPressure;
 
         [ViewVariables(VVAccess.ReadWrite), DataField("ruptureSound")]
         public SoundSpecifier RuptureSound = new SoundPathSpecifier("/Audio/Effects/spray.ogg");
@@ -31,6 +33,13 @@ namespace Content.Server.Atmos.Components
         public IPlayingAudioStream? DisconnectStream;
 
         [DataField("air")] [ViewVariables] public GasMixture Air { get; set; } = new();
+
+        /// <summary>
+        ///     Pressure at which tank should be considered 'low' such as for internals.
+        /// </summary>
+        [DataField("tankLowPressure")]
+        [ViewVariables]
+        public float TankLowPressure { get; set; } = DefaultLowPressure;
 
         /// <summary>
         ///     Distributed pressure.

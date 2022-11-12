@@ -36,7 +36,6 @@
       path: "/Audio/Items/Medical/ointment_end.ogg"
   - type: Stack
     stackType: Ointment
-    max: 10
     count: 10
   - type: StackPrice
     price: 10
@@ -64,7 +63,6 @@
       path: "/Audio/Items/Medical/brutepack_end.ogg"
   - type: Stack
     stackType: Brutepack
-    max: 10
     count: 10
   - type: StackPrice
     price: 10
@@ -96,7 +94,6 @@
       path: "/Audio/Items/Medical/brutepack_end.ogg"
   - type: Stack
     stackType: Gauze
-    max: 10
     count: 10
   - type: StackPrice
     price: 10
@@ -120,7 +117,6 @@
     state: cream
   - type: Stack
     stackType: AloeCream
-    max: 10
     count: 10
 
 # Pills

@@ -43,8 +43,6 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Movement
             await server.WaitAssertion(() =>
             {
                 var mapManager = IoCManager.Resolve<IMapManager>();
-                mapManager.CreateNewMapEntity(MapId.Nullspace);
-
                 var entityManager = IoCManager.Resolve<IEntityManager>();
 
                 // Spawn the entities

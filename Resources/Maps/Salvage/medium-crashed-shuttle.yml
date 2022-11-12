@@ -857,9 +857,6 @@ entities:
     pos: -2.5,-0.5
     parent: 0
     type: Transform
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 116
   type: Poweredlight
   components:
@@ -867,9 +864,6 @@ entities:
     pos: -2.5,-3.5
     parent: 0
     type: Transform
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 117
   type: Poweredlight
   components:
@@ -877,9 +871,6 @@ entities:
     pos: 1.5,-3.5
     parent: 0
     type: Transform
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 118
   type: Poweredlight
   components:
@@ -887,9 +878,6 @@ entities:
     pos: -0.5,-5.5
     parent: 0
     type: Transform
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 119
   type: SalvageMobSpawner
   components:

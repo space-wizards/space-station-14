@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -157,7 +157,6 @@ public sealed class StationJobsTest
         var station = EntityUid.Invalid;
         await server.WaitPost(() =>
         {
-            mapManager.CreateNewMapEntity(MapId.Nullspace);
             station = stationSystem.InitializeNewStation(fooStationProto.Stations["Station"], null, $"Foo Station");
         });
 

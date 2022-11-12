@@ -1,6 +1,8 @@
+using Content.Shared.Construction.Prototypes;
 using Content.Shared.Research.Prototypes;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Lathe
@@ -56,7 +58,43 @@ namespace Content.Shared.Lathe
         [ViewVariables]
         public LatheRecipePrototype? CurrentRecipe;
 
+        #region MachineUpgrading
+        /// <summary>
+        /// A modifier that changes how long it takes to print a recipe
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float TimeMultiplier = 1;
 
+        /// <summary>
+        /// The machine part that reduces how long it takes to print a recipe.
+        /// </summary>
+        [DataField("machinePartPrintSpeed", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
+        public string MachinePartPrintTime = "Manipulator";
+
+        /// <summary>
+        /// The value that is used to calculate the modified <see cref="TimeMultiplier"/>
+        /// </summary>
+        [DataField("partRatingPrintTimeMultiplier")]
+        public float PartRatingPrintTimeMultiplier = 0.5f;
+
+        /// <summary>
+        /// A modifier that changes how much of a material is needed to print a recipe
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float MaterialUseMultiplier = 1;
+
+        /// <summary>
+        /// The machine part that reduces how much material it takes to print a recipe.
+        /// </summary>
+        [DataField("machinePartMaterialUse", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
+        public string MachinePartMaterialUse = "MatterBin";
+
+        /// <summary>
+        /// The value that is used to calculate the modifier <see cref="MaterialUseMultiplier"/>
+        /// </summary>
+        [DataField("partRatingMaterialUseMultiplier")]
+        public float PartRatingMaterialUseMultiplier = 0.75f;
+        #endregion
     }
 
     public sealed class LatheGetRecipesEvent : EntityEventArgs

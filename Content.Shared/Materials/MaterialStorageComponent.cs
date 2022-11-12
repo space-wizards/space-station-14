@@ -2,6 +2,7 @@ using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Materials;
@@ -10,7 +11,7 @@ namespace Content.Shared.Materials;
 [RegisterComponent, NetworkedComponent]
 public sealed class MaterialStorageComponent : Component
 {
-    [ViewVariables]
+    [DataField("storage", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<int, MaterialPrototype>)), ViewVariables]
     public Dictionary<string, int> Storage { get; set; } = new();
 
     /// <summary>
