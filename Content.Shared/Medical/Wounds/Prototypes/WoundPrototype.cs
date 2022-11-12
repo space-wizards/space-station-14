@@ -12,4 +12,4 @@ public sealed class WoundPrototype : IPrototype
 }
 
 [Serializable, NetSerializable, DataRecord]
-public record struct WoundData (string WoundId, float Severity, float Healed, float Infected);
+public record struct WoundData (string WoundId, float Severity, float Tended, float Size, float Infected);
