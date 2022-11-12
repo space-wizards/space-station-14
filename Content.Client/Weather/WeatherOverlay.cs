@@ -173,33 +173,28 @@ public sealed class WeatherOverlay : Overlay
         // and not make it spaghetti, while getting the advantages of not-duped code?
 
         // Get position offset but rotated around
-        var offset = position;
-        offset = -rotation.RotateVec(offset);
-
-        var a = offset.Length;
-        a %= 1f;
-
-        if (!a.Equals(0f))
-            offset = offset.Normalized * a;
+        var offset = new Vector2(position.X % 1, position.Y % 1);
+        offset = rotation.RotateVec(offset);
 
         var scale = 1.0f;
         var size = sprite.Size / (float) EyeManager.PixelsPerMeter * scale;
-        worldHandle.SetTransform(Matrix3.CreateTransform(position, -rotation));
-        var bounds = args.WorldBounds.Box.Translated(-position + offset);
 
-        var scaledSize = size * scale;
+        var mat = Matrix3.CreateTransform(position, -rotation);
+        worldHandle.SetTransform(mat);
+        var viewBox = args.WorldBounds.Box;
 
-        for (var x = bounds.Left - scaledSize.X; x <= bounds.Right + scaledSize.X; x += scaledSize.X)
+        // Slight overdraw because I'm done but uhh don't worry about it.
+        for (var x = -viewBox.Width / 2f - 1f; x <= viewBox.Width / 2f; x += size.X * scale)
         {
-            for (var y = bounds.Bottom - scaledSize.Y; y <= bounds.Top + scaledSize.Y; y += scaledSize.Y)
+            for (var y = -viewBox.Height - 1f; y <= viewBox.Height; y += size.Y * scale)
             {
-                var boxPosition = new Vector2(x, y);
+                var boxPosition = new Vector2(x - offset.X, y - offset.Y);
 
                 // Yes I spent a while making sure no texture holes when the eye is rotating.
                 var box = Box2.FromDimensions(boxPosition, size * scale);
-                // worldHandle.DrawTextureRect(sprite, box, (weatherProto.Color ?? Color.White).WithAlpha(alpha));
+                worldHandle.DrawTextureRect(sprite, box, (weatherProto.Color ?? Color.White).WithAlpha(alpha));
                 // Deadcode but very useful for debugging to check there's no overlap or dead spots.
-                worldHandle.DrawRect(box, Color.Red.WithAlpha(alpha));
+                // worldHandle.DrawRect(box, Color.Red.WithAlpha(alpha));
             }
         }
 
