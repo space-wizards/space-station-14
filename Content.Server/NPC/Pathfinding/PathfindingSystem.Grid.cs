@@ -361,7 +361,7 @@ public sealed partial class PathfindingSystem
     }
 
     private void BuildBreadcrumbs(GridPathfindingChunk chunk,
-        IMapGrid grid,
+        MapGridComponent grid,
         EntityQuery<AccessReaderComponent> accessQuery,
         EntityQuery<DestructibleComponent> destructibleQuery,
         EntityQuery<DoorComponent> doorQuery,
@@ -571,7 +571,7 @@ public sealed partial class PathfindingSystem
                     var polyData = points[x * SubStep + poly.Left, y * SubStep + poly.Bottom].Data;
 
                     var neighbors = new HashSet<PathPoly>();
-                    tilePoly.Add(new PathPoly(grid.GridEntityId, chunk.Origin, GetIndex(x, y), box, polyData, neighbors));
+                    tilePoly.Add(new PathPoly(grid.Owner, chunk.Origin, GetIndex(x, y), box, polyData, neighbors));
                 }
             }
         }
@@ -614,7 +614,7 @@ public sealed partial class PathfindingSystem
         }
 
         // _sawmill.Debug($"Built breadcrumbs in {sw.Elapsed.TotalMilliseconds}ms");
-        SendBreadcrumbs(chunk, grid.GridEntityId);
+        SendBreadcrumbs(chunk, grid.Owner);
     }
 
     /// <summary>

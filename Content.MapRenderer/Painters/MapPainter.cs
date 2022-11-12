@@ -59,7 +59,7 @@ namespace Content.MapRenderer.Painters
 
             var tilePainter = new TilePainter(client, server);
             var entityPainter = new GridPainter(client, server);
-            IMapGrid[] grids = null!;
+            MapGridComponent[] grids = null!;
             var xformQuery = sEntityManager.GetEntityQuery<TransformComponent>();
 
             await server.WaitPost(() =>
@@ -76,7 +76,7 @@ namespace Content.MapRenderer.Painters
 
                 foreach (var grid in grids)
                 {
-                    var gridXform = xformQuery.GetComponent(grid.GridEntityId);
+                    var gridXform = xformQuery.GetComponent(grid.Owner);
                     gridXform.WorldRotation = Angle.Zero;
                 }
             });
@@ -89,7 +89,7 @@ namespace Content.MapRenderer.Painters
                 // Skip empty grids
                 if (grid.LocalAABB.IsEmpty())
                 {
-                    Console.WriteLine($"Warning: Grid {grid.GridEntityId} was empty. Skipping image rendering.");
+                    Console.WriteLine($"Warning: Grid {grid.Owner} was empty. Skipping image rendering.");
                     continue;
                 }
 
@@ -118,8 +118,8 @@ namespace Content.MapRenderer.Painters
 
                 var renderedImage = new RenderedGridImage<Rgba32>(gridCanvas)
                 {
-                    GridUid = grid.GridEntityId,
-                    Offset = xformQuery.GetComponent(grid.GridEntityId).WorldPosition
+                    GridUid = grid.Owner,
+                    Offset = xformQuery.GetComponent(grid.Owner).WorldPosition
                 };
 
                 yield return renderedImage;

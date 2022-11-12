@@ -201,11 +201,11 @@ namespace Content.IntegrationTests.Tests
                 var memberQuery = entManager.GetEntityQuery<StationMemberComponent>();
 
                 var grids = mapManager.GetAllMapGrids(mapId).ToList();
-                var gridUids = grids.Select(o => o.GridEntityId).ToList();
+                var gridUids = grids.Select(o => o.Owner).ToList();
 
                 foreach (var grid in grids)
                 {
-                    if (!memberQuery.HasComponent(grid.GridEntityId))
+                    if (!memberQuery.HasComponent(grid.Owner))
                         continue;
 
                     var area = grid.LocalAABB.Width * grid.LocalAABB.Height;
@@ -213,7 +213,7 @@ namespace Content.IntegrationTests.Tests
                     if (area > largest)
                     {
                         largest = area;
-                        targetGrid = grid.GridEntityId;
+                        targetGrid = grid.Owner;
                     }
                 }
 

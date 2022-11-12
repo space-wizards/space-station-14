@@ -388,14 +388,14 @@ public sealed class StationSystem : EntitySystem
     public void AddGridToStation(EntityUid station, EntityUid mapGrid, MapGridComponent? gridComponent = null, StationDataComponent? stationData = null, string? name = null)
     {
         if (!Resolve(mapGrid, ref gridComponent))
-            throw new ArgumentException("Tried to initialize a station on a non-grid entity!", nameof(mapGrid));
+            throw new ArgumentException("Tried to initialize a station on a non-grid entity!", nameof(MapGridComponent));
         if (!Resolve(station, ref stationData))
             throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
 
         if (!string.IsNullOrEmpty(name))
-            MetaData(mapGrid).EntityName = name;
+            MetaData(MapGridComponent).EntityName = name;
 
-        var stationMember = AddComp<StationMemberComponent>(mapGrid);
+        var stationMember = AddComp<StationMemberComponent>(MapGridComponent);
         stationMember.Station = station;
         stationData.Grids.Add(gridComponent.Owner);
 
@@ -415,11 +415,11 @@ public sealed class StationSystem : EntitySystem
     public void RemoveGridFromStation(EntityUid station, EntityUid mapGrid, MapGridComponent? gridComponent = null, StationDataComponent? stationData = null)
     {
         if (!Resolve(mapGrid, ref gridComponent))
-            throw new ArgumentException("Tried to initialize a station on a non-grid entity!", nameof(mapGrid));
+            throw new ArgumentException("Tried to initialize a station on a non-grid entity!", nameof(MapGridComponent));
         if (!Resolve(station, ref stationData))
             throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
 
-        RemComp<StationMemberComponent>(mapGrid);
+        RemComp<StationMemberComponent>(MapGridComponent);
         stationData.Grids.Remove(gridComponent.Owner);
 
         RaiseLocalEvent(station, new StationGridRemovedEvent(gridComponent.Owner), true);

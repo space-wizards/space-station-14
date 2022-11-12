@@ -160,9 +160,9 @@ namespace Content.Server.StationEvents.Events
                 var randomY = RobustRandom.Next((int) gridBounds.Bottom, (int) gridBounds.Top);
 
                 tile = new Vector2i(randomX - (int) gridPos.X, randomY - (int) gridPos.Y);
-                if (_atmosphere.IsTileSpace(grid.GridEntityId, Transform(targetGrid).MapUid, tile,
+                if (_atmosphere.IsTileSpace(grid.Owner, Transform(targetGrid).MapUid, tile,
                         mapGridComp: gridComp)
-                    || _atmosphere.IsTileAirBlocked(grid.GridEntityId, tile, mapGridComp: gridComp))
+                    || _atmosphere.IsTileAirBlocked(grid.Owner, tile, mapGridComp: gridComp))
                 {
                     continue;
                 }

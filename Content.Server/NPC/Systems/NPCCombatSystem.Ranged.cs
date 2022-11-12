@@ -147,7 +147,7 @@ public sealed partial class NPCCombatSystem
 
             if (_mapManager.TryFindGridAt(xform.MapID, targetPos, out var mapGrid))
             {
-                targetCordinates = new EntityCoordinates(mapGrid.GridEntityId, mapGrid.WorldToLocal(targetSpot));
+                targetCordinates = new EntityCoordinates(mapGrid.Owner, mapGrid.WorldToLocal(targetSpot));
             }
             else
             {
