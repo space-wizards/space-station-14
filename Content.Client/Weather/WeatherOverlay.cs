@@ -105,17 +105,10 @@ public sealed class WeatherOverlay : Overlay
 
                 foreach (var tile in grid.GetTilesIntersecting(worldAABB))
                 {
-                    var tileDef = _tileDefManager[tile.Tile.TypeId];
-
                     // Ignored tiles for stencil
-                    if (weatherProto.Tiles.Contains(tileDef.ID))
+                    if (_weather.CanWeatherAffect(grid, tile, weatherProto, bodyQuery))
                     {
-                        var anchoredEnts = grid.GetAnchoredEntitiesEnumerator(tile.GridIndices);
-
-                        if (!anchoredEnts.MoveNext(out var ent) || (bodyQuery.TryGetComponent(ent, out var body) && !body.CanCollide))
-                        {
-                            continue;
-                        }
+                        continue;
                     }
 
                     var gridTile = new Box2(tile.GridIndices * grid.TileSize,

@@ -2,8 +2,14 @@ using Content.Shared.Weather;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
+using Robust.Shared.Collections;
 using Robust.Shared.GameStates;
+using Robust.Shared.Map;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
+using Robust.Shared.Random;
 
 namespace Content.Client.Weather;
 
@@ -12,6 +18,7 @@ public sealed class WeatherSystem : SharedWeatherSystem
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly MetaDataSystem _metadata = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
     public override void Initialize()
     {
@@ -48,39 +55,74 @@ public sealed class WeatherSystem : SharedWeatherSystem
         {
             var stream = (AudioSystem.PlayingStream) component.Stream;
             var alpha = GetPercent(component, mapUid.Value, weather);
-            alpha = MathF.Pow(alpha, 4f);
+            alpha = MathF.Pow(alpha, 2f);
+            var occlusion = 0f;
             // TODO: Fade-out needs to be slower
             // TODO: HELPER PLZ
-            var circle = new Circle(entXform.WorldPosition, 3f);
 
-            // Work out tiles nearby to also determine volume.
+            // Work out tiles nearby to determine volume.
             if (entXform.GridUid != null)
             {
-                // If the tile count is less than target tiles we just assume the difference is weather-affected.
-                var targetTiles = 25;
-                var tiles = 0;
-                var weatherTiles = 0;
+                // Floodfill to the nearest tile and use that for audio.
+                var grid = MapManager.GetGrid(entXform.GridUid.Value);
+                var seed = grid.GetTileRef(entXform.Coordinates);
+                var frontier = new Queue<TileRef>();
+                frontier.Enqueue(seed);
+                // If we don't have a nearest node don't play any sound.
+                EntityCoordinates? nearestNode = null;
+                var bodyQuery = GetEntityQuery<PhysicsComponent>();
+                var visited = new HashSet<Vector2i>();
 
-                // TODO: Floodfill out and determine if we should occlude.
-                // TODO: Floodfill distance to nearest tile determines volume, too.
-
-                foreach (var tile in MapManager.GetGrid(entXform.GridUid.Value).GetTilesIntersecting(circle))
+                while (frontier.TryDequeue(out var node))
                 {
-                    tiles++;
+                    if (!visited.Add(node.GridIndices))
+                        continue;
 
-                    if (weather.Tiles.Contains(_tileDefManager[tile.Tile.TypeId].ID))
+                    if (!CanWeatherAffect(grid, node, weather, bodyQuery))
                     {
-                        weatherTiles++;
+                        // Add neighbors
+                        // TODO: Ideally we pick some deterministically random direction and use that
+                        // We can't just do that naively here because it will flicker between nearby tiles.
+                        for (var x = -1; x <= 1; x++)
+                        {
+                            for (var y = -1; y <= 1; y++)
+                            {
+                                if (Math.Abs(x) == 1 && Math.Abs(y) == 1 ||
+                                    x == 0 && y == 0 ||
+                                    (new Vector2(x, y) + node.GridIndices - seed.GridIndices).Length > 3)
+                                {
+                                    continue;
+                                }
+
+                                frontier.Enqueue(grid.GetTileRef(new Vector2i(x, y) + node.GridIndices));
+                            }
+                        }
+
+                        continue;
                     }
+
+                    nearestNode = new EntityCoordinates(entXform.GridUid.Value,
+                        (Vector2) node.GridIndices + (grid.TileSize / 2f));
+                    break;
                 }
 
-                var totalWeather = Math.Max(0, weatherTiles + targetTiles - tiles);
-                var ratio = Math.Clamp(tiles == 0 ? 1f : totalWeather / (float) tiles, 0f, 1f);
-                alpha *= ratio;
+                if (nearestNode == null)
+                    alpha = 0f;
+                else
+                {
+                    var entPos = entXform.WorldPosition;
+                    var sourceRelative = nearestNode.Value.ToMap(EntityManager).Position - entPos;
+
+                    occlusion = _physics.IntersectRayPenetration(entXform.MapID,
+                        new CollisionRay(entXform.WorldPosition, sourceRelative.Normalized, _audio.OcclusionCollisionMask),
+                        sourceRelative.Length, stream.TrackingEntity);
+                }
+
             }
             // Full volume if not on grid
 
             stream.Gain = alpha;
+            stream.Source.SetOcclusion(occlusion);
         }
 
         // TODO: Frames and stuff

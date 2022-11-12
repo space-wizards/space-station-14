@@ -12,7 +12,7 @@
   copyright: "Taken from https://github.com/Citadel-Station-13/Citadel-Station-13-RP/tree/28e11dee540e61b6c42fa293c1e1da087c1c2b0a and looped"
   source: "https://github.com/Citadel-Station-13/Citadel-Station-13-RP/tree/28e11dee540e61b6c42fa293c1e1da087c1c2b0a"
 
-- files: ["rain2.ogg"]
+- files: ["rain2.wav"]
   license: "Royalty free"
   copyright: "Varazuvi - Natural Environments"
   source: "Taken from Soniss.com - GDC"

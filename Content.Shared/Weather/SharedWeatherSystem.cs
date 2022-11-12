@@ -1,4 +1,5 @@
 using Robust.Shared.Map;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
@@ -22,6 +23,31 @@ public abstract class SharedWeatherSystem : EntitySystem
     {
         base.Initialize();
         Sawmill = Logger.GetSawmill("weather");
+    }
+
+    public bool CanWeatherAffect(IMapGrid grid, TileRef tileRef, WeatherPrototype weatherProto, EntityQuery<PhysicsComponent> bodyQuery)
+    {
+        if (tileRef.Tile.IsEmpty)
+            return true;
+
+        var tileDef = _tileDefManager[tileRef.Tile.TypeId];
+
+        if (weatherProto.Tiles.Contains(tileDef.ID))
+        {
+            var anchoredEnts = grid.GetAnchoredEntitiesEnumerator(tileRef.GridIndices);
+
+            while (anchoredEnts.MoveNext(out var ent))
+            {
+                if (bodyQuery.TryGetComponent(ent, out var body) && body.CanCollide)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        return false;
     }
 
     public override void Update(float frameTime)
