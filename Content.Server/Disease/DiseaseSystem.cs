@@ -1,26 +1,27 @@
-using System.Threading;
-using Content.Shared.Disease;
-using Content.Shared.Disease.Components;
-using Content.Server.Disease.Components;
-using Content.Server.Clothing.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chat.Systems;
-using Content.Shared.MobState.Components;
-using Content.Shared.Examine;
-using Content.Shared.Inventory;
-using Content.Shared.Interaction;
-using Content.Server.Popups;
+using Content.Server.Disease.Components;
 using Content.Server.DoAfter;
+using Content.Server.MobState;
+using Content.Server.Nutrition.EntitySystems;
+using Content.Server.Popups;
+using Content.Shared.Clothing.Components;
+using Content.Shared.Disease;
+using Content.Shared.Disease.Components;
+using Content.Shared.Examine;
+using Content.Shared.IdentityManagement;
+using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
+using Content.Shared.Inventory;
+using Content.Shared.Inventory.Events;
+using Content.Shared.MobState.Components;
+using Content.Shared.Rejuvenate;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager;
-using Content.Shared.Inventory.Events;
-using Content.Server.Nutrition.EntitySystems;
 using Robust.Shared.Utility;
-using Content.Shared.IdentityManagement;
-using Content.Shared.Item;
-using Content.Server.MobState;
+using System.Threading;
 
 namespace Content.Server.Disease
 {
@@ -44,8 +45,8 @@ namespace Content.Server.Disease
             base.Initialize();
             SubscribeLocalEvent<DiseaseCarrierComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<DiseaseCarrierComponent, CureDiseaseAttemptEvent>(OnTryCureDisease);
-            SubscribeLocalEvent<DiseasedComponent, UserInteractedWithItemEvent>(OnUserInteractDiseased);
-            SubscribeLocalEvent<DiseasedComponent, ItemInteractedWithEvent>(OnTargetInteractDiseased);
+            SubscribeLocalEvent<DiseaseCarrierComponent, RejuvenateEvent>(OnRejuvenate);
+            SubscribeLocalEvent<DiseasedComponent, ContactInteractionEvent>(OnContactInteraction);
             SubscribeLocalEvent<DiseasedComponent, EntitySpokeEvent>(OnEntitySpeak);
             SubscribeLocalEvent<DiseaseProtectionComponent, GotEquippedEvent>(OnEquipped);
             SubscribeLocalEvent<DiseaseProtectionComponent, GotUnequippedEvent>(OnUnequipped);
@@ -188,6 +189,11 @@ namespace Content.Server.Disease
             }
         }
 
+        private void OnRejuvenate(EntityUid uid, DiseaseCarrierComponent component, RejuvenateEvent args)
+        {
+            CureAllDiseases(uid, component);
+        }
+
         /// <summary>
         /// Called when a component with disease protection
         /// is equipped so it can be added to the person's
@@ -249,17 +255,9 @@ namespace Content.Server.Disease
         /// <summary>
         /// When a diseased person interacts with something, check infection.
         /// </summary>
-        private void OnUserInteractDiseased(EntityUid uid, DiseasedComponent component, UserInteractedWithItemEvent args)
+        private void OnContactInteraction(EntityUid uid, DiseasedComponent component, ContactInteractionEvent args)
         {
-            InteractWithDiseased(args.User, args.Item);
-        }
-
-        /// <summary>
-        /// When a diseased person is interacted with, check infection.
-        /// </summary>
-        private void OnTargetInteractDiseased(EntityUid uid, DiseasedComponent component, ItemInteractedWithEvent args)
-        {
-            InteractWithDiseased(args.Item, args.User);
+            InteractWithDiseased(uid, args.Other);
         }
 
         private void OnEntitySpeak(EntityUid uid, DiseasedComponent component, EntitySpokeEvent args)

@@ -192,7 +192,7 @@ namespace Content.Shared.Chemistry.Reaction
         {
             var args = new ReagentEffectArgs(owner, null, solution,
                 randomReagent,
-                unitReactions, EntityManager, null);
+                unitReactions, EntityManager, null, null);
 
             foreach (var effect in reaction.Effects)
             {

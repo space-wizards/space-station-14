@@ -4,6 +4,7 @@ gun-fire-rate-examine = Fire rate is [color={$color}]{$fireRate}[/color] per sec
 gun-selector-verb = Change to {$mode}
 gun-selected-mode = Selected {$mode}
 gun-disabled = You can't use guns!
+gun-clumsy = The gun blows up in your face!
 
 # SelectiveFire
 gun-SemiAuto = semi-auto
@@ -15,8 +16,12 @@ gun-ballistic-cycle = Cycle
 gun-ballistic-cycled = Cycled
 gun-ballistic-cycled-empty = Cycled (empty)
 
+# CartridgeAmmo
+gun-cartridge-spent = It is [color=red]spent[/color].
+gun-cartridge-unspent = It is [color=lime]not spent[/color].
+
 # BatteryAmmoProvider
-gun-battery-examine = It has enough charge for [color={$color}]{$count} shots.
+gun-battery-examine = It has enough charge for [color={$color}]{$count}[/color] shots.
 
 # MagazineAmmoProvider
 gun-magazine-examine = It has [color={$color}]{$count}[/color] shots remaining.
@@ -27,3 +32,4 @@ gun-revolver-full = Revolver full
 gun-revolver-insert = Inserted
 gun-revolver-spin = Spin revolver
 gun-revolver-spun = Spun
+gun-speedloader-empty = Speedloader empty

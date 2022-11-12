@@ -7,9 +7,6 @@ ent-CrateSecurityHelmet = helmet crate
 ent-CrateSecurityNonlethal = nonlethals crate
     .desc = Disabler weapons. Requires Security access to open.
 
-ent-CrateSecurityLaser = lasers crate
-    .desc = Contains three lethal, high-energy laser guns. Requires Security access to open.
-
 ent-CrateSecurityRiot = swat crate
     .desc = Contains two sets of heavy body armor and helmets and 2 shotguns with 6 rounds of beanbag shells each. Requires Armory access to open.
 

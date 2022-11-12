@@ -74,10 +74,10 @@
         Slash: 8
   - type: Wieldable
   - type: IncreaseDamageOnWield #they don't call it an axe for nothing
-    modifiers:
-      flatReductions:
-        Blunt: -2
-        Slash: -6
+    damage:
+      types:
+        Blunt: 2
+        Slash: 6
 
 - type: entity
   parent: BaseHandheldInstrument

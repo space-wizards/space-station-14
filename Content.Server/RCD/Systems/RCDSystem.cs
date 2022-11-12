@@ -73,17 +73,18 @@ namespace Content.Server.RCD.Systems
                 return;
             // Try to fix it (i.e. if clicking on space)
             // Note: Ideally there'd be a better way, but there isn't right now.
-            var gridID = clickLocationMod.GetGridEuid(EntityManager);
-            if (!gridID.IsValid())
+            var gridIdOpt = clickLocationMod.GetGridUid(EntityManager);
+            if (!(gridIdOpt is EntityUid gridId) || !gridId.IsValid())
             {
                 clickLocationMod = clickLocationMod.AlignWithClosestGridTile();
-                gridID = clickLocationMod.GetGridEuid(EntityManager);
+                gridIdOpt = clickLocationMod.GetGridUid(EntityManager);
+                // Check if fixing it failed / get final grid ID
+                if (!(gridIdOpt is EntityUid gridId2) || !gridId2.IsValid())
+                    return;
+                gridId = gridId2;
             }
-            // Check if fixing it failed / get final grid ID
-            if (!gridID.IsValid())
-                return;
 
-            var mapGrid = _mapManager.EntityManager.GetComponent<MapGridComponent>(gridID);
+            var mapGrid = _mapManager.GetGrid(gridId);
             var tile = mapGrid.GetTileRef(clickLocationMod);
             var snapPos = mapGrid.TileIndicesFor(clickLocationMod);
 
@@ -137,12 +138,12 @@ namespace Content.Server.RCD.Systems
                 case RcdMode.Walls:
                     var ent = EntityManager.SpawnEntity("WallSolid", mapGrid.GridTileToLocal(snapPos));
                     Transform(ent).LocalRotation = Angle.Zero; // Walls always need to point south.
-                    _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to spawn {ToPrettyString(ent)} at {snapPos} on grid {mapGrid.Owner}");
+                    _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to spawn {ToPrettyString(ent)} at {snapPos} on grid {mapGrid.GridEntityId}");
                     break;
                 case RcdMode.Airlock:
                     var airlock = EntityManager.SpawnEntity("Airlock", mapGrid.GridTileToLocal(snapPos));
                     Transform(airlock).LocalRotation = Transform(rcd.Owner).LocalRotation; //Now apply icon smoothing.
-                    _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to spawn {ToPrettyString(airlock)} at {snapPos} on grid {mapGrid.Owner}");
+                    _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to spawn {ToPrettyString(airlock)} at {snapPos} on grid {mapGrid.GridEntityId}");
                     break;
                 default:
                     args.Handled = true;
@@ -154,8 +155,7 @@ namespace Content.Server.RCD.Systems
             args.Handled = true;
         }
 
-        private bool IsRCDStillValid(RCDComponent rcd, AfterInteractEvent eventArgs, MapGridComponent mapGrid,
-            TileRef tile, RcdMode startingMode)
+        private bool IsRCDStillValid(RCDComponent rcd, AfterInteractEvent eventArgs, IMapGrid mapGrid, TileRef tile, RcdMode startingMode)
         {
             //Less expensive checks first. Failing those ones, we need to check that the tile isn't obstructed.
             if (rcd.CurrentAmmo <= 0)

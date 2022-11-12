@@ -50,3 +50,6 @@
 
 - type: statusEffect
   id: TemporaryBlindness
+
+- type: statusEffect
+  id: Pacified #cannot attack

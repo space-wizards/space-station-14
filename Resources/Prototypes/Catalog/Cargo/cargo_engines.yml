@@ -4,7 +4,7 @@
     sprite: Objects/Power/AME/ame_part.rsi
     state: box
   product: CrateEngineeringAMEShielding
-  cost: 10000
+  cost: 6000
   category: Engineering
   group: market
 
@@ -76,7 +76,7 @@
     sprite: Structures/Power/Generation/PA/control_box.rsi
     state: boxc
   product: CrateEngineeringParticleAccelerator
-  cost: 10000
+  cost: 2000
   category: Engineering
   group: market
 

@@ -38,18 +38,19 @@ public sealed class DoorBoltWireAction : BaseWireAction
     {
         if (EntityManager.TryGetComponent<AirlockComponent>(wire.Owner, out var door))
         {
-            if (!door.BoltsDown)
-            {
+            door.BoltWireCut = true;
+            if (!door.BoltsDown && IsPowered(wire.Owner))
                 door.SetBoltsWithAudio(true);
-            }
         }
 
         return true;
     }
 
-    // does nothing
     public override bool Mend(EntityUid user, Wire wire)
     {
+        if (EntityManager.TryGetComponent<AirlockComponent>(wire.Owner, out var door))
+            door.BoltWireCut = false;
+
         return true;
     }
 

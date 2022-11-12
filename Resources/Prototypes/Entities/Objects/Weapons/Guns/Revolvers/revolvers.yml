@@ -10,6 +10,12 @@
     state: icon
   - type: Item
     size: 10
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Revolvers/deckard.rsi
+    quickEquip: false
+    slots:
+    - suitStorage
+    - Belt
   - type: Gun
     selectedMode: SemiAuto
     fireRate: 1.5
@@ -24,6 +30,7 @@
     whitelist:
       tags:
         - CartridgeMagnum
+        - SpeedLoaderMagnum
     proto: CartridgeMagnum
     capacity: 7
     chambers: [ True, True, True, True, True, True, True ]
@@ -32,12 +39,14 @@
       path: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+  - type: StaticPrice
+    price: 500
 
 - type: entity
   name: Deckard
   parent: BaseWeaponRevolver
   id: WeaponRevolverDeckard
-  description: A rare, custom-built revolver. Use when there is no time for Voight-Kampff test.
+  description: A rare, custom-built revolver. Use when there is no time for Voight-Kampff test. Uses .40 magnum ammo.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/deckard.rsi
@@ -47,8 +56,6 @@
     - state: mag-unshaded-3
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
-  - type: Item
-    sprite: Objects/Weapons/Guns/Revolvers/deckard.rsi
   - type: RevolverAmmoProvider
     capacity: 5
     chambers: [ True, True, True, True, True ]
@@ -63,11 +70,11 @@
   name: Inspector
   parent: BaseWeaponRevolver
   id: WeaponRevolverInspector
-  description: A detective's best friend.
+  description: A detective's best friend. Uses .40 magnum ammo.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/inspector.rsi
-  - type: Item
+  - type: Clothing
     sprite: Objects/Weapons/Guns/Revolvers/inspector.rsi
   - type: RevolverAmmoProvider
     capacity: 6
@@ -78,11 +85,11 @@
   name: Mateba
   parent: BaseWeaponRevolver
   id: WeaponRevolverMateba
-  description: The iconic sidearm of the dreaded death squads.
+  description: The iconic sidearm of the dreaded death squads. Uses .40 magnum ammo.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi
-  - type: Item
+  - type: Clothing
     sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi
   - type: Gun
     soundGunshot:
@@ -92,22 +99,22 @@
   name: Predator
   parent: BaseWeaponRevolver
   id: WeaponRevolverPython
-  description: A robust revolver favoured by Syndicate agents.
+  description: A robust revolver favoured by Syndicate agents. Uses .40 magnum ammo.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/python.rsi
-  - type: Item
+  - type: Clothing
     sprite: Objects/Weapons/Guns/Revolvers/python.rsi
 
 - type: entity
   name: pirate revolver
   parent: BaseWeaponRevolver
   id: WeaponRevolverPirate
-  description: An odd, muzzle-loading revolver, favoured by pirate crews.
+  description: An odd, muzzle-loading revolver, favoured by pirate crews. Uses .40 magnum ammo.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/pirate_revolver.rsi
-  - type: Item
+  - type: Clothing
     sprite: Objects/Weapons/Guns/Revolvers/pirate_revolver.rsi
   - type: Gun
     fireRate: 1

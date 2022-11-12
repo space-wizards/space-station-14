@@ -114,6 +114,9 @@
     sprite: Objects/Consumable/Food/plates.rsi
     state: plate-plastic
     netsync: false
+  - type: Tag
+    tags:
+    - Trash
 
 - type: entity
   name: plastic plate
@@ -125,6 +128,9 @@
     sprite: Objects/Consumable/Food/plates.rsi
     state: plate-small-plastic
     netsync: false
+  - type: Tag
+    tags:
+    - Trash
 
 # Pie Tin
 

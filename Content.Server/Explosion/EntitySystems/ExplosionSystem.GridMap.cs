@@ -18,7 +18,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     /// </summary>
     private void OnGridStartup(GridStartupEvent ev)
     {
-        var grid = _mapManager.EntityManager.GetComponent<MapGridComponent>(ev.EntityUid);
+        var grid = _mapManager.GetGrid(ev.EntityUid);
 
         Dictionary<Vector2i, NeighborFlag> edges = new();
         _gridEdges[ev.EntityUid] = edges;
@@ -56,8 +56,8 @@ public sealed partial class ExplosionSystem : EntitySystem
         // if the explosion is centered on some grid (and not just space), get the transforms.
         if (referenceGrid != null)
         {
-            var targetGrid = _mapManager.EntityManager.GetComponent<MapGridComponent>(referenceGrid.Value);
-            var xform = Transform(targetGrid.Owner);
+            var targetGrid = _mapManager.GetGrid(referenceGrid.Value);
+            var xform = Transform(targetGrid.GridEntityId);
             targetAngle = xform.WorldRotation;
             targetMatrix = xform.InvWorldMatrix;
             tileSize = targetGrid.TileSize;
@@ -81,7 +81,7 @@ public sealed partial class ExplosionSystem : EntitySystem
             if (!_gridEdges.TryGetValue(gridToTransform, out var edges))
                 continue;
 
-            if (!_mapManager.EntityManager.TryGetComponent<MapGridComponent>((EntityUid?) gridToTransform, out var grid))
+            if (!_mapManager.TryGetGrid(gridToTransform, out var grid))
                 continue;
 
             if (grid.TileSize != tileSize)
@@ -91,7 +91,7 @@ public sealed partial class ExplosionSystem : EntitySystem
             }
 
             var xforms = EntityManager.GetEntityQuery<TransformComponent>();
-            var xform = xforms.GetComponent(grid.Owner);
+            var xform = xforms.GetComponent(grid.GridEntityId);
             var  (_, gridWorldRotation, gridWorldMatrix, invGridWorldMatrid) = xform.GetWorldPositionRotationMatrixWithInv(xforms);
 
             var localEpicentre = (Vector2i) invGridWorldMatrid.Transform(epicentre.Position);
@@ -225,7 +225,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         if (!ev.NewTile.Tile.IsEmpty && !ev.OldTile.IsEmpty)
             return;
 
-        if (!_mapManager.EntityManager.TryGetComponent<MapGridComponent>((EntityUid?) ev.Entity, out var grid))
+        if (!_mapManager.TryGetGrid(ev.Entity, out var grid))
             return;
 
         var tileRef = ev.NewTile;
@@ -289,7 +289,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     ///     Optionally ignore a specific Vector2i. Used by <see cref="OnTileChanged"/> when we already know that a
     ///     given tile is not space. This avoids unnecessary TryGetTileRef calls.
     /// </remarks>
-    private bool IsEdge(MapGridComponent grid, Vector2i index, out NeighborFlag spaceDirections)
+    private bool IsEdge(IMapGrid grid, Vector2i index, out NeighborFlag spaceDirections)
     {
         spaceDirections = NeighborFlag.Invalid;
         for (var i = 0; i < NeighbourVectors.Length; i++)

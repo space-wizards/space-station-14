@@ -33,46 +33,52 @@ namespace Content.IntegrationTests.Tests
                 var mapId = mapManager.CreateMap();
 
                 {
-                    var gridEnt = mapManager.EntityManager.SpawnEntity(null, mapId);
-                    var mapGrid = (MapGridComponent) mapManager.EntityManager.AddComponent<MapGridComponent>(gridEnt);
-                    var mapGridEnt = mapGrid.Owner;
+                    var mapGrid = mapManager.CreateGrid(mapId);
+                    var mapGridEnt = mapGrid.GridEntityId;
                     sEntities.GetComponent<TransformComponent>(mapGridEnt).WorldPosition = new Vector2(10, 10);
                     mapGrid.SetTile(new Vector2i(0,0), new Tile(1, (TileRenderFlag)1, 255));
                 }
                 {
-                    var gridEnt = mapManager.EntityManager.SpawnEntity(null, mapId);
-                    var mapGrid = (MapGridComponent) mapManager.EntityManager.AddComponent<MapGridComponent>(gridEnt);
-                    var mapGridEnt = mapGrid.Owner;
+                    var mapGrid = mapManager.CreateGrid(mapId);
+                    var mapGridEnt = mapGrid.GridEntityId;
                     sEntities.GetComponent<TransformComponent>(mapGridEnt).WorldPosition = new Vector2(-8, -8);
                     mapGrid.SetTile(new Vector2i(0, 0), new Tile(2, (TileRenderFlag)1, 254));
                 }
 
-                mapLoader.SaveMap(mapId, mapPath);
-
-                mapManager.DeleteMap(mapId);
+                Assert.Multiple(() => mapLoader.SaveMap(mapId, mapPath));
+                Assert.Multiple(() => mapManager.DeleteMap(mapId));
             });
             await server.WaitIdleAsync();
 
             await server.WaitPost(() =>
             {
-                mapLoader.LoadMap(new MapId(10), mapPath);
+                Assert.Multiple(() => mapLoader.LoadMap(new MapId(10), mapPath));
+
             });
             await server.WaitIdleAsync();
             await server.WaitAssertion(() =>
             {
                 {
-                    if (!mapManager.TryFindGridAt(new MapId(10), new Vector2(10, 10), out var mapGrid))
+                    if (!mapManager.TryFindGridAt(new MapId(10), new Vector2(10, 10), out var mapGrid) ||
+                        !sEntities.TryGetComponent<TransformComponent>(mapGrid.GridEntityId, out var gridXform))
+                    {
                         Assert.Fail();
+                        return;
+                    }
 
-                    Assert.That(sEntities.GetComponent<TransformComponent>(mapGrid.Owner).WorldPosition, Is.EqualTo(new Vector2(10, 10)));
+                    Assert.That(gridXform.WorldPosition, Is.EqualTo(new Vector2(10, 10)));
 
                     Assert.That(mapGrid.GetTileRef(new Vector2i(0, 0)).Tile, Is.EqualTo(new Tile(1, (TileRenderFlag)1, 255)));
                 }
                 {
-                    if (!mapManager.TryFindGridAt(new MapId(10), new Vector2(-8, -8), out var mapGrid))
+                    if (!mapManager.TryFindGridAt(new MapId(10), new Vector2(-8, -8), out var mapGrid) ||
+                        !sEntities.TryGetComponent<TransformComponent>(mapGrid.GridEntityId, out var gridXform))
+                    {
                         Assert.Fail();
+                        return;
+                    }
 
-                    Assert.That(sEntities.GetComponent<TransformComponent>(mapGrid.Owner).WorldPosition, Is.EqualTo(new Vector2(-8, -8)));
+                    Assert.That(gridXform.WorldPosition, Is.EqualTo(new Vector2(-8, -8)));
                     Assert.That(mapGrid.GetTileRef(new Vector2i(0, 0)).Tile, Is.EqualTo(new Tile(2, (TileRenderFlag)1, 254)));
                 }
             });

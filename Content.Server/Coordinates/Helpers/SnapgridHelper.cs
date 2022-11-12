@@ -4,24 +4,17 @@ namespace Content.Server.Coordinates.Helpers
 {
     public static class SnapgridHelper
     {
-        public static void SnapToGrid(this EntityUid entity, IEntityManager? entMan = null, IMapManager? mapManager = null)
-        {
-            IoCManager.Resolve(ref entMan, ref mapManager);
-            var transform = entMan.GetComponent<TransformComponent>(entity);
-            transform.Coordinates = transform.Coordinates.SnapToGrid(entMan, mapManager);
-        }
-
         public static EntityCoordinates SnapToGrid(this EntityCoordinates coordinates, IEntityManager? entMan = null, IMapManager? mapManager = null)
         {
             IoCManager.Resolve(ref entMan, ref mapManager);
 
-            var gridId = coordinates.GetGridUid(entMan);
+            var gridIdOpt = coordinates.GetGridUid(entMan);
 
             var tileSize = 1f;
 
-            if (gridId.HasValue && gridId.Value.IsValid())
+            if (gridIdOpt is EntityUid gridId && gridId.IsValid())
             {
-                var grid = mapManager.EntityManager.GetComponent<MapGridComponent>(gridId.Value);
+                var grid = mapManager.GetGrid(gridId);
                 tileSize = grid.TileSize;
             }
 
@@ -33,7 +26,7 @@ namespace Content.Server.Coordinates.Helpers
             return new EntityCoordinates(coordinates.EntityId, x, y);
         }
 
-        public static EntityCoordinates SnapToGrid(this EntityCoordinates coordinates, MapGridComponent grid)
+        public static EntityCoordinates SnapToGrid(this EntityCoordinates coordinates, IMapGrid grid)
         {
             var tileSize = grid.TileSize;
 

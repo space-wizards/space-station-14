@@ -1,8 +1,8 @@
 using Content.Server.Audio;
+using Content.Server.Body.Systems;
 using Content.Server.GameTicking;
 using Content.Server.Players;
 using Content.Server.Popups;
-using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Recycling.Components;
 using Content.Shared.Audio;
@@ -14,7 +14,7 @@ using Content.Shared.Recycling;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
@@ -24,6 +24,7 @@ namespace Content.Server.Recycling
     {
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly AmbientSoundSystem _ambience = default!;
+        [Dependency] private readonly BodySystem _bodySystem = default!;
         [Dependency] private readonly GameTicker _ticker = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly TagSystem _tags = default!;
@@ -56,9 +57,9 @@ namespace Content.Server.Recycling
                 victim,
                 Filter.Pvs(victim, entityManager: EntityManager).RemoveWhereAttachedEntity(e => e == victim));
 
-            if (TryComp<SharedBodyComponent?>(victim, out var body))
+            if (TryComp<BodyComponent?>(victim, out var body))
             {
-                body.Gib(true);
+                _bodySystem.GibBody(victim, true, body);
             }
 
             Bloodstain(component);
@@ -80,7 +81,7 @@ namespace Content.Server.Recycling
             _ambience.SetAmbience(component.Owner, false);
         }
 
-        private void OnCollide(EntityUid uid, RecyclerComponent component, StartCollideEvent args)
+        private void OnCollide(EntityUid uid, RecyclerComponent component, ref StartCollideEvent args)
         {
             if (component.Enabled && args.OurFixture.ID != "brrt") return;
 
@@ -91,8 +92,8 @@ namespace Content.Server.Recycling
         {
             RecyclableComponent? recyclable = null;
 
-            // Can only recycle things that are recyclable... And also check the safety of the thing to recycle.
-            if (!_tags.HasTag(entity, "Recyclable") &&
+            // Can only recycle things that are tagged trash or recyclable... And also check the safety of the thing to recycle.
+            if (!_tags.HasAnyTag(entity, "Trash", "Recyclable") &&
                 (!TryComp(entity, out recyclable) || !recyclable.Safe && component.Safe))
             {
                 return;
@@ -103,7 +104,7 @@ namespace Content.Server.Recycling
             // Mobs are a special case!
             if (CanGib(component, entity))
             {
-                Comp<SharedBodyComponent>(entity).Gib(true);
+                _bodySystem.GibBody(entity, true, Comp<BodyComponent>(entity));
                 Bloodstain(component);
                 return;
             }
@@ -122,7 +123,7 @@ namespace Content.Server.Recycling
 
         private bool CanGib(RecyclerComponent component, EntityUid entity)
         {
-            return HasComp<SharedBodyComponent>(entity) && !component.Safe &&
+            return HasComp<BodyComponent>(entity) && !component.Safe &&
                    this.IsPowered(component.Owner, EntityManager);
         }
 

@@ -1,7 +1,5 @@
 ﻿- type: vendingMachineInventory
   id: PietyVendInventory
-  name: PietyVend
-  spriteName: chapel
   startingInventory:
     ClothingUniformJumpsuitChaplain: 2
     ClothingUniformJumpskirtChaplain: 2

@@ -25,7 +25,7 @@ namespace Content.Server.UserInterface
 
             SubscribeLocalEvent<ActivatableUIComponent, ActivateInWorldEvent>(OnActivate);
             SubscribeLocalEvent<ActivatableUIComponent, UseInHandEvent>(OnUseInHand);
-            SubscribeLocalEvent<ActivatableUIComponent, HandDeselectedEvent>((uid, aui, _) => CloseAll(uid, aui));
+            SubscribeLocalEvent<ActivatableUIComponent, HandDeselectedEvent>(OnHandDeselected);
             SubscribeLocalEvent<ActivatableUIComponent, GotUnequippedHandEvent>((uid, aui, _) => CloseAll(uid, aui));
             // *THIS IS A BLATANT WORKAROUND!* RATIONALE: Microwaves need it
             SubscribeLocalEvent<ActivatableUIComponent, EntParentChangedMessage>(OnParentChanged);
@@ -168,6 +168,14 @@ namespace Content.Server.UserInterface
         {
             if (!Resolve(uid, ref aui, false)) return;
             aui.UserInterface?.CloseAll();
+        }
+
+        private void OnHandDeselected(EntityUid uid, ActivatableUIComponent? aui, HandDeselectedEvent args)
+        {
+            if (!Resolve(uid, ref aui, false)) return;
+            if (!aui.CloseOnHandDeselect)
+                return;
+            CloseAll(uid, aui);
         }
     }
 

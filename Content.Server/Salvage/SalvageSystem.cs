@@ -37,6 +37,7 @@ namespace Content.Server.Salvage
         private static readonly TimeSpan HoldTime = TimeSpan.FromMinutes(4);
         private static readonly TimeSpan DetachingTime = TimeSpan.FromSeconds(30);
         private static readonly TimeSpan CooldownTime = TimeSpan.FromMinutes(1);
+        private static readonly int SalvageLocationPlaceAttempts = 16;
 
         // TODO: This is probably not compatible with multi-station
         private readonly Dictionary<EntityUid, SalvageGridState> _salvageGridStates = new();
@@ -90,7 +91,7 @@ namespace Content.Server.Salvage
             if (component.MagnetState.StateType == MagnetStateType.Inactive) return;
 
             var magnetTranform = EntityManager.GetComponent<TransformComponent>(component.Owner);
-            if (!_salvageGridStates.TryGetValue(magnetTranform.GridUid.GetValueOrDefault(), out var salvageGridState))
+            if (!(magnetTranform.GridUid is EntityUid gridId) || !_salvageGridStates.TryGetValue(gridId, out var salvageGridState))
             {
                 return;
             }
@@ -128,8 +129,8 @@ namespace Content.Server.Salvage
                     args.PushMarkup(Loc.GetString("salvage-system-magnet-examined-cooling-down"));
                     break;
                 case MagnetStateType.Holding:
-                    var magnetTranform = EntityManager.GetComponent<TransformComponent>(component.Owner);
-                    if (_salvageGridStates.TryGetValue(magnetTranform.GridUid.GetValueOrDefault(), out var salvageGridState))
+                    var magnetTransform = EntityManager.GetComponent<TransformComponent>(component.Owner);
+                    if (magnetTransform.GridUid is EntityUid gridId && _salvageGridStates.TryGetValue(gridId, out var salvageGridState))
                     {
                         var remainingTime = component.MagnetState.Until - salvageGridState.CurrentTime;
                         args.PushMarkup(Loc.GetString("salvage-system-magnet-examined-active", ("timeLeft", Math.Ceiling(remainingTime.TotalSeconds))));
@@ -158,15 +159,17 @@ namespace Content.Server.Salvage
             {
                 case MagnetStateType.Inactive:
                     ShowPopup("salvage-system-report-activate-success", component, user);
-                    var magnetTranform = EntityManager.GetComponent<TransformComponent>(component.Owner);
                     SalvageGridState? gridState;
-                    if (!_salvageGridStates.TryGetValue(magnetTranform.GridUid.GetValueOrDefault(), out gridState))
+                    var magnetTransform = EntityManager.GetComponent<TransformComponent>(component.Owner);
+                    EntityUid gridId = magnetTransform.GridUid ?? throw new InvalidOperationException("Magnet had no grid associated");
+                    if (!_salvageGridStates.TryGetValue(gridId, out gridState))
                     {
                         gridState = new SalvageGridState();
-                        _salvageGridStates[magnetTranform.GridUid.GetValueOrDefault()] = gridState;
+                        _salvageGridStates[gridId] = gridState;
                     }
                     gridState.ActiveMagnets.Add(component);
                     component.MagnetState = new MagnetState(MagnetStateType.Attaching, gridState.CurrentTime + AttachingTime);
+                    RaiseLocalEvent(new SalvageMagnetActivatedEvent(component.Owner));
                     Report(component.Owner, component.SalvageChannel, "salvage-system-report-activate-success");
                     break;
                 case MagnetStateType.Attaching:
@@ -225,10 +228,10 @@ namespace Content.Server.Salvage
             angle = Angle.Zero;
             var tsc = Transform(component.Owner);
             coords = new EntityCoordinates(component.Owner, component.Offset).ToMap(EntityManager);
-            var grid = tsc.GridEuid;
-            if (_mapManager.EntityManager.TryGetComponent<MapGridComponent>((EntityUid?) grid, out var magnetGrid))
+
+            if (_mapManager.TryGetGrid(tsc.GridUid, out var magnetGrid) && TryComp<TransformComponent>(magnetGrid.GridEntityId, out var gridXform))
             {
-                angle = Transform(magnetGrid.Owner).WorldRotation;
+                angle = gridXform.WorldRotation;
             }
         }
 
@@ -238,7 +241,6 @@ namespace Content.Server.Salvage
         private bool SpawnSalvage(SalvageMagnetComponent component)
         {
             TryGetSalvagePlacementLocation(component, out var spl, out var spAngle);
-            SalvageMapPrototype? map = null;
 
             var forcedSalvage = _configurationManager.GetCVar<string>(CCVars.SalvageForced);
             List<SalvageMapPrototype> allSalvageMaps;
@@ -249,28 +251,40 @@ namespace Content.Server.Salvage
             else
             {
                 allSalvageMaps = new();
-                if (_prototypeManager.TryIndex<SalvageMapPrototype>(forcedSalvage, out map))
+                if (_prototypeManager.TryIndex<SalvageMapPrototype>(forcedSalvage, out var forcedMap))
                 {
-                    allSalvageMaps.Add(map);
+                    allSalvageMaps.Add(forcedMap);
                 }
                 else
                 {
                     Logger.ErrorS("c.s.salvage", $"Unable to get forced salvage map prototype {forcedSalvage}");
                 }
             }
+
+            SalvageMapPrototype? map = null;
+            Vector2 spawnLocation = Vector2.Zero;
+
             for (var i = 0; i < allSalvageMaps.Count; i++)
             {
-                map = _random.PickAndTake(allSalvageMaps);
-                var box2 = Box2.CenteredAround(spl.Position, new Vector2(map.Size * 2.0f, map.Size * 2.0f));
-                var box2rot = new Box2Rotated(box2, spAngle, spl.Position);
-
-                // This doesn't stop it from spawning on top of random things in space
-                // Might be better like this, ghosts could stop it before
-                if (_mapManager.FindGridsIntersecting(spl.MapId, box2rot).Any())
+                SalvageMapPrototype attemptedMap = _random.PickAndTake(allSalvageMaps);
+                for (var attempt = 0; attempt < SalvageLocationPlaceAttempts; attempt++)
                 {
-                    map = null;
+                    var randomRadius = _random.NextFloat(component.OffsetRadiusMin, component.OffsetRadiusMax);
+                    var randomOffset = _random.NextAngle().ToWorldVec() * randomRadius;
+                    spawnLocation = spl.Position + randomOffset;
+
+                    var box2 = Box2.CenteredAround(spawnLocation + attemptedMap.Bounds.Center, attemptedMap.Bounds.Size);
+                    var box2rot = new Box2Rotated(box2, spAngle, spawnLocation);
+
+                    // This doesn't stop it from spawning on top of random things in space
+                    // Might be better like this, ghosts could stop it before
+                    if (!_mapManager.FindGridsIntersecting(spl.MapId, box2rot).Any())
+                    {
+                        map = attemptedMap;
+                        break;
+                    }
                 }
-                else
+                if (map != null)
                 {
                     break;
                 }
@@ -284,7 +298,7 @@ namespace Content.Server.Salvage
 
             var opts = new MapLoadOptions
             {
-                Offset = spl.Position
+                Offset = spawnLocation
             };
 
             var (_, salvageEntityId) = _mapLoader.LoadGrid(spl.MapId, map.MapPath.ToString(), opts);
@@ -360,7 +374,7 @@ namespace Content.Server.Salvage
                 var gridId = gridIdAndState.Key;
                 // Not handling the case where the salvage we spawned got paused
                 // They both need to be paused, or it doesn't make sense
-                if (_mapManager.IsGridPaused(gridId)) continue;
+                if (MetaData(gridId).EntityPaused) continue;
                 state.CurrentTime += secondsPassed;
 
                 var deleteQueue = new RemQueue<SalvageMagnetComponent>();

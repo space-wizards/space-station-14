@@ -37,7 +37,7 @@ public sealed class SecretRuleSystem : GameRuleSystem
 
         foreach (var rule in _prototypeManager.Index<GamePresetPrototype>(preset).Rules)
         {
-            _ticker.AddGameRule(_prototypeManager.Index<GameRulePrototype>(rule));
+            _ticker.StartGameRule(_prototypeManager.Index<GameRulePrototype>(rule));
         }
     }
 }

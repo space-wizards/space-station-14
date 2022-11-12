@@ -1,36 +1,36 @@
 ﻿- type: gas
   id: 0
-  name: Oxygen
+  name: gases-oxygen
   specificHeat: 20
   heatCapacityRatio: 1.4
   molarMass: 32
   color: 2887E8
   reagent: Oxygen
-  pricePerMole: 0.3
+  pricePerMole: 0.1
 
 - type: gas
   id: 1
-  name: Nitrogen
+  name: gases-nitrogen
   specificHeat: 30
   heatCapacityRatio: 1.4
   molarMass: 28
   color: DA1010
   reagent: Nitrogen
-  pricePerMole: 0.6
+  pricePerMole: 0.1
 
 - type: gas
   id: 2
-  name: Carbon Dioxide
+  name: gases-co2
   specificHeat: 30
   heatCapacityRatio: 1.3
   molarMass: 44
   color: 4e4e4e
   reagent: CarbonDioxide
-  pricePerMole: 0.4
+  pricePerMole: 0.1
 
 - type: gas
   id: 3
-  name: Plasma
+  name: gases-plasma
   specificHeat: 200
   heatCapacityRatio: 1.7
   molarMass: 120
@@ -38,11 +38,11 @@
   gasOverlayState: plasma
   color: FF3300
   reagent: Plasma
-  pricePerMole: 2.5
+  pricePerMole: 0.1
 
 - type: gas
   id: 4
-  name: Tritium
+  name: gases-tritium
   specificHeat: 10
   heatCapacityRatio: 1.3
   molarMass: 6
@@ -54,7 +54,7 @@
 
 - type: gas
   id: 5
-  name: Water Vapor
+  name: gases-water-vapor
   specificHeat: 40
   heatCapacityRatio: 1.33
   molarMass: 18
@@ -62,11 +62,11 @@
   gasOverlayState: water_vapor
   color: bffffd
   reagent: Water
-  pricePerMole: 0.4
+  pricePerMole: 0.1
 
 - type: gas
   id: 6
-  name: Miasma
+  name: gases-miasma
   specificHeat: 20
   heatCapacityRatio: 1.4
   molarMass: 44
@@ -80,7 +80,7 @@
 
 - type: gas
   id: 7
-  name: NitrousOxide
+  name: gases-n2o
   specificHeat: 40
   heatCapacityRatio: 1.3
   molarMass: 44
@@ -90,7 +90,7 @@
 
 - type: gas
   id: 8
-  name: Frezon
+  name: gases-frezon
   specificHeat: 600 # Strongest by far
   heatCapacityRatio: 1.33
   molarMass: 50

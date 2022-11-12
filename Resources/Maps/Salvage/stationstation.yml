@@ -620,9 +620,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 88
   type: ChairOfficeLight
   components:
@@ -664,9 +661,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 94
   type: Autolathe
   components:
@@ -1159,9 +1153,6 @@ entities:
     type: ApcPowerReceiver
   - enabled: False
     type: AmbientSound
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 164
   type: Poweredlight
   components:
@@ -1171,9 +1162,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 165
   type: WallSolid
   components:
@@ -1191,9 +1179,6 @@ entities:
     type: ApcPowerReceiver
   - enabled: False
     type: AmbientSound
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 167
   type: PoweredSmallLight
   components:
@@ -1205,9 +1190,6 @@ entities:
     type: ApcPowerReceiver
   - enabled: False
     type: AmbientSound
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 168
   type: WallSolid
   components:
@@ -1302,7 +1284,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 318.3216
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -1315,7 +1296,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 23.601591
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -1328,7 +1308,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 222.80157
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -1341,7 +1320,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 190.88159
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -1354,7 +1332,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 574.0015
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -1367,7 +1344,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 538.08154
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -1380,7 +1356,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 94.88158
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -1393,7 +1368,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 31.52159
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -1406,7 +1380,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 15.681593
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -1419,7 +1392,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 107.041595
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -1432,7 +1404,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 63.36159
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -1445,7 +1416,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 99.20159
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -1458,7 +1428,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 47.441586
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -1471,7 +1440,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 254.40157
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -1484,7 +1452,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 238.48157
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -1497,7 +1464,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 139.04158
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -1510,7 +1476,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 95.12158
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -1523,7 +1488,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 55.281586
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -1536,7 +1500,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 71.281586
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -1549,7 +1512,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 178.88159
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -1562,7 +1524,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 15.601599
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -1575,7 +1536,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 446.16156
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -1588,7 +1548,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 7.7615967
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -1601,7 +1560,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 35.20158
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -1614,7 +1572,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 298.40155
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -1627,7 +1584,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 362.40155
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -1640,7 +1596,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 86.96158
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -1653,7 +1608,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 39.12158
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -1666,7 +1620,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 50.881573
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -1679,7 +1632,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 83.20169
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -1692,7 +1644,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 154.72157
       restitution: 0.1
     type: Fixtures
   - gravityShakeSound: !type:SoundPathSpecifier
@@ -2962,9 +2913,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 382
   type: SheetSteel
   components:
@@ -3015,9 +2963,6 @@ entities:
     type: ApcPowerReceiver
   - enabled: False
     type: AmbientSound
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 389
   type: WardrobeScience
   components:
@@ -3215,9 +3160,6 @@ entities:
     type: ApcPowerReceiver
   - enabled: False
     type: AmbientSound
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 418
   type: WallSolid
   components:
@@ -3651,9 +3593,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 483
   type: PoweredSmallLight
   components:
@@ -3665,9 +3604,6 @@ entities:
     type: ApcPowerReceiver
   - enabled: False
     type: AmbientSound
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 484
   type: WallSolid
   components:
@@ -4020,9 +3956,6 @@ entities:
     type: ApcPowerReceiver
   - enabled: False
     type: AmbientSound
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 535
   type: Poweredlight
   components:
@@ -4031,9 +3964,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 536
   type: Poweredlight
   components:
@@ -4043,9 +3973,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 537
   type: CableApcStack
   components:
@@ -4824,9 +4751,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 661
   type: Poweredlight
   components:
@@ -4836,9 +4760,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 662
   type: Poweredlight
   components:
@@ -4848,9 +4769,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 663
   type: Poweredlight
   components:
@@ -4859,9 +4777,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 664
   type: Poweredlight
   components:
@@ -4871,9 +4786,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 665
   type: Poweredlight
   components:
@@ -4883,9 +4795,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 666
   type: Poweredlight
   components:
@@ -4895,9 +4804,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 667
   type: Poweredlight
   components:
@@ -4907,9 +4813,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 668
   type: Poweredlight
   components:
@@ -4919,9 +4822,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 669
   type: Poweredlight
   components:
@@ -4931,9 +4831,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 670
   type: Poweredlight
   components:
@@ -4943,9 +4840,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 671
   type: Poweredlight
   components:
@@ -4954,9 +4848,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 672
   type: Poweredlight
   components:
@@ -4965,9 +4856,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 673
   type: Poweredlight
   components:
@@ -4977,9 +4865,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 674
   type: Poweredlight
   components:
@@ -4989,9 +4874,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 675
   type: Poweredlight
   components:
@@ -5001,9 +4883,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 676
   type: Poweredlight
   components:
@@ -5013,9 +4892,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 677
   type: Poweredlight
   components:
@@ -5025,9 +4901,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 678
   type: Poweredlight
   components:
@@ -5037,9 +4910,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 679
   type: Poweredlight
   components:
@@ -5049,9 +4919,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 680
   type: Poweredlight
   components:
@@ -5061,9 +4928,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 681
   type: Poweredlight
   components:
@@ -5073,9 +4937,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 682
   type: Poweredlight
   components:
@@ -5084,9 +4945,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 683
   type: Poweredlight
   components:
@@ -5096,7 +4954,4 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 ...

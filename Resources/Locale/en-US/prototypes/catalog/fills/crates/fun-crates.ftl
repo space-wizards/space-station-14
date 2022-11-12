@@ -14,7 +14,7 @@ ent-CrateFunBoardGames = Board game crate
     .desc = Game nights have been proven to either decrease boredom or increase murderous rage depending on the game.
 
 ent-CrateFunATV = ATV crate
-    .desc = Bring some jazz to the station with the brass ensemble. Contains a variety of brass instruments for the whole station to play.
+    .desc = An Absolutely Taxable Vehicle to help cargo with hauling.
 
 ent-CrateFunSyndicateSegway = Syndicate segway crate
-    .desc = Bring some jazz to the station with the brass ensemble. Contains a variety of brass instruments for the whole station to play.
+    .desc = A crate containing a two-wheeler that will help you escape from the security officers. Or not.

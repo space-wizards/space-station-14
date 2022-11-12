@@ -14,7 +14,7 @@
     sprite: Objects/Specific/Hydroponics/galaxythistle.rsi
     state: seed
   product: CrateHydroponicsSeedsMedicinal
-  cost: 1000
+  cost: 500
   category: Hydroponics
   group: market
 
@@ -24,7 +24,7 @@
     sprite: Objects/Tools/Hydroponics/hoe.rsi
     state: icon
   product: CrateHydroponicsTools
-  cost: 1500
+  cost: 500
   category: Hydroponics
   group: market
 
@@ -34,6 +34,6 @@
     sprite: Objects/Specific/Hydroponics/apple.rsi
     state: seed
   product: CrateHydroponicsSeeds
-  cost: 1000
+  cost: 500
   category: Hydroponics
   group: market

@@ -21,7 +21,7 @@ namespace Content.Server.Nutrition.Components
             set => _baseDecayRate = value;
         }
         [DataField("baseDecayRate")]
-        private float _baseDecayRate = 0.1f;
+        private float _baseDecayRate = 0.01666666666f;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public float ActualDecayRate
@@ -50,10 +50,10 @@ namespace Content.Server.Nutrition.Components
         public Dictionary<HungerThreshold, float> HungerThresholds => _hungerThresholds;
         private readonly Dictionary<HungerThreshold, float> _hungerThresholds = new()
         {
-            { HungerThreshold.Overfed, 600.0f },
-            { HungerThreshold.Okay, 450.0f },
-            { HungerThreshold.Peckish, 300.0f },
-            { HungerThreshold.Starving, 150.0f },
+            { HungerThreshold.Overfed, 200.0f },
+            { HungerThreshold.Okay, 150.0f },
+            { HungerThreshold.Peckish, 100.0f },
+            { HungerThreshold.Starving, 50.0f },
             { HungerThreshold.Dead, 0.0f },
         };
 
@@ -151,18 +151,15 @@ namespace Content.Server.Nutrition.Components
 
         public void UpdateFood(float amount)
         {
-            _currentHunger = Math.Min(_currentHunger + amount, HungerThresholds[HungerThreshold.Overfed]);
+            _currentHunger = Math.Clamp(_currentHunger + amount, HungerThresholds[HungerThreshold.Dead], HungerThresholds[HungerThreshold.Overfed]);
         }
 
         // TODO: If mob is moving increase rate of consumption?
         //  Should use a multiplier as something like a disease would overwrite decay rate.
         public void OnUpdate(float frametime)
         {
-            _currentHunger -= frametime * ActualDecayRate;
+            UpdateFood(- frametime * ActualDecayRate);
             UpdateCurrentThreshold();
-
-            if (_currentHungerThreshold != HungerThreshold.Dead)
-                return;
         }
 
         private void UpdateCurrentThreshold()

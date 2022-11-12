@@ -15,5 +15,5 @@ public sealed class StationBankAccountComponent : Component
     /// How much the bank balance goes up per second, every Delay period. Rounded down when multiplied.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("increasePerSecond")]
-    public int IncreasePerSecond = 10;
+    public int IncreasePerSecond = 1;
 }

@@ -1,9 +1,9 @@
+using Content.Server.Humanoid;
 using Content.Server.Speech.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
-using Content.Shared.CharacterAppearance;
-using Content.Shared.CharacterAppearance.Components;
+using Content.Shared.Humanoid;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -67,9 +67,7 @@ public sealed class VocalSystem : EntitySystem
         if (!_blocker.CanSpeak(uid))
             return false;
 
-        var sex = Sex.Male; //the default is male because requiring humanoid appearance for this is dogshit
-        if (TryComp(uid, out HumanoidAppearanceComponent? humanoid))
-            sex = humanoid.Sex;
+        var sex = CompOrNull<HumanoidComponent>(uid)?.Sex ?? Sex.Unsexed;
 
         if (_random.Prob(component.WilhelmProbability))
         {
@@ -89,7 +87,8 @@ public sealed class VocalSystem : EntitySystem
                 SoundSystem.Play(component.FemaleScream.GetSound(), Filter.Pvs(uid), uid, pitchedParams);
                 break;
             default:
-                throw new ArgumentOutOfRangeException();
+                SoundSystem.Play(component.UnsexedScream.GetSound(), Filter.Pvs(uid), uid, pitchedParams);
+                break;
         }
 
         return true;

@@ -14,6 +14,8 @@ using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Shuttles.Events;
+using Content.Server.Station.Components;
+using Robust.Shared.Physics.Components;
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -88,15 +90,18 @@ public sealed partial class ShuttleSystem
         reason = null;
 
         if (!TryComp<MapGridComponent>(uid, out var grid) ||
-            !Resolve(uid.Value, ref xform)) return true;
+            !Resolve(uid.Value, ref xform))
+        {
+            return true;
+        }
 
-        var bounds = TransformComponent.CalcWorldAabb(Transform(grid.Owner), grid.LocalAABB).Enlarged(ShuttleFTLRange);
+        var bounds = xform.WorldMatrix.TransformBox(grid.Grid.LocalAABB).Enlarged(ShuttleFTLRange);
         var bodyQuery = GetEntityQuery<PhysicsComponent>();
 
         foreach (var other in _mapManager.FindGridsIntersecting(xform.MapID, bounds))
         {
-            if (grid.Owner == other.Owner ||
-                !bodyQuery.TryGetComponent(other.Owner, out var body) ||
+            if (grid.Owner == other.GridEntityId ||
+                !bodyQuery.TryGetComponent(other.GridEntityId, out var body) ||
                 body.Mass < ShuttleFTLMassThreshold) continue;
 
             reason = Loc.GetString("shuttle-console-proximity");
@@ -221,7 +226,7 @@ public sealed partial class ShuttleSystem
 
                     comp.State = FTLState.Travelling;
 
-                    var width = Comp<MapGridComponent>(comp.Owner).LocalAABB.Width;
+                    var width = Comp<MapGridComponent>(comp.Owner).Grid.LocalAABB.Width;
                     xform.Coordinates = new EntityCoordinates(_mapManager.GetMapEntityId(_hyperSpaceMap!.Value), new Vector2(_index + width / 2f, 0f));
                     xform.LocalRotation = Angle.Zero;
                     _index += width + Buffer;
@@ -345,7 +350,7 @@ public sealed partial class ShuttleSystem
 
     private float GetSoundRange(EntityUid uid)
     {
-        if (!_mapManager.EntityManager.TryGetComponent<MapGridComponent>((EntityUid?) uid, out var grid)) return 4f;
+        if (!_mapManager.TryGetGrid(uid, out var grid)) return 4f;
 
         return MathF.Max(grid.LocalAABB.Width, grid.LocalAABB.Height) + 12.5f;
     }
@@ -453,13 +458,13 @@ public sealed partial class ShuttleSystem
         }
 
         var xformQuery = GetEntityQuery<TransformComponent>();
-        var shuttleAABB = Comp<MapGridComponent>(component.Owner).LocalAABB;
+        var shuttleAABB = Comp<MapGridComponent>(component.Owner).Grid.LocalAABB;
 
         // Spawn nearby.
         // We essentially expand the Box2 of the target area until nothing else is added then we know it's valid.
         // Can't just get an AABB of every grid as we may spawn very far away.
         var targetAABB = _transform.GetWorldMatrix(targetXform, xformQuery)
-            .TransformBox(Comp<MapGridComponent>(targetUid).LocalAABB).Enlarged(shuttleAABB.Size.Length);
+            .TransformBox(Comp<MapGridComponent>(targetUid).Grid.LocalAABB).Enlarged(shuttleAABB.Size.Length);
 
         var nearbyGrids = new HashSet<EntityUid>(1) { targetUid };
         var iteration = 0;
@@ -470,10 +475,10 @@ public sealed partial class ShuttleSystem
         {
             foreach (var grid in _mapManager.FindGridsIntersecting(mapId, targetAABB))
             {
-                if (!nearbyGrids.Add(grid.Owner)) continue;
+                if (!nearbyGrids.Add(grid.GridEntityId)) continue;
 
-                targetAABB = targetAABB.Union(_transform.GetWorldMatrix(grid.Owner, xformQuery)
-                    .TransformBox(Comp<MapGridComponent>(grid.Owner).LocalAABB));
+                targetAABB = targetAABB.Union(_transform.GetWorldMatrix(grid.GridEntityId, xformQuery)
+                    .TransformBox(Comp<MapGridComponent>(grid.GridEntityId).Grid.LocalAABB));
             }
 
             // Can do proximity
@@ -490,13 +495,13 @@ public sealed partial class ShuttleSystem
             if (iteration != FTLProximityIterations)
                 continue;
 
-            foreach (var grid in _mapManager.EntityManager.EntityQuery<MapGridComponent>())
+            foreach (var grid in _mapManager.GetAllGrids())
             {
                 // Don't add anymore as it is irrelevant, but that doesn't mean we need to re-do existing work.
-                if (nearbyGrids.Contains(grid.Owner)) continue;
+                if (nearbyGrids.Contains(grid.GridEntityId)) continue;
 
-                targetAABB = targetAABB.Union(_transform.GetWorldMatrix(grid.Owner, xformQuery)
-                    .TransformBox(Comp<MapGridComponent>(grid.Owner).LocalAABB));
+                targetAABB = targetAABB.Union(_transform.GetWorldMatrix(grid.GridEntityId, xformQuery)
+                    .TransformBox(Comp<MapGridComponent>(grid.GridEntityId).Grid.LocalAABB));
             }
 
             break;

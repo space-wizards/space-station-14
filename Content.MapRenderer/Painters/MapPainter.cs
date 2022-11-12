@@ -25,7 +25,12 @@ namespace Content.MapRenderer.Painters
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings(){ Map = map });
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
+            {
+                Fresh = true,
+                Map = map
+            });
+
             var server = pairTracker.Pair.Server;
             var client = pairTracker.Pair.Client;
 
@@ -54,7 +59,8 @@ namespace Content.MapRenderer.Painters
 
             var tilePainter = new TilePainter(client, server);
             var entityPainter = new GridPainter(client, server);
-            MapGridComponent[] grids = null!;
+            IMapGrid[] grids = null!;
+            var xformQuery = sEntityManager.GetEntityQuery<TransformComponent>();
 
             await server.WaitPost(() =>
             {
@@ -65,14 +71,13 @@ namespace Content.MapRenderer.Painters
                     sEntityManager.DeleteEntity(playerEntity.Value);
                 }
 
-                MapId mapId = new MapId(1);
-                grids = sMapManager.EntityManager.EntityQuery<MapGridComponent, TransformComponent>(true)
-                    .Where(tuple => tuple.Item2.MapID == mapId)
-                    .Select(tuple => tuple.Item1).ToArray();
+                var mapId = sMapManager.GetAllMapIds().Last();
+                grids = sMapManager.GetAllMapGrids(mapId).ToArray();
 
                 foreach (var grid in grids)
                 {
-                    sEntityManager.GetComponent<TransformComponent>(grid.Owner).WorldRotation = Angle.Zero;
+                    var gridXform = xformQuery.GetComponent(grid.GridEntityId);
+                    gridXform.WorldRotation = Angle.Zero;
                 }
             });
 
@@ -84,7 +89,7 @@ namespace Content.MapRenderer.Painters
                 // Skip empty grids
                 if (grid.LocalAABB.IsEmpty())
                 {
-                    Console.WriteLine($"Warning: Grid {grid.Owner} was empty. Skipping image rendering.");
+                    Console.WriteLine($"Warning: Grid {grid.GridEntityId} was empty. Skipping image rendering.");
                     continue;
                 }
 
@@ -111,9 +116,11 @@ namespace Content.MapRenderer.Painters
                     gridCanvas.Mutate(e => e.Flip(FlipMode.Vertical));
                 });
 
-                var renderedImage = new RenderedGridImage<Rgba32>(gridCanvas);
-                renderedImage.GridUid = grid.Owner;
-                renderedImage.Offset = sEntityManager.GetComponent<TransformComponent>(grid.Owner).WorldPosition;
+                var renderedImage = new RenderedGridImage<Rgba32>(gridCanvas)
+                {
+                    GridUid = grid.GridEntityId,
+                    Offset = xformQuery.GetComponent(grid.GridEntityId).WorldPosition
+                };
 
                 yield return renderedImage;
             }

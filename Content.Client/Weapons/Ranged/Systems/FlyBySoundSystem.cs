@@ -4,6 +4,7 @@ using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Client.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
@@ -21,7 +22,7 @@ public sealed class FlyBySoundSystem : SharedFlyBySoundSystem
         SubscribeLocalEvent<FlyBySoundComponent, StartCollideEvent>(OnCollide);
     }
 
-    private void OnCollide(EntityUid uid, FlyBySoundComponent component, StartCollideEvent args)
+    private void OnCollide(EntityUid uid, FlyBySoundComponent component, ref StartCollideEvent args)
     {
         var attachedEnt = _player.LocalPlayer?.ControlledEntity;
 

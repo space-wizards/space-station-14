@@ -1,0 +1,24 @@
+﻿- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsChameleon # doesn't protect from electricity or heat
+  name: black gloves
+  description: Regular black gloves that do not keep you from frying.
+  suffix: Chameleon
+  components:
+    - type: Tag
+      tags: [] # ignore "WhitelistChameleon" tag
+    - type: Sprite
+      sprite: Clothing/Hands/Gloves/Color/black.rsi
+      netsync: false
+    - type: Clothing
+      sprite: Clothing/Hands/Gloves/Color/black.rsi
+    - type: ChameleonClothing
+      slot: [gloves]
+      default: ClothingHandsGlovesColorBlack
+    - type: Fiber
+      fiberMaterial: fibers-chameleon
+    - type: FingerprintMask
+    - type: UserInterface
+      interfaces:
+        - key: enum.ChameleonUiKey.Key
+          type: ChameleonBoundUserInterface

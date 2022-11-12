@@ -8,7 +8,7 @@ using Robust.Shared.Console;
 
 namespace Content.Server.Traitor.Uplink.Commands
 {
-    [AdminCommand(AdminFlags.Fun)]
+    [AdminCommand(AdminFlags.Admin)]
     public sealed class AddUplinkCommand : IConsoleCommand
     {
         public string Command => "adduplink";

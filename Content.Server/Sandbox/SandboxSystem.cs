@@ -23,7 +23,7 @@ namespace Content.Server.Sandbox
         [Dependency] private readonly IPlacementManager _placementManager = default!;
         [Dependency] private readonly IConGroupController _conGroupController = default!;
         [Dependency] private readonly IServerConsoleHost _host = default!;
-        [Dependency] private readonly AccessSystem _access = default!;
+        [Dependency] private readonly SharedAccessSystem _access = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
         [Dependency] private readonly ItemSlotsSystem _slots = default!;
         [Dependency] private readonly GameTicker _ticker = default!;

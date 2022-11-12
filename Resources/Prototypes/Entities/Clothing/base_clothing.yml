@@ -5,3 +5,8 @@
   components:
   - type: Sprite
     netsync: false
+  - type: Tag
+    tags:
+      - WhitelistChameleon
+  - type: StaticPrice
+    price: 15

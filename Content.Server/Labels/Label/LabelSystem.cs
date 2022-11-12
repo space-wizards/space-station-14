@@ -31,6 +31,39 @@ namespace Content.Server.Labels
             SubscribeLocalEvent<PaperLabelComponent, ExaminedEvent>(OnExamined);
         }
 
+        /// <summary>
+        /// Apply or remove a label on an entity.
+        /// </summary>
+        /// <param name="uid">EntityUid to change label on</param>
+        /// <param name="text">intended label text (null to remove)</param>
+        /// <param name="label">label component for resolve</param>
+        /// <param name="metadata">metadata component for resolve</param>
+        public void Label(EntityUid uid, string? text, MetaDataComponent? metadata = null, LabelComponent? label = null)
+        {
+            if (!Resolve(uid, ref metadata))
+                return;
+            if (!Resolve(uid, ref label, false))
+                label = EnsureComp<LabelComponent>(uid);
+
+            if (string.IsNullOrEmpty(text))
+            {
+                if (label.OriginalName is null)
+                    return;
+
+                // Remove label
+                metadata.EntityName = label.OriginalName;
+                label.CurrentLabel = null;
+                label.OriginalName = null;
+
+                return;
+            }
+
+            // Update label
+            label.OriginalName ??= metadata.EntityName;
+            label.CurrentLabel = text;
+            metadata.EntityName = $"{label.OriginalName} ({text})";
+        }
+
         private void OnComponentInit(EntityUid uid, PaperLabelComponent component, ComponentInit args)
         {
             _itemSlotsSystem.AddItemSlot(uid, ContainerName, component.LabelSlot);

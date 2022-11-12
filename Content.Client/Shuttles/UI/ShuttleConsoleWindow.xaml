@@ -1,8 +1,7 @@
-<userInterface:FancyWindow xmlns="https://spacestation14.io"
-                           xmlns:userInterface="clr-namespace:Content.Client.UserInterface"
-                           xmlns:ui="clr-namespace:Content.Client.Shuttles.UI"
-                           xmlns:ui1="clr-namespace:Content.Client.HUD.UI"
-                           Title="{Loc 'shuttle-console-window-title'}">
+<controls:FancyWindow xmlns="https://spacestation14.io"
+                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                      xmlns:ui="clr-namespace:Content.Client.Shuttles.UI"
+                      Title="{Loc 'shuttle-console-window-title'}">
     <GridContainer Columns="3"
                   HorizontalAlignment="Stretch"
                   Margin="5 5 5 5">
@@ -13,20 +12,18 @@
                       Align="Center"
                       Orientation="Vertical">
             <BoxContainer Orientation="Vertical">
-                <ui1:StripeBack>
+                <controls:StripeBack>
                     <Label Name="DockingPortsLabel" Text="{Loc 'shuttle-console-dock-label'}" HorizontalAlignment="Center"/>
-                </ui1:StripeBack>
+                </controls:StripeBack>
                 <BoxContainer Name="DockPorts"
-                              Orientation="Vertical">
-                </BoxContainer>
+                              Orientation="Vertical"/>
             </BoxContainer>
             <BoxContainer Orientation="Vertical">
-                <ui1:StripeBack>
+                <controls:StripeBack>
                     <Label Name="HyperspaceLabel" Text="{Loc 'shuttle-console-hyperspace-label'}" HorizontalAlignment="Center"/>
-                </ui1:StripeBack>
+                </controls:StripeBack>
                 <BoxContainer Name="HyperspaceDestinations"
-                              Orientation="Vertical">
-                </BoxContainer>
+                              Orientation="Vertical"/>
             </BoxContainer>
         </BoxContainer>
         <PanelContainer>
@@ -42,9 +39,9 @@
                       MinWidth="256"
                       Align="Center"
                       Orientation="Vertical">
-            <ui1:StripeBack>
+            <controls:StripeBack>
                 <Label Name="DisplayLabel" Text="{Loc 'shuttle-console-display-label'}" HorizontalAlignment="Center"/>
-            </ui1:StripeBack>
+            </controls:StripeBack>
             <BoxContainer Name="ReadonlyDisplay">
                 <GridContainer Columns="2"
                                HorizontalAlignment="Stretch"
@@ -97,4 +94,4 @@
                     Disabled="True"/>
         </BoxContainer>
     </GridContainer>
-</userInterface:FancyWindow>
+</controls:FancyWindow>

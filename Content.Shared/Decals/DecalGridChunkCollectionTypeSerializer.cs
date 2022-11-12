@@ -50,7 +50,9 @@ namespace Content.Shared.Decals
             return new DecalGridComponent.DecalGridChunkCollection(newDict){NextUid = nextIndex};
         }
 
-        public DataNode Write(ISerializationManager serializationManager, DecalGridComponent.DecalGridChunkCollection value, bool alwaysWrite = false,
+        public DataNode Write(ISerializationManager serializationManager,
+            DecalGridComponent.DecalGridChunkCollection value, IDependencyCollection dependencies,
+            bool alwaysWrite = false,
             ISerializationContext? context = null)
         {
             return serializationManager.WriteValue(value.ChunkCollection, alwaysWrite, context);

@@ -4,7 +4,7 @@
     sprite: Objects/Specific/Medical/firstaidkits.rsi
     state: firstaid
   product: CrateMedicalSupplies
-  cost: 1000
+  cost: 2400
   category: Medical
   group: market
 
@@ -14,6 +14,6 @@
     sprite: Objects/Specific/Chemistry/beaker.rsi
     state: beaker
   product: CrateChemistrySupplies
-  cost: 500
+  cost: 750
   category: Medical
   group: market

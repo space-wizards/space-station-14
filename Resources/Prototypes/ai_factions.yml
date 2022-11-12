@@ -1,27 +1,34 @@
-- type: aiFaction
+- type: faction
+  id: Dragon
+  hostile:
+    - NanoTrasen
+    - Syndicate
+    - Xeno
+
+- type: faction
   id: NanoTrasen
   hostile:
   - SimpleHostile
   - Syndicate
   - Xeno
 
-- type: aiFaction
+- type: faction
   id: SimpleHostile
   hostile:
   - NanoTrasen
   - Syndicate
 
-- type: aiFaction
+- type: faction
   id: SimpleNeutral
 
-- type: aiFaction
+- type: faction
   id: Syndicate
   hostile:
   - NanoTrasen
   - SimpleHostile
   - Xeno
 
-- type: aiFaction
+- type: faction
   id: Xeno
   hostile:
   - NanoTrasen

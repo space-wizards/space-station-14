@@ -1,17 +1,16 @@
-using System.Threading;
-using Content.Shared.Verbs;
-using Content.Shared.Inventory.Events;
-using Content.Shared.MobState.Components;
-using Content.Shared.FixedPoint;
-using Content.Shared.Damage;
-using Content.Shared.Actions;
-using Content.Server.Clothing.Components;
-using Content.Server.Medical.Components;
-using Content.Server.Popups;
 using Content.Server.Body.Components;
 using Content.Server.DoAfter;
+using Content.Server.Medical.Components;
+using Content.Server.Popups;
+using Content.Shared.Actions;
+using Content.Shared.Clothing.Components;
+using Content.Shared.Damage;
+using Content.Shared.FixedPoint;
+using Content.Shared.Inventory.Events;
+using Content.Shared.MobState.Components;
+using Content.Shared.Verbs;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
+using System.Threading;
 
 namespace Content.Server.Medical
 {

@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.EntitySystems;
@@ -9,472 +10,375 @@ using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
+using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Atmos.Monitor.Systems
+namespace Content.Server.Atmos.Monitor.Systems;
+
+// AtmosMonitorSystem. Grabs all the AtmosAlarmables connected
+// to it via local APC net, and starts sending updates of the
+// current atmosphere. Monitors fire (which always triggers as
+// a danger), and atmos (which triggers based on set thresholds).
+public sealed class AtmosMonitorSystem : EntitySystem
 {
-    // AtmosMonitorSystem. Grabs all the AtmosAlarmables connected
-    // to it via local APC net, and starts sending updates of the
-    // current atmosphere. Monitors fire (which always triggers as
-    // a danger), and atmos (which triggers based on set thresholds).
-    public sealed class AtmosMonitorSystem : EntitySystem
+    [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+    [Dependency] private readonly AtmosDeviceSystem _atmosDeviceSystem = default!;
+    [Dependency] private readonly DeviceNetworkSystem _deviceNetSystem = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
+    // Commands
+    public const string AtmosMonitorSetThresholdCmd = "atmos_monitor_set_threshold";
+
+    // Packet data
+    public const string AtmosMonitorThresholdData = "atmos_monitor_threshold_data";
+
+    public const string AtmosMonitorThresholdDataType = "atmos_monitor_threshold_type";
+
+    public const string AtmosMonitorThresholdGasType = "atmos_monitor_threshold_gas";
+
+    public override void Initialize()
     {
-        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-        [Dependency] private readonly AtmosDeviceSystem _atmosDeviceSystem = default!;
-        [Dependency] private readonly DeviceNetworkSystem _deviceNetSystem = default!;
-        [Dependency] private readonly TransformSystem _transformSystem = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        SubscribeLocalEvent<AtmosMonitorComponent, ComponentInit>(OnAtmosMonitorInit);
+        SubscribeLocalEvent<AtmosMonitorComponent, ComponentStartup>(OnAtmosMonitorStartup);
+        SubscribeLocalEvent<AtmosMonitorComponent, AtmosDeviceUpdateEvent>(OnAtmosUpdate);
+        SubscribeLocalEvent<AtmosMonitorComponent, TileFireEvent>(OnFireEvent);
+        SubscribeLocalEvent<AtmosMonitorComponent, PowerChangedEvent>(OnPowerChangedEvent);
+        SubscribeLocalEvent<AtmosMonitorComponent, BeforePacketSentEvent>(BeforePacketRecv);
+        SubscribeLocalEvent<AtmosMonitorComponent, DeviceNetworkPacketEvent>(OnPacketRecv);
+    }
 
-        // Commands
-        /// <summary>
-        ///     Command to alarm the network that something has happened.
-        /// </summary>
-        public const string AtmosMonitorAlarmCmd = "atmos_monitor_alarm_update";
+    private void OnAtmosMonitorInit(EntityUid uid, AtmosMonitorComponent component, ComponentInit args)
+    {
+        if (component.TemperatureThresholdId != null)
+            component.TemperatureThreshold = new(_prototypeManager.Index<AtmosAlarmThreshold>(component.TemperatureThresholdId));
 
-        /// <summary>
-        ///     Command to sync this monitor's alarm state with the rest of the network.
-        /// </summary>
-        public const string AtmosMonitorAlarmSyncCmd = "atmos_monitor_alarm_sync";
+        if (component.PressureThresholdId != null)
+            component.PressureThreshold = new(_prototypeManager.Index<AtmosAlarmThreshold>(component.PressureThresholdId));
 
-        /// <summary>
-        ///     Command to reset all alarms on a network.
-        /// </summary>
-        public const string AtmosMonitorAlarmResetAllCmd = "atmos_monitor_alarm_reset_all";
-
-        // Packet data
-        /// <summary>
-        ///     Data response that contains the threshold types in an atmos monitor alarm.
-        /// </summary>
-        public const string AtmosMonitorAlarmThresholdTypes = "atmos_monitor_alarm_threshold_types";
-
-        /// <summary>
-        ///     Data response that contains the source of an atmos alarm.
-        /// </summary>
-        public const string AtmosMonitorAlarmSrc = "atmos_monitor_alarm_source";
-
-        /// <summary>
-        ///     Data response that contains the maximum alarm in an atmos alarm network.
-        /// </summary>
-        public const string AtmosMonitorAlarmNetMax = "atmos_monitor_alarm_net_max";
-
-        public override void Initialize()
+        if (component.GasThresholdIds != null)
         {
-            SubscribeLocalEvent<AtmosMonitorComponent, ComponentInit>(OnAtmosMonitorInit);
-            SubscribeLocalEvent<AtmosMonitorComponent, ComponentStartup>(OnAtmosMonitorStartup);
-            SubscribeLocalEvent<AtmosMonitorComponent, ComponentShutdown>(OnAtmosMonitorShutdown);
-            SubscribeLocalEvent<AtmosMonitorComponent, AtmosDeviceUpdateEvent>(OnAtmosUpdate);
-            SubscribeLocalEvent<AtmosMonitorComponent, TileFireEvent>(OnFireEvent);
-            SubscribeLocalEvent<AtmosMonitorComponent, PowerChangedEvent>(OnPowerChangedEvent);
-            SubscribeLocalEvent<AtmosMonitorComponent, BeforePacketSentEvent>(BeforePacketRecv);
-            SubscribeLocalEvent<AtmosMonitorComponent, DeviceNetworkPacketEvent>(OnPacketRecv);
-        }
-
-        private void OnAtmosMonitorInit(EntityUid uid, AtmosMonitorComponent component, ComponentInit args)
-        {
-            if (component.TemperatureThresholdId != null)
-                component.TemperatureThreshold = _prototypeManager.Index<AtmosAlarmThreshold>(component.TemperatureThresholdId);
-
-            if (component.PressureThresholdId != null)
-                component.PressureThreshold = _prototypeManager.Index<AtmosAlarmThreshold>(component.PressureThresholdId);
-
-            if (component.GasThresholdIds != null)
+            component.GasThresholds = new();
+            foreach (var (gas, id) in component.GasThresholdIds)
             {
-                component.GasThresholds = new();
-                foreach (var (gas, id) in component.GasThresholdIds)
-                    if (_prototypeManager.TryIndex<AtmosAlarmThreshold>(id, out var gasThreshold))
-                        component.GasThresholds.Add(gas, gasThreshold);
+                if (_prototypeManager.TryIndex<AtmosAlarmThreshold>(id, out var gasThreshold))
+                    component.GasThresholds.Add(gas, new(gasThreshold));
             }
         }
+    }
 
-        private void OnAtmosMonitorStartup(EntityUid uid, AtmosMonitorComponent component, ComponentStartup args)
+    private void OnAtmosMonitorStartup(EntityUid uid, AtmosMonitorComponent component, ComponentStartup args)
+    {
+        if (!HasComp<ApcPowerReceiverComponent>(uid)
+            && TryComp<AtmosDeviceComponent>(uid, out var atmosDeviceComponent))
         {
-            if (!HasComp<ApcPowerReceiverComponent>(uid)
-                && TryComp<AtmosDeviceComponent>(uid, out var atmosDeviceComponent))
-            {
-                _atmosDeviceSystem.LeaveAtmosphere(atmosDeviceComponent);
-                return;
-            }
+            _atmosDeviceSystem.LeaveAtmosphere(atmosDeviceComponent);
+        }
+    }
 
-            _checkPos.Add(uid);
+    private void BeforePacketRecv(EntityUid uid, AtmosMonitorComponent component, BeforePacketSentEvent args)
+    {
+        if (!component.NetEnabled) args.Cancel();
+    }
+
+    private void OnPacketRecv(EntityUid uid, AtmosMonitorComponent component, DeviceNetworkPacketEvent args)
+    {
+        // sync the internal 'last alarm state' from
+        // the other alarms, so that we can calculate
+        // the highest network alarm state at any time
+        if (!args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? cmd))
+        {
+            return;
         }
 
-        private void OnAtmosMonitorShutdown(EntityUid uid, AtmosMonitorComponent component, ComponentShutdown args)
+        switch (cmd)
         {
-            if (_checkPos.Contains(uid)) _checkPos.Remove(uid);
-        }
-
-        // hackiest shit ever but there's no PostStartup event
-        private HashSet<EntityUid> _checkPos = new();
-
-        public override void Update(float frameTime)
-        {
-            foreach (var uid in _checkPos)
-                OpenAirOrReposition(uid);
-        }
-
-        private void OpenAirOrReposition(EntityUid uid, AtmosMonitorComponent? component = null, AppearanceComponent? appearance = null)
-        {
-            if (!Resolve(uid, ref component, ref appearance)) return;
-
-            var transform = Transform(component.Owner);
-
-            if (transform.GridUid == null)
-                return;
-
-            // atmos alarms will first attempt to get the air
-            // directly underneath it - if not, then it will
-            // instead place itself directly in front of the tile
-            // it is facing, and then visually shift itself back
-            // via sprite offsets (SS13 style but fuck it)
-            var coords = transform.Coordinates;
-            var pos = _transformSystem.GetGridOrMapTilePosition(uid, transform);
-
-            if (_atmosphereSystem.IsTileAirBlocked(transform.GridUid.Value, pos))
-            {
-                var rotPos = transform.LocalRotation.RotateVec(new Vector2(0, -1));
-                transform.Anchored = false;
-                coords = coords.Offset(rotPos);
-                transform.Coordinates = coords;
-
-                appearance.SetData(AtmosMonitorVisuals.Offset, - new Vector2i(0, -1));
-
-                transform.Anchored = true;
-            }
-
-            GasMixture? air = _atmosphereSystem.GetContainingMixture(uid, true);
-            component.TileGas = air;
-
-            _checkPos.Remove(uid);
-        }
-
-        private void BeforePacketRecv(EntityUid uid, AtmosMonitorComponent component, BeforePacketSentEvent args)
-        {
-            if (!component.NetEnabled) args.Cancel();
-        }
-
-        private void OnPacketRecv(EntityUid uid, AtmosMonitorComponent component, DeviceNetworkPacketEvent args)
-        {
-            // sync the internal 'last alarm state' from
-            // the other alarms, so that we can calculate
-            // the highest network alarm state at any time
-            if (!args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? cmd)
-                || !EntityManager.TryGetComponent(uid, out AtmosAlarmableComponent? alarmable)
-                || !EntityManager.TryGetComponent(uid, out DeviceNetworkComponent? netConn))
-                return;
-
-            // ignore packets from self, ignore from different frequency
-            if (netConn.Address == args.SenderAddress) return;
-
-            switch (cmd)
-            {
-                // sync on alarm or explicit sync
-                case AtmosMonitorAlarmCmd:
-                case AtmosMonitorAlarmSyncCmd:
-                    if (args.Data.TryGetValue(AtmosMonitorAlarmSrc, out string? src)
-                        && alarmable.AlarmedByPrototypes.Contains(src)
-                        && args.Data.TryGetValue(DeviceNetworkConstants.CmdSetState, out AtmosMonitorAlarmType state)
-                        && !component.NetworkAlarmStates.TryAdd(args.SenderAddress, state))
-                        component.NetworkAlarmStates[args.SenderAddress] = state;
-                    break;
-                case AtmosMonitorAlarmResetAllCmd:
-                    if (args.Data.TryGetValue(AtmosMonitorAlarmSrc, out string? resetSrc)
-                        && alarmable.AlarmedByPrototypes.Contains(resetSrc))
-                    {
-                        component.LastAlarmState = AtmosMonitorAlarmType.Normal;
-                        component.NetworkAlarmStates.Clear();
-                    }
-                    break;
-            }
-
-            if (component.DisplayMaxAlarmInNet)
-            {
-                if (EntityManager.TryGetComponent(component.Owner, out AppearanceComponent? appearanceComponent))
-                    appearanceComponent.SetData(AtmosMonitorVisuals.AlarmType, component.HighestAlarmInNetwork);
-
-                if (component.HighestAlarmInNetwork == AtmosMonitorAlarmType.Danger) PlayAlertSound(uid, component);
-            }
-
-        }
-
-        private void OnPowerChangedEvent(EntityUid uid, AtmosMonitorComponent component, PowerChangedEvent args)
-        {
-            if (TryComp<AtmosDeviceComponent>(uid, out var atmosDeviceComponent))
-            {
-                if (!args.Powered)
+            case AtmosDeviceNetworkSystem.RegisterDevice:
+                component.RegisteredDevices.Add(args.SenderAddress);
+                break;
+            case AtmosDeviceNetworkSystem.DeregisterDevice:
+                component.RegisteredDevices.Remove(args.SenderAddress);
+                break;
+            case AtmosAlarmableSystem.ResetAll:
+                Reset(uid);
+                // Don't clear alarm states here.
+                break;
+            case AtmosMonitorSetThresholdCmd:
+                if (args.Data.TryGetValue(AtmosMonitorThresholdData, out AtmosAlarmThreshold? thresholdData)
+                    && args.Data.TryGetValue(AtmosMonitorThresholdDataType, out AtmosMonitorThresholdType? thresholdType))
                 {
-                    if (atmosDeviceComponent.JoinedGrid != null)
-                    {
-                        _atmosDeviceSystem.LeaveAtmosphere(atmosDeviceComponent);
-                        component.TileGas = null;
-                    }
-
-                    // clear memory when power cycled
-                    component.LastAlarmState = AtmosMonitorAlarmType.Normal;
-                    component.NetworkAlarmStates.Clear();
+                    args.Data.TryGetValue(AtmosMonitorThresholdGasType, out Gas? gas);
+                    SetThreshold(uid, thresholdType.Value, thresholdData, gas);
                 }
-                else if (args.Powered)
+
+                break;
+            case AtmosDeviceNetworkSystem.SyncData:
+                var payload = new NetworkPayload();
+                payload.Add(DeviceNetworkConstants.Command, AtmosDeviceNetworkSystem.SyncData);
+                if (component.TileGas != null)
                 {
-                    if (atmosDeviceComponent.JoinedGrid == null)
+                    var gases = new Dictionary<Gas, float>();
+                    foreach (var gas in Enum.GetValues<Gas>())
                     {
-                        _atmosDeviceSystem.JoinAtmosphere(atmosDeviceComponent);
-                        var air = _atmosphereSystem.GetContainingMixture(uid, true);
-                        component.TileGas = air;
+                        gases.Add(gas, component.TileGas.GetMoles(gas));
                     }
+
+                    payload.Add(AtmosDeviceNetworkSystem.SyncData, new AtmosSensorData(
+                        component.TileGas.Pressure,
+                        component.TileGas.Temperature,
+                        component.TileGas.TotalMoles,
+                        component.LastAlarmState,
+                        gases,
+                        component.PressureThreshold ?? new(),
+                        component.TemperatureThreshold ?? new(),
+                        component.GasThresholds ?? new()
+                    ));
+                }
+
+                _deviceNetSystem.QueuePacket(uid, args.SenderAddress, payload);
+                break;
+        }
+    }
+
+    private void OnPowerChangedEvent(EntityUid uid, AtmosMonitorComponent component, ref PowerChangedEvent args)
+    {
+        if (TryComp<AtmosDeviceComponent>(uid, out var atmosDeviceComponent))
+        {
+            if (!args.Powered)
+            {
+                if (atmosDeviceComponent.JoinedGrid != null)
+                {
+                    _atmosDeviceSystem.LeaveAtmosphere(atmosDeviceComponent);
+                    component.TileGas = null;
                 }
             }
+            else if (args.Powered)
+            {
+                if (atmosDeviceComponent.JoinedGrid == null)
+                {
+                    _atmosDeviceSystem.JoinAtmosphere(atmosDeviceComponent);
+                    var air = _atmosphereSystem.GetContainingMixture(uid, true);
+                    component.TileGas = air;
+                }
 
-            if (EntityManager.TryGetComponent(component.Owner, out AppearanceComponent? appearanceComponent))
-                appearanceComponent.SetData(AtmosMonitorVisuals.AlarmType, component.LastAlarmState);
+                Alert(uid, component.LastAlarmState);
+            }
         }
+    }
 
-        private void OnFireEvent(EntityUid uid, AtmosMonitorComponent component, ref TileFireEvent args)
-        {
-            if (!this.IsPowered(uid, EntityManager))
-                return;
+    private void OnFireEvent(EntityUid uid, AtmosMonitorComponent component, ref TileFireEvent args)
+    {
+        if (!this.IsPowered(uid, EntityManager))
+            return;
 
-            // if we're monitoring for atmos fire, then we make it similar to a smoke detector
-            // and just outright trigger a danger event
-            //
-            // somebody else can reset it :sunglasses:
-            if (component.MonitorFire
-                && component.LastAlarmState != AtmosMonitorAlarmType.Danger)
-                Alert(uid, AtmosMonitorAlarmType.Danger, new []{ AtmosMonitorThresholdType.Temperature }, component); // technically???
-
-            // only monitor state elevation so that stuff gets alarmed quicker during a fire,
-            // let the atmos update loop handle when temperature starts to reach different
-            // thresholds and different states than normal -> warning -> danger
-            if (component.TemperatureThreshold != null
-                && component.TemperatureThreshold.CheckThreshold(args.Temperature, out var temperatureState)
-                && temperatureState > component.LastAlarmState)
-                Alert(uid, AtmosMonitorAlarmType.Danger, new []{ AtmosMonitorThresholdType.Temperature }, component);
-        }
-
-        private void OnAtmosUpdate(EntityUid uid, AtmosMonitorComponent component, AtmosDeviceUpdateEvent args)
-        {
-            if (!this.IsPowered(uid, EntityManager))
-                return;
-
-            // can't hurt
-            // (in case something is making AtmosDeviceUpdateEvents
-            // outside the typical device loop)
-            if (!TryComp<AtmosDeviceComponent>(uid, out var atmosDeviceComponent)
-                || atmosDeviceComponent.JoinedGrid == null)
-                return;
-
-            // if we're not monitoring atmos, don't bother
-            if (component.TemperatureThreshold == null
-                && component.PressureThreshold == null
-                && component.GasThresholds == null)
-                return;
-
-            UpdateState(uid, component.TileGas, component);
-        }
-
-        // Update checks the current air if it exceeds thresholds of
-        // any kind.
+        // if we're monitoring for atmos fire, then we make it similar to a smoke detector
+        // and just outright trigger a danger event
         //
-        // If any threshold exceeds the other, that threshold
-        // immediately replaces the current recorded state.
-        //
-        // If the threshold does not match the current state
-        // of the monitor, it is set in the Alert call.
-        private void UpdateState(EntityUid uid, GasMixture? air, AtmosMonitorComponent? monitor = null)
+        // somebody else can reset it :sunglasses:
+        if (component.MonitorFire
+            && component.LastAlarmState != AtmosAlarmType.Danger)
         {
-            if (air == null) return;
+            component.TrippedThresholds.Add(AtmosMonitorThresholdType.Temperature);
+            Alert(uid, AtmosAlarmType.Danger, null, component); // technically???
+        }
 
-            if (!Resolve(uid, ref monitor)) return;
+        // only monitor state elevation so that stuff gets alarmed quicker during a fire,
+        // let the atmos update loop handle when temperature starts to reach different
+        // thresholds and different states than normal -> warning -> danger
+        if (component.TemperatureThreshold != null
+            && component.TemperatureThreshold.CheckThreshold(args.Temperature, out var temperatureState)
+            && temperatureState > component.LastAlarmState)
+        {
+            component.TrippedThresholds.Add(AtmosMonitorThresholdType.Temperature);
+            Alert(uid, AtmosAlarmType.Danger, null, component);
+        }
+    }
 
-            AtmosMonitorAlarmType state = AtmosMonitorAlarmType.Normal;
-            List<AtmosMonitorThresholdType> alarmTypes = new();
+    private void OnAtmosUpdate(EntityUid uid, AtmosMonitorComponent component, AtmosDeviceUpdateEvent args)
+    {
+        if (!this.IsPowered(uid, EntityManager))
+            return;
 
-            if (monitor.TemperatureThreshold != null
-                && monitor.TemperatureThreshold.CheckThreshold(air.Temperature, out var temperatureState)
-                && temperatureState > state)
+        // can't hurt
+        // (in case something is making AtmosDeviceUpdateEvents
+        // outside the typical device loop)
+        if (!TryComp<AtmosDeviceComponent>(uid, out var atmosDeviceComponent)
+            || atmosDeviceComponent.JoinedGrid == null)
+            return;
+
+        // if we're not monitoring atmos, don't bother
+        if (component.TemperatureThreshold == null
+            && component.PressureThreshold == null
+            && component.GasThresholds == null)
+            return;
+
+        UpdateState(uid, component.TileGas, component);
+    }
+
+    // Update checks the current air if it exceeds thresholds of
+    // any kind.
+    //
+    // If any threshold exceeds the other, that threshold
+    // immediately replaces the current recorded state.
+    //
+    // If the threshold does not match the current state
+    // of the monitor, it is set in the Alert call.
+    private void UpdateState(EntityUid uid, GasMixture? air, AtmosMonitorComponent? monitor = null)
+    {
+        if (air == null) return;
+
+        if (!Resolve(uid, ref monitor)) return;
+
+        var state = AtmosAlarmType.Normal;
+        HashSet<AtmosMonitorThresholdType> alarmTypes = new(monitor.TrippedThresholds);
+
+        if (monitor.TemperatureThreshold != null
+            && monitor.TemperatureThreshold.CheckThreshold(air.Temperature, out var temperatureState))
+        {
+            if (temperatureState > state)
             {
                 state = temperatureState;
                 alarmTypes.Add(AtmosMonitorThresholdType.Temperature);
             }
+            else if (temperatureState == AtmosAlarmType.Normal)
+            {
+                alarmTypes.Remove(AtmosMonitorThresholdType.Temperature);
+            }
+        }
 
-            if (monitor.PressureThreshold != null
-                && monitor.PressureThreshold.CheckThreshold(air.Pressure, out var pressureState)
-                && pressureState > state)
+        if (monitor.PressureThreshold != null
+            && monitor.PressureThreshold.CheckThreshold(air.Pressure, out var pressureState)
+           )
+        {
+            if (pressureState > state)
             {
                 state = pressureState;
                 alarmTypes.Add(AtmosMonitorThresholdType.Pressure);
             }
-
-            if (monitor.GasThresholds != null)
+            else if (pressureState == AtmosAlarmType.Normal)
             {
-                foreach (var (gas, threshold) in monitor.GasThresholds)
+                alarmTypes.Remove(AtmosMonitorThresholdType.Pressure);
+            }
+        }
+
+        if (monitor.GasThresholds != null)
+        {
+            var tripped = false;
+            foreach (var (gas, threshold) in monitor.GasThresholds)
+            {
+                var gasRatio = air.GetMoles(gas) / air.TotalMoles;
+                if (threshold.CheckThreshold(gasRatio, out var gasState)
+                    && gasState > state)
                 {
-                    var gasRatio = air.GetMoles(gas) / air.TotalMoles;
-                    if (threshold.CheckThreshold(gasRatio, out var gasState)
-                        && gasState > state)
-                    {
-                        state = gasState;
-                        alarmTypes.Add(AtmosMonitorThresholdType.Gas);
-                    }
+                    state = gasState;
+                    tripped = true;
                 }
             }
 
-            // if the state of the current air doesn't match the last alarm state,
-            // we update the state
-            if (state != monitor.LastAlarmState)
+            if (tripped)
             {
-                Alert(uid, state, alarmTypes, monitor);
+                alarmTypes.Add(AtmosMonitorThresholdType.Gas);
+            }
+            else
+            {
+                alarmTypes.Remove(AtmosMonitorThresholdType.Gas);
             }
         }
 
-        /// <summary>
-        ///     Alerts the network that the state of a monitor has changed.
-        /// </summary>
-        /// <param name="state">The alarm state to set this monitor to.</param>
-        /// <param name="alarms">The alarms that caused this alarm state.</param>
-        public void Alert(EntityUid uid, AtmosMonitorAlarmType state, IEnumerable<AtmosMonitorThresholdType>? alarms = null, AtmosMonitorComponent? monitor = null)
+        // if the state of the current air doesn't match the last alarm state,
+        // we update the state
+        if (state != monitor.LastAlarmState || !alarmTypes.SetEquals(monitor.TrippedThresholds))
         {
-            if (!Resolve(uid, ref monitor)) return;
-            monitor.LastAlarmState = state;
-            if (EntityManager.TryGetComponent(monitor.Owner, out AppearanceComponent? appearanceComponent))
-                appearanceComponent.SetData(AtmosMonitorVisuals.AlarmType, monitor.LastAlarmState);
-
-            BroadcastAlertPacket(monitor, alarms);
-
-            if (state == AtmosMonitorAlarmType.Danger) PlayAlertSound(uid, monitor);
-
-            if (EntityManager.TryGetComponent(monitor.Owner, out AtmosAlarmableComponent? alarmable)
-                && !alarmable.IgnoreAlarms)
-                RaiseLocalEvent(monitor.Owner, new AtmosMonitorAlarmEvent(monitor.LastAlarmState, monitor.HighestAlarmInNetwork), true);
-            // TODO: Central system that grabs *all* alarms from wired network
-        }
-
-        private void PlayAlertSound(EntityUid uid, AtmosMonitorComponent? monitor = null)
-        {
-            if (!Resolve(uid, ref monitor)) return;
-
-            SoundSystem.Play(monitor.AlarmSound.GetSound(), Filter.Pvs(uid), uid, AudioParams.Default.WithVolume(monitor.AlarmVolume));
-        }
-
-        /// <summary>
-        ///     Resets a single monitor's alarm.
-        /// </summary>
-        public void Reset(EntityUid uid) =>
-            Alert(uid, AtmosMonitorAlarmType.Normal);
-
-        /// <summary>
-        ///     Resets a network's alarms, using this monitor as a source.
-        /// </summary>
-        /// <remarks>
-        ///     The resulting packet will have this monitor set as the source, using its prototype ID if it has one - otherwise just sending an empty string.
-        /// </remarks>
-        public void ResetAll(EntityUid uid, AtmosMonitorComponent? monitor = null)
-        {
-            if (!Resolve(uid, ref monitor)) return;
-
-            var prototype = Prototype(monitor.Owner);
-            var payload = new NetworkPayload
-            {
-                [DeviceNetworkConstants.Command] = AtmosMonitorAlarmResetAllCmd,
-                [AtmosMonitorAlarmSrc] = prototype != null ? prototype.ID : string.Empty
-            };
-
-            _deviceNetSystem.QueuePacket(monitor.Owner, null, payload);
-            monitor.NetworkAlarmStates.Clear();
-
-            Alert(uid, AtmosMonitorAlarmType.Normal, null, monitor);
-        }
-
-        // (TODO: maybe just cache monitors in other monitors?)
-        /// <summary>
-        ///     Syncs the current state of this monitor to the network (to avoid alerting other monitors).
-        /// </summary>
-        private void Sync(AtmosMonitorComponent monitor)
-        {
-            if (!monitor.NetEnabled) return;
-
-            var prototype = Prototype(monitor.Owner);
-            var payload = new NetworkPayload
-            {
-                [DeviceNetworkConstants.Command] = AtmosMonitorAlarmSyncCmd,
-                [DeviceNetworkConstants.CmdSetState] = monitor.LastAlarmState,
-                [AtmosMonitorAlarmSrc] = prototype != null ? prototype.ID : string.Empty
-            };
-
-            _deviceNetSystem.QueuePacket(monitor.Owner, null, payload);
-        }
-
-        /// <summary>
-        ///	Broadcasts an alert packet to all devices on the network,
-        ///	which consists of the current alarm types,
-        ///	the highest alarm currently cached by this monitor,
-        ///	and the current alarm state of the monitor (so other
-        ///	alarms can sync to it).
-        /// </summary>
-        /// <remarks>
-        ///	Alarmables use the highest alarm to ensure that a monitor's
-        ///	state doesn't override if the alarm is lower. The state
-        ///	is synced between monitors the moment a monitor sends out an alarm,
-        ///	or if it is explicitly synced (see ResetAll/Sync).
-        /// </remarks>
-        private void BroadcastAlertPacket(AtmosMonitorComponent monitor, IEnumerable<AtmosMonitorThresholdType>? alarms = null)
-        {
-            if (!monitor.NetEnabled) return;
-
-            string source = string.Empty;
-            if (alarms == null) alarms = new List<AtmosMonitorThresholdType>();
-            var prototype = Prototype(monitor.Owner);
-            if (prototype != null) source = prototype.ID;
-
-            var payload = new NetworkPayload
-            {
-                [DeviceNetworkConstants.Command] = AtmosMonitorAlarmCmd,
-                [DeviceNetworkConstants.CmdSetState] = monitor.LastAlarmState,
-                [AtmosMonitorAlarmNetMax] = monitor.HighestAlarmInNetwork,
-                [AtmosMonitorAlarmThresholdTypes] = alarms,
-                [AtmosMonitorAlarmSrc] = source
-            };
-
-            _deviceNetSystem.QueuePacket(monitor.Owner, null, payload);
-        }
-
-        /// <summary>
-        ///     Set a monitor's threshold.
-        /// </summary>
-        /// <param name="type">The type of threshold to change.</param>
-        /// <param name="threshold">Threshold data.</param>
-        /// <param name="gas">Gas, if applicable.</param>
-        public void SetThreshold(EntityUid uid, AtmosMonitorThresholdType type, AtmosAlarmThreshold threshold, Gas? gas = null, AtmosMonitorComponent? monitor = null)
-        {
-            if (!Resolve(uid, ref monitor)) return;
-
-            switch (type)
-            {
-                case AtmosMonitorThresholdType.Pressure:
-                    monitor.PressureThreshold = threshold;
-                    break;
-                case AtmosMonitorThresholdType.Temperature:
-                    monitor.TemperatureThreshold = threshold;
-                    break;
-                case AtmosMonitorThresholdType.Gas:
-                    if (gas == null || monitor.GasThresholds == null) return;
-                    monitor.GasThresholds[(Gas) gas] = threshold;
-                    break;
-            }
-
+            Alert(uid, state, alarmTypes, monitor);
         }
     }
 
-    public sealed class AtmosMonitorAlarmEvent : EntityEventArgs
+    /// <summary>
+    ///     Alerts the network that the state of a monitor has changed.
+    /// </summary>
+    /// <param name="state">The alarm state to set this monitor to.</param>
+    /// <param name="alarms">The alarms that caused this alarm state.</param>
+    public void Alert(EntityUid uid, AtmosAlarmType state, HashSet<AtmosMonitorThresholdType>? alarms = null, AtmosMonitorComponent? monitor = null)
     {
-        public AtmosMonitorAlarmType Type { get; }
-        public AtmosMonitorAlarmType HighestNetworkType { get; }
+        if (!Resolve(uid, ref monitor)) return;
 
-        public AtmosMonitorAlarmEvent(AtmosMonitorAlarmType type, AtmosMonitorAlarmType netMax)
+        monitor.LastAlarmState = state;
+        monitor.TrippedThresholds = alarms ?? monitor.TrippedThresholds;
+
+        BroadcastAlertPacket(monitor);
+
+        // TODO: Central system that grabs *all* alarms from wired network
+    }
+
+    /// <summary>
+    ///     Resets a single monitor's alarm.
+    /// </summary>
+    private void Reset(EntityUid uid)
+    {
+        Alert(uid, AtmosAlarmType.Normal);
+    }
+
+    /// <summary>
+    ///	Broadcasts an alert packet to all devices on the network,
+    ///	which consists of the current alarm types,
+    ///	the highest alarm currently cached by this monitor,
+    ///	and the current alarm state of the monitor (so other
+    ///	alarms can sync to it).
+    /// </summary>
+    /// <remarks>
+    ///	Alarmables use the highest alarm to ensure that a monitor's
+    ///	state doesn't override if the alarm is lower. The state
+    ///	is synced between monitors the moment a monitor sends out an alarm,
+    ///	or if it is explicitly synced (see ResetAll/Sync).
+    /// </remarks>
+    private void BroadcastAlertPacket(AtmosMonitorComponent monitor, TagComponent? tags = null)
+    {
+        if (!monitor.NetEnabled) return;
+
+        if (!Resolve(monitor.Owner, ref tags, false))
         {
-            Type = type;
-            HighestNetworkType = netMax;
+            return;
         }
+
+        var payload = new NetworkPayload
+        {
+            [DeviceNetworkConstants.Command] = AtmosAlarmableSystem.AlertCmd,
+            [DeviceNetworkConstants.CmdSetState] = monitor.LastAlarmState,
+            [AtmosAlarmableSystem.AlertSource] = tags.Tags,
+            [AtmosAlarmableSystem.AlertTypes] = monitor.TrippedThresholds
+        };
+
+        foreach (var addr in monitor.RegisteredDevices)
+        {
+            _deviceNetSystem.QueuePacket(monitor.Owner, addr, payload);
+        }
+    }
+
+    /// <summary>
+    ///     Set a monitor's threshold.
+    /// </summary>
+    /// <param name="type">The type of threshold to change.</param>
+    /// <param name="threshold">Threshold data.</param>
+    /// <param name="gas">Gas, if applicable.</param>
+    public void SetThreshold(EntityUid uid, AtmosMonitorThresholdType type, AtmosAlarmThreshold threshold, Gas? gas = null, AtmosMonitorComponent? monitor = null)
+    {
+        if (!Resolve(uid, ref monitor)) return;
+
+        switch (type)
+        {
+            case AtmosMonitorThresholdType.Pressure:
+                monitor.PressureThreshold = threshold;
+                break;
+            case AtmosMonitorThresholdType.Temperature:
+                monitor.TemperatureThreshold = threshold;
+                break;
+            case AtmosMonitorThresholdType.Gas:
+                if (gas == null || monitor.GasThresholds == null) return;
+                monitor.GasThresholds[(Gas) gas] = threshold;
+                break;
+        }
+
     }
 }

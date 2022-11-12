@@ -13,7 +13,7 @@ using Robust.Shared.GameStates;
 namespace Content.Server.Buckle.Systems
 {
     [UsedImplicitly]
-    internal sealed class BuckleSystem : SharedBuckleSystem
+    public sealed class BuckleSystem : SharedBuckleSystem
     {
         public override void Initialize()
         {

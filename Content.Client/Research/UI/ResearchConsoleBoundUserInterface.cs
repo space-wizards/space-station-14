@@ -53,7 +53,7 @@ namespace Content.Client.Research.UI
 
         public bool IsTechnologyUnlocked(TechnologyPrototype technology)
         {
-            return _technologyDatabase?.IsTechnologyUnlocked(technology) ?? false;
+            return _technologyDatabase?.IsTechnologyUnlocked(technology.ID) ?? false;
         }
 
         public bool CanUnlockTechnology(TechnologyPrototype technology)

@@ -72,7 +72,7 @@ public sealed class SubFloorHideSystem : SharedSubFloorHideSystem
     {
         foreach (var (_, appearance) in EntityManager.EntityQuery<SubFloorHideComponent, AppearanceComponent>(true))
         {
-            _appearanceSystem.MarkDirty(appearance);
+            _appearanceSystem.MarkDirty(appearance, true);
         }
     }
 }

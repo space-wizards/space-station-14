@@ -6,6 +6,7 @@ using Content.Shared.Audio;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Popups;
+using Content.Shared.Rejuvenate;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
@@ -18,6 +19,13 @@ namespace Content.Server.Nutrition.EntitySystems
     {
         [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
         [Dependency] private readonly SpillableSystem _spillableSystem = default!;
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            SubscribeLocalEvent<CreamPiedComponent, RejuvenateEvent>(OnRejuvenate);
+        }
 
         protected override void SplattedCreamPie(EntityUid uid, CreamPieComponent creamPie)
         {
@@ -35,6 +43,11 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             creamPied.Owner.PopupMessage(Loc.GetString("cream-pied-component-on-hit-by-message",("thrower", args.Thrown)));
             creamPied.Owner.PopupMessageOtherClients(Loc.GetString("cream-pied-component-on-hit-by-message-others", ("owner", creamPied.Owner),("thrower", args.Thrown)));
+        }
+
+        private void OnRejuvenate(EntityUid uid, CreamPiedComponent component, RejuvenateEvent args)
+        {
+            SetCreamPied(uid, component, false);
         }
     }
 }

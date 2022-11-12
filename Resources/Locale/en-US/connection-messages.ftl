@@ -16,5 +16,10 @@ command-whitelistremove-not-found = Unable to find '{$username}'
 command-kicknonwhitelisted-description = Kicks all non-whitelisted players from the server.
 command-kicknonwhitelisted-help = kicknonwhitelisted
 
+ban-banned-permanent = This ban is appeal only.
+ban-expires = This ban is for {$duration} minutes and will expire at {$time} UTC.
+ban-banned-1 = You, or another user of this computer or connection, are banned from playing here.
+ban-banned-2 = The ban reason is: "{$reason}"
+
 soft-player-cap-full = The server is full!
 panic-bunker-account-denied = This server is in Panic mode and you were rejected. Contact the server administrator for help.

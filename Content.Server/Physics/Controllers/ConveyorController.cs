@@ -7,15 +7,16 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.Recycling;
 using Content.Server.Recycling.Components;
 using Content.Shared.Conveyor;
-using Content.Shared.Item;
-using Content.Shared.Movement.Components;
+using Content.Shared.Maps;
 using Content.Shared.Physics;
-using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Physics.Events;
+using Robust.Shared.Physics.Systems;
 
 namespace Content.Server.Physics.Controllers
 {
@@ -27,6 +28,8 @@ namespace Content.Server.Physics.Controllers
         [Dependency] private readonly GravitySystem _gravity = default!;
         [Dependency] private readonly RecyclerSystem _recycler = default!;
         [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         public const string ConveyorFixture = "conveyor";
 
@@ -43,7 +46,7 @@ namespace Content.Server.Physics.Controllers
             base.Initialize();
         }
 
-        private void OnConveyorEndCollide(EntityUid uid, ConveyorComponent component, EndCollideEvent args)
+        private void OnConveyorEndCollide(EntityUid uid, ConveyorComponent component, ref EndCollideEvent args)
         {
             component.Intersecting.Remove(args.OtherFixture.Body.Owner);
 
@@ -53,11 +56,12 @@ namespace Content.Server.Physics.Controllers
             }
         }
 
-        private void OnConveyorStartCollide(EntityUid uid, ConveyorComponent component, StartCollideEvent args)
+        private void OnConveyorStartCollide(EntityUid uid, ConveyorComponent component, ref StartCollideEvent args)
         {
             var otherUid = args.OtherFixture.Body.Owner;
 
-            if (args.OtherFixture.Body.BodyType == BodyType.Static) return;
+            if (args.OtherFixture.Body.BodyType == BodyType.Static)
+                return;
 
             component.Intersecting.Add(otherUid);
             EnsureComp<ActiveConveyorComponent>(uid);
@@ -81,16 +85,15 @@ namespace Content.Server.Physics.Controllers
             }
         }
 
-        private void OnPowerChanged(EntityUid uid, ConveyorComponent component, PowerChangedEvent args)
+        private void OnPowerChanged(EntityUid uid, ConveyorComponent component, ref PowerChangedEvent args)
         {
             UpdateAppearance(component);
         }
 
         private void UpdateAppearance(ConveyorComponent component)
         {
-            if (!EntityManager.TryGetComponent<AppearanceComponent?>(component.Owner, out var appearance)) return;
             var isPowered = this.IsPowered(component.Owner, EntityManager);
-            appearance.SetData(ConveyorVisuals.State, isPowered ? component.State : ConveyorState.Off);
+            _appearance.SetData(component.Owner, ConveyorVisuals.State, isPowered ? component.State : ConveyorState.Off);
         }
 
         private void OnSignalReceived(EntityUid uid, ConveyorComponent component, SignalReceivedEvent args)
@@ -98,9 +101,15 @@ namespace Content.Server.Physics.Controllers
             if (args.Port == component.OffPort)
                 SetState(component, ConveyorState.Off);
             else if (args.Port == component.ForwardPort)
+            {
+                AwakenEntities(component);
                 SetState(component, ConveyorState.Forward);
+            }
             else if (args.Port == component.ReversePort)
+            {
+                AwakenEntities(component);
                 SetState(component, ConveyorState.Reverse);
+            }
         }
 
         private void SetState(ConveyorComponent component, ConveyorState state)
@@ -118,6 +127,35 @@ namespace Content.Server.Physics.Controllers
             UpdateAppearance(component);
         }
 
+        /// <summary>
+        /// Awakens sleeping entities on the conveyor belt's tile when it's turned on.
+        /// Fixes an issue where non-hard/sleeping entities refuse to wake up + collide if a belt is turned off and on again.
+        /// </summary>
+        private void AwakenEntities(ConveyorComponent component)
+        {
+            var xformQuery = GetEntityQuery<TransformComponent>();
+            var bodyQuery = GetEntityQuery<PhysicsComponent>();
+
+            if (!xformQuery.TryGetComponent(component.Owner, out var xform))
+                return;
+
+            var beltTileRef = xform.Coordinates.GetTileRef(EntityManager, _mapManager);
+
+            if (beltTileRef != null)
+            {
+                var intersecting = _lookup.GetEntitiesIntersecting(beltTileRef.Value);
+
+                foreach (var entity in intersecting)
+                {
+                    if (!bodyQuery.TryGetComponent(entity, out var physics))
+                        continue;
+
+                    if (physics.BodyType != BodyType.Static)
+                        _physics.WakeBody(physics);
+                }
+            }
+        }
+
         public bool CanRun(ConveyorComponent component)
         {
             return component.State != ConveyorState.Off && this.IsPowered(component.Owner, EntityManager);
@@ -125,6 +163,9 @@ namespace Content.Server.Physics.Controllers
 
         private void OnConveyorShutdown(EntityUid uid, ConveyorComponent component, ComponentShutdown args)
         {
+            if (MetaData(uid).EntityLifeStage >= EntityLifeStage.Terminating)
+                return;
+
             RemComp<ActiveConveyorComponent>(uid);
 
             if (!TryComp<PhysicsComponent>(uid, out var body))
@@ -194,7 +235,8 @@ namespace Content.Server.Physics.Controllers
 
         private static Vector2 Convey(Vector2 direction, float speed, float frameTime, Vector2 itemRelative)
         {
-            if (speed == 0 || direction.Length == 0) return Vector2.Zero;
+            if (speed == 0 || direction.Length == 0)
+                return Vector2.Zero;
 
             /*
              * Basic idea: if the item is not in the middle of the conveyor in the direction that the conveyor is running,
@@ -216,7 +258,10 @@ namespace Content.Server.Physics.Controllers
             }
             else
             {
-                var velocity = r.Normalized * speed;
+                // Give a slight nudge in the direction of the conveyor to prevent
+                // to collidable objects (e.g. crates) on the locker from getting stuck
+                // pushing each other when rounding a corner.
+                var velocity = (r + direction*0.2f).Normalized * speed;
                 return velocity * frameTime;
             }
         }

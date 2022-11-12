@@ -13,6 +13,8 @@ namespace Content.Shared.Materials
     [Prototype("material")]
     public sealed class MaterialPrototype : IPrototype, IInheritingPrototype
     {
+        private string _name = string.Empty;
+
         [ViewVariables]
         [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<MaterialPrototype>))]
         public string[]? Parents { get; }
@@ -31,7 +33,11 @@ namespace Content.Shared.Materials
 
         [ViewVariables]
         [DataField("name")]
-        public string Name { get; } = "unobtanium";
+        public string Name
+        {
+            get => _name;
+            private set => _name = Loc.GetString(value);
+        }
 
         [ViewVariables]
         [DataField("color")]

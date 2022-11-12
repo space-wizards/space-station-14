@@ -1,11 +1,13 @@
 ﻿- type: vendingMachineInventory
   id: DinnerwareInventory
-  name: Dinnerware
-  spriteName: dinnerware
   startingInventory:
     ButchCleaver: 1
     KitchenKnife: 5
-    FoodBowlBig: 5
+    FoodBowlBig: 10
+    FoodPlate: 10
+    FoodPlateSmall: 10
+    FoodPlateTin: 5
+    FoodKebabSkewer: 5
     DrinkGlass: 10
     DrinkMug: 5
     DrinkMugBlack: 2

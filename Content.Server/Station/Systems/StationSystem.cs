@@ -80,9 +80,6 @@ public sealed class StationSystem : EntitySystem
             return;
 
         stationData.Grids.Remove(uid);
-
-        // TODO: Remove this when we find out what's mysteriously pulling the rug under us maps wise.
-        _sawmill.Debug($"Station grid is being deleted, trace is: {Environment.StackTrace}");
     }
 
     public override void Shutdown()
@@ -246,10 +243,10 @@ public sealed class StationSystem : EntitySystem
         foreach (var gridUid in component.Grids)
         {
             if (!TryComp<MapGridComponent>(gridUid, out var grid) ||
-                grid.LocalAABB.Size.LengthSquared < largestBounds.Size.LengthSquared)
+                grid.Grid.LocalAABB.Size.LengthSquared < largestBounds.Size.LengthSquared)
                 continue;
 
-            largestBounds = ((MapGridComponent) grid).LocalAABB;
+            largestBounds = grid.Grid.LocalAABB;
             largestGrid = gridUid;
         }
 
@@ -287,7 +284,7 @@ public sealed class StationSystem : EntitySystem
 
         foreach (var gridUid in dataComponent.Grids)
         {
-            if (!_mapManager.EntityManager.TryGetComponent<MapGridComponent>((EntityUid?) gridUid, out var grid) ||
+            if (!_mapManager.TryGetGrid(gridUid, out var grid) ||
                 !xformQuery.TryGetComponent(gridUid, out var xform))
                 continue;
 
@@ -298,7 +295,7 @@ public sealed class StationSystem : EntitySystem
             bounds.Add(bound);
             if (!mapIds.Contains(mapId))
             {
-                mapIds.Add(Transform(grid.Owner).MapID);
+                mapIds.Add(xform.MapID);
             }
         }
 
@@ -382,14 +379,13 @@ public sealed class StationSystem : EntitySystem
     /// <summary>
     /// Adds the given grid to a station.
     /// </summary>
-    /// <param name="station">Station to attach the grid to.</param>
     /// <param name="mapGrid">Grid to attach.</param>
+    /// <param name="station">Station to attach the grid to.</param>
     /// <param name="gridComponent">Resolve pattern, grid component of mapGrid.</param>
     /// <param name="stationData">Resolve pattern, station data component of station.</param>
     /// <param name="name">The name to assign to the grid if any.</param>
     /// <exception cref="ArgumentException">Thrown when mapGrid or station are not a grid or station, respectively.</exception>
-    public void AddGridToStation(EntityUid station, EntityUid mapGrid, MapGridComponent? gridComponent = null,
-        StationDataComponent? stationData = null, string? name = null)
+    public void AddGridToStation(EntityUid station, EntityUid mapGrid, MapGridComponent? gridComponent = null, StationDataComponent? stationData = null, string? name = null)
     {
         if (!Resolve(mapGrid, ref gridComponent))
             throw new ArgumentException("Tried to initialize a station on a non-grid entity!", nameof(mapGrid));

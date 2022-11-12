@@ -50,7 +50,7 @@ namespace Content.IntegrationTests.Tests
 
             await server.WaitPost(() =>
             {
-                var entityMetas = entityMan.EntityQuery<MetaDataComponent>().ToList();
+                var entityMetas = entityMan.EntityQuery<MetaDataComponent>(true).ToList();
                 foreach (var meta in entityMetas)
                 {
                     if(!entityMan.Deleted(meta.Owner))
@@ -93,7 +93,7 @@ namespace Content.IntegrationTests.Tests
             await server.WaitRunTicks(5);
             await server.WaitPost(() =>
             {
-                var entityMetas = entityMan.EntityQuery<MetaDataComponent>().ToList();
+                var entityMetas = entityMan.EntityQuery<MetaDataComponent>(true).ToList();
                 foreach (var meta in entityMetas)
                 {
                     if(!entityMan.Deleted(meta.Owner))

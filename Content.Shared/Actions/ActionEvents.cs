@@ -9,7 +9,7 @@ namespace Content.Shared.Actions;
 
 /// <summary>
 ///     Event raised directed at items or clothing when they are equipped or held. In order for an item to grant actions some
-///     system can subscribe to this event and add actions to the <see cref="Actions"/> list. 
+///     system can subscribe to this event and add actions to the <see cref="Actions"/> list.
 /// </summary>
 /// <remarks>
 ///     Note that a system could also just manually add actions as a result of a <see cref="GotEquippedEvent"/> or <see

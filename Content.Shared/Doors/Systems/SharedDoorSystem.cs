@@ -13,16 +13,19 @@ using System.Linq;
 using Content.Shared.Tag;
 using Content.Shared.Tools.Components;
 using Content.Shared.Verbs;
+using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Events;
+using Robust.Shared.Physics.Systems;
 
 namespace Content.Shared.Doors.Systems;
 
 public abstract class SharedDoorSystem : EntitySystem
 {
+    [Dependency] protected readonly IGameTiming GameTiming = default!;
     [Dependency] protected readonly SharedPhysicsSystem PhysicsSystem = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly SharedStunSystem _stunSystem = default!;
     [Dependency] protected readonly TagSystem Tags = default!;
-    [Dependency] protected readonly IGameTiming GameTiming = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
@@ -313,6 +316,11 @@ public abstract class SharedDoorSystem : EntitySystem
         if (!Resolve(uid, ref door))
             return false;
 
+        // since both closing/closed and welded are door states, we need to prevent 'closing'
+        // a welded door or else there will be weird state bugs
+        if (door.State == DoorState.Welded)
+            return false;
+
         var ev = new BeforeDoorClosedEvent(door.PerformCollisionCheck);
         RaiseLocalEvent(uid, ev, false);
         if (ev.Cancelled)
@@ -377,7 +385,7 @@ public abstract class SharedDoorSystem : EntitySystem
             return;
 
         if (Resolve(uid, ref physics, false))
-            physics.CanCollide = collidable;
+            PhysicsSystem.SetCanCollide(physics, collidable);
 
         if (!collidable)
             door.CurrentlyCrushing.Clear();
@@ -403,7 +411,7 @@ public abstract class SharedDoorSystem : EntitySystem
         {
             door.CurrentlyCrushing.Add(entity);
             if (door.CrushDamage != null)
-                _damageableSystem.TryChangeDamage(entity, door.CrushDamage);
+                _damageableSystem.TryChangeDamage(entity, door.CrushDamage, origin: uid);
 
             _stunSystem.TryParalyze(entity, stunTime, true);
         }
@@ -447,15 +455,15 @@ public abstract class SharedDoorSystem : EntitySystem
         }
     }
 
-    private void PreventCollision(EntityUid uid, DoorComponent component, PreventCollideEvent args)
+    private void PreventCollision(EntityUid uid, DoorComponent component, ref PreventCollideEvent args)
     {
         if (component.CurrentlyCrushing.Contains(args.BodyB.Owner))
         {
-            args.Cancel();
+            args.Cancelled = true;
         }
     }
 
-    protected virtual void HandleCollide(EntityUid uid, DoorComponent door, StartCollideEvent args)
+    protected virtual void HandleCollide(EntityUid uid, DoorComponent door, ref StartCollideEvent args)
     {
         // TODO ACCESS READER move access reader to shared and predict door opening/closing
         // Then this can be moved to the shared system without mispredicting.

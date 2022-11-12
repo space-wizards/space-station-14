@@ -1,5 +1,7 @@
+using Content.Shared.Construction.Prototypes;
 using Content.Shared.Stacks;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
 namespace Content.Server.Construction.Components
 {
@@ -9,8 +11,8 @@ namespace Content.Server.Construction.Components
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         [ViewVariables]
-        [DataField("requirements")]
-        public readonly Dictionary<MachinePart, int> Requirements = new();
+        [DataField("requirements", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<int, MachinePartPrototype>))]
+        public readonly Dictionary<string, int> Requirements = new();
 
         [ViewVariables]
         [DataField("materialRequirements")]

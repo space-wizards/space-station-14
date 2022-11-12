@@ -1,8 +1,5 @@
 - type: vendingMachineInventory
   id: MagiVendInventory
-  name: MagiVend
-  animationDuration: 1.5
-  spriteName: magivend
   startingInventory:
     ClothingHeadHatWizard: 3
     ClothingOuterWizard: 3

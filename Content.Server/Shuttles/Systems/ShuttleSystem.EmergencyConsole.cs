@@ -136,24 +136,24 @@ public sealed partial class ShuttleSystem
         {
             _launchedShuttles = true;
 
-            if (_centComMap != null)
+            if (CentComMap != null)
             {
                 foreach (var comp in EntityQuery<StationDataComponent>(true))
                 {
                     if (!TryComp<ShuttleComponent>(comp.EmergencyShuttle, out var shuttle)) continue;
 
-                    if (Deleted(_centCom))
+                    if (Deleted(CentCom))
                     {
                         // TODO: Need to get non-overlapping positions.
                         FTLTravel(shuttle,
                             new EntityCoordinates(
-                                _mapManager.GetMapEntityId(_centComMap.Value),
+                                _mapManager.GetMapEntityId(CentComMap.Value),
                                 Vector2.One * 1000f), _consoleAccumulator, TransitTime);
                     }
                     else
                     {
                         FTLTravel(shuttle,
-                            _centCom.Value, _consoleAccumulator, TransitTime, dock: true);
+                            CentCom.Value, _consoleAccumulator, TransitTime, dock: true);
                     }
                 }
             }
@@ -169,8 +169,8 @@ public sealed partial class ShuttleSystem
             Timer.Spawn((int) (TransitTime * 1000) + _bufferTime.Milliseconds, () => _roundEnd.EndRound(), _roundEndCancelToken.Token);
 
             // Guarantees that emergency shuttle arrives first before anyone else can FTL.
-            if (_centCom != null)
-                AddFTLDestination(_centCom.Value, true);
+            if (CentCom != null)
+                AddFTLDestination(CentCom.Value, true);
 
         }
     }

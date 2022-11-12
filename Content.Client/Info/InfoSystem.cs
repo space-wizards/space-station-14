@@ -16,7 +16,7 @@ public sealed class InfoSystem : EntitySystem
         RaiseNetworkEvent(new RequestRulesMessage());
     }
 
-    protected void OnRulesReceived(RulesMessage message, EntitySessionEventArgs eventArgs)
+    private void OnRulesReceived(RulesMessage message, EntitySessionEventArgs eventArgs)
     {
         Logger.DebugS("info", "Received server rules.");
         Rules = message;

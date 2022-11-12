@@ -14,8 +14,12 @@
       map: [ "enum.PneumaticCannonVisualLayers.Tank" ]
       visible: false
   - type: Item
-    size: 40
+    size: 50
+  - type: Clothing
     sprite: Objects/Weapons/Guns/Cannons/pneumatic_cannon.rsi
+    quickEquip: false
+    slots:
+    - Back
   - type: PneumaticCannon
   - type: Storage
     # todo mirror pneum replace with ecs/evnts
@@ -27,6 +31,11 @@
   - type: Construction
     graph: PneumaticCannon
     node: cannon
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
+      PneumaticCannon-gasTank: !type:ContainerSlot
 
 - type: entity
   name: pie cannon
@@ -51,4 +60,13 @@
     fireInterval: 0.4
   - type: Item
     size: 50
+  - type: Clothing
     sprite: Objects/Weapons/Guns/Cannons/pie_cannon.rsi
+    quickEquip: false
+    slots:
+    - Back
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
+      PneumaticCannon-gasTank: !type:ContainerSlot

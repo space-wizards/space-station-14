@@ -326,3 +326,39 @@
       amount: 1
   products:
     ChloralHydrate: 1
+
+- type: reaction
+  id: Pax
+  impact: Medium
+  reactants:
+    MindbreakerToxin:
+      amount: 1
+    Synaptizine:
+      amount: 1
+    Water:
+      amount: 1
+  products:
+    Pax: 3
+
+- type: reaction
+  id: Charcoal
+  reactants:
+    Carbon:
+      amount: 1
+    Ash:
+      amount: 1
+  products:
+    Charcoal: 1
+
+- type: reaction
+  id: NorepinephricAcid
+  impact: Medium
+  reactants:
+    Uranium:
+      amount: 2
+    Hydrogen:
+      amount: 1
+    Oxygen:
+      amount: 1
+  products:
+    NorepinephricAcid: 2

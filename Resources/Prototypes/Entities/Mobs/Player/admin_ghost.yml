@@ -23,18 +23,8 @@
   - type: Physics
     ignorePaused: true
     bodyType: Kinematic
-    # TODO: Even need these? Don't think so but CBF checking right now.
-  - type: Fixtures
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.35,-0.35,0.35,0.35"
-      mass: 5
-      mask:
-      - GhostImpassable
   - type: Body
-    template: AGhostTemplate
-    preset: HumanPreset
+    prototype: Aghost
   - type: Access
     groups:
     - AllAccess
@@ -111,3 +101,7 @@
     receiveFrequencyId: SuitSensor
   - type: WirelessNetworkConnection
     range: 500
+  - type: Thieving
+    stripTimeReduction: 9999
+    stealthy: true
+  - type: Stripping

@@ -5,6 +5,7 @@ namespace Content.Shared.Doors.Systems;
 
 public abstract class SharedAirlockSystem : EntitySystem
 {
+    [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
     [Dependency] protected readonly SharedDoorSystem DoorSystem = default!;
 
     public override void Initialize()
@@ -39,10 +40,7 @@ public abstract class SharedAirlockSystem : EntitySystem
 
     public void UpdateEmergencyLightStatus(SharedAirlockComponent component)
     {
-        if (TryComp<AppearanceComponent>(component.Owner, out var appearanceComponent))
-        {
-            appearanceComponent.SetData(DoorVisuals.EmergencyLights, component.EmergencyAccess);
-        }
+        Appearance.SetData(component.Owner, DoorVisuals.EmergencyLights, component.EmergencyAccess);
     }
 
     public void ToggleEmergencyAccess(SharedAirlockComponent component)

@@ -20,9 +20,7 @@ public sealed partial class ChemistrySystem : EntitySystem
     public override void Initialize()
     {
         // Why ChemMaster duplicates reagentdispenser nobody knows.
-        InitializeChemMaster();
         InitializeHypospray();
         InitializeInjector();
-        InitializeReagentDispenser();
     }
 }

@@ -1,13 +1,13 @@
 - type: antag
   id: Nukeops
-  name: "Nuclear Operative"
+  name: roles-antag-nuclear-operative-name
   antagonist: true
   setPreference: true
-  objective: "Find the nuke disk and blow up the station."
+  objective: roles-antag-nuclear-operative-objective
 
 - type: antag
   id: NukeopsCommander
-  name: "Nuclear Operative Commander"
+  name: roles-antag-nuclear-operative-commander-name
   antagonist: true
   setPreference: true
-  objective: "Lead your team to the destruction of the station."
+  objective: roles-antag-nuclear-operative-commander-objective

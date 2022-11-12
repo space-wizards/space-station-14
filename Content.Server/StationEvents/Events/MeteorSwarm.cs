@@ -1,6 +1,7 @@
 using Content.Server.GameTicking;
 using Content.Shared.Spawners.Components;
 using Robust.Shared.Map;
+using Robust.Shared.Physics.Components;
 
 namespace Content.Server.StationEvents.Events
 {
@@ -29,7 +30,8 @@ namespace Content.Server.StationEvents.Events
         public override void Started()
         {
             base.Started();
-            _waveCounter = RobustRandom.Next(MinimumWaves, MaximumWaves);
+            var mod = Math.Sqrt(GetSeverityModifier());
+            _waveCounter = (int) (RobustRandom.Next(MinimumWaves, MaximumWaves) * mod);
         }
 
         public override void Ended()
@@ -52,20 +54,27 @@ namespace Content.Server.StationEvents.Events
                 return;
             }
 
+            var mod = GetSeverityModifier();
+
             _cooldown -= frameTime;
 
-            if (_cooldown > 0f) return;
+            if (_cooldown > 0f)
+                return;
 
             _waveCounter--;
 
-            _cooldown += (MaximumCooldown - MinimumCooldown) * RobustRandom.NextFloat() + MinimumCooldown;
+            _cooldown += (MaximumCooldown - MinimumCooldown) * RobustRandom.NextFloat() / mod + MinimumCooldown;
 
             Box2? playableArea = null;
             var mapId = GameTicker.DefaultMap;
 
-            foreach (var grid in MapManager.EntityManager.EntityQuery<MapGridComponent>())
+            foreach (var grid in MapManager.GetAllMapGrids(mapId))
             {
-                if (Transform(grid.Owner).MapID != mapId || !EntityManager.TryGetComponent(grid.Owner, out PhysicsComponent? gridBody)) continue;
+                if (!TryComp<PhysicsComponent>(grid.GridEntityId, out var gridBody))
+                {
+                    continue;
+                }
+
                 var aabb = gridBody.GetWorldAABB();
                 playableArea = playableArea?.Union(aabb) ?? aabb;
             }

@@ -1,4 +1,3 @@
-
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Administration.Commands;
@@ -32,6 +31,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.Physics;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Administration.Systems;
@@ -40,7 +40,7 @@ public sealed partial class AdminVerbSystem
 {
     [Dependency] private readonly AirlockSystem _airlockSystem = default!;
     [Dependency] private readonly StackSystem _stackSystem = default!;
-    [Dependency] private readonly AccessSystem _accessSystem = default!;
+    [Dependency] private readonly SharedAccessSystem _accessSystem = default!;
     [Dependency] private readonly HandsSystem _handsSystem = default!;
     [Dependency] private readonly QuickDialogSystem _quickDialog = default!;
     [Dependency] private readonly AdminTestArenaSystem _adminTestArenaSystem = default!;
@@ -376,11 +376,11 @@ public sealed partial class AdminVerbSystem
                 Text = "Send to test arena",
                 Category = VerbCategory.Tricks,
                 IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png",
+
                 Act = () =>
                 {
-                    var (_, arenaGrid) = _adminTestArenaSystem.AssertArenaLoaded(player);
-
-                    Transform(args.Target).Coordinates = new EntityCoordinates(arenaGrid, Vector2.One);
+                    var (mapUid, gridUid) = _adminTestArenaSystem.AssertArenaLoaded(player);
+                    Transform(args.Target).Coordinates = new EntityCoordinates(gridUid ?? mapUid, Vector2.One);
                 },
                 Impact = LogImpact.Medium,
                 Message = Loc.GetString("admin-trick-send-to-test-arena-description"),
@@ -467,7 +467,7 @@ public sealed partial class AdminVerbSystem
                 Act = () =>
                 {
                     // Unbounded intentionally.
-                    _quickDialog.OpenDialog(player, "Adjust stack", $"Amount (max {stack.MaxCount})", (int newAmount) =>
+                    _quickDialog.OpenDialog(player, "Adjust stack", $"Amount (max {_stackSystem.GetMaxCount(stack)})", (int newAmount) =>
                     {
                         _stackSystem.SetCount(args.Target, newAmount, stack);
                     });
@@ -485,7 +485,7 @@ public sealed partial class AdminVerbSystem
                 IconTexture = "/Textures/Interface/AdminActions/fill-stack.png",
                 Act = () =>
                 {
-                    _stackSystem.SetCount(args.Target, stack.MaxCount, stack);
+                    _stackSystem.SetCount(args.Target, _stackSystem.GetMaxCount(stack), stack);
                 },
                 Impact = LogImpact.Medium,
                 Message = Loc.GetString("admin-trick-fill-stack-description"),
@@ -687,7 +687,7 @@ public sealed partial class AdminVerbSystem
             args.Verbs.Add(haltMovement);
         }
 
-        if (TryComp<IMapComponent>(args.Target, out var map))
+        if (TryComp<MapComponent>(args.Target, out var map))
         {
             if (_adminManager.HasAdminFlag(player, AdminFlags.Mapping))
             {
@@ -800,7 +800,7 @@ public sealed partial class AdminVerbSystem
 
     private bool TryGetGridChildren(EntityUid target, [NotNullWhen(true)] out IEnumerable<EntityUid>? enumerator)
     {
-        if (!HasComp<IMapComponent>(target) && !HasComp<MapGridComponent>(target) &&
+        if (!HasComp<MapComponent>(target) && !HasComp<MapGridComponent>(target) &&
             !HasComp<StationDataComponent>(target))
         {
             enumerator = null;
@@ -827,7 +827,7 @@ public sealed partial class AdminVerbSystem
             yield break;
         }
 
-        else if (HasComp<IMapComponent>(target))
+        else if (HasComp<MapComponent>(target))
         {
             foreach (var possibleGrid in Transform(target).ChildEntities)
             {

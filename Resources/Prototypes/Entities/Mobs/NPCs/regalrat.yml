@@ -6,15 +6,15 @@
   components:
   - type: CombatMode
   - type: MovementSpeedModifier
-    baseWalkSpeed : 3.75
-    baseSprintSpeed : 3.75
+    baseWalkSpeed : 3.00
+    baseSprintSpeed : 5.00
   - type: InputMover
   - type: MobMover
   - type: Reactive
     groups:
       Flammable: [Touch]
       Extinguish: [Touch]
-  - type: AiFactionTag
+  - type: Faction
     factions:
     - SimpleHostile
   - type: Sprite
@@ -30,27 +30,26 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.3
-      mass: 65
+      density: 230
       mask:
-      - MobMask
+      - SmallMobMask
       layer:
-      - MobLayer
+      - SmallMobLayer
   - type: MobState
     thresholds:
       0: Alive
       150: Critical
       200: Dead
   - type: MeleeWeapon
-    range: 1
-    arcwidth: 0
-    arc: claw
+    hidden: true
+    angle: 0
+    animation: WeaponArcClaw
     damage:
       types:
         Slash: 12
         Piercing: 8
   - type: Body
-    template: AnimalTemplate
-    preset: RatPreset
+    prototype: Rat
   - type: Appearance
   - type: DamageStateVisuals
     rotate: true
@@ -92,10 +91,6 @@
       event: !type:RatKingDomainActionEvent
     hungerPerDomainUse: 50
   - type: MobsterAccent
-  - type: Access #he's so baller he gets his own access. NT got nothing on him
-    tags:
-    - Maintenance
-    - Service
   - type: Butcherable
     spawned:
     - id: ClothingHeadHatFancyCrown #how did that get there?
@@ -113,6 +108,10 @@
     - TongueTwister
   - type: MobPrice
     price: 2500 # rat wealth
+  - type: RandomMetadata
+    nameSegments:
+    - RegalRatNameKingdom
+    - RegalRatNameTitle
 
 - type: entity
   id: MobRatKingBuff
@@ -132,18 +131,19 @@
       300: Critical
       350: Dead
   - type: MeleeWeapon
-    range: 1.5
-    arcwidth: 0
-    arc: fist
+    hidden: true
+    angle: 0
+    attackRate: 0.75
+    animation: WeaponArcFist
     damage:
       types:
-        Blunt: 50 #oof ouch owie my bones
+        Blunt: 66 #oof ouch owie my bones
   - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 150
+      density: 400
       mask:
       - MobMask
       layer:
@@ -165,15 +165,13 @@
     baseSprintSpeed : 3.5
   - type: InputMover
   - type: MobMover
-  - type: UtilityNPC
-    behaviorSets:
-    - Idle
-    - UnarmedAttackHostiles
+  - type: HTN
+    rootTask: SimpleHostileCompound
   - type: Reactive
     groups:
       Flammable: [Touch]
       Extinguish: [Touch]
-  - type: AiFactionTag
+  - type: Faction
     factions:
     - SimpleHostile
   - type: Sprite
@@ -189,7 +187,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.2
-      mass: 4 #Bulky by mouse standards...
+      density: 30 #Bulky by mouse standards...
       mask:
       - SmallMobMask
       layer:
@@ -197,19 +195,20 @@
   - type: MobState
     thresholds:
       0: Alive
-      30: Critical
+      40: Critical
       60: Dead
+  - type: Stamina
+    excess: 60
   - type: MeleeWeapon
-    range: 1
-    arcwidth: 0
-    arc: claw
+    hidden: true
+    angle: 0
+    animation: WeaponArcClaw
     damage:
       types:
         Slash: 5
         Piercing: 3
   - type: Body
-    template: AnimalTemplate
-    preset: RatPreset
+    prototype: Rat
   - type: Appearance
   - type: DamageStateVisuals
     rotate: true

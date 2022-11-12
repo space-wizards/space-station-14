@@ -277,11 +277,14 @@ namespace Content.Server.MachineLinking.System
 
         }
 
-        private bool TryLink(SignalTransmitterComponent transmitter, SignalReceiverComponent receiver, SignalPortSelected args, EntityUid user, bool quiet = false, bool checkRange = true)
+        private bool TryLink(SignalTransmitterComponent transmitter, SignalReceiverComponent receiver, SignalPortSelected args, EntityUid? user, bool quiet = false, bool checkRange = true)
         {
             if (!transmitter.Outputs.TryGetValue(args.TransmitterPort, out var linkedReceivers) ||
                 !receiver.Inputs.TryGetValue(args.ReceiverPort, out var linkedTransmitters))
                 return false;
+
+            // Accounts for possibly missing user & the quiet option.
+            var alertFilter = (!quiet && user != null) ? Filter.Entities(user.Value) : null;
 
             // Does the link already exist? Under the assumption that nothing has broken, lets only check the
             // transmitter ports.
@@ -293,9 +296,9 @@ namespace Content.Server.MachineLinking.System
 
             if (checkRange && !IsInRange(transmitter, receiver))
             {
-                if (!quiet)
+                if (alertFilter != null)
                     _popupSystem.PopupCursor(Loc.GetString("signal-linker-component-out-of-range"),
-                        Filter.Entities(user));
+                        alertFilter);
                 return false;
             }
 
@@ -304,27 +307,27 @@ namespace Content.Server.MachineLinking.System
             RaiseLocalEvent(transmitter.Owner, linkAttempt, true);
             if (linkAttempt.Cancelled)
             {
-                if (!quiet)
+                if (alertFilter != null)
                     _popupSystem.PopupCursor(Loc.GetString("signal-linker-component-connection-refused", ("machine", transmitter.Owner)),
-                        Filter.Entities(user));
+                        alertFilter);
                 return false;
             }
             RaiseLocalEvent(receiver.Owner, linkAttempt, true);
             if (linkAttempt.Cancelled)
             {
-                if (!quiet)
+                if (alertFilter != null)
                     _popupSystem.PopupCursor(Loc.GetString("signal-linker-component-connection-refused", ("machine", receiver.Owner)),
-                        Filter.Entities(user));
+                        alertFilter);
                 return false;
             }
 
             linkedReceivers.Add(new(receiver.Owner, args.ReceiverPort));
             linkedTransmitters.Add(new(transmitter.Owner, args.TransmitterPort));
-            if (!quiet)
+            if (alertFilter != null)
                 _popupSystem.PopupCursor(Loc.GetString("signal-linker-component-linked-port",
                     ("machine1", transmitter.Owner), ("port1", PortName<TransmitterPortPrototype>(args.TransmitterPort)),
                     ("machine2", receiver.Owner), ("port2", PortName<ReceiverPortPrototype>(args.ReceiverPort))),
-                    Filter.Entities(user), PopupType.Medium);
+                    alertFilter, PopupType.Medium);
 
             var newLink = new NewLinkEvent(user, transmitter.Owner, args.TransmitterPort, receiver.Owner, args.ReceiverPort);
             RaiseLocalEvent(receiver.Owner, newLink);
@@ -417,7 +420,7 @@ namespace Content.Server.MachineLinking.System
         ///     Attempt to link all default ports connections. Returns true if all links succeeded. Otherwise returns
         ///     false.
         /// </summary>
-        public bool TryLinkDefaults(EntityUid receiverUid, EntityUid transmitterUid, EntityUid user,
+        public bool TryLinkDefaults(EntityUid receiverUid, EntityUid transmitterUid, EntityUid? user,
             SignalReceiverComponent? receiver = null, SignalTransmitterComponent? transmitter = null)
         {
             if (!Resolve(receiverUid, ref receiver, false) || !Resolve(transmitterUid, ref transmitter, false))

@@ -17,4 +17,18 @@
       - PaintingTheGreatWave
       - PaintingCafeTerraceAtNight
       - PaintingNightHawks
+      - PaintingSkeletonCigarette
+      - PaintingPrayerHands
+      - PaintingOldGuitarist
+      - PaintingOlympia
+      - PaintingSaturn
+      - PaintingSleepingGypsy
+      - PaintingRedBlueYellow
+      - PaintingHelloWorld
     chance: 1
+    rarePrototypes:
+      - PaintingSkeletonBoof
+      - PaintingEmpty
+      - PaintingMoony
+      - PaintingAmogusTriptych
+    rareChance: 0.01

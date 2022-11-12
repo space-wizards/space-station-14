@@ -49,7 +49,7 @@
     damageOverlay:
       sprite: Structures/Windows/cracks.rsi
   - type: StaticPrice
-    price: 0.75
+    price: 150
 
 - type: entity
   parent: ReinforcedWindow

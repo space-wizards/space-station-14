@@ -1,7 +1,13 @@
 # Alphabetical order is now apparently required.
 
 - type: Tag
+  id: AirAlarm
+
+- type: Tag
   id: AirAlarmElectronics
+
+- type: Tag
+  id: AirSensor
 
 - type: Tag
   id: ATVKeys
@@ -13,10 +19,7 @@
   id: Bee
 
 - type: Tag
-  id: BrassInstrument
-
-- type: Tag
-  id: Brutepack
+  id: BikeHorn
 
 - type: Tag
   id: BodyBag
@@ -35,6 +38,18 @@
 
 - type: Tag
   id: Bottle
+
+- type: Tag
+  id: BoxHug
+
+- type: Tag
+  id: BrassInstrument
+
+- type: Tag
+  id: Brutepack
+
+- type: Tag
+  id: Bucket
 
 - type: Tag
   id: BulletFoam
@@ -91,10 +106,16 @@
   id: CartridgeRocket
 
 - type: Tag
+  id: Cigarette
+
+- type: Tag
   id: CigFilter
 
 - type: Tag
   id: CigPack
+
+- type: Tag
+  id: ClownRubberStamp
 
 - type: Tag
   id: Crayon
@@ -142,6 +163,9 @@
   id: CombatKnife
 
 - type: Tag
+  id: ComputerTelevisionCircuitboard
+
+- type: Tag
   id: Debug
 
 - type: Tag
@@ -166,9 +190,6 @@
   id: Donut
 
 - type: Tag
-  id: Drone
-
-- type: Tag
   id: DroneUsable
 
 - type: Tag
@@ -184,10 +205,16 @@
   id: ExplosivePassable
 
 - type: Tag
+  id: FireAlarm
+
+- type: Tag
   id: FireAlarmElectronics
 
 - type: Tag
   id: FireAxe
+
+- type: Tag
+  id: WhitelistChameleon
 
 - type: Tag
   id: FirelockElectronics
@@ -214,10 +241,19 @@
   id: ForceNoFixRotations # fixrotations command WON'T target this
 
 - type: Tag
+  id: GasScrubber
+
+- type: Tag
+  id: GasVent
+
+- type: Tag
   id: Gauze
 
 - type: Tag
   id: GlassBeaker
+
+- type: Tag
+  id: GlassShard
 
 - type: Tag
   id: Grenade
@@ -229,6 +265,9 @@
   id: Handcuffs
 
 - type: Tag
+  id: Head
+
+- type: Tag
   id: HideContextMenu
 
 - type: Tag
@@ -236,6 +275,9 @@
 
 - type: Tag
   id: Hoe
+
+- type: Tag #Drop this innate tool instead of deleting it.
+  id: InnateDontDelete
 
 - type: Tag
   id: Ingot
@@ -306,10 +348,10 @@
   id: MagazinePistolSubMachineGun
 
 - type: Tag
-  id: Matchstick
+  id: MailingUnitElectronics
 
 - type: Tag
-  id: MailingUnitElectronics
+  id: Matchstick
 
 - type: Tag
   id: Medkit
@@ -324,6 +366,9 @@
   id: MicrowaveSelfUnsafe
 
 - type: Tag
+  id: MindTransferTarget
+
+- type: Tag
   id: MonkeyCube
 
 - type: Tag
@@ -331,6 +376,9 @@
 
 - type: Tag
   id: NoSpinOnThrow
+
+- type: Tag
+  id: NoBlockAnchoring
 
 - type: Tag
   id: NukeOpsUplink
@@ -349,6 +397,9 @@
 
 - type: Tag
   id: PercussionInstrument
+
+- type: Tag
+  id: PetWearable
 
 - type: Tag
   id: Pickaxe
@@ -406,6 +457,9 @@
   id: Screwdriver
 
 - type: Tag
+  id: SecBeltEquip
+
+- type: Tag
   id: SecwayKeys
 
 - type: Tag
@@ -421,7 +475,19 @@
   id: Shovel
 
 - type: Tag
+  id: SkeletonMotorcycleKeys
+
+- type: Tag
+  id: Smokable
+
+- type: Tag
   id: Soap
+
+- type: Tag
+  id: SolarAssemblyPart
+
+- type: Tag
+  id: SolarTrackerElectronics
 
 - type: Tag
   id: Spray
@@ -430,7 +496,22 @@
   id: Spear
 
 - type: Tag
+  id: SpeedLoaderCap
+
+- type: Tag
+  id: SpeedLoaderMagnum
+
+- type: Tag
+  id: SpeedLoaderPistol
+
+- type: Tag
+  id: SpeedLoaderRifle
+
+- type: Tag
   id: StringInstrument
+
+- type: Tag
+  id: SurveillanceCameraMonitorCircuitboard
 
 - type: Tag
   id: Syndicate
@@ -455,6 +536,15 @@
 
 - type: Tag
   id: Wall
+
+- type: Tag
+  id: WallmountGeneratorAPUElectronics
+
+- type: Tag
+  id: WallmountGeneratorElectronics
+
+- type: Tag
+  id: WallmountSubstationElectronics
 
 - type: Tag
   id: Window

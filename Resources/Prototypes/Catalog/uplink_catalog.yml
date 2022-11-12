@@ -239,6 +239,16 @@
   categories:
   - UplinkUtility
 
+- type: listing
+  id: UplinkStealthBox
+  name: Stealth Box
+  description: A box outfitted with stealth technology, sneak around with this and don't move too fast now!
+  productEntity: StealthBox
+  cost:
+    Telecrystal: 10
+  categories:
+    - UplinkUtility
+
 #TODO: Increase the price of this to 4-5/remove it when we get encrpytion keys
 - type: listing
   id: UplinkHeadset
@@ -257,6 +267,16 @@
   productEntity: Hypopen
   cost:
     Telecrystal: 4
+  categories:
+  - UplinkUtility
+
+- type: listing
+  id: UplinkVoiceMask
+  name: Voice Mask
+  description: A gas mask that lets you adjust your voice to whoever you can think of.
+  productEntity: ClothingMaskGasVoiceMasker
+  cost:
+    Telecrystal: 5
   categories:
   - UplinkUtility
 
@@ -356,6 +376,7 @@
 
 - type: listing
   id: UplinkToolbox
+  description: A full compliment of tools for the mechanically inclined traitor. Includes a pair of insulated combat gloves, syndicate gas mask and a shoulder holster.
   productEntity: ToolboxSyndicateFilled
   cost:
     Telecrystal: 2
@@ -364,6 +385,7 @@
 
 - type: listing
   id: UplinkSyndicateJawsOfLife
+  description: A combined prying and cutting tool. Useful for entering the station or its departments.
   productEntity: SyndicateJawsOfLife
   cost:
     Telecrystal: 2
@@ -428,7 +450,17 @@
 
 # Armor
 
-# Should be cameleon shoes, change when implemented.
+- type: listing
+  id: UplinkChameleon
+  name: Chameleon Kit
+  description: A backpack full of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more!
+  productEntity: ClothingBackpackChameleonFill
+  icon: /Textures/Clothing/Uniforms/Jumpsuit/rainbow.rsi/icon.png
+  cost:
+    Telecrystal: 4
+  categories:
+    - UplinkArmor
+
 - type: listing
   id: UplinkClothingNoSlipsShoes
   name: no-slip shoes
@@ -515,14 +547,6 @@
   - UplinkMisc
 
 - type: listing
-  id: UplinkRevolverCapGun
-  productEntity: RevolverCapGun
-  cost:
-    Telecrystal: 4
-  categories:
-  - UplinkMisc
-
-- type: listing
   id: UplinkCigarettes
   productEntity: CigPackSyndicate
   cost:
@@ -591,6 +615,14 @@
  # Pointless
 
 - type: listing
+  id: UplinkRevolverCapGun
+  productEntity: RevolverCapGun
+  cost:
+    Telecrystal: 4
+  categories:
+  - UplinkPointless
+
+- type: listing
   id: UplinkSyndicateStamp
   productEntity: RubberStampSyndicate
   cost:
@@ -627,8 +659,28 @@
 - type: listing
   id: UplinkCostumeClown
   productEntity: ClothingBackpackDuffelSyndicateCostumeClown
+  name: clown costume duffel bag
+  description: Contains a complete Clown outfit. Includes PDA and service radio.
   cost:
     Telecrystal: 4
+  categories:
+  - UplinkPointless
+
+- type: listing
+  id: UplinkOperativeSuit
+  description: A suit given to our nuclear operatives with fine fabric to make sure you stand out, no other benefits aside from looking cool.
+  productEntity: ClothingUniformJumpsuitOperative
+  cost:
+    Telecrystal: 1
+  categories:
+  - UplinkPointless
+
+- type: listing
+  id: UplinkOperativeSkirt
+  description: A skirt given to our nuclear operatives with fine fabric to make sure you stand out, no other benefits aside from looking cool.
+  productEntity: ClothingUniformJumpskirtOperative
+  cost:
+    Telecrystal: 1
   categories:
   - UplinkPointless
 

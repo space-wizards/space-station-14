@@ -10,14 +10,14 @@
   - type: Sharp
   - type: Sprite
     sprite: Objects/Weapons/Melee/spear.rsi
+    netsync: false
     state: spear
   - type: MeleeWeapon
     damage:
       types:
         Piercing: 10
-    range: 1.5
-    arcwidth: 0
-    arc: spear
+    angle: 0
+    animation: WeaponArcThrust
   - type: DamageOtherOnHit
     damage:
       types:
@@ -32,11 +32,12 @@
     graph: Spear
     node: spear
   - type: ItemCooldown
-  - type: MeleeChemicalInjector
   - type: SolutionContainerManager
     solutions:
       melee:
         maxVol: 5
+  - type: MeleeChemicalInjector
+    solution: melee
   - type: RefillableSolution
     solution: melee
   - type: InjectableSolution
@@ -45,9 +46,9 @@
     maxTransferAmount: 5
   - type: Wieldable
   - type: IncreaseDamageOnWield
-    modifiers:
-      flatReductions:
-        Piercing: -7
+    damage:
+      types:
+        Piercing: 7
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
@@ -76,10 +77,3 @@
     damage:
       types:
         Blunt: 5
-
-- type: MeleeWeaponAnimation
-  id: spear
-  state: spear
-  length: 0.10
-  speed: 6
-  arcType: Poke

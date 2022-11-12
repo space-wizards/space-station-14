@@ -79,7 +79,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 7.7616
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -92,7 +91,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 3.8416002
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -105,7 +103,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 7.7616
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -118,7 +115,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 3.8416002
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -131,7 +127,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 8
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -144,7 +139,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 4
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -157,7 +151,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 4
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -170,7 +163,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 8
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -183,7 +175,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 8
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -196,7 +187,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 8
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -209,7 +199,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 16
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -222,7 +211,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 16
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -235,7 +223,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 4
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -248,7 +235,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 12
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -261,7 +247,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 4
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -274,7 +259,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 8
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -287,7 +271,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 12
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -300,7 +283,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 12
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -313,7 +295,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 16
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -326,7 +307,6 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 8
       restitution: 0.1
     type: Fixtures
   - gravityShakeSound: !type:SoundPathSpecifier

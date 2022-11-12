@@ -14,16 +14,16 @@ namespace Content.Client.Atmos.Overlays
     {
         private readonly AtmosDebugOverlaySystem _atmosDebugOverlaySystem;
 
+        [Dependency] private readonly IEntityManager _entManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly IEntityManager _entMan = default!;
 
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
-        public AtmosDebugOverlay()
+        internal AtmosDebugOverlay(AtmosDebugOverlaySystem system)
         {
             IoCManager.InjectDependencies(this);
 
-            _atmosDebugOverlaySystem = EntitySystem.Get<AtmosDebugOverlaySystem>();
+            _atmosDebugOverlaySystem = system;
         }
 
         protected override void Draw(in OverlayDrawArgs args)
@@ -42,16 +42,17 @@ namespace Content.Client.Atmos.Overlays
 
             foreach (var mapGrid in _mapManager.FindGridsIntersecting(mapId, worldBounds))
             {
-                if (!_atmosDebugOverlaySystem.HasData(mapGrid.Owner))
+                if (!_atmosDebugOverlaySystem.HasData(mapGrid.GridEntityId) ||
+                    !_entManager.TryGetComponent<TransformComponent>(mapGrid.GridEntityId, out var xform))
                     continue;
 
-                drawHandle.SetTransform(_entMan.GetComponent<TransformComponent>(mapGrid.Owner).WorldMatrix);
+                drawHandle.SetTransform(xform.WorldMatrix);
 
                 for (var pass = 0; pass < 2; pass++)
                 {
                     foreach (var tile in mapGrid.GetTilesIntersecting(worldBounds))
                     {
-                        var dataMaybeNull = _atmosDebugOverlaySystem.GetData(mapGrid.Owner, tile.GridIndices);
+                        var dataMaybeNull = _atmosDebugOverlaySystem.GetData(mapGrid.GridEntityId, tile.GridIndices);
                         if (dataMaybeNull != null)
                         {
                             var data = (SharedAtmosDebugOverlaySystem.AtmosDebugOverlayData) dataMaybeNull!;

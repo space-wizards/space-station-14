@@ -3,6 +3,7 @@
   abstract: true
   id: MobSiliconBase
   components:
+  - type: LagCompensation
   - type: Reactive
     groups:
       Acidic: [Touch]
@@ -25,7 +26,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 20
+      density: 50
       mask:
       - MobMask
       layer:
@@ -39,10 +40,7 @@
     netsync: false
   - type: Recyclable
     safe: false
-  - type: UtilityNPC
-    behaviorSets:
-    - Idle
-  - type: AiFactionTag
+  - type: Faction
     factions:
     - SimpleNeutral
   - type: HealthExaminable
@@ -78,6 +76,8 @@
     thresholds:
       0: Alive
       120: Dead
+  - type: Stamina
+    excess: 120
   - type: Destructible
     thresholds:
     - trigger:
@@ -90,6 +90,8 @@
     context: "human"
   - type: InputMover
   - type: MobMover
+  - type: Body
+    prototype: Bot
 
 - type: entity
   parent: MobSiliconBase
@@ -100,9 +102,6 @@
   - type: SpamEmitSound
     sound:
       collection: BikeHorn
-  - type: UtilityNPC
-    behaviorSets:
-    - Idle
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Silicon/Bots/honkbot.rsi
@@ -116,7 +115,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 8
+      density: 20
       mask:
       - MobMask
       layer:
@@ -145,9 +144,6 @@
     drawdepth: Mobs
     sprite: Mobs/Silicon/Bots/cleanbot.rsi
     state: cleanbot
-  - type: UtilityNPC
-    behaviorSets:
-    - CleanBot
   - type: Drain
     range: 1
     unitsDestroyedPerSecond: 6
@@ -155,11 +151,17 @@
     graph: CleanBot
     node: bot
   - type: SentienceTarget
-    flavorKind: mechanical
+    flavorKind: station-event-random-sentience-flavor-mechanical
   - type: SolutionContainerManager
     solutions:
       drainBuffer:
         maxVol: 30
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2
+    baseSprintSpeed: 3
+  - type: NoSlip
+  - type: HTN
+    rootTask: CleanbotCompound
   - type: DrainableSolution
     solution: drainBuffer
   - type: InteractionPopup
@@ -174,15 +176,14 @@
   name: medibot
   description: No substitute for a doctor, but better than nothing.
   components:
-  - type: UtilityNPC
-    behaviorSets:
-    - MediBot
   - type: Medibot
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Silicon/Bots/medibot.rsi
     state: medibot
   - type: Speech
+  - type: HTN
+    rootTask: MedibotCompound
   - type: Construction
     graph: MediBot
     node: bot

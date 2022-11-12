@@ -9,15 +9,20 @@
   - type: DiseaseProtection
     protection: 1
   - type: CombatMode
-    canDisarm: true
+    disarm: null
   - type: InputMover
   - type: MobMover
-  - type: UtilityNPC
-    behaviorSets:
-    - Idle
-    - UnarmedAttackHostiles
+  - type: HTN
+    rootTask: XenoCompound
+    blackboard:
+      NavInteract: !type:Bool
+        true
+      NavPry: !type:Bool
+        true
+      NavSmash: !type:Bool
+        true
   - type: Tool
-    speed: 0.3
+    speed: 1.5
     qualities:
       - Prying
     useSound:
@@ -26,7 +31,7 @@
     groups:
       Flammable: [Touch]
       Extinguish: [Touch]
-  - type: AiFactionTag
+  - type: Faction
     factions:
     - Xeno
   - type: Hands
@@ -43,7 +48,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.25
-      mass: 200
+      density: 1000
       mask:
       - MobMask
       layer:
@@ -52,6 +57,8 @@
     thresholds:
       0: Alive
       200: Dead
+  - type: Stamina
+    excess: 200
   - type: Bloodstream
     bloodReagent: FluorosulfuricAcid
     bloodlossDamage:
@@ -63,14 +70,14 @@
         Bloodloss:
           -0.25
   - type: MeleeWeapon
-    range: 1.5
-    arcwidth: 0
-    hitSound:
+    hidden: true
+    angle: 0
+    soundHit:
      collection: AlienClaw
-    arc:
+    animation: WeaponArcBite
     damage:
       groups:
-        Brute: 20
+        Brute: 12
   - type: Appearance
   - type: DamageStateVisuals
     rotate: true
@@ -88,6 +95,8 @@
     - id: FoodMeatXeno
       amount: 5
   - type: GhostTakeoverAvailable
+    allowMovement: true
+    allowSpeech: true
     makeSentient: true
     name: xeno
     description: You are a xeno, co-operate with your hive to kill all crewmembers!
@@ -123,6 +132,8 @@
     thresholds:
       0: Alive
       300: Dead
+  - type: Stamina
+    excess: 300
   - type: SlowOnDamage
     speedModifierThresholds:
       250: 0.7
@@ -131,7 +142,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.45
-      mass: 250
+      density: 400
       mask:
       - MobMask
       layer:
@@ -153,6 +164,8 @@
     thresholds:
       0: Alive
       200: Dead
+  - type: Stamina
+    excess: 200
   - type: MovementSpeedModifier
     baseWalkSpeed : 3.0
     baseSprintSpeed : 5.5
@@ -164,7 +177,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.45
-      mass: 200
+      density: 450
       mask:
       - MobMask
       layer:
@@ -186,14 +199,16 @@
     thresholds:
       0: Alive
       1500: Dead
+  - type: Stamina
+    excess: 1500
   - type: MovementSpeedModifier
     baseWalkSpeed : 2.8
     baseSprintSpeed : 3.8
   - type: MeleeWeapon
+    hidden: true
     damage:
      groups:
        Brute: 40
-    cooldownTime: 2
   - type: SlowOnDamage
     speedModifierThresholds:
       1000: 0.7
@@ -202,7 +217,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.45
-      mass: 10000
+      density: 15500
       mask:
       - MobMask
       layer:
@@ -224,14 +239,16 @@
     thresholds:
       0: Alive
       550: Dead
+  - type: Stamina
+    excess: 550
   - type: MovementSpeedModifier
     baseWalkSpeed : 2.3
     baseSprintSpeed : 4.2
   - type: MeleeWeapon
+    hidden: true
     damage:
      groups:
-       Brute: 35
-    cooldownTime: 1.5
+       Brute: 20
   - type: SlowOnDamage
     speedModifierThresholds:
       450: 0.7
@@ -240,7 +257,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.45
-      mass: 600
+      density: 1350
       mask:
       - MobMask
       layer:
@@ -262,14 +279,16 @@
     thresholds:
       0: Alive
       250: Dead
+  - type: Stamina
+    excess: 250
   - type: MovementSpeedModifier
     baseWalkSpeed : 2.7
     baseSprintSpeed : 6.0
   - type: MeleeWeapon
+    hidden: true
     damage:
      groups:
-       Brute: 15
-    cooldownTime: 0.5
+       Brute: 8
   - type: SlowOnDamage
     speedModifierThresholds:
       200: 0.7
@@ -278,7 +297,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.45
-      mass: 150
+      density: 235
       mask:
       - MobMask
       layer:
@@ -310,6 +329,8 @@
     thresholds:
       0: Alive
       300: Dead
+  - type: Stamina
+    excess: 300
   - type: SlowOnDamage
     speedModifierThresholds:
       250: 0.4
@@ -318,7 +339,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.45
-      mass: 150
+      density: 235
       mask:
       - MobMask
       layer:
@@ -351,39 +372,32 @@
       gender: male
   - type: InputMover
   - type: MobMover
-  - type: UtilityNPC
-    behaviorSets:
-    - Idle
-    - UnarmedAttackHostiles
-  - type: AiFactionTag
+  - type: HTN
+    rootTask: SimpleHostileCompound
+  - type: Faction
     factions:
     - Xeno
   - type: MeleeWeapon
-    range: 1.5
-    arcwidth: 0
-    arc: bite
+    hidden: true
+    angle: 0
+    animation: WeaponArcBite
     damage:
       types:
         Piercing: 5
-  - type: MeleeChemicalInjector
   - type: SolutionContainerManager
     solutions:
       melee:
         reagents:
         - ReagentId: Toxin
           Quantity: 50
-  - type: RefillableSolution
+  - type: MeleeChemicalInjector
     solution: melee
-  - type: InjectableSolution
-    solution: melee
-  - type: SolutionTransfer
-    maxTransferAmount: 3
   - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 10
+      density: 25
       mask:
       - MobMask
       layer:

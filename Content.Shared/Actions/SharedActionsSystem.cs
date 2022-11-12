@@ -19,13 +19,14 @@ namespace Content.Shared.Actions;
 
 public abstract class SharedActionsSystem : EntitySystem
 {
+    [Dependency] protected readonly IGameTiming GameTiming = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly RotateToFaceSystem _rotateToFaceSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] protected readonly IGameTiming GameTiming = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     public override void Initialize()
     {
@@ -37,7 +38,6 @@ public abstract class SharedActionsSystem : EntitySystem
         SubscribeLocalEvent<ActionsComponent, DidUnequipHandEvent>(OnHandUnequipped);
 
         SubscribeLocalEvent<ActionsComponent, ComponentGetState>(GetState);
-        SubscribeLocalEvent<ActionsComponent, ComponentGetStateAttemptEvent>(OnCanGetState);
 
         SubscribeAllEvent<RequestPerformActionEvent>(OnActionRequest);
     }
@@ -89,12 +89,6 @@ public abstract class SharedActionsSystem : EntitySystem
         args.State = new ActionsComponentState(component.Actions.ToList());
     }
 
-    private void OnCanGetState(EntityUid uid, ActionsComponent component, ref ComponentGetStateAttemptEvent args)
-    {
-        // Only send action state data to the relevant player.
-        if (args.Player.AttachedEntity != uid)
-            args.Cancelled = true;
-    }
     #endregion
 
     #region Execution
@@ -114,7 +108,7 @@ public abstract class SharedActionsSystem : EntitySystem
         if (!component.Actions.TryGetValue(ev.Action, out var act))
         {
             _adminLogger.Add(LogType.Action,
-                $"{ToPrettyString(user):user} attempted to perform an action that they do not have: {ev.Action.Name}.");
+                $"{ToPrettyString(user):user} attempted to perform an action that they do not have: {ev.Action.DisplayName}.");
             return;
         }
 
@@ -128,7 +122,7 @@ public abstract class SharedActionsSystem : EntitySystem
         BaseActionEvent? performEvent = null;
 
         // Validate request by checking action blockers and the like:
-        var name = Loc.GetString(act.Name);
+        var name = Loc.GetString(act.DisplayName);
 
         switch (act)
         {
@@ -136,7 +130,7 @@ public abstract class SharedActionsSystem : EntitySystem
 
                 if (ev.EntityTarget is not EntityUid { Valid: true } entityTarget)
                 {
-                    Logger.Error($"Attempted to perform an entity-targeted action without a target! Action: {entityAction.Name}");
+                    Logger.Error($"Attempted to perform an entity-targeted action without a target! Action: {entityAction.DisplayName}");
                     return;
                 }
 
@@ -164,7 +158,7 @@ public abstract class SharedActionsSystem : EntitySystem
 
                 if (ev.MapTarget is not MapCoordinates mapTarget)
                 {
-                    Logger.Error($"Attempted to perform a map-targeted action without a target! Action: {worldAction.Name}");
+                    Logger.Error($"Attempted to perform a map-targeted action without a target! Action: {worldAction.DisplayName}");
                     return;
                 }
 
@@ -274,7 +268,7 @@ public abstract class SharedActionsSystem : EntitySystem
         return _interactionSystem.InRangeUnobstructed(user, coords, range: action.Range);
     }
 
-    protected void PerformAction(ActionsComponent component, ActionType action, BaseActionEvent? actionEvent, TimeSpan curTime)
+    public void PerformAction(ActionsComponent component, ActionType action, BaseActionEvent? actionEvent, TimeSpan curTime)
     {
         var handled = false;
 
@@ -332,8 +326,7 @@ public abstract class SharedActionsSystem : EntitySystem
 
         var filter = Filter.Pvs(performer).RemoveWhereAttachedEntity(e => e == performer);
 
-        if (action.Sound != null)
-            SoundSystem.Play(action.Sound.GetSound(), filter, performer, action.AudioParams);
+        _audio.Play(action.Sound, filter, performer, action.AudioParams);
 
         if (string.IsNullOrWhiteSpace(action.Popup))
             return true;

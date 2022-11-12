@@ -1,7 +1,6 @@
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
 using Content.Server.Hands.Systems;
-using Content.Server.Weapon.Melee;
 using Content.Server.Wieldable.Components;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
@@ -12,6 +11,7 @@ using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Player;
 using Content.Server.Actions.Events;
+using Content.Shared.Weapons.Melee.Events;
 
 
 namespace Content.Server.Wieldable
@@ -243,7 +243,7 @@ namespace Content.Server.Wieldable
             if (args.Handled)
                 return;
 
-            args.ModifiersList.Add(component.Modifiers);
+            args.BonusDamage += component.BonusDamage;
         }
     }
 

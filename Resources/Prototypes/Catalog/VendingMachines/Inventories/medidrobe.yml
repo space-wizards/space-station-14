@@ -1,7 +1,5 @@
 - type: vendingMachineInventory
   id: MediDrobeInventory
-  name: MediDrobe
-  spriteName: medidrobe
   startingInventory:
     ClothingBackpackDuffelMedical: 4
     ClothingBackpackMedical: 4
@@ -17,4 +15,4 @@
     ClothingOuterWinterPara: 2
     ClothingHeadHelmetVoidParamed: 1
     ClothingOuterHardsuitVoidParamed: 1
-    
+

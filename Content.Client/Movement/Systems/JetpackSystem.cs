@@ -1,12 +1,10 @@
-using Content.Client.Clothing;
+using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
-using Content.Shared.Weapons.Ranged.Systems;
-using Robust.Client.Animations;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameStates;
 using Robust.Shared.Map;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
 
 namespace Content.Client.Movement.Systems;
@@ -48,10 +46,11 @@ public sealed class JetpackSystem : SharedJetpackSystem
 
         foreach (var comp in EntityQuery<ActiveJetpackComponent>())
         {
-            comp.Accumulator += frameTime;
+            if (_timing.CurTime < comp.TargetTime)
+                continue;
 
-            if (comp.Accumulator < comp.EffectCooldown) continue;
-            comp.Accumulator -= comp.EffectCooldown;
+            comp.TargetTime = _timing.CurTime + TimeSpan.FromSeconds(comp.EffectCooldown);
+
             CreateParticles(comp.Owner);
         }
     }

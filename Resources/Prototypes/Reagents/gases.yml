@@ -3,6 +3,7 @@
   name: reagent-name-oxygen
   desc: reagent-desc-oxygen
   physicalDesc: reagent-physical-desc-gaseous
+  flavor: bitter
   color: "#808080"
   boilingPoint: -183.0
   meltingPoint: -218.4
@@ -21,6 +22,10 @@
         conditions:
         - !type:OrganType
           type: Rat
+      - !type:Oxygenate
+        conditions:
+        - !type:OrganType
+          type: Plant
       # Convert Oxygen into CO2.
       - !type:ModifyLungGas
         conditions:
@@ -36,6 +41,7 @@
   name: reagent-name-plasma
   desc: reagent-desc-plasma
   physicalDesc: reagent-physical-desc-gaseous
+  flavor: bitter
   color: "#7e009e"
   boilingPoint: -127.3 # Random values picked between the actual values for CO2 and O2
   meltingPoint: -186.4
@@ -75,6 +81,7 @@
   name: reagent-name-tritium
   desc: reagent-desc-tritium
   physicalDesc: reagent-physical-desc-ionizing
+  flavor: bitter
   color: "#66ff33"
   tileReactions:
   - !type:FlammableTileReaction
@@ -104,6 +111,7 @@
   name: reagent-name-carbon-dioxide
   desc: reagent-desc-carbon-dioxide
   physicalDesc: reagent-physical-desc-odorless
+  flavor: bitter
   color: "#66ff33"
   metabolisms:
     Gas:
@@ -129,6 +137,7 @@
   name: reagent-name-nitrogen
   desc: reagent-desc-nitrogen
   physicalDesc: reagent-physical-desc-gaseous
+  flavor: bitter
   color: "#808080"
   boilingPoint: -195.8
   meltingPoint: -210.0
@@ -164,6 +173,7 @@
   name: reagent-name-miasma
   desc: reagent-desc-miasma
   physicalDesc: reagent-physical-desc-gaseous
+  flavor: bitter
   color: "#56941E"
   boilingPoint: -195.8
   meltingPoint: -210.0
@@ -228,6 +238,7 @@
   name: reagent-name-nitrous-oxide
   desc: reagent-desc-nitrous-oxide
   physicalDesc: reagent-physical-desc-gaseous
+  flavor: bitter
   color: "#808080"
   boilingPoint: -88
   meltingPoint: -90
@@ -286,6 +297,7 @@
   name: reagent-name-frezon
   desc: reagent-desc-frezon
   physicalDesc: reagent-physical-desc-gaseous
+  flavor: bitter
   color: "#3a758c"
   boilingPoint: -195.8
   meltingPoint: -210.0

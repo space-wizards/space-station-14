@@ -77,7 +77,7 @@ namespace Content.Client.NodeContainer
 
 
             var xform = _entityManager.GetComponent<TransformComponent>(node.Entity);
-            if (!_entityManager.TryGetComponent<MapGridComponent>(xform.GridUid, out var grid))
+            if (!_mapManager.TryGetGrid(xform.GridUid, out var grid))
                 return;
             var gridTile = grid.TileIndicesFor(xform.Coordinates);
 
@@ -113,12 +113,12 @@ namespace Content.Client.NodeContainer
 
             foreach (var grid in _mapManager.FindGridsIntersecting(map, worldAABB))
             {
-                foreach (var entity in _lookup.GetEntitiesIntersecting(grid.Owner, worldAABB))
+                foreach (var entity in _lookup.GetEntitiesIntersecting(grid.GridEntityId, worldAABB))
                 {
                     if (!_system.Entities.TryGetValue(entity, out var nodeData))
                         continue;
 
-                    var gridDict = _gridIndex.GetOrNew(grid.Owner);
+                    var gridDict = _gridIndex.GetOrNew(grid.GridEntityId);
                     var coords = xformQuery.GetComponent(entity).Coordinates;
 
                     // TODO: This probably shouldn't be capable of returning NaN...
@@ -139,8 +139,10 @@ namespace Content.Client.NodeContainer
 
             foreach (var (gridId, gridDict) in _gridIndex)
             {
-                var grid = _entityManager.GetComponent<MapGridComponent>(gridId);
-                var lCursorBox = _entityManager.GetComponent<TransformComponent>(grid.Owner).InvWorldMatrix.TransformBox(cursorBox);
+                var grid = _mapManager.GetGrid(gridId);
+                var (_, _, worldMatrix, invMatrix) = _entityManager.GetComponent<TransformComponent>(grid.GridEntityId).GetWorldPositionRotationMatrixWithInv();
+
+                var lCursorBox = invMatrix.TransformBox(cursorBox);
                 foreach (var (pos, list) in gridDict)
                 {
                     var centerPos = (Vector2) pos + grid.TileSize / 2f;
@@ -159,7 +161,7 @@ namespace Content.Client.NodeContainer
                     }
                 }
 
-                handle.SetTransform(_entityManager.GetComponent<TransformComponent>(grid.Owner).WorldMatrix);
+                handle.SetTransform(worldMatrix);
 
                 foreach (var nodeRenderData in _nodeIndex.Values)
                 {

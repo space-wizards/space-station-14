@@ -1,7 +1,5 @@
 ﻿- type: vendingMachineInventory
   id: DiscountDansInventory
-  name: Discount Dan's
-  spriteName: discount
   startingInventory:
     FoodSnackCheesie: 3
     FoodSnackChips: 3

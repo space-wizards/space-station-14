@@ -32,6 +32,7 @@ namespace Content.Server.Nutrition.EntitySystems
     public sealed class DrinkSystem : EntitySystem
     {
         [Dependency] private readonly FoodSystem _foodSystem = default!;
+        [Dependency] private readonly FlavorProfileSystem _flavorProfileSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
@@ -54,7 +55,7 @@ namespace Content.Server.Nutrition.EntitySystems
             SubscribeLocalEvent<DrinkComponent, GetVerbsEvent<AlternativeVerb>>(AddDrinkVerb);
             SubscribeLocalEvent<DrinkComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<DrinkComponent, SolutionTransferAttemptEvent>(OnTransferAttempt);
-            SubscribeLocalEvent<SharedBodyComponent, DrinkEvent>(OnDrink);
+            SubscribeLocalEvent<BodyComponent, DrinkEvent>(OnDrink);
             SubscribeLocalEvent<DrinkCancelledEvent>(OnDrinkCancelled);
         }
 
@@ -224,7 +225,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 return true;
             }
 
-            if (!EntityManager.HasComponent<SharedBodyComponent>(target))
+            if (!EntityManager.HasComponent<BodyComponent>(target))
                 return false;
 
             if (!drink.Opened)
@@ -264,6 +265,8 @@ namespace Content.Server.Nutrition.EntitySystems
             drink.CancelToken = new CancellationTokenSource();
             var moveBreak = user != target;
 
+            var flavors = _flavorProfileSystem.GetLocalizedFlavorsMessage(user, drinkSolution);
+
             _doAfterSystem.DoAfter(new DoAfterEventArgs(user, forceDrink ? drink.ForceFeedDelay : drink.Delay, drink.CancelToken.Token, target, drink.Owner)
             {
                 BreakOnUserMove = moveBreak,
@@ -272,7 +275,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 BreakOnTargetMove = moveBreak,
                 MovementThreshold = 0.01f,
                 DistanceThreshold = 1.0f,
-                TargetFinishedEvent = new DrinkEvent(user, drink, drinkSolution),
+                TargetFinishedEvent = new DrinkEvent(user, drink, drinkSolution, flavors),
                 BroadcastCancelledEvent = new DrinkCancelledEvent(drink),
                 NeedHand = true,
             });
@@ -283,7 +286,7 @@ namespace Content.Server.Nutrition.EntitySystems
         /// <summary>
         ///     Raised directed at a victim when someone has force fed them a drink.
         /// </summary>
-        private void OnDrink(EntityUid uid, SharedBodyComponent body, DrinkEvent args)
+        private void OnDrink(EntityUid uid, BodyComponent body, DrinkEvent args)
         {
             if (args.Drink.Deleted)
                 return;
@@ -294,7 +297,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             var forceDrink = uid != args.User;
 
-            if (!_bodySystem.TryGetComponentsOnMechanisms<StomachComponent>(uid, out var stomachs, body))
+            if (!_bodySystem.TryGetBodyOrganComponents<StomachComponent>(uid, out var stomachs, body))
             {
                 _popupSystem.PopupEntity(
                     forceDrink ?
@@ -335,13 +338,15 @@ namespace Content.Server.Nutrition.EntitySystems
                 return;
             }
 
+            var flavors = args.FlavorMessage;
+
             if (forceDrink)
             {
                 var targetName = Identity.Entity(uid, EntityManager);
                 var userName = Identity.Entity(args.User, EntityManager);
 
                 _popupSystem.PopupEntity(
-                    Loc.GetString("drink-component-force-feed-success", ("user", userName)), uid, Filter.Entities(uid));
+                    Loc.GetString("drink-component-force-feed-success", ("user", userName), ("flavors", flavors)), uid, Filter.Entities(uid));
 
                 _popupSystem.PopupEntity(
                     Loc.GetString("drink-component-force-feed-success-user", ("target", targetName)),
@@ -350,7 +355,10 @@ namespace Content.Server.Nutrition.EntitySystems
             else
             {
                 _popupSystem.PopupEntity(
-                    Loc.GetString("drink-component-try-use-drink-success-slurp"), args.User, Filter.Pvs(args.User));
+                    Loc.GetString("drink-component-try-use-drink-success-slurp-taste", ("flavors", flavors)), args.User,
+                    Filter.Entities(args.User));
+                _popupSystem.PopupEntity(
+                    Loc.GetString("drink-component-try-use-drink-success-slurp"), args.User, Filter.PvsExcept(args.User));
             }
 
             SoundSystem.Play(args.Drink.UseSound.GetSound(), Filter.Pvs(uid), uid, AudioParams.Default.WithVolume(-2f));
@@ -372,8 +380,8 @@ namespace Content.Server.Nutrition.EntitySystems
             if (uid == ev.User ||
                 !ev.CanInteract ||
                 !ev.CanAccess ||
-                !EntityManager.TryGetComponent(ev.User, out SharedBodyComponent? body) ||
-                !_bodySystem.TryGetComponentsOnMechanisms<StomachComponent>(ev.User, out var stomachs, body))
+                !EntityManager.TryGetComponent(ev.User, out BodyComponent? body) ||
+                !_bodySystem.TryGetBodyOrganComponents<StomachComponent>(ev.User, out var stomachs, body))
                 return;
 
             if (EntityManager.TryGetComponent<MobStateComponent>(uid, out var mobState) && mobState.IsAlive())

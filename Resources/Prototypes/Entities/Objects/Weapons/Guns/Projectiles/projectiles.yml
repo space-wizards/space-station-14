@@ -13,6 +13,9 @@
       sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
       state: muzzle_bullet
   - type: EffectVisuals
+  - type: Tag
+    tags:
+      - HideContextMenu
   - type: AnimationPlayer
 
 # One bullet to bring them all into the darkness and bind them
@@ -162,6 +165,46 @@
     damage:
       types:
         Heat: 5
+    soundHit:
+      path: "/Audio/Weapons/tap.ogg"
+    soundForce: true
+
+- type: entity
+  name : disabler bolt practice
+  id: BulletDisablerPractice
+  parent: BaseBullet
+  noSpawn: true
+  components:
+  - type: FlyBySound
+    sound:
+      collection: EnergyMiss
+      params:
+        volume: 5
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+    layers:
+    - state: omnilaser
+      shader: unshaded
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.15,-0.3,0.15,0.3"
+      hard: false
+      id: projectile
+      mask:
+      - Impassable
+      - BulletImpassable
+    - *flybyfixture
+  - type: Ammo
+  - type: StaminaDamageOnCollide
+    damage: 5
+  - type: Projectile
+    impactEffect: BulletImpactEffectDisabler
+    damage:
+      types:
+        Heat: 1
     soundHit:
       path: "/Audio/Weapons/tap.ogg"
     soundForce: true

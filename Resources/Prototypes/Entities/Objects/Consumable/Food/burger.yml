@@ -26,6 +26,10 @@
   id: FoodBurgerBase
   abstract: true
   components:
+  - type: FlavorProfile
+    flavors:
+      - bun
+      - meaty
   - type: Food
     transferAmount: 5
   - type: Sprite
@@ -76,6 +80,10 @@
   id: FoodBurgerCarp
   description: Almost like a carp is yelling somewhere...
   components:
+  - type: FlavorProfile
+    flavors:
+      - bun
+      - fishy
   - type: Sprite
     state: fish
 # Tastes like bun, fish.
@@ -86,6 +94,10 @@
   id: FoodBurgerTofu
   description: What... is that meat?
   components:
+  - type: FlavorProfile
+    flavors:
+      - bun
+      - tofu
   - type: Sprite
     state: tofu
 # Tastes like bun, tofu.
@@ -96,6 +108,11 @@
   id: FoodBurgerRobot
   description: The lettuce is the only organic component. Beep.
   components:
+  - type: FlavorProfile
+    flavors:
+      - bun
+      - leafy
+      - metallic
   - type: Sprite
     state: ro
 # Tastes like bun, lettuce, sludge.
@@ -106,6 +123,11 @@
   id: FoodBurgerXeno
   description: Smells caustic. Tastes like heresy.
   components:
+  - type: FlavorProfile
+    flavors:
+      - bun
+      - meaty
+      - acidic
   - type: Sprite
     state: x
 # Tastes like bun, acid.
@@ -136,6 +158,9 @@
   id: FoodBurgerClown
   description: This tastes funny...
   components:
+  - type: FlavorProfile
+    flavors:
+      - funny
   - type: Sprite
     state: clown
 
@@ -145,6 +170,9 @@
   id: FoodBurgerMime
   description: Its taste defies language.
   components:
+  - type: FlavorProfile
+    flavors:
+      - nothing
   - type: Sprite
     state: mime
 # Tastes like  .
@@ -165,6 +193,10 @@
   id: FoodBurgerGhost
   description: Too spooky!
   components:
+  - type: FlavorProfile
+    flavors:
+      - bun
+      - spooky
   - type: Sprite
     state: ghost
   - type: SolutionContainerManager
@@ -178,6 +210,28 @@
           Quantity: 12
 # Tastes like bun, ectoplasm.
 
+- type: entity
+  name: curger #curger...
+  parent: FoodBurgerBase
+  id: FoodBurgerCorgi
+  description: The Head of Personnel's favorite!
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bun
+      - validhunting
+  - type: Sprite
+    state: ian
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 25
+        reagents:
+        - ReagentId: Bicaridine #keeping it somewhat consistent with the meat itself
+          Quantity: 7
+        - ReagentId: Vitamin
+          Quantity: 12
+
 # Note: I would put a bunch of colored burgers here as listed in the tg .dm but
 # I'd rather wait for a custom burger component.
 
@@ -187,6 +241,10 @@
   id: FoodBurgerSpell
   description: This is absolutely Ei Nath.
   components:
+  - type: FlavorProfile
+    flavors:
+      - bun
+      - magical
   - type: Sprite
     state: spell
 # Tastes like bun, silver.
@@ -197,6 +255,11 @@
   id: FoodBurgerBig
   description: Forget the Big Mac. THIS is the future!
   components:
+  - type: FlavorProfile
+    flavors: # What bun?
+      - meaty
+      - oily
+      - cheesy
   - type: SolutionContainerManager
     solutions:
       food:
@@ -216,6 +279,11 @@
   id: FoodBurgerSuper
   description: This is a mountain of a burger. FOOD!
   components:
+  - type: FlavorProfile
+    flavors: # What bun?
+      - meaty
+      - oily
+      - cheesy
   - type: SolutionContainerManager
     solutions:
       food:
@@ -239,6 +307,10 @@
   id: FoodBurgerFive
   description: HOT! HOT! HOT!
   components:
+  - type: FlavorProfile
+    flavors:
+      - meaty
+      - spicy
   - type: Sprite
     state: fivealarm
   - type: SolutionContainerManager
@@ -292,6 +364,10 @@
   id: FoodBurgerBacon
   description: The perfect combination of all things American.
   components:
+  - type: FlavorProfile
+    flavors:
+      - meaty
+      - bacon
   - type: Sprite
     state: bacon
     solutions:
@@ -350,6 +426,10 @@
   id: FoodBurgerSoy
   description: After eating this you have the overwhelming urge to purchase overpriced figurines of superheroes.
   components:
+  - type: FlavorProfile
+    flavors:
+      - bun
+      - soy
   - type: Sprite
     state: soylent
   - type: SolutionContainerManager
@@ -394,6 +474,10 @@
   id: FoodBurgerMcguffin
   description: A cheap and greasy imitation of an eggs Benedict.
   components:
+  - type: FlavorProfile
+    flavors:
+      - muffin
+      - egg
   - type: Sprite
     state: mcguffin
   - type: SolutionContainerManager
@@ -457,6 +541,10 @@
   id: FoodBurgerCheese
   description: This noble burger stands proudly clad in golden cheese.
   components:
+  - type: FlavorProfile
+    flavors:
+      - meaty
+      - cheesy
   - type: Sprite
     state: cheese
   - type: SolutionContainerManager

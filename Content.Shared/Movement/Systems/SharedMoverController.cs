@@ -17,6 +17,8 @@ using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
+using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Systems;
 
 namespace Content.Shared.Movement.Systems
 {
@@ -34,8 +36,9 @@ namespace Content.Shared.Movement.Systems
         [Dependency] private readonly SharedContainerSystem _container = default!;
         [Dependency] private readonly SharedGravitySystem _gravity = default!;
         [Dependency] private readonly SharedMobStateSystem _mobState = default!;
-        [Dependency] private readonly TagSystem _tags = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
+        [Dependency] private readonly TagSystem _tags = default!;
 
         private const float StepSoundMoveDistanceRunning = 2;
         private const float StepSoundMoveDistanceWalking = 1.5f;
@@ -69,7 +72,7 @@ namespace Content.Shared.Movement.Systems
             InitializeRelay();
             _configManager.OnValueChanged(CCVars.RelativeMovement, SetRelativeMovement, true);
             _configManager.OnValueChanged(CCVars.StopSpeed, SetStopSpeed, true);
-            UpdatesBefore.Add(typeof(SharedTileFrictionController));
+            UpdatesBefore.Add(typeof(TileFrictionController));
         }
 
         private void SetRelativeMovement(bool value) => _relativeMovement = value;
@@ -101,46 +104,6 @@ namespace Content.Shared.Movement.Systems
             EntityQuery<TransformComponent> xformQuery)
         {
             DebugTools.Assert(!UsedMobMovement.ContainsKey(mover.Owner));
-
-            if (!UseMobMovement(mover, physicsComponent))
-            {
-                UsedMobMovement[mover.Owner] = false;
-                return;
-            }
-
-            UsedMobMovement[mover.Owner] = true;
-            // Specifically don't use mover.Owner because that may be different to the actual physics body being moved.
-            var weightless = _gravity.IsWeightless(physicsComponent.Owner, physicsComponent, xform);
-            var (walkDir, sprintDir) = GetVelocityInput(mover);
-            var touching = false;
-
-            // Handle wall-pushes.
-            if (weightless)
-            {
-                if (xform.GridUid != null)
-                    touching = true;
-
-                if (!touching)
-                {
-                    var ev = new CanWeightlessMoveEvent();
-                    RaiseLocalEvent(xform.Owner, ref ev);
-                    // No gravity: is our entity touching anything?
-                    touching = ev.CanMove;
-
-                    if (!touching && TryComp<MobMoverComponent>(xform.Owner, out var mobMover))
-                        touching |= IsAroundCollider(PhysicsSystem, xform, mobMover, physicsComponent);
-                }
-            }
-
-            // Regular movement.
-            // Target velocity.
-            // This is relative to the map / grid we're on.
-            var moveSpeedComponent = CompOrNull<MovementSpeedModifierComponent>(mover.Owner);
-
-            var walkSpeed = moveSpeedComponent?.CurrentWalkSpeed ?? MovementSpeedModifierComponent.DefaultBaseWalkSpeed;
-            var sprintSpeed = moveSpeedComponent?.CurrentSprintSpeed ?? MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
-
-            var total = walkDir * walkSpeed + sprintDir * sprintSpeed;
 
             // Update relative movement
             if (mover.LerpAccumulator > 0f)
@@ -205,11 +168,11 @@ namespace Content.Shared.Movement.Systems
             if (!angleDiff.EqualsApprox(Angle.Zero, 0.001))
             {
                 var adjustment = angleDiff * 5f * frameTime;
-                var minAdjustment = 0.005 * frameTime;
+                var minAdjustment = 0.01 * frameTime;
 
                 if (angleDiff < 0)
                 {
-                    adjustment = Math.Min(adjustment, minAdjustment);
+                    adjustment = Math.Min(adjustment, -minAdjustment);
                     adjustment = Math.Clamp(adjustment, angleDiff, -angleDiff);
                 }
                 else
@@ -219,15 +182,57 @@ namespace Content.Shared.Movement.Systems
                 }
 
                 mover.RelativeRotation += adjustment;
+                mover.RelativeRotation.FlipPositive();
                 Dirty(mover);
             }
             else if (!angleDiff.Equals(Angle.Zero))
             {
+                mover.TargetRelativeRotation.FlipPositive();
                 mover.RelativeRotation = mover.TargetRelativeRotation;
                 Dirty(mover);
             }
 
-            var parentRotation = GetParentGridAngle(mover);
+            if (!UseMobMovement(mover, physicsComponent))
+            {
+                UsedMobMovement[mover.Owner] = false;
+                return;
+            }
+
+            UsedMobMovement[mover.Owner] = true;
+            // Specifically don't use mover.Owner because that may be different to the actual physics body being moved.
+            var weightless = _gravity.IsWeightless(physicsComponent.Owner, physicsComponent, xform);
+            var (walkDir, sprintDir) = GetVelocityInput(mover);
+            var touching = false;
+
+            // Handle wall-pushes.
+            if (weightless)
+            {
+                if (xform.GridUid != null)
+                    touching = true;
+
+                if (!touching)
+                {
+                    var ev = new CanWeightlessMoveEvent();
+                    RaiseLocalEvent(xform.Owner, ref ev);
+                    // No gravity: is our entity touching anything?
+                    touching = ev.CanMove;
+
+                    if (!touching && TryComp<MobMoverComponent>(xform.Owner, out var mobMover))
+                        touching |= IsAroundCollider(PhysicsSystem, xform, mobMover, physicsComponent);
+                }
+            }
+
+            // Regular movement.
+            // Target velocity.
+            // This is relative to the map / grid we're on.
+            var moveSpeedComponent = CompOrNull<MovementSpeedModifierComponent>(mover.Owner);
+
+            var walkSpeed = moveSpeedComponent?.CurrentWalkSpeed ?? MovementSpeedModifierComponent.DefaultBaseWalkSpeed;
+            var sprintSpeed = moveSpeedComponent?.CurrentSprintSpeed ?? MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
+
+            var total = walkDir * walkSpeed + sprintDir * sprintSpeed;
+
+            var parentRotation = GetParentGridAngle(mover, xformQuery);
             var worldTotal = _relativeMovement ? parentRotation.RotateVec(total) : total;
 
             DebugTools.Assert(MathHelper.CloseToPercent(total.Length, worldTotal.Length));

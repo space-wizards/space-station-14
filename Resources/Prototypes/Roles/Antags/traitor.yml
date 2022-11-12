@@ -1,6 +1,6 @@
 - type: antag
   id: Traitor
-  name: "Syndicate Agent"
+  name: roles-antag-syndicate-agent-name
   antagonist: true
   setPreference: true
-  objective: "Complete your objectives without being caught."
+  objective: roles-antag-syndicate-agent-objective

@@ -21,7 +21,7 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.4,-0.5,0.4,0.3"
-      mass: 25
+      density: 190
       mask:
       - MachineMask
       layer:
@@ -67,6 +67,8 @@
     maxIntensity: 100
     intensitySlope: 2
     totalIntensity: 200
+  - type: StaticPrice
+    price: 500
 
 # Base Wallmount Generator
 
@@ -167,6 +169,9 @@
     LayoutId: GeneratorPlasma
   - type: Machine
     board: GeneratorPlasmaMachineCircuitboard
+  - type: UpgradePowerSupplier
+    powerSupplyMultiplier: 1.25
+    scaling: Exponential
 
 - type: entity
   parent: [ BaseGenerator, ConstructibleMachine ]
@@ -183,6 +188,9 @@
     LayoutId: GeneratorUranium
   - type: Machine
     board: GeneratorUraniumMachineCircuitboard
+  - type: UpgradePowerSupplier
+    powerSupplyMultiplier: 1.25
+    scaling: Exponential
 
 - type: entity
   parent: BaseGeneratorWallmount
@@ -226,6 +234,23 @@
     range: 5
     sound:
       path: /Audio/Ambience/Objects/buzzing.ogg
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 300
+        behaviors:
+          - !type:PlaySoundBehavior
+            sound:
+              path: /Audio/Effects/metalbreak.ogg
+          - !type:SpawnEntitiesBehavior
+            spawn:
+              GeneratorRTGDamaged:
+                min: 1
+                max: 1
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+  
 # TODO: need radioactive fallout when destroyed
 
 - type: entity
@@ -243,8 +268,24 @@
     layers:
       - state: rtg_damaged
       - state: rtg_glow
-  - type: RadiationPulse # ideally only when opened.
-    range: 2
-    decay: false
-    minPulseLifespan: 1
-    maxPulseLifespan: 1
+  - type: RadiationSource # ideally only when opened.
+    intensity: 2
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 5
+          SheetUranium1:
+            min: 1
+            max: 5
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]

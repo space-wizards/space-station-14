@@ -100,7 +100,7 @@ public sealed partial class AtmosphereSystem
 
                tile.Clear();
                var mixtureId = 0;
-               foreach (var entUid in ((MapGridComponent) gridComp).GetAnchoredEntities(indices))
+               foreach (var entUid in gridComp.Grid.GetAnchoredEntities(indices))
                {
                    if (!TryComp(entUid, out AtmosFixMarkerComponent? afm))
                        continue;
@@ -122,11 +122,18 @@ public sealed partial class AtmosphereSystem
         if (shell.Player is { AttachedEntity: { } playerEnt })
             playerMap = Transform(playerEnt).MapID;
 
-        var options = _mapManager.EntityManager.EntityQuery<MapGridComponent>()
-            .OrderByDescending(e => playerMap != null && Transform(e.Owner).MapID == playerMap)
-            .ThenBy(e => (int) Transform(e.Owner).MapID)
-            .ThenBy(e => (int) e.Owner)
-            .Select(e => new CompletionOption(e.Owner.ToString(), $"{MetaData(e.Owner).EntityName} - Map {Transform(e.Owner).MapID}"));
+        var options = new List<CompletionOption>();
+
+        if (playerMap == null)
+            return CompletionResult.FromOptions(options);
+
+        foreach (var grid in _mapManager.GetAllMapGrids(playerMap.Value).OrderBy(o => o.GridEntityId))
+        {
+            if (!TryComp<TransformComponent>(grid.GridEntityId, out var gridXform))
+                continue;
+
+            options.Add(new CompletionOption(grid.GridEntityId.ToString(), $"{MetaData(grid.GridEntityId).EntityName} - Map {gridXform.MapID}"));
+        }
 
         return CompletionResult.FromOptions(options);
     }

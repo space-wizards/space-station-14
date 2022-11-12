@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Alert;
 using Content.Shared.GameTicking;
+using Content.Shared.Gravity;
 using Content.Shared.Input;
 using Content.Shared.Movement.Components;
 using Content.Shared.Physics.Pull;
@@ -19,6 +20,7 @@ namespace Content.Shared.Pulling
     public abstract partial class SharedPullingSystem : EntitySystem
     {
         [Dependency] private readonly SharedPullingStateManagementSystem _pullSm = default!;
+        [Dependency] private readonly SharedGravitySystem _gravity = default!;
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
 
         /// <summary>
@@ -91,6 +93,7 @@ namespace Content.Shared.Pulling
                 Verb verb = new();
                 verb.Text = Loc.GetString("pulling-verb-get-data-text-stop-pulling");
                 verb.Act = () => TryStopPull(component, args.User);
+                verb.DoContactInteraction = false; // pulling handle its own contact interaction.
                 args.Verbs.Add(verb);
             }
             else if (CanPull(args.User, args.Target))
@@ -98,6 +101,7 @@ namespace Content.Shared.Pulling
                 Verb verb = new();
                 verb.Text = Loc.GetString("pulling-verb-get-data-text");
                 verb.Act = () => TryStartPull(args.User, args.Target);
+                verb.DoContactInteraction = false; // pulling handle its own contact interaction.
                 args.Verbs.Add(verb);
             }
         }
@@ -117,6 +121,11 @@ namespace Content.Shared.Pulling
                 return;
 
             _alertsSystem.ClearAlert(component.Owner, AlertType.Pulled);
+        }
+
+        public bool IsPulled(EntityUid uid, SharedPullableComponent? component = null)
+        {
+            return Resolve(uid, ref component, false) && component.BeingPulled;
         }
 
         public override void Update(float frameTime)
@@ -192,7 +201,7 @@ namespace Content.Shared.Pulling
             }
 
             if (_containerSystem.IsEntityInContainer(player) ||
-                player.IsWeightless(entityManager: EntityManager))
+                _gravity.IsWeightless(player))
                 return false;
 
             TryMoveTo(pullable, coords);

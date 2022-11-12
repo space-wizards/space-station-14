@@ -1,11 +1,32 @@
-﻿using Robust.Shared.Serialization;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.APC
 {
     [Serializable, NetSerializable]
     public enum ApcVisuals
     {
-        ChargeState
+        /// <summary>
+        ///     APC lights/HUD.
+        /// </summary>
+        ChargeState,
+
+        /// <summary>
+        ///     APC frame.
+        /// </summary>
+        PanelState
+    }
+
+    [Serializable, NetSerializable]
+    public enum ApcPanelState
+    {
+        /// <summary>
+        ///     APC is closed.
+        /// </summary>
+        Closed,
+        /// <summary>
+        ///     APC opened.
+        /// </summary>
+        Open
     }
 
     [Serializable, NetSerializable]

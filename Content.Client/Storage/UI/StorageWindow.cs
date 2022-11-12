@@ -3,6 +3,7 @@ using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Content.Client.Items.Components;
+using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Item;
 using Robust.Client.UserInterface;
@@ -20,7 +21,7 @@ namespace Content.Client.Storage.UI
 
         private readonly Label _information;
         public readonly ContainerButton StorageContainerButton;
-        public readonly EntityListDisplay EntityList;
+        public readonly ListContainer EntityList;
         private readonly StyleBoxFlat _hoveredBox = new() { BackgroundColor = Color.Black.WithAlpha(0.35f) };
         private readonly StyleBoxFlat _unHoveredBox = new() { BackgroundColor = Color.Black.WithAlpha(0.0f) };
 
@@ -62,7 +63,7 @@ namespace Content.Client.Storage.UI
 
             vBox.AddChild(_information);
 
-            EntityList = new EntityListDisplay
+            EntityList = new ListContainer
             {
                 Name = "EntityListContainer",
             };
@@ -85,7 +86,8 @@ namespace Content.Client.Storage.UI
         /// </summary>
         public void BuildEntityList(StorageBoundUserInterfaceState state)
         {
-            EntityList.PopulateList(state.StoredEntities);
+            var list = state.StoredEntities.ConvertAll(uid => new EntityListData(uid));
+            EntityList.PopulateList(list);
 
             //Sets information about entire storage container current capacity
             if (state.StorageCapacityMax != 0)
@@ -102,9 +104,10 @@ namespace Content.Client.Storage.UI
         /// <summary>
         /// Button created for each entity that represents that item in the storage UI, with a texture, and name and size label
         /// </summary>
-        public void GenerateButton(EntityUid entity, EntityContainerButton button)
+        public void GenerateButton(ListData data, ListContainerButton button)
         {
-            if (!_entityManager.EntityExists(entity))
+            if (data is not EntityListData {Uid: var entity}
+                || !_entityManager.EntityExists(entity))
                 return;
 
             _entityManager.TryGetComponent(entity, out ISpriteComponent? sprite);
@@ -137,6 +140,7 @@ namespace Content.Client.Storage.UI
                         }
                     }
             });
+            button.StyleClasses.Add(StyleNano.StyleClassStorageButton);
             button.EnableAllKeybinds = true;
         }
     }

@@ -1,4 +1,2 @@
 - type: vendingMachineInventory
   id: VendomatInventory
-  name: Vendomat
-  spriteName: vendomat

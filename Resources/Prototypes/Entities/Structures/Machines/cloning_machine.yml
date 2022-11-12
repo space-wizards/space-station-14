@@ -21,7 +21,7 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.25,-0.5,0.25,0.5"
-      mass: 25
+      density: 190
       mask:
       - MachineMask
       layer:
@@ -29,6 +29,13 @@
   - type: Construction
     graph: Machine
     node: machine
+    containers:
+     - machine_board
+     - machine_parts
+     - clonepod-bodyContainer
+  - type: SignalReceiver
+    inputs:
+      CloningPodReceiver: []
   - type: EmptyOnMachineDeconstruct
     containers:
       - clonepod-bodyContainer
@@ -63,3 +70,10 @@
           enum.CloningPodStatus.Gore: pod_g
           enum.CloningPodStatus.Idle: pod_0
   - type: Climbable
+  - type: StaticPrice
+    price: 1000
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container
+      clonepod-bodyContainer: !type:ContainerSlot

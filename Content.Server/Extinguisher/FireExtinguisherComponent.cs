@@ -1,17 +1,10 @@
-using Robust.Shared.Audio;
+using Content.Shared.Extinguisher;
+using Robust.Shared.GameStates;
 
 namespace Content.Server.Extinguisher;
 
-[RegisterComponent]
+[NetworkedComponent, RegisterComponent]
 [Access(typeof(FireExtinguisherSystem))]
-public sealed class FireExtinguisherComponent : Component
+public sealed class FireExtinguisherComponent : SharedFireExtinguisherComponent
 {
-    [DataField("refillSound")] public SoundSpecifier RefillSound = new SoundPathSpecifier("/Audio/Effects/refill.ogg");
-
-    [DataField("hasSafety")] public bool HasSafety = true;
-
-    [DataField("safety")] public bool Safety = true;
-
-    [DataField("safetySound")]
-    public SoundSpecifier SafetySound { get; } = new SoundPathSpecifier("/Audio/Machines/button.ogg");
 }

@@ -37,6 +37,11 @@ namespace Content.Client.Rotation
             var entMan = IoCManager.Resolve<IEntityManager>();
             var sprite = entMan.GetComponent<ISpriteComponent>(component.Owner);
 
+            if (sprite.Rotation.Equals(rotation))
+            {
+                return;
+            }
+
             if (!entMan.TryGetComponent(sprite.Owner, out AnimationPlayerComponent? animation))
             {
                 sprite.Rotation = rotation;

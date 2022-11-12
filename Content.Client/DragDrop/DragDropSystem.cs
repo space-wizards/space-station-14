@@ -1,4 +1,5 @@
 using Content.Client.CombatMode;
+using Content.Client.Gameplay;
 using Content.Client.Outline;
 using Content.Client.Viewport;
 using Content.Shared.ActionBlocker;
@@ -303,7 +304,7 @@ namespace Content.Client.DragDrop
 
             IList<EntityUid> entities;
 
-            if (_stateManager.CurrentState is GameScreen screen)
+            if (_stateManager.CurrentState is GameplayState screen)
             {
                 entities = screen.GetEntitiesUnderPosition(args.Coordinates);
             }

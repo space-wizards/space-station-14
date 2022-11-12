@@ -4,7 +4,7 @@
     sprite: Objects/Fun/Instruments/accordion.rsi
     state: icon
   product: CrateFunInstruments
-  cost: 5000
+  cost: 3000
   category: Fun
   group: market
 
@@ -14,7 +14,7 @@
     sprite: Objects/Fun/Instruments/structureinstruments.rsi
     state: tuba
   product: CrateFunBrass
-  cost: 3500
+  cost: 2500
   category: Fun
   group: market
 
@@ -24,7 +24,7 @@
     sprite: Objects/Fun/crayons.rsi
     state: box
   product: CrateFunArtSupplies
-  cost: 1000
+  cost: 500
   category: Fun
   group: market
 
@@ -34,7 +34,7 @@
     sprite: Objects/Fun/toys.rsi
     state: plushie_h
   product: CrateFunPlushie
-  cost: 5000
+  cost: 1000
   category: Fun
   group: market
 
@@ -54,6 +54,6 @@
     sprite: Objects/Vehicles/atv.rsi
     state: vehicle
   product: CrateFunATV
-  cost: 6000
+  cost: 1500
   category: Fun
   group: market

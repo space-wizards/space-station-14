@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Robust.Shared.Maths;
-using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 
 namespace Content.MapRenderer;
@@ -45,27 +44,27 @@ public sealed class LayerGroup
 
     public static LayerGroup DefaultParallax()
     {
-        return new LayerGroup()
+        return new LayerGroup
         {
             Scale = new Position(0.1f, 0.1f),
-            Source = new GroupSource()
+            Source = new GroupSource
             {
                 Url = "https://i.imgur.com/3YO8KRd.png",
                 Extent = new Extent(6000, 4000)
             },
-            Layers = new List<Layer>()
+            Layers = new List<Layer>
             {
-                new Layer()
+                new()
                 {
                     Url = "https://i.imgur.com/IannmmK.png"
                 },
-                new Layer()
+                new()
                 {
                     Url = "https://i.imgur.com/T3W6JsE.png",
                     Composition = "lighter",
                     ParallaxScale = new Position(0.2f, 0.2f)
                 },
-                new Layer()
+                new()
                 {
                     Url = "https://i.imgur.com/T3W6JsE.png",
                     Composition = "lighter",

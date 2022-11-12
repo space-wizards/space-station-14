@@ -4,6 +4,7 @@ using System.Linq;
 using Content.Shared.Voting;
 using Robust.Client;
 using Robust.Client.Console;
+using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
@@ -117,7 +118,8 @@ namespace Content.Client.Voting
                 }
 
                 @new = true;
-                SoundSystem.Play("/Audio/Effects/voteding.ogg", Filter.Local());
+                IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>()
+                    .PlayGlobal("/Audio/Effects/voteding.ogg", Filter.Local());
 
                 // New vote from the server.
                 var vote = new ActiveVote(voteId)

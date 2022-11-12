@@ -1,6 +1,6 @@
 ﻿- type: tile
   id: Plating
-  name: plating
+  name: tiles-plating
   sprite: /Textures/Tiles/plating.png
   baseTurfs:
   - Lattice
@@ -13,15 +13,17 @@
 
 - type: tile
   id: Lattice
-  name: lattice
+  name: tiles-lattice
   sprite: /Textures/Tiles/lattice.png
   baseTurfs:
   - Space
   isSubfloor: true
+  canWirecutter: true
   footstepSounds:
     collection: FootstepPlating
   friction: 0.5
   isSpace: true
+  itemDrop: PartRodMetal1
   thermalConductivity: 0.04
   heatCapacity: 10000
 

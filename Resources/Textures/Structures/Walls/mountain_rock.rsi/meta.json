@@ -1,0 +1,46 @@
+{
+    "version": 1,
+    "copyright": "recolor of https://github.com/discordia-space/CEV-Eris/commit/a0c067f688288aeb167157203e2170b14cfa9d7f",
+    "license": "CC-BY-SA-3.0",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "directions": 4,
+            "name": "rock_0"
+        },
+        {
+            "directions": 4,
+            "name": "rock_1"
+        },
+        {
+            "directions": 4,
+            "name": "rock_2"
+        },
+        {
+            "directions": 4,
+            "name": "rock_3"
+        },
+        {
+            "directions": 4,
+            "name": "rock_4"
+        },
+        {
+            "directions": 4,
+            "name": "rock_5"
+        },
+        {
+            "directions": 4,
+            "name": "rock_6"
+        },
+        {
+            "directions": 4,
+            "name": "rock_7"
+        },
+        {
+            "name": "full"
+        }
+    ]
+}

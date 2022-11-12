@@ -1,7 +1,5 @@
 - type: vendingMachineInventory
   id: NutriMaxInventory
-  name: NutriMax
-  spriteName: nutri
   startingInventory:
     HydroponicsToolSpade: 2
     HydroponicsToolMiniHoe: 2

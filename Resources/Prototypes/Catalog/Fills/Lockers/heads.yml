@@ -16,12 +16,14 @@
         prob: 0.7
       - id: ClothingHeadHatQMsoft
         prob: 0.8
-      - id: SupplyRequestComputerCircuitboard
-      - id: SupplyComputerCircuitboard
+      - id: CargoRequestComputerCircuitboard
+      - id: CargoShuttleComputerCircuitboard
+      - id: CargoShuttleConsoleCircuitboard
       - id: CigPackGreen
         prob: 0.50
       - id: DoorRemoteCargo
       - id: RubberStampQm
+      - id: ClothingHeadsetAltCargo
 
 - type: entity
   id: LockerCaptainFilled
@@ -72,6 +74,7 @@
       - id: ClothingHeadsetCommand
       - id: BoxPDA
       - id: BoxID
+      - id: BoxHeadset
       - id: IDComputerCircuitboard
       - id: WeaponDisabler
       - id: ClothingShoesColorBlack
@@ -107,6 +110,7 @@
       - id: DoorRemoteEngineering
       - id: RubberStampCE
       - id: JetpackVoidFilled
+      - id: ClothingHeadsetAltEngineering
 
 - type: entity
   id: LockerChiefMedicalOfficerFilled
@@ -152,6 +156,9 @@
         prob: 0.1
       - id: DoorRemoteResearch
       - id: RubberStampRd
+      - id: ClothingHeadsetAltScience
+      - id: AnalysisComputerCircuitboard
+      - id: ArtifactAnalyzerMachineCircuitboard
 
 - type: entity
   id: LockerHeadOfSecurityFilled
@@ -187,6 +194,8 @@
       - id: ClothingShoesBootsJack
       - id: CigarGoldCase
         prob: 0.50
+      - id: PlushieSharkPink
+        prob: 0.1
       - id: DoorRemoteSecurity
       - id: ClothingUniformJumpskirtHosFormal
       - id: ClothingUniformJumpsuitHosFormal

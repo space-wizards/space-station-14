@@ -1,6 +1,3 @@
-- type: Tag
-  id: Cigarette
-
 - type: entity
   id: Cigarette
   parent: BaseCigar
@@ -26,6 +23,20 @@
   - type: Construction
     graph: smokeableCigarette
     node: cigarette
+
+- type: entity
+  id: CigaretteSpent
+  parent: Cigarette
+  suffix: spent
+  components:
+  - type: Sprite
+    state: burnt-icon
+  - type: Smokable
+    state: Burnt
+  - type: SolutionContainerManager
+    solutions:
+      smokable:
+        maxVol: 20
 
 - type: entity
   id: CigaretteSyndicate

@@ -1,6 +1,7 @@
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Prototypes;
 using Content.Shared.Actions.ActionTypes;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Abilities.Mime
@@ -29,7 +30,7 @@ namespace Content.Server.Abilities.Mime
         {
             UseDelay = TimeSpan.FromSeconds(30),
             Icon = new SpriteSpecifier.Texture(new ResourcePath("Structures/Walls/solid.rsi/full.png")),
-            Name = "mime-invisible-wall",
+            DisplayName = "mime-invisible-wall",
             Description = "mime-invisible-wall-desc",
             Priority = -1,
             Event = new InvisibleWallActionEvent(),
@@ -48,16 +49,15 @@ namespace Content.Server.Abilities.Mime
         public bool ReadyToRepent = false;
 
         /// <summary>
-        /// Accumulator for when the mime breaks their vows
+        /// Time when the mime can repent their vow
         /// </summary>
-
-        [DataField("accumulator")]
-        public float Accumulator = 0f;
+        [DataField("vowRepentTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
+        public TimeSpan VowRepentTime = TimeSpan.Zero;
 
         /// <summary>
         /// How long it takes the mime to get their powers back
 
-        [DataField("vowCooldown")]
+        [DataField("vowCooldown", customTypeSerializer: typeof(TimeOffsetSerializer))]
         public TimeSpan VowCooldown = TimeSpan.FromMinutes(5);
     }
 }

@@ -8,23 +8,23 @@ namespace Content.Shared.Stacks
     public abstract class SharedStackComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("stackType", required:true, customTypeSerializer:typeof(PrototypeIdSerializer<StackPrototype>))]
-        public string StackTypeId { get; private set; } = string.Empty;
+        [DataField("stackType", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<StackPrototype>))]
+        public string? StackTypeId { get; private set; }
 
         /// <summary>
         ///     Current stack count.
         ///     Do NOT set this directly, use the <see cref="SharedStackSystem.SetCount"/> method instead.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
         [DataField("count")]
         public int Count { get; set; } = 30;
 
         /// <summary>
         ///     Max amount of things that can be in the stack.
+        ///     Overrides the max defined on the stack prototype.
         /// </summary>
         [ViewVariables(VVAccess.ReadOnly)]
-        [DataField("max")]
-        public int MaxCount  { get; set; } = 30;
+        [DataField("maxCountOverride")]
+        public int? MaxCountOverride  { get; set; }
 
         /// <summary>
         ///     Set to true to not reduce the count when used.
@@ -32,9 +32,6 @@ namespace Content.Shared.Stacks
         [DataField("unlimited")]
         [ViewVariables(VVAccess.ReadOnly)]
         public bool Unlimited { get; set; }
-
-        [ViewVariables]
-        public int AvailableSpace => MaxCount - Count;
     }
 
     [Serializable, NetSerializable]

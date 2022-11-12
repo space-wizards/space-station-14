@@ -16,9 +16,6 @@ reagent-desc-bicaridine = An analgesic which is highly effective at treating bru
 reagent-name-cryoxadone = cryoxadone
 reagent-desc-cryoxadone = Required for the proper function of cryogenics. Heals all standard types of damage very swiftly, but only works in temperatures under 170K (usually this means cryo cells). Can also slowly heal clone damage, such as caused by cloning or Slimes.
 
-reagent-name-clonexadone = clonexadone
-reagent-desc-clonexadone = Heals standard damage in the same as Cryoxadone, with the same temperature requirement. Significantly more effective than the former at treating cellular damage, although both can be used simultaneously. Best used in cryo cells.
-
 reagent-name-dermaline = dermaline
 reagent-desc-dermaline = An advanced chemical that is more effective at treating burn damage than Kelotane.
 
@@ -90,3 +87,6 @@ reagent-desc-oculine = Heals eye damage.
 
 reagent-name-ethylredoxrazine = ethylredoxrazine
 reagent-desc-ethylredoxrazine = Neutralises the effects of alcohol in the blood stream. Though it is commonly needed, it is rarely requested.
+
+reagent-name-cognizine = cognizine
+reagent-desc-cognizine = A mysterious chemical which is able to make any non-sentient creature sentient.

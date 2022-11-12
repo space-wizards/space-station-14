@@ -23,12 +23,12 @@ namespace Content.Server.Chat.Managers
         void SendHookOOC(string sender, string message);
         void SendAdminAnnouncement(string message);
 
-        void ChatMessageToOne(ChatChannel channel, string message, string messageWrap, EntityUid source, bool hideChat,
+        void ChatMessageToOne(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat,
             INetChannel client, Color? colorOverride = null);
-        void ChatMessageToMany(ChatChannel channel, string message, string messageWrap, EntityUid source, bool hideChat,
+        void ChatMessageToMany(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat,
             List<INetChannel> clients, Color? colorOverride = null);
-        void ChatMessageToManyFiltered(Filter filter, ChatChannel channel, string message, string messageWrap, EntityUid source, bool hideChat, Color? colorOverride);
-        void ChatMessageToAll(ChatChannel channel, string message, string messageWrap, Color? colorOverride = null);
+        void ChatMessageToManyFiltered(Filter filter, ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, Color? colorOverride);
+        void ChatMessageToAll(ChatChannel channel, string message, string wrappedMessage, Color? colorOverride = null);
 
         bool MessageCharacterLimit(IPlayerSession player, string message);
     }

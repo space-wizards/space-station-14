@@ -106,7 +106,7 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.2,-0.2,0.2,0.2"
-      mass: 5
+      density: 30
       mask:
       - ItemMask
   - type: StepTrigger

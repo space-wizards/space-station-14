@@ -31,6 +31,15 @@ namespace Content.Shared.Roles
         [ViewVariables(VVAccess.ReadOnly)]
         public string LocalizedName => Loc.GetString(Name);
 
+        /// <summary>
+        ///     The name of this job as displayed to players.
+        /// </summary>
+        [DataField("description")]
+        public string? Description { get; }
+
+        [ViewVariables(VVAccess.ReadOnly)]
+        public string? LocalizedDescription => Description is null ? null : Loc.GetString(Description);
+
         [DataField("requirements")]
         public HashSet<JobRequirement>? Requirements;
 
@@ -52,6 +61,13 @@ namespace Content.Shared.Roles
         /// </summary>
         [DataField("weight")]
         public int Weight { get; private set; }
+
+        /// <summary>
+        ///     A numerical score for how much easier this job is for antagonists.
+        ///     For traitors, reduces starting TC by this amount. Other gamemodes can use it for whatever they find fitting.
+        /// </summary>
+        [DataField("antagAdvantage")]
+        public int AntagAdvantage = 0;
 
         [DataField("startingGear", customTypeSerializer: typeof(PrototypeIdSerializer<StartingGearPrototype>))]
         public string? StartingGear { get; private set; }

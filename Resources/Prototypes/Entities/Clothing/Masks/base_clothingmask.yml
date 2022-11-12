@@ -18,5 +18,5 @@
       name: action-name-mask
       description: action-description-mask-toggle
       icon: Clothing/Mask/gas.rsi/icon.png
-      iconOn: Interface/Inventory/blocked.png
+      iconOn: Interface/Default/blocked.png
       event: !type:ToggleMaskEvent

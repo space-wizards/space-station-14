@@ -1,142 +1,145 @@
-# ALL SALVAGE MAPS SHOULD BE SETUP SUCH THAT TILE REF -1,-1 IS THEIR OFFICIAL CENTRE,
-# AND FOR EASE OF UNDERSTANDING, USE - pos: 0.5, 0.5 FOR SAVED POSITION.
+# So the way things are done as of now is that Salvages are measured by world AABBs in their maps.
+# Remember, first two coordinates should be the minimum X/Y, second two should be maximum.
+# You can also use the salvageruler command to get these, once you're sure the transform's been reset.
+# Ultimately, you should still be keeping the maps centred.
 
 # "Small"-class maps - Max size square: 7x7, indicated size: 3.5
 
 - type: salvageMap
-  id: small1
+  id: Small1
   name: "Small / Engineering Storage 1"
   mapPath: /Maps/Salvage/small-1.yml
-  size: 3.5
+  bounds: "-2.5,-3.5,3.5,3.5"
 
 - type: salvageMap
-  id: small2
+  id: Small2
   name: "Small / Gaming Nook 1"
   mapPath: /Maps/Salvage/small-2.yml
-  size: 3.5
+  bounds: "-3.5,-3.5,3.5,3.5"
 
 - type: salvageMap
-  id: small-ship-1
+  id: Small-ship-1
   name: "Small / Ship 1 (Pill)"
   mapPath: /Maps/Salvage/small-ship-1.yml
-  size: 3.5
+  bounds: "-1.5,-0.5,2.5,1.5"
 
 - type: salvageMap
-  id: small3
+  id: Small3
   name: "Small / Laundromat 1"
   mapPath: /Maps/Salvage/small-3.yml
-  size: 3.5
+  bounds: "-3.5,-3.5,2.5,3.5"
 
 - type: salvageMap
-  id: smallAISurveyDrone
+  id: SmallAISurveyDrone
   name: "Small / AI Survey Drone"
   mapPath: /Maps/Salvage/small-ai-survey-drone.yml
-  size: 3.5
+  bounds: "-3.5,-3.5,3.5,3.5"
 
 - type: salvageMap
-  id: small4
+  id: Small4
   name: "Small / Bar Salvage"
   mapPath: /Maps/Salvage/small-4.yml
-  size: 3.5
+  bounds: "-3.5,-3.5,3.5,3.5"
 
 # Small - Asteroids
 
 - type: salvageMap
-  id: smallA1
+  id: SmallA1
   name: "Small / Asteroid 1 Plasmafire"
   mapPath: /Maps/Salvage/small-a-1.yml
-  size: 3.5
+  bounds: "-3.5,-3.5,3.5,3.5"
 
 # "Medium"-class maps - Max size square: 15x15, indicated size: 7.5
 
 - type: salvageMap
-  id: medium1
+  id: Medium1
   name: "Medium / Plasma-Trapped Cache 1"
   mapPath: /Maps/Salvage/medium-1.yml
-  size: 7.5
+  bounds: "-7.5,-7.5,7.5,7.5"
 
 - type: salvageMap
-  id: mediumvault1
+  id: MediumVault1
   name: "Medium / Vault 1"
   mapPath: /Maps/Salvage/medium-vault-1.yml
-  size: 7.5
+  bounds: "-7.5,-7.5,7.5,7.5"
 
 - type: salvageMap
-  id: mediumOrchestra
+  id: MediumOrchestra
   name: "Medium / Silent Orchestra"
   mapPath: /Maps/Salvage/medium-silent-orchestra.yml
-  size: 7.5
+  bounds: "-7.5,-7.5,7.5,7.5"
 
 - type: salvageMap
-  id: mediumLibraryWreck
+  id: MediumLibraryWreck
   name: "Medium / Abandoned Library"
   mapPath: /Maps/Salvage/medium-library.yml
-  size: 7.5
+  bounds: "-8.5,-8.5,6.5,7.5"
 
 - type: salvageMap
-  id: mediumCargoWreck
+  id: MediumCargoWreck
   name: "Medium / Cargo Department Wreck"
   mapPath: /Maps/Salvage/cargo-1.yml
-  size: 7.5
+  bounds: "-5.5,-5.5,5.5,9.5"
 
 - type: salvageMap
-  id: mediumPirateWreck
+  id: MediumPirateWreck
   name: "Medium / Pirate Barge Fragment"
   mapPath: /Maps/Salvage/medium-pirate.yml
-  size: 7.5
+  bounds: "-3.5,-9.5,6.5,7.5"
 
 - type: salvageMap
-  id: tickColony
+  id: TickColony
   name: "Space Tick colony"
   mapPath: /Maps/Salvage/tick-colony.yml
-  size: 8.5
+  bounds: "-6,-7,5,7"
 
 - type: salvageMap
-  id: cargoDock
+  id: CargoDock
   name: "Asteroid Cargo Dock"
   mapPath: /Maps/Salvage/medium-dock.yml
-  size: 8.5
+  bounds: "-7,-6,4,8"
 
 - type: salvageMap
-  id: spaceWaffleHome
+  id: SpaceWaffleHome
   name: "Waffle Home"
   mapPath: /Maps/Salvage/wh-salvage.yml
-  size: 12
+  bounds: "-13,-12,14,11"
 
 - type: salvageMap
-  id: mediumShuttleWreck
+  id: MediumShuttleWreck
   name: "Medium / Ruined Emergency Shuttle"
   mapPath: /Maps/Salvage/medium-ruined-emergency-shuttle.yml
-  size: 8.5 # Over standard medium wreck size, may need future adjustment.
+  bounds: "-8.5,-8.5,8.5,8.5"
   
 - type: salvageMap
   id: mediumPetHospital
   name: "Medium / Pet and Bear Hospital"
   mapPath: /Maps/Salvage/medium-pet-hospital.yml
-  size: 8.5
+  bounds: "-5.5,-8.5,5.5,8.5"
 
 - type: salvageMap
-  id: mediumCrashedShuttle
+  id: MediumCrashedShuttle
   name: "Crashed Shuttle"
   mapPath: /Maps/Salvage/medium-crashed-shuttle.yml
-  size: 9.5
+  bounds: "-7,-8,5,9"
 
 # """Large""" maps
 
 - type: salvageMap
-  id: stationstation
+  id: StationStation
   name: "StationStation"
   mapPath: /Maps/Salvage/stationstation.yml
-  size: 24
+  bounds: "-17,-15,35,29"
 
 - type: salvageMap
-  id: asteroidBase
+  id: AsteroidBase
   name: "Asteroid Base"
   mapPath: /Maps/Salvage/asteroid-base.yml
-  size: 16
+  bounds: "-12,-13,15,11"
 
 - type: salvageMap
-  id: ruinCargoBase
+  id: RuinCargoBase
   name: "Ruined Cargo Storage"
   mapPath: /Maps/Salvage/ruin-cargo-salvage.yml
-  size: 22.5
+  bounds: "-15,-13,22,14"
+

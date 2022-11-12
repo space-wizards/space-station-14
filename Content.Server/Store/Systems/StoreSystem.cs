@@ -54,6 +54,7 @@ public sealed partial class StoreSystem : EntitySystem
         //if you somehow are inserting cash before the store initializes.
         if (!store.Opened)
         {
+            RefreshAllListings(store);
             InitializeFromPreset(store.Preset, store);
             store.Opened = true;
         }
@@ -147,7 +148,8 @@ public sealed partial class StoreSystem : EntitySystem
         if (component.Balance == new Dictionary<string, FixedPoint2>() && preset.InitialBalance != null) //if we don't have a value stored, use the preset
             TryAddCurrency(preset.InitialBalance, component);
 
-        var ui = component.Owner.GetUIOrNull(StoreUiKey.Key);
-        ui?.SetState(new StoreInitializeState(preset.StoreName));
+        var ui = _ui.GetUiOrNull(component.Owner, StoreUiKey.Key);
+        if (ui != null)
+            _ui.SetUiState(ui, new StoreInitializeState(preset.StoreName));
     }
 }

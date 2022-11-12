@@ -115,6 +115,8 @@
       radius: 1.5
       energy: 1.6
       color: "#c94242"
+    - type: Computer
+      board: CargoShuttleConsoleCircuitboard
 
 - type: entity
   parent: BaseComputer
@@ -335,6 +337,46 @@
 
 - type: entity
   parent: BaseComputer
+  id: ComputerAnalysisConsole
+  name: analysis console
+  description: A computer used to interface with the artifact analyzer.
+  components:
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer
+      key: tech_key
+      screen: artifact
+  - type: ResearchClient
+  - type: AnalysisConsole
+  - type: DeviceList
+  - type: DeviceNetwork
+    deviceNetId: Wired
+  - type: SignalTransmitter
+    transmissionRange: 5
+    outputs:
+      ArtifactAnalyzerSender: []
+  - type: ActivatableUI
+    key: enum.ArtifactAnalzyerUiKey.Key
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+    - key: enum.ArtifactAnalzyerUiKey.Key
+      type: AnalysisConsoleBoundUserInterface
+    - key: enum.ResearchClientUiKey.Key
+      type: ResearchClientBoundUserInterface
+  - type: ApcPowerReceiver
+    powerLoad: 1000
+    priority: Low
+  - type: ExtensionCableReceiver
+  - type: Computer
+    board: AnalysisComputerCircuitboard
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#b53ca1"
+
+- type: entity
+  parent: BaseComputer
   id: ComputerId
   name: ID card computer
   description: Terminal for programming Nanotrasen employee ID cards to access parts of the station.
@@ -548,7 +590,7 @@
     - key: enum.CargoConsoleUiKey.Shuttle
       type: CargoShuttleConsoleBoundUserInterface
   - type: Computer
-    board: SupplyComputerCircuitboard
+    board: CargoShuttleComputerCircuitboard
   - type: PointLight
     radius: 1.5
     energy: 1.6
@@ -576,7 +618,7 @@
     - key: enum.CargoConsoleUiKey.Orders
       type: CargoOrderConsoleBoundUserInterface
   - type: Computer
-    board: SupplyComputerCircuitboard
+    board: CargoRequestComputerCircuitboard
   - type: PointLight
     radius: 1.5
     energy: 1.6
@@ -609,6 +651,9 @@
     color: "#1f8c28"
   - type: SignalTransmitter
     transmissionRange: 4
+    outputs:
+      MedicalScannerSender: []
+      CloningPodSender: []
   - type: ActivatableUI
     key: enum.CloningConsoleUiKey.Key
   - type: ActivatableUIRequiresPower
@@ -637,10 +682,12 @@
       receiveFrequencyId: SurveillanceCamera
       transmitFrequencyId: SurveillanceCamera
     - type: WiredNetworkConnection
+    - type: DeviceNetworkRequiresPower
     - type: SurveillanceCameraMonitor
     - type: ActivatableUI
       key: enum.SurveillanceCameraMonitorUiKey.Key
     - type: ActivatableUIRequiresPower
+    - type: ActivatableUIRequiresVision
     - type: Transform
       anchored: true
     - type: UserInterface
@@ -667,10 +714,15 @@
       transmitFrequencyId: SurveillanceCamera
     - type: WirelessNetworkConnection
       range: 200
+    - type: DeviceNetworkRequiresPower
+    - type: Speech
+    - type: SurveillanceCameraSpeaker
     - type: SurveillanceCameraMonitor
+      speechEnabled: true
     - type: ActivatableUI
       key: enum.SurveillanceCameraMonitorUiKey.Key
     - type: ActivatableUIRequiresPower
+    - type: ActivatableUIRequiresVision
     - type: Transform
       anchored: true
     - type: UserInterface
@@ -713,7 +765,7 @@
         - shape:
             !type:PhysShapeAabb
             bounds: "-0.25,-0.25,0.25,0.25"
-          mass: 50
+          density: 200
           mask:
             - TabletopMachineMask
           layer:

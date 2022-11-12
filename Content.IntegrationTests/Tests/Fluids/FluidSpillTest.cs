@@ -48,7 +48,6 @@ public sealed class FluidSpill
     {
         await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
         var server = pairTracker.Pair.Server;
-
         var mapManager = server.ResolveDependency<IMapManager>();
         var entityManager = server.ResolveDependency<IEntityManager>();
         var spillSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<SpillableSystem>();

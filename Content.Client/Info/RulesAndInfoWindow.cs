@@ -1,5 +1,4 @@
-using Content.Client.EscapeMenu.UI;
-using Content.Shared.CCVar;
+using Content.Client.UserInterface.Systems.EscapeMenu;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -12,17 +11,11 @@ namespace Content.Client.Info
     public sealed class RulesAndInfoWindow : DefaultWindow
     {
         [Dependency] private readonly IResourceCache _resourceManager = default!;
-        [Dependency] private readonly IConfigurationManager _cfgManager = default!;
-        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
         [Dependency] private readonly RulesManager _rules = default!;
-
-        private OptionsMenu optionsMenu;
 
         public RulesAndInfoWindow()
         {
             IoCManager.InjectDependencies(this);
-
-            optionsMenu = new OptionsMenu();
 
             Title = Loc.GetString("ui-info-title");
 
@@ -53,7 +46,7 @@ namespace Content.Client.Info
             AddSection(tutorialList, Loc.GetString("ui-info-header-gameplay"), "Gameplay.txt", true);
             AddSection(tutorialList, Loc.GetString("ui-info-header-sandbox"), "Sandbox.txt", true);
 
-            infoControlSection.ControlsButton.OnPressed += _ => optionsMenu.OpenCentered();
+            infoControlSection.ControlsButton.OnPressed += _ => UserInterfaceManager.GetUIController<OptionsUIController>().OpenWindow();
         }
 
         private static void AddSection(Info info, Control control)

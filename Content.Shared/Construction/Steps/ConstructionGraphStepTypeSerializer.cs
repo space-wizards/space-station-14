@@ -20,11 +20,6 @@ namespace Content.Shared.Construction.Steps
                 return typeof(ToolConstructionGraphStep);
             }
 
-            if (node.Has("prototype"))
-            {
-                return typeof(PrototypeConstructionGraphStep);
-            }
-
             if (node.Has("component"))
             {
                 return typeof(ComponentConstructionGraphStep);
@@ -62,7 +57,8 @@ namespace Content.Shared.Construction.Steps
         {
             var type = GetType(node);
 
-            if (type == null) return new ErrorNode(node, "No construction graph step type found.", true);
+            if (type == null)
+                return new ErrorNode(node, "No construction graph step type found.");
 
             return serializationManager.ValidateNode(type, node, context);
         }

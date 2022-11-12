@@ -1,6 +1,6 @@
 - type: disease
   id: SpaceCold
-  name: space cold
+  name: disease-proto-space-cold
   cureResist: 0
   effects:
     - !type:DiseaseAdjustReagent
@@ -25,7 +25,7 @@
 
 - type: disease
   id: VentCough
-  name: vent cough
+  name: disease-proto-vent-cough
   effects:
     - !type:DiseasePopUp
       probability: 0.025
@@ -51,7 +51,7 @@
 
 - type: disease
   id: SpaceFlu
-  name: space flu
+  name: disease-proto-space-flu
   cureResist: 0.08
   effects:
     - !type:DiseaseVomit
@@ -73,7 +73,7 @@
 
 - type: disease
   id: BirdFlew
-  name: bird flew
+  name: disease-proto-bird-flew
   cureResist: 0.08
   effects:
     - !type:DiseaseVomit
@@ -96,7 +96,7 @@
 
 - type: disease
   id: VanAusdallsRobovirus
-  name: Van Ausdall's Robovirus
+  name: disease-proto-robovirus
   cureResist: 0.1
   effects:
     - !type:DiseaseAdjustReagent
@@ -116,7 +116,7 @@
 
 - type: disease
   id: AMIV
-  name: AMIV
+  name: disease-proto-amiv
   cureResist: 0.10
   stages:
     - 0
@@ -210,7 +210,7 @@
 
 - type: disease
   id: MemeticAmirmir
-  name: Memetic Amirmir
+  name: disease-proto-amirmir
   effects:
     - !type:DiseaseGenericStatusEffect
       probability: 0.015
@@ -226,7 +226,7 @@
 
 - type: disease
   id: BleedersBite
-  name: Bleeder's Bite
+  name: disease-proto-bleeders
   effects:
     - !type:DiseaseAdjustReagent
       reagent: TranexamicAcid
@@ -250,7 +250,7 @@
 
 - type: disease
   id: Plague
-  name: plague
+  name: disease-proto-plague
   cureResist: 0.1
   effects:
     - !type:DiseaseVomit
@@ -275,7 +275,7 @@
 
 - type: disease
   id: OwOnavirus
-  name: OwOnavirus
+  name: disease-proto-owonavirus
   cureResist: 0.25
   effects:
     - !type:DiseaseGenericStatusEffect
@@ -303,7 +303,7 @@
 
 - type: disease
   id: TongueTwister
-  name: Tongue Twister
+  name: disease-proto-tongue-twister
   cureResist: 0.1
   effects:
     - !type:DiseaseGenericStatusEffect

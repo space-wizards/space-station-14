@@ -1,10 +1,12 @@
-using Content.Server.Body.Components;
+using Content.Server.Body.Systems;
 using Content.Server.Popups;
+using Content.Shared.Body.Components;
 using Content.Shared.Examine;
 using Content.Shared.Popups;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
-using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
@@ -14,6 +16,8 @@ public sealed class ImmovableRodSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IMapManager _map = default!;
+
+    [Dependency] private readonly BodySystem _bodySystem = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
 
     public override void Update(float frameTime)
@@ -25,7 +29,7 @@ public sealed class ImmovableRodSystem : EntitySystem
         {
             if (!rod.DestroyTiles)
                 continue;
-            if (!_map.EntityManager.TryGetComponent<MapGridComponent>((EntityUid?) trans.GridEuid, out var grid))
+            if (!_map.TryGetGrid(trans.GridUid, out var grid))
                 continue;
 
             grid.SetTile(trans.Coordinates, Tile.Empty);
@@ -64,7 +68,7 @@ public sealed class ImmovableRodSystem : EntitySystem
         }
     }
 
-    private void OnCollide(EntityUid uid, ImmovableRodComponent component, StartCollideEvent args)
+    private void OnCollide(EntityUid uid, ImmovableRodComponent component, ref StartCollideEvent args)
     {
         var ent = args.OtherFixture.Body.Owner;
 
@@ -94,7 +98,7 @@ public sealed class ImmovableRodSystem : EntitySystem
 
             _popup.PopupEntity(Loc.GetString("immovable-rod-penetrated-mob", ("rod", uid), ("mob", ent)), uid,
                 Filter.Pvs(uid), PopupType.LargeCaution);
-            body.Gib();
+            _bodySystem.GibBody(ent, body: body);
         }
 
         QueueDel(ent);

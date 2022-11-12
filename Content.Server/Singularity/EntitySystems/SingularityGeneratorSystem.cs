@@ -2,6 +2,7 @@
 using Content.Server.Singularity.Components;
 using Content.Shared.Singularity.Components;
 using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Physics.Events;
 
 namespace Content.Server.Singularity.EntitySystems;
 
@@ -14,7 +15,7 @@ public sealed class SingularityGeneratorSystem : EntitySystem
         SubscribeLocalEvent<ParticleProjectileComponent, StartCollideEvent>(HandleParticleCollide);
     }
 
-    private void HandleParticleCollide(EntityUid uid, ParticleProjectileComponent component, StartCollideEvent args)
+    private void HandleParticleCollide(EntityUid uid, ParticleProjectileComponent component, ref StartCollideEvent args)
     {
         if (EntityManager.TryGetComponent<SingularityGeneratorComponent?>(args.OtherFixture.Body.Owner, out var singularityGeneratorComponent))
         {

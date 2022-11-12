@@ -8,3 +8,13 @@
   materials:
     Steel: 500
     Plastic: 50
+
+- type: latheRecipe
+  id: AppraisalTool
+  icon:
+    sprite: Objects/Tools/appraisal-tool.rsi
+    state: icon
+  result: AppraisalTool
+  completetime: 4
+  materials:
+    Steel: 500

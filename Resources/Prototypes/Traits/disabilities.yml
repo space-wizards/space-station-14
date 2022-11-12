@@ -1,0 +1,24 @@
+﻿- type: trait
+  id: Blindness
+  name: trait-blindness-name
+  description: trait-blindness-desc
+  whitelist:
+    components:
+      - Blindable
+  components:
+    - type: PermanentBlindness
+
+- type: trait
+  id: Narcolepsy
+  name: trait-narcolepsy-name
+  description: trait-narcolepsy-decs
+  components:
+    - type: Narcolepsy
+      timeBetweenIncidents: 300, 600
+      durationOfIncident: 10, 30
+
+- type: trait
+  id: Pacifist
+  name: trait-pacifist-name
+  components:
+    - type: Pacifist

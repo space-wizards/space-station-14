@@ -1,11 +1,13 @@
 using Content.Server.Power.EntitySystems;
 using Content.Server.Research.Components;
+using Content.Server.Station.Systems;
 using Content.Shared.Research.Prototypes;
 
 namespace Content.Server.Research;
 
 public sealed partial class ResearchSystem
 {
+    [Dependency] private readonly StationSystem _stationSystem = default!;
     private void InitializeServer()
     {
         SubscribeLocalEvent<ResearchServerComponent, ComponentStartup>(OnServerStartup);
@@ -35,6 +37,10 @@ public sealed partial class ResearchSystem
 
     public bool RegisterServerClient(ResearchServerComponent component, ResearchClientComponent clientComponent)
     {
+        // Has to be on the same station
+        if (_stationSystem.GetOwningStation(component.Owner) != _stationSystem.GetOwningStation(clientComponent.Owner))
+            return false;
+
         // TODO: This is shit but I'm just trying to fix RND for now until it gets bulldozed
         if (TryComp<ResearchPointSourceComponent>(clientComponent.Owner, out var source))
         {
@@ -64,7 +70,7 @@ public sealed partial class ResearchSystem
         TechnologyDatabaseComponent? databaseComponent = null)
     {
         if (!Resolve(component.Owner, ref databaseComponent, false)) return false;
-        return databaseComponent.IsTechnologyUnlocked(prototype);
+        return databaseComponent.IsTechnologyUnlocked(prototype.ID);
     }
 
     public bool CanUnlockTechnology(ResearchServerComponent component, TechnologyPrototype technology, TechnologyDatabaseComponent? databaseComponent = null)
@@ -96,7 +102,8 @@ public sealed partial class ResearchSystem
     {
         var points = 0;
 
-        if (CanRun(component))
+        // Is our machine powered, and are we below our limit of passive point gain?
+        if (CanRun(component) && component.Points < (component.PassiveLimitPerSource * component.PointSources.Count))
         {
             foreach (var source in component.PointSources)
             {

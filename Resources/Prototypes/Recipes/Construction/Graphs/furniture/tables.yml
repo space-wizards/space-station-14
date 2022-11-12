@@ -30,7 +30,7 @@
             - material: Steel
               amount: 1
               doAfter: 1
-              
+
 
     - node: TableFrame
       entity: TableFrame
@@ -87,8 +87,8 @@
         - to: start
           completed:
             - !type:SpawnPrototype
-                prototype: MaterialWoodPlank1
-                amount: 1
+              prototype: MaterialWoodPlank1
+              amount: 1
           steps:
             - tool: Anchoring
               doAfter: 1
@@ -104,8 +104,11 @@
         - to: start
           completed:
             - !type:SpawnPrototype
-                prototype: SheetSteel1
-                amount: 1
+              prototype: SheetSteel1
+              amount: 1
+          steps:
+          - tool: Anchoring
+            doAfter: 1
         - to: CounterMetal
           steps:
             - material: Steel
@@ -202,7 +205,7 @@
           steps:
             - tool: Prying
               doAfter: 1
-              
+
     - node: CounterMetal
       entity: TableCounterMetal
       edges:
@@ -214,7 +217,7 @@
           steps:
             - tool: Anchoring
               doAfter: 1
-              
+
     - node: CounterWood
       entity: TableCounterWood
       edges:

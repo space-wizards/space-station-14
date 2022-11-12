@@ -25,7 +25,7 @@
       - shape:
           !type:PhysShapeCircle
           radius: 0.35
-        mass: 30
+        density: 80
         mask:
         - MobMask
     - type: Damageable
@@ -55,6 +55,16 @@
         key: rollerbed
       - type: RollerbedVisualizer
         key: rollerbed
+    - type: StaticPrice
+      price: 200
+
+- type: entity
+  parent: RollerBed
+  id: RollerBedSpawnFolded
+  suffix: folded
+  components:
+  - type: Foldable
+    folded: true
 
 - type: entity
   id: CheapRollerBed
@@ -74,6 +84,14 @@
       key: cheap_rollerbed
 
 - type: entity
+  parent: CheapRollerBed
+  id: CheapRollerBedSpawnFolded
+  suffix: folded
+  components:
+  - type: Foldable
+    folded: true
+
+- type: entity
   id: EmergencyRollerBed
   name: rollerbed
   parent: RollerBed
@@ -89,3 +107,11 @@
       key: emergency_rollerbed
     - type: RollerbedVisualizer
       key: emergency_rollerbed
+
+- type: entity
+  parent: EmergencyRollerBed
+  id: EmergencyRollerBedSpawnFolded
+  suffix: folded
+  components:
+  - type: Foldable
+    folded: true

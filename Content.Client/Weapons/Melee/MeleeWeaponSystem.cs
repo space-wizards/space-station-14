@@ -1,130 +1,252 @@
-using System;
+using Content.Client.CombatMode;
+using Content.Client.Gameplay;
+using Content.Client.Hands;
 using Content.Client.Weapons.Melee.Components;
+using Content.Shared.MobState.Components;
 using Content.Shared.Weapons.Melee;
-using JetBrains.Annotations;
+using Content.Shared.Weapons.Melee.Events;
+using Content.Shared.StatusEffect;
+using Robust.Client.Animations;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
-using Robust.Shared.Maths;
+using Robust.Client.Graphics;
+using Robust.Client.Input;
+using Robust.Client.Player;
+using Robust.Client.ResourceManagement;
+using Robust.Client.State;
+using Robust.Shared.Animations;
+using Robust.Shared.Input;
+using Robust.Shared.Map;
+using Robust.Shared.Player;
+using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
-using static Content.Shared.Weapons.Melee.MeleeWeaponSystemMessages;
 
-namespace Content.Client.Weapons.Melee
+namespace Content.Client.Weapons.Melee;
+
+public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
 {
-    [UsedImplicitly]
-    public sealed class MeleeWeaponSystem : EntitySystem
+    [Dependency] private readonly IEyeManager _eyeManager = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IInputManager _inputManager = default!;
+    [Dependency] private readonly IOverlayManager _overlayManager = default!;
+    [Dependency] private readonly IPlayerManager _player = default!;
+    [Dependency] private readonly IPrototypeManager _protoManager = default!;
+    [Dependency] private readonly IResourceCache _cache = default!;
+    [Dependency] private readonly IStateManager _stateManager = default!;
+    [Dependency] private readonly AnimationPlayerSystem _animation = default!;
+    [Dependency] private readonly InputSystem _inputSystem = default!;
+
+    private const string MeleeLungeKey = "melee-lunge";
+
+    public override void Initialize()
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly EffectSystem _effectSystem = default!;
+        base.Initialize();
+        InitializeEffect();
+        _overlayManager.AddOverlay(new MeleeWindupOverlay(EntityManager, _timing, _player, _protoManager, _cache));
+        SubscribeNetworkEvent<DamageEffectEvent>(OnDamageEffect);
+        SubscribeNetworkEvent<MeleeLungeEvent>(OnMeleeLunge);
+    }
 
-        public override void Initialize()
+    public override void Shutdown()
+    {
+        base.Shutdown();
+        _overlayManager.RemoveOverlay<MeleeWindupOverlay>();
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        if (!Timing.IsFirstTimePredicted)
+            return;
+
+        var entityNull = _player.LocalPlayer?.ControlledEntity;
+
+        if (entityNull == null)
+            return;
+
+        var entity = entityNull.Value;
+        var weapon = GetWeapon(entity);
+
+        if (weapon == null)
+            return;
+
+        if (!CombatMode.IsInCombatMode(entity) || !Blocker.CanAttack(entity))
         {
-            SubscribeNetworkEvent<PlayMeleeWeaponAnimationMessage>(PlayWeaponArc);
-            SubscribeNetworkEvent<PlayLungeAnimationMessage>(PlayLunge);
-        }
-
-        public override void FrameUpdate(float frameTime)
-        {
-            base.FrameUpdate(frameTime);
-
-            foreach (var arcAnimationComponent in EntityManager.EntityQuery<MeleeWeaponArcAnimationComponent>(true))
+            weapon.Attacking = false;
+            if (weapon.WindUpStart != null)
             {
-                arcAnimationComponent.Update(frameTime);
+                EntityManager.RaisePredictiveEvent(new StopHeavyAttackEvent(weapon.Owner));
             }
+
+            return;
         }
 
-        private void PlayWeaponArc(PlayMeleeWeaponAnimationMessage msg)
+        // TODO using targeted actions while combat mode is enabled should NOT trigger attacks.
+
+        var useDown = _inputSystem.CmdStates.GetState(EngineKeyFunctions.Use);
+        var altDown = _inputSystem.CmdStates.GetState(EngineKeyFunctions.UseSecondary);
+        var currentTime = Timing.CurTime;
+
+        // Heavy attack.
+        if (altDown == BoundKeyState.Down)
         {
-            if (!_prototypeManager.TryIndex(msg.ArcPrototype, out MeleeWeaponAnimationPrototype? weaponArc))
+            // We did the click to end the attack but haven't pulled the key up.
+            if (weapon.Attacking)
             {
-                Logger.Error("Tried to play unknown weapon arc prototype '{0}'", msg.ArcPrototype);
                 return;
             }
 
-            var attacker = msg.Attacker;
-            if (!EntityManager.EntityExists(msg.Attacker))
+            // If it's an unarmed attack then do a disarm
+            if (weapon.Owner == entity)
             {
-                // FIXME: This should never happen.
-                Logger.Error($"Tried to play a weapon arc {msg.ArcPrototype}, but the attacker does not exist. attacker={msg.Attacker}, source={msg.Source}");
+                EntityUid? target = null;
+
+                var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
+                EntityCoordinates coordinates;
+
+                if (MapManager.TryFindGridAt(mousePos, out var grid))
+                {
+                    coordinates = EntityCoordinates.FromMap(grid.GridEntityId, mousePos, EntityManager);
+                }
+                else
+                {
+                    coordinates = EntityCoordinates.FromMap(MapManager.GetMapEntityId(mousePos.MapId), mousePos, EntityManager);
+                }
+
+                if (_stateManager.CurrentState is GameplayStateBase screen)
+                {
+                    target = screen.GetEntityUnderPosition(mousePos);
+                }
+
+                EntityManager.RaisePredictiveEvent(new DisarmAttackEvent(target, coordinates));
                 return;
             }
 
-            if (!Deleted(attacker))
+            // Otherwise do heavy attack if it's a weapon.
+
+            // Start a windup
+            if (weapon.WindUpStart == null)
             {
-                var lunge = attacker.EnsureComponent<MeleeLungeComponent>();
-                lunge.SetData(msg.Angle);
-
-                var entity = EntityManager.SpawnEntity(weaponArc.Prototype, EntityManager.GetComponent<TransformComponent>(attacker).Coordinates);
-                EntityManager.GetComponent<TransformComponent>(entity).LocalRotation = msg.Angle;
-
-                var weaponArcAnimation = EntityManager.GetComponent<MeleeWeaponArcAnimationComponent>(entity);
-                weaponArcAnimation.SetData(weaponArc, msg.Angle, attacker, msg.ArcFollowAttacker);
-
-                // Due to ISpriteComponent limitations, weapons that don't use an RSI won't have this effect.
-                if (EntityManager.EntityExists(msg.Source) &&
-                    msg.TextureEffect &&
-                    EntityManager.TryGetComponent(msg.Source, out ISpriteComponent? sourceSprite) &&
-                    sourceSprite.BaseRSI?.Path is { } path)
-                {
-                    var curTime = _gameTiming.CurTime;
-                    var effect = new EffectSystemMessage
-                    {
-                        EffectSprite = path.ToString(),
-                        RsiState = sourceSprite.LayerGetState(0).Name,
-                        Coordinates = EntityManager.GetComponent<TransformComponent>(attacker).Coordinates,
-                        Color = Vector4.Multiply(new Vector4(255, 255, 255, 125), 1.0f),
-                        ColorDelta = Vector4.Multiply(new Vector4(0, 0, 0, -10), 1.0f),
-                        Velocity = msg.Angle.ToWorldVec(),
-                        Acceleration = msg.Angle.ToWorldVec() * 5f,
-                        Born = curTime,
-                        DeathTime = curTime.Add(TimeSpan.FromMilliseconds(300f)),
-                    };
-
-                    _effectSystem.CreateEffect(effect);
-                }
+                EntityManager.RaisePredictiveEvent(new StartHeavyAttackEvent(weapon.Owner));
+                weapon.WindUpStart = currentTime;
             }
 
-            foreach (var hit in msg.Hits)
+            // Try to do a heavy attack.
+            if (useDown == BoundKeyState.Down)
             {
-                if (!EntityManager.EntityExists(hit))
+                var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
+                EntityCoordinates coordinates;
+
+                // Bro why would I want a ternary here
+                // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
+                if (MapManager.TryFindGridAt(mousePos, out var grid))
                 {
-                    continue;
+                    coordinates = EntityCoordinates.FromMap(grid.GridEntityId, mousePos, EntityManager);
+                }
+                else
+                {
+                    coordinates = EntityCoordinates.FromMap(MapManager.GetMapEntityId(mousePos.MapId), mousePos, EntityManager);
                 }
 
-                if (!EntityManager.TryGetComponent(hit, out ISpriteComponent? sprite))
-                {
-                    continue;
-                }
-
-                var originalColor = sprite.Color;
-                var newColor = Color.Red * originalColor;
-                sprite.Color = newColor;
-
-                hit.SpawnTimer(100, () =>
-                {
-                    // Only reset back to the original color if something else didn't change the color in the mean time.
-                    if (sprite.Color == newColor)
-                    {
-                        sprite.Color = originalColor;
-                    }
-                });
+                EntityManager.RaisePredictiveEvent(new HeavyAttackEvent(weapon.Owner, coordinates));
             }
+
+            return;
         }
 
-        private void PlayLunge(PlayLungeAnimationMessage msg)
+        if (weapon.WindUpStart != null)
         {
-            if (EntityManager.EntityExists(msg.Source))
+            EntityManager.RaisePredictiveEvent(new StopHeavyAttackEvent(weapon.Owner));
+        }
+
+        // Light attack
+        if (useDown == BoundKeyState.Down)
+        {
+            if (weapon.Attacking || weapon.NextAttack > Timing.CurTime)
             {
-                msg.Source.EnsureComponent<MeleeLungeComponent>().SetData(msg.Angle);
+                return;
+            }
+
+            var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
+            var attackerPos = Transform(entity).MapPosition;
+
+            if (mousePos.MapId != attackerPos.MapId ||
+                (attackerPos.Position - mousePos.Position).Length > weapon.Range)
+            {
+                return;
+            }
+
+            EntityCoordinates coordinates;
+
+            // Bro why would I want a ternary here
+            // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
+            if (MapManager.TryFindGridAt(mousePos, out var grid))
+            {
+                coordinates = EntityCoordinates.FromMap(grid.GridEntityId, mousePos, EntityManager);
             }
             else
             {
-                // FIXME: This should never happen.
-                Logger.Error($"Tried to play a lunge animation, but the entity \"{msg.Source}\" does not exist.");
+                coordinates = EntityCoordinates.FromMap(MapManager.GetMapEntityId(mousePos.MapId), mousePos, EntityManager);
             }
+
+            EntityUid? target = null;
+
+            // TODO: UI Refactor update I assume
+            if (_stateManager.CurrentState is GameplayStateBase screen)
+            {
+                target = screen.GetEntityUnderPosition(mousePos);
+            }
+
+            RaisePredictiveEvent(new LightAttackEvent(target, weapon.Owner, coordinates));
+            return;
         }
+
+        if (weapon.Attacking)
+        {
+            RaisePredictiveEvent(new StopAttackEvent(weapon.Owner));
+        }
+    }
+
+    protected override bool DoDisarm(EntityUid user, DisarmAttackEvent ev, MeleeWeaponComponent component, ICommonSession? session)
+    {
+        if (!base.DoDisarm(user, ev, component, session))
+            return false;
+
+        if (!TryComp<CombatModeComponent>(user, out var combatMode) ||
+            combatMode.CanDisarm != true)
+        {
+            return false;
+        }
+
+        // They need to either have hands...
+        if (!HasComp<HandsComponent>(ev.Target!.Value))
+        {
+            // or just be able to be shoved over.
+            if (TryComp<StatusEffectsComponent>(ev.Target!.Value, out var status) && status.AllowedEffects.Contains("KnockedDown"))
+                return true;
+
+            if (Timing.IsFirstTimePredicted && HasComp<MobStateComponent>(ev.Target.Value))
+                PopupSystem.PopupEntity(Loc.GetString("disarm-action-disarmable", ("targetName", ev.Target.Value)), ev.Target.Value, Filter.Local());
+
+            return false;
+        }
+
+        return true;
+    }
+
+    protected override void Popup(string message, EntityUid? uid, EntityUid? user)
+    {
+        if (!Timing.IsFirstTimePredicted || uid == null)
+            return;
+
+        PopupSystem.PopupEntity(message, uid.Value, Filter.Local());
+    }
+
+    private void OnMeleeLunge(MeleeLungeEvent ev)
+    {
+        // Entity might not have been sent by PVS.
+        if (Exists(ev.Entity))
+            DoLunge(ev.Entity, ev.Angle, ev.LocalPos, ev.Animation);
     }
 }

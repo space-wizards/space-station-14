@@ -53,6 +53,8 @@
   - type: ContainerContainer
     containers:
       DisposalTube: !type:Container
+  - type: StaticPrice
+    price: 100
 
 - type: entity
   id: DisposalHolder
@@ -62,7 +64,7 @@
   - type: DisposalHolder
   - type: ContainerContainer
     containers:
-      DisposalHolder: !type:Container
+      DisposalHolderComponent: !type:Container
 
 # Pipes
 

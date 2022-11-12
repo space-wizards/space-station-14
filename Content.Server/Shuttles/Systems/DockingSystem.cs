@@ -1,5 +1,6 @@
 using Content.Server.Doors.Components;
 using Content.Server.Doors.Systems;
+using Content.Server.NPC.Pathfinding;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Shared.Doors;
@@ -8,8 +9,10 @@ using Content.Shared.Shuttles.Events;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Dynamics.Joints;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Shuttles.Systems
@@ -22,6 +25,7 @@ namespace Content.Server.Shuttles.Systems
         [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
         [Dependency] private readonly ShuttleConsoleSystem _console = default!;
         [Dependency] private readonly DoorSystem _doorSystem = default!;
+        [Dependency] private readonly PathfindingSystem _pathfinding = default!;
 
         private ISawmill _sawmill = default!;
         private const string DockingFixture = "docking";
@@ -65,8 +69,8 @@ namespace Content.Server.Shuttles.Systems
 
             // Assume the docking port itself (and its body) is valid
 
-            if (!_mapManager.EntityManager.TryGetComponent<MapGridComponent>(dockingXform.GridUid, out var grid) ||
-                !HasComp<ShuttleComponent>(grid.Owner)) return null;
+            if (!_mapManager.TryGetGrid(dockingXform.GridUid, out var grid) ||
+                !HasComp<ShuttleComponent>(grid.GridEntityId)) return null;
 
             var transform = body.GetTransform();
             var dockingFixture = _fixtureSystem.GetFixtureOrNull(body, DockingFixture);
@@ -88,14 +92,17 @@ namespace Content.Server.Shuttles.Systems
             // Get any docking ports in range on other grids.
             foreach (var otherGrid in _mapManager.FindGridsIntersecting(dockingXform.MapID, enlargedAABB))
             {
-                if (otherGrid.Owner == dockingXform.GridUid)
+                if (otherGrid.GridEntityId == dockingXform.GridUid)
                     continue;
 
                 foreach (var ent in otherGrid.GetAnchoredEntities(enlargedAABB))
                 {
                     if (!TryComp(ent, out DockingComponent? otherDocking) ||
                         !otherDocking.Enabled ||
-                        !TryComp(ent, out PhysicsComponent? otherBody)) continue;
+                        !TryComp(ent, out PhysicsComponent? otherBody))
+                    {
+                        continue;
+                    }
 
                     var otherTransform = otherBody.GetTransform();
                     var otherDockingFixture = _fixtureSystem.GetFixtureOrNull(otherBody, DockingFixture);
@@ -133,6 +140,7 @@ namespace Content.Server.Shuttles.Systems
 
         private void Cleanup(DockingComponent dockA)
         {
+            _pathfinding.RemovePortal(dockA.PathfindHandle);
             _jointSystem.RemoveJoint(dockA.DockJoint!);
 
             var dockBUid = dockA.DockedWith;
@@ -344,26 +352,34 @@ namespace Content.Server.Shuttles.Systems
             dockB.DockJoint = joint;
             dockB.DockJointId = joint.ID;
 
-            if (TryComp<AirlockComponent>(dockA.Owner, out var airlockA))
-            {
-                airlockA.SetBoltsWithAudio(true);
-            }
-
-            if (TryComp<AirlockComponent>(dockB.Owner, out var airlockB))
-            {
-                airlockB.SetBoltsWithAudio(true);
-            }
-
             if (TryComp(dockA.Owner, out DoorComponent? doorA))
-            {
-                doorA.ChangeAirtight = false;
-                _doorSystem.StartOpening(doorA.Owner, doorA);
+            {   
+                if (_doorSystem.TryOpen(doorA.Owner, doorA))
+                {
+                    doorA.ChangeAirtight = false;
+                    if (TryComp<AirlockComponent>(dockA.Owner, out var airlockA))
+                    {
+                        airlockA.SetBoltsWithAudio(true);
+                    }
+                }
             }
 
             if (TryComp(dockB.Owner, out DoorComponent? doorB))
             {
-                doorB.ChangeAirtight = false;
-                _doorSystem.StartOpening(doorB.Owner, doorB);
+                if (_doorSystem.TryOpen(doorB.Owner, doorB))
+                {
+                    doorB.ChangeAirtight = false;
+                    if (TryComp<AirlockComponent>(dockB.Owner, out var airlockB))
+                    {
+                        airlockB.SetBoltsWithAudio(true);
+                    }
+                }
+            }
+
+            if (_pathfinding.TryCreatePortal(dockAXform.Coordinates, dockBXform.Coordinates, out var handle))
+            {
+                dockA.PathfindHandle = handle;
+                dockB.PathfindHandle = handle;
             }
 
             var msg = new DockEvent
@@ -450,23 +466,27 @@ namespace Content.Server.Shuttles.Systems
 
             if (TryComp(dock.Owner, out DoorComponent? doorA))
             {
-                doorA.ChangeAirtight = true;
-                _doorSystem.TryClose(doorA.Owner, doorA);
+                if (_doorSystem.TryClose(doorA.Owner, doorA))
+                {
+                    doorA.ChangeAirtight = true;
+                }
             }
 
             if (TryComp(dock.DockedWith, out DoorComponent? doorB))
             {
-                doorB.ChangeAirtight = true;
-                _doorSystem.TryClose(doorB.Owner, doorB);
+                if (_doorSystem.TryClose(doorB.Owner, doorB))
+                {
+                    doorB.ChangeAirtight = true;
+                }
             }
 
-            if (!Deleted(dock.Owner))
+            if (LifeStage(dock.Owner) < EntityLifeStage.Terminating)
             {
                 var recentlyDocked = EnsureComp<RecentlyDockedComponent>(dock.Owner);
                 recentlyDocked.LastDocked = dock.DockedWith.Value;
             }
 
-            if (!Deleted(dock.DockedWith.Value))
+            if (TryComp(dock.DockedWith.Value, out MetaDataComponent? meta) && meta.EntityLifeStage < EntityLifeStage.Terminating)
             {
                 var recentlyDocked = EnsureComp<RecentlyDockedComponent>(dock.DockedWith.Value);
                 recentlyDocked.LastDocked = dock.DockedWith.Value;

@@ -31,6 +31,9 @@
   id: FoodSnackBoritos
   description: Crunchy, salty tortilla chips. You could probably make nachos with these.
   components:
+  - type: FlavorProfile
+    flavors:
+      - boritos
   - type: Sprite
     state: boritos
   - type: Item
@@ -43,6 +46,10 @@
   id: FoodSnackCheesie
   description: Bite sized cheesie snacks that will honk all over your mouth.
   components:
+  - type: FlavorProfile
+    flavors:
+      - cheesy
+      - funny
   - type: Sprite
     state: cheesiehonkers
   - type: Item
@@ -55,6 +62,11 @@
   id: FoodSnackChips
   description: Commander Riker's What-The-Crisps.
   components:
+  - type: FlavorProfile
+    flavors:
+      - oily
+      - salty
+      - potatoes
   - type: Sprite
     state: chips
   - type: Item
@@ -87,6 +99,9 @@
   id: FoodSnackChocolateBar
   description: Tastes like cardboard.
   components:
+  - type: FlavorProfile
+    flavors:
+      - chocolate
   - type: Sprite
     state: chocolatebar-open
   - type: Item
@@ -122,6 +137,12 @@
   id: FoodSnackEnergyBar
   description: An energy bar with a lot of punch.
   components:
+  - type: FlavorProfile
+    flavors:
+      - nutty
+      - oats
+      - fiber
+      - sweet
   - type: Sprite
     state: energybar-open
   - type: Item
@@ -132,6 +153,11 @@
   id: FoodSnackPopcorn
   description: Grown on an unknown planet, by an unknown farmer, popped by some jerk on a space station.
   components:
+  - type: FlavorProfile
+    flavors:
+      - corn
+      - salt
+      - butter
   - type: Sprite
     state: popcorn
   - type: Item
@@ -145,6 +171,9 @@
   id: FoodSnackRaisins
   description: Best raisins in the universe. Not sure why.
   components:
+  - type: FlavorProfile
+    flavors:
+      - raisins
   - type: Sprite
     state: raisins
   - type: Item
@@ -157,6 +186,9 @@
   id: FoodSnackSus
   description: Something about this packet makes you feel incredibly uneasy. Jerky's good though.
   components:
+  - type: FlavorProfile
+    flavors:
+      - susjerky
   - type: Sprite
     state: susjerky
   - type: Item
@@ -169,6 +201,9 @@
   id: FoodSnackSyndi
   description: An extremely moist snack cake that tastes just as good after being nuked.
   components:
+  - type: FlavorProfile
+    flavors:
+      - syndicakes
   - type: Sprite
     state: syndicakes
   - type: Item
@@ -181,6 +216,11 @@
   id: FoodSnackChowMein
   description: A salty fried noodle snack. Looks like they forgot the vegetables.
   components:
+  - type: FlavorProfile
+    flavors:
+      - cheapnoodles
+      - salty
+      - oily
   - type: Sprite
     state: chinese1
   - type: Item
@@ -202,6 +242,11 @@
   id: FoodSnackDanDanNoodles
   description: A spicy Sichuan noodle snack. The chili oil slick pools on top.
   components:
+  - type: FlavorProfile
+    flavors:
+      - cheapnoodles
+      - oily
+      - spicy
   - type: Sprite
     state: chinese2
   - type: Item
@@ -225,6 +270,9 @@
   id: FoodSnackCookieFortune
   description: A boring cardboard tasting snack with a fortune inside. Surprise! You're boring too.
   components:
+  - type: FlavorProfile
+    flavors:
+      - fortunecookie
   - type: Sprite
     state: cookie_fortune
   - type: SolutionContainerManager
@@ -266,6 +314,9 @@
   name: nutribrick
   description: A carefully synthesized brick designed to contain the highest ratio of nutriment to volume. Tastes like shit.
   components:
+  - type: FlavorProfile
+    flavors:
+      - nutribrick
   - type: Item
     size: 10
   - type: Sprite
@@ -303,6 +354,9 @@
   name: brownie
   description: A precisely mixed brownie, made to withstand blunt trauma and harsh conditions. Tastes like shit.
   components:
+  - type: FlavorProfile
+    flavors:
+      - mrebrownie
   - type: Sprite
     state: mre-brownie-open
   - type: Food

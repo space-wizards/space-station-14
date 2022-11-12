@@ -11,6 +11,8 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
+using Robust.Shared.Network;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Containers.ItemSlots
 {
@@ -19,6 +21,8 @@ namespace Content.Shared.Containers.ItemSlots
     /// </summary>
     public sealed class ItemSlotsSystem : EntitySystem
     {
+        [Dependency] private readonly IGameTiming _timing = default!;
+        [Dependency] private readonly INetManager _netManager = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly SharedContainerSystem _containers = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
@@ -121,6 +125,16 @@ namespace Content.Shared.Containers.ItemSlots
             else
                 Dirty(itemSlots);
         }
+
+        public bool TryGetSlot(EntityUid uid, string slotId, [NotNullWhen(true)] out ItemSlot? itemSlot, ItemSlotsComponent? component = null)
+        {
+            itemSlot = null;
+
+            if (!Resolve(uid, ref component))
+                return false;
+
+            return component.Slots.TryGetValue(slotId, out itemSlot);
+        }
         #endregion
 
         #region Interactions
@@ -214,9 +228,6 @@ namespace Content.Shared.Containers.ItemSlots
             // ContainerSlot automatically raises a directed EntInsertedIntoContainerMessage
 
             _audioSystem.PlayPredicted(slot.InsertSound, uid, excludeUserAudio ? user : null);
-
-            var ev = new ItemSlotChangedEvent();
-            RaiseLocalEvent(uid, ref ev, true);
         }
 
         /// <summary>
@@ -237,7 +248,7 @@ namespace Content.Shared.Containers.ItemSlots
 
             if (slot.Whitelist != null && !slot.Whitelist.IsValid(usedUid))
             {
-                if (popup.HasValue && !string.IsNullOrWhiteSpace(slot.WhitelistFailPopup))
+                if (_netManager.IsClient && _timing.IsFirstTimePredicted && popup.HasValue && !string.IsNullOrWhiteSpace(slot.WhitelistFailPopup))
                     _popupSystem.PopupEntity(Loc.GetString(slot.WhitelistFailPopup), uid, Filter.Entities(popup.Value));
                 return false;
             }
@@ -320,8 +331,6 @@ namespace Content.Shared.Containers.ItemSlots
             // ContainerSlot automatically raises a directed EntRemovedFromContainerMessage
 
             _audioSystem.PlayPredicted(slot.EjectSound, uid, excludeUserAudio ? user : null, slot.SoundOptions);
-            var ev = new ItemSlotChangedEvent();
-            RaiseLocalEvent(uid, ref ev, true);
         }
 
         /// <summary>
@@ -528,9 +537,10 @@ namespace Content.Shared.Containers.ItemSlots
         /// <summary>
         ///     Get the contents of some item slot.
         /// </summary>
-        public EntityUid? GetItem(EntityUid uid, string id, ItemSlotsComponent? itemSlots = null)
+        /// <returns>The item in the slot, or null if the slot is empty or the entity doesn't have an <see cref="ItemSlotsComponent"/>.</returns>
+        public EntityUid? GetItemOrNull(EntityUid uid, string id, ItemSlotsComponent? itemSlots = null)
         {
-            if (!Resolve(uid, ref itemSlots))
+            if (!Resolve(uid, ref itemSlots, logMissing: false))
                 return null;
 
             return itemSlots.Slots.GetValueOrDefault(id)?.Item;
@@ -601,10 +611,4 @@ namespace Content.Shared.Containers.ItemSlots
             args.State = new ItemSlotsComponentState(component.Slots);
         }
     }
-
-    /// <summary>
-    /// Raised directed on an entity when one of its item slots changes.
-    /// </summary>
-    [ByRefEvent]
-    public readonly struct ItemSlotChangedEvent {}
 }

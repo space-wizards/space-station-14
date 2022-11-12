@@ -4,6 +4,7 @@
   group: Narcotics
   desc: reagent-desc-desoxyephedrine
   physicalDesc: reagent-physical-desc-translucent
+  flavor: bitter
   color: "#FAFAFA"
   boilingPoint: 212.0  # Dexosyephedrine vape when?
   meltingPoint: 170.0
@@ -46,6 +47,7 @@
   group: Narcotics
   desc: reagent-desc-ephedrine
   physicalDesc: reagent-physical-desc-powdery
+  flavor: bitter
   color: "#D2FFFA"
   boilingPoint: 255.0
   meltingPoint: 36.0
@@ -83,6 +85,7 @@
   name: reagent-name-thc
   group: Narcotics
   desc: reagent-desc-thc
+  flavor: bitter
   color: "#808080"
   physicalDesc: reagent-physical-desc-crystalline
   plantMetabolism:
@@ -106,6 +109,7 @@
   group: Narcotics
   desc: reagent-desc-thc-oil
   physicalDesc: reagent-physical-desc-skunky
+  flavor: bitter
   color: "#DAA520"
   metabolisms:
     Narcotic:
@@ -122,6 +126,7 @@
   name: reagent-name-nicotine
   group: Narcotics
   desc: reagent-desc-nicotine
+  flavor: bitter
   color: "#C0C0C0"
   physicalDesc: reagent-physical-desc-strong-smelling
   plantMetabolism:
@@ -134,6 +139,7 @@
   group: Narcotics
   desc: reagent-desc-impedrezene
   physicalDesc: reagent-physical-desc-acrid
+  flavor: bitter
   color: "#215263"
 
 - type: reagent
@@ -142,6 +148,7 @@
   group: Narcotics
   desc: reagent-desc-space-drugs
   physicalDesc: reagent-physical-desc-syrupy
+  flavor: bitter
   color: "#63806e"
   metabolisms:
     Narcotic:
@@ -173,13 +180,15 @@
         damage:
           types:
             Poison: 1
-      - !type:Paralyze
-        paralyzeTime: 1.2
-        refresh: false
       - !type:GenericStatusEffect
-        key: Stutter
-        time: 1
-        component: StutteringAccent
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Nocturine
+          min: 8
+        key: ForcedSleep
+        component: ForcedSleeping
+        refresh: false
+        type: Add
 
 - type: reagent
   id: MuteToxin
@@ -196,3 +205,47 @@
       - !type:GenericStatusEffect
         key: Muted
         component: Muted
+
+- type: reagent
+  id: NorepinephricAcid
+  name: reagent-name-norepinephric-acid
+  group: Narcotics
+  desc: reagent-desc-norepinephric-acid
+  physicalDesc: reagent-physical-desc-milky
+  flavor: salty
+  color: "#96a8b5"
+  boilingPoint: 255.0
+  meltingPoint: 36.0
+  metabolisms:
+    Narcotic:
+      effects:
+      - !type:PopupMessage
+        type: Local
+        messages:
+        - generic-reagent-effect-burning-eyes
+        - generic-reagent-effect-burning-eyes-a-bit
+        - generic-reagent-effect-tearing-up
+        - norepinephricacid-effect-eyelids
+        - norepinephricacid-effect-eyes-itch
+        - norepinephricacid-effect-vision-fade
+        - norepinephricacid-effect-vision-fail
+        probability: 0.08
+      - !type:PopupMessage
+        visualType: MediumCaution
+        type: Local
+        messages:
+        - norepinephricacid-effect-eye-disconnect
+        - norepinephricacid-effect-eye-pain
+        - norepinephricacid-effect-darkness
+        - norepinephricacid-effect-blindness
+        conditions:
+        - !type:ReagentThreshold
+          min: 20
+        probability: 0.03
+        #If anyone wants to add a light dimming or grayscale effect when under 20u, be my guest
+      - !type:GenericStatusEffect
+        key: TemporaryBlindness
+        component: TemporaryBlindness
+        conditions:
+        - !type:ReagentThreshold
+          min: 20

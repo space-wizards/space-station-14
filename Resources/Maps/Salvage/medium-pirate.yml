@@ -749,7 +749,7 @@ entities:
     parent: 52
     type: Transform
 - uid: 79
-  type: AngryMobsSpawnArtifact
+  type: RandomArtifactSpawner
   components:
   - pos: -0.5,-0.5
     parent: 52
@@ -835,9 +835,6 @@ entities:
     type: ApcPowerReceiver
   - enabled: False
     type: AmbientSound
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 91
   type: PoweredSmallLight
   components:
@@ -848,9 +845,6 @@ entities:
     type: ApcPowerReceiver
   - enabled: False
     type: AmbientSound
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 92
   type: ClothingEyesEyepatch
   components:

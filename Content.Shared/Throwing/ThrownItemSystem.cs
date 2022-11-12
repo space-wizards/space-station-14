@@ -8,6 +8,9 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
 using System.Linq;
+using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Events;
+using Robust.Shared.Physics.Systems;
 
 namespace Content.Shared.Throwing
 {
@@ -55,7 +58,7 @@ namespace Content.Shared.Throwing
             if (!EntityManager.TryGetComponent(component.Owner, out FixturesComponent? fixturesComponent) ||
                 fixturesComponent.Fixtures.Count != 1) return;
             if (!EntityManager.TryGetComponent(component.Owner, out PhysicsComponent? physicsComponent)) return;
-            
+
             if (fixturesComponent.Fixtures.ContainsKey(ThrowingFixture))
             {
                 Logger.Error($"Found existing throwing fixture on {component.Owner}");
@@ -67,7 +70,7 @@ namespace Content.Shared.Throwing
             _fixtures.TryCreateFixture(physicsComponent, throwingFixture, manager: fixturesComponent);
         }
 
-        private void HandleCollision(EntityUid uid, ThrownItemComponent component, StartCollideEvent args)
+        private void HandleCollision(EntityUid uid, ThrownItemComponent component, ref StartCollideEvent args)
         {
             if (args.OtherFixture.Hard == false)
                 return;
@@ -79,11 +82,11 @@ namespace Content.Shared.Throwing
             ThrowCollideInteraction(thrower, args.OurFixture.Body, otherBody);
         }
 
-        private void PreventCollision(EntityUid uid, ThrownItemComponent component, PreventCollideEvent args)
+        private void PreventCollision(EntityUid uid, ThrownItemComponent component, ref PreventCollideEvent args)
         {
             if (args.BodyB.Owner == component.Thrower)
             {
-                args.Cancel();
+                args.Cancelled = true;
             }
         }
 

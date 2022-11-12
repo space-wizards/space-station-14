@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace Content.Server.Roles
 {
-    [AdminCommand(AdminFlags.Fun)]
+    [AdminCommand(AdminFlags.Admin)]
     public sealed class AddRoleCommand : IConsoleCommand
     {
         public string Command => "addrole";

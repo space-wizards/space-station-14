@@ -162,7 +162,7 @@ public sealed class PayloadSystem : EntitySystem
 
         solutionA.MaxVolume += solutionB.MaxVolume;
         _solutionSystem.TryAddSolution(beakerA, solutionA, solutionB);
-        solutionB.RemoveAllSolution();
+        _solutionSystem.RemoveAllSolution(beakerB, solutionB);
 
         // The grenade might be a dud. Redistribute solution:
         var tmpSol = _solutionSystem.SplitSolution(beakerA, solutionA, solutionA.CurrentVolume * solutionB.MaxVolume / solutionA.MaxVolume);

@@ -153,6 +153,26 @@
 
 - type: entity
   parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitJester
+  name: jester suit
+  description: A jolly dress, well suited to entertain your master, nuncle.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/jester.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/jester.rsi
+
+- type: entity
+  parent: ClothingUniformJumpsuitJester
+  id: ClothingUniformJumpsuitJesterAlt
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/jester2.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/jester2.rsi
+
+- type: entity
+  parent: ClothingUniformBase
   id: ClothingUniformJumpsuitCMO
   name: chief medical officer's jumpsuit
   description: It's a jumpsuit worn by those with the experience to be Chief Medical Officer. It provides minor biological protection.
@@ -196,6 +216,17 @@
     sprite: Clothing/Uniforms/Jumpsuit/engineering.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/engineering.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitEngineeringHazard
+  name: hazard jumpsuit
+  description: Woven in a grungy, warm orange. Lets others around you know that you really mean business when it comes to work.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/engineering_hazard.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/engineering_hazard.rsi
 
 - type: entity
   parent: ClothingUniformBase
@@ -628,7 +659,7 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitLawyerRed
-  name: red lawyer jumpsuit
+  name: red lawyer suit
   description: A flashy red suit worn by lawyers and show-offs.
   components:
   - type: Sprite
@@ -639,7 +670,7 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitLawyerBlue
-  name: blue lawyer jumpsuit
+  name: blue lawyer suit
   description: A flashy blue suit worn by lawyers and show-offs.
   components:
   - type: Sprite
@@ -650,7 +681,7 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitLawyerBlack
-  name: black lawyer jumpsuit
+  name: black lawyer suit
   description: A subtle black suit worn by lawyers and gangsters.
   components:
   - type: Sprite
@@ -661,13 +692,24 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitLawyerPurple
-  name: purple lawyer jumpsuit
+  name: purple lawyer suit
   description: A stylish purple piece worn by lawyers and show people.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/lawyerpurple.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/lawyerpurple.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitLawyerGood
+  name: good lawyer's suit
+  description: A tacky suit perfect for a CRIMINAL lawyer!
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpsuit/lawyergood.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpsuit/lawyergood.rsi
 
 - type: entity
   parent: UnsensoredClothingUniformBase
@@ -789,6 +831,17 @@
     sprite: Clothing/Uniforms/Jumpsuit/reporter.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/reporter.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitSafari
+  name: safari suit
+  description: Perfect for a jungle excursion.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/safari.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/safari.rsi
 
 - type: entity
   parent: ClothingUniformBase

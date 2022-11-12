@@ -27,6 +27,7 @@ namespace Content.Client.Tabletop
         [Dependency] private readonly IUserInterfaceManager _uiManger = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         // Time in seconds to wait until sending the location of a dragged entity to the server again
         private const float Delay = 1f / 10; // 10 Hz
@@ -219,8 +220,8 @@ namespace Content.Client.Tabletop
 
             if (EntityManager.TryGetComponent<AppearanceComponent>(draggedEntity, out var appearance))
             {
-                appearance.SetData(TabletopItemVisuals.Scale, new Vector2(1.25f, 1.25f));
-                appearance.SetData(TabletopItemVisuals.DrawDepth, (int) DrawDepth.Items + 1);
+                _appearance.SetData(draggedEntity, TabletopItemVisuals.Scale, new Vector2(1.25f, 1.25f), appearance);
+                _appearance.SetData(draggedEntity, TabletopItemVisuals.DrawDepth, (int) DrawDepth.Items + 1, appearance);
             }
 
             _draggedEntity = draggedEntity;

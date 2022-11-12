@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using Content.Server.Atmos.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.EntitySystems;
@@ -12,9 +11,12 @@ using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
-using Robust.Shared.Player;
+using Robust.Shared.Threading;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using DependencyAttribute = Robust.Shared.IoC.DependencyAttribute;
 
 // ReSharper disable once RedundantUsingDirective
@@ -28,6 +30,7 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IConfigurationManager _confMan = default!;
+        [Dependency] private readonly IParallelManager _parMan = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly ChunkingSystem _chunkingSys = default!;
 
@@ -96,28 +99,20 @@ namespace Content.Server.Atmos.EntitySystems
         {
             if (e.NewStatus != SessionStatus.InGame)
             {
-                if (_lastSentChunks.Remove(e.Session, out var set))
-                    ReturnToPool(set);
-                return;
+                if (_lastSentChunks.Remove(e.Session, out var sets))
+                {
+                    foreach (var set in sets.Values)
+                    {
+                        set.Clear();
+                        _chunkIndexPool.Return(set);
+                    }
+                }
             }
 
             if (!_lastSentChunks.ContainsKey(e.Session))
             {
-                _lastSentChunks[e.Session] = _chunkViewerPool.Get();
-                DebugTools.Assert(_lastSentChunks[e.Session].Count == 0);
+                _lastSentChunks[e.Session] = new();
             }
-        }
-
-        private void ReturnToPool(Dictionary<EntityUid, HashSet<Vector2i>> chunks)
-        {
-            foreach (var (_, previous) in chunks)
-            {
-                previous.Clear();
-                _chunkIndexPool.Return(previous);
-            }
-
-            chunks.Clear();
-            _chunkViewerPool.Return(chunks);
         }
 
         /// <summary>
@@ -164,6 +159,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void UpdateOverlayData(GameTick curTick)
         {
+            // TODO parallelize?
             foreach (var (gridId, invalidIndices) in _invalidTiles)
             {
                 if (!TryComp(gridId, out GridAtmosphereComponent? gam))
@@ -203,24 +199,16 @@ namespace Content.Server.Atmos.EntitySystems
             // Now we'll go through each player, then through each chunk in range of that player checking if the player is still in range
             // If they are, check if they need the new data to send (i.e. if there's an overlay for the gas).
             // Afterwards we reset all the chunk data for the next time we tick.
-            var xformQuery = GetEntityQuery<TransformComponent>();
-
-            foreach (var session in Filter.GetAllPlayers(_playerManager))
-            {
-                if (session is IPlayerSession { Status: SessionStatus.InGame } playerSession)
-                    UpdatePlayer(playerSession, xformQuery, curTick);
-            }
+            var players = _playerManager.ServerSessions.Where(x => x.Status == SessionStatus.InGame).ToArray();
+            var opts = new ParallelOptions { MaxDegreeOfParallelism = _parMan.ParallelProcessCount };
+            Parallel.ForEach(players, opts, p => UpdatePlayer(p, curTick));
         }
 
-        private void UpdatePlayer(IPlayerSession playerSession, EntityQuery<TransformComponent> xformQuery, GameTick curTick)
+        private void UpdatePlayer(IPlayerSession playerSession, GameTick curTick)
         {
+            var xformQuery = GetEntityQuery<TransformComponent>();
             var chunksInRange = _chunkingSys.GetChunksForSession(playerSession, ChunkSize, xformQuery, _chunkIndexPool, _chunkViewerPool);
-
-            if (!_lastSentChunks.TryGetValue(playerSession, out var previouslySent))
-            {
-                _lastSentChunks[playerSession] = previouslySent = _chunkViewerPool.Get();
-                DebugTools.Assert(previouslySent.Count == 0);
-            }
+            var previouslySent = _lastSentChunks[playerSession];
 
             var ev = new GasOverlayUpdateEvent();
 
@@ -289,8 +277,8 @@ namespace Content.Server.Atmos.EntitySystems
                 }
             }
 
-            RaiseNetworkEvent(ev, playerSession.ConnectedClient);
-            ReturnToPool(ev.RemovedChunks);
+            if (ev.UpdatedChunks.Count != 0 || ev.RemovedChunks.Count != 0)
+                RaiseNetworkEvent(ev, playerSession.ConnectedClient);
         }
 
         public override void Reset(RoundRestartCleanupEvent ev)
@@ -300,10 +288,14 @@ namespace Content.Server.Atmos.EntitySystems
 
             foreach (var data in _lastSentChunks.Values)
             {
-                ReturnToPool(data);
-            }
+                foreach (var previous in data.Values)
+                {
+                    previous.Clear();
+                    _chunkIndexPool.Return(previous);
+                }
 
-            _lastSentChunks.Clear();
+                data.Clear();
+            }
         }
     }
 }

@@ -34,7 +34,7 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.25,-0.4,0.25,0.1"
-      mass: 5
+      density: 20
       mask:
       - Impassable
   - type: EntityStorage
@@ -72,13 +72,15 @@
     containers:
       entity_storage: !type:Container
       paper_label: !type:ContainerSlot
+  - type: StaticPrice
+    price: 50
 
 - type: entity
   id: BodyBag_Folded
   name: body bag
   description: A plastic bag designed for the storage and transportation of cadavers.
   parent: BodyBag_Container
-  suffix: Folded
+  suffix: folded
   components:
   - type: Foldable
     folded: true
@@ -100,3 +102,16 @@
   - type: Tag
     tags:
     - Trash
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 50
+        reagents:
+        - ReagentId: Ash
+          Quantity: 10
+  - type: SolutionSpiker
+    sourceSolution: food
+    ignoreEmpty: true
+  - type: DeleteOnTrigger
+  - type: Extractable
+    grindableSolutionName: food

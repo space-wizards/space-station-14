@@ -4,7 +4,9 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Weapons.Ranged.Systems;
@@ -45,7 +47,11 @@ public abstract class SharedFlyBySoundSystem : EntitySystem
 
     private void OnShutdown(EntityUid uid, FlyBySoundComponent component, ComponentShutdown args)
     {
-        if (!TryComp<PhysicsComponent>(uid, out var body)) return;
+        if (!TryComp<PhysicsComponent>(uid, out var body) ||
+            MetaData(uid).EntityLifeStage >= EntityLifeStage.Terminating)
+        {
+            return;
+        }
 
         _fixtures.DestroyFixture(body, FlyByFixture);
     }

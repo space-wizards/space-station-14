@@ -113,7 +113,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.30
-      mass: 50
+      density: 180
       mask:
       - Impassable
       - HighImpassable

@@ -8,6 +8,8 @@ namespace Content.Shared.Flash
     {
         public float Duration { get; set; }
         public TimeSpan LastFlash { get; set; }
+
+        public override bool SendOnlyToOwner => true;
     }
 
     [Serializable, NetSerializable]

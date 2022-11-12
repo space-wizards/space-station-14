@@ -552,3 +552,58 @@
     sprite: Clothing/Uniforms/Jumpskirt/janimaid.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpskirt/janimaid.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpskirtLawyerRed
+  name: red lawyer suitskirt
+  description: A flashy red suitskirt worn by lawyers and show-offs.
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpskirt/lawyerred.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpskirt/lawyerred.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpskirtLawyerBlue
+  name: blue lawyer suitskirt
+  description: A flashy blue suitskirt worn by lawyers and show-offs.
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpskirt/lawyerblue.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpskirt/lawyerblue.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpskirtLawyerBlack
+  name: black lawyer suitskirt
+  description: A subtle black suitskirt worn by lawyers and gangsters.
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpskirt/lawyerblack.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpskirt/lawyerblack.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpskirtLawyerPurple
+  name: purple lawyer suitskirt
+  description: A stylish purple piece worn by lawyers and show people.
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpskirt/lawyerpurple.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpskirt/lawyerpurple.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpskirtLawyerGood
+  name: good lawyer's suitskirt
+  description: A tacky suitskirt perfect for a CRIMINAL lawyer!
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpskirt/lawyergood.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpskirt/lawyergood.rsi

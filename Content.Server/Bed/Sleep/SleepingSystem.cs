@@ -1,5 +1,4 @@
 using Content.Server.Actions;
-using Content.Server.MobState;
 using Content.Server.Popups;
 using Content.Server.Sound.Components;
 using Content.Shared.Actions.ActionTypes;
@@ -26,7 +25,6 @@ namespace Content.Server.Bed.Sleep
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly ActionsSystem _actionsSystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
 
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
@@ -57,7 +55,7 @@ namespace Content.Server.Bed.Sleep
 
                 var emitSound = EnsureComp<SpamEmitSoundComponent>(uid);
 
-                // TODO WTF is this, these should a data fields and not hard-coded. 
+                // TODO WTF is this, these should a data fields and not hard-coded.
                 emitSound.Sound = new SoundCollectionSpecifier("Snores", AudioParams.Default.WithVariation(0.2f));
                 emitSound.PlayChance = 0.33f;
                 emitSound.RollInterval = 5f;
@@ -107,14 +105,14 @@ namespace Content.Server.Bed.Sleep
         /// </summary>
         private void OnMobStateChanged(EntityUid uid, SleepingComponent component, MobStateChangedEvent args)
         {
-            if (_mobStateSystem.IsCritical(uid) && !HasComp<ForcedSleepingComponent>(uid))
+            if (args.CurrentMobState == DamageState.Dead)
             {
+                RemComp<SpamEmitSoundComponent>(uid);
                 RemComp<SleepingComponent>(uid);
                 return;
             }
-
-            if (_mobStateSystem.IsDead(uid))
-                RemComp<SleepingComponent>(uid);
+            if (TryComp<SpamEmitSoundComponent>(uid, out var spam))
+                spam.Enabled = (args.CurrentMobState == DamageState.Alive) ? true : false;
         }
 
         private void AddWakeVerb(EntityUid uid, SleepingComponent component, GetVerbsEvent<AlternativeVerb> args)
@@ -141,7 +139,15 @@ namespace Content.Server.Bed.Sleep
         private void OnInteractHand(EntityUid uid, SleepingComponent component, InteractHandEvent args)
         {
             args.Handled = true;
+
+            var curTime = _gameTiming.CurTime;
+            if (curTime < component.CoolDownEnd)
+            {
+                return;
+            }
+
             TryWaking(args.Target, user: args.User);
+            component.CoolDownEnd = curTime + component.Cooldown;
         }
 
         private void OnExamined(EntityUid uid, SleepingComponent component, ExaminedEvent args)

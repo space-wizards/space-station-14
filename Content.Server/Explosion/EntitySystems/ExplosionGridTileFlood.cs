@@ -186,7 +186,11 @@ public sealed class ExplosionGridTileFlood : ExplosionTileFlood
             NewBlockedTiles.Add(tile);
 
             // At what explosion iteration would this blocker be destroyed?
-            var clearIteration = iteration + (int) MathF.Ceiling(tileData.ExplosionTolerance[_typeIndex] / _intensityStepSize);
+            var required = tileData.ExplosionTolerance[_typeIndex];
+            if (required > _maxIntensity)
+                return; // blocker is never destroyed.
+
+            var clearIteration = iteration + (int) MathF.Ceiling(required / _intensityStepSize);
             if (FreedTileLists.TryGetValue(clearIteration, out var list))
                 list.Add(tile);
             else
@@ -275,7 +279,7 @@ public sealed class ExplosionGridTileFlood : ExplosionTileFlood
 
             // This tile has one or more airtight entities anchored to it blocking the explosion from traveling in
             // some directions. First, check whether this blocker can even be destroyed by this explosion?
-            if (sealIntegrity > _maxIntensity || float.IsNaN(sealIntegrity))
+            if (sealIntegrity > _maxIntensity)
                 continue;
 
             // At what explosion iteration would this blocker be destroyed?

@@ -6,11 +6,9 @@
   components:
   - type: InputMover
   - type: MobMover
-  - type: UtilityNPC
-    behaviorSets:
-    - Idle
-    - UnarmedAttackHostiles
-  - type: AiFactionTag
+  - type: HTN
+    rootTask: SimpleHostileCompound
+  - type: Faction
     factions:
     - SimpleHostile
   - type: Sprite
@@ -24,7 +22,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.5
-      mass: 320
+      density: 400
       mask:
       - MobMask
       layer:
@@ -34,6 +32,8 @@
     thresholds:
       0: Alive
       150: Dead
+  - type: Stamina
+    excess: 150
   - type: Appearance
   - type: DamageStateVisuals
     states:
@@ -61,9 +61,9 @@
     heatDamageThreshold: 500
     coldDamageThreshold: 0
   - type: MeleeWeapon
-    range: 0.5
-    arcwidth: 0
-    arc: claw
+    hidden: true
+    angle: 0
+    animation: WeaponArcClaw
     damage:
       groups:
         Brute: 15

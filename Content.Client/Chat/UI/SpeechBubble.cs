@@ -1,12 +1,7 @@
-using System;
 using Content.Client.Chat.Managers;
-using Content.Client.Viewport;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 
 namespace Content.Client.Chat.UI
@@ -47,6 +42,9 @@ namespace Content.Client.Chat.UI
         private float _verticalOffsetAchieved;
 
         public Vector2 ContentSize { get; private set; }
+
+        // man down
+        public event Action<EntityUid, SpeechBubble>? OnDied;
 
         public static SpeechBubble CreateSpeechBubble(SpeechType type, string text, EntityUid senderEntity, IEyeManager eyeManager, IChatManager chatManager, IEntityManager entityManager)
         {
@@ -148,7 +146,7 @@ namespace Content.Client.Chat.UI
                 return;
             }
 
-            _chatManager.RemoveSpeechBubble(_senderEntity, this);
+            OnDied?.Invoke(_senderEntity, this);
         }
 
         /// <summary>
@@ -164,7 +162,6 @@ namespace Content.Client.Chat.UI
     }
 
     public sealed class TextSpeechBubble : SpeechBubble
-
     {
         public TextSpeechBubble(string text, EntityUid senderEntity, IEyeManager eyeManager, IChatManager chatManager, IEntityManager entityManager, string speechStyleClass)
             : base(text, senderEntity, eyeManager, chatManager, entityManager, speechStyleClass)

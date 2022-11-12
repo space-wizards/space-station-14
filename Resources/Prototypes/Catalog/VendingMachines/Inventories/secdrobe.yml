@@ -1,7 +1,5 @@
 - type: vendingMachineInventory
   id: SecDrobeInventory
-  name: SecDrobe
-  spriteName: secdrobe
   startingInventory:
     ClothingBackpackSecurity: 3
     ClothingBackpackSatchelSecurity: 3
@@ -18,3 +16,4 @@
     ClothingHeadsetSecurity: 3
     ClothingOuterWinterSec: 2
     ClothingEyesBlindfold: 1
+    ClothingShoesBootsCombat: 1

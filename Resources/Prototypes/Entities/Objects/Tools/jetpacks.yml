@@ -6,7 +6,7 @@
     lifetime: 2
   - type: Sprite
     netsync: false
-    drawdepth: Effects
+    drawdepth: SmallMobs
     noRot: true
     layers:
     - shader: unshaded
@@ -14,6 +14,9 @@
       sprite: Effects/atmospherics.rsi
       state: frezon_old
   - type: EffectVisuals
+  - type: Tag
+    tags:
+      - HideContextMenu
   - type: AnimationPlayer
 
 - type: entity
@@ -34,6 +37,7 @@
       state: icon
       netsync: false
     - type: Item
+      sprite: Objects/Tanks/Jetpacks/blue.rsi
       size: 100
     - type: UserInterface
       interfaces:
@@ -41,8 +45,7 @@
           type: GasTankBoundUserInterface
     - type: Clothing
       sprite: Objects/Tanks/Jetpacks/blue.rsi
-      QuickEquip: false
-      size: 100
+      quickEquip: false
       slots:
         - Back
     - type: GasTank
@@ -63,6 +66,8 @@
         useDelay: 1.0
         event: !type:ToggleJetpackEvent
     - type: Appearance
+    - type: StaticPrice
+      price: 100
 
 #Empty blue
 - type: entity
@@ -86,12 +91,13 @@
   suffix: Filled
   components:
   - type: GasTank
-    outputPressure: 21.27825
+    outputPressure: 42.6
     air:
       volume: 70
       temperature: 293.15
       moles:
-        - 22.6293856
+        - 11.315
+        - 11.315
 
 #Empty black
 - type: entity
@@ -100,6 +106,8 @@
   name: jetpack
   suffix: Empty
   components:
+  - type: Item
+    sprite: Objects/Tanks/Jetpacks/black.rsi
   - type: Sprite
     sprite: Objects/Tanks/Jetpacks/black.rsi
   - type: Clothing
@@ -115,12 +123,13 @@
   suffix: Filled
   components:
   - type: GasTank
-    outputPressure: 21.27825
+    outputPressure: 42.6
     air:
       volume: 70
       temperature: 293.15
       moles:
-        - 22.6293856
+        - 11.315
+        - 11.315
 
 #Empty captain
 - type: entity
@@ -136,6 +145,7 @@
     slots:
       - Back
   - type: Item
+    sprite: Objects/Tanks/Jetpacks/captain.rsi
     size: 30
 
 # Filled captain
@@ -146,12 +156,13 @@
   suffix: Filled
   components:
   - type: GasTank
-    outputPressure: 21.27825
+    outputPressure: 42.6
     air:
       volume: 70
       temperature: 293.15
       moles:
-        - 22.6293856
+        - 11.315
+        - 11.315
 
 #Empty mini
 - type: entity
@@ -160,14 +171,19 @@
   name: mini jetpack
   suffix: Empty
   components:
+    - type: Item
+      sprite: Objects/Tanks/Jetpacks/mini.rsi
     - type: Sprite
       sprite: Objects/Tanks/Jetpacks/mini.rsi
     - type: Clothing
       sprite: Objects/Tanks/Jetpacks/mini.rsi
       slots:
         - Back
-    - type: Item
-      size: 50
+        - suitStorage
+    - type: GasTank
+      outputPressure: 42.6
+      air:
+        volume: 4
 
 # Filled mini
 - type: entity
@@ -177,12 +193,13 @@
   suffix: Filled
   components:
   - type: GasTank
-    outputPressure: 21.27825
+    outputPressure: 42.6
     air:
       temperature: 293.15
-      volume: 2
+      volume: 4
       moles:
-      - 0.323460326
+      - 0.747
+      - 0.747
 
 #Empty security
 - type: entity
@@ -191,6 +208,8 @@
   name: security jetpack
   suffix: Empty
   components:
+  - type: Item
+    sprite: Objects/Tanks/Jetpacks/security.rsi
   - type: Sprite
     sprite: Objects/Tanks/Jetpacks/security.rsi
   - type: Clothing
@@ -206,12 +225,13 @@
   suffix: Filled
   components:
   - type: GasTank
-    outputPressure: 21.27825
+    outputPressure: 42.6
     air:
       volume: 70
       temperature: 293.15
       moles:
-        - 22.6293856
+        - 11.315
+        - 11.315
 
 #Empty void
 - type: entity
@@ -220,6 +240,8 @@
   name: void jetpack
   suffix: Empty
   components:
+  - type: Item
+    sprite: Objects/Tanks/Jetpacks/void.rsi
   - type: Sprite
     sprite: Objects/Tanks/Jetpacks/void.rsi
   - type: Clothing
@@ -235,9 +257,10 @@
   suffix: Filled
   components:
   - type: GasTank
-    outputPressure: 21.27825
+    outputPressure: 42.6
     air:
       volume: 70
       temperature: 293.15
       moles:
-        - 22.6293856
+        - 11.315
+        - 11.315

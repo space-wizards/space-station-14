@@ -18,3 +18,5 @@
       whitelist:
         tags:
           - PaintableAirlock
+    - type: StaticPrice
+      price: 40

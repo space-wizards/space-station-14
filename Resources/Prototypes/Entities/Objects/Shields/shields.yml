@@ -50,6 +50,9 @@
   parent: BaseShield
   id: RiotShield
   description: A large tower shield. Good for controlling crowds.
+  components:
+    - type: StaticPrice
+      price: 100
 
 - type: entity
   name: riot laser shield

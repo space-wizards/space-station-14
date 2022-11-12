@@ -9,7 +9,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Alerts;
 
 [UsedImplicitly]
-internal sealed class ClientAlertsSystem : AlertsSystem
+public sealed class ClientAlertsSystem : AlertsSystem
 {
     public AlertOrderPrototype? AlertOrder { get; set; }
 
@@ -66,15 +66,13 @@ internal sealed class ClientAlertsSystem : AlertsSystem
 
     private void ClientAlertsHandleState(EntityUid uid, AlertsComponent component, ref ComponentHandleState args)
     {
-        if (_playerManager.LocalPlayer?.ControlledEntity != uid)
-            return;
-
         var componentAlerts = (args.Current as AlertsComponentState)?.Alerts;
         if (componentAlerts == null) return;
 
         component.Alerts = new(componentAlerts);
 
-        SyncAlerts?.Invoke(this, componentAlerts);
+        if (_playerManager.LocalPlayer?.ControlledEntity == uid)
+            SyncAlerts?.Invoke(this, componentAlerts);
     }
 
     private void OnPlayerAttached(EntityUid uid, AlertsComponent component, PlayerAttachedEvent args)
@@ -97,9 +95,6 @@ internal sealed class ClientAlertsSystem : AlertsSystem
 
     private void OnPlayerDetached(EntityUid uid, AlertsComponent component, PlayerDetachedEvent args)
     {
-        if (_playerManager.LocalPlayer?.ControlledEntity != uid)
-            return;
-
         ClearAlerts?.Invoke(this, EventArgs.Empty);
     }
 

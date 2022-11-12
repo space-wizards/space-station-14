@@ -1,6 +1,4 @@
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 
 namespace Content.Shared.Disease
@@ -13,12 +11,18 @@ namespace Content.Shared.Disease
     [DataDefinition]
     public sealed class DiseasePrototype : IPrototype, IInheritingPrototype
     {
+        private string _name = string.Empty;
+
         [ViewVariables]
         [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         [DataField("name")]
-        public string Name { get; } = string.Empty;
+        public string Name
+        {
+            get => _name;
+            private set => _name = Loc.GetString(value);
+        }
 
         [ParentDataFieldAttribute(typeof(AbstractPrototypeIdArraySerializer<DiseasePrototype>))]
         public string[]? Parents { get; private set; }

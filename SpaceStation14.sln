@@ -100,12 +100,22 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content.Shared.Database", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content.MapRenderer", "Content.MapRenderer\Content.MapRenderer.csproj", "{199BBEA1-7627-434B-B6F6-0F52A7C0E1E0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robust.Packaging", "RobustToolbox\Robust.Packaging\Robust.Packaging.csproj", "{952AAF2A-DF63-4A7D-8094-3453893EBA80}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content.Packaging", "Content.Packaging\Content.Packaging.csproj", "{424445D4-F5D9-4CA9-A435-0A36E8AA28F3}"
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Project Files", "Project Files", "{EC27A16C-9412-4AA6-AE68-CAAB28882802}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
 		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Project Files", "Project Files", "{A965CB3B-FD31-44AF-8872-85ABA436098D}"
+	ProjectSection(SolutionItems) = preProject
+		RobustToolbox\README.md = RobustToolbox\README.md
+		RobustToolbox\RELEASE-NOTES.md = RobustToolbox\RELEASE-NOTES.md
 	EndProjectSection
 EndProject
 Global
@@ -241,6 +251,14 @@ Global
 		{199BBEA1-7627-434B-B6F6-0F52A7C0E1E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{199BBEA1-7627-434B-B6F6-0F52A7C0E1E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{199BBEA1-7627-434B-B6F6-0F52A7C0E1E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{952AAF2A-DF63-4A7D-8094-3453893EBA80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{952AAF2A-DF63-4A7D-8094-3453893EBA80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{952AAF2A-DF63-4A7D-8094-3453893EBA80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{952AAF2A-DF63-4A7D-8094-3453893EBA80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{424445D4-F5D9-4CA9-A435-0A36E8AA28F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{424445D4-F5D9-4CA9-A435-0A36E8AA28F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{424445D4-F5D9-4CA9-A435-0A36E8AA28F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{424445D4-F5D9-4CA9-A435-0A36E8AA28F3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -268,6 +286,8 @@ Global
 		{88B0FC0F-7209-40E2-AF16-EB90AF727C5B} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
 		{A3C5B00A-D232-4A01-B82E-B0E58BFD5C12} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
 		{8A21C7CA-2EB8-40E5-8043-33582C06D139} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
+		{952AAF2A-DF63-4A7D-8094-3453893EBA80} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
+		{A965CB3B-FD31-44AF-8872-85ABA436098D} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AA37ED9F-F8D6-468E-A101-658AD605B09A}

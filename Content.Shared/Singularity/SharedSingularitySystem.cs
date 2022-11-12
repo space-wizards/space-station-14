@@ -1,16 +1,22 @@
 using Content.Shared.Ghost;
 using Content.Shared.Radiation;
+using Content.Shared.Radiation.Components;
 using Content.Shared.Singularity.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Physics.Events;
+using Robust.Shared.Physics.Systems;
 
 namespace Content.Shared.Singularity
 {
     public abstract class SharedSingularitySystem : EntitySystem
     {
         [Dependency] private readonly FixtureSystem _fixtures = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
         public const string DeleteFixture = "DeleteCircle";
 
@@ -50,13 +56,12 @@ namespace Content.Shared.Singularity
             SubscribeLocalEvent<SharedSingularityComponent, PreventCollideEvent>(OnPreventCollide);
         }
 
-        protected void OnPreventCollide(EntityUid uid, SharedSingularityComponent component, PreventCollideEvent args)
+        protected void OnPreventCollide(EntityUid uid, SharedSingularityComponent component, ref PreventCollideEvent args)
         {
-            PreventCollide(uid, component, args);
+            PreventCollide(uid, component, ref args);
         }
 
-        protected virtual bool PreventCollide(EntityUid uid, SharedSingularityComponent component,
-            PreventCollideEvent args)
+        protected virtual bool PreventCollide(EntityUid uid, SharedSingularityComponent component, ref PreventCollideEvent args)
         {
             var otherUid = args.BodyB.Owner;
 
@@ -64,7 +69,7 @@ namespace Content.Shared.Singularity
             if (EntityManager.HasComponent<MapGridComponent>(otherUid) ||
                 EntityManager.HasComponent<SharedGhostComponent>(otherUid))
             {
-                args.Cancel();
+                args.Cancelled = true;
                 return true;
             }
 
@@ -75,7 +80,7 @@ namespace Content.Shared.Singularity
             {
                 if (component.Level > 4)
                 {
-                    args.Cancel();
+                    args.Cancelled = true;
                 }
 
                 return true;
@@ -100,21 +105,18 @@ namespace Content.Shared.Singularity
                 // Prevents it getting stuck (see SingularityController.MoveSingulo)
                 if (physics != null)
                 {
-                    physics.LinearVelocity = Vector2.Zero;
+                    _physics.SetLinearVelocity(physics, Vector2.Zero);
                 }
             }
 
             singularity.Level = value;
 
-            if (EntityManager.TryGetComponent(singularity.Owner, out SharedRadiationPulseComponent? pulse))
+            if (EntityManager.TryGetComponent(singularity.Owner, out RadiationSourceComponent? source))
             {
-                pulse.RadsPerSecond = singularity.RadsPerLevel * value;
+                source.Intensity = singularity.RadsPerLevel * value;
             }
 
-            if (EntityManager.TryGetComponent(singularity.Owner, out AppearanceComponent? appearance))
-            {
-                appearance.SetData(SingularityVisuals.Level, value);
-            }
+            _appearance.SetData(singularity.Owner, SingularityVisuals.Level, value);
 
             if (physics != null)
             {

@@ -1,42 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Linq;
 using Content.Shared.Gravity;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.Gravity
 {
     [UsedImplicitly]
-    public sealed class GravityGeneratorVisualizer : AppearanceVisualizer, ISerializationHooks
+    public sealed class GravityGeneratorVisualizer : AppearanceVisualizer
     {
         [DataField("spritemap")]
-        private Dictionary<string, string> _rawSpriteMap = new();
-        private Dictionary<GravityGeneratorStatus, string> _spriteMap = new();
-
-        void ISerializationHooks.BeforeSerialization()
+        private Dictionary<string, string> _rawSpriteMap
         {
-            _rawSpriteMap = new Dictionary<string, string>();
-            foreach (var (status, sprite) in _spriteMap)
+            get => _spriteMap.ToDictionary(x => x.Value.ToString().ToLower(), x => x.Value);
+            set
             {
-                _rawSpriteMap.Add(status.ToString().ToLower(), sprite);
-            }
-        }
-
-        void ISerializationHooks.AfterDeserialization()
-        {
-            // Get Sprites for each status
-            foreach (var status in (GravityGeneratorStatus[]) Enum.GetValues(typeof(GravityGeneratorStatus)))
-            {
-                if (_rawSpriteMap.TryGetValue(status.ToString().ToLower(), out var sprite))
+                // Get Sprites for each status
+                foreach (var status in (GravityGeneratorStatus[]) Enum.GetValues(typeof(GravityGeneratorStatus)))
                 {
-                    _spriteMap[status] = sprite;
+                    if (value.TryGetValue(status.ToString().ToLower(), out var sprite))
+                    {
+                        _spriteMap[status] = sprite;
+                    }
                 }
             }
         }
+
+        private Dictionary<GravityGeneratorStatus, string> _spriteMap = new();
 
         [Obsolete("Subscribe to your component being initialised instead.")]
         public override void InitializeEntity(EntityUid entity)

@@ -10,8 +10,7 @@
       - Debug
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/debug.rsi
-  - type: Item
-    size: 1
+  - type: Clothing
     sprite: Objects/Weapons/Guns/Pistols/debug.rsi
   - type: Gun
     fireRate: 100

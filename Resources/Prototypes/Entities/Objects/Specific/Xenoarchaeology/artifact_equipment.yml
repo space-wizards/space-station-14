@@ -28,7 +28,7 @@
         - shape:
             !type:PhysShapeCircle
             radius: 0.45
-          mass: 150
+          density: 75
           mask:
           - MachineMask
           layer:
@@ -44,6 +44,7 @@
     - type: Weldable
     - type: SuppressArtifactContainer
     - type: PlaceableSurface
+      isPlaceable: false
     - type: Damageable
       damageContainer: Inorganic
       damageModifierSet: Metallic
@@ -72,3 +73,5 @@
       containers:
         entity_storage: !type:Container
         paper_label: !type:ContainerSlot
+    - type: StaticPrice
+      price: 250

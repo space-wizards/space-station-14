@@ -4,10 +4,10 @@
   parent: BaseMobOrganic
   id: BaseMobHuman
   abstract: true
-  description: A miserable pile of secrets.
   components:
   - type: Hunger
   - type: Thirst
+  - type: Perishable
 
 - type: entity
   name: Urist McHands
