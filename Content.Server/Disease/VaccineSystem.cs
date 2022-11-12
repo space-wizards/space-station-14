@@ -10,9 +10,9 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.DoAfter;
 using Content.Server.Research;
 using Content.Server.UserInterface;
+using Content.Server.Construction;
 using Content.Server.Popups;
 using Robust.Shared.Player;
-using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -39,6 +39,8 @@ namespace Content.Server.Disease
             SubscribeLocalEvent<DiseaseVaccineCreatorComponent, VaccinatorSyncRequestMessage>(OnSyncRequest);
             SubscribeLocalEvent<DiseaseVaccineCreatorComponent, VaccinatorServerSelectionMessage>(OpenServerList);
             SubscribeLocalEvent<DiseaseVaccineCreatorComponent, AfterActivatableUIOpenEvent>(AfterUIOpen);
+            SubscribeLocalEvent<DiseaseVaccineCreatorComponent, RefreshPartsEvent>(OnRefreshParts);
+            SubscribeLocalEvent<DiseaseVaccineCreatorComponent, UpgradeExamineEvent>(OnUpgradeExamine);
 
             /// vaccines, the item
             SubscribeLocalEvent<DiseaseVaccineComponent, AfterInteractEvent>(OnAfterInteract);
@@ -151,6 +153,18 @@ namespace Content.Server.Disease
         private void AfterUIOpen(EntityUid uid, DiseaseVaccineCreatorComponent component, AfterActivatableUIOpenEvent args)
         {
             UpdateUserInterfaceState(uid, component);
+        }
+
+        private void OnRefreshParts(EntityUid uid, DiseaseVaccineCreatorComponent component, RefreshPartsEvent args)
+        {
+            int costRating = (int) args.PartRatings[component.MachinePartCost];
+
+            component.BiomassCost = component.BaseBiomassCost - costRating;
+        }
+
+        private void OnUpgradeExamine(EntityUid uid, DiseaseVaccineCreatorComponent component, UpgradeExamineEvent args)
+        {
+            args.AddNumberUpgrade("vaccine-machine-cost-upgrade", component.BiomassCost - component.BaseBiomassCost);
         }
 
         public void UpdateUserInterfaceState(EntityUid uid, DiseaseVaccineCreatorComponent? component = null, bool? overrideLocked = null)

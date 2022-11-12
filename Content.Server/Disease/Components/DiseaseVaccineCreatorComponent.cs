@@ -1,4 +1,6 @@
+using Content.Shared.Construction.Prototypes;
 using Robust.Shared.Audio;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Disease.Components;
 
@@ -13,10 +15,22 @@ public sealed class DiseaseVaccineCreatorComponent : Component
     public DiseaseServerComponent? DiseaseServer = null;
 
     /// <summary>
-    /// Biomass cost per vaccine.
+    /// Biomass cost per vaccine, scaled off of the machine part. (So T1 parts effectively reduce the default to 4.)
+    /// Reduced by the part rating.
     /// </summary>
-    [DataField("BiomassCost")]
+    [DataField("BaseBiomassCost")]
+    public int BaseBiomassCost = 5;
+
+    /// <summary>
+    /// Current biomass cost, derived from the above.
+    /// </summary>
     public int BiomassCost = 4;
+
+    /// <summary>
+    /// The machine part that reduces biomass cost.
+    /// </summary>
+    [DataField("machinePartCost", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
+    public string MachinePartCost = "Manipulator";
 
     /// <summary>
     /// Current vaccines queued.

@@ -27,6 +27,22 @@
     containers:
       machine_board: !type:Container
       machine_parts: !type:Container
+  - type: Construction
+    graph: Machine
+    node: machine
+    containers:
+     - machine_board
+     - machine_parts
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: ResearchClient
   - type: DiseaseVaccineCreator
   - type: ActivatableUI
