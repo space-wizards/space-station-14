@@ -18,12 +18,6 @@ namespace Content.Server.Disease.Components
         [ViewVariables]
         [DataField("accumulator")]
         public float Accumulator = 0f;
-
-        /// <summary>
-        /// Prototypes queued.
-        /// </summary>
-        public int Queued = 0;
-
         /// <summary>
         /// The disease prototype currently being diagnosed
         /// </summary>
