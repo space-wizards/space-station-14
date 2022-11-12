@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Linq;
 using Content.Client.Parallax;
 using Content.Shared.Weather;
@@ -30,6 +31,7 @@ public sealed class WeatherOverlay : Overlay
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
 
     private IRenderTexture? _blep;
+    private IRenderTexture? _blep2;
 
     public WeatherOverlay(SpriteSystem sprite, WeatherSystem weather)
     {
@@ -86,7 +88,9 @@ public sealed class WeatherOverlay : Overlay
         if (_blep?.Texture.Size != args.Viewport.Size)
         {
             _blep?.Dispose();
+            _blep2?.Dispose();
             _blep = _clyde.CreateRenderTarget(args.Viewport.Size, new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb), name: "weather-stencil");
+            _blep2 = _clyde.CreateRenderTarget(args.Viewport.Size, new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb), name: "weather");
         }
 
         // Cut out the irrelevant bits via stencil
@@ -166,39 +170,46 @@ public sealed class WeatherOverlay : Overlay
                 throw new NotImplementedException();
         }
 
+        var viewport = args.Viewport;
+
         // Draw the rain
-        worldHandle.UseShader(_protoManager.Index<ShaderPrototype>("StencilDraw").Instance());
-
-        // TODO: This is very similar to parallax but we need stencil support but we can probably combine these somehow
-        // and not make it spaghetti, while getting the advantages of not-duped code?
-
-        // Get position offset but rotated around
-        var offset = new Vector2(position.X % 1, position.Y % 1);
-        offset = rotation.RotateVec(offset);
-
-        var scale = 1.0f;
-        var size = sprite.Size / (float) EyeManager.PixelsPerMeter * scale;
-
-        var mat = Matrix3.CreateTransform(position, -rotation);
-        worldHandle.SetTransform(mat);
-        var viewBox = args.WorldBounds.Box;
-
-        // Slight overdraw because I'm done but uhh don't worry about it.
-        for (var x = -viewBox.Width / 2f - 1f; x <= viewBox.Width / 2f; x += size.X * scale)
+        // We don't technically need this render target
+        // but if someone want to substitute their own texture in this is much easier.
+        worldHandle.RenderInRenderTarget(_blep2!, () =>
         {
-            for (var y = -viewBox.Height - 1f; y <= viewBox.Height; y += size.Y * scale)
-            {
-                var boxPosition = new Vector2(x - offset.X, y - offset.Y);
+            var matrix = Matrix3.CreateTransform(position, -rotation);
+            Matrix3.Multiply(in matrix, in invMatrix, out var matty);
+            worldHandle.SetTransform(matty);
 
-                // Yes I spent a while making sure no texture holes when the eye is rotating.
-                var box = Box2.FromDimensions(boxPosition, size * scale);
-                worldHandle.DrawTextureRect(sprite, box, (weatherProto.Color ?? Color.White).WithAlpha(alpha));
-                // Deadcode but very useful for debugging to check there's no overlap or dead spots.
-                // worldHandle.DrawRect(box, Color.Red.WithAlpha(alpha));
+            // Size of the texture in world units.
+            var size = sprite.Size / (float) EyeManager.PixelsPerMeter;
+            var worldDimensions = _blep2!.Texture.Size / EyeManager.PixelsPerMeter;
+
+            // 0f means it never changes, 1f means it matches the eye.
+            // TODO:
+            var slowness = 1f;
+            var offset = rotation.RotateVec(position) * slowness;
+            var offsetClamped = new Vector2(offset.X % size.X, offset.Y % size.Y);
+            Logger.Debug($"Offset is {offset}");
+
+            var topRight = worldDimensions / 2f + offsetClamped;
+            var botLeft = -topRight;
+
+            for (var x = botLeft.X; x <= topRight.X; x += size.X)
+            {
+                for (var y = botLeft.Y; y <= topRight.Y; y += size.Y)
+                {
+                    var box = Box2.FromDimensions((x, y), size);
+                    worldHandle.DrawTextureRect(sprite, box, (weatherProto.Color ?? Color.White).WithAlpha(alpha));
+                    // worldHandle.DrawRect(box, Color.Red.WithAlpha(alpha));
+                }
             }
-        }
+
+        }, Color.Transparent);
 
         worldHandle.SetTransform(Matrix3.Identity);
+        worldHandle.UseShader(_protoManager.Index<ShaderPrototype>("StencilDraw").Instance());
+        worldHandle.DrawTextureRect(_blep2!.Texture, worldBounds, Color.White.WithAlpha(alpha));
         worldHandle.UseShader(null);
     }
 }
