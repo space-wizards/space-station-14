@@ -8,6 +8,7 @@ using Robust.Client.ResourceManagement;
 using Robust.Client.Utility;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -22,6 +23,7 @@ public sealed class WeatherOverlay : Overlay
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
+    [Dependency] private readonly IResourceCache _cache = default!;
     private readonly SpriteSystem _sprite;
     private readonly WeatherSystem _weather;
 
@@ -92,6 +94,7 @@ public sealed class WeatherOverlay : Overlay
         // particularly for planet maps or stations.
         worldHandle.RenderInRenderTarget(_blep, () =>
         {
+            var bodyQuery = _entManager.GetEntityQuery<PhysicsComponent>();
             var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
 
             foreach (var grid in _mapManager.FindGridsIntersecting(mapId, worldAABB))
@@ -109,7 +112,7 @@ public sealed class WeatherOverlay : Overlay
                     {
                         var anchoredEnts = grid.GetAnchoredEntitiesEnumerator(tile.GridIndices);
 
-                        if (!anchoredEnts.MoveNext(out _))
+                        if (!anchoredEnts.MoveNext(out var ent) || (bodyQuery.TryGetComponent(ent, out var body) && !body.CanCollide))
                         {
                             continue;
                         }
@@ -134,7 +137,7 @@ public sealed class WeatherOverlay : Overlay
         switch (weatherProto.Sprite)
         {
             case SpriteSpecifier.Rsi rsi:
-                var rsiActual = IoCManager.Resolve<IResourceCache>().GetResource<RSIResource>(rsi.RsiPath).RSI;
+                var rsiActual = _cache.GetResource<RSIResource>(rsi.RsiPath).RSI;
                 rsiActual.TryGetState(rsi.RsiState, out var state);
                 var frames = state!.GetFrames(RSI.State.Direction.South);
                 var delays = state.GetDelays();
@@ -157,7 +160,7 @@ public sealed class WeatherOverlay : Overlay
                 sprite ??= _sprite.Frame0(weatherProto.Sprite);
                 break;
             case SpriteSpecifier.Texture texture:
-                sprite = texture.GetTexture(IoCManager.Resolve<IResourceCache>());
+                sprite = texture.GetTexture(_cache);
                 break;
             default:
                 throw new NotImplementedException();
@@ -170,27 +173,33 @@ public sealed class WeatherOverlay : Overlay
         // and not make it spaghetti, while getting the advantages of not-duped code?
 
         // Get position offset but rotated around
-        var offset = new Vector2(-position.X % 1, -position.Y % 1);
-        offset = rotation.RotateVec(offset);
+        var offset = position;
+        offset = -rotation.RotateVec(offset);
+
+        var a = offset.Length;
+        a %= 1f;
+
+        if (!a.Equals(0f))
+            offset = offset.Normalized * a;
 
         var scale = 1.0f;
         var size = sprite.Size / (float) EyeManager.PixelsPerMeter * scale;
         worldHandle.SetTransform(Matrix3.CreateTransform(position, -rotation));
-        var localAABB = args.WorldAABB.Translated(-position);
-        var BL = (Vector2) (localAABB.BottomLeft).Floored() + offset;
+        var bounds = args.WorldBounds.Box.Translated(-position + offset);
 
-        // Slight overdraw because I'm done but uhh don't worry about it.
-        for (var x = BL.X; x <= localAABB.Right; x += size.X * scale)
+        var scaledSize = size * scale;
+
+        for (var x = bounds.Left - scaledSize.X; x <= bounds.Right + scaledSize.X; x += scaledSize.X)
         {
-            for (var y = BL.Y; y <= localAABB.Top; y += size.Y * scale)
+            for (var y = bounds.Bottom - scaledSize.Y; y <= bounds.Top + scaledSize.Y; y += scaledSize.Y)
             {
                 var boxPosition = new Vector2(x, y);
 
                 // Yes I spent a while making sure no texture holes when the eye is rotating.
                 var box = Box2.FromDimensions(boxPosition, size * scale);
-                worldHandle.DrawTextureRect(sprite, box, (weatherProto.Color ?? Color.White).WithAlpha(alpha));
+                // worldHandle.DrawTextureRect(sprite, box, (weatherProto.Color ?? Color.White).WithAlpha(alpha));
                 // Deadcode but very useful for debugging to check there's no overlap or dead spots.
-                // worldHandle.DrawRect(box, Color.Red.WithAlpha(alpha));
+                worldHandle.DrawRect(box, Color.Red.WithAlpha(alpha));
             }
         }
 

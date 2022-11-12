@@ -11,6 +11,7 @@
     - FloorGrassJungle
     - FloorDirt
     - FloorTileGrass
+    - Lattice
   sound:
     path: /Audio/Effects/Weather/snowstorm_weak.ogg
     params:
@@ -29,6 +30,7 @@
     - FloorGrassJungle
     - FloorDirt
     - FloorTileGrass
+    - Lattice
   sound:
     path: /Audio/Effects/Weather/snowstorm_weak.ogg
     params:
@@ -47,6 +49,7 @@
     - FloorGrassJungle
     - FloorDirt
     - FloorTileGrass
+    - Lattice
   sound:
     path: /Audio/Effects/Weather/snowstorm.ogg
     params:
@@ -65,6 +68,7 @@
     - FloorGrassJungle
     - FloorDirt
     - FloorTileGrass
+    - Lattice
   sound:
     path: /Audio/Effects/Weather/snowstorm_weak.ogg
     params:
@@ -83,6 +87,7 @@
     - FloorGrassJungle
     - FloorDirt
     - FloorTileGrass
+    - Lattice
   sound:
     path:
       /Audio/Effects/Weather/rain.ogg
@@ -102,6 +107,7 @@
     - FloorGrassJungle
     - FloorDirt
     - FloorTileGrass
+    - Lattice
   sound:
     collection: Rain
     params:
@@ -126,6 +132,7 @@
     - FloorGrassJungle
     - FloorDirt
     - FloorTileGrass
+    - Lattice
   sound:
     path: /Audio/Effects/Weather/snowstorm_weak.ogg
     params:
@@ -144,6 +151,7 @@
     - FloorGrassJungle
     - FloorDirt
     - FloorTileGrass
+    - Lattice
   sound:
     path: /Audio/Effects/Weather/snowstorm.ogg
     params:
@@ -162,6 +170,7 @@
     - FloorGrassJungle
     - FloorDirt
     - FloorTileGrass
+    - Lattice
   sound:
     path: /Audio/Effects/Weather/snowstorm_weak.ogg
     params:
@@ -180,6 +189,7 @@
     - FloorGrassJungle
     - FloorDirt
     - FloorTileGrass
+    - Lattice
   sound:
     path: /Audio/Effects/Weather/snowstorm_weak.ogg
     params:
@@ -198,6 +208,7 @@
     - FloorGrassJungle
     - FloorDirt
     - FloorTileGrass
+    - Lattice
   sound:
     path: /Audio/Effects/Weather/snowstorm.ogg
     params:
@@ -216,6 +227,7 @@
     - FloorGrassJungle
     - FloorDirt
     - FloorTileGrass
+    - Lattice
   sound:
     path: /Audio/Effects/Weather/rain_heavy.ogg
     params:
