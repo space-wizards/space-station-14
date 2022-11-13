@@ -87,15 +87,15 @@ namespace Content.Shared.Maps
             return tile.Tile.IsSpace(tileDefinitionManager);
         }
 
-        public static bool TryDeconstructWithToolQuality(this TileRef tileRef,
-            string toolQuality,
+        public static bool TryDeconstructWithToolQualities(this TileRef tileRef,
+            IEnumerable<string> toolQualitiesNeeded,
             IMapManager? mapManager = null,
             ITileDefinitionManager? tileDefinitionManager = null,
             IEntityManager? entityManager = null,
             IRobustRandom? robustRandom = null)
         {
             var def = tileRef.GetContentTileDefinition();
-            if (def.DeconstructToolQualities.Contains(toolQuality))
+            if (def.DeconstructToolQualities.ContainsAll(toolQualitiesNeeded))
             {
                 return DeconstructTile(tileRef, mapManager, tileDefinitionManager, entityManager, robustRandom);
             }

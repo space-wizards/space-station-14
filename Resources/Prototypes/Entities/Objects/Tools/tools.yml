@@ -138,7 +138,8 @@
       - Prying
     useSound:
       path: /Audio/Items/crowbar.ogg
-  - type: TilePrying
+  #- type: TilePrying
+  - type: ToolWorksWithTiles
   - type: StaticPrice
     price: 40
 

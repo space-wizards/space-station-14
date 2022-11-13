@@ -37,7 +37,7 @@ public sealed partial class ToolSystem
             || tile.IsBlockedTurf(true))
             return;
 
-        tile.TryDeconstructWithToolQuality("Cutting", _mapManager, _tileDefinitionManager, EntityManager);
+        tile.TryDeconstructWithToolQualities(new[] { "Cutting" }, _mapManager, _tileDefinitionManager, EntityManager);
         _adminLogger.Add(LogType.LatticeCut, LogImpact.Medium, $"{ToPrettyString(args.User):user} cut the lattice at {args.Coordinates:target}");
     }
 

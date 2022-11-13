@@ -38,6 +38,7 @@ namespace Content.Server.Tools
             InitializeTilePrying();
             InitializeLatticeCutting();
             InitializeWelders();
+            InitializeToolWithTile();
 
             SubscribeLocalEvent<ToolDoAfterComplete>(OnDoAfterComplete);
             SubscribeLocalEvent<ToolDoAfterCancelled>(OnDoAfterCancelled);
