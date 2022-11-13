@@ -5,6 +5,8 @@ using Content.Shared.Body.Organ;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Prototypes;
+using Content.Shared.FixedPoint;
 using Content.Shared.Medical.Wounds.Components;
 using Content.Shared.Medical.Wounds.Prototypes;
 using Robust.Shared.Prototypes;
@@ -17,8 +19,9 @@ public sealed class WoundSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private RobustRandom _random = default!;
-    //DamageTypeId
-    //private Dictionary<string, List<string>>
+    //TODO: Make these CVARS!
+    private float _hardenedSkinWoundTypeChance = 0.75f; //Chance for hardened skin to recieve a solid instead of surface wound.
+    private float _hardenedSkinSeverityAdjustment = 0.2f; //Decrease in severity if hardened skin receives a surface wound
 
     public override void Initialize()
     {
@@ -34,21 +37,18 @@ public sealed class WoundSystem : EntitySystem
         var success = false;
         if (!EntityManager.TryGetComponent<WoundableComponent>(target, out var woundContainer))
             return false;
-
-        EntityManager.TryGetComponent<BodyPartComponent>(target, out var bodyPart);
-        //if (bodyPart!.) //TODO: Check if skeleton is external and apply damage to it first if that is the case
-        if (EntityManager.TryGetComponent<BodyCoveringComponent>(target, out var covering))
+        if (EntityManager.TryGetComponent<BodySkinComponent>(target, out var coveringComp))
         {
-            var coveringResistance = _prototypeManager.Index<BodyCoveringPrototype>(covering.PrimaryBodyCoveringId).Resistance;
-            DamageSpecifier.ApplyModifierSet(damage, coveringResistance); //apply covering resistances first!
-            //TODO: eventually take into account second skin covering for damage resistance
-            DamageSpecifier.ApplyModifierSet(damage, covering.DamageResistance);
-            success = TryApplyWoundsCovering(target, covering, damage, woundContainer);
+            var primaryCovering = _prototypeManager.Index<BodyCoveringPrototype>(coveringComp.PrimaryBodyCoveringId);
+            damage = DamageSpecifier.ApplyModifierSet(damage, primaryCovering.Resistance); //apply skin resistances first!
+            //TODO: eventually take into account second skin skin for damage resistance
+            damage = DamageSpecifier.ApplyModifierSet(damage, coveringComp.DamageModifier);
+            success = TryApplyWoundsSkin(target, coveringComp, damage, woundContainer, primaryCovering.Hardened);
         }
-        if (bodyPart != null)
+        if ( EntityManager.TryGetComponent<BodyPartComponent>(target, out var bodyPart))
         {
-            DamageSpecifier.ApplyModifierSet(damage, bodyPart.DamageResistance);
-            success |= TryApplyWoundsBodyPart(target, bodyPart, damage, woundContainer);
+            var newDamage = DamageSpecifier.ApplyModifierSet(damage, bodyPart.DamageResistance);
+            success |= TryApplyWoundsBodyPart(target, bodyPart, newDamage, woundContainer);
         }
         if (EntityManager.TryGetComponent<OrganComponent>(target, out var organ))
         {
@@ -57,11 +57,17 @@ public sealed class WoundSystem : EntitySystem
         }
         return success;
     }
-
-    private bool TryApplyWoundsCovering(EntityUid target, BodyCoveringComponent covering, DamageSpecifier damage,
-        WoundableComponent woundContainer)
+    private bool TryApplyWoundsSkin(EntityUid target, BodySkinComponent skin, DamageSpecifier damage,
+        WoundableComponent woundContainer, bool hardenedCovering)
     {
-        //TODO: get damage from cached protos
+        if (hardenedCovering)
+        {
+
+        }
+        foreach (var DamageData in damage.GetDamagePerGroup())
+        {
+
+        }
         return true;
     }
 
@@ -76,17 +82,38 @@ public sealed class WoundSystem : EntitySystem
         return true;
     }
 
-
+    private float CalculateWoundSeverity(WoundableComponent woundableContainer, string damageType, float damage, WoundType woundType)
+    {
+        var newDamage = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>(damageType), damage);
+        damage = DamageSpecifier.ApplyModifierSet(newDamage, woundableContainer.DamageResistance).DamageDict[damageType].Float();
+        switch (woundType)
+        {
+            case WoundType.Skin:
+            {
+                return  Math.Clamp(damage/woundableContainer.WoundData[damageType].SkinDamageCap, 0f, 1.0f)  ;
+            }
+            case WoundType.Internal:
+            {
+                return  Math.Clamp(damage/woundableContainer.WoundData[damageType].InternalDamageCap, 0f, 1.0f)  ;
+            }
+            case WoundType.Solid:
+            {
+                return  Math.Clamp(damage/woundableContainer.WoundData[damageType].SolidDamageCap, 0f, 1.0f)  ;
+            }
+            default:
+                throw new ArgumentException("WoundType was None!");
+        }
+    }
 }
 
 [Serializable, NetSerializable]
 [Flags]
-public enum WoundDepth
+public enum WoundType
 {
     None = 0,
-    Surface = 1 <<1,
-    Internal = 1 << 2,
-    Solid = 1 << 3,
+    Skin = 1,
+    Internal = 2,
+    Solid = 3
 }
 
 [Serializable, NetSerializable, DataRecord]

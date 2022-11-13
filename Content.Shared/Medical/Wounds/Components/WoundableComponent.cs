@@ -7,6 +7,7 @@ using Content.Shared.Medical.Wounds.Systems;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Medical.Wounds.Components;
 
@@ -14,18 +15,18 @@ namespace Content.Shared.Medical.Wounds.Components;
 public sealed class WoundableComponent : Component
 {
     [Access(typeof(WoundSystem),Other = AccessPermissions.Read)]
-    public Dictionary<string, List<WoundData>> Wounds = new();
+    [DataField("WoundData", customTypeSerializer:typeof(PrototypeIdDictionarySerializer<WoundableData, DamageTypePrototype>))]
+    public Dictionary<string, WoundableData> WoundData = new();
 
     [Access(typeof(WoundSystem),Other = AccessPermissions.Read)]
-    [ViewVariables, DataField("damageResistance", required:false)]
+    [ViewVariables, DataField("damageResistance")]
     public DamageModifierSet DamageResistance = new();
-
-    [Access(typeof(WoundSystem), Other = AccessPermissions.Read)]
-    [ViewVariables, DataField("woundDamageCaps", required: false, customTypeSerializer:typeof(PrototypeIdDictionarySerializer<WoundDamageCap, DamageTypePrototype>))]
-    public Dictionary<string, WoundDamageCap> WoundDamageCaps = new();
 }
 
-
 [Serializable, NetSerializable, DataRecord]
-public readonly record struct WoundDamageCap ([field:DataField("skinDamageCap")]float SkinDamageCap,
-    [field:DataField("fleshDamageCap")]float InternalDamageCap, [field:DataField("solidDamageCap")]float SolidDamageCap);
+public record struct WoundableData (
+    [field:DataField("wounds", customTypeSerializer:typeof(PrototypeIdListSerializer<DamageTypePrototype>))]List<WoundData> Wounds,
+    [field:DataField("skinDamageCap")]float SkinDamageCap,
+    [field:DataField("fleshDamageCap")]float InternalDamageCap,
+    [field:DataField("solidDamageCap")]float SolidDamageCap
+    );

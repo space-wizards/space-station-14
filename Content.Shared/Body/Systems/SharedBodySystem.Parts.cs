@@ -21,8 +21,8 @@ public partial class SharedBodySystem
         SubscribeLocalEvent<BodyPartComponent, ComponentGetState>(OnPartGetState);
         SubscribeLocalEvent<BodyPartComponent, ComponentHandleState>(OnPartHandleState);
         //SKIIIIIIIINNNNN
-        SubscribeLocalEvent<BodyCoveringComponent, ComponentGetState>(OnCoveringGetState);
-        SubscribeLocalEvent<BodyCoveringComponent, ComponentHandleState>(OnCoveringHandleState);
+        SubscribeLocalEvent<BodySkinComponent, ComponentGetState>(OnCoveringGetState);
+        SubscribeLocalEvent<BodySkinComponent, ComponentHandleState>(OnCoveringHandleState);
     }
 
     private void OnPartGetState(EntityUid uid, BodyPartComponent part, ref ComponentGetState args)
@@ -65,13 +65,13 @@ public partial class SharedBodySystem
         }
     }
 
-    private void OnCoveringGetState(EntityUid uid, BodyCoveringComponent part, ref ComponentGetState args)
+    private void OnCoveringGetState(EntityUid uid, BodySkinComponent part, ref ComponentGetState args)
     {
         args.State = new BodyCoveringComponentState(part.PrimaryBodyCoveringId, part.SecondaryBodyCoveringId,
             part.SecondaryCoveringPercentage);
     }
 
-    private void OnCoveringHandleState(EntityUid uid, BodyCoveringComponent part, ref ComponentHandleState args)
+    private void OnCoveringHandleState(EntityUid uid, BodySkinComponent part, ref ComponentHandleState args)
     {
         if (args.Current is not BodyCoveringComponentState state)
             return;

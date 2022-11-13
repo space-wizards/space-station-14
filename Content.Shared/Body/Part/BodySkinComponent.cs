@@ -7,7 +7,7 @@ namespace Content.Shared.Body.Part;
 
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedBodySystem))]
-public sealed class BodyCoveringComponent : Component
+public sealed class BodySkinComponent : Component
 {
     [ViewVariables, DataField("primaryCoveringId", required:true, customTypeSerializer: typeof(PrototypeIdSerializer<BodyCoveringPrototype>))]
     public string PrimaryBodyCoveringId = string.Empty;
@@ -19,5 +19,5 @@ public sealed class BodyCoveringComponent : Component
     public float SecondaryCoveringPercentage = 0f;
 
     [ViewVariables, DataField("damageResistance", required:false)]
-    public DamageModifierSet DamageResistance = new();
+    public DamageModifierSet DamageModifier = new();
 }

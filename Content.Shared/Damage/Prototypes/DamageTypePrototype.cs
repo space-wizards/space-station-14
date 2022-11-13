@@ -32,13 +32,13 @@ namespace Content.Shared.Damage.Prototypes
         [DataField("internalWounds", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<WoundPrototype>))]
         public HashSet<string> InternalWounds { get; init; } = new();
 
-        //used to calculate how much damage penetrates the skin
+        //used to calculate how much this damage type propogates the skin
         [DataField("skinPenMod")] public float SkinPenModifier = 1.0f;
 
-        //used to calculate how much damage penetrates a bodypart/flesh
+        //used to calculate how much this damage type propogates a bodypart/flesh
         [DataField("fleshPenMod")] public float FleshPenModifier = 1.0f;
 
-        //used to calculate how much damage propogates through a bone if it is protecting organs
+        //used to calculate how much this damage type propogates through a bone if it is protecting organs
         [DataField("bonePenMod")] public float BonePenModifier = 1.0f;
 
     }
