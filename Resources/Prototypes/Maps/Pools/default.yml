@@ -11,9 +11,3 @@
   - Origin
   - Pillar
   - Saltern
-
-- type: gameMapPool
-  id: CorvaxMapPool
-  maps:
-    - Delta
-    - Box
