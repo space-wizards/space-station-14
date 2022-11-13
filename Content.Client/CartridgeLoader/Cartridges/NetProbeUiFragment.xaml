@@ -1,0 +1,19 @@
+﻿<cartridges:NetProbeUiFragment xmlns:cartridges="clr-namespace:Content.Client.CartridgeLoader.Cartridges"
+                                 xmlns="https://spacestation14.io" Margin="1 0 2 0">
+    <PanelContainer StyleClasses="BackgroundDark"></PanelContainer>
+    <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+        <BoxContainer Orientation="Vertical" MinHeight="32" MaxHeight="32" VerticalAlignment="Top" Margin="3 0">
+            <PanelContainer Name="HeaderPanel">
+                <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="4">
+                    <Label HorizontalExpand="True" Text="Name"/>
+                    <Label HorizontalExpand="True" Text="Address"/>
+                    <Label HorizontalExpand="True" Text="Frequency"/>
+                    <Label HorizontalExpand="True" Text="Network"/>
+                </BoxContainer>
+            </PanelContainer>
+        </BoxContainer>
+        <ScrollContainer Name="ScrollContainer" HorizontalExpand="True" VerticalExpand="True">
+            <BoxContainer Orientation="Vertical" Name="ProbedDeviceContainer" HorizontalExpand="True" VerticalExpand="True" VerticalAlignment="Top" Margin="3 0"/>
+        </ScrollContainer>
+    </BoxContainer>
+</cartridges:NetProbeUiFragment>
