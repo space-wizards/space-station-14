@@ -64,7 +64,8 @@ namespace Content.Server.Interaction
                     var coordinates = mapGrid.GridTileToLocal(tile.GridIndices);
                     var tileDef = (ContentTileDefinition) tileDefinitionManager[tile.Tile.TypeId];
 
-                    if (!tileDef.CanCrowbar) continue;
+                    if (!tileDef.DeconstructToolQualities.Contains("Prying"))
+                        continue;
 
                     var underplating = tileDefinitionManager["UnderPlating"];
                     mapGrid.SetTile(coordinates, new Tile(underplating.TileId));

@@ -18,7 +18,8 @@
   baseTurfs:
   - Space
   isSubfloor: true
-  canWirecutter: true
+  deconstructToolQualities:
+    - Cutting
   footstepSounds:
     collection: FootstepPlating
   friction: 0.5

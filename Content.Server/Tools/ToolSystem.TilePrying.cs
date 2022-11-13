@@ -37,7 +37,7 @@ public sealed partial class ToolSystem
             return;
         }
 
-        grid.GetTileRef(args.Coordinates).PryTile(_mapManager, _tileDefinitionManager, EntityManager);
+        grid.GetTileRef(args.Coordinates).TryDeconstructWithToolQuality("Prying", _mapManager, _tileDefinitionManager, EntityManager);
     }
 
     private void OnTilePryingAfterInteract(EntityUid uid, TilePryingComponent component, AfterInteractEvent args)
@@ -70,7 +70,7 @@ public sealed partial class ToolSystem
 
         var tileDef = (ContentTileDefinition)_tileDefinitionManager[tile.Tile.TypeId];
 
-        if (!tileDef.CanCrowbar)
+        if (!tileDef.DeconstructToolQualities.Contains("Prying"))
             return false;
 
         var token = new CancellationTokenSource();

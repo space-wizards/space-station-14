@@ -87,53 +87,19 @@ namespace Content.Shared.Maps
             return tile.Tile.IsSpace(tileDefinitionManager);
         }
 
-        public static bool PryTile(this Vector2i indices, EntityUid gridId,
-            IMapManager? mapManager = null, ITileDefinitionManager? tileDefinitionManager = null, IEntityManager? entityManager = null)
-        {
-            mapManager ??= IoCManager.Resolve<IMapManager>();
-            var grid = mapManager.GetGrid(gridId);
-            var tileRef = grid.GetTileRef(indices);
-            return tileRef.PryTile(mapManager, tileDefinitionManager, entityManager);
-        }
-
-        public static bool PryTile(this TileRef tileRef,
+        public static bool TryDeconstructWithToolQuality(this TileRef tileRef,
+            string toolQuality,
             IMapManager? mapManager = null,
             ITileDefinitionManager? tileDefinitionManager = null,
             IEntityManager? entityManager = null,
             IRobustRandom? robustRandom = null)
         {
-            var tile = tileRef.Tile;
-
-            // If the arguments are null, resolve the needed dependencies.
-            tileDefinitionManager ??= IoCManager.Resolve<ITileDefinitionManager>();
-
-            if (tile.IsEmpty) return false;
-
-            var tileDef = (ContentTileDefinition) tileDefinitionManager[tile.TypeId];
-
-            if (!tileDef.CanCrowbar) return false;
-
-            return DeconstructTile(tileRef, mapManager, tileDefinitionManager, entityManager, robustRandom);
-        }
-
-        public static bool CutTile(this TileRef tileRef,
-            IMapManager? mapManager = null,
-            ITileDefinitionManager? tileDefinitionManager = null,
-            IEntityManager? entityManager = null,
-            IRobustRandom? robustRandom = null)
-        {
-            var tile = tileRef.Tile;
-
-            // If the arguments are null, resolve the needed dependencies.
-            tileDefinitionManager ??= IoCManager.Resolve<ITileDefinitionManager>();
-
-            if (tile.IsEmpty) return false;
-
-            var tileDef = (ContentTileDefinition) tileDefinitionManager[tile.TypeId];
-
-            if (!tileDef.CanWirecutter) return false;
-
-            return DeconstructTile(tileRef, mapManager, tileDefinitionManager, entityManager, robustRandom);
+            var def = tileRef.GetContentTileDefinition();
+            if (def.DeconstructToolQualities.Contains(toolQuality))
+            {
+                return DeconstructTile(tileRef, mapManager, tileDefinitionManager, entityManager, robustRandom);
+            }
+            return false;
         }
 
         private static bool DeconstructTile(this TileRef tileRef,
@@ -142,6 +108,9 @@ namespace Content.Shared.Maps
             IEntityManager? entityManager = null,
             IRobustRandom? robustRandom = null)
         {
+            if (tileRef.Tile.IsEmpty)
+                return false;
+
             var indices = tileRef.GridIndices;
 
             mapManager ??= IoCManager.Resolve<IMapManager>();

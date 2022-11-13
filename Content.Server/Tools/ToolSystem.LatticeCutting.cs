@@ -1,4 +1,4 @@
-﻿using System.Threading;
+using System.Threading;
 using Content.Server.Administration.Logs;
 using Content.Server.Tools.Components;
 using Content.Shared.Database;
@@ -35,12 +35,12 @@ public sealed partial class ToolSystem
         var tile = grid.GetTileRef(args.Coordinates);
 
         if (_tileDefinitionManager[tile.Tile.TypeId] is not ContentTileDefinition tileDef
-            || !tileDef.CanWirecutter
+            || !tileDef.DeconstructToolQualities.Contains("Cutting")
             || tileDef.BaseTurfs.Count == 0
             || tile.IsBlockedTurf(true))
             return;
 
-        tile.CutTile(_mapManager, _tileDefinitionManager, EntityManager);
+        tile.TryDeconstructWithToolQuality("Cutting", _mapManager, _tileDefinitionManager, EntityManager);
         _adminLogger.Add(LogType.LatticeCut, LogImpact.Medium, $"{ToPrettyString(args.User):user} cut the lattice at {args.Coordinates:target}");
     }
 
@@ -74,7 +74,7 @@ public sealed partial class ToolSystem
             return false;
 
         if (_tileDefinitionManager[tile.Tile.TypeId] is not ContentTileDefinition tileDef
-            || !tileDef.CanWirecutter
+            || !tileDef.DeconstructToolQualities.Contains("Cutting")
             || tileDef.BaseTurfs.Count == 0
             || _tileDefinitionManager[tileDef.BaseTurfs[^1]] is not ContentTileDefinition newDef
             || tile.IsBlockedTurf(true))

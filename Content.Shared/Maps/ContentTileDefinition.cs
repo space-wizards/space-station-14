@@ -1,4 +1,5 @@
 using Content.Shared.Atmos;
+using Content.Shared.Tools;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
@@ -40,9 +41,8 @@ namespace Content.Shared.Maps
 
         [DataField("baseTurfs")] public List<string> BaseTurfs { get; } = new();
 
-        [DataField("canCrowbar")] public bool CanCrowbar { get; private set; }
-
-        [DataField("canWirecutter")] public bool CanWirecutter { get; private set; }
+        [DataField("deconstructToolQualities")]
+        public PrototypeFlags<ToolQualityPrototype> DeconstructToolQualities { get; set; } = new();
 
         /// <summary>
         /// These play when the mob has shoes on.

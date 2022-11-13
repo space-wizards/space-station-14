@@ -1,4 +1,4 @@
-﻿using Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
+using Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
 using Content.Shared.Maps;
 using Content.Shared.Throwing;
@@ -33,7 +33,7 @@ public sealed class ThrowArtifactSystem : EntitySystem
                 if (!_random.Prob(component.TilePryChance))
                     continue;
 
-                tile.PryTile();
+                tile.TryDeconstructWithToolQuality("Prying");
             }
         }
 

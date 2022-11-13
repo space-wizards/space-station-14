@@ -7,7 +7,8 @@
   baseTurfs:
   - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepFloor
   friction: 0.30
@@ -24,7 +25,8 @@
   baseTurfs:
     - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepFloor
   friction: 0.30
@@ -41,7 +43,8 @@
   baseTurfs:
     - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepFloor
   friction: 0.30
@@ -58,7 +61,8 @@
   baseTurfs:
     - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepFloor
   friction: 0.30
@@ -75,7 +79,8 @@
   baseTurfs:
     - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepFloor
   friction: 0.30
@@ -92,7 +97,8 @@
   baseTurfs:
     - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepTile
   friction: 0.25
@@ -109,7 +115,8 @@
   baseTurfs:
     - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepTile
   friction: 0.25
@@ -126,7 +133,8 @@
   baseTurfs:
     - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepTile
   friction: 0.25
@@ -143,7 +151,8 @@
   baseTurfs:
     - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepTile
   friction: 0.25
@@ -160,7 +169,8 @@
   baseTurfs:
     - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepFloor
   friction: 0.30
@@ -177,7 +187,8 @@
   baseTurfs:
   - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepWood
   barestepSounds:
@@ -196,7 +207,8 @@
   baseTurfs:
   - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepTile
   friction: 0.25
@@ -213,7 +225,8 @@
   baseTurfs:
     - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepTile
   friction: 0.25
@@ -230,7 +243,8 @@
   baseTurfs:
     - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepTile
   friction: 0.25
@@ -247,7 +261,8 @@
   baseTurfs:
     - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepTile
   friction: 0.25
@@ -264,7 +279,8 @@
   baseTurfs:
     - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepTile
   friction: 0.25
@@ -281,7 +297,8 @@
   baseTurfs:
     - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepTile
   friction: 0.25
@@ -298,7 +315,8 @@
   baseTurfs:
     - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepTile
   friction: 0.25
@@ -315,7 +333,8 @@
   baseTurfs:
     - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepTile
   friction: 0.25
@@ -332,7 +351,8 @@
   baseTurfs:
     - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepTile
   friction: 0.25
@@ -349,7 +369,8 @@
   baseTurfs:
     - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepTile
   friction: 0.25
@@ -366,7 +387,8 @@
   baseTurfs:
   - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepTile
   friction: 0.30
@@ -383,7 +405,8 @@
   baseTurfs:
     - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepTile
   friction: 0.30
@@ -400,7 +423,8 @@
   baseTurfs:
     - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepTile
   friction: 0.30
@@ -417,7 +441,8 @@
   baseTurfs:
     - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepTile
   friction: 0.30
@@ -434,7 +459,8 @@
   baseTurfs:
     - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepTile
   friction: 0.25
@@ -451,7 +477,8 @@
   baseTurfs:
     - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepTile
   friction: 0.25
@@ -468,7 +495,8 @@
   baseTurfs:
     - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepTile
   friction: 0.25
@@ -485,7 +513,8 @@
   baseTurfs:
     - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepTile
   friction: 0.25
@@ -502,7 +531,8 @@
   baseTurfs:
     - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepTile
   friction: 0.25
@@ -519,7 +549,8 @@
   baseTurfs:
     - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepTile
   friction: 0.30
@@ -534,7 +565,8 @@
   baseTurfs:
   - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepHull
   friction: 0.30
@@ -549,7 +581,8 @@
   baseTurfs:
   - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepHull
   friction: 0.30
@@ -564,7 +597,8 @@
   baseTurfs:
   - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepTile
   friction: 0.30
@@ -579,7 +613,8 @@
   baseTurfs:
   - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepTile
   friction: 0.30
@@ -594,7 +629,8 @@
   baseTurfs:
   - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepPlating
   friction: 0.30
@@ -609,7 +645,8 @@
   baseTurfs:
   - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepHull
   friction: 0.30
@@ -624,7 +661,8 @@
   baseTurfs:
   - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepHull
   friction: 0.30
@@ -639,7 +677,8 @@
   baseTurfs:
   - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepAsteroid
   friction: 0.30
@@ -654,7 +693,8 @@
   baseTurfs:
   - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepTile
   friction: 0.30
@@ -670,7 +710,8 @@
   baseTurfs:
   - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepHull
   friction: 0.30
@@ -685,7 +726,8 @@
   baseTurfs:
   - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepFloor
   friction: 0.30
@@ -700,7 +742,8 @@
   baseTurfs:
   - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepFloor
   friction: 0.30
@@ -717,7 +760,8 @@
   baseTurfs:
   - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepFloor
   friction: 0.30
@@ -732,7 +776,8 @@
   baseTurfs:
   - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepFloor
   friction: 0.30
@@ -747,7 +792,8 @@
   baseTurfs:
   - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepFloor
   friction: 0.30
@@ -762,7 +808,8 @@
   baseTurfs:
   - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepTile
   friction: 0.30
@@ -777,7 +824,8 @@
   baseTurfs:
   - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepTile
   friction: 0.30
@@ -793,7 +841,8 @@
   baseTurfs:
   - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepCarpet
   barestepSounds:
@@ -810,7 +859,8 @@
   baseTurfs:
   - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepCarpet
   barestepSounds:
@@ -827,7 +877,8 @@
   baseTurfs:
   - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepCarpet
   barestepSounds:
@@ -844,7 +895,8 @@
   baseTurfs:
   - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepCarpet
   barestepSounds:
@@ -861,7 +913,8 @@
   baseTurfs:
   - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepCarpet
   barestepSounds:
@@ -878,7 +931,8 @@
   baseTurfs:
   - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepCarpet
   barestepSounds:
@@ -897,7 +951,8 @@
   baseTurfs:
   - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepFloor
   friction: 0.40
@@ -914,7 +969,8 @@
   baseTurfs:
   - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepFloor
   friction: 0.40
@@ -930,7 +986,8 @@
   baseTurfs:
   - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepFloor
   friction: 0.30
@@ -945,7 +1002,8 @@
   baseTurfs:
   - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepFloor
   friction: 0.30
@@ -960,7 +1018,8 @@
   baseTurfs:
   - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepFloor
   friction: 0.30
@@ -975,7 +1034,8 @@
   baseTurfs:
   - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepFloor
   friction: 0.30
@@ -990,7 +1050,8 @@
   baseTurfs:
   - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepFloor
   friction: 0.30
@@ -1007,7 +1068,8 @@
   baseTurfs:
   - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepTile
   friction: 0.30
@@ -1022,7 +1084,8 @@
   baseTurfs:
   - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepTile
   friction: 0.30
@@ -1037,7 +1100,8 @@
   baseTurfs:
   - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepTile
   friction: 0.30
@@ -1052,7 +1116,8 @@
   baseTurfs:
   - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepTile
   friction: 0.30
@@ -1068,7 +1133,8 @@
   baseTurfs:
   - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepHull
   friction: 0.30
@@ -1083,7 +1149,8 @@
   baseTurfs:
   - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepHull
   friction: 0.30
@@ -1207,7 +1274,8 @@
   baseTurfs:
   - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepAsteroid
   friction: 0.30
@@ -1348,7 +1416,8 @@
   baseTurfs:
   - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepHull
   friction: 0.30
@@ -1365,7 +1434,8 @@
   baseTurfs:
   - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepHull
   friction: 0.30
@@ -1382,7 +1452,8 @@
   baseTurfs:
   - Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructToolQualities:
+    - Prying
   footstepSounds:
     collection: FootstepWood
   barestepSounds:

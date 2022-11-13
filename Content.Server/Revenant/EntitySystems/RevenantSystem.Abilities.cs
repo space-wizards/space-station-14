@@ -235,7 +235,7 @@ public sealed partial class RevenantSystem
         {
             if (!tiles.TryGetValue(i, out var value))
                 continue;
-            value.PryTile();
+            value.TryDeconstructWithToolQuality("Prying");
         }
 
         var lookup = _lookup.GetEntitiesInRange(uid, component.DefileRadius, LookupFlags.Approximate | LookupFlags.Anchored);

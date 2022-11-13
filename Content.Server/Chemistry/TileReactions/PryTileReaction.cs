@@ -13,7 +13,7 @@ public sealed class PryTileReaction : ITileReaction
 {
     public FixedPoint2 TileReact(TileRef tile, ReagentPrototype reagent, FixedPoint2 reactVolume)
     {
-        tile.PryTile();
+        tile.TryDeconstructWithToolQuality("Prying");
         return reactVolume;
     }
 }
