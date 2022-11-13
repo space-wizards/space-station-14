@@ -12,3 +12,6 @@ marking-DionaFlowersBody = Diona Chest (Flowers)
 
 marking-DionaLeafCover-leaf_cover = Diona Chest (Leaf)
 marking-DionaLeafCover = Diona Chest (Leaf)
+
+marking-DionaLeafCover-bloom = Diona Everbloom
+marking-DionaLeafCover = Diona Everbloom
