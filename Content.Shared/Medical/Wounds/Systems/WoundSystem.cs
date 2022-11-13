@@ -23,15 +23,37 @@ public sealed class WoundSystem : EntitySystem
     private float _hardenedSkinWoundTypeChance = 0.75f; //Chance for hardened skin to recieve a solid instead of surface wound.
     private float _hardenedSkinSeverityAdjustment = 0.2f; //Decrease in severity if hardened skin receives a surface wound
 
+    private readonly Dictionary<string, CachedWoundTable> _cachedDamageWoundTables = new();
+
     public override void Initialize()
     {
+        CacheData(null);
+        _prototypeManager.PrototypesReloaded += CacheData;
     }
 
+    private void CacheData(PrototypesReloadedEventArgs? prototypesReloadedEventArgs)
+    {
+        _cachedDamageWoundTables.Clear();
+        foreach (var damageProto in _prototypeManager.EnumeratePrototypes<DamageTypePrototype>())
+        {
+            _cachedDamageWoundTables.Add(damageProto.ID, new CachedWoundTable(damageProto));
+        }
+    }
 
+    public IReadOnlyDictionary<FixedPoint2, string>? GetWoundTableForDamageType(string damageTypeId, WoundLayer woundLayer)
+    {
+        if (!_cachedDamageWoundTables.ContainsKey(damageTypeId))
+            return null;
+        return woundLayer switch
+        {
+            WoundLayer.Surface => _cachedDamageWoundTables[damageTypeId].SurfaceWounds,
+            WoundLayer.Internal => _cachedDamageWoundTables[damageTypeId].InternalWounds,
+            WoundLayer.Solid => _cachedDamageWoundTables[damageTypeId].SolidWounds,
+            _ => throw new ArgumentException("WoundLayer was invalid! This should never happen!")
+        };
+    }
 
-
-
-    //TODO: return an out woundhandle from this!
+    //TODO: output a woundhandle from this!
     public bool TryApplyWounds(EntityUid target, DamageSpecifier damage)
     {
         var success = false;
@@ -71,11 +93,11 @@ public sealed class WoundSystem : EntitySystem
         {
             if (_random.Prob(_hardenedSkinWoundTypeChance))
             {
-                woundSeverity = CalculateWoundSeverity(woundContainer, damageType, damage, WoundType.Solid);
+                woundSeverity = CalculateWoundSeverity(woundContainer, damageType, damage, WoundLayer.Solid);
             }
             else
             {
-                woundSeverity = CalculateWoundSeverity(woundContainer, damageType, damage, WoundType.Skin)*_hardenedSkinSeverityAdjustment;
+                woundSeverity = CalculateWoundSeverity(woundContainer, damageType, damage, WoundLayer.Surface)*_hardenedSkinSeverityAdjustment;
             }
         }
         return true;
@@ -92,30 +114,43 @@ public sealed class WoundSystem : EntitySystem
         return true;
     }
 
-    private float CalculateWoundSeverity(WoundableComponent woundableContainer, string damageType, float damage, WoundType woundType)
+    private float CalculateWoundSeverity(WoundableComponent woundableContainer, string damageType, float damage, WoundLayer woundLayer)
     {
         var newDamage = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>(damageType), damage);
         damage = DamageSpecifier.ApplyModifierSet(newDamage, woundableContainer.DamageResistance).DamageDict[damageType].Float();
-        return woundType switch
+        return woundLayer switch
         {
-            WoundType.Skin => Math.Clamp(damage / woundableContainer.WoundData[damageType].SkinDamageCap, 0f, 1.0f),
-            WoundType.Internal => Math.Clamp(damage / woundableContainer.WoundData[damageType].InternalDamageCap, 0f,
+            WoundLayer.Surface => Math.Clamp(damage / woundableContainer.WoundData[damageType].SkinDamageCap, 0f, 1.0f),
+            WoundLayer.Internal => Math.Clamp(damage / woundableContainer.WoundData[damageType].InternalDamageCap, 0f,
                 1.0f),
-            WoundType.Solid => Math.Clamp(damage / woundableContainer.WoundData[damageType].SolidDamageCap, 0f, 1.0f),
-            WoundType.None => throw new ArgumentException("WoundType was None! This should never happen!"),
-            _ => throw new ArgumentException("WoundType was None! This should never happen!")
+            WoundLayer.Solid => Math.Clamp(damage / woundableContainer.WoundData[damageType].SolidDamageCap, 0f, 1.0f),
+            _ => throw new ArgumentException("WoundLayer was invalid! This should never happen!")
         };
+    }
+
+    private readonly struct CachedWoundTable
+    {
+        //we do some defensive coding
+        public readonly IReadOnlyDictionary<FixedPoint2, string>? SurfaceWounds;
+        public readonly IReadOnlyDictionary<FixedPoint2, string>? InternalWounds;
+        public readonly IReadOnlyDictionary<FixedPoint2, string>? SolidWounds;
+
+        public CachedWoundTable(DamageTypePrototype damageTypeProto)
+        {
+            InternalWounds = damageTypeProto.InternalWounds;
+            SurfaceWounds = damageTypeProto.SurfaceWounds;
+            SolidWounds = damageTypeProto.SolidWounds;
+        }
     }
 }
 
 [Serializable, NetSerializable]
 [Flags]
-public enum WoundType
+public enum WoundLayer
 {
-    None = 0,
-    Skin = 1,
-    Internal = 2,
-    Solid = 3
+    Surface = 0,
+    Internal = 1,
+    Solid = 2
 }
 
 [Serializable, NetSerializable, DataRecord]
