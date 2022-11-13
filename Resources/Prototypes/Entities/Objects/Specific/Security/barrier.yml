@@ -12,6 +12,8 @@
     state: idle
   - type: InteractionOutline
   - type: Physics
+    bodyType: Dynamic
+    canCollide: false
   - type: Fixtures
     fixtures:
     - shape:

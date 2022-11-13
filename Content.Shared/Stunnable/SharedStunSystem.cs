@@ -59,11 +59,12 @@ namespace Content.Shared.Stunnable
 
             // Attempt event subscriptions.
             SubscribeLocalEvent<StunnedComponent, UpdateCanMoveEvent>(OnMoveAttempt);
-            SubscribeLocalEvent<StunnedComponent, InteractionAttemptEvent>(OnInteractAttempt);
-            SubscribeLocalEvent<StunnedComponent, UseAttemptEvent>(OnUseAttempt);
-            SubscribeLocalEvent<StunnedComponent, ThrowAttemptEvent>(OnThrowAttempt);
-            SubscribeLocalEvent<StunnedComponent, DropAttemptEvent>(OnDropAttempt);
-            SubscribeLocalEvent<StunnedComponent, PickupAttemptEvent>(OnPickupAttempt);
+            SubscribeLocalEvent<StunnedComponent, InteractionAttemptEvent>(OnAttempt);
+            SubscribeLocalEvent<StunnedComponent, UseAttemptEvent>(OnAttempt);
+            SubscribeLocalEvent<StunnedComponent, ThrowAttemptEvent>(OnAttempt);
+            SubscribeLocalEvent<StunnedComponent, DropAttemptEvent>(OnAttempt);
+            SubscribeLocalEvent<StunnedComponent, AttackAttemptEvent>(OnAttempt);
+            SubscribeLocalEvent<StunnedComponent, PickupAttemptEvent>(OnAttempt);
             SubscribeLocalEvent<StunnedComponent, IsEquippingAttemptEvent>(OnEquipAttempt);
             SubscribeLocalEvent<StunnedComponent, IsUnequippingAttemptEvent>(OnUnequipAttempt);
         }
@@ -243,27 +244,7 @@ namespace Content.Shared.Stunnable
             args.Cancel();
         }
 
-        private void OnInteractAttempt(EntityUid uid, StunnedComponent stunned, InteractionAttemptEvent args)
-        {
-            args.Cancel();
-        }
-
-        private void OnUseAttempt(EntityUid uid, StunnedComponent stunned, UseAttemptEvent args)
-        {
-            args.Cancel();
-        }
-
-        private void OnThrowAttempt(EntityUid uid, StunnedComponent stunned, ThrowAttemptEvent args)
-        {
-            args.Cancel();
-        }
-
-        private void OnDropAttempt(EntityUid uid, StunnedComponent stunned, DropAttemptEvent args)
-        {
-            args.Cancel();
-        }
-
-        private void OnPickupAttempt(EntityUid uid, StunnedComponent stunned, PickupAttemptEvent args)
+        private void OnAttempt(EntityUid uid, StunnedComponent stunned, CancellableEntityEventArgs args)
         {
             args.Cancel();
         }

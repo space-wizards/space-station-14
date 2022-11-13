@@ -26,3 +26,7 @@ nukeops-cond-allnukiesalive = No nuclear operatives died.
 nukeops-list-start = The nuke ops were:
 nukeops-not-enough-ready-players = Not enough players readied up for the game! There were {$readyPlayersCount} players readied up out of {$minimumPlayers} needed. Can't start Nukeops.
 nukeops-no-one-ready = No players readied up! Can't start Nukeops.
+
+nukeops-role-commander = Commander
+nukeops-role-agent = Agent
+nukeops-role-operator = Operator

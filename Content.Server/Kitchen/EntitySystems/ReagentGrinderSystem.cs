@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server.Chemistry.EntitySystems;
+using Content.Server.Construction;
 using Content.Server.Kitchen.Components;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
@@ -16,13 +17,14 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
-using Robust.Shared.Utility;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Kitchen.EntitySystems
 {
     [UsedImplicitly]
     internal sealed class ReagentGrinderSystem : EntitySystem
     {
+        [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
         [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
@@ -36,10 +38,11 @@ namespace Content.Server.Kitchen.EntitySystems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<ReagentGrinderComponent, ComponentStartup>((uid, component, _) => UpdateUiState(uid, component));
-            SubscribeLocalEvent<ReagentGrinderComponent, PowerChangedEvent>(
-                (EntityUid uid, ReagentGrinderComponent component, ref PowerChangedEvent _) => UpdateUiState(uid, component));
+            SubscribeLocalEvent<ReagentGrinderComponent, ComponentStartup>((uid, _, _) => UpdateUiState(uid));
+            SubscribeLocalEvent((EntityUid uid, ReagentGrinderComponent _, ref PowerChangedEvent _) => UpdateUiState(uid));
             SubscribeLocalEvent<ReagentGrinderComponent, InteractUsingEvent>(OnInteractUsing);
+            SubscribeLocalEvent<ReagentGrinderComponent, RefreshPartsEvent>(OnRefreshParts);
+            SubscribeLocalEvent<ReagentGrinderComponent, UpgradeExamineEvent>(OnUpgradeExamine);
 
             SubscribeLocalEvent<ReagentGrinderComponent, EntInsertedIntoContainerMessage>(OnContainerModified);
             SubscribeLocalEvent<ReagentGrinderComponent, EntRemovedFromContainerMessage>(OnContainerModified);
@@ -57,11 +60,11 @@ namespace Content.Server.Kitchen.EntitySystems
             foreach (var (active, reagentGrinder) in EntityQuery<ActiveReagentGrinderComponent, ReagentGrinderComponent>())
             {
                 var uid = reagentGrinder.Owner;
-                active.WorkTimer -= frameTime;
 
-                if (active.WorkTimer > 0)
+                if (active.EndTime > _timing.CurTime)
                     continue;
 
+                reagentGrinder.AudioStream?.Stop();
                 RemCompDeferred<ActiveReagentGrinderComponent>(uid);
 
                 var inputContainer = _containerSystem.EnsureContainer<Container>(uid, SharedReagentGrinder.InputContainerId);
@@ -110,7 +113,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 _userInterfaceSystem.TrySendUiMessage(uid, ReagentGrinderUiKey.Key,
                     new ReagentGrinderWorkCompleteMessage());
 
-                UpdateUiState(uid, reagentGrinder);
+                UpdateUiState(uid);
             }
         }
 
@@ -122,7 +125,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
         private void OnContainerModified(EntityUid uid, ReagentGrinderComponent reagentGrinder, ContainerModifiedMessage args)
         {
-            UpdateUiState(uid, reagentGrinder);
+            UpdateUiState(uid);
 
             var outputContainer = _itemSlotsSystem.GetItemOrNull(uid, SharedReagentGrinder.BeakerSlotId);
             _appearanceSystem.SetData(uid, ReagentGrinderVisualState.BeakerAttached, outputContainer.HasValue);
@@ -161,7 +164,25 @@ namespace Content.Server.Kitchen.EntitySystems
             args.Handled = true;
         }
 
-        private void UpdateUiState(EntityUid uid, ReagentGrinderComponent reagentGrinder)
+        /// <remarks>
+        /// Gotta be efficient, you know? you're saving a whole extra second here and everything.
+        /// </remarks>
+        private void OnRefreshParts(EntityUid uid, ReagentGrinderComponent component, RefreshPartsEvent args)
+        {
+            var ratingWorkTime = args.PartRatings[component.MachinePartWorkTime];
+            var ratingStorage = args.PartRatings[component.MachinePartStorageMax];
+
+            component.WorkTimeMultiplier = MathF.Pow(component.PartRatingWorkTimerMulitplier, ratingWorkTime - 1);
+            component.StorageMaxEntities = component.BaseStorageMaxEntities + (int) (component.StoragePerPartRating * (ratingStorage - 1));
+        }
+
+        private void OnUpgradeExamine(EntityUid uid, ReagentGrinderComponent component, UpgradeExamineEvent args)
+        {
+            args.AddPercentageUpgrade("reagent-grinder-component-upgrade-work-time", component.WorkTimeMultiplier);
+            args.AddNumberUpgrade("reagent-grinder-component-upgrade-storage", component.StorageMaxEntities - component.BaseStorageMaxEntities);
+        }
+
+        private void UpdateUiState(EntityUid uid)
         {
             var inputContainer = _containerSystem.EnsureContainer<Container>(uid, SharedReagentGrinder.InputContainerId);
             var outputContainer = _itemSlotsSystem.GetItemOrNull(uid, SharedReagentGrinder.BeakerSlotId);
@@ -195,7 +216,7 @@ namespace Content.Server.Kitchen.EntitySystems
             if (!this.IsPowered(uid, EntityManager) || HasComp<ActiveReagentGrinderComponent>(uid))
                 return;
 
-            DoWork(uid, reagentGrinder, message.Session.AttachedEntity, message.Program);
+            DoWork(uid, reagentGrinder, message.Program);
         }
 
         private void OnEjectChamberAllMessage(EntityUid uid, ReagentGrinderComponent reagentGrinder, ReagentGrinderEjectChamberAllMessage message)
@@ -211,7 +232,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 inputContainer.Remove(entity);
                 entity.RandomOffset(0.4f);
             }
-            UpdateUiState(uid, reagentGrinder);
+            UpdateUiState(uid);
         }
 
         private void OnEjectChamberContentMessage(EntityUid uid, ReagentGrinderComponent reagentGrinder, ReagentGrinderEjectChamberContentMessage message)
@@ -225,15 +246,17 @@ namespace Content.Server.Kitchen.EntitySystems
             {
                 message.EntityId.RandomOffset(0.4f);
                 ClickSound(uid, reagentGrinder);
-                UpdateUiState(uid, reagentGrinder);
+                UpdateUiState(uid);
             }
         }
 
         /// <summary>
         /// The wzhzhzh of the grinder. Processes the contents of the grinder and puts the output in the beaker.
         /// </summary>
+        /// <param name="uid">The grinder itself</param>
+        /// <param name="reagentGrinder"></param>
         /// <param name="program">Which program, such as grind or juice</param>
-        private void DoWork(EntityUid uid, ReagentGrinderComponent reagentGrinder, EntityUid? user, GrinderProgram program)
+        private void DoWork(EntityUid uid, ReagentGrinderComponent reagentGrinder, GrinderProgram program)
         {
             var inputContainer = _containerSystem.EnsureContainer<Container>(uid, SharedReagentGrinder.InputContainerId);
             var outputContainer = _itemSlotsSystem.GetItemOrNull(uid, SharedReagentGrinder.BeakerSlotId);
@@ -242,7 +265,7 @@ namespace Content.Server.Kitchen.EntitySystems
             if (inputContainer.ContainedEntities.Count <= 0 || !HasComp<FitsInDispenserComponent>(outputContainer))
                 return;
 
-            SoundSpecifier? sound = null;
+            SoundSpecifier? sound;
             switch (program)
             {
                 case GrinderProgram.Grind when inputContainer.ContainedEntities.All(CanGrind):
@@ -256,10 +279,11 @@ namespace Content.Server.Kitchen.EntitySystems
             }
 
             var active = AddComp<ActiveReagentGrinderComponent>(uid);
-            active.WorkTimer = (float) reagentGrinder.WorkTime.TotalSeconds;
+            active.EndTime = _timing.CurTime + reagentGrinder.WorkTime * reagentGrinder.WorkTimeMultiplier;
             active.Program = program;
 
-            _audioSystem.PlayPvs(sound, uid);
+            reagentGrinder.AudioStream = _audioSystem.PlayPvs(sound, uid,
+                AudioParams.Default.WithPitchScale(1 / reagentGrinder.WorkTimeMultiplier)); //slightly higher pitched
             _userInterfaceSystem.TrySendUiMessage(uid, ReagentGrinderUiKey.Key,
                 new ReagentGrinderWorkStartedMessage(program));
         }

@@ -36,7 +36,7 @@ namespace Content.Client.Audio
         private bool _overlayEnabled;
         private float _maxAmbientRange;
         private float _cooldown;
-        private float _accumulator;
+        private TimeSpan _targetTime = TimeSpan.Zero;
         private float _ambienceVolume = 0.0f;
 
         /// <summary>
@@ -131,17 +131,16 @@ namespace Content.Client.Audio
         {
             base.Update(frameTime);
 
-            if (!_gameTiming.IsFirstTimePredicted) return;
+            if (!_gameTiming.IsFirstTimePredicted)
+                return;
 
             if (_cooldown <= 0f)
-            {
-                _accumulator = 0f;
                 return;
-            }
 
-            _accumulator += frameTime;
-            if (_accumulator < _cooldown) return;
-            _accumulator -= _cooldown;
+            if (_gameTiming.CurTime < _targetTime)
+                return;
+
+            _targetTime = _gameTiming.CurTime+TimeSpan.FromSeconds(_cooldown);
 
             var player = _playerManager.LocalPlayer?.ControlledEntity;
             if (!EntityManager.TryGetComponent(player, out TransformComponent? playerManager))
