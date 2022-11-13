@@ -43,30 +43,40 @@ public sealed class WoundSystem : EntitySystem
             damage = DamageSpecifier.ApplyModifierSet(damage, primaryCovering.Resistance); //apply skin resistances first!
             //TODO: eventually take into account second skin skin for damage resistance
             damage = DamageSpecifier.ApplyModifierSet(damage, coveringComp.DamageModifier);
-            success = TryApplyWoundsSkin(target, coveringComp, damage, woundContainer, primaryCovering.Hardened);
+            foreach (var damageData in damage.DamageDict)
+            {
+                success = TryApplyWoundsSkin(target, coveringComp, damageData.Key, damageData.Value.Float(), woundContainer, primaryCovering.Hardened);
+            }
         }
         if ( EntityManager.TryGetComponent<BodyPartComponent>(target, out var bodyPart))
         {
-            var newDamage = DamageSpecifier.ApplyModifierSet(damage, bodyPart.DamageResistance);
+            var newDamage = DamageSpecifier.ApplyModifierSet(damage, woundContainer.DamageResistance);
             success |= TryApplyWoundsBodyPart(target, bodyPart, newDamage, woundContainer);
         }
         if (EntityManager.TryGetComponent<OrganComponent>(target, out var organ))
         {
-            DamageSpecifier.ApplyModifierSet(damage, organ.DamageResistance);
+            DamageSpecifier.ApplyModifierSet(damage, woundContainer.DamageResistance);
             success |= TryApplyWoundsOrgan(target, organ, damage, woundContainer);
         }
         return success;
     }
-    private bool TryApplyWoundsSkin(EntityUid target, BodySkinComponent skin, DamageSpecifier damage,
-        WoundableComponent woundContainer, bool hardenedCovering)
+    private bool TryApplyWoundsSkin(EntityUid target, BodySkinComponent skin, string damageType ,float damage,
+        WoundableComponent woundContainer, bool hardenedSkin)
     {
-        if (hardenedCovering)
-        {
+        if (!woundContainer.WoundData.TryGetValue(damageType, out var woundData))
+            return false;
 
-        }
-        foreach (var DamageData in damage.GetDamagePerGroup())
+        var woundSeverity = 0f;
+        if (hardenedSkin)
         {
-
+            if (_random.Prob(_hardenedSkinWoundTypeChance))
+            {
+                woundSeverity = CalculateWoundSeverity(woundContainer, damageType, damage, WoundType.Solid);
+            }
+            else
+            {
+                woundSeverity = CalculateWoundSeverity(woundContainer, damageType, damage, WoundType.Skin)*_hardenedSkinSeverityAdjustment;
+            }
         }
         return true;
     }
@@ -86,23 +96,15 @@ public sealed class WoundSystem : EntitySystem
     {
         var newDamage = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>(damageType), damage);
         damage = DamageSpecifier.ApplyModifierSet(newDamage, woundableContainer.DamageResistance).DamageDict[damageType].Float();
-        switch (woundType)
+        return woundType switch
         {
-            case WoundType.Skin:
-            {
-                return  Math.Clamp(damage/woundableContainer.WoundData[damageType].SkinDamageCap, 0f, 1.0f)  ;
-            }
-            case WoundType.Internal:
-            {
-                return  Math.Clamp(damage/woundableContainer.WoundData[damageType].InternalDamageCap, 0f, 1.0f)  ;
-            }
-            case WoundType.Solid:
-            {
-                return  Math.Clamp(damage/woundableContainer.WoundData[damageType].SolidDamageCap, 0f, 1.0f)  ;
-            }
-            default:
-                throw new ArgumentException("WoundType was None!");
-        }
+            WoundType.Skin => Math.Clamp(damage / woundableContainer.WoundData[damageType].SkinDamageCap, 0f, 1.0f),
+            WoundType.Internal => Math.Clamp(damage / woundableContainer.WoundData[damageType].InternalDamageCap, 0f,
+                1.0f),
+            WoundType.Solid => Math.Clamp(damage / woundableContainer.WoundData[damageType].SolidDamageCap, 0f, 1.0f),
+            WoundType.None => throw new ArgumentException("WoundType was None! This should never happen!"),
+            _ => throw new ArgumentException("WoundType was None! This should never happen!")
+        };
     }
 }
 

@@ -21,7 +21,7 @@ namespace Content.Shared.Damage.Prototypes
 
         //Note: these should be defined in order of severity!
         //surface wounds are wounds on skin or exposed bodyparts
-        [DataField("surfaceWounds", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<WoundPrototype>))]
+        [DataField("SurfaceWounds", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<WoundPrototype>))]
         public HashSet<string> SurfaceWounds { get; init; } = new();
 
         //solid wounds are wounds that get caused when affecting a solid surface/object, such as bones or an exoskeleton

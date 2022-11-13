@@ -18,7 +18,7 @@ public sealed class WoundGroupPrototype : IPrototype
 
     //--- wound prototypes ordered in severity based on the initial ---
     //surface wounds are wounds on skin or exposed bodyparts
-    [DataField("surfaceWounds", required: true, customTypeSerializer: typeof(PrototypeIdHashSetSerializer<WoundPrototype>))]
+    [DataField("SurfaceWounds", required: true, customTypeSerializer: typeof(PrototypeIdHashSetSerializer<WoundPrototype>))]
     public HashSet<WoundPrototype> SurfaceWoundProtos { get; init; } = new();
 
     //solid wounds are wounds that get caused when affecting a solid surface/object, such as bones or an exoskeleton

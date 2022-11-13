@@ -14,11 +14,8 @@ public sealed class OrganComponent : Component
 
     //is this organ exposed?
     [ViewVariables]
-    [DataField("internal")]
-    public bool Internal = true;
-
-    [ViewVariables, DataField("damageResistance", required:false)]
-    public DamageModifierSet DamageResistance = new();
+    [DataField("exposed")]
+    public bool Exposed = true;
 
     [ViewVariables]
     [DataField("parent")]
