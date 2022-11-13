@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Body.Systems;
+using Content.Shared.Damage;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Body.Organ;
@@ -15,6 +16,9 @@ public sealed class OrganComponent : Component
     [ViewVariables]
     [DataField("internal")]
     public bool Internal = true;
+
+    [ViewVariables, DataField("damageResistance", required:false)]
+    public DamageModifierSet DamageResistance = new();
 
     [ViewVariables]
     [DataField("parent")]

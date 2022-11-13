@@ -3,6 +3,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using Content.Shared.Body.Organ;
 using Content.Shared.Body.Part;
+using Content.Shared.Body.Prototypes;
 using Content.Shared.Damage;
 using Content.Shared.Medical.Wounds.Components;
 using Content.Shared.Medical.Wounds.Prototypes;
@@ -16,10 +17,16 @@ public sealed class WoundSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private RobustRandom _random = default!;
+    //DamageTypeId
+    //private Dictionary<string, List<string>>
 
     public override void Initialize()
     {
     }
+
+
+
+
 
     //TODO: return an out woundhandle from this!
     public bool TryApplyWounds(EntityUid target, DamageSpecifier damage)
@@ -27,25 +34,43 @@ public sealed class WoundSystem : EntitySystem
         var success = false;
         if (!EntityManager.TryGetComponent<WoundableComponent>(target, out var woundContainer))
             return false;
-        if (EntityManager.TryGetComponent<BodyPartComponent>(target, out var bodyPart))
+
+        EntityManager.TryGetComponent<BodyPartComponent>(target, out var bodyPart);
+        //if (bodyPart!.) //TODO: Check if skeleton is external and apply damage to it first if that is the case
+        if (EntityManager.TryGetComponent<BodyCoveringComponent>(target, out var covering))
         {
-            success = TryApplyWoundsBodyPart(target, bodyPart, damage);
+            var coveringResistance = _prototypeManager.Index<BodyCoveringPrototype>(covering.PrimaryBodyCoveringId).Resistance;
+            DamageSpecifier.ApplyModifierSet(damage, coveringResistance); //apply covering resistances first!
+            //TODO: eventually take into account second skin covering for damage resistance
+            DamageSpecifier.ApplyModifierSet(damage, covering.DamageResistance);
+            success = TryApplyWoundsCovering(target, covering, damage, woundContainer);
+        }
+        if (bodyPart != null)
+        {
+            DamageSpecifier.ApplyModifierSet(damage, bodyPart.DamageResistance);
+            success |= TryApplyWoundsBodyPart(target, bodyPart, damage, woundContainer);
         }
         if (EntityManager.TryGetComponent<OrganComponent>(target, out var organ))
         {
-            success |= TryApplyWoundsOrgan(target, organ, damage);
+            DamageSpecifier.ApplyModifierSet(damage, organ.DamageResistance);
+            success |= TryApplyWoundsOrgan(target, organ, damage, woundContainer);
         }
         return success;
     }
-    private bool TryApplyWoundsBodyPart(EntityUid target, BodyPartComponent bodyPart, DamageSpecifier damage)
+
+    private bool TryApplyWoundsCovering(EntityUid target, BodyCoveringComponent covering, DamageSpecifier damage,
+        WoundableComponent woundContainer)
     {
+        //TODO: get damage from cached protos
+        return true;
+    }
 
-
-
+    private bool TryApplyWoundsBodyPart(EntityUid target, BodyPartComponent bodyPart, DamageSpecifier damage, WoundableComponent woundContainer)
+    {
 
         return true;
     }
-    private bool TryApplyWoundsOrgan(EntityUid target, OrganComponent organ, DamageSpecifier damage)
+    private bool TryApplyWoundsOrgan(EntityUid target, OrganComponent organ, DamageSpecifier damage, WoundableComponent woundContainer)
     {
 
         return true;

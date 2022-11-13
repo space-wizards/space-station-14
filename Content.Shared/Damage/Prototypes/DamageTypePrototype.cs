@@ -12,28 +12,34 @@ namespace Content.Shared.Damage.Prototypes
     [Serializable, NetSerializable]
     public sealed class DamageTypePrototype : IPrototype
     {
-        [IdDataFieldAttribute]
+        [IdDataField]
         public string ID { get; } = default!;
+
+        //TODO: Net serialize this shit!
 
         // --===   Wounding/Medical configuration  ===---
 
         //Note: these should be defined in order of severity!
         //surface wounds are wounds on skin or exposed bodyparts
-        [DataField("surfaceWounds", required: false, customTypeSerializer: typeof(PrototypeIdHashSetSerializer<WoundPrototype>))]
-        public HashSet<WoundPrototype> SurfaceWounds { get; init; } = new();
+        [DataField("surfaceWounds", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<WoundPrototype>))]
+        public HashSet<string> SurfaceWounds { get; init; } = new();
 
         //solid wounds are wounds that get caused when affecting a solid surface/object, such as bones or an exoskeleton
-        [DataField("solidWounds", required: false, customTypeSerializer: typeof(PrototypeIdHashSetSerializer<WoundPrototype>))]
-        public HashSet<WoundPrototype> SolidWounds { get; init; } = new();
+        [DataField("solidWounds", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<WoundPrototype>))]
+        public HashSet<string> SolidWounds { get; init; } = new();
 
         //internal wounds are wounds that are caused when an injury affects internal soft tissue such as organs or flesh
-        [DataField("internalWounds", required: false, customTypeSerializer: typeof(PrototypeIdHashSetSerializer<WoundPrototype>))]
-        public HashSet<WoundPrototype> InternalWounds { get; init; } = new();
+        [DataField("internalWounds", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<WoundPrototype>))]
+        public HashSet<string> InternalWounds { get; init; } = new();
 
-        //Modifier for adjusting how much penetration this damage type has to apply internal wounding
-        [DataField("penModifier", required: false)]
-        public float PenetrationModifier { get; init; } = 1.0f;
+        //used to calculate how much damage penetrates the skin
+        [DataField("skinPenMod")] public float SkinPenModifier = 1.0f;
 
+        //used to calculate how much damage penetrates a bodypart/flesh
+        [DataField("fleshPenMod")] public float FleshPenModifier = 1.0f;
+
+        //used to calculate how much damage propogates through a bone if it is protecting organs
+        [DataField("bonePenMod")] public float BonePenModifier = 1.0f;
 
     }
 }

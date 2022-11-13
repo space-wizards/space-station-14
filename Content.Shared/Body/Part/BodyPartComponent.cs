@@ -39,6 +39,9 @@ public sealed class BodyPartComponent : Component
     [DataField("vital")]
     public bool IsVital;
 
+    [ViewVariables, DataField("damageResistance", required:false)]
+    public DamageModifierSet DamageResistance = new();
+
     [ViewVariables]
     [DataField("symmetry")]
     public BodyPartSymmetry Symmetry = BodyPartSymmetry.None;
