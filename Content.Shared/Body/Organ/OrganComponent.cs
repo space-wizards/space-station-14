@@ -12,6 +12,10 @@ public sealed class OrganComponent : Component
     public EntityUid? Body;
 
     [ViewVariables]
+    [DataField("internal")]
+    public bool Internal = true;
+
+    [ViewVariables]
     [DataField("parent")]
     public OrganSlot? ParentSlot;
 }

@@ -20,6 +20,9 @@ public partial class SharedBodySystem
         SubscribeLocalEvent<BodyPartComponent, ComponentRemove>(OnPartRemoved);
         SubscribeLocalEvent<BodyPartComponent, ComponentGetState>(OnPartGetState);
         SubscribeLocalEvent<BodyPartComponent, ComponentHandleState>(OnPartHandleState);
+        //SKIIIIIIIINNNNN
+        SubscribeLocalEvent<BodyCoveringComponent, ComponentGetState>(OnCoveringGetState);
+        SubscribeLocalEvent<BodyCoveringComponent, ComponentHandleState>(OnCoveringHandleState);
     }
 
     private void OnPartGetState(EntityUid uid, BodyPartComponent part, ref ComponentGetState args)
@@ -34,7 +37,6 @@ public partial class SharedBodySystem
             part.Symmetry
         );
     }
-
     private void OnPartHandleState(EntityUid uid, BodyPartComponent part, ref ComponentHandleState args)
     {
         if (args.Current is not BodyPartComponentState state)
@@ -61,6 +63,21 @@ public partial class SharedBodySystem
         {
             DropPart(childSlot.Child);
         }
+    }
+
+    private void OnCoveringGetState(EntityUid uid, BodyCoveringComponent part, ref ComponentGetState args)
+    {
+        args.State = new BodyCoveringComponentState(part.PrimaryBodyCoveringId, part.SecondaryBodyCoveringId,
+            part.SecondaryCoveringPercentage);
+    }
+
+    private void OnCoveringHandleState(EntityUid uid, BodyCoveringComponent part, ref ComponentHandleState args)
+    {
+        if (args.Current is not BodyCoveringComponentState state)
+            return;
+        part.PrimaryBodyCoveringId = state.SecondaryBodyCoveringId;
+        part.SecondaryBodyCoveringId = state.SecondaryBodyCoveringId;
+        part.SecondaryCoveringPercentage = state.SecondaryCoveringPercentage;
     }
 
     private BodyPartSlot? CreatePartSlot(

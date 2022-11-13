@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Damage;
+using Content.Shared.Damage.Prototypes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 namespace Content.Shared.Medical.Wounds.Prototypes;
@@ -8,8 +9,19 @@ public sealed class WoundPrototype : IPrototype
 {
     [IdDataField] public string ID { get; init; } = string.Empty;
 
-    [DataField("damageToApply")] public DamageSpecifier DamageToApply { get; init; } = new();
-}
+    [DataField("allowStacking")] public bool AllowStacking { get; init; } = true;
 
-[Serializable, NetSerializable, DataRecord]
-public record struct WoundData (string WoundId, float Severity, float Tended, float Size, float Infected);
+    [DataField("name", required: true)]
+    public string DisplayName { get; init; } = string.Empty;
+
+    [DataField("description", required: true)]
+    public string Description { get; init; } = string.Empty;
+
+    [DataField("pain", required: true)] public float Pain { get; init; }
+
+    [DataField("bleedRate", required: false)] public float Bleed { get; init; }
+}
+public static class A
+{
+    // IT LIVES ON! FOREVER IN OUR HEARTS!
+}
