@@ -211,14 +211,11 @@ public partial class SharedBodySystem
 
         if (part.Body is { } newBody)
         {
-            var argsAdded = new BodyPartAddedEventArgs(slot.Id, part);
+            var partAddedEvent = new BodyPartAddedEvent(slot.Id, part);
+            RaiseLocalEvent(newBody, ref partAddedEvent);
 
             // TODO: Body refactor. Somebody is doing it
             // EntitySystem.Get<SharedHumanoidAppearanceSystem>().BodyPartAdded(Owner, argsAdded);
-            foreach (var component in AllComps<IBodyPartAdded>(newBody).ToArray())
-            {
-                component.BodyPartAdded(argsAdded);
-            }
 
             foreach (var organ in GetPartOrgans(partId, part))
             {
@@ -238,7 +235,7 @@ public partial class SharedBodySystem
             part.ParentSlot is not { } slot)
             return false;
 
-        var oldBody = part.Body;
+        var oldBodyNullable = part.Body;
 
         slot.Child = null;
         part.ParentSlot = null;
@@ -252,18 +249,15 @@ public partial class SharedBodySystem
 
         part.Owner.RandomOffset(0.25f);
 
-        if (oldBody != null)
+        if (oldBodyNullable is { } oldBody)
         {
-            var args = new BodyPartRemovedEventArgs(slot.Id, part);
-            foreach (var component in AllComps<IBodyPartRemoved>(oldBody.Value))
-            {
-                component.BodyPartRemoved(args);
-            }
+            var args = new BodyPartRemovedEvent(slot.Id, part);
+            RaiseLocalEvent(oldBody, ref args);
 
             if (part.PartType == BodyPartType.Leg &&
                 !GetBodyChildrenOfType(oldBody, BodyPartType.Leg).Any())
             {
-                Standing.Down(oldBody.Value);
+                Standing.Down(oldBody);
             }
 
             if (part.IsVital && !GetBodyChildrenOfType(oldBody, part.PartType).Any())
@@ -278,7 +272,7 @@ public partial class SharedBodySystem
                 if (organSlot.Child is not { } child)
                     continue;
 
-                RaiseLocalEvent(child, new RemovedFromBodyEvent(oldBody.Value), true);
+                RaiseLocalEvent(child, new RemovedFromBodyEvent(oldBody), true);
             }
         }
 
