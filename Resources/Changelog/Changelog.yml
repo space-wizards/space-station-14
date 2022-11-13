@@ -1,9 +1,4 @@
 Entries:
-- author: Ablankmann
-  changes:
-  - {message: The Outlaw's Hat now looks nicer., type: Tweak}
-  id: 2141
-  time: '2022-08-13T13:52:24.0000000+00:00'
 - author: JustinTrotter
   changes:
   - {message: nukies no longer have the chance to spawn with their suit sensors on,
@@ -2961,3 +2956,8 @@ Entries:
   - {message: Increased the likelihood of seeing certain rare artifact effects., type: Tweak}
   id: 2640
   time: '2022-11-11T04:18:51.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: You can no longer sleepwalk from slipping while tired., type: Fix}
+  id: 2641
+  time: '2022-11-13T03:36:33.0000000+00:00'
