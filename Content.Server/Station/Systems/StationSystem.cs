@@ -100,7 +100,7 @@ public sealed class StationSystem : EntitySystem
     {
         if (e.NewStatus == SessionStatus.Connected)
         {
-            RaiseNetworkEvent(new StationsUpdatedEvent(_stations), Filter.SinglePlayer(e.Session));
+            RaiseNetworkEvent(new StationsUpdatedEvent(_stations), e.Session);
         }
     }
 

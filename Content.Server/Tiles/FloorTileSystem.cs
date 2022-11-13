@@ -98,7 +98,7 @@ namespace Content.Server.Tiles
         {
             var variant = _random.Pick(((ContentTileDefinition) _tileDefinitionManager[tileId]).PlacementVariants);
             mapGrid.SetTile(location.Offset(new Vector2(offset, offset)), new Tile(tileId, 0, variant));
-            _audio.Play(placeSound, Filter.Pvs(location), location, AudioHelpers.WithVariation(0.125f, _random));
+            _audio.Play(placeSound, Filter.Pvs(location), location, true, AudioHelpers.WithVariation(0.125f, _random));
         }
     }
 }

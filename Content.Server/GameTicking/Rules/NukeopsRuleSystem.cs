@@ -263,7 +263,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             filter.AddPlayer(actor.PlayerSession);
         }
 
-        _audioSystem.PlayGlobal(_nukeopsRuleConfig.GreetSound, filter);
+        _audioSystem.PlayGlobal(_nukeopsRuleConfig.GreetSound, filter, recordReplay: false);
     }
 
     private void OnRoundEnd()
@@ -592,7 +592,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             return;
 
         if (_nukeopsRuleConfig.GreetSound != null)
-            _audioSystem.PlayGlobal(_nukeopsRuleConfig.GreetSound, Filter.Empty().AddPlayer(playerSession));
+            _audioSystem.PlayGlobal(_nukeopsRuleConfig.GreetSound, playerSession);
 
         if (_targetStation != null && !string.IsNullOrEmpty(Name(_targetStation.Value)))
             _chatManager.DispatchServerMessage(playerSession, Loc.GetString("nukeops-welcome", ("station", _targetStation.Value)));

@@ -90,6 +90,6 @@ public sealed class PrayerSystem : SharedPrayerSystem
 
         var networkMessage = new PrayerTextMessage(Loc.GetString("prayer-chat-notify", ("message", message)));
 
-        RaiseNetworkEvent(networkMessage, Filter.Empty().AddPlayer(sender));
+        RaiseNetworkEvent(networkMessage, sender);
     }
 }
