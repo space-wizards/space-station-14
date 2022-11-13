@@ -1,9 +1,4 @@
 Entries:
-- author: OctoRocket
-  changes:
-  - {message: Fixed e-dagger flipping back and forth while in right hand, type: Fix}
-  id: 2144
-  time: '2022-08-14T05:15:54.0000000+00:00'
 - author: Zero_Diamond
   changes:
   - {message: Added "musician's tuxedo" and "musician's winter coat" for musician
@@ -2961,3 +2956,9 @@ Entries:
   - {message: Fixed rich text wrapping., type: Fix}
   id: 2643
   time: '2022-11-13T15:07:48.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Melee sounds and effects are now predicted and the client should generally
+      match the server due to lag compensation., type: Tweak}
+  id: 2644
+  time: '2022-11-13T21:33:54.0000000+00:00'
