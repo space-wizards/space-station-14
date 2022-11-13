@@ -1,5 +1,4 @@
 using System.Threading;
-using Content.Server.Administration.Logs;
 using Content.Server.Tools.Components;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
@@ -11,8 +10,6 @@ namespace Content.Server.Tools;
 
 public sealed partial class ToolSystem
 {
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-
     private void InitializeLatticeCutting()
     {
         SubscribeLocalEvent<LatticeCuttingComponent, AfterInteractEvent>(OnLatticeCuttingAfterInteract);
@@ -44,8 +41,7 @@ public sealed partial class ToolSystem
         _adminLogger.Add(LogType.LatticeCut, LogImpact.Medium, $"{ToPrettyString(args.User):user} cut the lattice at {args.Coordinates:target}");
     }
 
-    private void OnLatticeCuttingAfterInteract(EntityUid uid, LatticeCuttingComponent component,
-        AfterInteractEvent args)
+    private void OnLatticeCuttingAfterInteract(EntityUid uid, LatticeCuttingComponent component, AfterInteractEvent args)
     {
         if (args.Handled || !args.CanReach || args.Target != null)
             return;
@@ -59,8 +55,7 @@ public sealed partial class ToolSystem
         if (component.CancelTokenSource != null)
             return true;
 
-        ToolComponent? tool = null;
-        if (component.ToolComponentNeeded && !TryComp<ToolComponent?>(component.Owner, out tool))
+        if (!TryComp<ToolComponent?>(component.Owner, out var tool))
             return false;
 
         if (!_mapManager.TryGetGrid(clickLocation.GetGridUid(EntityManager), out var mapGrid))

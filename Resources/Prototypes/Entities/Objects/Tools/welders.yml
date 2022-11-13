@@ -47,7 +47,8 @@
   - type: Tool
     useSound:
       collection: Welder
-    qualities: Welding
+    qualities:
+      - Welding
   - type: Welder
     litMeleeDamageBonus:
       types: # When lit, negate standard melee damage and replace with heat

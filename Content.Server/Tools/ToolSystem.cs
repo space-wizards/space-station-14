@@ -1,8 +1,10 @@
+using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.DoAfter;
 using Content.Server.Popups;
 using Content.Shared.Audio;
+using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
@@ -26,6 +28,8 @@ namespace Content.Server.Tools
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly SharedItemSystem _itemSystem = default!;
+        [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
         public override void Initialize()
         {

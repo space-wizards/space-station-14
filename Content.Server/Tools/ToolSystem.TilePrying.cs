@@ -4,17 +4,12 @@ using Content.Server.Tools.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
 using Content.Shared.Tools.Components;
-using Robust.Shared.Audio;
 using Robust.Shared.Map;
-using Robust.Shared.Player;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Tools;
 
 public sealed partial class ToolSystem
 {
-    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
-
     private void InitializeTilePrying()
     {
         SubscribeLocalEvent<TilePryingComponent, AfterInteractEvent>(OnTilePryingAfterInteract);
@@ -42,7 +37,8 @@ public sealed partial class ToolSystem
 
     private void OnTilePryingAfterInteract(EntityUid uid, TilePryingComponent component, AfterInteractEvent args)
     {
-        if (args.Handled || !args.CanReach || (args.Target != null && !HasComp<PuddleComponent>(args.Target))) return;
+        if (args.Handled || !args.CanReach || (args.Target != null && !HasComp<PuddleComponent>(args.Target)))
+            return;
 
         if (TryPryTile(args.User, component, args.ClickLocation))
             args.Handled = true;
@@ -51,11 +47,9 @@ public sealed partial class ToolSystem
     private bool TryPryTile(EntityUid user, TilePryingComponent component, EntityCoordinates clickLocation)
     {
         if (component.CancelToken != null)
-        {
             return true;
-        }
 
-        if (!TryComp<ToolComponent?>(component.Owner, out var tool) && component.ToolComponentNeeded)
+        if (!TryComp<ToolComponent?>(component.Owner, out var tool))
             return false;
 
         if (!_mapManager.TryGetGrid(clickLocation.GetGridUid(EntityManager), out var mapGrid))
@@ -105,6 +99,5 @@ public sealed partial class ToolSystem
 
     private sealed class TilePryingCancelledEvent : EntityEventArgs
     {
-
     }
 }

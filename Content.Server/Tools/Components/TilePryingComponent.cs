@@ -8,10 +8,6 @@ namespace Content.Server.Tools.Components
     public sealed class TilePryingComponent : Component
     {
         [ViewVariables]
-        [DataField("toolComponentNeeded")]
-        public bool ToolComponentNeeded = true;
-
-        [ViewVariables]
         [DataField("qualityNeeded", customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
         public string QualityNeeded = "Prying";
 
