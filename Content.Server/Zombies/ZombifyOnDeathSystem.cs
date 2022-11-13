@@ -26,6 +26,8 @@ using Content.Shared.Popups;
 using Content.Server.Atmos.Miasma;
 using Content.Server.Humanoid;
 using Content.Server.IdentityManagement;
+using Content.Server.Traits.Assorted;
+using Content.Shared.CombatMode.Pacification;
 using Content.Shared.Humanoid;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Weapons.Melee;
@@ -99,6 +101,8 @@ namespace Content.Server.Zombies
             RemComp<BarotraumaComponent>(target);
             RemComp<HungerComponent>(target);
             RemComp<ThirstComponent>(target);
+            RemComp<PacifistComponent>(target);
+            RemComp<PacifiedComponent>(target);
 
             //funny voice
             EnsureComp<ReplacementAccentComponent>(target).Accent = "zombie";
