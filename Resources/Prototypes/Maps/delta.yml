@@ -1,11 +1,11 @@
 ﻿- type: gameMap
-  id: Delta
-  mapName: 'Delta Station'
-  mapPath: /Maps/delta.yml
+  id: CorvaxDelta
+  mapName: 'Corvax Delta Station'
+  mapPath: /Maps/corvax_delta.yml
   minPlayers: 40
   stations:
     Delta:
-      mapNameTemplate: '{0} Delta Station {1}'
+      mapNameTemplate: '{0} Дельта {1}'
       nameGenerator:
         !type:NanotrasenNameGenerator
         prefixCreator: 'TG'
