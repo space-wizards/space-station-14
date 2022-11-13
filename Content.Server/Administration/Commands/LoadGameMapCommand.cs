@@ -48,7 +48,7 @@ namespace Content.Server.Administration.Commands
                     loadOptions.Offset = new Vector2(x, y);
                 }
                 var grids = gameTicker.LoadGameMap(gameMap, new MapId(mapId), loadOptions, stationName);
-                shell.WriteLine($"Loaded {grids.Count} entities.");
+                shell.WriteLine($"Loaded {grids.Count} grids.");
             }
             else
             {
