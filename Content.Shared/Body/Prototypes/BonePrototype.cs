@@ -26,7 +26,7 @@ public sealed class BonePrototype : IPrototype
     public string Description = string.Empty;
 
     [DataField("damageResistance", required: false)]
-    public DamageSpecifier Resistance = new DamageSpecifier();
+    public DamageModifierSet Resistance = new();
 
     //support for exoskeletons because bugs and xenos are cool. Also crabs. Because everything returns to crab.
     [DataField("internal", required: false)]

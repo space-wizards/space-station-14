@@ -11,4 +11,8 @@ public sealed class WoundableComponent : Component
 {
     [Access(typeof(WoundSystem),Other = AccessPermissions.Read)]
     public Dictionary<string, List<WoundData>> Wounds = new();
+
+    [Access(typeof(WoundSystem),Other = AccessPermissions.Read)]
+    [ViewVariables, DataField("damageResistance", required:false)]
+    public DamageModifierSet DamageResistance = new();
 }

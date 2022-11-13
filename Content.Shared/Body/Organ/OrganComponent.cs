@@ -11,6 +11,7 @@ public sealed class OrganComponent : Component
     [DataField("body")]
     public EntityUid? Body;
 
+    //is this organ exposed?
     [ViewVariables]
     [DataField("internal")]
     public bool Internal = true;

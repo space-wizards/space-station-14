@@ -21,6 +21,35 @@ public sealed class WoundSystem : EntitySystem
     {
     }
 
+    //TODO: return an out woundhandle from this!
+    public bool TryApplyWounds(EntityUid target, DamageSpecifier damage)
+    {
+        var success = false;
+        if (!EntityManager.TryGetComponent<WoundableComponent>(target, out var woundContainer))
+            return false;
+        if (EntityManager.TryGetComponent<BodyPartComponent>(target, out var bodyPart))
+        {
+            success = TryApplyWoundsBodyPart(target, bodyPart, damage);
+        }
+        if (EntityManager.TryGetComponent<OrganComponent>(target, out var organ))
+        {
+            success |= TryApplyWoundsOrgan(target, organ, damage);
+        }
+        return success;
+    }
+    private bool TryApplyWoundsBodyPart(EntityUid target, BodyPartComponent bodyPart, DamageSpecifier damage)
+    {
+
+
+
+
+        return true;
+    }
+    private bool TryApplyWoundsOrgan(EntityUid target, OrganComponent organ, DamageSpecifier damage)
+    {
+
+        return true;
+    }
 
 
 }

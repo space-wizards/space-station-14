@@ -20,7 +20,7 @@ public sealed class BodyCoveringPrototype : IPrototype
     public string Description = string.Empty;
 
     [DataField("damageResistance", required: false)]
-    public DamageSpecifier Resistance = new DamageSpecifier();
+    public DamageModifierSet Resistance = new();
 
     [DataField("hardened", required: false)]
     public bool Hardened = false;

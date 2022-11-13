@@ -1,6 +1,6 @@
 ﻿using Content.Shared.Body.Prototypes;
 using Content.Shared.Body.Systems;
-
+using Content.Shared.Damage;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 namespace Content.Shared.Body.Part;
@@ -17,4 +17,7 @@ public sealed class BodyCoveringComponent : Component
 
     [ViewVariables, DataField("secondaryCoveringPercentage")]
     public float SecondaryCoveringPercentage = 0f;
+
+    [ViewVariables, DataField("damageResistance", required:false)]
+    public DamageModifierSet DamageResistance = new();
 }
