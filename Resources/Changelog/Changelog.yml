@@ -1,10 +1,4 @@
 Entries:
-- author: JustinTrotter
-  changes:
-  - {message: nukies no longer have the chance to spawn with their suit sensors on,
-    type: Fix}
-  id: 2142
-  time: '2022-08-13T13:57:49.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Plastitanium walls have been ported from ss13., type: Add}
@@ -2961,3 +2955,9 @@ Entries:
   - {message: You can no longer sleepwalk from slipping while tired., type: Fix}
   id: 2641
   time: '2022-11-13T03:36:33.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: 'NPCs will now try to stay ~1m away from you for melee rather than 0.2m,
+      meaning rat servants will no longer sit under you in combat.', type: Tweak}
+  id: 2642
+  time: '2022-11-13T09:57:14.0000000+00:00'
