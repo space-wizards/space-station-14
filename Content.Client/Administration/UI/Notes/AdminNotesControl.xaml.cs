@@ -53,7 +53,7 @@ public sealed partial class AdminNotesControl : Control
         OnNoteChanged?.Invoke(input.Id, text);
     }
 
-    private bool NoteRightClicked(AdminNotesLine line)
+    private bool NoteClicked(AdminNotesLine line)
     {
         ClosePopup();
 
@@ -102,7 +102,7 @@ public sealed partial class AdminNotesControl : Control
 
             input = new AdminNotesLine(note);
             input.OnSubmitted += NoteSubmitted;
-            input.OnRightClicked += NoteRightClicked;
+            input.OnClicked += NoteClicked;
             Notes.AddChild(input);
             Inputs[note.Id] = input;
         }
