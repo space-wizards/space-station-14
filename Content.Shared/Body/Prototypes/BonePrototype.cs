@@ -1,5 +1,7 @@
 ﻿using Content.Shared.Damage;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
 namespace Content.Shared.Body.Prototypes;
 
@@ -7,6 +9,9 @@ namespace Content.Shared.Body.Prototypes;
 public sealed class BonePrototype : IPrototype
 {
     [IdDataField] public string ID { get; } = default!;
+
+    [DataField("boneType", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<BoneTypePrototype>))]
+    public string BoneType = string.Empty;
 
     private string _name = string.Empty;
 
