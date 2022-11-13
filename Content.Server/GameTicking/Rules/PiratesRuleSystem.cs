@@ -10,6 +10,7 @@ using Content.Shared.CCVar;
 using Content.Shared.Humanoid;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
+using Robust.Server.GameObjects;
 using Robust.Server.Maps;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
@@ -30,12 +31,12 @@ public sealed class PiratesRuleSystem : GameRuleSystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
-    [Dependency] private readonly IMapLoader _mapLoader = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IServerPreferencesManager _prefs = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawningSystem = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly PricingSystem _pricingSystem = default!;
+    [Dependency] private readonly MapLoaderSystem _map = default!;
     [Dependency] private readonly NamingSystem _namingSystem = default!;
 
     [ViewVariables]
@@ -161,7 +162,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem
             aabb.Union(aabbs[i]);
         }
 
-        var (_, gridId) = _mapLoader.LoadGrid(GameTicker.DefaultMap, map, new MapLoadOptions
+        var gridId = _map.LoadGrid(GameTicker.DefaultMap, map, new MapLoadOptions
         {
             Offset = aabb.Center + MathF.Max(aabb.Height / 2f, aabb.Width / 2f) * 2.5f
         });
