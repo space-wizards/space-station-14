@@ -1,9 +1,4 @@
 Entries:
-- author: corentt
-  changes:
-  - {message: Cans and shakers can now be spilled on floor, type: Add}
-  id: 2146
-  time: '2022-08-14T05:19:45.0000000+00:00'
 - author: Visne
   changes:
   - {message: Fixed cigarette/blunt/joint crafting recipes to consume the correct
@@ -2961,3 +2956,9 @@ Entries:
   - {message: 'added a new PDA cartridge: The NetProbe cartridge.', type: Add}
   id: 2645
   time: '2022-11-13T21:36:00.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed a rounding error which would cause certain parts in machine upgrades
+      to not work. This has mostly affected the artifact analyzer., type: Fix}
+  id: 2646
+  time: '2022-11-13T23:42:35.0000000+00:00'
