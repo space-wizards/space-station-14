@@ -1,10 +1,4 @@
 Entries:
-- author: Zero_Diamond
-  changes:
-  - {message: Added "musician's tuxedo" and "musician's winter coat" for musician
-      role., type: Add}
-  id: 2145
-  time: '2022-08-14T05:17:37.0000000+00:00'
 - author: corentt
   changes:
   - {message: Cans and shakers can now be spilled on floor, type: Add}
@@ -2962,3 +2956,8 @@ Entries:
       match the server due to lag compensation., type: Tweak}
   id: 2644
   time: '2022-11-13T21:33:54.0000000+00:00'
+- author: juliangiebel
+  changes:
+  - {message: 'added a new PDA cartridge: The NetProbe cartridge.', type: Add}
+  id: 2645
+  time: '2022-11-13T21:36:00.0000000+00:00'
