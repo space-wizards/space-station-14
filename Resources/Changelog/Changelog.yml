@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Plastitanium walls have been ported from ss13., type: Add}
-  id: 2143
-  time: '2022-08-14T05:04:46.0000000+00:00'
 - author: OctoRocket
   changes:
   - {message: Fixed e-dagger flipping back and forth while in right hand, type: Fix}
@@ -2961,3 +2956,8 @@ Entries:
       meaning rat servants will no longer sit under you in combat.', type: Tweak}
   id: 2642
   time: '2022-11-13T09:57:14.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: Fixed rich text wrapping., type: Fix}
+  id: 2643
+  time: '2022-11-13T15:07:48.0000000+00:00'
