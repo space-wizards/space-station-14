@@ -116,9 +116,9 @@
     state: laurel
 
 - type: marking
-  id: DionaLeafyHead
-  bodyPart: Head
-  markingCategory: Head
+  id: DionaLeafyHeadTop
+  bodyPart: HeadTop
+  markingCategory: HeadTop
   speciesRestriction: [Diona]
   sprites:
   - sprite: Mobs/Customization/diona.rsi
@@ -134,9 +134,9 @@
     state: lotus
 
 - type: marking
-  id: DionaMeadowHead
-  bodyPart: Head
-  markingCategory: Head
+  id: DionaMeadowHeadTop
+  bodyPart: HeadTop
+  markingCategory: HeadTop
   speciesRestriction: [Diona]
   sprites:
   - sprite: Mobs/Customization/diona.rsi
@@ -188,36 +188,36 @@
     state: rosey
 
 - type: marking
-  id: DionaShrubHead
-  bodyPart: Head
-  markingCategory: Head
+  id: DionaShrubHeadTop
+  bodyPart: HeadTop
+  markingCategory: HeadTop
   speciesRestriction: [Diona]
   sprites:
   - sprite: Mobs/Customization/diona.rsi
     state: shrub
 
 - type: marking
-  id: DionaSpinnerHead
-  bodyPart: Head
-  markingCategory: Head
+  id: DionaSpinnerHeadSide
+  bodyPart: HeadSide
+  markingCategory: HeadSide
   speciesRestriction: [Diona]
   sprites:
   - sprite: Mobs/Customization/diona.rsi
     state: spinner
 
 - type: marking
-  id: DionaSproutHead
-  bodyPart: Head
-  markingCategory: Head
+  id: DionaSproutHeadSide
+  bodyPart: HeadSide
+  markingCategory: HeadSide
   speciesRestriction: [Diona]
   sprites:
   - sprite: Mobs/Customization/diona.rsi
     state: sprout
 
 - type: marking
-  id: DionaVineHead
-  bodyPart: Head
-  markingCategory: Head
+  id: DionaVineHeadTop
+  bodyPart: HeadTop
+  markingCategory: HeadTop
   speciesRestriction: [Diona]
   sprites:
   - sprite: Mobs/Customization/diona.rsi
