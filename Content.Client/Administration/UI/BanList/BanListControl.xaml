@@ -8,7 +8,7 @@
         </PanelContainer.PanelOverride>
         <ScrollContainer>
             <BoxContainer Name="Bans" Access="Public" Orientation="Vertical">
-                <controls:BanListHeader/>
+                <controls:BanListHeader Name="BansHeader"/>
             </BoxContainer>
         </ScrollContainer>
     </PanelContainer>

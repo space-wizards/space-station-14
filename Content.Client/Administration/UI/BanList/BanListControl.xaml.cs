@@ -10,6 +10,8 @@ namespace Content.Client.Administration.UI.BanList;
 [GenerateTypedNameReferences]
 public sealed partial class BanListControl : Control
 {
+    private BanListIdsPopup? _popup;
+
     public BanListControl()
     {
         RobustXamlLoader.Load(this);
@@ -25,7 +27,46 @@ public sealed partial class BanListControl : Control
         foreach (var ban in bans)
         {
             Bans.AddChild(new HSeparator());
-            Bans.AddChild(new BanListLine(ban));
+
+            var line = new BanListLine(ban);
+            line.OnIdsClicked += LineIdsClicked;
+
+            Bans.AddChild(line);
+        }
+    }
+
+    private void ClosePopup()
+    {
+        _popup?.Close();
+        _popup = null;
+    }
+
+    private bool LineIdsClicked(BanListLine line)
+    {
+        ClosePopup();
+
+        var ban = line.Ban;
+        var ip = ban.Address == null
+            ? string.Empty
+            : Loc.GetString("ban-list-ip", ("ip", ban.Address.Value.address));
+        var hwid =  ban.HWId == null ? string.Empty : Loc.GetString("ban-list-hwid", ("hwid", ban.HWId));
+        var guid = ban.UserId == null ? string.Empty : Loc.GetString("ban-list-guid", ("guid", ban.UserId.Value.ToString()));
+
+        _popup = new BanListIdsPopup(ip, hwid, guid);
+
+        var box = UIBox2.FromDimensions(UserInterfaceManager.MousePositionScaled.Position, (1, 1));
+        _popup.Open(box);
+
+        return true;
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+
+        if (_popup != null)
+        {
+            UserInterfaceManager.PopupRoot.RemoveChild(_popup);
         }
     }
 }
