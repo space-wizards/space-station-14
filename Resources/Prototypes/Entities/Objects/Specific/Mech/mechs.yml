@@ -1,0 +1,59 @@
+- type: entity
+  id: BaseMech
+  save: false
+  abstract: false
+  name: Mech
+  components:
+  - type: Sprite
+    netsync: false
+    drawdepth: Mobs
+    noRot: true
+    sprite: Objects/Specific/Mech/mecha.rsi
+    layers:
+    - map: [ "enum.MechVisualLayers.Base" ]
+      state: gygax
+  - type: Mech
+    baseState: gygax
+    openState: gygax-open
+    brokenState: gygax-broken
+  - type: InputMover
+  - type: InteractionOutline
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2.5
+    baseSprintSpeed: 4
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+  - type: Pullable
+  - type: Physics
+    bodyType: KinematicController
+  - type: Clickable
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.45
+      density: 400
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
+  - type: Appearance
+  #- type: Repairable
+  #  fuelcost: 20
+  #  doAfterDelay: 2
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+      - !type:ExplodeBehavior
