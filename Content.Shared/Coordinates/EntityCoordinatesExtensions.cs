@@ -1,4 +1,5 @@
 ﻿using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 
 namespace Content.Shared.Coordinates
 {
@@ -19,17 +20,17 @@ namespace Content.Shared.Coordinates
             return new EntityCoordinates(id, x, y);
         }
 
-        public static EntityCoordinates ToCoordinates(this IMapGrid grid, Vector2 offset)
+        public static EntityCoordinates ToCoordinates(this MapGridComponent grid, Vector2 offset)
         {
             return ToCoordinates(grid.GridEntityId, offset);
         }
 
-        public static EntityCoordinates ToCoordinates(this IMapGrid grid, float x, float y)
+        public static EntityCoordinates ToCoordinates(this MapGridComponent grid, float x, float y)
         {
             return ToCoordinates(grid.GridEntityId, x, y);
         }
 
-        public static EntityCoordinates ToCoordinates(this IMapGrid grid)
+        public static EntityCoordinates ToCoordinates(this MapGridComponent grid)
         {
             return ToCoordinates(grid.GridEntityId, Vector2.Zero);
         }

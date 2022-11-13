@@ -2,6 +2,7 @@ using System.Linq;
 using Robust.Server.Maps;
 using Robust.Server.Player;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
 
 namespace Content.Server.Administration.Systems;
