@@ -48,7 +48,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IServerPreferencesManager _prefs = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
-    [Dependency] private readonly IMapLoader _mapLoader = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPlayerManager _playerSystem = default!;
     [Dependency] private readonly FactionSystem _faction = default!;
@@ -58,6 +57,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly GameTicker _ticker = default!;
+    [Dependency] private readonly MapLoaderSystem _map = default!;
     [Dependency] private readonly RandomHumanoidSystem _randomHumanoid = default!;
 
 
@@ -619,7 +619,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
         var mapId = _mapManager.CreateMap();
 
-        var (_, outpostGrids) = _mapLoader.LoadMap(mapId, path.ToString());
+        var outpostGrids = _map.LoadMap(mapId, path.ToString());
         if (outpostGrids.Count == 0)
         {
             Logger.ErrorS("nukies", $"Error loading map {path} for nukies!");
@@ -630,7 +630,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         _nukieOutpost = outpostGrids[0];
 
         // Listen I just don't want it to overlap.
-        var (_, shuttleId) = _mapLoader.LoadGrid(mapId, shuttlePath.ToString(), new MapLoadOptions()
+        var shuttleId = _map.LoadGrid(mapId, shuttlePath.ToString(), new MapLoadOptions()
         {
             Offset = Vector2.One * 1000f,
         });
