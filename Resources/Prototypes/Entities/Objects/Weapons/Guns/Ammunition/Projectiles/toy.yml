@@ -2,7 +2,8 @@
   id: BulletFoam
   description: I hope you're wearing eye protection.
   name: foam dart
-  parent: BaseItem
+  parent: BaseBullet
+  noSpawn: true
   components:
     - type: Tag
       tags:
@@ -12,13 +13,20 @@
       sprite: Objects/Fun/toys.rsi
       layers:
         - state: foamdart
+    - type: StaminaDamageOnCollide
+      damage: 5 #You ever been shot with a Nerf gun? Those bullets hit way harder than they look.
+    - type: Projectile
+      damage:
+        types:
+          Blunt: 0
+      soundHit:
+        path: "/Audio/Weapons/tap.ogg"
         
   - type: entity
     id: BulletRiotFoam
     description: Eye protection won't save you this time.
     name: riot dart
-    parent: BaseBullet
-    noSpawn: true
+    parent: BulletFoam
     components:
     - type: Tag
       tags:
