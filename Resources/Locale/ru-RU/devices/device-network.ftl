@@ -25,9 +25,9 @@ device-address-prefix-air-alarm = Возд-
 device-address-examine-message = Адрес устройства: { $address }.
 
 #Device net ID names
-device-net-id-private = Частный
-device-net-id-wired = Проводной
-device-net-id-wireless = Беспроводной
+device-net-id-private = Частная
+device-net-id-wired = Проводная
+device-net-id-wireless = Беспроводная
 device-net-id-apc = ЛКП
 device-net-id-atmos-devices = Устройства Атмосферы
-device-net-id-reserved = Резерв
+device-net-id-reserved = Резервная
