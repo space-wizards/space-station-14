@@ -1,7 +1,7 @@
 ent-BaseWeaponLauncher = BaseWeaponLauncher
     .desc = Дерзай — налетай, целься и стреляй.
     .suffix = { "" }
-ent-WeaponLauncherChinaLake = China Lake
+ent-WeaponLauncherChinaLake = Китайское озеро
     .desc = БЛУП
     .suffix = { "" }
 ent-WeaponLauncherRocket = РПГ-7
