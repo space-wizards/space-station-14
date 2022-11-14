@@ -22,10 +22,6 @@
   id: AirlockArmory
 
 - type: wireLayout
-  parent: Airlock
-  id: Windoors
-
-- type: wireLayout
   id: HighSec
   wires:
   - !type:PowerWireAction

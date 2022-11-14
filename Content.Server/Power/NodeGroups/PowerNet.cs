@@ -1,10 +1,11 @@
-using System.Linq;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Power.Pow3r;
 using JetBrains.Annotations;
+using Robust.Shared.Utility;
+using System.Linq;
 
 namespace Content.Server.Power.NodeGroups
 {
@@ -59,6 +60,7 @@ namespace Content.Server.Power.NodeGroups
 
         public void AddSupplier(PowerSupplierComponent supplier)
         {
+            DebugTools.Assert(supplier.NetworkSupply.LinkedNetwork == default);
             supplier.NetworkSupply.LinkedNetwork = default;
             Suppliers.Add(supplier);
             _powerNetSystem?.QueueReconnectPowerNet(this);
@@ -66,6 +68,7 @@ namespace Content.Server.Power.NodeGroups
 
         public void RemoveSupplier(PowerSupplierComponent supplier)
         {
+            DebugTools.Assert(supplier.NetworkSupply.LinkedNetwork == NetworkNode.Id);
             supplier.NetworkSupply.LinkedNetwork = default;
             Suppliers.Remove(supplier);
             _powerNetSystem?.QueueReconnectPowerNet(this);
@@ -73,6 +76,7 @@ namespace Content.Server.Power.NodeGroups
 
         public void AddConsumer(PowerConsumerComponent consumer)
         {
+            DebugTools.Assert(consumer.NetworkLoad.LinkedNetwork == default);
             consumer.NetworkLoad.LinkedNetwork = default;
             Consumers.Add(consumer);
             _powerNetSystem?.QueueReconnectPowerNet(this);
@@ -80,6 +84,7 @@ namespace Content.Server.Power.NodeGroups
 
         public void RemoveConsumer(PowerConsumerComponent consumer)
         {
+            DebugTools.Assert(consumer.NetworkLoad.LinkedNetwork == NetworkNode.Id);
             consumer.NetworkLoad.LinkedNetwork = default;
             Consumers.Remove(consumer);
             _powerNetSystem?.QueueReconnectPowerNet(this);
@@ -88,7 +93,8 @@ namespace Content.Server.Power.NodeGroups
         public void AddDischarger(BatteryDischargerComponent discharger)
         {
             var battery = IoCManager.Resolve<IEntityManager>().GetComponent<PowerNetworkBatteryComponent>(discharger.Owner);
-            battery.NetworkBattery.LinkedNetworkCharging = default;
+            DebugTools.Assert(battery.NetworkBattery.LinkedNetworkDischarging == default);
+            battery.NetworkBattery.LinkedNetworkDischarging = default;
             Dischargers.Add(discharger);
             _powerNetSystem?.QueueReconnectPowerNet(this);
         }
@@ -97,7 +103,10 @@ namespace Content.Server.Power.NodeGroups
         {
             // Can be missing if the entity is being deleted, not a big deal.
             if (IoCManager.Resolve<IEntityManager>().TryGetComponent(discharger.Owner, out PowerNetworkBatteryComponent? battery))
-                battery.NetworkBattery.LinkedNetworkCharging = default;
+            {
+                DebugTools.Assert(battery.NetworkBattery.LinkedNetworkDischarging == NetworkNode.Id);
+                battery.NetworkBattery.LinkedNetworkDischarging = default;
+            }
 
             Dischargers.Remove(discharger);
             _powerNetSystem?.QueueReconnectPowerNet(this);
@@ -106,6 +115,7 @@ namespace Content.Server.Power.NodeGroups
         public void AddCharger(BatteryChargerComponent charger)
         {
             var battery = IoCManager.Resolve<IEntityManager>().GetComponent<PowerNetworkBatteryComponent>(charger.Owner);
+            DebugTools.Assert(battery.NetworkBattery.LinkedNetworkCharging == default);
             battery.NetworkBattery.LinkedNetworkCharging = default;
             Chargers.Add(charger);
             _powerNetSystem?.QueueReconnectPowerNet(this);
@@ -115,7 +125,10 @@ namespace Content.Server.Power.NodeGroups
         {
             // Can be missing if the entity is being deleted, not a big deal.
             if (IoCManager.Resolve<IEntityManager>().TryGetComponent(charger.Owner, out PowerNetworkBatteryComponent? battery))
+            {
+                DebugTools.Assert(battery.NetworkBattery.LinkedNetworkCharging == NetworkNode.Id);
                 battery.NetworkBattery.LinkedNetworkCharging = default;
+            }
 
             Chargers.Remove(charger);
             _powerNetSystem?.QueueReconnectPowerNet(this);

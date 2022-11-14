@@ -739,9 +739,6 @@ entities:
     pos: -1.5,1.5
     parent: 50
     type: Transform
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 81
   type: Poweredlight
   components:
@@ -749,9 +746,6 @@ entities:
     pos: 0.5,-0.5
     parent: 50
     type: Transform
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 82
   type: PoweredSmallLight
   components:
@@ -759,9 +753,6 @@ entities:
     pos: -1.5,-3.5
     parent: 50
     type: Transform
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 83
   type: Rack
   components:

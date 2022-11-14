@@ -4,6 +4,9 @@
   parent: BaseItem
   abstract: true
   components:
+  - type: Tag
+    tags:
+      - SpeedLoaderMagnum
   - type: BallisticAmmoProvider
     whitelist:
       tags:

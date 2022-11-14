@@ -1,0 +1,22 @@
+<controls:FancyWindow
+    xmlns="https://spacestation14.io"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    Title="{Loc 'analysis-destroy-window-title'}"
+    MinSize="256 100">
+    <BoxContainer
+        Margin="10 10"
+        HorizontalExpand="True"
+        Orientation="Vertical"
+        VerticalExpand="True">
+        <Label Text="{Loc 'analysis-destroy-window-text'}" />
+        <BoxContainer
+            Margin="10 10 10 10"
+            VerticalAlignment="Bottom"
+            Orientation="Horizontal"
+            HorizontalExpand="True">
+            <Button Name="YesButton" Text="{Loc 'analysis-destroy-window-yes'}" HorizontalExpand="True"></Button>
+            <BoxContainer SetSize="10 10"></BoxContainer>
+            <Button Name="NoButton" Text="{Loc 'analysis-destroy-window-no'}" HorizontalExpand="True"></Button>
+        </BoxContainer>
+        </BoxContainer>
+</controls:FancyWindow>

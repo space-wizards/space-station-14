@@ -159,6 +159,7 @@ public sealed class SpillableSystem : EntitySystem
             };
         }
         verb.Impact = LogImpact.Medium; // dangerous reagent reaction are logged separately.
+        verb.DoContactInteraction = true;
         args.Verbs.Add(verb);
     }
 

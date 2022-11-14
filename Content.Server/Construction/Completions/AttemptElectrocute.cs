@@ -11,7 +11,7 @@ namespace Content.Server.Construction.Completions
             if (userUid == null)
                 return;
 
-            EntitySystem.Get<ElectrocutionSystem>().TryDoElectrifiedAct(uid, userUid.Value);
+            entityManager.EntitySysManager.GetEntitySystem<ElectrocutionSystem>().TryDoElectrifiedAct(uid, userUid.Value);
         }
     }
 }

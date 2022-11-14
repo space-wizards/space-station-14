@@ -11,9 +11,9 @@ using Content.Shared.Disease.Components;
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
-using Content.Shared.Item;
 using Content.Shared.MobState.Components;
 using Content.Shared.Rejuvenate;
 using Robust.Shared.Player;
@@ -46,8 +46,7 @@ namespace Content.Server.Disease
             SubscribeLocalEvent<DiseaseCarrierComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<DiseaseCarrierComponent, CureDiseaseAttemptEvent>(OnTryCureDisease);
             SubscribeLocalEvent<DiseaseCarrierComponent, RejuvenateEvent>(OnRejuvenate);
-            SubscribeLocalEvent<DiseasedComponent, UserInteractedWithItemEvent>(OnUserInteractDiseased);
-            SubscribeLocalEvent<DiseasedComponent, ItemInteractedWithEvent>(OnTargetInteractDiseased);
+            SubscribeLocalEvent<DiseasedComponent, ContactInteractionEvent>(OnContactInteraction);
             SubscribeLocalEvent<DiseasedComponent, EntitySpokeEvent>(OnEntitySpeak);
             SubscribeLocalEvent<DiseaseProtectionComponent, GotEquippedEvent>(OnEquipped);
             SubscribeLocalEvent<DiseaseProtectionComponent, GotUnequippedEvent>(OnUnequipped);
@@ -256,17 +255,9 @@ namespace Content.Server.Disease
         /// <summary>
         /// When a diseased person interacts with something, check infection.
         /// </summary>
-        private void OnUserInteractDiseased(EntityUid uid, DiseasedComponent component, UserInteractedWithItemEvent args)
+        private void OnContactInteraction(EntityUid uid, DiseasedComponent component, ContactInteractionEvent args)
         {
-            InteractWithDiseased(args.User, args.Item);
-        }
-
-        /// <summary>
-        /// When a diseased person is interacted with, check infection.
-        /// </summary>
-        private void OnTargetInteractDiseased(EntityUid uid, DiseasedComponent component, ItemInteractedWithEvent args)
-        {
-            InteractWithDiseased(args.Item, args.User);
+            InteractWithDiseased(uid, args.Other);
         }
 
         private void OnEntitySpeak(EntityUid uid, DiseasedComponent component, EntitySpokeEvent args)

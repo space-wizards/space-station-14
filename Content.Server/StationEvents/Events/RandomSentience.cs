@@ -34,7 +34,7 @@ public sealed class RandomSentience : StationEventSystem
             var comp = EntityManager.AddComponent<GhostTakeoverAvailableComponent>(target.Owner);
             comp.RoleName = EntityManager.GetComponent<MetaDataComponent>(target.Owner).EntityName;
             comp.RoleDescription = Loc.GetString("station-event-random-sentience-role-description", ("name", comp.RoleName));
-            groups.Add(target.FlavorKind);
+            groups.Add(Loc.GetString(target.FlavorKind));
         }
 
         if (groups.Count == 0)

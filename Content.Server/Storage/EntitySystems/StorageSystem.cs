@@ -298,7 +298,7 @@ namespace Content.Server.Storage.EntitySystems
                 var validStorables = new List<EntityUid>();
                 var itemQuery = GetEntityQuery<ItemComponent>();
 
-                foreach (var entity in _entityLookupSystem.GetEntitiesInRange(args.ClickLocation, storageComp.AreaInsertRadius, LookupFlags.None))
+                foreach (var entity in _entityLookupSystem.GetEntitiesInRange(args.ClickLocation, storageComp.AreaInsertRadius, LookupFlags.Dynamic | LookupFlags.Sundries))
                 {
                     if (entity == args.User
                         || !itemQuery.HasComponent(entity)

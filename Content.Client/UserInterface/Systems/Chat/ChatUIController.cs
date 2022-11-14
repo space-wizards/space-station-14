@@ -437,7 +437,7 @@ public sealed class ChatUIController : UIController
             CanSendChannels |= ChatSelectChannel.Admin;
         }
 
-        SelectableChannels = CanSendChannels & ~ChatSelectChannel.Console;
+        SelectableChannels = CanSendChannels;
 
         // Necessary so that we always have a channel to fall back to.
         DebugTools.Assert((CanSendChannels & ChatSelectChannel.OOC) != 0, "OOC must always be available");

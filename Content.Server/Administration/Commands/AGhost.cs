@@ -1,4 +1,4 @@
-using Content.Server.GameTicking;
+﻿using Content.Server.GameTicking;
 using Content.Server.Ghost.Components;
 using Content.Server.Players;
 using Content.Shared.Administration;
@@ -40,7 +40,8 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            var canReturn = mind.CurrentEntity != null;
+            var canReturn = mind.CurrentEntity != null
+                            && !_entities.HasComponent<GhostComponent>(mind.CurrentEntity);
             var coordinates = player.AttachedEntity != null
                 ? _entities.GetComponent<TransformComponent>(player.AttachedEntity.Value).Coordinates
                 : EntitySystem.Get<GameTicker>().GetObserverSpawnPoint();

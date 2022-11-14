@@ -27,6 +27,15 @@ public sealed partial class PathfindingSystem
     public const int PathfindingCollisionMask = (int) CollisionGroup.MobMask;
     public const int PathfindingCollisionLayer = (int) CollisionGroup.MobLayer;
 
+    /// <summary>
+    ///     If true, UpdateGrid() will not process grids.
+    /// </summary>
+    /// <remarks>
+    ///     Useful if something like a large explosion is in the process of shredding the grid, as it avoids uneccesary
+    ///     updating.
+    /// </remarks>
+    public bool PauseUpdating = false;
+
     private readonly Stopwatch _stopwatch = new();
 
     // Probably can't pool polys as there might be old pathfinding refs to them.
@@ -66,6 +75,9 @@ public sealed partial class PathfindingSystem
 
     private void UpdateGrid()
     {
+        if (PauseUpdating)
+            return;
+
         var curTime = _timing.CurTime;
 #if DEBUG
         var updateCount = 0;
@@ -78,7 +90,7 @@ public sealed partial class PathfindingSystem
         {
             if (comp.DirtyChunks.Count == 0 ||
                 comp.NextUpdate < curTime ||
-                !TryComp<IMapGridComponent>(comp.Owner, out var mapGridComp))
+                !TryComp<MapGridComponent>(comp.Owner, out var mapGridComp))
             {
                 continue;
             }
@@ -89,13 +101,13 @@ public sealed partial class PathfindingSystem
             // TODO: Often we invalidate the entire chunk when it might be something as simple as an airlock change
             // Would be better to handle that though this was safer and max it's taking is like 1-2ms every half-second.
             var dirt = new GridPathfindingChunk[comp.DirtyChunks.Count];
-            var i = 0;
+            var idx = 0;
 
             foreach (var origin in comp.DirtyChunks)
             {
                 var chunk = GetChunk(origin, comp.Owner, comp);
-                dirt[i] = chunk;
-                i++;
+                dirt[idx] = chunk;
+                idx++;
             }
 
             // We force clear portals in a single-threaded context to be safe
@@ -119,7 +131,7 @@ public sealed partial class PathfindingSystem
             // This is for map <> grid pathfinding
 
             // Without parallel this is roughly 3x slower on my desktop.
-            Parallel.For(0, dirt.Length, i =>
+            for (var i = 0; i < dirt.Length; i++)
             {
                 // Doing the queries per task seems faster.
                 var accessQuery = GetEntityQuery<AccessReaderComponent>();
@@ -129,7 +141,7 @@ public sealed partial class PathfindingSystem
                 var physicsQuery = GetEntityQuery<PhysicsComponent>();
                 var xformQuery = GetEntityQuery<TransformComponent>();
                 BuildBreadcrumbs(dirt[i], mapGridComp.Grid, accessQuery, destructibleQuery, doorQuery, fixturesQuery, physicsQuery, xformQuery);
-            });
+            }
 
             const int Division = 4;
 
@@ -237,7 +249,7 @@ public sealed partial class PathfindingSystem
     {
         if (!TryComp<PhysicsComponent>(ev.Sender, out var body) ||
             body.BodyType != BodyType.Static ||
-            HasComp<IMapGridComponent>(ev.Sender) ||
+            HasComp<MapGridComponent>(ev.Sender) ||
             ev.OldPosition.Equals(ev.NewPosition))
         {
             return;

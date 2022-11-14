@@ -4,9 +4,11 @@ using System.Linq;
 using BenchmarkDotNet.Attributes;
 using Content.IntegrationTests;
 using Content.Server.Maps;
+using Robust.Server.GameObjects;
 using Robust.Server.Maps;
 using Robust.Shared;
 using Robust.Shared.Analyzers;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -37,6 +39,6 @@ public class MapLoadBenchmark
     [Benchmark]
     public void LoadMap()
     {
-        _pair.Pair.Server.ResolveDependency<IMapLoader>().LoadMap(new MapId(10), Paths[Map]);
+        _pair.Pair.Server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<MapLoaderSystem>().LoadMap(new MapId(10), Paths[Map]);
     }
 }

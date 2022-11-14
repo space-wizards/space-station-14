@@ -8,6 +8,7 @@
   - type: Anchorable
   - type: Transform
     noRot: true
+  - type: Prayable
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic

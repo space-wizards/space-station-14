@@ -31,7 +31,7 @@ namespace Content.Server.Atmos.Commands
                 return;
             }
 
-            if (!entMan.HasComponent<IMapGridComponent>(euid))
+            if (!entMan.HasComponent<MapGridComponent>(euid))
             {
                 shell.WriteError($"Euid '{euid}' does not exist or is not a grid.");
                 return;
