@@ -106,24 +106,29 @@
   id: WeaponSubMachineGunC20rDonksoft
   parent: WeaponSubMachineGunC20r
   description: A Donksoft-produced replica of the infamous SMG, uses foam darts as ammo. Looks and sounds just like the real thing!
-- type: ItemSlots
-    slots:
-      gun_magazine:
-        name: Magazine
-        startingItem: MagazinePistolSubMachineGunFoam # ditto on the L6 comment, adding this to uplinks eventually once I've polished it
-        insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
-        ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
-        priority: 2
-        whitelist:
-          tags:
-            - MagazineDonksoftSMG
-      gun_chamber:
-        name: Chamber
-        startingItem: BulletFoam
-        priority: 1
-        whitelist:
-          tags:
-            - BulletFoam
+  components:
+  - type: ItemSlots
+      slots:
+        gun_magazine:
+          name: Magazine
+          startingItem: MagazinePistolSubMachineGunFoam # ditto on the L6 comment, adding this to uplinks eventually once I've polished it
+          insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
+          ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
+          priority: 2
+          whitelist:
+            tags:
+              - MagazineDonksoftSMG
+        gun_chamber:
+          name: Chamber
+          startingItem: BulletFoam
+          priority: 1
+          whitelist:
+            tags:
+              - BulletFoam
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
 
 - type: entity
   name: Vector
