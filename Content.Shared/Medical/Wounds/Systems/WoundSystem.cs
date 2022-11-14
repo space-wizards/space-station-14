@@ -22,6 +22,13 @@ public sealed class WoundSystem : EntitySystem
     {
         CacheData(null);
         _prototypeManager.PrototypesReloaded += CacheData;
+        SubscribeLocalEvent<DamageableComponent, DamageChangedEvent>(OnDamageReceived);
+    }
+
+    private void OnDamageReceived(EntityUid uid, DamageableComponent component, DamageChangedEvent args)
+    {
+        if (args.DamageDelta != null)
+            TryApplyWounds(uid, args.DamageDelta);
     }
 
     private void CacheData(PrototypesReloadedEventArgs? prototypesReloadedEventArgs)
