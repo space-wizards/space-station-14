@@ -1,10 +1,4 @@
 Entries:
-- author: notafet
-  changes:
-  - {message: ChemMasters no longer need a free beaker loaded to discard reagents.,
-    type: Fix}
-  id: 2149
-  time: '2022-08-14T05:37:19.0000000+00:00'
 - author: corentt
   changes:
   - {message: "fix spawn point for HoP and Detective on NSS\_Pillar", type: Fix}
@@ -2959,3 +2953,8 @@ Entries:
   - {message: Grids should no longer clip constantly (engine change)., type: Fix}
   id: 2648
   time: '2022-11-14T11:17:34.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Cell charger is destructible and doesn't block mobs movement., type: Tweak}
+  id: 2649
+  time: '2022-11-14T14:57:59.0000000+00:00'
