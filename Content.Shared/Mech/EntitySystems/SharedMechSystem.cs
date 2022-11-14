@@ -22,23 +22,22 @@ public abstract class SharedMechSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<MechComponent, InteractNoHandEvent>(RelayInteractionEvent);
+        SubscribeLocalEvent<SharedMechComponent, InteractNoHandEvent>(RelayInteractionEvent);
 
-        SubscribeLocalEvent<MechComponent, ComponentStartup>(OnStartup);
-        SubscribeLocalEvent<MechComponent, GetVerbsEvent<AlternativeVerb>>(OnAlternativeVerb);
-        SubscribeLocalEvent<MechComponent, DestructionEventArgs>(OnDestruction);
+        SubscribeLocalEvent<SharedMechComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<SharedMechComponent, GetVerbsEvent<AlternativeVerb>>(OnAlternativeVerb);
+        SubscribeLocalEvent<SharedMechComponent, DestructionEventArgs>(OnDestruction);
     }
 
-    private void RelayInteractionEvent<TEvent>(EntityUid uid, MechComponent component, TEvent args) where TEvent : notnull
+    private void RelayInteractionEvent<TEvent>(EntityUid uid, SharedMechComponent component, TEvent args) where TEvent : notnull
     {
-        Logger.Debug("FOOBAR");
         foreach (var module in component.Modules)
         {
             RaiseLocalEvent(module, args);
         }
     }
 
-    private void OnAlternativeVerb(EntityUid uid, MechComponent component, GetVerbsEvent<AlternativeVerb> args)
+    private void OnAlternativeVerb(EntityUid uid, SharedMechComponent component, GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract)
             return;
@@ -65,13 +64,13 @@ public abstract class SharedMechSystem : EntitySystem
         }
     }
 
-    private void OnStartup(EntityUid uid, MechComponent component, ComponentStartup args)
+    private void OnStartup(EntityUid uid, SharedMechComponent component, ComponentStartup args)
     {
         component.RiderSlot = _container.EnsureContainer<ContainerSlot>(uid, component.RiderSlotId);
         UpdateAppearance(uid, component);
     }
 
-    private void OnDestruction(EntityUid uid, MechComponent component, DestructionEventArgs args)
+    private void OnDestruction(EntityUid uid, SharedMechComponent component, DestructionEventArgs args)
     {
         TryEject(uid, component);
     }
@@ -94,12 +93,12 @@ public abstract class SharedMechSystem : EntitySystem
         RemComp<InteractionRelayComponent>(uid);
     }
 
-    public bool IsEmpty(MechComponent component)
+    public bool IsEmpty(SharedMechComponent component)
     {
         return component.RiderSlot.ContainedEntity == null;
     }
 
-    public bool CanInsert(EntityUid uid, EntityUid toInsert, MechComponent? component = null)
+    public bool CanInsert(EntityUid uid, EntityUid toInsert, SharedMechComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return false;
@@ -107,7 +106,7 @@ public abstract class SharedMechSystem : EntitySystem
         return IsEmpty(component) && _actionBlocker.CanMove(toInsert) && HasComp<BodyComponent>(toInsert);
     }
 
-    public bool TryInsert(EntityUid uid, EntityUid? toInsert, MechComponent? component = null)
+    public virtual bool TryInsert(EntityUid uid, EntityUid? toInsert, SharedMechComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return false;
@@ -124,7 +123,7 @@ public abstract class SharedMechSystem : EntitySystem
         return true;
     }
 
-    public bool TryEject(EntityUid uid, MechComponent? component = null)
+    public virtual bool TryEject(EntityUid uid, SharedMechComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return false;
@@ -138,7 +137,7 @@ public abstract class SharedMechSystem : EntitySystem
         return true;
     }
 
-    public void UpdateAppearance(EntityUid uid, MechComponent? component = null)
+    public void UpdateAppearance(EntityUid uid, SharedMechComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;

@@ -1,11 +1,10 @@
 ﻿using Robust.Shared.Containers;
-using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Mech.Components;
 
-[RegisterComponent, NetworkedComponent]
-public sealed class MechComponent : Component
+//TODO: make some fucking network replication
+public abstract class SharedMechComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
     public ContainerSlot RiderSlot = default!;

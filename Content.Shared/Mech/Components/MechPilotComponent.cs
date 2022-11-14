@@ -6,5 +6,5 @@ namespace Content.Shared.Mech.Components;
 public sealed class MechPilotComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
-    public EntityUid? Mech;
+    public EntityUid Mech;
 }
