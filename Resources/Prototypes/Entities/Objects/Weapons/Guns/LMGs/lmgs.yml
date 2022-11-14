@@ -78,21 +78,22 @@
     id: WeaponLightMachineGunL6Donksoft
     parent: WeaponLightMachineGunL6
     description: A Donksoft-produced replica of the L6 SAW that uses foam darts as ammo. Looks and sounds just like the real thing!
-  - type: ItemSlots
-    slots:
-      gun_magazine:
-        name: Magazine
-        startingItem: MagazineLightRifleFoam #split on whether to make this preloaded with riot darts or regular darts, since I'm eventually adding these to uplinks
-        insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
-        ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
-        priority: 2
-        whitelist:
-          tags:
-            - MagazineDonksoftLMG
-      gun_chamber:
-        name: Chamber
-        startingItem: BulletFoam
-        priority: 1
-        whitelist:
-          tags:
-            - BulletFoam
+    components:
+    - type: ItemSlots
+      slots:
+        gun_magazine:
+          name: Magazine
+          startingItem: MagazineLightRifleFoam #split on whether to make this preloaded with riot darts or regular darts, since I'm eventually adding these to uplinks
+          insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+          ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
+          priority: 2
+          whitelist:
+            tags:
+              - MagazineDonksoftLMG
+        gun_chamber:
+          name: Chamber
+          startingItem: BulletFoam
+          priority: 1
+          whitelist:
+            tags:
+              - BulletFoam
