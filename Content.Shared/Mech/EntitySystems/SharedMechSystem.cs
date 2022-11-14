@@ -1,6 +1,8 @@
 ﻿using Content.Shared.ActionBlocker;
 using Content.Shared.Body.Components;
 using Content.Shared.Destructible;
+using Content.Shared.Interaction;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Mech.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
@@ -9,19 +11,31 @@ using Robust.Shared.Containers;
 
 namespace Content.Shared.Mech.EntitySystems;
 
-public abstract partial class SharedMechSystem : EntitySystem
+public abstract class SharedMechSystem : EntitySystem
 {
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly SharedMoverController _mover = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
+        SubscribeLocalEvent<MechComponent, InteractNoHandEvent>(RelayInteractionEvent);
+
         SubscribeLocalEvent<MechComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<MechComponent, GetVerbsEvent<AlternativeVerb>>(OnAlternativeVerb);
         SubscribeLocalEvent<MechComponent, DestructionEventArgs>(OnDestruction);
+    }
+
+    private void RelayInteractionEvent<TEvent>(EntityUid uid, MechComponent component, TEvent args) where TEvent : notnull
+    {
+        Logger.Debug("FOOBAR");
+        foreach (var module in component.Modules)
+        {
+            RaiseLocalEvent(module, args);
+        }
     }
 
     private void OnAlternativeVerb(EntityUid uid, MechComponent component, GetVerbsEvent<AlternativeVerb> args)
@@ -66,7 +80,9 @@ public abstract partial class SharedMechSystem : EntitySystem
     {
         var rider = EnsureComp<MechPilotComponent>(user);
         var relay = EnsureComp<RelayInputMoverComponent>(user);
+        var irelay = EnsureComp<InteractionRelayComponent>(user);
         _mover.SetRelay(user, uid, relay);
+        _interaction.SetRelay(user, uid, irelay);
         rider.Mech = uid;
     }
 
@@ -75,6 +91,7 @@ public abstract partial class SharedMechSystem : EntitySystem
         if (!RemComp<MechPilotComponent>(uid))
             return;
         RemComp<RelayInputMoverComponent>(uid);
+        RemComp<InteractionRelayComponent>(uid);
     }
 
     public bool IsEmpty(MechComponent component)

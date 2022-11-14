@@ -40,7 +40,7 @@ namespace Content.Shared.Interaction
     /// Governs interactions during clicking on entities
     /// </summary>
     [UsedImplicitly]
-    public abstract class SharedInteractionSystem : EntitySystem
+    public abstract partial class SharedInteractionSystem : EntitySystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
@@ -81,6 +81,8 @@ namespace Content.Shared.Interaction
                 .Bind(ContentKeyFunctions.TryPullObject,
                     new PointerInputCmdHandler(HandleTryPullObject))
                 .Register<SharedInteractionSystem>();
+
+            InitializeRelay();
         }
 
         public override void Shutdown()
@@ -224,6 +226,11 @@ namespace Content.Shared.Interaction
             bool checkAccess = true,
             bool checkCanUse = true)
         {
+            if (TryComp<InteractionRelayComponent>(user, out var relay) && relay.RelayEntity is not null)
+            {
+                UserInteraction(relay.RelayEntity.Value, coordinates, target, altInteract, checkCanInteract, checkAccess, checkCanUse);
+            }
+
             if (target != null && Deleted(target.Value))
                 return;
 
