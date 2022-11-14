@@ -6,7 +6,6 @@ using Content.Server.Hands.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
-using Content.Shared.Buckle.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Standing;
 using NUnit.Framework;
@@ -92,7 +91,6 @@ namespace Content.IntegrationTests.Tests.Buckle
                 Assert.NotNull(buckle.BuckledTo);
                 Assert.True(buckle.Buckled);
 
-                Assert.True(((BuckleComponentState) buckle.GetComponentState()).Buckled);
                 Assert.False(actionBlocker.CanMove(human));
                 Assert.False(actionBlocker.CanChangeDirection(human));
                 Assert.False(standingState.Down(human));
