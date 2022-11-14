@@ -1,11 +1,4 @@
 Entries:
-- author: Visne
-  changes:
-  - {message: Fixed cigarette/blunt/joint crafting recipes to consume the correct
-      amount of ingredients, type: Fix}
-  - {message: Made blunts brown instead of white, type: Tweak}
-  id: 2147
-  time: '2022-08-14T05:20:31.0000000+00:00'
 - author: Elijahrane
   changes:
   - {message: Drivebys work again, type: Fix}
@@ -2962,3 +2955,8 @@ Entries:
       to not work. This has mostly affected the artifact analyzer., type: Fix}
   id: 2646
   time: '2022-11-13T23:42:35.0000000+00:00'
+- author: JustinTrotter
+  changes:
+  - {message: The savage magnet now has functional LED lights., type: Add}
+  id: 2647
+  time: '2022-11-14T07:45:45.0000000+00:00'
