@@ -1,9 +1,4 @@
 Entries:
-- author: Veritius
-  changes:
-  - {message: You can now stop C-4 from automatically activating when planted., type: Tweak}
-  id: 2152
-  time: '2022-08-14T05:48:03.0000000+00:00'
 - author: juliangiebel
   changes:
   - {message: The mailing unit. A pneumatic mail delivery system!, type: Add}
@@ -2957,3 +2952,9 @@ Entries:
   - {message: Adds SSXIV lobby screen., type: Add}
   id: 2651
   time: '2022-11-14T19:09:38.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added the Rapid Parts Exchange Device. Just load it up with parts and
+      click on a machine to instantly upgrade it., type: Add}
+  id: 2652
+  time: '2022-11-14T19:36:14.0000000+00:00'
