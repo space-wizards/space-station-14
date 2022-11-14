@@ -14,7 +14,8 @@ namespace Content.Benchmarks
 {
     [DisassemblyDiagnoser]
     [Virtual]
-    public class ColorInterpolateBenchmark
+    public class
+        ColorInterpolateBenchmark
     {
 #if NETCOREAPP
         private const MethodImplOptions AggressiveOpt = MethodImplOptions.AggressiveOptimization;

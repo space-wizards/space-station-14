@@ -434,8 +434,35 @@
     staticRecipes:
       - ClothingUniformJumpsuitColorGrey
       - ClothingUniformJumpskirtColorGrey
-      - ClothingUniformJumpsuitBartender
-      - ClothingUniformJumpskirtBartender
+      - ClothingUniformJumpsuitColorBlack
+      - ClothingUniformJumpskirtColorBlack
+      - ClothingUniformJumpsuitColorBlue
+      - ClothingUniformJumpskirtColorBlue
+      - ClothingUniformJumpsuitColorYellow
+      - ClothingUniformJumpskirtColorYellow
+      - ClothingUniformJumpsuitColorGreen
+      - ClothingUniformJumpskirtColorGreen
+      - ClothingUniformJumpsuitColorOrange
+      - ClothingUniformJumpskirtColorOrange
+      - ClothingUniformJumpsuitColorRed
+      - ClothingUniformJumpskirtColorRed
+      - ClothingUniformJumpskirtColorMaroon
+      - ClothingUniformJumpsuitColorMaroon
+      - ClothingUniformJumpsuitColorPink
+      - ClothingUniformJumpskirtColorPink
+      - ClothingUniformJumpsuitColorPurple
+      - ClothingUniformJumpskirtColorPurple
+      - ClothingUniformJumpsuitColorDarkBlue
+      - ClothingUniformJumpskirtColorDarkBlue
+      - ClothingUniformJumpsuitColorTeal
+      - ClothingUniformJumpskirtColorTeal
+      - ClothingUniformJumpsuitColorBrown
+      - ClothingUniformJumpskirtColorBrown
+      - ClothingUniformJumpsuitColorDarkGreen
+      - ClothingUniformJumpskirtColorDarkGreen
+      - ClothingUniformColorRainbow
+      - CothingUniformJumpsuitBartender
+      - CllothingUniformJumpskirtBartender
       - ClothingUniformJumpsuitCaptain
       - ClothingUniformJumpskirtCaptain
       - ClothingUniformJumpsuitCargo
@@ -466,7 +493,6 @@
       - ClothingUniformJumpskirtJanitor
       - ClothingUniformJumpsuitLawyerBlack
       - ClothingUniformJumpsuitLibrarian
-      - ClothingUniformJumpskirtColorLightBrown
       - ClothingUniformJumpsuitMedicalDoctor
       - ClothingUniformJumpskirtMedicalDoctor
       - ClothingUniformJumpsuitMime
@@ -486,6 +512,7 @@
       - ClothingUniformJumpskirtSec
       - ClothingUniformJumpsuitWarden
       - ClothingUniformJumpskirtWarden
+      - ClothingOuterWinterCoat
       - ClothingOuterWinterCap
       - ClothingOuterWinterCE
       - ClothingOuterWinterCMO
@@ -493,6 +520,10 @@
       - ClothingOuterWinterHoS
       - ClothingOuterWinterQM
       - ClothingOuterWinterRD
+      - ClothingNeckScarfStripedGreen
+      - ClothingNeckScarfStripedZebra
+      - ClothingNeckScarfStripedBlue
+      - ClothingNeckScarfStripedRed
       - ClothingNeckMantleCap
       - ClothingNeckMantleCE
       - ClothingNeckMantleCMO
@@ -502,6 +533,29 @@
       - ClothingOuterWinterMusician
       - ClothingOuterWinterClown
       - ClothingOuterWinterMime
+      - ClothingOuterWinterCoat
+      - ClothingHeadHatGreysoft
+      - ClothingHeadHatMimesoft
+      - ClothingHeadHatBluesoft
+      - ClothingHeadHatYellowsoft
+      - ClothingHeadHatGreensoft
+      - ClothingHeadHatOrangesoft
+      - ClothingHeadHatRedsoft
+      - ClothingHeadHatPurplesoft
+      - HatBandBlack
+      - HatBandBlue
+      - HatBandGreen
+      - HatBandRed
+      - HatBandSkull
+      - ClothingShoesColorBlack
+      - ClothingShoesColorBrown
+      - ClothingShoesColorWhite
+      - ClothingShoesColorBlue
+      - ClothingShoesColorYellow
+      - ClothingShoesColorGreen
+      - ClothingShoesColorOrange
+      - ClothingShoesColorRed
+      - ClothingShoesColorPurple
   - type: MaterialStorage
     whitelist:
       tags:

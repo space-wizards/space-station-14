@@ -8,17 +8,287 @@
   result: ClothingUniformJumpsuitColorGrey
   completetime: 4
   materials:
-    Cloth: 300
+    Cloth: 150
 
 - type: latheRecipe
-  id: ClothingUniformJumpskirtColorGrey
+  id: ClothingUniformJumpskirtColorGrey # Tide
   icon:
     sprite: Clothing/Uniforms/Jumpskirt/Color/grey.rsi
     state: icon
   result: ClothingUniformJumpskirtColorGrey
   completetime: 4
   materials:
-    Cloth: 300
+    Cloth: 150
+
+- type: latheRecipe
+  id: ClothingUniformJumpsuitColorBlack
+  icon:
+    sprite: Clothing/Uniforms/Jumpsuit/Color/black.rsi
+    state: icon
+  result: ClothingUniformJumpsuitColorBlack
+  completetime: 4
+  materials:
+    Cloth: 150
+
+- type: latheRecipe
+  id: ClothingUniformJumpskirtColorBlack
+  icon:
+    sprite: Clothing/Uniforms/Jumpskirt/Color/black.rsi
+    state: icon
+  result: ClothingUniformJumpskirtColorBlack
+  completetime: 4
+  materials:
+    Cloth: 150
+
+- type: latheRecipe
+  id: ClothingUniformJumpsuitColorBlue
+  icon:
+    sprite: Clothing/Uniforms/Jumpsuit/Color/blue.rsi
+    state: icon
+  result: ClothingUniformJumpsuitColorBlue
+  completetime: 4
+  materials:
+    Cloth: 150
+
+- type: latheRecipe
+  id: ClothingUniformJumpskirtColorBlue
+  icon:
+    sprite: Clothing/Uniforms/Jumpskirt/Color/blue.rsi
+    state: icon
+  result: ClothingUniformJumpskirtColorBlue
+  completetime: 4
+  materials:
+    Cloth: 150
+
+- type: latheRecipe
+  id: ClothingUniformJumpskirtColorYellow
+  icon:
+    sprite: Clothing/Uniforms/Jumpskirt/Color/yellow.rsi
+    state: icon
+  result: ClothingUniformJumpskirtColorYellow
+  completetime: 4
+  materials:
+    Cloth: 150
+
+- type: latheRecipe
+  id: ClothingUniformJumpsuitColorYellow
+  icon:
+    sprite: Clothing/Uniforms/Jumpsuit/Color/yellow.rsi
+    state: icon
+  result: ClothingUniformJumpsuitColorYellow
+  completetime: 4
+  materials:
+    Cloth: 150
+
+- type: latheRecipe
+  id: ClothingUniformJumpsuitColorGreen
+  icon:
+    sprite: Clothing/Uniforms/Jumpsuit/Color/green.rsi
+    state: icon
+  result: ClothingUniformJumpsuitColorGreen
+  completetime: 4
+  materials:
+    Cloth: 150
+
+- type: latheRecipe
+  id: ClothingUniformJumpskirtColorGreen
+  icon:
+    sprite: Clothing/Uniforms/Jumpskirt/Color/green.rsi
+    state: icon
+  result: ClothingUniformJumpskirtColorGreen
+  completetime: 4
+  materials:
+    Cloth: 150
+
+- type: latheRecipe
+  id: ClothingUniformJumpsuitColorOrange
+  icon:
+    sprite: Clothing/Uniforms/Jumpsuit/Color/orange.rsi
+    state: icon
+  result: ClothingUniformJumpsuitColorOrange
+  completetime: 4
+  materials:
+    Cloth: 150
+
+- type: latheRecipe
+  id: ClothingUniformJumpskirtColorOrange
+  icon:
+    sprite: Clothing/Uniforms/Jumpskirt/Color/orange.rsi
+    state: icon
+  result: ClothingUniformJumpskirtColorOrange
+  completetime: 4
+  materials:
+    Cloth: 150
+
+- type: latheRecipe
+  id: ClothingUniformJumpsuitColorRed
+  icon:
+    sprite: Clothing/Uniforms/Jumpsuit/Color/red.rsi
+    state: icon
+  result: ClothingUniformJumpsuitColorRed
+  completetime: 4
+  materials:
+    Cloth: 150
+
+- type: latheRecipe
+  id: ClothingUniformJumpskirtColorRed
+  icon:
+    sprite: Clothing/Uniforms/Jumpskirt/Color/red.rsi
+    state: icon
+  result: ClothingUniformJumpskirtColorRed
+  completetime: 4
+  materials:
+    Cloth: 150
+
+- type: latheRecipe
+  id: ClothingUniformJumpskirtColorMaroon
+  icon:
+    sprite: Clothing/Uniforms/Jumpskirt/Color/maroon.rsi
+    state: icon
+  result: ClothingUniformJumpskirtColorMaroon
+  completetime: 4
+  materials:
+    Cloth: 150
+
+- type: latheRecipe
+  id: ClothingUniformJumpsuitColorMaroon
+  icon:
+    sprite: Clothing/Uniforms/Jumpsuit/Color/maroon.rsi
+    state: icon
+  result: ClothingUniformJumpsuitColorMaroon
+  completetime: 4
+  materials:
+    Cloth: 150
+
+- type: latheRecipe
+  id: ClothingUniformJumpsuitColorPink
+  icon:
+    sprite: Clothing/Uniforms/Jumpsuit/Color/pink.rsi
+    state: icon
+  result: ClothingUniformJumpsuitColorPink
+  completetime: 4
+  materials:
+    Cloth: 150
+
+- type: latheRecipe
+  id: ClothingUniformJumpskirtColorPink
+  icon:
+    sprite: Clothing/Uniforms/Jumpskirt/Color/pink.rsi
+    state: icon
+  result: ClothingUniformJumpskirtColorPink
+  completetime: 4
+  materials:
+    Cloth: 150
+
+- type: latheRecipe
+  id: ClothingUniformJumpsuitColorPurple
+  icon:
+    sprite: Clothing/Uniforms/Jumpsuit/Color/lightpurple.rsi
+    state: icon
+  result: ClothingUniformJumpsuitColorPurple
+  completetime: 4
+  materials:
+    Cloth: 150
+
+- type: latheRecipe
+  id: ClothingUniformJumpskirtColorPurple
+  icon:
+    sprite: Clothing/Uniforms/Jumpskirt/Color/lightpurple.rsi
+    state: icon
+  result: ClothingUniformJumpskirtColorPurple
+  completetime: 4
+  materials:
+    Cloth: 150
+
+- type: latheRecipe
+  id: ClothingUniformJumpsuitColorDarkBlue
+  icon:
+    sprite: Clothing/Uniforms/Jumpsuit/Color/darkblue.rsi
+    state: icon
+  result: ClothingUniformJumpsuitColorDarkBlue
+  completetime: 4
+  materials:
+    Cloth: 150
+
+- type: latheRecipe
+  id: ClothingUniformJumpskirtColorDarkBlue
+  icon:
+    sprite: Clothing/Uniforms/Jumpskirt/Color/darkblue.rsi
+    state: icon
+  result: ClothingUniformJumpskirtColorDarkBlue
+  completetime: 4
+  materials:
+    Cloth: 150
+
+- type: latheRecipe
+  id: ClothingUniformJumpsuitColorTeal
+  icon:
+    sprite: Clothing/Uniforms/Jumpsuit/Color/teal.rsi
+    state: icon
+  result: ClothingUniformJumpsuitColorTeal
+  completetime: 4
+  materials:
+    Cloth: 150
+
+- type: latheRecipe
+  id: ClothingUniformJumpskirtColorTeal
+  icon:
+    sprite: Clothing/Uniforms/Jumpskirt/Color/teal.rsi
+    state: icon
+  result: ClothingUniformJumpskirtColorTeal
+  completetime: 4
+  materials:
+    Cloth: 150
+
+- type: latheRecipe
+  id: ClothingUniformJumpsuitColorBrown
+  icon:
+    sprite: Clothing/Uniforms/Jumpsuit/Color/brown.rsi
+    state: icon
+  result: ClothingUniformJumpsuitColorBrown
+  completetime: 4
+  materials:
+    Cloth: 150
+
+- type: latheRecipe
+  id: ClothingUniformJumpskirtColorBrown
+  icon:
+    sprite: Clothing/Uniforms/Jumpskirt/Color/brown.rsi
+    state: icon
+  result: ClothingUniformJumpskirtColorBrown
+  completetime: 4
+  materials:
+    Cloth: 150
+
+- type: latheRecipe
+  id: ClothingUniformJumpsuitColorDarkGreen
+  icon:
+    sprite: Clothing/Uniforms/Jumpsuit/Color/darkgreen.rsi
+    state: icon
+  result: ClothingUniformJumpsuitColorDarkGreen
+  completetime: 4
+  materials:
+    Cloth: 150
+
+- type: latheRecipe
+  id: ClothingUniformJumpskirtColorDarkGreen
+  icon:
+    sprite: Clothing/Uniforms/Jumpskirt/Color/darkgreen.rsi
+    state: icon
+  result: ClothingUniformJumpskirtColorDarkGreen
+  completetime: 4
+  materials:
+    Cloth: 150
+
+- type: latheRecipe
+  id: ClothingUniformColorRainbow
+  icon:
+    sprite: Clothing/Uniforms/Jumpsuit/rainbow.rsi
+    state: icon
+  result: ClothingUniformColorRainbow
+  completetime: 4
+  materials:
+    Cloth: 150
 
 - type: latheRecipe
   id: ClothingUniformJumpsuitBartender
@@ -553,6 +823,16 @@
     Cloth: 300
 
 - type: latheRecipe
+  id: ClothingOuterWinterCoat
+  icon:
+    sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
+    state: icon
+  result: ClothingOuterWinterCoat
+  completetime: 3.2
+  materials:
+    Cloth: 150
+
+- type: latheRecipe
   id: ClothingOuterWinterCap
   icon:
     sprite: Clothing/OuterClothing/WinterCoats/coatcap.rsi
@@ -628,6 +908,47 @@
   materials:
     Cloth: 300
     Durathread: 300
+
+- type: latheRecipe
+  id: ClothingNeckScarfStripedGreen
+  icon:
+    sprite: Clothing/Neck/Scarfs/green.rsi
+    state: icon
+  result: ClothingNeckScarfStripedGreen
+  completetime: 2.8
+  materials:
+    Cloth: 150
+
+- type: latheRecipe
+  id: ClothingNeckScarfStripedZebra
+  icon:
+    sprite: Clothing/Neck/Scarfs/zebra.rsi
+    state: icon
+  result: ClothingNeckScarfStripedZebra
+  completetime: 2.8
+  materials:
+    Cloth: 150
+
+- type: latheRecipe
+  id: ClothingNeckScarfStripedBlue
+  icon:
+    sprite: Clothing/Neck/Scarfs/blue.rsi
+    state: icon
+  result: ClothingNeckScarfStripedBlue
+  completetime: 2.8
+  materials:
+    Cloth: 150
+
+- type: latheRecipe
+  id: ClothingNeckScarfStripedRed
+  icon:
+    sprite: Clothing/Neck/Scarfs/red.rsi
+    state: icon
+  result: ClothingNeckScarfStripedRed
+  completetime: 2.8
+  materials:
+    Cloth: 150
+
 
 - type: latheRecipe
   id: ClothingNeckMantleCap
@@ -727,3 +1048,223 @@
   materials:
     Cloth: 300
     Durathread: 300
+
+- type: latheRecipe
+  id: ClothingHeadHatGreysoft
+  icon:
+    sprite: Clothing/Head/Soft/greysoft.rsi
+    state: icon
+  result: ClothingHeadHatGreysoft
+  completetime: 4
+  materials:
+    Cloth: 150
+
+- type: latheRecipe
+  id: ClothingHeadHatMimesoft
+  icon:
+    sprite: Clothing/Head/Soft/mimesoft.rsi
+    state: icon
+  result: ClothingHeadHatMimesoft
+  completetime: 4
+  materials:
+    Cloth: 150
+
+- type: latheRecipe
+  id: ClothingHeadHatBluesoft
+  icon:
+    sprite: Clothing/Head/Soft/bluesoft.rsi
+    state: icon
+  result: ClothingHeadHatBluesoft
+  completetime: 4
+  materials:
+    Cloth: 150
+
+- type: latheRecipe
+  id: ClothingHeadHatYellowsoft
+  icon:
+    sprite: Clothing/Head/Soft/yellowsoft.rsi
+    state: icon
+  result: ClothingHeadHatYellowsoft
+  completetime: 4
+  materials:
+    Cloth: 150
+
+- type: latheRecipe
+  id: ClothingHeadHatGreensoft
+  icon:
+    sprite: Clothing/Head/Soft/greensoft.rsi
+    state: icon
+  result: ClothingHeadHatGreensoft
+  completetime: 4
+  materials:
+    Cloth: 150
+
+- type: latheRecipe
+  id: ClothingHeadHatOrangesoft
+  icon:
+    sprite: Clothing/Head/Soft/orangesoft.rsi
+    state: icon
+  result: ClothingHeadHatOrangesoft
+  completetime: 4
+  materials:
+    Cloth: 150
+
+- type: latheRecipe
+  id: ClothingHeadHatRedsoft
+  icon:
+    sprite: Clothing/Head/Soft/redsoft.rsi
+    state: icon
+  result: ClothingHeadHatRedsoft
+  completetime: 4
+  materials:
+    Cloth: 150
+
+- type: latheRecipe
+  id: ClothingHeadHatPurplesoft
+  icon:
+    sprite: Clothing/Head/Soft/purplesoft.rsi
+    state: icon
+  result: ClothingHeadHatPurplesoft
+  completetime: 4
+  materials:
+    Cloth: 150
+
+- type: latheRecipe
+  id: HatBandBlack
+  icon:
+    sprite: Clothing/Head/Bandanas/black.rsi
+    state: icon
+  result: HatBandBlack
+  completetime: 3
+  materials:
+    Cloth: 150
+
+- type: latheRecipe
+  id: HatBandBlue
+  icon:
+    sprite: Clothing/Head/Bandanas/blue.rsi
+    state: icon
+  result: HatBandBlue
+  completetime: 3
+  materials:
+    Cloth: 150
+
+- type: latheRecipe
+  id: HatBandGreen
+  icon:
+    sprite: Clothing/Head/Bandanas/green.rsi
+    state: icon
+  result: HatBandGreen
+  completetime: 3
+  materials:
+    Cloth: 150
+
+- type: latheRecipe
+  id: HatBandRed
+  icon:
+    sprite: Clothing/Head/Bandanas/green.rsi
+    state: icon
+  result: HatBandRed
+  completetime: 3
+  materials:
+    Cloth: 150
+
+- type: latheRecipe
+  id: HatBandSkull
+  icon:
+    sprite: Clothing/Head/Bandanas/skull.rsi
+    state: icon
+  result: HatBandSkull
+  completetime: 3
+  materials:
+    Cloth: 150
+
+- type: latheRecipe
+  id: ClothingShoesColorBlack
+  icon:
+    sprite: Clothing/Shoes/Color/black.rsi
+    state: icon
+  result: ClothingShoesColorBlack
+  completetime: 3
+  materials:
+    Cloth: 150
+
+- type: latheRecipe
+  id: ClothingShoesColorBrown
+  icon:
+    sprite: Clothing/Shoes/Color/brown.rsi
+    state: icon
+  result: ClothingShoesColorBrown
+  completetime: 3
+  materials:
+    Cloth: 150
+
+- type: latheRecipe
+  id: ClothingShoesColorWhite
+  icon:
+    sprite: Clothing/Shoes/Color/white.rsi
+    state: icon
+  result: ClothingShoesColorWhite
+  completetime: 3
+  materials:
+    Cloth: 150
+
+- type: latheRecipe
+  id: ClothingShoesColorBlue
+  icon:
+    sprite: Clothing/Shoes/Color/blue.rsi
+    state: icon
+  result: ClothingShoesColorBlue
+  completetime: 3
+  materials:
+    Cloth: 150
+
+- type: latheRecipe
+  id: ClothingShoesColorYellow
+  icon:
+    sprite: Clothing/Shoes/Color/yellow.rsi
+    state: icon
+  result: ClothingShoesColorYellow
+  completetime: 3
+  materials:
+    Cloth: 150
+
+- type: latheRecipe
+  id: ClothingShoesColorGreen
+  icon:
+    sprite: Clothing/Shoes/Color/green.rsi
+    state: icon
+  result: ClothingShoesColorGreen
+  completetime: 3
+  materials:
+    Cloth: 150
+
+- type: latheRecipe
+  id: ClothingShoesColorOrange
+  icon:
+    sprite: Clothing/Shoes/Color/orange.rsi
+    state: icon
+  result: ClothingShoesColorOrange
+  completetime: 3
+  materials:
+    Cloth: 150
+
+- type: latheRecipe
+  id: ClothingShoesColorRed
+  icon:
+    sprite: Clothing/Shoes/Color/red.rsi
+    state: icon
+  result: ClothingShoesColorRed
+  completetime: 3
+  materials:
+    Cloth: 150
+
+- type: latheRecipe
+  id: ClothingShoesColorPurple
+  icon:
+    sprite: Clothing/Shoes/Color/purple.rsi
+    state: icon
+  result: ClothingShoesColorPurple
+  completetime: 3
+  materials:
+    Cloth: 150
