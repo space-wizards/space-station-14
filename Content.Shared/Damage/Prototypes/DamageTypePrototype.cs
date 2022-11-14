@@ -3,7 +3,6 @@ using Content.Shared.Medical.Wounds.Prototypes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
 namespace Content.Shared.Damage.Prototypes
 {
@@ -35,24 +34,24 @@ namespace Content.Shared.Damage.Prototypes
 
         //Note: these should be defined in order of severity!
         //surface wounds are wounds on skin or exposed bodyparts
-        [DataField("surfaceWounds", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, WoundPrototype>))]
-        public SortedDictionary<FixedPoint2,string> SurfaceWounds { get; init; } = new();
+        [DataField("surfaceWounds", customTypeSerializer: typeof(PrototypeIdValueDictionarySerializer<float, WoundPrototype>))]
+        public SortedDictionary<float,string> SurfaceWounds { get; init; } = new();
 
         //internal wounds are wounds that are caused when an injury affects internal soft tissue such as organs or flesh
-        [DataField("internalWounds", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, WoundPrototype>))]
-        public SortedDictionary<FixedPoint2,string>? InternalWounds { get; init; } = new();
+        [DataField("internalWounds", customTypeSerializer: typeof(PrototypeIdValueDictionarySerializer<float, WoundPrototype>))]
+        public SortedDictionary<float,string>? InternalWounds { get; init; } = new();
 
         //solid wounds are wounds that get caused when affecting a solid surface/object, such as bones or an exoskeleton
-        [DataField("structuralWounds", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, WoundPrototype>))]
-        public SortedDictionary<FixedPoint2,string>? StructuralWounds { get; init; } = new();
+        [DataField("structuralWounds", customTypeSerializer: typeof(PrototypeIdValueDictionarySerializer<float, WoundPrototype>))]
+        public SortedDictionary<float,string>? StructuralWounds { get; init; } = new();
 
-        //used to calculate how much this damage type propogates the skin
+        //used to calculate how much this damage type propogates to internal
         [DataField("surfacePenMod")] public float SurfacePenModifier = 1.0f;
 
-        //used to calculate how much this damage type propogates a bodypart/flesh
+        //used to calculate how much this damage type propogates to structure
         [DataField("internalPenMod")] public float InternalPenModifier = 1.0f;
 
-        //used to calculate how much this damage type propogates through a bone if it is protecting organs
+        //used to calculate how much this damage type propogates to the next layer
         [DataField("structurePenMod")] public float StructurePenModifier = 1.0f;
 
     }

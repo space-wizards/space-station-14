@@ -1,14 +1,10 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using Content.Shared.Body.Organ;
-using Content.Shared.Body.Part;
-using Content.Shared.Damage;
+﻿using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
 using Content.Shared.Medical.Wounds.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
 namespace Content.Shared.Medical.Wounds.Systems;
 
 public sealed class WoundSystem : EntitySystem
@@ -40,7 +36,7 @@ public sealed class WoundSystem : EntitySystem
         }
     }
 
-    private SortedDictionary<FixedPoint2, string>? GetWoundTableForDamageType(string damageTypeId, WoundCategory woundCategory)
+    private SortedDictionary<float, string>? GetWoundTableForDamageType(string damageTypeId, WoundCategory woundCategory)
     {
         if (!_cachedDamageWoundMetaData.ContainsKey(damageTypeId))
             return null;
@@ -225,7 +221,7 @@ public sealed class WoundSystem : EntitySystem
         }
     }
 
-    private string PickWound(float level, SortedDictionary<FixedPoint2, string> woundTable, out float severity)
+    private string PickWound(float level, SortedDictionary<float, string> woundTable, out float severity)
     {
         var nextLevel = 1f;
         var levelFloor = 0f;
@@ -234,11 +230,11 @@ public sealed class WoundSystem : EntitySystem
         {
             if (woundLevel.Key > level)
             {
-                nextLevel = woundLevel.Key.Float();
+                nextLevel = woundLevel.Key;
                 break;
             }
             woundId = woundLevel.Value;
-            levelFloor = woundLevel.Key.Float();
+            levelFloor = woundLevel.Key;
         }
         severity = (level - levelFloor) / (nextLevel - level);
         return woundId;
@@ -293,9 +289,9 @@ public sealed class WoundSystem : EntitySystem
     private readonly struct WoundMetaData
     {
         //we do some defensive coding
-        public readonly SortedDictionary<FixedPoint2, string>? SurfaceWounds;
-        public readonly SortedDictionary<FixedPoint2, string>? InternalWounds;
-        public readonly SortedDictionary<FixedPoint2, string>? StructuralWounds;
+        public readonly SortedDictionary<float, string>? SurfaceWounds;
+        public readonly SortedDictionary<float, string>? InternalWounds;
+        public readonly SortedDictionary<float, string>? StructuralWounds;
         public readonly float SurfacePenModifier;
         public readonly float InternalPenModifier;
         public readonly float StructuralPenModifier;
