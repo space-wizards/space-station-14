@@ -3,14 +3,13 @@ using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
 using Content.Shared.Medical.Wounds.Components;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 using Robust.Shared.Serialization;
+
 namespace Content.Shared.Medical.Wounds.Systems;
 
 public sealed class WoundSystem : EntitySystem
 {
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
-    [Dependency] private RobustRandom _random = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     private readonly Dictionary<string, WoundMetaData> _cachedDamageWoundMetaData = new();
 

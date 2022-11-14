@@ -1,11 +1,10 @@
 ﻿using Content.Shared.Damage.Prototypes;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
 namespace Content.Shared.Medical.Wounds.Prototypes;
 
-[DataDefinition]
+[Prototype("woundGroup")]
 public sealed class WoundGroupPrototype : IPrototype
 {
     [IdDataField] public string ID { get; init; } = string.Empty;
@@ -19,15 +18,15 @@ public sealed class WoundGroupPrototype : IPrototype
     //--- wound prototypes ordered in severity based on the initial ---
     //surface wounds are wounds on skin or exposed bodyparts
     [DataField("SurfaceWounds", required: true, customTypeSerializer: typeof(PrototypeIdHashSetSerializer<WoundPrototype>))]
-    public HashSet<WoundPrototype> SurfaceWoundProtos { get; init; } = new();
+    public HashSet<string> SurfaceWoundProtos { get; init; } = new();
 
     //solid wounds are wounds that get caused when affecting a solid surface/object, such as bones or an exoskeleton
     [DataField("solidWounds", required: true, customTypeSerializer: typeof(PrototypeIdHashSetSerializer<WoundPrototype>))]
-    public HashSet<WoundPrototype> SolidWoundProtos { get; init; } = new();
+    public HashSet<string> SolidWoundProtos { get; init; } = new();
 
     //internal wounds are wounds that are caused when an injury affects internal soft tissue such as organs or flesh
     [DataField("internalWounds", required: true, customTypeSerializer: typeof(PrototypeIdHashSetSerializer<WoundPrototype>))]
-    public HashSet<WoundPrototype> InternalWoundProtos { get; init; } = new();
+    public HashSet<string> InternalWoundProtos { get; init; } = new();
 
 
 }

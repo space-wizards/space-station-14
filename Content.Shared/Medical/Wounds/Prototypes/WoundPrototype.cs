@@ -1,10 +1,8 @@
-﻿using Content.Shared.Damage;
-using Content.Shared.Damage.Prototypes;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
+﻿using Robust.Shared.Prototypes;
+
 namespace Content.Shared.Medical.Wounds.Prototypes;
 
-[DataDefinition]
+[Prototype("wound")]
 public sealed class WoundPrototype : IPrototype
 {
     [IdDataField] public string ID { get; init; } = string.Empty;

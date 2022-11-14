@@ -1,7 +1,5 @@
-using Content.Shared.FixedPoint;
 using Content.Shared.Medical.Wounds.Prototypes;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
 namespace Content.Shared.Damage.Prototypes
@@ -10,7 +8,6 @@ namespace Content.Shared.Damage.Prototypes
     ///     A single damage type. These types are grouped together in <see cref="DamageGroupPrototype"/>s.
     /// </summary>
     [Prototype("damageType")]
-    [Serializable, NetSerializable]
     public sealed class DamageTypePrototype : IPrototype
     {
         [IdDataField]
