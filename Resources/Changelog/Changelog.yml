@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: The Rat King now can spawn with a multitude of different names. Enjoy!,
-    type: Add}
-  id: 2151
-  time: '2022-08-14T05:38:40.0000000+00:00'
 - author: Veritius
   changes:
   - {message: You can now stop C-4 from automatically activating when planted., type: Tweak}
@@ -2958,3 +2952,8 @@ Entries:
   - {message: Added ban list window for admins., type: Add}
   id: 2650
   time: '2022-11-14T19:06:55.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: Adds SSXIV lobby screen., type: Add}
+  id: 2651
+  time: '2022-11-14T19:09:38.0000000+00:00'
