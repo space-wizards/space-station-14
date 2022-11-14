@@ -39,7 +39,8 @@ namespace Content.Shared.Maps
 
         [DataField("isSubfloor")] public bool IsSubFloor { get; private set; }
 
-        [DataField("baseTurfs")] public List<string> BaseTurfs { get; } = new();
+        [DataField("baseTurf")]
+        public string BaseTurf { get; } = string.Empty;
 
         [DataField("deconstructToolQualities")]
         public PrototypeFlags<ToolQualityPrototype> DeconstructToolQualities { get; set; } = new();

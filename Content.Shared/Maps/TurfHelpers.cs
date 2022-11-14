@@ -111,18 +111,20 @@ namespace Content.Shared.Maps
             if (tileRef.Tile.IsEmpty)
                 return false;
 
-            var indices = tileRef.GridIndices;
-
             mapManager ??= IoCManager.Resolve<IMapManager>();
             tileDefinitionManager ??= IoCManager.Resolve<ITileDefinitionManager>();
             entityManager ??= IoCManager.Resolve<IEntityManager>();
             robustRandom ??= IoCManager.Resolve<IRobustRandom>();
 
             var tileDef = (ContentTileDefinition) tileDefinitionManager[tileRef.Tile.TypeId];
+            //if (string.IsNullOrEmpty(tileDef.BaseTurf))
+                //return false;
+
             var mapGrid = mapManager.GetGrid(tileRef.GridUid);
 
             const float margin = 0.1f;
             var bounds = mapGrid.TileSize - margin * 2;
+            var indices = tileRef.GridIndices;
             var coordinates = mapGrid.GridTileToLocal(indices)
                 .Offset(new Vector2(
                     (robustRandom.NextFloat() - 0.5f) * bounds,
@@ -133,9 +135,9 @@ namespace Content.Shared.Maps
             entityManager.GetComponent<TransformComponent>(tileItem).LocalRotation
                 = robustRandom.NextDouble() * Math.Tau;
 
-            var plating = tileDefinitionManager[tileDef.BaseTurfs[^1]];
+            var baseTurf = tileDefinitionManager[tileDef.BaseTurf];
 
-            mapGrid.SetTile(tileRef.GridIndices, new Tile(plating.TileId));
+            mapGrid.SetTile(tileRef.GridIndices, new Tile(baseTurf.TileId));
 
             return true;
         }

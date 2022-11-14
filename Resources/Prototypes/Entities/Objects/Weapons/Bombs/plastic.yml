@@ -31,7 +31,7 @@
       blacklist: # can't stick it to other items
         components:
           - Item
-    - type: Explosive # Powerful explosion in a very small radius. Doesn't break underplating.
+    - type: Explosive # Powerful explosion in a very small radius. Doesn't break lattice.
       explosionType: DemolitionCharge
       totalIntensity: 60
       intensitySlope: 5

@@ -85,13 +85,7 @@ namespace Content.Server.Tiles
 
         public bool HasBaseTurf(ContentTileDefinition tileDef, string baseTurf)
         {
-            foreach (var tileBaseTurf in tileDef.BaseTurfs)
-            {
-                if (baseTurf == tileBaseTurf)
-                    return true;
-            }
-
-            return false;
+            return tileDef.BaseTurf == baseTurf;
         }
 
         private void PlaceAt(IMapGrid mapGrid, EntityCoordinates location, ushort tileId, SoundSpecifier placeSound, float offset = 0)
