@@ -140,7 +140,7 @@ namespace Content.IntegrationTests.Tests
 
                 grid = mapManager.CreateGrid(mapId);
 
-                var tileDefinition = tileDefinitionManager["UnderPlating"];
+                var tileDefinition = tileDefinitionManager["Plating"];
                 var tile = new Tile(tileDefinition.TileId);
                 var coordinates = grid.ToCoordinates();
 
@@ -235,7 +235,7 @@ namespace Content.IntegrationTests.Tests
 
                 grid = mapManager.CreateGrid(mapId);
 
-                var tileDefinition = tileDefinitionManager["UnderPlating"];
+                var tileDefinition = tileDefinitionManager["Plating"];
                 var tile = new Tile(tileDefinition.TileId);
 
                 grid.SetTile(Vector2i.Zero, tile);

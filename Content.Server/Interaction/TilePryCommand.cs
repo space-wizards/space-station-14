@@ -67,7 +67,7 @@ namespace Content.Server.Interaction
                     if (!tileDef.DeconstructToolQualities.Contains("Prying"))
                         continue;
 
-                    var underplating = tileDefinitionManager["UnderPlating"];
+                    var underplating = tileDefinitionManager["Plating"];
                     mapGrid.SetTile(coordinates, new Tile(underplating.TileId));
                 }
             }
