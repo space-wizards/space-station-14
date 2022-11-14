@@ -14,7 +14,8 @@ namespace Content.Server.Buckle.Systems
     [UsedImplicitly]
     internal sealed class StrapSystem : EntitySystem
     {
-        [Dependency] InteractionSystem _interactionSystem = default!;
+        [Dependency] private readonly BuckleSystem _buckle = default!;
+        [Dependency] private readonly InteractionSystem _interactionSystem = default!;
 
         public override void Initialize()
         {
@@ -47,12 +48,10 @@ namespace Content.Server.Buckle.Systems
 
         private void OnInteractHand(EntityUid uid, StrapComponent component, InteractHandEvent args)
         {
-            if (args.Handled) return;
-
-            if (!TryComp<BuckleComponent>(args.User, out var buckle))
+            if (args.Handled)
                 return;
 
-            buckle.ToggleBuckle(args.User, uid);
+            _buckle.ToggleBuckle(args.User, args.User, uid);
         }
 
         // TODO ECS BUCKLE/STRAP These 'Strap' verbs are an incestuous mess of buckle component and strap component
@@ -77,7 +76,7 @@ namespace Content.Server.Buckle.Systems
 
                 InteractionVerb verb = new()
                 {
-                    Act = () => buckledComp.TryUnbuckle(args.User),
+                    Act = () => _buckle.TryUnbuckle(entity, args.User, buckle: buckledComp),
                     Category = VerbCategory.Unbuckle
                 };
 
@@ -103,7 +102,7 @@ namespace Content.Server.Buckle.Systems
             {
                 InteractionVerb verb = new()
                 {
-                    Act = () => buckle.TryBuckle(args.User, args.Target),
+                    Act = () => _buckle.TryBuckle(args.User, args.User, args.Target, buckle),
                     Category = VerbCategory.Buckle,
                     Text = Loc.GetString("verb-self-target-pronoun")
                 };
@@ -123,7 +122,7 @@ namespace Content.Server.Buckle.Systems
 
                 InteractionVerb verb = new()
                 {
-                    Act = () => usingBuckle.TryBuckle(args.User, args.Target),
+                    Act = () => _buckle.TryBuckle(@using, args.User, args.Target, usingBuckle),
                     Category = VerbCategory.Buckle,
                     Text = EntityManager.GetComponent<MetaDataComponent>(@using).EntityName,
                     // just a held object, the user is probably just trying to sit down.
