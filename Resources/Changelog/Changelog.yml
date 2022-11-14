@@ -1,9 +1,4 @@
 Entries:
-- author: corentt
-  changes:
-  - {message: "fix spawn point for HoP and Detective on NSS\_Pillar", type: Fix}
-  id: 2150
-  time: '2022-08-14T05:37:51.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: The Rat King now can spawn with a multitude of different names. Enjoy!,
@@ -2958,3 +2953,8 @@ Entries:
   - {message: Cell charger is destructible and doesn't block mobs movement., type: Tweak}
   id: 2649
   time: '2022-11-14T14:57:59.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Added ban list window for admins., type: Add}
+  id: 2650
+  time: '2022-11-14T19:06:55.0000000+00:00'
