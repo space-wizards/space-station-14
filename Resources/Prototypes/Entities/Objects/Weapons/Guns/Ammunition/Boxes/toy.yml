@@ -28,6 +28,15 @@
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: foambox
+    
+- type: entity
+  parent: BoxDonkSoftBox
+  id: BoxDonkSoftRiot
+  name: riot dart box
+  components:
+  - type: BallisticAmmoProvider
+    capacity: 100
+    proto: BulletRiotFoam
 
 - type: entity
   parent: BoxDonkSoftBase
