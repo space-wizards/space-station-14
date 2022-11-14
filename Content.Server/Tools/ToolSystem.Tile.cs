@@ -28,13 +28,13 @@ public sealed partial class ToolSystem
         var gridUid = args.Coordinates.GetGridUid(EntityManager);
         if (!_mapManager.TryGetGrid(gridUid, out var grid))
         {
-            Logger.Error("Attempted to pry from a non-existent grid?");
+            Logger.Error("Attempted use tool on a non-existent grid?");
             return;
         }
 
-        if (!TryComp<ToolComponent?>(component.Owner, out var tool))
+        if (!TryComp(component.Owner, out ToolComponent? tool))
             return;
-
+        
         var tileRef = grid.GetTileRef(args.Coordinates);
         tileRef.TryDeconstructWithToolQualities(tool.Qualities, _mapManager, _tileDefinitionManager, EntityManager);
         // TODO admin log esp cutting lattice
