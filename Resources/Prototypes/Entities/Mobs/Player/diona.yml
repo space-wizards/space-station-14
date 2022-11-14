@@ -5,6 +5,10 @@
   id: MobDiona
   components:
     - type: CombatMode
+      combatToggleAction: # Corvax - Diona pacifist
+        enabled: false
+        autoPopulate: false
+        name: action-name-combat
       canDisarm: true
     - type: InteractionPopup
       successChance: 1
@@ -32,4 +36,4 @@
     - type: Faction
       factions:
         - NanoTrasen
-    - type: Pacified # Corvax
+    - type: Pacified # Corvax - Diona pacifist
