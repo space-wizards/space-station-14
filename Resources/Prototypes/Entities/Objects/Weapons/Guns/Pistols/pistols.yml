@@ -95,6 +95,7 @@
   id: WeaponPistolViperDonksoft
   parent: WeaponPistolViper
   description: A Donksoft-produced replica of the Viper handgun, using foam darts as ammo. Looks and sounds just like the real thing!
+  components:
   - type: ItemSlots
     slots:
       gun_magazine:
@@ -113,6 +114,10 @@
         whitelist:
           tags:
             - BulletFoam
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
   
 - type: entity
   name: handmade pistol
