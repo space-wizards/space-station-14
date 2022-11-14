@@ -215,7 +215,6 @@ public sealed class BuckleSystem : SharedBuckleSystem
 
         if (strap == null)
         {
-            buckle.DontCollide = false;
             buckle.Buckled = false;
         }
         else
