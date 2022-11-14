@@ -20,3 +20,7 @@ disposal-unit-no-hands = You don't have hands!
 
 ## missed
 disposal-unit-thrown-missed = Missed!
+
+# state
+disposal-unit-state-Ready = Ready
+disposal-unit-state-Pressurizing = Pressurizing

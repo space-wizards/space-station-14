@@ -4,6 +4,7 @@ using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.Interaction;
 using Content.Server.DoAfter;
+using Content.Server.GameTicking;
 using Content.Shared.Stunnable;
 using Content.Shared.Revenant;
 using Robust.Server.GameObjects;
@@ -42,6 +43,8 @@ public sealed partial class RevenantSystem : EntitySystem
     [Dependency] private readonly SharedStunSystem _stun = default!;
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly StoreSystem _store = default!;
+    [Dependency] private readonly VisibilitySystem _visibility = default!;
+    [Dependency] private readonly GameTicker _ticker = default!;
 
     public override void Initialize()
     {
@@ -54,6 +57,7 @@ public sealed partial class RevenantSystem : EntitySystem
         SubscribeLocalEvent<RevenantComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<RevenantComponent, StatusEffectAddedEvent>(OnStatusAdded);
         SubscribeLocalEvent<RevenantComponent, StatusEffectEndedEvent>(OnStatusEnded);
+        SubscribeLocalEvent<RoundEndTextAppendEvent>(_ => MakeVisible(true));
 
         InitializeAbilities();
     }
@@ -67,6 +71,13 @@ public sealed partial class RevenantSystem : EntitySystem
         _appearance.SetData(uid, RevenantVisuals.Corporeal, false);
         _appearance.SetData(uid, RevenantVisuals.Harvesting, false);
         _appearance.SetData(uid, RevenantVisuals.Stunned, false);
+
+        if (_ticker.RunLevel == GameRunLevel.PostRound && TryComp<VisibilityComponent>(uid, out var visibility))
+        {
+            _visibility.AddLayer(visibility, (int) VisibilityFlags.Ghost, false);
+            _visibility.RemoveLayer(visibility, (int) VisibilityFlags.Normal, false);
+            _visibility.RefreshVisibility(visibility);
+        }
 
         //ghost vision
         if (TryComp(component.Owner, out EyeComponent? eye))
@@ -162,6 +173,24 @@ public sealed partial class RevenantSystem : EntitySystem
         if (!TryComp<StoreComponent>(uid, out var store))
             return;
         _store.ToggleUi(uid, store);
+    }
+
+    public void MakeVisible(bool visible)
+    {
+        foreach (var (_, vis) in EntityQuery<RevenantComponent, VisibilityComponent>())
+        {
+            if (visible)
+            {
+                _visibility.AddLayer(vis, (int) VisibilityFlags.Normal, false);
+                _visibility.RemoveLayer(vis, (int) VisibilityFlags.Ghost, false);
+            }
+            else
+            {
+                _visibility.AddLayer(vis, (int) VisibilityFlags.Ghost, false);
+                _visibility.RemoveLayer(vis, (int) VisibilityFlags.Normal, false);
+            }
+            _visibility.RefreshVisibility(vis);
+        }
     }
 
     public override void Update(float frameTime)

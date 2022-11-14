@@ -158,7 +158,7 @@
   parent: BaseAlcohol
   desc: reagent-desc-melon-liquor
   physicalDesc: reagent-physical-desc-strong-smelling
-  flavor: sweet
+  flavor: watermelon
   color: "#138808"
   spritePath: emeraldglass.rsi
 

@@ -129,3 +129,6 @@
 
 - type: playTimeTracker
   id: JobCardborg
+
+- type: playTimeTracker
+  id: JobZookeeper

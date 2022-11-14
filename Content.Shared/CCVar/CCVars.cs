@@ -33,6 +33,10 @@ namespace Content.Shared.CCVar
         /*
          * Ambience
          */
+        //TODO: This is so that this compiles, yell at me if this is still in
+        public static readonly CVarDef<bool> AmbienceBasicEnabled =
+            CVarDef.Create("ambiance.basic_enabled", true, CVar.CLIENTONLY | CVar.ARCHIVE);
+
 
         /// <summary>
         /// How long we'll wait until re-sampling nearby objects for ambience. Should be pretty fast, but doesn't have to match the tick rate.
@@ -71,6 +75,12 @@ namespace Content.Shared.CCVar
             CVarDef.Create("ambience.volume", 0.0f, CVar.ARCHIVE | CVar.CLIENTONLY);
 
         /// <summary>
+        /// Lobby / round end music volume.
+        /// </summary>
+        public static readonly CVarDef<float> LobbyMusicVolume =
+            CVarDef.Create("ambience.lobby_music_volume", 0.0f, CVar.ARCHIVE | CVar.CLIENTONLY);
+
+        /// <summary>
         /// Whether to play the station ambience (humming) sound
         /// </summary>
         public static readonly CVarDef<bool> StationAmbienceEnabled =
@@ -92,9 +102,8 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<string> StatusMoMMIPassword =
             CVarDef.Create("status.mommipassword", "", CVar.SERVERONLY | CVar.CONFIDENTIAL);
 
-
         /*
-         * Game
+         * Events
          */
 
         /// <summary>
@@ -102,6 +111,24 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool>
             EventsEnabled = CVarDef.Create("events.enabled", true, CVar.ARCHIVE | CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Average time (in minutes) for when the ramping event scheduler should stop increasing the chaos modifier.
+        ///     Close to how long you expect a round to last, so you'll probably have to tweak this on downstreams.
+        /// </summary>
+        public static readonly CVarDef<float>
+            EventsRampingAverageEndTime = CVarDef.Create("events.ramping_average_end_time", 40f, CVar.ARCHIVE | CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Average ending chaos modifier for the ramping event scheduler.
+        ///     Max chaos chosen for a round will deviate from this
+        /// </summary>
+        public static readonly CVarDef<float>
+            EventsRampingAverageChaos = CVarDef.Create("events.ramping_average_chaos", 6f, CVar.ARCHIVE | CVar.SERVERONLY);
+
+        /*
+         * Game
+         */
 
         /// <summary>
         ///     Disables most functionality in the GameTicker.
@@ -161,13 +188,13 @@ namespace Content.Shared.CCVar
         ///     Controls the game map prototype to load. SS14 stores these prototypes in Prototypes/Maps.
         /// </summary>
         public static readonly CVarDef<string>
-            GameMap = CVarDef.Create("game.map", "Saltern", CVar.SERVERONLY);
+            GameMap = CVarDef.Create("game.map", string.Empty, CVar.SERVERONLY);
 
         /// <summary>
-        ///     Controls if the game should obey map criteria or not. Overriden if a map vote or similar occurs.
+        ///     Prototype to use for map pool.
         /// </summary>
-        public static readonly CVarDef<bool>
-            GameMapForced = CVarDef.Create("game.mapforced", false, CVar.SERVERONLY);
+        public static readonly CVarDef<string>
+            GameMapPool = CVarDef.Create("game.map_pool", "DefaultMapPool", CVar.SERVERONLY);
 
         /// <summary>
         /// The depth of the queue used to calculate which map is next in rotation.
@@ -624,6 +651,36 @@ namespace Content.Shared.CCVar
             CVarDef.Create("explosion.single_tick_area_limit", 400, CVar.SERVERONLY);
 
         /*
+         * Radiation
+         */
+
+        /// <summary>
+        ///     What is the smallest radiation dose in rads that can be received by object.
+        ///     Extremely small values may impact performance.
+        /// </summary>
+        public static readonly CVarDef<float> RadiationMinIntensity =
+            CVarDef.Create("radiation.min_intensity", 0.1f, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Rate of radiation system update in seconds.
+        /// </summary>
+        public static readonly CVarDef<float> RadiationGridcastUpdateRate =
+            CVarDef.Create("radiation.gridcast.update_rate", 1.0f, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     If both radiation source and receiver are placed on same grid, ignore grids between them.
+        ///     May get inaccurate result in some cases, but greatly boost performance in general.
+        /// </summary>
+        public static readonly CVarDef<bool> RadiationGridcastSimplifiedSameGrid =
+            CVarDef.Create("radiation.gridcast.simplified_same_grid", true, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Max distance that radiation ray can travel in meters.
+        /// </summary>
+        public static readonly CVarDef<float> RadiationGridcastMaxDistance =
+            CVarDef.Create("radiation.gridcast.max_distance", 50f, CVar.SERVERONLY);
+
+        /*
          * Admin logs
          */
 
@@ -840,11 +897,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> VoteEnabled =
             CVarDef.Create("vote.enabled", true, CVar.SERVERONLY);
 
+        // TODO HUD REFACTOR REENABLE
         /// <summary>
         ///     See vote.enabled, but specific to restart votes
         /// </summary>
         public static readonly CVarDef<bool> VoteRestartEnabled =
-            CVarDef.Create("vote.restart_enabled", true, CVar.SERVERONLY);
+            CVarDef.Create("vote.restart_enabled", false, CVar.SERVERONLY);
 
         /// <summary>
         ///     See vote.enabled, but specific to preset votes
@@ -971,6 +1029,19 @@ namespace Content.Shared.CCVar
             CVarDef.Create("shuttle.recall_turning_point", 0.5f, CVar.SERVERONLY);
 
         /// <summary>
+        ///     Time in minutes after round start to auto-call the shuttle. Set to zero to disable.
+        /// </summary>
+        public static readonly CVarDef<int> EmergencyShuttleAutoCallTime =
+            CVarDef.Create("shuttle.auto_call_time", 90, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Time in minutes after the round was extended (by recalling the shuttle) to call
+        ///     the shuttle again.
+        /// </summary>
+        public static readonly CVarDef<int> EmergencyShuttleAutoCallExtensionTime =
+            CVarDef.Create("shuttle.auto_call_extension_time", 45, CVar.SERVERONLY);
+
+        /// <summary>
         /// The map to load for CentCom for the emergency shuttle to dock to.
         /// </summary>
         public static readonly CVarDef<string> CentcommMap =
@@ -1037,6 +1108,24 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<bool> ViewportScaleRender =
             CVarDef.Create("viewport.scale_render", true, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+        public static readonly CVarDef<int> ViewportMinimumWidth =
+            CVarDef.Create("viewport.minimum_width", 15, CVar.REPLICATED);
+
+        public static readonly CVarDef<int> ViewportMaximumWidth =
+            CVarDef.Create("viewport.maximum_width", 21, CVar.REPLICATED);
+
+        public static readonly CVarDef<int> ViewportWidth =
+            CVarDef.Create("viewport.width", 21, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+        /*
+         * UI
+         */
+
+        public static readonly CVarDef<string> UILayout =
+            CVarDef.Create("ui.layout", "Default", CVar.CLIENTONLY | CVar.ARCHIVE);
+
+
 
         /*
          * CHAT

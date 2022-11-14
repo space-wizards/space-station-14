@@ -1,6 +1,7 @@
 ﻿using Content.Client.Changelog;
 using Content.Client.Credits;
 using Content.Client.Links;
+using Content.Client.UserInterface.Systems.EscapeMenu;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.IoC;
@@ -33,6 +34,7 @@ namespace Content.Client.Info
             var wikiButton = new Button {Text = Loc.GetString("server-info-wiki-button")};
             wikiButton.OnPressed += args => uriOpener.OpenUri(UILinks.Wiki);
             var changelogButton = new ChangelogButton();
+            changelogButton.OnPressed += args => UserInterfaceManager.GetUIController<ChangelogUIController>().ToggleWindow();
             buttons.AddChild(changelogButton);
             buttons.AddChild(rulesButton);
             buttons.AddChild(discordButton);

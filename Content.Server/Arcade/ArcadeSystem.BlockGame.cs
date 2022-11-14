@@ -10,7 +10,7 @@ public sealed partial class ArcadeSystem
         SubscribeLocalEvent<BlockGameArcadeComponent, PowerChangedEvent>(OnBlockPowerChanged);
     }
 
-    private static void OnBlockPowerChanged(EntityUid uid, BlockGameArcadeComponent component, PowerChangedEvent args)
+    private static void OnBlockPowerChanged(EntityUid uid, BlockGameArcadeComponent component, ref PowerChangedEvent args)
     {
         component.OnPowerStateChanged(args);
     }

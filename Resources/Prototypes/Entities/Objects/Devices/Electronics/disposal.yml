@@ -7,3 +7,7 @@
     - type: Sprite
       sprite: Objects/Misc/module.rsi
       state: net_wired
+    - type: Tag
+      tags:
+        - DroneUsable
+        - MailingUnitElectronics

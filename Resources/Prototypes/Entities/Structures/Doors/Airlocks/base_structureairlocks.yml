@@ -41,8 +41,10 @@
       - FullTileMask
       layer:
       - AirlockLayer
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronics ]
   - type: Door
-    board: DoorElectronics
     crushDamage:
       types:
         Blunt: 15
@@ -72,6 +74,12 @@
   - type: Wires
     BoardName: "Airlock Control"
     LayoutId: Airlock
+  - type: DoorSignalControl
+  - type: SignalReceiver
+    inputs:
+      Open: []
+      Close: []
+      Toggle: []
   - type: UserInterface
     interfaces:
     - key: enum.WiresUiKey.Key
@@ -79,6 +87,8 @@
   - type: Airtight
     fixVacuum: true
     noAirWhenFullyAirBlocked: false
+  - type: RadiationBlocker
+    resistance: 3
   - type: Occluder
   - type: Damageable
     damageContainer: Inorganic
@@ -94,6 +104,8 @@
   - type: Construction
     graph: Airlock
     node: airlock
+    containers:
+    - board
   - type: IconSmooth
     key: walls
     mode: NoSprite

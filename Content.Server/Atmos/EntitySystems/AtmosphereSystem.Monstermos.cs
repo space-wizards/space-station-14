@@ -7,6 +7,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using System.Linq;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -582,9 +583,24 @@ namespace Content.Server.Atmos.EntitySystems
             DebugTools.AssertNotNull(tile);
             DebugTools.Assert(tile.AdjacentBits.IsFlagSet(direction));
             DebugTools.Assert(tile.AdjacentTiles[direction.ToIndex()] != null);
-            tile.MonstermosInfo[direction] += amount;
             // Every call to this method already ensures that the adjacent tile won't be null.
-            tile.AdjacentTiles[direction.ToIndex()]!.MonstermosInfo[direction.GetOpposite()] -= amount;
+
+            // Turns out: no they don't. Temporary debug checks to figure out which caller is causing problems:
+            if (tile == null)
+            {
+                Logger.Error($"Encountered null-tile in {nameof(AdjustEqMovement)}. Trace: {Environment.StackTrace}");
+                return;
+            }
+            var adj = tile.AdjacentTiles[direction.ToIndex()];
+            if (adj == null)
+            {
+                var nonNull = tile.AdjacentTiles.Where(x => x != null).Count();
+                Logger.Error($"Encountered null adjacent tile in {nameof(AdjustEqMovement)}. Dir: {direction}, Tile: {tile.Tile}, non-null adj count: {nonNull}, Trace: {Environment.StackTrace}");
+                return;
+            }
+
+            tile.MonstermosInfo[direction] += amount;
+            adj.MonstermosInfo[direction.GetOpposite()] -= amount;
         }
 
         private void HandleDecompressionFloorRip(IMapGrid mapGrid, TileAtmosphere tile, float sum)

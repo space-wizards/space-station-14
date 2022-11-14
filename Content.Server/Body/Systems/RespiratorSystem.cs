@@ -8,7 +8,6 @@ using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
 using Content.Shared.Damage;
 using Content.Shared.Database;
-using Content.Shared.MobState.Components;
 using Content.Shared.MobState.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Shared.Player;
@@ -42,8 +41,7 @@ namespace Content.Server.Body.Systems
         {
             base.Update(frameTime);
 
-            foreach (var (respirator, body) in
-                     EntityManager.EntityQuery<RespiratorComponent, SharedBodyComponent>())
+            foreach (var (respirator, body) in EntityManager.EntityQuery<RespiratorComponent, BodyComponent>())
             {
                 var uid = respirator.Owner;
 
@@ -91,12 +89,13 @@ namespace Content.Server.Body.Systems
                 respirator.SuffocationCycles = 0;
             }
         }
-        public void Inhale(EntityUid uid, SharedBodyComponent? body=null)
+
+        public void Inhale(EntityUid uid, BodyComponent? body = null)
         {
             if (!Resolve(uid, ref body, false))
                 return;
 
-            var organs = _bodySystem.GetComponentsOnMechanisms<LungComponent>(uid, body);
+            var organs = _bodySystem.GetBodyOrganComponents<LungComponent>(uid, body);
 
             // Inhale gas
             var ev = new InhaleLocationEvent();
@@ -121,12 +120,12 @@ namespace Content.Server.Body.Systems
             }
         }
 
-        public void Exhale(EntityUid uid, SharedBodyComponent? body=null)
+        public void Exhale(EntityUid uid, BodyComponent? body = null)
         {
             if (!Resolve(uid, ref body, false))
                 return;
 
-            var organs = _bodySystem.GetComponentsOnMechanisms<LungComponent>(uid, body);
+            var organs = _bodySystem.GetBodyOrganComponents<LungComponent>(uid, body);
 
             // exhale gas
 
@@ -187,7 +186,8 @@ namespace Content.Server.Body.Systems
                 Math.Clamp(respirator.Saturation, respirator.MinSaturation, respirator.MaxSaturation);
         }
 
-        private void OnApplyMetabolicMultiplier(EntityUid uid, RespiratorComponent component, ApplyMetabolicMultiplierEvent args)
+        private void OnApplyMetabolicMultiplier(EntityUid uid, RespiratorComponent component,
+            ApplyMetabolicMultiplierEvent args)
         {
             if (args.Apply)
             {
@@ -197,6 +197,7 @@ namespace Content.Server.Body.Systems
                 component.MinSaturation *= args.Multiplier;
                 return;
             }
+
             // This way we don't have to worry about it breaking if the stasis bed component is destroyed
             component.CycleDelay /= args.Multiplier;
             component.Saturation /= args.Multiplier;

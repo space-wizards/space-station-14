@@ -51,8 +51,7 @@
   - type: Hands
     showInHands: false
   - type: Body
-    template: DroneTemplate
-    preset: DronePreset
+    prototype: Drone
   - type: DoAfter
   - type: Pullable
   - type: Examiner

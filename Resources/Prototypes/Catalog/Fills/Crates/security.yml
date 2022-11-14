@@ -34,15 +34,6 @@
 #      - GrenadeTeargas
 
 - type: entity
-  id: CrateSecurityLaser
-  parent: CrateSecgear
-  components:
-  - type: StorageFill
-    contents:
-      - id: WeaponLaserGun
-        amount: 3
-
-- type: entity
   id: CrateSecurityRiot
   parent: CrateSecgear
   components:

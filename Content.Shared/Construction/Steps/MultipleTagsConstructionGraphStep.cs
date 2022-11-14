@@ -25,7 +25,7 @@ namespace Content.Shared.Construction.Steps
             if (!entityManager.TryGetComponent(uid, out TagComponent? tags))
                 return false;
 
-            var tagSystem = EntitySystem.Get<TagSystem>();
+            var tagSystem = entityManager.EntitySysManager.GetEntitySystem<TagSystem>();
 
             if (_allTags != null && !tagSystem.HasAllTags(tags, _allTags))
                 return false; // We don't have all the tags needed.

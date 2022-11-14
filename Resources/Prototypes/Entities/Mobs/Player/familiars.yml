@@ -41,7 +41,6 @@
     rules: You are an intelligent, demonic dog. Try to help the chaplain and any of his flock. As an antagonist, you're otherwise unrestrained.
   - type: MeleeWeapon
     hidden: true
-    range: 1.5
     angle: 0
     animation: WeaponArcBite
     damage:

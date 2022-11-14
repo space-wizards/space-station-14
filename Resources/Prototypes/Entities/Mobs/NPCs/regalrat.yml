@@ -42,7 +42,6 @@
       200: Dead
   - type: MeleeWeapon
     hidden: true
-    range: 1
     angle: 0
     animation: WeaponArcClaw
     damage:
@@ -50,8 +49,7 @@
         Slash: 12
         Piercing: 8
   - type: Body
-    template: AnimalTemplate
-    preset: RatPreset
+    prototype: Rat
   - type: Appearance
   - type: DamageStateVisuals
     rotate: true
@@ -134,7 +132,6 @@
       350: Dead
   - type: MeleeWeapon
     hidden: true
-    range: 1.5
     angle: 0
     attackRate: 0.75
     animation: WeaponArcFist
@@ -200,9 +197,10 @@
       0: Alive
       40: Critical
       60: Dead
+  - type: Stamina
+    excess: 60
   - type: MeleeWeapon
     hidden: true
-    range: 1
     angle: 0
     animation: WeaponArcClaw
     damage:
@@ -210,8 +208,7 @@
         Slash: 5
         Piercing: 3
   - type: Body
-    template: AnimalTemplate
-    preset: RatPreset
+    prototype: Rat
   - type: Appearance
   - type: DamageStateVisuals
     rotate: true

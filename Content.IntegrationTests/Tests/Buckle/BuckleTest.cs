@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Content.Server.Body.Systems;
 using Content.Server.Buckle.Components;
 using Content.Server.Hands.Components;
 using Content.Shared.ActionBlocker;
@@ -9,8 +10,6 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Standing;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Map;
 
 namespace Content.IntegrationTests.Tests.Buckle
 {
@@ -31,9 +30,7 @@ namespace Content.IntegrationTests.Tests.Buckle
   - type: Buckle
   - type: Hands
   - type: Body
-    template: HumanoidTemplate
-    preset: HumanPreset
-    centerSlot: torso
+    prototype: Human
   - type: StandingState
 
 - type: entity
@@ -48,10 +45,12 @@ namespace Content.IntegrationTests.Tests.Buckle
   components:
   - type: Item
 ";
+
         [Test]
         public async Task BuckleUnbuckleCooldownRangeTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{ExtraPrototypes = Prototypes});
+            await using var pairTracker =
+                await PoolManager.GetServerClient(new PoolSettings {ExtraPrototypes = Prototypes});
             var server = pairTracker.Pair.Server;
 
             var testMap = await PoolManager.CreateTestMap(pairTracker);
@@ -96,7 +95,10 @@ namespace Content.IntegrationTests.Tests.Buckle
                 Assert.False(actionBlocker.CanMove(human));
                 Assert.False(actionBlocker.CanChangeDirection(human));
                 Assert.False(standingState.Down(human));
-                Assert.That((entityManager.GetComponent<TransformComponent>(human).WorldPosition - entityManager.GetComponent<TransformComponent>(chair).WorldPosition).Length, Is.LessThanOrEqualTo(buckle.BuckleOffset.Length));
+                Assert.That(
+                    (entityManager.GetComponent<TransformComponent>(human).WorldPosition -
+                     entityManager.GetComponent<TransformComponent>(chair).WorldPosition).Length,
+                    Is.LessThanOrEqualTo(buckle.BuckleOffset.Length));
 
                 // Side effects of buckling for the strap
                 Assert.That(strap.BuckledEntities, Does.Contain(human));
@@ -166,7 +168,8 @@ namespace Content.IntegrationTests.Tests.Buckle
                 Assert.False(buckle.ToggleBuckle(human, chair));
 
                 // Move near the chair
-                entityManager.GetComponent<TransformComponent>(human).WorldPosition = entityManager.GetComponent<TransformComponent>(chair).WorldPosition + (0.5f, 0);
+                entityManager.GetComponent<TransformComponent>(human).WorldPosition =
+                    entityManager.GetComponent<TransformComponent>(chair).WorldPosition + (0.5f, 0);
 
                 // In range
                 Assert.True(buckle.TryBuckle(human, chair));
@@ -206,7 +209,8 @@ namespace Content.IntegrationTests.Tests.Buckle
         [Test]
         public async Task BuckledDyingDropItemsTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
+                {NoClient = true, ExtraPrototypes = Prototypes});
             var server = pairTracker.Pair.Server;
 
             var testMap = await PoolManager.CreateTestMap(pairTracker);
@@ -215,7 +219,7 @@ namespace Content.IntegrationTests.Tests.Buckle
             EntityUid human = default;
             BuckleComponent buckle = null;
             HandsComponent hands = null;
-            SharedBodyComponent body = null;
+            BodyComponent body = null;
 
             await server.WaitIdleAsync();
 
@@ -260,12 +264,13 @@ namespace Content.IntegrationTests.Tests.Buckle
                     Assert.NotNull(hand.HeldEntity);
                 }
 
-                var legs = body.GetPartsOfType(BodyPartType.Leg);
+                var bodySystem = entityManager.System<BodySystem>();
+                var legs = bodySystem.GetBodyChildrenOfType(body.Owner, BodyPartType.Leg, body);
 
                 // Break our guy's kneecaps
                 foreach (var leg in legs)
                 {
-                    body.RemovePart(leg);
+                    bodySystem.DropPart(leg.Id, leg.Component);
                 }
             });
 
@@ -291,7 +296,8 @@ namespace Content.IntegrationTests.Tests.Buckle
         [Test]
         public async Task ForceUnbuckleBuckleTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
+                {NoClient = true, ExtraPrototypes = Prototypes});
             var server = pairTracker.Pair.Server;
 
             var testMap = await PoolManager.CreateTestMap(pairTracker);

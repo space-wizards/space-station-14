@@ -187,7 +187,7 @@ public sealed partial class GunSystem : SharedGunSystem
                     {
                         SetCartridgeSpent(cartridge, true);
                         MuzzleFlash(gun.Owner, cartridge, user);
-                        PlaySound(gun.Owner, gun.SoundGunshot?.GetSound(Random, ProtoManager), user);
+                        Audio.PlayPredicted(gun.SoundGunshot, gun.Owner, user);
                         Recoil(user, direction);
                         // TODO: Can't predict entity deletions.
                         //if (cartridge.DeleteOnSpawn)
@@ -195,7 +195,7 @@ public sealed partial class GunSystem : SharedGunSystem
                     }
                     else
                     {
-                        PlaySound(gun.Owner, gun.SoundEmpty?.GetSound(Random, ProtoManager), user);
+                        Audio.PlayPredicted(gun.SoundEmpty, gun.Owner, user);
                     }
 
                     if (cartridge.Owner.IsClientSide())
@@ -204,7 +204,7 @@ public sealed partial class GunSystem : SharedGunSystem
                     break;
                 case AmmoComponent newAmmo:
                     MuzzleFlash(gun.Owner, newAmmo, user);
-                    PlaySound(gun.Owner, gun.SoundGunshot?.GetSound(Random, ProtoManager), user);
+                    Audio.PlayPredicted(gun.SoundGunshot, gun.Owner, user);
                     Recoil(user, direction);
                     if (newAmmo.Owner.IsClientSide())
                         Del(newAmmo.Owner);
@@ -212,7 +212,7 @@ public sealed partial class GunSystem : SharedGunSystem
                         RemComp<AmmoComponent>(newAmmo.Owner);
                     break;
                 case HitscanPrototype:
-                    PlaySound(gun.Owner, gun.SoundGunshot?.GetSound(Random, ProtoManager), user);
+                    Audio.PlayPredicted(gun.SoundGunshot, gun.Owner, user);
                     Recoil(user, direction);
                     break;
             }
@@ -223,12 +223,6 @@ public sealed partial class GunSystem : SharedGunSystem
     {
         if (!Timing.IsFirstTimePredicted || user == null || recoil == Vector2.Zero) return;
         _recoil.KickCamera(user.Value, recoil.Normalized * 0.5f);
-    }
-
-    protected override void PlaySound(EntityUid gun, string? sound, EntityUid? user = null)
-    {
-        if (string.IsNullOrEmpty(sound) || user == null || !Timing.IsFirstTimePredicted) return;
-        SoundSystem.Play(sound, Filter.Local(), gun);
     }
 
     protected override void Popup(string message, EntityUid? uid, EntityUid? user)

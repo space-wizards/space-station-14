@@ -28,7 +28,7 @@ namespace Content.Server.Power.EntitySystems
             args.Cancel();
         }
 
-        private void OnPowerChanged(EntityUid uid, ActivatableUIRequiresPowerComponent component, PowerChangedEvent args)
+        private void OnPowerChanged(EntityUid uid, ActivatableUIRequiresPowerComponent component, ref PowerChangedEvent args)
         {
             if (!args.Powered)
                 _activatableUISystem.CloseAll(uid);

@@ -2,7 +2,6 @@ using Content.Shared.CCVar;
 using Content.Shared.Input;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
-using Robust.Shared.Configuration;
 using Robust.Shared.GameStates;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
@@ -52,6 +51,7 @@ namespace Content.Shared.Movement.Systems
             SubscribeLocalEvent<InputMoverComponent, EntParentChangedMessage>(OnInputParentChange);
 
             _configManager.OnValueChanged(CCVars.CameraRotationLocked, SetCameraRotationLocked, true);
+            _configManager.OnValueChanged(CCVars.GameDiagonalMovement, SetDiagonalMovement, true);
         }
 
         private void SetCameraRotationLocked(bool obj)
@@ -59,7 +59,7 @@ namespace Content.Shared.Movement.Systems
             CameraRotationLocked = obj;
         }
 
-        private void SetMoveInput(InputMoverComponent component, MoveButtons buttons)
+        protected void SetMoveInput(InputMoverComponent component, MoveButtons buttons)
         {
             if (component.HeldMoveButtons == buttons) return;
             component.HeldMoveButtons = buttons;
@@ -97,9 +97,12 @@ namespace Content.Shared.Movement.Systems
         {
             CommandBinds.Unregister<SharedMoverController>();
             _configManager.UnsubValueChanged(CCVars.CameraRotationLocked, SetCameraRotationLocked);
+            _configManager.UnsubValueChanged(CCVars.GameDiagonalMovement, SetDiagonalMovement);
         }
 
-        public bool DiagonalMovementEnabled => _configManager.GetCVar(CCVars.GameDiagonalMovement);
+        public bool DiagonalMovementEnabled { get; private set; }
+
+        private void SetDiagonalMovement(bool value) => DiagonalMovementEnabled = value;
 
         protected virtual void HandleShuttleInput(EntityUid uid, ShuttleButtons button, ushort subTick, bool state) {}
 
@@ -119,6 +122,16 @@ namespace Content.Shared.Movement.Systems
 
             mover.TargetRelativeRotation = Angle.Zero;
             Dirty(mover);
+        }
+
+        public Angle GetParentGridAngle(InputMoverComponent mover, EntityQuery<TransformComponent> xformQuery)
+        {
+            var rotation = mover.RelativeRotation;
+
+            if (xformQuery.TryGetComponent(mover.RelativeEntity, out var relativeXform))
+                return (_transform.GetWorldRotation(relativeXform, xformQuery) + rotation);
+
+            return rotation;
         }
 
         public Angle GetParentGridAngle(InputMoverComponent mover)
@@ -517,28 +530,29 @@ namespace Content.Shared.Movement.Systems
             }
         }
     }
-}
 
-[Flags]
-public enum MoveButtons : byte
-{
-    None = 0,
-    Up = 1,
-    Down = 2,
-    Left = 4,
-    Right = 8,
-    Walk = 16,
-}
+    [Flags]
+    public enum MoveButtons : byte
+    {
+        None = 0,
+        Up = 1,
+        Down = 2,
+        Left = 4,
+        Right = 8,
+        Walk = 16,
+    }
 
-[Flags]
-public enum ShuttleButtons : byte
-{
-    None = 0,
-    StrafeUp = 1 << 0,
-    StrafeDown = 1 << 1,
-    StrafeLeft = 1 << 2,
-    StrafeRight = 1 << 3,
-    RotateLeft = 1 << 4,
-    RotateRight = 1 << 5,
-    Brake = 1 << 6,
+    [Flags]
+    public enum ShuttleButtons : byte
+    {
+        None = 0,
+        StrafeUp = 1 << 0,
+        StrafeDown = 1 << 1,
+        StrafeLeft = 1 << 2,
+        StrafeRight = 1 << 3,
+        RotateLeft = 1 << 4,
+        RotateRight = 1 << 5,
+        Brake = 1 << 6,
+    }
+
 }

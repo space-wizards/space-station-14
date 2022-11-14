@@ -47,6 +47,7 @@
   - type: BatteryDischarger
     # This is JUST a default. It has to be dynamically adjusted to ensure that the battery doesn't discharge "too fast" & run out immediately, while still scaling by input power.
     activeSupplyRate: 100000
+  - type: RadiationReceiver
   - type: Anchorable
   - type: Rotatable
   - type: Pullable

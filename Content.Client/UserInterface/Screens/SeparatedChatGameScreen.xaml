@@ -1,0 +1,35 @@
+<screens:SeparatedChatGameScreen
+    xmlns="https://spacestation14.io"
+    xmlns:screens="clr-namespace:Content.Client.UserInterface.Screens"
+    xmlns:menuBar="clr-namespace:Content.Client.UserInterface.Systems.MenuBar.Widgets"
+    xmlns:actions="clr-namespace:Content.Client.UserInterface.Systems.Actions.Widgets"
+    xmlns:chat="clr-namespace:Content.Client.UserInterface.Systems.Chat.Widgets"
+    xmlns:alerts="clr-namespace:Content.Client.UserInterface.Systems.Alerts.Widgets"
+    xmlns:hotbar="clr-namespace:Content.Client.UserInterface.Systems.Hotbar.Widgets"
+    xmlns:widgets="clr-namespace:Content.Client.UserInterface.Systems.Ghost.Widgets"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+    Name="SeparatedChatHud"
+    VerticalExpand="False"
+    VerticalAlignment="Bottom"
+    HorizontalAlignment="Center">
+    <SplitContainer Name="ScreenContainer" HorizontalExpand="True" VerticalExpand="True">
+        <LayoutContainer Name="ViewportContainer" HorizontalExpand="True" VerticalExpand="True">
+            <controls:MainViewport Name="MainViewport"/>
+            <widgets:GhostGui Name="Ghost" Access="Protected" />
+            <hotbar:HotbarGui Name="Hotbar" Access="Protected" />
+            <actions:ActionsBar Name="Actions" Access="Protected" />
+            <alerts:AlertsUI Name="Alerts" Access="Protected" />
+        </LayoutContainer>
+        <PanelContainer HorizontalExpand="True">
+            <PanelContainer.PanelOverride>
+                <graphics:StyleBoxFlat BackgroundColor="#2B2C3B" />
+            </PanelContainer.PanelOverride>
+
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True" MinWidth="300" SeparationOverride="10" Margin="10">
+                <menuBar:GameTopMenuBar Name="TopBar" HorizontalExpand="True" Access="Protected" />
+                <chat:ChatBox VerticalExpand="True" HorizontalExpand="True" Name="Chat" Access="Protected" />
+            </BoxContainer>
+        </PanelContainer>
+    </SplitContainer>
+</screens:SeparatedChatGameScreen>

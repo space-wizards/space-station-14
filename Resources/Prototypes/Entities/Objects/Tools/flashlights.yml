@@ -10,6 +10,29 @@
     - DroneUsable
   - type: HandheldLight
     addPrefix: false
+    blinkingBehaviourId: blinking
+    radiatingBehaviourId: radiating
+  - type: LightBehaviour
+    behaviours:
+      - !type:FadeBehaviour
+        id: radiating
+        interpolate: Linear
+        maxDuration: 2.0
+        startValue: 3.0
+        endValue: 2.0
+        isLooped: true
+        property: Radius
+        enabled: false
+        reverseWhenFinished: true
+      - !type:PulseBehaviour
+        id: blinking
+        interpolate: Nearest
+        maxDuration: 1.0
+        minValue: 0.1
+        maxValue: 2.0
+        isLooped: true
+        property: Radius
+        enabled: false
     toggleAction:
       name: action-name-toggle-light
       description: action-description-toggle-light
@@ -26,12 +49,15 @@
       - state: inhand-right-light
         shader: unshaded
   - type: PowerCellSlot
-    cellSlot:
-      startingItem: PowerCellMedium
+    cellSlotId: cell_slot
   - type: ContainerContainer
     containers:
       cell_slot: !type:ContainerSlot
   - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMedium
   - type: Sprite
     sprite: Objects/Tools/flashlight.rsi
     netsync: false
@@ -48,10 +74,8 @@
     enabled: false
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
-    radius: 3
+    radius: 4.5
   - type: Appearance
-    visuals:
-      - type: FlashLightVisualizer
   - type: StaticPrice
     price: 40
 
@@ -64,9 +88,11 @@
   - type: Tag
     tags:
       - SecBeltEquip
-  - type: PowerCellSlot
-    cellSlot:
-      startingItem: PowerCellHigh
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHigh
   - type: HandheldLight
     addPrefix: false
   - type: ToggleableLightVisuals
@@ -89,4 +115,4 @@
     sprite: Objects/Tools/seclite.rsi
   - type: PointLight
     enabled: false
-    radius: 4
+    radius: 6

@@ -125,6 +125,9 @@
   - type: IngestionBlocker
   - type: DiseaseProtection
     protection: 0.10
+  - type: Tag
+    tags:
+    - PetWearable
 
 - type: entity
   parent: ClothingMaskPullableBase
@@ -140,6 +143,9 @@
   - type: IngestionBlocker
   - type: DiseaseProtection
     protection: 0.05
+  - type: Tag
+    tags:
+    - PetWearable
 
 - type: entity
   parent: ClothingMaskBase
@@ -207,6 +213,9 @@
     - type: AddAccentClothing
       accent: ReplacementAccent
       replacement: mumble
+    - type: Construction
+      graph: Muzzle
+      node: muzzle
 
 - type: entity
   parent: ClothingMaskPullableBase

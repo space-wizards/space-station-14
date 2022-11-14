@@ -1,7 +1,7 @@
 namespace Content.Shared.Paper
 {
     [RegisterComponent]
-    public class StampComponent : Component
+    public sealed class StampComponent : Component
     {
         /// <summary>
         ///     The loc string name that will be stamped to the piece of paper on examine.

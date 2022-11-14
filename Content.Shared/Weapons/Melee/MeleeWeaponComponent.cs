@@ -83,11 +83,12 @@ public sealed class MeleeWeaponComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public FixedPoint2 BluntStaminaDamageFactor { get; set; } = 0.5f;
 
+    // TODO: Temporarily 1.5 until interactionoutline is adjusted to use melee, then probably drop to 1.2
     /// <summary>
     /// Nearest edge range to hit an entity.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("range")]
-    public float Range = 1f;
+    public float Range = 1.5f;
 
     /// <summary>
     /// Total width of the angle for wide attacks.
@@ -96,7 +97,10 @@ public sealed class MeleeWeaponComponent : Component
     public Angle Angle = Angle.FromDegrees(60);
 
     [ViewVariables(VVAccess.ReadWrite), DataField("animation", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string Animation = "WeaponArcSlash";
+    public string ClickAnimation = "WeaponArcPunch";
+
+    [ViewVariables(VVAccess.ReadWrite), DataField("wideAnimation", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string WideAnimation = "WeaponArcSlash";
 
     // Sounds
 

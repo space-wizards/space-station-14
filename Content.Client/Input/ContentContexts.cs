@@ -23,7 +23,7 @@ namespace Content.Client.Input
             common.AddFunction(ContentKeyFunctions.CycleChatChannelForward);
             common.AddFunction(ContentKeyFunctions.CycleChatChannelBackward);
             common.AddFunction(ContentKeyFunctions.ExamineEntity);
-            common.AddFunction(ContentKeyFunctions.OpenInfo);
+            common.AddFunction(ContentKeyFunctions.OpenAHelp);
             common.AddFunction(ContentKeyFunctions.TakeScreenshot);
             common.AddFunction(ContentKeyFunctions.TakeScreenshotNoUI);
             common.AddFunction(ContentKeyFunctions.Point);
@@ -63,25 +63,16 @@ namespace Content.Client.Input
 
             // actions should be common (for ghosts, mobs, etc)
             common.AddFunction(ContentKeyFunctions.OpenActionsMenu);
-            common.AddFunction(ContentKeyFunctions.Hotbar0);
-            common.AddFunction(ContentKeyFunctions.Hotbar1);
-            common.AddFunction(ContentKeyFunctions.Hotbar2);
-            common.AddFunction(ContentKeyFunctions.Hotbar3);
-            common.AddFunction(ContentKeyFunctions.Hotbar4);
-            common.AddFunction(ContentKeyFunctions.Hotbar5);
-            common.AddFunction(ContentKeyFunctions.Hotbar6);
-            common.AddFunction(ContentKeyFunctions.Hotbar7);
-            common.AddFunction(ContentKeyFunctions.Hotbar8);
-            common.AddFunction(ContentKeyFunctions.Hotbar9);
-            common.AddFunction(ContentKeyFunctions.Loadout1);
-            common.AddFunction(ContentKeyFunctions.Loadout2);
-            common.AddFunction(ContentKeyFunctions.Loadout3);
-            common.AddFunction(ContentKeyFunctions.Loadout4);
-            common.AddFunction(ContentKeyFunctions.Loadout5);
-            common.AddFunction(ContentKeyFunctions.Loadout6);
-            common.AddFunction(ContentKeyFunctions.Loadout7);
-            common.AddFunction(ContentKeyFunctions.Loadout8);
-            common.AddFunction(ContentKeyFunctions.Loadout9);
+
+            foreach (var boundKey in ContentKeyFunctions.GetHotbarBoundKeys())
+            {
+                common.AddFunction(boundKey);
+            }
+
+            foreach (var boundKey in ContentKeyFunctions.GetLoadoutBoundKeys())
+            {
+                common.AddFunction(boundKey);
+            }
 
             var aghost = contexts.New("aghost", "common");
             aghost.AddFunction(EngineKeyFunctions.MoveUp);

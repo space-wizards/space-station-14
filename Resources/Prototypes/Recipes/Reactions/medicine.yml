@@ -343,3 +343,15 @@
       amount: 1
   products:
     Spaceacillin: 2
+
+- type: reaction
+  id: Cognizine
+  reactants:
+    CarpoToxin:
+      amount: 1
+    Siderlac:
+      amount: 1
+    UnstableMutagen:
+      amount: 1
+  products:
+    Cognizine: 1

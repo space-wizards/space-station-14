@@ -197,6 +197,11 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
     public const string MovementTarget = "MovementTarget";
 
     /// <summary>
+    /// Can the NPC click open entities such as doors.
+    /// </summary>
+    public const string NavInteract = "NavInteract";
+
+    /// <summary>
     /// Can the NPC pry open doors for steering.
     /// </summary>
     public const string NavPry = "NavPry";
@@ -205,6 +210,12 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
     /// Can the NPC smash obstacles for steering.
     /// </summary>
     public const string NavSmash = "NavSmash";
+
+    /// <summary>
+    /// Default key storage for a movement pathfind.
+    /// </summary>
+    public const string PathfindKey = "MovementPathfind";
+
     public const string RotateSpeed = "RotateSpeed";
     public const string VisionRadius = "VisionRadius";
     public const float MeleeRange = 1f;

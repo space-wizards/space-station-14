@@ -223,7 +223,7 @@ namespace Content.Server.Shuttles.Systems
             DisableThruster(uid, component);
         }
 
-        private void OnPowerChange(EntityUid uid, ThrusterComponent component, PowerChangedEvent args)
+        private void OnPowerChange(EntityUid uid, ThrusterComponent component, ref PowerChangedEvent args)
         {
             if (args.Powered && CanEnable(uid, component))
             {

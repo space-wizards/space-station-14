@@ -55,7 +55,6 @@
         acts: ["Destruction"]
   - type: Machine
     board: MedicalScannerMachineCircuitboard
-  - type: MaterialStorage
   - type: Wires
     BoardName: "MedicalScanner"
     LayoutId: MedicalScanner

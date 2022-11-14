@@ -11,10 +11,11 @@ public abstract class SharedRevenantOverloadedLightsSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        foreach (var comp in EntityQuery<RevenantOverloadedLightsComponent>())
+        var enumerator = EntityQueryEnumerator<RevenantOverloadedLightsComponent>();
+
+        while (enumerator.MoveNext(out var comp))
         {
             comp.Accumulator += frameTime;
-
 
             if (comp.Accumulator < comp.ZapDelay)
                 continue;

@@ -9,8 +9,6 @@
     whitelist:
       tags:
         - Pickaxe
-    loot:
-      Pickaxe: MiningLootTableLowYield
   - type: Sprite
     sprite: Structures/Walls/asteroid_rock.rsi
     state: full
@@ -42,6 +40,9 @@
   - type: IconSmooth
     key: walls
     base: rock_
+  - type: OreVein
+    oreChance: 0.2
+    oreRarityPrototypeId: RandomOreDistributionStandard
 
 - type: entity
   id: AsteroidRockMining
@@ -54,5 +55,6 @@
     whitelist:
       tags:
         - Pickaxe
-    loot:
-      Pickaxe: MiningLootTable
+  - type: OreVein
+    oreChance: 0.33
+    oreRarityPrototypeId: RandomOreDistributionStandard

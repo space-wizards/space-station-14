@@ -186,6 +186,10 @@ namespace Content.Server.Chemistry.EntitySystems
             if (message.Dosage == 0 || message.Dosage > chemMaster.PillDosageLimit)
                 return;
 
+            // Ensure label length is within the character limit.
+            if (message.Label.Length > SharedChemMaster.LabelMaxLength)
+                return;
+
             var needed = message.Dosage * message.Number;
             if (!WithdrawFromBuffer(chemMaster, needed, user, out var withdrawal))
                 return;
@@ -225,6 +229,10 @@ namespace Content.Server.Chemistry.EntitySystems
 
             // Ensure the amount is valid.
             if (message.Dosage == 0 || message.Dosage > solution.AvailableVolume)
+                return;
+
+            // Ensure label length is within the character limit.
+            if (message.Label.Length > SharedChemMaster.LabelMaxLength)
                 return;
 
             if (!WithdrawFromBuffer(chemMaster, message.Dosage, user, out var withdrawal))

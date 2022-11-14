@@ -51,6 +51,7 @@
               anchored: true
           steps:
             - tag: FirelockElectronics
+              store: board
               name: Firelock Electronics
               icon:
                 sprite: "Objects/Misc/module.rsi"
@@ -82,9 +83,7 @@
               doAfter: 0.25
         - to: frame2
           completed:
-            - !type:SpawnPrototype
-              prototype: FirelockElectronics
-              amount: 1
+            - !type:EmptyAllContainers {}
           conditions:
             - !type:EntityAnchored
               anchored: true
@@ -149,7 +148,7 @@
               prototype: SheetGlass1
               amount: 2
           steps:
-            - tool: Screwing
+            - tool: Prying
               doAfter: 1
 
 

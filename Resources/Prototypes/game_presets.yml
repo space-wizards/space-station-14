@@ -1,13 +1,23 @@
 - type: gamePreset
+  id: Survival
+  alias:
+    - survival
+  name: survival-title
+  showInVote: false # secret
+  description: survival-description
+  rules:
+    - RampingStationEventScheduler
+
+- type: gamePreset
   id: Extended
   alias:
-    - extended
-    - shittersafari
+  - extended
+  - shittersafari
   name: extended-title
   showInVote: false #2boring2vote
   description: extended-description
   rules:
-    - BasicStationEventScheduler
+  - BasicStationEventScheduler
 
 - type: gamePreset
   id: Secret

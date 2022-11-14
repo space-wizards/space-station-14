@@ -1,21 +1,20 @@
 using Content.Client.CombatMode;
 using Content.Client.Gameplay;
 using Content.Client.Hands;
-using Content.Client.Weapons.Melee.Components;
 using Content.Shared.MobState.Components;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
-using Robust.Client.Animations;
+using Content.Shared.StatusEffect;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Client.ResourceManagement;
 using Robust.Client.State;
-using Robust.Shared.Animations;
 using Robust.Shared.Input;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -41,7 +40,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         base.Initialize();
         InitializeEffect();
         _overlayManager.AddOverlay(new MeleeWindupOverlay(EntityManager, _timing, _player, _protoManager, _cache));
-        SubscribeNetworkEvent<DamageEffectEvent>(OnDamageEffect);
+        SubscribeAllEvent<DamageEffectEvent>(OnDamageEffect);
         SubscribeNetworkEvent<MeleeLungeEvent>(OnMeleeLunge);
     }
 
@@ -79,6 +78,8 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
             return;
         }
+
+        // TODO using targeted actions while combat mode is enabled should NOT trigger attacks.
 
         var useDown = _inputSystem.CmdStates.GetState(EngineKeyFunctions.Use);
         var altDown = _inputSystem.CmdStates.GetState(EngineKeyFunctions.UseSecondary);
@@ -165,6 +166,14 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
             }
 
             var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
+            var attackerPos = Transform(entity).MapPosition;
+
+            if (mousePos.MapId != attackerPos.MapId ||
+                (attackerPos.Position - mousePos.Position).Length > weapon.Range)
+            {
+                return;
+            }
+
             EntityCoordinates coordinates;
 
             // Bro why would I want a ternary here
@@ -186,28 +195,50 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
                 target = screen.GetEntityUnderPosition(mousePos);
             }
 
-            EntityManager.RaisePredictiveEvent(new LightAttackEvent(target, weapon.Owner, coordinates));
-
+            RaisePredictiveEvent(new LightAttackEvent(target, weapon.Owner, coordinates));
             return;
         }
 
         if (weapon.Attacking)
         {
-            EntityManager.RaisePredictiveEvent(new StopAttackEvent(weapon.Owner));
+            RaisePredictiveEvent(new StopAttackEvent(weapon.Owner));
         }
     }
 
-    protected override bool DoDisarm(EntityUid user, DisarmAttackEvent ev, MeleeWeaponComponent component)
+    protected override bool InRange(EntityUid user, EntityUid target, float range, ICommonSession? session)
     {
-        if (!base.DoDisarm(user, ev, component))
+        var xform = Transform(target);
+        var targetCoordinates = xform.Coordinates;
+        var targetLocalAngle = xform.LocalRotation;
+
+        return Interaction.InRangeUnobstructed(user, target, targetCoordinates, targetLocalAngle, range);
+    }
+
+    protected override void DoDamageEffect(List<EntityUid> targets, EntityUid? user, TransformComponent targetXform)
+    {
+        // Server never sends the event to us for predictiveeevent.
+        if (_timing.IsFirstTimePredicted)
+            RaiseLocalEvent(new DamageEffectEvent(Color.Red, targets));
+    }
+
+    protected override bool DoDisarm(EntityUid user, DisarmAttackEvent ev, MeleeWeaponComponent component, ICommonSession? session)
+    {
+        if (!base.DoDisarm(user, ev, component, session))
             return false;
 
-        if (!HasComp<CombatModeComponent>(user))
+        if (!TryComp<CombatModeComponent>(user, out var combatMode) ||
+            combatMode.CanDisarm != true)
+        {
             return false;
+        }
 
-        // If target doesn't have hands then we can't disarm so will let the player know it's pointless.
+        // They need to either have hands...
         if (!HasComp<HandsComponent>(ev.Target!.Value))
         {
+            // or just be able to be shoved over.
+            if (TryComp<StatusEffectsComponent>(ev.Target!.Value, out var status) && status.AllowedEffects.Contains("KnockedDown"))
+                return true;
+
             if (Timing.IsFirstTimePredicted && HasComp<MobStateComponent>(ev.Target.Value))
                 PopupSystem.PopupEntity(Loc.GetString("disarm-action-disarmable", ("targetName", ev.Target.Value)), ev.Target.Value, Filter.Local());
 
@@ -227,191 +258,8 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
     private void OnMeleeLunge(MeleeLungeEvent ev)
     {
-        DoLunge(ev.Entity, ev.Angle, ev.LocalPos, ev.Animation);
-    }
-
-    /// <summary>
-    /// Does all of the melee effects for a player that are predicted, i.e. character lunge and weapon animation.
-    /// </summary>
-    public override void DoLunge(EntityUid user, Angle angle, Vector2 localPos, string? animation)
-    {
-        if (!Timing.IsFirstTimePredicted)
-            return;
-
-        var lunge = GetLungeAnimation(localPos);
-
-        // Stop any existing lunges on the user.
-        _animation.Stop(user, MeleeLungeKey);
-        _animation.Play(user, lunge, MeleeLungeKey);
-
-        // Clientside entity to spawn
-        if (animation != null)
-        {
-            var animationUid = Spawn(animation, new EntityCoordinates(user, Vector2.Zero));
-
-            if (localPos != Vector2.Zero && TryComp<SpriteComponent>(animationUid, out var sprite))
-            {
-                sprite[0].AutoAnimated = false;
-
-                if (TryComp<WeaponArcVisualsComponent>(animationUid, out var arcComponent))
-                {
-                    sprite.NoRotation = true;
-                    sprite.Rotation = localPos.ToWorldAngle();
-                    var distance = Math.Clamp(localPos.Length / 2f, 0.2f, 1f);
-
-                    switch (arcComponent.Animation)
-                    {
-                        case WeaponArcAnimation.Slash:
-                            _animation.Play(animationUid, GetSlashAnimation(sprite, angle), "melee-slash");
-                            break;
-                        case WeaponArcAnimation.Thrust:
-                            _animation.Play(animationUid, GetThrustAnimation(sprite, distance), "melee-thrust");
-                            break;
-                        case WeaponArcAnimation.None:
-                            sprite.Offset = localPos.Normalized * distance;
-                            _animation.Play(animationUid, GetStaticAnimation(sprite), "melee-fade");
-                            break;
-                    }
-                }
-            }
-        }
-    }
-
-    private Animation GetSlashAnimation(SpriteComponent sprite, Angle arc)
-    {
-        var slashStart = 0.03f;
-        var slashEnd = 0.065f;
-        var length = slashEnd + 0.05f;
-        var startRotation = sprite.Rotation - arc / 2;
-        var endRotation = sprite.Rotation + arc / 2;
-        sprite.NoRotation = true;
-
-        return new Animation()
-        {
-            Length = TimeSpan.FromSeconds(length),
-            AnimationTracks =
-            {
-                new AnimationTrackComponentProperty()
-                {
-                    ComponentType = typeof(SpriteComponent),
-                    Property = nameof(SpriteComponent.Rotation),
-                    KeyFrames =
-                    {
-                        new AnimationTrackProperty.KeyFrame(startRotation, 0f),
-                        new AnimationTrackProperty.KeyFrame(startRotation, slashStart),
-                        new AnimationTrackProperty.KeyFrame(endRotation, slashEnd)
-                    }
-                },
-                new AnimationTrackComponentProperty()
-                {
-                    ComponentType = typeof(SpriteComponent),
-                    Property = nameof(SpriteComponent.Offset),
-                    KeyFrames =
-                    {
-                        new AnimationTrackProperty.KeyFrame(startRotation.RotateVec(new Vector2(0f, -1f)), 0f),
-                        new AnimationTrackProperty.KeyFrame(startRotation.RotateVec(new Vector2(0f, -1f)), slashStart),
-                        new AnimationTrackProperty.KeyFrame(endRotation.RotateVec(new Vector2(0f, -1f)), slashEnd)
-                    }
-                },
-                new AnimationTrackComponentProperty()
-                {
-                    ComponentType = typeof(SpriteComponent),
-                    Property = nameof(SpriteComponent.Color),
-                    KeyFrames =
-                    {
-                        new AnimationTrackProperty.KeyFrame(sprite.Color, slashEnd),
-                        new AnimationTrackProperty.KeyFrame(sprite.Color.WithAlpha(0f), length),
-                    }
-                }
-            }
-        };
-    }
-
-    private Animation GetThrustAnimation(SpriteComponent sprite, float distance)
-    {
-        var length = 0.15f;
-        var thrustEnd = 0.05f;
-
-        return new Animation()
-        {
-            Length = TimeSpan.FromSeconds(length),
-            AnimationTracks =
-            {
-                new AnimationTrackComponentProperty()
-                {
-                    ComponentType = typeof(SpriteComponent),
-                    Property = nameof(SpriteComponent.Offset),
-                    KeyFrames =
-                    {
-                        new AnimationTrackProperty.KeyFrame(sprite.Rotation.RotateVec(new Vector2(0f, -distance / 5f)), 0f),
-                        new AnimationTrackProperty.KeyFrame(sprite.Rotation.RotateVec(new Vector2(0f, -distance)), thrustEnd),
-                        new AnimationTrackProperty.KeyFrame(sprite.Rotation.RotateVec(new Vector2(0f, -distance)), length),
-                    }
-                },
-                new AnimationTrackComponentProperty()
-                {
-                    ComponentType = typeof(SpriteComponent),
-                    Property = nameof(SpriteComponent.Color),
-                    KeyFrames =
-                    {
-                        new AnimationTrackProperty.KeyFrame(sprite.Color, thrustEnd),
-                        new AnimationTrackProperty.KeyFrame(sprite.Color.WithAlpha(0f), length),
-                    }
-                }
-            }
-        };
-    }
-
-    /// <summary>
-    /// Get the fadeout for static weapon arcs.
-    /// </summary>
-    private Animation GetStaticAnimation(SpriteComponent sprite)
-    {
-        var length = 0.15f;
-
-        return new()
-        {
-            Length = TimeSpan.FromSeconds(length),
-            AnimationTracks =
-            {
-                new AnimationTrackComponentProperty()
-                {
-                    ComponentType = typeof(SpriteComponent),
-                    Property = nameof(SpriteComponent.Color),
-                    KeyFrames =
-                    {
-                        new AnimationTrackProperty.KeyFrame(sprite.Color, 0f),
-                        new AnimationTrackProperty.KeyFrame(sprite.Color.WithAlpha(0f), length)
-                    }
-                }
-            }
-        };
-    }
-
-    /// <summary>
-    /// Get the sprite offset animation to use for mob lunges.
-    /// </summary>
-    private Animation GetLungeAnimation(Vector2 direction)
-    {
-        var length = 0.1f;
-
-        return new Animation
-        {
-            Length = TimeSpan.FromSeconds(length),
-            AnimationTracks =
-            {
-                new AnimationTrackComponentProperty()
-                {
-                    ComponentType = typeof(SpriteComponent),
-                    Property = nameof(SpriteComponent.Offset),
-                    InterpolationMode = AnimationInterpolationMode.Linear,
-                    KeyFrames =
-                    {
-                        new AnimationTrackProperty.KeyFrame(direction.Normalized * 0.15f, 0f),
-                        new AnimationTrackProperty.KeyFrame(Vector2.Zero, length)
-                    }
-                }
-            }
-        };
+        // Entity might not have been sent by PVS.
+        if (Exists(ev.Entity))
+            DoLunge(ev.Entity, ev.Angle, ev.LocalPos, ev.Animation);
     }
 }

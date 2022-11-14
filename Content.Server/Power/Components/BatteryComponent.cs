@@ -30,6 +30,13 @@ namespace Content.Server.Power.Components
         [ViewVariables] public bool IsFullyCharged => MathHelper.CloseToPercent(CurrentCharge, MaxCharge);
 
         /// <summary>
+        /// The price per one joule. Default is 1 credit for 10kJ.
+        /// </summary>
+        [DataField("pricePerJoule")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float PricePerJoule = 0.0001f;
+
+        /// <summary>
         ///     If sufficient charge is avaiable on the battery, use it. Otherwise, don't.
         /// </summary>
         public virtual bool TryUseCharge(float chargeToUse)

@@ -59,7 +59,7 @@ namespace Content.Server.Cloning.Systems
             UpdateUserInterface(consoleComponent);
         }
 
-        private void OnPowerChanged(EntityUid uid, CloningConsoleComponent component, PowerChangedEvent args)
+        private void OnPowerChanged(EntityUid uid, CloningConsoleComponent component, ref PowerChangedEvent args)
         {
             UpdateUserInterface(component);
         }

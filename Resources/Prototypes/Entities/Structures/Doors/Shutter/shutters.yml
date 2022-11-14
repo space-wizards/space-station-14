@@ -4,6 +4,8 @@
   name: shutter
   abstract: true
   description: One shudders to think about what might be behind this shutter.
+  placement:
+    mode: SnapgridCenter
   components:
   - type: Sprite
     netsync: false
@@ -22,8 +24,13 @@
       - FullTileMask
       layer:
       - AirlockLayer
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronics ]
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
   - type: Door
-    board: DoorElectronics
     bumpOpen: false
     clickOpen: false
     closeTimeOne: 0.2
@@ -51,6 +58,8 @@
       type: WiresBoundUserInterface
   - type: Airtight
     fixVacuum: true
+  - type: RadiationBlocker
+    resistance: 2
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -76,8 +85,6 @@
     messagePerceivedByOthers: comp-window-knock
     interactSuccessSound:
       path: /Audio/Effects/glass_knock.ogg
-  placement:
-    mode: SnapgridCenter
 
 - type: entity
   id: ShuttersNormal
@@ -87,6 +94,8 @@
   - type: Construction
     graph: Shutters
     node: Shutters
+    containers:
+    - board
 
 - type: entity
   id: ShuttersNormalOpen
@@ -101,9 +110,8 @@
     enabled: false
   - type: Airtight
     airBlocked: false
-  - type: Construction
-    graph: Shutters
-    node: Shutters
+  - type: RadiationBlocker
+    enabled: false
 
 - type: entity
   id: ShuttersRadiation
@@ -121,6 +129,8 @@
   - type: Construction
     graph: Shutters
     node: ShuttersRadiation
+    containers:
+    - board
 
 - type: entity
   id: ShuttersRadiationOpen
@@ -129,15 +139,14 @@
   components:
   - type: Door
     state: Open
-  - type: Construction
-    graph: Shutters
-    node: ShuttersRadiation
   - type: Occluder
     enabled: false
   - type: Physics
     canCollide: false
   - type: Airtight
     airBlocked: false
+  - type: RadiationBlocker
+    enabled: false
 
 - type: entity
   id: ShuttersWindow
@@ -154,6 +163,8 @@
   - type: Construction
     graph: Shutters
     node: ShuttersWindow
+    containers:
+    - board
 
 - type: entity
   id: ShuttersWindowOpen
@@ -162,13 +173,12 @@
   components:
   - type: Door
     state: Open
-  - type: Construction
-    graph: Shutters
-    node: ShuttersWindow
   - type: Physics
     canCollide: false
   - type: Airtight
     airBlocked: false
+  - type: RadiationBlocker
+    enabled: false
 
 # Frame for construction
 - type: entity
@@ -184,6 +194,8 @@
   - type: Construction
     graph: Shutters
     node: frame1
+    containers:
+    - board
   - type: InteractionOutline
   - type: Damageable
     damageContainer: Inorganic

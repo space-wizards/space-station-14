@@ -8,13 +8,16 @@
   - type: ItemCooldown
   - type: UseDelay
     delay: 1.0
-  - type: ItemSlots
   - type: ContainerContainer
     containers:
       cell_slot: !type:ContainerSlot {}
   - type: PowerCellSlot
-    cellSlot:
-      startingItem: PowerCellMedium
+    cellSlotId: cell_slot
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMedium
   - type: Sprite
     sprite: Objects/Devices/Holoprojectors/custodial.rsi
     state: icon

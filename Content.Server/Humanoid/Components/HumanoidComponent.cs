@@ -34,5 +34,5 @@ public sealed class HumanoidComponent : SharedHumanoidComponent
 
     // Couldn't these be somewhere else?
     [ViewVariables] public Gender Gender = default!;
-    [ViewVariables] public int Age = HumanoidCharacterProfile.MinimumAge;
+    [ViewVariables] public int Age = 18;
 }

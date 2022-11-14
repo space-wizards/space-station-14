@@ -9,6 +9,7 @@ using Content.Shared.Maps;
 using Content.Shared.MobState.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Physics;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Abilities.Mime
 {
@@ -17,6 +18,8 @@ namespace Content.Server.Abilities.Mime
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
+
+        [Dependency] private readonly IGameTiming _timing = default!;
 
         public override void Initialize()
         {
@@ -34,8 +37,7 @@ namespace Content.Server.Abilities.Mime
                 if (!mime.VowBroken || mime.ReadyToRepent)
                     continue;
 
-                mime.Accumulator += frameTime;
-                if (mime.Accumulator < mime.VowCooldown.TotalSeconds)
+                if (_timing.CurTime < mime.VowRepentTime)
                     continue;
 
                 mime.ReadyToRepent = true;
@@ -101,6 +103,7 @@ namespace Content.Server.Abilities.Mime
 
             mimePowers.Enabled = false;
             mimePowers.VowBroken = true;
+            mimePowers.VowRepentTime = _timing.CurTime + mimePowers.VowCooldown;
             _alertsSystem.ClearAlert(uid, AlertType.VowOfSilence);
             _alertsSystem.ShowAlert(uid, AlertType.VowBroken);
             _actionsSystem.RemoveAction(uid, mimePowers.InvisibleWallAction);
@@ -123,7 +126,6 @@ namespace Content.Server.Abilities.Mime
             mimePowers.Enabled = true;
             mimePowers.ReadyToRepent = false;
             mimePowers.VowBroken = false;
-            mimePowers.Accumulator = 0f;
             _alertsSystem.ClearAlert(uid, AlertType.VowBroken);
             _alertsSystem.ShowAlert(uid, AlertType.VowOfSilence);
             _actionsSystem.AddAction(uid, mimePowers.InvisibleWallAction, uid);

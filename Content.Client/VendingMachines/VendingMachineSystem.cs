@@ -7,6 +7,7 @@ namespace Content.Client.VendingMachines;
 public sealed class VendingMachineSystem : SharedVendingMachineSystem
 {
     [Dependency] private readonly AnimationPlayerSystem _animationPlayer = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
     public override void Initialize()
     {
@@ -21,7 +22,14 @@ public sealed class VendingMachineSystem : SharedVendingMachineSystem
         if (!TryComp<SpriteComponent>(uid, out var sprite))
             return;
 
-        UpdateAppearance(uid, VendingMachineVisualState.Normal, component, sprite);
+        if (!TryComp<AppearanceComponent>(uid, out var appearance) ||
+            !_appearanceSystem.TryGetData(uid, VendingMachineVisuals.VisualState, out var visualStateObject, appearance) ||
+            visualStateObject is not VendingMachineVisualState visualState)
+        {
+            visualState = VendingMachineVisualState.Normal;
+        }
+
+        UpdateAppearance(uid, visualState, component, sprite);
     }
 
     private void OnAppearanceChange(EntityUid uid, VendingMachineComponent component, ref AppearanceChangeEvent args)

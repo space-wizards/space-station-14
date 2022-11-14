@@ -57,6 +57,7 @@ namespace Content.Server.Explosion.EntitySystems
             InitializeOnUse();
             InitializeSignal();
             InitializeTimedCollide();
+            InitializeVoice();
 
             SubscribeLocalEvent<TriggerOnCollideComponent, StartCollideEvent>(OnTriggerCollide);
             SubscribeLocalEvent<TriggerOnActivateComponent, ActivateInWorldEvent>(OnActivate);

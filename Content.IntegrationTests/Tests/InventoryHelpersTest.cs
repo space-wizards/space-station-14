@@ -52,9 +52,6 @@ namespace Content.IntegrationTests.Tests
             {
                 var mapMan = IoCManager.Resolve<IMapManager>();
                 var systemMan = IoCManager.Resolve<IEntitySystemManager>();
-
-                mapMan.CreateNewMapEntity(MapId.Nullspace);
-
                 var human = sEntities.SpawnEntity("InventoryStunnableDummy", MapCoordinates.Nullspace);
                 var invSystem = systemMan.GetEntitySystem<InventorySystem>();
 

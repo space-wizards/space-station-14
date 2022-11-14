@@ -5,5 +5,7 @@ namespace Content.Shared.CombatMode.Pacification
     /// </summary>
     [RegisterComponent]
     public sealed class PacifiedComponent : Component
-    {}
+    {
+
+    }
 }

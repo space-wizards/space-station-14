@@ -1,5 +1,6 @@
-﻿using System.Threading;
+using System.Threading;
 using Content.Shared.FixedPoint;
+using Robust.Shared.Utility;
 
 namespace Content.Server.DoAfter
 {
@@ -125,6 +126,7 @@ namespace Content.Server.DoAfter
 
             if (Target == null)
             {
+                DebugTools.Assert(!BreakOnTargetMove);
                 BreakOnTargetMove = false;
             }
         }

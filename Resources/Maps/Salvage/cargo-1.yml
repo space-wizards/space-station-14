@@ -183,9 +183,6 @@ entities:
     pos: -4.5,1.5
     parent: 20
     type: Transform
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 18
   type: Poweredlight
   components:
@@ -195,9 +192,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 19
   type: SalvageCanisterSpawner
   components:

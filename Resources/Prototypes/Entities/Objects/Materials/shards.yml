@@ -92,6 +92,10 @@
     damage:
       types:
         Piercing: 5
+  - type: Tag
+    tags:
+      - GlassShard
+      - Trash
 
 - type: entity
   parent: ShardBase

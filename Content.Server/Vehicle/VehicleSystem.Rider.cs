@@ -49,7 +49,7 @@ namespace Content.Server.Vehicle
         /// </summary>
         private void OnMobStateChanged(EntityUid uid, RiderComponent rider, MobStateChangedEvent args)
         {
-            if (args.Component.IsCritical() || args.Component.IsDead())
+            if (args.CurrentMobState is DamageState.Critical or DamageState.Dead)
             {
                 UnbuckleFromVehicle(uid);
             }

@@ -19,11 +19,8 @@ namespace Content.Shared.CombatMode
         /// Whether we are able to disarm. This requires our active hand to be free.
         /// False if it's toggled off for whatever reason, null if it's not possible.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite), DataField("disarm")]
+        [ViewVariables(VVAccess.ReadWrite), DataField("canDisarm")]
         public bool? CanDisarm;
-
-        [DataField("disarmFailSound")]
-        public readonly SoundSpecifier DisarmFailSound = new SoundPathSpecifier("/Audio/Weapons/punchmiss.ogg");
 
         [DataField("disarmSuccessSound")]
         public readonly SoundSpecifier DisarmSuccessSound = new SoundPathSpecifier("/Audio/Effects/thudswoosh.ogg");

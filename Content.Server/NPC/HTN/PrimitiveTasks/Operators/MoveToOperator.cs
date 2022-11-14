@@ -42,7 +42,7 @@ public sealed class MoveToOperator : HTNOperator
     /// Where the pathfinding result will be stored (if applicable). This gets removed after execution.
     /// </summary>
     [ViewVariables, DataField("pathfindKey")]
-    public string PathfindKey = "MovementPathfind";
+    public string PathfindKey = NPCBlackboard.PathfindKey;
 
     /// <summary>
     /// How close we need to get before considering movement finished.

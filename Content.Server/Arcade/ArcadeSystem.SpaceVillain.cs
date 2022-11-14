@@ -10,7 +10,7 @@ public sealed partial class ArcadeSystem
         SubscribeLocalEvent<SpaceVillainArcadeComponent, PowerChangedEvent>(OnSVillainPower);
     }
 
-    private void OnSVillainPower(EntityUid uid, SpaceVillainArcadeComponent component, PowerChangedEvent args)
+    private void OnSVillainPower(EntityUid uid, SpaceVillainArcadeComponent component, ref PowerChangedEvent args)
     {
         component.OnPowerStateChanged(args);
     }

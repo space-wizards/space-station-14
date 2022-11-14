@@ -35,6 +35,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
 using Content.Server.Administration.Commands;
+using Content.Server.Humanoid.Systems;
 using Content.Shared.Preferences;
 using Content.Server.Preferences.Managers;
 
@@ -47,7 +48,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IServerPreferencesManager _prefs = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
-    [Dependency] private readonly IMapLoader _mapLoader = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPlayerManager _playerSystem = default!;
     [Dependency] private readonly FactionSystem _faction = default!;
@@ -57,6 +57,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly GameTicker _ticker = default!;
+    [Dependency] private readonly MapLoaderSystem _map = default!;
+    [Dependency] private readonly RandomHumanoidSystem _randomHumanoid = default!;
 
 
     private enum WinType
@@ -617,7 +619,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
         var mapId = _mapManager.CreateMap();
 
-        var (_, outpostGrids) = _mapLoader.LoadMap(mapId, path.ToString());
+        var outpostGrids = _map.LoadMap(mapId, path.ToString());
         if (outpostGrids.Count == 0)
         {
             Logger.ErrorS("nukies", $"Error loading map {path} for nukies!");
@@ -628,7 +630,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         _nukieOutpost = outpostGrids[0];
 
         // Listen I just don't want it to overlap.
-        var (_, shuttleId) = _mapLoader.LoadGrid(mapId, shuttlePath.ToString(), new MapLoadOptions()
+        var shuttleId = _map.LoadGrid(mapId, shuttlePath.ToString(), new MapLoadOptions()
         {
             Offset = Vector2.One * 1000f,
         });
@@ -662,17 +664,17 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         switch (spawnNumber)
         {
             case 0:
-                name = $"Commander " + _random.PickAndTake(_operativeNames[_nukeopsRuleConfig.EliteNames]);
+                name = Loc.GetString("nukeops-role-commander") + " " + _random.PickAndTake(_operativeNames[_nukeopsRuleConfig.EliteNames]);
                 role = _nukeopsRuleConfig.CommanderRolePrototype;
                 gear = _nukeopsRuleConfig.CommanderStartGearPrototype;
                 break;
             case 1:
-                name = $"Agent " + _random.PickAndTake(_operativeNames[_nukeopsRuleConfig.NormalNames]);
+                name = Loc.GetString("nukeops-role-agent") + " " + _random.PickAndTake(_operativeNames[_nukeopsRuleConfig.NormalNames]);
                 role = _nukeopsRuleConfig.OperativeRoleProto;
                 gear = _nukeopsRuleConfig.MedicStartGearPrototype;
                 break;
             default:
-                name = $"Operator " + _random.PickAndTake(_operativeNames[_nukeopsRuleConfig.NormalNames]);
+                name = Loc.GetString("nukeops-role-operator") + " " + _random.PickAndTake(_operativeNames[_nukeopsRuleConfig.NormalNames]);
                 role = _nukeopsRuleConfig.OperativeRoleProto;
                 gear = _nukeopsRuleConfig.OperativeStartGearPrototype;
                 break;
@@ -732,7 +734,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
             if (sessions.TryGetValue(i, out var session))
             {
-                var mob = EntityManager.SpawnEntity(_nukeopsRuleConfig.SpawnEntityPrototype, _random.Pick(spawns));
+                var mob = _randomHumanoid.SpawnRandomHumanoid(_nukeopsRuleConfig.RandomHumanoidSettingsPrototype, _random.Pick(spawns), string.Empty);
                 var profile = _prefs.GetPreferences(session.UserId).SelectedCharacter as HumanoidCharacterProfile;
                 SetupOperativeEntity(mob, spawnDetails.Name, spawnDetails.Gear, profile);
 

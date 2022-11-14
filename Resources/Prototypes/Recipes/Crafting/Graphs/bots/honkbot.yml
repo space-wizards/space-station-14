@@ -6,18 +6,18 @@
     edges:
     - to: bot
       steps:
-      - prototype: BoxHug
+      - tag: BoxHug
         icon:
           sprite: Objects/Storage/boxes.rsi
           state: box_hug
         name: box of hugs
-      - prototype: RubberStampClown
+      - tag: ClownRubberStamp
         icon:
           sprite: Objects/Misc/bureaucracy.rsi
           state: stamp-clown
         name: clown's rubber stamp
         doAfter: 2
-      - prototype: BikeHorn
+      - tag: BikeHorn
         icon:
             sprite: Objects/Fun/bikehorn.rsi
             state: icon

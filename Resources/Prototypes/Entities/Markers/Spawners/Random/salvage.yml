@@ -9,7 +9,7 @@
     - type: Sprite
       layers:
         - state: red
-        - texture: Structures/Storage/Crates/generic.rsi/crate_icon.png
+        - texture: Structures/Storage/Crates/generic.rsi/icon.png
     - type: RandomSpawner
       rarePrototypes:
         - SalvageHumanCorpse

@@ -17,8 +17,7 @@ namespace Content.Client.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            EntitySystem.Get<MarkerSystem>()
-                .MarkersVisible ^= true;
+            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<MarkerSystem>().MarkersVisible ^= true;
         }
     }
 
@@ -31,7 +30,7 @@ namespace Content.Client.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            EntitySystem.Get<SubFloorHideSystem>().ShowAll ^= true;
+            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SubFloorHideSystem>().ShowAll ^= true;
         }
     }
 
@@ -47,14 +46,11 @@ namespace Content.Client.Commands
             EntitySystem.Get<SubFloorHideSystem>().ShowAll = true;
 
             var entMan = IoCManager.Resolve<IEntityManager>();
-            var components = entMan.EntityQuery<SubFloorHideComponent>(true);
+            var components = entMan.EntityQuery<SubFloorHideComponent, SpriteComponent>(true);
 
-            foreach (var component in components)
+            foreach (var (_, sprite) in components)
             {
-                if (entMan.TryGetComponent(component.Owner, out ISpriteComponent? sprite))
-                {
-                    sprite.DrawDepth = (int) DrawDepth.Overlays;
-                }
+                sprite.DrawDepth = (int) DrawDepth.Overlays;
             }
         }
     }
@@ -69,7 +65,7 @@ namespace Content.Client.Commands
         {
             var message = args[0];
 
-            EntitySystem.Get<PopupSystem>().PopupCursor(message);
+            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<PopupSystem>().PopupCursor(message);
         }
     }
 }

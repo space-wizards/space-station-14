@@ -70,7 +70,7 @@ grids:
     tiles: EgAAABIAAAASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIAAAASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
 entities:
 - uid: 0
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: -2.5,-2.5
     parent: 3
@@ -170,19 +170,19 @@ entities:
   - chunkCollection: {}
     type: DecalGrid
 - uid: 4
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: -2.5,2.5
     parent: 3
     type: Transform
 - uid: 5
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: -2.5,1.5
     parent: 3
     type: Transform
 - uid: 6
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: -2.5,0.5
     parent: 3
@@ -194,151 +194,151 @@ entities:
     parent: 3
     type: Transform
 - uid: 8
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: -2.5,-1.5
     parent: 3
     type: Transform
 - uid: 9
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: -1.5,2.5
     parent: 3
     type: Transform
 - uid: 10
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: -0.5,0.5
     parent: 3
     type: Transform
 - uid: 11
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: -1.5,-1.5
     parent: 3
     type: Transform
 - uid: 12
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: -1.5,-2.5
     parent: 3
     type: Transform
 - uid: 13
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: -0.5,1.5
     parent: 3
     type: Transform
 - uid: 14
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: -0.5,-1.5
     parent: 3
     type: Transform
 - uid: 15
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: 0.5,2.5
     parent: 3
     type: Transform
 - uid: 16
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: 0.5,0.5
     parent: 3
     type: Transform
 - uid: 17
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: 0.5,-2.5
     parent: 3
     type: Transform
 - uid: 18
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: -3.5,0.5
     parent: 3
     type: Transform
 - uid: 19
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: -3.5,-0.5
     parent: 3
     type: Transform
 - uid: 20
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: -3.5,-1.5
     parent: 3
     type: Transform
 - uid: 21
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: 1.5,1.5
     parent: 3
     type: Transform
 - uid: 22
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: 1.5,-0.5
     parent: 3
     type: Transform
 - uid: 23
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: 1.5,-1.5
     parent: 3
     type: Transform
 - uid: 24
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: 2.5,0.5
     parent: 3
     type: Transform
 - uid: 25
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: 2.5,-1.5
     parent: 3
     type: Transform
 - uid: 26
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: -1.5,-3.5
     parent: 3
     type: Transform
 - uid: 27
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: -0.5,-3.5
     parent: 3
     type: Transform
 - uid: 28
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: -1.5,0.5
     parent: 3
     type: Transform
 - uid: 29
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: -0.5,-0.5
     parent: 3
     type: Transform
 - uid: 30
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: 0.5,-0.5
     parent: 3
     type: Transform
 - uid: 31
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: -0.5,2.5
     parent: 3
     type: Transform
 - uid: 32
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: -1.5,-0.5
     parent: 3
@@ -350,31 +350,31 @@ entities:
     parent: 3
     type: Transform
 - uid: 34
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: 0.5,1.5
     parent: 3
     type: Transform
 - uid: 35
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: 0.5,-1.5
     parent: 3
     type: Transform
 - uid: 36
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: -3.5,1.5
     parent: 3
     type: Transform
 - uid: 37
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: 2.5,-0.5
     parent: 3
     type: Transform
 - uid: 38
-  type: AsteroidRock
+  type: AsteroidRockMining
   components:
   - pos: -2.5,-3.5
     parent: 3

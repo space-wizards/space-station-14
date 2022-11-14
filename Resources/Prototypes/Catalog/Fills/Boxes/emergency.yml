@@ -96,6 +96,9 @@
       - id: EmergencyMedipen
       - id: Flare
       - id: FoodTinMRE
+  - type: Tag
+    tags:
+      - BoxHug
 
 - type: entity
   name: extended-capacity survival box

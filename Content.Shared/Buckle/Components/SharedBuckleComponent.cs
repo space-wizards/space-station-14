@@ -2,6 +2,7 @@ using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
 using Content.Shared.Standing;
 using Robust.Shared.GameStates;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Buckle.Components
@@ -48,7 +49,13 @@ namespace Content.Shared.Buckle.Components
             var ownTransform = EntMan.GetComponent<TransformComponent>(Owner);
             var strapTransform = EntMan.GetComponent<TransformComponent>(strap.Owner);
 
-            ownTransform.AttachParent(strapTransform);
+            ownTransform.Coordinates = new EntityCoordinates(strapTransform.Owner, strap.BuckleOffset);
+
+            // Buckle subscribes to move for <reasons> so this might fail.
+            // TODO: Make buckle not do that.
+            if (ownTransform.ParentUid != strapTransform.Owner)
+                return;
+
             ownTransform.LocalRotation = Angle.Zero;
 
             switch (strap.Position)
@@ -62,8 +69,6 @@ namespace Content.Shared.Buckle.Components
                     EntitySystem.Get<StandingStateSystem>().Down(Owner, false, false);
                     break;
             }
-
-            ownTransform.LocalPosition = strap.BuckleOffset;
         }
     }
 
