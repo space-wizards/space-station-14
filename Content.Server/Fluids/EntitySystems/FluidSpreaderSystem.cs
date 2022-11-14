@@ -140,6 +140,6 @@ public sealed class FluidSpreaderSystem : EntitySystem
         }
 
         puddle = _puddleSystem.SpawnPuddle(srcUid, pos, srcPuddle);
-        return puddle != null;
+        return true;
     }
 }
