@@ -5,6 +5,13 @@
   name: Donksoft LMG magazine
   parent: BaseMagazineLightRifle
   components:
+    - type: Tag
+    tags:
+      - MagazineDonksoftLMG
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - BulletFoam
   - type: BallisticAmmoProvider
     proto: BulletFoam
   - type: Sprite
@@ -17,7 +24,7 @@
 - type: entity
   id: MagazineLightRifleRiotFoam
   name: Donksoft LMG magazine (riot edition)
-  parent: BaseMagazineLightRifle
+  parent: MagazineLightRifleFoam
   components:
   - type: BallisticAmmoProvider
     proto: BulletRiotFoam
@@ -33,6 +40,13 @@
   name: Donksoft SMG magazine
   parent: BaseMagazinePistolSubMachineGun
   components:
+  - type: Tag
+    tags:
+      - MagazineDonksoftSMG
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - BulletFoam
   - type: BallisticAmmoProvider
     proto: BulletFoam
   - type: Sprite
@@ -45,7 +59,7 @@
 - type: entity
   id: MagazinePistolSubMachineGunRiotFoam
   name: Donksoft SMG magazine (riot edition)
-  parent: BaseMagazinePistolSubMachineGun
+  parent: MagazinePistolSubMachineGunFoam
   components:
   - type: BallisticAmmoProvider
     proto: BulletRiotFoam
@@ -61,6 +75,13 @@
   name: Donksoft pistol magazine
   parent: BaseMagazinePistol
   components:
+  - type: Tag
+    tags:
+      - MagazineDonksoftPistol
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - BulletFoam
   - type: BallisticAmmoProvider
     proto: BulletFoam
   - type: Sprite
@@ -73,7 +94,7 @@
 - type: entity
   id: MagazinePistolRiotFoam
   name: Donksoft pistol magazine (riot edition)
-  parent: BaseMagazinePistol
+  parent: MagazinePistolFoam
   components:
   - type: BallisticAmmoProvider
     proto: BulletRiotFoam
@@ -89,6 +110,13 @@
   name: Donksoft machine pistol magazine
   parent: BaseMagazinePistolHighCapacity
   components:
+  - type: Tag
+    tags:
+      - MagazineDonksoftPistol
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - BulletFoam
   - type: BallisticAmmoProvider
     proto: BulletFoam
   - type: Sprite
@@ -101,7 +129,7 @@
 - type: entity
   id: MagazinePistolHighCapacityRiotFoam
   name: Donksoft machine pistol magazine (riot edition)
-  parent: BaseMagazinePistolHighCapacity
+  parent: MagazinePistolHighCapacityFoam
   components:
   - type: BallisticAmmoProvider
     proto: BulletRiotFoam
