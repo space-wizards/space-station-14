@@ -114,7 +114,6 @@
           tags:
             - BulletFoam
   
-
 - type: entity
   name: handmade pistol
   parent: BaseWeaponPistol
