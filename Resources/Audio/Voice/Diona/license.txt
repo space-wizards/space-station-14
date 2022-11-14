@@ -1,0 +1,4 @@
+The sounds are taken from Paradise
+https://github.com/ParadiseSS13/Paradise/commit/06bb3527c7ec597223235476103452ab518a2e58
+
+diona_scream.ogg
