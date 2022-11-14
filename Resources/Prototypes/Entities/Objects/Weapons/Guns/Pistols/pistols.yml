@@ -91,6 +91,31 @@
       gun_chamber: !type:ContainerSlot
 
 - type: entity
+  name: Viper (Donksoft edition)
+  id: WeaponPistolViperDonksoft
+  parent: WeaponPistolViper
+  description: A Donksoft-produced replica of the Viper handgun, using foam darts as ammo. Looks and sounds just like the real thing!
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazinePistolFoam # ditto on the L6 comment, adding this to uplinks eventually once I've polished it
+        insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazineDonksoftPistol
+      gun_chamber:
+        name: Chamber
+        startingItem: BulletFoam
+        priority: 1
+        whitelist:
+          tags:
+            - BulletFoam
+  
+
+- type: entity
   name: handmade pistol
   parent: BaseWeaponPistol
   id: WeaponPistolHandmade
