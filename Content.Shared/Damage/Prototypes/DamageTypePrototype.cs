@@ -35,25 +35,25 @@ namespace Content.Shared.Damage.Prototypes
 
         //Note: these should be defined in order of severity!
         //surface wounds are wounds on skin or exposed bodyparts
-        [DataField("SurfaceWounds", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, WoundPrototype>))]
-        public Dictionary<FixedPoint2,string> SurfaceWounds { get; init; } = new();
-
-        //solid wounds are wounds that get caused when affecting a solid surface/object, such as bones or an exoskeleton
-        [DataField("solidWounds", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, WoundPrototype>))]
-        public Dictionary<FixedPoint2,string> SolidWounds { get; init; } = new();
+        [DataField("surfaceWounds", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, WoundPrototype>))]
+        public SortedDictionary<FixedPoint2,string> SurfaceWounds { get; init; } = new();
 
         //internal wounds are wounds that are caused when an injury affects internal soft tissue such as organs or flesh
         [DataField("internalWounds", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, WoundPrototype>))]
-        public Dictionary<FixedPoint2,string> InternalWounds { get; init; } = new();
+        public SortedDictionary<FixedPoint2,string>? InternalWounds { get; init; } = new();
+
+        //solid wounds are wounds that get caused when affecting a solid surface/object, such as bones or an exoskeleton
+        [DataField("structuralWounds", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, WoundPrototype>))]
+        public SortedDictionary<FixedPoint2,string>? StructuralWounds { get; init; } = new();
 
         //used to calculate how much this damage type propogates the skin
-        [DataField("skinPenMod")] public float SkinPenModifier = 1.0f;
+        [DataField("surfacePenMod")] public float SurfacePenModifier = 1.0f;
 
         //used to calculate how much this damage type propogates a bodypart/flesh
-        [DataField("fleshPenMod")] public float FleshPenModifier = 1.0f;
+        [DataField("internalPenMod")] public float InternalPenModifier = 1.0f;
 
         //used to calculate how much this damage type propogates through a bone if it is protecting organs
-        [DataField("bonePenMod")] public float BonePenModifier = 1.0f;
+        [DataField("structurePenMod")] public float StructurePenModifier = 1.0f;
 
     }
 }

@@ -1,29 +1,22 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Runtime.InteropServices;
 using Content.Shared.Body.Organ;
 using Content.Shared.Body.Part;
-using Content.Shared.Body.Prototypes;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
 using Content.Shared.Medical.Wounds.Components;
-using Content.Shared.Medical.Wounds.Prototypes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
-
+using Robust.Shared.Utility;
 namespace Content.Shared.Medical.Wounds.Systems;
 
 public sealed class WoundSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private RobustRandom _random = default!;
-    //TODO: Make these CVARS!
-    private float _hardenedSkinWoundTypeChance = 0.75f; //Chance for hardened skin to recieve a solid instead of surface wound.
-    private float _hardenedSkinSeverityAdjustment = 0.2f; //Decrease in severity if hardened skin receives a surface wound
 
-    private readonly Dictionary<string, CachedWoundTable> _cachedDamageWoundTables = new();
+    private readonly Dictionary<string, WoundMetaData> _cachedDamageWoundMetaData = new();
 
     public override void Initialize()
     {
@@ -33,125 +26,287 @@ public sealed class WoundSystem : EntitySystem
 
     private void CacheData(PrototypesReloadedEventArgs? prototypesReloadedEventArgs)
     {
-        _cachedDamageWoundTables.Clear();
+        _cachedDamageWoundMetaData.Clear();
         foreach (var damageProto in _prototypeManager.EnumeratePrototypes<DamageTypePrototype>())
         {
-            _cachedDamageWoundTables.Add(damageProto.ID, new CachedWoundTable(damageProto));
+            _cachedDamageWoundMetaData.Add(damageProto.ID, new WoundMetaData(damageProto));
         }
     }
 
-    public IReadOnlyDictionary<FixedPoint2, string>? GetWoundTableForDamageType(string damageTypeId, WoundLayer woundLayer)
+    private SortedDictionary<FixedPoint2, string>? GetWoundTableForDamageType(string damageTypeId, WoundCategory woundCategory)
     {
-        if (!_cachedDamageWoundTables.ContainsKey(damageTypeId))
+        if (!_cachedDamageWoundMetaData.ContainsKey(damageTypeId))
             return null;
-        return woundLayer switch
+        return woundCategory switch
         {
-            WoundLayer.Surface => _cachedDamageWoundTables[damageTypeId].SurfaceWounds,
-            WoundLayer.Internal => _cachedDamageWoundTables[damageTypeId].InternalWounds,
-            WoundLayer.Solid => _cachedDamageWoundTables[damageTypeId].SolidWounds,
-            _ => throw new ArgumentException("WoundLayer was invalid! This should never happen!")
+            WoundCategory.Surface => _cachedDamageWoundMetaData[damageTypeId].SurfaceWounds,
+            WoundCategory.Internal => _cachedDamageWoundMetaData[damageTypeId].InternalWounds,
+            WoundCategory.Structural => _cachedDamageWoundMetaData[damageTypeId].StructuralWounds,
+            _ => throw new ArgumentException("WoundLayers was invalid! This should never happen!")
         };
     }
 
-    //TODO: output a woundhandle from this!
+    public bool TryGetWoundPen(string damageType, WoundCategory category, out float? woundPen)
+    {
+        woundPen = null;
+        if (!_cachedDamageWoundMetaData.TryGetValue(damageType, out var woundMetaData))
+            return false;
+        switch (category)
+        {
+            case WoundCategory.Surface:
+            {
+                woundPen = woundMetaData.SurfacePenModifier;
+                return true;
+
+            }
+            case WoundCategory.Internal:
+            {
+                woundPen = woundMetaData.InternalPenModifier;
+                return true;
+
+            }
+            case WoundCategory.Structural:
+            {
+                woundPen = woundMetaData.StructuralPenModifier;
+                return true;
+            }
+            default:
+                throw new ArgumentException("Wound category is invalid! This should never happen!");
+        }
+    }
+
+    public WoundData? CreateWound(string damageType, WoundCategory woundCategory, float level)
+    {
+        if (level < 0) //if level is invalid return null
+            return null;
+        var woundTable = GetWoundTableForDamageType(damageType, woundCategory);
+        if (woundTable == null)
+            return null;
+        //wound severity is the percentage to reach the next wound level, it describes how severe this particular wound is
+        var woundId = PickWound(level, woundTable, out var severity);
+        return new WoundData(woundId, severity, woundCategory, damageType);
+    }
+    //TODO: output a WoundHandle
+    public bool ForceApplyWound(EntityUid target, string woundId, WoundCategory category, float severity)
+    {
+        if (!EntityManager.TryGetComponent<WoundableComponent>(target, out var woundContainer))
+            return false;
+        if (!ContainsForcableWound(woundContainer, woundId))
+            return false;
+        AddWound(woundContainer, category, new WoundData(woundId, severity, category));
+        return true;
+    }
+
+
+    //TODO: output a WoundHandle
+    public bool ApplyWound(EntityUid target, WoundData woundData, WoundCategory woundCategory)
+    {
+        if (!EntityManager.TryGetComponent<WoundableComponent>(target, out var woundContainer))
+            return false;
+        //TODO: implement stacking/severity increases later!
+        AddWound(woundContainer, woundCategory, woundData);
+        return true;
+    }
+    public bool ContainsForcableWound(WoundableComponent woundableComponent, string woundId)
+    {//Here be dragons
+        return //fuck if statements, we use boolean ors in this neighborhood
+            (woundableComponent.ForcedSurfaceWounds != null && woundableComponent.ForcedSurfaceWounds.Contains(woundId))
+               ||
+            (woundableComponent.ForcedInternalWounds != null && woundableComponent.ForcedInternalWounds.Contains(woundId))
+               ||
+            (woundableComponent.ForcedStructuralWounds != null && woundableComponent.ForcedStructuralWounds.Contains(woundId));
+    }
+
+    public bool CreateAndApplyWound(WoundableComponent woundComponent, string damageType, WoundCategory category, float level, out WoundData? newWound)
+    {
+        newWound = CreateWound(damageType, category, level);
+        if (!newWound.HasValue)
+            return false;
+        AddWound(woundComponent, category, newWound.Value);
+        return true;
+
+    }
+
+    public bool CreateAndApplyWound(WoundableComponent woundComponent, string damageType, WoundCategory category, float level)
+    {
+        return CreateAndApplyWound(woundComponent, damageType, category, level, out var _);
+    }
+
+    public bool CreateAndApplyWound(EntityUid target, string damageType, WoundCategory category, float level, out WoundData? newWound)
+    {
+        newWound = CreateWound(damageType, category, level);
+        return newWound.HasValue && ApplyWound(target, newWound.Value, category);
+    }
+
+    public bool CreateAndApplyWound(EntityUid target, string damageType, WoundCategory category, float severity)
+    {
+        return CreateAndApplyWound(target, damageType, category, severity,out _);
+    }
+
+
     public bool TryApplyWounds(EntityUid target, DamageSpecifier damage)
+    {
+        var success = false;
+        foreach (var damageData in damage.DamageDict)
+        {
+            if (damageData.Value > 0)
+                success |= TryApplyWounds(target, damageData.Key, damageData.Value);
+        }
+        return success;
+    }
+
+    //try to apply wounds to a part for specific damage
+    public bool TryApplyWounds(EntityUid target, string damageType, FixedPoint2 damage)
     {
         var success = false;
         if (!EntityManager.TryGetComponent<WoundableComponent>(target, out var woundContainer))
             return false;
-        if (EntityManager.TryGetComponent<BodySkinComponent>(target, out var coveringComp))
+        if (!_prototypeManager.TryIndex<DamageTypePrototype>(damageType, out var damageTypeProto))
+            return false;
+        var damageSpec = new DamageSpecifier(damageTypeProto, damage);
+        if (woundContainer.DamageResistance != null)
+            damageSpec = DamageSpecifier.ApplyModifierSet(damageSpec, woundContainer.DamageResistance);
+        if (damageSpec.DamageDict[damageType] == 0)
+            return false;
+        //TODO: implement custom wounds defined by skins
+        //if (EntityManager.TryGetComponent<BodySkinComponent>(target, out var coveringComp))
+        if (woundContainer.SurfaceWounds != null)
         {
-            var primaryCovering = _prototypeManager.Index<BodyCoveringPrototype>(coveringComp.PrimaryBodyCoveringId);
-            damage = DamageSpecifier.ApplyModifierSet(damage, primaryCovering.Resistance); //apply skin resistances first!
-            //TODO: eventually take into account second skin skin for damage resistance
-            damage = DamageSpecifier.ApplyModifierSet(damage, coveringComp.DamageModifier);
-            foreach (var damageData in damage.DamageDict)
-            {
-                success = TryApplyWoundsSkin(target, coveringComp, damageData.Key, damageData.Value.Float(), woundContainer, primaryCovering.Hardened);
-            }
+            damageSpec.DamageDict[damageType] = ApplyLayeringWound(woundContainer, WoundCategory.Surface, damageType, damage.Float(), out _);
         }
-        if ( EntityManager.TryGetComponent<BodyPartComponent>(target, out var bodyPart))
+        if (woundContainer.InternalWounds != null && damageSpec.DamageDict[damageType] > 0)
         {
-            var newDamage = DamageSpecifier.ApplyModifierSet(damage, woundContainer.DamageResistance);
-            success |= TryApplyWoundsBodyPart(target, bodyPart, newDamage, woundContainer);
+            damageSpec.DamageDict[damageType] = ApplyLayeringWound(woundContainer, WoundCategory.Internal, damageType, damage.Float(), out _);
         }
-        if (EntityManager.TryGetComponent<OrganComponent>(target, out var organ))
+        if (woundContainer.StructuralWounds == null || damageSpec.DamageDict[damageType] <= 0)
+            return success;
+        damageSpec.DamageDict[damageType] = ApplyLayeringWound(woundContainer, WoundCategory.Structural, damageType, damage.Float(),out var woundLevel);
+        if (woundLevel >= 1.0f)
         {
-            DamageSpecifier.ApplyModifierSet(damage, woundContainer.DamageResistance);
-            success |= TryApplyWoundsOrgan(target, organ, damage, woundContainer);
+            //TODO: implement structural wound destruction
+            //Destroy this if it's a bodypart!
         }
         return success;
     }
-    private bool TryApplyWoundsSkin(EntityUid target, BodySkinComponent skin, string damageType ,float damage,
-        WoundableComponent woundContainer, bool hardenedSkin)
+    //Apply a layering wound and return and penetrating damage
+    private float ApplyLayeringWound( WoundableComponent woundContainer, WoundCategory category, string damageType, float damage, out float woundLevel)
     {
-        if (!woundContainer.WoundData.TryGetValue(damageType, out var woundData))
-            return false;
+        woundLevel = CalculateWoundLevel(woundContainer, WoundCategory.Surface, damageType, damage, out var penDamage);
+        if (penDamage != 0 && TryGetWoundPen(damageType, WoundCategory.Surface, out var penMultiplier))
+            penDamage *= penMultiplier!.Value; //apply penMultiplier
+        CreateAndApplyWound(woundContainer, damageType, WoundCategory.Surface, woundLevel);
+        if (penDamage < 0)//this should never be the case but it's good to double check incase someone does a stupid
+            penDamage = 0;
+        return penDamage;
+    }
 
-        var woundSeverity = 0f;
-        if (hardenedSkin)
+    private void AddWound(WoundableComponent woundContainer, WoundCategory category, WoundData wound)
+    {
+        switch (category)
         {
-            if (_random.Prob(_hardenedSkinWoundTypeChance))
-            {
-                woundSeverity = CalculateWoundSeverity(woundContainer, damageType, damage, WoundLayer.Solid);
-            }
-            else
-            {
-                woundSeverity = CalculateWoundSeverity(woundContainer, damageType, damage, WoundLayer.Surface)*_hardenedSkinSeverityAdjustment;
-            }
+            case WoundCategory.Surface:
+                woundContainer.SurfaceWounds?.Add(wound);
+                return;
+            case WoundCategory.Internal:
+                woundContainer.InternalWounds?.Add(wound);
+                return;
+            case WoundCategory.Structural:
+                woundContainer.StructuralWounds?.Add(wound);
+                return;
+            default:
+                throw new ArgumentException("Wound category is invalid! This should never happen!");
         }
-        return true;
     }
 
-    private bool TryApplyWoundsBodyPart(EntityUid target, BodyPartComponent bodyPart, DamageSpecifier damage, WoundableComponent woundContainer)
+    private string PickWound(float level, SortedDictionary<FixedPoint2, string> woundTable, out float severity)
     {
-
-        return true;
-    }
-    private bool TryApplyWoundsOrgan(EntityUid target, OrganComponent organ, DamageSpecifier damage, WoundableComponent woundContainer)
-    {
-
-        return true;
-    }
-
-    private float CalculateWoundSeverity(WoundableComponent woundableContainer, string damageType, float damage, WoundLayer woundLayer)
-    {
-        var newDamage = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>(damageType), damage);
-        damage = DamageSpecifier.ApplyModifierSet(newDamage, woundableContainer.DamageResistance).DamageDict[damageType].Float();
-        return woundLayer switch
+        var nextLevel = 1f;
+        var levelFloor = 0f;
+        var woundId = string.Empty;
+        foreach (var woundLevel in woundTable)
         {
-            WoundLayer.Surface => Math.Clamp(damage / woundableContainer.WoundData[damageType].SkinDamageCap, 0f, 1.0f),
-            WoundLayer.Internal => Math.Clamp(damage / woundableContainer.WoundData[damageType].InternalDamageCap, 0f,
+            if (woundLevel.Key > level)
+            {
+                nextLevel = woundLevel.Key.Float();
+                break;
+            }
+            woundId = woundLevel.Value;
+            levelFloor = woundLevel.Key.Float();
+        }
+        severity = (level - levelFloor) / (nextLevel - level);
+        return woundId;
+    }
+
+    private float GetDamageCapForDamageType(WoundableComponent woundableComponent, WoundCategory category, string damageType)
+    {
+        switch (category)
+        {
+            case WoundCategory.Surface:
+                if (woundableComponent.SurfaceDamageCap.TryGetValue(damageType, out var cap1))
+                    return cap1;
+                return -1;
+            case WoundCategory.Internal:
+                if (woundableComponent.InternalDamageCap.TryGetValue(damageType, out var cap2))
+                    return cap2;
+                return -1;
+            case WoundCategory.Structural:
+                if (woundableComponent.StructuralDamageCap.TryGetValue(damageType, out var cap3))
+                    return cap3;
+                return -1;
+            default:
+                throw new ArgumentException("Wound category is invalid! This should never happen!");
+        }
+    }
+
+    //an implementation of calculate wound level that outputs excess damage
+    public float CalculateWoundLevel(WoundableComponent woundableComponent,WoundCategory category ,string damageType, FixedPoint2 damage, out float overDamage)
+    {
+        var damageCap = GetDamageCapForDamageType(woundableComponent, category, damageType);
+        overDamage = 0.0f;
+        var level =damage.Float() / damageCap;
+        if (!(level > 1.0f))
+            return level;
+        level = 1.0f;
+        overDamage = damage.Float() - damageCap;
+        return level;
+    }
+    //a simpler implementation of calculating wound levels without excess damage output
+    public float CalculateWoundLevel(WoundableComponent woundableContainer,  WoundCategory category, string damageType, FixedPoint2 damage)
+    {
+        return category switch
+        {
+            WoundCategory.Surface => Math.Clamp(damage.Float() / woundableContainer.SurfaceDamageCap[damageType], 0f, 1.0f),
+            WoundCategory.Internal => Math.Clamp(damage.Float() / woundableContainer.InternalDamageCap[damageType], 0f,
                 1.0f),
-            WoundLayer.Solid => Math.Clamp(damage / woundableContainer.WoundData[damageType].SolidDamageCap, 0f, 1.0f),
-            _ => throw new ArgumentException("WoundLayer was invalid! This should never happen!")
+            WoundCategory.Structural => Math.Clamp(damage.Float() / woundableContainer.StructuralDamageCap[damageType], 0f, 1.0f),
+            _ => throw new ArgumentException("WoundLayers was invalid! This should never happen!")
         };
     }
 
-    private readonly struct CachedWoundTable
+    private readonly struct WoundMetaData
     {
         //we do some defensive coding
-        public readonly IReadOnlyDictionary<FixedPoint2, string>? SurfaceWounds;
-        public readonly IReadOnlyDictionary<FixedPoint2, string>? InternalWounds;
-        public readonly IReadOnlyDictionary<FixedPoint2, string>? SolidWounds;
+        public readonly SortedDictionary<FixedPoint2, string>? SurfaceWounds;
+        public readonly SortedDictionary<FixedPoint2, string>? InternalWounds;
+        public readonly SortedDictionary<FixedPoint2, string>? StructuralWounds;
+        public readonly float SurfacePenModifier;
+        public readonly float InternalPenModifier;
+        public readonly float StructuralPenModifier;
 
-        public CachedWoundTable(DamageTypePrototype damageTypeProto)
+        public WoundMetaData(DamageTypePrototype damageTypeProto)
         {
             InternalWounds = damageTypeProto.InternalWounds;
             SurfaceWounds = damageTypeProto.SurfaceWounds;
-            SolidWounds = damageTypeProto.SolidWounds;
+            StructuralWounds = damageTypeProto.StructuralWounds;
+            SurfacePenModifier = damageTypeProto.SurfacePenModifier;
+            InternalPenModifier = damageTypeProto.InternalPenModifier;
+            StructuralPenModifier = damageTypeProto.StructurePenModifier;
         }
     }
 }
 
-[Serializable, NetSerializable]
-[Flags]
-public enum WoundLayer
-{
-    Surface = 0,
-    Internal = 1,
-    Solid = 2
-}
 
 [Serializable, NetSerializable, DataRecord]
-public record struct WoundData (string WoundId, float Severity, float Tended, float Size, float Infected);
+public record struct WoundData(string Id, float Severity,WoundCategory WoundCategory, string? DamageType = null, float Tended = 0f, float Infected = 0f)
+{
+};

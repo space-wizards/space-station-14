@@ -1,7 +1,6 @@
 ﻿using Content.Shared.Body.Components;
 using Content.Shared.Body.Organ;
 using Content.Shared.Body.Systems;
-using Content.Shared.Damage;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Body.Part;

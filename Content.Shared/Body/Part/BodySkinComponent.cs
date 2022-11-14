@@ -1,7 +1,10 @@
 ﻿using Content.Shared.Body.Prototypes;
 using Content.Shared.Body.Systems;
 using Content.Shared.Damage;
+using Content.Shared.Medical.Wounds;
+using Content.Shared.Medical.Wounds.Systems;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 namespace Content.Shared.Body.Part;
 
@@ -9,15 +12,26 @@ namespace Content.Shared.Body.Part;
 [Access(typeof(SharedBodySystem))]
 public sealed class BodySkinComponent : Component
 {
-    [ViewVariables, DataField("primaryCoveringId", required:true, customTypeSerializer: typeof(PrototypeIdSerializer<BodyCoveringPrototype>))]
-    public string PrimaryBodyCoveringId = string.Empty;
+    [Access(typeof(WoundSystem), typeof(SharedBodySystem), Other = AccessPermissions.Read)]
+    [DataField("skinLayers")]
+    public List<SkinlayerData> SkinLayers = new();
+    public SkinlayerData? PrimaryLayer
+    {
+        get
+        {
+            if (SkinLayers.Count > 0)
+                return SkinLayers[0];
+            return null;
+        }
+    }
 
-    [ViewVariables, DataField("secondaryCoveringId", required:false, customTypeSerializer: typeof(PrototypeIdSerializer<BodyCoveringPrototype>))]
-    public string SecondaryBodyCoveringId = string.Empty;
-
-    [ViewVariables, DataField("secondaryCoveringPercentage")]
-    public float SecondaryCoveringPercentage = 0f;
-
-    [ViewVariables, DataField("damageResistance", required:false)]
-    public DamageModifierSet DamageModifier = new();
 }
+
+[Serializable, NetSerializable, DataRecord]
+public record struct SkinlayerData(
+    [field: DataField("prototype", customTypeSerializer: typeof(PrototypeIdSerializer<BodyCoveringPrototype>))]
+    string? ProtoType,
+    [field: DataField("name", required:true)]
+    string Name,
+    string Description, float Coverage = 1.0f,
+    DamageModifierSet? Resistance = null);

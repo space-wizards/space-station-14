@@ -67,17 +67,15 @@ public partial class SharedBodySystem
 
     private void OnCoveringGetState(EntityUid uid, BodySkinComponent part, ref ComponentGetState args)
     {
-        args.State = new BodyCoveringComponentState(part.PrimaryBodyCoveringId, part.SecondaryBodyCoveringId,
-            part.SecondaryCoveringPercentage);
+        args.State = new BodySkinComponentState(part);
     }
 
     private void OnCoveringHandleState(EntityUid uid, BodySkinComponent part, ref ComponentHandleState args)
     {
-        if (args.Current is not BodyCoveringComponentState state)
+        if (args.Current is not BodySkinComponentState state)
             return;
-        part.PrimaryBodyCoveringId = state.SecondaryBodyCoveringId;
-        part.SecondaryBodyCoveringId = state.SecondaryBodyCoveringId;
-        part.SecondaryCoveringPercentage = state.SecondaryCoveringPercentage;
+        part.SkinLayers.Clear();
+        part.SkinLayers.AddRange(state.SkinLayers);
     }
 
     private BodyPartSlot? CreatePartSlot(
