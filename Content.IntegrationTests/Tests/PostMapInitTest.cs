@@ -12,6 +12,7 @@ using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Roles;
 using NUnit.Framework;
+using Robust.Server.GameObjects;
 using Robust.Server.Maps;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;
@@ -52,7 +53,7 @@ namespace Content.IntegrationTests.Tests
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
             var server = pairTracker.Pair.Server;
 
-            var mapLoader = server.ResolveDependency<IMapLoader>();
+            var mapLoader = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<MapLoaderSystem>();
             var mapManager = server.ResolveDependency<IMapManager>();
 
             await server.WaitPost(() =>
@@ -175,9 +176,9 @@ namespace Content.IntegrationTests.Tests
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
             var server = pairTracker.Pair.Server;
 
-            var mapLoader = server.ResolveDependency<IMapLoader>();
             var mapManager = server.ResolveDependency<IMapManager>();
             var entManager = server.ResolveDependency<IEntityManager>();
+            var mapLoader = entManager.System<MapLoaderSystem>();
             var protoManager = server.ResolveDependency<IPrototypeManager>();
             var ticker = entManager.EntitySysManager.GetEntitySystem<GameTicker>();
             var shuttleSystem = entManager.EntitySysManager.GetEntitySystem<ShuttleSystem>();
@@ -223,7 +224,7 @@ namespace Content.IntegrationTests.Tests
                 var shuttlePath = entManager.GetComponent<StationDataComponent>(station).EmergencyShuttlePath
                     .ToString();
                 var shuttle = mapLoader.LoadGrid(shuttleMap, entManager.GetComponent<StationDataComponent>(station).EmergencyShuttlePath.ToString());
-                Assert.That(shuttleSystem.TryFTLDock(entManager.GetComponent<ShuttleComponent>(shuttle.gridId!.Value), targetGrid.Value), $"Unable to dock {shuttlePath} to {mapProto}");
+                Assert.That(shuttle != null && shuttleSystem.TryFTLDock(entManager.GetComponent<ShuttleComponent>(shuttle.Value), targetGrid.Value), $"Unable to dock {shuttlePath} to {mapProto}");
 
                 mapManager.DeleteMap(shuttleMap);
 
@@ -331,7 +332,7 @@ namespace Content.IntegrationTests.Tests
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
             var server = pairTracker.Pair.Server;
 
-            var mapLoader = server.ResolveDependency<IMapLoader>();
+            var mapLoader = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<MapLoaderSystem>();
             var mapManager = server.ResolveDependency<IMapManager>();
 
             await server.WaitPost(() =>

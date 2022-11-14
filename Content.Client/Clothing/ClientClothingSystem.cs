@@ -298,6 +298,11 @@ public sealed class ClientClothingSystem : ClothingSystem
                 layer.SetRsi(clothingSprite.BaseRSI);
             }
 
+            // Another "temporary" fix for clothing stencil masks.
+            // Sprite layer redactor when
+            if (slot == "jumpsuit")
+                layerData.Shader ??= "StencilDraw";
+
             sprite.LayerSetData(index, layerData);
             layer.Offset += slotDef.Offset;
         }

@@ -1,36 +1,4 @@
 Entries:
-- author: Ablankmann
-  changes:
-  - {message: The Outlaw's Hat now looks nicer., type: Tweak}
-  id: 2141
-  time: '2022-08-13T13:52:24.0000000+00:00'
-- author: JustinTrotter
-  changes:
-  - {message: nukies no longer have the chance to spawn with their suit sensors on,
-    type: Fix}
-  id: 2142
-  time: '2022-08-13T13:57:49.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Plastitanium walls have been ported from ss13., type: Add}
-  id: 2143
-  time: '2022-08-14T05:04:46.0000000+00:00'
-- author: OctoRocket
-  changes:
-  - {message: Fixed e-dagger flipping back and forth while in right hand, type: Fix}
-  id: 2144
-  time: '2022-08-14T05:15:54.0000000+00:00'
-- author: Zero_Diamond
-  changes:
-  - {message: Added "musician's tuxedo" and "musician's winter coat" for musician
-      role., type: Add}
-  id: 2145
-  time: '2022-08-14T05:17:37.0000000+00:00'
-- author: corentt
-  changes:
-  - {message: Cans and shakers can now be spilled on floor, type: Add}
-  id: 2146
-  time: '2022-08-14T05:19:45.0000000+00:00'
 - author: Visne
   changes:
   - {message: Fixed cigarette/blunt/joint crafting recipes to consume the correct
@@ -2961,3 +2929,36 @@ Entries:
   - {message: Increased the likelihood of seeing certain rare artifact effects., type: Tweak}
   id: 2640
   time: '2022-11-11T04:18:51.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: You can no longer sleepwalk from slipping while tired., type: Fix}
+  id: 2641
+  time: '2022-11-13T03:36:33.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: 'NPCs will now try to stay ~1m away from you for melee rather than 0.2m,
+      meaning rat servants will no longer sit under you in combat.', type: Tweak}
+  id: 2642
+  time: '2022-11-13T09:57:14.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: Fixed rich text wrapping., type: Fix}
+  id: 2643
+  time: '2022-11-13T15:07:48.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Melee sounds and effects are now predicted and the client should generally
+      match the server due to lag compensation., type: Tweak}
+  id: 2644
+  time: '2022-11-13T21:33:54.0000000+00:00'
+- author: juliangiebel
+  changes:
+  - {message: 'added a new PDA cartridge: The NetProbe cartridge.', type: Add}
+  id: 2645
+  time: '2022-11-13T21:36:00.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed a rounding error which would cause certain parts in machine upgrades
+      to not work. This has mostly affected the artifact analyzer., type: Fix}
+  id: 2646
+  time: '2022-11-13T23:42:35.0000000+00:00'
