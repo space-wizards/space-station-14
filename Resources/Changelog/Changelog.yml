@@ -1,10 +1,4 @@
 Entries:
-- author: Elijahrane
-  changes:
-  - {message: Drivebys work again, type: Fix}
-  - {message: Vehicle riders are easy to kill again., type: Fix}
-  id: 2148
-  time: '2022-08-14T05:22:15.0000000+00:00'
 - author: notafet
   changes:
   - {message: ChemMasters no longer need a free beaker loaded to discard reagents.,
@@ -2960,3 +2954,8 @@ Entries:
   - {message: The savage magnet now has functional LED lights., type: Add}
   id: 2647
   time: '2022-11-14T07:45:45.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Grids should no longer clip constantly (engine change)., type: Fix}
+  id: 2648
+  time: '2022-11-14T11:17:34.0000000+00:00'
