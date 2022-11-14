@@ -132,7 +132,7 @@ grids:
   - ind: -1,1
     tiles: PgAAAz4AAANYAAAAWAAAADQAAAA0AAAANAAAADQAAABYAAAAWAAAAFgAAAA0AAAAPgAAA1gAAAA+AAABNAAAAD4AAAI+AAACPgAAAz4AAAA+AAADPgAAAz4AAAE+AAACPgAAAD4AAAA+AAADPgAAAj4AAAE+AAAAPgAAAz4AAAI+AAAAPgAAAz4AAAMjAAAAPgAAAD4AAAA+AAACPgAAAD4AAAI+AAABPgAAAz4AAAI+AAAAPgAAACMAAAA+AAADWAAAAD4AAAA+AAADPgAAAD4AAAAjAAAAPgAAASUAAAAlAAAAJQAAACUAAAA+AAABIwAAAD4AAAI+AAAAPgAAA1gAAAA+AAADPgAAAj4AAAE+AAADPgAAAj4AAAIlAAAAJQAAACUAAAAlAAAAPgAAAz4AAAA+AAACPgAAAj4AAAFYAAAAPgAAAFgAAABYAAAAPgAAAT4AAAA+AAADWAAAAFgAAABYAAAAWAAAAD4AAAI+AAACPgAAAVgAAABYAAAAPgAAAT4AAAI+AAACWAAAAD4AAAA+AAACPgAAAlgAAAAAAAAAAAAAAFgAAAA+AAADPgAAAz4AAANYAAAAPgAAAjQAAAA+AAADPgAAAjQAAAA+AAACPgAAAT4AAANYAAAAAAAAAAAAAABYAAAAPgAAAz4AAAE+AAAANAAAAD4AAAIqAAAAPgAAAT4AAAE0AAAAPgAAASMAAAA+AAADWAAAAAAAAAAAAAAAWAAAAD4AAAIjAAAAPgAAATYAAAA2AAAAKgAAAj4AAAM+AAACPgAAAz4AAAI+AAADPgAAAlgAAAAAAAAAAAAAAFgAAAA+AAABPgAAAD4AAAI2AAAANgAAACoAAAE+AAACPgAAAz4AAAE+AAAAIwAAAD4AAAJYAAAAAAAAAAAAAABYAAAAPgAAASMAAAA+AAABNAAAAD4AAAMqAAACPgAAAD4AAAI0AAAAPgAAAj4AAAM+AAABWAAAAAAAAAAAAAAAWAAAAD4AAAM+AAAAPgAAAFgAAAA+AAADKgAAAj4AAAI+AAADNAAAAD4AAAA+AAADPgAAAVgAAAAAAAAAAAAAAFgAAAA+AAACPgAAAD4AAABYAAAAWAAAACoAAAE+AAABPgAAAVgAAAA+AAAAPgAAAz4AAABYAAAAWAAAAFgAAABYAAAAPgAAAz4AAAA+AAADPgAAAFgAAAA+AAAAPgAAAz4AAAFYAAAAPgAAAz4AAAM+AAADPgAAAD4AAAI+AAABPgAAAz4AAAA+AAABPgAAAT4AAANYAAAAPgAAAD4AAAE+AAABWAAAAD4AAAI+AAABPgAAAj4AAAI+AAACPgAAAT4AAAE+AAACPgAAAj4AAAI+AAABWAAAAA==
   - ind: -2,1
-    tiles: PgAAAz4AAAEjAAAAPgAAAD4AAAJYAAAALQAAAFgAAABYAAAAWAAAAFgAAAA+AAACPgAAACUAAAAlAAAAPgAAAD4AAAI+AAACPgAAAj4AAAE+AAADWAAAAFgAAABYAAAAPgAAAj4AAAE+AAAAPgAAAT4AAAE+AAABPgAAAj4AAAA+AAAAPgAAAT4AAAM+AAABPgAAAj4AAAI+AAAAPgAAAj4AAAI+AAACPgAAAT4AAAE+AAAAPgAAAz4AAAA+AAACPgAAAD4AAAMjAAAAPgAAAD4AAAE+AAACIwAAAD4AAAA+AAADPgAAA1gAAABYAAAAWAAAAFgAAABYAAAAWAAAAD4AAAI+AAABPgAAAD4AAAM+AAACPgAAAj4AAAE+AAABPgAAAj4AAAEVAAABFQAAABUAAAMVAAADFQAAAxUAAAI+AAACPgAAAT4AAAE+AAAANAAAAD4AAAE+AAABPgAAAFgAAABYAAAAWAAAAFgAAAAVAAADFQAAABUAAAMVAAAALAAAACwAAAAsAAAALAAAAFgAAABYAAAAWAAAAFgAAABYAAAAPgAAAz4AAAI+AAABFQAAAxUAAAAVAAABFQAAAywAAAAsAAAALAAAACwAAAAsAAAAWAAAAFgAAABYAAAAPgAAAz4AAAI+AAADNAAAABUAAAMVAAACFQAAABUAAAIsAAAALAAAACwAAAAsAAAALAAAAFgAAABYAAAAWAAAAD4AAAA+AAACPgAAACoAAAMqAAADKgAAAioAAAAqAAADLAAAACwAAAAsAAAALAAAACwAAABYAAAAWAAAAFgAAAA+AAACPgAAAD4AAAAqAAABKgAAAyoAAAMqAAACKgAAACwAAAAsAAAALAAAACwAAAAsAAAAWAAAAFgAAABYAAAAPgAAAT4AAAM+AAADKgAAASoAAAMqAAABKgAAACoAAAEsAAAALAAAACwAAAAsAAAALAAAAFgAAABYAAAAWAAAAD4AAAI+AAAAPgAAAioAAAMqAAADKgAAACoAAAAqAAABLAAAACwAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAAA+AAADPgAAAD4AAAIqAAADKgAAAyoAAAIqAAADKgAAASsAAAAsAAAAWAAAACIAAAAiAAAAWAAAAFgAAABYAAAAPgAAAD4AAAI+AAAAKgAAAyoAAAEqAAACKgAAAyoAAAErAAAAKwAAAFgAAAAiAAAAIgAAAFgAAABYAAAAWAAAAD4AAAA+AAABPgAAAj4AAAE+AAACPgAAAz4AAAE+AAACKwAAACsAAABYAAAAIgAAACIAAAAiAAAAWAAAAFgAAAA+AAADPgAAAj4AAAM+AAACPgAAAD4AAAE+AAABPgAAAg==
+    tiles: PgAAAz4AAAEjAAAAPgAAAD4AAAJYAAAALQAAAFgAAABYAAAAWAAAAFgAAAA+AAACPgAAACUAAAAlAAAAPgAAAD4AAAI+AAACPgAAAj4AAAE+AAADWAAAAFgAAABYAAAAPgAAAj4AAAE+AAAAPgAAAT4AAAA+AAABPgAAAj4AAAA+AAAAPgAAAT4AAAM+AAABPgAAAj4AAAI+AAAAPgAAAj4AAAI+AAACPgAAAT4AAAE+AAAAPgAAAz4AAAA+AAACPgAAAD4AAAMjAAAAPgAAAD4AAAE+AAACIwAAAD4AAAA+AAADPgAAA1gAAABYAAAAWAAAAFgAAABYAAAAWAAAAD4AAAI+AAABPgAAAD4AAAM+AAACPgAAAj4AAAE+AAABPgAAAj4AAAEVAAABFQAAABUAAAMVAAADFQAAAxUAAAI+AAACPgAAAT4AAAE+AAAANAAAAD4AAAE+AAABPgAAAFgAAABYAAAAWAAAAFgAAAAVAAADFQAAABUAAAMVAAAALAAAACwAAAAsAAAALAAAAFgAAABYAAAAWAAAAFgAAABYAAAAPgAAAz4AAAI+AAABFQAAAxUAAAAVAAABFQAAAywAAAAsAAAALAAAACwAAAAsAAAAWAAAAFgAAABYAAAAPgAAAz4AAAI+AAADNAAAABUAAAMVAAACFQAAABUAAAIsAAAALAAAACwAAAAsAAAALAAAAFgAAABYAAAAWAAAAD4AAAA+AAACPgAAACoAAAMqAAADKgAAAioAAAAqAAADLAAAACwAAAAsAAAALAAAACwAAABYAAAAWAAAAFgAAAA+AAACPgAAAD4AAAAqAAABKgAAAyoAAAMqAAACKgAAACwAAAAsAAAALAAAACwAAAAsAAAAWAAAAFgAAABYAAAAPgAAAT4AAAM+AAADKgAAASoAAAMqAAABKgAAACoAAAEsAAAALAAAACwAAAAsAAAALAAAAFgAAABYAAAAWAAAAD4AAAI+AAAAPgAAAioAAAMqAAADKgAAACoAAAAqAAABLAAAACwAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAAA+AAADPgAAAD4AAAIqAAADKgAAAyoAAAIqAAADKgAAASsAAAAsAAAAWAAAACIAAAAiAAAAWAAAAFgAAABYAAAAPgAAAD4AAAI+AAAAKgAAAyoAAAEqAAACKgAAAyoAAAErAAAAKwAAAFgAAAAiAAAAIgAAAFgAAABYAAAAWAAAAD4AAAA+AAABPgAAAj4AAAE+AAACPgAAAz4AAAE+AAACKwAAACsAAABYAAAAIgAAACIAAAAiAAAAWAAAAFgAAAA+AAADPgAAAj4AAAM+AAACPgAAAD4AAAE+AAABPgAAAg==
   - ind: 1,1
     tiles: PgAAAT4AAAM+AAACPgAAADMAAAAzAAAAMwAAADMAAAAzAAAAPgAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAD4AAAJYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAC8AAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAC8AAAAvAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAQQAAAEEAAABYAAAAWAAAAFgAAABXAAAAVwAAAFgAAABYAAAAWAAAAFgAAABYAAAAQQAAAEEAAABBAAAAQQAAAEEAAABBAAAAQQAAAFgAAABXAAAAVwAAAAAAAAAVAAADFQAAAFgAAABYAAAAWAAAAFgAAABBAAAAQQAAAEEAAABBAAAAQQAAAEEAAAA0AAAAAAAAAAAAAAAAAAAAFQAAAhUAAANYAAAAWAAAAC8AAABYAAAAWAAAAFgAAABBAAAAQQAAAEEAAABBAAAANAAAAAAAAAAAAAAAAAAAABUAAAMVAAADWAAAAFgAAABYAAAALwAAAC8AAABYAAAAQQAAAEEAAABBAAAAQQAAADQAAAAAAAAAAAAAAAAAAABYAAAAFQAAAlgAAABYAAAAWAAAAC8AAAAvAAAAWAAAAEEAAABBAAAAQQAAAFgAAABYAAAAAAAAAAAAAAAAAAAAFQAAABUAAAEVAAADFQAAA1gAAAAvAAAALwAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFcAAABXAAAAAAAAABUAAAAVAAADFQAAAVgAAABYAAAALwAAAC8AAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABXAAAAAAAAAAAAAABYAAAAFQAAAVgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAVwAAAFcAAABXAAAAFQAAAxUAAAMVAAABWAAAAEgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFcAAABXAAAAVwAAABUAAAIVAAAAFQAAA1gAAABIAAAASAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAAAAAAAAAAAAAAAAAABYAAAAWAAAAFgAAABYAAAASAAAAFgAAABYAAAALwAAAFgAAABYAAAAWAAAAFgAAABYAAAAAAAAAAAAAABXAAAAFQAAARUAAAIVAAADWAAAAEgAAABYAAAAWAAAAC8AAABYAAAAVwAAAFcAAABXAAAAVwAAAFcAAABXAAAAVwAAAA==
   - ind: -1,2
@@ -19013,7 +19013,7 @@ entities:
       -6,1: 0
       -6,2: 0
       -6,3: 0
-      -6,4: 2
+      -6,4: 3
       -6,5: 0
       -5,0: 0
       -5,1: 0
@@ -19300,7 +19300,7 @@ entities:
       -17,-14: 0
       -17,-13: 0
       -17,-12: 0
-      -17,-11: 3
+      -17,-11: 4
       -17,-10: 0
       -17,-9: 0
       -17,-8: 0
@@ -20105,7 +20105,7 @@ entities:
       -21,-2: 0
       -21,-1: 0
       -20,-16: 0
-      -20,-15: 2
+      -20,-15: 3
       -20,-14: 1
       -20,-13: 0
       -20,-12: 0
@@ -20943,7 +20943,7 @@ entities:
       -22,5: 0
       -22,6: 0
       -22,7: 0
-      -22,8: 2
+      -22,8: 3
       -22,9: 0
       -22,10: 0
       -22,11: 0
@@ -21899,7 +21899,7 @@ entities:
       -31,-7: 0
       -31,-6: 0
       -31,-5: 0
-      -31,-4: 4
+      -31,-4: 5
       -31,-3: 0
       -31,-2: 0
       -31,-1: 0
@@ -22053,9 +22053,9 @@ entities:
       -29,26: 0
       -29,27: 0
       -29,28: 0
-      -29,29: 5
-      -29,30: 5
-      -29,31: 6
+      -29,29: 6
+      -29,30: 6
+      -29,31: 7
       -28,20: 0
       -28,21: 0
       -28,22: 0
@@ -22065,9 +22065,9 @@ entities:
       -28,26: 0
       -28,27: 0
       -28,28: 0
-      -28,29: 5
-      -28,30: 5
-      -28,31: 5
+      -28,29: 6
+      -28,30: 6
+      -28,31: 6
       -27,21: 0
       -27,22: 0
       -27,23: 0
@@ -22076,9 +22076,9 @@ entities:
       -27,26: 0
       -27,27: 0
       -27,28: 0
-      -27,29: 7
+      -27,29: 8
       -27,30: 0
-      -27,31: 5
+      -27,31: 6
       -26,22: 0
       -26,23: 0
       -26,24: 0
@@ -22198,7 +22198,7 @@ entities:
       -13,39: 0
       -13,40: 0
       -13,41: 0
-      -13,42: 2
+      -13,42: 3
       -13,43: 0
       -13,44: 0
       -13,45: 0
@@ -22562,8 +22562,8 @@ entities:
       -28,38: 0
       -28,39: 0
       -28,40: 0
-      -28,41: 8
-      -28,42: 8
+      -28,41: 9
+      -28,42: 9
       -28,43: 0
       -28,44: 0
       -28,45: 0
@@ -22659,7 +22659,7 @@ entities:
       -22,39: 0
       -22,40: 0
       -22,41: 0
-      -22,42: 2
+      -22,42: 3
       -22,43: 0
       -22,44: 0
       -22,45: 0
@@ -23208,7 +23208,7 @@ entities:
       -36,-5: 0
       -36,-4: 0
       -36,-3: 0
-      -36,-2: 4
+      -36,-2: 5
       -36,-1: 0
       -35,-9: 0
       -35,-8: 0
@@ -23217,7 +23217,7 @@ entities:
       -35,-5: 0
       -35,-4: 0
       -35,-3: 0
-      -35,-2: 4
+      -35,-2: 5
       -35,-1: 0
       -34,-9: 0
       -34,-8: 0
@@ -23226,7 +23226,7 @@ entities:
       -34,-5: 0
       -34,-4: 0
       -34,-3: 0
-      -34,-2: 3
+      -34,-2: 4
       -34,-1: 0
       -33,-9: 0
       -33,-8: 0
@@ -23235,7 +23235,7 @@ entities:
       -33,-5: 0
       -33,-4: 0
       -33,-3: 0
-      -33,-2: 3
+      -33,-2: 4
       -33,-1: 0
       -16,48: 0
       -16,49: 0
@@ -23336,7 +23336,7 @@ entities:
       -32,53: 0
       -32,54: 0
       -31,48: 0
-      -31,49: 2
+      -31,49: 3
       -31,50: 0
       -31,51: 0
       -31,52: 0
@@ -23869,7 +23869,7 @@ entities:
       13,50: 0
       13,51: 0
       13,52: 0
-      14,48: 9
+      14,48: 10
       14,49: 0
       14,50: 0
       14,51: 0
@@ -25801,7 +25801,7 @@ entities:
       -36,-27: 0
       -36,-26: 0
       -36,-25: 0
-      -36,-24: 10
+      -36,-24: 5
       -36,-23: 0
       -36,-22: 0
       -36,-21: 0
@@ -27246,11 +27246,11 @@ entities:
       -57,0: 0
       -57,13: 0
       -56,0: 0
-      -56,13: 5
+      -56,13: 6
       -55,0: 0
       -55,1: 0
       -55,2: 0
-      -55,13: 5
+      -55,13: 6
       -55,14: 0
       -54,1: 0
       -54,2: 0
@@ -27259,8 +27259,8 @@ entities:
       -54,5: 0
       -54,6: 0
       -54,7: 0
-      -54,13: 5
-      -53,13: 6
+      -54,13: 6
+      -53,13: 7
       -52,8: 0
       -52,9: 0
       -52,12: 0
@@ -28004,14 +28004,14 @@ entities:
       -47,-45: 0
       -47,-44: 0
       -47,-43: 0
-      -47,-42: 3
+      -47,-42: 4
       -47,-41: 0
       -46,-48: 0
       -46,-47: 0
       -46,-46: 0
       -46,-45: 0
       -46,-44: 0
-      -46,-43: 2
+      -46,-43: 3
       -46,-42: 0
       -46,-41: 0
       -44,-34: 0
@@ -28033,7 +28033,7 @@ entities:
       -36,-46: 0
       -36,-45: 0
       -36,-44: 0
-      -36,-43: 2
+      -36,-43: 3
       -36,-42: 0
       -36,-41: 0
       -36,-34: 0
@@ -28044,7 +28044,7 @@ entities:
       -35,-45: 0
       -35,-44: 0
       -35,-43: 0
-      -35,-42: 3
+      -35,-42: 4
       -35,-41: 0
       -34,-48: 0
       -34,-47: 0
@@ -29052,28 +29052,28 @@ entities:
       -57,11: 0
       -57,12: 0
       -56,7: 0
-      -56,8: 5
-      -56,9: 5
-      -56,10: 5
-      -56,11: 5
-      -56,12: 5
+      -56,8: 6
+      -56,9: 6
+      -56,10: 6
+      -56,11: 6
+      -56,12: 6
       -55,6: 0
       -55,7: 0
-      -55,8: 5
-      -55,9: 5
-      -55,10: 5
-      -55,11: 5
-      -55,12: 5
-      -54,8: 5
-      -54,9: 5
-      -54,10: 5
-      -54,11: 5
-      -54,12: 5
-      -53,8: 5
-      -53,9: 5
-      -53,10: 5
-      -53,11: 5
-      -53,12: 5
+      -55,8: 6
+      -55,9: 6
+      -55,10: 6
+      -55,11: 6
+      -55,12: 6
+      -54,8: 6
+      -54,9: 6
+      -54,10: 6
+      -54,11: 6
+      -54,12: 6
+      -53,8: 6
+      -53,9: 6
+      -53,10: 6
+      -53,11: 6
+      -53,12: 6
       -48,-34: 0
       -48,-33: 0
       -47,-34: 0
@@ -31500,8 +31500,23 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 18.935778
-      - 71.2346
+      - 18.405577
+      - 69.24003
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.15
+      moles:
+      - 20.619795
+      - 77.56971
       - 0
       - 0
       - 0
@@ -31530,8 +31545,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 20.619795
-      - 77.56971
+      - 20.04244
+      - 75.39776
       - 0
       - 0
       - 0
@@ -31575,8 +31590,8 @@ entities:
     - volume: 2500
       temperature: 235
       moles:
-      - 18.935778
-      - 71.2346
+      - 18.405577
+      - 69.24003
       - 0
       - 0
       - 0
@@ -31605,8 +31620,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 16.429127
-      - 61.804813
+      - 15.521976
+      - 58.3922
       - 0
       - 0
       - 0
@@ -31620,23 +31635,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 17.89022
-      - 67.30131
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.15
-      moles:
-      - 20.04244
-      - 75.39776
+      - 17.389294
+      - 65.41687
       - 0
       - 0
       - 0
@@ -113378,13 +113378,16 @@ entities:
     parent: 100
     type: Transform
 - uid: 10606
-  type: DisposalPipe
+  type: DisposalRouterFlipped
   components:
   - type: MetaData
   - rot: 3.141592653589793 rad
     pos: -19.5,17.5
     parent: 100
     type: Transform
+  - tags:
+    - Botany
+    type: DisposalRouter
 - uid: 10607
   type: DisposalPipe
   components:
@@ -127203,10 +127206,11 @@ entities:
     parent: 100
     type: Transform
 - uid: 12332
-  type: RandomPosterLegit
+  type: DisposalPipe
   components:
   - type: MetaData
-  - pos: -1.5,28.5
+  - rot: 1.5707963267948966 rad
+    pos: -20.5,17.5
     parent: 100
     type: Transform
 - uid: 12333
@@ -170075,6 +170079,229 @@ entities:
   components:
   - type: MetaData
   - pos: 6.5,-34.5
+    parent: 100
+    type: Transform
+- uid: 17538
+  type: RandomPosterLegit
+  components:
+  - type: MetaData
+  - pos: -1.5,27.5
+    parent: 100
+    type: Transform
+- uid: 17539
+  type: DisposalPipe
+  components:
+  - type: MetaData
+  - rot: 1.5707963267948966 rad
+    pos: -21.5,17.5
+    parent: 100
+    type: Transform
+- uid: 17540
+  type: DisposalPipe
+  components:
+  - type: MetaData
+  - rot: 1.5707963267948966 rad
+    pos: -22.5,17.5
+    parent: 100
+    type: Transform
+- uid: 17541
+  type: DisposalPipe
+  components:
+  - type: MetaData
+  - pos: -23.5,18.5
+    parent: 100
+    type: Transform
+- uid: 17542
+  type: DisposalPipe
+  components:
+  - type: MetaData
+  - pos: -23.5,19.5
+    parent: 100
+    type: Transform
+- uid: 17543
+  type: DisposalPipe
+  components:
+  - type: MetaData
+  - rot: -1.5707963267948966 rad
+    pos: -24.5,20.5
+    parent: 100
+    type: Transform
+- uid: 17544
+  type: DisposalPipe
+  components:
+  - type: MetaData
+  - rot: 3.141592653589793 rad
+    pos: -25.5,21.5
+    parent: 100
+    type: Transform
+- uid: 17545
+  type: DisposalPipe
+  components:
+  - type: MetaData
+  - rot: 3.141592653589793 rad
+    pos: -25.5,22.5
+    parent: 100
+    type: Transform
+- uid: 17546
+  type: DisposalBend
+  components:
+  - type: MetaData
+  - rot: 3.141592653589793 rad
+    pos: -23.5,17.5
+    parent: 100
+    type: Transform
+- uid: 17547
+  type: DisposalBend
+  components:
+  - type: MetaData
+  - pos: -23.5,20.5
+    parent: 100
+    type: Transform
+- uid: 17548
+  type: DisposalBend
+  components:
+  - type: MetaData
+  - rot: 3.141592653589793 rad
+    pos: -25.5,20.5
+    parent: 100
+    type: Transform
+- uid: 17549
+  type: DisposalPipe
+  components:
+  - type: MetaData
+  - rot: 3.141592653589793 rad
+    pos: -25.5,23.5
+    parent: 100
+    type: Transform
+- uid: 17550
+  type: DisposalPipe
+  components:
+  - type: MetaData
+  - rot: 3.141592653589793 rad
+    pos: -25.5,25.5
+    parent: 100
+    type: Transform
+- uid: 17551
+  type: DisposalPipe
+  components:
+  - type: MetaData
+  - rot: 3.141592653589793 rad
+    pos: -25.5,26.5
+    parent: 100
+    type: Transform
+- uid: 17552
+  type: DisposalPipe
+  components:
+  - type: MetaData
+  - rot: 3.141592653589793 rad
+    pos: -25.5,27.5
+    parent: 100
+    type: Transform
+- uid: 17553
+  type: DisposalPipe
+  components:
+  - type: MetaData
+  - rot: 3.141592653589793 rad
+    pos: -25.5,28.5
+    parent: 100
+    type: Transform
+- uid: 17554
+  type: DisposalPipe
+  components:
+  - type: MetaData
+  - rot: 3.141592653589793 rad
+    pos: -24.5,30.5
+    parent: 100
+    type: Transform
+- uid: 17555
+  type: DisposalBend
+  components:
+  - type: MetaData
+  - rot: 1.5707963267948966 rad
+    pos: -25.5,29.5
+    parent: 100
+    type: Transform
+- uid: 17556
+  type: DisposalBend
+  components:
+  - type: MetaData
+  - rot: -1.5707963267948966 rad
+    pos: -24.5,29.5
+    parent: 100
+    type: Transform
+- uid: 17557
+  type: DisposalPipe
+  components:
+  - type: MetaData
+  - rot: 3.141592653589793 rad
+    pos: -24.5,31.5
+    parent: 100
+    type: Transform
+- uid: 17558
+  type: DisposalPipe
+  components:
+  - type: MetaData
+  - rot: 3.141592653589793 rad
+    pos: -24.5,32.5
+    parent: 100
+    type: Transform
+- uid: 17559
+  type: DisposalPipe
+  components:
+  - type: MetaData
+  - rot: 3.141592653589793 rad
+    pos: -24.5,33.5
+    parent: 100
+    type: Transform
+- uid: 17560
+  type: DisposalPipe
+  components:
+  - type: MetaData
+  - rot: 3.141592653589793 rad
+    pos: -25.5,35.5
+    parent: 100
+    type: Transform
+- uid: 17561
+  type: DisposalBend
+  components:
+  - type: MetaData
+  - rot: 1.5707963267948966 rad
+    pos: -25.5,36.5
+    parent: 100
+    type: Transform
+- uid: 17562
+  type: DisposalTrunk
+  components:
+  - type: MetaData
+  - rot: -1.5707963267948966 rad
+    pos: -24.5,36.5
+    parent: 100
+    type: Transform
+- uid: 17563
+  type: MailingUnit
+  components:
+  - type: MetaData
+  - pos: -24.5,36.5
+    parent: 100
+    type: Transform
+  - tag: Botany
+    type: MailingUnit
+  - config:
+      tag: Botany
+    type: Configuration
+- uid: 17564
+  type: DisposalBend
+  components:
+  - type: MetaData
+  - pos: -24.5,34.5
+    parent: 100
+    type: Transform
+- uid: 17565
+  type: DisposalBend
+  components:
+  - type: MetaData
+  - rot: 3.141592653589793 rad
+    pos: -25.5,34.5
     parent: 100
     type: Transform
 ...
