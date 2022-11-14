@@ -2,7 +2,7 @@ using Content.Shared.Damage.Prototypes;
 using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
-namespace Content.Server.Weapons.Melee.Components;
+namespace Content.Shared.Weapons.Melee.Components;
 
 /// <summary>
 /// Plays the specified sound upon receiving damage of the specified type.
