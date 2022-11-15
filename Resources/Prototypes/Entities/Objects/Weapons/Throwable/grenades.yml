@@ -6,6 +6,8 @@
   parent: BaseItem
   id: ExGrenade
   components:
+  - type: EmitSoundOnUse
+    sound: /Audio/Effects/grenade_pin.ogg
   - type: Sprite
     sprite: Objects/Weapons/Grenades/grenade.rsi
     layers:

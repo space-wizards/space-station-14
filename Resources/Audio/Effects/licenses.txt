@@ -7,6 +7,8 @@
 hit_kick.ogg is made by Taira Komori
 (https://taira-komori.jpn.org/freesounden.html)
 
+grenade_pin.ogg is taken from https://www.the3rdsequence.com/soundb/sound/39/grenade+pin+pull/
+
 fire.ogg taken and edited from https://freesound.org/people/raremess/sounds/222557/
 
 holy.ogg taken from https://freesound.org/people/random_intruder/sounds/392172/ and edited
