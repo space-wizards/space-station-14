@@ -80,7 +80,7 @@ namespace Content.Shared.Movement.Systems
             component.RelativeRotation = state.RelativeRotation;
             component.TargetRelativeRotation = state.TargetRelativeRotation;
             component.RelativeEntity = state.RelativeEntity;
-            component.LerpAccumulator = state.LerpAccumulator;
+            component.LerpTarget = state.LerpTarget;
         }
 
         private void OnInputGetState(EntityUid uid, InputMoverComponent component, ref ComponentGetState args)
@@ -91,7 +91,7 @@ namespace Content.Shared.Movement.Systems
                 component.RelativeRotation,
                 component.TargetRelativeRotation,
                 component.RelativeEntity,
-                component.LerpAccumulator);
+                component.LerpTarget);
         }
 
         private void ShutdownInput()
@@ -161,16 +161,16 @@ namespace Content.Shared.Movement.Systems
             // If we go on a grid and back off then just reset the accumulator.
             if (relative == component.RelativeEntity)
             {
-                if (component.LerpAccumulator != 0f)
+                if (component.LerpTarget > Timing.CurTime)
                 {
-                    component.LerpAccumulator = 0f;
+                    component.LerpTarget = TimeSpan.Zero;
                     Dirty(component);
                 }
 
                 return;
             }
 
-            component.LerpAccumulator = InputMoverComponent.LerpTime;
+            component.LerpTarget = TimeSpan.FromSeconds(InputMoverComponent.LerpTime) + Timing.CurTime;
             Dirty(component);
         }
 
@@ -499,16 +499,16 @@ namespace Content.Shared.Movement.Systems
             /// </summary>
             public Angle TargetRelativeRotation;
             public EntityUid? RelativeEntity;
-            public float LerpAccumulator = 0f;
+            public TimeSpan LerpTarget;
 
-            public InputMoverComponentState(MoveButtons buttons, bool canMove, Angle relativeRotation, Angle targetRelativeRotation, EntityUid? relativeEntity, float lerpAccumulator)
+            public InputMoverComponentState(MoveButtons buttons, bool canMove, Angle relativeRotation, Angle targetRelativeRotation, EntityUid? relativeEntity, TimeSpan lerpTarget)
             {
                 Buttons = buttons;
                 CanMove = canMove;
                 RelativeRotation = relativeRotation;
                 TargetRelativeRotation = targetRelativeRotation;
                 RelativeEntity = relativeEntity;
-                LerpAccumulator = lerpAccumulator;
+                LerpTarget = LerpTarget;
             }
         }
 

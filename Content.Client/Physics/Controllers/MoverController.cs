@@ -6,6 +6,7 @@ using Robust.Client.Player;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Physics.Controllers
 {
@@ -134,8 +135,23 @@ namespace Content.Client.Physics.Controllers
                 }
             }
 
+            var mobQuery = GetEntityQuery<MobMoverComponent>();
+            DebugTools.Assert(!UsedMobMovement.ContainsKey(mover.Owner));
+
             // Server-side should just be handled on its own so we'll just do this shizznit
-            HandleMobMovement(mover, body, xformMover, frameTime, xformQuery);
+            HandleMobMovement(mover, body, xformMover, frameTime, xformQuery, mobQuery, out var dirtyMover, out var linearVelocity, out var sound, out var audio);
+
+            if (dirtyMover)
+                Dirty(mover);
+
+            if (linearVelocity != null)
+            {
+                PhysicsSystem.SetLinearVelocity(body, linearVelocity.Value, false);
+                PhysicsSystem.SetAngularVelocity(body, 0f, false);
+                Dirty(body);
+            }
+
+            Audio.PlayPredicted(sound, mover.Owner, mover.Owner, audio);
         }
 
         protected override bool CanSound()

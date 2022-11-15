@@ -1,3 +1,5 @@
+using System.Buffers;
+using System.Threading.Tasks;
 using Content.Server.Cargo.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
@@ -6,15 +8,19 @@ using Content.Shared.Movement.Systems;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Systems;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
+using Robust.Shared.Threading;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Physics.Controllers
 {
     public sealed class MoverController : SharedMoverController
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IParallelManager _parallel = default!;
         [Dependency] private readonly ThrusterSystem _thruster = default!;
 
         private Dictionary<ShuttleComponent, List<(PilotComponent, InputMoverComponent, TransformComponent)>> _shuttlePilots = new();
@@ -63,8 +69,14 @@ namespace Content.Server.Physics.Controllers
             var relayQuery = GetEntityQuery<RelayInputMoverComponent>();
             var xformQuery = GetEntityQuery<TransformComponent>();
             var moverQuery = GetEntityQuery<InputMoverComponent>();
+            var mobQuery = GetEntityQuery<MobMoverComponent>();
 
-            foreach (var mover in EntityQuery<InputMoverComponent>(true))
+            var movers = AllEntityQuery<InputMoverComponent>();
+            var totalCount = EntityManager.Count<InputMoverComponent>();
+            var moveInput = ArrayPool<(InputMoverComponent Mover, TransformComponent Transform, PhysicsComponent Physics)>.Shared.Rent(totalCount);
+            var count = 0;
+
+            while (movers.MoveNext(out var mover))
             {
                 if (relayQuery.TryGetComponent(mover.Owner, out var relayed) && relayed.RelayEntity != null)
                 {
@@ -83,13 +95,11 @@ namespace Content.Server.Physics.Controllers
                     continue;
                 }
 
-                PhysicsComponent? body = null;
-                TransformComponent? xformMover = xform;
-
+                PhysicsComponent? body;
                 if (mover.ToParent && relayQuery.HasComponent(xform.ParentUid))
                 {
                     if (!bodyQuery.TryGetComponent(xform.ParentUid, out body) ||
-                        !TryComp(xform.ParentUid, out xformMover))
+                        !xformQuery.HasComponent(xform.ParentUid))
                     {
                         continue;
                     }
@@ -99,9 +109,55 @@ namespace Content.Server.Physics.Controllers
                     continue;
                 }
 
-                HandleMobMovement(mover, body, xformMover, frameTime, xformQuery);
+                DebugTools.Assert(!UsedMobMovement.ContainsKey(mover.Owner));
+
+                // To avoid threading issues on adding dictionary entries later.
+                UsedMobMovement[mover.Owner] = false;
+                moveInput[count++] = (mover, xform, body);
             }
 
+            var moveResults = ArrayPool<(bool DirtyMover, Vector2? LinearVelocity, SoundSpecifier? sound, AudioParams audio)>.Shared.Rent(count);
+
+            var options = new ParallelOptions()
+            {
+                MaxDegreeOfParallelism = _parallel.ParallelProcessCount,
+            };
+
+            Parallel.For(0, count, options, i =>
+            {
+                var (mover, xform, body) = moveInput[i];
+                HandleMobMovement(mover, body, xform, frameTime, xformQuery, mobQuery, out var dirtyMover, out var linearVelocity, out var sound, out var audio);
+                moveResults[i] = (dirtyMover, linearVelocity, sound, audio);
+            });
+
+            var metaQuery = GetEntityQuery<MetaDataComponent>();
+
+            for (var i = 0; i < count; i++)
+            {
+                var results = moveResults[i];
+                var input = moveInput[i];
+
+                // Calling dirty isn't thread-safe sadly.
+                if (results.DirtyMover)
+                    Dirty(input.Mover, metaQuery.GetComponent(input.Mover.Owner));
+
+                if (results.LinearVelocity != null)
+                {
+                    PhysicsSystem.SetLinearVelocity(input.Physics, results.LinearVelocity.Value, false);
+                    PhysicsSystem.SetAngularVelocity(input.Physics, 0f, false);
+                    Dirty(input.Physics, metaQuery.GetComponent(input.Mover.Owner));
+                }
+
+                if (results.sound != null)
+                {
+                    Audio.PlayPredicted(results.sound, input.Mover.Owner, input.Mover.Owner, results.audio);
+                }
+
+                moveInput[i] = default;
+            }
+
+            ArrayPool<(bool DirtyMover, Vector2? LinearVelocity, SoundSpecifier? Sound, AudioParams Audio)>.Shared.Return(moveResults);
+            ArrayPool<(InputMoverComponent, TransformComponent, PhysicsComponent)>.Shared.Return(moveInput);
             HandleShuttleMovement(frameTime);
         }
 
