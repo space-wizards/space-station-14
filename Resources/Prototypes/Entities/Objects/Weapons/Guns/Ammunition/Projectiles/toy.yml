@@ -14,7 +14,7 @@
       layers:
         - state: foamdart
     - type: StaminaDamageOnCollide
-      damage: 5 #You ever been shot with a Nerf gun? Those bullets hit way harder than they look.
+      damage: 2 #You ever been shot with a Nerf gun? Those bullets hit way harder than they look.
     - type: Projectile
       damage:
         types:
