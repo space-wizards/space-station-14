@@ -59,6 +59,7 @@ namespace Content.Server.Paper
                 return;
 
             if (paperComp.Content != "")
+                args.Message.PushNewline();
                 args.Message.AddMarkup(
                     Loc.GetString(
                         "paper-component-examine-detail-has-words", ("paper", uid)
