@@ -125,6 +125,7 @@
           whitelist:
             tags:
               - BulletFoam
+  - type: ChamberMagazineAmmoProvider
   - type: ContainerContainer
     containers:
       gun_magazine: !type:ContainerSlot
