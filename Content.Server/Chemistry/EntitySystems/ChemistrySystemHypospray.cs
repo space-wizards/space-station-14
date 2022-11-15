@@ -65,9 +65,7 @@ namespace Content.Server.Chemistry.EntitySystems
             string? msgFormat = null;
 
             if (target == user)
-            {
                 msgFormat = "hypospray-component-inject-self-message";
-            }
             else if (EligibleEntity(user, _entMan) && _interaction.TryRollClumsy(user, component.ClumsyFailChance))
             {
                 msgFormat = "hypospray-component-inject-self-clumsy-message";
