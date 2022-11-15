@@ -82,10 +82,9 @@
     state: icon
   - type: Item
     sprite: Objects/Tools/Toolboxes/toolbox_syn.rsi
+    size: 5
   - type: Storage
     capacity: 120
-  - type: Item
-    size: 5    
   - type: MeleeWeapon
     damage:
       types:
