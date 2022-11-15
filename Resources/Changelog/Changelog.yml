@@ -1,9 +1,4 @@
 Entries:
-- author: SirDragooon
-  changes:
-  - {message: The ChemMaster4000 pill limit is increased to 25, type: Tweak}
-  id: 2160
-  time: '2022-08-15T04:57:31.0000000+00:00'
 - author: tomasalves8
   changes:
   - {message: Removed the ability to point while asleep, type: Fix}
@@ -2951,3 +2946,9 @@ Entries:
   - {message: Lightning is fixed to properly collide, type: Fix}
   id: 2659
   time: '2022-11-15T06:35:23.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Removed duplicate disarm popup when disarming someone with an item in
+      their hands., type: Fix}
+  id: 2660
+  time: '2022-11-15T07:48:00.0000000+00:00'
