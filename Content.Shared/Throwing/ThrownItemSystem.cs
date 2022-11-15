@@ -123,6 +123,9 @@ namespace Content.Shared.Throwing
             EntityManager.RemoveComponent<ThrownItemComponent>(uid);
         }
 
+        /// <summary>
+        ///     Called when thrownItem should hit the ground and slide, can stop movement entirely if specified.
+        /// </summary>
         public void LandComponent(ThrownItemComponent thrownItem, bool stopMoving = false)
         {
             if (thrownItem.Deleted || Deleted(thrownItem.Owner) || _containerSystem.IsEntityInContainer(thrownItem.Owner)) return;
@@ -133,7 +136,7 @@ namespace Content.Shared.Throwing
                 physics.LinearVelocity = (0, 0);
 
             // Unfortunately we can't check for hands containers as they have specific names.
-            if (thrownItem.Owner.TryGetContainerMan(out var containerManager) &&
+            if (landing.TryGetContainerMan(out var containerManager) &&
                 EntityManager.HasComponent<SharedHandsComponent>(containerManager.Owner))
             {
                 EntityManager.RemoveComponent(landing, thrownItem);
@@ -156,9 +159,18 @@ namespace Content.Shared.Throwing
             if (user is not null)
                 _adminLogger.Add(LogType.ThrowHit, LogImpact.Low,
                     $"{ToPrettyString(thrown.Owner):thrown} thrown by {ToPrettyString(user.Value):thrower} hit {ToPrettyString(target.Owner):target}.");
-            // TODO: Just pass in the bodies directly
-            RaiseLocalEvent(target.Owner, new ThrowHitByEvent(user, thrown.Owner, target.Owner), true);
-            RaiseLocalEvent(thrown.Owner, new ThrowDoHitEvent(user, thrown.Owner, target.Owner), true);
+
+            var beHit = new ThrowHitByEvent(user, thrown, target);
+            var doHit = new ThrowDoHitEvent(user, thrown, target);
+            RaiseLocalEvent(target.Owner, ref beHit, true);
+            RaiseLocalEvent(thrown.Owner, ref doHit, true);
+
+            // Stop movement and throw state if requested by subscribers
+            if (doHit.StopCollisions && TryComp<ThrownItemComponent>(thrown.Owner, out var item))
+            {
+                LandComponent(item, doHit.StopMoving);
+                StopThrow(thrown.Owner, item);
+            }                
         }
     }
 }

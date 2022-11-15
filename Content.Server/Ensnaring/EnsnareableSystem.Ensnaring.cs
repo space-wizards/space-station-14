@@ -42,7 +42,7 @@ public sealed partial class EnsnareableSystem
         TryEnsnare(args.Tripper, component);
     }
 
-    private void OnThrowHit(EntityUid uid, EnsnaringComponent component, ThrowDoHitEvent args)
+    private void OnThrowHit(EntityUid uid, EnsnaringComponent component, ref ThrowDoHitEvent args)
     {
         if (!component.CanThrowTrigger)
             return;

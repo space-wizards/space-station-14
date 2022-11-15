@@ -50,22 +50,22 @@ namespace Content.Shared.Nutrition.EntitySystems
             SplatCreamPie(uid, component);
         }
 
-        private void OnCreamPieHit(EntityUid uid, CreamPieComponent component, ThrowDoHitEvent args)
+        private void OnCreamPieHit(EntityUid uid, CreamPieComponent component, ref ThrowDoHitEvent args)
         {
             SplatCreamPie(uid, component);
         }
 
-        private void OnCreamPiedHitBy(EntityUid uid, CreamPiedComponent creamPied, ThrowHitByEvent args)
+        private void OnCreamPiedHitBy(EntityUid uid, CreamPiedComponent creamPied, ref ThrowHitByEvent args)
         {
             if (!EntityManager.EntityExists(args.Thrown) || !EntityManager.TryGetComponent(args.Thrown, out CreamPieComponent? creamPie)) return;
 
             SetCreamPied(uid, creamPied, true);
 
-            CreamedEntity(uid, creamPied, args);
+            CreamedEntity(uid, creamPied, ref args);
 
             _stunSystem.TryParalyze(uid, TimeSpan.FromSeconds(creamPie.ParalyzeTime), true);
         }
 
-        protected virtual void CreamedEntity(EntityUid uid, CreamPiedComponent creamPied, ThrowHitByEvent args) {}
+        protected virtual void CreamedEntity(EntityUid uid, CreamPiedComponent creamPied, ref ThrowHitByEvent args) {}
     }
 }

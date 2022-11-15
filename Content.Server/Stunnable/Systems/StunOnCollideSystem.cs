@@ -47,7 +47,7 @@ namespace Content.Server.Stunnable
             TryDoCollideStun(uid, component, args.OtherFixture.Body.Owner);
         }
 
-        private void HandleThrow(EntityUid uid, StunOnCollideComponent component, ThrowDoHitEvent args)
+        private void HandleThrow(EntityUid uid, StunOnCollideComponent component, ref ThrowDoHitEvent args)
         {
             TryDoCollideStun(uid, component, args.Target);
         }

@@ -280,7 +280,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         /// <summary>
         /// Thrown items have a chance of bouncing off the unit and not going in.
         /// </summary>
-        private void HandleThrowCollide(EntityUid uid, DisposalUnitComponent component, ThrowHitByEvent args)
+        private void HandleThrowCollide(EntityUid uid, DisposalUnitComponent component, ref ThrowHitByEvent args)
         {
             if (!CanInsert(component, args.Thrown) ||
                 _robustRandom.NextDouble() > 0.75 ||

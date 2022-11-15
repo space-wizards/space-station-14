@@ -1,3 +1,5 @@
+using Robust.Shared.Physics;
+
 namespace Content.Shared.Throwing
 {
     /// <summary>
@@ -31,20 +33,52 @@ namespace Content.Shared.Throwing
     /// <summary>
     ///     Raised directed on the target entity being hit by the thrown entity.
     /// </summary>
-    public sealed class ThrowHitByEvent : ThrowEvent
+    [ByRefEvent]
+    public struct ThrowHitByEvent
     {
-        public ThrowHitByEvent(EntityUid? user, EntityUid thrown, EntityUid target) : base(user, thrown, target)
+        public EntityUid? User;
+        public EntityUid Thrown;
+        public EntityUid Target;
+
+        public ThrowHitByEvent(EntityUid? user, EntityUid thrown, EntityUid target)
         {
+            User = user;
+            Thrown = thrown;
+            Target = target;
+        }
+
+        public ThrowHitByEvent(EntityUid? user, IPhysBody thrown, IPhysBody target)
+        {
+            User = user;
+            Thrown = thrown.Owner;
+            Target = target.Owner;
         }
     }
 
     /// <summary>
-    ///     Raised directed on the thrown entity that hits another. 'User' is whoever threw it.
+    ///     Raised directed on the thrown entity that hits another. 'User' is whoever threw it, if anyone.
     /// </summary>
-    public sealed class ThrowDoHitEvent : ThrowEvent
+    [ByRefEvent]
+    public struct ThrowDoHitEvent
     {
-        public ThrowDoHitEvent(EntityUid? user, EntityUid thrown, EntityUid target) : base(user, thrown, target)
+        public EntityUid? User;
+        public EntityUid Thrown;
+        public EntityUid Target;
+        public bool StopCollisions = false;
+        public bool StopMoving = false;
+
+        public ThrowDoHitEvent(EntityUid? user, EntityUid thrown, EntityUid target)
         {
+            User = user;
+            Thrown = thrown;
+            Target = target;
+        }
+
+        public ThrowDoHitEvent(EntityUid? user, IPhysBody thrown, IPhysBody target)
+        {
+            User = user;
+            Thrown = thrown.Owner;
+            Target = target.Owner;
         }
     }
 }
