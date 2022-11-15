@@ -284,13 +284,10 @@ namespace Content.Server.Storage.EntitySystems
         /// </summary>
         private void OnImplantActivate(EntityUid uid, ServerStorageComponent storageComp, OpenStorageImplantEvent args)
         {
-            if (args.Handled)
+            if (args.Handled || !TryComp<TransformComponent>(uid, out var xform))
                 return;
 
-            if (!TryComp<SubdermalImplantComponent>(uid, out var implant) || implant.ImplantedEntity == null)
-                return;
-
-            OpenStorageUI(uid, implant.ImplantedEntity.Value, storageComp);
+            OpenStorageUI(uid, xform.ParentUid, storageComp);
         }
 
         /// <summary>
