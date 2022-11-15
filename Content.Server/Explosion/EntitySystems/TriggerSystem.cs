@@ -99,12 +99,10 @@ namespace Content.Server.Explosion.EntitySystems
 
         private void HandleGibTrigger(EntityUid uid, GibOnTriggerComponent component, TriggerEvent args)
         {
-            //Code so implants can properly handle gibbing their owners
-            if (TryComp<SubdermalImplantComponent>(uid, out var implantComponent) && implantComponent.ImplantedEntity != null)
-                _body.GibBody(implantComponent.ImplantedEntity.Value, deleteItems: component.DeleteItems);
+            if (!TryComp<TransformComponent>(uid, out var xform))
+                return;
 
-            else
-                _body.GibBody(uid, deleteItems: component.DeleteItems);
+            _body.GibBody(xform.ParentUid, deleteItems: component.DeleteItems);
 
             args.Handled = true;
         }
@@ -134,7 +132,7 @@ namespace Content.Server.Explosion.EntitySystems
 
         private void OnStateChanged(EntityUid uid, TriggerOnMobstateChangeComponent component, MobStateChangedEvent args)
         {
-            if (component.MobState != args.CurrentMobState)
+            if (component.MobState < args.CurrentMobState)
                 return;
 
             Trigger(component.Owner);
