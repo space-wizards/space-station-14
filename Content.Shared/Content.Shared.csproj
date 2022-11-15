@@ -30,11 +30,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Text\Names\*.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Medical\Wounding\Components" />
-    <Folder Include="Medical\Wounding\Prototypes" />
-    <Folder Include="Medical\Wounding\Systems" />
-  </ItemGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.Analyzers.targets" />
 
 </Project>

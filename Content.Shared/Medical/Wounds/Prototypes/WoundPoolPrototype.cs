@@ -5,8 +5,8 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.Medical.Wounds.Prototypes;
 
-[Prototype("woundGroup")]
-public sealed class WoundGroupPrototype : IPrototype
+[Prototype("woundPool")]
+public sealed class WoundPoolPrototype : IPrototype
 {
     [IdDataField] public string ID { get; init; } = string.Empty;
 

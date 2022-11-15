@@ -30,7 +30,7 @@ public sealed class WoundSystem : EntitySystem
     private void CacheData(PrototypesReloadedEventArgs? prototypesReloadedEventArgs)
     {
         _cachedDamageWoundMetaData.Clear();
-        foreach (var woundGroup in _prototypeManager.EnumeratePrototypes<WoundGroupPrototype>())
+        foreach (var woundGroup in _prototypeManager.EnumeratePrototypes<WoundPoolPrototype>())
         {
             if (!_cachedDamageWoundMetaData.TryAdd(woundGroup.DamageType, new WoundMetaData(woundGroup)))
                 Logger.Error("Woundgroup has duplicate damageType! ID:" + woundGroup.ID + " DamageType:" +
@@ -321,7 +321,7 @@ public sealed class WoundSystem : EntitySystem
         public readonly float InternalPenModifier;
         public readonly float StructuralPenModifier;
 
-        public WoundMetaData(WoundGroupPrototype damageTypeProto)
+        public WoundMetaData(WoundPoolPrototype damageTypeProto)
         {
             InternalWounds = damageTypeProto.InternalWounds;
             SurfaceWounds = damageTypeProto.SurfaceWounds;
