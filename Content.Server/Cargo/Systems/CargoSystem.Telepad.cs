@@ -141,14 +141,13 @@ public sealed partial class CargoSystem
             return;
 
         // fill in the order data
-        var orderNumber = data.OrderIndex + 1; // Make manifest numbers start at 1, not 0
-        var val = Loc.GetString("cargo-console-paper-print-name", ("orderNumber", orderNumber));
+        var val = Loc.GetString("cargo-console-paper-print-name", ("orderNumber", data.OrderNumber));
 
         MetaData(printed).EntityName = val;
 
         _paperSystem.SetContent(printed, Loc.GetString(
             "cargo-console-paper-print-text",
-            ("orderNumber", orderNumber),
+            ("orderNumber", data.OrderNumber),
             ("itemName", prototype.Name),
             ("requester", data.Requester),
             ("reason", data.Reason),
