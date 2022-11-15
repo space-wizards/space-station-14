@@ -1,11 +1,4 @@
 Entries:
-- author: martin69420
-  changes:
-  - {message: 'yellow, green, and blue boxing gloves now use correct sprites for worn
-      and inhand states', type: Fix}
-  - {message: renamed boxing gloves to red boxing gloves, type: Tweak}
-  id: 2157
-  time: '2022-08-14T06:23:25.0000000+00:00'
 - author: moonheart08
   changes:
   - {message: Non-newbies can no longer play as interns., type: Tweak}
@@ -2952,3 +2945,9 @@ Entries:
       "(" just be interpreted as LOOC chat, type: Fix}
   id: 2656
   time: '2022-11-15T04:14:40.0000000+00:00'
+- author: moony
+  changes:
+  - {message: Origin station has been pulled temporarily due to needing re-review.,
+    type: Remove}
+  id: 2657
+  time: '2022-11-15T05:12:32.0000000+00:00'
