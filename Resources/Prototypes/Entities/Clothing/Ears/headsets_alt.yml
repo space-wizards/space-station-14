@@ -1,38 +1,40 @@
 ﻿- type: entity
   abstract: true
-  parent: Clothing
+  parent: ClothingHeadset
   id: ClothingHeadsetAlt
   name: headset
-  description: An updated, modular intercom that fits over the head. Takes encryption keys.
+  description: An updated, modular intercom that fits over the head. Takes encryption chips.
   components:
-  - type: Headset
   - type: Sprite
     state: icon_alt
   - type: Clothing
     equippedPrefix: alt
-    slots:
-    - ears
+
+- type: entity
+  parent: ClothingHeadsetAlt
+  id: ClothingHeadsetAltCargo
+  name: qm over-ear headset
+  components:
+  - type: Headset
+    chipsPrototypes:
+    - EncryptionChipQM
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/cargo.rsi
+  - type: Clothing
+    sprite: Clothing/Ears/Headsets/cargo.rsi
 
 - type: entity
   parent: ClothingHeadsetAlt
   id: ClothingHeadsetAltCentCom
   name: CentCom over-ear headset
   components:
-    - type: Headset
-      channels:
-      - Common
-      - Command
-      - CentCom
-      - Engineering
-      - Medical
-      - Science
-      - Security
-      - Service
-      - Supply
-    - type: Sprite
-      sprite: Clothing/Ears/Headsets/centcom.rsi
-    - type: Clothing
-      sprite: Clothing/Ears/Headsets/centcom.rsi
+  - type: Headset
+    chipsPrototypes:
+    - EncryptionChipCentCom
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/centcom.rsi
+  - type: Clothing
+    sprite: Clothing/Ears/Headsets/centcom.rsi
 
 - type: entity
   parent: ClothingHeadsetAlt
@@ -40,15 +42,8 @@
   name: command over-ear headset
   components:
   - type: Headset
-    channels:
-    - Common
-    - Command
-    - Engineering
-    - Medical
-    - Science
-    - Security
-    - Service
-    - Supply
+    chipsPrototypes:
+    - EncryptionChipCommand
   - type: Sprite
     sprite: Clothing/Ears/Headsets/command.rsi
   - type: Clothing
@@ -56,14 +51,25 @@
 
 - type: entity
   parent: ClothingHeadsetAlt
-  id: ClothingHeadsetAltMedical
-  name: medical over-ear headset
+  id: ClothingHeadsetAltEngineering
+  name: ce over-ear headset
   components:
   - type: Headset
-    channels:
-    - Command
-    - Common
-    - Medical
+    chipsPrototypes:
+    - EncryptionChipCE
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/engineering.rsi
+  - type: Clothing
+    sprite: Clothing/Ears/Headsets/engineering.rsi
+ 
+- type: entity
+  parent: ClothingHeadsetAlt
+  id: ClothingHeadsetAltMedical
+  name: cmo over-ear headset
+  components:
+  - type: Headset
+    chipsPrototypes:
+    - EncryptionChipCMO
   - type: Sprite
     sprite: Clothing/Ears/Headsets/medical.rsi
   - type: Clothing
@@ -72,73 +78,40 @@
 - type: entity
   parent: ClothingHeadsetAlt
   id: ClothingHeadsetAltSecurity
-  name: security over-ear headset
+  name: hos over-ear headset
   components:
   - type: Headset
-    channels:
-    - Command
-    - Common
-    - Security
+    chipsPrototypes:
+    - EncryptionChipHOS
   - type: Sprite
     sprite: Clothing/Ears/Headsets/security.rsi
   - type: Clothing
     sprite: Clothing/Ears/Headsets/security.rsi
 
-- type: entity
-  parent: ClothingHeadsetAlt
-  id: ClothingHeadsetAltEngineering
-  name: engineering over-ear headset
-  components:
-  - type: Headset
-    channels:
-    - Command
-    - Common
-    - Engineering
-  - type: Sprite
-    sprite: Clothing/Ears/Headsets/engineering.rsi
-  - type: Clothing
-    sprite: Clothing/Ears/Headsets/engineering.rsi
- 
 - type: entity
   parent: ClothingHeadsetAlt
   id: ClothingHeadsetAltScience
-  name: science over-ear headset
+  name: research director over-ear headset
   components:
   - type: Headset
-    channels:
-    - Command
-    - Common
-    - Science
+    chipsPrototypes:
+    - EncryptionChipRD
   - type: Sprite
     sprite: Clothing/Ears/Headsets/science.rsi
   - type: Clothing
     sprite: Clothing/Ears/Headsets/science.rsi
-
-- type: entity
-  parent: ClothingHeadsetAlt
-  id: ClothingHeadsetAltCargo
-  name: cargo over-ear headset
-  components:
-  - type: Headset
-    channels:
-    - Command
-    - Common
-    - Supply
-  - type: Sprite
-    sprite: Clothing/Ears/Headsets/cargo.rsi
-  - type: Clothing
-    sprite: Clothing/Ears/Headsets/cargo.rsi
 
 - type: entity
   parent: ClothingHeadsetAlt
   id: ClothingHeadsetAltSyndicate
   name: syndicate over-ear headset
-  description: An updated, modular syndicate intercom that fits over the head and takes encryption keys. Protects ears from flashbangs.
+  description: An updated, modular syndicate intercom that fits over the head and takes encryption chips (there are 4 of them). Protects ears from flashbangs.
   components:
   - type: Headset
-    channels:
-    - Syndicate
+    chipsPrototypes:
+    - EncryptionChipSyndie
   - type: Sprite
     sprite: Clothing/Ears/Headsets/syndicate.rsi
   - type: Clothing
     sprite: Clothing/Ears/Headsets/syndicate.rsi
+

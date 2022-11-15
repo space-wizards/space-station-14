@@ -12,6 +12,8 @@ using Robust.Shared.Network;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 using Robust.Shared.Utility;
+using Content.Shared.Containers.ItemSlots;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Headset
 {
@@ -28,11 +30,33 @@ namespace Content.Server.Headset
         private ChatSystem _chatSystem = default!;
         private RadioSystem _radioSystem = default!;
 
-        [DataField("channels", customTypeSerializer:typeof(PrototypeIdHashSetSerializer<RadioChannelPrototype>))]
+        //[DataField("channels", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<RadioChannelPrototype>))]
+        [ViewVariables]
         public HashSet<string> Channels = new()
         {
             "Common"
         };
+
+        [DataField("chipsPrototypes", required: true)]
+        public List<string> ChipsPrototypes = new List<string>();
+        [ViewVariables]
+        public List<EntityUid> ChipsInstalled = new List<EntityUid>();
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("isChipExtractable")]
+        public bool IsChipsExtractable = true;
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("chipSlotsAmount")]
+        public int ChipSlotsAmount = 2;
+
+        [DataField("chipExtarctionSound")]
+        public SoundSpecifier ChipExtarctionSound = new SoundPathSpecifier("/Audio/Items/pistol_magout.ogg");
+        [DataField("chipInsertionSound")]
+        public SoundSpecifier ChipInsertionSound = new SoundPathSpecifier("/Audio/Items/pistol_magin.ogg");
+
+        [ViewVariables]
+        public Container ChipContainer = default!;
+        public const string ChipContainerName = "chip_slots";
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("listenRange")]
