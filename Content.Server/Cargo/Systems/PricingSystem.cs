@@ -116,7 +116,7 @@ public sealed class PricingSystem : EntitySystem
     {
         var price = 0f;
 
-        foreach( ( _ ,var solution) in component.Solutions)
+        foreach (var solution in component.Solutions.Values)
         {
             if (solution.Contents.Count() == 0)
                 continue;
