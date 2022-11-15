@@ -1,9 +1,4 @@
 Entries:
-- author: tomasalves8
-  changes:
-  - {message: Removed the ability to point while asleep, type: Fix}
-  id: 2161
-  time: '2022-08-16T04:22:17.0000000+00:00'
 - author: vulppine
   changes:
   - {message: "FunTime Arcade Solutions\u2122 has outfitted NanoTrasen stations with\
@@ -2952,3 +2947,10 @@ Entries:
       their hands., type: Fix}
   id: 2660
   time: '2022-11-15T07:48:00.0000000+00:00'
+- author: Ygg01
+  changes:
+  - {message: Fluids no longer leak through micropores in concrete, type: Fix}
+  - {message: 'Fluids now spill slowly, rather than quantum tunneling to optimal size',
+    type: Fix}
+  id: 2661
+  time: '2022-11-15T11:31:00.0000000+00:00'
