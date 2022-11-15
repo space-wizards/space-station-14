@@ -112,9 +112,7 @@ namespace Content.Server.Chemistry.EntitySystems
             var removedSolution = _solutions.SplitSolution(component.Owner, hypoSpraySolution, realTransferAmount);
 
             if (!targetSolution.CanAddSolution(removedSolution))
-            {
                 return true;
-            }
             _reactiveSystem.DoEntityReaction(target.Value, removedSolution, ReactionMethod.Injection);
             _solutions.TryAddSolution(target.Value, targetSolution, removedSolution);
 
