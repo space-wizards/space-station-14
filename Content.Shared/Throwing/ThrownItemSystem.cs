@@ -119,7 +119,8 @@ namespace Content.Shared.Throwing
                 }
             }
 
-            EntityManager.EventBus.RaiseLocalEvent(uid, new StopThrowEvent {User = thrownItemComponent.Thrower}, true);
+            var stopThrow = new StopThrowEvent(thrownItemComponent.Thrower);
+            EntityManager.EventBus.RaiseLocalEvent(uid, ref stopThrow, true);
             EntityManager.RemoveComponent<ThrownItemComponent>(uid);
         }
 
