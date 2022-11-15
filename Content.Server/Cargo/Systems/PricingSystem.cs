@@ -118,10 +118,7 @@ public sealed class PricingSystem : EntitySystem
 
         foreach (var solution in component.Solutions.Values)
         {
-            if (solution.Contents.Count() == 0)
-                continue;
-
-            foreach(var reagent in solution.Contents)
+            foreach (var reagent in solution.Contents)
             {
                 if (!_prototypeManager.TryIndex<ReagentPrototype>(reagent.ReagentId, out var reagentProto))
                     continue;
