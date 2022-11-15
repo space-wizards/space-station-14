@@ -1,3 +1,4 @@
+admin-player-actions-bans = Ban List
 admin-player-actions-notes = Заметки
 admin-player-actions-kick = Кикнуть
 admin-player-actions-ban = Забанить
