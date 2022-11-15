@@ -166,6 +166,9 @@ namespace Content.Client.Atmos.Overlays
 
                     while (enumerator.MoveNext(out var gas))
                     {
+                        if (gas.Opacity == null!)
+                            continue;
+
                         var tilePosition = chunk.Origin + (enumerator.X, enumerator.Y);
                         if (!localBounds.Contains(tilePosition))
                             continue;
