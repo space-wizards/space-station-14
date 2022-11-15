@@ -43,10 +43,10 @@
       points: 1
       required: false
     Tail: # the cat tail joke
-      points: 0
+      points: 1 # Corvax-Sponsors
       required: false
     HeadTop: # the cat ear joke
-      points: 0
+      points: 1 # Corvax-Sponsors
       required: false
     Chest:
       points: 1

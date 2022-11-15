@@ -28,7 +28,7 @@ namespace Content.Server.Connection
         [Dependency] private readonly IServerNetManager _netMgr = default!;
         [Dependency] private readonly IServerDbManager _db = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
-        [Dependency] private readonly SponsorsManager _sponsorsManager = default!;
+        [Dependency] private readonly ServerSponsorsManager _sponsorsManager = default!; // Corvax-Sponsors
 
         public void Initialize()
         {
@@ -102,7 +102,7 @@ namespace Content.Server.Connection
             }
 
             var adminData = await _dbManager.GetAdminDataForAsync(e.UserId);
-            var sponsorData = _sponsorsManager.GetSponsorInfo(e.UserId);
+            var sponsorData = _sponsorsManager.GetSponsorInfo(e.UserId); // Corvax-Sponsors
 
             if (_cfg.GetCVar(CCVars.PanicBunkerEnabled))
             {
@@ -115,7 +115,7 @@ namespace Content.Server.Connection
                 }
             }
 
-            var havePriorityJoin = sponsorData?.HavePriorityJoin == true;
+            var havePriorityJoin = sponsorData?.HavePriorityJoin == true; // Corvax-Sponsors
             var wasInGame = EntitySystem.TryGet<GameTicker>(out var ticker) &&
                             ticker.PlayerGameStatuses.TryGetValue(userId, out var status) &&
                             status == PlayerGameStatus.JoinedGame;

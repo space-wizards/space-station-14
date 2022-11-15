@@ -1,16 +1,16 @@
 ﻿using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Content.Shared.CCVar;
+using Content.Shared.Corvax.Sponsors;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Corvax.Sponsors;
 
-public sealed class SponsorsManager
+public sealed class ServerSponsorsManager : SponsorsManager
 {
     [Dependency] private readonly IServerNetManager _netMgr = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
@@ -26,7 +26,11 @@ public sealed class SponsorsManager
     {
         _sawmill = Logger.GetSawmill("sponsors");
         _cfg.OnValueChanged(CCVars.SponsorsApiUrl, s => _apiUrl = s, true);
+        
+        _netMgr.RegisterNetMessage<MsgSponsoringInfo>();
+        
         _netMgr.Connecting += OnConnecting;
+        _netMgr.Connected += OnConnected;
         _netMgr.Disconnect += OnDisconnect;
     }
 
@@ -41,11 +45,36 @@ public sealed class SponsorsManager
     {
         var info = await LoadSponsorInfo(e.UserId);
         if (info?.Tier == null)
+        {
+            _cachedSponsors.Remove(e.UserId); // Remove from cache if sponsor expired
             return;
+        }
 
         DebugTools.Assert(!_cachedSponsors.ContainsKey(e.UserId), "Cached data was found on client connect");
 
-        _cachedSponsors[e.UserId] = info.Value;
+        _cachedSponsors[e.UserId] = info;
+    }
+    
+    private void OnConnected(object? sender, NetChannelArgs e)
+    {
+        MsgSponsoringInfo msg;
+        if (_cachedSponsors.TryGetValue(e.Channel.UserId, out var info))
+        {
+            msg = new()
+            {
+                IsSponsor = true,
+                AllowedNeko = info.AllowedNeko,
+            };
+        }
+        else
+        {
+            msg = new()
+            {
+                IsSponsor = false,
+                AllowedNeko = false,
+            };
+        }
+        _netMgr.ServerSendMessage(msg, e.Channel);
     }
     
     private void OnDisconnect(object? sender, NetDisconnectedArgs e)
@@ -74,21 +103,5 @@ public sealed class SponsorsManager
         }
 
         return await response.Content.ReadFromJsonAsync<SponsorInfo>();
-    }
-    
-
-    public struct SponsorInfo
-    {
-        [JsonPropertyName("tier")]
-        public int? Tier { get; set; }
-
-        [JsonPropertyName("oocColor")]
-        public string? OOCColor { get; set; }
-
-        [JsonPropertyName("priorityJoin")]
-        public bool HavePriorityJoin { get; set; }
-
-        [JsonPropertyName("nekoCharName")]
-        public string? NekoCharName { get; set; }
     }
 }

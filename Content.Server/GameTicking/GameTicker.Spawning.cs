@@ -209,28 +209,6 @@ namespace Content.Server.GameTicking
             {
                 EntityManager.AddComponent<OwOAccentComponent>(mob);
             }
-
-            // Corvax-Sponsors-Start: Add sponsor reward to player character
-            var sponsorData = _sponsorsManager.GetSponsorInfo(player.UserId);
-            var selectedCharacterName = _prefsManager.GetPreferences(player.UserId).SelectedCharacter.Name;
-            if (sponsorData?.NekoCharName == selectedCharacterName)
-            {
-                Color? color = null;
-
-                // Get hair color
-                if (TryComp<HumanoidComponent>(mob, out var humanoid) &&
-                    humanoid.CurrentMarkings.TryGetCategory(MarkingCategories.Hair, out var hairMarkings) &&
-                    hairMarkings.Count > 0 &&
-                    hairMarkings[0].MarkingColors.Count > 0)
-                {
-                    color = hairMarkings[0].MarkingColors[0];
-                }
-
-                _humanoid.AddMarking(mob, "CatTail", color, forced: true);
-                _humanoid.AddMarking(mob, "CatEars", color, forced: true);
-            }
-            // Corvax-Sponsors-End
-
             _stationJobs.TryAssignJob(station, jobPrototype);
 
             if (lateJoin)

@@ -3,6 +3,7 @@
   bodyPart: HeadTop
   markingCategory: HeadTop
   speciesRestriction: [Human]
+  sponsorOnly: true # Corvax-Sponsors
   sprites:
   - sprite: Mobs/Customization/cat_parts.rsi
     state: ears_cat_outer
@@ -14,6 +15,7 @@
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: [Human]
+  sponsorOnly: true # Corvax-Sponsors
   sprites:
   - sprite: Mobs/Customization/cat_parts.rsi
     state: tail_cat

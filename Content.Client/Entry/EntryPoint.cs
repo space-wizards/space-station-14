@@ -1,6 +1,7 @@
 using Content.Client.Administration.Managers;
 using Content.Client.Changelog;
 using Content.Client.Chat.Managers;
+using Content.Client.Corvax.Sponsors;
 using Content.Client.Options;
 using Content.Client.Eui;
 using Content.Client.Flash;
@@ -72,6 +73,7 @@ namespace Content.Client.Entry
         [Dependency] private readonly ExtendedDisconnectInformationManager _extendedDisconnectInformation = default!;
         [Dependency] private readonly PlayTimeTrackingManager _playTimeTracking = default!;
         [Dependency] private readonly ContentLocalizationManager _contentLoc = default!;
+        [Dependency] private readonly ClientSponsorsManager _sponsorsManager = default!; // Corvax-Sponsors
 
         public const int NetBufferSizeOverride = 2;
 
@@ -172,6 +174,7 @@ namespace Content.Client.Entry
             _gamePrototypeLoadManager.Initialize();
             _networkResources.Initialize();
             _userInterfaceManager.SetDefaultTheme("SS14DefaultTheme");
+            _sponsorsManager.Initialize(); // Corvax-Sponsors
 
             _baseClient.RunLevelChanged += (_, args) =>
             {

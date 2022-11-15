@@ -97,7 +97,7 @@ namespace Content.Server.Entry
                 IoCManager.Resolve<IGamePrototypeLoadManager>().Initialize();
                 IoCManager.Resolve<NetworkResourceManager>().Initialize();
                 IoCManager.Resolve<GhostKickManager>().Initialize();
-                IoCManager.Resolve<SponsorsManager>().Initialize(); // Corvax
+                IoCManager.Resolve<ServerSponsorsManager>().Initialize(); // Corvax-Sponsors
 
                 _voteManager.Initialize();
                 _updateManager.Initialize();
