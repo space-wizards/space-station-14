@@ -40,18 +40,21 @@ namespace Content.Server.UserInterface
         ///     This should probably be true for most machines & computers, but there will still be UIs that represent a
         ///     more generic interaction / configuration that might not require hands.
         /// </remarks>
+        [ViewVariables(VVAccess.ReadWrite)]
         [DataField("requireHands")]
         public bool RequireHands = true;
 
         /// <summary>
         ///     Whether spectators (non-admin ghosts) should be allowed to view this UI.
         /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
         [DataField("allowSpectator")]
         public bool AllowSpectator = true;
 
         /// <summary>
         ///     Whether the UI should close when the item is deselected due to a hand swap or drop
         /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
         [DataField("closeOnHandDeselect")]
         public bool CloseOnHandDeselect = true;
 

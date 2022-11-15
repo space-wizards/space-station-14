@@ -55,5 +55,20 @@ namespace Content.Server.Fluids.EntitySystems
                 EntityManager.RemoveComponent(evaporationComponent.Owner, evaporationComponent);
             }
         }
+
+        /// <summary>
+        ///  Copy constructor to copy initial fields from source to destination.
+        /// </summary>
+        /// <param name="destUid">Entity to which we copy <paramref name="srcEvaporation"/> properties</param>
+        /// <param name="srcEvaporation">Component that contains relevant properties</param>
+        public void CopyConstruct(EntityUid destUid, EvaporationComponent srcEvaporation)
+        {
+            var destEvaporation = EntityManager.EnsureComponent<EvaporationComponent>(destUid);
+            destEvaporation.EvaporateTime = srcEvaporation.EvaporateTime;
+            destEvaporation.EvaporationToggle = srcEvaporation.EvaporationToggle;
+            destEvaporation.SolutionName = srcEvaporation.SolutionName;
+            destEvaporation.LowerLimit = srcEvaporation.LowerLimit;
+            destEvaporation.UpperLimit = srcEvaporation.UpperLimit;
+        }
     }
 }
