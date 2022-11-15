@@ -90,8 +90,8 @@
   color: "#9A040E"
   boilingPoint: 212.0
   meltingPoint: 170.0
-  metabolismRate: 0.2
   metabolisms:
+       metabolismRate: 0.4 #for whatever reason this value will be multiplied by 0.5 to get the actual rate, so this should metabolize at 0.2 chems/s
     Narcotic:
       effects:
       - !type:MovespeedModifier
