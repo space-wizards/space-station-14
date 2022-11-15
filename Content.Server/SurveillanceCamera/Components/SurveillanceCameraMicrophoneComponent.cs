@@ -20,6 +20,7 @@ public sealed class SurveillanceCameraMicrophoneComponent : Component
     [DataField("blacklist")]
     public EntityWhitelist Blacklist { get; } = new();
 
+    [ViewVariables(VVAccess.ReadWrite)]
     [DataField("range")]
     public int Range { get; } = 10;
 }

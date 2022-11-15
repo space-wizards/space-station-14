@@ -264,15 +264,15 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         var (message, channel) = GetRadioPrefix(source, originalMessage);
 
-        message = TransformSpeech(source, message);
-        if (message.Length == 0)
-            return;
-
         if (channel != null)
         {
             SendEntityWhisper(source, message, hideChat, hideGlobalGhostChat, channel, nameOverride);
             return;
         }
+
+        message = TransformSpeech(source, message);
+        if (message.Length == 0)
+            return;
 
         // get the entity's apparent name (if no override provided).
         string name;
@@ -306,7 +306,7 @@ public sealed partial class ChatSystem : SharedChatSystem
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Say from {ToPrettyString(source):user}, original: {originalMessage}, transformed: {message}.");
     }
 
-    private void SendEntityWhisper(EntityUid source, string originalMessage, bool hideChat , bool hideGlobalGhostChat, RadioChannelPrototype? channel, string? nameOverride)
+    private void SendEntityWhisper(EntityUid source, string originalMessage, bool hideChat, bool hideGlobalGhostChat, RadioChannelPrototype? channel, string? nameOverride)
     {
         if (!_actionBlocker.CanSpeak(source))
             return;

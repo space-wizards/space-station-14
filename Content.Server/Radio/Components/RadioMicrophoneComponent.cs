@@ -11,9 +11,11 @@ namespace Content.Server.Radio.Components;
 [Access(typeof(RadioDeviceSystem))]
 public sealed class RadioMicrophoneComponent : Component
 {
+    [ViewVariables(VVAccess.ReadWrite)]
     [DataField("broadcastChannel", customTypeSerializer: typeof(PrototypeIdSerializer<RadioChannelPrototype>))]
     public string BroadcastChannel = "Common";
 
+    [ViewVariables(VVAccess.ReadWrite)]
     [DataField("listenRange")]
     public int ListenRange  = 4;
 
