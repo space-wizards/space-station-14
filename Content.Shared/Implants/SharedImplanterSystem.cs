@@ -44,8 +44,7 @@ public abstract class SharedImplanterSystem : EntitySystem
             return;
 
         //If the target doesn't have the implanted component, add it.
-        if (!HasComp<ImplantedComponent>(target))
-            EnsureComp<ImplantedComponent>(target);
+        EnsureComp<ImplantedComponent>(target);
 
         var implantContainer = _container.EnsureContainer<Container>(target, ImplantSlotId);
         implanterContainer.Remove(implant);

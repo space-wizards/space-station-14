@@ -13,8 +13,6 @@ public sealed class ImplanterStatusControl : Control
     private readonly ImplanterComponent _parent;
     private readonly RichTextLabel _label;
 
-    public const string ImplanterSlotId = "implanter_slot";
-
     public ImplanterStatusControl(ImplanterComponent parent)
     {
         _parent = parent;
