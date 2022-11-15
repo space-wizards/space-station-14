@@ -1,17 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: 'Welding without eye protection now blinds you, and causes permanent
-      eye damage if you had no protection at all.', type: Add}
-  - {message: Added oculine to heal eye damage., type: Add}
-  - {message: Added glasses to correct blurry vision., type: Add}
-  - {message: 'Renamed mesons to engineering goggles for less confusion. They no longer
-      provide radiation damage, instead functioning more as a compact welding mask.',
-    type: Tweak}
-  - {message: You will no longer see 'this entity does not exist' when examining entities
-      that exist., type: Fix}
-  id: 2154
-  time: '2022-08-14T05:59:15.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Revenants can no longer stack multiple harvests or soul searches at
@@ -2956,3 +2943,11 @@ Entries:
   - {message: Fix melee sounds getting spammed in some instances., type: Fix}
   id: 2653
   time: '2022-11-15T00:56:10.0000000+00:00'
+- author: Interrobang01
+  changes:
+  - {message: Cognizine now needs Acetone instead of Unstable Mutagen in its recipe,
+    type: Tweak}
+  - {message: Monkeys can talk when brought to life via Cognizine, type: Tweak}
+  - {message: Cognizine has a taste now, type: Fix}
+  id: 2654
+  time: '2022-11-15T02:02:46.0000000+00:00'
