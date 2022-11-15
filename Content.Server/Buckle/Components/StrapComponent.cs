@@ -1,10 +1,9 @@
 using System.Linq;
+using Content.Server.Buckle.Systems;
 using Content.Shared.Alert;
 using Content.Shared.Buckle.Components;
 using Content.Shared.DragDrop;
 using Robust.Shared.Audio;
-using Robust.Shared.Serialization;
-
 
 namespace Content.Server.Buckle.Components
 {
@@ -150,14 +149,11 @@ namespace Content.Server.Buckle.Components
 
         public void RemoveAll()
         {
-            var entManager = IoCManager.Resolve<IEntityManager>();
+            var buckleSystem = IoCManager.Resolve<IEntityManager>().System<BuckleSystem>();
 
             foreach (var entity in BuckledEntities.ToArray())
             {
-                if (entManager.TryGetComponent<BuckleComponent>(entity, out var buckle))
-                {
-                    buckle.TryUnbuckle(entity, true);
-                }
+                buckleSystem.TryUnbuckle(entity, entity, true);
             }
 
             BuckledEntities.Clear();
@@ -167,10 +163,8 @@ namespace Content.Server.Buckle.Components
 
         public override bool DragDropOn(DragDropEvent eventArgs)
         {
-            var entManager = IoCManager.Resolve<IEntityManager>();
-
-            if (!entManager.TryGetComponent(eventArgs.Dragged, out BuckleComponent? buckleComponent)) return false;
-            return buckleComponent.TryBuckle(eventArgs.User, Owner);
+            var buckleSystem = IoCManager.Resolve<IEntityManager>().System<BuckleSystem>();
+            return buckleSystem.TryBuckle(eventArgs.Dragged, eventArgs.User, Owner);
         }
     }
 }
