@@ -84,6 +84,8 @@
     sprite: Objects/Tools/Toolboxes/toolbox_syn.rsi
   - type: Storage
     capacity: 120
+  - type: Item
+    size: 5    
   - type: MeleeWeapon
     damage:
       types:
