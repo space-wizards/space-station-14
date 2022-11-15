@@ -3,7 +3,7 @@
   parent: ClothingHeadset
   id: ClothingHeadsetAlt
   name: headset
-  description: An updated, modular intercom that fits over the head. Takes encryption chips.
+  description: An updated, modular intercom that fits over the head. Takes encryption keys.
   components:
   - type: Sprite
     state: icon_alt
@@ -16,8 +16,8 @@
   name: qm over-ear headset
   components:
   - type: Headset
-    chipsPrototypes:
-    - EncryptionChipQM
+    keysPrototypes:
+    - EncryptionKeyQM
   - type: Sprite
     sprite: Clothing/Ears/Headsets/cargo.rsi
   - type: Clothing
@@ -29,8 +29,8 @@
   name: CentCom over-ear headset
   components:
   - type: Headset
-    chipsPrototypes:
-    - EncryptionChipCentCom
+    keysPrototypes:
+    - EncryptionKeyCentCom
   - type: Sprite
     sprite: Clothing/Ears/Headsets/centcom.rsi
   - type: Clothing
@@ -42,8 +42,8 @@
   name: command over-ear headset
   components:
   - type: Headset
-    chipsPrototypes:
-    - EncryptionChipCommand
+    keysPrototypes:
+    - EncryptionKeyCommand
   - type: Sprite
     sprite: Clothing/Ears/Headsets/command.rsi
   - type: Clothing
@@ -55,8 +55,8 @@
   name: ce over-ear headset
   components:
   - type: Headset
-    chipsPrototypes:
-    - EncryptionChipCE
+    keysPrototypes:
+    - EncryptionKeyCE
   - type: Sprite
     sprite: Clothing/Ears/Headsets/engineering.rsi
   - type: Clothing
@@ -68,8 +68,8 @@
   name: cmo over-ear headset
   components:
   - type: Headset
-    chipsPrototypes:
-    - EncryptionChipCMO
+    keysPrototypes:
+    - EncryptionKeyCMO
   - type: Sprite
     sprite: Clothing/Ears/Headsets/medical.rsi
   - type: Clothing
@@ -81,8 +81,8 @@
   name: hos over-ear headset
   components:
   - type: Headset
-    chipsPrototypes:
-    - EncryptionChipHOS
+    keysPrototypes:
+    - EncryptionKeyHOS
   - type: Sprite
     sprite: Clothing/Ears/Headsets/security.rsi
   - type: Clothing
@@ -94,8 +94,8 @@
   name: research director over-ear headset
   components:
   - type: Headset
-    chipsPrototypes:
-    - EncryptionChipRD
+    keysPrototypes:
+    - EncryptionKeyRD
   - type: Sprite
     sprite: Clothing/Ears/Headsets/science.rsi
   - type: Clothing
@@ -105,11 +105,11 @@
   parent: ClothingHeadsetAlt
   id: ClothingHeadsetAltSyndicate
   name: syndicate over-ear headset
-  description: An updated, modular syndicate intercom that fits over the head and takes encryption chips (there are 4 of them). Protects ears from flashbangs.
+  description: An updated, modular syndicate intercom that fits over the head and takes encryption keys (there are 4 of them). Should protects ears from flashbangs.
   components:
   - type: Headset
-    chipsPrototypes:
-    - EncryptionChipSyndie
+    keysPrototypes:
+    - EncryptionKeySyndie
   - type: Sprite
     sprite: Clothing/Ears/Headsets/syndicate.rsi
   - type: Clothing

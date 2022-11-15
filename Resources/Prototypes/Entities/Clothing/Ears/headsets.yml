@@ -3,11 +3,11 @@
   parent: Clothing
   id: ClothingHeadset
   name: headset
-  description: An updated, modular intercom that fits over the head. Takes encryption chips.
+  description: An updated, modular intercom that fits over the head. Takes encryption keys.
   components:
   - type: Headset
-    chipsPrototypes:
-    - EncryptionChipCommon
+    keysPrototypes:
+    - EncryptionKeyCommon
   - type: Sprite
     state: icon
   - type: Clothing
@@ -16,17 +16,17 @@
     sprite: Clothing/Ears/Headsets/base.rsi
   - type: ContainerContainer
     containers:
-      chip_slots: !type:Container
+      key_slots: !type:Container
 
 - type: entity
   parent: ClothingHeadset
   id: ClothingHeadsetGrey
   name: passenger headset
-  description: An updated, modular intercom that fits over the head. Takes encryption chips.
+  description: An updated, modular intercom that fits over the head. Takes encryption keys.
   components:
   - type: Headset
-    chipsPrototypes:
-    - EncryptionChipCommon
+    keysPrototypes:
+    - EncryptionKeyCommon
   - type: Sprite
     sprite: Clothing/Ears/Headsets/base.rsi
 
@@ -37,8 +37,8 @@
   description: A headset used by supply employees.
   components:
   - type: Headset
-    chipsPrototypes:
-    - EncryptionChipCargo
+    keysPrototypes:
+    - EncryptionKeyCargo
   - type: Sprite
     sprite: Clothing/Ears/Headsets/cargo.rsi
   - type: Clothing
@@ -51,8 +51,8 @@
   description: Headset used by shaft miners.
   components:
   - type: Headset
-    chipsPrototypes:
-    - EncryptionChipCargo
+    keysPrototypes:
+    - EncryptionKeyCargo
   - type: Sprite
     sprite: Clothing/Ears/Headsets/mining.rsi
   - type: Clothing
@@ -65,8 +65,8 @@
   description: A headset used by the quartermaster.
   components:
   - type: Headset
-    chipsPrototypes:
-    - EncryptionChipQM
+    keysPrototypes:
+    - EncryptionKeyQM
   - type: Sprite
     sprite: Clothing/Ears/Headsets/cargo.rsi
   - type: Clothing
@@ -79,8 +79,8 @@
   description: A headset used by the upper echelons of Nanotrasen.
   components:
   - type: Headset
-    chipsPrototypes:
-    - EncryptionChipCentCom
+    keysPrototypes:
+    - EncryptionKeyCentCom
   - type: Sprite
     sprite: Clothing/Ears/Headsets/centcom.rsi
   - type: Clothing
@@ -93,8 +93,8 @@
   description: A headset with a commanding channel.
   components:
   - type: Headset
-    chipsPrototypes:
-    - EncryptionChipCommand
+    keysPrototypes:
+    - EncryptionKeyCommand
   - type: Sprite
     sprite: Clothing/Ears/Headsets/command.rsi
   - type: Clothing
@@ -107,8 +107,8 @@
   description: A headset for engineers to chat while the station burns around them.
   components:
   - type: Headset
-    chipsPrototypes:
-    - EncryptionChipEngineering
+    keysPrototypes:
+    - EncryptionKeyEngineering
   - type: Sprite
     sprite: Clothing/Ears/Headsets/engineering.rsi
   - type: Clothing
@@ -121,8 +121,8 @@
   description: A headset for the chief engineer to ignore all emergency calls on.
   components:
   - type: Headset
-    chipsPrototypes:
-    - EncryptionChipCE
+    keysPrototypes:
+    - EncryptionKeyCE
   - type: Sprite
     sprite: Clothing/Ears/Headsets/engineering.rsi
   - type: Clothing
@@ -135,8 +135,8 @@
   description: A headset for the trained staff of the medbay.
   components:
   - type: Headset
-    chipsPrototypes:
-    - EncryptionChipMedical
+    keysPrototypes:
+    - EncryptionKeyMedical
   - type: Sprite
     sprite: Clothing/Ears/Headsets/medical.rsi
   - type: Clothing
@@ -149,8 +149,8 @@
   description: A headset that is a result of the mating between medical and science.
   components:
   - type: Headset
-    chipsPrototypes:
-    - EncryptionChipMedicalScience
+    keysPrototypes:
+    - EncryptionKeyMedicalScience
   - type: Sprite
     sprite: Clothing/Ears/Headsets/medicalscience.rsi
   - type: Clothing
@@ -163,8 +163,8 @@
   description: This is used by your elite security force.
   components:
   - type: Headset
-    chipsPrototypes:
-    - EncryptionChipSecurity
+    keysPrototypes:
+    - EncryptionKeySecurity
   - type: Sprite
     sprite: Clothing/Ears/Headsets/security.rsi
   - type: Clothing
@@ -177,8 +177,8 @@
   description: A sciency headset. Like usual.
   components:
   - type: Headset
-    chipsPrototypes:
-    - EncryptionChipScience
+    keysPrototypes:
+    - EncryptionKeyScience
   - type: Sprite
     sprite: Clothing/Ears/Headsets/science.rsi
   - type: Clothing
@@ -191,8 +191,8 @@
   description: Made specifically for the roboticists, who cannot decide between departments.
   components:
   - type: Headset
-    chipsPrototypes:
-    - EncryptionChipRobo
+    keysPrototypes:
+    - EncryptionKeyRobo
   - type: Sprite
     sprite: Clothing/Ears/Headsets/robotics.rsi
   - type: Clothing
@@ -205,8 +205,8 @@
   description: Lamarr used to love chewing on this...
   components:
   - type: Headset
-    chipsPrototypes:
-    - EncryptionChipRD
+    keysPrototypes:
+    - EncryptionKeyRD
   - type: Sprite
     sprite: Clothing/Ears/Headsets/science.rsi
   - type: Clothing
@@ -220,8 +220,8 @@
   description: Headset used by the service staff, tasked with keeping the station full, happy and clean.
   components:
   - type: Headset
-    chipsPrototypes:
-    - EncryptionChipService
+    keysPrototypes:
+    - EncryptionKeyService
   - type: Sprite
     sprite: Clothing/Ears/Headsets/service.rsi
   - type: Clothing
