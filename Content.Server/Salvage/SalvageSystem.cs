@@ -7,6 +7,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Radio;
 using Content.Shared.Salvage;
+using Robust.Server.GameObjects;
 using Robust.Server.Maps;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
