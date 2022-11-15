@@ -29,7 +29,9 @@ public sealed class AddImplantSpecial : JobSpecial
         foreach (var implantId in Implants)
         {
             var implant = entMan.SpawnEntity(implantId, xform.Coordinates);
-            var implantComp = entMan.GetComponent<SubdermalImplantComponent>(implant);
+
+            if (!entMan.TryGetComponent<SubdermalImplantComponent>(implant, out var implantComp))
+                return;
 
             implantSystem.ForceImplant(mob, implant, implantComp);
         }

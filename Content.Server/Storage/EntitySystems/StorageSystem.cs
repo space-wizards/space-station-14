@@ -287,10 +287,10 @@ namespace Content.Server.Storage.EntitySystems
             if (args.Handled)
                 return;
 
-            if (!TryComp<SubdermalImplantComponent>(uid, out var implant) || implant.EntityUid == null)
+            if (!TryComp<SubdermalImplantComponent>(uid, out var implant) || implant.ImplantedEntity == null)
                 return;
 
-            OpenStorageUI(uid, implant.EntityUid.Value, storageComp);
+            OpenStorageUI(uid, implant.ImplantedEntity.Value, storageComp);
         }
 
         /// <summary>

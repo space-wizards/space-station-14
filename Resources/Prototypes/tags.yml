@@ -396,10 +396,10 @@
   id: Payload # for grenade/bomb crafting
 
 - type: Tag
-  id: MicroBomb
+  id: MacroBomb
 
 - type: Tag
-  id: MacroBomb
+  id: MicroBomb
 
 - type: Tag
   id: PaintableAirlock

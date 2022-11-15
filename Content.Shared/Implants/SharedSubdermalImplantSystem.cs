@@ -15,7 +15,7 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly TagSystem _tag = default!;
 
-    public const string ImplantSlotId = "implantcontainer";
+    public const string ImplantSlotId = "implant";
     public const string BaseStorageId = "storagebase";
 
     public override void Initialize()
@@ -27,17 +27,17 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
 
     private void OnInsert(EntityUid uid, SubdermalImplantComponent component, EntGotInsertedIntoContainerMessage args)
     {
-        if (component.EntityUid == null)
+        if (component.ImplantedEntity == null)
             return;
 
         if (component.ImplantAction != null)
         {
             var action = new InstantAction(_prototypeManager.Index<InstantActionPrototype>(component.ImplantAction));
-            _actionsSystem.AddAction(component.EntityUid.Value, action, uid);
+            _actionsSystem.AddAction(component.ImplantedEntity.Value, action, uid);
         }
 
         //replace micro bomb with macro bomb
-        if (_container.TryGetContainer(component.EntityUid.Value, ImplantSlotId, out var implantContainer) && _tag.HasTag(uid, "MacroBomb"))
+        if (_container.TryGetContainer(component.ImplantedEntity.Value, ImplantSlotId, out var implantContainer) && _tag.HasTag(uid, "MacroBomb"))
         {
             foreach (var implant in implantContainer.ContainedEntities)
             {
@@ -52,19 +52,19 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
 
     private void OnRemoveAttempt(EntityUid uid, SubdermalImplantComponent component, ContainerGettingRemovedAttemptEvent args)
     {
-        if (component.Permanent && component.EntityUid != null)
+        if (component.Permanent && component.ImplantedEntity != null)
             args.Cancel();
     }
 
     private void OnRemove(EntityUid uid, SubdermalImplantComponent component, EntGotRemovedFromContainerMessage args)
     {
-        if (component.EntityUid == null)
+        if (component.ImplantedEntity == null)
             return;
 
-        var entCoords = Transform(component.EntityUid.Value).Coordinates;
+        var entCoords = Transform(component.ImplantedEntity.Value).Coordinates;
 
         if (component.ImplantAction != null)
-            _actionsSystem.RemoveProvidedActions(component.EntityUid.Value, uid);
+            _actionsSystem.RemoveProvidedActions(component.ImplantedEntity.Value, uid);
 
         if (!_container.TryGetContainer(uid, BaseStorageId, out var storageImplant))
             return;
@@ -82,11 +82,10 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
     public void ForceImplant(EntityUid target, EntityUid implant, SubdermalImplantComponent component)
     {
         //If the target doesn't have the implanted component, add it.
-        if (!HasComp<ImplantedComponent>(target))
-            EnsureComp<ImplantedComponent>(target);
+        EnsureComp<ImplantedComponent>(target);
 
         var implantContainer = _container.EnsureContainer<Container>(target, ImplantSlotId);
-        component.EntityUid = target;
+        component.ImplantedEntity = target;
         implantContainer.OccludesLight = false;
         implantContainer.Insert(implant);
     }

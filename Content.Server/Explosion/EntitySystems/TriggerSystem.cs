@@ -100,8 +100,8 @@ namespace Content.Server.Explosion.EntitySystems
         private void HandleGibTrigger(EntityUid uid, GibOnTriggerComponent component, TriggerEvent args)
         {
             //Code so implants can properly handle gibbing their owners
-            if (TryComp<SubdermalImplantComponent>(uid, out var implantComponent) && implantComponent.EntityUid != null)
-                _body.GibBody(implantComponent.EntityUid.Value, deleteItems: component.DeleteItems);
+            if (TryComp<SubdermalImplantComponent>(uid, out var implantComponent) && implantComponent.ImplantedEntity != null)
+                _body.GibBody(implantComponent.ImplantedEntity.Value, deleteItems: component.DeleteItems);
 
             else
                 _body.GibBody(uid, deleteItems: component.DeleteItems);

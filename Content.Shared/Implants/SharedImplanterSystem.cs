@@ -14,7 +14,7 @@ public abstract class SharedImplanterSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     public const string ImplanterSlotId = "implanter_slot";
-    public const string ImplantSlotId = "implantcontainer";
+    public const string ImplantSlotId = "implant";
 
     public override void Initialize()
     {
@@ -50,7 +50,7 @@ public abstract class SharedImplanterSystem : EntitySystem
         var implantContainer = _container.EnsureContainer<Container>(target, ImplantSlotId);
         implanterContainer.Remove(implant);
         component.NumberOfEntities = implanterContainer.ContainedEntities.Count;
-        implantComp.EntityUid = target;
+        implantComp.ImplantedEntity = target;
         implantContainer.OccludesLight = false;
         implantContainer.Insert(implant);
 
@@ -93,7 +93,7 @@ public abstract class SharedImplanterSystem : EntitySystem
                 }
 
                 implantContainer.Remove(implant);
-                implantComp.EntityUid = null;
+                implantComp.ImplantedEntity = null;
                 implanterContainer.Insert(implant);
                 component.NumberOfEntities = implanterContainer.ContainedEntities.Count;
                 permanentFound = implantComp.Permanent;

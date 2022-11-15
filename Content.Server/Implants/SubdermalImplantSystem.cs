@@ -22,12 +22,12 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
 
     private void OnFreedomImplant(EntityUid uid, SubdermalImplantComponent component, UseFreedomImplantEvent args)
     {
-        if (!TryComp<CuffableComponent>(component.EntityUid, out var cuffs) || cuffs.Container.ContainedEntities.Count < 1)
+        if (!TryComp<CuffableComponent>(component.ImplantedEntity, out var cuffs) || cuffs.Container.ContainedEntities.Count < 1)
             return;
 
         if (TryComp<HandcuffComponent>(cuffs.LastAddedCuffs, out var cuff))
         {
-            cuffs.Uncuff(component.EntityUid.Value, cuffs.LastAddedCuffs, cuff, true);
+            cuffs.Uncuff(component.ImplantedEntity.Value, cuffs.LastAddedCuffs, cuff, true);
         }
     }
 
@@ -49,9 +49,9 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
     //Relays from the implant to the implanted
     private void RelayToImplantedEvent<T>(EntityUid uid, SubdermalImplantComponent component, T args) where T : EntityEventArgs
     {
-        if (component.EntityUid != null)
+        if (component.ImplantedEntity != null)
         {
-            RaiseLocalEvent(component.EntityUid.Value, args);
+            RaiseLocalEvent(component.ImplantedEntity.Value, args);
         }
     }
 

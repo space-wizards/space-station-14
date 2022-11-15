@@ -20,7 +20,8 @@ public sealed class SubdermalImplantComponent : Component
     /// <summary>
     /// The entity this implant is inside
     /// </summary>
-    public EntityUid? EntityUid;
+    [ViewVariables]
+    public EntityUid? ImplantedEntity;
 
     /// <summary>
     /// Should this implant be removeable?
