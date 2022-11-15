@@ -1,11 +1,4 @@
 Entries:
-- author: vulppine
-  changes:
-  - {message: "FunTime Arcade Solutions\u2122 has outfitted NanoTrasen stations with\
-      \ a new supply of arcade toys! Come spend your free time at the arcade machines\
-      \ for exciting, fun objects!", type: Add}
-  id: 2162
-  time: '2022-08-16T09:57:40.0000000+00:00'
 - author: Hoid
   changes:
   - {message: Experimental Research Hardsuit now protects more effectively against
@@ -2954,3 +2947,8 @@ Entries:
     type: Fix}
   id: 2661
   time: '2022-11-15T11:31:00.0000000+00:00'
+- author: corentt
+  changes:
+  - {message: the price of food now depends on its nutritional capacity, type: Add}
+  id: 2662
+  time: '2022-11-15T11:51:31.0000000+00:00'
