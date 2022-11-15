@@ -10633,8 +10633,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 18.935778
-      - 71.2346
+      - 18.405577
+      - 69.24003
       - 0
       - 0
       - 0
@@ -54479,7 +54479,7 @@ entities:
   - pos: 24.5,-5.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -73212.74
+  - SecondsUntilStateChange: -73425
     state: Opening
     type: Door
   - inputs:
@@ -54495,7 +54495,7 @@ entities:
   - pos: 24.5,-4.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -73212.74
+  - SecondsUntilStateChange: -73425
     state: Opening
     type: Door
   - inputs:
@@ -54511,7 +54511,7 @@ entities:
   - pos: 24.5,-7.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -73212.74
+  - SecondsUntilStateChange: -73425
     state: Opening
     type: Door
   - inputs:
@@ -54527,7 +54527,7 @@ entities:
   - pos: 24.5,-6.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -73212.74
+  - SecondsUntilStateChange: -73425
     state: Opening
     type: Door
   - inputs:
@@ -54579,7 +54579,7 @@ entities:
   - pos: 13.5,-5.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -74263.62
+  - SecondsUntilStateChange: -74475.875
     state: Opening
     type: Door
   - inputs:
@@ -54595,7 +54595,7 @@ entities:
   - pos: 14.5,-5.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -74263.62
+  - SecondsUntilStateChange: -74475.875
     state: Opening
     type: Door
   - inputs:
@@ -54611,7 +54611,7 @@ entities:
   - pos: 15.5,-5.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -74263.62
+  - SecondsUntilStateChange: -74475.875
     state: Opening
     type: Door
   - inputs:
@@ -54627,7 +54627,7 @@ entities:
   - pos: 16.5,-5.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -74263.62
+  - SecondsUntilStateChange: -74475.875
     state: Opening
     type: Door
   - inputs:
@@ -54643,7 +54643,7 @@ entities:
   - pos: 17.5,-5.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -74263.62
+  - SecondsUntilStateChange: -74475.875
     state: Opening
     type: Door
   - inputs:
@@ -54659,7 +54659,7 @@ entities:
   - pos: 18.5,-5.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -74263.62
+  - SecondsUntilStateChange: -74475.875
     state: Opening
     type: Door
   - inputs:
@@ -54675,7 +54675,7 @@ entities:
   - pos: 12.5,-5.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -74263.62
+  - SecondsUntilStateChange: -74475.875
     state: Opening
     type: Door
   - inputs:
@@ -54691,7 +54691,7 @@ entities:
   - pos: 19.5,-5.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -74263.62
+  - SecondsUntilStateChange: -74475.875
     state: Opening
     type: Door
   - inputs:
@@ -54707,7 +54707,7 @@ entities:
   - pos: 11.5,-6.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -74263.62
+  - SecondsUntilStateChange: -74475.875
     state: Opening
     type: Door
   - inputs:
@@ -54723,7 +54723,7 @@ entities:
   - pos: 11.5,-7.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -74263.62
+  - SecondsUntilStateChange: -74475.875
     state: Opening
     type: Door
   - inputs:
@@ -54739,7 +54739,7 @@ entities:
   - pos: 20.5,-6.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -74263.62
+  - SecondsUntilStateChange: -74475.875
     state: Opening
     type: Door
   - inputs:
@@ -54755,7 +54755,7 @@ entities:
   - pos: 20.5,-7.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -74263.62
+  - SecondsUntilStateChange: -74475.875
     state: Opening
     type: Door
   - inputs:
@@ -54771,7 +54771,7 @@ entities:
   - pos: 20.5,-9.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -74179.016
+  - SecondsUntilStateChange: -74391.27
     state: Opening
     type: Door
   - inputs:
@@ -54787,7 +54787,7 @@ entities:
   - pos: 20.5,-11.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -74179.016
+  - SecondsUntilStateChange: -74391.27
     state: Opening
     type: Door
   - inputs:
@@ -69107,9 +69107,9 @@ entities:
     parent: 127
     type: Transform
 - uid: 8587
-  type: WallReinforced
+  type: SignRadiationMed
   components:
-  - pos: -27.5,7.5
+  - pos: -31.5,7.5
     parent: 127
     type: Transform
 - uid: 8588
@@ -69139,13 +69139,13 @@ entities:
 - uid: 8592
   type: PonderingOrb
   components:
-  - desc: A funny sphere of radioactive material.
+  - desc: It seems to be radioactive...
     name: demon core
     type: MetaData
   - pos: -29.5,6.5
     parent: 127
     type: Transform
-  - slope: 0.35
+  - slope: 0.4
     intensity: 6
     type: RadiationSource
 - uid: 8593
@@ -70053,6 +70053,90 @@ entities:
   type: CableApcExtension
   components:
   - pos: -4.5,-6.5
+    parent: 127
+    type: Transform
+- uid: 8731
+  type: SignSecureMedRed
+  components:
+  - pos: -29.5,8.5
+    parent: 127
+    type: Transform
+- uid: 8732
+  type: SignRadiationMed
+  components:
+  - pos: -30.5,4.5
+    parent: 127
+    type: Transform
+- uid: 8733
+  type: SignSecureMedRed
+  components:
+  - pos: -31.5,6.5
+    parent: 127
+    type: Transform
+- uid: 8734
+  type: ClothingEyesGlasses
+  components:
+  - pos: -3.592097,8.474771
+    parent: 127
+    type: Transform
+- uid: 8735
+  type: SignRadiationMed
+  components:
+  - pos: -30.5,8.5
+    parent: 127
+    type: Transform
+- uid: 8736
+  type: SignRadiationMed
+  components:
+  - pos: -31.5,5.5
+    parent: 127
+    type: Transform
+- uid: 8737
+  type: SignSecureMedRed
+  components:
+  - pos: -27.5,6.5
+    parent: 127
+    type: Transform
+- uid: 8738
+  type: SignSecureMedRed
+  components:
+  - pos: -29.5,4.5
+    parent: 127
+    type: Transform
+- uid: 8739
+  type: ClothingEyesGlasses
+  components:
+  - pos: 0.86081576,-3.7415516
+    parent: 127
+    type: Transform
+- uid: 8740
+  type: WallReinforced
+  components:
+  - pos: -27.5,7.5
+    parent: 127
+    type: Transform
+- uid: 8741
+  type: SignRadiationMed
+  components:
+  - pos: -28.5,8.5
+    parent: 127
+    type: Transform
+- uid: 8742
+  type: SignRadiationMed
+  components:
+  - pos: -27.5,7.5
+    parent: 127
+    type: Transform
+- uid: 8743
+  type: SignRadiationMed
+  components:
+  - pos: -27.5,5.5
+    parent: 127
+    type: Transform
+- uid: 8744
+  type: SignRadiationMed
+  components:
+  - pos: -28.5,4.5
     parent: 127
     type: Transform
 ...
