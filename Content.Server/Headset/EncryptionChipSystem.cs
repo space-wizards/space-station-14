@@ -18,22 +18,22 @@ namespace Content.Server.Headset
             if (!args.IsInDetailsRange)
                 return;
             // args.PushMarkup(Loc.GetString("examine-radio-frequency", ("frequency", component.BroadcastFrequency)));
-            args.PushMarkup(Loc.GetString("examine-encryption-chip"));
-
-            foreach (var id in component.Channels)
+            if(component.Channels.Count > 0)
             {
-                if (id == "Common")
-                    continue;
-
-                var proto = _protoManager.Index<RadioChannelPrototype>(id);
-                args.PushMarkup(Loc.GetString("examine-headset-channel",
-                    ("color", proto.Color),
-                    ("key", proto.KeyCode),
-                    ("id", proto.LocalizedName),
-                    ("freq", proto.Frequency)));
+                args.PushMarkup("\n" + Loc.GetString("examine-encryption-chip") + "\n");
+                foreach (var id in component.Channels)
+                {
+                    // if (id == "Common")
+                    //     continue;
+                    var proto = _protoManager.Index<RadioChannelPrototype>(id);
+                    args.PushMarkup(Loc.GetString("examine-headset-channel",
+                        ("color", proto.Color),
+                        ("key", proto.KeyCode),
+                        ("id", proto.LocalizedName),
+                        ("freq", proto.Frequency)) + "\n");
+                }
+                args.PushMarkup(Loc.GetString("examine-headset-chat-prefix", ("prefix", ";")));
             }
-
-            args.PushMarkup(Loc.GetString("examine-headset-chat-prefix", ("prefix", ";")));
         }
     }
 }
