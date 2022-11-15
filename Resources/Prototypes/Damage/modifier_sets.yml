@@ -54,7 +54,6 @@
   flatReductions:
     Blunt: 5
     Slash: 5
-    Heat: 5
 
 - type: damageModifierSet
   id: RGlass
