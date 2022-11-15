@@ -50,8 +50,8 @@ public sealed class HeadsetSystem : EntitySystem
     private void OnGotUnequipped(EntityUid uid, HeadsetComponent component, GotUnequippedEvent args)
     {
         component.IsEquipped = false;
-        RemCompDeferred<ActiveRadioComponent>(uid);
-        RemCompDeferred<WearingHeadsetComponent>(args.Equipee);
+        RemComp<ActiveRadioComponent>(uid);
+        RemComp<WearingHeadsetComponent>(args.Equipee);
     }
 
     public void SetEnabled(EntityUid uid, bool value, HeadsetComponent? component = null)
