@@ -93,16 +93,24 @@ namespace Content.Server.NPC.Pathfinding
 
                 var request = _pathRequests[i];
 
-                switch (request)
+                try
                 {
-                    case AStarPathRequest astar:
-                        results[i] = UpdateAStarPath(astar);
-                        break;
-                    case BFSPathRequest bfs:
-                        results[i] = UpdateBFSPath(_random, bfs);
-                        break;
-                    default:
-                        throw new NotImplementedException();
+                    switch (request)
+                    {
+                        case AStarPathRequest astar:
+                            results[i] = UpdateAStarPath(astar);
+                            break;
+                        case BFSPathRequest bfs:
+                            results[i] = UpdateBFSPath(_random, bfs);
+                            break;
+                        default:
+                            throw new NotImplementedException();
+                    }
+                }
+                catch (Exception)
+                {
+                    results[i] = PathResult.NoPath;
+                    throw;
                 }
             });
 
@@ -123,6 +131,7 @@ namespace Content.Server.NPC.Pathfinding
                 switch (result)
                 {
                     case PathResult.Continuing:
+                        DebugTools.Assert(path.Frontier.Count > 0);
                         break;
                     case PathResult.PartialPath:
                     case PathResult.Path:

@@ -1399,28 +1399,12 @@ entities:
   - pos: -3.5,3.5
     parent: 0
     type: Transform
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 133
   type: Poweredlight
   components:
   - pos: 3.5,3.5
     parent: 0
     type: Transform
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 134
   type: PoweredlightLED
   components:
@@ -1428,14 +1412,6 @@ entities:
     pos: 7.5,-4.5
     parent: 0
     type: Transform
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 135
   type: PoweredlightLED
   components:
@@ -1443,14 +1419,6 @@ entities:
     pos: 9.5,-4.5
     parent: 0
     type: Transform
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 136
   type: Poweredlight
   components:
@@ -1458,14 +1426,6 @@ entities:
     pos: 10.5,-0.5
     parent: 0
     type: Transform
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 137
   type: Poweredlight
   components:
@@ -1473,28 +1433,12 @@ entities:
     pos: 4.5,-4.5
     parent: 0
     type: Transform
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 138
   type: Poweredlight
   components:
   - pos: -7.5,3.5
     parent: 0
     type: Transform
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 139
   type: Poweredlight
   components:
@@ -1502,14 +1446,6 @@ entities:
     pos: -1.5,-4.5
     parent: 0
     type: Transform
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 140
   type: Grille
   components:
@@ -2382,56 +2318,24 @@ entities:
     pos: 10.5,2.5
     parent: 0
     type: Transform
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 268
   type: Poweredlight
   components:
   - pos: 8.5,8.5
     parent: 0
     type: Transform
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 269
   type: PoweredLightPostSmall
   components:
   - pos: 1.5,-7.5
     parent: 0
     type: Transform
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 270
   type: PoweredLightPostSmall
   components:
   - pos: -9.5,-7.5
     parent: 0
     type: Transform
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 271
   type: TableWood
   components:

@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Shared.Construction;
+using Robust.Server.Containers;
 using Robust.Shared.Containers;
 
 namespace Content.Server.Construction.Completions
@@ -11,10 +12,12 @@ namespace Content.Server.Construction.Completions
 
         public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {
-            if (string.IsNullOrEmpty(Container)) return;
-            // TODO CONSTRUCTION: Use the new ContainerSystem methods here.
-            if (!entityManager.TryGetComponent(uid, out ContainerManagerComponent? containerMan)) return;
-            if (!containerMan.TryGetContainer(Container, out var container)) return;
+            if (string.IsNullOrEmpty(Container))
+                return;
+            var containerSys = entityManager.EntitySysManager.GetEntitySystem<ContainerSystem>();
+
+            if (!containerSys.TryGetContainer(uid, Container, out var container))
+                return;
 
             foreach (var contained in container.ContainedEntities.ToArray())
             {

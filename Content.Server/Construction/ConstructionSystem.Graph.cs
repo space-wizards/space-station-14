@@ -11,8 +11,6 @@ namespace Content.Server.Construction
 {
     public sealed partial class ConstructionSystem
     {
-        [Dependency] private readonly ContainerSystem _containerSystem = default!;
-
         private void InitializeGraphs()
         {
         }
@@ -329,11 +327,11 @@ namespace Content.Server.Construction
                 // Transfer all construction-owned containers from the old entity to the new one.
                 foreach (var container in construction.Containers)
                 {
-                    if (!_containerSystem.TryGetContainer(uid, container, out var ourContainer, containerManager))
+                    if (!_container.TryGetContainer(uid, container, out var ourContainer, containerManager))
                         continue;
 
                     // NOTE: Only Container is supported by Construction!
-                    var otherContainer = _containerSystem.EnsureContainer<Container>(newUid, container, newContainerManager);
+                    var otherContainer = _container.EnsureContainer<Container>(newUid, container, newContainerManager);
 
                     for (var i = ourContainer.ContainedEntities.Count - 1; i >= 0; i--)
                     {

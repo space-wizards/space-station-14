@@ -29,6 +29,13 @@
   - type: Construction
     graph: Machine
     node: machine
+    containers:
+     - machine_board
+     - machine_parts
+     - clonepod-bodyContainer
+  - type: SignalReceiver
+    inputs:
+      CloningPodReceiver: []
   - type: EmptyOnMachineDeconstruct
     containers:
       - clonepod-bodyContainer
@@ -65,3 +72,8 @@
   - type: Climbable
   - type: StaticPrice
     price: 1000
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container
+      clonepod-bodyContainer: !type:ContainerSlot

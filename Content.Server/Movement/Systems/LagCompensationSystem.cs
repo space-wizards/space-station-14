@@ -57,6 +57,9 @@ public sealed class LagCompensationSystem : EntitySystem
 
     private void OnLagMove(EntityUid uid, LagCompensationComponent component, ref MoveEvent args)
     {
+        if (!args.NewPosition.EntityId.IsValid())
+            return; // probably being sent to nullspace for deletion.
+
         EnsureComp<ActiveLagCompensationComponent>(uid);
         component.Positions.Enqueue((_timing.CurTime, args.NewPosition, args.NewRotation));
     }

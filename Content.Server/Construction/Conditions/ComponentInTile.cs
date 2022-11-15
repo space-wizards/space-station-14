@@ -47,7 +47,8 @@ namespace Content.Server.Construction.Conditions
                 return false;
 
             var indices = transform.Coordinates.ToVector2i(entityManager, IoCManager.Resolve<IMapManager>());
-            var entities = indices.GetEntitiesInTile(transform.GridUid.Value, LookupFlags.Approximate | LookupFlags.Anchored, EntitySystem.Get<EntityLookupSystem>());
+            var lookup = entityManager.EntitySysManager.GetEntitySystem<EntityLookupSystem>();
+            var entities = indices.GetEntitiesInTile(transform.GridUid.Value, LookupFlags.Approximate | LookupFlags.Anchored, lookup);
 
             foreach (var ent in entities)
             {

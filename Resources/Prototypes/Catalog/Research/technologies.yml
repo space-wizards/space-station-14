@@ -245,6 +245,7 @@
     - FireAlarmElectronics
     - MailingUnitElectronics
     - HolofanProjector
+    - RPED
 
 - type: technology
   name: technologies-material-sheet-printing
@@ -291,6 +292,7 @@
   unlockedRecipes:
     - ShuttleConsoleCircuitboard
     - Drone
+    - RadarConsoleCircuitboard
 
 # Electromagnetic Theory Technology Tree
 
@@ -317,7 +319,10 @@
     - SubstationMachineCircuitboard
     - HydroponicsTrayMachineCircuitboard
     - SolarControlComputerCircuitboard
+    - PowerComputerCircuitboard
     - GeneratorPlasmaMachineCircuitboard
+    - AnalysisComputerCircuitboard
+    - ArtifactAnalyzerMachineCircuitboard
     - Signaller
     - SignalTrigger
     - VoiceTrigger
@@ -434,7 +439,6 @@
   requiredPoints: 8000
   requiredTechnologies:
     - BasicPartsTechnology
-    - IndustrialEngineering
     - PowerCellBasic
   unlockedRecipes:
     - AdvancedCapacitorStockPart

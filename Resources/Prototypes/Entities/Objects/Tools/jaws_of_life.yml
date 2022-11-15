@@ -24,6 +24,7 @@
     qualities:
       - Prying
     speed: 1.5
+    useSound: /Audio/Items/jaws_pry.ogg
   - type: ToolForcePowered
   - type: MultipleTool
     statusShowBehavior: true

@@ -2,7 +2,6 @@ using Content.Shared.StepTrigger.Components;
 using Robust.Shared.Collections;
 using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
 
 namespace Content.Shared.StepTrigger.Systems;
@@ -22,7 +21,9 @@ public sealed class StepTriggerSystem : EntitySystem
     public override void Update(float frameTime)
     {
         var query = GetEntityQuery<PhysicsComponent>();
-        foreach (var (active, trigger, transform) in EntityQuery<StepTriggerActiveComponent, StepTriggerComponent, TransformComponent>())
+        var enumerator = EntityQueryEnumerator<StepTriggerActiveComponent, StepTriggerComponent, TransformComponent>();
+
+        while (enumerator.MoveNext(out var active, out var trigger, out var transform))
         {
             if (!Update(trigger, transform, query))
                 continue;
@@ -102,6 +103,9 @@ public sealed class StepTriggerSystem : EntitySystem
     private void HandleCollide(EntityUid uid, StepTriggerComponent component, ref StartCollideEvent args)
     {
         var otherUid = args.OtherFixture.Body.Owner;
+
+        if (!args.OtherFixture.Hard)
+            return;
 
         if (!CanTrigger(uid, otherUid, component))
             return;

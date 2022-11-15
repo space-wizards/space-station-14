@@ -1,5 +1,6 @@
 using Content.Server.GameTicking;
 using Content.Shared.Traits;
+using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager;
 
@@ -27,6 +28,12 @@ public sealed class TraitSystem : EntitySystem
                 Logger.Warning($"No trait found with ID {traitId}!");
                 return;
             }
+
+            if (traitPrototype.Whitelist != null && !traitPrototype.Whitelist.IsValid(args.Mob))
+                continue;
+
+            if (traitPrototype.Blacklist != null && traitPrototype.Blacklist.IsValid(args.Mob))
+                continue;
 
             // Add all components required by the prototype
             foreach (var entry in traitPrototype.Components.Values)

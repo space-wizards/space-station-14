@@ -6,6 +6,7 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Radio;
+using Content.Shared.Salvage;
 using Robust.Server.Maps;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
@@ -19,13 +20,14 @@ namespace Content.Server.Salvage
 {
     public sealed class SalvageSystem : EntitySystem
     {
-        [Dependency] private readonly IMapLoader _mapLoader = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly MapLoaderSystem _map = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly RadioSystem _radioSystem = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
         private static readonly TimeSpan AttachingTime = TimeSpan.FromSeconds(30);
         private static readonly TimeSpan HoldTime = TimeSpan.FromMinutes(4);
@@ -54,6 +56,42 @@ namespace Content.Server.Salvage
             if(ev.New != GameRunLevel.InRound)
             {
                 _salvageGridStates.Clear();
+            }
+        }
+
+        private void UpdateAppearance(EntityUid uid, SalvageMagnetComponent? component = null)
+        {
+            if (!Resolve(uid, ref component, false))
+                return;
+
+            _appearanceSystem.SetData(uid, SalvageMagnetVisuals.ReadyBlinking, component.MagnetState.StateType == MagnetStateType.Attaching);
+            _appearanceSystem.SetData(uid, SalvageMagnetVisuals.Ready, component.MagnetState.StateType == MagnetStateType.Holding);
+            _appearanceSystem.SetData(uid, SalvageMagnetVisuals.Unready, component.MagnetState.StateType == MagnetStateType.CoolingDown);
+            _appearanceSystem.SetData(uid, SalvageMagnetVisuals.UnreadyBlinking, component.MagnetState.StateType == MagnetStateType.Detaching);
+        }
+
+        private void UpdateChargeStateAppearance(EntityUid uid, TimeSpan currentTime, SalvageMagnetComponent? component = null)
+        {
+            if (!Resolve(uid, ref component, false))
+                return;
+
+            int timeLeft = (component.MagnetState.Until.Minutes * 60 + component.MagnetState.Until.Seconds) - (currentTime.Minutes * 60 + currentTime.Seconds);
+            if (component.MagnetState.StateType == MagnetStateType.Inactive)
+                component.ChargeRemaining = 5;
+            else if (component.MagnetState.StateType == MagnetStateType.Holding)
+            {
+                component.ChargeRemaining = (timeLeft / ((HoldTime.Minutes * 60 + HoldTime.Seconds) / component.ChargeCapacity)) + 1;
+            }
+            else if (component.MagnetState.StateType == MagnetStateType.Detaching)
+                component.ChargeRemaining = 0;
+            else if (component.MagnetState.StateType == MagnetStateType.CoolingDown)
+            {
+                component.ChargeRemaining = component.ChargeCapacity - (timeLeft / ((CooldownTime.Minutes * 60 + CooldownTime.Seconds) / component.ChargeCapacity)) - 1;
+            }
+            if (component.PreviousCharge != component.ChargeRemaining)
+            {
+                _appearanceSystem.SetData(uid, SalvageMagnetVisuals.ChargeState, component.ChargeRemaining);
+                component.PreviousCharge = component.ChargeRemaining;
             }
         }
 
@@ -145,6 +183,7 @@ namespace Content.Server.Salvage
                 return;
             args.Handled = true;
             StartMagnet(component, args.User);
+            UpdateAppearance(uid, component);
         }
 
         private void StartMagnet(SalvageMagnetComponent component, EntityUid user)
@@ -163,6 +202,7 @@ namespace Content.Server.Salvage
                     }
                     gridState.ActiveMagnets.Add(component);
                     component.MagnetState = new MagnetState(MagnetStateType.Attaching, gridState.CurrentTime + AttachingTime);
+                    RaiseLocalEvent(new SalvageMagnetActivatedEvent(component.Owner));
                     Report(component.Owner, component.SalvageChannel, "salvage-system-report-activate-success");
                     break;
                 case MagnetStateType.Attaching:
@@ -221,9 +261,10 @@ namespace Content.Server.Salvage
             angle = Angle.Zero;
             var tsc = Transform(component.Owner);
             coords = new EntityCoordinates(component.Owner, component.Offset).ToMap(EntityManager);
-            if (_mapManager.TryGetGrid(tsc.GridUid, out var magnetGrid))
+
+            if (_mapManager.TryGetGrid(tsc.GridUid, out var magnetGrid) && TryComp<TransformComponent>(magnetGrid.GridEntityId, out var gridXform))
             {
-                angle = magnetGrid.WorldRotation;
+                angle = gridXform.WorldRotation;
             }
         }
 
@@ -293,7 +334,7 @@ namespace Content.Server.Salvage
                 Offset = spawnLocation
             };
 
-            var (_, salvageEntityId) = _mapLoader.LoadGrid(spl.MapId, map.MapPath.ToString(), opts);
+            var salvageEntityId = _map.LoadGrid(spl.MapId, map.MapPath.ToString(), opts);
             if (salvageEntityId == null)
             {
                 Report(component.Owner, component.SalvageChannel, "salvage-system-announcement-spawn-debris-disintegrated");
@@ -353,6 +394,8 @@ namespace Content.Server.Salvage
                     magnet.MagnetState = MagnetState.Inactive;
                     break;
             }
+            UpdateAppearance(magnet.Owner, magnet);
+            UpdateChargeStateAppearance(magnet.Owner, currentTime, magnet);
         }
 
         public override void Update(float frameTime)
@@ -366,12 +409,14 @@ namespace Content.Server.Salvage
                 var gridId = gridIdAndState.Key;
                 // Not handling the case where the salvage we spawned got paused
                 // They both need to be paused, or it doesn't make sense
-                if (_mapManager.IsGridPaused(gridId)) continue;
+                if (MetaData(gridId).EntityPaused) continue;
                 state.CurrentTime += secondsPassed;
 
                 var deleteQueue = new RemQueue<SalvageMagnetComponent>();
+
                 foreach(var magnet in state.ActiveMagnets)
                 {
+                    UpdateChargeStateAppearance(magnet.Owner, state.CurrentTime, magnet);
                     if (magnet.MagnetState.Until > state.CurrentTime) continue;
                     Transition(magnet, state.CurrentTime);
                     if (magnet.MagnetState.StateType == MagnetStateType.Inactive)

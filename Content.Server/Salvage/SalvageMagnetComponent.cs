@@ -1,14 +1,17 @@
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Content.Shared.Radio;
+using Content.Shared.Salvage;
+using Robust.Shared.GameStates;
 
 namespace Content.Server.Salvage
 {
     /// <summary>
     ///     A salvage magnet.
     /// </summary>
-    [RegisterComponent]
-    public sealed class SalvageMagnetComponent : Component
+    [NetworkedComponent, RegisterComponent]
+    [Access(typeof(SalvageSystem))]
+    public sealed class SalvageMagnetComponent : SharedSalvageMagnetComponent
     {
         /// <summary>
         ///     Offset relative to magnet used as centre of the placement circle.
@@ -49,11 +52,36 @@ namespace Content.Server.Salvage
         [DataField("salvageChannel", customTypeSerializer: typeof(PrototypeIdSerializer<RadioChannelPrototype>))]
         public string SalvageChannel = "Supply";
 
+        /// <summary>
+        ///     Current how much charge the magnet currently has
+        /// </summary>
+        public int ChargeRemaining = 5;
+
+        /// <summary>
+        ///     How much capacity the magnet can hold
+        /// </summary>
+        public int ChargeCapacity = 5;
+
+        /// <summary>
+        ///     Used as a guard to prevent spamming the appearance system
+        /// </summary>
+        public int PreviousCharge = 5;
+
     }
     public record struct MagnetState(MagnetStateType StateType, TimeSpan Until)
     {
         public static readonly MagnetState Inactive = new (MagnetStateType.Inactive, TimeSpan.Zero);
     };
+
+    public sealed class SalvageMagnetActivatedEvent : EntityEventArgs
+    {
+        public EntityUid Magnet;
+
+        public SalvageMagnetActivatedEvent(EntityUid magnet)
+        {
+            Magnet = magnet;
+        }
+    }
     public enum MagnetStateType
     {
         Inactive,

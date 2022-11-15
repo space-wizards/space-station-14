@@ -20,7 +20,15 @@
   - type: Item
     size: 10
     sprite: Objects/Tools/welder.rsi
-    heldPrefix: off
+  - type: ToggleableLightVisuals
+    spriteLayer: flame
+    inhandVisuals:
+      left:
+      - state: inhand-left-flame
+        shader: unshaded
+      right:
+      - state: inhand-right-flame
+        shader: unshaded
   - type: ItemCooldown
   - type: MeleeWeapon
     damage:
@@ -46,6 +54,7 @@
         Heat: 10
         Blunt: -10
   - type: PointLight
+    netsync: false
     enabled: false
     radius: 1.5
     color: orange

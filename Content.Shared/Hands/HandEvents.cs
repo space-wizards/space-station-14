@@ -267,6 +267,20 @@ namespace Content.Shared.Hands
         }
     }
 
+    /// <summary>
+    ///     Event raised by a client when they want to alt interact with the item currently in their hands.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public sealed class RequestHandAltInteractEvent : EntityEventArgs
+    {
+        public string HandName { get; }
+
+        public RequestHandAltInteractEvent(string handName)
+        {
+            HandName = handName;
+        }
+    }
+
     public sealed class HandCountChangedEvent : EntityEventArgs
     {
         public HandCountChangedEvent(EntityUid sender)

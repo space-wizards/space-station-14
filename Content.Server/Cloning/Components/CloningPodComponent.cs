@@ -1,6 +1,8 @@
 using Content.Shared.Cloning;
 using Content.Shared.Construction.Prototypes;
+using Content.Shared.Materials;
 using Robust.Shared.Containers;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Cloning.Components
@@ -24,6 +26,18 @@ namespace Content.Server.Cloning.Components
 
         [ViewVariables]
         public bool FailedClone = false;
+
+        /// <summary>
+        /// The material that is used to clone entities.
+        /// </summary>
+        [DataField("requiredMaterial", customTypeSerializer: typeof(PrototypeIdSerializer<MaterialPrototype>)), ViewVariables(VVAccess.ReadWrite)]
+        public string RequiredMaterial = "Biomass";
+
+        /// <summary>
+        /// The entity that is spawned on machine deconstruct as well as failed cloning.
+        /// </summary>
+        [DataField("materialCloningOutput", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)), ViewVariables(VVAccess.ReadWrite)]
+        public string MaterialCloningOutput = "MaterialBiomass";
 
         /// <summary>
         /// The base amount of time it takes to clone a body

@@ -1,5 +1,4 @@
 using Content.Server.Actions;
-using Content.Server.MobState;
 using Content.Server.Popups;
 using Content.Server.Sound.Components;
 using Content.Shared.Actions.ActionTypes;
@@ -11,6 +10,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.MobState;
 using Content.Shared.MobState.Components;
+using Content.Shared.Slippery;
 using Content.Shared.Stunnable;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
@@ -26,7 +26,6 @@ namespace Content.Server.Bed.Sleep
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly ActionsSystem _actionsSystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
 
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
@@ -41,6 +40,7 @@ namespace Content.Server.Bed.Sleep
             SubscribeLocalEvent<SleepingComponent, GetVerbsEvent<AlternativeVerb>>(AddWakeVerb);
             SubscribeLocalEvent<SleepingComponent, InteractHandEvent>(OnInteractHand);
             SubscribeLocalEvent<SleepingComponent, ExaminedEvent>(OnExamined);
+            SubscribeLocalEvent<SleepingComponent, SlipAttemptEvent>(OnSlip);
             SubscribeLocalEvent<ForcedSleepingComponent, ComponentInit>(OnInit);
         }
 
@@ -159,6 +159,12 @@ namespace Content.Server.Bed.Sleep
                 args.PushMarkup(Loc.GetString("sleep-examined", ("target", Identity.Entity(uid, EntityManager))));
             }
         }
+
+        private void OnSlip(EntityUid uid, SleepingComponent component, SlipAttemptEvent args)
+        {
+            args.Cancel();
+        }
+
         private void OnInit(EntityUid uid, ForcedSleepingComponent component, ComponentInit args)
         {
             TrySleeping(uid);

@@ -378,6 +378,9 @@
   id: NoSpinOnThrow
 
 - type: Tag
+  id: NoBlockAnchoring
+
+- type: Tag
   id: NukeOpsUplink
 
 - type: Tag
@@ -394,6 +397,9 @@
 
 - type: Tag
   id: PercussionInstrument
+
+- type: Tag
+  id: PetWearable
 
 - type: Tag
   id: Pickaxe
@@ -476,7 +482,7 @@
 
 - type: Tag
   id: Smokable
-  
+
 - type: Tag
   id: Soap
 
@@ -491,6 +497,18 @@
 
 - type: Tag
   id: Spear
+
+- type: Tag
+  id: SpeedLoaderCap
+
+- type: Tag
+  id: SpeedLoaderMagnum
+
+- type: Tag
+  id: SpeedLoaderPistol
+
+- type: Tag
+  id: SpeedLoaderRifle
 
 - type: Tag
   id: StringInstrument

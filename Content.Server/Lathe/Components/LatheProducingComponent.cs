@@ -7,9 +7,15 @@ namespace Content.Server.Lathe.Components;
 public sealed class LatheProducingComponent : Component
 {
     /// <summary>
-    /// How much production time has passed, in seconds.
+    /// The time at which production began
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    public float AccumulatedTime;
+    public TimeSpan StartTime;
+
+    /// <summary>
+    /// How long it takes to produce the recipe.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    public TimeSpan ProductionLength;
 }
 

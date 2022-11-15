@@ -111,14 +111,13 @@ public abstract class SharedItemSystem : EntitySystem
         if (args.Hands == null ||
             args.Using != null ||
             !args.CanAccess ||
-            !args.CanInteract) //||
-            //!_handsSystem.CanPickupAnyHand(args.User, args.Target, handsComp: args.Hands, item: component))
+            !args.CanInteract ||
+            !_handsSystem.CanPickupAnyHand(args.User, args.Target, handsComp: args.Hands, item: component))
             return;
 
         InteractionVerb verb = new();
-        // TODO ITEM
-        //verb.Act = () => _handsSystem.TryPickupAnyHand(args.User, args.Target, checkActionBlocker: false,
-        //    handsComp: args.Hands, item: component);
+        verb.Act = () => _handsSystem.TryPickupAnyHand(args.User, args.Target, checkActionBlocker: false,
+            handsComp: args.Hands, item: component);
         verb.IconTexture = "/Textures/Interface/VerbIcons/pickup.svg.192dpi.png";
 
         // if the item already in a container (that is not the same as the user's), then change the text.
