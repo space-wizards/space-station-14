@@ -3,9 +3,7 @@ using Content.Server.Lightning;
 using Content.Shared.Beam;
 using Content.Shared.Beam.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Lightning;
 using Content.Shared.Physics;
-using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
@@ -19,6 +17,8 @@ public sealed class BeamSystem : SharedBeamSystem
 {
     [Dependency] private readonly FixtureSystem _fixture = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
     public override void Initialize()
     {
@@ -85,12 +85,13 @@ public sealed class BeamSystem : SharedBeamSystem
             {
                 ID = "BeamBody",
                 Hard = false,
-                CollisionMask = (int)CollisionGroup.ItemMask, //Change to MobMask
-                CollisionLayer = (int)CollisionGroup.MobLayer //Change to WallLayer
+                CollisionMask = (int)CollisionGroup.ItemMask,
+                CollisionLayer = (int)CollisionGroup.MobLayer
             };
 
             _fixture.TryCreateFixture(physics, fixture);
-            physics.BodyType = BodyType.Dynamic;
+            _physics.SetBodyType(physics, BodyType.Dynamic);
+            _physics.SetCanCollide(physics, true);
 
             var beamVisualizerEvent = new BeamVisualizerEvent(ent, distanceLength, userAngle, bodyState, shader);
             RaiseNetworkEvent(beamVisualizerEvent);
