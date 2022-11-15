@@ -59,9 +59,9 @@ public sealed partial class RevenantSystem
 
     private void OnInteract(EntityUid uid, RevenantComponent component, InteractNoHandEvent args)
     {
-        var target = args.Target;
-        if (target == args.User)
+        if (args.Target == args.User || args.Target == null)
             return;
+        var target = args.Target.Value;
 
         if (HasComp<PoweredLightComponent>(target))
         {

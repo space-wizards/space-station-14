@@ -262,24 +262,24 @@ namespace Content.Shared.Interaction
                 && !CanAccessViaStorage(user, target.Value))
                 return;
 
+            var inRangeUnobstructed = target == null
+                ? !checkAccess || InRangeUnobstructed(user, coordinates)
+                : !checkAccess || InRangeUnobstructed(user, target.Value); // permits interactions with wall mounted entities
+
             // Does the user have hands?
             if (!TryComp(user, out SharedHandsComponent? hands) || hands.ActiveHand == null)
             {
+                var ev = new InteractNoHandEvent(user, target, coordinates);
+                RaiseLocalEvent(user, ev);
+
                 if (target != null)
                 {
-                    var ev = new InteractNoHandEvent(user, target.Value);
-                    RaiseLocalEvent(user, ev);
-
-                    var interactedEv = new InteractedNoHandEvent(target.Value, user);
+                    var interactedEv = new InteractedNoHandEvent(target.Value, user, coordinates);
                     RaiseLocalEvent(target.Value, interactedEv);
                     DoContactInteraction(user, target.Value, ev);
                 }
                 return;
             }
-
-            var inRangeUnobstructed = target == null
-                ? !checkAccess || InRangeUnobstructed(user, coordinates)
-                : !checkAccess || InRangeUnobstructed(user, target.Value); // permits interactions with wall mounted entities
 
             // empty-hand interactions
             if (hands.ActiveHandEntity is not { } held)

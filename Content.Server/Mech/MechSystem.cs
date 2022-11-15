@@ -1,12 +1,14 @@
 ﻿using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Mech.Components;
 using Content.Shared.Mech.EntitySystems;
+using Robust.Shared.Map;
 
 namespace Content.Server.Mech;
 
 public sealed class MechSystem : SharedMechSystem
 {
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
+    [Dependency] private readonly IMapManager _map = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -18,8 +20,6 @@ public sealed class MechSystem : SharedMechSystem
         SubscribeLocalEvent<MechPilotComponent, AtmosExposedGetAirEvent>(OnExpose);
     }
 
-    #region Atmos Handling
-
     public override bool TryInsert(EntityUid uid, EntityUid? toInsert, SharedMechComponent? component = null)
     {
         if (!base.TryInsert(uid, toInsert, component))
@@ -30,23 +30,55 @@ public sealed class MechSystem : SharedMechSystem
 
         if (mech.Airtight)
         {
-
-
-            if (tile != null && _atmosphere.GetTileMixture(tile.Value.GridUid, null, tile.Value.GridIndices, true) is {} environment)
+            var coordinates = Transform(uid).MapPosition;
+            if (_map.TryFindGridAt(coordinates, out var grid))
             {
-                _atmosphere.Merge(mech.Air, environment.RemoveVolume(MechComponent.GasMixVolume));
+                var tile = grid.GetTileRef(coordinates);
+
+                if (_atmosphere.GetTileMixture(tile.GridUid, null, tile.GridIndices, true) is {} environment)
+                {
+                    _atmosphere.Merge(mech.Air, environment.RemoveVolume(MechComponent.GasMixVolume));
+                }
             }
         }
 
         return true;
     }
 
+    public override bool TryEject(EntityUid uid, SharedMechComponent? component = null)
+    {
+        if (!base.TryEject(uid, component))
+            return false;
+
+        if (!TryComp<MechComponent>(uid, out var mech))
+            return false;
+
+        if (mech.Airtight)
+        {
+            var coordinates = Transform(uid).MapPosition;
+            if (_map.TryFindGridAt(coordinates, out var grid))
+            {
+                var tile = grid.GetTileRef(coordinates);
+
+                if (_atmosphere.GetTileMixture(tile.GridUid, null, tile.GridIndices, true) is {} environment)
+                {
+                    _atmosphere.Merge(environment, mech.Air);
+                    mech.Air.Clear();
+                }
+            }
+        }
+
+        return true;
+    }
+
+    #region Atmos Handling
     private void OnInhale(EntityUid uid, MechPilotComponent component, InhaleLocationEvent args)
     {
         if (!TryComp<MechComponent>(component.Mech, out var mech))
             return;
 
-        args.Gas = mech.Airtight ? mech.Air : _atmosphere.GetContainingMixture(component.Mech);
+        if (mech.Airtight)
+            args.Gas = mech.Air;
     }
 
     private void OnExhale(EntityUid uid, MechPilotComponent component, ExhaleLocationEvent args)
@@ -54,7 +86,8 @@ public sealed class MechSystem : SharedMechSystem
         if (!TryComp<MechComponent>(component.Mech, out var mech))
             return;
 
-        args.Gas = mech.Airtight ? mech.Air : _atmosphere.GetContainingMixture(component.Mech);
+        if (mech.Airtight)
+            args.Gas = mech.Air;
     }
 
     private void OnExpose(EntityUid uid, MechPilotComponent component, ref AtmosExposedGetAirEvent args)

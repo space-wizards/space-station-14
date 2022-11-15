@@ -31,6 +31,7 @@ public abstract class SharedMechSystem : EntitySystem
 
     private void RelayInteractionEvent<TEvent>(EntityUid uid, SharedMechComponent component, TEvent args) where TEvent : notnull
     {
+        Logger.Debug("got interaction");
         foreach (var module in component.Modules)
         {
             RaiseLocalEvent(module, args);

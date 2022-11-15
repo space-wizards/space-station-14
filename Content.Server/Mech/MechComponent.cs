@@ -12,6 +12,7 @@ public sealed class MechComponent : SharedMechComponent
     [DataField("airtight"), ViewVariables(VVAccess.ReadWrite)]
     public bool Airtight = false;
 
+    //TODO: this doesn't support a tank implant for
     [ViewVariables(VVAccess.ReadWrite)]
     public GasMixture Air = new (GasMixVolume);
     public const float GasMixVolume = 70f;
