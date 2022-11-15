@@ -34,8 +34,12 @@ public sealed partial class ToolSystem
 
         if (!TryComp(component.Owner, out ToolComponent? tool))
             return;
-        
+
         var tileRef = grid.GetTileRef(args.Coordinates);
+
+        if (!CheckTileConditions(tileRef, tool.Qualities))
+            return;
+        
         tileRef.TryDeconstructWithToolQualities(tool.Qualities, _mapManager, _tileDefinitionManager, EntityManager);
         // TODO admin log esp cutting lattice
     }
@@ -98,10 +102,22 @@ public sealed partial class ToolSystem
         return true;
     }
 
+    private bool CheckTileConditions(TileRef tileRef, IEnumerable<string> toolQualities)
+    {
+        if (_tileDefinitionManager[tileRef.Tile.TypeId] is ContentTileDefinition tileDef)
+        {
+            if (tileDef.DeconstructToolQualities.ContainsAll(toolQualities)
+                && !string.IsNullOrEmpty(tileDef.BaseTurf)
+                && !tileRef.IsBlockedTurf(true))
+                return true;
+        }
+        return false;
+    }
+
     private sealed class TileToolCompleteEvent : EntityEventArgs
     {
         public EntityCoordinates Coordinates { get; init; }
-        public EntityUid User;
+        public EntityUid User { get; init; }
     }
 
     private sealed class TileToolCancelledEvent : EntityEventArgs
