@@ -3,3 +3,6 @@ ent-ArmorySmg = { ent-CrateArmorySMG }
 
 ent-ArmoryShotgun = { ent-CrateArmoryShotgun }
     .desc = { ent-CrateArmoryShotgun.desc }
+
+ent-ArmoryLaser = { ent-CrateArmoryLaser }
+    .desc = { ent-CrateArmoryLaser.desc }

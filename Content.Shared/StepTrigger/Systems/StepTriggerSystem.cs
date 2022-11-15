@@ -21,7 +21,9 @@ public sealed class StepTriggerSystem : EntitySystem
     public override void Update(float frameTime)
     {
         var query = GetEntityQuery<PhysicsComponent>();
-        foreach (var (active, trigger, transform) in EntityQuery<StepTriggerActiveComponent, StepTriggerComponent, TransformComponent>())
+        var enumerator = EntityQueryEnumerator<StepTriggerActiveComponent, StepTriggerComponent, TransformComponent>();
+
+        while (enumerator.MoveNext(out var active, out var trigger, out var transform))
         {
             if (!Update(trigger, transform, query))
                 continue;

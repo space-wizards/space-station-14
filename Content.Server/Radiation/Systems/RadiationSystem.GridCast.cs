@@ -24,6 +24,7 @@ public partial class RadiationSystem
         var destinations = EntityQuery<RadiationReceiverComponent, TransformComponent>();
         var resistanceQuery = GetEntityQuery<RadiationGridResistanceComponent>();
         var transformQuery = GetEntityQuery<TransformComponent>();
+        var gridQuery = GetEntityQuery<MapGridComponent>();
 
         // precalculate world positions for each source
         // so we won't need to calc this in cycle over and over again
@@ -48,7 +49,7 @@ public partial class RadiationSystem
                 // send ray towards destination entity
                 var ray = Irradiate(sourceTrs.Owner, sourceTrs, sourceWorld,
                     destTrs.Owner, destTrs, destWorld,
-                    source.Intensity, source.Slope, saveVisitedTiles, resistanceQuery, transformQuery);
+                    source.Intensity, source.Slope, saveVisitedTiles, resistanceQuery, transformQuery, gridQuery);
                 if (ray == null)
                     continue;
 
@@ -86,7 +87,7 @@ public partial class RadiationSystem
         EntityUid destUid, TransformComponent destTrs, Vector2 destWorld,
         float incomingRads, float slope, bool saveVisitedTiles,
         EntityQuery<RadiationGridResistanceComponent> resistanceQuery,
-        EntityQuery<TransformComponent> transformQuery)
+        EntityQuery<TransformComponent> transformQuery, EntityQuery<MapGridComponent> gridQuery)
     {
         // lets first check that source and destination on the same map
         if (sourceTrs.MapID != destTrs.MapID)
@@ -115,8 +116,7 @@ public partial class RadiationSystem
         // however we can do simplification and ignore that case
         if (GridcastSimplifiedSameGrid && sourceTrs.GridUid != null && sourceTrs.GridUid == destTrs.GridUid)
         {
-            // todo: entity queries doesn't support interface - use it when IMapGridComponent will be removed
-            if (!TryComp(sourceTrs.GridUid.Value, out IMapGridComponent? gridComponent))
+            if (!gridQuery.TryGetComponent(sourceTrs.GridUid.Value, out var gridComponent))
                 return ray;
             return Gridcast(gridComponent.Grid, ray, saveVisitedTiles, resistanceQuery, sourceTrs, destTrs, transformQuery.GetComponent(sourceTrs.GridUid.Value));
         }
@@ -169,7 +169,7 @@ public partial class RadiationSystem
         Vector2 dstLocal = destTrs.ParentUid == grid.GridEntityId
             ? destTrs.LocalPosition
             : gridTrs.InvLocalMatrix.Transform(ray.Destination);
-        
+
         Vector2i sourceGrid = new(
             (int) Math.Floor(srcLocal.X / grid.TileSize),
             (int) Math.Floor(srcLocal.Y / grid.TileSize));

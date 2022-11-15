@@ -17,6 +17,7 @@ using Content.Shared.CCVar;
 using Content.Shared.Dataset;
 using Content.Shared.GameTicking;
 using Content.Shared.MobState.Components;
+using Robust.Server.GameObjects;
 using Robust.Server.Maps;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
@@ -36,10 +37,10 @@ public sealed partial class CargoSystem
 
     [Dependency] private readonly IConfigurationManager _configManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IMapLoader _loader = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly MapLoaderSystem _map = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly PricingSystem _pricing = default!;
     [Dependency] private readonly ShuttleConsoleSystem _console = default!;
@@ -289,7 +290,7 @@ public sealed partial class CargoSystem
         var possibleNames = _protoMan.Index<DatasetPrototype>(prototype.NameDataset).Values;
         var name = _random.Pick(possibleNames);
 
-        var (_, shuttleUid) = _loader.LoadGrid(CargoMap.Value, prototype.Path.ToString());
+        var shuttleUid = _map.LoadGrid(CargoMap.Value, prototype.Path.ToString());
         var xform = Transform(shuttleUid!.Value);
         MetaData(shuttleUid!.Value).EntityName = name;
 
@@ -387,10 +388,12 @@ public sealed partial class CargoSystem
         var center = new Vector2();
         var minRadius = 0f;
         Box2? aabb = null;
+        var xformQuery = GetEntityQuery<TransformComponent>();
 
         foreach (var grid in _mapManager.GetAllMapGrids(xform.MapID))
         {
-            aabb = aabb?.Union(grid.WorldAABB) ?? grid.WorldAABB;
+            var worldAABB = xformQuery.GetComponent(grid.GridEntityId).WorldMatrix.TransformBox(grid.LocalAABB);
+            aabb = aabb?.Union(worldAABB) ?? worldAABB;
         }
 
         if (aabb != null)
@@ -400,7 +403,7 @@ public sealed partial class CargoSystem
         }
 
         var offset = 0f;
-        if (TryComp<IMapGridComponent>(orderDatabase.Shuttle, out var shuttleGrid))
+        if (TryComp<MapGridComponent>(orderDatabase.Shuttle, out var shuttleGrid))
         {
             var bounds = shuttleGrid.Grid.LocalAABB;
             offset = MathF.Max(bounds.Width, bounds.Height) / 2f;

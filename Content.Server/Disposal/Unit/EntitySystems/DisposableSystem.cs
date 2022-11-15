@@ -65,7 +65,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 if (duc != null)
                     duc.Container.Insert(entity, EntityManager, xform, meta: meta);
                 else
-                    xform.AttachParentToContainerOrGrid(EntityManager);
+                    xform.AttachToGridOrMap();
             }
 
             if (duc != null)
@@ -167,7 +167,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                     var newPosition = destination * progress;
 
                     // This is some supreme shit code.
-                    EntityManager.GetComponent<TransformComponent>(holder.Owner).Coordinates = origin.Offset(newPosition).WithEntityId(currentTube.Owner); ;
+                    EntityManager.GetComponent<TransformComponent>(holder.Owner).Coordinates = origin.Offset(newPosition).WithEntityId(currentTube.Owner);
 
                     continue;
                 }

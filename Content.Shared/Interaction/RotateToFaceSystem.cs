@@ -80,8 +80,7 @@ namespace Content.Shared.Interaction
 
         public bool TryFaceAngle(EntityUid user, Angle diffAngle, TransformComponent? xform = null)
         {
-            // TODO: MobState should be handling CanChangeDirection's event
-            if (_actionBlockerSystem.CanChangeDirection(user) && !_mobState.IsIncapacitated(user))
+            if (_actionBlockerSystem.CanChangeDirection(user))
             {
                 if (!Resolve(user, ref xform))
                     return false;

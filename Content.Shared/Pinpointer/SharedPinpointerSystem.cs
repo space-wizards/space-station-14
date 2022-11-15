@@ -4,13 +4,10 @@ namespace Content.Shared.Pinpointer
 {
     public abstract class SharedPinpointerSystem : EntitySystem
     {
-        protected readonly HashSet<EntityUid> ActivePinpointers = new();
-
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<PinpointerComponent, ComponentGetState>(GetCompState);
-            SubscribeLocalEvent<PinpointerComponent, ComponentShutdown>(OnPinpointerShutdown);
         }
 
         private void GetCompState(EntityUid uid, PinpointerComponent pinpointer, ref ComponentGetState args)
@@ -18,15 +15,9 @@ namespace Content.Shared.Pinpointer
             args.State = new PinpointerComponentState
             {
                 IsActive = pinpointer.IsActive,
-                DirectionToTarget = pinpointer.DirectionToTarget,
+                ArrowAngle = pinpointer.ArrowAngle,
                 DistanceToTarget = pinpointer.DistanceToTarget
             };
-        }
-
-        private void OnPinpointerShutdown(EntityUid uid, PinpointerComponent component, ComponentShutdown _)
-        {
-            // no need to dirty it/etc: it's shutting down anyway!
-            ActivePinpointers.Remove(uid);
         }
 
         /// <summary>
@@ -45,18 +36,22 @@ namespace Content.Shared.Pinpointer
         }
 
         /// <summary>
-        ///     Manually set pinpointer arrow direction
+        ///     Try to manually set pinpointer arrow direction.
+        ///     If difference between current angle and new angle is smaller than
+        ///     pinpointer precision, new value will be ignored and it will return false.
         /// </summary>
-        public void SetDirection(EntityUid uid, Direction directionToTarget, PinpointerComponent? pinpointer = null)
+        public bool TrySetArrowAngle(EntityUid uid, Angle arrowAngle, PinpointerComponent? pinpointer = null)
         {
             if (!Resolve(uid, ref pinpointer))
-                return;
+                return false;
 
-            if (directionToTarget == pinpointer.DirectionToTarget)
-                return;
+            if (pinpointer.ArrowAngle.EqualsApprox(arrowAngle, pinpointer.Precision))
+                return false;
 
-            pinpointer.DirectionToTarget = directionToTarget;
+            pinpointer.ArrowAngle = arrowAngle;
             Dirty(pinpointer);
+
+            return true;
         }
 
         /// <summary>
@@ -68,13 +63,7 @@ namespace Content.Shared.Pinpointer
                 return;
             if (isActive == pinpointer.IsActive)
                 return;
-
-            // add-remove pinpointer from update list
-            if (isActive)
-                ActivePinpointers.Add(uid);
-            else
-                ActivePinpointers.Remove(uid);
-
+            
             pinpointer.IsActive = isActive;
             Dirty(pinpointer);
         }

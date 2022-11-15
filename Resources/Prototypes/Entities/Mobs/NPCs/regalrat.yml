@@ -197,6 +197,8 @@
       0: Alive
       40: Critical
       60: Dead
+  - type: Stamina
+    excess: 60
   - type: MeleeWeapon
     hidden: true
     angle: 0

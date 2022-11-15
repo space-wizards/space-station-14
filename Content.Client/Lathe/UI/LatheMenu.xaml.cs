@@ -122,7 +122,11 @@ public sealed partial class LatheMenu : DefaultWindow
                 else
                     sb.Append('\n');
 
-                sb.Append((int) (amount * component.MaterialUseMultiplier));
+                var adjustedAmount = amount;
+                if (prototype.ApplyMaterialDiscount)
+                    adjustedAmount = (int) (adjustedAmount * component.MaterialUseMultiplier);
+
+                sb.Append(adjustedAmount);
                 sb.Append(' ');
                 sb.Append(proto.Name);
             }

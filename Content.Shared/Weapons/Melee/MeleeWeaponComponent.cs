@@ -97,7 +97,10 @@ public sealed class MeleeWeaponComponent : Component
     public Angle Angle = Angle.FromDegrees(60);
 
     [ViewVariables(VVAccess.ReadWrite), DataField("animation", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string Animation = "WeaponArcSlash";
+    public string ClickAnimation = "WeaponArcPunch";
+
+    [ViewVariables(VVAccess.ReadWrite), DataField("wideAnimation", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string WideAnimation = "WeaponArcSlash";
 
     // Sounds
 

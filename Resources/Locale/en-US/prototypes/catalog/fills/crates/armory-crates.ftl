@@ -3,3 +3,6 @@ ent-CrateArmorySMG = SMG crate
 
 ent-CrateArmoryShotgun = Shotgun crate
     .desc = For when the enemy absolutely needs to be replaced with lead. Contains two Enforcer Combat Shotguns, and some standard shotgun shells. Requires Armory access to open.
+
+ent-CrateArmoryLaser = lasers crate
+    .desc = Contains three lethal, high-energy laser guns. Requires Armory access to open.

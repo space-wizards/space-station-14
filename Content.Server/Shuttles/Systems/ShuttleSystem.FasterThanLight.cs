@@ -89,10 +89,13 @@ public sealed partial class ShuttleSystem
     {
         reason = null;
 
-        if (!TryComp<IMapGridComponent>(uid, out var grid) ||
-            !Resolve(uid.Value, ref xform)) return true;
+        if (!TryComp<MapGridComponent>(uid, out var grid) ||
+            !Resolve(uid.Value, ref xform))
+        {
+            return true;
+        }
 
-        var bounds = grid.Grid.WorldAABB.Enlarged(ShuttleFTLRange);
+        var bounds = xform.WorldMatrix.TransformBox(grid.Grid.LocalAABB).Enlarged(ShuttleFTLRange);
         var bodyQuery = GetEntityQuery<PhysicsComponent>();
 
         foreach (var other in _mapManager.FindGridsIntersecting(xform.MapID, bounds))
@@ -223,7 +226,7 @@ public sealed partial class ShuttleSystem
 
                     comp.State = FTLState.Travelling;
 
-                    var width = Comp<IMapGridComponent>(comp.Owner).Grid.LocalAABB.Width;
+                    var width = Comp<MapGridComponent>(comp.Owner).Grid.LocalAABB.Width;
                     xform.Coordinates = new EntityCoordinates(_mapManager.GetMapEntityId(_hyperSpaceMap!.Value), new Vector2(_index + width / 2f, 0f));
                     xform.LocalRotation = Angle.Zero;
                     _index += width + Buffer;
@@ -455,13 +458,13 @@ public sealed partial class ShuttleSystem
         }
 
         var xformQuery = GetEntityQuery<TransformComponent>();
-        var shuttleAABB = Comp<IMapGridComponent>(component.Owner).Grid.LocalAABB;
+        var shuttleAABB = Comp<MapGridComponent>(component.Owner).Grid.LocalAABB;
 
         // Spawn nearby.
         // We essentially expand the Box2 of the target area until nothing else is added then we know it's valid.
         // Can't just get an AABB of every grid as we may spawn very far away.
         var targetAABB = _transform.GetWorldMatrix(targetXform, xformQuery)
-            .TransformBox(Comp<IMapGridComponent>(targetUid).Grid.LocalAABB).Enlarged(shuttleAABB.Size.Length);
+            .TransformBox(Comp<MapGridComponent>(targetUid).Grid.LocalAABB).Enlarged(shuttleAABB.Size.Length);
 
         var nearbyGrids = new HashSet<EntityUid>(1) { targetUid };
         var iteration = 0;
@@ -475,7 +478,7 @@ public sealed partial class ShuttleSystem
                 if (!nearbyGrids.Add(grid.GridEntityId)) continue;
 
                 targetAABB = targetAABB.Union(_transform.GetWorldMatrix(grid.GridEntityId, xformQuery)
-                    .TransformBox(Comp<IMapGridComponent>(grid.GridEntityId).Grid.LocalAABB));
+                    .TransformBox(Comp<MapGridComponent>(grid.GridEntityId).Grid.LocalAABB));
             }
 
             // Can do proximity
@@ -498,7 +501,7 @@ public sealed partial class ShuttleSystem
                 if (nearbyGrids.Contains(grid.GridEntityId)) continue;
 
                 targetAABB = targetAABB.Union(_transform.GetWorldMatrix(grid.GridEntityId, xformQuery)
-                    .TransformBox(Comp<IMapGridComponent>(grid.GridEntityId).Grid.LocalAABB));
+                    .TransformBox(Comp<MapGridComponent>(grid.GridEntityId).Grid.LocalAABB));
             }
 
             break;

@@ -342,7 +342,7 @@ namespace Content.Server.ParticleAccelerator.Components
             var xform = _entMan.GetComponent<TransformComponent>(Owner);
 
             // Find fuel chamber first by scanning cardinals.
-            if (xform.Anchored && _entMan.TryGetComponent(xform.GridUid, out IMapGridComponent? grid))
+            if (xform.Anchored && _entMan.TryGetComponent(xform.GridUid, out MapGridComponent? grid))
             {
                 foreach (var maybeFuel in grid.Grid.GetCardinalNeighborCells(xform.Coordinates))
                 {

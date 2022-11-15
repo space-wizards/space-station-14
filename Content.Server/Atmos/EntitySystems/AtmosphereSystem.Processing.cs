@@ -3,7 +3,6 @@ using Content.Server.Atmos.Piping.Components;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Shared.Atmos;
 using Content.Shared.Maps;
-using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
 
@@ -46,11 +45,11 @@ namespace Content.Server.Atmos.EntitySystems
 
             var uid = atmosphere.Owner;
 
-            if (!TryComp(uid, out IMapGridComponent? mapGridComp))
+            if (!TryComp(uid, out MapGridComponent? mapGridComp))
                 return true;
 
             var mapGrid = mapGridComp.Grid;
-            var mapUid = _mapManager.GetMapEntityIdOrThrow(mapGridComp.Grid.ParentMapId);
+            var mapUid = _mapManager.GetMapEntityIdOrThrow(Transform(mapGridComp.Owner).MapID);
 
             var volume = GetVolumeForTiles(mapGrid, 1);
 
@@ -59,7 +58,8 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 if (!atmosphere.Tiles.TryGetValue(indices, out var tile))
                 {
-                    tile = new TileAtmosphere(mapGrid.GridEntityId, indices, new GasMixture(volume){Temperature = Atmospherics.T20C});
+                    tile = new TileAtmosphere(mapGrid.GridEntityId, indices,
+                        new GasMixture(volume) { Temperature = Atmospherics.T20C });
                     atmosphere.Tiles[indices] = tile;
                 }
 
@@ -67,8 +67,15 @@ namespace Content.Server.Atmos.EntitySystems
                 GridIsTileAirBlocked(uid, atmosphere, ref airBlockedEv);
                 var isAirBlocked = airBlockedEv.Result;
 
+                var oldBlocked = tile.BlockedAirflow;
                 var updateAdjacentEv = new UpdateAdjacentMethodEvent(uid, indices, mapGridComp);
                 GridUpdateAdjacent(uid, atmosphere, ref updateAdjacentEv);
+
+                // Blocked airflow changed, rebuild excited groups!
+                if (tile.Excited && tile.BlockedAirflow != oldBlocked)
+                {
+                    RemoveActiveTile(atmosphere, tile);
+                }
 
                 // Call this instead of the grid method as the map has a say on whether the tile is space or not.
                 if ((!mapGrid.TryGetTileRef(indices, out var t) || t.IsSpace(_tileDefinitionManager)) && !isAirBlocked)
@@ -161,7 +168,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             var uid = atmosphere.Owner;
 
-            if (!TryComp(uid, out IMapGridComponent? mapGridComp))
+            if (!TryComp(uid, out MapGridComponent? mapGridComp))
                 throw new Exception("Tried to process a grid atmosphere on an entity that isn't a grid!");
 
             var mapGrid = mapGridComp.Grid;

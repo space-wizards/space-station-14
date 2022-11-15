@@ -102,7 +102,7 @@ namespace Content.Server.Shuttles.Systems
 
         private void OnShuttleStartup(EntityUid uid, ShuttleComponent component, ComponentStartup args)
         {
-            if (!EntityManager.HasComponent<IMapGridComponent>(component.Owner))
+            if (!EntityManager.HasComponent<MapGridComponent>(component.Owner))
             {
                 return;
             }
