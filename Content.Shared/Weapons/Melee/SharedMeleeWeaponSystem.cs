@@ -557,7 +557,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
         if (appliedDamage.Total > FixedPoint2.Zero)
         {
-            RaiseNetworkEvent(new DamageEffectEvent(Color.Red, targets), Filter.Pvs(Transform(targets[0]).Coordinates, entityMan: EntityManager));
+            DoDamageEffect(targets, user, Transform(targets[0]));
         }
     }
 
@@ -635,14 +635,14 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
                 case "Burn":
                 case "Heat":
                 case "Cold":
-                    Audio.PlayPvs(new SoundPathSpecifier("/Audio/Items/welder.ogg"), target, AudioParams.Default.WithVariation(DamagePitchVariation));
+                    Audio.PlayPredicted(new SoundPathSpecifier("/Audio/Items/welder.ogg"), target, user, AudioParams.Default.WithVariation(DamagePitchVariation));
                     break;
                 // No damage, fallback to tappies
                 case null:
-                    Audio.PlayPvs(new SoundPathSpecifier("/Audio/Weapons/tap.ogg"), target, AudioParams.Default.WithVariation(DamagePitchVariation));
+                    Audio.PlayPredicted(new SoundPathSpecifier("/Audio/Weapons/tap.ogg"), target, user, AudioParams.Default.WithVariation(DamagePitchVariation));
                     break;
                 case "Brute":
-                    Audio.PlayPvs(new SoundPathSpecifier("/Audio/Weapons/smash.ogg"), target, AudioParams.Default.WithVariation(DamagePitchVariation));
+                    Audio.PlayPredicted(new SoundPathSpecifier("/Audio/Weapons/smash.ogg"), target, user, AudioParams.Default.WithVariation(DamagePitchVariation));
                     break;
             }
         }
