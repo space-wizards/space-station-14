@@ -16,7 +16,7 @@ public sealed class FluidMapDataComponent : Component
     /// <summary>
     /// Delay between two runs of <see cref="FluidSpreaderSystem"/>
     /// </summary>
-    [DataField("delay", customTypeSerializer:typeof(TimeOffsetSerializer))]
+    [DataField("delay")]
     public TimeSpan Delay = TimeSpan.FromSeconds(2);
 
     /// <summary>
