@@ -1,3 +1,4 @@
+using Robust.Shared.GameStates;
 using Content.Shared.Singularity.EntitySystems;
 
 namespace Content.Shared.Singularity.Components;
@@ -5,9 +6,10 @@ namespace Content.Shared.Singularity.Components;
 /// <summary>
 /// A component that makes the associated entity destroy other within some distance of itself.
 /// Also makes the associated entity destroy other entities upon contact.
-/// Primarily managed by <see cref="SharedEventHorizonSystem"/>.
+/// Primarily managed by <see cref="SharedEventHorizonSystem"/> and its server/client versions.
 /// </summary>
-public abstract class SharedEventHorizonComponent : Component
+[RegisterComponent, NetworkedComponent]
+public sealed class EventHorizonComponent : Component
 {
     /// <summary>
     /// The radius of the event horizon within which it will destroy all entities and tiles.
@@ -34,4 +36,24 @@ public abstract class SharedEventHorizonComponent : Component
     [DataField("horizonFixtureId")]
     [Access(friends:typeof(SharedEventHorizonSystem))]
     public string? HorizonFixtureId = "EventHorizon";
+
+    /// <summary>
+    /// Whether the entity this event horizon is attached to is being consumed by another event horizon.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly)]
+    public bool BeingConsumedByAnotherEventHorizon = false;
+
+    /// <summary>
+    /// The amount of time between the moments when the event horizon consumes everything it overlaps in seconds.
+    /// </summary>
+    [DataField("consumePeriod")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public float ConsumePeriod = 0.5f;
+
+    /// <summary>
+    /// The amount of time that has passed since the last moment when the event horizon consumed eveything it overlapped in seconds.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly)]
+    [Access(friends:typeof(SharedEventHorizonSystem))]
+    public float TimeSinceLastConsumeWave = float.PositiveInfinity;
 }

@@ -38,7 +38,7 @@ public abstract class SharedSingularitySystem : EntitySystem
         SubscribeLocalEvent<AppearanceComponent, SingularityLevelChangedEvent>(UpdateAppearance);
         SubscribeLocalEvent<RadiationSourceComponent, SingularityLevelChangedEvent>(UpdateRadiation);
         SubscribeLocalEvent<PhysicsComponent, SingularityLevelChangedEvent>(UpdateBody);
-        SubscribeLocalEvent<SharedEventHorizonComponent, SingularityLevelChangedEvent>(UpdateEventHorizon);
+        SubscribeLocalEvent<EventHorizonComponent, SingularityLevelChangedEvent>(UpdateEventHorizon);
         SubscribeLocalEvent<SingularityDistortionComponent, SingularityLevelChangedEvent>(UpdateDistortion);
 
         var vvHandle = _vvm.GetTypeHandler<SharedSingularityComponent>();
@@ -275,7 +275,7 @@ public abstract class SharedSingularitySystem : EntitySystem
     /// <param name="uid">The entity that the event horizon and singularity are attached to.</param>
     /// <param name="comp">The event horizon associated with the singularity.</param>
     /// <param name="args">The event arguments.</param>
-    private void UpdateEventHorizon(EntityUid uid, SharedEventHorizonComponent comp, SingularityLevelChangedEvent args)
+    private void UpdateEventHorizon(EntityUid uid, EventHorizonComponent comp, SingularityLevelChangedEvent args)
     {
         var singulo = args.Singularity;
         _horizons.SetRadius(comp, EventHorizonRadius(singulo), false);

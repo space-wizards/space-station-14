@@ -1,4 +1,4 @@
-using Content.Server.Singularity.Components;
+using Content.Shared.Singularity.Components;
 
 namespace Content.Server.Singularity.Events;
 

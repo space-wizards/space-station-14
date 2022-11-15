@@ -15,9 +15,9 @@ public sealed class EntityConsumedByEventHorizonEvent : EntityEventArgs
     /// <summary>
     /// The event horizon consuming the entity.
     /// </summary>
-    public readonly SharedEventHorizonComponent EventHorizon;
+    public readonly EventHorizonComponent EventHorizon;
 
-    public EntityConsumedByEventHorizonEvent(EntityUid entity, SharedEventHorizonComponent eventHorizon)
+    public EntityConsumedByEventHorizonEvent(EntityUid entity, EventHorizonComponent eventHorizon)
     {
         Entity = entity;
         EventHorizon = eventHorizon;

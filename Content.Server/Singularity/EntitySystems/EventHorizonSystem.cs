@@ -250,7 +250,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// <param name="uid">The event horizon entity that is trying to collide with something.</param>
     /// <param name="comp">The event horizon that is trying to collide with something.</param>
     /// <param name="args">The event arguments.</param>
-    protected override sealed bool PreventCollide(EntityUid uid, SharedEventHorizonComponent comp, ref PreventCollideEvent args)
+    protected override sealed bool PreventCollide(EntityUid uid, EventHorizonComponent comp, ref PreventCollideEvent args)
     {
         if (base.PreventCollide(uid, comp, ref args) || args.Cancelled)
             return true;
