@@ -1,14 +1,4 @@
 Entries:
-- author: moonheart08
-  changes:
-  - {message: Non-newbies can no longer play as interns., type: Tweak}
-  id: 2158
-  time: '2022-08-14T21:14:46.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fix crew monitor not displaying directional arrows, type: Fix}
-  id: 2159
-  time: '2022-08-15T04:14:01.0000000+00:00'
 - author: SirDragooon
   changes:
   - {message: The ChemMaster4000 pill limit is increased to 25, type: Tweak}
@@ -2951,3 +2941,13 @@ Entries:
     type: Remove}
   id: 2657
   time: '2022-11-15T05:12:32.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Combat mode no longer disables alt-clicking., type: Tweak}
+  id: 2658
+  time: '2022-11-15T06:34:47.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: Lightning is fixed to properly collide, type: Fix}
+  id: 2659
+  time: '2022-11-15T06:35:23.0000000+00:00'
