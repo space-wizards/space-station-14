@@ -1,11 +1,4 @@
 Entries:
-- author: juliangiebel
-  changes:
-  - {message: The mailing unit. A pneumatic mail delivery system!, type: Add}
-  - {message: Mailing unit electronics. Unlocked by the industrial engineering research.,
-    type: Add}
-  id: 2153
-  time: '2022-08-14T05:57:25.0000000+00:00'
 - author: Rane
   changes:
   - {message: 'Welding without eye protection now blinds you, and causes permanent
@@ -2958,3 +2951,8 @@ Entries:
       click on a machine to instantly upgrade it., type: Add}
   id: 2652
   time: '2022-11-14T19:36:14.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix melee sounds getting spammed in some instances., type: Fix}
+  id: 2653
+  time: '2022-11-15T00:56:10.0000000+00:00'
