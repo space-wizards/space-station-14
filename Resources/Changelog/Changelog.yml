@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: You can no longer place tiles underneath solid structures., type: Fix}
-  id: 2156
-  time: '2022-08-14T06:00:39.0000000+00:00'
 - author: martin69420
   changes:
   - {message: 'yellow, green, and blue boxing gloves now use correct sprites for worn
@@ -2951,3 +2946,9 @@ Entries:
     type: Remove}
   id: 2655
   time: '2022-11-15T04:04:56.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed LOOC chat prefix not working. Now messages starting starting with
+      "(" just be interpreted as LOOC chat, type: Fix}
+  id: 2656
+  time: '2022-11-15T04:14:40.0000000+00:00'
