@@ -112,7 +112,7 @@ namespace Content.Server.Cargo.Systems
             }
 
             // No order to approve?
-            if (!orderDatabase.Orders.TryGetValue(args.OrderNumber, out var order) ||
+            if (!orderDatabase.Orders.TryGetValue(args.OrderIndex, out var order) ||
                 order.Approved) return;
 
             // Invalid order
@@ -168,7 +168,7 @@ namespace Content.Server.Cargo.Systems
         {
             var orderDatabase = GetOrderDatabase(component);
             if (orderDatabase == null) return;
-            RemoveOrder(orderDatabase, args.OrderNumber);
+            RemoveOrder(orderDatabase, args.OrderIndex);
         }
 
         private void OnAddOrderMessage(EntityUid uid, CargoOrderConsoleComponent component, CargoConsoleAddOrderMessage args)
@@ -268,7 +268,7 @@ namespace Content.Server.Cargo.Systems
 
         public bool TryAddOrder(StationCargoOrderDatabaseComponent component, CargoOrderData data)
         {
-            component.Orders.Add(data.OrderNumber, data);
+            component.Orders.Add(data.OrderIndex, data);
             UpdateOrders(component);
             return true;
         }

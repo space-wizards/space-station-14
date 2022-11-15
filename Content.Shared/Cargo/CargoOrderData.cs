@@ -6,7 +6,7 @@ namespace Content.Shared.Cargo
     [NetSerializable, Serializable]
     public sealed class CargoOrderData
     {
-        public int OrderNumber;
+        public int OrderIndex;
         public string ProductId;
         public int Amount;
         public string Requester;
@@ -16,9 +16,9 @@ namespace Content.Shared.Cargo
         public bool Approved => Approver is not null;
         public string? Approver;
 
-        public CargoOrderData(int orderNumber, string productId, int amount, string requester, string reason)
+        public CargoOrderData(int orderIndex, string productId, int amount, string requester, string reason)
         {
-            OrderNumber = orderNumber;
+            OrderIndex = orderIndex;
             ProductId = productId;
             Amount = amount;
             Requester = requester;
