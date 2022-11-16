@@ -5,6 +5,9 @@
   name: headset
   description: An updated, modular intercom that fits over the head. Takes encryption keys.
   components:
+  - type: ContainerContainer
+    containers:
+      key_slots: !type:Container
   - type: Headset
     keysPrototypes:
     - EncryptionKeyCommon
@@ -14,9 +17,6 @@
     slots:
     - ears
     sprite: Clothing/Ears/Headsets/base.rsi
-  - type: ContainerContainer
-    containers:
-      key_slots: !type:Container
 
 - type: entity
   parent: ClothingHeadset
