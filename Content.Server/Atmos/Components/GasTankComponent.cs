@@ -32,7 +32,7 @@ namespace Content.Server.Atmos.Components
         public IPlayingAudioStream? ConnectStream;
         public IPlayingAudioStream? DisconnectStream;
 
-        [DataField("air")]  public GasMixture Air { get; set; } = new();
+        [DataField("air")] public GasMixture Air { get; set; } = new();
 
         /// <summary>
         ///     Pressure at which tank should be considered 'low' such as for internals.

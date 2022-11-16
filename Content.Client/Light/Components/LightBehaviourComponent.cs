@@ -21,24 +21,24 @@ namespace Content.Client.Light.Components
         protected IEntityManager _entMan = default!;
         protected IRobustRandom _random = default!;
 
-        [DataField("id")]  public string ID { get; set; } = string.Empty;
+        [DataField("id")] public string ID { get; set; } = string.Empty;
 
         [DataField("property")]
         public virtual string Property { get; protected set; } = "Radius";
 
-        [DataField("isLooped")]  public bool IsLooped { get; set; }
+        [DataField("isLooped")] public bool IsLooped { get; set; }
 
-        [DataField("enabled")]  public bool Enabled { get; set; }
+        [DataField("enabled")] public bool Enabled { get; set; }
 
-        [DataField("startValue")]  public float StartValue { get; set; } = 0f;
+        [DataField("startValue")] public float StartValue { get; set; } = 0f;
 
-        [DataField("endValue")]  public float EndValue { get; set; } = 2f;
+        [DataField("endValue")] public float EndValue { get; set; } = 2f;
 
-        [DataField("minDuration")]  public float MinDuration { get; set; } = -1f;
+        [DataField("minDuration")] public float MinDuration { get; set; } = -1f;
 
-        [DataField("maxDuration")]  public float MaxDuration { get; set; } = 2f;
+        [DataField("maxDuration")] public float MaxDuration { get; set; } = 2f;
 
-        [DataField("interpolate")]  public AnimationInterpolationMode InterpolateMode { get; set; } = AnimationInterpolationMode.Linear;
+        [DataField("interpolate")] public AnimationInterpolationMode InterpolateMode { get; set; } = AnimationInterpolationMode.Linear;
 
         [ViewVariables] protected float MaxTime { get; set; }
 
