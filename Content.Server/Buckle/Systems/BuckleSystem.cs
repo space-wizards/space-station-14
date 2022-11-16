@@ -318,7 +318,7 @@ public sealed class BuckleSystem : SharedBuckleSystem
         if (!CanBuckle(buckleId, user, to, out var strap, buckle))
             return false;
 
-        _audio.Play(strap.BuckleSound, Filter.Pvs(buckleId), buckleId);
+        _audio.PlayPvs(strap.BuckleSound, buckleId);
 
         if (!strap.TryAdd(buckle))
         {
@@ -428,7 +428,7 @@ public sealed class BuckleSystem : SharedBuckleSystem
         _mobState.EnterState(mobState, mobState?.CurrentState);
 
         oldBuckledTo.Remove(buckle);
-        _audio.Play(oldBuckledTo.UnbuckleSound, Filter.Pvs(buckleId), buckleId);
+        _audio.PlayPvs(oldBuckledTo.UnbuckleSound, buckleId);
 
         var ev = new BuckleChangeEvent { Buckling = false, Strap = oldBuckledTo.Owner, BuckledEntity = buckleId };
         RaiseLocalEvent(buckleId, ev);
