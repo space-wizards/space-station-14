@@ -22,6 +22,8 @@ public sealed partial class ArtifactSystem : EntitySystem
 
         SubscribeLocalEvent<ArtifactComponent, MapInitEvent>(OnInit);
         SubscribeLocalEvent<ArtifactComponent, PriceCalculationEvent>(GetPrice);
+
+        InitializeCommands();
     }
 
     private void OnInit(EntityUid uid, ArtifactComponent component, MapInitEvent args)

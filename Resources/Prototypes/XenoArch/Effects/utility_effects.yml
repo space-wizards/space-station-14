@@ -9,3 +9,33 @@
   permanentComponents:
   - type: PowerSupplier
     supplyRate: 20000
+
+- type: artifactEffect
+  id: EffectBigIron
+  targetDepth: 3
+  effectHint: artifact-effect-hint-gun
+  restrictStructures: true
+  permanentComponents:
+  - type: Gun
+    selectedMode: SemiAuto
+    fireRate: 1.5
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
+  - type: ContainerContainer
+    containers:
+      revolver-ammo: !type:Container
+  - type: RevolverAmmoProvider
+    whitelist:
+      tags:
+      - CartridgeMagnumHC
+      - SpeedLoaderMagnumHC
+    proto: CartridgeMagnumHC
+    capacity: 7
+    chambers: [ True, True, True, True, True, True, True ]
+    ammoSlots: [ null, null, null, null, null, null, null ]
+    soundEject:
+      path: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
