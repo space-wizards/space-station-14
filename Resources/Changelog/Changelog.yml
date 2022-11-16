@@ -1,12 +1,6 @@
 Entries:
 - author: JustinTrotter
   changes:
-  - {message: 'Uniform printer can now print musician, clown, and mime winter coats',
-    type: Tweak}
-  id: 2168
-  time: '2022-08-18T02:22:30.0000000+00:00'
-- author: JustinTrotter
-  changes:
   - {message: Nettle soup recipe works now, type: Tweak}
   id: 2169
   time: '2022-08-18T02:30:30.0000000+00:00'
@@ -2950,3 +2944,8 @@ Entries:
   - {message: Cat ears now cost 26tc, type: Tweak}
   id: 2667
   time: '2022-11-16T14:46:56.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: You can't turn chameleon hat into cat ears., type: Remove}
+  id: 2668
+  time: '2022-11-16T18:13:54.0000000+00:00'
