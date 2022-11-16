@@ -4,6 +4,9 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Objectives
 {
+    /// <summary>
+    ///     Prototype for objectives. Remember that to be assigned, it should be added to one or more objective groups in prototype. E.g. crew, traitor, wizard
+    /// </summary>
     [Prototype("objective")]
     public sealed class ObjectivePrototype : IPrototype
     {
