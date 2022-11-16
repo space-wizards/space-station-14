@@ -8,44 +8,43 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Medical.Wounds.Components;
 
 [RegisterComponent, NetworkedComponent]
+[Access(typeof(InjurySystem))]
 public sealed class InjurableComponent : Component
 {
-    [Access(typeof(InjurySystem), Other = AccessPermissions.Read)] [DataField("injuries")]
+    [DataField("injuries")]
     public List<Injury>? Injuries;
 
-    [Access(typeof(InjurySystem), Other = AccessPermissions.Read)]
     [DataField("allowedTraumaTypes", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<TraumaTypePrototype>))]
     public HashSet<string>? AllowedTraumaTypes;
 
-    [Access(typeof(InjurySystem), Other = AccessPermissions.Read)] [ViewVariables, DataField("traumaResistance")]
+    [DataField("traumaResistance")]
     public TraumaModifierSet? TraumaResistance;
 
-    [Access(typeof(InjurySystem), Other = AccessPermissions.Read)] [ViewVariables, DataField("traumaPenResistance")]
+    [DataField("traumaPenResistance")]
     public TraumaModifierSet? TraumaPenResistance;
 
-    [Access(typeof(InjurySystem), Other = AccessPermissions.Read)] [ViewVariables, DataField("allowBleeds")]
+    [DataField("allowBleeds")]
     public bool AllowBleeds = true;
 
-    [Access(typeof(InjurySystem), Other = AccessPermissions.Read)] [ViewVariables, DataField("appliesPain")]
+    [DataField("appliesPain")]
     public bool AppliesPain = true;
 
     //How much health does this woundable have, when this reaches 0, it starts taking structural damage
-    [Access(typeof(InjurySystem), Other = AccessPermissions.Read)]
-    [ViewVariables, DataField("maxHealth", required: true)]
+    [DataField("maxHealth", required: true)]
     public FixedPoint2 MaxHealth;
 
     //How much health does this woundable have, when this reaches 0, it starts taking structural damage
-    [Access(typeof(InjurySystem), Other = AccessPermissions.Read)] [ViewVariables, DataField("health", required: true)]
+    [DataField("health", required: true)]
     public FixedPoint2 Health;
 
     //How well is this woundable holding up, when this reaches 0 the entity is destroyed/gibbed!
-    [Access(typeof(InjurySystem), Other = AccessPermissions.Read)]
-    [ViewVariables, DataField("maxStructure", required: true)]
+    [Access(typeof(InjurySystem))]
+    [DataField("maxStructure", required: true)]
     public FixedPoint2 MaxStructure;
 
     //How well is this woundable holding up, when this reaches 0 the entity is destroyed/gibbed!
-    [Access(typeof(InjurySystem), Other = AccessPermissions.Read)]
-    [ViewVariables, DataField("structure", required: true)]
+    [Access(typeof(InjurySystem))]
+    [DataField("structure", required: true)]
     public FixedPoint2 StructuralPool;
 }
 

@@ -24,6 +24,7 @@ public sealed class InjurySystem : EntitySystem
     private void CacheData(PrototypesReloadedEventArgs? prototypesReloadedEventArgs)
     {
         _cachedInjuryTables.Clear();
+
         foreach (var traumaType in _prototypeManager.EnumeratePrototypes<TraumaTypePrototype>())
         {
             _cachedInjuryTables.Add(traumaType.ID, new InjuryTable(traumaType));
@@ -41,24 +42,29 @@ public sealed class InjurySystem : EntitySystem
         foreach (var (traumaType, trauma) in traumaSpec.TraumaValues)
         {
             var validTarget = GetValidInjurable(target, traumaType);
+
             if (!validTarget.HasValue)
                 return false;
+
             var injuryContainer = validTarget.Value.injurable;
             target = validTarget.Value.target;
 
-            success |= AddInjury_internal(target, injuryContainer, traumaType,
+            success |= AddInjury(target, injuryContainer, traumaType,
                 PickInjury(traumaType,
                     ApplyTraumaModifiers(traumaType, injuryContainer.TraumaResistance, trauma.Damage)));
 
             if (trauma.PenTraumaType == null || !_random.Prob(trauma.PenetrationChance.Float()))
                 continue;
+
             validTarget = GetValidInjurable(target, trauma.PenTraumaType);
+
             if (!validTarget.HasValue)
                 continue;
+
             //Apply penetrating wounds
             injuryContainer = validTarget.Value.injurable;
             target = validTarget.Value.target;
-            success |= AddInjury_internal(target, injuryContainer, trauma.PenTraumaType,
+            success |= AddInjury(target, injuryContainer, trauma.PenTraumaType,
                 PickInjury(trauma.PenTraumaType,
                     ApplyTraumaModifiers(trauma.PenTraumaType, injuryContainer.TraumaResistance, trauma.Damage)));
         }
@@ -66,32 +72,38 @@ public sealed class InjurySystem : EntitySystem
         return success;
     }
 
-    public bool AddInjury(EntityUid target, string traumaType, Trauma trauma)
+    public bool TryAddInjury(EntityUid target, string traumaType, Trauma trauma)
     {
         var checkedContainer = GetValidInjurable(target, traumaType);
+
         if (checkedContainer == null)
             return false;
+
         var injuryContainer = checkedContainer.Value.injurable;
         target = checkedContainer.Value.target;
-        return AddInjury_internal(target, injuryContainer, traumaType, PickInjury(traumaType, trauma.Damage));
+        return AddInjury(target, injuryContainer, traumaType, PickInjury(traumaType, trauma.Damage));
     }
 
     private FixedPoint2 ApplyTraumaModifiers(string traumaType, TraumaModifierSet? modifiers, FixedPoint2 damage)
     {
         if (!modifiers.HasValue)
             return damage;
+
         if (modifiers.Value.TryGetCoefficentForTraumaType(traumaType, out var coeff))
             damage *= coeff;
+
         if (modifiers.Value.TryGetFlatReductionForTraumaType(traumaType, out var reduction))
             damage -= reduction;
+
         return damage;
     }
 
-    private bool AddInjury_internal(EntityUid target, InjurableComponent injuryContainer, string traumaType,
+    private bool AddInjury(EntityUid target, InjurableComponent injuryContainer, string traumaType,
         Injury injury)
     {
-        injuryContainer.Injuries ??= new();
-        injuryContainer.Injuries!.Add(injury);
+        injuryContainer.Injuries ??= new List<Injury>();
+        injuryContainer.Injuries.Add(injury);
+
         return true;
     }
 
@@ -99,20 +111,20 @@ public sealed class InjurySystem : EntitySystem
     {
         if (!TryComp<InjurableComponent>(target, out var injuryContainer))
             return null;
-        if (injuryContainer.AllowedTraumaTypes == null)
+
+        if (injuryContainer.AllowedTraumaTypes?.Contains(traumaType) ?? false)
             return (injuryContainer, target);
-        if (injuryContainer.AllowedTraumaTypes.Contains(traumaType))
-            return (injuryContainer, target);
+
         var childInjuryContainer = FindValidInjurableInAdjacent(target, traumaType);
         return childInjuryContainer;
     }
-
 
     private Injury PickInjury(string traumaType, FixedPoint2 trauma)
     {
         var nextLevel = 1f;
         var levelFloor = 0f;
-        var injuryId = _cachedInjuryTables[traumaType].Injuries[0];
+        var injuryId = _cachedInjuryTables[traumaType].Injuries[FixedPoint2.Zero];
+
         foreach (var injuryData in _cachedInjuryTables[traumaType].Injuries)
         {
             if (injuryData.Key > trauma)
