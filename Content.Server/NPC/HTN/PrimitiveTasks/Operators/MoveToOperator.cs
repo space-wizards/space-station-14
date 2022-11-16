@@ -3,10 +3,8 @@ using System.Threading.Tasks;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.Pathfinding;
 using Content.Server.NPC.Systems;
-using Content.Shared.NPC;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
-using YamlDotNet.Core.Tokens;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
 
@@ -23,31 +21,31 @@ public sealed class MoveToOperator : HTNOperator
     /// <summary>
     /// Should we assume the MovementTarget is reachable during planning or should we pathfind to it?
     /// </summary>
-    [ViewVariables, DataField("pathfindInPlanning")]
+    [DataField("pathfindInPlanning")]
     public bool PathfindInPlanning = true;
 
     /// <summary>
     /// When we're finished moving to the target should we remove its key?
     /// </summary>
-    [ViewVariables, DataField("removeKeyOnFinish")]
+    [DataField("removeKeyOnFinish")]
     public bool RemoveKeyOnFinish = true;
 
     /// <summary>
     /// Target Coordinates to move to. This gets removed after execution.
     /// </summary>
-    [ViewVariables, DataField("targetKey")]
+    [DataField("targetKey")]
     public string TargetKey = "MovementTarget";
 
     /// <summary>
     /// Where the pathfinding result will be stored (if applicable). This gets removed after execution.
     /// </summary>
-    [ViewVariables, DataField("pathfindKey")]
+    [DataField("pathfindKey")]
     public string PathfindKey = NPCBlackboard.PathfindKey;
 
     /// <summary>
     /// How close we need to get before considering movement finished.
     /// </summary>
-    [ViewVariables, DataField("rangeKey")]
+    [DataField("rangeKey")]
     public string RangeKey = "MovementRange";
 
     private const string MovementCancelToken = "MovementCancelToken";

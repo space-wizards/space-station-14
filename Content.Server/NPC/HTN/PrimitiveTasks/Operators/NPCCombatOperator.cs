@@ -18,12 +18,12 @@ public abstract class NPCCombatOperator : HTNOperator
     protected InteractionSystem Interaction = default!;
     private PathfindingSystem _pathfinding = default!;
 
-    [ViewVariables, DataField("key")] public string Key = "CombatTarget";
+    [DataField("key")] public string Key = "CombatTarget";
 
     /// <summary>
     /// The EntityCoordinates of the specified target.
     /// </summary>
-    [ViewVariables, DataField("keyCoordinates")]
+    [DataField("keyCoordinates")]
     public string KeyCoordinates = "CombatTargetCoordinates";
 
     /// <summary>
