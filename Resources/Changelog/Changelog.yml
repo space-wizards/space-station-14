@@ -1,9 +1,4 @@
 Entries:
-- author: JustinTrotter
-  changes:
-  - {message: Nettle soup recipe works now, type: Tweak}
-  id: 2169
-  time: '2022-08-18T02:30:30.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Tweaks to bullet flyby sounds to be less grating., type: Tweak}
@@ -2949,3 +2944,12 @@ Entries:
   - {message: You can't turn chameleon hat into cat ears., type: Remove}
   id: 2668
   time: '2022-11-16T18:13:54.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'The base rules for all Wizards'' Den servers have been rewritten from
+      the ground up. A "long-form" version is available on the wiki, with even more
+      examples and clarifications. Not much concrete is changing--this is mostly just
+      better codifying stuff that we were already enforcing, but we recommend that
+      you reread them anyway, of course.', type: Add}
+  id: 2669
+  time: '2022-11-16T18:24:37.0000000+00:00'
