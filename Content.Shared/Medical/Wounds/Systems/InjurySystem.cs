@@ -89,7 +89,7 @@ public sealed class InjurySystem : EntitySystem
         if (!modifiers.HasValue)
             return damage;
 
-        if (modifiers.Value.TryGetCoefficentForTraumaType(traumaType, out var coeff))
+        if (modifiers.Value.TryGetCoefficientForTraumaType(traumaType, out var coeff))
             damage *= coeff;
 
         if (modifiers.Value.TryGetFlatReductionForTraumaType(traumaType, out var reduction))

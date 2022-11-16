@@ -17,16 +17,15 @@ public struct TraumaModifierSet
         customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, TraumaTypePrototype>))]
     public Dictionary<string, FixedPoint2> FlatReduction = new();
 
-    public bool TryGetCoefficentForTraumaType(string traumaType, out FixedPoint2 coefficent)
+    public bool TryGetCoefficientForTraumaType(string traumaType, out FixedPoint2 coefficient)
     {
-        return Coefficients.TryGetValue(traumaType, out coefficent);
+        return Coefficients.TryGetValue(traumaType, out coefficient);
     }
 
     public bool TryGetFlatReductionForTraumaType(string traumaType, out FixedPoint2 reduction)
     {
         return Coefficients.TryGetValue(traumaType, out reduction);
     }
-
 
     public TraumaModifierSet()
     {
