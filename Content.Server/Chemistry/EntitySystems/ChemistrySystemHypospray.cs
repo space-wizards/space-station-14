@@ -29,7 +29,7 @@ namespace Content.Server.Chemistry.EntitySystems
         {
             if (args.Handled) return;
 
-            TryDoInject(component, args.User, args.User);
+            TryDoInject(uid, args.User, args.User);
             args.Handled = true;
         }
 
@@ -46,7 +46,7 @@ namespace Content.Server.Chemistry.EntitySystems
             var target = args.Target;
             var user = args.User;
 
-            TryDoInject(component, target, user);
+            TryDoInject(uid, target, user);
         }
 
         public void OnAttack(EntityUid uid, HyposprayComponent component, MeleeHitEvent args)
@@ -54,14 +54,14 @@ namespace Content.Server.Chemistry.EntitySystems
             if (!args.HitEntities.Any())
                 return;
 
-            TryDoInject(component, args.HitEntities.First(), args.User);
+            TryDoInject(uid, args.HitEntities.First(), args.User);
         }
 
         public bool TryDoInject(EntityUid uid, EntityUid? target, EntityUid user, HyposprayComponent? component=null)
         {
-            if (!Resolve(uid, ref component)
-                return;
-        {
+            if (!Resolve(uid, ref component))
+                return false;
+
             if (!EligibleEntity(target, _entMan))
                 return false;
 
@@ -75,7 +75,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 target = user;
             }
 
-            _solutions.TryGetSolution(component.Owner, component.SolutionName, out var hypoSpraySolution);
+            _solutions.TryGetSolution(uid, component.SolutionName, out var hypoSpraySolution);
 
             if (hypoSpraySolution == null || hypoSpraySolution.CurrentVolume == 0)
             {
@@ -112,7 +112,7 @@ namespace Content.Server.Chemistry.EntitySystems
             }
 
             // Move units from attackSolution to targetSolution
-            var removedSolution = _solutions.SplitSolution(component.Owner, hypoSpraySolution, realTransferAmount);
+            var removedSolution = _solutions.SplitSolution(uid, hypoSpraySolution, realTransferAmount);
 
             if (!targetSolution.CanAddSolution(removedSolution))
                 return true;
@@ -120,7 +120,7 @@ namespace Content.Server.Chemistry.EntitySystems
             _solutions.TryAddSolution(target.Value, targetSolution, removedSolution);
 
             //same logtype as syringes...
-            _adminLogger.Add(LogType.ForceFeed, $"{_entMan.ToPrettyString(user):user} injected {_entMan.ToPrettyString(target.Value):target} with a solution {SolutionContainerSystem.ToPrettyString(removedSolution):removedSolution} using a {_entMan.ToPrettyString(component.Owner):using}");
+            _adminLogger.Add(LogType.ForceFeed, $"{_entMan.ToPrettyString(user):user} injected {_entMan.ToPrettyString(target.Value):target} with a solution {SolutionContainerSystem.ToPrettyString(removedSolution):removedSolution} using a {_entMan.ToPrettyString(uid):using}");
 
             return true;
         }
