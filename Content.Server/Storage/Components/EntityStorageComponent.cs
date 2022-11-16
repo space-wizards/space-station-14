@@ -29,11 +29,9 @@ public sealed class EntityStorageComponent : Component, IGasMixtureHolder
     [DataField("removedMasks")]
     public int RemovedMasks;
 
-    [ViewVariables]
     [DataField("capacity")]
     public int Capacity = 30;
 
-    [ViewVariables]
     [DataField("isCollidableWhenOpen")]
     public bool IsCollidableWhenOpen;
 
@@ -54,7 +52,6 @@ public sealed class EntityStorageComponent : Component, IGasMixtureHolder
     [DataField("enteringOffsetCollisionFlags")]
     public readonly CollisionGroup EnteringOffsetCollisionFlags = CollisionGroup.Impassable | CollisionGroup.MidImpassable;
 
-    [ViewVariables]
     [DataField("enteringRange")]
     public float EnteringRange = 0.18f;
 

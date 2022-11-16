@@ -3,7 +3,6 @@ using Robust.Server.Player;
 using Robust.Shared.Reflection;
 using Robust.Shared.Serialization;
 
-
 namespace Content.Server.UserInterface
 {
     [RegisterComponent]
@@ -19,7 +18,6 @@ namespace Content.Server.UserInterface
         [DataField("inHandsOnly")]
         public bool InHandsOnly { get; set; } = false;
 
-        [ViewVariables]
         [DataField("singleUser")]
         public bool SingleUser { get; set; } = false;
 

@@ -21,7 +21,7 @@ public sealed class MedibotInjectOperator : HTNOperator
     /// <summary>
     /// Target entity to inject.
     /// </summary>
-    [ViewVariables, DataField("targetKey", required: true)]
+    [DataField("targetKey", required: true)]
     public string TargetKey = string.Empty;
 
     public override void Initialize(IEntitySystemManager sysManager)

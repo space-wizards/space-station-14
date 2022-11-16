@@ -20,7 +20,6 @@ namespace Content.Server.Cargo.Components
         /// <summary>
         /// How much time we've accumulated until next teleport.
         /// </summary>
-        [ViewVariables]
         [DataField("accumulator")]
         public float Accumulator = 0f;
 

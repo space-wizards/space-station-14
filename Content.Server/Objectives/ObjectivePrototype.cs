@@ -14,7 +14,7 @@ namespace Content.Server.Objectives
         [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
-        [ViewVariables] [DataField("issuer")] public string Issuer { get; private set; } = "Unknown";
+        [DataField("issuer")] public string Issuer { get; private set; } = "Unknown";
 
         [ViewVariables]
         public float Difficulty => _difficultyOverride ?? _conditions.Sum(c => c.Difficulty);
@@ -27,7 +27,6 @@ namespace Content.Server.Objectives
         [ViewVariables]
         public IReadOnlyList<IObjectiveCondition> Conditions => _conditions;
 
-        [ViewVariables]
         [DataField("canBeDuplicate")]
         public bool CanBeDuplicateAssignment { get; private set; }
 

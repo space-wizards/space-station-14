@@ -14,7 +14,6 @@ public sealed class BuckleComponent : SharedBuckleComponent
     ///     be able to unbuckle after recently buckling.
     /// </summary>
     [DataField("delay")]
-    [ViewVariables]
     public TimeSpan UnbuckleDelay = TimeSpan.FromSeconds(0.25f);
 
     /// <summary>
@@ -33,6 +32,5 @@ public sealed class BuckleComponent : SharedBuckleComponent
     ///     <see cref="StrapComponent"/>.
     /// </summary>
     [DataField("size")]
-    [ViewVariables]
     public int Size = 100;
 }
