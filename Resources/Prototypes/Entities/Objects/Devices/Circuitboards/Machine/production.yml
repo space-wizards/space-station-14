@@ -230,11 +230,10 @@
     - type: MachineBoard
       prototype: MedicalScanner
       requirements:
-        ScanningModule: 1
-        Manipulator: 1
-        Laser: 1
+        ScanningModule: 2
+        Capacitor: 1
       materialRequirements:
-        Glass: 1
+        Glass: 5
         Cable: 1
 
 - type: entity
