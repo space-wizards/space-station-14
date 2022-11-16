@@ -1,0 +1,11 @@
+﻿# Utility effects permanently modify the entity in some way when triggered, and they generally make it 'useful' for some purpose,
+# like turning the artifact into a tool, or gun, or whatever.
+
+- type: artifactEffect
+  id: EffectPowerGen20K
+  targetDepth: 3
+  effectHint: artifact-effect-hint-release
+  restrictItems: true
+  permanentComponents:
+  - type: PowerSupplier
+    supplyRate: 20000
