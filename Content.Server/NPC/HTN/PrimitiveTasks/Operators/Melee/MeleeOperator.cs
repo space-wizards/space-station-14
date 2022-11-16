@@ -1,6 +1,5 @@
 using System.Threading;
 using System.Threading.Tasks;
-using Content.Server.MobState;
 using Content.Server.NPC.Components;
 using Content.Shared.MobState;
 using Content.Shared.MobState.Components;
@@ -17,13 +16,13 @@ public sealed class MeleeOperator : HTNOperator
     /// <summary>
     /// Key that contains the target entity.
     /// </summary>
-    [ViewVariables, DataField("targetKey", required: true)]
+    [DataField("targetKey", required: true)]
     public string TargetKey = default!;
 
     /// <summary>
     /// Minimum damage state that the target has to be in for us to consider attacking.
     /// </summary>
-    [ViewVariables, DataField("targetState")]
+    [DataField("targetState")]
     public DamageState TargetState = DamageState.Alive;
 
     // Like movement we add a component and pass it off to the dedicated system.

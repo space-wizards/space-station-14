@@ -9,9 +9,9 @@ public sealed class CoordinatesInRangePrecondition : HTNPrecondition
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
 
-    [ViewVariables, DataField("targetKey", required: true)] public string TargetKey = default!;
+    [DataField("targetKey", required: true)] public string TargetKey = default!;
 
-    [ViewVariables, DataField("rangeKey", required: true)]
+    [DataField("rangeKey", required: true)]
     public string RangeKey = default!;
 
     public override bool IsMet(NPCBlackboard blackboard)

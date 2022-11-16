@@ -9,7 +9,6 @@ namespace Content.Server.Botany
     public sealed class BotanySwabComponent : Component
     {
         [DataField("swabDelay")]
-        [ViewVariables]
         public float SwabDelay = 2f;
 
         /// <summary>

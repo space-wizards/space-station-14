@@ -6,10 +6,10 @@ public sealed class TargetInLOSPrecondition : HTNPrecondition
 {
     private InteractionSystem _interaction = default!;
 
-    [ViewVariables, DataField("targetKey")]
+    [DataField("targetKey")]
     public string TargetKey = "CombatTarget";
 
-    [ViewVariables, DataField("rangeKey")]
+    [DataField("rangeKey")]
     public string RangeKey = "RangeKey";
 
     public override void Initialize(IEntitySystemManager sysManager)

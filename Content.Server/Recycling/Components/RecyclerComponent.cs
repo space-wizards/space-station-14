@@ -10,7 +10,6 @@ namespace Content.Server.Recycling.Components
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        [ViewVariables]
         [DataField("enabled")]
         public bool Enabled = true;
 
