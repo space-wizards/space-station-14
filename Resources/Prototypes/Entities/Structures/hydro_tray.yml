@@ -16,7 +16,6 @@
   - type: Anchorable
   - type: Pullable
   - type: Sprite
-    noRot: true
     layers:
       - sprite: Structures/Hydroponics/containers.rsi
         state: hydrotray3
