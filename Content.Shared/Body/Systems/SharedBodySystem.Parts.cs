@@ -20,6 +20,9 @@ public partial class SharedBodySystem
         SubscribeLocalEvent<BodyPartComponent, ComponentRemove>(OnPartRemoved);
         SubscribeLocalEvent<BodyPartComponent, ComponentGetState>(OnPartGetState);
         SubscribeLocalEvent<BodyPartComponent, ComponentHandleState>(OnPartHandleState);
+        //SKIIIIIIIINNNNN
+        SubscribeLocalEvent<BodySkinComponent, ComponentGetState>(OnCoveringGetState);
+        SubscribeLocalEvent<BodySkinComponent, ComponentHandleState>(OnCoveringHandleState);
     }
 
     private void OnPartGetState(EntityUid uid, BodyPartComponent part, ref ComponentGetState args)
@@ -34,7 +37,6 @@ public partial class SharedBodySystem
             part.Symmetry
         );
     }
-
     private void OnPartHandleState(EntityUid uid, BodyPartComponent part, ref ComponentHandleState args)
     {
         if (args.Current is not BodyPartComponentState state)
@@ -61,6 +63,19 @@ public partial class SharedBodySystem
         {
             DropPart(childSlot.Child);
         }
+    }
+
+    private void OnCoveringGetState(EntityUid uid, BodySkinComponent part, ref ComponentGetState args)
+    {
+        args.State = new BodySkinComponentState(part);
+    }
+
+    private void OnCoveringHandleState(EntityUid uid, BodySkinComponent part, ref ComponentHandleState args)
+    {
+        if (args.Current is not BodySkinComponentState state)
+            return;
+        part.SkinLayers.Clear();
+        part.SkinLayers.AddRange(state.SkinLayers);
     }
 
     private BodyPartSlot? CreatePartSlot(

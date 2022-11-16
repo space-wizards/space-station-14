@@ -39,6 +39,7 @@
   id: OrganHumanEyes
   parent: BaseHumanOrgan
   name: eyes
+  internal: false
   description: "I see you!"
   components:
   - type: Sprite
@@ -73,6 +74,7 @@
   id: OrganHumanEars
   parent: BaseHumanOrgan
   name: ears
+  internal: false
   description: "There are three parts to the ear. Inner, middle and outer. Only one of these parts should normally be visible."
   components:
   - type: Sprite
