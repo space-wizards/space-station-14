@@ -145,7 +145,12 @@ namespace Content.Server.Atmos.EntitySystems
 
                     if (moles < gas.GasMolesVisible)
                     {
-                        oldOpacity = 0;
+                        if (oldOpacity != 0)
+                        {
+                            oldOpacity = 0;
+                            changed = true;
+                        }
+
                         continue;
                     }
 
