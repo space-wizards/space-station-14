@@ -10,6 +10,7 @@
         <BoxContainer Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="2">
             <BoxContainer Access="Public" Name="BwoinkArea" VerticalExpand="True" />
             <BoxContainer Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Visible="False" Name="Bans" Text="{Loc 'admin-player-actions-bans'}" />
                 <Button Visible="False" Name="Notes" Text="{Loc 'admin-player-actions-notes'}" />
                 <Button Visible="False" Name="Kick" Text="{Loc 'admin-player-actions-kick'}" />
                 <Button Visible="False" Name="Ban" Text="{Loc 'admin-player-actions-ban'}" />

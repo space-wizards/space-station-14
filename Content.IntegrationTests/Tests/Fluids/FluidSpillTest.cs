@@ -1,5 +1,6 @@
 #nullable enable
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.Fluids.Components;
 using Content.Server.Fluids.EntitySystems;
@@ -31,13 +32,9 @@ public sealed class FluidSpill
     private readonly Direction[] _dirs =
     {
         Direction.East,
-        Direction.SouthEast,
         Direction.South,
-        Direction.SouthWest,
         Direction.West,
-        Direction.NorthWest,
         Direction.North,
-        Direction.NorthEast,
     };
 
 
@@ -46,12 +43,13 @@ public sealed class FluidSpill
     [Test]
     public async Task SpillEvenlyTest()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
         var server = pairTracker.Pair.Server;
         var mapManager = server.ResolveDependency<IMapManager>();
         var entityManager = server.ResolveDependency<IEntityManager>();
         var spillSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<SpillableSystem>();
         var gameTiming = server.ResolveDependency<IGameTiming>();
+        var puddleSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<PuddleSystem>();
         MapId mapId;
         EntityUid gridId = default;
 
@@ -89,38 +87,44 @@ public sealed class FluidSpill
             var puddle = GetPuddle(entityManager, grid, _origin);
 
             Assert.That(puddle, Is.Not.Null);
-            Assert.That(puddle!.CurrentVolume, Is.EqualTo(FixedPoint2.New(20)));
+            Assert.That(puddleSystem.CurrentVolume(puddle!.Owner, puddle), Is.EqualTo(FixedPoint2.New(20)));
 
             foreach (var direction in _dirs)
             {
                 var newPos = _origin.Offset(direction);
                 var sidePuddle = GetPuddle(entityManager, grid, newPos);
                 Assert.That(sidePuddle, Is.Not.Null);
-                Assert.That(sidePuddle!.CurrentVolume, Is.EqualTo(FixedPoint2.New(10)));
+                Assert.That(puddleSystem.CurrentVolume(sidePuddle!.Owner, sidePuddle), Is.EqualTo(FixedPoint2.New(20)));
             }
         });
 
         await pairTracker.CleanReturnAsync();
     }
 
-
     [Test]
-    public async Task SpillSmallOverflowTest()
+    public async Task SpillCorner()
     {
-        await using var pairTracker = await PoolManager.GetServerClient();
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
         var server = pairTracker.Pair.Server;
-
         var mapManager = server.ResolveDependency<IMapManager>();
         var entityManager = server.ResolveDependency<IEntityManager>();
         var spillSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<SpillableSystem>();
+        var puddleSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<PuddleSystem>();
         var gameTiming = server.ResolveDependency<IGameTiming>();
         MapId mapId;
         EntityUid gridId = default;
 
+        /*
+         In this test, if o is spillage puddle and # are walls, we want to ensure all tiles are empty (`.`)
+            o # .
+            # . .
+            . . .
+        */
         await server.WaitPost(() =>
         {
             mapId = mapManager.CreateMap();
             var grid = mapManager.CreateGrid(mapId);
+            gridId = grid.GridEntityId;
 
             for (var x = 0; x < 3; x++)
             {
@@ -130,49 +134,47 @@ public sealed class FluidSpill
                 }
             }
 
-            gridId = grid.GridEntityId;
+            entityManager.SpawnEntity("WallReinforced", grid.GridTileToLocal(new Vector2i(0, 1)));
+            entityManager.SpawnEntity("WallReinforced", grid.GridTileToLocal(new Vector2i(1, 0)));
         });
 
+
+        var puddleOrigin = new Vector2i(0, 0);
         await server.WaitAssertion(() =>
         {
-            var solution = new Solution("Water", FixedPoint2.New(20.01));
             var grid = mapManager.GetGrid(gridId);
-            var tileRef = grid.GetTileRef(_origin);
+            var solution = new Solution("Water", FixedPoint2.New(100));
+            var tileRef = grid.GetTileRef(puddleOrigin);
             var puddle = spillSystem.SpillAt(tileRef, solution, "PuddleSmear");
-
             Assert.That(puddle, Is.Not.Null);
+            Assert.That(GetPuddle(entityManager, grid, puddleOrigin), Is.Not.Null);
         });
 
         var sTimeToWait = (int) Math.Ceiling(2f * gameTiming.TickRate);
-        await PoolManager.RunTicksSync(pairTracker.Pair, sTimeToWait);
+        await server.WaitRunTicks(sTimeToWait);
 
         await server.WaitAssertion(() =>
         {
             var grid = mapManager.GetGrid(gridId);
-            var puddle = GetPuddle(entityManager, grid, _origin);
-            Assert.That(puddle, Is.Not.Null);
-            Assert.That(puddle!.CurrentVolume, Is.EqualTo(FixedPoint2.New(20)));
+            var puddle = GetPuddle(entityManager, grid, puddleOrigin);
 
-            // we don't know where a spill would happen
-            // but there should be only one
-            var emptyField = 0;
-            var fullField = 0;
-            foreach (var direction in _dirs)
+            Assert.That(puddle, Is.Not.Null);
+            Assert.That(puddleSystem.CurrentVolume(puddle!.Owner, puddle), Is.EqualTo(FixedPoint2.New(100)));
+
+            for (var x = 0; x < 3; x++)
             {
-                var newPos = _origin.Offset(direction);
-                var sidePuddle = GetPuddle(entityManager, grid, newPos);
-                if (sidePuddle == null)
+                for (var y = 0; y < 3; y++)
                 {
-                    emptyField++;
-                }
-                else if (sidePuddle.CurrentVolume == FixedPoint2.Epsilon)
-                {
-                    fullField++;
+                    if (x == 0 && y == 0 || x == 0 && y == 1 || x == 1 && y == 0)
+                    {
+                        continue;
+                    }
+
+                    var newPos = new Vector2i(x, y);
+                    var sidePuddle = GetPuddle(entityManager, grid, newPos);
+                    Assert.That(sidePuddle, Is.Null);
                 }
             }
-
-            Assert.That(emptyField, Is.EqualTo(7));
-            Assert.That(fullField, Is.EqualTo(1));
         });
 
         await pairTracker.CleanReturnAsync();

@@ -58,7 +58,7 @@ namespace Content.Shared.Zombies
         /// <summary>
         /// The role prototype of the zombie antag role
         /// </summary>
-        [ViewVariables, DataField("zombieRoleId", customTypeSerializer: typeof(PrototypeIdSerializer<AntagPrototype>))]
+        [DataField("zombieRoleId", customTypeSerializer: typeof(PrototypeIdSerializer<AntagPrototype>))]
         public readonly string ZombieRoleId = "Zombie";
     }
 }
