@@ -1,14 +1,14 @@
 # UI
-ban-list-header-ids = Ids
-ban-list-header-reason = Reason
-ban-list-header-time = Ban time
-ban-list-header-expires = Expires
-ban-list-header-banning-admin = Banning admin
-ban-list-title = Bans for { $player }
-ban-list-hidden = Hidden
+ban-list-header-ids = Id
+ban-list-header-reason = Причина
+ban-list-header-time = Длительность бана
+ban-list-header-expires = Истекает
+ban-list-header-banning-admin = Забанил
+ban-list-title = Все баны { $player }
+ban-list-hidden = Скрыт
 ban-list-ip = IP: { $ip }
 ban-list-hwid = HWID: { $hwid }
 ban-list-guid = GUID: { $guid }
 ban-list-permanent = PERMANENT
-ban-list-unbanned = Unbanned: { $date }
-ban-list-unbanned-by = By { $unbanner }
+ban-list-unbanned = Разбанен: { $date }
+ban-list-unbanned-by = Разбанил { $unbanner }
