@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Tweaks to bullet flyby sounds to be less grating., type: Tweak}
-  id: 2170
-  time: '2022-08-18T02:32:39.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Roundstart bag filling sounds should no longer play., type: Fix}
   id: 2171
   time: '2022-08-18T02:34:52.0000000+00:00'
@@ -2953,3 +2948,10 @@ Entries:
       you reread them anyway, of course.', type: Add}
   id: 2669
   time: '2022-11-16T18:24:37.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Traitor objectives should no longer be overly steal-oriented., type: Tweak}
+  - {message: The fallback for the 'keep another traitor alive' condition now just
+      gives you stay alive rather than telling you to keep yourself alive., type: Fix}
+  id: 2670
+  time: '2022-11-16T20:58:48.0000000+00:00'
