@@ -2,6 +2,7 @@ using Content.Server.Radio.EntitySystems;
 using Content.Shared.Inventory;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Server.Radio.Components;
@@ -19,7 +20,7 @@ public sealed class HeadsetComponent : Component
         "Common"
     }; //Fills only by encryption chips in it
 
-    [DataField("keysPrototypes", required: true, customTypeSerializer: typeof(PrototypeIdListSerializer<EncryptionKeyPrototype>))]
+    [DataField("keysPrototypes", required: true, customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
     public List<string> KeysPrototypes = new();
     // [ViewVariables]
     // public List<EntityUid> KeysInstalled = new List<EntityUid>();
