@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Roundstart bag filling sounds should no longer play., type: Fix}
-  id: 2171
-  time: '2022-08-18T02:34:52.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Machine boards now have different appearances depending on department.,
@@ -2955,3 +2950,9 @@ Entries:
       gives you stay alive rather than telling you to keep yourself alive., type: Fix}
   id: 2670
   time: '2022-11-16T20:58:48.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added machine upgrades for the medical scanner. You can now decrease
+      the chance that cloning fails on a body., type: Add}
+  id: 2671
+  time: '2022-11-16T21:02:37.0000000+00:00'
