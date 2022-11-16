@@ -1,10 +1,4 @@
 Entries:
-- author: martin69420
-  changes:
-  - {message: 'Added descriptions to many entities, including most signs.', type: Add}
-  - {message: Fixed typos on a few descriptions., type: Tweak}
-  id: 2165
-  time: '2022-08-17T00:56:54.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed guns spawning w/o ammo., type: Fix}
@@ -2952,3 +2946,8 @@ Entries:
     type: Fix}
   id: 2664
   time: '2022-11-16T11:08:19.0000000+00:00'
+- author: GoodWheatley
+  changes:
+  - {message: Eswords can damage windows now., type: Tweak}
+  id: 2665
+  time: '2022-11-16T14:20:42.0000000+00:00'
