@@ -1,9 +1,13 @@
 using Content.Server.GameTicking;
+using Content.Server.Radio.Components;
+using Content.Server.Radio.EntitySystems;
 using Content.Shared.CCVar;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.Radio;
 using Content.Shared.Salvage;
+using Robust.Server.GameObjects;
 using Robust.Server.Maps;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
@@ -12,10 +16,6 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using System.Linq;
-using Content.Server.Ghost.Components;
-using Content.Server.Radio.EntitySystems;
-using Content.Shared.Radio;
-using Robust.Server.GameObjects;
 
 namespace Content.Server.Salvage
 {
@@ -354,11 +354,11 @@ namespace Content.Server.Salvage
 
         private void Report(EntityUid source, string channelName, string messageKey, params (string, object)[] args)
         {
-            if (!TryComp<IntrinsicRadioComponent>(source, out var radio)) return;
+            if (!TryComp<IntrinsicRadioReceiverComponent>(source, out var radio)) return;
 
             var message = args.Length == 0 ? Loc.GetString(messageKey) : Loc.GetString(messageKey, args);
             var channel = _prototypeManager.Index<RadioChannelPrototype>(channelName);
-            _radioSystem.SpreadMessage(radio, source, message, channel);
+            _radioSystem.SendRadioMessage(source, message, channel);
         }
 
         private void Transition(SalvageMagnetComponent magnet, TimeSpan currentTime)
