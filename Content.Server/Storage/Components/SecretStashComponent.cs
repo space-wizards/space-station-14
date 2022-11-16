@@ -1,5 +1,4 @@
 using Content.Server.Storage.EntitySystems;
-using Content.Server.Toilet;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Item;
 using Robust.Shared.Containers;
@@ -20,14 +19,14 @@ namespace Content.Server.Storage.Components
         /// <summary>
         ///     Max item size that can be fitted into secret stash.
         /// </summary>
-        [ViewVariables] [DataField("maxItemSize")]
+        [DataField("maxItemSize")]
         public int MaxItemSize = (int) ReferenceSizes.Pocket;
 
         /// <summary>
         ///     IC secret stash name. For example "the toilet cistern".
         ///     If empty string, will replace it with entity name in init.
         /// </summary>
-        [ViewVariables] [DataField("secretPartName", readOnly: true)]
+        [DataField("secretPartName", readOnly: true)]
         public string SecretPartName
         {
             get => _secretPartName;

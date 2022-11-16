@@ -32,20 +32,18 @@ namespace Content.Server.Atmos.Components
         public IPlayingAudioStream? ConnectStream;
         public IPlayingAudioStream? DisconnectStream;
 
-        [DataField("air")] [ViewVariables] public GasMixture Air { get; set; } = new();
+        [DataField("air")] public GasMixture Air { get; set; } = new();
 
         /// <summary>
         ///     Pressure at which tank should be considered 'low' such as for internals.
         /// </summary>
         [DataField("tankLowPressure")]
-        [ViewVariables]
         public float TankLowPressure { get; set; } = DefaultLowPressure;
 
         /// <summary>
         ///     Distributed pressure.
         /// </summary>
         [DataField("outputPressure")]
-        [ViewVariables]
         public float OutputPressure { get; set; } = DefaultOutputPressure;
 
         /// <summary>

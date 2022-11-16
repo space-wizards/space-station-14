@@ -42,7 +42,7 @@ namespace Content.Server.Disease.Components
         /// exhibit direct symptoms from. They still transmit
         /// these diseases, just without symptoms.
         /// </summary>
-        [ViewVariables, DataField("carrierDiseases", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<DiseasePrototype>))]
+        [DataField("carrierDiseases", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<DiseasePrototype>))]
         public HashSet<string>? CarrierDiseases;
 
         /// <summary>
