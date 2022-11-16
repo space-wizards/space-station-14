@@ -1,11 +1,6 @@
 Entries:
 - author: martin69420
   changes:
-  - {message: Fixed missing death sprite for holocarp and magicarp, type: Fix}
-  id: 2164
-  time: '2022-08-16T13:41:26.0000000+00:00'
-- author: martin69420
-  changes:
   - {message: 'Added descriptions to many entities, including most signs.', type: Add}
   - {message: Fixed typos on a few descriptions., type: Tweak}
   id: 2165
@@ -2951,3 +2946,9 @@ Entries:
   - {message: Fixed a broken inhand for the fire extinguisher., type: Fix}
   id: 2663
   time: '2022-11-16T05:24:35.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Hydroponics trays and soil now properly rotate with the player perspective.,
+    type: Fix}
+  id: 2664
+  time: '2022-11-16T11:08:19.0000000+00:00'
