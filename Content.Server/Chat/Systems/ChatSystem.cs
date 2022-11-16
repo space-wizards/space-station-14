@@ -1,24 +1,22 @@
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Server.Ghost.Components;
-using Content.Server.Mind.Components;
+using Content.Server.MobState;
 using Content.Server.Players;
 using Content.Server.Popups;
-using Content.Server.Radio.EntitySystems;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
-using Content.Server.MobState;
 using Content.Shared.ActionBlocker;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory;
+using Content.Shared.Radio;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
@@ -30,8 +28,6 @@ using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
-using Content.Server.Speech.EntitySystems;
-using Content.Shared.Radio;
 
 namespace Content.Server.Chat.Systems;
 
@@ -359,8 +355,8 @@ public sealed partial class ChatSystem : SharedChatSystem
             else
                 _chatManager.ChatMessageToOne(ChatChannel.Whisper, obfuscatedMessage, wrappedobfuscatedMessage, source, data.HideChatOverride ?? hideChat, session.ConnectedClient);
         }
-        
-        // _replay.QueueReplayMessage(new ChatMessage(channel, message, wrappedMessage, source, hideChat));
+
+        // _replay.QueueReplayMessage(new ChatMessage(ChatChannel.Whisper, message, wrappedMessage, source, hideChat));
 
         var ev = new EntitySpokeEvent(source, message, channel, obfuscatedMessage);
         RaiseLocalEvent(source, ev, true);

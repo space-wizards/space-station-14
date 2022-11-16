@@ -1,6 +1,5 @@
 using Content.Server.Chat.Systems;
 using Content.Server.Radio.Components;
-using Content.Server.Speech;
 using Content.Server.VoiceMask;
 using Content.Shared.Chat;
 using Content.Shared.IdentityManagement;
@@ -12,7 +11,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.Radio.EntitySystems;
 
 /// <summary>
-///     This system handles radio speakers and microphones (which together form a hand-held radio).
+///     This system handles intrinsic radios and the general process of converting radio messages into chat messages.
 /// </summary>
 public sealed class RadioSystem : EntitySystem
 {
@@ -82,6 +81,8 @@ public sealed class RadioSystem : EntitySystem
 
             RaiseLocalEvent(radio.Owner, ev);
         }
+
+        // _replay.QueueReplayMessage(chat);
 
         _messages.Remove(message);
     }
