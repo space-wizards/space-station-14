@@ -15,6 +15,13 @@
         ents: []
   - type: StaticPrice
     price: 100
+  - type: Injurable # TODO wounds before merge
+    allowedTraumaTypes:
+    - Impact
+    maxHealth: 50
+    health: 50
+    maxStructure: 50
+    structure: 50
 
 - type: entity
   id: TorsoHuman

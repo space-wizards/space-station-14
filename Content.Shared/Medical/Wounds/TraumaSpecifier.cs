@@ -9,28 +9,26 @@ namespace Content.Shared.Medical.Wounds;
 [DataDefinition, NetSerializable, Serializable]
 public struct TraumaSpecifier
 {
-    [DataField("traumas",
+    [field: DataField("traumas",
         customTypeSerializer: typeof(PrototypeIdDictionarySerializer<Trauma, TraumaTypePrototype>))]
-    private readonly Dictionary<string, Trauma> _traumaData;
-
-    public Dictionary<string, Trauma> TraumaValues => _traumaData;
+    public Dictionary<string, Trauma> TraumaValues { get; }
 
     public void ApplyModifiers(TraumaModifierSet modifiers)
     {
         foreach (var traumaType in modifiers.Coefficients.Keys)
         {
-            if (!_traumaData.ContainsKey(traumaType))
+            if (!TraumaValues.ContainsKey(traumaType))
                 continue;
-            var temp = _traumaData[traumaType];
-            _traumaData[traumaType] = temp with {Damage = temp.Damage * modifiers.Coefficients[traumaType]};
+            var temp = TraumaValues[traumaType];
+            TraumaValues[traumaType] = temp with {Damage = temp.Damage * modifiers.Coefficients[traumaType]};
         }
 
         foreach (var traumaType in modifiers.FlatReduction.Keys)
         {
-            if (!_traumaData.ContainsKey(traumaType))
+            if (!TraumaValues.ContainsKey(traumaType))
                 continue;
-            var temp = _traumaData[traumaType];
-            _traumaData[traumaType] = temp with {Damage = temp.Damage - modifiers.FlatReduction[traumaType]};
+            var temp = TraumaValues[traumaType];
+            TraumaValues[traumaType] = temp with {Damage = temp.Damage - modifiers.FlatReduction[traumaType]};
         }
     }
 
@@ -38,10 +36,10 @@ public struct TraumaSpecifier
     {
         foreach (var traumaType in modifiers.Coefficients.Keys)
         {
-            if (!_traumaData.ContainsKey(traumaType))
+            if (!TraumaValues.ContainsKey(traumaType))
                 continue;
-            var temp = _traumaData[traumaType];
-            _traumaData[traumaType] = temp with
+            var temp = TraumaValues[traumaType];
+            TraumaValues[traumaType] = temp with
             {
                 PenetrationChance = temp.PenetrationChance * modifiers.Coefficients[traumaType]
             };
@@ -49,10 +47,10 @@ public struct TraumaSpecifier
 
         foreach (var traumaType in modifiers.FlatReduction.Keys)
         {
-            if (!_traumaData.ContainsKey(traumaType))
+            if (!TraumaValues.ContainsKey(traumaType))
                 continue;
-            var temp = _traumaData[traumaType];
-            _traumaData[traumaType] = temp with
+            var temp = TraumaValues[traumaType];
+            TraumaValues[traumaType] = temp with
             {
                 PenetrationChance = temp.PenetrationChance - modifiers.FlatReduction[traumaType]
             };
@@ -62,10 +60,10 @@ public struct TraumaSpecifier
 
 [DataRecord, Serializable, NetSerializable]
 public record struct Trauma(
-    [field: DataField("Damage", required: true)]
+    [field: DataField("damage", required: true)]
     FixedPoint2 Damage, //Damage represents the amount of trauma dealt
-    [field: DataField("Chance", required: false)]
+    [field: DataField("chance", required: false)]
     FixedPoint2 PenetrationChance,
-    [field: DataField("penTraumaType", required: false, customTypeSerializer: typeof(PrototypeIdSerializer<>))]
+    [field: DataField("penTraumaType", required: false, customTypeSerializer: typeof(PrototypeIdSerializer<TraumaTypePrototype>))]
     string? PenTraumaType = null
 ); //Penetration represents how much this damage penetrates to hit child parts

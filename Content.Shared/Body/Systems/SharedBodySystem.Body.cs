@@ -28,6 +28,7 @@ public partial class SharedBodySystem
 
         var prototype = Prototypes.Index<BodyPrototype>(body.Prototype);
         InitBody(body, prototype);
+        Dirty(body);
     }
 
     private void OnBodyGetState(EntityUid uid, BodyComponent body, ref ComponentGetState args)

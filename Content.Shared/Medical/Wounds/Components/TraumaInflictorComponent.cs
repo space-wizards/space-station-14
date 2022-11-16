@@ -7,6 +7,6 @@ namespace Content.Shared.Medical.Wounds.Components;
 [Access(typeof(InjurySystem))]
 public sealed class TraumaInflictorComponent : Component
 {
-    [DataField("Trauma", required: true)]
+    [DataField("trauma", required: true)]
     public TraumaSpecifier Trauma = new TraumaSpecifier();
 }

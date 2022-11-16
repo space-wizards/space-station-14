@@ -1,7 +1,9 @@
-﻿using Content.Shared.Body.Systems;
+﻿using Content.Shared.Body.Components;
+using Content.Shared.Body.Systems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Medical.Wounds.Components;
 using Content.Shared.Medical.Wounds.Prototypes;
+using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -12,12 +14,26 @@ public sealed class InjurySystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedBodySystem _bodySystem = default!;
+
     private readonly Dictionary<string, InjuryTable> _cachedInjuryTables = new();
 
     public override void Initialize()
     {
         CacheData(null);
         _prototypeManager.PrototypesReloaded += CacheData;
+
+        SubscribeLocalEvent<BodyComponent, AttackedEvent>(OnBodyAttacked);
+    }
+
+    private void OnBodyAttacked(EntityUid uid, BodyComponent component, AttackedEvent args)
+    {
+        if (!TryComp(args.Used, out TraumaInflictorComponent? inflictor))
+            return;
+
+        foreach (var child in _bodySystem.GetBodyChildren(uid, component))
+        {
+            TryApplyWound(child.Id, inflictor.Trauma);
+        }
     }
 
     private void CacheData(PrototypesReloadedEventArgs? prototypesReloadedEventArgs)
@@ -125,6 +141,7 @@ public sealed class InjurySystem : EntitySystem
     {
         var nextLevel = 1f;
         var levelFloor = 0f;
+        // TODO what if 0 is not in the dict
         var injuryId = _cachedInjuryTables[traumaType].Injuries[FixedPoint2.Zero];
 
         foreach (var injuryData in _cachedInjuryTables[traumaType].Injuries)
