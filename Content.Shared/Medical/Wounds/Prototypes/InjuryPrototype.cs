@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Prototypes;
+﻿using Content.Shared.FixedPoint;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Medical.Wounds.Prototypes;
 
@@ -7,17 +8,26 @@ public sealed class InjuryPrototype : IPrototype
 {
     [IdDataField] public string ID { get; init; } = string.Empty;
 
-    [DataField("allowStacking")] public bool AllowStacking { get; init; } = true;
+    [DataField("allowStacking")]
+    public readonly bool AllowStacking = true;
 
-    [DataField("name", required: true)] public string DisplayName { get; init; } = string.Empty;
+    [DataField("name", required: true)]
+    public readonly string DisplayName = string.Empty;
 
     [DataField("description", required: true)]
-    public string Description { get; init; } = string.Empty;
+    public readonly string Description = string.Empty;
 
-    [DataField("pain", required: true)] public float Pain { get; init; }
+    [DataField("pain", required: true)]
+    public readonly float Pain;
 
     [DataField("bleedRate", required: false)]
-    public float Bleed { get; init; }
+    public readonly float Bleed;
+
+    [DataField("healthDamage")]
+    public readonly FixedPoint2 HealthDamage;
+
+    [DataField("integrityDamage")]
+    public readonly FixedPoint2 IntegrityDamage;
 }
 
 public static class A
