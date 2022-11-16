@@ -15,4 +15,3 @@ public sealed class EncryptionKeyComponent : Component
         "Common"
     };
 }
-
