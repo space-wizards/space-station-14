@@ -13,14 +13,12 @@ public sealed class StrapComponent : SharedStrapComponent
     /// <summary>
     /// The angle in degrees to rotate the player by when they get strapped
     /// </summary>
-    [ViewVariables]
     [DataField("rotation")]
     public int Rotation { get; set; }
 
     /// <summary>
     /// The size of the strap which is compared against when buckling entities
     /// </summary>
-    [ViewVariables]
     [DataField("size")]
     public int Size { get; set; } = 100;
 
@@ -37,27 +35,23 @@ public sealed class StrapComponent : SharedStrapComponent
     /// <summary>
     /// The sound to be played when a mob is buckled
     /// </summary>
-    [ViewVariables]
     [DataField("buckleSound")]
     public SoundSpecifier BuckleSound { get; } = new SoundPathSpecifier("/Audio/Effects/buckle.ogg");
 
     /// <summary>
     /// The sound to be played when a mob is unbuckled
     /// </summary>
-    [ViewVariables]
     [DataField("unbuckleSound")]
     public SoundSpecifier UnbuckleSound { get; } = new SoundPathSpecifier("/Audio/Effects/unbuckle.ogg");
 
     /// <summary>
     /// ID of the alert to show when buckled
     /// </summary>
-    [ViewVariables]
     [DataField("buckledAlertType")]
     public AlertType BuckledAlertType { get; } = AlertType.Buckled;
 
     /// <summary>
     /// The sum of the sizes of all the buckled entities in this strap
     /// </summary>
-    [ViewVariables]
     public int OccupiedSize { get; set; }
 }

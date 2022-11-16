@@ -15,7 +15,6 @@ namespace Content.Server.Disease.Components
         /// <summary>
         /// How much time we've accumulated processing
         /// </summary>
-        [ViewVariables]
         [DataField("accumulator")]
         public float Accumulator = 0f;
         /// <summary>

@@ -60,6 +60,46 @@
   - type: Appearance
 
 - type: entity
+  id: SpeedLoaderMagnumHC
+  name: "speed loader (.45 magnum)"
+  parent: BaseSpeedLoaderMagnum
+  components:
+  - type: BallisticAmmoProvider
+    proto: BulletMagnumHC
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_speed_loader.rsi
+    layers:
+      - state: base
+        map: [ "enum.GunVisualLayers.Base" ]
+      - state: base-6
+        map: [ "enum.GunVisualLayers.Mag" ]
+  - type: MagazineVisuals
+    magState: base
+    steps: 7
+    zeroVisible: false
+  - type: Appearance
+
+- type: entity
+  id: SpeedLoaderMagnumHCHighVelocity
+  name: "speed loader (.45 magnum high-velocity)"
+  parent: BaseSpeedLoaderMagnum
+  components:
+  - type: BallisticAmmoProvider
+    proto: BulletMagnumHCHighVelocity
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_speed_loader.rsi
+    layers:
+      - state: base
+        map: [ "enum.GunVisualLayers.Base" ]
+      - state: high-velocity-6
+        map: [ "enum.GunVisualLayers.Mag" ]
+  - type: MagazineVisuals
+    magState: high-velocity
+    steps: 7
+    zeroVisible: false
+  - type: Appearance
+
+- type: entity
   id: SpeedLoaderMagnumPractice
   name: "speed loader (.40 magnum practice)"
   parent: BaseSpeedLoaderMagnum

@@ -23,13 +23,13 @@
         - Flare
         - CableCoil
         - CigPack
+        - Radio
       components:
         - AirlockPainter
         - SignalLinker
         - RCD
         - RCDAmmo
         - Welder
-        - Radio
         - PowerCell
   - type: ItemMapper
     mapLayers:
@@ -86,6 +86,7 @@
         - Powerdrill
         - JawsOfLife
         - CigPack
+        - Radio
       components:
         - AirlockPainter
         - SignalLinker
@@ -93,7 +94,6 @@
         - RCDAmmo
         - Welder
         - Flash
-        - Radio
         - Handcuff
         - PowerCell
   - type: ItemMapper
@@ -229,9 +229,9 @@
         - CigPack
         - Pill
         - PillCanister
+        - Radio
       components:
         - Hypospray
-        - Radio
         - Injector
   - type: ItemMapper
     mapLayers:
@@ -338,6 +338,7 @@
         - CigPack
         - Taser
         - SecBeltEquip
+        - Radio
       components:
         - Stunbaton
         - FlashOnTrigger
