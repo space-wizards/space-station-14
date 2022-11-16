@@ -1,9 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed guns spawning w/o ammo., type: Fix}
-  id: 2166
-  time: '2022-08-17T03:44:43.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: The Syndicate Zombie Bundle has been readded for Nuclear Operatives
@@ -2951,3 +2946,11 @@ Entries:
   - {message: Eswords can damage windows now., type: Tweak}
   id: 2665
   time: '2022-11-16T14:20:42.0000000+00:00'
+- author: BurninDreamear
+  changes:
+  - {message: 'All sorts of corporations now supply higher caliber bullets, revolver
+      only, for now...', type: Add}
+  - {message: Nanotrasen and Syndicate revolvers have been retrofitted to use .45
+      magnum rounds instead of .40. Happy shooting!, type: Tweak}
+  id: 2666
+  time: '2022-11-16T14:41:48.0000000+00:00'
