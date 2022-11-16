@@ -2,7 +2,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.NPC.Pathfinding;
-using Robust.Shared.Random;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
 
@@ -16,13 +15,13 @@ public sealed class PickAccessibleOperator : HTNOperator
     [DataField("rangeKey", required: true)]
     public string RangeKey = string.Empty;
 
-    [ViewVariables, DataField("targetKey", required: true)]
+    [DataField("targetKey", required: true)]
     public string TargetKey = string.Empty;
 
     /// <summary>
     /// Where the pathfinding result will be stored (if applicable). This gets removed after execution.
     /// </summary>
-    [ViewVariables, DataField("pathfindKey")]
+    [DataField("pathfindKey")]
     public string PathfindKey = NPCBlackboard.PathfindKey;
 
     public override void Initialize(IEntitySystemManager sysManager)

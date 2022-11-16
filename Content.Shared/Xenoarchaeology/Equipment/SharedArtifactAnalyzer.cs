@@ -53,7 +53,7 @@ public sealed class AnalysisConsoleScanUpdateState : BoundUserInterfaceState
 
     public string? TriggerProto;
 
-    public float? Completion;
+    public int? PointValue;
 
     public bool Scanning;
 
@@ -62,7 +62,7 @@ public sealed class AnalysisConsoleScanUpdateState : BoundUserInterfaceState
     public TimeSpan TotalTime;
 
     public AnalysisConsoleScanUpdateState(EntityUid? artifact, bool analyzerConnected, bool serverConnected, bool canScan, bool canPrint,
-        int? id, int? depth, int? edges, bool? triggered, string? effectProto, string? triggerProto, float? completion,
+        int? id, int? depth, int? edges, bool? triggered, string? effectProto, string? triggerProto, int? pointValue,
         bool scanning, TimeSpan timeRemaining, TimeSpan totalTime)
     {
         Artifact = artifact;
@@ -77,7 +77,7 @@ public sealed class AnalysisConsoleScanUpdateState : BoundUserInterfaceState
         Triggered = triggered;
         EffectProto = effectProto;
         TriggerProto = triggerProto;
-        Completion = completion;
+        PointValue = pointValue;
 
         Scanning = scanning;
         TimeRemaining = timeRemaining;

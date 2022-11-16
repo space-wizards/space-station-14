@@ -167,7 +167,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                     var newPosition = destination * progress;
 
                     // This is some supreme shit code.
-                    EntityManager.GetComponent<TransformComponent>(holder.Owner).Coordinates = origin.Offset(newPosition).WithEntityId(currentTube.Owner); ;
+                    EntityManager.GetComponent<TransformComponent>(holder.Owner).Coordinates = origin.Offset(newPosition).WithEntityId(currentTube.Owner);
 
                     continue;
                 }

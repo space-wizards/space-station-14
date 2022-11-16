@@ -22,6 +22,9 @@ public sealed class MakeSentient : ReagentEffect
         // This piece of code makes things able to speak "normally". One thing of note is that monkeys have a unique accent and won't be affected by this.
         entityManager.RemoveComponent<ReplacementAccentComponent>(uid);
 
+        // Monke talk
+        entityManager.RemoveComponent<MonkeyAccentComponent>(uid);
+
         // No idea what anything past this point does
         if (entityManager.TryGetComponent(uid, out GhostTakeoverAvailableComponent? takeOver))
         {

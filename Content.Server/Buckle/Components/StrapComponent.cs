@@ -1,10 +1,9 @@
 using System.Linq;
+using Content.Server.Buckle.Systems;
 using Content.Shared.Alert;
 using Content.Shared.Buckle.Components;
 using Content.Shared.DragDrop;
 using Robust.Shared.Audio;
-using Robust.Shared.Serialization;
-
 
 namespace Content.Server.Buckle.Components
 {
@@ -17,13 +16,13 @@ namespace Content.Server.Buckle.Components
         /// <summary>
         /// The angle in degrees to rotate the player by when they get strapped
         /// </summary>
-        [ViewVariables] [DataField("rotation")]
+        [DataField("rotation")]
         private int _rotation;
 
         /// <summary>
         /// The size of the strap which is compared against when buckling entities
         /// </summary>
-        [ViewVariables] [DataField("size")] private int _size = 100;
+        [DataField("size")] private int _size = 100;
         private int _occupiedSize;
 
         private bool _enabled = true;
@@ -50,21 +49,18 @@ namespace Content.Server.Buckle.Components
         /// <summary>
         /// The sound to be played when a mob is buckled
         /// </summary>
-        [ViewVariables]
         [DataField("buckleSound")]
         public SoundSpecifier BuckleSound { get; } = new SoundPathSpecifier("/Audio/Effects/buckle.ogg");
 
         /// <summary>
         /// The sound to be played when a mob is unbuckled
         /// </summary>
-        [ViewVariables]
         [DataField("unbuckleSound")]
         public SoundSpecifier UnbuckleSound { get; } = new SoundPathSpecifier("/Audio/Effects/unbuckle.ogg");
 
         /// <summary>
         /// ID of the alert to show when buckled
         /// </summary>
-        [ViewVariables]
         [DataField("buckledAlertType")]
         public AlertType BuckledAlertType { get; } = AlertType.Buckled;
 
@@ -150,14 +146,11 @@ namespace Content.Server.Buckle.Components
 
         public void RemoveAll()
         {
-            var entManager = IoCManager.Resolve<IEntityManager>();
+            var buckleSystem = IoCManager.Resolve<IEntityManager>().System<BuckleSystem>();
 
             foreach (var entity in BuckledEntities.ToArray())
             {
-                if (entManager.TryGetComponent<BuckleComponent>(entity, out var buckle))
-                {
-                    buckle.TryUnbuckle(entity, true);
-                }
+                buckleSystem.TryUnbuckle(entity, entity, true);
             }
 
             BuckledEntities.Clear();
@@ -167,10 +160,8 @@ namespace Content.Server.Buckle.Components
 
         public override bool DragDropOn(DragDropEvent eventArgs)
         {
-            var entManager = IoCManager.Resolve<IEntityManager>();
-
-            if (!entManager.TryGetComponent(eventArgs.Dragged, out BuckleComponent? buckleComponent)) return false;
-            return buckleComponent.TryBuckle(eventArgs.User, Owner);
+            var buckleSystem = IoCManager.Resolve<IEntityManager>().System<BuckleSystem>();
+            return buckleSystem.TryBuckle(eventArgs.Dragged, eventArgs.User, Owner);
         }
     }
 }
