@@ -570,13 +570,22 @@
   categories:
   - UplinkMisc
 
-#- type: listing
-#  id: UplinkCostumeCentcom
-#  productEntity: ClothingBackpackDuffelSyndicateCostumeCentcom
-#  cost:
-#    Telecrystal: 4
-#  categories:
-#  - UplinkMisc
+- type: listing
+  id: UplinkCostumeCentcom
+  productEntity: ClothingBackpackDuffelSyndicateCostumeCentcom
+  cost:
+    Telecrystal: 4
+  categories:
+  - UplinkMisc
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+  - !type:BuyerWhitelistCondition
+    blacklist:
+      components:
+      - SurplusBundle
 
 # - type: listing
 #   id: UplinkGigacancerScanner
