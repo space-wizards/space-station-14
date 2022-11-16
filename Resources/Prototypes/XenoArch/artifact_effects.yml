@@ -46,14 +46,14 @@
       - goodfeeling-artifact-9
       - goodfeeling-artifact-10
       - goodfeeling-artifact-11
-      - goodfeeling-artifact-12 
+      - goodfeeling-artifact-12
       - goodfeeling-artifact-13
       - goodfeeling-artifact-14
     drastic:
       - goodfeeling-artifact-drastic-1
       - goodfeeling-artifact-drastic-2
       - goodfeeling-artifact-drastic-3
-      - goodfeeling-artifact-drastic-4 
+      - goodfeeling-artifact-drastic-4
       - goodfeeling-artifact-drastic-5
       - goodfeeling-artifact-drastic-6
 
@@ -241,7 +241,6 @@
     - UltraHighPowerMicroLaserStockPart
     - SuperMatterBinStockPart
 
-
 - type: artifactEffect
   id: EffectDisease
   targetDepth: 3
@@ -275,6 +274,7 @@
   id: EffectPowerGen20K
   targetDepth: 3
   effectHint: artifact-effect-hint-release
+  restrictItems: true
   components:
   - type: PowerSupplier
     supplyRate: 20000

@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Prototypes;
+﻿using Content.Shared.Item;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Xenoarchaeology.XenoArtifacts;
@@ -33,4 +34,17 @@ public sealed class ArtifactEffectPrototype : IPrototype
 
     [DataField("effectHint")]
     public string? EffectHint;
+
+
+    /// <summary>
+    ///     Should this effect be restricted from artifacts with <see cref="ItemComponent"/>?
+    /// </summary>
+    [DataField("restrictItems")]
+    public bool RestrictItems = false;
+
+    /// <summary>
+    ///     Should this effect be restricted from artifacts that do not have <see cref="ItemComponent"/>?
+    /// </summary>
+    [DataField("restrictStructures")]
+    public bool RestrictStructures = false;
 }

@@ -105,7 +105,7 @@ public sealed partial class ArtifactSystem : EntitySystem
 
         component.NodeTree = new ArtifactTree();
 
-        GenerateArtifactNodeTree(ref component.NodeTree, nodeAmount);
+        GenerateArtifactNodeTree(component.Owner, ref component.NodeTree, nodeAmount);
         EnterNode(component.Owner, ref component.NodeTree.StartNode, component);
     }
 

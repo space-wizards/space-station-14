@@ -21,6 +21,7 @@
   id: TriggerAnchor
   targetDepth: 0
   triggerHint: artifact-trigger-hint-tool
+  restrictItems: true
   components:
   - type: ArtifactAnchorTrigger
 
@@ -28,6 +29,7 @@
   id: TriggerElectricity
   targetDepth: 0
   triggerHint: artifact-trigger-hint-electricity
+  restrictItems: true
   components:
   - type: ArtifactElectricityTrigger
   - type: PowerConsumer
@@ -61,7 +63,7 @@
   - type: ArtifactDamageTrigger
     damageTypes:
     - Blunt
-    - Slash 
+    - Slash
     - Piercing
     damageThreshold: 50
 
