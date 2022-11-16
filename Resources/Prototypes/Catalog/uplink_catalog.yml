@@ -404,7 +404,7 @@
   id: UplinkPowerSink
   productEntity: PowerSink
   cost:
-    Telecrystal: 10
+    Telecrystal: 8
   categories:
   - UplinkTools
 
@@ -532,7 +532,7 @@
   description: Cybersun's legal department pen. Smells vaguely of hard-light and war profiteering.
   productEntity: CyberPen
   cost:
-    Telecrystal: 2
+    Telecrystal: 3
   categories:
   - UplinkMisc
 
@@ -569,23 +569,6 @@
     Telecrystal: 2
   categories:
   - UplinkMisc
-
-- type: listing
-  id: UplinkCostumeCentcom
-  productEntity: ClothingBackpackDuffelSyndicateCostumeCentcom
-  cost:
-    Telecrystal: 4
-  categories:
-  - UplinkMisc
-  conditions:
-  - !type:StoreWhitelistCondition
-    whitelist:
-      tags:
-      - NukeOpsUplink
-  - !type:BuyerWhitelistCondition
-    blacklist:
-      components:
-      - SurplusBundle
 
 # - type: listing
 #   id: UplinkGigacancerScanner
