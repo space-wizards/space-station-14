@@ -68,6 +68,14 @@
     damageThreshold: 50
 
 - type: artifactTrigger
+  id: TriggerItemLanded
+  targetDepth: 1
+  triggerHint: artifact-trigger-hint-throw
+  restrictStructures: true
+  components:
+  - type: ArtifactLandTrigger
+
+- type: artifactTrigger
   id: TriggerHeat
   targetDepth: 1
   triggerHint: artifact-trigger-hint-heat

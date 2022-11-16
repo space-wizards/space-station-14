@@ -25,3 +25,4 @@ artifact-trigger-hint-death = Life essence
 artifact-trigger-hint-radiation = Radiation
 artifact-trigger-hint-pressure = Extreme pressure
 artifact-trigger-hint-gas = Gas
+artifact-trigger-hint-throw = Change in acceleration
