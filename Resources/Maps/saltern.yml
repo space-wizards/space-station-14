@@ -22961,7 +22961,7 @@ entities:
     parent: 852
     type: Transform
 - uid: 2053
-  type: AirlockMaintChapelLocked
+  type: AirlockMaintLocked
   components:
   - pos: -33.5,14.5
     parent: 852
