@@ -92,7 +92,7 @@
   meltingPoint: 170.0
   metabolisms:
     Narcotic:
-      metabolismRate: 0.4 #for whatever reason this value will be multiplied by 0.5 to get the actual rate, so this should metabolize at 0.2 chems/s
+      metabolismRate: 0.2
       effects:
       - !type:MovespeedModifier
         walkSpeedModifier: 1.3
