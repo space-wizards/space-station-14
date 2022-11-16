@@ -32,7 +32,7 @@ public sealed partial class ToolSystem
             return;
         }
 
-        grid.GetTileRef(args.Coordinates).TryDeconstructToSubFloor(_mapManager, _tileDefinitionManager, EntityManager);
+        grid.GetTileRef(args.Coordinates).TryDeconstructWithToolQualities(new[] { "Prying" }, _mapManager, _tileDefinitionManager, EntityManager);
     }
 
     private void OnTilePryingAfterInteract(EntityUid uid, TilePryingComponent component, AfterInteractEvent args)
