@@ -141,19 +141,21 @@ public sealed class InjurySystem : EntitySystem
     private (InjurableComponent Injurable, EntityUid Target)? FindValidInjurableInAdjacentParts(EntityUid target,
         string traumaType)
     {
-        //Stub method for SMUG to implement <3
+        foreach (var data in _bodySystem.GetBodyPartAdjacentPartsComponents<InjurableComponent>(target))
+        {
+            if (data.Component.AllowedTraumaTypes?.Contains(traumaType) ?? false)
+                return (data.Component, target);
+        }
+
         return null;
     }
 
     private (InjurableComponent Injurable, EntityUid Target)? FindValidInjurableInOrgans(EntityUid target,
         string traumaType)
     {
-        //TODO: replace this with bodypartOrganComps
-        foreach (var data in _bodySystem.GetBodyOrganComponents<InjurableComponent>(target))
+        foreach (var data in _bodySystem.GetBodyPartOrganComponents<InjurableComponent>(target))
         {
-            if (data.Comp.AllowedTraumaTypes == null)
-                continue;
-            if (data.Comp.AllowedTraumaTypes.Contains(traumaType))
+            if (data.Comp.AllowedTraumaTypes?.Contains(traumaType) ?? false)
                 return (data.Comp, target);
         }
 

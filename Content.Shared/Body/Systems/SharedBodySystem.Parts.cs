@@ -371,7 +371,7 @@ public partial class SharedBodySystem
         if (!Resolve(partId, ref part, false))
             yield break;
 
-        if (part.ParentSlot != null)
+        if (part.ParentSlot != null && HasComp<BodyPartComponent>(partId))
             yield return part.ParentSlot.Parent;
 
         foreach (var slot in part.Children.Values)
