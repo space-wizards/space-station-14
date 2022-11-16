@@ -33,7 +33,6 @@
     - type: Appearance
       visuals:
         - type: RandomArtifactVisualizer
-   
     - type: StaticPrice
       price: 500
 

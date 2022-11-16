@@ -1,0 +1,52 @@
+﻿- type: entity
+  parent: BaseItem
+  id: BaseXenoArtifactItem
+  name: alien artifact
+  description: A strange handheld alien device.
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi
+    netsync: false
+    state: ano01
+  - type: Damageable
+  - type: Physics
+    bodyType: Dynamic
+  - type: Transform
+    noRot: true
+  - type: InteractionOutline
+  - type: Artifact
+  - type: RandomArtifactSprite
+  - type: Appearance
+    visuals:
+    - type: RandomArtifactVisualizer
+  - type: StaticPrice
+    price: 500
+
+- type: entity
+  parent: BaseXenoArtifactItem
+  id: SimpleXenoArtifactItem
+  suffix: Simple
+  components:
+  - type: Artifact
+    nodesMin: 2
+    nodesMax: 5
+
+- type: entity
+  parent: BaseXenoArtifactItem
+  id: MediumXenoArtifactItem
+  suffix: Medium
+  components:
+  - type: Artifact
+    nodesMin: 5
+    nodesMax: 9
+
+- type: entity
+  parent: BaseXenoArtifactItem
+  id: ComplexXenoArtifactItem
+  suffix: Complex
+  components:
+  - type: Artifact
+    nodesMin: 9
+    nodesMax: 13
+
