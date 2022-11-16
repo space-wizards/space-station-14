@@ -94,7 +94,7 @@
   id: UplinkSyndieMiniBomb
   productEntity: SyndieMiniBomb
   cost:
-    Telecrystal: 7
+    Telecrystal: 6
   categories:
     - UplinkExplosives
 
@@ -194,7 +194,7 @@
   description: A deep shoulder holster capable of holding many types of ballistics.
   productEntity: ClothingBeltSyndieHolster
   cost:
-    Telecrystal: 2
+    Telecrystal: 1
   categories:
   - UplinkUtility
 
@@ -224,7 +224,7 @@
   description: A black jetpack. It allows you to fly around in space. Additional fuel not included.
   productEntity: JetpackBlack
   cost:
-    Telecrystal: 5
+    Telecrystal: 4
   categories:
   - UplinkUtility
 
@@ -235,7 +235,7 @@
   productEntity: ReinforcementTeleporterSyndicate
   icon: Objects/Devices/communication.rsi/old-radio.png
   cost:
-    Telecrystal: 25
+    Telecrystal: 20
   categories:
   - UplinkUtility
 
@@ -266,7 +266,7 @@
   description: A chemical hypospray disguised as a pen, capable of instantly injecting up to 15u of reagents. Starts empty.
   productEntity: Hypopen
   cost:
-    Telecrystal: 4
+    Telecrystal: 6
   categories:
   - UplinkUtility
 
@@ -404,7 +404,7 @@
   id: UplinkPowerSink
   productEntity: PowerSink
   cost:
-    Telecrystal: 5
+    Telecrystal: 10
   categories:
   - UplinkTools
 
@@ -412,7 +412,7 @@
   id: UplinkCarpDehydrated
   productEntity: DehydratedSpaceCarp
   cost:
-    Telecrystal: 3
+    Telecrystal: 2
   categories:
   - UplinkTools
 
@@ -485,7 +485,7 @@
   id: UplinkClothingOuterVestWeb
   productEntity: ClothingOuterVestWeb
   cost:
-    Telecrystal: 5
+    Telecrystal: 4
   categories:
   - UplinkArmor
 
@@ -512,7 +512,7 @@
   description: A simple EVA suit that offers no protection other than what's needed to survive in space.
   productEntity: ClothingBackpackDuffelSyndicateEVABundle
   cost:
-    Telecrystal: 4
+    Telecrystal: 3
   categories:
   - UplinkArmor
 
@@ -532,7 +532,7 @@
   description: Cybersun's legal department pen. Smells vaguely of hard-light and war profiteering.
   productEntity: CyberPen
   cost:
-    Telecrystal: 4
+    Telecrystal: 2
   categories:
   - UplinkMisc
 
