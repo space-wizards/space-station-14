@@ -12,7 +12,9 @@ public abstract class SharedMechComponent : Component
     public readonly string RiderSlotId = "mech-rider-slot";
 
     [ViewVariables(VVAccess.ReadWrite)]
-    public List<EntityUid> Modules = new();
+    public Container EquipmentContainer = default!;
+    [ViewVariables]
+    public readonly string EquipmentContainerId = "mech-equipment-container";
 
     #region Visualizer States
     [DataField("baseState")]

@@ -72,9 +72,6 @@ public sealed partial class RevenantSystem
         if (!HasComp<MobStateComponent>(target) || !HasComp<HumanoidComponent>(target) || HasComp<RevenantComponent>(target))
             return;
 
-        if (!_interact.InRangeUnobstructed(uid, target))
-            return;
-
         args.Handled = true;
         if (!TryComp<EssenceComponent>(target, out var essence) || !essence.SearchComplete)
         {

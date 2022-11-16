@@ -31,8 +31,7 @@ public abstract class SharedMechSystem : EntitySystem
 
     private void RelayInteractionEvent<TEvent>(EntityUid uid, SharedMechComponent component, TEvent args) where TEvent : notnull
     {
-        Logger.Debug("got interaction");
-        foreach (var module in component.Modules)
+        foreach (var module in component.EquipmentContainer.ContainedEntities)
         {
             RaiseLocalEvent(module, args);
         }
@@ -68,7 +67,12 @@ public abstract class SharedMechSystem : EntitySystem
     private void OnStartup(EntityUid uid, SharedMechComponent component, ComponentStartup args)
     {
         component.RiderSlot = _container.EnsureContainer<ContainerSlot>(uid, component.RiderSlotId);
+        component.EquipmentContainer = _container.EnsureContainer<Container>(uid, component.EquipmentContainerId);
         UpdateAppearance(uid, component);
+
+        //TODO: fix this shit
+        var ent = Spawn("MechEquipmentGrabber", Transform(uid).Coordinates);
+        component.EquipmentContainer.Insert(ent, EntityManager);
     }
 
     private void OnDestruction(EntityUid uid, SharedMechComponent component, DestructionEventArgs args)

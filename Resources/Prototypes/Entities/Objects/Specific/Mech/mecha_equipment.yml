@@ -1,0 +1,19 @@
+- type: entity
+  parent: BaseItem
+  id: BaseMechEquipment
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/mecha_equipment.rsi
+  - type: Item
+    sprite: Objects/Specific/Mech/mecha_equipment.rsi
+    size: 150
+
+- type: entity
+  id: MechEquipmentGrabber
+  parent: BaseMechEquipment
+  name: grabber
+  components:
+  - type: Sprite
+    state: mecha_clamp
+  - type: MechGrabber

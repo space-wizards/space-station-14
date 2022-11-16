@@ -16,11 +16,13 @@
     baseState: gygax
     openState: gygax-open
     brokenState: gygax-broken
+  - type: Puller
+    needsHands: false
   - type: InputMover
   - type: InteractionOutline
   - type: MovementSpeedModifier
-    baseWalkSpeed: 2.5
-    baseSprintSpeed: 4
+    baseWalkSpeed: 1
+    baseSprintSpeed: 2.5
   - type: Tag
     tags:
     - DoorBumpOpener
