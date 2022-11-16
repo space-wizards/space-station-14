@@ -21,7 +21,19 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
 #region Dependencies
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly IMapManager _mapMan = default!;
+    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
 #endregion Dependencies
+
+    /// <summary>
+    /// The maximum number of nested containers an event horizon is allowed to eat through in an attempt to get to the map.
+    /// </summary>
+    private const int MaxEventHorizonUnnestingIterations = 100;
+
+    /// <summary>
+    /// The maximum number of nested containers an immune entity in a container being consumed by an event horizon is allowed to search through before it gives up and just jumps to the map.
+    /// </summary>
+    private const int MaxEventHorizonDumpSearchIterations = 100;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -30,6 +42,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         SubscribeLocalEvent<GhostComponent, EventHorizonAttemptConsumeEntityEvent>(PreventConsume);
         SubscribeLocalEvent<StationDataComponent, EventHorizonAttemptConsumeEntityEvent>(PreventConsume);
         SubscribeLocalEvent<EventHorizonComponent, StartCollideEvent>(OnStartCollide);
+        SubscribeLocalEvent<EventHorizonComponent, EntGotInsertedIntoContainerMessage>(OnEventHorizonContained);
         SubscribeLocalEvent<EventHorizonComponent, EventHorizonAttemptConsumeEntityEvent>(OnAnotherEventHorizonAttemptConsumeThisEventHorizon);
         SubscribeLocalEvent<EventHorizonComponent, EventHorizonConsumedEntityEvent>(OnAnotherEventHorizonConsumedThisEventHorizon);
         SubscribeLocalEvent<ContainerManagerComponent, EventHorizonConsumedEntityEvent>(OnContainerConsumed);
@@ -45,24 +58,34 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         foreach(var (eventHorizon, xform) in EntityManager.EntityQuery<EventHorizonComponent, TransformComponent>())
         {
             if ((eventHorizon.TimeSinceLastConsumeWave += frameTime) > eventHorizon.ConsumePeriod)
-                Update(eventHorizon, xform);
+                Update(eventHorizon.Owner, eventHorizon, xform);
         }
     }
 
     /// <summary>
     /// Makes an event horizon consume everything nearby and resets the cooldown it for the next automated wave.
     /// </summary>
+    /// <param name="uid">The uid of the event horizon consuming everything nearby.</param>
     /// <param name="eventHorizon">The event horizon we want to consume nearby things.</param>
     /// <param name="xform">The transform of the event horizon.</param>
-    public void Update(EventHorizonComponent eventHorizon, TransformComponent? xform)
+    public void Update(EntityUid uid, EventHorizonComponent eventHorizon, TransformComponent? xform = null)
     {
         eventHorizon.TimeSinceLastConsumeWave = 0.0f;
-        if(!Resolve(eventHorizon.Owner, ref xform))
+        if (eventHorizon.BeingConsumedByAnotherEventHorizon)
             return;
-        if (eventHorizon.Radius < 0.0f || eventHorizon.BeingConsumedByAnotherEventHorizon)
+        if(!Resolve(uid, ref xform))
             return;
 
-        ConsumeEverythingInRange(xform.Owner, eventHorizon.Radius, xform, eventHorizon);
+        // Handle singularities some admin smited into a locker.
+        if (_containerSystem.TryGetContainingContainer(uid, out var container, transform: xform)
+        && !AttemptConsumeEntity(container.Owner, eventHorizon))
+        {
+            ConsumeEntitiesInContainer(uid, container, eventHorizon, container);
+            return;
+        }
+
+        if (eventHorizon.Radius > 0.0f)
+            ConsumeEverythingInRange(xform.Owner, eventHorizon.Radius, xform, eventHorizon);
     }
 
 #region Consume
@@ -74,11 +97,12 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// </summary>
     /// <param name="uid">The entity to consume.</param>
     /// <param name="eventHorizon">The event horizon consuming the given entity.</param>
-    public void ConsumeEntity(EntityUid uid, EventHorizonComponent eventHorizon)
+    /// <param name="outerContainer">The innermost container of the entity to consume that isn't also being consumed by the event horizon.</param>
+    public void ConsumeEntity(EntityUid uid, EventHorizonComponent eventHorizon, IContainer? outerContainer = null)
     {
-        RaiseLocalEvent(eventHorizon.Owner, new EntityConsumedByEventHorizonEvent(uid, eventHorizon));
-        RaiseLocalEvent(uid, new EventHorizonConsumedEntityEvent(uid, eventHorizon));
         EntityManager.QueueDeleteEntity(uid);
+        RaiseLocalEvent(eventHorizon.Owner, new EntityConsumedByEventHorizonEvent(uid, eventHorizon, outerContainer));
+        RaiseLocalEvent(uid, new EventHorizonConsumedEntityEvent(uid, eventHorizon, outerContainer));
     }
 
     /// <summary>
@@ -86,12 +110,13 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// </summary>
     /// <param name="uid">The entity to attempt to consume.</param>
     /// <param name="eventHorizon">The event horizon attempting to consume the given entity.</param>
-    public bool AttemptConsumeEntity(EntityUid uid, EventHorizonComponent eventHorizon)
+    /// <param name="outerContainer">The innermost container of the entity to consume that isn't also being consumed by the event horizon.</param>
+    public bool AttemptConsumeEntity(EntityUid uid, EventHorizonComponent eventHorizon, IContainer? outerContainer = null)
     {
         if(!CanConsumeEntity(uid, eventHorizon))
             return false;
 
-        ConsumeEntity(uid, eventHorizon);
+        ConsumeEntity(uid, eventHorizon, outerContainer);
         return true;
     }
 
@@ -126,6 +151,49 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
                 continue;
 
             AttemptConsumeEntity(entity, eventHorizon);
+        }
+    }
+
+    /// <summary>
+    /// Attempts to consume all entities within a container.
+    /// Excludes the event horizon itself.
+    /// All immune entities within the container will be dumped to a given container or the map/grid if that is impossible.
+    /// </summary>
+    /// <param name="uid">The uid of the event horizon. The single entity that is immune-by-default.</param>
+    /// <param name="container">The container within which to consume all entities.</param>
+    /// <param name="eventHorizon">The state of the event horizon.</param>
+    /// <param name="outerContainer">The location any immune entities within the container should be dumped to.</param>
+    public void ConsumeEntitiesInContainer(EntityUid uid, IContainer container, EventHorizonComponent eventHorizon, IContainer? outerContainer = null) {
+        // Removing the immune entities from the container needs to be deferred until after iteration or the iterator raises an error.
+        List<EntityUid> immune = new();
+
+        foreach(var entity in container.ContainedEntities)
+        {
+            if (entity == uid || !AttemptConsumeEntity(entity, eventHorizon, outerContainer))
+                immune.Add(entity); // The first check keeps singularities an admin smited into a locker from consuming themselves.
+                                    // The second check keeps things that have been rendered immune to singularities from being deleted by a singularity eating their container.
+        }
+
+        if (outerContainer == container)
+            return; // The container we are intended to drop immune things to is the same container we are consuming everything in
+                    //  it's a safe bet that we aren't consuming the container entity so there's no reason to eject anything from this container.
+
+        // We need to get the immune things out of the container because the chances are we are about to eat the container and we don't want them to get deleted despite their immunity.
+        foreach(var entity in immune)
+        {
+            // Attempt to insert immune entities into innermost container at least as outer as outerContainer.
+            var target_container = outerContainer;
+            while(target_container != null)
+            {
+                if (target_container.Insert(entity))
+                    break;
+
+                _containerSystem.TryGetContainingContainer(target_container.Owner, out target_container);
+            }
+
+            // If we couldn't or there was no container to insert into just dump them to the map/grid.
+            if (target_container == null)
+                Transform(entity).AttachToGridOrMap();
         }
     }
 
@@ -231,9 +299,9 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// <param name="range">The distance of the center entity within which to consume everything.</param>
     /// <param name="xform">The transform component attached to the center entity.</param>
     /// <param name="eventHorizon">The event horizon component attached to the center entity.</param>
-    public void ConsumeEverythingInRange(EntityUid uid, float range, TransformComponent? xform, EventHorizonComponent? eventHorizon)
+    public void ConsumeEverythingInRange(EntityUid uid, float range, TransformComponent? xform = null, EventHorizonComponent? eventHorizon = null)
     {
-        if(!Resolve(uid, ref xform) || !Resolve(uid, ref eventHorizon))
+        if(!Resolve(uid, ref xform, ref eventHorizon))
             return;
 
         ConsumeEntitiesInRange(uid, range, xform, eventHorizon);
@@ -304,6 +372,23 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     }
 
     /// <summary>
+    /// Handles event horizons being inserted into containers.
+    /// The event horizon will attempt to consume its container.
+    /// If it cannot consume its container it will instead attempt to consume everything else in the container.
+    /// </summary>
+    /// <param name="uid">The uid of the event horizon.</param>
+    /// <param name="comp">The state of the event horizon.</param>
+    /// <param name="args">The event arguments.</param>
+    private void OnEventHorizonContained(EntityUid uid, EventHorizonComponent comp, EntGotInsertedIntoContainerMessage args)
+    {
+        if (comp.BeingConsumedByAnotherEventHorizon)
+            return;
+        if (AttemptConsumeEntity(args.Container.Owner, comp))
+            return;
+        ConsumeEntitiesInContainer(uid, args.Container, comp, args.Container);
+    }
+
+    /// <summary>
     /// Prevents two event horizons from annihilating one another.
     /// Specifically prevents event horizons from consuming themselves.
     /// Also ensures that if this event horizon has already been consumed by another event horizon it cannot be consumed again.
@@ -338,21 +423,13 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// <param name="args">The event arguments.</param>
     private void OnContainerConsumed(EntityUid uid, ContainerManagerComponent comp, EventHorizonConsumedEntityEvent args)
     {
+        var drop_container = args.Container;
+        if (drop_container is null)
+            _containerSystem.TryGetContainingContainer(uid, out drop_container);
+
         foreach(var container in comp.GetAllContainers())
         {
-            foreach(var contained in container.ContainedEntities)
-            {
-                if(!AttemptConsumeEntity(contained, args.EventHorizon))
-                {
-                    // Forcefully removes this entity from whatever container is has and places it on the ground.
-                    // We can't use container.Remove because that can place us in a parent container
-                    //  and we happen to be consuming all parent containers. It could also fail which
-                    //  doesn't make much sense when the containing entity is ceasing to exist and
-                    //  could cause entities that are immune to singularities to be deleted by
-                    //  singularities consuming their container.
-                    Transform(contained).AttachToGridOrMap();
-                }
-            }
+            ConsumeEntitiesInContainer(args.EventHorizon.Owner, container, args.EventHorizon, drop_container);
         }
     }
 #endregion Event Handlers
