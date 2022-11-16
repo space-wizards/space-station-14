@@ -53,10 +53,15 @@ public sealed class InjurySystem : EntitySystem
                 PickInjury(traumaType,
                     ApplyTraumaModifiers(traumaType, injuryContainer.TraumaResistance, trauma.Damage)));
 
-            if (trauma.PenTraumaType == null || !_random.Prob(trauma.PenetrationChance.Float()))
-                continue;
+            var type = trauma.PenTraumaType ?? traumaType;
 
-            validTarget = GetValidInjurable(target, trauma.PenTraumaType);
+            if (trauma.PenTraumaType != null)
+            {
+                if (!_random.Prob(trauma.PenetrationChance.Float()))
+                    continue;
+            }
+
+            validTarget = GetValidInjurable(target, type);
 
             if (!validTarget.HasValue)
                 continue;
@@ -64,9 +69,8 @@ public sealed class InjurySystem : EntitySystem
             //Apply penetrating wounds
             injuryContainer = validTarget.Value.injurable;
             target = validTarget.Value.target;
-            success |= AddInjury(target, injuryContainer, trauma.PenTraumaType,
-                PickInjury(trauma.PenTraumaType,
-                    ApplyTraumaModifiers(trauma.PenTraumaType, injuryContainer.TraumaResistance, trauma.Damage)));
+            success |= AddInjury(target, injuryContainer, type,
+                PickInjury(type, ApplyTraumaModifiers(type, injuryContainer.TraumaResistance, trauma.Damage)));
         }
 
         return success;
@@ -98,8 +102,7 @@ public sealed class InjurySystem : EntitySystem
         return damage;
     }
 
-    private bool AddInjury(EntityUid target, InjurableComponent injuryContainer, string traumaType,
-        Injury injury)
+    private bool AddInjury(EntityUid target, InjurableComponent injuryContainer, string traumaType, Injury injury)
     {
         injuryContainer.Injuries ??= new List<Injury>();
         injuryContainer.Injuries.Add(injury);
