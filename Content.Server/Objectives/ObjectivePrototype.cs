@@ -4,6 +4,9 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Objectives
 {
+    /// <summary>
+    ///     Prototype for objectives. Remember that to be assigned, it should be added to one or more objective groups in prototype. E.g. crew, traitor, wizard
+    /// </summary>
     [Prototype("objective")]
     public sealed class ObjectivePrototype : IPrototype
     {
@@ -12,8 +15,6 @@ namespace Content.Server.Objectives
         public string ID { get; } = default!;
 
         [DataField("issuer")] public string Issuer { get; private set; } = "Unknown";
-
-        [DataField("prob")] public float Probability { get; private set; } = 0.3f;
 
         [ViewVariables]
         public float Difficulty => _difficultyOverride ?? _conditions.Sum(c => c.Difficulty);
