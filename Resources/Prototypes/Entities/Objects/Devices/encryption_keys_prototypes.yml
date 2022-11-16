@@ -1,0 +1,55 @@
+- type: encryptionKey
+  id: EncryptionKey
+
+- type: encryptionKey
+  id: EncryptionKeyCommon
+
+- type: encryptionKey
+  id: EncryptionKeyCargo
+
+- type: encryptionKey
+  id: EncryptionKeyQM
+
+- type: encryptionKey
+  id: EncryptionKeyCentCom
+
+- type: encryptionKey
+  id: EncryptionKeyCommand
+
+- type: encryptionKey
+  id: EncryptionKeyEngineering
+
+- type: encryptionKey
+  id: EncryptionKeyCE
+
+- type: encryptionKey
+  id: EncryptionKeyMedical
+
+- type: encryptionKey
+  id: EncryptionKeyCMO
+
+- type: encryptionKey
+  id: EncryptionKeyMedicalScience
+
+- type: encryptionKey
+  id: EncryptionKeyScience
+
+- type: encryptionKey
+  id: EncryptionKeyRobo
+
+- type: encryptionKey
+  id: EncryptionKeyRD
+
+- type: encryptionKey
+  id: EncryptionKeySecurity
+
+- type: encryptionKey
+  id: EncryptionKeyHOS
+
+- type: encryptionKey
+  id: EncryptionKeyService
+
+- type: encryptionKey
+  id: EncryptionKeySyndie
+
+
