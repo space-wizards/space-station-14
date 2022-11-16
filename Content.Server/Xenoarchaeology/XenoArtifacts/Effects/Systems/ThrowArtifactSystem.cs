@@ -33,7 +33,7 @@ public sealed class ThrowArtifactSystem : EntitySystem
                 if (!_random.Prob(component.TilePryChance))
                     continue;
 
-                tile.TryDeconstructWithToolQualities(new[] { "Prying" });
+                tile.TryDeconstructToSubFloor();
             }
         }
 

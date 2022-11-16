@@ -86,14 +86,36 @@ namespace Content.Shared.Maps
         }
 
         public static bool TryDeconstructWithToolQualities(this TileRef tileRef,
-            IEnumerable<string> toolQualitiesNeeded,
+            IEnumerable<string> withToolQualities,
             IMapManager? mapManager = null,
             ITileDefinitionManager? tileDefinitionManager = null,
             IEntityManager? entityManager = null,
             IRobustRandom? robustRandom = null)
         {
-            var def = tileRef.GetContentTileDefinition();
-            if (def.DeconstructToolQualities.ContainsAll(toolQualitiesNeeded))
+            tileDefinitionManager ??= IoCManager.Resolve<ITileDefinitionManager>();
+            var tileDef = (ContentTileDefinition) tileDefinitionManager[tileRef.Tile.TypeId];
+            if (tileDef.DeconstructToolQualities.ContainsAll(withToolQualities))
+            {
+                return DeconstructTile(tileRef, mapManager, tileDefinitionManager, entityManager, robustRandom);
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Deconstruct a tile so long as that tile is not a subfloor
+        /// </summary>
+        /// <remarks>
+        /// Formerly 'Tile Prying', call this when you want to remove 'floor' tiles
+        /// </remarks>
+        public static bool TryDeconstructToSubFloor(this TileRef tileRef,
+            IMapManager? mapManager = null,
+            ITileDefinitionManager? tileDefinitionManager = null,
+            IEntityManager? entityManager = null,
+            IRobustRandom? robustRandom = null)
+        {
+            tileDefinitionManager ??= IoCManager.Resolve<ITileDefinitionManager>();
+            var tileDef = (ContentTileDefinition) tileDefinitionManager[tileRef.Tile.TypeId];
+            if (!tileDef.IsSubFloor)
             {
                 return DeconstructTile(tileRef, mapManager, tileDefinitionManager, entityManager, robustRandom);
             }
@@ -109,14 +131,15 @@ namespace Content.Shared.Maps
             if (tileRef.Tile.IsEmpty)
                 return false;
 
-            mapManager ??= IoCManager.Resolve<IMapManager>();
             tileDefinitionManager ??= IoCManager.Resolve<ITileDefinitionManager>();
+            
+            var tileDef = (ContentTileDefinition) tileDefinitionManager[tileRef.Tile.TypeId];
+            if (string.IsNullOrEmpty(tileDef.BaseTurf))
+                return false;
+
+            mapManager ??= IoCManager.Resolve<IMapManager>();
             entityManager ??= IoCManager.Resolve<IEntityManager>();
             robustRandom ??= IoCManager.Resolve<IRobustRandom>();
-
-            var tileDef = (ContentTileDefinition) tileDefinitionManager[tileRef.Tile.TypeId];
-            //if (string.IsNullOrEmpty(tileDef.BaseTurf))
-                //return false;
 
             var mapGrid = mapManager.GetGrid(tileRef.GridUid);
 
@@ -128,7 +151,7 @@ namespace Content.Shared.Maps
                     (robustRandom.NextFloat() - 0.5f) * bounds,
                     (robustRandom.NextFloat() - 0.5f) * bounds));
 
-            //Actually spawn the relevant tile item at the right position and give it some random offset.
+            // Spawn the relevant tile item at the right position and give it some random offset.
             var tileItem = entityManager.SpawnEntity(tileDef.ItemDropPrototypeName, coordinates);
             entityManager.GetComponent<TransformComponent>(tileItem).LocalRotation
                 = robustRandom.NextDouble() * Math.Tau;

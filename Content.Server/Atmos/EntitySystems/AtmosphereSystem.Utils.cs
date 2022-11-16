@@ -103,6 +103,6 @@ public partial class AtmosphereSystem
         if (!mapGrid.TryGetTileRef(tile, out var tileRef))
             return;
 
-        tileRef.TryDeconstructWithToolQualities(new[] { "Prying" }, _mapManager, _tileDefinitionManager, EntityManager, _robustRandom);
+        tileRef.TryDeconstructToSubFloor(_mapManager, _tileDefinitionManager, EntityManager, _robustRandom);
     }
 }

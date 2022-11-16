@@ -35,11 +35,14 @@ public sealed partial class ToolSystem
         if (!TryComp(component.Owner, out ToolComponent? tool))
             return;
 
+        //if (!_interactionSystem.InRangeUnobstructed(user, coordinates, popup: false))
+            //return false;
+
         var tileRef = grid.GetTileRef(args.Coordinates);
 
-        if (!CheckTileConditions(tileRef, tool.Qualities))
+        if (tileRef.IsBlockedTurf(true))
             return;
-        
+
         tileRef.TryDeconstructWithToolQualities(tool.Qualities, _mapManager, _tileDefinitionManager, EntityManager);
         // TODO admin log esp cutting lattice
     }
@@ -64,16 +67,16 @@ public sealed partial class ToolSystem
         if (!_mapManager.TryGetGrid(clickLocation.GetGridUid(EntityManager), out var mapGrid))
             return false;
 
-        var tile = mapGrid.GetTileRef(clickLocation);
+        var tileRef = mapGrid.GetTileRef(clickLocation);
 
-        var coordinates = mapGrid.GridTileToLocal(tile.GridIndices);
+        var coordinates = mapGrid.GridTileToLocal(tileRef.GridIndices);
 
-        //if (!_interactionSystem.InRangeUnobstructed(user, coordinates, popup: false))
-            //return false;
-
-        var tileDef = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
+        var tileDef = (ContentTileDefinition) _tileDefinitionManager[tileRef.Tile.TypeId];
 
         if (!tileDef.DeconstructToolQualities.ContainsAll(tool.Qualities))
+            return false;
+
+        if (tileRef.IsBlockedTurf(true))
             return false;
 
         var tokenSource = new CancellationTokenSource();
@@ -100,18 +103,6 @@ public sealed partial class ToolSystem
             component.CancelTokenSource = null;
 
         return true;
-    }
-
-    private bool CheckTileConditions(TileRef tileRef, IEnumerable<string> toolQualities)
-    {
-        if (_tileDefinitionManager[tileRef.Tile.TypeId] is ContentTileDefinition tileDef)
-        {
-            if (tileDef.DeconstructToolQualities.ContainsAll(toolQualities)
-                && !string.IsNullOrEmpty(tileDef.BaseTurf)
-                && !tileRef.IsBlockedTurf(true))
-                return true;
-        }
-        return false;
     }
 
     private sealed class TileToolCompleteEvent : EntityEventArgs
