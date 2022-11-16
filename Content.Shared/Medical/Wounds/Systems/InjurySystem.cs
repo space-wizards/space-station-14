@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using Content.Shared.Body.Systems;
+﻿using Content.Shared.Body.Systems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Medical.Wounds.Components;
 using Content.Shared.Medical.Wounds.Prototypes;
@@ -31,9 +30,9 @@ public sealed class InjurySystem : EntitySystem
         }
     }
 
-    public ReadOnlyDictionary<FixedPoint2, string> GetInjuryTable(string traumaType)
+    public IReadOnlyDictionary<FixedPoint2, string> GetInjuryTable(string traumaType)
     {
-        return new ReadOnlyDictionary<FixedPoint2, string>(_cachedInjuryTables[traumaType].Injuries);
+        return _cachedInjuryTables[traumaType].Injuries;
     }
 
     public bool TryApplyWound(EntityUid target, TraumaSpecifier traumaSpec)
