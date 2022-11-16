@@ -1,0 +1,13 @@
+- type: entity
+  id: EffectFlashBluespace
+  noSpawn: true
+  components:
+  - type: PointLight
+    radius: 10.5
+    energy: 15
+    color: "#18abf5"
+  - type: TimedDespawn
+    lifetime: 1
+  - type: EmitSoundOnSpawn
+    sound: 
+      path: /Audio/Effects/Lightning/lightningbolt.ogg

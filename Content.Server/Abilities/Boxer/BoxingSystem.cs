@@ -1,6 +1,6 @@
-using Content.Server.Damage.Events;
-using Content.Server.Weapons.Melee.Events;
+using Content.Shared.Damage.Events;
 using Content.Shared.Weapons.Melee;
+using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Containers;
 
 namespace Content.Server.Abilities.Boxer

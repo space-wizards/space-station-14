@@ -9,6 +9,13 @@
   plantMetabolism:
     - !type:PlantAdjustNutrition
       amount: 1
+  metabolisms:
+    Food:
+      effects:
+      - !type:SatiateHunger
+        conditions:
+        - !type:OrganType
+          type: Plant
 
 - type: reagent
   id: Left4Zed
@@ -26,6 +33,20 @@
     - !type:PlantAdjustMutationMod
       prob: 0.3
       amount: 0.2
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:SatiateHunger
+        conditions:
+        - !type:OrganType
+          type: Plant
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 1
+        conditions:
+        - !type:OrganType
+          type: Plant
 
 - type: reagent
   id: PestKiller
@@ -40,6 +61,16 @@
       amount: 4
     - !type:PlantAdjustPests
       amount: -6
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 3
+        conditions:
+        - !type:OrganType
+          type: Plant
 
 - type: reagent
   id: PlantBGone
@@ -58,6 +89,19 @@
       amount: -20
     - !type:PlantAdjustMutationMod
       amount: 0.1
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: -4
+            Blunt: 2
+            Slash: 1
+            Piercing: 1
+        conditions:
+        - !type:OrganType
+          type: Plant
 
 - type: reagent
   id: RobustHarvest
@@ -77,6 +121,19 @@
       prob: 0.025
       amount: 1
     - !type:RobustHarvest {}
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: -2
+            Blunt: -3
+            Slash: -3
+            Piercing: -3
+        conditions:
+        - !type:OrganType
+          type: Plant
 
 - type: reagent
   id: WeedKiller
@@ -91,6 +148,16 @@
       amount: 4
     - !type:PlantAdjustWeeds
       amount: -6
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 4
+        conditions:
+        - !type:OrganType
+          type: Plant
 
 - type: reagent
   id: Ammonia

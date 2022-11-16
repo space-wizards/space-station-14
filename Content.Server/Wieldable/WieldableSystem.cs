@@ -11,7 +11,7 @@ using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Player;
 using Content.Server.Actions.Events;
-using Content.Server.Weapons.Melee.Events;
+using Content.Shared.Weapons.Melee.Events;
 
 
 namespace Content.Server.Wieldable

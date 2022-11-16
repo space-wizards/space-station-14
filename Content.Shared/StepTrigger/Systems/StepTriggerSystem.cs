@@ -21,7 +21,9 @@ public sealed class StepTriggerSystem : EntitySystem
     public override void Update(float frameTime)
     {
         var query = GetEntityQuery<PhysicsComponent>();
-        foreach (var (active, trigger, transform) in EntityQuery<StepTriggerActiveComponent, StepTriggerComponent, TransformComponent>())
+        var enumerator = EntityQueryEnumerator<StepTriggerActiveComponent, StepTriggerComponent, TransformComponent>();
+
+        while (enumerator.MoveNext(out var active, out var trigger, out var transform))
         {
             if (!Update(trigger, transform, query))
                 continue;
@@ -173,6 +175,20 @@ public sealed class StepTriggerSystem : EntitySystem
 
         component.Active = active;
         Dirty(component);
+    }
+
+    
+    /// <summary>
+    ///  Copy constructor to copy initial fields from source to destination.
+    /// </summary>
+    /// <param name="destUid">Entity to which we copy <paramref name="srcStep"/> properties</param>
+    /// <param name="srcStep">Component that contains relevant properties</param>
+    public void CopyConstruct(EntityUid destUid, StepTriggerComponent srcStep)
+    {
+        var destTrigger = EntityManager.EnsureComponent<StepTriggerComponent>(destUid);
+        destTrigger.Active = srcStep.Active;
+        destTrigger.IntersectRatio = srcStep.IntersectRatio;
+        destTrigger.RequiredTriggerSpeed = srcStep.RequiredTriggerSpeed;
     }
 }
 

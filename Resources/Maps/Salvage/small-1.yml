@@ -278,9 +278,6 @@ entities:
     type: ApcPowerReceiver
   - enabled: False
     type: AmbientSound
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 15
   type: CableApcExtension
   components:

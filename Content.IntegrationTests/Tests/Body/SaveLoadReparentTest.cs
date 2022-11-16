@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
 using NUnit.Framework;
+using Robust.Server.GameObjects;
 using Robust.Server.Maps;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -33,7 +34,7 @@ public sealed class SaveLoadReparentTest
 
         var entities = server.ResolveDependency<IEntityManager>();
         var maps = server.ResolveDependency<IMapManager>();
-        var mapLoader = server.ResolveDependency<IMapLoader>();
+        var mapLoader = entities.System<MapLoaderSystem>();
         var bodySystem = entities.System<SharedBodySystem>();
 
         await server.WaitAssertion(() =>

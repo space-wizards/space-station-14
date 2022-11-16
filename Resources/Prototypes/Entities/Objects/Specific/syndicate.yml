@@ -13,7 +13,6 @@
     sprite: Objects/Specific/Syndicate/telecrystal.rsi
   - type: Stack
     count: 20
-    max: 999999 # todo: add support for unlimited stacks
     stackType: Telecrystal
   - type: StackPrice
     price: 200

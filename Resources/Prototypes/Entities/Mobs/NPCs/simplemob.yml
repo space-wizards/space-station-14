@@ -94,6 +94,7 @@
       0: Alive
       50: Critical
       100: Dead
+  - type: Stamina
   - type: Destructible
     thresholds:
     - trigger:
@@ -115,6 +116,8 @@
     - Pacified
   - type: Body
     prototype: Animal
+  - type: InjectableSolution
+    solution: chemicals
   - type: Examiner
   - type: MeleeWeapon
     hidden: true

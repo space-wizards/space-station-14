@@ -2,6 +2,7 @@ using Content.Shared.Damage;
 using Content.Shared.MobState.EntitySystems;
 using Content.Shared.MobState.Components;
 using Content.Server.Damage.Components;
+using Content.Shared.Damage.Components;
 using Robust.Shared.Physics.Components;
 
 namespace Content.Server.Contests
