@@ -13,8 +13,6 @@ namespace Content.Shared.Materials
     [Prototype("material")]
     public sealed class MaterialPrototype : IPrototype, IInheritingPrototype
     {
-        private string _name = string.Empty;
-
         [ViewVariables]
         [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<MaterialPrototype>))]
         public string[]? Parents { get; }
@@ -36,24 +34,8 @@ namespace Content.Shared.Materials
         [DataField("stackEntity", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string StackEntity { get; } = "";
 
-        [ViewVariables]
-        [DataField("name")]
-        public string Name
-        {
-            get => _name;
-            private set => _name = Loc.GetString(value);
-        }
-
-        [ViewVariables]
         [DataField("color")]
         public Color Color { get; } = Color.Gray;
-
-        /// <summary>
-        ///     An icon used to represent the material in graphic interfaces.
-        /// </summary>
-        [ViewVariables]
-        [DataField("icon")]
-        public SpriteSpecifier Icon { get; } = SpriteSpecifier.Invalid;
 
         /// <summary>
         /// The price per cm3.

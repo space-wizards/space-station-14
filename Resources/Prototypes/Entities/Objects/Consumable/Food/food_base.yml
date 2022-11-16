@@ -15,7 +15,7 @@
   - type: Sprite
     netsync: false
   - type: StaticPrice
-    price: 50
+    price: 0
 
 # This base type is used to cover all of the "obvious" things that should be doable to open-package food.
 # Practically this means injection.

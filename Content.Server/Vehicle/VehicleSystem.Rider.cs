@@ -1,8 +1,7 @@
-using Content.Server.Buckle.Components;
-using Content.Shared.Vehicle.Components;
-using Content.Shared.MobState;
 using Content.Server.Standing;
 using Content.Shared.Hands;
+using Content.Shared.MobState;
+using Content.Shared.Vehicle.Components;
 using Robust.Shared.GameStates;
 
 namespace Content.Server.Vehicle
@@ -57,10 +56,7 @@ namespace Content.Server.Vehicle
 
         public void UnbuckleFromVehicle(EntityUid uid)
         {
-            if (!TryComp<BuckleComponent>(uid, out var buckle))
-                return;
-
-            buckle.TryUnbuckle(uid, true);
+            _buckle.TryUnbuckle(uid, uid, true);
         }
     }
 }

@@ -583,6 +583,9 @@
   components:
   - type: MachineBoard
     prototype: GasRecycler
+    requirements:
+      Laser: 2
+      Manipulator: 2
     materialRequirements:
       Steel: 10
-      Plasma: 10
+      Plasma: 5
