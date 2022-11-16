@@ -57,7 +57,10 @@ namespace Content.Server.Chemistry.EntitySystems
             TryDoInject(component, args.HitEntities.First(), args.User);
         }
 
-        public bool TryDoInject(HyposprayComponent component, EntityUid? target, EntityUid user)
+        public bool TryDoInject(EntityUid uid, EntityUid? target, EntityUid user, HyposprayComponent? component=null)
+        {
+            if (!Resolve(uid, ref component)
+                return;
         {
             if (!EligibleEntity(target, _entMan))
                 return false;
