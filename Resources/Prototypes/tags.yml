@@ -97,6 +97,9 @@
   id: CartridgeMagnum
 
 - type: Tag
+  id: CartridgeMagnumHC
+
+- type: Tag
   id: CartridgePistol
 
 - type: Tag
@@ -438,6 +441,9 @@
   id: PussyWagonKeys
 
 - type: Tag
+  id: Radio
+
+- type: Tag
   id: RawMaterial
 
 # Give this to something that doesn't need any special recycler behavior and just needs deleting.
@@ -500,6 +506,9 @@
 
 - type: Tag
   id: SpeedLoaderMagnum
+
+- type: Tag
+  id: SpeedLoaderMagnumHC
 
 - type: Tag
   id: SpeedLoaderPistol

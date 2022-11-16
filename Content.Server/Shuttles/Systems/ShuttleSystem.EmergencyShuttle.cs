@@ -11,6 +11,7 @@ using Content.Server.Station.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Shuttles.Events;
+using Robust.Server.GameObjects;
 using Robust.Server.Maps;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
@@ -32,11 +33,11 @@ public sealed partial class ShuttleSystem
    [Dependency] private readonly IAdminLogManager _logger = default!;
    [Dependency] private readonly IAdminManager _admin = default!;
    [Dependency] private readonly IConfigurationManager _configManager = default!;
-   [Dependency] private readonly IMapLoader _loader = default!;
    [Dependency] private readonly IRobustRandom _random = default!;
    [Dependency] private readonly ChatSystem _chatSystem = default!;
    [Dependency] private readonly CommunicationsConsoleSystem _commsConsole = default!;
    [Dependency] private readonly DockingSystem _dockSystem = default!;
+   [Dependency] private readonly MapLoaderSystem _map = default!;
    [Dependency] private readonly StationSystem _station = default!;
 
    public MapId? CentComMap { get; private set; }
@@ -405,7 +406,7 @@ public sealed partial class ShuttleSystem
 
        if (!string.IsNullOrEmpty(centComPath))
        {
-           var (_, centcomm) = _loader.LoadGrid(CentComMap.Value, "/Maps/centcomm.yml");
+           var centcomm = _map.LoadGrid(CentComMap.Value, "/Maps/centcomm.yml");
            CentCom = centcomm;
 
            if (CentCom != null)
@@ -427,7 +428,7 @@ public sealed partial class ShuttleSystem
        if (!_emergencyShuttleEnabled || CentComMap == null || component.EmergencyShuttle != null) return;
 
        // Load escape shuttle
-       var (_, shuttle) = _loader.LoadGrid(CentComMap.Value, component.EmergencyShuttlePath.ToString(), new MapLoadOptions()
+       var shuttle = _map.LoadGrid(CentComMap.Value, component.EmergencyShuttlePath.ToString(), new MapLoadOptions()
        {
            // Should be far enough... right? I'm too lazy to bounds check CentCom rn.
            Offset = new Vector2(500f + _shuttleIndex, 0f)

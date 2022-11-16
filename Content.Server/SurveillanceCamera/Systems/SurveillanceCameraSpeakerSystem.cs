@@ -21,7 +21,6 @@ public sealed class SurveillanceCameraSpeakerSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<SurveillanceCameraSpeakerComponent, SurveillanceCameraSpeechSendEvent>(OnSpeechSent);
-        SubscribeLocalEvent<SurveillanceCameraSpeakerComponent, TransformSpeakerNameEvent>(OnTransformSpeech);
     }
 
     private void OnSpeechSent(EntityUid uid, SurveillanceCameraSpeakerComponent component,
@@ -71,15 +70,11 @@ public sealed class SurveillanceCameraSpeakerSystem : EntitySystem
 
         var nameEv = new TransformSpeakerNameEvent(args.Speaker, Name(args.Speaker));
         RaiseLocalEvent(args.Speaker, nameEv);
-        component.LastSpokenNames.Enqueue(nameEv.Name);
 
-        _chatSystem.TrySendInGameICMessage(uid, args.Message, InGameICChatType.Speak, false);
-    }
+        var name = Loc.GetString("speech-name-relay", ("speaker", Name(uid)),
+            ("originalName", nameEv.Name));
 
-    private void OnTransformSpeech(EntityUid uid, SurveillanceCameraSpeakerComponent component,
-        TransformSpeakerNameEvent args)
-    {
-        args.Name = Loc.GetString("surveillance-camera-microphone-message", ("speaker", Name(uid)),
-            ("originalName", component.LastSpokenNames.Dequeue()));
+        var hideGlobalGhostChat = true; // log to chat so people can identity the speaker/source, but avoid clogging ghost chat if there are many radios
+        _chatSystem.TrySendInGameICMessage(uid, args.Message, InGameICChatType.Speak, false, hideGlobalGhostChat, nameOverride: name);
     }
 }
