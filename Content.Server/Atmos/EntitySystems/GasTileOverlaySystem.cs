@@ -1,3 +1,6 @@
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using Content.Server.Atmos.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.EntitySystems;
@@ -14,10 +17,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Threading;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
-using DependencyAttribute = Robust.Shared.IoC.DependencyAttribute;
 
 // ReSharper disable once RedundantUsingDirective
 
@@ -26,13 +25,13 @@ namespace Content.Server.Atmos.EntitySystems
     [UsedImplicitly]
     internal sealed class GasTileOverlaySystem : SharedGasTileOverlaySystem
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly IConfigurationManager _confMan = default!;
-        [Dependency] private readonly IParallelManager _parMan = default!;
-        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-        [Dependency] private readonly ChunkingSystem _chunkingSys = default!;
+        [Robust.Shared.IoC.Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Robust.Shared.IoC.Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Robust.Shared.IoC.Dependency] private readonly IMapManager _mapManager = default!;
+        [Robust.Shared.IoC.Dependency] private readonly IConfigurationManager _confMan = default!;
+        [Robust.Shared.IoC.Dependency] private readonly IParallelManager _parMan = default!;
+        [Robust.Shared.IoC.Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+        [Robust.Shared.IoC.Dependency] private readonly ChunkingSystem _chunkingSys = default!;
 
         private readonly Dictionary<IPlayerSession, Dictionary<EntityUid, HashSet<Vector2i>>> _lastSentChunks = new();
 
@@ -120,40 +119,57 @@ namespace Content.Server.Atmos.EntitySystems
         /// </summary>
         private void UpdateChunkTile(GridAtmosphereComponent gridAtmosphere, GasOverlayChunk chunk, Vector2i index, GameTick curTick)
         {
-            var oldData = chunk.GetData(index);
+            ref var oldData = ref chunk.GetData(index);
             if (!gridAtmosphere.Tiles.TryGetValue(index, out var tile))
             {
-                if (oldData == null)
+                if (oldData.Equals(default))
                     return;
 
                 chunk.LastUpdate = curTick;
-                chunk.SetData(index, null);
+                oldData = default;
                 return;
             }
 
-            var opacity = new byte[VisibleGasId.Length];
-            GasOverlayData newData = new(tile!.Hotspot.State, opacity);
+            var changed = oldData.Equals(default) || oldData.FireState != tile.Hotspot.State;
+            if (oldData.Equals(default))
+                oldData = new GasOverlayData(tile.Hotspot.State, new byte[VisibleGasId.Length]);
+
             if (tile.Air != null)
             {
-                var i = 0;
-                foreach (var id in VisibleGasId)
+                for (var i = 0; i < VisibleGasId.Length; i++)
                 {
+                    var id = VisibleGasId[i];
                     var gas = _atmosphereSystem.GetGas(id);
                     var moles = tile.Air.Moles[id];
+                    ref var oldOpacity = ref oldData.Opacity[i];
 
-                    if (moles >= gas.GasMolesVisible)
+                    if (moles < gas.GasMolesVisible)
                     {
-                        opacity[i] = (byte) (ContentHelpers.RoundToLevels(
-                            MathHelper.Clamp01((moles - gas.GasMolesVisible) / (gas.GasMolesVisibleMax - gas.GasMolesVisible)) * 255, byte.MaxValue, _thresholds) * 255 / (_thresholds - 1));
+                        if (oldOpacity != 0)
+                        {
+                            oldOpacity = 0;
+                            changed = true;
+                        }
+
+                        continue;
                     }
-                    i++;
+
+                    var opacity = (byte) (ContentHelpers.RoundToLevels(
+                        MathHelper.Clamp01((moles - gas.GasMolesVisible) /
+                                           (gas.GasMolesVisibleMax - gas.GasMolesVisible)) * 255, byte.MaxValue,
+                        _thresholds) * 255 / (_thresholds - 1));
+
+                    if (oldOpacity == opacity)
+                        continue;
+
+                    oldOpacity = opacity;
+                    changed = true;
                 }
             }
 
-            if (oldData != null && oldData.Value.Equals(newData))
+            if (!changed)
                 return;
 
-            chunk.SetData(index, newData);
             chunk.LastUpdate = curTick;
         }
 
