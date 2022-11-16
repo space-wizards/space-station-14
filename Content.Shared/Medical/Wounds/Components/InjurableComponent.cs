@@ -49,11 +49,9 @@ public sealed class InjurableComponent : Component
 }
 
 [DataRecord, NetSerializable, Serializable]
-public record struct Injury(string InjuryId, FixedPoint2 Severity, FixedPoint2 Healed, FixedPoint2 Bleed,
-    FixedPoint2 Infected)
+public record struct Injury(string InjuryId, FixedPoint2 Severity, FixedPoint2 Healed, FixedPoint2 Bleed)
 {
-    public Injury(string injuryId, FixedPoint2 severity) : this(injuryId, severity, FixedPoint2.Zero, FixedPoint2.Zero,
-        FixedPoint2.Zero)
+    public Injury(string injuryId, FixedPoint2 severity) : this(injuryId, severity, FixedPoint2.Zero, FixedPoint2.Zero)
     {
     }
 }
