@@ -38,7 +38,7 @@ This is the "short" form of the rules, which has all the information any regular
     - Antagonists have lots of leeway with this rule and may kill/sabotage as they see fit, but if it degrades the experience for majority of the rest of the server you will be told to stop.
     - [color=#ff0000]THE ROUND IS NOT OVER UNTIL THE END-ROUND SUMMARY APPEARS. KILLING SOMEONE FOR NO REASON BEFORE THIS WILL BE HANDLED ACCORDINGLY.[/color]
 
-[color=#a4885c]12.[/color] Don't harass or target players across rounds for actions in prior rounds or for actions outside of the game (this is referred to as "Metagrudging".) 
+[color=#a4885c]12.[/color] Don't harass or target players across rounds for actions in prior rounds or for actions outside of the game (this is referred to as "Metagrudging".)
     - Annoying players for IC reasons in the current round is fine; doing it across rounds or as a ghost role after they kill you is not.
 
 [color=#a4885c]13.[/color] Don't use information gained from outside your character's knowledge to gain an advantage (this is referred to as "Metagaming").
@@ -49,10 +49,10 @@ This is the "short" form of the rules, which has all the information any regular
     - Security is unique in escalation and can escalate to less lethal to arrest criminals as needed.
     - Don't outright leave people to die if you get in a fight, make an effort to heal them or bring them to Medbay.
     - Adminhelp the situation if you think someone is over-escalating.
-    - Department strikes, revolutions (ex: cargonia and any variation thereof), or cults are antagonist-only activites and are forbidden.
+    - Department strikes, revolutions (ex: cargonia and any variation thereof), or cults are antagonist-only activites and are forbidden without admin permission.
 
 [color=#a4885c]15.[/color] Don't immediately ghost or suicide from your role if you do not get antagonist (referred to as "Antag-rolling").
-    - This is not fair to other players actually waiting patiently for an antagonist round. Alternatively, if you do not want to play an antagonist or do not want to cause conflict (ex: friendly antagonists), do not opt-in for antagonist roles.
+    - This is not fair to other players actually waiting patiently for an antagonist round. Alternatively, if you do not want to play an antagonist or do not want to cause conflict, do not opt-in for antagonist roles.
 
 [color=#a4885c]16.[/color] Don't rush for or prepare equipment unrelated to your job for no purpose other then to have it "just in case" (referred to as "Powergaming").
     - A medical doctor does not need insulated gloves, and the Head of Personnel does not need to give themselves armory access so they can go grab a gun.
@@ -71,7 +71,7 @@ If you regularly play Security or Command roles and got this far, I applaud you 
 
 [color=#a4885c]19.[/color] Security/Command should try to remain non-lethal and effect arrests, except in the following special circumstances, where they may choose to use lethal force:
     - Lethal force is used against you (ex: firearms, lasers, disabling weapons with intent to kill, deadly melee weapons)
-    - Suspect is wearing clothing or showing equipment only used by enemy agents/antagonists (ex: Syndicate EVA Suit, Bloodred Hardsuit, Holoparasprite, C-20R, etc.)
+    - Suspect is wearing clothing or showing immediately dangerous equipment only used by enemy agents/antagonists (ex: Syndicate EVA Suit, Bloodred Hardsuit, Holoparasite, C-20R, etc.)
     - You determine that your life or the life of an innocent is in immediate danger
     - The suspect is unable to be safely detained by less-lethal means
     - If no other reasonable options are readily available and allowing the suspect to continue would be an unreasonable danger to the station/crew
