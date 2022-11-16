@@ -1,6 +1,8 @@
 using Content.Shared.Decals;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
+using Robust.Client.State;
+using Robust.Shared.GameStates;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Decals
@@ -21,6 +23,7 @@ namespace Content.Client.Decals
             _overlay = new DecalOverlay(this, _sprites, EntityManager, PrototypeManager);
             _overlayManager.AddOverlay(_overlay);
 
+            SubscribeLocalEvent<DecalGridComponent, ComponentHandleState>(OnHandleState);
             SubscribeNetworkEvent<DecalChunkUpdateEvent>(OnChunkUpdate);
             SubscribeLocalEvent<GridInitializeEvent>(OnGridInitialize);
             SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoval);
@@ -71,6 +74,55 @@ namespace Content.Client.Decals
                 DecalRenderIndex[gridId].Remove(zIndex);
 
             _decalZIndexIndex[gridId].Remove(uid);
+        }
+
+        private void OnHandleState(EntityUid gridUid, DecalGridComponent gridComp, ref ComponentHandleState args)
+        {
+            if (args.Current is not DecalGridState state)
+                return;
+
+            var chunkCollection = gridComp.ChunkCollection.ChunkCollection;
+            var chunkIndex = ChunkIndex[gridUid];
+            var renderIndex = DecalRenderIndex[gridUid];
+            var zIndexIndex = _decalZIndexIndex[gridUid];
+
+            var oldCollection = gridComp.ChunkCollection.ChunkCollection;
+            var newCollection = state.ChunkCollection.ChunkCollection;
+
+            // This only works under the assumption that clients never predict decal changes. Otherwise, this needs to clone this data, not store a reference to it.
+            gridComp.ChunkCollection = state.ChunkCollection;
+
+ 
+            // Update any existing data / remove decals we didn't receive data for.
+            foreach (var (indices, oldChunkData) in oldCollection)
+            {
+                var removed = new HashSet<uint>(oldChunkData.Keys);
+                if (newCollection.TryGetValue(indices, out var newChunkData))
+                    removed.ExceptWith(newChunkData.Keys);
+
+                foreach (var id in removed)
+                {
+                    RemoveDecalHook(gridUid, id);
+                }
+            }
+
+            foreach (var (indices, newChunkData) in newCollection)
+            {
+                oldCollection.TryGetValue(indices, out var oldChunkData);
+                
+                foreach (var (id, decal) in newChunkData)
+                {
+                    if (oldChunkData?.ContainsKey(id) ?? false)
+                        continue;
+
+                    if (zIndexIndex.TryGetValue(id, out var zIndex))
+                        renderIndex[zIndex].Remove(id);
+
+                    renderIndex.GetOrNew(decal.ZIndex)[id] = decal;
+                    zIndexIndex[id] = decal.ZIndex;
+                    chunkIndex[id] = indices;
+                }
+            }
         }
 
         private void OnChunkUpdate(DecalChunkUpdateEvent ev)

@@ -8,7 +8,10 @@ using Content.Shared.Decals;
 using Content.Shared.Maps;
 using Microsoft.Extensions.ObjectPool;
 using Robust.Server.Player;
+using Robust.Shared;
+using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
+using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Threading;
@@ -23,6 +26,7 @@ namespace Content.Server.Decals
         [Dependency] private readonly ITileDefinitionManager _tileDefMan = default!;
         [Dependency] private readonly IParallelManager _parMan = default!;
         [Dependency] private readonly ChunkingSystem _chunking = default!;
+        [Dependency] private readonly IConfigurationManager _conf = default!;
 
         private readonly Dictionary<EntityUid, HashSet<Vector2i>> _dirtyChunks = new();
         private readonly Dictionary<IPlayerSession, Dictionary<EntityUid, HashSet<Vector2i>>> _previousSentChunks = new();
@@ -35,6 +39,7 @@ namespace Content.Server.Decals
         private ObjectPool<Dictionary<EntityUid, HashSet<Vector2i>>> _chunkViewerPool =
             new DefaultObjectPool<Dictionary<EntityUid, HashSet<Vector2i>>>(
                 new DefaultPooledObjectPolicy<Dictionary<EntityUid, HashSet<Vector2i>>>(), 64);
+        private bool _pvsEnabled;
 
         public override void Initialize()
         {
@@ -42,10 +47,36 @@ namespace Content.Server.Decals
 
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
             SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
+            SubscribeLocalEvent<DecalGridComponent, ComponentGetState>(OnGetState);
 
             SubscribeNetworkEvent<RequestDecalPlacementEvent>(OnDecalPlacementRequest);
             SubscribeNetworkEvent<RequestDecalRemovalEvent>(OnDecalRemovalRequest);
             SubscribeLocalEvent<PostGridSplitEvent>(OnGridSplit);
+
+            _conf.OnValueChanged(CVars.NetPVS, OnPvsToggle, true);
+        }
+
+        private void OnPvsToggle(bool value)
+        {
+            if (value == _pvsEnabled)
+                return;
+
+            _pvsEnabled = value;
+
+            if (value)
+                return;
+
+            foreach (var grid in EntityQuery<DecalGridComponent>(true))
+            {
+                Dirty(grid);
+            }
+        }
+
+        private void OnGetState(EntityUid uid, DecalGridComponent component, ref ComponentGetState args)
+        {
+            // TODO properly support delta states??
+            if (!_pvsEnabled || args.Player == null)
+                args.State = new DecalGridState(component);
         }
 
         private void OnGridSplit(ref PostGridSplitEvent ev)
@@ -101,6 +132,7 @@ namespace Content.Server.Decals
             base.Shutdown();
 
             _playerManager.PlayerStatusChanged -= OnPlayerStatusChanged;
+            _conf.UnsubValueChanged(CVars.NetPVS, OnPvsToggle);
         }
 
         private void OnTileChanged(TileChangedEvent args)
@@ -398,6 +430,18 @@ namespace Content.Server.Decals
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
+
+            foreach (var ent in _dirtyChunks.Keys)
+            {
+                if (TryComp(ent, out DecalGridComponent? decals))
+                    Dirty(decals);
+            }
+
+            if (!_pvsEnabled)
+            {
+                _dirtyChunks.Clear();
+                return;
+            }
 
             var players = _playerManager.ServerSessions.Where(x => x.Status == SessionStatus.InGame).ToArray();
             var opts = new ParallelOptions { MaxDegreeOfParallelism = _parMan.ParallelProcessCount };
