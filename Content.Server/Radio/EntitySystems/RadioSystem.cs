@@ -56,13 +56,12 @@ public sealed class RadioSystem : EntitySystem
         name = FormattedMessage.EscapeText(name);
 
         // most radios are relayed to chat, so lets parse the chat message beforehand
-        var chatMsg = new MsgChatMessage
-        {
-            Channel = ChatChannel.Radio,
-            Message = message,
-            //Square brackets are added here to avoid issues with escaping
-            WrappedMessage = Loc.GetString("chat-radio-message-wrap", ("color", channel.Color), ("channel", $"\\[{channel.LocalizedName}\\]"), ("name", name), ("message", FormattedMessage.EscapeText(message)))
-        };
+        var chat = new ChatMessage(
+            ChatChannel.Radio,
+            message,
+            Loc.GetString("chat-radio-message-wrap", ("color", channel.Color), ("channel", $"\\[{channel.LocalizedName}\\]"), ("name", name), ("message", FormattedMessage.EscapeText(message))),
+            EntityUid.Invalid);
+        var chatMsg = new MsgChatMessage { Message = chat };
 
         var ev = new RadioReceiveEvent(message, source, channel, chatMsg);
         var attemptEv = new RadioReceiveAttemptEvent(message, source, channel);

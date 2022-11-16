@@ -44,7 +44,7 @@ public partial class ChatBox : UIWidget
         _controller.SendMessage(this, SelectedChannel);
     }
 
-    private void OnMessageAdded(StoredChatMessage msg)
+    private void OnMessageAdded(ChatMessage msg)
     {
         Logger.DebugS("chat", $"{msg.Channel}: {msg.Message}");
         if (!ChatInput.FilterButton.ChatFilterPopup.IsActive(msg.Channel))
@@ -54,8 +54,8 @@ public partial class ChatBox : UIWidget
 
         msg.Read = true;
 
-        var color = msg.MessageColorOverride != Color.Transparent
-            ? msg.MessageColorOverride
+        var color = msg.MessageColorOverride != null
+            ? msg.MessageColorOverride.Value
             : msg.Channel.TextColor();
 
         AddLine(msg.WrappedMessage, color);
