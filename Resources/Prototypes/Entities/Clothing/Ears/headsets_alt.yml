@@ -15,9 +15,11 @@
   id: ClothingHeadsetAltCargo
   name: qm over-ear headset
   components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyQM
   - type: Headset
-    keysPrototypes:
-    - EncryptionKeyQM
   - type: Sprite
     sprite: Clothing/Ears/Headsets/cargo.rsi
   - type: Clothing
@@ -28,9 +30,11 @@
   id: ClothingHeadsetAltCentCom
   name: CentCom over-ear headset
   components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyCentCom
   - type: Headset
-    keysPrototypes:
-    - EncryptionKeyCentCom
   - type: Sprite
     sprite: Clothing/Ears/Headsets/centcom.rsi
   - type: Clothing
@@ -41,9 +45,11 @@
   id: ClothingHeadsetAltCommand
   name: command over-ear headset
   components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyCommand
   - type: Headset
-    keysPrototypes:
-    - EncryptionKeyCommand
   - type: Sprite
     sprite: Clothing/Ears/Headsets/command.rsi
   - type: Clothing
@@ -54,9 +60,11 @@
   id: ClothingHeadsetAltEngineering
   name: ce over-ear headset
   components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyCE
   - type: Headset
-    keysPrototypes:
-    - EncryptionKeyCE
   - type: Sprite
     sprite: Clothing/Ears/Headsets/engineering.rsi
   - type: Clothing
@@ -67,9 +75,11 @@
   id: ClothingHeadsetAltMedical
   name: cmo over-ear headset
   components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyCMO
   - type: Headset
-    keysPrototypes:
-    - EncryptionKeyCMO
   - type: Sprite
     sprite: Clothing/Ears/Headsets/medical.rsi
   - type: Clothing
@@ -78,11 +88,13 @@
 - type: entity
   parent: ClothingHeadsetAlt
   id: ClothingHeadsetAltSecurity
-  name: hos over-ear headset
+  name: security command over-ear headset
   components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyHOS
   - type: Headset
-    keysPrototypes:
-    - EncryptionKeyHOS
   - type: Sprite
     sprite: Clothing/Ears/Headsets/security.rsi
   - type: Clothing
@@ -93,9 +105,11 @@
   id: ClothingHeadsetAltScience
   name: research director over-ear headset
   components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyRD
   - type: Headset
-    keysPrototypes:
-    - EncryptionKeyRD
   - type: Sprite
     sprite: Clothing/Ears/Headsets/science.rsi
   - type: Clothing
@@ -107,9 +121,11 @@
   name: syndicate over-ear headset
   description: An updated, modular syndicate intercom that fits over the head and takes encryption keys (there are 4 of them). Should protects ears from flashbangs.
   components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeySyndie
   - type: Headset
-    keysPrototypes:
-    - EncryptionKeySyndie
   - type: Sprite
     sprite: Clothing/Ears/Headsets/syndicate.rsi
   - type: Clothing

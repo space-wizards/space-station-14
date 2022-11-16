@@ -20,8 +20,8 @@ public sealed class HeadsetComponent : Component
         "Common"
     }; //Fills only by encryption chips in it
 
-    [DataField("keysPrototypes", required: true, customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
-    public List<string> KeysPrototypes = new();
+    //[DataField("keysPrototypes", required: true, customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
+    //public List<string> KeysPrototypes = new();
     // [ViewVariables]
     // public List<EntityUid> KeysInstalled = new List<EntityUid>();
     [ViewVariables]

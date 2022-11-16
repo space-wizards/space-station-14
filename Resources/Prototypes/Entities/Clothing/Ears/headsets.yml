@@ -8,9 +8,11 @@
   - type: ContainerContainer
     containers:
       key_slots: !type:Container
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyCommon
   - type: Headset
-    keysPrototypes:
-    - EncryptionKeyCommon
   - type: Sprite
     state: icon
   - type: Clothing
@@ -24,9 +26,11 @@
   name: passenger headset
   description: An updated, modular intercom that fits over the head. Takes encryption keys.
   components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyCommon
   - type: Headset
-    keysPrototypes:
-    - EncryptionKeyCommon
   - type: Sprite
     sprite: Clothing/Ears/Headsets/base.rsi
 
@@ -36,9 +40,11 @@
   name: cargo headset
   description: A headset used by supply employees.
   components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyCargo
   - type: Headset
-    keysPrototypes:
-    - EncryptionKeyCargo
   - type: Sprite
     sprite: Clothing/Ears/Headsets/cargo.rsi
   - type: Clothing
@@ -50,9 +56,11 @@
   name: mining headset
   description: Headset used by shaft miners.
   components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyCargo
   - type: Headset
-    keysPrototypes:
-    - EncryptionKeyCargo
   - type: Sprite
     sprite: Clothing/Ears/Headsets/mining.rsi
   - type: Clothing
@@ -64,9 +72,11 @@
   name: qm headset
   description: A headset used by the quartermaster.
   components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyQM
   - type: Headset
-    keysPrototypes:
-    - EncryptionKeyQM
   - type: Sprite
     sprite: Clothing/Ears/Headsets/cargo.rsi
   - type: Clothing
@@ -78,9 +88,11 @@
   name: CentCom headset
   description: A headset used by the upper echelons of Nanotrasen.
   components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyCentCom
   - type: Headset
-    keysPrototypes:
-    - EncryptionKeyCentCom
   - type: Sprite
     sprite: Clothing/Ears/Headsets/centcom.rsi
   - type: Clothing
@@ -92,9 +104,11 @@
   name: command headset
   description: A headset with a commanding channel.
   components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyCommand
   - type: Headset
-    keysPrototypes:
-    - EncryptionKeyCommand
   - type: Sprite
     sprite: Clothing/Ears/Headsets/command.rsi
   - type: Clothing
@@ -106,9 +120,11 @@
   name: engineering headset
   description: A headset for engineers to chat while the station burns around them.
   components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyEngineering
   - type: Headset
-    keysPrototypes:
-    - EncryptionKeyEngineering
   - type: Sprite
     sprite: Clothing/Ears/Headsets/engineering.rsi
   - type: Clothing
@@ -120,9 +136,11 @@
   name: ce headset
   description: A headset for the chief engineer to ignore all emergency calls on.
   components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyCE
   - type: Headset
-    keysPrototypes:
-    - EncryptionKeyCE
   - type: Sprite
     sprite: Clothing/Ears/Headsets/engineering.rsi
   - type: Clothing
@@ -134,9 +152,11 @@
   name: medical headset
   description: A headset for the trained staff of the medbay.
   components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyMedical
   - type: Headset
-    keysPrototypes:
-    - EncryptionKeyMedical
   - type: Sprite
     sprite: Clothing/Ears/Headsets/medical.rsi
   - type: Clothing
@@ -148,9 +168,11 @@
   name: medical research headset
   description: A headset that is a result of the mating between medical and science.
   components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyMedicalScience
   - type: Headset
-    keysPrototypes:
-    - EncryptionKeyMedicalScience
   - type: Sprite
     sprite: Clothing/Ears/Headsets/medicalscience.rsi
   - type: Clothing
@@ -162,9 +184,11 @@
   name: security headset
   description: This is used by your elite security force.
   components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeySecurity
   - type: Headset
-    keysPrototypes:
-    - EncryptionKeySecurity
   - type: Sprite
     sprite: Clothing/Ears/Headsets/security.rsi
   - type: Clothing
@@ -176,9 +200,11 @@
   name: science headset
   description: A sciency headset. Like usual.
   components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyScience
   - type: Headset
-    keysPrototypes:
-    - EncryptionKeyScience
   - type: Sprite
     sprite: Clothing/Ears/Headsets/science.rsi
   - type: Clothing
@@ -190,9 +216,11 @@
   name: robotics headset
   description: Made specifically for the roboticists, who cannot decide between departments.
   components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyRobo
   - type: Headset
-    keysPrototypes:
-    - EncryptionKeyRobo
   - type: Sprite
     sprite: Clothing/Ears/Headsets/robotics.rsi
   - type: Clothing
@@ -204,14 +232,15 @@
   name: rd headset
   description: Lamarr used to love chewing on this...
   components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyRD
   - type: Headset
-    keysPrototypes:
-    - EncryptionKeyRD
   - type: Sprite
     sprite: Clothing/Ears/Headsets/science.rsi
   - type: Clothing
     sprite: Clothing/Ears/Headsets/science.rsi
-
 
 - type: entity
   parent: ClothingHeadset
@@ -219,9 +248,11 @@
   name: service headset
   description: Headset used by the service staff, tasked with keeping the station full, happy and clean.
   components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyService
   - type: Headset
-    keysPrototypes:
-    - EncryptionKeyService
   - type: Sprite
     sprite: Clothing/Ears/Headsets/service.rsi
   - type: Clothing
