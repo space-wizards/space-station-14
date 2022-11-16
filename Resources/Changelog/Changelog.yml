@@ -1,10 +1,4 @@
 Entries:
-- author: Hoid
-  changes:
-  - {message: Experimental Research Hardsuit now protects more effectively against
-      things that can go wrong in the lab - including explosions., type: Tweak}
-  id: 2163
-  time: '2022-08-16T11:16:18.0000000+00:00'
 - author: martin69420
   changes:
   - {message: Fixed missing death sprite for holocarp and magicarp, type: Fix}
@@ -2952,3 +2946,8 @@ Entries:
   - {message: the price of food now depends on its nutritional capacity, type: Add}
   id: 2662
   time: '2022-11-15T11:51:31.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed a broken inhand for the fire extinguisher., type: Fix}
+  id: 2663
+  time: '2022-11-16T05:24:35.0000000+00:00'
