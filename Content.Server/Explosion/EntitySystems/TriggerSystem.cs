@@ -68,7 +68,7 @@ namespace Content.Server.Explosion.EntitySystems
             SubscribeLocalEvent<TriggerOnActivateComponent, ActivateInWorldEvent>(OnActivate);
             SubscribeLocalEvent<TriggerImplantActionComponent, ActivateImplantEvent>(OnImplantTrigger);
             SubscribeLocalEvent<TriggerOnStepTriggerComponent, StepTriggeredEvent>(OnStepTriggered);
-            SubscribeLocalEvent<TriggerOnMobstateChangeComponent, MobStateChangedEvent>(OnStateChanged);
+            SubscribeLocalEvent<TriggerOnMobstateChangeComponent, MobStateChangedEvent>(OnMobStateChanged);
 
             SubscribeLocalEvent<DeleteOnTriggerComponent, TriggerEvent>(HandleDeleteTrigger);
             SubscribeLocalEvent<ExplodeOnTriggerComponent, TriggerEvent>(HandleExplodeTrigger);
@@ -122,7 +122,7 @@ namespace Content.Server.Explosion.EntitySystems
 
         private void OnImplantTrigger(EntityUid uid, TriggerImplantActionComponent component, ActivateImplantEvent args)
         {
-            Trigger(component.Owner);
+            Trigger(uid);
         }
 
         private void OnStepTriggered(EntityUid uid, TriggerOnStepTriggerComponent component, ref StepTriggeredEvent args)
@@ -130,12 +130,27 @@ namespace Content.Server.Explosion.EntitySystems
             Trigger(uid, args.Tripper);
         }
 
-        private void OnStateChanged(EntityUid uid, TriggerOnMobstateChangeComponent component, MobStateChangedEvent args)
+        private void OnMobStateChanged(EntityUid uid, TriggerOnMobstateChangeComponent component, MobStateChangedEvent args)
         {
             if (component.MobState < args.CurrentMobState)
                 return;
 
-            Trigger(component.Owner);
+            //This chains Mobstate Changed triggers with OnUseTimerTrigger if they have it
+            //Very useful for things that require a mobstate change and a timer
+            if (TryComp<OnUseTimerTriggerComponent>(uid, out var timerTrigger))
+            {
+                HandleTimerTrigger(
+                    uid,
+                    args.Origin,
+                    timerTrigger.Delay,
+                    timerTrigger.BeepInterval,
+                    timerTrigger.InitialBeepDelay,
+                    timerTrigger.BeepSound,
+                    timerTrigger.BeepParams);
+            }
+
+            else
+                Trigger(uid);
         }
 
         public bool Trigger(EntityUid trigger, EntityUid? user = null)

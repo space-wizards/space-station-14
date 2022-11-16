@@ -19,22 +19,6 @@ public sealed partial class TriggerSystem
         SubscribeLocalEvent<OnUseTimerTriggerComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<OnUseTimerTriggerComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAltVerbs);
         SubscribeLocalEvent<OnUseTimerTriggerComponent, EntityStuckEvent>(OnStuck);
-        SubscribeLocalEvent<OnUseTimerTriggerComponent, MobStateChangedEvent>(OnMobstateChanged);
-    }
-
-    private void OnMobstateChanged(EntityUid uid, OnUseTimerTriggerComponent component, MobStateChangedEvent args)
-    {
-        if (component.MobState != args.CurrentMobState)
-            return;
-
-        HandleTimerTrigger(
-            uid,
-            args.Origin,
-            component.Delay,
-            component.BeepInterval,
-            component.InitialBeepDelay,
-            component.BeepSound,
-            component.BeepParams);
     }
 
     private void OnStuck(EntityUid uid, OnUseTimerTriggerComponent component, EntityStuckEvent args)

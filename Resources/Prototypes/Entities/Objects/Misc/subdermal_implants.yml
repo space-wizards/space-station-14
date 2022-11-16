@@ -152,11 +152,12 @@
   components:
     - type: SubdermalImplant
       permanent: true
+    - type: TriggerOnMobstateChange #Chains with OnUseTimerTrigger
+      mobState: Dead
     - type: OnUseTimerTrigger
       delay: 5
       initialBeepDelay: 0
       beepSound: /Audio/Machines/Nuke/general_beep.ogg
-      mobState: Dead
     - type: ExplodeOnTrigger
     - type: GibOnTrigger
       deleteItems: true
