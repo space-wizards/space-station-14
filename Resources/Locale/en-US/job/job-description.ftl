@@ -1,4 +1,4 @@
-job-description-assistant = An engineer in training, help the engineer fix the station and try to learn atmos !
+job-description-technical-assistant = An engineer in training, help the engineers fix the station and try to learn atmos!
 job-description-atmostech = Watch and manage atmos, don't flood the station with plasma.
 job-description-bartender = Give the crew drinks and keep the bar mostly hole-free, and you will do fine. Also, you got a shotgun.
 job-description-botanist = Grow wheats for the chef, banana for the clown and weed for you and your colleague.
