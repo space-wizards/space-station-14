@@ -32,6 +32,7 @@
     - Cargo
     - Medical
     - Engineering
+    - Maintenance
     
 - type: entity
   parent: DoorRemoteDefault
