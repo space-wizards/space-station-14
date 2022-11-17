@@ -280,6 +280,9 @@ public sealed class FaxSystem : EntitySystem
         _userInterface.TrySetUiState(uid, FaxUiKey.Key, state);
     }
 
+    /// <summary>
+    ///     Set fax destination address not checking if he knows it exists
+    /// </summary>
     public void SetDestination(EntityUid uid, string destAddress, FaxMachineComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -290,6 +293,10 @@ public sealed class FaxSystem : EntitySystem
         UpdateUserInterface(uid, component);
     }
 
+    /// <summary>
+    ///     Clears current known fax info and make network scan ping
+    ///     Adds special data to  payload if it was emagged to identify itself as a Syndicate
+    /// </summary>
     public void Refresh(EntityUid uid, FaxMachineComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -309,6 +316,10 @@ public sealed class FaxSystem : EntitySystem
         _deviceNetworkSystem.QueuePacket(uid, null, payload);
     }
 
+    /// <summary>
+    ///     Sends message to addressee if paper is set and a known fax is selected
+    ///     A timeout is set after sending
+    /// </summary>
     public void Send(EntityUid uid, FaxMachineComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -341,6 +352,10 @@ public sealed class FaxSystem : EntitySystem
         UpdateUserInterface(uid, component);
     }
 
+    /// <summary>
+    ///     Accepts a new message and adds it to the queue to print
+    ///     If has parameter "notifyAdmins" also output a special message to admin chat.
+    /// </summary>
     public void Receive(EntityUid uid, string content, string? fromAddress, FaxMachineComponent? component = null)
     {
         if (!Resolve(uid, ref component))
