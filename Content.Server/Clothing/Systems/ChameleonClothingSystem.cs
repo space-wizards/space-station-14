@@ -1,4 +1,5 @@
-﻿using Content.Shared.Clothing.Components;
+﻿using Content.Server.IdentityManagement;
+using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Prototypes;
@@ -14,6 +15,7 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly IComponentFactory _factory = default!;
+    [Dependency] private readonly IdentitySystem _identity = default!;
 
     public override void Initialize()
     {
@@ -94,14 +96,20 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
             return;
         component.SelectedId = protoId;
 
-        // update identity blocker
+        UpdateIdentityBlocker(uid, component, proto);
+        UpdateVisuals(uid, component);
+        UpdateUi(uid, component);
+        Dirty(component);
+    }
+
+    private void UpdateIdentityBlocker(EntityUid uid, ChameleonClothingComponent component, EntityPrototype proto)
+    {
         if (proto.HasComponent<IdentityBlockerComponent>(_factory))
             EnsureComp<IdentityBlockerComponent>(uid);
         else
             RemComp<IdentityBlockerComponent>(uid);
 
-        UpdateVisuals(uid, component);
-        UpdateUi(uid, component);
-        Dirty(component);
+        if (component.User != null)
+            _identity.QueueIdentityUpdate(component.User.Value);
     }
 }
