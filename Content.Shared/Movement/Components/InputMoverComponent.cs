@@ -62,7 +62,7 @@ namespace Content.Shared.Movement.Components
         /// <summary>
         /// If we traverse on / off a grid then set a timer to update our relative inputs.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite), DataField("lerpTarget", customTypeSerializer:typeof(TimeOffsetSerializer))]
+        [ViewVariables(VVAccess.ReadWrite), DataField("lerpTarget", customTypeSerializer: typeof(TimeOffsetSerializer))]
         public TimeSpan LerpTarget;
 
         public const float LerpTime = 1.0f;

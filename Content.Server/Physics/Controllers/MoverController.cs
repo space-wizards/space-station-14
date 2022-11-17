@@ -136,16 +136,21 @@ namespace Content.Server.Physics.Controllers
             {
                 var results = moveResults[i];
                 var input = moveInput[i];
+                MetaDataComponent? metadata = null;
 
                 // Calling dirty isn't thread-safe sadly.
                 if (results.DirtyMover)
-                    Dirty(input.Mover, metaQuery.GetComponent(input.Mover.Owner));
+                {
+                    metadata ??= metaQuery.GetComponent(input.Mover.Owner);
+                    Dirty(input.Mover, metadata);
+                }
 
                 if (results.LinearVelocity != null)
                 {
+                    metadata ??= metaQuery.GetComponent(input.Physics.Owner);
                     PhysicsSystem.SetLinearVelocity(input.Physics, results.LinearVelocity.Value, false);
                     PhysicsSystem.SetAngularVelocity(input.Physics, 0f, false);
-                    Dirty(input.Physics, metaQuery.GetComponent(input.Mover.Owner));
+                    Dirty(input.Physics, metadata);
                 }
 
                 if (results.sound != null)

@@ -117,52 +117,11 @@ namespace Content.Shared.Movement.Systems
             audio = default;
 
             // Update relative movement
-            if (mover.LerpTarget <= Timing.CurTime)
+            if (mover.LerpTarget < Timing.CurTime)
             {
-                var relative = xform.GridUid;
-                relative ??= xform.MapUid;
-
-                // So essentially what we want:
-                // 1. If we go from grid to map then preserve our rotation and continue as usual
-                // 2. If we go from grid -> grid then (after lerp time) snap to nearest cardinal (probably imperceptible)
-                // 3. If we go from map -> grid then (after lerp time) snap to nearest cardinal
-
-                if (!mover.RelativeEntity.Equals(relative))
+                if (TryUpdateRelative(mover, xform, xformQuery))
                 {
-                    // Okay need to get our old relative rotation with respect to our new relative rotation
-                    // e.g. if we were right side up on our current grid need to get what that is on our new grid.
-                    var currentRotation = Angle.Zero;
-                    var targetRotation = Angle.Zero;
-
-                    // Get our current relative rotation
-                    if (xformQuery.TryGetComponent(mover.RelativeEntity, out var oldRelativeXform))
-                    {
-                        currentRotation = _transform.GetWorldRotation(oldRelativeXform, xformQuery) + mover.RelativeRotation;
-                    }
-
-                    if (xformQuery.TryGetComponent(relative, out var relativeXform))
-                    {
-                        // This is our current rotation relative to our new parent.
-                        mover.RelativeRotation = (currentRotation - _transform.GetWorldRotation(relativeXform, xformQuery)).FlipPositive();
-                    }
-
-                    // If we went from grid -> map we'll preserve our worldrotation
-                    if (relative != null && _mapManager.IsMap(relative.Value))
-                    {
-                        targetRotation = currentRotation.FlipPositive().Reduced();
-                    }
-                    // If we went from grid -> grid OR grid -> map then snap the target to cardinal and lerp there.
-                    // OR just rotate to zero (depending on cvar)
-                    else if (relative != null && _mapManager.IsGrid(relative.Value))
-                    {
-                        if (CameraRotationLocked)
-                            targetRotation = Angle.Zero;
-                        else
-                            targetRotation = mover.RelativeRotation.GetCardinalDir().ToAngle().Reduced();
-                    }
-
-                    mover.RelativeEntity = relative;
-                    mover.TargetRelativeRotation = targetRotation;
+                    dirtyMover = true;
                 }
             }
 
