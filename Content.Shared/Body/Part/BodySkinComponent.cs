@@ -12,7 +12,7 @@ namespace Content.Shared.Body.Part;
 [Access(typeof(SharedBodySystem))]
 public sealed class BodySkinComponent : Component
 {
-    [Access(typeof(InjurySystem), typeof(SharedBodySystem), Other = AccessPermissions.Read)] [DataField("skinLayers")]
+    [Access(typeof(WoundSystem), typeof(SharedBodySystem), Other = AccessPermissions.Read)] [DataField("skinLayers")]
     public List<SkinlayerData> SkinLayers = new();
 
     public SkinlayerData? PrimaryLayer

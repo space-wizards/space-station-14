@@ -1,4 +1,4 @@
-﻿- type: injury # TODO wounds before merge
+﻿- type: wound # TODO wounds before merge
   id: Bruise
   name: Bruise # TODO loc
   description: Bruise # TODO

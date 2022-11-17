@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Medical.Wounds.Components;
 
 [RegisterComponent, NetworkedComponent]
-[Access(typeof(InjurySystem))]
+[Access(typeof(WoundSystem))]
 public sealed class TraumaInflicterComponent : Component
 {
     [DataField("traumas", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<TraumaDamage, TraumaPrototype>))]

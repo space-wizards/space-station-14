@@ -12,7 +12,7 @@ public sealed class TraumaPrototype : IPrototype
     //Note: these should be defined in order of severity!
     //list of possible wounds sorted by their trauma cutoffs
     [DataField("wounds", required: true,
-        customTypeSerializer: typeof(PrototypeIdValueDictionarySerializer<FixedPoint2, InjuryPrototype>))]
+        customTypeSerializer: typeof(PrototypeIdValueDictionarySerializer<FixedPoint2, WoundPrototype>))]
     public SortedDictionary<FixedPoint2, string> Wounds { get; init; } = new();
 
     // TODO wounds wound cap

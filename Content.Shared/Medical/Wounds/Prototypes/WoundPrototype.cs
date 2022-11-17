@@ -3,8 +3,8 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Medical.Wounds.Prototypes;
 
-[Prototype("injury")]
-public sealed class InjuryPrototype : IPrototype
+[Prototype("wound")]
+public sealed class WoundPrototype : IPrototype
 {
     [IdDataField] public string ID { get; init; } = string.Empty;
 

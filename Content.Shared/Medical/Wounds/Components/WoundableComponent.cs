@@ -8,10 +8,10 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Medical.Wounds.Components;
 
 [RegisterComponent, NetworkedComponent]
-[Access(typeof(InjurySystem))]
-public sealed class InjurableComponent : Component
+[Access(typeof(WoundSystem))]
+public sealed class WoundableComponent : Component
 {
-    [DataField("injuries")] public List<Injury>? Injuries;
+    [DataField("wounds")] public List<Wound>? Wounds;
 
     [DataField("allowedTraumaTypes", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<TraumaPrototype>))]
     public HashSet<string>? AllowedTraumaTypes;
@@ -28,18 +28,18 @@ public sealed class InjurableComponent : Component
     [DataField("health", required: true)] public FixedPoint2 Health;
 
     //How well is this woundable holding up, when this reaches 0 the entity is destroyed/gibbed!
-    [Access(typeof(InjurySystem))] [DataField("maxStructure", required: true)]
+    [Access(typeof(WoundSystem))] [DataField("maxStructure", required: true)]
     public FixedPoint2 MaxStructure;
 
     //How well is this woundable holding up, when this reaches 0 the entity is destroyed/gibbed!
-    [Access(typeof(InjurySystem))] [DataField("structure", required: true)]
+    [Access(typeof(WoundSystem))] [DataField("structure", required: true)]
     public FixedPoint2 StructuralPool;
 }
 
 [DataRecord, NetSerializable, Serializable]
-public record struct Injury(string InjuryId, FixedPoint2 Healed, FixedPoint2 Bleed)
+public record struct Wound(string WoundId, FixedPoint2 Healed, FixedPoint2 Bleed)
 {
-    public Injury(string injuryId) : this(injuryId, FixedPoint2.Zero, FixedPoint2.Zero)
+    public Wound(string woundId) : this(woundId, FixedPoint2.Zero, FixedPoint2.Zero)
     {
     }
 }
