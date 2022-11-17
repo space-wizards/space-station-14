@@ -156,7 +156,7 @@ public sealed class InjurySystem : EntitySystem
             levelFloor = injuryData.Key.Float();
         }
 
-        return new Injury(injuryId, (trauma - levelFloor) / (nextLevel - trauma));
+        return new Injury(injuryId);
     }
 
     private (InjurableComponent Injurable, EntityUid Target)? FindValidInjurableInAdjacent(EntityUid target,
