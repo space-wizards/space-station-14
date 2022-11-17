@@ -6,9 +6,13 @@
   abstract: true
   components:
   - type: Sprite
-    sprite: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi
+    sprite: Objects/Specific/Xenoarchaeology/item_artifacts.rsi
     netsync: false
-    state: ano01
+    layers:
+    - state: ano01
+      map: [ "enum.ArtifactsVisualLayers.Base" ]
+    - state: ano01_on
+      map: [ "enum.PipeVisualLayers.Effect" ]
   - type: Damageable
   - type: Physics
     bodyType: Dynamic
@@ -17,9 +21,8 @@
   - type: InteractionOutline
   - type: Artifact
   - type: RandomArtifactSprite
+    maxSprite: 10
   - type: Appearance
-    visuals:
-    - type: RandomArtifactVisualizer
   - type: StaticPrice
     price: 500
 
