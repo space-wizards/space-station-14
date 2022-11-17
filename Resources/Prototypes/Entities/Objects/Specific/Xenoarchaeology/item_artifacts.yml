@@ -29,6 +29,9 @@
   - type: Appearance
   - type: StaticPrice
     price: 500
+  - type: Item
+    sprite: Objects/Specific/Xenoarchaeology/item_artifacts.rsi
+    heldPrefix: ano01
 
 - type: entity
   parent: BaseXenoArtifactItem

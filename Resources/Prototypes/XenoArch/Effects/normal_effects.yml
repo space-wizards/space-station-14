@@ -300,6 +300,13 @@
     - Amatoxin
 
 - type: artifactEffect
+  id: EffectIgnite
+  targetDepth: 3
+  effectHint: artifact-effect-hint-release
+  components:
+  - type: IgniteArtifact
+
+- type: artifactEffect
   id: EffectSingulo
   targetDepth: 100
   effectHint: artifact-effect-hint-destruction
