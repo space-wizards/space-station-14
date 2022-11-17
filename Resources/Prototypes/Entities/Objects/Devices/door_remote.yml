@@ -32,6 +32,22 @@
     - Cargo
     - Medical
     - Engineering
+    
+- type: entity
+  parent: DoorRemoteDefault
+  id: DoorRemoteCommand
+  name: command door remote
+  components:
+  - type: Sprite
+    layers:
+    - state: door_remotebase
+    - state: door_remotelightscolour
+      color: "#e6e600"
+    - state: door_remotescreencolour
+      color: "#9f9f00"
+  - type: Access
+    groups:
+    - Command
 
 - type: entity
   parent: DoorRemoteDefault
