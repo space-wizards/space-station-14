@@ -53,6 +53,9 @@
           Inserting: { state: inserting }
           Printing: { state: printing }
   - type: ItemSlots
+  - type: ContainerContainer
+    containers:
+      Paper: !type:ContainerSlot
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: Fax

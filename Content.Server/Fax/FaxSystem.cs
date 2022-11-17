@@ -32,7 +32,7 @@ public sealed class FaxSystem : EntitySystem
     [Dependency] private readonly QuickDialogSystem _quickDialog = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
 
-    public const string PaperSlotId = "FaxMachine-paper";
+    public const string PaperSlotId = "Paper";
 
     public override void Initialize()
     {
