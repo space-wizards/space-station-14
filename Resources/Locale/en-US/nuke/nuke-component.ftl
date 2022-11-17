@@ -32,3 +32,7 @@ nuke-label-nanotrasen = NT-{$serial}
 # do you even need this one? It's more funnier to say that
 # the Syndicate stole a NT nuke
 nuke-label-syndicate = SYN-{$serial}
+
+## Fax
+nuke-codes-message = [color=red]TOP SECRET![/color]
+ Nuclear device activation code: {$name} - {$code}

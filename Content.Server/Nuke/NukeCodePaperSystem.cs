@@ -92,7 +92,7 @@ namespace Content.Server.Nuke
                     continue;
                 }
 
-                nukeCode = $"{MetaData(nuke.Owner).EntityName} - {nuke.Code}";
+                nukeCode = Loc.GetString("nuke-codes-message", ("name", MetaData(nuke.Owner).EntityName), ("code", nuke.Code));
                 return true;
             }
 
