@@ -88,6 +88,7 @@ public sealed class ImplanterSystem : SharedImplanterSystem
         var userName = Identity.Entity(user, EntityManager);
         _popup.PopupEntity(Loc.GetString("implanter-component-implanting-target", ("user", userName)), user, Filter.Entities(target), PopupType.LargeCaution);
 
+        component.CancelToken?.Cancel();
         component.CancelToken = new CancellationTokenSource();
 
         _doAfter.DoAfter(new DoAfterEventArgs(user, component.ImplantTime, component.CancelToken.Token, implanter)
@@ -113,6 +114,7 @@ public sealed class ImplanterSystem : SharedImplanterSystem
     {
         _popup.PopupEntity(Loc.GetString("injector-component-injecting-user"), target, Filter.Entities(user));
 
+        component.CancelToken?.Cancel();
         component.CancelToken = new CancellationTokenSource();
 
         _doAfter.DoAfter(new DoAfterEventArgs(user, component.DrawTime, component.CancelToken.Token, implanter)
@@ -136,18 +138,21 @@ public sealed class ImplanterSystem : SharedImplanterSystem
 
     private void OnImplantAttemptSuccess(EntityUid uid, ImplanterComponent component, ImplanterImplantCompleteEvent args)
     {
+        component.CancelToken?.Cancel();
         component.CancelToken = null;
         Implant(args.Implanter, args.Target, component);
     }
 
     private void OnDrawAttemptSuccess(EntityUid uid, ImplanterComponent component, ImplanterDrawCompleteEvent args)
     {
+        component.CancelToken?.Cancel();
         component.CancelToken = null;
         Draw(args.Implanter, args.User, args.Target, component);
     }
 
     private void OnImplantAttemptFail(EntityUid uid, ImplanterComponent component, ImplanterCancelledEvent args)
     {
+        component.CancelToken?.Cancel();
         component.CancelToken = null;
     }
 
