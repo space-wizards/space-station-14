@@ -168,7 +168,7 @@ public sealed class InjurySystem : EntitySystem
             levelFloor = injuryData.Key.Float();
         }
 
-        injury = new Injury(injuryId, (trauma - levelFloor) / (nextLevel - trauma));
+        injury = new Injury(injuryId);
         return true;
     }
 
