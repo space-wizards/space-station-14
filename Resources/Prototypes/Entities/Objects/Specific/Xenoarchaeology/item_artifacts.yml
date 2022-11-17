@@ -12,7 +12,8 @@
     - state: ano01
       map: [ "enum.ArtifactsVisualLayers.Base" ]
     - state: ano01_on
-      map: [ "enum.PipeVisualLayers.Effect" ]
+      map: [ "enum.ArtifactsVisualLayers.Effect" ]
+      visible: false
   - type: Damageable
   - type: Physics
     bodyType: Dynamic
@@ -22,6 +23,11 @@
   - type: Artifact
   - type: RandomArtifactSprite
     maxSprite: 10
+    activationTime: 2.4
+  - type: RandomSprite
+    available:
+    - enum.ArtifactsVisualLayers.Effect:
+        ano01_on: Rainbow
   - type: Appearance
   - type: StaticPrice
     price: 500
