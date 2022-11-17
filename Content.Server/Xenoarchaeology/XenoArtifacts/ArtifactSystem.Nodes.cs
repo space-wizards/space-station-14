@@ -166,11 +166,22 @@ public sealed partial class ArtifactSystem
         foreach (var (name, entry) in allComponents)
         {
             var reg = _componentFactory.GetRegistration(name);
+
+            if (EntityManager.HasComponent(uid, reg.Type))
+            {
+                // Don't re-add permanent components
+                if (node.Effect.PermanentComponents.ContainsValue(entry))
+                    continue;
+
+                EntityManager.RemoveComponent(uid, reg.Type);
+            }
+
             var comp = (Component) _componentFactory.GetComponent(reg);
             comp.Owner = uid;
 
             var temp = (object) comp;
             _serialization.Copy(entry.Component, ref temp);
+
             EntityManager.AddComponent(uid, (Component) temp!, true);
         }
 

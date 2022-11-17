@@ -7,8 +7,6 @@
   effectHint: artifact-effect-hint-storage
   restrictStructures: true # it doesnt necessarily have to be restricted from structures, but i think it'll be better that way
   permanentComponents:
-  - type: Storage
-    capacity: 50
   - type: UserInterface
     interfaces:
     - key: enum.StorageUiKey.Key
@@ -16,7 +14,9 @@
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
-        ents: []
+        ents: [ ]
+  - type: Storage
+    capacity: 50
 
 - type: artifactEffect
   id: EffectSolutionStorage
@@ -24,6 +24,10 @@
   effectHint: artifact-effect-hint-storage
   restrictStructures: true
   permanentComponents:
+  - type: UserInterface
+    interfaces:
+    - key: enum.TransferAmountUiKey.Key
+      type: TransferAmountBoundUserInterface
   - type: SolutionContainerManager
     solutions:
       beaker:
@@ -42,10 +46,6 @@
     solution: beaker
   - type: SolutionTransfer
     canChangeTransferAmount: true
-  - type: UserInterface
-    interfaces:
-    - key: enum.TransferAmountUiKey.Key
-      type: TransferAmountBoundUserInterface
   - type: Drink
     isOpen: true
     solution: beaker
@@ -87,14 +87,6 @@
   effectHint: artifact-effect-hint-gun
   restrictStructures: true
   permanentComponents:
-  - type: Gun
-    selectedMode: SemiAuto
-    fireRate: 2
-    availableModes:
-    - SemiAuto
-    - FullAuto # no alien revolver in buildings
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
   - type: ContainerContainer
     containers:
       revolver-ammo: !type:Container
@@ -111,6 +103,14 @@
       path: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+  - type: Gun
+    selectedMode: SemiAuto
+    fireRate: 2
+    availableModes:
+    - SemiAuto
+    - FullAuto # no alien revolver in buildings
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
 
 - type: artifactEffect
   id: EffectMultitool
