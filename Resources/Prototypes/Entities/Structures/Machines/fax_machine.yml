@@ -65,6 +65,11 @@
   name: centcom long range fax machine
   suffix: Centcom
   components:
+  - type: Sprite
+    layers:
+      - state: icon
+        map: [ "base" ]
+        color: "#bfe3ff"
   - type: FaxMachine
     notifyAdmins: true
 
@@ -74,6 +79,11 @@
   name: syndicate long range fax machine
   suffix: Syndicate
   components:
+  - type: Sprite
+    layers:
+      - state: icon
+        map: [ "base" ]
+        color: "#a3a3a3"
   - type: FaxMachine
     responsePings: false
     emagged: true
