@@ -21,7 +21,9 @@
   id: TriggerAnchor
   targetDepth: 0
   triggerHint: artifact-trigger-hint-tool
-  restrictItems: true
+  blacklist:
+    components:
+    - Item
   components:
   - type: ArtifactAnchorTrigger
 
@@ -29,7 +31,9 @@
   id: TriggerElectricity
   targetDepth: 0
   triggerHint: artifact-trigger-hint-electricity
-  restrictItems: true
+  blacklist:
+    components:
+    - Item
   components:
   - type: ArtifactElectricityTrigger
   - type: PowerConsumer
@@ -71,7 +75,9 @@
   id: TriggerItemLanded
   targetDepth: 1
   triggerHint: artifact-trigger-hint-land
-  restrictStructures: true
+  whitelist:
+    components:
+    - Item
   components:
   - type: ArtifactLandTrigger
 
@@ -112,7 +118,9 @@
   id: TriggerMicrowave
   targetDepth: 2
   triggerHint: artifact-trigger-hint-radiation
-  restrictStructures: true
+  whitelist:
+    components:
+    - Item
   components:
   - type: ArtifactMicrowaveTrigger
 

@@ -5,7 +5,9 @@
   id: EffectStorage
   targetDepth: 2
   effectHint: artifact-effect-hint-storage
-  restrictStructures: true # it doesnt necessarily have to be restricted from structures, but i think it'll be better that way
+  whitelist:
+    components:
+    - Item # it doesnt necessarily have to be restricted from structures, but i think it'll be better that way
   permanentComponents:
   - type: UserInterface
     interfaces:
@@ -22,7 +24,9 @@
   id: EffectSolutionStorage
   targetDepth: 2
   effectHint: artifact-effect-hint-storage
-  restrictStructures: true
+  whitelist:
+    components:
+    - Item
   permanentComponents:
   - type: UserInterface
     interfaces:
@@ -76,7 +80,9 @@
   id: EffectPowerGen20K
   targetDepth: 3
   effectHint: artifact-effect-hint-release
-  restrictItems: true
+  blacklist:
+    components:
+    - Item
   permanentComponents:
   - type: PowerSupplier
     supplyRate: 20000
@@ -85,7 +91,9 @@
   id: EffectBigIron
   targetDepth: 3
   effectHint: artifact-effect-hint-gun
-  restrictStructures: true
+  whitelist:
+    components:
+    - Item
   permanentComponents:
   - type: ContainerContainer
     containers:
@@ -116,7 +124,9 @@
   id: EffectMultitool
   targetDepth: 3
   effectHint: artifact-effect-hint-multitool
-  restrictStructures: true
+  whitelist:
+    components:
+    - Item
   permanentComponents:
   - type: TilePrying
   - type: SignalLinker

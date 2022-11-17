@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Item;
+using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
@@ -35,16 +36,9 @@ public sealed class ArtifactEffectPrototype : IPrototype
     [DataField("effectHint")]
     public string? EffectHint;
 
+    [DataField("whitelist")]
+    public EntityWhitelist? Whitelist;
 
-    /// <summary>
-    ///     Should this effect be restricted from artifacts with <see cref="ItemComponent"/>?
-    /// </summary>
-    [DataField("restrictItems")]
-    public bool RestrictItems = false;
-
-    /// <summary>
-    ///     Should this effect be restricted from artifacts that do not have <see cref="ItemComponent"/>?
-    /// </summary>
-    [DataField("restrictStructures")]
-    public bool RestrictStructures = false;
+    [DataField("blacklist")]
+    public EntityWhitelist? Blacklist;
 }

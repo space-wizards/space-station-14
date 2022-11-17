@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Item;
+using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
@@ -24,15 +25,9 @@ public sealed class ArtifactTriggerPrototype : IPrototype
     [DataField("triggerHint")]
     public string? TriggerHint;
 
-    /// <summary>
-    ///     Should this trigger be restricted from artifacts with <see cref="ItemComponent"/>?
-    /// </summary>
-    [DataField("restrictItems")]
-    public bool RestrictItems = false;
+    [DataField("whitelist")]
+    public EntityWhitelist? Whitelist;
 
-    /// <summary>
-    ///     Should this trigger be restricted from artifacts that do not have <see cref="ItemComponent"/>?
-    /// </summary>
-    [DataField("restrictStructures")]
-    public bool RestrictStructures = false;
+    [DataField("blacklist")]
+    public EntityWhitelist? Blacklist;
 }

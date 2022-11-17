@@ -86,8 +86,9 @@ public sealed partial class ArtifactSystem
 
         var weights = GetDepthWeights(validDepth, node.Depth);
         var selectedRandomTargetDepth = GetRandomTargetDepth(weights);
-        var targetTriggers = allTriggers.Where(x =>
-            x.TargetDepth == selectedRandomTargetDepth).Where(x => HasComp<ItemComponent>(artifact) ? !x.RestrictItems : !x.RestrictStructures).ToList();
+        var targetTriggers = allTriggers
+            .Where(x => x.TargetDepth == selectedRandomTargetDepth)
+            .Where(x => (x.Whitelist?.IsValid(artifact, EntityManager) ?? true) && (!x.Blacklist?.IsValid(artifact, EntityManager) ?? true)).ToList();
 
 
         return _random.Pick(targetTriggers);
@@ -100,8 +101,9 @@ public sealed partial class ArtifactSystem
 
         var weights = GetDepthWeights(validDepth, node.Depth);
         var selectedRandomTargetDepth = GetRandomTargetDepth(weights);
-        var targetEffects = allEffects.Where(x =>
-            x.TargetDepth == selectedRandomTargetDepth).Where(x => HasComp<ItemComponent>(artifact) ? !x.RestrictItems : !x.RestrictStructures).ToList();
+        var targetEffects = allEffects
+            .Where(x => x.TargetDepth == selectedRandomTargetDepth)
+            .Where(x => (x.Whitelist?.IsValid(artifact, EntityManager) ?? true) && (!x.Blacklist?.IsValid(artifact, EntityManager) ?? true)).ToList();
 
         return _random.Pick(targetEffects);
     }
