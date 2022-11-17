@@ -19,6 +19,11 @@ public sealed class AnalysisConsoleScanButtonPressedMessage : BoundUserInterface
 }
 
 [Serializable, NetSerializable]
+public sealed class AnalysisConsolePrintButtonPressedMessage : BoundUserInterfaceMessage
+{
+}
+
+[Serializable, NetSerializable]
 public sealed class AnalysisConsoleDestroyButtonPressedMessage : BoundUserInterfaceMessage
 {
 }
@@ -34,6 +39,8 @@ public sealed class AnalysisConsoleScanUpdateState : BoundUserInterfaceState
 
     public bool CanScan;
 
+    public bool CanPrint;
+
     public int? Id;
 
     public int? Depth;
@@ -46,7 +53,7 @@ public sealed class AnalysisConsoleScanUpdateState : BoundUserInterfaceState
 
     public string? TriggerProto;
 
-    public float? Completion;
+    public int? PointValue;
 
     public bool Scanning;
 
@@ -54,14 +61,15 @@ public sealed class AnalysisConsoleScanUpdateState : BoundUserInterfaceState
 
     public TimeSpan TotalTime;
 
-    public AnalysisConsoleScanUpdateState(EntityUid? artifact, bool analyzerConnected, bool serverConnected, bool canScan,
-        int? id, int? depth, int? edges, bool? triggered, string? effectProto, string? triggerProto, float? completion,
+    public AnalysisConsoleScanUpdateState(EntityUid? artifact, bool analyzerConnected, bool serverConnected, bool canScan, bool canPrint,
+        int? id, int? depth, int? edges, bool? triggered, string? effectProto, string? triggerProto, int? pointValue,
         bool scanning, TimeSpan timeRemaining, TimeSpan totalTime)
     {
         Artifact = artifact;
         AnalyzerConnected = analyzerConnected;
         ServerConnected = serverConnected;
         CanScan = canScan;
+        CanPrint = canPrint;
 
         Id = id;
         Depth = depth;
@@ -69,7 +77,7 @@ public sealed class AnalysisConsoleScanUpdateState : BoundUserInterfaceState
         Triggered = triggered;
         EffectProto = effectProto;
         TriggerProto = triggerProto;
-        Completion = completion;
+        PointValue = pointValue;
 
         Scanning = scanning;
         TimeRemaining = timeRemaining;

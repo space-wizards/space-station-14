@@ -1,0 +1,64 @@
+- type: entity
+  save: false
+  name: Urist McPlants
+  parent: BaseMobOrganic
+  id: BaseMobDiona
+  abstract: true
+  components:
+  - type: Humanoid
+    species: Diona
+  - type: Hunger
+  - type: Thirst
+    baseDecayRate: 0.3
+  - type: Icon
+    sprite: Mobs/Species/Diona/parts.rsi
+    state: full
+  - type: Body
+    prototype: Diona
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Diona
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+      - id: FoodMeatPlant
+        amount: 5
+  - type: Bloodstream
+    bloodReagent: Water
+    bloodlossDamage:
+      types:
+        Bloodloss:
+          1
+    bloodlossHealDamage:
+      types:
+        Bloodloss:
+          -0.25
+  - type: Fixtures
+    fixtures:
+      - shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 300 #weighs more than humans because wood
+        restitution: 0.0
+        mask:
+          - MobMask
+        layer:
+          - MobLayer
+  - type: Inventory
+    templateId: diona
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 1.5
+    baseSprintSpeed : 3.5
+
+- type: entity
+  save: false
+  name: Urist McHands
+  parent: MobHumanDummy
+  id: MobDionaDummy
+  noSpawn: true
+  description: A dummy diona meant to be used in character setup.
+  components:
+  - type: Inventory
+    templateId: diona
+  - type: Humanoid
+    species: Diona

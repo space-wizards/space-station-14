@@ -168,6 +168,9 @@ namespace Content.Shared.Verbs
                     RaiseLocalEvent(verb.ExecutionEventArgs);
             }
 
+            if (Deleted(user) || Deleted(target))
+                return;
+
             // Perform any contact interactions
             if (verb.DoContactInteraction ?? (verb.DefaultDoContactInteraction && _interactionSystem.InRangeUnobstructed(user, target)))
                 _interactionSystem.DoContactInteraction(user, target);

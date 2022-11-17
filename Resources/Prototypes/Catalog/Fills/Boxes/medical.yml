@@ -52,7 +52,7 @@
   - type: StorageFill
     contents:
       - id: ClothingMaskSterile
-        amount: 4
+        amount: 6
   - type: Sprite
     layers:
       - state: box

@@ -432,7 +432,7 @@
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitSpatio
   name: spationaut hardsuit
-  description: A lightweight hardsuit designed for industrial eva activies in zero grav.
+  description: A lightweight hardsuit designed for industrial EVA in zero gravity.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/spatio.rsi

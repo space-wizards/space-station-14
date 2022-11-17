@@ -87,7 +87,7 @@ namespace Content.Server.Drone
 
                 if (TryComp<BodyComponent>(uid, out var body))
                     _bodySystem.GibBody(uid, body: body);
-                Del(uid);
+                QueueDel(uid);
             }
         }
 

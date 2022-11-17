@@ -23,9 +23,6 @@ public sealed class StationJobsTest
 - type: playTimeTracker
   id: Dummy
 
-- type: playTimeTracker
-  id: Overall
-
 - type: gameMap
   id: FooStation
   minPlayers: 0

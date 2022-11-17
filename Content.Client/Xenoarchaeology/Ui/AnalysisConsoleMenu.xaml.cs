@@ -17,8 +17,11 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
     [Dependency] private readonly IEntityManager _ent = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
 
+    public AnalysisDestroyWindow? AnalysisDestroyWindow;
+
     public event Action<BaseButton.ButtonEventArgs>? OnServerSelectionButtonPressed;
     public event Action<BaseButton.ButtonEventArgs>? OnScanButtonPressed;
+    public event Action<BaseButton.ButtonEventArgs>? OnPrintButtonPressed;
     public event Action<BaseButton.ButtonEventArgs>? OnDestroyButtonPressed;
 
     public AnalysisConsoleMenu()
@@ -28,18 +31,34 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
 
         ServerSelectionButton.OnPressed += a => OnServerSelectionButtonPressed?.Invoke(a);
         ScanButton.OnPressed += a => OnScanButtonPressed?.Invoke(a);
-        DestroyButton.OnPressed += a => OnDestroyButtonPressed?.Invoke(a);
+        PrintButton.OnPressed += a => OnPrintButtonPressed?.Invoke(a);
+        DestroyButton.OnPressed += _ => OnDestroyButton();
     }
 
-    public void SetScanButtonDisabled(AnalysisConsoleScanUpdateState state)
+    private void OnDestroyButton()
     {
-        var disabled = !state.CanScan;
+        // check if window is already open
+        if (AnalysisDestroyWindow is { IsOpen: true })
+        {
+            AnalysisDestroyWindow.MoveToFront();
+            return;
+        }
 
-        ScanButton.Disabled = disabled;
+        // open a new one
+        AnalysisDestroyWindow = new ();
+        AnalysisDestroyWindow.OpenCentered();
+
+        AnalysisDestroyWindow.OnYesButton += a =>
+        {
+            OnDestroyButtonPressed?.Invoke(a);
+        };
     }
 
-    public void SetDestroyButtonDisabled(AnalysisConsoleScanUpdateState state)
+    public void SetButtonsDisabled(AnalysisConsoleScanUpdateState state)
     {
+        ScanButton.Disabled = !state.CanScan;
+        PrintButton.Disabled = !state.CanPrint;
+
         var disabled = !state.ServerConnected || !state.CanScan;
 
         DestroyButton.Disabled = disabled;
@@ -77,6 +96,7 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
         {
             message.AddMarkup(Loc.GetString("analysis-console-info-scanner"));
             Information.SetMessage(message);
+            UpdateArtifactIcon(null); //set it to blank
             return;
         }
 
@@ -94,19 +114,26 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
         }
 
         if (state.Id != null) //node id
-            message.AddMarkup(Loc.GetString("analysis-console-info-id", ("id", state.Id))+"\n");
+        {
+            message.AddMarkup(Loc.GetString("analysis-console-info-id", ("id", state.Id)));
+            message.PushNewline();
+        }
         if (state.Depth != null) //node depth
-            message.AddMarkup(Loc.GetString("analysis-console-info-depth", ("depth", state.Depth))+"\n");
+        {
+            message.AddMarkup(Loc.GetString("analysis-console-info-depth", ("depth", state.Depth)));
+            message.PushNewline();
+        }
 
         if (state.Triggered != null) //whether it has been triggered
         {
             var activated = state.Triggered.Value
                 ? "analysis-console-info-triggered-true"
                 : "analysis-console-info-triggered-false";
-            message.AddMarkup(Loc.GetString(activated)+"\n");
+            message.AddMarkup(Loc.GetString(activated));
+            message.PushNewline();
         }
 
-        message.AddMarkup("\n");
+        message.PushNewline();
         var needSecondNewline = false;
 
         if (state.TriggerProto != null && //possible triggers
@@ -114,7 +141,8 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
             trigger.TriggerHint != null)
         {
             message.AddMarkup(Loc.GetString("analysis-console-info-trigger",
-                ("trigger", Loc.GetString(trigger.TriggerHint))) + "\n");
+                ("trigger", Loc.GetString(trigger.TriggerHint))));
+            message.PushNewline();
             needSecondNewline = true;
         }
 
@@ -123,21 +151,24 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
             effect.EffectHint != null)
         {
             message.AddMarkup(Loc.GetString("analysis-console-info-effect",
-                ("effect", Loc.GetString(effect.EffectHint))) + "\n");
+                ("effect", Loc.GetString(effect.EffectHint))));
+            message.PushNewline();
             needSecondNewline = true;
         }
 
         if (needSecondNewline)
-            message.AddMarkup("\n");
+            message.PushNewline();
 
         if (state.Edges != null) //number of edges
-            message.AddMarkup(Loc.GetString("analysis-console-info-edges", ("edges", state.Edges))+"\n");
-        if (state.Completion != null) //completion percentage
         {
-            message.AddMarkup(Loc.GetString("analysis-console-info-completion",
-                ("percentage", Math.Round(state.Completion.Value * 100)))+"\n");
+            message.AddMarkup(Loc.GetString("analysis-console-info-edges", ("edges", state.Edges)));
+            message.PushNewline();
         }
-
+        if (state.PointValue != null) //completion percentage
+        {
+            message.AddMarkup(Loc.GetString("analysis-console-info-value", ("value", state.PointValue)));
+            message.PushNewline();
+        }
         Information.SetMessage(message);
     }
 
@@ -152,6 +183,13 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
         ProgressLabel.Text = Loc.GetString("analysis-console-progress-text",
             ("seconds", (int) state.TotalTime.TotalSeconds - (int) state.TimeRemaining.TotalSeconds));
         ProgressBar.Value = (float) state.TimeRemaining.Divide(state.TotalTime);
+    }
+
+    public override void Close()
+    {
+        base.Close();
+
+        AnalysisDestroyWindow?.Close();
     }
 }
 
