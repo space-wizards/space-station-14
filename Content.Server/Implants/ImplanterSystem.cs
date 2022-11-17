@@ -131,7 +131,7 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
 
     private void OnImplanterGetState(EntityUid uid, ImplanterComponent component, ref ComponentGetState args)
     {
-        args.State = new ImplanterComponentState(component.CurrentMode, component.ImplanterContainer, component.ImplantOnly);
+        args.State = new ImplanterComponentState(component.CurrentMode, component.NumberOfEntities, component.ImplantOnly);
     }
 
     private void OnImplantAttemptSuccess(EntityUid uid, ImplanterComponent component, ImplanterImplantCompleteEvent args)
