@@ -70,7 +70,7 @@
 - type: artifactTrigger
   id: TriggerItemLanded
   targetDepth: 1
-  triggerHint: artifact-trigger-hint-throw
+  triggerHint: artifact-trigger-hint-land
   restrictStructures: true
   components:
   - type: ArtifactLandTrigger
