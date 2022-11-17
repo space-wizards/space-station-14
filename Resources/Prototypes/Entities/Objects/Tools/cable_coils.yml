@@ -23,7 +23,7 @@
   - type: CablePlacer
   - type: Clickable
   - type: StackPrice
-    price: 2
+    price: 5
 
 - type: entity
   id: CableHVStack
