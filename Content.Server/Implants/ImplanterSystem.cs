@@ -15,7 +15,7 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Implants;
 
-public sealed class ImplanterSystem : SharedImplanterSystem
+public sealed partial class ImplanterSystem : SharedImplanterSystem
 {
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
@@ -24,6 +24,7 @@ public sealed class ImplanterSystem : SharedImplanterSystem
     public override void Initialize()
     {
         base.Initialize();
+        InitializeImplanted();
 
         SubscribeLocalEvent<ImplanterComponent, HandDeselectedEvent>(OnHandDeselect);
         SubscribeLocalEvent<ImplanterComponent, AfterInteractEvent>(OnImplanterAfterInteract);
@@ -130,10 +131,7 @@ public sealed class ImplanterSystem : SharedImplanterSystem
 
     private void OnImplanterGetState(EntityUid uid, ImplanterComponent component, ref ComponentGetState args)
     {
-        if (!_container.TryGetContainer(uid, ImplanterSlotId, out var container))
-            return;
-
-        args.State = new ImplanterComponentState(component.CurrentMode, container.ContainedEntities.Count, component.ImplantOnly);
+        args.State = new ImplanterComponentState(component.CurrentMode, component.ImplanterContainer, component.ImplantOnly);
     }
 
     private void OnImplantAttemptSuccess(EntityUid uid, ImplanterComponent component, ImplanterImplantCompleteEvent args)

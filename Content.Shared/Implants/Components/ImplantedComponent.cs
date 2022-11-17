@@ -1,4 +1,6 @@
-﻿namespace Content.Shared.Implants.Components;
+﻿using Robust.Shared.Containers;
+
+namespace Content.Shared.Implants.Components;
 
 /// <summary>
 /// Added to an entity via the <see cref="SharedImplanterSystem"/> on implant
@@ -7,5 +9,5 @@
 [RegisterComponent]
 public sealed class ImplantedComponent : Component
 {
-
+    public Container ImplantContainer = default!;
 }
