@@ -210,6 +210,7 @@ public sealed partial class ThresholdControl : BoxContainer
 
             HorizontalExpand = true;
             Orientation = LayoutOrientation.Vertical;
+            Margin = new Thickness(0, 0, 6, 0);
 
             AddChild(new Label { Text = Loc.GetString($"air-alarm-ui-thresholds-{name}") });
             _bound = new FloatSpinBox(.01f, 2);
