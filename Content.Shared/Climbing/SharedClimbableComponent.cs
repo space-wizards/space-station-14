@@ -7,6 +7,6 @@ namespace Content.Shared.Climbing
         /// <summary>
         ///     The range from which this entity can be climbed.
         /// </summary>
-        [ViewVariables] [DataField("range")] public float Range = SharedInteractionSystem.InteractionRange / 1.4f;
+        [DataField("range")] public float Range = SharedInteractionSystem.InteractionRange / 1.4f;
     }
 }

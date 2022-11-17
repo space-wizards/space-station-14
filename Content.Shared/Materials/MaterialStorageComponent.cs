@@ -11,7 +11,7 @@ namespace Content.Shared.Materials;
 [RegisterComponent, NetworkedComponent]
 public sealed class MaterialStorageComponent : Component
 {
-    [DataField("storage", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<int, MaterialPrototype>)), ViewVariables]
+    [DataField("storage", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<int, MaterialPrototype>))]
     public Dictionary<string, int> Storage { get; set; } = new();
 
     /// <summary>
@@ -23,14 +23,12 @@ public sealed class MaterialStorageComponent : Component
     /// <summary>
     /// Whitelist for specifying the kind of items that can be insert into this entity.
     /// </summary>
-    [ViewVariables]
     [DataField("whitelist")]
     public EntityWhitelist? EntityWhitelist;
 
     /// <summary>
     /// Whitelist generated on runtime for what specific materials can be inserted into this entity.
     /// </summary>
-    [ViewVariables]
     [DataField("materialWhiteList", customTypeSerializer: typeof(PrototypeIdListSerializer<MaterialPrototype>))]
     public List<string>? MaterialWhiteList;
 

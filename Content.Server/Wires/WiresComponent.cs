@@ -1,5 +1,4 @@
 using Robust.Shared.Audio;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Wires;
 
@@ -21,14 +20,12 @@ public sealed class WiresComponent : Component
     /// <summary>
     ///     The name of this entity's internal board.
     /// </summary>
-    [ViewVariables]
     [DataField("BoardName")]
     public string BoardName { get; set; } = "Wires";
 
     /// <summary>
     ///     The layout ID of this entity's wires.
     /// </summary>
-    [ViewVariables]
     [DataField("LayoutId", required: true)]
     public string LayoutId { get; set; } = default!;
 
@@ -62,7 +59,6 @@ public sealed class WiresComponent : Component
     ///     If this should follow the layout saved the first time the layout dictated by the
     ///     layout ID is generated, or if a new wire order should be generated every time.
     /// </summary>
-    [ViewVariables]
     [DataField("alwaysRandomize")]
     public bool AlwaysRandomize { get; }
 

@@ -47,7 +47,6 @@ namespace Content.Shared.Lathe
         [DataField("runningState", required: true)]
         public string RunningState = default!;
 
-        [ViewVariables]
         [DataField("ignoreColor")]
         public bool IgnoreColor;
         #endregion
