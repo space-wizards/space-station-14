@@ -1,4 +1,5 @@
-﻿using Content.Shared.Body.Components;
+﻿using System.Linq;
+using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Medical.Wounds.Components;
@@ -31,10 +32,9 @@ public sealed class InjurySystem : EntitySystem
         if (!TryComp(args.Used, out TraumaInflicterComponent? inflicter))
             return;
 
-        foreach (var child in _bodySystem.GetBodyChildren(uid, component))
-        {
-            TryApplyWound(child.Id, inflicter);
-        }
+        var parts = _bodySystem.GetBodyChildren(uid, component).ToList();
+        var part = _random.Pick(parts);
+        TryApplyWound(part.Id, inflicter);
     }
 
     private void CacheData(PrototypesReloadedEventArgs? prototypesReloadedEventArgs)
