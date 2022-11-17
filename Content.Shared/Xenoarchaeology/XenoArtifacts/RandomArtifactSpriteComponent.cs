@@ -1,4 +1,4 @@
-﻿namespace Content.Server.Xenoarchaeology.XenoArtifacts;
+﻿namespace Content.Shared.Xenoarchaeology.XenoArtifacts;
 
 [RegisterComponent]
 public sealed class RandomArtifactSpriteComponent : Component

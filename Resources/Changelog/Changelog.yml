@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Machine boards now have different appearances depending on department.,
-    type: Tweak}
-  id: 2172
-  time: '2022-08-19T00:10:20.0000000+00:00'
 - author: Elijahrane
   changes:
   - {message: You no longer get better at pushing people over the worse you are at
@@ -2956,3 +2950,9 @@ Entries:
       the chance that cloning fails on a body., type: Add}
   id: 2671
   time: '2022-11-16T21:02:37.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Item artifacts. Artifact spawns may now spawn handheld artifacts, which
+      have a suite of new triggers and very useful effects, with more coming.', type: Add}
+  id: 2672
+  time: '2022-11-17T17:40:05.0000000+00:00'
