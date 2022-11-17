@@ -71,6 +71,6 @@
   frequency: 2300
 
 - type: deviceFrequency
-  id: FaxCentcom
-  name: device-frequency-prototype-name-fax-centcom
+  id: Fax
+  name: device-frequency-prototype-name-fax
   frequency: 2640

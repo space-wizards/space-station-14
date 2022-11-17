@@ -55,8 +55,8 @@
   - type: ItemSlots
   - type: DeviceNetwork
     deviceNetId: Wireless
-    receiveFrequencyId: FaxCentcom
-    transmitFrequencyId: FaxCentcom
+    receiveFrequencyId: Fax
+    transmitFrequencyId: Fax
 
 # Special
 - type: entity

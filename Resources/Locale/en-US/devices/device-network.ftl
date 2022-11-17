@@ -3,7 +3,7 @@ device-frequency-prototype-name-atmos = Atmospheric Devices
 device-frequency-prototype-name-suit-sensors = Suit Sensors
 device-frequency-prototype-name-lights = Smart Lights
 device-frequency-prototype-name-mailing-units = Mailing Units
-device-frequency-prototype-name-fax-centcom = Fax Centcom
+device-frequency-prototype-name-fax = Fax Centcom
 
 ## camera frequencies
 device-frequency-prototype-name-surveillance-camera-test = Subnet Test
