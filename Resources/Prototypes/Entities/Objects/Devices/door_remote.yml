@@ -13,8 +13,8 @@
 
 - type: entity
   parent: DoorRemoteDefault
-  id: DoorRemoteCommand
-  name: command door remote
+  id: DoorRemoteUniversal
+  name: universal door remote
   components:
   - type: Sprite
     layers:
@@ -26,6 +26,12 @@
   - type: Access
     groups:
     - Command
+    - Security
+    - Service
+    - Research
+    - Cargo
+    - Medical
+    - Engineering
 
 - type: entity
   parent: DoorRemoteDefault
