@@ -16,13 +16,13 @@ namespace Content.Server.Buckle.Components
         /// <summary>
         /// The angle in degrees to rotate the player by when they get strapped
         /// </summary>
-        [ViewVariables] [DataField("rotation")]
+        [DataField("rotation")]
         private int _rotation;
 
         /// <summary>
         /// The size of the strap which is compared against when buckling entities
         /// </summary>
-        [ViewVariables] [DataField("size")] private int _size = 100;
+        [DataField("size")] private int _size = 100;
         private int _occupiedSize;
 
         private bool _enabled = true;
@@ -49,21 +49,18 @@ namespace Content.Server.Buckle.Components
         /// <summary>
         /// The sound to be played when a mob is buckled
         /// </summary>
-        [ViewVariables]
         [DataField("buckleSound")]
         public SoundSpecifier BuckleSound { get; } = new SoundPathSpecifier("/Audio/Effects/buckle.ogg");
 
         /// <summary>
         /// The sound to be played when a mob is unbuckled
         /// </summary>
-        [ViewVariables]
         [DataField("unbuckleSound")]
         public SoundSpecifier UnbuckleSound { get; } = new SoundPathSpecifier("/Audio/Effects/unbuckle.ogg");
 
         /// <summary>
         /// ID of the alert to show when buckled
         /// </summary>
-        [ViewVariables]
         [DataField("buckledAlertType")]
         public AlertType BuckledAlertType { get; } = AlertType.Buckled;
 

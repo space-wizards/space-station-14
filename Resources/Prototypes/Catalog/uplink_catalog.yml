@@ -13,7 +13,7 @@
 - type: listing
   id: UplinkRevolverPython
   name: Python
-  description: A loud and deadly revolver. Uses .40 Magnum.
+  description: A loud and deadly revolver. Uses .45 Magnum.
   productEntity: WeaponRevolverPython
   cost:
     Telecrystal: 8
@@ -636,7 +636,7 @@
   description: UwU
   productEntity: ClothingHeadHatCatEars
   cost:
-    Telecrystal: 21
+    Telecrystal: 26
   categories:
   - UplinkPointless
 

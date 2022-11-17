@@ -1,56 +1,4 @@
 Entries:
-- author: Hoid
-  changes:
-  - {message: Experimental Research Hardsuit now protects more effectively against
-      things that can go wrong in the lab - including explosions., type: Tweak}
-  id: 2163
-  time: '2022-08-16T11:16:18.0000000+00:00'
-- author: martin69420
-  changes:
-  - {message: Fixed missing death sprite for holocarp and magicarp, type: Fix}
-  id: 2164
-  time: '2022-08-16T13:41:26.0000000+00:00'
-- author: martin69420
-  changes:
-  - {message: 'Added descriptions to many entities, including most signs.', type: Add}
-  - {message: Fixed typos on a few descriptions., type: Tweak}
-  id: 2165
-  time: '2022-08-17T00:56:54.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed guns spawning w/o ammo., type: Fix}
-  id: 2166
-  time: '2022-08-17T03:44:43.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: The Syndicate Zombie Bundle has been readded for Nuclear Operatives
-      for 40 TC., type: Add}
-  - {message: Nuclear Operatives can no longer purchase Holoparasites or Surplus bundles.,
-    type: Tweak}
-  - {message: Empty Uplink categories no longer show up in the menu., type: Tweak}
-  id: 2167
-  time: '2022-08-17T04:34:25.0000000+00:00'
-- author: JustinTrotter
-  changes:
-  - {message: 'Uniform printer can now print musician, clown, and mime winter coats',
-    type: Tweak}
-  id: 2168
-  time: '2022-08-18T02:22:30.0000000+00:00'
-- author: JustinTrotter
-  changes:
-  - {message: Nettle soup recipe works now, type: Tweak}
-  id: 2169
-  time: '2022-08-18T02:30:30.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Tweaks to bullet flyby sounds to be less grating., type: Tweak}
-  id: 2170
-  time: '2022-08-18T02:32:39.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Roundstart bag filling sounds should no longer play., type: Fix}
-  id: 2171
-  time: '2022-08-18T02:34:52.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Machine boards now have different appearances depending on department.,
@@ -2952,3 +2900,59 @@ Entries:
   - {message: the price of food now depends on its nutritional capacity, type: Add}
   id: 2662
   time: '2022-11-15T11:51:31.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed a broken inhand for the fire extinguisher., type: Fix}
+  id: 2663
+  time: '2022-11-16T05:24:35.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Hydroponics trays and soil now properly rotate with the player perspective.,
+    type: Fix}
+  id: 2664
+  time: '2022-11-16T11:08:19.0000000+00:00'
+- author: GoodWheatley
+  changes:
+  - {message: Eswords can damage windows now., type: Tweak}
+  id: 2665
+  time: '2022-11-16T14:20:42.0000000+00:00'
+- author: BurninDreamear
+  changes:
+  - {message: 'All sorts of corporations now supply higher caliber bullets, revolver
+      only, for now...', type: Add}
+  - {message: Nanotrasen and Syndicate revolvers have been retrofitted to use .45
+      magnum rounds instead of .40. Happy shooting!, type: Tweak}
+  id: 2666
+  time: '2022-11-16T14:41:48.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Cat ears now cost 26tc, type: Tweak}
+  id: 2667
+  time: '2022-11-16T14:46:56.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: You can't turn chameleon hat into cat ears., type: Remove}
+  id: 2668
+  time: '2022-11-16T18:13:54.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'The base rules for all Wizards'' Den servers have been rewritten from
+      the ground up. A "long-form" version is available on the wiki, with even more
+      examples and clarifications. Not much concrete is changing--this is mostly just
+      better codifying stuff that we were already enforcing, but we recommend that
+      you reread them anyway, of course.', type: Add}
+  id: 2669
+  time: '2022-11-16T18:24:37.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Traitor objectives should no longer be overly steal-oriented., type: Tweak}
+  - {message: The fallback for the 'keep another traitor alive' condition now just
+      gives you stay alive rather than telling you to keep yourself alive., type: Fix}
+  id: 2670
+  time: '2022-11-16T20:58:48.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added machine upgrades for the medical scanner. You can now decrease
+      the chance that cloning fails on a body., type: Add}
+  id: 2671
+  time: '2022-11-16T21:02:37.0000000+00:00'
