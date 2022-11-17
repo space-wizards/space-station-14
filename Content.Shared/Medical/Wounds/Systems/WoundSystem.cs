@@ -1,10 +1,12 @@
 ﻿using System.Linq;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
+using Content.Shared.Coordinates;
 using Content.Shared.FixedPoint;
 using Content.Shared.Medical.Wounds.Components;
 using Content.Shared.Medical.Wounds.Prototypes;
 using Content.Shared.Weapons.Melee.Events;
+using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -12,9 +14,13 @@ namespace Content.Shared.Medical.Wounds.Systems;
 
 public sealed class WoundSystem : EntitySystem
 {
+    private const string WoundContainerId = "WoundableComponentWounds";
+
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedBodySystem _bodySystem = default!;
+
+    [Dependency] private readonly SharedBodySystem _body = default!;
+    [Dependency] private readonly SharedContainerSystem _containers = default!;
 
     private readonly Dictionary<string, WoundTable> _cachedWounds = new();
 
@@ -31,7 +37,7 @@ public sealed class WoundSystem : EntitySystem
         if (!TryComp(args.Used, out TraumaInflicterComponent? inflicter))
             return;
 
-        var parts = _bodySystem.GetBodyChildren(uid, component).ToList();
+        var parts = _body.GetBodyChildren(uid, component).ToList();
         var part = _random.Pick(parts);
         TryApplyWound(part.Id, inflicter);
     }
@@ -51,52 +57,30 @@ public sealed class WoundSystem : EntitySystem
         var success = false;
         foreach (var (traumaType, trauma) in inflicter.Traumas)
         {
-            var validTarget = GetValidWoundable(target, traumaType);
+            success |= TryAddWound(target, traumaType, trauma);
 
-            if (!validTarget.HasValue)
-                return false;
-
-            var woundContainer = validTarget.Value.Woundable;
-            target = validTarget.Value.Target;
-
-            var modifiers = ApplyTraumaModifiers(traumaType, woundContainer.TraumaResistance, trauma.Damage);
-            if (TryPickWound(traumaType, modifiers, out var wound))
-                success |= AddWound(target, woundContainer, traumaType, wound);
-
+            // TODO wounds before merge add support for non penetrating traumas
             var type = trauma.PenTraumaType ?? traumaType;
 
             if (trauma.PenetrationChance > 0 && !_random.Prob(trauma.PenetrationChance.Float()))
                 continue;
 
-            validTarget = GetValidWoundable(target, type);
-
-            if (!validTarget.HasValue)
-                continue;
-
-            //Apply penetrating wounds
-            woundContainer = validTarget.Value.Woundable;
-            target = validTarget.Value.Target;
-
-            modifiers = ApplyTraumaModifiers(type, woundContainer.TraumaResistance, trauma.Damage);
-            if (TryPickWound(type, modifiers, out wound))
-                success |= AddWound(target, woundContainer, type, wound);
+            success |= TryAddWound(target, type, trauma);
         }
 
         return success;
     }
 
-    public bool TryAddWound(EntityUid target, string traumaType, TraumaDamage damage)
+    public bool TryAddWound(EntityUid target, string traumaType, TraumaDamage traumaDamage)
     {
-        var checkedContainer = GetValidWoundable(target, traumaType);
-
-        if (checkedContainer == null)
+        // TODO wounds before merge turn into tryget
+        if (GetValidWoundable(target, traumaType) is not {Woundable: var woundable})
             return false;
 
-        var woundContainer = checkedContainer.Value.Woundable;
-        target = checkedContainer.Value.Target;
+        var modifiers = ApplyTraumaModifiers(traumaType, woundable.TraumaResistance, traumaDamage.Damage);
 
-        return TryPickWound(traumaType, damage.Damage, out var wound) &&
-               AddWound(target, woundContainer, traumaType, wound);
+        return TryCreateWound(target, traumaType, modifiers, out var wound) &&
+               AddWound(woundable, wound.Id, wound.Component);
     }
 
     private FixedPoint2 ApplyTraumaModifiers(string traumaType, TraumaModifierSet? modifiers, FixedPoint2 damage)
@@ -113,34 +97,42 @@ public sealed class WoundSystem : EntitySystem
         return damage;
     }
 
-    private bool AddWound(EntityUid target, WoundableComponent woundContainer, string traumaType, Wound wound)
+    private bool AddWound(WoundableComponent woundable, EntityUid woundId, WoundComponent? wound = null)
     {
-        woundContainer.Wounds ??= new List<Wound>();
-        woundContainer.Wounds.Add(wound);
+        if (!Resolve(woundId, ref wound, false))
+            return false;
 
-        return true;
+        var wounds = _containers.EnsureContainer<Container>(woundable.Owner, WoundContainerId);
+        return wounds.Insert(woundId);
     }
 
-    private (WoundableComponent Woundable, EntityUid Target)? GetValidWoundable(EntityUid target, string traumaType)
+    private (EntityUid Target, WoundableComponent Woundable)? GetValidWoundable(EntityUid target, string traumaType)
     {
         if (!TryComp<WoundableComponent>(target, out var woundable))
             return null;
 
         if (woundable.AllowedTraumaTypes?.Contains(traumaType) ?? false)
-            return (woundable, target);
+            return (target, woundable);
 
         var adjacentWoundable = FindValidWoundableInAdjacent(target, traumaType);
         return adjacentWoundable;
     }
 
-    private bool TryPickWound(string traumaType, FixedPoint2 trauma, out Wound wound)
+    private bool TryCreateWound(
+        EntityUid woundableId,
+        string traumaType,
+        FixedPoint2 traumaDamage,
+        out (EntityUid Id, WoundComponent Component) wound)
     {
         foreach (var woundData in _cachedWounds[traumaType].HighestToLowest())
         {
-            if (woundData.Key > trauma)
+            if (woundData.Key > traumaDamage)
                 continue;
 
-            wound = new Wound(woundData.Value);
+            // TODO wounds before merge dont spawn on the client
+            var woundId = Spawn(woundData.Value, woundableId.ToCoordinates());
+            var woundComponent = Comp<WoundComponent>(woundId);
+            wound = (woundId, woundComponent);
             return true;
         }
 
@@ -148,7 +140,7 @@ public sealed class WoundSystem : EntitySystem
         return false;
     }
 
-    private (WoundableComponent Woundable, EntityUid Target)? FindValidWoundableInAdjacent(EntityUid target,
+    private (EntityUid Target, WoundableComponent Woundable)? FindValidWoundableInAdjacent(EntityUid target,
         string traumaType)
     {
         //search all the children in the body for a part that accepts the wound we want to apply
@@ -158,25 +150,25 @@ public sealed class WoundSystem : EntitySystem
         return foundContainer;
     }
 
-    private (WoundableComponent Woundable, EntityUid Target)? FindValidWoundableInAdjacentParts(EntityUid target,
+    private (EntityUid Target, WoundableComponent Woundable)? FindValidWoundableInAdjacentParts(EntityUid target,
         string traumaType)
     {
-        foreach (var data in _bodySystem.GetBodyPartAdjacentPartsComponents<WoundableComponent>(target))
+        foreach (var data in _body.GetBodyPartAdjacentPartsComponents<WoundableComponent>(target))
         {
             if (data.Component.AllowedTraumaTypes?.Contains(traumaType) ?? false)
-                return (data.Component, target);
+                return (target, data.Component);
         }
 
         return null;
     }
 
-    private (WoundableComponent Woundable, EntityUid Target)? FindValidWoundableInOrgans(EntityUid target,
+    private (EntityUid Target, WoundableComponent Woundable)? FindValidWoundableInOrgans(EntityUid target,
         string traumaType)
     {
-        foreach (var data in _bodySystem.GetBodyPartOrganComponents<WoundableComponent>(target))
+        foreach (var data in _body.GetBodyPartOrganComponents<WoundableComponent>(target))
         {
             if (data.Comp.AllowedTraumaTypes?.Contains(traumaType) ?? false)
-                return (data.Comp, target);
+                return (target, data.Comp);
         }
 
         return null;

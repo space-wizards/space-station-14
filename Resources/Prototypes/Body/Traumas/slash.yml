@@ -1,33 +1,9 @@
-﻿- type: wound # TODO wounds before merge
-  id: Scrape
-  name: Scrape # TODO loc
-  description: Scrape # TODO
-  healthDamage: 3
-  # TODO wounds bleed
-
-- type: wound # TODO wounds before merge
-  id: Abrasion
-  name: Abrasion # TODO loc
-  description: Abrasion # TODO
-  healthDamage: 7
-
-- type: wound # TODO wounds before merge
-  id: Cut
-  name: Cut # TODO loc
-  description: Cut # TODO
-  healthDamage: 14
-  integrityDamage: 5
-
-- type: wound # TODO wounds before merge
-  id: Laceration
-  name: Laceration # TODO loc
-  description: Laceration # TODO
-  healthDamage: 25
-  integrityDamage: 20
-
-- type: wound # TODO wounds before merge
-  id: Avulsion
-  name: Avulsion # TODO loc
-  description: Avulsion # TODO
-  healthDamage: 40
-  integrityDamage: 40
+﻿- type: trauma # TODO wounds before merge
+  id: Slash
+  wounds:
+    1: Bruise
+    5: Scrape
+    10: Abrasion
+    20: Cut
+    30: Laceration
+    50: Avulsion

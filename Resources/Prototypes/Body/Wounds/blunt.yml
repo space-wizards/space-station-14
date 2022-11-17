@@ -1,5 +1,7 @@
-﻿- type: wound # TODO wounds before merge
+﻿- type: entity # TODO wounds before merge
   id: Bruise
-  name: Bruise # TODO loc
+  name: Bruise
   description: Bruise # TODO
-  healthDamage: 1
+  components:
+  - type: Wound
+    healthDamage: 1

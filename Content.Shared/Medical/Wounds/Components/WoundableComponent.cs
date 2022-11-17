@@ -2,7 +2,6 @@
 using Content.Shared.Medical.Wounds.Prototypes;
 using Content.Shared.Medical.Wounds.Systems;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
 namespace Content.Shared.Medical.Wounds.Components;
@@ -11,8 +10,6 @@ namespace Content.Shared.Medical.Wounds.Components;
 [Access(typeof(WoundSystem))]
 public sealed class WoundableComponent : Component
 {
-    [DataField("wounds")] public List<Wound>? Wounds;
-
     [DataField("allowedTraumaTypes", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<TraumaPrototype>))]
     public HashSet<string>? AllowedTraumaTypes;
 
@@ -34,12 +31,4 @@ public sealed class WoundableComponent : Component
     //How well is this woundable holding up, when this reaches 0 the entity is destroyed/gibbed!
     [Access(typeof(WoundSystem))] [DataField("structure", required: true)]
     public FixedPoint2 StructuralPool;
-}
-
-[DataRecord, NetSerializable, Serializable]
-public record struct Wound(string WoundId, FixedPoint2 Healed, FixedPoint2 Bleed)
-{
-    public Wound(string woundId) : this(woundId, FixedPoint2.Zero, FixedPoint2.Zero)
-    {
-    }
 }
