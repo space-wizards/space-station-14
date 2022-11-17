@@ -44,7 +44,7 @@ public sealed class MedibotInjectOperator : HTNOperator
         // TODO: Wat
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
 
-        if (!blackboard.TryGetValue<EntityUid>(TargetKey, out var target) || _entManager.Deleted(target))
+        if (!blackboard.TryGetValue<EntityUid>(TargetKey, out var target, _entManager) || _entManager.Deleted(target))
             return HTNOperatorStatus.Failed;
 
         if (!_entManager.TryGetComponent<MedibotComponent>(owner, out var botComp))
