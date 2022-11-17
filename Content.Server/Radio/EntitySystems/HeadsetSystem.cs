@@ -59,8 +59,12 @@ public sealed class HeadsetSystem : EntitySystem
         if (component.IsEquipped && component.Enabled)
         {
             EnsureComp<WearingHeadsetComponent>(args.Equipee).Headset = uid;
-            EnsureComp<ActiveRadioComponent>(uid).Channels.UnionWith(component.Channels);
+            PushRadioChannelsToOwner(uid, component);
         }
+    }
+    private void PushRadioChannelsToOwner(EntityUid uid, HeadsetComponent component)
+    {
+        EnsureComp<ActiveRadioComponent>(uid).Channels.UnionWith(component.Channels);
     }
 
     private void OnGotUnequipped(EntityUid uid, HeadsetComponent component, GotUnequippedEvent args)
@@ -205,5 +209,6 @@ public sealed class HeadsetSystem : EntitySystem
     private void OnContainerModified(EntityUid uid, HeadsetComponent component, ContainerModifiedMessage args)
     {
         RecalculateChannels(component);
+        PushRadioChannelsToOwner(uid, component);
     }
 }
