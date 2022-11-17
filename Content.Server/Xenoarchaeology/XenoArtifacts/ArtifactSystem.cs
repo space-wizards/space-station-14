@@ -22,6 +22,8 @@ public sealed partial class ArtifactSystem : EntitySystem
 
         SubscribeLocalEvent<ArtifactComponent, MapInitEvent>(OnInit);
         SubscribeLocalEvent<ArtifactComponent, PriceCalculationEvent>(GetPrice);
+
+        InitializeCommands();
     }
 
     private void OnInit(EntityUid uid, ArtifactComponent component, MapInitEvent args)
@@ -105,7 +107,7 @@ public sealed partial class ArtifactSystem : EntitySystem
 
         component.NodeTree = new ArtifactTree();
 
-        GenerateArtifactNodeTree(ref component.NodeTree, nodeAmount);
+        GenerateArtifactNodeTree(component.Owner, ref component.NodeTree, nodeAmount);
         EnterNode(component.Owner, ref component.NodeTree.StartNode, component);
     }
 
