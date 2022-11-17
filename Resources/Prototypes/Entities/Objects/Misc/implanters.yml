@@ -8,6 +8,8 @@
   abstract: true
   components:
     - type: ItemSlots
+      containers:
+        implanter_slot: !type:ContainerSlot {}
       slots:
         implanter_slot:
         whitelist:
