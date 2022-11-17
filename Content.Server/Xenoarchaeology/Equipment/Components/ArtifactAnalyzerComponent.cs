@@ -65,6 +65,6 @@ public sealed class ArtifactAnalyzerComponent : Component
     public ArtifactNode? LastAnalyzedNode;
 
     [ViewVariables(VVAccess.ReadWrite)]
-    public float? LastAnalyzedCompletion;
+    public int? LastAnalyzerPointValue;
     #endregion
 }

@@ -311,11 +311,11 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
         if (_window != null)
         {
-            _window.OnOpen += OnWindowOpened;
-            _window.OnClose += OnWindowClosed;
-            _window.ClearButton.OnPressed += OnClearPressed;
-            _window.SearchBar.OnTextChanged += OnSearchChanged;
-            _window.FilterButton.OnItemSelected += OnFilterSelected;
+            _window.OnOpen -= OnWindowOpened;
+            _window.OnClose -= OnWindowClosed;
+            _window.ClearButton.OnPressed -= OnClearPressed;
+            _window.SearchBar.OnTextChanged -= OnSearchChanged;
+            _window.FilterButton.OnItemSelected -= OnFilterSelected;
 
             _window.Dispose();
             _window = null;
