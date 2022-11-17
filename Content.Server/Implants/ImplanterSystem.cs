@@ -92,14 +92,14 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
         component.CancelToken?.Cancel();
         component.CancelToken = new CancellationTokenSource();
 
-        _doAfter.DoAfter(new DoAfterEventArgs(user, component.ImplantTime, component.CancelToken.Token, implanter)
+        _doAfter.DoAfter(new DoAfterEventArgs(user, component.ImplantTime, component.CancelToken.Token, target, implanter)
         {
             BreakOnUserMove = true,
             BreakOnTargetMove = true,
             BreakOnDamage = true,
             BreakOnStun = true,
-            TargetFinishedEvent = new ImplanterImplantCompleteEvent(implanter, target),
-            TargetCancelledEvent = new ImplanterCancelledEvent()
+            UsedFinishedEvent = new ImplanterImplantCompleteEvent(implanter, target),
+            UserCancelledEvent = new ImplanterCancelledEvent()
         });
     }
 
@@ -118,14 +118,14 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
         component.CancelToken?.Cancel();
         component.CancelToken = new CancellationTokenSource();
 
-        _doAfter.DoAfter(new DoAfterEventArgs(user, component.DrawTime, component.CancelToken.Token, implanter)
+        _doAfter.DoAfter(new DoAfterEventArgs(user, component.DrawTime, component.CancelToken.Token, target ,implanter)
         {
             BreakOnUserMove = true,
             BreakOnTargetMove = true,
             BreakOnDamage = true,
             BreakOnStun = true,
-            TargetFinishedEvent = new ImplanterDrawCompleteEvent(implanter, user, target),
-            TargetCancelledEvent = new ImplanterCancelledEvent()
+            UsedFinishedEvent = new ImplanterDrawCompleteEvent(implanter, user, target),
+            UsedCancelledEvent = new ImplanterCancelledEvent()
         });
     }
 
