@@ -130,6 +130,9 @@ public sealed class PricingSystem : EntitySystem
 
     private void CalculateStaticPrice(EntityUid uid, StaticPriceComponent component, ref PriceCalculationEvent args)
     {
+        if (HasComp<StackPriceComponent>(uid))
+            return;
+
         args.Price += component.Price;
     }
 
