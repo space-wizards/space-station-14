@@ -70,11 +70,8 @@ public sealed class InjurySystem : EntitySystem
 
             var type = trauma.PenTraumaType ?? traumaType;
 
-            if (trauma.PenTraumaType != null)
-            {
-                if (!_random.Prob(trauma.PenetrationChance.Float()))
-                    continue;
-            }
+            if (trauma.PenetrationChance > 0 && !_random.Prob(trauma.PenetrationChance.Float()))
+                continue;
 
             validTarget = GetValidInjurable(target, type);
 
