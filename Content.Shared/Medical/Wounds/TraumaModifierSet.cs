@@ -10,22 +10,12 @@ namespace Content.Shared.Medical.Wounds;
 public struct TraumaModifierSet
 {
     [DataField("coefficients",
-        customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, TraumaTypePrototype>))]
+        customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, TraumaPrototype>))]
     public Dictionary<string, FixedPoint2> Coefficients = new();
 
     [DataField("flatReductions",
-        customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, TraumaTypePrototype>))]
+        customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, TraumaPrototype>))]
     public Dictionary<string, FixedPoint2> FlatReduction = new();
-
-    public bool TryGetCoefficientForTraumaType(string traumaType, out FixedPoint2 coefficient)
-    {
-        return Coefficients.TryGetValue(traumaType, out coefficient);
-    }
-
-    public bool TryGetFlatReductionForTraumaType(string traumaType, out FixedPoint2 reduction)
-    {
-        return Coefficients.TryGetValue(traumaType, out reduction);
-    }
 
     public TraumaModifierSet()
     {

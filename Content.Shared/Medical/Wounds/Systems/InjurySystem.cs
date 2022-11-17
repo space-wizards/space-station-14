@@ -28,12 +28,12 @@ public sealed class InjurySystem : EntitySystem
 
     private void OnBodyAttacked(EntityUid uid, BodyComponent component, AttackedEvent args)
     {
-        if (!TryComp(args.Used, out TraumaInflictorComponent? inflictor))
+        if (!TryComp(args.Used, out TraumaInflicterComponent? inflicter))
             return;
 
         foreach (var child in _bodySystem.GetBodyChildren(uid, component))
         {
-            TryApplyWound(child.Id, inflictor.Trauma);
+            TryApplyWound(child.Id, inflicter);
         }
     }
 
@@ -41,7 +41,7 @@ public sealed class InjurySystem : EntitySystem
     {
         _cachedInjuryTables.Clear();
 
-        foreach (var traumaType in _prototypeManager.EnumeratePrototypes<TraumaTypePrototype>())
+        foreach (var traumaType in _prototypeManager.EnumeratePrototypes<TraumaPrototype>())
         {
             _cachedInjuryTables.Add(traumaType.ID, new InjuryTable(traumaType));
         }
@@ -52,10 +52,10 @@ public sealed class InjurySystem : EntitySystem
         return _cachedInjuryTables[traumaType].Injuries;
     }
 
-    public bool TryApplyWound(EntityUid target, TraumaSpecifier traumaSpec)
+    public bool TryApplyWound(EntityUid target, TraumaInflicterComponent inflicter)
     {
         var success = false;
-        foreach (var (traumaType, trauma) in traumaSpec.TraumaValues)
+        foreach (var (traumaType, trauma) in inflicter.Traumas)
         {
             var validTarget = GetValidInjurable(target, traumaType);
 
@@ -67,9 +67,7 @@ public sealed class InjurySystem : EntitySystem
 
             var modifiers = ApplyTraumaModifiers(traumaType, injuryContainer.TraumaResistance, trauma.Damage);
             if (TryPickInjury(traumaType, modifiers, out var injury))
-            {
                 success |= AddInjury(target, injuryContainer, traumaType, injury);
-            }
 
             var type = trauma.PenTraumaType ?? traumaType;
 
@@ -87,15 +85,13 @@ public sealed class InjurySystem : EntitySystem
 
             modifiers = ApplyTraumaModifiers(type, injuryContainer.TraumaResistance, trauma.Damage);
             if (TryPickInjury(type, modifiers, out injury))
-            {
                 success |= AddInjury(target, injuryContainer, type, injury);
-            }
         }
 
         return success;
     }
 
-    public bool TryAddInjury(EntityUid target, string traumaType, Trauma trauma)
+    public bool TryAddInjury(EntityUid target, string traumaType, TraumaDamage damage)
     {
         var checkedContainer = GetValidInjurable(target, traumaType);
 
@@ -105,7 +101,7 @@ public sealed class InjurySystem : EntitySystem
         var injuryContainer = checkedContainer.Value.injurable;
         target = checkedContainer.Value.target;
 
-        return TryPickInjury(traumaType, trauma.Damage, out var injury) &&
+        return TryPickInjury(traumaType, damage.Damage, out var injury) &&
                AddInjury(target, injuryContainer, traumaType, injury);
     }
 
@@ -114,10 +110,10 @@ public sealed class InjurySystem : EntitySystem
         if (!modifiers.HasValue)
             return damage;
 
-        if (modifiers.Value.TryGetCoefficientForTraumaType(traumaType, out var coeff))
-            damage *= coeff;
+        if (modifiers.Value.Coefficients.TryGetValue(traumaType, out var coefficient))
+            damage *= coefficient;
 
-        if (modifiers.Value.TryGetFlatReductionForTraumaType(traumaType, out var reduction))
+        if (modifiers.Value.FlatReduction.TryGetValue(traumaType, out var reduction))
             damage -= reduction;
 
         return damage;
@@ -205,6 +201,21 @@ public sealed class InjurySystem : EntitySystem
 
         return null;
     }
+
+    public FixedPoint2 ApplyModifiers(string type, FixedPoint2 damage, TraumaModifierSet modifiers)
+    {
+        if (modifiers.Coefficients.TryGetValue(type, out var coefficient))
+        {
+            damage *= coefficient;
+        }
+
+        if (modifiers.FlatReduction.TryGetValue(type, out var flat))
+        {
+            damage -= flat;
+        }
+
+        return FixedPoint2.Max(damage, FixedPoint2.Zero);
+    }
 }
 
 public readonly struct InjuryTable
@@ -212,8 +223,8 @@ public readonly struct InjuryTable
     //we do some defensive coding
     public readonly SortedDictionary<FixedPoint2, string> Injuries;
 
-    public InjuryTable(TraumaTypePrototype traumaProto)
+    public InjuryTable(TraumaPrototype traumaProto)
     {
-        Injuries = traumaProto.WoundPool;
+        Injuries = traumaProto.Wounds;
     }
 }

@@ -13,16 +13,12 @@ public sealed class InjurableComponent : Component
 {
     [DataField("injuries")] public List<Injury>? Injuries;
 
-    [DataField("allowedTraumaTypes", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<TraumaTypePrototype>))]
+    [DataField("allowedTraumaTypes", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<TraumaPrototype>))]
     public HashSet<string>? AllowedTraumaTypes;
 
     [DataField("traumaResistance")] public TraumaModifierSet? TraumaResistance;
 
     [DataField("traumaPenResistance")] public TraumaModifierSet? TraumaPenResistance;
-
-    [DataField("allowBleeds")] public bool AllowBleeds = true;
-
-    [DataField("appliesPain")] public bool AppliesPain = true;
 
     //How much health does this woundable have, when this reaches 0, it starts taking structural damage
     [DataField("maxHealth", required: true)]

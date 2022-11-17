@@ -1,4 +1,0 @@
-﻿- type: traumaType # TODO wounds before merge
-  id: Impact
-  woundPool:
-    0: Crack

@@ -17,7 +17,7 @@
     price: 100
   - type: Injurable # TODO wounds before merge
     allowedTraumaTypes:
-    - Impact
+    - Slash
     maxHealth: 50
     health: 50
     maxStructure: 50

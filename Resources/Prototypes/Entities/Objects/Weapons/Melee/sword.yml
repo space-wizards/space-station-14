@@ -20,13 +20,12 @@
     tags:
     - CaptainSabre
   - type: DisarmMalus
-  - type: TraumaInflictor # TODO wounds before merge
-    trauma:
-      traumas:
-        Impact:
-          damage: 10
-          chance: 0.25
-          penTraumaType: Impact
+  - type: TraumaInflicter # TODO wounds before merge
+    traumas:
+      Slash:
+        damage: 10
+        penChance: 0.3
+        penModifier: 0.2
 
 - type: entity
   name: katana

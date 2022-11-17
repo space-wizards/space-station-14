@@ -1,7 +1,0 @@
-﻿- type: injury # TODO wounds before merge
-  id: Crack
-  name: Crack # TODO loc
-  description: Crack # TODO
-  pain: 1
-  healthDamage: 5
-  integrityDamage: 10
