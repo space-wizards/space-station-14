@@ -17,8 +17,6 @@
   - type: Damageable
   - type: Physics
     bodyType: Dynamic
-  - type: Transform
-    noRot: true
   - type: InteractionOutline
   - type: Artifact
   - type: RandomArtifactSprite
