@@ -249,14 +249,23 @@
   categories:
     - UplinkUtility
 
-#TODO: Increase the price of this to 4-5/remove it when we get encrpytion keys
 - type: listing
   id: UplinkHeadset
-  name: Syndicate Overear-Headset
-  description: A headset that allows you to listen in on departmental channels, or contact other traitors.
+  name: Syndicate Headset - Overear-Headset
+  description: A headset that allows you to listen in on departmental channels, or contact other our agents. Should be flashband proof.
   productEntity: ClothingHeadsetAltSyndicate
   cost:
-    Telecrystal: 2
+    Telecrystal: 4
+  categories:
+  - UplinkUtility
+
+- type: listing
+  id: UplinkHeadsetEncryption Key
+  name: Syndicate Headset - Encryption Key
+  description: A encryption key for access to secret frequency of our special agents. Just insert it in any headset that you will use. And anyone won't get know that you have special channel with your friends... or rivals.
+  productEntity: EncryptionKeySyndie
+  cost:
+    Telecrystal: 1
   categories:
   - UplinkUtility
 
