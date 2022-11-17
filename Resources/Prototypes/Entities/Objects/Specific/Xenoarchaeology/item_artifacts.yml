@@ -20,7 +20,7 @@
   - type: InteractionOutline
   - type: Artifact
   - type: RandomArtifactSprite
-    maxSprite: 10
+    maxSprite: 11
     activationTime: 2.4
   - type: RandomSprite
     available:
