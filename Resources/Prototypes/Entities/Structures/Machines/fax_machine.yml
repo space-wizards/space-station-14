@@ -88,3 +88,12 @@
     responsePings: false
     emagged: true
     notifyAdmins: true
+
+- type: entity
+  parent: FaxMachineBase
+  id: FaxMachineCaptain
+  name: captain long range fax machine
+  suffix: Centcom
+  components:
+    - type: FaxMachine
+      receiveNukeCodes: true
