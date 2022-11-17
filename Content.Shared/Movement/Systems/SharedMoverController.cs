@@ -106,6 +106,9 @@ namespace Content.Shared.Movement.Systems
             float frameTime,
             EntityQuery<TransformComponent> xformQuery,
             EntityQuery<MobMoverComponent> mobQuery,
+            EntityQuery<InventoryComponent> inventoryQuery,
+            EntityQuery<ContainerManagerComponent> containerQuery,
+            EntityQuery<FootstepModifierComponent> footQuery,
             out bool dirtyMover,
             out Vector2? linearVelocity,
             out SoundSpecifier? sound,
@@ -241,7 +244,7 @@ namespace Content.Shared.Movement.Systems
                 xform.DeferUpdates = false;
 
                 if (!weightless && TryComp<MobMoverComponent>(mover.Owner, out var mobMover) &&
-                    TryGetSound(weightless, mover, mobMover, xform, out var soundSpec))
+                    TryGetSound(weightless, mover, mobMover, xform, inventoryQuery, containerQuery, footQuery, out var soundSpec))
                 {
                     var soundModifier = mover.Sprinting ? 1.0f : FootstepWalkingAddedVolumeMultiplier;
 
@@ -346,7 +349,16 @@ namespace Content.Shared.Movement.Systems
 
         protected abstract bool CanSound();
 
-        private bool TryGetSound(bool weightless, InputMoverComponent mover, MobMoverComponent mobMover, TransformComponent xform, [NotNullWhen(true)] out SoundSpecifier? sound)
+        private bool TryGetSound(
+            bool weightless,
+            InputMoverComponent mover,
+            MobMoverComponent mobMover,
+            TransformComponent xform,
+            EntityQuery<InventoryComponent> inventoryQuery,
+            EntityQuery<ContainerManagerComponent> containerQuery,
+            EntityQuery<FootstepModifierComponent> footQuery,
+
+        [NotNullWhen(true)] out SoundSpecifier? sound)
         {
             sound = null;
 
@@ -380,18 +392,21 @@ namespace Content.Shared.Movement.Systems
             if (mobMover.StepSoundDistance < distanceNeeded) return false;
 
             mobMover.StepSoundDistance -= distanceNeeded;
+            EntityUid? shoes = null;
 
-            if (_inventory.TryGetSlotEntity(mover.Owner, "shoes", out var shoes) &&
-                EntityManager.TryGetComponent<FootstepModifierComponent>(shoes, out var modifier))
+            if (inventoryQuery.TryGetComponent(mover.Owner, out var inventory) &&
+                containerQuery.TryGetComponent(mover.Owner, out var containerManager) &&
+                _inventory.TryGetSlotEntity(mover.Owner, "shoes", out shoes, inventory, containerManager) &&
+                footQuery.TryGetComponent(shoes, out var modifier))
             {
                 sound = modifier.Sound;
                 return true;
             }
 
-            return TryGetFootstepSound(coordinates, shoes != null, out sound);
+            return TryGetFootstepSound(coordinates, shoes != null, footQuery, out sound);
         }
 
-        private bool TryGetFootstepSound(EntityCoordinates coordinates, bool haveShoes, [NotNullWhen(true)] out SoundSpecifier? sound)
+        private bool TryGetFootstepSound(EntityCoordinates coordinates, bool haveShoes, EntityQuery<FootstepModifierComponent> footQuery, [NotNullWhen(true)] out SoundSpecifier? sound)
         {
             sound = null;
             var gridUid = coordinates.GetGridUid(EntityManager);
@@ -399,7 +414,7 @@ namespace Content.Shared.Movement.Systems
             // Fallback to the map
             if (gridUid == null)
             {
-                if (TryComp<FootstepModifierComponent>(coordinates.GetMapUid(EntityManager), out var modifier))
+                if (footQuery.TryGetComponent(coordinates.GetMapUid(EntityManager), out var modifier))
                 {
                     sound = modifier.Sound;
                     return true;
@@ -411,17 +426,20 @@ namespace Content.Shared.Movement.Systems
             var grid = _mapManager.GetGrid(gridUid.Value);
             var tile = grid.GetTileRef(coordinates);
 
-            if (tile.IsSpace(_tileDefinitionManager)) return false;
+            if (tile.IsSpace(_tileDefinitionManager))
+                return false;
 
             // If the coordinates have a FootstepModifier component
             // i.e. component that emit sound on footsteps emit that sound
-            foreach (var maybeFootstep in grid.GetAnchoredEntities(tile.GridIndices))
+            var anchoredEnumerator = grid.GetAnchoredEntitiesEnumerator(tile.GridIndices);
+
+            while (anchoredEnumerator.MoveNext(out var maybeFootstep))
             {
-                if (EntityManager.TryGetComponent(maybeFootstep, out FootstepModifierComponent? footstep))
-                {
-                    sound = footstep.Sound;
-                    return true;
-                }
+                if (!footQuery.TryGetComponent(maybeFootstep, out var footstep))
+                    continue;
+
+                sound = footstep.Sound;
+                return true;
             }
 
             // Walking on a tile.

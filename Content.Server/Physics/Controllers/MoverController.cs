@@ -3,12 +3,14 @@ using System.Threading.Tasks;
 using Content.Server.Cargo.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
+using Content.Shared.Inventory;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
@@ -69,7 +71,6 @@ namespace Content.Server.Physics.Controllers
             var relayQuery = GetEntityQuery<RelayInputMoverComponent>();
             var xformQuery = GetEntityQuery<TransformComponent>();
             var moverQuery = GetEntityQuery<InputMoverComponent>();
-            var mobQuery = GetEntityQuery<MobMoverComponent>();
 
             var movers = AllEntityQuery<InputMoverComponent>();
             var totalCount = EntityManager.Count<InputMoverComponent>();
@@ -117,6 +118,10 @@ namespace Content.Server.Physics.Controllers
             }
 
             var moveResults = ArrayPool<(bool DirtyMover, Vector2? LinearVelocity, SoundSpecifier? sound, AudioParams audio)>.Shared.Rent(count);
+            var mobQuery = GetEntityQuery<MobMoverComponent>();
+            var inventoryQuery = GetEntityQuery<InventoryComponent>();
+            var containerQuery = GetEntityQuery<ContainerManagerComponent>();
+            var footQuery = GetEntityQuery<FootstepModifierComponent>();
 
             var options = new ParallelOptions()
             {
@@ -126,7 +131,7 @@ namespace Content.Server.Physics.Controllers
             Parallel.For(0, count, options, i =>
             {
                 var (mover, xform, body) = moveInput[i];
-                HandleMobMovement(mover, body, xform, frameTime, xformQuery, mobQuery, out var dirtyMover, out var linearVelocity, out var sound, out var audio);
+                HandleMobMovement(mover, body, xform, frameTime, xformQuery, mobQuery, inventoryQuery, containerQuery, footQuery, out var dirtyMover, out var linearVelocity, out var sound, out var audio);
                 moveResults[i] = (dirtyMover, linearVelocity, sound, audio);
             });
 
