@@ -3,7 +3,6 @@ using Content.Client.Stylesheets;
 using Content.Shared.Implants.Components;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 
 namespace Content.Client.Implants.UI;
@@ -42,11 +41,10 @@ public sealed class ImplanterStatusControl : Control
             _ => Loc.GetString("injector-invalid-injector-toggle-mode")
         };
 
-        var entitiesStringLocalized = _parent.NumberOfEntities switch
+        var entitiesStringLocalized = _parent.ImplanterSlot.HasItem switch
         {
-            0 => Loc.GetString("implanter-empty-text"),
-            1 => Loc.GetString("implanter-implant-text", ("implantName", _parent.ImplantData.Item1), ("implantDescription", _parent.ImplantData.Item2), ("lineBreak", "\n")),
-            _ => Loc.GetString("injector-invalid-injector-toggle-mode")
+            false => Loc.GetString("implanter-empty-text"),
+            true => Loc.GetString("implanter-implant-text", ("implantName", _parent.ImplantData.Item1), ("implantDescription", _parent.ImplantData.Item2), ("lineBreak", "\n")),
         };
 
 

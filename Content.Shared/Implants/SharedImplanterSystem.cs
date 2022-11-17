@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Implants.Components;
 using Content.Shared.Popups;
@@ -10,6 +11,7 @@ namespace Content.Shared.Implants;
 public abstract class SharedImplanterSystem : EntitySystem
 {
     [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
 
@@ -20,13 +22,21 @@ public abstract class SharedImplanterSystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<ImplanterComponent, ComponentInit>(OnImplanterInit);
         SubscribeLocalEvent<ImplanterComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
 
     }
 
+    private void OnImplanterInit(EntityUid uid, ImplanterComponent component, ComponentInit args)
+    {
+        if (!_itemSlots.TryGetSlot(uid, ImplanterSlotId, out var implanterSlot))
+            return;
+
+        component.ImplanterSlot = implanterSlot;
+    }
+
     private void OnEntInserted(EntityUid uid, ImplanterComponent component, EntInsertedIntoContainerMessage args)
     {
-        component.NumberOfEntities = args.Container.ContainedEntities.Count;
         var implantData = EntityManager.GetComponent<MetaDataComponent>(args.Entity);
         component.ImplantData = (implantData.EntityName, implantData.EntityDescription);
     }
@@ -35,7 +45,9 @@ public abstract class SharedImplanterSystem : EntitySystem
     //Set to draw mode if not implant only
     public void Implant(EntityUid implanter, EntityUid target, ImplanterComponent component)
     {
-        if (!_container.TryGetContainer(implanter, ImplanterSlotId, out var implanterContainer))
+        var implanterContainer = component.ImplanterSlot.ContainerSlot;
+
+        if (implanterContainer is null)
             return;
 
         var implant = implanterContainer.ContainedEntities.FirstOrDefault();
@@ -44,11 +56,10 @@ public abstract class SharedImplanterSystem : EntitySystem
             return;
 
         //If the target doesn't have the implanted component, add it.
-        EnsureComp<ImplantedComponent>(target);
+        var implantedComp = EnsureComp<ImplantedComponent>(target);
+        var implantContainer = implantedComp.ImplantContainer;
 
-        var implantContainer = _container.EnsureContainer<Container>(target, ImplantSlotId);
         implanterContainer.Remove(implant);
-        component.NumberOfEntities = implanterContainer.ContainedEntities.Count;
         implantComp.ImplantedEntity = target;
         implantContainer.OccludesLight = false;
         implantContainer.Insert(implant);
@@ -66,7 +77,9 @@ public abstract class SharedImplanterSystem : EntitySystem
     //TODO: Rework when surgery is in so implant cases can be a thing
     public void Draw(EntityUid implanter, EntityUid user, EntityUid target, ImplanterComponent component)
     {
-        if (!_container.TryGetContainer(implanter, ImplanterSlotId, out var implanterContainer))
+        var implanterContainer = component.ImplanterSlot.ContainerSlot;
+
+        if (implanterContainer is null)
             return;
 
         var permanentFound = false;
@@ -94,7 +107,6 @@ public abstract class SharedImplanterSystem : EntitySystem
                 implantContainer.Remove(implant);
                 implantComp.ImplantedEntity = null;
                 implanterContainer.Insert(implant);
-                component.NumberOfEntities = implanterContainer.ContainedEntities.Count;
                 permanentFound = implantComp.Permanent;
                 //Break so only one implant is drawn
                 break;
@@ -126,7 +138,7 @@ public abstract class SharedImplanterSystem : EntitySystem
 
         bool implantFound;
 
-        if (component.NumberOfEntities > 0)
+        if (component.ImplanterSlot.HasItem)
             implantFound = true;
 
         else

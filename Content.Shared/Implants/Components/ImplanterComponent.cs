@@ -1,4 +1,5 @@
 ﻿using System.Threading;
+using Content.Shared.Containers.ItemSlots;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
@@ -50,11 +51,10 @@ public sealed class ImplanterComponent : Component
     public (string, string) ImplantData;
 
     /// <summary>
-    /// Current number of implants in the implanter
-    /// Should only be 0 or 1, no more than a single implant should be in an implanter
+    /// Grab the <see cref="ItemSlot"/> for this implanter
     /// </summary>
     [ViewVariables]
-    public int NumberOfEntities;
+    public ItemSlot ImplanterSlot = default!;
 
     public bool UiUpdateNeeded;
 
@@ -65,13 +65,11 @@ public sealed class ImplanterComponent : Component
 public sealed class ImplanterComponentState : ComponentState
 {
     public ImplanterToggleMode CurrentMode;
-    public int NumberOfEntities;
     public bool ImplantOnly;
 
-    public ImplanterComponentState(ImplanterToggleMode currentMode, int numberOfEntities, bool implantOnly)
+    public ImplanterComponentState(ImplanterToggleMode currentMode, bool implantOnly)
     {
         CurrentMode = currentMode;
-        NumberOfEntities = numberOfEntities;
         ImplantOnly = implantOnly;
     }
 }

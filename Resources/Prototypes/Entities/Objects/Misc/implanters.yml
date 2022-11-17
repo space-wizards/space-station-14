@@ -8,9 +8,12 @@
   abstract: true
   components:
     - type: ItemSlots
-    - containers:
-        implanter_slot: !type:ContainerSlot {}
-      type: ContainerContainer
+      slots:
+        implanter_slot:
+        whitelist:
+          tags:
+            - SubdermalImplant
+    - type: ContainerContainer
     - type: Implanter
       currentMode: Draw
     - type: Sprite
