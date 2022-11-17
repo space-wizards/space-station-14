@@ -6,6 +6,7 @@ using Content.Shared.Medical.Wounds.Prototypes;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Medical.Wounds.Systems;
 
@@ -64,9 +65,11 @@ public sealed class InjurySystem : EntitySystem
             var injuryContainer = validTarget.Value.injurable;
             target = validTarget.Value.target;
 
-            success |= AddInjury(target, injuryContainer, traumaType,
-                PickInjury(traumaType,
-                    ApplyTraumaModifiers(traumaType, injuryContainer.TraumaResistance, trauma.Damage)));
+            var modifiers = ApplyTraumaModifiers(traumaType, injuryContainer.TraumaResistance, trauma.Damage);
+            if (TryPickInjury(traumaType, modifiers, out var injury))
+            {
+                success |= AddInjury(target, injuryContainer, traumaType, injury);
+            }
 
             var type = trauma.PenTraumaType ?? traumaType;
 
@@ -81,8 +84,12 @@ public sealed class InjurySystem : EntitySystem
             //Apply penetrating wounds
             injuryContainer = validTarget.Value.injurable;
             target = validTarget.Value.target;
-            success |= AddInjury(target, injuryContainer, type,
-                PickInjury(type, ApplyTraumaModifiers(type, injuryContainer.TraumaResistance, trauma.Damage)));
+
+            modifiers = ApplyTraumaModifiers(type, injuryContainer.TraumaResistance, trauma.Damage);
+            if (TryPickInjury(type, modifiers, out injury))
+            {
+                success |= AddInjury(target, injuryContainer, type, injury);
+            }
         }
 
         return success;
@@ -97,7 +104,9 @@ public sealed class InjurySystem : EntitySystem
 
         var injuryContainer = checkedContainer.Value.injurable;
         target = checkedContainer.Value.target;
-        return AddInjury(target, injuryContainer, traumaType, PickInjury(traumaType, trauma.Damage));
+
+        return TryPickInjury(traumaType, trauma.Damage, out var injury) &&
+               AddInjury(target, injuryContainer, traumaType, injury);
     }
 
     private FixedPoint2 ApplyTraumaModifiers(string traumaType, TraumaModifierSet? modifiers, FixedPoint2 damage)
@@ -134,12 +143,18 @@ public sealed class InjurySystem : EntitySystem
         return childInjuryContainer;
     }
 
-    private Injury PickInjury(string traumaType, FixedPoint2 trauma)
+    private bool TryPickInjury(string traumaType, FixedPoint2 trauma, out Injury injury)
     {
         var nextLevel = 1f;
         var levelFloor = 0f;
         // TODO what if 0 is not in the dict
-        var injuryId = _cachedInjuryTables[traumaType].Injuries[FixedPoint2.Zero];
+        if (!_cachedInjuryTables[traumaType].Injuries.TryFirstOrNull(out var cachedInjury))
+        {
+            injury = default;
+            return false;
+        }
+
+        var injuryId = cachedInjury.Value.Value;
 
         foreach (var injuryData in _cachedInjuryTables[traumaType].Injuries)
         {
@@ -153,7 +168,8 @@ public sealed class InjurySystem : EntitySystem
             levelFloor = injuryData.Key.Float();
         }
 
-        return new Injury(injuryId, (trauma - levelFloor) / (nextLevel - trauma));
+        injury = new Injury(injuryId, (trauma - levelFloor) / (nextLevel - trauma));
+        return true;
     }
 
     private (InjurableComponent Injurable, EntityUid Target)? FindValidInjurableInAdjacent(EntityUid target,
