@@ -82,11 +82,10 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
     public void ForceImplant(EntityUid target, EntityUid implant, SubdermalImplantComponent component)
     {
         //If the target doesn't have the implanted component, add it.
-        EnsureComp<ImplantedComponent>(target);
+        var implantedComp = EnsureComp<ImplantedComponent>(target);
+        var implantContainer = implantedComp.ImplantContainer;
 
-        var implantContainer = _container.EnsureContainer<Container>(target, ImplantSlotId);
         component.ImplantedEntity = target;
-        implantContainer.OccludesLight = false;
         implantContainer.Insert(implant);
     }
 
@@ -97,8 +96,10 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
     /// <param name="component">The implant component</param>
     public void ForceRemove(EntityUid target, SubdermalImplantComponent component)
     {
-        if (!_container.TryGetContainer(target, ImplantSlotId, out var implantContainer))
+        if (!TryComp<ImplantedComponent>(target, out var implanted))
             return;
+
+        var implantContainer = implanted.ImplantContainer;
 
         _container.CleanContainer(implantContainer);
     }
