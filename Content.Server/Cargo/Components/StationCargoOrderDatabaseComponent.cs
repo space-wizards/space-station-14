@@ -24,12 +24,12 @@ public sealed class StationCargoOrderDatabaseComponent : Component
     /// </summary>
     public int Index;
 
-    [ViewVariables, DataField("cargoShuttleProto", customTypeSerializer:typeof(PrototypeIdSerializer<CargoShuttlePrototype>))]
+    [DataField("cargoShuttleProto", customTypeSerializer:typeof(PrototypeIdSerializer<CargoShuttlePrototype>))]
     public string? CargoShuttleProto = "CargoShuttle";
 
     /// <summary>
     /// The cargo shuttle assigned to this station.
     /// </summary>
-    [ViewVariables, DataField("shuttle")]
+    [DataField("shuttle")]
     public EntityUid? Shuttle;
 }
