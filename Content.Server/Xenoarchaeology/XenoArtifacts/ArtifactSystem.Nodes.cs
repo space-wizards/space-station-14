@@ -172,7 +172,7 @@ public sealed partial class ArtifactSystem
             if (EntityManager.HasComponent(uid, reg.Type))
             {
                 // Don't re-add permanent components
-                if (node.Effect.PermanentComponents.ContainsValue(entry))
+                if (node.Effect.PermanentComponents.ContainsKey(name))
                     continue;
 
                 EntityManager.RemoveComponent(uid, reg.Type);
