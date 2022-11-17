@@ -44,35 +44,33 @@ public abstract partial class SharedGunSystem
         if (TryComp<BallisticAmmoProviderComponent>(args.Used, out var ammoComp))
         {
             if (GetBallisticShots(ammoComp) == 0) return;
+                
+            var xform = EntityManager.GetComponent<TransformComponent>(uid);
 
-            while (GetBallisticShots(component) < component.Capacity && GetBallisticShots(ammoComp) > 0)
+            if (ammoComp.Entities.Count == 0)
             {
-                var xform = EntityManager.GetComponent<TransformComponent>(uid);
+                if (GetBallisticShots(component) == 0)
+                    component.FillProto = ammoComp.FillProto;
 
-                if (ammoComp.Entities.Count == 0) // If the entity doesn't have any spawned bullets
-                {
-                    if (GetBallisticShots(component) == 0) // If the gun doesn't have any ammo
-                        component.FillProto = ammoComp.FillProto;
+                ammoComp.UnspawnedCount -= 1;
 
-                    ammoComp.UnspawnedCount -= 1;
-                    if (ammoComp.FillProto == component.FillProto) // We don't want the game just changing the ammo into a different type
-                        component.UnspawnedCount += 1; // simple preformance trick
-                    else // Unfortunately, this is nessecary, as it would just not work with other bullet types otherwise
-                    { // However, there aren't any other speedloaders for non-revolver weapons right now, so this may not even be used
-                        var bullet = Spawn(ammoComp.FillProto, xform.Coordinates);
-                        component.Entities.Add(bullet);
-                        component.Container.Insert(bullet);
-                    }
-                }
+                if (ammoComp.FillProto == component.FillProto)
+                    component.UnspawnedCount += 1; // if it's the same type as the gun would take normally, we don't need to spawn a new entity
                 else
                 {
-                    var bullet = ammoComp.Entities.FirstOrNull()!.Value;
-                    ammoComp.Entities.Remove(bullet); // Remove the bullet from the container, ensures no bugs happen with the speedloader.
+                    var bullet = Spawn(ammoComp.FillProto, xform.Coordinates); // this is nessecary, as it would just not work with other bullet types otherwise
                     component.Entities.Add(bullet);
                     component.Container.Insert(bullet);
                 }
             }
-            UpdateBallisticAppearance(ammoComp); // This one is for the speedloader
+            else
+            {
+                var bullet = ammoComp.Entities.FirstOrNull()!.Value;
+                ammoComp.Entities.Remove(bullet); // Remove the bullet from the container, ensures no bugs happen with the speedloader.
+                component.Entities.Add(bullet);
+                component.Container.Insert(bullet);
+            }
+            UpdateBallisticAppearance(ammoComp);
         }
         else
         {
