@@ -18,9 +18,6 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Fax;
 
-// TODO: Transfer paper stamps
-// TODO: Add fax entities for all departs
-
 public sealed class FaxSystem : EntitySystem
 {
     [Dependency] private readonly IChatManager _chat = default!;
