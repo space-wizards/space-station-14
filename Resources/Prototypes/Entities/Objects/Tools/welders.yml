@@ -33,7 +33,7 @@
   - type: MeleeWeapon
     damage:
       types:
-        Blunt: 10
+        Blunt: 3
   - type: ItemStatus
   - type: RefillableSolution
     solution: Welder
@@ -51,8 +51,8 @@
   - type: Welder
     litMeleeDamageBonus:
       types: # When lit, negate standard melee damage and replace with heat
-        Heat: 10
-        Blunt: -10
+        Heat: 15
+        Blunt: -3
   - type: PointLight
     netsync: false
     enabled: false

@@ -22,7 +22,7 @@
   - type: MeleeWeapon
     damage:
       types:
-        Blunt: 10
+        Blunt: 5
   - type: Tool
     qualities:
       - Cutting
@@ -64,7 +64,7 @@
     attackRate: 1.5
     damage:
       types:
-        Piercing: 7
+        Piercing: 3.5
   - type: Tool
     qualities:
       - Screwing
@@ -100,7 +100,7 @@
     attackRate: 1.5
     damage:
       types:
-        Blunt: 6.5
+        Blunt: 4
   - type: Tool
     qualities:
       - Anchoring
@@ -132,7 +132,7 @@
   - type: MeleeWeapon
     damage:
       types:
-        Blunt: 10
+        Blunt: 5
   - type: Tool
     qualities:
       - Prying

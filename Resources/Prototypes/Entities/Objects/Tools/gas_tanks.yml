@@ -27,6 +27,10 @@
         state: internal1
       event: !type:ToggleActionEvent
       useDelay: 1.0
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 10
   - type: Explosive
     explosionType: Default
     maxIntensity: 20
