@@ -120,7 +120,7 @@ namespace Content.Shared.Movement.Systems
         {
             if (CameraRotationLocked || !TryComp<InputMoverComponent>(uid, out var mover) || mover.TargetRelativeRotation.Equals(Angle.Zero))
                 return;
-
+            
             mover.TargetRelativeRotation = Angle.Zero;
             Dirty(mover);
         }
@@ -161,7 +161,7 @@ namespace Content.Shared.Movement.Systems
             // If we go on a grid and back off then just reset the accumulator.
             if (relative == component.RelativeEntity)
             {
-                if (component.LerpTarget > Timing.CurTime)
+                if (component.LerpTarget != TimeSpan.Zero)
                 {
                     component.LerpTarget = TimeSpan.Zero;
                     Dirty(component);
@@ -508,7 +508,7 @@ namespace Content.Shared.Movement.Systems
                 RelativeRotation = relativeRotation;
                 TargetRelativeRotation = targetRelativeRotation;
                 RelativeEntity = relativeEntity;
-                LerpTarget = LerpTarget;
+                LerpTarget = lerpTarget;
             }
         }
 
