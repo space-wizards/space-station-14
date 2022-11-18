@@ -60,7 +60,7 @@ public sealed class MoveToOperator : HTNOperator
     public override async Task<(bool Valid, Dictionary<string, object>? Effects)> Plan(NPCBlackboard blackboard,
         CancellationToken cancelToken)
     {
-        if (!blackboard.TryGetValue<EntityCoordinates>(TargetKey, out var targetCoordinates))
+        if (!blackboard.TryGetValue<EntityCoordinates>(TargetKey, out var targetCoordinates, _entManager))
         {
             return (false, null);
         }
@@ -77,14 +77,14 @@ public sealed class MoveToOperator : HTNOperator
             return (false, null);
         }
 
-        var range = blackboard.GetValueOrDefault<float>(RangeKey);
+        var range = blackboard.GetValueOrDefault<float>(RangeKey, _entManager);
 
         if (xform.Coordinates.TryDistance(_entManager, targetCoordinates, out var distance) && distance <= range)
         {
             // In range
             return (true, new Dictionary<string, object>()
             {
-                {NPCBlackboard.OwnerCoordinates, blackboard.GetValueOrDefault<EntityCoordinates>(NPCBlackboard.OwnerCoordinates)}
+                {NPCBlackboard.OwnerCoordinates, blackboard.GetValueOrDefault<EntityCoordinates>(NPCBlackboard.OwnerCoordinates, _entManager)}
             });
         }
 
@@ -130,14 +130,14 @@ public sealed class MoveToOperator : HTNOperator
         // Re-use the path we may have if applicable.
         var comp = _steering.Register(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner), targetCoordinates);
 
-        if (blackboard.TryGetValue<float>(RangeKey, out var range))
+        if (blackboard.TryGetValue<float>(RangeKey, out var range, _entManager))
         {
             comp.Range = range;
         }
 
-        if (blackboard.TryGetValue<PathResultEvent>(PathfindKey, out var result))
+        if (blackboard.TryGetValue<PathResultEvent>(PathfindKey, out var result, _entManager))
         {
-            if (blackboard.TryGetValue<EntityCoordinates>(NPCBlackboard.OwnerCoordinates, out var coordinates))
+            if (blackboard.TryGetValue<EntityCoordinates>(NPCBlackboard.OwnerCoordinates, out var coordinates, _entManager))
             {
                 var mapCoords = coordinates.ToMap(_entManager);
                 _steering.PrunePath(mapCoords, targetCoordinates.ToMapPos(_entManager) - mapCoords.Position, result.Path);
@@ -152,7 +152,7 @@ public sealed class MoveToOperator : HTNOperator
         base.Shutdown(blackboard, status);
 
         // Cleanup the blackboard and remove steering.
-        if (blackboard.TryGetValue<CancellationTokenSource>(MovementCancelToken, out var cancelToken))
+        if (blackboard.TryGetValue<CancellationTokenSource>(MovementCancelToken, out var cancelToken, _entManager))
         {
             cancelToken.Cancel();
             blackboard.Remove<CancellationTokenSource>(MovementCancelToken);
