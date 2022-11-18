@@ -25,7 +25,6 @@
     contents:
       - id: BoxSurvivalSecurity
       - id: Flash
-      - id: PaperTenCodes
 
 - type: entity
   noSpawn: true
