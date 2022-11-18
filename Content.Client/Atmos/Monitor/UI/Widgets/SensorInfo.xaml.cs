@@ -1,4 +1,5 @@
 using Content.Client.Message;
+using Content.Client.Stylesheets;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Temperature;
@@ -125,11 +126,11 @@ public sealed partial class SensorInfo : BoxContainer
         threshold.CheckThreshold(amount, out AtmosAlarmType curAlarm);
         if(curAlarm == AtmosAlarmType.Danger)
         {
-            return new Color(0xBB, 0x32, 0x32);
+            return StyleNano.DangerousRedFore;
         }
         else if(curAlarm == AtmosAlarmType.Warning)
         {
-            return new Color(0xA5, 0x76, 0x2F);
+            return StyleNano.ConcerningOrangeFore;
         }
 
         return new Color(1f, 1f, 1f);
