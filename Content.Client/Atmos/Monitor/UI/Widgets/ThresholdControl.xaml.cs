@@ -211,12 +211,19 @@ public sealed partial class ThresholdControl : BoxContainer
             HorizontalExpand = true;
             Orientation = LayoutOrientation.Vertical;
             Margin = new Thickness(20, 0, 0, 0);
+            MinSize = new Vector2(160, 0);
 
-            AddChild(new Label { Text = Loc.GetString($"air-alarm-ui-thresholds-{name}") });
+            var controlLabel = new Label
+            {
+                Text = Loc.GetString($"air-alarm-ui-thresholds-{name}"),
+                HorizontalAlignment = HAlignment.Center
+            };
+            AddChild(controlLabel);
 
             _boundEnabled = new CheckBox
             {
-                Text = Loc.GetString("Enabled")
+                Text = Loc.GetString("Enabled"),
+                HorizontalAlignment = HAlignment.Center
             };
             AddChild(_boundEnabled);
 

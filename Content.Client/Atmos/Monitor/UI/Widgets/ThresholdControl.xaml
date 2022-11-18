@@ -11,7 +11,7 @@
                 <!-- Upper row: Danger bounds -->
                 <BoxContainer Name="CDangerBounds" Orientation="Horizontal" Margin="0 0 0 2"/>
                 <!-- Lower row: Warning bounds -->
-                <BoxContainer Name="CWarningBounds" Orientation="Horizontal" Margin="0 0 0 2"/>
+                <BoxContainer Name="CWarningBounds" Orientation="Horizontal" Margin="0 6 0 2"/>
             </BoxContainer>
         </CollapsibleBody>
     </Collapsible>
