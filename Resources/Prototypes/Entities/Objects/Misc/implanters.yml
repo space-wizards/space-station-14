@@ -7,15 +7,6 @@
   parent: BaseItem
   abstract: true
   components:
-    - type: ItemSlots
-      slots:
-        implanter_slot:
-          whitelist:
-            tags:
-              - SubdermalImplant
-    - type: ContainerContainer
-      containers:
-        implanter_slot: !type:ContainerSlot { }
     - type: Implanter
       currentMode: Draw
     - type: Sprite
@@ -48,6 +39,15 @@
   id: Implanter
   parent: BaseImplanter
   components:
+    - type: ItemSlots
+      slots:
+        implanter_slot:
+          whitelist:
+            tags:
+              - SubdermalImplant
+    - type: ContainerContainer
+      containers:
+        implanter_slot: !type:ContainerSlot { }
     - type: Tag
       tags:
         - Trash
