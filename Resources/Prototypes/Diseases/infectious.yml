@@ -332,7 +332,7 @@
       reagent: Potassium
       amount: 15
     - !type:DiseaseSatiateThirst
-      probability: 0.05
+      probability: 0.1
       factor: -20
     - !type:DiseaseSnough
       probability: 0.01
