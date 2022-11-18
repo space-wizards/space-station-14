@@ -321,3 +321,29 @@
       maxLength: 30
     - !type:DiseaseJustWaitCure
       maxLength: 400
+
+- type: disease
+  id: Hydroglycerin
+  name: disease-proto-hydroglycerin
+  cureResist: 0.15
+  effects:
+    - !type:DiseaseAdjustReagent
+      probability: 0.1
+      reagent: Potassium
+      amount: 15
+    - !type:DiseaseSatiateThirst
+      probability: 0.05
+      factor: -20
+    - !type:DiseaseSnough
+      probability: 0.01
+      snoughSound:
+        collection: Coughs
+    - !type:DiseasePopUp
+      probability: 0.03
+      message: disease-thirst
+    - !type:DiseasePopUp
+      probability: 0.03
+      message: disease-hydrophobia
+  cures:
+    - !type:DiseaseReagentCure
+      reagent: Water
