@@ -1,8 +1,6 @@
-#nullable enable
 using System.Text;
 using System.Threading;
 using Content.Client.Administration.Managers;
-using Content.Client.Administration.Systems;
 using Content.Client.Administration.UI.CustomControls;
 using Content.Client.Administration.UI.Tabs.AdminTab;
 using Content.Client.Stylesheets;
@@ -62,7 +60,7 @@ namespace Content.Client.Administration.UI
                     sb.Append('●');
                 else
                     sb.Append(info.ActiveThisRound ? '○' : '·');
-                
+
                 sb.Append(' ');
                 if (_adminAHelpHelper.TryGetChannel(info.SessionId, out var panel) && panel.Unread > 0)
                 {
@@ -83,21 +81,13 @@ namespace Content.Client.Administration.UI
 
             ChannelSelector.Comparison = (a, b) =>
             {
-                var aChannelExists = _adminAHelpHelper.TryGetChannel(a.SessionId, out var ach);
-                var bChannelExists = _adminAHelpHelper.TryGetChannel(b.SessionId, out var bch);
-                if (!aChannelExists && !bChannelExists)
-                    return 0;
-
-                if (!aChannelExists)
-                    return 1;
-
-                if (!bChannelExists)
-                    return -1;
+                var ach = _adminAHelpHelper.EnsurePanel(a.SessionId);
+                var bch = _adminAHelpHelper.EnsurePanel(b.SessionId);
 
                 // First, sort by unread. Any chat with unread messages appears first. We just sort based on unread
                 // status, not number of unread messages, so that more recent unread messages take priority.
-                var aUnread = ach!.Unread > 0;
-                var bUnread = bch!.Unread > 0;
+                var aUnread = ach.Unread > 0;
+                var bUnread = bch.Unread > 0;
                 if (aUnread != bUnread)
                     return aUnread ? -1 : 1;
 
@@ -112,6 +102,12 @@ namespace Content.Client.Administration.UI
 
                 // Finally, sort by the most recent message.
                 return bch!.LastMessage.CompareTo(ach!.LastMessage);
+            };
+
+            Bans.OnPressed += _ =>
+            {
+                if (_currentPlayer is not null)
+                    _console.ExecuteCommand($"banlist \"{_currentPlayer.SessionId}\"");
             };
 
             Notes.OnPressed += _ =>
@@ -156,6 +152,8 @@ namespace Content.Client.Administration.UI
                 if (_currentPlayer is not null)
                     _console.ExecuteCommand($"respawn \"{_currentPlayer.Username}\"");
             };
+
+            OnOpen += () => ChannelSelector.PopulateList();
         }
 
         private Dictionary<Control, (CancellationTokenSource cancellation, string? originalText)> Confirmations { get; } = new();
@@ -176,6 +174,9 @@ namespace Content.Client.Administration.UI
 
         private void FixButtons()
         {
+            Bans.Visible = _adminManager.HasFlag(AdminFlags.Ban);
+            Bans.Disabled = !Bans.Visible;
+
             Notes.Visible = _adminManager.HasFlag(AdminFlags.ViewNotes);
             Notes.Disabled = !Notes.Visible;
 

@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Materials;
 using Content.Shared.Popups;
+using Content.Server.Power.Components;
 using Robust.Shared.Player;
 
 namespace Content.Server.Materials;
@@ -15,6 +16,8 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
     public override bool TryInsertMaterialEntity(EntityUid user, EntityUid toInsert, EntityUid receiver, MaterialStorageComponent? component = null)
     {
         if (!Resolve(receiver, ref component))
+            return false;
+        if (TryComp<ApcPowerReceiverComponent>(receiver, out var power) && !power.Powered)
             return false;
         if (!base.TryInsertMaterialEntity(user, toInsert, receiver, component))
             return false;

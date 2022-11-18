@@ -63,10 +63,16 @@ namespace Content.Shared.Atmos.EntitySystems
                 if (FireState != other.FireState)
                     return false;
 
-                for (var i = 0; i < Opacity.Length; i++)
+                if (Opacity?.Length != other.Opacity?.Length)
+                    return false;
+
+                if (Opacity != null && other.Opacity != null)
                 {
-                    if (Opacity[i] != other.Opacity[i])
-                        return false;
+                    for (var i = 0; i < Opacity.Length; i++)
+                    {
+                        if (Opacity[i] != other.Opacity[i])
+                            return false;
+                    }
                 }
 
                 return true;

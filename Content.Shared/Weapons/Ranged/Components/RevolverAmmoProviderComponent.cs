@@ -16,15 +16,15 @@ public sealed class RevolverAmmoProviderComponent : AmmoProviderComponent
      * for example 7 entities when revolver spawns (1 for the revolver and 6 cylinders) we can instead defer it.
      */
 
-    [ViewVariables, DataField("whitelist")]
+    [DataField("whitelist")]
     public EntityWhitelist? Whitelist;
 
     public Container AmmoContainer = default!;
 
-    [ViewVariables, DataField("currentSlot")]
+    [DataField("currentSlot")]
     public int CurrentIndex;
 
-    [ViewVariables, DataField("capacity")]
+    [DataField("capacity")]
     public int Capacity = 6;
 
     // Like BallisticAmmoProvider we defer spawning until necessary
@@ -40,12 +40,12 @@ public sealed class RevolverAmmoProviderComponent : AmmoProviderComponent
     [DataField("proto", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string? FillPrototype = "CartridgeMagnum";
 
-    [ViewVariables, DataField("soundEject")]
+    [DataField("soundEject")]
     public SoundSpecifier? SoundEject = new SoundPathSpecifier("/Audio/Weapons/Guns/MagOut/revolver_magout.ogg");
 
-    [ViewVariables, DataField("soundInsert")]
+    [DataField("soundInsert")]
     public SoundSpecifier? SoundInsert = new SoundPathSpecifier("/Audio/Weapons/Guns/MagIn/revolver_magin.ogg");
 
-    [ViewVariables, DataField("soundSpin")]
+    [DataField("soundSpin")]
     public SoundSpecifier? SoundSpin = new SoundPathSpecifier("/Audio/Weapons/Guns/Misc/revolver_spin.ogg");
 }

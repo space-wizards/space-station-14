@@ -32,10 +32,6 @@ namespace Content.Server.Atmos.EntitySystems
                 OnAirtightRotated(uid, airtight, ref moveEvent);
             }
 
-            // Adding this component will immediately anchor the entity, because the atmos system
-            // requires airtight entities to be anchored for performance.
-            xform.Anchored = true;
-
             UpdatePosition(airtight);
         }
 
@@ -122,11 +118,7 @@ namespace Content.Server.Atmos.EntitySystems
             var query = EntityManager.GetEntityQuery<AirtightComponent>();
             _explosionSystem.UpdateAirtightMap(gridId, pos, query);
             // TODO make atmos system use query
-            _atmosphereSystem.UpdateAdjacent(gridUid, pos);
             _atmosphereSystem.InvalidateTile(gridUid, pos);
-
-            if(fixVacuum)
-                _atmosphereSystem.FixTileVacuum(gridUid, pos);
         }
 
         private AtmosDirection Rotate(AtmosDirection myDirection, Angle myAngle)

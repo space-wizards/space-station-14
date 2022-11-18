@@ -1160,7 +1160,8 @@ namespace Content.Client.Preferences.UI
                 _jobTitle = new Label()
                 {
                     Text = job.LocalizedName,
-                    MinSize = (175, 0)
+                    MinSize = (175, 0),
+                    MouseFilter = MouseFilterMode.Stop
                 };
 
                 if (job.LocalizedDescription != null)

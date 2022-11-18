@@ -78,7 +78,7 @@ namespace Content.Server.Medical.BiomassReclaimer
                     continue;
                 }
 
-                _stackSystem.SpawnMultiple((int) reclaimer.CurrentExpectedYield, 100, "Biomass", Transform(reclaimer.Owner).Coordinates);
+                _stackSystem.SpawnMultiple(reclaimer.OutputEntityId, reclaimer.CurrentExpectedYield, Transform(reclaimer.Owner).Coordinates);
 
                 reclaimer.BloodReagent = null;
                 reclaimer.SpawnedEntities.Clear();
@@ -234,7 +234,7 @@ namespace Content.Server.Medical.BiomassReclaimer
                 component.SpawnedEntities = butcherableComponent.SpawnedEntities;
             }
 
-            component.CurrentExpectedYield = (uint) Math.Max(0, physics.FixturesMass * component.YieldPerUnitMass);
+            component.CurrentExpectedYield = (int) Math.Max(0, physics.FixturesMass * component.YieldPerUnitMass);
             component.ProcessingTimer = physics.FixturesMass * component.ProcessingTimePerUnitMass;
             QueueDel(toProcess);
         }

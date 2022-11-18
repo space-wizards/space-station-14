@@ -26,6 +26,6 @@ public sealed class CargoShuttleComponent : Component
     /// <summary>
     /// The assigned station for this cargo shuttle.
     /// </summary>
-    [ViewVariables, DataField("station")]
+    [DataField("station")]
     public EntityUid? Station;
 }
