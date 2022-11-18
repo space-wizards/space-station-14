@@ -19,7 +19,6 @@
     containers:
       key_slots:
       - EncryptionKeyQM
-  - type: Headset
   - type: Sprite
     sprite: Clothing/Ears/Headsets/cargo.rsi
   - type: Clothing
@@ -34,7 +33,6 @@
     containers:
       key_slots:
       - EncryptionKeyCentCom
-  - type: Headset
   - type: Sprite
     sprite: Clothing/Ears/Headsets/centcom.rsi
   - type: Clothing
@@ -49,7 +47,6 @@
     containers:
       key_slots:
       - EncryptionKeyCommand
-  - type: Headset
   - type: Sprite
     sprite: Clothing/Ears/Headsets/command.rsi
   - type: Clothing
@@ -64,7 +61,6 @@
     containers:
       key_slots:
       - EncryptionKeyCE
-  - type: Headset
   - type: Sprite
     sprite: Clothing/Ears/Headsets/engineering.rsi
   - type: Clothing
@@ -79,7 +75,6 @@
     containers:
       key_slots:
       - EncryptionKeyCMO
-  - type: Headset
   - type: Sprite
     sprite: Clothing/Ears/Headsets/medical.rsi
   - type: Clothing
@@ -94,7 +89,6 @@
     containers:
       key_slots:
       - EncryptionKeyHOS
-  - type: Headset
   - type: Sprite
     sprite: Clothing/Ears/Headsets/security.rsi
   - type: Clothing
@@ -109,7 +103,6 @@
     containers:
       key_slots:
       - EncryptionKeyRD
-  - type: Headset
   - type: Sprite
     sprite: Clothing/Ears/Headsets/science.rsi
   - type: Clothing
@@ -125,7 +118,6 @@
     containers:
       key_slots:
       - EncryptionKeySyndie
-  - type: Headset
   - type: Sprite
     sprite: Clothing/Ears/Headsets/syndicate.rsi
   - type: Clothing
