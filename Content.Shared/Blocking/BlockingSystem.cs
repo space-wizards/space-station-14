@@ -137,8 +137,8 @@ public sealed class BlockingSystem : EntitySystem
 
         if (component.BlockingToggleAction != null)
         {
-            //Don't allow someone to block if they're in a container or if they're buckled.
-            if (_containerSystem.IsEntityInContainer(user) || !_mapManager.TryFindGridAt(xform.MapPosition, out var grid) || _buckleSystem.IsBuckled(user))
+            //Don't allow someone to block if they're not parented to a grid
+            if (xform.GridUid != xform.ParentUid)
             {
                 CantBlockError(user);
                 return false;
