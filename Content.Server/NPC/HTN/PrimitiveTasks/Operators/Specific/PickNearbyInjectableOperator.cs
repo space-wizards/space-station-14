@@ -41,7 +41,7 @@ public sealed class PickNearbyInjectableOperator : HTNOperator
     {
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
 
-        if (!blackboard.TryGetValue<float>(RangeKey, out var range))
+        if (!blackboard.TryGetValue<float>(RangeKey, out var range, _entManager))
             return (false, null);
 
         var damageQuery = _entManager.GetEntityQuery<DamageableComponent>();
