@@ -234,8 +234,6 @@
         - Pill
         - PillCanister
         - Radio
-        - WetFloorSign
-        - HolosignProjector
       components:
         - Hypospray
         - Injector
