@@ -125,11 +125,11 @@ public sealed partial class SensorInfo : BoxContainer
         threshold.CheckThreshold(amount, out AtmosAlarmType curAlarm);
         if(curAlarm == AtmosAlarmType.Danger)
         {
-            return new Color(1f, 0, 0);
+            return new Color(0xBB, 0x32, 0x32);
         }
         else if(curAlarm == AtmosAlarmType.Warning)
         {
-            return new Color(1f, 1f, 0);
+            return new Color(0xA5, 0x76, 0x2F);
         }
 
         return new Color(1f, 1f, 1f);
