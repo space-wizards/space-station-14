@@ -54,7 +54,8 @@
   - type: Rotatable
   - type: Transform
     noRot: false
-  - type: IntrinsicRadio
+  - type: IntrinsicRadioReceiver
+  - type: ActiveRadio
     channels:
     - Supply
   - type: SalvageMagnet

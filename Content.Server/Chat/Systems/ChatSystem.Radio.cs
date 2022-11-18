@@ -1,6 +1,6 @@
 using System.Linq;
 using System.Text.RegularExpressions;
-using Content.Server.Headset;
+using Content.Server.Radio.Components;
 using Content.Shared.Radio;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -76,12 +76,9 @@ public sealed partial class ChatSystem
         // Re-capitalize message since we removed the prefix.
         message = SanitizeMessageCapital(message);
 
-        if (_inventory.TryGetSlotEntity(source, "ears", out var entityUid) &&
-            TryComp(entityUid, out HeadsetComponent? headset))
-        {
-            headset.RadioRequested = true;
-        }
-        else
+        var hasHeadset = _inventory.TryGetSlotEntity(source, "ears", out var entityUid)  && HasComp<HeadsetComponent>(entityUid);
+
+        if (!hasHeadset && !HasComp<IntrinsicRadioTransmitterComponent>(source))
         {
             _popup.PopupEntity(Loc.GetString("chat-manager-no-headset-on-message"), source, Filter.Entities(source));
         }

@@ -32,7 +32,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Components;
 
-namespace Content.Server.Cloning.Systems
+namespace Content.Server.Cloning
 {
     public sealed class CloningSystem : EntitySystem
     {
@@ -152,7 +152,7 @@ namespace Content.Server.Cloning.Systems
             args.PushMarkup(Loc.GetString("cloning-pod-biomass", ("number", _material.GetMaterialAmount(uid, component.RequiredMaterial))));
         }
 
-        public bool TryCloning(EntityUid uid, EntityUid bodyToClone, Mind.Mind mind, CloningPodComponent? clonePod)
+        public bool TryCloning(EntityUid uid, EntityUid bodyToClone, Mind.Mind mind, CloningPodComponent? clonePod, float failChanceModifier = 1)
         {
             if (!Resolve(uid, ref clonePod))
                 return false;
@@ -211,6 +211,8 @@ namespace Content.Server.Cloning.Systems
                 damageable.Damage.DamageDict.TryGetValue("Cellular", out var cellularDmg))
             {
                 var chance = Math.Clamp((float) (cellularDmg / 100), 0, 1);
+                chance *= failChanceModifier;
+
                 if (cellularDmg > 0 && clonePod.ConnectedConsole != null)
                     _chatSystem.TrySendInGameICMessage(clonePod.ConnectedConsole.Value, Loc.GetString("cloning-console-cellular-warning", ("percent", Math.Round(100 - (chance * 100)))), InGameICChatType.Speak, false);
 

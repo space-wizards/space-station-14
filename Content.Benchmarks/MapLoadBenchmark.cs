@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
 using Content.IntegrationTests;
 using Content.Server.Maps;
 using Robust.Server.GameObjects;
-using Robust.Server.Maps;
 using Robust.Shared;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
@@ -19,15 +18,29 @@ namespace Content.Benchmarks;
 public class MapLoadBenchmark
 {
     private PairTracker _pair = default!;
+    private MapLoaderSystem _mapLoader = default!;
+    private IMapManager _mapManager = default!;
 
     [GlobalSetup]
     public void Setup()
     {
         ProgramShared.PathOffset = "../../../../";
+
         _pair = PoolManager.GetServerClient().GetAwaiter().GetResult();
-        Paths = _pair.Pair.Server.ResolveDependency<IPrototypeManager>()
-            .EnumeratePrototypes<GameMapPrototype>().ToDictionary(x => x.ID, x => x.MapPath.ToString());
-        IoCManager.InitThread(_pair.Pair.Server.InstanceDependencyCollection);
+        var server = _pair.Pair.Server;
+
+        Paths = server.ResolveDependency<IPrototypeManager>()
+            .EnumeratePrototypes<GameMapPrototype>()
+            .ToDictionary(x => x.ID, x => x.MapPath.ToString());
+
+        _mapLoader = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<MapLoaderSystem>();
+        _mapManager = server.ResolveDependency<IMapManager>();
+    }
+
+    [GlobalCleanup]
+    public async Task Cleanup()
+    {
+        await _pair.DisposeAsync();
     }
 
     public static IEnumerable<string> MapsSource { get; set; }
@@ -37,8 +50,25 @@ public class MapLoadBenchmark
     public static Dictionary<string, string> Paths;
 
     [Benchmark]
-    public void LoadMap()
+    public async Task LoadMap()
     {
-        _pair.Pair.Server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<MapLoaderSystem>().LoadMap(new MapId(10), Paths[Map]);
+        var mapPath = Paths[Map];
+        var server = _pair.Pair.Server;
+        await server.WaitPost(() =>
+        {
+            var success = _mapLoader.TryLoad(new MapId(10), mapPath, out _);
+            if (!success)
+                throw new Exception("Map load failed");
+        });
+    }
+
+    [IterationCleanup]
+    public void IterationCleanup()
+    {
+        var server = _pair.Pair.Server;
+        server.WaitPost(() =>
+        {
+            _mapManager.DeleteMap(new MapId(10));
+        }).Wait();
     }
 }

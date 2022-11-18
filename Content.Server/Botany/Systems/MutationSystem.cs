@@ -112,8 +112,10 @@ public class MutationSystem : EntitySystem
             return;
         }
 
-        // Starting number of bits that are high, between 0 and n.
+        // Starting number of bits that are high, between 0 and bits.
         int n = (int)Math.Round((val - min) / (max - min) * bits);
+        // val may be outside the range of min/max due to starting prototype values, so clamp
+        n = Math.Clamp(n, 0, bits);
 
         // Probability that the bit flip increases n.
         float p_increase = 1-(float)n/bits;

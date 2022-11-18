@@ -1,138 +1,4 @@
 Entries:
-- author: juliangiebel
-  changes:
-  - {message: The mailing unit. A pneumatic mail delivery system!, type: Add}
-  - {message: Mailing unit electronics. Unlocked by the industrial engineering research.,
-    type: Add}
-  id: 2153
-  time: '2022-08-14T05:57:25.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: 'Welding without eye protection now blinds you, and causes permanent
-      eye damage if you had no protection at all.', type: Add}
-  - {message: Added oculine to heal eye damage., type: Add}
-  - {message: Added glasses to correct blurry vision., type: Add}
-  - {message: 'Renamed mesons to engineering goggles for less confusion. They no longer
-      provide radiation damage, instead functioning more as a compact welding mask.',
-    type: Tweak}
-  - {message: You will no longer see 'this entity does not exist' when examining entities
-      that exist., type: Fix}
-  id: 2154
-  time: '2022-08-14T05:59:15.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Revenants can no longer stack multiple harvests or soul searches at
-      once., type: Fix}
-  id: 2155
-  time: '2022-08-14T05:59:26.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: You can no longer place tiles underneath solid structures., type: Fix}
-  id: 2156
-  time: '2022-08-14T06:00:39.0000000+00:00'
-- author: martin69420
-  changes:
-  - {message: 'yellow, green, and blue boxing gloves now use correct sprites for worn
-      and inhand states', type: Fix}
-  - {message: renamed boxing gloves to red boxing gloves, type: Tweak}
-  id: 2157
-  time: '2022-08-14T06:23:25.0000000+00:00'
-- author: moonheart08
-  changes:
-  - {message: Non-newbies can no longer play as interns., type: Tweak}
-  id: 2158
-  time: '2022-08-14T21:14:46.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fix crew monitor not displaying directional arrows, type: Fix}
-  id: 2159
-  time: '2022-08-15T04:14:01.0000000+00:00'
-- author: SirDragooon
-  changes:
-  - {message: The ChemMaster4000 pill limit is increased to 25, type: Tweak}
-  id: 2160
-  time: '2022-08-15T04:57:31.0000000+00:00'
-- author: tomasalves8
-  changes:
-  - {message: Removed the ability to point while asleep, type: Fix}
-  id: 2161
-  time: '2022-08-16T04:22:17.0000000+00:00'
-- author: vulppine
-  changes:
-  - {message: "FunTime Arcade Solutions\u2122 has outfitted NanoTrasen stations with\
-      \ a new supply of arcade toys! Come spend your free time at the arcade machines\
-      \ for exciting, fun objects!", type: Add}
-  id: 2162
-  time: '2022-08-16T09:57:40.0000000+00:00'
-- author: Hoid
-  changes:
-  - {message: Experimental Research Hardsuit now protects more effectively against
-      things that can go wrong in the lab - including explosions., type: Tweak}
-  id: 2163
-  time: '2022-08-16T11:16:18.0000000+00:00'
-- author: martin69420
-  changes:
-  - {message: Fixed missing death sprite for holocarp and magicarp, type: Fix}
-  id: 2164
-  time: '2022-08-16T13:41:26.0000000+00:00'
-- author: martin69420
-  changes:
-  - {message: 'Added descriptions to many entities, including most signs.', type: Add}
-  - {message: Fixed typos on a few descriptions., type: Tweak}
-  id: 2165
-  time: '2022-08-17T00:56:54.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed guns spawning w/o ammo., type: Fix}
-  id: 2166
-  time: '2022-08-17T03:44:43.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: The Syndicate Zombie Bundle has been readded for Nuclear Operatives
-      for 40 TC., type: Add}
-  - {message: Nuclear Operatives can no longer purchase Holoparasites or Surplus bundles.,
-    type: Tweak}
-  - {message: Empty Uplink categories no longer show up in the menu., type: Tweak}
-  id: 2167
-  time: '2022-08-17T04:34:25.0000000+00:00'
-- author: JustinTrotter
-  changes:
-  - {message: 'Uniform printer can now print musician, clown, and mime winter coats',
-    type: Tweak}
-  id: 2168
-  time: '2022-08-18T02:22:30.0000000+00:00'
-- author: JustinTrotter
-  changes:
-  - {message: Nettle soup recipe works now, type: Tweak}
-  id: 2169
-  time: '2022-08-18T02:30:30.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Tweaks to bullet flyby sounds to be less grating., type: Tweak}
-  id: 2170
-  time: '2022-08-18T02:32:39.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Roundstart bag filling sounds should no longer play., type: Fix}
-  id: 2171
-  time: '2022-08-18T02:34:52.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Machine boards now have different appearances depending on department.,
-    type: Tweak}
-  id: 2172
-  time: '2022-08-19T00:10:20.0000000+00:00'
-- author: Elijahrane
-  changes:
-  - {message: You no longer get better at pushing people over the worse you are at
-      disarming., type: Fix}
-  id: 2173
-  time: '2022-08-20T02:14:55.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Shot glasses can now only hold 10u of liquid., type: Tweak}
-  id: 2174
-  time: '2022-08-20T02:27:48.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Most circuitry has been resprited., type: Tweak}
@@ -2958,3 +2824,136 @@ Entries:
       click on a machine to instantly upgrade it., type: Add}
   id: 2652
   time: '2022-11-14T19:36:14.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix melee sounds getting spammed in some instances., type: Fix}
+  id: 2653
+  time: '2022-11-15T00:56:10.0000000+00:00'
+- author: Interrobang01
+  changes:
+  - {message: Cognizine now needs Acetone instead of Unstable Mutagen in its recipe,
+    type: Tweak}
+  - {message: Monkeys can talk when brought to life via Cognizine, type: Tweak}
+  - {message: Cognizine has a taste now, type: Fix}
+  id: 2654
+  time: '2022-11-15T02:02:46.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Science passive research point generation is no longer capped at 30000,
+    type: Remove}
+  id: 2655
+  time: '2022-11-15T04:04:56.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed LOOC chat prefix not working. Now messages starting starting with
+      "(" just be interpreted as LOOC chat, type: Fix}
+  id: 2656
+  time: '2022-11-15T04:14:40.0000000+00:00'
+- author: moony
+  changes:
+  - {message: Origin station has been pulled temporarily due to needing re-review.,
+    type: Remove}
+  id: 2657
+  time: '2022-11-15T05:12:32.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Combat mode no longer disables alt-clicking., type: Tweak}
+  id: 2658
+  time: '2022-11-15T06:34:47.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: Lightning is fixed to properly collide, type: Fix}
+  id: 2659
+  time: '2022-11-15T06:35:23.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Removed duplicate disarm popup when disarming someone with an item in
+      their hands., type: Fix}
+  id: 2660
+  time: '2022-11-15T07:48:00.0000000+00:00'
+- author: Ygg01
+  changes:
+  - {message: Fluids no longer leak through micropores in concrete, type: Fix}
+  - {message: 'Fluids now spill slowly, rather than quantum tunneling to optimal size',
+    type: Fix}
+  id: 2661
+  time: '2022-11-15T11:31:00.0000000+00:00'
+- author: corentt
+  changes:
+  - {message: the price of food now depends on its nutritional capacity, type: Add}
+  id: 2662
+  time: '2022-11-15T11:51:31.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed a broken inhand for the fire extinguisher., type: Fix}
+  id: 2663
+  time: '2022-11-16T05:24:35.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Hydroponics trays and soil now properly rotate with the player perspective.,
+    type: Fix}
+  id: 2664
+  time: '2022-11-16T11:08:19.0000000+00:00'
+- author: GoodWheatley
+  changes:
+  - {message: Eswords can damage windows now., type: Tweak}
+  id: 2665
+  time: '2022-11-16T14:20:42.0000000+00:00'
+- author: BurninDreamear
+  changes:
+  - {message: 'All sorts of corporations now supply higher caliber bullets, revolver
+      only, for now...', type: Add}
+  - {message: Nanotrasen and Syndicate revolvers have been retrofitted to use .45
+      magnum rounds instead of .40. Happy shooting!, type: Tweak}
+  id: 2666
+  time: '2022-11-16T14:41:48.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Cat ears now cost 26tc, type: Tweak}
+  id: 2667
+  time: '2022-11-16T14:46:56.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: You can't turn chameleon hat into cat ears., type: Remove}
+  id: 2668
+  time: '2022-11-16T18:13:54.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'The base rules for all Wizards'' Den servers have been rewritten from
+      the ground up. A "long-form" version is available on the wiki, with even more
+      examples and clarifications. Not much concrete is changing--this is mostly just
+      better codifying stuff that we were already enforcing, but we recommend that
+      you reread them anyway, of course.', type: Add}
+  id: 2669
+  time: '2022-11-16T18:24:37.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Traitor objectives should no longer be overly steal-oriented., type: Tweak}
+  - {message: The fallback for the 'keep another traitor alive' condition now just
+      gives you stay alive rather than telling you to keep yourself alive., type: Fix}
+  id: 2670
+  time: '2022-11-16T20:58:48.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added machine upgrades for the medical scanner. You can now decrease
+      the chance that cloning fails on a body., type: Add}
+  id: 2671
+  time: '2022-11-16T21:02:37.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Item artifacts. Artifact spawns may now spawn handheld artifacts, which
+      have a suite of new triggers and very useful effects, with more coming.', type: Add}
+  id: 2672
+  time: '2022-11-17T17:40:05.0000000+00:00'
+- author: nikthechampiongr
+  changes:
+  - {message: Fixes access permissions for maintenance door on saltern., type: Fix}
+  id: 2673
+  time: '2022-11-18T04:42:38.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Added the Traversal Distorter, a machine capable of pushing Artifacts''
+      random node traversal in certain directions. Simply place an artifact on the
+      machine and you can choose how you want to encourage it.', type: Add}
+  id: 2674
+  time: '2022-11-18T04:43:18.0000000+00:00'

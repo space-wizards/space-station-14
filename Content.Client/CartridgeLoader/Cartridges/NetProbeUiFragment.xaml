@@ -5,10 +5,10 @@
         <BoxContainer Orientation="Vertical" MinHeight="32" MaxHeight="32" VerticalAlignment="Top" Margin="3 0">
             <PanelContainer Name="HeaderPanel">
                 <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="4">
-                    <Label HorizontalExpand="True" Text="Name"/>
-                    <Label HorizontalExpand="True" Text="Address"/>
-                    <Label HorizontalExpand="True" Text="Frequency"/>
-                    <Label HorizontalExpand="True" Text="Network"/>
+                    <Label HorizontalExpand="True" Text="{Loc 'net-probe-label-name'}"/>
+                    <Label HorizontalExpand="True" Text="{Loc 'net-probe-label-address'}"/>
+                    <Label HorizontalExpand="True" Text="{Loc 'net-probe-label-frequency'}"/>
+                    <Label HorizontalExpand="True" Text="{Loc 'net-probe-label-network'}"/>
                 </BoxContainer>
             </PanelContainer>
         </BoxContainer>
