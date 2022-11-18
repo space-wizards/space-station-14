@@ -1,4 +1,4 @@
-﻿using Content.Server.Administration;
+p﻿using Content.Server.Administration;
 using Content.Server.Bible.Components;
 using Content.Server.Chat.Managers;
 using Content.Server.Popups;
@@ -69,7 +69,7 @@ public sealed class PrayerSystem : SharedPrayerSystem
             return;
 
         _popupSystem.PopupEntity(popupMessage, target.AttachedEntity.Value, Filter.Empty().AddPlayer(target), PopupType.Large);
-        _chatManager.ChatMessageToOne(ChatChannel.Local, messageString, popupMessage + " \"{message}\"", EntityUid.Invalid, false, target.ConnectedClient);
+        _chatManager.ChatMessageToOne(ChatChannel.Local, messageString, popupMessage + " \"{$message}\"", EntityUid.Invalid, false, target.ConnectedClient);
     }
 
     /// <summary>
