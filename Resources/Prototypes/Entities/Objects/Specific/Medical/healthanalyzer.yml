@@ -49,3 +49,104 @@
   - type: HealthAnalyzer
     fake: true
     disease: ActiveZombieVirus
+
+## Behold, health analyzers for every disease
+- type: entity
+  parent: HandheldHealthAnalyzer
+  id: HandheldHealthAnalyzerSpaceCold
+  name: Space Cold Infector
+  suffix: Active
+  components:
+  - type: HealthAnalyzer
+    fake: true
+    disease: SpaceCold
+
+- type: entity
+  parent: HandheldHealthAnalyzer
+  id: HandheldHealthAnalyzerVentCough
+  name: Vent Cough Infector
+  suffix: Active
+  components:
+  - type: HealthAnalyzer
+    fake: true
+    disease: VentCough
+
+- type: entity
+  parent: HandheldHealthAnalyzer
+  id: HandheldHealthAnalyzerSpaceFlu
+  name: Space Flu Infector
+  suffix: Active
+  components:
+  - type: HealthAnalyzer
+    fake: true
+    disease: SpaceFlu
+
+- type: entity
+  parent: HandheldHealthAnalyzer
+  id: HandheldHealthAnalyzerBirdFlew
+  name: Bird Flew Infector
+  suffix: Active
+  components:
+  - type: HealthAnalyzer
+    fake: true
+    disease: BirdFlew
+
+- type: entity
+  parent: HandheldHealthAnalyzer
+  id: HandheldHealthAnalyzerVanAusdallsRobovirus
+  name: Van Ausdalls Robovirus Infector
+  suffix: Active
+  components:
+  - type: HealthAnalyzer
+    fake: true
+    disease: VanAusdallsRobovirus
+
+- type: entity
+  parent: HandheldHealthAnalyzer
+  id: HandheldHealthAnalyzerAMIV
+  name: AMIV Infector
+  suffix: Active
+  components:
+  - type: HealthAnalyzer
+    fake: true
+    disease: AMIV
+
+- type: entity
+  parent: HandheldHealthAnalyzer
+  id: HandheldHealthAnalyzerMemeticAmirmir
+  name: Memetic Amirmir Infector
+  suffix: Active
+  components:
+  - type: HealthAnalyzer
+    fake: true
+    disease: MemeticAmirmir
+
+- type: entity
+  parent: HandheldHealthAnalyzer
+  id: HandheldHealthAnalyzerBleedersBite
+  name: Bleeders Bite Infector
+  suffix: Active
+  components:
+  - type: HealthAnalyzer
+    fake: true
+    disease: BleedersBite
+
+- type: entity
+  parent: HandheldHealthAnalyzer
+  id: HandheldHealthAnalyzerPlague
+  name: Plague Infector
+  suffix: Active
+  components:
+  - type: HealthAnalyzer
+    fake: true
+    disease: Plague
+
+- type: entity
+  parent: HandheldHealthAnalyzer
+  id: HandheldHealthAnalyzerTongueTwister
+  name: Tongue Twister Infector
+  suffix: Active
+  components:
+  - type: HealthAnalyzer
+    fake: true
+    disease: TongueTwister
