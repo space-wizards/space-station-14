@@ -1,13 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: Most circuitry has been resprited., type: Tweak}
-  - {message: Most computers now have department-based sprites for their circuit board.,
-    type: Add}
-  id: 2175
-  time: '2022-08-20T02:50:19.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: The blurry effect from eye damage has been replaced with a dim overlay
       filter., type: Tweak}
   id: 2176
@@ -2957,3 +2950,8 @@ Entries:
       machine and you can choose how you want to encourage it.', type: Add}
   id: 2674
   time: '2022-11-18T04:43:18.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Item artifacts can now be scanned., type: Fix}
+  id: 2675
+  time: '2022-11-18T21:59:58.0000000+00:00'
