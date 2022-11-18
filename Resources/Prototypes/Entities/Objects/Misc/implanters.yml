@@ -8,11 +8,9 @@
   abstract: true
   components:
     - type: ItemSlots
-      containers:
-        implanter_slot: !type:ContainerSlot
       slots:
         implanter_slot:
-          name: Implanter
+          startingItem: SadTromboneImplant
           priority: 0
           whitelist:
             tags:

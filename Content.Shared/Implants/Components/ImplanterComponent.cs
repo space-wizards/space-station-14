@@ -12,6 +12,8 @@ namespace Content.Shared.Implants.Components;
 [RegisterComponent, NetworkedComponent]
 public sealed class ImplanterComponent : Component
 {
+    public const string ImplanterSlotId = "implanter_slot";
+
     /// <summary>
     /// The time it takes to implant someone else
     /// </summary>
@@ -51,10 +53,11 @@ public sealed class ImplanterComponent : Component
     public (string, string) ImplantData;
 
     /// <summary>
-    /// Grab the <see cref="ItemSlot"/> for this implanter
+    /// The <see cref="ItemSlot"/> for this implanter
     /// </summary>
     [ViewVariables]
-    public ItemSlot ImplanterSlot = default!;
+    [DataField("implanterSlot")]
+    public ItemSlot ImplanterSlot = new();
 
     public bool UiUpdateNeeded;
 
