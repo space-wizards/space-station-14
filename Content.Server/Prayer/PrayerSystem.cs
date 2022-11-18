@@ -1,4 +1,4 @@
-p﻿using Content.Server.Administration;
+using Content.Server.Administration;
 using Content.Server.Bible.Components;
 using Content.Server.Chat.Managers;
 using Content.Server.Popups;
