@@ -23,7 +23,6 @@
         - Flare
         - CableCoil
         - CigPack
-        - HolofanProjector
       components:
         - AirlockPainter
         - SignalLinker
@@ -87,7 +86,6 @@
         - Powerdrill
         - JawsOfLife
         - CigPack
-        - HolofanProjector
       components:
         - AirlockPainter
         - SignalLinker
