@@ -1,12 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: The blurry effect from eye damage has been replaced with a dim overlay
-      filter., type: Tweak}
-  id: 2176
-  time: '2022-08-20T20:17:58.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: 'Added the classic "space station 14" sign, coming to a station near
       you.', type: Add}
   id: 2177
@@ -2955,3 +2949,8 @@ Entries:
   - {message: Item artifacts can now be scanned., type: Fix}
   id: 2675
   time: '2022-11-18T21:59:58.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: The 'toggle ghosts' button while a ghost is now an action., type: Tweak}
+  id: 2676
+  time: '2022-11-18T22:30:54.0000000+00:00'
