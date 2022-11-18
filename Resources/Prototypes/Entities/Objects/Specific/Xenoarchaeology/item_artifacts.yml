@@ -17,6 +17,8 @@
   - type: Damageable
   - type: Physics
     bodyType: Dynamic
+  - type: CollisionWake
+    enabled: false
   - type: InteractionOutline
   - type: Artifact
   - type: RandomArtifactSprite
