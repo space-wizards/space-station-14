@@ -1,5 +1,4 @@
 using Content.Client.Message;
-using Content.Client.Stylesheets;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Temperature;
@@ -29,13 +28,13 @@ public sealed partial class SensorInfo : BoxContainer
         SensorAddress.Title = $"{address} : {data.AlarmState}";
 
         AlarmStateLabel.SetMarkup(Loc.GetString("air-alarm-ui-window-alarm-state-indicator",
-                    ("color", ColorForThreshold(data.AlarmState)),
+                    ("color", AirAlarmWindow.ColorForAlarm(data.AlarmState)),
                     ("state", $"{data.AlarmState}")));
         PressureLabel.SetMarkup(Loc.GetString("air-alarm-ui-window-pressure-indicator",
-                    ("color", ColorForThreshold(data.Pressure, data.PressureThreshold)),
+                    ("color", AirAlarmWindow.ColorForThreshold(data.Pressure, data.PressureThreshold)),
                     ("pressure", $"{data.Pressure:0.##}")));
         TemperatureLabel.SetMarkup(Loc.GetString("air-alarm-ui-window-temperature-indicator",
-                ("color", ColorForThreshold(data.Temperature, data.TemperatureThreshold).ToHex()),
+                ("color", AirAlarmWindow.ColorForThreshold(data.Temperature, data.TemperatureThreshold)),
                 ("tempC", $"{TemperatureHelpers.KelvinToCelsius(data.Temperature):0.#}"),
                 ("temperature", $"{data.Temperature:0.##}")));
 
@@ -45,7 +44,7 @@ public sealed partial class SensorInfo : BoxContainer
 
             var fractionGas = amount / data.TotalMoles;
             label.SetMarkup(Loc.GetString("air-alarm-ui-gases-indicator", ("gas", $"{gas}"),
-                ("color", ColorForThreshold(fractionGas, data.GasThresholds[gas])),
+                ("color", AirAlarmWindow.ColorForThreshold(fractionGas, data.GasThresholds[gas])),
                 ("amount", $"{amount:0.####}"),
                 ("percentage", $"{(100 * fractionGas):0.##}")));
             GasContainer.AddChild(label);
@@ -89,14 +88,14 @@ public sealed partial class SensorInfo : BoxContainer
         SensorAddress.Title = $"{_address} : {data.AlarmState}";
 
         AlarmStateLabel.SetMarkup(Loc.GetString("air-alarm-ui-window-alarm-state-indicator",
-                    ("color", ColorForThreshold(data.AlarmState)),
+                    ("color", AirAlarmWindow.ColorForAlarm(data.AlarmState)),
                     ("state", $"{data.AlarmState}")));
 
         PressureLabel.SetMarkup(Loc.GetString("air-alarm-ui-window-pressure-indicator",
-                    ("color", ColorForThreshold(data.Pressure, data.PressureThreshold)),
+                    ("color", AirAlarmWindow.ColorForThreshold(data.Pressure, data.PressureThreshold)),
                     ("pressure", $"{data.Pressure:0.##}")));
         TemperatureLabel.SetMarkup(Loc.GetString("air-alarm-ui-window-temperature-indicator",
-                ("color", ColorForThreshold(data.Temperature, data.TemperatureThreshold)),
+                ("color", AirAlarmWindow.ColorForThreshold(data.Temperature, data.TemperatureThreshold)),
                 ("tempC", $"{TemperatureHelpers.KelvinToCelsius(data.Temperature):0.#}"),
                 ("temperature", $"{data.Temperature:0.##}")));
 
@@ -109,7 +108,7 @@ public sealed partial class SensorInfo : BoxContainer
 
             var fractionGas = amount / data.TotalMoles;
             label.SetMarkup(Loc.GetString("air-alarm-ui-gases-indicator", ("gas", $"{gas}"),
-                ("color", ColorForThreshold(fractionGas, data.GasThresholds[gas])),
+                ("color", AirAlarmWindow.ColorForThreshold(fractionGas, data.GasThresholds[gas])),
                 ("amount", $"{amount:0.####}"),
                 ("percentage", $"{(100 * fractionGas):0.##}")));
         }
@@ -125,26 +124,6 @@ public sealed partial class SensorInfo : BoxContainer
 
             control.UpdateThresholdData(threshold);
         }
-    }
-
-    private Color ColorForThreshold(float amount, AtmosAlarmThreshold threshold)
-    {
-        threshold.CheckThreshold(amount, out AtmosAlarmType curAlarm);
-        return ColorForThreshold(curAlarm);
-    }
-
-    private Color ColorForThreshold(AtmosAlarmType curAlarm)
-    {
-        if(curAlarm == AtmosAlarmType.Danger)
-        {
-            return StyleNano.DangerousRedFore;
-        }
-        else if(curAlarm == AtmosAlarmType.Warning)
-        {
-            return StyleNano.ConcerningOrangeFore;
-        }
-
-        return StyleNano.GoodGreenFore;
     }
 
  }
