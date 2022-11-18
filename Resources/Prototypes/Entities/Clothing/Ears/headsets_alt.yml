@@ -97,7 +97,7 @@
 - type: entity
   parent: ClothingHeadsetAlt
   id: ClothingHeadsetAltScience
-  name: research director over-ear headset
+  name: rd over-ear headset
   components:
   - type: ContainerFill
     containers:
@@ -112,7 +112,7 @@
   parent: ClothingHeadsetAlt
   id: ClothingHeadsetAltSyndicate
   name: syndicate over-ear headset
-  description: An updated, modular syndicate intercom that fits over the head and takes encryption keys (there are 4 of them). Should protects ears from flashbangs.
+  description: An updated, modular syndicate intercom that fits over the head and takes encryption keys (there are 4 of them). Should protect ears from flashbangs.
   components:
   - type: ContainerFill
     containers:
