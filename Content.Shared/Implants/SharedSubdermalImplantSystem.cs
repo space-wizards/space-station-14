@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Content.Shared.Actions;
+﻿using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Implants.Components;
 using Content.Shared.Tag;
@@ -90,11 +89,27 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
     }
 
     /// <summary>
+    /// Force remove a singular implant
+    /// </summary>
+    /// <param name="target">the implanted entity</param>
+    /// <param name="implant">the implant</param>
+    /// <param name="component">the implant component</param>
+    public void ForceRemove(EntityUid target, EntityUid implant)
+    {
+        if (!TryComp<ImplantedComponent>(target, out var implanted))
+            return;
+
+        var implantContainer = implanted.ImplantContainer;
+
+        implantContainer.Remove(implant);
+        QueueDel(implant);
+    }
+
+    /// <summary>
     /// Removes and deletes implants by force
     /// </summary>
     /// <param name="target">The entity to have implants removed</param>
-    /// <param name="component">The implant component</param>
-    public void ForceRemove(EntityUid target, SubdermalImplantComponent component)
+    public void WipeImplants(EntityUid target)
     {
         if (!TryComp<ImplantedComponent>(target, out var implanted))
             return;
