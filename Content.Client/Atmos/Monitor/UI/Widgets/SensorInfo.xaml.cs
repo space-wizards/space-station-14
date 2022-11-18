@@ -27,16 +27,24 @@ public sealed partial class SensorInfo : BoxContainer
 
         SensorAddress.Title = $"{address} : {data.AlarmState}";
 
-        PressureLabel.SetMarkup(Loc.GetString("air-alarm-ui-window-pressure", ("pressure", $"{data.Pressure:0.##}")));
-        TemperatureLabel.SetMarkup(Loc.GetString("air-alarm-ui-window-temperature", ("tempC", $"{TemperatureHelpers.KelvinToCelsius(data.Temperature):0.#}"), ("temperature", $"{data.Temperature:0.##}")));
+        PressureLabel.SetMarkup(Loc.GetString("air-alarm-ui-window-pressure-indicator",
+                    ("color", ColorForThreshold(data.Pressure, data.PressureThreshold).ToHex()),
+                    ("pressure", $"{data.Pressure:0.##}")));
+        TemperatureLabel.SetMarkup(Loc.GetString("air-alarm-ui-window-temperature-indicator",
+                ("color", ColorForThreshold(data.Temperature, data.TemperatureThreshold).ToHex()),
+                ("tempC", $"{TemperatureHelpers.KelvinToCelsius(data.Temperature):0.#}"),
+                ("temperature", $"{data.Temperature:0.##}")));
         AlarmStateLabel.SetMarkup(Loc.GetString("air-alarm-ui-window-alarm-state", ("state", $"{data.AlarmState}")));
 
         foreach (var (gas, amount) in data.Gases)
         {
             var label = new Label();
+
+            var fractionGas = amount / data.TotalMoles;
+            label.FontColorOverride = ColorForThreshold(fractionGas, data.GasThresholds[gas]);
             label.Text = Loc.GetString("air-alarm-ui-gases", ("gas", $"{gas}"),
                 ("amount", $"{amount:0.####}"),
-                ("percentage", $"{(100 * amount / data.TotalMoles):0.##}"));
+                ("percentage", $"{(100 * fractionGas):0.##}"));
             GasContainer.AddChild(label);
             _gasLabels.Add(gas, label);
         }
@@ -74,8 +82,15 @@ public sealed partial class SensorInfo : BoxContainer
     public void ChangeData(AtmosSensorData data)
     {
         SensorAddress.Title = $"{_address} : {data.AlarmState}";
-        PressureLabel.SetMarkup(Loc.GetString("air-alarm-ui-window-pressure", ("pressure", $"{data.Pressure:0.##}")));
-        TemperatureLabel.SetMarkup(Loc.GetString("air-alarm-ui-window-temperature", ("tempC", $"{TemperatureHelpers.KelvinToCelsius(data.Temperature):0.#}"), ("temperature", $"{data.Temperature:0.##}")));
+
+        PressureLabel.SetMarkup(Loc.GetString("air-alarm-ui-window-pressure-indicator",
+                    ("color", ColorForThreshold(data.Pressure, data.PressureThreshold)),
+                    ("pressure", $"{data.Pressure:0.##}")));
+        TemperatureLabel.SetMarkup(Loc.GetString("air-alarm-ui-window-temperature-indicator",
+                ("color", ColorForThreshold(data.Temperature, data.TemperatureThreshold)),
+                ("tempC", $"{TemperatureHelpers.KelvinToCelsius(data.Temperature):0.#}"),
+                ("temperature", $"{data.Temperature:0.##}")));
+
         AlarmStateLabel.SetMarkup(Loc.GetString("air-alarm-ui-window-alarm-state", ("state", $"{data.AlarmState}")));
 
         foreach (var (gas, amount) in data.Gases)
@@ -85,9 +100,11 @@ public sealed partial class SensorInfo : BoxContainer
                 continue;
             }
 
+            var fractionGas = amount / data.TotalMoles;
             label.Text = Loc.GetString("air-alarm-ui-gases", ("gas", $"{gas}"),
                 ("amount", $"{amount:0.####}"),
-                ("percentage", $"{(100 * amount / data.TotalMoles):0.##}"));
+                ("percentage", $"{(100 * fractionGas):0.##}"));
+            label.FontColorOverride = ColorForThreshold(fractionGas, data.GasThresholds[gas]);
         }
 
         _pressureThreshold.UpdateThresholdData(data.PressureThreshold);
@@ -102,4 +119,20 @@ public sealed partial class SensorInfo : BoxContainer
             control.UpdateThresholdData(threshold);
         }
     }
-}
+
+    private Color ColorForThreshold(float amount, AtmosAlarmThreshold threshold)
+    {
+        threshold.CheckThreshold(amount, out AtmosAlarmType curAlarm);
+        if(curAlarm == AtmosAlarmType.Danger)
+        {
+            return new Color(1f, 0, 0);
+        }
+        else if(curAlarm == AtmosAlarmType.Warning)
+        {
+            return new Color(1f, 1f, 0);
+        }
+
+        return new Color(1f, 1f, 1f);
+    }
+
+ }

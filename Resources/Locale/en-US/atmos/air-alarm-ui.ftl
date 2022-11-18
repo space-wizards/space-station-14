@@ -15,7 +15,9 @@ air-alarm-ui-window-resync-devices-label = Resync
 air-alarm-ui-window-mode-label = Mode
 
 air-alarm-ui-window-pressure = {$pressure} kPa
+air-alarm-ui-window-pressure-indicator = [color={$color}]{$pressure} kPa[/color]
 air-alarm-ui-window-temperature = {$tempC} C ({$temperature} K)
+air-alarm-ui-window-temperature-indicator = [color={$color}]{$tempC} C ({$temperature} K)[/color]
 air-alarm-ui-window-alarm-state = {$state}
 
 air-alarm-ui-window-tab-vents = Vents
