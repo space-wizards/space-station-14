@@ -23,7 +23,7 @@ public sealed partial class ThresholdControl : BoxContainer
     public event Action<AtmosMonitorThresholdType, AtmosAlarmThreshold, Gas?>? ThresholdDataChanged;
 
     private CollapsibleHeading _name => CName;
-    private CheckBox _ignore => CIgnore;
+    private CheckBox _enabled => CEnabled;
     private BoxContainer _dangerBounds => CDangerBounds;
     private BoxContainer _warningBounds => CWarningBounds;
     private ThresholdBoundControl _upperBoundControl;
@@ -135,12 +135,12 @@ public sealed partial class ThresholdControl : BoxContainer
 
         _warningBounds.AddChild(_lowerWarningBoundControl);
 
-        _ignore.OnToggled += args =>
+        _enabled.OnToggled += args =>
         {
-            _threshold.Ignore = args.Pressed;
+            _threshold.Ignore = !args.Pressed;
             ThresholdDataChanged!.Invoke(_type, _threshold, _gas);
         };
-        _ignore.Pressed = _threshold.Ignore;
+        _enabled.Pressed = !_threshold.Ignore;
     }
 
     public void UpdateThresholdData(AtmosAlarmThreshold threshold)
@@ -149,7 +149,7 @@ public sealed partial class ThresholdControl : BoxContainer
         _lowerBoundControl.SetValue(threshold.LowerBound);
         _upperWarningBoundControl.SetValue(threshold.UpperWarningBound);
         _lowerWarningBoundControl.SetValue(threshold.LowerWarningBound);
-        _ignore.Pressed = threshold.Ignore;
+        _enabled.Pressed = !threshold.Ignore;
     }
 
 
