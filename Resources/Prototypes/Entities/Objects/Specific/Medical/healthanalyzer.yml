@@ -55,7 +55,7 @@
   parent: HandheldHealthAnalyzer
   id: HandheldHealthAnalyzerSpaceCold
   name: Space Cold Infector
-  suffix: Active
+  suffix: Space Cold
   components:
   - type: HealthAnalyzer
     fake: true
@@ -65,7 +65,7 @@
   parent: HandheldHealthAnalyzer
   id: HandheldHealthAnalyzerVentCough
   name: Vent Cough Infector
-  suffix: Active
+  suffix: Vent Cough
   components:
   - type: HealthAnalyzer
     fake: true
@@ -75,7 +75,7 @@
   parent: HandheldHealthAnalyzer
   id: HandheldHealthAnalyzerSpaceFlu
   name: Space Flu Infector
-  suffix: Active
+  suffix: Space Flu
   components:
   - type: HealthAnalyzer
     fake: true
@@ -85,7 +85,7 @@
   parent: HandheldHealthAnalyzer
   id: HandheldHealthAnalyzerBirdFlew
   name: Bird Flew Infector
-  suffix: Active
+  suffix: Bird Flew
   components:
   - type: HealthAnalyzer
     fake: true
@@ -94,8 +94,8 @@
 - type: entity
   parent: HandheldHealthAnalyzer
   id: HandheldHealthAnalyzerVanAusdallsRobovirus
-  name: Van Ausdalls Robovirus Infector
-  suffix: Active
+  name: Robovirus Infector
+  suffix: Van Ausdalls Robovirus
   components:
   - type: HealthAnalyzer
     fake: true
@@ -105,7 +105,7 @@
   parent: HandheldHealthAnalyzer
   id: HandheldHealthAnalyzerAMIV
   name: AMIV Infector
-  suffix: Active
+  suffix: AMIV
   components:
   - type: HealthAnalyzer
     fake: true
@@ -115,7 +115,7 @@
   parent: HandheldHealthAnalyzer
   id: HandheldHealthAnalyzerMemeticAmirmir
   name: Memetic Amirmir Infector
-  suffix: Active
+  suffix: Memetic Amirmir
   components:
   - type: HealthAnalyzer
     fake: true
@@ -125,7 +125,7 @@
   parent: HandheldHealthAnalyzer
   id: HandheldHealthAnalyzerBleedersBite
   name: Bleeders Bite Infector
-  suffix: Active
+  suffix: Bleeders Bite
   components:
   - type: HealthAnalyzer
     fake: true
@@ -135,7 +135,7 @@
   parent: HandheldHealthAnalyzer
   id: HandheldHealthAnalyzerPlague
   name: Plague Infector
-  suffix: Active
+  suffix: Plague
   components:
   - type: HealthAnalyzer
     fake: true
@@ -145,7 +145,7 @@
   parent: HandheldHealthAnalyzer
   id: HandheldHealthAnalyzerTongueTwister
   name: Tongue Twister Infector
-  suffix: Active
+  suffix: Tongue Twister
   components:
   - type: HealthAnalyzer
     fake: true
