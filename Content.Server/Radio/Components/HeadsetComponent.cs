@@ -13,22 +13,19 @@ namespace Content.Server.Radio.Components;
 [Access(typeof(HeadsetSystem))]
 public sealed class HeadsetComponent : Component
 {
-    //[DataField("channels", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<RadioChannelPrototype>))]
     [ViewVariables]
     public HashSet<string> Channels = new()
     {
         "Common"
     }; //Fills only by encryption chips in it
 
-    //[DataField("keysPrototypes", required: true, customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
-    //public List<string> KeysPrototypes = new();
-    // [ViewVariables]
-    // public List<EntityUid> KeysInstalled = new List<EntityUid>();
     [ViewVariables]
     public int KeysInstalledAmount = 0;
+
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("keySlotsAmount")]
     public int KeySlotsAmount = 2;
+ 
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("isKeysExtractable")]
     public bool IsKeysExtractable = true;
@@ -36,6 +33,7 @@ public sealed class HeadsetComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("keyExtractionSound")]
     public SoundSpecifier KeyExtractionSound = new SoundPathSpecifier("/Audio/Items/pistol_magout.ogg");
+
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("keyInsertionSound")]
     public SoundSpecifier KeyInsertionSound = new SoundPathSpecifier("/Audio/Items/pistol_magin.ogg");

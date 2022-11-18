@@ -43,7 +43,7 @@ public sealed class HeadsetSystem : EntitySystem
 
     private void OnSpeak(EntityUid uid, WearingHeadsetComponent component, EntitySpokeEvent args)
     {
-        if (args.Channel != null
+        if(args.Channel != null
             && TryComp(component.Headset, out HeadsetComponent? headset)
             && headset.Channels.Contains(args.Channel.ID))
         {
@@ -56,7 +56,7 @@ public sealed class HeadsetSystem : EntitySystem
     {
         component.IsEquipped = args.SlotFlags.HasFlag(component.RequiredSlot);
 
-        if (component.IsEquipped && component.Enabled)
+        if(component.IsEquipped && component.Enabled)
         {
             EnsureComp<WearingHeadsetComponent>(args.Equipee).Headset = uid;
             EnsureComp<ActiveRadioComponent>(uid);
@@ -78,20 +78,20 @@ public sealed class HeadsetSystem : EntitySystem
 
     public void SetEnabled(EntityUid uid, bool value, HeadsetComponent? component = null)
     {
-        if (!Resolve(uid, ref component))
+        if(!Resolve(uid, ref component))
             return;
 
-        if (component.Enabled == value)
+        if(component.Enabled == value)
             return;
 
-        if (!value)
+        if(!value)
         {
             RemCompDeferred<ActiveRadioComponent>(uid);
 
             if (component.IsEquipped)
                 RemCompDeferred<WearingHeadsetComponent>(Transform(uid).ParentUid);
         }
-        else if (component.IsEquipped)
+        else if(component.IsEquipped)
         {
             EnsureComp<WearingHeadsetComponent>(Transform(uid).ParentUid).Headset = uid;
             EnsureComp<ActiveRadioComponent>(uid).Channels.UnionWith(component.Channels);
@@ -100,7 +100,7 @@ public sealed class HeadsetSystem : EntitySystem
 
     private void OnHeadsetReceive(EntityUid uid, HeadsetComponent component, RadioReceiveEvent args)
     {
-        if (TryComp(Transform(uid).ParentUid, out ActorComponent? actor))
+        if(TryComp(Transform(uid).ParentUid, out ActorComponent? actor))
             _netMan.ServerSendMessage(args.ChatMsg, actor.PlayerSession.ConnectedClient);
     }
 
@@ -112,7 +112,6 @@ public sealed class HeadsetSystem : EntitySystem
         {
             args.PushMarkup(Loc.GetString("examine-headset-no-keys"));
         }
-        // args.PushMarkup(Loc.GetString("examine-radio-frequency", ("frequency", component.BroadcastFrequency)));
         if(component.Channels.Count > 0)
         {
             args.PushMarkup(Loc.GetString("examine-headset"));
@@ -131,11 +130,11 @@ public sealed class HeadsetSystem : EntitySystem
         }
     }
 
-
     private void OnStartup(EntityUid uid, HeadsetComponent component, ComponentStartup args)
     {
         component.KeyContainer = _container.EnsureContainer<Container>(uid, HeadsetComponent.KeyContainerName);
     }
+
     private bool InstallKey(HeadsetComponent src, EntityUid key)
     {
         if(src.KeyContainer.Insert(key))
@@ -143,9 +142,9 @@ public sealed class HeadsetSystem : EntitySystem
             ++src.KeysInstalledAmount;
             return true;
         }
-        // RecalculateChannels(src); //handled by event
         return false;
     }
+
     private void RecalculateChannels(HeadsetComponent src)
     {
         src.Channels.Clear();
@@ -159,18 +158,18 @@ public sealed class HeadsetSystem : EntitySystem
             }
         return;
     }
+
     private void OnInteractUsing(EntityUid uid, HeadsetComponent component, InteractUsingEvent args)
     {
         if(!component.IsKeysExtractable || !TryComp<ContainerManagerComponent>(uid, out var Storage))
         {
             return;
         }
-       if(TryComp<EncryptionKeyComponent?>(args.Used, out var key))
+        if(TryComp<EncryptionKeyComponent?>(args.Used, out var key))
         {
             if(component.KeySlotsAmount > component.KeysInstalledAmount)
                 if(_container.TryRemoveFromContainer(args.Used) && InstallKey(component, args.Used))
                 {
-                    // RecalculateChannels(component);
                     _popupSystem.PopupEntity(Loc.GetString("headset-encryption-key-successfully-installed"), uid, Filter.Entities(args.User));
                     SoundSystem.Play(component.KeyInsertionSound.GetSound(), Filter.Pvs(args.Target), args.Target);
                 }
@@ -196,7 +195,6 @@ public sealed class HeadsetSystem : EntitySystem
                         if(TryComp<EncryptionKeyComponent>(i, out var _))
                             component.KeyContainer.Remove(i);
                     component.KeysInstalledAmount = 0;
-                    // RecalculateChannels(component);
                     _popupSystem.PopupEntity(Loc.GetString("headset-encryption-keys-all-extrated"), uid, Filter.Entities(args.User));
                     SoundSystem.Play(component.KeyExtractionSound.GetSound(), Filter.Pvs(args.Target), args.Target);
                 }
@@ -208,6 +206,7 @@ public sealed class HeadsetSystem : EntitySystem
             }
         }
     }
+
     private void OnContainerModified(EntityUid uid, HeadsetComponent component, ContainerModifiedMessage args)
     {
         RecalculateChannels(component);

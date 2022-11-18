@@ -18,14 +18,11 @@ public sealed class EncryptionKeySystem : EntitySystem
     {
         if (!args.IsInDetailsRange)
             return;
-        // args.PushMarkup(Loc.GetString("examine-radio-frequency", ("frequency", component.BroadcastFrequency)));
         if(component.Channels.Count > 0)
         {
             args.PushMarkup(Loc.GetString("examine-encryption-key"));
             foreach (var id in component.Channels)
             {
-                // if (id == "Common")
-                //     continue;
                 var proto = _protoManager.Index<RadioChannelPrototype>(id);
                 args.PushMarkup(Loc.GetString("examine-encryption-key-channel",
                     ("color", proto.Color),
