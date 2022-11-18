@@ -12,4 +12,4 @@ ban-list-hwid = HWID: {$hwid}
 ban-list-guid = GUID: {$guid}
 ban-list-permanent = ВЕЧНЫЙ
 ban-list-unbanned = Разбан: {$date}
-ban-list-unbanned-by = {$unbanner}
+ban-list-unbanned-by = Разбанил {$unbanner}
