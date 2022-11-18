@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Content.Server.Cuffs.Components;
+﻿using Content.Server.Cuffs.Components;
 using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
 using Content.Shared.MobState;
@@ -37,7 +36,7 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
     //Relays from the implanted to the implant
     private void RelayToImplantEvent<T>(EntityUid uid, ImplantedComponent component, T args) where T : EntityEventArgs
     {
-        if (!_container.TryGetContainer(uid, ImplantSlotId, out var implantContainer))
+        if (!_container.TryGetContainer(uid, ImplanterComponent.ImplantSlotId, out var implantContainer))
             return;
 
         foreach (var implant in implantContainer.ContainedEntities)
