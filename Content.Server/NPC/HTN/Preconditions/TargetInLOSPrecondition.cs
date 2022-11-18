@@ -4,6 +4,7 @@ namespace Content.Server.NPC.HTN.Preconditions;
 
 public sealed class TargetInLOSPrecondition : HTNPrecondition
 {
+    [Dependency] private readonly IEntityManager _entManager = default!;
     private InteractionSystem _interaction = default!;
 
     [DataField("targetKey")]
@@ -22,10 +23,10 @@ public sealed class TargetInLOSPrecondition : HTNPrecondition
     {
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
 
-        if (!blackboard.TryGetValue<EntityUid>(TargetKey, out var target))
+        if (!blackboard.TryGetValue<EntityUid>(TargetKey, out var target, _entManager))
             return false;
 
-        var range = blackboard.GetValueOrDefault<float>(RangeKey);
+        var range = blackboard.GetValueOrDefault<float>(RangeKey, _entManager);
 
         return _interaction.InRangeUnobstructed(owner, target, range);
     }
