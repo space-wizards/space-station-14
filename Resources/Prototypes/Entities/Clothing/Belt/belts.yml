@@ -24,6 +24,7 @@
         - CableCoil
         - CigPack
         - Radio
+        - HolofanProjector
       components:
         - AirlockPainter
         - SignalLinker
@@ -87,6 +88,7 @@
         - JawsOfLife
         - CigPack
         - Radio
+        - HolofanProjector
       components:
         - AirlockPainter
         - SignalLinker
@@ -232,6 +234,8 @@
         - Pill
         - PillCanister
         - Radio
+        - WetFloorSign
+        - HolosignProjector
       components:
         - Hypospray
         - Injector
