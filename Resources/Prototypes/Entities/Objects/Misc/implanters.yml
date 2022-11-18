@@ -8,18 +8,17 @@
   abstract: true
   components:
     - type: ItemSlots
-      slots:
-        implanter_slot:
-          startingItem: SadTromboneImplant
-          priority: 0
-          whitelist:
-            tags:
-              - SubdermalImplant
     - type: ContainerContainer
       containers:
         implanter_slot: !type:ContainerSlot { }
     - type: Implanter
       currentMode: Draw
+      implantSlot:
+        name: Implant
+        priority: 0
+        whitelist:
+          tags:
+            - SubdermalImplant
     - type: Sprite
       sprite: Objects/Specific/Chemistry/syringe.rsi
       netsync: false
@@ -83,14 +82,8 @@
   description: a single use implanter, the implant plays a sad tune on death
   parent: BaseImplantOnlyImplanter
   components:
-    - type: ItemSlots
-      slots:
-        implanter_slot:
-          startingItem: SadTromboneImplant
-          priority: 0
-          whitelist:
-            tags:
-              - SubdermalImplant
+    - type: Implanter
+      implant: SadTromboneImplant
 
 - type: entity
   id: LightImplanter
@@ -98,14 +91,8 @@
   description: a single use implanter, the implant emits light on activation
   parent: BaseImplantOnlyImplanter
   components:
-    - type: ItemSlots
-      slots:
-        implanter_slot:
-          startingItem: LightImplant
-          priority: 0
-          whitelist:
-            tags:
-              - SubdermalImplant
+    - type: Implanter
+      implant: LightImplant
 
 #Security implanters
 
@@ -115,14 +102,8 @@
   description: a single use implanter, the implant tracks
   parent: BaseImplantOnlyImplanter
   components:
-    - type: ItemSlots
-      slots:
-        implanter_slot:
-          startingItem: TrackingImplant
-          priority: 0
-          whitelist:
-            tags:
-              - SubdermalImplant
+    - type: Implanter
+      implant: TrackingImplant
 
 #Traitor implanters
 
@@ -132,14 +113,8 @@
   description: a single use implanter, the implant grants hidden storage
   parent: BaseImplantOnlyImplanter
   components:
-    - type: ItemSlots
-      slots:
-        implanter_slot:
-          startingItem: StorageImplant
-          priority: 0
-          whitelist:
-            tags:
-              - SubdermalImplant
+    - type: Implanter
+      implant: StorageImplant
 
 - type: entity
   id: FreedomImplanter
@@ -147,14 +122,8 @@
   description: a single use implanter, the implant lets the user break out of hand restraints three times
   parent: BaseImplantOnlyImplanter
   components:
-    - type: ItemSlots
-      slots:
-        implanter_slot:
-          startingItem: FreedomImplant
-          priority: 0
-          whitelist:
-            tags:
-              - SubdermalImplant
+    - type: Implanter
+      implant: FreedomImplant
 
 #Nuclear Operative/Special implanters
 
@@ -164,14 +133,8 @@
   description: a single use implanter, the implant is permanent and blows the user up on death
   parent: BaseImplantOnlyImplanter
   components:
-    - type: ItemSlots
-      slots:
-        implanter_slot:
-          startingItem: MicroBombImplant
-          priority: 0
-          whitelist:
-            tags:
-              - SubdermalImplant
+    - type: Implanter
+      implant: MicroBombImplant
 
 - type: entity
   id: MacroBombImplanter
@@ -179,11 +142,5 @@
   description: a single use implanter, the implant creates a large explosion on death after the alloted time
   parent: BaseImplantOnlyImplanter
   components:
-    - type: ItemSlots
-      slots:
-        implanter_slot:
-          startingItem: MacroBombImplant
-          priority: 0
-          whitelist:
-            tags:
-              - SubdermalImplant
+    - type: Implanter
+      implant: MacroBombImplant

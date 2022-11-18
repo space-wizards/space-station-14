@@ -1,7 +1,9 @@
 ﻿using System.Threading;
 using Content.Shared.Containers.ItemSlots;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Implants.Components;
 /// <summary>
@@ -13,6 +15,14 @@ namespace Content.Shared.Implants.Components;
 public sealed class ImplanterComponent : Component
 {
     public const string ImplanterSlotId = "implanter_slot";
+    public const string ImplantSlotId = "implant";
+
+    /// <summary>
+    /// Used for implanters that start with specific implants
+    /// </summary>
+    [ViewVariables]
+    [DataField("implant", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string? Implant;
 
     /// <summary>
     /// The time it takes to implant someone else

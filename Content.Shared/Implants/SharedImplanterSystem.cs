@@ -15,9 +15,6 @@ public abstract class SharedImplanterSystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
 
-    public const string ImplanterSlotId = "implanter_slot";
-    public const string ImplantSlotId = "implant";
-
     public override void Initialize()
     {
         base.Initialize();
@@ -29,10 +26,10 @@ public abstract class SharedImplanterSystem : EntitySystem
 
     private void OnImplanterInit(EntityUid uid, ImplanterComponent component, ComponentInit args)
     {
-        if (!_itemSlots.TryGetSlot(uid, ImplanterSlotId, out var implanterSlot))
-            return;
+        if (component.Implant != null)
+            component.ImplanterSlot.StartingItem = component.Implant;
 
-        component.ImplanterSlot = implanterSlot;
+        _itemSlots.AddItemSlot(uid, ImplanterComponent.ImplanterSlotId, component.ImplanterSlot);
     }
 
     private void OnEntInserted(EntityUid uid, ImplanterComponent component, EntInsertedIntoContainerMessage args)
@@ -84,7 +81,7 @@ public abstract class SharedImplanterSystem : EntitySystem
 
         var permanentFound = false;
 
-        if (_container.TryGetContainer(target, ImplantSlotId, out var implantContainer))
+        if (_container.TryGetContainer(target, ImplanterComponent.ImplantSlotId, out var implantContainer))
         {
             var implantCompQuery = GetEntityQuery<SubdermalImplantComponent>();
 

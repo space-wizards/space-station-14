@@ -13,7 +13,7 @@ public sealed partial class ImplanterSystem
 
     private void OnImplantedInit(EntityUid uid, ImplantedComponent component, ComponentInit args)
     {
-        component.ImplantContainer = _container.EnsureContainer<Container>(uid, ImplantSlotId);
+        component.ImplantContainer = _container.EnsureContainer<Container>(uid, ImplanterComponent.ImplantSlotId);
         component.ImplantContainer.OccludesLight = false;
     }
 
