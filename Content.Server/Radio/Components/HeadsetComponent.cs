@@ -2,8 +2,6 @@ using Content.Server.Radio.EntitySystems;
 using Content.Shared.Inventory;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Server.Radio.Components;
 /// <summary>
