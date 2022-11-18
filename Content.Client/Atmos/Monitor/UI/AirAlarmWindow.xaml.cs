@@ -24,8 +24,8 @@ public sealed partial class AirAlarmWindow : FancyWindow
     public event Action? ResyncAllRequested;
     public event Action<AirAlarmTab>? AirAlarmTabChange;
 
-    private Label _address => CDeviceAddress;
-    private Label _deviceTotal => CDeviceTotal;
+    private RichTextLabel _address => CDeviceAddress;
+    private RichTextLabel _deviceTotal => CDeviceTotal;
     private RichTextLabel _pressure => CPressureLabel;
     private RichTextLabel _temperature => CTemperatureLabel;
     private RichTextLabel _alarmState => CStatusLabel;
@@ -93,8 +93,8 @@ public sealed partial class AirAlarmWindow : FancyWindow
 
     public void UpdateState(AirAlarmUIState state)
     {
-        _address.Text = state.Address;
-        _deviceTotal.Text = $"{state.DeviceCount}";
+        _address.SetMarkup(state.Address);
+        _deviceTotal.SetMarkup($"{state.DeviceCount}");
         _pressure.SetMarkup(Loc.GetString("air-alarm-ui-window-pressure", ("pressure", $"{state.PressureAverage:0.##}")));
         _temperature.SetMarkup(Loc.GetString("air-alarm-ui-window-temperature", ("tempC", $"{TemperatureHelpers.KelvinToCelsius(state.TemperatureAverage):0.#}"), ("temperature", $"{state.TemperatureAverage:0.##}")));
         _alarmState.SetMarkup(Loc.GetString("air-alarm-ui-window-alarm-state",
