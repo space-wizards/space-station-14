@@ -121,9 +121,9 @@ namespace Content.MapRenderer.Painters
                 // for some reason decal moment i guess.
                 if (_sEntityManager.TryGetComponent<DecalGridComponent>(grid.GridEntityId, out var comp))
                 {
-                    foreach (var (_, list) in comp.ChunkCollection.ChunkCollection)
+                    foreach (var chunk in comp.ChunkCollection.ChunkCollection.Values)
                     {
-                        foreach (var (_, decal) in list)
+                        foreach (var decal in chunk.Decals.Values)
                         {
                             var (x, y) = TransformLocalPosition(decal.Coordinates, grid);
                             decals.GetOrNew(grid.GridEntityId).Add(new DecalData(decal, x, y));

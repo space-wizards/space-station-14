@@ -20,6 +20,8 @@ namespace Content.Shared.Decals
         {
             [DataField("decals")]
             public Dictionary<uint, Decal> Decals;
+
+            [NonSerialized]
             public GameTick LastModified;
 
             public DecalChunk()
