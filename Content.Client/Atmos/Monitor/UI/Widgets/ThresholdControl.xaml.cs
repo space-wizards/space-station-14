@@ -46,22 +46,22 @@ public sealed partial class ThresholdControl : BoxContainer
 
         // i miss rust macros
 
-        _upperBoundControl = new ThresholdBoundControl(LabelForBound("upper-bound"), _threshold.UpperBound, modifier);
+        _upperBoundControl = new ThresholdBoundControl(LabelForBound("upper-bound"), _threshold.UpperBound.Value, modifier);
         _upperBoundControl.OnBoundChanged += value =>
         {
             // a lot of threshold logic is baked into the properties,
             // so setting this just returns if a change occurred or not
             _threshold.TrySetPrimaryBound(AtmosMonitorThresholdBound.Upper, value);
-            return _threshold.UpperBound;
+            return _threshold.UpperBound.Value;
         };
         _upperBoundControl.OnBoundEnabled += () =>
         {
             var value = 0f;
 
-            if (_threshold.LowerWarningBound != null)
-                value = (float) _threshold.LowerWarningBound + 0.1f;
-            else if (_threshold.LowerBound != null)
-                value = (float) _threshold.LowerBound + 0.1f;
+            if (_threshold.LowerWarningBound.Enabled)
+                value = (float) _threshold.LowerWarningBound.Value + 0.1f;
+            else if (_threshold.LowerBound.Enabled)
+                value = (float) _threshold.LowerBound.Value + 0.1f;
 
             return value;
         };
@@ -71,20 +71,20 @@ public sealed partial class ThresholdControl : BoxContainer
         };
         _dangerBounds.AddChild(_upperBoundControl);
 
-        _lowerBoundControl = new ThresholdBoundControl(LabelForBound("lower-bound"), _threshold.LowerBound, modifier);
+        _lowerBoundControl = new ThresholdBoundControl(LabelForBound("lower-bound"), _threshold.LowerBound.Value, modifier);
         _lowerBoundControl.OnBoundChanged += value =>
         {
             _threshold.TrySetPrimaryBound(AtmosMonitorThresholdBound.Lower, value);
-            return _threshold.LowerBound;
+            return _threshold.LowerBound.Value;
         };
         _lowerBoundControl.OnBoundEnabled += () =>
         {
             var value = 0f;
 
-            if (_threshold.UpperWarningBound != null)
-                value = (float) _threshold.UpperWarningBound - 0.1f;
-            else if (_threshold.UpperBound != null)
-                value = (float) _threshold.UpperBound - 0.1f;
+            if (_threshold.UpperWarningBound.Enabled)
+                value = (float) _threshold.UpperWarningBound.Value - 0.1f;
+            else if (_threshold.UpperBound.Enabled)
+                value = (float) _threshold.UpperBound.Value - 0.1f;
 
             return value;
         };
@@ -92,20 +92,20 @@ public sealed partial class ThresholdControl : BoxContainer
             ThresholdDataChanged!.Invoke(_type, _threshold, _gas);
         _dangerBounds.AddChild(_lowerBoundControl);
 
-        _upperWarningBoundControl = new ThresholdBoundControl(LabelForBound("upper-warning-bound"), _threshold.UpperWarningBound, modifier);
+        _upperWarningBoundControl = new ThresholdBoundControl(LabelForBound("upper-warning-bound"), _threshold.UpperWarningBound.Value, modifier);
         _upperWarningBoundControl.OnBoundChanged += value =>
         {
             _threshold.TrySetWarningBound(AtmosMonitorThresholdBound.Upper, value);
-            return _threshold.UpperWarningBound;
+            return _threshold.UpperWarningBound.Value;
         };
         _upperWarningBoundControl.OnBoundEnabled += () =>
         {
             var value = 0f;
 
-            if (_threshold.LowerWarningBound != null)
-                value = (float) _threshold.LowerWarningBound + 0.1f;
-            else if (_threshold.LowerBound != null)
-                value = (float) _threshold.LowerBound + 0.1f;
+            if (_threshold.LowerWarningBound.Enabled)
+                value = (float) _threshold.LowerWarningBound.Value + 0.1f;
+            else if (_threshold.LowerBound.Enabled)
+                value = (float) _threshold.LowerBound.Value + 0.1f;
 
             return value;
         };
@@ -113,20 +113,20 @@ public sealed partial class ThresholdControl : BoxContainer
             ThresholdDataChanged!.Invoke(_type, _threshold, _gas);
         _warningBounds.AddChild(_upperWarningBoundControl);
 
-        _lowerWarningBoundControl = new ThresholdBoundControl(LabelForBound("lower-warning-bound"), _threshold.LowerWarningBound, modifier);
+        _lowerWarningBoundControl = new ThresholdBoundControl(LabelForBound("lower-warning-bound"), _threshold.LowerWarningBound.Value, modifier);
         _lowerWarningBoundControl.OnBoundChanged += value =>
         {
             _threshold.TrySetWarningBound(AtmosMonitorThresholdBound.Lower, value);
-            return _threshold.LowerWarningBound;
+            return _threshold.LowerWarningBound.Value;
         };
         _lowerWarningBoundControl.OnBoundEnabled += () =>
         {
             var value = 0f;
 
-            if (_threshold.UpperWarningBound != null)
-                value = (float) _threshold.UpperWarningBound - 0.1f;
-            else if (_threshold.UpperBound != null)
-                value = (float) _threshold.UpperBound - 0.1f;
+            if (_threshold.UpperWarningBound.Enabled)
+                value = (float) _threshold.UpperWarningBound.Value - 0.1f;
+            else if (_threshold.UpperBound.Enabled)
+                value = (float) _threshold.UpperBound.Value - 0.1f;
 
             return value;
         };
@@ -145,10 +145,10 @@ public sealed partial class ThresholdControl : BoxContainer
 
     public void UpdateThresholdData(AtmosAlarmThreshold threshold)
     {
-        _upperBoundControl.SetValue(threshold.UpperBound);
-        _lowerBoundControl.SetValue(threshold.LowerBound);
-        _upperWarningBoundControl.SetValue(threshold.UpperWarningBound);
-        _lowerWarningBoundControl.SetValue(threshold.LowerWarningBound);
+        _upperBoundControl.SetValue(threshold.UpperBound.Value);
+        _lowerBoundControl.SetValue(threshold.LowerBound.Value);
+        _upperWarningBoundControl.SetValue(threshold.UpperWarningBound.Value);
+        _lowerWarningBoundControl.SetValue(threshold.LowerWarningBound.Value);
         _enabled.Pressed = !threshold.Ignore;
     }
 
