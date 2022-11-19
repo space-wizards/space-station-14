@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: 'Added the classic "space station 14" sign, coming to a station near
-      you.', type: Add}
-  id: 2177
-  time: '2022-08-21T11:44:38.0000000+00:00'
 - author: martin69420
   changes:
   - {message: Fixed playtime requirement tooltips not showing on roles with no open
@@ -2954,3 +2948,9 @@ Entries:
   - {message: The 'toggle ghosts' button while a ghost is now an action., type: Tweak}
   id: 2676
   time: '2022-11-18T22:30:54.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: Fixes an issue where teleporting would happen if someone raised a riot
+      shield, type: Fix}
+  id: 2677
+  time: '2022-11-19T03:51:55.0000000+00:00'
