@@ -885,7 +885,7 @@
 - type: entity
   suffix: "Ghost Role"
   parent: MobMouse1
-  id: MobMouse1GhostRole
+  id: MobMouseGhostRole1
   components:
   - type: GhostTakeoverAvailable
     makeSentient: true
@@ -925,7 +925,7 @@
 - type: entity
   suffix: "Ghost Role"
   parent: MobMouse2
-  id: MobMouse2GhostRole
+  id: MobMouseGhostRole2
   components:
   - type: GhostTakeoverAvailable
     makeSentient: true
