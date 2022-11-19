@@ -1,17 +1,4 @@
 Entries:
-- author: Flareguy
-  changes:
-  - {message: 'Touched up and re-shaded the Medical, Cargo, and Scientist jumpsuit
-      sprites.', type: Tweak}
-  - {message: Touched up and re-shaded all three labcoats., type: Tweak}
-  - {message: Medical backpacks and satchels now correctly use a blue cross instead
-      of a green one., type: Tweak}
-  - {message: Recolored the Cargo cap to reflect the new colors the jumpsuit has.,
-    type: Tweak}
-  - {message: Gave the Quartermaster a unique recolored cap that reflects his new
-      jumpsuit colors., type: Add}
-  id: 2180
-  time: '2022-08-23T02:28:11.0000000+00:00'
 - author: TekuNut
   changes:
   - {message: Xenos can no longer pry doors open from afar., type: Fix}
@@ -2951,3 +2938,11 @@ Entries:
   - {message: Nukie planet has been fixed., type: Fix}
   id: 2679
   time: '2022-11-19T05:24:31.0000000+00:00'
+- author: Mervill
+  changes:
+  - {message: Paper and some misc other objects are now recyclable, type: Add}
+  - {message: Recycler counts the number of recycled items, type: Add}
+  - {message: Two way levels can be switched in a specific direction with the right-click
+      menu, type: Add}
+  id: 2680
+  time: '2022-11-19T16:05:44.0000000+00:00'
