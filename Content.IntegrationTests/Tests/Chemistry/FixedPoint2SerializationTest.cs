@@ -18,7 +18,7 @@ namespace Content.IntegrationTests.Tests.Chemistry
         [Test]
         public void DeserializeNullTest()
         {
-            var node = new ValueDataNode("null");
+            var node = ValueDataNode.Null();
             var unit = Serialization.Read<FixedPoint2?>(node);
 
             Assert.That(unit, Is.Null);
