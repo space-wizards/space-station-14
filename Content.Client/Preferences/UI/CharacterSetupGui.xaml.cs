@@ -3,6 +3,7 @@ using Content.Client.Humanoid;
 using Content.Client.Info;
 using Content.Client.Lobby.UI;
 using Content.Client.Resources;
+using Content.Client.Stylesheets;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Preferences;
@@ -214,6 +215,7 @@ namespace Content.Client.Preferences.UI
                     Text = Loc.GetString("character-setup-gui-character-picker-button-confirm-delete-button"),
                     Visible = false,
                 };
+                confirmDeleteButton.ModulateSelfOverride = StyleNano.ButtonColorCautionDefault;
                 confirmDeleteButton.OnPressed += _ =>
                 {
                     Parent?.RemoveChild(this);
