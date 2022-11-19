@@ -18,17 +18,9 @@ public sealed class WoundableComponent : Component
     [DataField("traumaPenResistance")] public TraumaModifierSet? TraumaPenResistance;
 
     //How much health does this woundable have, when this reaches 0, it starts taking structural damage
-    [DataField("maxHealth", required: true)]
-    public FixedPoint2 MaxHealth;
-
-    //How much health does this woundable have, when this reaches 0, it starts taking structural damage
     [DataField("health", required: true)] public FixedPoint2 Health;
 
     //How well is this woundable holding up, when this reaches 0 the entity is destroyed/gibbed!
-    [Access(typeof(WoundSystem))] [DataField("maxStructure", required: true)]
-    public FixedPoint2 MaxStructure;
-
-    //How well is this woundable holding up, when this reaches 0 the entity is destroyed/gibbed!
-    [Access(typeof(WoundSystem))] [DataField("structure", required: true)]
-    public FixedPoint2 StructuralPool;
+    [Access(typeof(WoundSystem))] [DataField("integrity", required: true)]
+    public FixedPoint2 Integrity;
 }
