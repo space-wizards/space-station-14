@@ -144,13 +144,18 @@ public sealed class WoundSystem : EntitySystem
         if (!Resolve(woundableId, ref woundable, false))
             return;
 
-        if (woundable.DestroyWoundId != null &&
-            _body.TryGetPartParent(woundableId, out var parent))
+        if (woundable.DestroyWoundId != null)
         {
-            AddWound(parent, woundable.DestroyWoundId);
+            if (_body.TryGetPartParentPart(woundableId, out var parent))
+            {
+                AddWound(parent, woundable.DestroyWoundId);
+                _body.DropPart(woundableId);
+            }
+            else
+            {
+                _body.GibBody(woundableId);
+            }
         }
-
-        _body.DropPart(woundableId);
 
         var ev = new WoundableDestroyedEvent();
         RaiseLocalEvent(woundableId, ev);
