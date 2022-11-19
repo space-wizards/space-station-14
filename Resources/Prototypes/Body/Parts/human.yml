@@ -18,10 +18,8 @@
   - type: Woundable # TODO wounds before merge
     allowedTraumaTypes:
     - Slash
-    maxHealth: 100
     health: 100
-    maxStructure: 100
-    structure: 100
+    integrity: 100
 
 - type: entity
   id: TorsoHuman

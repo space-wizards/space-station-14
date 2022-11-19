@@ -125,6 +125,19 @@ public partial class SharedBodySystem
         return TryCreatePartSlot(parentId, id, out var slot, parent) && AttachPart(childId, slot, child);
     }
 
+    public EntityUid? GetPartParent(EntityUid? id, BodyPartComponent? part = null)
+    {
+        if (id == null || !Resolve(id.Value, ref part, false))
+            return null;
+
+        return part.ParentSlot?.Parent;
+    }
+
+    public bool TryGetPartParent(EntityUid? id, out EntityUid parent, BodyPartComponent? part = null)
+    {
+        return (parent = GetPartParent(id, part).GetValueOrDefault()) != default;
+    }
+
     public IEnumerable<(EntityUid Id, BodyPartComponent Component)> GetPartChildren(EntityUid? id, BodyPartComponent? part = null)
     {
         if (id == null || !Resolve(id.Value, ref part, false))
