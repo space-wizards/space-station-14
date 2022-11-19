@@ -1,11 +1,4 @@
 Entries:
-- author: martin69420
-  changes:
-  - {message: Fixed playtime requirement tooltips not showing on roles with no open
-      slots, type: Fix}
-  - {message: Tweaked playtime requirement tooltip text slightly, type: Tweak}
-  id: 2178
-  time: '2022-08-21T19:14:24.0000000+00:00'
 - author: Myctai
   changes:
   - {message: 'Barozine in overdose will cause you to vomit, potentially saving you
@@ -2954,3 +2947,8 @@ Entries:
       shield, type: Fix}
   id: 2677
   time: '2022-11-19T03:51:55.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: the RPED can now actually be printed at protolathes., type: Fix}
+  id: 2678
+  time: '2022-11-19T04:25:54.0000000+00:00'
