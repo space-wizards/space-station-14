@@ -8,7 +8,7 @@
   - type: Item
     sprite: Objects/Specific/Mech/mecha_equipment.rsi
     size: 50
-  - type: MechEquipmentComponent
+  - type: MechEquipment
 
 - type: entity
   id: MechEquipmentGrabber

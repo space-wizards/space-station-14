@@ -41,6 +41,10 @@
       layer:
       - MobLayer
   - type: Appearance
+  - type: ContainerContainer
+    containers:
+      mech-rider-slot: !type:ContainerSlot
+      mech-equipment-container: !type:Container
   #- type: Repairable
   #  fuelcost: 20
   #  doAfterDelay: 2

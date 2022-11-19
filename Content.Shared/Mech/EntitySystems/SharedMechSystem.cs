@@ -10,14 +10,12 @@ using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
-using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Mech.EntitySystems;
 
 public abstract class SharedMechSystem : EntitySystem
 {
-    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
@@ -53,7 +51,7 @@ public abstract class SharedMechSystem : EntitySystem
             var v = new AlternativeVerb
             {
                 Act = () => TryInsert(uid, args.User, component),
-                Text = Loc.GetString("medical-scanner-verb-enter")
+                Text = Loc.GetString("mech-verb-enter")
             };
             args.Verbs.Add(v);
         }
@@ -62,8 +60,7 @@ public abstract class SharedMechSystem : EntitySystem
             var v = new AlternativeVerb
             {
                 Act = () => TryEject(uid, component),
-                Category = VerbCategory.Eject,
-                Text = Loc.GetString("medical-scanner-verb-noun-occupant"),
+                Text = Loc.GetString("mech-verb-exit "),
                 Priority = 1 // Promote to top to make ejecting the ALT-click action
             };
             args.Verbs.Add(v);
@@ -75,10 +72,6 @@ public abstract class SharedMechSystem : EntitySystem
         component.RiderSlot = _container.EnsureContainer<ContainerSlot>(uid, component.RiderSlotId);
         component.EquipmentContainer = _container.EnsureContainer<Container>(uid, component.EquipmentContainerId);
         UpdateAppearance(uid, component);
-
-        //TODO: fix this shit
-        var ent = Spawn("MechEquipmentGrabber", Transform(uid).Coordinates);
-        component.EquipmentContainer.Insert(ent, EntityManager);
     }
 
     private void OnDestruction(EntityUid uid, SharedMechComponent component, DestructionEventArgs args)
@@ -163,7 +156,7 @@ public abstract class SharedMechSystem : EntitySystem
 
     public void UpdateAppearance(EntityUid uid, SharedMechComponent? component = null, AppearanceComponent? appearance = null)
     {
-        if (!Resolve(uid, ref component, ref appearance))
+        if (!Resolve(uid, ref component, ref appearance, false))
             return;
 
         _appearance.SetData(uid, MechVisuals.Open, IsEmpty(component), appearance);
