@@ -72,8 +72,14 @@ namespace Content.Shared.Pulling
             return (!startPull.Cancelled && !getPulled.Cancelled);
         }
 
-        public bool TogglePull(EntityUid puller, SharedPullableComponent pullable)
+        public bool TogglePull(EntityUid puller, EntityUid? pulled, SharedPullableComponent? pullable = null)
         {
+            if (pulled == null)
+                return false;
+
+            if (!Resolve(pulled.Value, ref pullable, false))
+                return false;
+
             if (pullable.Puller == puller)
             {
                 return TryStopPull(pullable);

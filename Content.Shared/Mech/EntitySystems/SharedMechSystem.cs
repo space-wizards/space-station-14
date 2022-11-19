@@ -1,4 +1,6 @@
 ﻿using Content.Shared.ActionBlocker;
+using Content.Shared.Actions;
+using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Body.Components;
 using Content.Shared.Destructible;
 using Content.Shared.Interaction;
@@ -8,12 +10,17 @@ using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
+using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Mech.EntitySystems;
 
 public abstract class SharedMechSystem : EntitySystem
 {
+    [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
+    [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
@@ -23,7 +30,6 @@ public abstract class SharedMechSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<SharedMechComponent, InteractNoHandEvent>(RelayInteractionEvent);
-
         SubscribeLocalEvent<SharedMechComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<SharedMechComponent, GetVerbsEvent<AlternativeVerb>>(OnAlternativeVerb);
         SubscribeLocalEvent<SharedMechComponent, DestructionEventArgs>(OnDestruction);
@@ -77,25 +83,36 @@ public abstract class SharedMechSystem : EntitySystem
 
     private void OnDestruction(EntityUid uid, SharedMechComponent component, DestructionEventArgs args)
     {
+        component.Broken = true;
         TryEject(uid, component);
+        UpdateAppearance(uid, component);
     }
 
-    private void SetupUser(EntityUid uid, EntityUid user)
+    private void SetupUser(EntityUid mech, EntityUid pilot, SharedMechComponent? component = null)
     {
-        var rider = EnsureComp<MechPilotComponent>(user);
-        var relay = EnsureComp<RelayInputMoverComponent>(user);
-        var irelay = EnsureComp<InteractionRelayComponent>(user);
-        _mover.SetRelay(user, uid, relay);
-        _interaction.SetRelay(user, uid, irelay);
-        rider.Mech = uid;
-    }
-
-    private void RemoveUser(EntityUid uid)
-    {
-        if (!RemComp<MechPilotComponent>(uid))
+        if (!Resolve(mech, ref component))
             return;
-        RemComp<RelayInputMoverComponent>(uid);
-        RemComp<InteractionRelayComponent>(uid);
+
+        var rider = EnsureComp<MechPilotComponent>(pilot);
+        var relay = EnsureComp<RelayInputMoverComponent>(pilot);
+        var irelay = EnsureComp<InteractionRelayComponent>(pilot);
+
+        _mover.SetRelay(pilot, mech, relay);
+        _interaction.SetRelay(pilot, mech, irelay);
+        rider.Mech = mech;
+
+        var action = _prototype.Index<InstantActionPrototype>(component.MechToggleAction);
+        _actions.AddAction(pilot, (InstantAction) action.Clone(), mech);
+    }
+
+    private void RemoveUser(EntityUid mech, EntityUid pilot)
+    {
+        if (!RemComp<MechPilotComponent>(pilot))
+            return;
+        RemComp<RelayInputMoverComponent>(pilot);
+        RemComp<InteractionRelayComponent>(pilot);
+
+        _actions.RemoveProvidedActions(pilot, mech);
     }
 
     public bool IsEmpty(SharedMechComponent component)
@@ -136,17 +153,20 @@ public abstract class SharedMechSystem : EntitySystem
         if (component.RiderSlot.ContainedEntity == null)
             return false;
 
-        RemoveUser(component.RiderSlot.ContainedEntity.Value);
-        _container.RemoveEntity(uid, component.RiderSlot.ContainedEntity.Value);
+        var pilot = component.RiderSlot.ContainedEntity.Value;
+
+        RemoveUser(uid, pilot);
+        _container.RemoveEntity(uid, pilot);
         UpdateAppearance(uid, component);
         return true;
     }
 
-    public void UpdateAppearance(EntityUid uid, SharedMechComponent? component = null)
+    public void UpdateAppearance(EntityUid uid, SharedMechComponent? component = null, AppearanceComponent? appearance = null)
     {
-        if (!Resolve(uid, ref component))
+        if (!Resolve(uid, ref component, ref appearance))
             return;
 
-        _appearance.SetData(uid, MechVisuals.Open, IsEmpty(component));
+        _appearance.SetData(uid, MechVisuals.Open, IsEmpty(component), appearance);
+        _appearance.SetData(uid, MechVisuals.Broken, component.Broken, appearance);
     }
 }

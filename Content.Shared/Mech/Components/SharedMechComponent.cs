@@ -1,5 +1,8 @@
-﻿using Robust.Shared.Containers;
+﻿using Content.Shared.Actions;
+using Content.Shared.Actions.ActionTypes;
+using Robust.Shared.Containers;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Mech.Components;
 
@@ -12,9 +15,17 @@ public abstract class SharedMechComponent : Component
     public readonly string RiderSlotId = "mech-rider-slot";
 
     [ViewVariables(VVAccess.ReadWrite)]
+    public bool Broken = false;
+
+    [ViewVariables]
+    public EntityUid? CurrentSelectedEquipment;
+    [ViewVariables(VVAccess.ReadWrite)]
     public Container EquipmentContainer = default!;
     [ViewVariables]
     public readonly string EquipmentContainerId = "mech-equipment-container";
+
+    [DataField("mechToggleAction", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
+    public string MechToggleAction = "MechToggleEquipment";
 
     #region Visualizer States
     [DataField("baseState")]
@@ -37,4 +48,9 @@ public enum MechVisuals : byte
 public enum MechVisualLayers : byte
 {
     Base
+}
+
+public sealed class MechToggleEquipmentEvent : InstantActionEvent
+{
+
 }

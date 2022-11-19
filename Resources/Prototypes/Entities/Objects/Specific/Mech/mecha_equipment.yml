@@ -7,12 +7,14 @@
     sprite: Objects/Specific/Mech/mecha_equipment.rsi
   - type: Item
     sprite: Objects/Specific/Mech/mecha_equipment.rsi
-    size: 150
+    size: 50
+  - type: MechEquipmentComponent
 
 - type: entity
   id: MechEquipmentGrabber
   parent: BaseMechEquipment
-  name: grabber
+  name: hydraulic clamp
+  description: Gives the mech the ability to grab things and drag them around.
   components:
   - type: Sprite
     state: mecha_clamp

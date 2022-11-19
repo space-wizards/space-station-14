@@ -22,11 +22,13 @@ public sealed class MechSystem : SharedMechSystem
 
     public override bool TryInsert(EntityUid uid, EntityUid? toInsert, SharedMechComponent? component = null)
     {
+        if (!Resolve(uid, ref component))
+            return false;
+
         if (!base.TryInsert(uid, toInsert, component))
             return false;
 
-        if (!TryComp<MechComponent>(uid, out var mech))
-            return false;
+        var mech = (MechComponent) component;
 
         if (mech.Airtight)
         {
@@ -41,17 +43,18 @@ public sealed class MechSystem : SharedMechSystem
                 }
             }
         }
-
         return true;
     }
 
     public override bool TryEject(EntityUid uid, SharedMechComponent? component = null)
     {
+        if (!Resolve(uid, ref component))
+            return false;
+
         if (!base.TryEject(uid, component))
             return false;
 
-        if (!TryComp<MechComponent>(uid, out var mech))
-            return false;
+        var mech = (MechComponent) component;
 
         if (mech.Airtight)
         {

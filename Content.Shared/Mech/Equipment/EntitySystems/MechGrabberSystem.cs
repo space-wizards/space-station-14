@@ -18,20 +18,20 @@ public sealed class MechGrabberSystem : EntitySystem
 
     private void OnInteract(EntityUid uid, MechGrabberComponent component, InteractNoHandEvent args)
     {
-        if (args.Handled || !_interaction.InRangeUnobstructed(args.User, args.ClickLocation))
+        if (args.Handled)
             return;
         args.Handled = true;
 
-        if (_pulling.IsPulling(args.User))
+        var inRange = _interaction.InRangeUnobstructed(args.User, args.ClickLocation);
+        if (inRange && _pulling.TogglePull(args.User, args.Target))
+            return;
+
+        var pulled = _pulling.GetPulled(args.User);
+        if (pulled == EntityUid.Invalid || !TryComp<SharedPullableComponent>(pulled, out var pullable))
         {
-            var pulled = _pulling.GetPulled(args.User);
-            if (TryComp<SharedPullableComponent>(pulled, out var pullable))
-                _pulling.TryStopPull(pullable, args.User);
+            args.Handled = false; //weird logic flow but trust me
+            return;
         }
-        else if (args.Target != null)
-        {
-            if (TryComp<SharedPullableComponent>(args.Target.Value, out var pullable))
-                _pulling.TogglePull(args.User, pullable);
-        }
+        _pulling.TryStopPull(pullable, args.User);
     }
 }
