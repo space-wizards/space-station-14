@@ -53,12 +53,12 @@ namespace Content.Shared.Zombies
         /// The attack arc of the zombie
         /// </summary>
         [DataField("attackArc", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string AttackAnimation = "WeaponArcClaw";
+        public string AttackAnimation = "WeaponArcBite";
 
         /// <summary>
         /// The role prototype of the zombie antag role
         /// </summary>
-        [DataField("zombieRoldId", customTypeSerializer: typeof(PrototypeIdSerializer<AntagPrototype>))]
+        [DataField("zombieRoleId", customTypeSerializer: typeof(PrototypeIdSerializer<AntagPrototype>))]
         public readonly string ZombieRoleId = "Zombie";
     }
 }
