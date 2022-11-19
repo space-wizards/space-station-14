@@ -1,9 +1,4 @@
 Entries:
-- author: TekuNut
-  changes:
-  - {message: Xenos can no longer pry doors open from afar., type: Fix}
-  id: 2181
-  time: '2022-08-23T10:31:54.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed players being unable to suppress their inner ballerina (fix player's
@@ -2946,3 +2941,8 @@ Entries:
       menu, type: Add}
   id: 2680
   time: '2022-11-19T16:05:44.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed weird zombie attack animations., type: Fix}
+  id: 2681
+  time: '2022-11-19T16:07:09.0000000+00:00'
