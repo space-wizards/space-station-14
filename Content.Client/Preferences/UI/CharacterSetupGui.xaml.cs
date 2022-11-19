@@ -130,7 +130,7 @@ namespace Content.Client.Preferences.UI
                 var characterIndexCopy = slot;
                 characterPickerButton.OnPressed += args =>
                 {
-                    _humanoidProfileEditor.Profile = (HumanoidCharacterProfile) character;
+                    _humanoidProfileEditor.Profile = (HumanoidCharacterProfile)character;
                     _humanoidProfileEditor.CharacterSlot = characterIndexCopy;
                     _humanoidProfileEditor.UpdateControls();
                     _preferencesManager.SelectCharacter(character);
@@ -170,7 +170,7 @@ namespace Content.Client.Preferences.UI
                     _previewDummy = entityManager.SpawnEntity(prototypeManager.Index<SpeciesPrototype>(SharedHumanoidSystem.DefaultSpecies).DollPrototype, MapCoordinates.Nullspace);
                 }
 
-                EntitySystem.Get<HumanoidSystem>().LoadProfile(_previewDummy, (HumanoidCharacterProfile) profile);
+                EntitySystem.Get<HumanoidSystem>().LoadProfile(_previewDummy, (HumanoidCharacterProfile)profile);
 
                 if (humanoid != null)
                 {
@@ -211,7 +211,7 @@ namespace Content.Client.Preferences.UI
                 };
                 var confirmDeleteButton = new Button
                 {
-                    Text = "Confirm",
+                    Text = Loc.GetString("character-setup-gui-character-picker-button-confirm-delete-button"),
                     Visible = false,
                 };
                 confirmDeleteButton.OnPressed += _ =>
