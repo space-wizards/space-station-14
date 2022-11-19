@@ -31,6 +31,7 @@
     explosionType: Default
     maxIntensity: 20
   - type: MeleeWeapon
+    attackRate: 0.8
     damage:
       types:
         Blunt: 10
@@ -105,7 +106,6 @@
     - Belt
     - suitStorage
   - type: MeleeWeapon
-    attackRate: 1.5
     damage:
       types:
         Blunt: 5
@@ -154,7 +154,7 @@
     - Belt
     - suitStorage
   - type: MeleeWeapon
-    attackRate: 1.25
+    attackRate: 0.9
     damage:
       types:
         Blunt: 7.5
