@@ -46,7 +46,7 @@ public sealed partial class ThresholdControl : BoxContainer
 
         // i miss rust macros
 
-        _upperBoundControl = new ThresholdBoundControl("upper-bound", _threshold.UpperBound, modifier);
+        _upperBoundControl = new ThresholdBoundControl(LabelForBound("upper-bound"), _threshold.UpperBound, modifier);
         _upperBoundControl.OnBoundChanged += value =>
         {
             // a lot of threshold logic is baked into the properties,
@@ -71,7 +71,7 @@ public sealed partial class ThresholdControl : BoxContainer
         };
         _dangerBounds.AddChild(_upperBoundControl);
 
-        _lowerBoundControl = new ThresholdBoundControl("lower-bound", _threshold.LowerBound, modifier);
+        _lowerBoundControl = new ThresholdBoundControl(LabelForBound("lower-bound"), _threshold.LowerBound, modifier);
         _lowerBoundControl.OnBoundChanged += value =>
         {
             _threshold.TrySetPrimaryBound(AtmosMonitorThresholdBound.Lower, value);
@@ -92,7 +92,7 @@ public sealed partial class ThresholdControl : BoxContainer
             ThresholdDataChanged!.Invoke(_type, _threshold, _gas);
         _dangerBounds.AddChild(_lowerBoundControl);
 
-        _upperWarningBoundControl = new ThresholdBoundControl("upper-warning-bound", _threshold.UpperWarningBound, modifier);
+        _upperWarningBoundControl = new ThresholdBoundControl(LabelForBound("upper-warning-bound"), _threshold.UpperWarningBound, modifier);
         _upperWarningBoundControl.OnBoundChanged += value =>
         {
             _threshold.TrySetWarningBound(AtmosMonitorThresholdBound.Upper, value);
@@ -113,7 +113,7 @@ public sealed partial class ThresholdControl : BoxContainer
             ThresholdDataChanged!.Invoke(_type, _threshold, _gas);
         _warningBounds.AddChild(_upperWarningBoundControl);
 
-        _lowerWarningBoundControl = new ThresholdBoundControl("lower-warning-bound", _threshold.LowerWarningBound, modifier);
+        _lowerWarningBoundControl = new ThresholdBoundControl(LabelForBound("lower-warning-bound"), _threshold.LowerWarningBound, modifier);
         _lowerWarningBoundControl.OnBoundChanged += value =>
         {
             _threshold.TrySetWarningBound(AtmosMonitorThresholdBound.Lower, value);
@@ -152,155 +152,8 @@ public sealed partial class ThresholdControl : BoxContainer
         _enabled.Pressed = !threshold.Ignore;
     }
 
-
-    private sealed class ThresholdBoundControl : BoxContainer
+    private String LabelForBound(string boundType) //<todo.eoin Replace this with enums
     {
-        // raw values to use in thresholds, prefer these
-        // over directly setting Modified(Value/LastValue)
-        // when working with the FloatSpinBox
-        private float? _value;
-        private float _lastValue;
-
-        // convenience thing for getting multiplied values
-        // and also setting value to a usable value
-        private float? ModifiedValue
-        {
-            get => _value * _modifier;
-            set => _value = value / _modifier;
-        }
-
-        private float ModifiedLastValue
-        {
-            get => _lastValue * _modifier;
-            set => _lastValue = value / _modifier;
-        }
-
-        private float _modifier;
-
-        private FloatSpinBox _bound;
-        private CheckBox _boundEnabled;
-
-        public event Action? OnValidBoundChanged;
-        public Func<float?, float?>? OnBoundChanged;
-        public Func<float>? OnBoundEnabled;
-
-        public void SetValue(float? value)
-        {
-            _value = value;
-
-            if (_value == null)
-            {
-                _boundEnabled.Pressed = false;
-                _bound.Value = 0;
-            }
-            else
-            {
-                _boundEnabled.Pressed = true;
-                _bound.Value = (float) ModifiedValue!;
-            }
-        }
-
-        // Modifier indicates what factor the value should be multiplied by.
-        // Mostly useful to convert tiny decimals to human-readable 'percentages'
-        // (yes it's still a float, but floatspinbox unfucks that)
-        public ThresholdBoundControl(string name, float? value, float modifier = 1)
-        {
-            _modifier = modifier > 0 ? modifier : 1;
-            _value = value;
-
-            HorizontalExpand = true;
-            Orientation = LayoutOrientation.Vertical;
-            Margin = new Thickness(20, 0, 0, 0);
-            MinSize = new Vector2(160, 0);
-
-            var controlLabel = new Label
-            {
-                Text = Loc.GetString($"air-alarm-ui-thresholds-{name}"),
-                HorizontalAlignment = HAlignment.Center
-            };
-            AddChild(controlLabel);
-
-            _boundEnabled = new CheckBox
-            {
-                Text = Loc.GetString("Enabled"),
-                HorizontalAlignment = HAlignment.Center
-            };
-            AddChild(_boundEnabled);
-
-            _bound = new FloatSpinBox(.01f, 2);
-            AddChild(_bound);
-
-            _bound.Value = ModifiedValue ?? 0;
-            _lastValue = _value ?? 0;
-            _boundEnabled.Pressed = _value != null;
-
-            _bound.OnValueChanged += ChangeValue;
-            _bound.IsValid += ValidateThreshold;
-            _boundEnabled.OnToggled += ToggleBound;
-        }
-
-        private void ChangeValue(FloatSpinBox.FloatSpinBoxEventArgs args)
-        {
-            // ensure that the value in the spinbox is transformed
-            ModifiedValue = args.Value;
-            // set the value in the scope above
-            var value = OnBoundChanged!(_value);
-            // is the value not null, or has it changed?
-            if (value != null || value != _lastValue)
-            {
-                _value = value;
-                _lastValue = (float) value!;
-                OnValidBoundChanged!.Invoke();
-            }
-            // otherwise, just set it to the last known value
-            else
-            {
-                _value = _lastValue;
-                _bound.Value = ModifiedLastValue;
-            }
-        }
-
-        private void ToggleBound(BaseButton.ButtonToggledEventArgs args)
-        {
-            if (args.Pressed)
-            {
-                var value = OnBoundChanged!(_lastValue);
-
-                if (value != _lastValue)
-                {
-                    value = OnBoundChanged!(OnBoundEnabled!());
-
-                    if (value == null || value < 0)
-                    {
-                        // TODO: Improve UX here, this is ass
-                        // basically this implies that the bound
-                        // you currently have is too aggressive
-                        // for the other set of values, so a
-                        // default value (which is +/-0.1) can't
-                        // be used
-                        _boundEnabled.Pressed = false;
-                        return;
-                    }
-                }
-
-                _value = value;
-
-                _bound.Value = (float) ModifiedValue!;
-                _lastValue = (float) _value;
-            }
-            else
-            {
-                _value = null;
-                _bound.Value = 0f;
-                OnBoundChanged!(_value);
-            }
-
-            OnValidBoundChanged!.Invoke();
-        }
-
-        private bool ValidateThreshold(float value)
-        {
-            return _value != null && value >= 0;
-        }
+        return Loc.GetString($"air-alarm-ui-thresholds-{boundType}");
     }
 }
