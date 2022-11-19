@@ -1,10 +1,4 @@
 Entries:
-- author: Myctai
-  changes:
-  - {message: 'Barozine in overdose will cause you to vomit, potentially saving you
-      from fatal poisoning!', type: Add}
-  id: 2179
-  time: '2022-08-22T08:50:46.0000000+00:00'
 - author: Flareguy
   changes:
   - {message: 'Touched up and re-shaded the Medical, Cargo, and Scientist jumpsuit
@@ -2952,3 +2946,8 @@ Entries:
   - {message: the RPED can now actually be printed at protolathes., type: Fix}
   id: 2678
   time: '2022-11-19T04:25:54.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Nukie planet has been fixed., type: Fix}
+  id: 2679
+  time: '2022-11-19T05:24:31.0000000+00:00'
