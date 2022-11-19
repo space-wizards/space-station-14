@@ -21,6 +21,28 @@
         Piercing: 24
 
 - type: entity
+  id: BulletMagnumHC
+  name: bullet (.45 magnum)
+  parent: BaseBullet
+  noSpawn: true
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 34
+
+- type: entity
+  id: BulletMagnumHCHighVelocity
+  name: bullet (.45 magnum high-velocity)
+  parent: BaseBulletHighVelocity
+  noSpawn: true
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 36
+
+- type: entity
   id: BulletMagnumPractice
   name: bullet (.40 magnum practice)
   parent: BaseBulletPractice

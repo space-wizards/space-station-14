@@ -18,7 +18,6 @@ namespace Content.Shared.Slippery
         /// <summary>
         /// Path to the sound to be played when a mob slips.
         /// </summary>
-        [ViewVariables]
         [DataField("slipSound")]
         [Access(Other = AccessPermissions.ReadWriteExecute)]
         public SoundSpecifier SlipSound = new SoundPathSpecifier("/Audio/Effects/slip.ogg");

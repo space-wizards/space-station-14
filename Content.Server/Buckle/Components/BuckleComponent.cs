@@ -1,3 +1,4 @@
+using Content.Server.Buckle.Systems;
 using Content.Shared.Buckle.Components;
 
 namespace Content.Server.Buckle.Components;
@@ -7,6 +8,7 @@ namespace Content.Server.Buckle.Components;
 /// </summary>
 [RegisterComponent]
 [ComponentReference(typeof(SharedBuckleComponent))]
+[Access(typeof(BuckleSystem))]
 public sealed class BuckleComponent : SharedBuckleComponent
 {
     /// <summary>
@@ -14,7 +16,6 @@ public sealed class BuckleComponent : SharedBuckleComponent
     ///     be able to unbuckle after recently buckling.
     /// </summary>
     [DataField("delay")]
-    [ViewVariables]
     public TimeSpan UnbuckleDelay = TimeSpan.FromSeconds(0.25f);
 
     /// <summary>
@@ -33,6 +34,5 @@ public sealed class BuckleComponent : SharedBuckleComponent
     ///     <see cref="StrapComponent"/>.
     /// </summary>
     [DataField("size")]
-    [ViewVariables]
     public int Size = 100;
 }

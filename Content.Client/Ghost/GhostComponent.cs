@@ -20,7 +20,19 @@ namespace Content.Client.Ghost
             CheckCanInteract = false,
             Event = new DisableLightingActionEvent(),
         };
+
+        public InstantAction ToggleGhostsAction = new()
+        {
+            Icon = new SpriteSpecifier.Rsi(new ResourcePath("Mobs/Ghosts/ghost_human.rsi"), "icon"),
+            DisplayName = "ghost-gui-toggle-ghost-visibility-name",
+            Description = "ghost-gui-toggle-ghost-visibility-desc",
+            ClientExclusive = true,
+            CheckCanInteract = false,
+            Event = new ToggleGhostsActionEvent(),
+        };
     }
 
     public sealed class DisableLightingActionEvent : InstantActionEvent { };
+
+    public sealed class ToggleGhostsActionEvent : InstantActionEvent { };
 }
