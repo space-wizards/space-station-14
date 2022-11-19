@@ -15,9 +15,21 @@ public sealed class MechSystem : SharedMechSystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<MechComponent, MapInitEvent>(OnMapInit);
+
         SubscribeLocalEvent<MechPilotComponent, InhaleLocationEvent>(OnInhale);
         SubscribeLocalEvent<MechPilotComponent, ExhaleLocationEvent>(OnExhale);
         SubscribeLocalEvent<MechPilotComponent, AtmosExposedGetAirEvent>(OnExpose);
+    }
+
+    private void OnMapInit(EntityUid uid, MechComponent component, MapInitEvent args)
+    {
+        var xform = Transform(uid);
+        foreach (var equipment in component.StartingEquipment)
+        {
+            var ent = Spawn(equipment, xform.Coordinates);
+            component.EquipmentContainer.Insert(ent);
+        }
     }
 
     public override bool TryInsert(EntityUid uid, EntityUid? toInsert, SharedMechComponent? component = null)
