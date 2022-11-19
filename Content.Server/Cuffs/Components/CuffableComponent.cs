@@ -17,6 +17,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
+using Content.Server.Recycling.Components;
 
 namespace Content.Server.Cuffs.Components
 {
@@ -270,6 +271,8 @@ namespace Content.Server.Cuffs.Components
                     {
                         sprite.LayerSetState(0, cuff.BrokenState); // TODO: safety check to see if RSI contains the state?
                     }
+
+                    _entMan.AddComponent<RecyclableComponent>(cuffsToRemove.Value);
                 }
 
                 CanStillInteract = _entMan.TryGetComponent(Owner, out HandsComponent? handsComponent) && handsComponent.SortedHands.Count() > CuffedHandCount;
