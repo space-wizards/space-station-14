@@ -19,19 +19,19 @@ public sealed partial class ThresholdBoundControl : BoxContainer
 
     // convenience thing for getting multiplied values
     // and also setting value to a usable value
-    private float? ModifiedValue
+    private float? ScaledValue
     {
-        get => _value * _modifier;
-        set => _value = value / _modifier;
+        get => _value * _uiValueScale;
+        set => _value = value / _uiValueScale;
     }
 
-    private float ModifiedLastValue
+    private float ScaledLastValue
     {
-        get => _lastValue * _modifier;
-        set => _lastValue = value / _modifier;
+        get => _lastValue * _uiValueScale;
+        set => _lastValue = value / _uiValueScale;
     }
 
-    private float _modifier;
+    private float _uiValueScale;
 
     public event Action? OnValidBoundChanged;
     public Func<float?, float?>? OnBoundChanged;
@@ -49,32 +49,32 @@ public sealed partial class ThresholdBoundControl : BoxContainer
         else
         {
             CBoundEnabled.Pressed = true;
-            CSpinner.Value = (float) ModifiedValue!;
+            CSpinner.Value = (float) ScaledValue!;
         }
     }
 
-    public ThresholdBoundControl(string controlLabel, float? value, float modifier = 1)
+    public ThresholdBoundControl(string controlLabel, float? value, float uiValueScale = 1)
     {
         RobustXamlLoader.Load(this);
 
-        _modifier = modifier > 0 ? modifier : 1;
+        _uiValueScale = uiValueScale > 0 ? uiValueScale : 1;
         _value = value;
 
         CBoundLabel.Text = controlLabel;
 
-        CSpinner.Value = ModifiedValue ?? 2;
+        CSpinner.Value = ScaledValue ?? 2;
         _lastValue = _value ?? 0;
         CBoundEnabled.Pressed = _value != null;
 
-        CSpinner.OnValueChanged += ChangeValue;
+        CSpinner.OnValueChanged += OnSpinnerValueChanged;
         CSpinner.IsValid += ValidateThreshold;
-        CBoundEnabled.OnToggled += ToggleBound;
+        CBoundEnabled.OnToggled += OnCheckboxToggled;
     }
 
-    private void ChangeValue(FloatSpinBox.FloatSpinBoxEventArgs args)
+    private void OnSpinnerValueChanged(FloatSpinBox.FloatSpinBoxEventArgs args)
     {
         // ensure that the value in the spinbox is transformed
-        ModifiedValue = args.Value;
+        ScaledValue = args.Value;
         // set the value in the scope above
         var value = OnBoundChanged!(_value);
         // is the value not null, or has it changed?
@@ -88,11 +88,11 @@ public sealed partial class ThresholdBoundControl : BoxContainer
         else
         {
             _value = _lastValue;
-            CSpinner.Value = ModifiedLastValue;
+            CSpinner.Value = ScaledLastValue;
         }
     }
 
-    private void ToggleBound(BaseButton.ButtonToggledEventArgs args)
+    private void OnCheckboxToggled(BaseButton.ButtonToggledEventArgs args)
     {
         if (args.Pressed)
         {
@@ -117,7 +117,7 @@ public sealed partial class ThresholdBoundControl : BoxContainer
 
             _value = value;
 
-            CSpinner.Value = (float) ModifiedValue!;
+            CSpinner.Value = (float) ScaledValue!;
             _lastValue = (float) _value;
         }
         else
