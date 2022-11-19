@@ -209,10 +209,23 @@ namespace Content.Client.Preferences.UI
                     Text = Loc.GetString("character-setup-gui-character-picker-button-delete-button"),
                     Visible = !isSelectedCharacter,
                 };
-                deleteButton.OnPressed += _ =>
+                var confirmDeleteButton = new Button
+                {
+                    Text = "Confirm",
+                    Visible = false,
+                };
+                confirmDeleteButton.OnPressed += _ =>
                 {
                     Parent?.RemoveChild(this);
+                    Parent?.RemoveChild(confirmDeleteButton);
                     preferencesManager.DeleteCharacter(profile);
+                };
+                deleteButton.OnPressed += _ =>
+                {
+
+                    deleteButton.Visible = false;
+                    confirmDeleteButton.Visible = true;
+
                 };
 
                 var internalHBox = new BoxContainer
@@ -224,7 +237,8 @@ namespace Content.Client.Preferences.UI
                     {
                         view,
                         descriptionLabel,
-                        deleteButton
+                        deleteButton,
+                        confirmDeleteButton
                     }
                 };
 
