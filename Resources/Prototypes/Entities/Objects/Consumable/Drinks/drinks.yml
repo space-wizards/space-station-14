@@ -1026,8 +1026,8 @@
 
 - type: entity
   parent: DrinkGlassBase
-  id: DrinkKahluaGlass
-  name: kahlua glass
+  id: DrinkCoffeeLiqueurGlass
+  name: Coffee Liqueur glass
   description: DAMN, THIS THING LOOKS ROBUST
   components:
   - type: SolutionContainerManager
@@ -1035,10 +1035,10 @@
       drink:
         maxVol: 50
         reagents:
-        - ReagentId: Kahlua
+        - ReagentId: CoffeeLiqueur
           Quantity: 50
   - type: Sprite
-    sprite: Objects/Consumable/Drinks/kahluaglass.rsi
+    sprite: Objects/Consumable/Drinks/coffeeliqueurglass.rsi
 
 - type: entity
   parent: DrinkGlassBase

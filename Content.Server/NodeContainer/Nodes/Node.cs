@@ -15,7 +15,6 @@ namespace Content.Server.NodeContainer.Nodes
         ///     An ID used as a criteria for combining into groups. Determines which <see cref="INodeGroup"/>
         ///     implementation is used as a group, detailed in <see cref="INodeGroupFactory"/>.
         /// </summary>
-        [ViewVariables]
         [DataField("nodeGroupID")]
         public NodeGroupID NodeGroupID { get; private set; } = NodeGroupID.Default;
 
