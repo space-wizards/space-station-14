@@ -131,7 +131,6 @@ namespace Content.Server.NPC.Pathfinding
                 switch (result)
                 {
                     case PathResult.Continuing:
-                        DebugTools.Assert(path.Frontier.Count > 0);
                         break;
                     case PathResult.PartialPath:
                     case PathResult.Path:
@@ -409,17 +408,17 @@ namespace Content.Server.NPC.Pathfinding
         {
             var flags = PathFlags.None;
 
-            if (blackboard.TryGetValue<bool>(NPCBlackboard.NavPry, out var pry) && pry)
+            if (blackboard.TryGetValue<bool>(NPCBlackboard.NavPry, out var pry, EntityManager) && pry)
             {
                 flags |= PathFlags.Prying;
             }
 
-            if (blackboard.TryGetValue<bool>(NPCBlackboard.NavSmash, out var smash) && smash)
+            if (blackboard.TryGetValue<bool>(NPCBlackboard.NavSmash, out var smash, EntityManager) && smash)
             {
                 flags |= PathFlags.Smashing;
             }
 
-            if (blackboard.TryGetValue<bool>(NPCBlackboard.NavInteract, out var interact) && interact)
+            if (blackboard.TryGetValue<bool>(NPCBlackboard.NavInteract, out var interact, EntityManager) && interact)
             {
                 flags |= PathFlags.Interact;
             }
