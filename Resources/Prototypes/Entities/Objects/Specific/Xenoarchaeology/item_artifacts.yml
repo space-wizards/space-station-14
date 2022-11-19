@@ -17,6 +17,8 @@
   - type: Damageable
   - type: Physics
     bodyType: Dynamic
+  - type: CollisionWake
+    enabled: false
   - type: InteractionOutline
   - type: Artifact
   - type: RandomArtifactSprite
@@ -29,6 +31,10 @@
   - type: Appearance
   - type: StaticPrice
     price: 500
+  - type: Item
+    size: 40
+    sprite: Objects/Specific/Xenoarchaeology/item_artifacts.rsi
+    heldPrefix: ano01
 
 - type: entity
   parent: BaseXenoArtifactItem

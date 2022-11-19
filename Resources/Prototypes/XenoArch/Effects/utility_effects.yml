@@ -1,5 +1,36 @@
 ﻿# Utility effects permanently modify the entity in some way when triggered, and they generally make it 'useful' for some purpose,
 # like turning the artifact into a tool, or gun, or whatever.
+- type: artifactEffect
+  id: EffectRandomInstrument
+  targetDepth: 2
+  effectHint: artifact-effect-hint-mental
+  permanentComponents:
+  - type: Instrument
+  - type: ActivatableUI
+    inHandsOnly: true
+    singleUser: true
+    verbText: verb-instrument-openui
+    key: enum.InstrumentUiKey.Key
+  - type: UserInterface
+    interfaces:
+    - key: enum.InstrumentUiKey.Key
+      type: InstrumentBoundUserInterface
+  - type: RandomInstrumentArtifact
+
+- type: artifactEffect
+  id: EffectSlippy
+  targetDepth: 2
+  effectHint: artifact-effect-hint-soap
+  whitelist:
+    components:
+    - Item
+  permanentComponents:
+  - type: Slippery
+    paralyzeTime: 7
+    launchForwardsMultiplier: 9.0
+  - type: StepTrigger
+  - type: CollisionWake
+    enabled: false
 
 - type: artifactEffect
   id: EffectStorage

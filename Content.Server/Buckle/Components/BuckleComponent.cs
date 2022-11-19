@@ -1,3 +1,4 @@
+using Content.Server.Buckle.Systems;
 using Content.Shared.Buckle.Components;
 
 namespace Content.Server.Buckle.Components;
@@ -7,6 +8,7 @@ namespace Content.Server.Buckle.Components;
 /// </summary>
 [RegisterComponent]
 [ComponentReference(typeof(SharedBuckleComponent))]
+[Access(typeof(BuckleSystem))]
 public sealed class BuckleComponent : SharedBuckleComponent
 {
     /// <summary>

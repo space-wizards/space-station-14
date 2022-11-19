@@ -67,7 +67,7 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
     /// <summary>
     /// Tries to get the blackboard data for a particular key. Returns default if not found
     /// </summary>
-    public T? GetValueOrDefault<T>(string key, IEntityManager? entManager = null)
+    public T? GetValueOrDefault<T>(string key, IEntityManager entManager)
     {
         if (_blackboard.TryGetValue(key, out var value))
         {
@@ -90,7 +90,7 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
     /// <summary>
     /// Tries to get the blackboard data for a particular key.
     /// </summary>
-    public bool TryGetValue<T>(string key, [NotNullWhen(true)] out T? value, IEntityManager? entManager = null)
+    public bool TryGetValue<T>(string key, [NotNullWhen(true)] out T? value, IEntityManager entManager)
     {
         if (_blackboard.TryGetValue(key, out var data))
         {
@@ -130,17 +130,15 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
         DebugTools.Assert(false, $"Tried to write to an NPC blackboard that is readonly!");
     }
 
-    private bool TryGetEntityDefault(string key, [NotNullWhen(true)] out object? value, IEntityManager? entManager = null)
+    private bool TryGetEntityDefault(string key, [NotNullWhen(true)] out object? value, IEntityManager entManager)
     {
-        // TODO: Pass this in
-        IoCManager.Resolve(ref entManager);
         value = default;
         EntityUid owner;
 
         switch (key)
         {
             case Access:
-                if (!TryGetValue(Owner, out owner))
+                if (!TryGetValue(Owner, out owner, entManager))
                 {
                     return false;
                 }
@@ -149,7 +147,7 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
                 value = access.FindAccessTags(owner);
                 return true;
             case CanMove:
-                if (!TryGetValue(Owner, out owner))
+                if (!TryGetValue(Owner, out owner, entManager))
                 {
                     return false;
                 }
@@ -158,7 +156,7 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
                 value = blocker.CanMove(owner);
                 return true;
             case OwnerCoordinates:
-                if (!TryGetValue(Owner, out owner))
+                if (!TryGetValue(Owner, out owner, entManager))
                 {
                     return false;
                 }
