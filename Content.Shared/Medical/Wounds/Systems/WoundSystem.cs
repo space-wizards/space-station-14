@@ -149,6 +149,7 @@ public sealed class WoundSystem : EntitySystem
             if (_body.TryGetPartParentPart(woundableId, out var parent))
             {
                 AddWound(parent, woundable.DestroyWoundId);
+                // TODO wounds before merge gib
                 _body.DropPart(woundableId);
             }
             else
