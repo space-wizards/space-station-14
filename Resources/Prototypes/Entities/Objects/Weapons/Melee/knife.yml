@@ -54,18 +54,6 @@
   - type: Item
     size: 10
     sprite: Objects/Weapons/Melee/kitchen_knife.rsi
-  - type: SolutionContainerManager
-    solutions:
-      melee:
-        maxVol: 5
-  - type: MeleeChemicalInjector
-    solution: melee
-  - type: RefillableSolution
-    solution: melee
-  - type: InjectableSolution
-    solution: melee
-  - type: SolutionTransfer
-    maxTransferAmount: 5
 
 - type: entity
   name: butcher's cleaver
@@ -88,19 +76,7 @@
   - type: Item
     size: 10
     sprite: Objects/Weapons/Melee/cleaver.rsi
-  - type: SolutionContainerManager
-    solutions:
-      melee:
-        maxVol: 5
-  - type: MeleeChemicalInjector
-    solution: melee
-  - type: RefillableSolution
-    solution: melee
-  - type: InjectableSolution
-    solution: melee
-  - type: SolutionTransfer
-    maxTransferAmount: 5
-
+    
 - type: entity
   name: combat knife
   parent: BaseKnife
@@ -125,18 +101,6 @@
     sprite: Objects/Weapons/Melee/combat_knife.rsi
   - type: DisarmMalus
     malus: 0.225
-  - type: SolutionContainerManager
-    solutions:
-      melee:
-        maxVol: 5
-  - type: MeleeChemicalInjector
-    solution: melee
-  - type: RefillableSolution
-    solution: melee
-  - type: InjectableSolution
-    solution: melee
-  - type: SolutionTransfer
-    maxTransferAmount: 5 
 
 - type: entity
   name: survival knife
@@ -151,15 +115,3 @@
   - type: Item
     size: 10
     sprite: Objects/Weapons/Melee/survival_knife.rsi
-  - type: SolutionContainerManager
-    solutions:
-      melee:
-        maxVol: 5
-  - type: MeleeChemicalInjector
-    solution: melee
-  - type: RefillableSolution
-    solution: melee
-  - type: InjectableSolution
-    solution: melee
-  - type: SolutionTransfer
-    maxTransferAmount: 5   
