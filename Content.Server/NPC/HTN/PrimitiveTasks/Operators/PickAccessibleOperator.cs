@@ -10,6 +10,7 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
 /// </summary>
 public sealed class PickAccessibleOperator : HTNOperator
 {
+    [Dependency] private readonly IEntityManager _entManager = default!;
     private PathfindingSystem _pathfinding = default!;
 
     [DataField("rangeKey", required: true)]
@@ -37,7 +38,7 @@ public sealed class PickAccessibleOperator : HTNOperator
         // Very inefficient (should weight each region by its node count) but better than the old system
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
 
-        blackboard.TryGetValue<float>(RangeKey, out var maxRange);
+        blackboard.TryGetValue<float>(RangeKey, out var maxRange, _entManager);
 
         if (maxRange == 0f)
             maxRange = 7f;
