@@ -70,19 +70,25 @@
           Quantity: 5
   - type: MeleeChemicalInjector
     solution: melee
+  - type: ReplacementAccent
+    accent: genericAggressive
+
+- type: entity
+  id: MobTickGhostRole
+  parent: MobTick
+  suffix: "Ghost Role"
+  components:
   - type: GhostTakeoverAvailable
     prob: 0.33
     makeSentient: true
     name: space tick
     description: |
       Wreak havoc on the station!
-  - type: ReplacementAccent
-    accent: genericAggressive
 
 - type: entity
   id: MobTickSalvage
   parent: MobTick
-  suffix: "Salvage Ruleset"
+  suffix: "Ghost Role, Salvage Ruleset"
   components:
   - type: GhostTakeoverAvailable
     name: space tick on salvage wreck

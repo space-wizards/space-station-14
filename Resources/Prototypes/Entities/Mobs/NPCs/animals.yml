@@ -738,12 +738,6 @@
   id: MobMouse
   description: Squeak!
   components:
-  - type: GhostTakeoverAvailable
-    makeSentient: true
-    allowSpeech: true
-    allowMovement: true
-    name: ghost-role-information-mouse-name
-    description: ghost-role-information-mouse-description
   - type: Speech
     speechSounds: Squeak
   - type: Sprite
@@ -849,6 +843,21 @@
     price: 50
 
 - type: entity
+  suffix: "Ghost Role"
+  parent: MobMouse
+  id: MobMouseGhostRole
+  components:
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-mouse-name
+    description: ghost-role-information-mouse-description
+  - type: Bloodstream
+    bloodMaxVolume: 50
+  - type: DiseaseCarrier
+
+- type: entity
   parent: MobMouse
   id: MobMouse1
   components:
@@ -873,6 +882,20 @@
     bloodMaxVolume: 50
   - type: DiseaseCarrier #Why doesn't this save if it's only on the parent wtf
 
+- type: entity
+  suffix: "Ghost Role"
+  parent: MobMouse1
+  id: MobMouse1GhostRole
+  components:
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-mouse-name
+    description: ghost-role-information-mouse-description
+  - type: Bloodstream
+    bloodMaxVolume: 50
+  - type: DiseaseCarrier
 
 - type: entity
   parent: MobMouse
@@ -899,6 +922,20 @@
     bloodMaxVolume: 50
   - type: DiseaseCarrier
 
+- type: entity
+  suffix: "Ghost Role"
+  parent: MobMouse2
+  id: MobMouse2GhostRole
+  components:
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-mouse-name
+    description: ghost-role-information-mouse-description
+  - type: Bloodstream
+    bloodMaxVolume: 50
+  - type: DiseaseCarrier
 
 - type: entity
   name: lizard #Weh
@@ -1315,6 +1352,12 @@
     - type: MobMover
     - type: HTN
       rootTask: SimpleHostileCompound
+
+- type: entity
+  parent: MobGiantSpiderAngry
+  id: MobGiantSpiderGhostRole
+  suffix: "Angry, Ghost Role"
+  components:
     - type: GhostTakeoverAvailable
       makeSentient: true
       name: ghost-role-information-giant-spider-name

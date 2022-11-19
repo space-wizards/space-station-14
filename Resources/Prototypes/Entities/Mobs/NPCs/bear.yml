@@ -69,6 +69,12 @@
         Brute: 15
   - type: ReplacementAccent
     accent: genericAggressive
+
+- type: entity
+  id: MobBearSpaceGhostRole
+  parent: MobBearSpace
+  suffix: "Ghost Role"
+  components:
   - type: GhostTakeoverAvailable
     prob: 0.05
     name: space bear
@@ -78,7 +84,7 @@
 - type: entity
   id: MobBearSpaceSalvage
   parent: MobBearSpace
-  suffix: "Salvage Ruleset"
+  suffix: "Ghost Role, Salvage Ruleset"
   components:
   - type: GhostTakeoverAvailable
     prob: 0.05

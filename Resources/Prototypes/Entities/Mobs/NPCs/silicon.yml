@@ -124,10 +124,6 @@
   - type: Construction
     graph: HonkBot
     node: bot
-  - type: GhostTakeoverAvailable
-    makeSentient: true
-    name: honkbot
-    description: An artificial being of pure evil.
   - type: InteractionPopup
     interactSuccessString: petting-success-honkbot
     interactFailureString: petting-failure-honkbot
@@ -192,3 +188,13 @@
     interactFailureString: petting-failure-medibot
     interactSuccessSound:
       path: /Audio/Ambience/Objects/periodic_beep.ogg
+
+- type: entity
+  parent: MobHonkBot
+  id: MobHonkBotGhostRole
+  suffix: "Ghost Role"
+  components:
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: honkbot
+    description: An artificial being of pure evil.

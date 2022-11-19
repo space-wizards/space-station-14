@@ -12,9 +12,9 @@
       - state: ai
   - type: ConditionalSpawner
     prototypes:
-      - MobMouse
-      - MobMouse1
-      - MobMouse2
+      - MobMouseGhostRole
+      - MobMouseGhostRole1
+      - MobMouseGhostRole2
 
 - type: entity
   name: Ian Spawner
@@ -214,4 +214,4 @@
       sprite: Mobs/Animals/bear.rsi
   - type: ConditionalSpawner
     prototypes:
-    - MobBearSpace
+    - MobBearSpaceGhostRole

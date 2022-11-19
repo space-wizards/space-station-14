@@ -32,22 +32,33 @@
   parent: MobSkeletonPerson
   id: MobSkeletonPirate
   components:
-  - type: GhostTakeoverAvailable
-    name: Skeleton Pirate
-    description: Cause chaos and loot the station for treasure.
   - type: Loadout
     prototypes: [PirateGear]
   - type: RandomHumanoidAppearance
 
+- type: entity
+  parent: MobSkeletonPirate
+  id: MobSkeletonPirateGhostRole
+  suffix: "Ghost Role"
+  components:
+  - type: GhostTakeoverAvailable
+    name: Skeleton Pirate
+    description: Cause chaos and loot the station for treasure.
 
 - type: entity
   name: Skeleton Biker
   parent: MobSkeletonPerson
   id: MobSkeletonBiker
   components:
-  - type: GhostTakeoverAvailable
-    name: Skeleton Biker
-    description: Ride around on your sweet ride.
   - type: Loadout
     prototypes: [SkeletonBiker]
   - type: RandomHumanoidAppearance
+
+- type: entity
+  parent: MobSkeletonBiker
+  id: MobSkeletonBikerGhostRole
+  suffix: "Ghost Role"
+  components:
+  - type: GhostTakeoverAvailable
+    name: Skeleton Biker
+    description: Ride around on your sweet ride.

@@ -130,7 +130,7 @@
 - type: entity
   id: MobCarpSalvage
   parent: MobCarp
-  suffix: "Salvage Ruleset"
+  suffix: "Ghost Role, Salvage Ruleset"
   components:
     - type: GhostTakeoverAvailable
       prob: 0.33
@@ -147,11 +147,18 @@
   suffix: DragonBrood
   parent: BaseMobCarp
   components:
+    - type: HTN
+      rootTask: DragonCarpCompound
+
+- type: entity
+  name: space carp
+  id: MobCarpDragonGhostRole
+  suffix: "DragonBrood, Ghost Role"
+  parent: MobCarpDragon
+  components:
     - type: GhostTakeoverAvailable
       allowMovement: true
       allowSpeech: true
       makeSentient: true
       name: Sentient Carp
       description: Help the dragon flood the station with carps!
-    - type: HTN
-      rootTask: DragonCarpCompound

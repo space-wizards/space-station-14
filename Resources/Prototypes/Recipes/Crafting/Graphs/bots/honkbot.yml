@@ -35,4 +35,4 @@
         name: borg arm
         doAfter: 2
   - node: bot
-    entity: MobHonkBot
+    entity: MobHonkBotGhostRole

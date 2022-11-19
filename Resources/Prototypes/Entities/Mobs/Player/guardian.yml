@@ -7,12 +7,6 @@
   save: false
   components:
     - type: LagCompensation
-    - type: GhostTakeoverAvailable
-      allowMovement: true
-      allowSpeech: true
-      makeSentient: true
-      name: Guardian
-      description: Listen to your owner. Don't tank damage. Punch people hard.
     - type: Input
       context: "human"
     - type: MobMover
@@ -97,6 +91,18 @@
       tags:
         - CannotSuicide
 
+- type: entity
+  id: MobGuardianGhostRole
+  parent: MobGuardianBase
+  suffix: "Ghost Role"
+  components:
+    - type: GhostTakeoverAvailable
+      allowMovement: true
+      allowSpeech: true
+      makeSentient: true
+      name: Guardian
+      description: Listen to your owner. Don't tank damage. Punch people hard.
+
 # From the uplink injector
 - type: entity
   name: Holoparasite
@@ -104,12 +110,6 @@
   parent: MobGuardianBase
   description: A mesmerising whirl of hard-light patterns weaves a marvelous, yet oddly familiar visage. It stands proud, tuning into its owner's life to sustain itself.
   components:
-    - type: GhostTakeoverAvailable
-      allowMovement: true
-      allowSpeech: true
-      makeSentient: true
-      name: Holoparasite
-      description: Listen to your owner. Don't tank damage. Punch people hard.
     - type: NameIdentifier
       group: Holoparasite
     - type: TypingIndicator
@@ -123,6 +123,18 @@
           color: "#40a7d7"
           shader: unshaded
 
+- type: entity
+  id: MobHoloparasiteGuardianGhostRole
+  parent: MobHoloparasiteGuardian
+  suffix: "Ghost Role"
+  components:
+    - type: GhostTakeoverAvailable
+      allowMovement: true
+      allowSpeech: true
+      makeSentient: true
+      name: Holoparasite
+      description: Listen to your owner. Don't tank damage. Punch people hard.
+
 # From Wizard deck of cards
 - type: entity
   name: Ifrit
@@ -130,12 +142,6 @@
   id: MobIfritGuardian
   description: A corrupted jinn, ripped from fitra to serve the wizard's petty needs. It stands wicked, tuning into it's owner's life to sustain itself.
   components:
-    - type: GhostTakeoverAvailable
-      allowMovement: true
-      allowSpeech: true
-      makeSentient: true
-      name: Ifrit
-      description: Listen to your owner. Don't tank damage. Punch people hard.
     - type: RandomSprite
       available:
         - enum.DamageStateVisualLayers.BaseUnshaded:
@@ -148,3 +154,15 @@
           map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
           color: "#40a7d7"
           shader: unshaded
+
+- type: entity
+  parent: MobIfritGuardian
+  id: MobIfritGuardianGhostRole
+  suffix: "Ghost Role"
+  components:
+    - type: GhostTakeoverAvailable
+      allowMovement: true
+      allowSpeech: true
+      makeSentient: true
+      name: Ifrit
+      description: Listen to your owner. Don't tank damage. Punch people hard.

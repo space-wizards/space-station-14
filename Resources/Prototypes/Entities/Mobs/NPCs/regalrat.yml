@@ -62,11 +62,6 @@
         Base: dead
   - type: Puller
     needsHands: false
-  - type: GhostTakeoverAvailable
-    makeSentient: true
-    name: Rat King
-    description: You are the Rat King, scavenge food in order to produce rat minions to do your bidding.
-    rules: You are an antagonist, scavenge, attack, and grow your hoard!
   - type: Tag
     tags:
       - CannotSuicide
@@ -112,6 +107,17 @@
     nameSegments:
     - RegalRatNameKingdom
     - RegalRatNameTitle
+
+- type: entity
+  id: MobRatKingGhostRole
+  parent: MobRatKing
+  suffix: "Ghost Role"
+  components:
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: Rat King
+    description: You are the Rat King, scavenge food in order to produce rat minions to do your bidding.
+    rules: You are an antagonist, scavenge, attack, and grow your hoard!
 
 - type: entity
   id: MobRatKingBuff

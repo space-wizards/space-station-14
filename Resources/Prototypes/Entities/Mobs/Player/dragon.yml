@@ -5,12 +5,6 @@
   suffix:
   description: A flying leviathan, loosely related to space carps.
   components:
-    - type: GhostTakeoverAvailable
-      allowMovement: true
-      allowSpeech: true
-      makeSentient: true
-      name: Space dragon
-      description: Call in 3 carp rifts and take over this quadrant! You have only 5 minutes in between each rift before you will disappear.
     - type: HTN
       rootTask: XenoCompound
     - type: Faction
@@ -100,7 +94,7 @@
           Slash: 15
     - type: Dragon
       spawnsLeft: 2
-      spawnsProto: MobCarpDragon
+      spawnsProto: MobCarpDragonGhostRole
       devourAction:
         event: !type:DragonDevourActionEvent
         icon: Interface/Actions/devour.png
@@ -122,3 +116,15 @@
         name: action-name-carp-rift
         description: action-description-carp-rift
         useDelay: 1
+
+- type: entity
+  parent: MobDragon
+  id: MobDragonGhostRole
+  suffix: "Ghost Role"
+  components:
+    - type: GhostTakeoverAvailable
+      allowMovement: true
+      allowSpeech: true
+      makeSentient: true
+      name: Space dragon
+      description: Call in 3 carp rifts and take over this quadrant! You have only 5 minutes in between each rift before you will disappear.
