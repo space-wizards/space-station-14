@@ -13,7 +13,7 @@
         implanter_slot: !type:ContainerSlot { }
     - type: Implanter
       currentMode: Draw
-      implantSlot:
+      implanterSlot:
         name: Implant
         priority: 0
         whitelist:
