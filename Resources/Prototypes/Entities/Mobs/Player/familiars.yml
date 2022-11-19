@@ -23,6 +23,7 @@
   parent: MobBatRemilia
   id: MobBatRemiliaGhostRole
   suffix: "Ghost Role"
+  components:
   - type: GhostTakeoverAvailable
     makeSentient: true
     allowMovement: true
