@@ -205,7 +205,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
     private void OnGetState(EntityUid uid, MeleeWeaponComponent component, ref ComponentGetState args)
     {
         args.State = new MeleeWeaponComponentState(component.AttackRate, component.Attacking, component.NextAttack,
-            component.WindUpStart);
+            component.WindUpStart, component.ClickAnimation, component.WideAnimation, component.Range);
     }
 
     private void OnHandleState(EntityUid uid, MeleeWeaponComponent component, ref ComponentHandleState args)
@@ -217,6 +217,10 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         component.AttackRate = state.AttackRate;
         component.NextAttack = state.NextAttack;
         component.WindUpStart = state.WindUpStart;
+
+        component.ClickAnimation = state.ClickAnimation;
+        component.WideAnimation = state.WideAnimation;
+        component.Range = state.Range;
     }
 
     public MeleeWeaponComponent? GetWeapon(EntityUid entity)

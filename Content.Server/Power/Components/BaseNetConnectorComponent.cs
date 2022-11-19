@@ -28,7 +28,7 @@ namespace Content.Server.Power.Components
         [ViewVariables]
         private bool _needsNet => _net != null;
 
-        [DataField("node")] [ViewVariables] public string? NodeId { get; set; }
+        [DataField("node")] public string? NodeId { get; set; }
 
         protected override void Initialize()
         {

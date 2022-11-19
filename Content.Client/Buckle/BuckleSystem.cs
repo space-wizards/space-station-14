@@ -64,7 +64,9 @@ namespace Content.Client.Buckle
 
         private void OnStrapHandleState(EntityUid uid, StrapComponent component, ref ComponentHandleState args)
         {
-            if (args.Current is not StrapComponentState state) return;
+            if (args.Current is not StrapComponentState state)
+                return;
+
             component.Position = state.Position;
             component.BuckleOffsetUnclamped = state.BuckleOffsetClamped;
             component.BuckledEntities.Clear();

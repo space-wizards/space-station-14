@@ -11,7 +11,6 @@ public abstract class SharedBuckleComponent : Component
     /// <summary>
     ///     The range from which this entity can buckle to a <see cref="SharedStrapComponent"/>.
     /// </summary>
-    [ViewVariables]
     [DataField("range")]
     public float Range { get; protected set; } = SharedInteractionSystem.InteractionRange / 1.4f;
 
