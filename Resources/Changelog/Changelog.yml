@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed players being unable to suppress their inner ballerina (fix player's
-      getting stuck with angular velocity. no more eternal spinning)., type: Fix}
-  id: 2182
-  time: '2022-08-23T11:59:47.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Shields no longer randomly break upon healing the user., type: Fix}
@@ -2946,3 +2940,8 @@ Entries:
   - {message: Fixed weird zombie attack animations., type: Fix}
   id: 2681
   time: '2022-11-19T16:07:09.0000000+00:00'
+- author: ODJ
+  changes:
+  - {message: Lighthouse Station, type: Remove}
+  id: 2682
+  time: '2022-11-20T04:34:38.0000000+00:00'
