@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -10,17 +11,26 @@ namespace Content.Shared.Mech.Components;
 public abstract class SharedMechComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
-    public ContainerSlot RiderSlot = default!;
+    public ContainerSlot PilotSlot = default!;
+
     [ViewVariables]
-    public readonly string RiderSlotId = "mech-rider-slot";
+    public readonly string PilotSlotId = "mech-pilot-slot";
 
     [ViewVariables(VVAccess.ReadWrite)]
     public bool Broken = false;
 
     [ViewVariables]
     public EntityUid? CurrentSelectedEquipment;
+
+    [DataField("maxEquipmentAmount")]
+    public int MaxEquipmentAmount = 3;
+
+    [DataField("equipmentWhitelist")]
+    public EntityWhitelist? EquipmentWhitelist;
+
     [ViewVariables(VVAccess.ReadWrite)]
     public Container EquipmentContainer = default!;
+
     [ViewVariables]
     public readonly string EquipmentContainerId = "mech-equipment-container";
 

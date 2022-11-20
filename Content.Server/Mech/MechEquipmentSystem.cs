@@ -31,7 +31,14 @@ public sealed class MechEquipmentSystem : EntitySystem
         if (!TryComp<MechComponent>(mech, out var mechComp))
             return;
 
-        //TODO: check for valid equipment here.
+        if (args.User == mechComp.PilotSlot.ContainedEntity)
+            return;
+
+        if (mechComp.EquipmentContainer.ContainedEntities.Count >= mechComp.MaxEquipmentAmount)
+            return;
+
+        if (mechComp.EquipmentWhitelist != null && !mechComp.EquipmentWhitelist.IsValid(uid))
+            return;
 
         _popup.PopupEntity(Loc.GetString("mech-equipment-begin-install", ("item", uid)), mech, Filter.Pvs(mech));
 
