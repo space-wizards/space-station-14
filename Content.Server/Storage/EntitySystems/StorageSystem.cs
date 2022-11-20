@@ -29,6 +29,7 @@ using Content.Shared.Destructible;
 using static Content.Shared.Storage.SharedStorageComponent;
 using Content.Shared.ActionBlocker;
 using Content.Shared.CombatMode;
+using Content.Shared.Implants.Components;
 using Content.Shared.Movement.Events;
 
 namespace Content.Server.Storage.EntitySystems
@@ -62,6 +63,7 @@ namespace Content.Server.Storage.EntitySystems
             SubscribeLocalEvent<ServerStorageComponent, GetVerbsEvent<UtilityVerb>>(AddTransferVerbs);
             SubscribeLocalEvent<ServerStorageComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<ServerStorageComponent, ActivateInWorldEvent>(OnActivate);
+            SubscribeLocalEvent<ServerStorageComponent, OpenStorageImplantEvent>(OnImplantActivate);
             SubscribeLocalEvent<ServerStorageComponent, AfterInteractEvent>(AfterInteract);
             SubscribeLocalEvent<ServerStorageComponent, DestructionEventArgs>(OnDestroy);
             SubscribeLocalEvent<ServerStorageComponent, StorageInteractWithItemEvent>(OnInteractWithItem);
@@ -275,6 +277,17 @@ namespace Content.Server.Storage.EntitySystems
                 return;
 
             OpenStorageUI(uid, args.User, storageComp);
+        }
+
+        /// <summary>
+        /// Specifically for storage implants.
+        /// </summary>
+        private void OnImplantActivate(EntityUid uid, ServerStorageComponent storageComp, OpenStorageImplantEvent args)
+        {
+            if (args.Handled || !TryComp<TransformComponent>(uid, out var xform))
+                return;
+
+            OpenStorageUI(uid, xform.ParentUid, storageComp);
         }
 
         /// <summary>

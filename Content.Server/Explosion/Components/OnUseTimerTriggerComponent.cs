@@ -1,3 +1,4 @@
+using Content.Shared.MobState;
 using Robust.Shared.Audio;
 
 namespace Content.Server.Explosion.Components

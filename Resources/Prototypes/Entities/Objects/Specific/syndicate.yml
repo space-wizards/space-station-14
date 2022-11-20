@@ -70,9 +70,9 @@
     key: enum.StoreUiKey.Key
   - type: Store
     preset: StorePresetUplink
-    balance: 
+    balance:
       Telecrystal: 0
-  
+
 - type: entity
   parent: BaseUplinkRadio
   id: BaseUplinkRadio20TC
@@ -82,6 +82,9 @@
     preset: StorePresetUplink
     balance:
       Telecrystal: 20
+  - type: Tag
+    tags:
+      - TraitorUplink
 
 - type: entity
   parent: BaseUplinkRadio
@@ -92,6 +95,9 @@
     preset: StorePresetUplink
     balance:
       Telecrystal: 25
+  - type: Tag
+    tags:
+      - TraitorUplink
 
 #this uplink MUST be used for nukeops, as it has the tag for filtering the listing.
 - type: entity
