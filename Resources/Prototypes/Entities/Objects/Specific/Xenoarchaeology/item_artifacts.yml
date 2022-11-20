@@ -17,7 +17,6 @@
   - type: Damageable
   - type: Physics
     bodyType: Dynamic
-    canCollide: true
   - type: CollisionWake
     enabled: false
   - type: InteractionOutline
