@@ -121,7 +121,8 @@ namespace Content.Server.Zombies
             var melee = EnsureComp<MeleeWeaponComponent>(target);
             melee.ClickAnimation = zombiecomp.AttackAnimation;
             melee.WideAnimation = zombiecomp.AttackAnimation;
-            melee.Range = 0.75f;
+            melee.Range = 1.5f;
+            Dirty(melee);
 
             //We have specific stuff for humanoid zombies because they matter more
             if (TryComp<HumanoidComponent>(target, out var huApComp)) //huapcomp
@@ -170,8 +171,8 @@ namespace Content.Server.Zombies
                 _damageable.SetAllDamage(damageablecomp, 0);
 
             //gives it the funny "Zombie ___" name.
-            if (TryComp<MetaDataComponent>(target, out var meta))
-                meta.EntityName = Loc.GetString("zombie-name-prefix", ("target", meta.EntityName));
+            var meta = MetaData(target);
+            meta.EntityName = Loc.GetString("zombie-name-prefix", ("target", meta.EntityName));
 
             _identity.QueueIdentityUpdate(target);
 

@@ -38,7 +38,7 @@ public sealed class MeleeOperator : HTNOperator
         CancellationToken cancelToken)
     {
         // Don't attack if they're already as wounded as we want them.
-        if (!blackboard.TryGetValue<EntityUid>(TargetKey, out var target))
+        if (!blackboard.TryGetValue<EntityUid>(TargetKey, out var target, _entManager))
         {
             return (false, null);
         }
