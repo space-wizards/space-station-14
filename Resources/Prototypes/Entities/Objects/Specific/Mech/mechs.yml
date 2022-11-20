@@ -10,11 +10,15 @@
     sprite: Objects/Specific/Mech/mecha.rsi
     layers:
     - map: [ "enum.MechVisualLayers.Base" ]
-      state: gygax
+      state: ripley
   - type: Mech
-    baseState: gygax
-    openState: gygax-open
-    brokenState: gygax-broken
+    baseState: ripley
+    openState: ripley-open
+    brokenState: ripley-broken
+  - type: UserInterface
+    interfaces:
+    - key: enum.MechUiKey.Key
+      type: MechBoundUserInterface
   - type: Puller
     needsHands: false
   - type: InputMover
@@ -51,11 +55,11 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 300
+        damage: 1000
       behaviors:
-      - !type:DoActsBehavior #don't do this, actually
+      - !type:DoActsBehavior
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
           path: /Audio/Effects/metalbreak.ogg
-      #- !type:ExplodeBehavior
+      - !type:ExplodeBehavior

@@ -6,3 +6,5 @@ mech-equipment-finish-install = Finished installing the {THE($item)}.
 
 mech-equipment-select-popup = {$item} selected.
 mech-equipment-select-none-popup = Nothing selected.
+
+mech-ui-open-verb = Open control panel.

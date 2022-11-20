@@ -1,0 +1,15 @@
+- type: instantAction
+  id: MechToggleEquipment
+  name: toggle
+  description: Toggle currently selected equipment
+  itemIconStyle: NoItem
+  icon: Objects/Consumable/Food/egg.rsi/icon.png
+  event: !type:MechToggleEquipmentEvent
+
+- type: instantAction
+  id: MechOpenUI
+  name: Open Control Panel
+  description: Opens the control panel for the mech.
+  itemIconStyle: NoItem
+  icon: Objects/Consumable/Food/egg.rsi/icon.png
+  event: !type:MechOpenUiEvent

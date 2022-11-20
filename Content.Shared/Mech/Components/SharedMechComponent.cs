@@ -10,14 +10,21 @@ namespace Content.Shared.Mech.Components;
 //TODO: make some fucking network replication
 public abstract class SharedMechComponent : Component
 {
+    //TODO: implement integrity
+    [ViewVariables(VVAccess.ReadWrite)]
+    public float Integrity;
+
+    [DataField("maxIntegrity")]
+    public float MaxIntegrity = 300;
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    public bool Broken = false;
+
     [ViewVariables(VVAccess.ReadWrite)]
     public ContainerSlot PilotSlot = default!;
 
     [ViewVariables]
     public readonly string PilotSlotId = "mech-pilot-slot";
-
-    [ViewVariables(VVAccess.ReadWrite)]
-    public bool Broken = false;
 
     [ViewVariables]
     public EntityUid? CurrentSelectedEquipment;
@@ -36,6 +43,9 @@ public abstract class SharedMechComponent : Component
 
     [DataField("mechToggleAction", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
     public string MechToggleAction = "MechToggleEquipment";
+
+    [DataField("mechUiAction", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
+    public string MechUiAction = "MechOpenUI";
 
     #region Visualizer States
     [DataField("baseState")]
@@ -61,6 +71,11 @@ public enum MechVisualLayers : byte
 }
 
 public sealed class MechToggleEquipmentEvent : InstantActionEvent
+{
+
+}
+
+public sealed class MechOpenUiEvent : InstantActionEvent
 {
 
 }

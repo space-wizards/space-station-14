@@ -10,7 +10,6 @@ using Content.Shared.Mech.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
-using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -37,13 +36,11 @@ public abstract class SharedMechSystem : EntitySystem
 
         SubscribeLocalEvent<SharedMechComponent, InteractNoHandEvent>(RelayInteractionEvent);
         SubscribeLocalEvent<SharedMechComponent, ComponentStartup>(OnStartup);
-        SubscribeLocalEvent<SharedMechComponent, GetVerbsEvent<AlternativeVerb>>(OnAlternativeVerb);
         SubscribeLocalEvent<SharedMechComponent, DestructionEventArgs>(OnDestruction);
     }
 
     private void OnToggleEquipmentAction(EntityUid uid, SharedMechComponent component, MechToggleEquipmentEvent args)
     {
-        Logger.Debug("okay got the event");
         CycleEquipment(uid);
     }
 
@@ -52,32 +49,6 @@ public abstract class SharedMechSystem : EntitySystem
         foreach (var module in component.EquipmentContainer.ContainedEntities)
         {
             RaiseLocalEvent(module, args);
-        }
-    }
-
-    private void OnAlternativeVerb(EntityUid uid, SharedMechComponent component, GetVerbsEvent<AlternativeVerb> args)
-    {
-        if (!args.CanAccess || !args.CanInteract)
-            return;
-
-        if (CanInsert(uid, args.User, component))
-        {
-            var v = new AlternativeVerb
-            {
-                Act = () => TryInsert(uid, args.User, component),
-                Text = Loc.GetString("mech-verb-enter")
-            };
-            args.Verbs.Add(v);
-        }
-        else if (!IsEmpty(component))
-        {
-            var v = new AlternativeVerb
-            {
-                Act = () => TryEject(uid, component),
-                Text = Loc.GetString("mech-verb-exit"),
-                Priority = 1 // Promote to top to make ejecting the ALT-click action
-            };
-            args.Verbs.Add(v);
         }
     }
 
@@ -108,8 +79,8 @@ public abstract class SharedMechSystem : EntitySystem
         _interaction.SetRelay(pilot, mech, irelay);
         rider.Mech = mech;
 
-        var action = _prototype.Index<InstantActionPrototype>(component.MechToggleAction);
-        _actions.AddAction(pilot, new InstantAction(action), mech);
+        _actions.AddAction(pilot, new InstantAction(_prototype.Index<InstantActionPrototype>(component.MechToggleAction)), mech);
+        _actions.AddAction(pilot, new InstantAction(_prototype.Index<InstantActionPrototype>(component.MechUiAction)), mech);
     }
 
     private void RemoveUser(EntityUid mech, EntityUid pilot)

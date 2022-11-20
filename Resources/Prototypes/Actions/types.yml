@@ -93,11 +93,3 @@
   icon: Objects/Consumable/Food/egg.rsi/icon.png
   checkCanInteract: false
   event: !type:WakeActionEvent
-
-- type: instantAction
-  id: MechToggleEquipment
-  name: toggle
-  description: Toggle currently selected equipment
-  itemIconStyle: NoItem
-  icon: Objects/Consumable/Food/egg.rsi/icon.png
-  event: !type:MechToggleEquipmentEvent
