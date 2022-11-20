@@ -381,9 +381,6 @@
   id: NoSpinOnThrow
 
 - type: Tag
-  id: TraitorUplink
-
-- type: Tag
   id: NoBlockAnchoring
 
 - type: Tag
