@@ -220,7 +220,8 @@
       - VoiceTrigger
       - PowerCellSmall
       - PowerCellMedium
-      - PowerCellHigh
+      - PowerCellHigh  
+      - RPED
       - ProximitySensor
       - LeftArmBorg
       - RightArmBorg
