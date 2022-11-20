@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Shields no longer randomly break upon healing the user., type: Fix}
-  id: 2183
-  time: '2022-08-23T12:00:06.0000000+00:00'
 - author: martin69420
   changes:
   - {message: Added wall lockers, type: Add}
@@ -2945,3 +2940,22 @@ Entries:
   - {message: Lighthouse Station, type: Remove}
   id: 2682
   time: '2022-11-20T04:34:38.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: 'Subdermal Implants and Implanters have been added! Subdermal Implants
+      give the user a variety of functions and can either be a passive type (something
+      consistently happens), a reactive type (something happens on death), and/or
+      an activation type (something happens on button press). Implanters handle implants/removals.',
+    type: Add}
+  - {message: Macro Bomb implants have been added to the nuclear operative uplink.
+      They make a massive explosion upon death., type: Add}
+  - {message: Freedom and Storage implants have been added to the traitor uplink.
+      Freedom implants are limited use and allow you to break out of cuffs. Storage
+      implants allow you to store an item in hidden storage., type: Add}
+  - {message: 'Sad Trombone implant was added to clowns on spawn. If they die, a sad
+      tune planes.', type: Add}
+  - {message: Tracking implants have been added to cargo under armory. They'll track
+      whoever's been implanted via the suit sensor network, type: Add}
+  - {message: Implanters have been added to the medical lathe., type: Add}
+  id: 2683
+  time: '2022-11-20T06:49:37.0000000+00:00'
