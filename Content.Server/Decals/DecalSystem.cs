@@ -69,9 +69,15 @@ namespace Content.Server.Decals
             if (value)
                 return;
 
-            foreach (var grid in EntityQuery<DecalGridComponent>(true))
+            foreach (var playerData in _previousSentChunks.Values)
             {
-                Dirty(grid);
+                playerData.Clear();
+            }
+
+            foreach (var (grid, meta) in EntityQuery<DecalGridComponent, MetaDataComponent>(true))
+            {
+                grid.ForceTick = _timing.CurTick;
+                Dirty(grid, meta);
             }
         }
 
@@ -81,7 +87,7 @@ namespace Content.Server.Decals
                 return;
 
             // Should this be a full component state or a delta-state?
-            if (args.FromTick <= component.CreationTick)
+            if (args.FromTick <= component.CreationTick && args.FromTick > component.ForceTick)
             {
                 args.State = new DecalGridState(component.ChunkCollection.ChunkCollection);
                 return;
@@ -465,9 +471,13 @@ namespace Content.Server.Decals
                 return;
             }
 
-            var players = _playerManager.ServerSessions.Where(x => x.Status == SessionStatus.InGame).ToArray();
-            var opts = new ParallelOptions { MaxDegreeOfParallelism = _parMan.ParallelProcessCount };
-            Parallel.ForEach(players, opts, UpdatePlayer);
+            if (_pvsEnabled)
+            {
+                var players = _playerManager.ServerSessions.Where(x => x.Status == SessionStatus.InGame).ToArray();
+                var opts = new ParallelOptions { MaxDegreeOfParallelism = _parMan.ParallelProcessCount };
+                Parallel.ForEach(players, opts, UpdatePlayer);
+            }
+
             _dirtyChunks.Clear();
         }
 

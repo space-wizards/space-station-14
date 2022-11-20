@@ -14,6 +14,11 @@ namespace Content.Shared.Decals
         [DataField("chunkCollection", serverOnly: true)]
         public DecalGridChunkCollection ChunkCollection = new(new ());
 
+        /// <summary>
+        ///     Tick at which PVS was last toggled. Ensures that all players receive a full update when toggling PVS.
+        /// </summary>
+        public GameTick ForceTick { get; set; }
+
         [DataDefinition]
         [Serializable, NetSerializable]
         public sealed class DecalChunk
