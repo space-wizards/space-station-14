@@ -1,0 +1,5 @@
+- type: emoteSounds
+  id: MaleHuman
+  sounds:
+    - Scream:
+        collection: MaleScreams

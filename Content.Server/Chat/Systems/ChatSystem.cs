@@ -66,6 +66,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     public override void Initialize()
     {
         InitializeRadio();
+        InitializeEmotes();
         _configurationManager.OnValueChanged(CCVars.LoocEnabled, OnLoocEnabledChanged, true);
         _configurationManager.OnValueChanged(CCVars.DeadLoocEnabled, OnDeadLoocEnabledChanged, true);
 
@@ -75,6 +76,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     public override void Shutdown()
     {
         ShutdownRadio();
+        ShutdownEmotes();
         _configurationManager.UnsubValueChanged(CCVars.LoocEnabled, OnLoocEnabledChanged);
     }
 

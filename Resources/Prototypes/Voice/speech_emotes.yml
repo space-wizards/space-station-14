@@ -1,0 +1,6 @@
+- type: emote
+  id: Scream
+  words:
+    - scream
+    - screams
+    - screaming
