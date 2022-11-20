@@ -151,7 +151,7 @@ namespace Content.Client.Light
 
         private void ResetOriginalColors(EntityUid uid, RgbLightControllerComponent? rgb = null, PointLightComponent? light = null, SpriteComponent? sprite = null)
         {
-            if (!Resolve(uid, ref rgb, ref sprite, ref light))
+            if (!Resolve(uid, ref rgb, ref sprite, ref light, false))
                 return;
 
             light.Color = rgb.OriginalLightColor;

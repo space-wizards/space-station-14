@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using NUnit.Framework;
+using Robust.Server.GameObjects;
 using Robust.Server.Maps;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;
@@ -20,9 +21,9 @@ namespace Content.IntegrationTests.Tests
 
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
             var server = pairTracker.Pair.Server;
-            var mapLoader = server.ResolveDependency<IMapLoader>();
             var mapManager = server.ResolveDependency<IMapManager>();
             var sEntities = server.ResolveDependency<IEntityManager>();
+            var mapLoader = sEntities.System<MapLoaderSystem>();
             var resManager = server.ResolveDependency<IResourceManager>();
 
             await server.WaitPost(() =>

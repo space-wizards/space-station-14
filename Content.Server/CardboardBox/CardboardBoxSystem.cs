@@ -54,7 +54,7 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
         foreach (var mover in mobMover)
         {
             //Set the movement relay for the box as the first mob
-            if (component.Mover == null && args.Contents.Contains(mover))
+            if (component.Mover == null)
             {
                 var relay = EnsureComp<RelayInputMoverComponent>(mover);
                 _mover.SetRelay(mover, uid, relay);
