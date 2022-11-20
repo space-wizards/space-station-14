@@ -202,6 +202,14 @@ public sealed class AtmosAlarmThreshold : IPrototype, ISerializationHooks
     // enforce that LowerBound <= LowerWarningBound <= UpperWarningBound <= UpperBound
     public void SetLimit(AtmosMonitorLimitType whichLimit, float limit)
     {
+        if (limit <= 0)
+        {
+            // Unit tests expect that setting value of 0 or less should not change the limit.
+            // Feels a bit strange, but does avoid a bug where the warning data (stored as a
+            // percentage of danger bounds) is lost when setting the danger threshold to zero
+            return;
+        }
+
         switch (whichLimit)
         {
             case AtmosMonitorLimitType.LowerDanger:
