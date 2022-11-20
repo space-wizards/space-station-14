@@ -381,6 +381,9 @@
   id: NoSpinOnThrow
 
 - type: Tag
+  id: TraitorUplink
+
+- type: Tag
   id: NoBlockAnchoring
 
 - type: Tag
@@ -394,6 +397,12 @@
 
 - type: Tag
   id: Payload # for grenade/bomb crafting
+
+- type: Tag
+  id: MacroBomb
+
+- type: Tag
+  id: MicroBomb
 
 - type: Tag
   id: PaintableAirlock
@@ -582,3 +591,5 @@
 - type: Tag
   id: Write
 
+- type: Tag
+  id: SubdermalImplant
