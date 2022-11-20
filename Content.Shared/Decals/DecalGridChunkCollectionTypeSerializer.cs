@@ -1,3 +1,4 @@
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Markdown;
 using Robust.Shared.Serialization.Markdown.Mapping;
@@ -15,10 +16,12 @@ namespace Content.Shared.Decals
             return serializationManager.ValidateNode<Dictionary<Vector2i, Dictionary<uint, Decal>>>(node, context);
         }
 
-        public DecalGridComponent.DecalGridChunkCollection Read(ISerializationManager serializationManager, MappingDataNode node,
-            IDependencyCollection dependencies, bool skipHook, ISerializationContext? context = null, DecalGridComponent.DecalGridChunkCollection? _ = null)
+        public DecalGridComponent.DecalGridChunkCollection Read(ISerializationManager serializationManager,
+            MappingDataNode node,
+            IDependencyCollection dependencies, SerializationHookContext hookCtx,
+            ISerializationContext? context = null, DecalGridComponent.DecalGridChunkCollection? _ = default)
         {
-            var dictionary = serializationManager.Read<Dictionary<Vector2i, Dictionary<uint, Decal>>>(node, context, skipHook: skipHook);
+            var dictionary = serializationManager.Read<Dictionary<Vector2i, Dictionary<uint, Decal>>>(node, hookCtx, context);
 
             var uids = new SortedSet<uint>();
             var uidChunkMap = new Dictionary<uint, Vector2i>();
@@ -58,11 +61,13 @@ namespace Content.Shared.Decals
             return serializationManager.WriteValue(value.ChunkCollection, alwaysWrite, context);
         }
 
-        public DecalGridComponent.DecalGridChunkCollection Copy(ISerializationManager serializationManager, DecalGridComponent.DecalGridChunkCollection source,
-            DecalGridComponent.DecalGridChunkCollection target, bool skipHook, ISerializationContext? context = null)
+        public DecalGridComponent.DecalGridChunkCollection Copy(ISerializationManager serializationManager,
+            DecalGridComponent.DecalGridChunkCollection source,
+            DecalGridComponent.DecalGridChunkCollection target, SerializationHookContext hookCtx,
+            ISerializationContext? context = null)
         {
             var dict = target.ChunkCollection;
-            serializationManager.Copy(source.ChunkCollection, ref dict, context, skipHook);
+            serializationManager.Copy(source.ChunkCollection, ref dict, hookCtx, context);
             return new DecalGridComponent.DecalGridChunkCollection(dict) {NextUid = source.NextUid};
         }
     }

@@ -1,4 +1,5 @@
 using Robust.Shared.Reflection;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Markdown;
 using Robust.Shared.Serialization.Markdown.Mapping;
@@ -45,8 +46,10 @@ public sealed class NPCBlackboardSerializer : ITypeReader<NPCBlackboard, Mapping
         return new ValidatedSequenceNode(validated);
     }
 
-    public NPCBlackboard Read(ISerializationManager serializationManager, MappingDataNode node, IDependencyCollection dependencies,
-        bool skipHook, ISerializationContext? context = null, NPCBlackboard? value = default)
+    public NPCBlackboard Read(ISerializationManager serializationManager, MappingDataNode node,
+        IDependencyCollection dependencies,
+        SerializationHookContext hookCtx, ISerializationContext? context = null,
+        NPCBlackboard? value = default)
     {
         value ??= new NPCBlackboard();
 
@@ -66,7 +69,7 @@ public sealed class NPCBlackboardSerializer : ITypeReader<NPCBlackboard, Mapping
                 if (!reflection.TryLooseGetType(typeString, out var type))
                     throw new NullReferenceException($"Found null type for {key}");
 
-                var bbData = serializationManager.Read(type, data.Value, context, skipHook);
+                var bbData = serializationManager.Read(type, data.Value, hookCtx, context);
 
                 if (bbData == null)
                     throw new NullReferenceException($"Found null data for {key}, expected {type}");

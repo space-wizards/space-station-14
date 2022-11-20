@@ -1,6 +1,7 @@
 using Content.Server.Storage.Components;
 using Content.Shared.Storage;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Markdown;
 using Robust.Shared.Serialization.Markdown.Mapping;
@@ -62,26 +63,24 @@ public sealed class ContainerFillSerializer : ITypeSerializer<Dictionary<string,
         return new ValidatedMappingNode(mapping);
     }
 
-    public Dictionary<string, List<string>> Copy(
-        ISerializationManager serializationManager,
+    public Dictionary<string, List<string>> Copy(ISerializationManager serializationManager,
         Dictionary<string, List<string>> source,
         Dictionary<string, List<string>> target,
-        bool skipHook,
+        SerializationHookContext hookCtx,
         ISerializationContext? context = null)
     {
-        serializationManager.Copy(source, ref target, context, skipHook);
+        serializationManager.Copy(source, ref target, hookCtx, context);
         return target;
     }
 
-    public Dictionary<string, List<string>> Read(
-        ISerializationManager serializationManager,
+    public Dictionary<string, List<string>> Read(ISerializationManager serializationManager,
         MappingDataNode node,
         IDependencyCollection dependencies,
-        bool skipHook,
+        SerializationHookContext hookCtx,
         ISerializationContext? context = null,
-        Dictionary<string, List<string>>? value = null)
+        Dictionary<string, List<string>>? value = default)
     {
-        return serializationManager.Read(node, context, skipHook, value);
+        return serializationManager.Read(node, hookCtx, context, value);
     }
 
     public DataNode Write(ISerializationManager serializationManager,

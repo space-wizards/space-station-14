@@ -1,5 +1,6 @@
 using Content.Server.NPC.HTN.PrimitiveTasks;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Markdown;
 using Robust.Shared.Serialization.Markdown.Mapping;
@@ -39,8 +40,9 @@ public sealed class HTNTaskListSerializer : ITypeSerializer<List<string>, Sequen
         return new ValidatedSequenceNode(list);
     }
 
-    public List<string> Read(ISerializationManager serializationManager, SequenceDataNode node, IDependencyCollection dependencies,
-        bool skipHook, ISerializationContext? context = null, List<string>? value = default)
+    public List<string> Read(ISerializationManager serializationManager, SequenceDataNode node,
+        IDependencyCollection dependencies,
+        SerializationHookContext hookCtx, ISerializationContext? context = null, List<string>? value = default)
     {
         value ??= new List<string>();
         foreach (var data in node.Sequence)
@@ -73,7 +75,8 @@ public sealed class HTNTaskListSerializer : ITypeSerializer<List<string>, Sequen
         return sequence;
     }
 
-    public List<string> Copy(ISerializationManager serializationManager, List<string> source, List<string> target, bool skipHook,
+    public List<string> Copy(ISerializationManager serializationManager, List<string> source, List<string> target,
+        SerializationHookContext hookCtx,
         ISerializationContext? context = null)
     {
         target.Clear();

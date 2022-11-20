@@ -10,6 +10,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Markdown;
 using Robust.Shared.Serialization.Markdown.Mapping;
@@ -243,14 +244,14 @@ public sealed class PrototypeSaveTest
         EntityUid ITypeReader<EntityUid, ValueDataNode>.Read(ISerializationManager serializationManager,
             ValueDataNode node,
             IDependencyCollection dependencies,
-            bool skipHook,
-            ISerializationContext? context, EntityUid _)
+            SerializationHookContext hookCtx,
+            ISerializationContext? context, EntityUid _ = default)
         {
             return EntityUid.Invalid;
         }
 
         public EntityUid Copy(ISerializationManager serializationManager, EntityUid source, EntityUid target,
-            bool skipHook,
+            SerializationHookContext hookCtx,
             ISerializationContext? context = null)
         {
             return new((int) source);

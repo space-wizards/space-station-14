@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Serialization.Manager;
+﻿using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Markdown;
 using Robust.Shared.Serialization.Markdown.Validation;
 using Robust.Shared.Serialization.Markdown.Value;
@@ -24,16 +25,18 @@ public sealed class CartridgeUISerializer : ITypeSerializer<CartridgeUI, ValueDa
         return serializationManager.ValidateNode<CartridgeUI>(node, context);
     }
 
-    public CartridgeUI Read(ISerializationManager serializationManager, ValueDataNode node, IDependencyCollection dependencies,
-        bool skipHook, ISerializationContext? context = null, CartridgeUI? value = default)
+    public CartridgeUI Read(ISerializationManager serializationManager, ValueDataNode node,
+        IDependencyCollection dependencies,
+        SerializationHookContext hookCtx, ISerializationContext? context = null, CartridgeUI? value = default)
     {
-        return serializationManager.Read(node, context, skipHook, value);
+        return serializationManager.Read(node, hookCtx, context, value);
     }
 
-    public CartridgeUI Copy(ISerializationManager serializationManager, CartridgeUI source, CartridgeUI target, bool skipHook,
+    public CartridgeUI Copy(ISerializationManager serializationManager, CartridgeUI source, CartridgeUI target,
+        SerializationHookContext hookCtx,
         ISerializationContext? context = null)
     {
-        return serializationManager.Copy(source, context, skipHook);
+        return serializationManager.Copy(source, hookCtx, context);
     }
 
     public DataNode Write(ISerializationManager serializationManager, CartridgeUI value, IDependencyCollection dependencies,

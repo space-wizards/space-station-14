@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Serialization.Manager;
+﻿using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Markdown;
 using Robust.Shared.Serialization.Markdown.Mapping;
 using Robust.Shared.Serialization.Markdown.Validation;
@@ -14,10 +15,12 @@ public sealed class TileAtmosCollectionSerializer : ITypeSerializer<Dictionary<V
         return serializationManager.ValidateNode<TileAtmosData>(node, context);
     }
 
-    public Dictionary<Vector2i, TileAtmosphere> Read(ISerializationManager serializationManager, MappingDataNode node, IDependencyCollection dependencies,
-        bool skipHook, ISerializationContext? context = null, Dictionary<Vector2i, TileAtmosphere>? value = default)
+    public Dictionary<Vector2i, TileAtmosphere> Read(ISerializationManager serializationManager, MappingDataNode node,
+        IDependencyCollection dependencies,
+        SerializationHookContext hookCtx, ISerializationContext? context = null,
+        Dictionary<Vector2i, TileAtmosphere>? value = default)
     {
-        var data = serializationManager.Read<TileAtmosData>(node, context, skipHook);
+        var data = serializationManager.Read<TileAtmosData>(node, hookCtx, context);
         var tiles = new Dictionary<Vector2i, TileAtmosphere>();
         if (data.TilesUniqueMixes != null)
         {
@@ -72,10 +75,12 @@ public sealed class TileAtmosCollectionSerializer : ITypeSerializer<Dictionary<V
         }, alwaysWrite, context);
     }
 
-    public Dictionary<Vector2i, TileAtmosphere> Copy(ISerializationManager serializationManager, Dictionary<Vector2i, TileAtmosphere> source, Dictionary<Vector2i, TileAtmosphere> target, bool skipHook,
+    public Dictionary<Vector2i, TileAtmosphere> Copy(ISerializationManager serializationManager,
+        Dictionary<Vector2i, TileAtmosphere> source, Dictionary<Vector2i, TileAtmosphere> target,
+        SerializationHookContext hookCtx,
         ISerializationContext? context = null)
     {
-        serializationManager.Copy(source, ref target, context, skipHook);
+        serializationManager.Copy(source, ref target, hookCtx, context);
         return target;
     }
 
