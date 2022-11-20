@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
+using Content.Shared.Item;
 using Content.Shared.Xenoarchaeology.XenoArtifacts;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -20,7 +21,7 @@ public sealed partial class ArtifactSystem
     /// </summary>
     /// <param name="tree">The tree being generated.</param>
     /// <param name="nodeAmount">The amount of nodes it has.</param>
-    private void GenerateArtifactNodeTree(ref ArtifactTree tree, int nodeAmount)
+    private void GenerateArtifactNodeTree(EntityUid artifact, ref ArtifactTree tree, int nodeAmount)
     {
         if (nodeAmount < 1)
         {
@@ -33,14 +34,14 @@ public sealed partial class ArtifactSystem
 
         while (uninitializedNodes.Any())
         {
-            GenerateNode(ref uninitializedNodes, ref tree, nodeAmount);
+            GenerateNode(artifact, ref uninitializedNodes, ref tree, nodeAmount);
         }
     }
 
     /// <summary>
     /// Generate an individual node on the tree.
     /// </summary>
-    private void GenerateNode(ref List<ArtifactNode> uninitializedNodes, ref ArtifactTree tree, int targetNodeAmount)
+    private void GenerateNode(EntityUid artifact, ref List<ArtifactNode> uninitializedNodes, ref ArtifactTree tree, int targetNodeAmount)
     {
         if (!uninitializedNodes.Any())
             return;
@@ -69,8 +70,8 @@ public sealed partial class ArtifactSystem
             uninitializedNodes.Add(neighbor);
         }
 
-        node.Trigger = GetRandomTrigger(ref node);
-        node.Effect = GetRandomEffect(ref node);
+        node.Trigger = GetRandomTrigger(artifact, ref node);
+        node.Effect = GetRandomEffect(artifact, ref node);
 
         tree.AllNodes.Add(node);
     }
@@ -78,28 +79,31 @@ public sealed partial class ArtifactSystem
     //yeah these two functions are near duplicates but i don't
     //want to implement an interface or abstract parent
 
-    private ArtifactTriggerPrototype GetRandomTrigger(ref ArtifactNode node)
+    private ArtifactTriggerPrototype GetRandomTrigger(EntityUid artifact, ref ArtifactNode node)
     {
         var allTriggers = _prototype.EnumeratePrototypes<ArtifactTriggerPrototype>().ToList();
         var validDepth = allTriggers.Select(x => x.TargetDepth).Distinct().ToList();
 
         var weights = GetDepthWeights(validDepth, node.Depth);
         var selectedRandomTargetDepth = GetRandomTargetDepth(weights);
-        var targetTriggers = allTriggers.Where(x =>
-            x.TargetDepth == selectedRandomTargetDepth).ToList();
+        var targetTriggers = allTriggers
+            .Where(x => x.TargetDepth == selectedRandomTargetDepth)
+            .Where(x => (x.Whitelist?.IsValid(artifact, EntityManager) ?? true) && (!x.Blacklist?.IsValid(artifact, EntityManager) ?? true)).ToList();
+
 
         return _random.Pick(targetTriggers);
     }
 
-    private ArtifactEffectPrototype GetRandomEffect(ref ArtifactNode node)
+    private ArtifactEffectPrototype GetRandomEffect(EntityUid artifact, ref ArtifactNode node)
     {
         var allEffects = _prototype.EnumeratePrototypes<ArtifactEffectPrototype>().ToList();
         var validDepth = allEffects.Select(x => x.TargetDepth).Distinct().ToList();
 
         var weights = GetDepthWeights(validDepth, node.Depth);
         var selectedRandomTargetDepth = GetRandomTargetDepth(weights);
-        var targetEffects = allEffects.Where(x =>
-            x.TargetDepth == selectedRandomTargetDepth).ToList();
+        var targetEffects = allEffects
+            .Where(x => x.TargetDepth == selectedRandomTargetDepth)
+            .Where(x => (x.Whitelist?.IsValid(artifact, EntityManager) ?? true) && (!x.Blacklist?.IsValid(artifact, EntityManager) ?? true)).ToList();
 
         return _random.Pick(targetEffects);
     }
@@ -164,11 +168,22 @@ public sealed partial class ArtifactSystem
         foreach (var (name, entry) in allComponents)
         {
             var reg = _componentFactory.GetRegistration(name);
+
+            if (EntityManager.HasComponent(uid, reg.Type))
+            {
+                // Don't re-add permanent components
+                if (node.Effect.PermanentComponents.ContainsKey(name))
+                    continue;
+
+                EntityManager.RemoveComponent(uid, reg.Type);
+            }
+
             var comp = (Component) _componentFactory.GetComponent(reg);
             comp.Owner = uid;
 
             var temp = (object) comp;
             _serialization.Copy(entry.Component, ref temp);
+
             EntityManager.AddComponent(uid, (Component) temp!, true);
         }
 

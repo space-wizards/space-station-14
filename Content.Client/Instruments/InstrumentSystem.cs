@@ -265,7 +265,7 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
             instrument.SequenceStartTick = midiEv.MidiEvent.Min(x => x.Tick) - 1;
         }
 
-        var sqrtLag = MathF.Sqrt(_netManager.ServerChannel!.Ping / 1000f);
+        var sqrtLag = MathF.Sqrt((_netManager.ServerChannel?.Ping ?? 0)/ 1000f);
         var delay = (uint) (renderer.SequencerTimeScale * (.2 + sqrtLag));
         var delta = delay - instrument.SequenceStartTick;
 

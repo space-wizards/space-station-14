@@ -205,7 +205,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
     private void OnGetState(EntityUid uid, MeleeWeaponComponent component, ref ComponentGetState args)
     {
         args.State = new MeleeWeaponComponentState(component.AttackRate, component.Attacking, component.NextAttack,
-            component.WindUpStart);
+            component.WindUpStart, component.ClickAnimation, component.WideAnimation, component.Range);
     }
 
     private void OnHandleState(EntityUid uid, MeleeWeaponComponent component, ref ComponentHandleState args)
@@ -217,6 +217,10 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         component.AttackRate = state.AttackRate;
         component.NextAttack = state.NextAttack;
         component.WindUpStart = state.WindUpStart;
+
+        component.ClickAnimation = state.ClickAnimation;
+        component.WideAnimation = state.WideAnimation;
+        component.Range = state.Range;
     }
 
     public MeleeWeaponComponent? GetWeapon(EntityUid entity)
@@ -557,7 +561,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
         if (appliedDamage.Total > FixedPoint2.Zero)
         {
-            RaiseNetworkEvent(new DamageEffectEvent(Color.Red, targets), Filter.Pvs(Transform(targets[0]).Coordinates, entityMan: EntityManager));
+            DoDamageEffect(targets, user, Transform(targets[0]));
         }
     }
 
@@ -635,14 +639,14 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
                 case "Burn":
                 case "Heat":
                 case "Cold":
-                    Audio.PlayPvs(new SoundPathSpecifier("/Audio/Items/welder.ogg"), target, AudioParams.Default.WithVariation(DamagePitchVariation));
+                    Audio.PlayPredicted(new SoundPathSpecifier("/Audio/Items/welder.ogg"), target, user, AudioParams.Default.WithVariation(DamagePitchVariation));
                     break;
                 // No damage, fallback to tappies
                 case null:
-                    Audio.PlayPvs(new SoundPathSpecifier("/Audio/Weapons/tap.ogg"), target, AudioParams.Default.WithVariation(DamagePitchVariation));
+                    Audio.PlayPredicted(new SoundPathSpecifier("/Audio/Weapons/tap.ogg"), target, user, AudioParams.Default.WithVariation(DamagePitchVariation));
                     break;
                 case "Brute":
-                    Audio.PlayPvs(new SoundPathSpecifier("/Audio/Weapons/smash.ogg"), target, AudioParams.Default.WithVariation(DamagePitchVariation));
+                    Audio.PlayPredicted(new SoundPathSpecifier("/Audio/Weapons/smash.ogg"), target, user, AudioParams.Default.WithVariation(DamagePitchVariation));
                     break;
             }
         }
