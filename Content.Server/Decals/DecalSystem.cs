@@ -100,8 +100,7 @@ namespace Content.Server.Decals
                     data[index] = chunk;
             }
 
-            if (data.Count > 0)
-                args.State = new DecalGridState(data) { AllChunks = new(component.ChunkCollection.ChunkCollection.Keys) };
+            args.State = new DecalGridState(data) { AllChunks = new(component.ChunkCollection.ChunkCollection.Keys) };
         }
 
         private void OnGridSplit(ref PostGridSplitEvent ev)
