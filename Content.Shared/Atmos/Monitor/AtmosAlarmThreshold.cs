@@ -96,24 +96,47 @@ public sealed class AtmosAlarmThreshold : IPrototype, ISerializationHooks
     // utility function to check a threshold against some calculated value
     public bool CheckThreshold(float value, out AtmosAlarmType state)
     {
+        return CheckThreshold(value, out state, out AtmosMonitorThresholdBound _);
+    }
+
+    // utility function to check a threshold against some calculated value. If the output state
+    // is normal, whichFailed should not be used..
+    public bool CheckThreshold(float value, out AtmosAlarmType state, out AtmosMonitorThresholdBound whichFailed)
+    {
         state = AtmosAlarmType.Normal;
+        whichFailed = AtmosMonitorThresholdBound.Upper;
+
         if (Ignore)
         {
             return false;
         }
 
-        if (value >= UpperBound || value <= LowerBound)
+        if (value >= UpperBound)
         {
             state = AtmosAlarmType.Danger;
+            whichFailed = AtmosMonitorThresholdBound.Upper;
             return true;
         }
-        if (value >= UpperWarningBound || value <= LowerWarningBound)
+        if(value <= LowerBound)
+        {
+            state = AtmosAlarmType.Danger;
+            whichFailed = AtmosMonitorThresholdBound.Lower;
+            return true;
+        }
+        if (value >= UpperWarningBound)
         {
             state = AtmosAlarmType.Warning;
+            whichFailed = AtmosMonitorThresholdBound.Upper;
+            return true;
+        }
+        if (value <= LowerWarningBound)
+        {
+            state = AtmosAlarmType.Warning;
+            whichFailed = AtmosMonitorThresholdBound.Lower;
             return true;
         }
 
-        return true;
+        return false;
     }
 
     /// Warnings are stored in prototypes as a percentage, for ease of content

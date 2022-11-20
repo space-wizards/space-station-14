@@ -39,6 +39,27 @@ public sealed partial class ThresholdBoundControl : BoxContainer
     public void SetEnabled(bool enabled)
     {
         CBoundEnabled.Pressed = enabled;
+
+        if (enabled)
+        {
+            CBoundLabel.RemoveStyleClass("Disabled");
+        }
+        else
+        {
+            CBoundLabel.SetOnlyStyleClass("Disabled");
+        }
+    }
+
+    public void SetWarningState(AtmosAlarmType alarm)
+    {
+        if(alarm == AtmosAlarmType.Normal)
+        {
+            CBoundLabel.FontColorOverride = null;
+        }
+        else
+        {
+            CBoundLabel.FontColorOverride = AirAlarmWindow.ColorForAlarm(alarm);
+        }
     }
 
     public ThresholdBoundControl(string controlLabel, float value, float uiValueScale = 1)

@@ -115,21 +115,47 @@ public sealed partial class ThresholdControl : BoxContainer
         _enabled.Pressed = !_threshold.Ignore;
     }
 
-    public void UpdateThresholdData(AtmosAlarmThreshold threshold)
-    {
-        _upperBoundControl.SetValue(threshold.UpperBound.Value);
-        _upperBoundControl.SetEnabled(threshold.UpperBound.Enabled);
-        _lowerBoundControl.SetValue(threshold.LowerBound.Value);
-        _lowerBoundControl.SetEnabled(threshold.LowerBound.Enabled);
-        _upperWarningBoundControl.SetValue(threshold.UpperWarningBound.Value);
-        _upperWarningBoundControl.SetEnabled(threshold.UpperWarningBound.Enabled);
-        _lowerWarningBoundControl.SetValue(threshold.LowerWarningBound.Value);
-        _lowerWarningBoundControl.SetEnabled(threshold.LowerWarningBound.Enabled);
-        _enabled.Pressed = !threshold.Ignore;
-    }
-
     private String LabelForBound(string boundType) //<todo.eoin Replace this with enums
     {
         return Loc.GetString($"air-alarm-ui-thresholds-{boundType}");
+    }
+
+    public void UpdateThresholdData(AtmosAlarmThreshold threshold, float currentAmount)
+    {
+        threshold.CheckThreshold(currentAmount, out AtmosAlarmType alarm, out AtmosMonitorThresholdBound which);
+
+        var upperDangerState = AtmosAlarmType.Normal;
+        var lowerDangerState = AtmosAlarmType.Normal;
+        var upperWarningState = AtmosAlarmType.Normal;
+        var lowerWarningState = AtmosAlarmType.Normal;
+
+        if(alarm == AtmosAlarmType.Danger)
+        {
+            if(which == AtmosMonitorThresholdBound.Upper) upperDangerState = alarm;
+            else lowerDangerState = alarm;
+        }
+        else if(alarm == AtmosAlarmType.Warning)
+        {
+            if(which == AtmosMonitorThresholdBound.Upper) upperWarningState = alarm;
+            else lowerWarningState = alarm;
+        }
+
+        _upperBoundControl.SetValue(threshold.UpperBound.Value);
+        _upperBoundControl.SetEnabled(threshold.UpperBound.Enabled);
+        _upperBoundControl.SetWarningState(upperDangerState);
+
+        _lowerBoundControl.SetValue(threshold.LowerBound.Value);
+        _lowerBoundControl.SetEnabled(threshold.LowerBound.Enabled);
+        _lowerBoundControl.SetWarningState(lowerDangerState);
+
+        _upperWarningBoundControl.SetValue(threshold.UpperWarningBound.Value);
+        _upperWarningBoundControl.SetEnabled(threshold.UpperWarningBound.Enabled);
+        _upperWarningBoundControl.SetWarningState(upperWarningState);
+
+        _lowerWarningBoundControl.SetValue(threshold.LowerWarningBound.Value);
+        _lowerWarningBoundControl.SetEnabled(threshold.LowerWarningBound.Enabled);
+        _lowerWarningBoundControl.SetWarningState(lowerWarningState);
+
+        _enabled.Pressed = !threshold.Ignore;
     }
 }

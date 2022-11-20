@@ -113,8 +113,8 @@ public sealed partial class SensorInfo : BoxContainer
                 ("percentage", $"{(100 * fractionGas):0.##}")));
         }
 
-        _pressureThreshold.UpdateThresholdData(data.PressureThreshold);
-        _temperatureThreshold.UpdateThresholdData(data.TemperatureThreshold);
+        _pressureThreshold.UpdateThresholdData(data.PressureThreshold, data.Pressure);
+        _temperatureThreshold.UpdateThresholdData(data.TemperatureThreshold, data.Temperature);
         foreach (var (gas, control) in _gasThresholds)
         {
             if (!data.GasThresholds.TryGetValue(gas, out var threshold))
@@ -122,7 +122,7 @@ public sealed partial class SensorInfo : BoxContainer
                 continue;
             }
 
-            control.UpdateThresholdData(threshold);
+            control.UpdateThresholdData(threshold, data.Gases[gas] / data.TotalMoles);
         }
     }
 
