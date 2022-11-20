@@ -1,28 +1,18 @@
 ﻿using Content.Server.Atmos.EntitySystems;
 using Content.Server.Medical.Components;
 using Content.Shared.Medical.Cryogenics;
-using Content.Shared.Standing;
 
 namespace Content.Server.Medical
 {
     public sealed partial class CryoPodSystem
     {
-
-        public void InitializeInsideCryoPod()
+        public override void InitializeInsideCryoPod()
         {
-            base.Initialize();
+            base.InitializeInsideCryoPod();
             // Atmos overrides
             SubscribeLocalEvent<InsideCryoPodComponent, InhaleLocationEvent>(OnInhaleLocation);
             SubscribeLocalEvent<InsideCryoPodComponent, ExhaleLocationEvent>(OnExhaleLocation);
             SubscribeLocalEvent<InsideCryoPodComponent, AtmosExposedGetAirEvent>(OnGetAir);
-
-            SubscribeLocalEvent<InsideCryoPodComponent, DownAttemptEvent>(HandleDown);
-
-        }
-        // Must stand in the cryo pod
-        private void HandleDown(EntityUid uid, InsideCryoPodComponent component, DownAttemptEvent args)
-        {
-            args.Cancel();
         }
 
         #region Atmos handlers

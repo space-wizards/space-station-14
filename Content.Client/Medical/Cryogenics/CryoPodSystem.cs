@@ -4,7 +4,7 @@ using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
 namespace Content.Client.Medical.Cryogenics;
 
-public sealed class CryoPodSystem: VisualizerSystem<CryoPodVisualsComponent>
+public sealed class CryoPodSystem: VisualizerSystem<CryoPodComponent>
 {
     public override void Initialize()
     {
@@ -35,7 +35,7 @@ public sealed class CryoPodSystem: VisualizerSystem<CryoPodVisualsComponent>
         spriteComponent.Offset = component.PreviousOffset;
     }
 
-    protected override void OnAppearanceChange(EntityUid uid, CryoPodVisualsComponent component, ref AppearanceChangeEvent args)
+    protected override void OnAppearanceChange(EntityUid uid, CryoPodComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
         {

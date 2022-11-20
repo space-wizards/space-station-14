@@ -43,7 +43,6 @@
       machine_board: !type:Container
       machine_parts: !type:Container
   - type: AtmosDevice
-  - type: CryoPodVisuals
   - type: Appearance
   - type: Machine
     board: CryoPodMachineCircuitboard

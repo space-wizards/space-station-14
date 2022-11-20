@@ -1,12 +1,13 @@
 ﻿using System.Threading;
 using Content.Server.Atmos;
 using Content.Shared.Atmos;
-using Robust.Shared.Containers;
+using Content.Shared.Medical.Cryogenics;
 
 namespace Content.Server.Medical.Components;
 
 [RegisterComponent]
-public sealed class CryoPodComponent: Component, IGasMixtureHolder
+[ComponentReference(typeof(SharedCryoPodComponent))]
+public sealed class CryoPodComponent: SharedCryoPodComponent, IGasMixtureHolder
 {
     /// <summary>
     /// Specifies the name of the atmospherics port to draw gas from.
@@ -21,11 +22,6 @@ public sealed class CryoPodComponent: Component, IGasMixtureHolder
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("gasMixture")]
     public GasMixture Air { get; set; } = new(Atmospherics.OneAtmosphere);
-
-    /// <summary>
-    /// Container for mobs inserted in the pod.
-    /// </summary>
-    public ContainerSlot BodyContainer = default!;
 
     /// <summary>
     /// Specifies the name of the atmospherics port to draw gas from.
@@ -65,22 +61,6 @@ public sealed class CryoPodComponent: Component, IGasMixtureHolder
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("pryDelay")]
     public float PryDelay = 5f;
-
-    /// <summary>
-    /// If true, the eject verb will not work on the pod and the user must use a crowbar to pry the pod open.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("locked")]
-    public bool Locked { get; set; }
-
-    /// <summary>
-    /// Causes the pod to be locked without being fixable by messing with wires.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("permaLocked")]
-    public bool PermaLocked { get; set; }
-
-    public bool IsPrying { get; set; }
 
     public CancellationTokenSource? DragDropCancelToken;
 }
