@@ -150,9 +150,17 @@ namespace Content.Server.Atmos.EntitySystems
                 return true;
             }
 
-            var changed = oldData.Equals(default) || oldData.FireState != tile.Hotspot.State;
+            var changed = false;
             if (oldData.Equals(default))
+            {
+                changed = true;
                 oldData = new GasOverlayData(tile.Hotspot.State, new byte[VisibleGasId.Length]);
+            }
+            else if (oldData.FireState != tile.Hotspot.State)
+            {
+                changed = true;
+                oldData = new GasOverlayData(tile.Hotspot.State, oldData.Opacity);
+            }
 
             if (tile.Air != null)
             {
@@ -186,6 +194,14 @@ namespace Content.Server.Atmos.EntitySystems
                     changed = true;
                 }
             }
+            else
+            {
+                for (var i = 0; i < VisibleGasId.Length; i++)
+                {
+                    changed |= oldData.Opacity[i] != 0;
+                    oldData.Opacity[i] = 0;
+                }
+            }
 
             if (!changed)
                 return false;
@@ -211,7 +227,7 @@ namespace Content.Server.Atmos.EntitySystems
                 }
 
                 if (changed)
-                    Dirty(overlay.Owner, meta);
+                    Dirty(overlay, meta);
 
                 overlay.InvalidTiles.Clear();
             }
@@ -338,7 +354,7 @@ namespace Content.Server.Atmos.EntitySystems
                 return;
 
             // Should this be a full component state or a delta-state?
-            if (args.FromTick <= component.CreationTick && args.FromTick > component.ForceTick)
+            if (args.FromTick <= component.CreationTick && args.FromTick <= component.ForceTick)
             {
                 args.State = new GasTileOverlayState(component.Chunks);
                 return;
@@ -351,8 +367,7 @@ namespace Content.Server.Atmos.EntitySystems
                     data[index] = chunk;
             }
 
-            if (data.Count > 0)
-                args.State = new GasTileOverlayState(data) { AllChunks = new(component.Chunks.Keys) };
+            args.State = new GasTileOverlayState(data) { AllChunks = new(component.Chunks.Keys) };
         }
     }
 }
