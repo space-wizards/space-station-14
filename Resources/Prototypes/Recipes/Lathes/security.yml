@@ -107,6 +107,17 @@
     Steel: 5
 
 - type: latheRecipe
+  id: SpeedloaderMagnumHC
+  icon:
+    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_speed_loader.rsi
+    state: base
+  result: SpeedloaderMagnumHC
+  completetime: 8
+  materials:
+    Plastic: 60
+    Steel: 70
+
+- type: latheRecipe
   id: CartridgeCaselessRifleRubber
   icon:
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
