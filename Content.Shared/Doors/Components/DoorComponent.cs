@@ -64,7 +64,7 @@ public sealed class DoorComponent : Component
     /// <summary>
     ///     When the door is active, this is the time when the state will next update.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("nextStateChange", customTypeSerializer:typeof(TimeOffsetSerializer))]
+    [ViewVariables(VVAccess.ReadWrite), DataField("nextStateChange", customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan NextStateChange;
 
     [Obsolete("Use NextStateChange"), DataField("SecondsUntilStateChange")]
