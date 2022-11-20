@@ -618,6 +618,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         }
 
         var mapId = _mapManager.CreateMap();
+        _mapManager.AddUninitializedMap(mapId);
+        _mapManager.DeleteMap(mapId);
 
         var outpostGrids = _map.LoadMap(mapId, path.ToString());
         if (outpostGrids.Count == 0)
@@ -650,6 +652,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
         _nukiePlanet = mapId;
         _nukieShuttle = shuttleId;
+        _mapManager.DoMapInitialize(mapId);
 
         return true;
     }

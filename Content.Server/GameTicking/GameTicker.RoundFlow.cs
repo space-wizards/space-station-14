@@ -80,6 +80,7 @@ namespace Content.Server.GameTicking
 
             DefaultMap = _mapManager.CreateMap();
             _mapManager.AddUninitializedMap(DefaultMap);
+            _mapManager.DeleteMap(DefaultMap);
             var startTime = _gameTiming.RealTime;
 
             var maps = new List<GameMapPrototype>();
@@ -116,6 +117,7 @@ namespace Content.Server.GameTicking
                     // Create other maps for the others since we need to.
                     toLoad = _mapManager.CreateMap();
                     _mapManager.AddUninitializedMap(toLoad);
+                    _mapManager.DeleteMap(toLoad);
                 }
 
                 LoadGameMap(map, toLoad, null);
