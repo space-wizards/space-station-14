@@ -42,6 +42,8 @@ namespace Content.Server.Temperature.Systems
 
             // Allows overriding thresholds based on the parent's thresholds.
             SubscribeLocalEvent<TemperatureComponent, EntParentChangedMessage>(OnParentChange);
+            SubscribeLocalEvent<ContainerTemperatureDamageThresholdsComponent, ComponentStartup>(OnParentThresholdStartup);
+            SubscribeLocalEvent<ContainerTemperatureDamageThresholdsComponent, ComponentShutdown>(OnParentThresholdShutdown);
         }
 
         public override void Update(float frameTime)
@@ -217,14 +219,71 @@ namespace Content.Server.Temperature.Systems
         private void OnParentChange(EntityUid uid, TemperatureComponent component,
             ref EntParentChangedMessage args)
         {
-            if (!TryComp<ContainerTemperatureDamageThresholdsComponent>(args.Transform.ParentUid, out var newThresholds))
+            RecursiveThresholdUpdate(uid);
+        }
+
+        private void OnParentThresholdStartup(EntityUid uid, ContainerTemperatureDamageThresholdsComponent component, ComponentStartup args)
+        {
+            RecursiveThresholdUpdate(uid);
+        }
+
+        private void OnParentThresholdShutdown(EntityUid uid, ContainerTemperatureDamageThresholdsComponent component, ComponentShutdown args)
+        {
+            RecursiveThresholdUpdate(uid);
+        }
+
+        /// <summary>
+        /// Recalculate parent thresholds for the root entity and all its descendant.
+        /// </summary>
+        /// <param name="root"></param>
+        private void RecursiveThresholdUpdate(EntityUid root)
+        {
+            RecalculateParentThresholds(root, null);
+
+            foreach (var child in Transform(root).ChildEntities)
             {
-                component.ParentHeatDamageThreshold = null;
-                component.ParentColdDamageThreshold = null;
+                RecalculateParentThresholds(child, null);
+            }
+        }
+
+        /// <summary>
+        /// Recalculate Parent Heat/Cold DamageThreshold by recursively checking each ancestor and fetching the
+        /// maximum HeatDamageThreshold and the minimum ColdDamageThreshold if any exists (aka the best value for each).
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <param name="component"></param>
+        private void RecalculateParentThresholds(EntityUid uid, TemperatureComponent? component)
+        {
+            if (!Resolve(uid, ref component, logMissing: false))
+            {
                 return;
             }
-            component.ParentHeatDamageThreshold = newThresholds.HeatDamageThreshold;
-            component.ParentColdDamageThreshold = newThresholds.ColdDamageThreshold;
+
+            component.ParentHeatDamageThreshold = null;
+            component.ParentColdDamageThreshold = null;
+
+            // Recursively check parents for the best threshold available
+            var parentUid = Transform(uid).ParentUid;
+            while(parentUid.IsValid())
+            {
+                if (TryComp<ContainerTemperatureDamageThresholdsComponent>(parentUid,
+                        out var newThresholds))
+                {
+                    if (newThresholds.HeatDamageThreshold != null)
+                    {
+                        component.ParentHeatDamageThreshold = Math.Max(newThresholds.HeatDamageThreshold.Value,
+                            component.ParentHeatDamageThreshold ?? 0);
+                    }
+
+                    if (newThresholds.ColdDamageThreshold != null)
+                    {
+                        component.ParentColdDamageThreshold = Math.Min(newThresholds.ColdDamageThreshold.Value,
+                            component.ParentColdDamageThreshold ?? float.MaxValue);
+                    }
+                }
+
+                parentUid = Transform(parentUid).ParentUid;
+            }
         }
     }
 
