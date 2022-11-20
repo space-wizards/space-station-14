@@ -43,6 +43,9 @@ public sealed class VocalSystem : EntitySystem
 
         if (component.ScreamAction != null)
             _actions.AddAction(uid, component.ScreamAction, null);
+
+        if (component.EmoteSoundsId != null)
+            _proto.TryIndex(component.EmoteSoundsId, out component.EmoteSounds);
     }
 
     private void OnShutdown(EntityUid uid, VocalComponent component, ComponentShutdown args)

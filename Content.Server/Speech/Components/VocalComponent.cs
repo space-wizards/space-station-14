@@ -1,5 +1,6 @@
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Chat.Prototypes;
 using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -36,6 +37,11 @@ public sealed class VocalComponent : Component
 
     [DataField("action")] // must be a data-field to properly save cooldown when saving game state.
     public InstantAction? ScreamAction = null;
+
+    [DataField("emoteSounds")]
+    public string? EmoteSoundsId;
+
+    public EmoteSoundsPrototype? EmoteSounds = null;
 }
 
 public sealed class ScreamActionEvent : InstantActionEvent { };
