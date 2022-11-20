@@ -1,6 +1,5 @@
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Content.Shared.Radio;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Salvage
 {
@@ -50,6 +49,7 @@ namespace Content.Server.Salvage
         public string SalvageChannel = "Supply";
 
     }
+    [CopyByRef]
     public record struct MagnetState(MagnetStateType StateType, TimeSpan Until)
     {
         public static readonly MagnetState Inactive = new (MagnetStateType.Inactive, TimeSpan.Zero);
