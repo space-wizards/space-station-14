@@ -10,19 +10,15 @@ namespace Content.Server.Construction.Components
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-        [ViewVariables]
         [DataField("requirements", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<int, MachinePartPrototype>))]
         public readonly Dictionary<string, int> Requirements = new();
 
-        [ViewVariables]
         [DataField("materialRequirements")]
         public readonly Dictionary<string, int> MaterialIdRequirements = new();
 
-        [ViewVariables]
         [DataField("tagRequirements")]
         public readonly Dictionary<string, GenericPartInfo> TagRequirements = new();
 
-        [ViewVariables]
         [DataField("componentRequirements")]
         public readonly Dictionary<string, GenericPartInfo> ComponentRequirements = new();
 

@@ -48,7 +48,7 @@ namespace Content.Server.Construction
         /// <remarks>When <see cref="validation"/> is true, this method will simply return whether the interaction
         ///          would be handled by the entity or not. It essentially becomes a pure method that modifies nothing.</remarks>
         /// <returns>The result of this interaction with the entity.</returns>
-        private HandleResult HandleEvent(EntityUid uid, object ev, bool validation, ConstructionComponent? construction = null, InteractUsingEvent? args = null)
+        private HandleResult HandleEvent(EntityUid uid, object ev, bool validation, ConstructionComponent? construction = null)
         {
             if (!Resolve(uid, ref construction))
                 return HandleResult.False;
@@ -170,9 +170,6 @@ namespace Content.Server.Construction
 
                 // We change the node now.
                 ChangeNode(uid, user, edge.Target, true, construction);
-
-                if (ev is ConstructionDoAfterComplete event1 && event1.WrappedEvent is InteractUsingEvent event2)
-                    _adminLogger.Add(LogType.Construction, LogImpact.Low, $"{ToPrettyString(event2.User):player} changed {ToPrettyString(uid):entity}'s node to {edge.Target}");
             }
 
             return HandleResult.True;

@@ -1,6 +1,6 @@
-using Content.Shared.Storage;
 using System.Threading;
 using Content.Shared.Construction.Prototypes;
+using Content.Shared.Storage;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -64,7 +64,7 @@ namespace Content.Server.Medical.BiomassReclaimer
         /// <summary>
         /// The base yield per mass unit when no components are upgraded.
         /// </summary>
-        [ViewVariables, DataField("baseYieldPerUnitMass")]
+        [DataField("baseYieldPerUnitMass")]
         public float BaseYieldPerUnitMass = 0.4f;
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Content.Server.Medical.BiomassReclaimer
         /// The base time per mass unit that it takes to process a mob
         /// when no components are upgraded.
         /// </summary>
-        [ViewVariables, DataField("baseProcessingTimePerUnitMass")]
+        [DataField("baseProcessingTimePerUnitMass")]
         public float BaseProcessingTimePerUnitMass = 0.5f;
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace Content.Server.Medical.BiomassReclaimer
         /// How much the machine part quality affects the yield.
         /// Going up a tier will multiply the speed by this amount.
         /// </summary>
-        [ViewVariables, DataField("partRatingSpeedMultiplier")]
+        [DataField("partRatingSpeedMultiplier")]
         public float PartRatingSpeedMultiplier = 1.35f;
 
         /// <summary>

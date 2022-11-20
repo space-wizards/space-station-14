@@ -1,9 +1,6 @@
 using System.Threading;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.FixedPoint;
-using Content.Server.UserInterface;
-using Robust.Server.GameObjects;
-using Content.Shared.Chemistry;
 
 namespace Content.Server.Chemistry.Components
 {
@@ -21,7 +18,6 @@ namespace Content.Server.Chemistry.Components
         /// Whether or not the injector is able to draw from containers or if it's a single use
         /// device that can only inject.
         /// </summary>
-        [ViewVariables]
         [DataField("injectOnly")]
         public bool InjectOnly;
 
@@ -31,7 +27,6 @@ namespace Content.Server.Chemistry.Components
         /// <remarks>
         ///     for example: droppers would ignore mobs
         /// </remarks>
-        [ViewVariables]
         [DataField("ignoreMobs")]
         public bool IgnoreMobs = false;
 
