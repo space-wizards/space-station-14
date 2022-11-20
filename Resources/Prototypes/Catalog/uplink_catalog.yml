@@ -262,7 +262,7 @@
 - type: listing
   id: UplinkHeadsetEncryption Key
   name: Syndicate Headset - Encryption Key
-  description: A encryption key for access to secret frequency of our special agents. Just insert it in any headset that you will use. And anyone won't get know that you have special channel with your friends... or rivals.
+  description: A encryption key to access the secret frequency of our special agents. Just insert it in any headset you use. And no one will know that you have a special channel with friends... or rivals.
   productEntity: EncryptionKeySyndie
   cost:
     Telecrystal: 1
