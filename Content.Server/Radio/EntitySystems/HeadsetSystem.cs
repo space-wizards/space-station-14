@@ -8,11 +8,11 @@ using Content.Shared.Interaction;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Radio;
 using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using System.Linq;
 
 namespace Content.Server.Radio.EntitySystems;
 
@@ -24,6 +24,7 @@ public sealed class HeadsetSystem : EntitySystem
     [Dependency] private readonly ToolSystem _toolSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     public override void Initialize()
     {
@@ -108,17 +109,16 @@ public sealed class HeadsetSystem : EntitySystem
     {
         if(!args.IsInDetailsRange)
             return;
-        if(component.KeysInstalledAmount == 0)
+        if(component.KeyContainer.ContainedEntities.Count == 0)
         {
             args.PushMarkup(Loc.GetString("examine-headset-no-keys"));
+            return;
         }
-        if(component.Channels.Count > 0)
+        else if(component.Channels.Count > 0)
         {
             args.PushMarkup(Loc.GetString("examine-headset"));
             foreach(var id in component.Channels)
             {
-                // if(id == "Common")
-                //     continue;
                 var proto = _protoManager.Index<RadioChannelPrototype>(id);
                 args.PushMarkup(Loc.GetString("examine-headset-channel",
                     ("color", proto.Color),
@@ -135,43 +135,43 @@ public sealed class HeadsetSystem : EntitySystem
         component.KeyContainer = _container.EnsureContainer<Container>(uid, HeadsetComponent.KeyContainerName);
     }
 
-    private bool InstallKey(HeadsetComponent src, EntityUid key)
+    private bool InstallKey(HeadsetComponent src, EntityUid key, EncryptionKeyComponent keyComponent)
     {
         if(src.KeyContainer.Insert(key))
         {
-            ++src.KeysInstalledAmount;
+            UploadChannelsFromKey(src, keyComponent);
             return true;
         }
         return false;
     }
-
+    private void UploadChannelsFromKey(HeadsetComponent src, EncryptionKeyComponent key)
+    {
+        foreach(var j in key.Channels)
+            src.Channels.Add(j);
+        return;
+    }
     private void RecalculateChannels(HeadsetComponent src)
     {
         src.Channels.Clear();
-        src.KeysInstalledAmount = 0;
         foreach(EntityUid i in src.KeyContainer.ContainedEntities)
             if(TryComp<EncryptionKeyComponent?>(i, out var key))
-            {
-                ++src.KeysInstalledAmount;
-                foreach(var j in key.Channels)
-                    src.Channels.Add(j);
-            }
+                UploadChannelsFromKey(src, key);
         return;
     }
 
     private void OnInteractUsing(EntityUid uid, HeadsetComponent component, InteractUsingEvent args)
     {
-        if(!component.IsKeysExtractable || !TryComp<ContainerManagerComponent>(uid, out var Storage))
+        if(!component.IsKeysExtractable || !TryComp<ContainerManagerComponent>(uid, out var storage))
         {
             return;
         }
         if(TryComp<EncryptionKeyComponent?>(args.Used, out var key))
         {
-            if(component.KeySlotsAmount > component.KeysInstalledAmount)
-                if(_container.TryRemoveFromContainer(args.Used) && InstallKey(component, args.Used))
+            if(component.KeySlotsAmount > component.KeyContainer.ContainedEntities.Count)
+                if(_container.TryRemoveFromContainer(args.Used) && InstallKey(component, args.Used, key))
                 {
                     _popupSystem.PopupEntity(Loc.GetString("headset-encryption-key-successfully-installed"), uid, Filter.Entities(args.User));
-                    SoundSystem.Play(component.KeyInsertionSound.GetSound(), Filter.Pvs(args.Target), args.Target);
+                    _audio.Play(_audio.GetSound(component.KeyInsertionSound), Filter.Pvs(args.Target), args.Target);
                 }
             else
                 _popupSystem.PopupEntity(Loc.GetString("headset-encryption-key-slots-already-full"), uid, Filter.Entities(args.User));
@@ -179,24 +179,24 @@ public sealed class HeadsetSystem : EntitySystem
         } 
         if(TryComp<ToolComponent?>(args.Used, out var tool))
         {
-            if(component.KeysInstalledAmount > 0)
+            if(component.KeyContainer.ContainedEntities.Count > 0)
             {
                 if(_toolSystem.UseTool(
                     args.Used, args.User, uid,
-                    0f, 0f, new String[] { "Screwing" },
+                    0f, 0f, new String[] {"Screwing"},
                     doAfterCompleteEvent: null, toolComponent: tool)
                 )
                 {
-                   var contained = new List<EntityUid>();
+                    var contained = new List<EntityUid>();
                     foreach (var i in component.KeyContainer.ContainedEntities)
                         contained.Add(i);
-
                     foreach (var i in contained)
                         if(TryComp<EncryptionKeyComponent>(i, out var _))
                             component.KeyContainer.Remove(i);
-                    component.KeysInstalledAmount = 0;
+                    component.Channels.Clear();
+
                     _popupSystem.PopupEntity(Loc.GetString("headset-encryption-keys-all-extrated"), uid, Filter.Entities(args.User));
-                    SoundSystem.Play(component.KeyExtractionSound.GetSound(), Filter.Pvs(args.Target), args.Target);
+                    _audio.Play(_audio.GetSound(component.KeyExtractionSound), Filter.Pvs(args.Target), args.Target);
                 }
             }
             else
@@ -209,7 +209,17 @@ public sealed class HeadsetSystem : EntitySystem
 
     private void OnContainerModified(EntityUid uid, HeadsetComponent component, ContainerModifiedMessage args)
     {
-        RecalculateChannels(component);
-        PushRadioChannelsToOwner(uid, component);
+
+        if ((args.Container.ID == HeadsetComponent.KeyContainerName) && (args.Container.ContainedEntities.Contains(args.Entity)))
+        {
+            if (TryComp<EncryptionKeyComponent>(args.Entity, out var added))
+            {
+                UploadChannelsFromKey(component, added);
+                //RecalculateChannels(component);
+                PushRadioChannelsToOwner(uid, component);
+            }
+        }
+        else
+            RecalculateChannels(component);
     }
 }

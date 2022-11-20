@@ -14,9 +14,6 @@ public sealed class HeadsetComponent : Component
     [ViewVariables]
     public HashSet<string> Channels = new();
 
-    [ViewVariables]
-    public int KeysInstalledAmount = 0;
-
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("keySlotsAmount")]
     public int KeySlotsAmount = 2;
