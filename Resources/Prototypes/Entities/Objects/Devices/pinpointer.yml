@@ -35,5 +35,14 @@
   id: PinpointerMagnet
   parent: PinpointerBase
   components:
+  - type: Sprite
+    netsync: false
+    noRot: True
+    sprite: Objects/Devices/pinpointer.rsi
+    layers:
+    - state: pinpointer_salvage
+      map: ["enum.PinpointerLayers.Base"]
+    - state: pinonnull
+      map: ["enum.PinpointerLayers.Screen"]
   - type: Pinpointer
     component: SalvageMagnet
