@@ -120,7 +120,7 @@ namespace Content.Server.Physics.Controllers
 
             component.State = state;
 
-            if (component.State != ConveyorState.Off && TryComp<PhysicsComponent>(uid, out var physics))
+            if (TryComp<PhysicsComponent>(uid, out var physics))
             {
                 _broadphase.RegenerateContacts(physics);
             }
