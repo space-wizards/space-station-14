@@ -12,10 +12,7 @@ namespace Content.Server.Radio.Components;
 public sealed class HeadsetComponent : Component
 {
     [ViewVariables]
-    public HashSet<string> Channels = new()
-    {
-        "Common"
-    }; //Fills only by encryption chips in it
+    public HashSet<string> Channels = new();
 
     [ViewVariables]
     public int KeysInstalledAmount = 0;

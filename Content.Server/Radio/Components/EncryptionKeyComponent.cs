@@ -7,8 +7,5 @@ namespace Content.Server.Radio.Components;
 public sealed class EncryptionKeyComponent : Component
 {
     [DataField("channels", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<RadioChannelPrototype>))]
-    public HashSet<string> Channels = new()
-    {
-        "Common"
-    };
+    public HashSet<string> Channels = new();
 }
