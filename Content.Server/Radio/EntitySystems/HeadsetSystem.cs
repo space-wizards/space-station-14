@@ -191,7 +191,7 @@ public sealed class HeadsetSystem : EntitySystem
                     foreach (var i in component.KeyContainer.ContainedEntities)
                         contained.Add(i);
                     foreach (var i in contained)
-                        if(TryComp<EncryptionKeyComponent>(i, out var _))
+                        if(HasComp<EncryptionKeyComponent>(i))
                             component.KeyContainer.Remove(i);
                     component.Channels.Clear();
 
