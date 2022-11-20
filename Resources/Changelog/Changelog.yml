@@ -1,12 +1,4 @@
 Entries:
-- author: keronshb
-  changes:
-  - {message: 'Adds the Ensnaring Component. If a player gets ensnared by something
-      with it, their movement will be impeded.', type: Add}
-  - {message: Bolas no longer have a knockdown/stun chance and now ensnare instead.,
-    type: Tweak}
-  id: 2185
-  time: '2022-08-24T14:50:31.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: WallmountSubstationElectronics Are now printable., type: Fix}
@@ -2959,3 +2951,8 @@ Entries:
   - {message: Magnet artifacts can now be activated with magboots., type: Add}
   id: 2684
   time: '2022-11-20T06:52:32.0000000+00:00'
+- author: illersaver
+  changes:
+  - {message: Added damage to gas tanks and utensils!, type: Add}
+  id: 2685
+  time: '2022-11-20T18:43:24.0000000+00:00'
