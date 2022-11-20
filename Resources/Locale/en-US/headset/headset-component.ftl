@@ -1,7 +1,7 @@
 # Chat window radio wrap (prefix and postfix)
 chat-radio-message-wrap = [color={$color}]{$channel} {$name} says: "{$message}"[/color]
 
-examine-encryption-key = It is providing frequences to headset:
+examine-encryption-key = It is providing these frequencies to the headset:
 examine-encryption-key-channel = [color={$color}]:{$key} for {$id} ({$freq})[/color]
 
 headset-encryption-key-successfully-installed = You put the key into the headset.
