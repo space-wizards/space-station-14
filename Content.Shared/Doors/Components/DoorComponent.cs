@@ -1,6 +1,5 @@
 using Content.Shared.Damage;
 using Content.Shared.Tools;
-using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -13,7 +12,7 @@ namespace Content.Shared.Doors.Components;
 
 [NetworkedComponent]
 [RegisterComponent]
-public sealed class DoorComponent : Component, ISerializationHooks
+public sealed class DoorComponent : Component
 {
     /// <summary>
     /// The current state of the door -- whether it is open, closed, opening, or closing.
@@ -65,7 +64,28 @@ public sealed class DoorComponent : Component, ISerializationHooks
     /// <summary>
     ///     When the door is active, this is the time when the state will next update.
     /// </summary>
-    public TimeSpan? NextStateChange;
+    [ViewVariables(VVAccess.ReadWrite), DataField("nextStateChange", customTypeSerializer:typeof(TimeOffsetSerializer))]
+    public TimeSpan NextStateChange;
+
+    [Obsolete("Use NextStateChange"), DataField("SecondsUntilStateChange")]
+    public float? SecondsUntilStateChange
+    {
+        get => 0f;
+        set
+        {
+            if (value == null || value.Value > 0)
+                return;
+
+            var curTime = IoCManager.Resolve<IGameTiming>().CurTime;
+            NextStateChange = curTime + TimeSpan.FromSeconds(value.Value);
+
+            // Fallback for invalid data getting serialized.
+            if (NextStateChange < TimeSpan.Zero)
+            {
+                NextStateChange = curTime;
+            }
+        }
+    }
 
     /// <summary>
     ///     Whether the door is currently partially closed or open. I.e., when the door is "closing" and is already opaque,
@@ -141,35 +161,6 @@ public sealed class DoorComponent : Component, ISerializationHooks
     public HashSet<EntityUid> CurrentlyCrushing = new();
     #endregion
 
-    #region Serialization
-    /// <summary>
-    ///     Time until next state change. Because apparently <see cref="IGameTiming.CurTime"/> might not get saved/restored.
-    /// </summary>
-    [DataField("SecondsUntilStateChange")]
-    private float? SecondsUntilStateChange
-    {
-        [UsedImplicitly]
-        get
-        {
-            if (NextStateChange == null)
-            {
-                return null;
-            }
-
-            var curTime = IoCManager.Resolve<IGameTiming>().CurTime;
-            return (float) (NextStateChange.Value - curTime).TotalSeconds;
-        }
-        set
-        {
-            if (value == null || value.Value > 0)
-                return;
-
-            NextStateChange = IoCManager.Resolve<IGameTiming>().CurTime + TimeSpan.FromSeconds(value.Value);
-
-        }
-    }
-    #endregion
-
     [DataField("pryingQuality", customTypeSerializer: typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
     public string PryingQuality = "Prying";
 
@@ -238,7 +229,7 @@ public sealed class DoorComponentState : ComponentState
 {
     public readonly DoorState DoorState;
     public readonly HashSet<EntityUid> CurrentlyCrushing;
-    public readonly TimeSpan? NextStateChange;
+    public readonly TimeSpan NextStateChange;
     public readonly bool Partial;
 
     public DoorComponentState(DoorComponent door)

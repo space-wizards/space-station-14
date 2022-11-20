@@ -29,6 +29,7 @@ public abstract class SharedDoorSystem : EntitySystem
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly MetaDataSystem _metadata = default!;
 
     /// <summary>
     ///     A body must have an intersection percentage larger than this in order to be considered as colliding with a
@@ -63,7 +64,7 @@ public abstract class SharedDoorSystem : EntitySystem
 
     private void OnInit(EntityUid uid, DoorComponent door, ComponentInit args)
     {
-        if (door.NextStateChange != null)
+        if (door.NextStateChange != TimeSpan.Zero)
             _activeDoors.Add(door);
         else
         {
@@ -79,6 +80,15 @@ public abstract class SharedDoorSystem : EntitySystem
                 // force to closed.
                 door.State = DoorState.Closed;
                 door.Partial = false;
+            }
+
+            if (door.State == DoorState.Open)
+            {
+                door.NextStateChange = GameTiming.CurTime + door.OpenTimeOne;
+            }
+            if (door.State == DoorState.Closed)
+            {
+                door.NextStateChange = GameTiming.CurTime + door.CloseTimeOne;
             }
         }
 
@@ -112,7 +122,7 @@ public abstract class SharedDoorSystem : EntitySystem
         door.NextStateChange = state.NextStateChange;
         door.Partial = state.Partial;
 
-        if (state.NextStateChange == null)
+        if (state.NextStateChange == TimeSpan.Zero)
             _activeDoors.Remove(door);
         else
             _activeDoors.Add(door);
@@ -150,7 +160,7 @@ public abstract class SharedDoorSystem : EntitySystem
 
             case DoorState.Open:
                 door.Partial = false;
-                if (door.NextStateChange == null)
+                if (door.NextStateChange == TimeSpan.Zero)
                     _activeDoors.Remove(door);
                 break;
             case DoorState.Closed:
@@ -488,7 +498,7 @@ public abstract class SharedDoorSystem : EntitySystem
     /// <summary>
     /// How door access should be handled.
     /// </summary>
-    public enum AccessTypes
+    public enum AccessTypes : byte
     {
         /// <summary> ID based door access. </summary>
         Id,
@@ -526,7 +536,7 @@ public abstract class SharedDoorSystem : EntitySystem
         // Is this trying to prevent an update? (e.g., cancel an auto-close)
         if (delay == null || delay.Value <= TimeSpan.Zero)
         {
-            door.NextStateChange = null;
+            door.NextStateChange = TimeSpan.Zero;
             _activeDoors.Remove(door);
             return;
         }
@@ -541,19 +551,25 @@ public abstract class SharedDoorSystem : EntitySystem
     public override void Update(float frameTime)
     {
         var time = GameTiming.CurTime;
+        var metaQuery = GetEntityQuery<MetaDataComponent>();
 
         foreach (var door in _activeDoors.ToList())
         {
-            if (door.Deleted || door.NextStateChange == null)
+            if (door.Deleted || door.NextStateChange == TimeSpan.Zero)
             {
                 _activeDoors.Remove(door);
                 continue;
             }
 
-            if (Paused(door.Owner))
+            if (!metaQuery.TryGetComponent(door.Owner, out var metadata))
                 continue;
 
-            if (door.NextStateChange.Value < time)
+            if (Paused(door.Owner, metadata))
+                continue;
+
+            var nextChange = door.NextStateChange + _metadata.GetPauseTime(door.Owner, metadata);
+
+            if (nextChange < time)
                 NextState(door, time);
 
             if (door.State == DoorState.Closed &&
@@ -573,7 +589,7 @@ public abstract class SharedDoorSystem : EntitySystem
     /// </summary>
     private void NextState(DoorComponent door, TimeSpan time)
     {
-        door.NextStateChange = null;
+        door.NextStateChange = TimeSpan.Zero;
 
         if (door.CurrentlyCrushing.Count > 0)
             // This is a closed door that is crushing people and needs to auto-open. Note that we don't check "can open"
