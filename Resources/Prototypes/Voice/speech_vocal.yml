@@ -4,7 +4,7 @@
     - Scream:
         collection: MaleScreams
     - Laugh:
-        collection: MaleLaugh
+        collection: MaleLaughs
     - Cough:
         collection: Coughs
 
@@ -14,6 +14,14 @@
     - Scream:
         collection: FemaleScreams
     - Laugh:
-        collection: FemaleLaugh
+        collection: FemaleLaughs
     - Cough:
         collection: Coughs
+
+- type: emoteSounds
+  id: Hands
+  sounds:
+    - Clap:
+        collection: Claps
+    - Snap:
+        collection: HandSnaps
