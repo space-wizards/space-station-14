@@ -172,30 +172,26 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
             return;
 
         EntityUid? artifact = null;
-        ArtifactNode? node = null;
-        int? pointValue = null;
+        FormattedMessage? msg = null;
         var totalTime = TimeSpan.Zero;
         var canScan = false;
         var canPrint = false;
         if (component.AnalyzerEntity != null && TryComp<ArtifactAnalyzerComponent>(component.AnalyzerEntity, out var analyzer))
         {
             artifact = analyzer.LastAnalyzedArtifact;
-            node = analyzer.LastAnalyzedNode;
-            pointValue = analyzer.LastAnalyzerPointValue;
+            msg = GetArtifactScanMessage(analyzer);
             totalTime = analyzer.AnalysisDuration * analyzer.AnalysisDurationMulitplier;
             canScan = analyzer.Contacts.Any();
             canPrint = analyzer.ReadyToPrint;
         }
-
         var analyzerConnected = component.AnalyzerEntity != null;
         var serverConnected = TryComp<ResearchClientComponent>(uid, out var client) && client.ConnectedToServer;
 
         var scanning = TryComp<ActiveArtifactAnalyzerComponent>(component.AnalyzerEntity, out var active);
         var remaining = active != null ? _timing.CurTime - active.StartTime : TimeSpan.Zero;
 
-        var state = new AnalysisConsoleScanUpdateState(artifact, analyzerConnected, serverConnected, canScan, canPrint,
-            node?.Id, node?.Depth, node?.Edges.Count, node?.Triggered, node?.Effect.ID, node?.Trigger.ID, pointValue,
-            scanning, remaining, totalTime);
+        var state = new AnalysisConsoleScanUpdateState(artifact, analyzerConnected, serverConnected,
+            canScan, canPrint, msg, scanning, remaining, totalTime);
 
         var bui = _ui.GetUi(uid, ArtifactAnalzyerUiKey.Key);
         _ui.SetUiState(bui, state);
@@ -250,14 +246,27 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         {
             return;
         }
-
         analyzer.ReadyToPrint = false;
-        var n = analyzer.LastAnalyzedNode;
 
         var report = Spawn(component.ReportEntityId, Transform(uid).Coordinates);
-        MetaData(report).EntityName = Loc.GetString("analysis-report-title", ("id", n.Id));
+        MetaData(report).EntityName = Loc.GetString("analysis-report-title", ("id", analyzer.LastAnalyzedNode.Id));
 
+        var msg = GetArtifactScanMessage(analyzer);
+        if (msg == null)
+            return;
+
+        _popup.PopupEntity(Loc.GetString("analysis-console-print-popup"), uid, Filter.Pvs(uid));
+        _paper.SetContent(report, msg.ToMarkup());
+        UpdateUserInterface(uid, component);
+    }
+
+    private FormattedMessage? GetArtifactScanMessage(ArtifactAnalyzerComponent component)
+    {
         var msg = new FormattedMessage();
+        if (component.LastAnalyzedNode == null)
+            return null;
+
+        var n = component.LastAnalyzedNode;
 
         msg.AddMarkup(Loc.GetString("analysis-console-info-id", ("id", n.Id)));
         msg.PushNewline();
@@ -292,11 +301,10 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         msg.AddMarkup(Loc.GetString("analysis-console-info-edges", ("edges", n.Edges.Count)));
         msg.PushNewline();
 
-        msg.AddMarkup(Loc.GetString("analysis-console-info-value", ("value", analyzer.LastAnalyzerPointValue)));
+        if (component.LastAnalyzerPointValue != null)
+            msg.AddMarkup(Loc.GetString("analysis-console-info-value", ("value", component.LastAnalyzerPointValue)));
 
-        _popup.PopupEntity(Loc.GetString("analysis-console-print-popup"), uid, Filter.Pvs(uid));
-        _paper.SetContent(report, msg.ToMarkup());
-        UpdateUserInterface(uid, component);
+        return msg;
     }
 
     /// <summary>

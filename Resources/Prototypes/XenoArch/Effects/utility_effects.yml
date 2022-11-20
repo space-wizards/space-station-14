@@ -18,21 +18,6 @@
   - type: RandomInstrumentArtifact
 
 - type: artifactEffect
-  id: EffectSlippy
-  targetDepth: 2
-  effectHint: artifact-effect-hint-soap
-  whitelist:
-    components:
-    - Item
-  permanentComponents:
-  - type: Slippery
-    paralyzeTime: 7
-    launchForwardsMultiplier: 9.0
-  - type: StepTrigger
-  - type: CollisionWake
-    enabled: false
-
-- type: artifactEffect
   id: EffectStorage
   targetDepth: 2
   effectHint: artifact-effect-hint-storage
@@ -40,10 +25,6 @@
     components:
     - Item # it doesnt necessarily have to be restricted from structures, but i think it'll be better that way
   permanentComponents:
-  - type: UserInterface
-    interfaces:
-    - key: enum.StorageUiKey.Key
-      type: StorageBoundUserInterface
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
@@ -59,10 +40,6 @@
     components:
     - Item
   permanentComponents:
-  - type: UserInterface
-    interfaces:
-    - key: enum.TransferAmountUiKey.Key
-      type: TransferAmountBoundUserInterface
   - type: SolutionContainerManager
     solutions:
       beaker:
