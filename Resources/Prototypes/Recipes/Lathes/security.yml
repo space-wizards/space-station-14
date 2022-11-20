@@ -107,11 +107,11 @@
     Steel: 5
 
 - type: latheRecipe
-  id: SpeedloaderMagnumHC
+  id: SpeedLoaderMagnumHC
   icon:
     sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_speed_loader.rsi
     state: base
-  result: SpeedloaderMagnumHC
+  result: SpeedLoaderMagnumHC
   completetime: 8
   materials:
     Plastic: 60
