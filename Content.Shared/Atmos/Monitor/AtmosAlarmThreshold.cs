@@ -187,7 +187,7 @@ public sealed class AtmosAlarmThreshold : IPrototype, ISerializationHooks
                 LowerBound = LowerBound.WithEnabled(isEnabled);
                 break;
             case AtmosMonitorLimitType.LowerWarning:
-                LowerWarningPercentage = LowerBound.WithEnabled(isEnabled);
+                LowerWarningPercentage = LowerWarningPercentage.WithEnabled(isEnabled);
                 break;
             case AtmosMonitorLimitType.UpperWarning:
                 UpperWarningPercentage = UpperWarningPercentage.WithEnabled(isEnabled);

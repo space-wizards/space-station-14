@@ -12,10 +12,14 @@ namespace Content.IntegrationTests.Tests.Atmos
         private const string Prototypes = @"
 - type: alarmThreshold
   id: testThreshold
-  upperBound: 5
-  lowerBound: 1
-  upperWarnAround: 0.5
-  lowerWarnAround: 1.5
+  upperBound: !type:AlarmThresholdSetting
+    threshold: 5
+  lowerBound: !type:AlarmThresholdSetting
+    threshold: 1
+  upperWarnAround: !type:AlarmThresholdSetting
+    threshold: 0.5
+  lowerWarnAround: !type:AlarmThresholdSetting
+    threshold: 1.5
 ";
 
         [Test]
@@ -72,29 +76,35 @@ namespace Content.IntegrationTests.Tests.Atmos
 
                 // Check that the warning percentage is calculated correcly
                 {
-                    threshold.SetLimit(AtmosMonitorLimitType.UpperWarning, threshold.UpperBound.Value + 1);
+                    threshold.SetLimit(AtmosMonitorLimitType.UpperWarning, threshold.UpperBound.Value * 0.5f);
                     Assert.That(threshold.UpperWarningPercentage.Value, Is.EqualTo(0.5f));
 
-                    threshold.SetLimit(AtmosMonitorLimitType.LowerWarning, threshold.LowerBound.Value - 1);
+                    threshold.SetLimit(AtmosMonitorLimitType.LowerWarning, threshold.LowerBound.Value * 1.5f);
                     Assert.That(threshold.LowerWarningPercentage.Value, Is.EqualTo(1.5f));
 
-                    threshold.SetLimit(AtmosMonitorLimitType.UpperWarning, threshold.LowerBound.Value);
+                    threshold.SetLimit(AtmosMonitorLimitType.UpperWarning, threshold.UpperBound.Value * 0.5f);
                     Assert.That(threshold.UpperWarningPercentage.Value, Is.EqualTo(0.5f));
 
-                    threshold.SetLimit(AtmosMonitorLimitType.LowerWarning, threshold.UpperBound.Value + 1);
+                    threshold.SetLimit(AtmosMonitorLimitType.LowerWarning, threshold.LowerBound.Value * 1.5f);
                     Assert.That(threshold.LowerWarningPercentage.Value, Is.EqualTo(1.5f));
                 }
 
                 // Check that the threshold reporting works correctly:
                 {
+                    // Set threshold to some known state
                     threshold.SetLimit(AtmosMonitorLimitType.UpperDanger, 5f);
-                    threshold.SetLimit(AtmosMonitorLimitType.UpperWarning, 4f);
-                    threshold.SetLimit(AtmosMonitorLimitType.LowerWarning, 2f);
+                    threshold.SetEnabled(AtmosMonitorLimitType.UpperDanger, true);
                     threshold.SetLimit(AtmosMonitorLimitType.LowerDanger, 1f);
+                    threshold.SetEnabled(AtmosMonitorLimitType.LowerDanger, true);
+                    threshold.SetLimit(AtmosMonitorLimitType.UpperWarning, 4f);
+                    threshold.SetEnabled(AtmosMonitorLimitType.UpperWarning, true);
+                    threshold.SetLimit(AtmosMonitorLimitType.LowerWarning, 2f);
+                    threshold.SetEnabled(AtmosMonitorLimitType.LowerWarning, true);
 
+                    // Check a value that's in between each upper/lower warning/panic:
                     threshold.CheckThreshold(3f, out AtmosAlarmType alarmType);
                     Assert.That(alarmType, Is.EqualTo(AtmosAlarmType.Normal));
-                    threshold.CheckThreshold(2.5f, out alarmType);
+                    threshold.CheckThreshold(1.5f, out alarmType);
                     Assert.That(alarmType, Is.EqualTo(AtmosAlarmType.Warning));
                     threshold.CheckThreshold(4.5f, out alarmType);
                     Assert.That(alarmType, Is.EqualTo(AtmosAlarmType.Warning));
@@ -113,6 +123,7 @@ namespace Content.IntegrationTests.Tests.Atmos
                     threshold.CheckThreshold(123.4f, out alarmType);
                     Assert.That(alarmType, Is.EqualTo(AtmosAlarmType.Normal));
 
+                    // And for lower thresholds:
                     threshold.CheckThreshold(0.01f, out alarmType);
                     Assert.That(alarmType, Is.EqualTo(AtmosAlarmType.Danger));
                     threshold.SetEnabled(AtmosMonitorLimitType.LowerDanger, false);
