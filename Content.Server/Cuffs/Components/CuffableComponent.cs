@@ -281,12 +281,12 @@ namespace Content.Server.Cuffs.Components
                 meta.EntityName = cuff.BrokenName;
                 meta.EntityDescription = cuff.BrokenDesc;
 
-                if (_entMan.TryGetComponent<SpriteComponent?>(cuffsToRemove, out var sprite) && cuff.BrokenState != null)
+                if (_entMan.TryGetComponent<SpriteComponent>(cuffsToRemove, out var sprite) && cuff.BrokenState != null)
                 {
                     sprite.LayerSetState(0, cuff.BrokenState); // TODO: safety check to see if RSI contains the state?
                 }
 
-                _entMan.AddComponent<RecyclableComponent>(cuffsToRemove.Value);
+                _entMan.AddComponent<RecyclableComponent>(cuffsToRemove);
             }
 
             CanStillInteract = _entMan.TryGetComponent(Owner, out HandsComponent? handsComponent) && handsComponent.SortedHands.Count() > CuffedHandCount;
