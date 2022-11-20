@@ -1,9 +1,4 @@
 Entries:
-- author: martin69420
-  changes:
-  - {message: Added wall lockers, type: Add}
-  id: 2184
-  time: '2022-08-24T07:08:57.0000000+00:00'
 - author: keronshb
   changes:
   - {message: 'Adds the Ensnaring Component. If a player gets ensnared by something
@@ -2959,3 +2954,8 @@ Entries:
   - {message: Implanters have been added to the medical lathe., type: Add}
   id: 2683
   time: '2022-11-20T06:49:37.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Magnet artifacts can now be activated with magboots., type: Add}
+  id: 2684
+  time: '2022-11-20T06:52:32.0000000+00:00'
