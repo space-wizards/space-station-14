@@ -65,6 +65,7 @@ public sealed partial class ChatSystem : SharedChatSystem
 
     public override void Initialize()
     {
+        base.Initialize();
         InitializeRadio();
         InitializeEmotes();
         _configurationManager.OnValueChanged(CCVars.LoocEnabled, OnLoocEnabledChanged, true);
@@ -75,6 +76,7 @@ public sealed partial class ChatSystem : SharedChatSystem
 
     public override void Shutdown()
     {
+        base.Shutdown();
         ShutdownRadio();
         ShutdownEmotes();
         _configurationManager.UnsubValueChanged(CCVars.LoocEnabled, OnLoocEnabledChanged);
@@ -379,6 +381,7 @@ public sealed partial class ChatSystem : SharedChatSystem
             ("entityName", name),
             ("message", FormattedMessage.EscapeText(action)));
 
+        TryEmote(source, action);
         SendInVoiceRange(ChatChannel.Emotes, action, wrappedMessage, source, hideChat, hideGlobalGhostChat);
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Emote from {ToPrettyString(source):user}: {action}");
     }

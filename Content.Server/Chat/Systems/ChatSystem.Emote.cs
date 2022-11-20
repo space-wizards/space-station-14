@@ -5,7 +5,7 @@ namespace Content.Server.Chat.Systems;
 
 public partial class ChatSystem
 {
-    private Dictionary<string, EmotePrototype> _wordEmoteDict = new();
+    private readonly Dictionary<string, EmotePrototype> _wordEmoteDict = new();
 
     private void InitializeEmotes()
     {
@@ -25,6 +25,7 @@ public partial class ChatSystem
 
     public void CacheEmotes()
     {
+        _wordEmoteDict.Clear();
         var emotes = _prototypeManager.EnumeratePrototypes<EmotePrototype>();
         foreach (var emote in emotes)
         {
@@ -49,18 +50,21 @@ public partial class ChatSystem
             return false;
 
         var ev = new EmoteEvent(emote);
-        RaiseLocalEvent(uid, ev);
+        RaiseLocalEvent(uid, ref ev);
 
-        return true;
+        return ev.Handled;
     }
 }
 
+[ByRefEvent]
 public struct EmoteEvent
 {
+    public bool Handled;
     public readonly EmotePrototype Emote;
 
     public EmoteEvent(EmotePrototype emote)
     {
         Emote = emote;
+        Handled = false;
     }
 }

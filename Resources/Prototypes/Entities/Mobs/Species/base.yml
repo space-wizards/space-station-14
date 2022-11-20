@@ -276,6 +276,7 @@
   - type: Speech
     speechSounds: Alto
   - type: Vocal
+    emoteSounds: MaleHuman
   - type: Emoting
   - type: Grammar
     attributes:

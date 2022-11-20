@@ -1,3 +1,4 @@
+using Content.Server.Chat.Systems;
 using Content.Server.Humanoid;
 using Content.Server.Speech.Components;
 using Content.Shared.ActionBlocker;
@@ -23,14 +24,29 @@ public sealed class VocalSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly ActionBlockerSystem _blocker = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
+        SubscribeLocalEvent<VocalComponent, EmoteEvent>(OnEmote);
         SubscribeLocalEvent<VocalComponent, ScreamActionEvent>(OnActionPerform);
         SubscribeLocalEvent<VocalComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<VocalComponent, ComponentShutdown>(OnShutdown);
+    }
+
+    private void OnEmote(EntityUid uid, VocalComponent component, ref EmoteEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        var proto = component.EmoteSounds;
+        if (proto == null || !proto.Sounds.TryGetValue(args.Emote.ID, out var sound))
+            return;
+
+        _audio.PlayPvs(sound, uid, sound.Params);
+        args.Handled = true;
     }
 
     private void OnStartup(EntityUid uid, VocalComponent component, ComponentStartup args)

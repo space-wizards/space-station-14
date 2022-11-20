@@ -1,0 +1,11 @@
+- type: emoteSounds
+  id: MaleHuman
+  sounds:
+    Scream:
+      collection: MaleScreams
+
+- type: emoteSounds
+  id: FemaleHuman
+  sounds:
+    Scream:
+      collection: FemaleScreams
