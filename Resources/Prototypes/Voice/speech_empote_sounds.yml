@@ -3,9 +3,13 @@
   sounds:
     Scream:
       collection: MaleScreams
+    Laugh:
+      collection: MaleLaugh
 
 - type: emoteSounds
   id: FemaleHuman
   sounds:
     Scream:
       collection: FemaleScreams
+    Laugh:
+      collection: FemaleLaugh

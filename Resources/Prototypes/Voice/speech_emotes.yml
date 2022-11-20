@@ -4,3 +4,24 @@
     - scream
     - screams
     - screaming
+    - screamed
+    - shriek
+    - shrieks
+    - shrieking
+    - shrieked
+    - screech
+    - screechs
+    - screeching
+    - screeched
+    - yell
+    - yells
+    - yelled
+    - yelling
+
+- type: emote
+  id: Laugh
+  words:
+    - laugh
+    - laughs
+    - laughing
+    - laughed

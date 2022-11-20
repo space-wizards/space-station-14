@@ -1,0 +1,10 @@
+- type: soundCollection
+  id: MaleLaugh
+  files:
+    - /Audio/Voice/Human/manlaugh1.ogg
+    - /Audio/Voice/Human/manlaugh2.ogg
+
+- type: soundCollection
+  id: FemaleLaugh
+  files:
+    - /Audio/Voice/Human/womanlaugh.ogg
