@@ -1,14 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: WallmountSubstationElectronics Are now printable., type: Fix}
-  id: 2186
-  time: '2022-08-25T13:23:03.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: You can no longer inject chems into cigarettes., type: Remove}
-  id: 2187
-  time: '2022-08-25T13:35:23.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Boxing gloves now have the fist weapon arc., type: Fix}
@@ -2956,3 +2946,15 @@ Entries:
   - {message: Added damage to gas tanks and utensils!, type: Add}
   id: 2685
   time: '2022-11-20T18:43:24.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a bug causing gas/fire visuals to sometimes not update properly.,
+    type: Fix}
+  id: 2686
+  time: '2022-11-21T02:50:02.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: You can no longer use an RPED to increase a generator's power output
+      infinitely., type: Fix}
+  id: 2687
+  time: '2022-11-21T02:50:43.0000000+00:00'
