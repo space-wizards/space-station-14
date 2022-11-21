@@ -619,7 +619,10 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
         var mapId = _mapManager.CreateMap();
 
-        var outpostGrids = _map.LoadMap(mapId, path.ToString());
+        var outpostGrids = _map.LoadMap(mapId, path.ToString(), new MapLoadOptions()
+        {
+            LoadMap = true,
+        });
         if (outpostGrids.Count == 0)
         {
             Logger.ErrorS("nukies", $"Error loading map {path} for nukies!");
