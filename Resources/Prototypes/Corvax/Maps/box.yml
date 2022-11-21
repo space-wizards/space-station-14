@@ -1,0 +1,47 @@
+- type: gameMap
+  id: CorvaxBox
+  mapName: 'Box Station'
+  mapPath: /Maps/box.yml
+  minPlayers: 0
+  stations:
+    Boxstation:
+      mapNameTemplate: '{0} Box Station {1}'
+      nameGenerator:
+        !type:NanotrasenNameGenerator
+        prefixCreator: 'TG'
+      overflowJobs:
+        - Passenger
+      availableJobs:
+        CargoTechnician: [ 3, 3 ]
+        Passenger: [ -1, -1 ]
+        Bartender: [ 1, 1 ]
+        Botanist: [ 3, 3 ]
+        Chef: [ 2, 2 ]
+        Clown: [ 1, 1 ]
+        Janitor: [ 2, 2 ]
+        Mime: [ 1, 1 ]
+        Captain: [ 1, 1 ]
+        IAA: [ 1, 1 ]
+        HeadOfPersonnel: [ 1, 1 ]
+        ChiefEngineer: [ 1, 1 ]
+        StationEngineer: [ 4, 4 ]
+        ChiefMedicalOfficer: [ 1, 1 ]
+        MedicalDoctor: [ 3, 3 ]
+        Chemist: [ 2, 3 ]
+        ResearchDirector: [ 1, 1 ]
+        Scientist: [ 4, 4 ]
+        HeadOfSecurity: [ 1, 1 ]
+        SecurityOfficer: [ 4, 4 ]
+        Chaplain: [ 1, 1 ]
+        Warden: [ 1, 1 ]
+        Librarian: [ 1, 1 ]
+        Lawyer: [ 0, 0 ]
+        Quartermaster: [ 1, 1 ]
+        SalvageSpecialist: [ 3, 3 ]
+        Musician: [ 1, 1 ]
+        AtmosphericTechnician: [ 3, 3 ]
+        TechnicalAssistant: [ 2, 2 ]
+        MedicalIntern: [ 2, 2 ]
+        ServiceWorker: [ 2, 2 ]
+        SecurityCadet: [ 2, 2 ]
+        Detective: [ 1, 1 ]
