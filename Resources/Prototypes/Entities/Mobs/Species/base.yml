@@ -276,7 +276,10 @@
   - type: Speech
     speechSounds: Alto
   - type: Vocal
-    emoteSounds: MaleHuman
+    sounds:
+      Male: MaleHuman
+      Female: FemaleHuman
+      Unsexed: MaleHuman
   - type: Emoting
   - type: Grammar
     attributes:

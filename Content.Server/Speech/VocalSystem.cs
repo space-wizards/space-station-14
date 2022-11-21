@@ -4,6 +4,7 @@ using Content.Server.Speech.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Chat.Prototypes;
 using Content.Shared.Humanoid;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
@@ -31,6 +32,8 @@ public sealed class VocalSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<VocalComponent, EmoteEvent>(OnEmote);
+        SubscribeLocalEvent<VocalComponent, SexChangedEvent>(OnSexChanged);
+
         SubscribeLocalEvent<VocalComponent, ScreamActionEvent>(OnActionPerform);
         SubscribeLocalEvent<VocalComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<VocalComponent, ComponentShutdown>(OnShutdown);
@@ -49,6 +52,11 @@ public sealed class VocalSystem : EntitySystem
         args.Handled = true;
     }
 
+    private void OnSexChanged(EntityUid uid, VocalComponent component, SexChangedEvent args)
+    {
+        LoadSounds(uid, component);
+    }
+
     private void OnStartup(EntityUid uid, VocalComponent component, ComponentStartup args)
     {
         if (component.ScreamAction == null
@@ -60,8 +68,7 @@ public sealed class VocalSystem : EntitySystem
         if (component.ScreamAction != null)
             _actions.AddAction(uid, component.ScreamAction, null);
 
-        if (component.EmoteSoundsId != null)
-            _proto.TryIndex(component.EmoteSoundsId, out component.EmoteSounds);
+        LoadSounds(uid, component);
     }
 
     private void OnShutdown(EntityUid uid, VocalComponent component, ComponentShutdown args)
@@ -78,6 +85,21 @@ public sealed class VocalSystem : EntitySystem
         args.Handled = TryScream(uid, component);
     }
 
+    private void LoadSounds(EntityUid uid, VocalComponent component, Sex? sex = null)
+    {
+        if (component.SoundsBySex == null)
+            return;
+
+        sex ??= CompOrNull<HumanoidComponent>(uid)?.Sex ?? Sex.Unsexed;
+
+        if (!component.SoundsBySex.TryGetValue(sex.Value, out var protoId))
+            return;
+        if (!_proto.TryIndex(protoId, out EmoteSoundsPrototype? proto))
+            return;
+
+        component.EmoteSounds = proto;
+    }
+
     public bool TryScream(EntityUid uid, VocalComponent? component = null)
     {
         if (!Resolve(uid, ref component, false))
@@ -86,7 +108,7 @@ public sealed class VocalSystem : EntitySystem
         if (!_blocker.CanSpeak(uid))
             return false;
 
-        var sex = CompOrNull<HumanoidComponent>(uid)?.Sex ?? Sex.Unsexed;
+
 
         if (_random.Prob(component.WilhelmProbability))
         {
@@ -97,18 +119,7 @@ public sealed class VocalSystem : EntitySystem
         var scale = (float) _random.NextGaussian(1, VocalComponent.Variation);
         var pitchedParams = component.AudioParams.WithPitchScale(scale);
 
-        switch (sex)
-        {
-            case Sex.Male:
-                SoundSystem.Play(component.MaleScream.GetSound(), Filter.Pvs(uid), uid, pitchedParams);
-                break;
-            case Sex.Female:
-                SoundSystem.Play(component.FemaleScream.GetSound(), Filter.Pvs(uid), uid, pitchedParams);
-                break;
-            default:
-                SoundSystem.Play(component.UnsexedScream.GetSound(), Filter.Pvs(uid), uid, pitchedParams);
-                break;
-        }
+
 
         return true;
     }

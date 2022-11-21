@@ -1,8 +1,10 @@
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Chat.Prototypes;
+using Content.Shared.Humanoid;
 using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
 namespace Content.Server.Speech.Components;
 
@@ -12,14 +14,8 @@ namespace Content.Server.Speech.Components;
 [RegisterComponent]
 public sealed class VocalComponent : Component
 {
-    [DataField("maleScream")]
-    public SoundSpecifier MaleScream = new SoundCollectionSpecifier("MaleScreams");
-
-    [DataField("femaleScream")]
-    public SoundSpecifier FemaleScream = new SoundCollectionSpecifier("FemaleScreams");
-
-    [DataField("unsexedScream")]
-    public SoundSpecifier UnsexedScream = new SoundCollectionSpecifier("MaleScreams");
+    [DataField("sounds", customTypeSerializer: typeof(PrototypeIdValueDictionarySerializer<Sex, EmoteSoundsPrototype>))]
+    public Dictionary<Sex, string>? SoundsBySex;
 
     [DataField("wilhelm")]
     public SoundSpecifier Wilhelm = new SoundPathSpecifier("/Audio/Voice/Human/wilhelm_scream.ogg");
@@ -38,9 +34,7 @@ public sealed class VocalComponent : Component
     [DataField("action")] // must be a data-field to properly save cooldown when saving game state.
     public InstantAction? ScreamAction = null;
 
-    [DataField("emoteSounds")]
-    public string? EmoteSoundsId;
-
+    [ViewVariables]
     public EmoteSoundsPrototype? EmoteSounds = null;
 }
 

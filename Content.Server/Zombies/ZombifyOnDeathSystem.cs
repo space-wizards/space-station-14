@@ -113,8 +113,8 @@ namespace Content.Server.Zombies
 
             var vocal = EnsureComp<VocalComponent>(target);
             var scream = new SoundCollectionSpecifier ("ZombieScreams");
-            vocal.FemaleScream = scream;
-            vocal.MaleScream = scream;
+            //vocal.FemaleScream = scream;
+            //vocal.MaleScream = scream;
 
             //This is the actual damage of the zombie. We assign the visual appearance
             //and range here because of stuff we'll find out later
