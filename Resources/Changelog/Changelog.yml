@@ -1,9 +1,4 @@
 Entries:
-- author: PJB3005
-  changes:
-  - {message: Clowns now go BONK on tables, type: Add}
-  id: 2189
-  time: '2022-08-25T13:41:37.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Popups for wielding now display the correct text., type: Fix}
@@ -2959,3 +2954,8 @@ Entries:
       after they leave a container., type: Fix}
   id: 2688
   time: '2022-11-21T03:34:54.0000000+00:00'
+- author: checkraze
+  changes:
+  - {message: Added a renovated Moose Station, type: Add}
+  id: 2689
+  time: '2022-11-21T09:20:08.0000000+00:00'
