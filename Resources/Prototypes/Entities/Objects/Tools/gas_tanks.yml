@@ -30,6 +30,11 @@
   - type: Explosive
     explosionType: Default
     maxIntensity: 20
+  - type: MeleeWeapon
+    attackRate: 0.8
+    damage:
+      types:
+        Blunt: 10
 
 - type: entity
   parent: GasTankBase
@@ -100,6 +105,10 @@
     - Pocket
     - Belt
     - suitStorage
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 5
 
 - type: entity
   parent: EmergencyOxygenTank
@@ -144,6 +153,11 @@
     - Pocket
     - Belt
     - suitStorage
+  - type: MeleeWeapon
+    attackRate: 0.9
+    damage:
+      types:
+        Blunt: 7.5
 
 - type: entity
   parent: GasTankBase
