@@ -252,7 +252,7 @@
 - type: listing
   id: UplinkHeadset
   name: Syndicate Headset - Overear-Headset
-  description: A headset that allows you to listen in on departmental channels, or contact other our agents. Should be flashband proof.
+  description: A headset that allows you to listen in on departmental channels, or contact other our agents. Should be flashbang proof.
   productEntity: ClothingHeadsetAltSyndicate
   cost:
     Telecrystal: 4
