@@ -192,7 +192,7 @@ public sealed partial class HumanoidSystem : SharedHumanoidSystem
 
         var oldSex = humanoid.Sex;
         humanoid.Sex = sex;
-        RaiseLocalEvent(new SexChangedEvent(oldSex, sex));
+        RaiseLocalEvent(uid, new SexChangedEvent(oldSex, sex));
 
         if (sync)
         {

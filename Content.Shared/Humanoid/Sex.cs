@@ -13,16 +13,5 @@ namespace Content.Shared.Humanoid
         Unsexed,
     }
 
-    [ByRefEvent]
-    public struct SexChangedEvent
-    {
-        public readonly Sex OldSex;
-        public readonly Sex NewSex;
-
-        public SexChangedEvent(Sex oldSex, Sex newSex)
-        {
-            OldSex = oldSex;
-            NewSex = newSex;
-        }
-    }
+    public record struct SexChangedEvent(Sex OldSex, Sex NewSex);
 }
