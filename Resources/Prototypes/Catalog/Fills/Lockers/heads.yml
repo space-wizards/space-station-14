@@ -24,6 +24,8 @@
       - id: DoorRemoteCargo
       - id: RubberStampQm
       - id: ClothingHeadsetAltCargo
+      - id: PinpointerMagnet
+        prob: 0.25
 
 - type: entity
   id: LockerCaptainFilled
