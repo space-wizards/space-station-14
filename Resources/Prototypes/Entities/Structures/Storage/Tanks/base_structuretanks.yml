@@ -22,13 +22,20 @@
       - WallLayer
   - type: Damageable
     damageContainer: Inorganic
-    damageModifierSet: IgnitableMetallic
+    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTypeTrigger
         damageType: Heat
-        damage: 1
+        damage: 5
+      behaviors:
+      - !type:SolutionExplosionBehavior
+        solution: tank
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Piercing
+        damage: 5
       behaviors:
       - !type:SolutionExplosionBehavior
         solution: tank

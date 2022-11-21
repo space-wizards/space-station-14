@@ -9,17 +9,6 @@
     Blunt: 5
     Heat: 5
 
-# Like metallic, but takes full damage from heat.
-- type: damageModifierSet
-  id: IgnitableMetallic
-  coefficients:
-    Blunt: 0.7
-    Slash: 0.5
-    Piercing: 0.7
-    Shock: 1.2
-  flatReductions:
-    Blunt: 5
-
 # Like metallic, but without flat reduction so it can be damaged with fists.
 - type: damageModifierSet
   id: FlimsyMetallic

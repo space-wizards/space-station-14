@@ -10,8 +10,7 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 7  # Should have the same or less damage than a regular pellet
-        Heat: 1
+        Piercing: 8  # Should have the same or less damage than a regular pellet
 
 - type: entity
   id: PelletShotgunBeanbag
@@ -41,8 +40,7 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 11
-        Heat: 1
+        Piercing: 12
 
 - type: entity
   id: PelletShotgunIncendiary
@@ -55,8 +53,6 @@
     state: buckshot-flare
   - type: Projectile
     damage:
-      types:
-        Heat: 1
       groups:
         Burn: 7
   - type: PointLight
@@ -119,8 +115,6 @@
     state: buckshot-flare
   - type: Projectile
     damage:
-      type:
-        Heat: 1
       groups:
         Burn: 14
   - type: PointLight

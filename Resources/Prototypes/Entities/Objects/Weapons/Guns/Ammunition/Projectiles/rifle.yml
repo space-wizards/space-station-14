@@ -7,8 +7,7 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 16
-        Heat: 1
+        Piercing: 17
 
 - type: entity
   id: BulletRifleHighVelocity
@@ -19,8 +18,7 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 20
-        Heat: 1
+        Piercing: 21
 
 - type: entity
   id: BulletRiflePractice
