@@ -61,7 +61,8 @@ public sealed class VocalSystem : EntitySystem
         if (proto == null || !proto.Sounds.TryGetValue(emoteId, out var sound))
             return false;
 
-        _audio.PlayPvs(sound, uid, sound.Params);
+        var param = proto.Params ?? sound.Params;
+        _audio.PlayPvs(sound, uid, param);
         return true;
     }
 

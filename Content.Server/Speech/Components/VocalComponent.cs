@@ -23,13 +23,8 @@ public sealed class VocalComponent : Component
     [DataField("wilhelm")]
     public SoundSpecifier Wilhelm = new SoundPathSpecifier("/Audio/Voice/Human/wilhelm_scream.ogg");
 
-    [DataField("audioParams")]
-    public AudioParams AudioParams = AudioParams.Default.WithVolume(4f);
-
     [DataField("wilhelmProbability")]
-    public float WilhelmProbability = 0.5f;
-
-    public const float Variation = 0.125f;
+    public float WilhelmProbability = 0.01f;
 
     [DataField("actionId", customTypeSerializer:typeof(PrototypeIdSerializer<InstantActionPrototype>))]
     public string ActionId = "Scream";
