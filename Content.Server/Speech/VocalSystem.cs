@@ -44,12 +44,36 @@ public sealed class VocalSystem : EntitySystem
         if (args.Handled)
             return;
 
-        var proto = component.EmoteSounds;
-        if (proto == null || !proto.Sounds.TryGetValue(args.Emote.ID, out var sound))
+        // snowflake case for wilhelm scream easter egg
+        if (args.Emote.ID == component.ScreamId)
+        {
+            args.Handled = TryScream(uid, component);
             return;
+        }
+
+        // just play regular sound based on emote proto
+        args.Handled = TryPlayEmoteSound(uid, component, args.Emote.ID);
+    }
+
+    private bool TryPlayEmoteSound(EntityUid uid, VocalComponent component, string emoteId)
+    {
+        var proto = component.EmoteSounds;
+        if (proto == null || !proto.Sounds.TryGetValue(emoteId, out var sound))
+            return false;
 
         _audio.PlayPvs(sound, uid, sound.Params);
-        args.Handled = true;
+        return true;
+    }
+
+    private bool TryScream(EntityUid uid, VocalComponent component)
+    {
+        if (_random.Prob(component.WilhelmProbability))
+        {
+            _audio.PlayPvs(component.Wilhelm, uid, component.Wilhelm.Params);
+            return true;
+        }
+
+        return TryPlayEmoteSound(uid, component, component.ScreamId);
     }
 
     private void OnSexChanged(EntityUid uid, VocalComponent component, SexChangedEvent args)
@@ -100,7 +124,7 @@ public sealed class VocalSystem : EntitySystem
         component.EmoteSounds = proto;
     }
 
-    public bool TryScream(EntityUid uid, VocalComponent? component = null)
+    /*public bool TryScream(EntityUid uid, VocalComponent? component = null)
     {
         if (!Resolve(uid, ref component, false))
             return false;
@@ -122,5 +146,5 @@ public sealed class VocalSystem : EntitySystem
 
 
         return true;
-    }
+    }*/
 }

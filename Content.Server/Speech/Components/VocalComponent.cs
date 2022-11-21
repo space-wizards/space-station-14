@@ -17,6 +17,9 @@ public sealed class VocalComponent : Component
     [DataField("sounds", customTypeSerializer: typeof(PrototypeIdValueDictionarySerializer<Sex, EmoteSoundsPrototype>))]
     public Dictionary<Sex, string>? SoundsBySex;
 
+    [DataField("screamId", customTypeSerializer: typeof(PrototypeIdSerializer<EmotePrototype>))]
+    public string ScreamId = "Scream";
+
     [DataField("wilhelm")]
     public SoundSpecifier Wilhelm = new SoundPathSpecifier("/Audio/Voice/Human/wilhelm_scream.ogg");
 
@@ -24,7 +27,7 @@ public sealed class VocalComponent : Component
     public AudioParams AudioParams = AudioParams.Default.WithVolume(4f);
 
     [DataField("wilhelmProbability")]
-    public float WilhelmProbability = 0.01f;
+    public float WilhelmProbability = 0.5f;
 
     public const float Variation = 0.125f;
 

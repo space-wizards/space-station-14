@@ -135,8 +135,8 @@ namespace Content.Server.Zombies
                 // What? Is this REALLY the best way we have of letting admins know there are zombies in a round?
                 // [automated maintainer groan]
                 _chat.TrySendInGameICMessage(uid, "[automated zombie groan]", InGameICChatType.Speak, false);
-            else
-                _vocal.TryScream(uid);
+            /*else
+                _vocal.TryScream(uid);*/
 
             component.LastDamageGroanCooldown = component.GroanCooldown;
         }
