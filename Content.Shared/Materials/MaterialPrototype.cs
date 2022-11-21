@@ -1,4 +1,5 @@
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 
@@ -32,8 +33,23 @@ namespace Content.Shared.Materials
         [DataField("stackEntity", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string StackEntity { get; } = "";
 
+        private string _name = string.Empty;
+
+        [DataField("name")]
+        public string Name
+        {
+            get => _name;
+            private set => _name = Loc.GetString(value);
+        }
+
         [DataField("color")]
         public Color Color { get; } = Color.Gray;
+
+        /// <summary>
+        ///     An icon used to represent the material in graphic interfaces.
+        /// </summary>
+        [DataField("icon")]
+        public SpriteSpecifier Icon { get; } = SpriteSpecifier.Invalid;
 
         /// <summary>
         /// The price per cm3.
