@@ -237,15 +237,6 @@ grids:
   chunks:
   - ind: 0,-1
     tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAYAAAAGAAAABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAAWAAAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAGAAAABgAAAAYAAABYAAAAWAAAAFgAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYAAAABgAAAFgAAABYAAAAWAAAAFgAAABYAAAABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYAAAAWAAAAFgAAABYAAAAWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWAAAAFgAAABYAAAAWAAAAFgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAABYAAAAWAAAAFgAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
-- uid: 13707
-  settings:
-    chunksize: 16
-    tilesize: 1
-  chunks:
-  - ind: 0,-1
-    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAGAAAABgAAAA8AAAAPAAAADwAAAA8AAAAPAAAABgAAAAYAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAGAAAABgAAAAYAAAAPAAAADwAAAA8AAAAPAAAADwAAAAYAAAAGAAAABgAAAAAAAAAAAAAAAAAAAAAAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAADwAAAAYAAAAGAAAABgAAAAYAAAAGAAAAAAAAAAAAAAAAAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAA8AAAAPAAAABgAAAAYAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAADwAAAAYAAAAGAAAABgAAAAYAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAA==
-  - ind: 0,0
-    tiles: AAAAAAAAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAYAAAAGAAAABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
 entities:
 - uid: 0
   type: WallReinforced
@@ -286,7 +277,7 @@ entities:
   components:
   - type: MetaData
   - type: Transform
-  - index: 14
+  - index: 11
     type: Map
   - type: PhysicsMap
   - type: Broadphase
@@ -5703,11 +5694,6 @@ entities:
           color: '#A4610641'
           id: Dirt
           coordinates: -15,7
-        1643:
-          cleanable: True
-          color: '#A4610641'
-          id: Dirt
-          coordinates: -32,1
         2382:
           cleanable: True
           color: '#A4610696'
@@ -5778,11 +5764,6 @@ entities:
           color: '#A4610696'
           id: Dirt
           coordinates: -32,3
-        2598:
-          cleanable: True
-          color: '#A4610696'
-          id: Dirt
-          coordinates: -32,1
         2611:
           cleanable: True
           color: '#A4610696'
@@ -5953,16 +5934,11 @@ entities:
           color: '#A4610696'
           id: Dirt
           coordinates: -7,3
-        2674:
+        2799:
           cleanable: True
           color: '#A4610696'
           id: Dirt
-          coordinates: -32,1
-        2680:
-          cleanable: True
-          color: '#A4610696'
-          id: Dirt
-          coordinates: -32,1
+          coordinates: -32,4
         2681:
           cleanable: True
           color: '#A4610696'
@@ -6023,6 +5999,16 @@ entities:
           color: '#A4610696'
           id: Dirt
           coordinates: -22,1
+        2748:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -15,4
+        2749:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -15,3
       0,0:
         4:
           color: '#DE3A3A96'
@@ -6629,11 +6615,6 @@ entities:
           color: '#A4610696'
           id: DirtLight
           coordinates: 2,3
-        1522:
-          cleanable: True
-          color: '#A4610696'
-          id: DirtLight
-          coordinates: 6,7
         1523:
           cleanable: True
           color: '#A4610696'
@@ -6679,11 +6660,6 @@ entities:
           color: '#A4610696'
           id: DirtLight
           coordinates: 10,19
-        1557:
-          cleanable: True
-          color: '#A4610696'
-          id: DirtLight
-          coordinates: 31,8
         1558:
           cleanable: True
           color: '#A4610696'
@@ -6899,11 +6875,11 @@ entities:
           color: '#A4610641'
           id: Dirt
           coordinates: 15,8
-        1830:
+        2850:
           cleanable: True
-          color: '#A4610641'
+          color: '#A4610696'
           id: Dirt
-          coordinates: 30,7
+          coordinates: 11,9
         1831:
           cleanable: True
           color: '#A4610641'
@@ -6914,11 +6890,11 @@ entities:
           color: '#A4610641'
           id: Dirt
           coordinates: 31,1
-        1942:
+        2849:
           cleanable: True
           color: '#A4610696'
-          id: DirtHeavy
-          coordinates: 31,7
+          id: Dirt
+          coordinates: 11,2
         1943:
           cleanable: True
           color: '#A4610696'
@@ -6939,11 +6915,6 @@ entities:
           color: '#A4610696'
           id: DirtHeavy
           coordinates: 5,2
-        2144:
-          cleanable: True
-          color: '#A4610696'
-          id: DirtHeavy
-          coordinates: 6,3
         2145:
           cleanable: True
           color: '#A4610696'
@@ -7054,46 +7025,21 @@ entities:
           color: '#A4610696'
           id: Dirt
           coordinates: 4,4
-        2398:
-          cleanable: True
-          color: '#A4610696'
-          id: Dirt
-          coordinates: 6,3
-        2399:
-          cleanable: True
-          color: '#A4610696'
-          id: Dirt
-          coordinates: 6,3
         2400:
           cleanable: True
           color: '#A4610696'
           id: Dirt
           coordinates: 6,6
-        2401:
-          cleanable: True
-          color: '#A4610696'
-          id: Dirt
-          coordinates: 6,7
-        2402:
-          cleanable: True
-          color: '#A4610696'
-          id: Dirt
-          coordinates: 7,7
         2403:
           cleanable: True
           color: '#A4610696'
           id: Dirt
           coordinates: 8,8
-        2404:
+        2882:
           cleanable: True
           color: '#A4610696'
-          id: Dirt
+          id: DirtMedium
           coordinates: 7,7
-        2405:
-          cleanable: True
-          color: '#A4610696'
-          id: Dirt
-          coordinates: 6,3
         2427:
           cleanable: True
           color: '#A4610696'
@@ -7249,16 +7195,11 @@ entities:
           color: '#A4610696'
           id: Dirt
           coordinates: 10,18
-        2491:
+        2765:
           cleanable: True
           color: '#A4610696'
           id: Dirt
-          coordinates: 30,7
-        2492:
-          cleanable: True
-          color: '#A4610696'
-          id: Dirt
-          coordinates: 31,8
+          coordinates: 30,4
         2493:
           cleanable: True
           color: '#A4610696'
@@ -7284,11 +7225,6 @@ entities:
           color: '#A4610696'
           id: Dirt
           coordinates: 5,2
-        2648:
-          cleanable: True
-          color: '#A4610696'
-          id: Dirt
-          coordinates: 6,4
         2649:
           cleanable: True
           color: '#A4610696'
@@ -7304,6 +7240,41 @@ entities:
           color: '#A4610696'
           id: Dirt
           coordinates: 6,1
+        2742:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: 14,14
+        2743:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: 15,16
+        2744:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: 14,18
+        2745:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: 15,18
+        2746:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: 16,18
+        2747:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: 5,4
+        2764:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: 30,5
       0,-1:
         11:
           color: '#DE3A3A96'
@@ -7831,11 +7802,6 @@ entities:
           color: '#A4610696'
           id: DirtLight
           coordinates: 6,-10
-        1527:
-          cleanable: True
-          color: '#A4610696'
-          id: DirtLight
-          coordinates: 9,-8
         1528:
           cleanable: True
           color: '#A4610696'
@@ -7866,11 +7832,11 @@ entities:
           color: '#A4610696'
           id: DirtLight
           coordinates: 12,-3
-        1541:
+        2757:
           cleanable: True
           color: '#A4610696'
-          id: DirtLight
-          coordinates: 17,-13
+          id: Dirt
+          coordinates: 20,-13
         1542:
           cleanable: True
           color: '#A4610696'
@@ -7891,16 +7857,11 @@ entities:
           color: '#A4610696'
           id: DirtLight
           coordinates: 30,-7
-        1562:
+        2767:
           cleanable: True
           color: '#A4610696'
-          id: DirtLight
-          coordinates: 31,-10
-        1563:
-          cleanable: True
-          color: '#A4610696'
-          id: DirtLight
-          coordinates: 31,-13
+          id: Dirt
+          coordinates: 9,-10
         1564:
           cleanable: True
           color: '#A4610696'
@@ -7931,16 +7892,16 @@ entities:
           color: '#A4610696'
           id: DirtLight
           coordinates: 8,-27
-        1570:
+        2855:
           cleanable: True
           color: '#A4610696'
-          id: DirtLight
-          coordinates: 8,-25
-        1571:
+          id: Dirt
+          coordinates: 0,-12
+        2848:
           cleanable: True
           color: '#A4610696'
-          id: DirtLight
-          coordinates: 8,-22
+          id: Dirt
+          coordinates: 27,-11
         1572:
           cleanable: True
           color: '#A4610696'
@@ -8056,11 +8017,6 @@ entities:
           color: '#A4610641'
           id: Dirt
           coordinates: 20,-12
-        1815:
-          cleanable: True
-          color: '#A4610641'
-          id: Dirt
-          coordinates: 25,-12
         1816:
           cleanable: True
           color: '#A4610641'
@@ -8081,11 +8037,6 @@ entities:
           color: '#A4610641'
           id: Dirt
           coordinates: 31,-8
-        1836:
-          cleanable: True
-          color: '#A4610641'
-          id: Dirt
-          coordinates: 31,-10
         1840:
           cleanable: True
           color: '#A4610641'
@@ -8236,11 +8187,11 @@ entities:
           color: '#A4610696'
           id: DirtHeavy
           coordinates: 4,-11
-        1984:
+        2754:
           cleanable: True
           color: '#A4610696'
-          id: DirtHeavy
-          coordinates: 2,-12
+          id: Dirt
+          coordinates: 16,-13
         2099:
           cleanable: True
           color: '#A4610696'
@@ -8286,11 +8237,11 @@ entities:
           color: '#A4610696'
           id: DirtHeavy
           coordinates: 8,-23
-        2108:
+        2853:
           cleanable: True
           color: '#A4610696'
-          id: DirtHeavy
-          coordinates: 8,-26
+          id: Dirt
+          coordinates: 5,-13
         2109:
           cleanable: True
           color: '#A4610696'
@@ -8321,11 +8272,11 @@ entities:
           color: '#A4610696'
           id: DirtHeavy
           coordinates: 6,-17
-        2137:
+        2852:
           cleanable: True
           color: '#A4610696'
-          id: DirtHeavy
-          coordinates: 6,-15
+          id: Dirt
+          coordinates: 6,-14
         2138:
           cleanable: True
           color: '#A4610696'
@@ -8406,11 +8357,6 @@ entities:
           color: '#A4610696'
           id: DirtHeavy
           coordinates: 14,-9
-        2175:
-          cleanable: True
-          color: '#A4610696'
-          id: DirtHeavy
-          coordinates: 24,-12
         2176:
           cleanable: True
           color: '#A4610696'
@@ -8421,11 +8367,11 @@ entities:
           color: '#A4610696'
           id: DirtHeavy
           coordinates: 28,-12
-        2178:
+        2766:
           cleanable: True
           color: '#A4610696'
-          id: DirtHeavy
-          coordinates: 31,-13
+          id: Dirt
+          coordinates: 10,-8
         2348:
           cleanable: True
           color: '#A4610696'
@@ -8466,11 +8412,11 @@ entities:
           color: '#A4610696'
           id: Dirt
           coordinates: 6,-18
-        2356:
+        2851:
           cleanable: True
           color: '#A4610696'
           id: Dirt
-          coordinates: 6,-15
+          coordinates: 5,-14
         2406:
           cleanable: True
           color: '#A4610696'
@@ -8521,11 +8467,6 @@ entities:
           color: '#A4610696'
           id: Dirt
           coordinates: 8,-9
-        2416:
-          cleanable: True
-          color: '#A4610696'
-          id: Dirt
-          coordinates: 9,-8
         2417:
           cleanable: True
           color: '#A4610696'
@@ -8606,11 +8547,11 @@ entities:
           color: '#A4610696'
           id: Dirt
           coordinates: 15,-12
-        2464:
+        2756:
           cleanable: True
           color: '#A4610696'
           id: Dirt
-          coordinates: 17,-13
+          coordinates: 19,-13
         2465:
           cleanable: True
           color: '#A4610696'
@@ -8621,11 +8562,6 @@ entities:
           color: '#A4610696'
           id: Dirt
           coordinates: 22,-12
-        2467:
-          cleanable: True
-          color: '#A4610696'
-          id: Dirt
-          coordinates: 24,-12
         2468:
           cleanable: True
           color: '#A4610696'
@@ -8656,11 +8592,6 @@ entities:
           color: '#A4610696'
           id: Dirt
           coordinates: 31,-8
-        2499:
-          cleanable: True
-          color: '#A4610696'
-          id: Dirt
-          coordinates: 31,-10
         2500:
           cleanable: True
           color: '#A4610696'
@@ -8676,11 +8607,11 @@ entities:
           color: '#A4610696'
           id: Dirt
           coordinates: 20,-11
-        2503:
+        2755:
           cleanable: True
           color: '#A4610696'
           id: Dirt
-          coordinates: 17,-13
+          coordinates: 19,-14
         2504:
           cleanable: True
           color: '#A4610696'
@@ -8731,26 +8662,21 @@ entities:
           color: '#A4610696'
           id: Dirt
           coordinates: 6,-8
-        2653:
+        2753:
           cleanable: True
           color: '#A4610696'
           id: Dirt
-          coordinates: 9,-8
-        2654:
+          coordinates: 14,-12
+        2854:
           cleanable: True
           color: '#A4610696'
           id: Dirt
-          coordinates: 2,-12
-        2707:
+          coordinates: 3,-13
+        2847:
           cleanable: True
           color: '#A4610696'
           id: Dirt
-          coordinates: 8,-25
-        2708:
-          cleanable: True
-          color: '#A4610696'
-          id: Dirt
-          coordinates: 8,-22
+          coordinates: 4,-22
         2709:
           cleanable: True
           color: '#A4610696'
@@ -8776,6 +8702,56 @@ entities:
           color: '#A4610696'
           id: Dirt
           coordinates: 7,-30
+        2735:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: 4,-21
+        2736:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: 4,-22
+        2737:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: 9,-13
+        2738:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: 10,-9
+        2739:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: 10,-7
+        2740:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: 14,-7
+        2741:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: 14,-8
+        2758:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: 30,-11
+        2759:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: 29,-11
+        2760:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: 30,-10
       -1,-1:
         26:
           color: '#FFFFFFFF'
@@ -10667,11 +10643,11 @@ entities:
           color: '#A4610696'
           id: DirtLight
           coordinates: -23,-23
-        1491:
+        2898:
           cleanable: True
           color: '#A4610696'
-          id: DirtLight
-          coordinates: -21,-21
+          id: Dirt
+          coordinates: -27,-23
         1492:
           cleanable: True
           color: '#A4610696'
@@ -11088,11 +11064,11 @@ entities:
           color: '#A4610696'
           id: DirtHeavy
           coordinates: -25,-22
-        2037:
+        2897:
           cleanable: True
           color: '#A4610696'
-          id: DirtHeavy
-          coordinates: -21,-21
+          id: Dirt
+          coordinates: -27,-21
         2038:
           cleanable: True
           color: '#A4610696'
@@ -11313,11 +11289,11 @@ entities:
           color: '#A4610696'
           id: Dirt
           coordinates: -8,-13
-        2512:
+        2778:
           cleanable: True
           color: '#A4610696'
           id: Dirt
-          coordinates: -9,-12
+          coordinates: -19,-20
         2513:
           cleanable: True
           color: '#A4610696'
@@ -11328,10 +11304,10 @@ entities:
           color: '#A4610696'
           id: Dirt
           coordinates: -10,-12
-        2515:
+        2880:
           cleanable: True
           color: '#A4610696'
-          id: Dirt
+          id: DirtMedium
           coordinates: -12,-13
         2516:
           cleanable: True
@@ -11378,16 +11354,16 @@ entities:
           color: '#A4610696'
           id: Dirt
           coordinates: -7,-12
-        2525:
+        2777:
           cleanable: True
           color: '#A4610696'
           id: Dirt
-          coordinates: -9,-12
-        2526:
+          coordinates: -20,-19
+        2899:
           cleanable: True
           color: '#A4610696'
           id: Dirt
-          coordinates: -22,-22
+          coordinates: -29,-21
         2527:
           cleanable: True
           color: '#A4610696'
@@ -11638,21 +11614,21 @@ entities:
           color: '#A4610696'
           id: Dirt
           coordinates: -2,-20
-        2589:
+        2805:
           cleanable: True
           color: '#A4610696'
           id: Dirt
-          coordinates: -31,-2
+          coordinates: -30,-7
         2590:
           cleanable: True
           color: '#A4610696'
           id: Dirt
           coordinates: -32,-4
-        2599:
+        2798:
           cleanable: True
           color: '#A4610696'
           id: Dirt
-          coordinates: -32,-2
+          coordinates: -30,-4
         2600:
           cleanable: True
           color: '#A4610696'
@@ -11668,11 +11644,11 @@ entities:
           color: '#A4610696'
           id: Dirt
           coordinates: -30,-3
-        2603:
+        2804:
           cleanable: True
           color: '#A4610696'
           id: Dirt
-          coordinates: -31,-2
+          coordinates: -30,-8
         2604:
           cleanable: True
           color: '#A4610696'
@@ -11718,16 +11694,16 @@ entities:
           color: '#A4610696'
           id: Dirt
           coordinates: -6,-12
-        2657:
+        2776:
           cleanable: True
           color: '#A4610696'
           id: Dirt
-          coordinates: -9,-12
-        2658:
+          coordinates: -16,-32
+        2881:
           cleanable: True
           color: '#A4610696'
-          id: Dirt
-          coordinates: -10,-13
+          id: DirtMedium
+          coordinates: -7,-13
         2659:
           cleanable: True
           color: '#A4610696'
@@ -11763,21 +11739,311 @@ entities:
           color: '#A4610696'
           id: Dirt
           coordinates: -29,-13
-        2666:
+        2834:
           cleanable: True
           color: '#A4610696'
           id: Dirt
-          coordinates: -32,-12
-        2673:
+          coordinates: -29,-10
+        2797:
           cleanable: True
           color: '#A4610696'
           id: Dirt
-          coordinates: -32,-2
-        2679:
+          coordinates: -30,-2
+        2803:
           cleanable: True
           color: '#A4610696'
           id: Dirt
-          coordinates: -31,-2
+          coordinates: -31,-8
+        2723:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -19,-17
+        2724:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -20,-17
+        2725:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -18,-17
+        2726:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -17,-17
+        2727:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -16,-17
+        2728:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -20,-13
+        2729:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -21,-13
+        2730:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -15,-14
+        2731:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -15,-15
+        2732:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -16,-15
+        2733:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -14,-21
+        2734:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -14,-26
+        2750:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -1,-11
+        2751:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -8,-11
+        2752:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -7,-11
+        2779:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -19,-19
+        2794:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -25,-2
+        2795:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -30,-2
+        2796:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -30,-1
+        2806:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -31,-6
+        2807:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -30,-6
+        2808:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -31,-7
+        2809:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -29,-7
+        2810:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -28,-7
+        2811:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -27,-8
+        2835:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -28,-10
+        2836:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -27,-10
+        2837:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -29,-11
+        2838:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -28,-11
+        2839:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -27,-11
+        2840:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -26,-11
+        2841:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -25,-12
+        2856:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -4,-12
+        2857:
+          cleanable: True
+          color: '#A4610696'
+          id: DirtLight
+          coordinates: -5,-11
+        2858:
+          cleanable: True
+          color: '#A4610696'
+          id: DirtLight
+          coordinates: -1,-11
+        2859:
+          cleanable: True
+          color: '#A4610696'
+          id: DirtLight
+          coordinates: -7,-14
+        2860:
+          cleanable: True
+          color: '#A4610696'
+          id: DirtLight
+          coordinates: -13,-13
+        2861:
+          cleanable: True
+          color: '#A4610696'
+          id: DirtLight
+          coordinates: -15,-14
+        2885:
+          cleanable: True
+          color: '#A4610696'
+          id: DirtHeavy
+          coordinates: -30,-27
+        2886:
+          cleanable: True
+          color: '#A4610696'
+          id: DirtHeavy
+          coordinates: -30,-28
+        2887:
+          cleanable: True
+          color: '#A4610696'
+          id: DirtLight
+          coordinates: -30,-26
+        2888:
+          cleanable: True
+          color: '#A4610696'
+          id: DirtLight
+          coordinates: -30,-25
+        2889:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -30,-25
+        2890:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -30,-28
+        2891:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -31,-28
+        2892:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -26,-25
+        2893:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -26,-27
+        2894:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -25,-25
+        2895:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -25,-23
+        2896:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -26,-23
+        2900:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -29,-23
+        2901:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -30,-21
+        2902:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -30,-19
+        2903:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -30,-23
+        2904:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -20,-27
+        2906:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -21,-31
+        2907:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -18,-30
+        2908:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -18,-31
       -1,-2:
         42:
           color: '#D381C996'
@@ -12415,11 +12681,6 @@ entities:
           color: '#A4610641'
           id: Dirt
           coordinates: -14,-44
-        1695:
-          cleanable: True
-          color: '#A4610641'
-          id: Dirt
-          coordinates: -16,-45
         1696:
           cleanable: True
           color: '#A4610641'
@@ -12450,11 +12711,6 @@ entities:
           color: '#A4610641'
           id: Dirt
           coordinates: -20,-46
-        1708:
-          cleanable: True
-          color: '#A4610641'
-          id: Dirt
-          coordinates: -16,-45
         1709:
           cleanable: True
           color: '#A4610641'
@@ -12545,11 +12801,11 @@ entities:
           color: '#A4610696'
           id: DirtHeavy
           coordinates: -14,-36
-        2061:
+        2780:
           cleanable: True
           color: '#A4610696'
-          id: DirtHeavy
-          coordinates: -16,-38
+          id: Dirt
+          coordinates: -15,-44
         2062:
           cleanable: True
           color: '#A4610696'
@@ -12565,16 +12821,16 @@ entities:
           color: '#A4610696'
           id: DirtHeavy
           coordinates: -14,-41
-        2065:
+        2775:
           cleanable: True
           color: '#A4610696'
-          id: DirtHeavy
-          coordinates: -16,-38
-        2066:
+          id: Dirt
+          coordinates: -16,-36
+        2878:
           cleanable: True
           color: '#A4610696'
-          id: DirtHeavy
-          coordinates: -14,-45
+          id: DirtMedium
+          coordinates: -1,-46
         2067:
           cleanable: True
           color: '#A4610696'
@@ -12805,31 +13061,31 @@ entities:
           color: '#A4610696'
           id: Dirt
           coordinates: -26,-45
-        2281:
+        2876:
           cleanable: True
           color: '#A4610696'
-          id: Dirt
-          coordinates: -24,-45
+          id: DirtMedium
+          coordinates: -26,-44
         2282:
           cleanable: True
           color: '#A4610696'
           id: Dirt
           coordinates: -21,-44
-        2283:
+        2879:
+          cleanable: True
+          color: '#A4610696'
+          id: DirtMedium
+          coordinates: -1,-47
+        2905:
           cleanable: True
           color: '#A4610696'
           id: Dirt
-          coordinates: -19,-45
-        2284:
+          coordinates: -18,-33
+        2877:
           cleanable: True
           color: '#A4610696'
-          id: Dirt
-          coordinates: -16,-45
-        2285:
-          cleanable: True
-          color: '#A4610696'
-          id: Dirt
-          coordinates: -14,-45
+          id: DirtMedium
+          coordinates: -4,-46
         2286:
           cleanable: True
           color: '#A4610696'
@@ -12865,11 +13121,11 @@ entities:
           color: '#A4610696'
           id: Dirt
           coordinates: -15,-40
-        2359:
+        2774:
           cleanable: True
           color: '#A4610696'
           id: Dirt
-          coordinates: -16,-38
+          coordinates: -16,-36
         2360:
           cleanable: True
           color: '#A4610696'
@@ -12905,6 +13161,66 @@ entities:
           color: '#A4610696'
           id: Dirt
           coordinates: -25,-47
+        2773:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -14,-35
+        2781:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -14,-44
+        2782:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -16,-44
+        2783:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -13,-47
+        2784:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -12,-47
+        2785:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -8,-47
+        2842:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -20,-44
+        2843:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -18,-46
+        2844:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -17,-46
+        2871:
+          cleanable: True
+          color: '#A4610696'
+          id: DirtMedium
+          coordinates: -8,-49
+        2872:
+          cleanable: True
+          color: '#A4610696'
+          id: DirtMedium
+          coordinates: -8,-55
+        2873:
+          cleanable: True
+          color: '#A4610696'
+          id: DirtMedium
+          coordinates: -6,-62
       0,-2:
         44:
           color: '#EFB34196'
@@ -13619,21 +13935,11 @@ entities:
           color: '#A4610696'
           id: DirtLight
           coordinates: 6,-48
-        1713:
-          cleanable: True
-          color: '#A4610641'
-          id: Dirt
-          coordinates: 1,-45
         1714:
           cleanable: True
           color: '#A4610641'
           id: Dirt
           coordinates: 4,-44
-        1742:
-          cleanable: True
-          color: '#A4610641'
-          id: Dirt
-          coordinates: 1,-45
         1743:
           cleanable: True
           color: '#A4610641'
@@ -13644,11 +13950,6 @@ entities:
           color: '#A4610641'
           id: Dirt
           coordinates: 5,-40
-        1745:
-          cleanable: True
-          color: '#A4610641'
-          id: Dirt
-          coordinates: 13,-36
         1746:
           cleanable: True
           color: '#A4610641'
@@ -13879,11 +14180,6 @@ entities:
           color: '#A4610696'
           id: DirtHeavy
           coordinates: 6,-44
-        2090:
-          cleanable: True
-          color: '#A4610696'
-          id: DirtHeavy
-          coordinates: 5,-41
         2091:
           cleanable: True
           color: '#A4610696'
@@ -13909,11 +14205,6 @@ entities:
           color: '#A4610696'
           id: DirtHeavy
           coordinates: 8,-40
-        2096:
-          cleanable: True
-          color: '#A4610696'
-          id: DirtHeavy
-          coordinates: 5,-38
         2097:
           cleanable: True
           color: '#A4610696'
@@ -13949,11 +14240,6 @@ entities:
           color: '#A4610696'
           id: DirtHeavy
           coordinates: 13,-35
-        2115:
-          cleanable: True
-          color: '#A4610696'
-          id: DirtHeavy
-          coordinates: 13,-36
         2116:
           cleanable: True
           color: '#A4610696'
@@ -14029,26 +14315,11 @@ entities:
           color: '#A4610696'
           id: DirtHeavy
           coordinates: 15,-36
-        2131:
-          cleanable: True
-          color: '#A4610696'
-          id: DirtHeavy
-          coordinates: 13,-36
         2179:
           cleanable: True
           color: '#A4610696'
           id: DirtHeavy
           coordinates: 6,-36
-        2180:
-          cleanable: True
-          color: '#A4610696'
-          id: DirtHeavy
-          coordinates: 5,-38
-        2181:
-          cleanable: True
-          color: '#A4610696'
-          id: DirtHeavy
-          coordinates: 5,-41
         2182:
           cleanable: True
           color: '#A4610696'
@@ -14099,11 +14370,6 @@ entities:
           color: '#A4610696'
           id: DirtHeavy
           coordinates: 3,-48
-        2291:
-          cleanable: True
-          color: '#A4610696'
-          id: Dirt
-          coordinates: 1,-45
         2292:
           cleanable: True
           color: '#A4610696'
@@ -14314,11 +14580,11 @@ entities:
           color: '#A4610696'
           id: Dirt
           coordinates: 12,-38
-        2334:
+        2846:
           cleanable: True
           color: '#A4610696'
           id: Dirt
-          coordinates: 13,-36
+          coordinates: 16,-35
         2335:
           cleanable: True
           color: '#A4610696'
@@ -14369,11 +14635,6 @@ entities:
           color: '#A4610696'
           id: Dirt
           coordinates: 8,-40
-        2345:
-          cleanable: True
-          color: '#A4610696'
-          id: Dirt
-          coordinates: 5,-38
         2346:
           cleanable: True
           color: '#A4610696'
@@ -14389,6 +14650,76 @@ entities:
           color: '#A4610696'
           id: Dirt
           coordinates: 2,-46
+        2768:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: 4,-35
+        2769:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: 2,-35
+        2770:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: 1,-35
+        2771:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: 1,-36
+        2772:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: 2,-36
+        2786:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: 6,-45
+        2787:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: 7,-41
+        2788:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: 9,-40
+        2789:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: 9,-41
+        2790:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: 13,-38
+        2791:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: 14,-38
+        2792:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: 18,-40
+        2793:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: 17,-40
+        2845:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: 16,-35
       -1,-3:
         46:
           color: '#FFFFFFFF'
@@ -14888,6 +15219,16 @@ entities:
           color: '#A4610696'
           id: DirtHeavy
           coordinates: 1,-82
+        2874:
+          cleanable: True
+          color: '#A4610696'
+          id: DirtMedium
+          coordinates: 0,-80
+        2875:
+          cleanable: True
+          color: '#A4610696'
+          id: DirtMedium
+          coordinates: 1,-82
       -2,-1:
         656:
           color: '#52B4E996'
@@ -14977,10 +15318,6 @@ entities:
           color: '#FFFFFFFF'
           id: BrickTileWhiteLineS
           coordinates: -39,-23
-        723:
-          color: '#FFFFFFFF'
-          id: BrickTileWhiteLineS
-          coordinates: -38,-23
         724:
           color: '#FFFFFFFF'
           id: BrickTileWhiteLineS
@@ -15025,7 +15362,7 @@ entities:
           color: '#52B4E996'
           id: BrickTileWhiteLineS
           coordinates: -39,-23
-        751:
+        2884:
           color: '#52B4E996'
           id: BrickTileWhiteLineS
           coordinates: -38,-23
@@ -15832,11 +16169,11 @@ entities:
           color: '#A461067F'
           id: Damaged
           coordinates: -45,-15
-        1998:
+        2813:
           cleanable: True
           color: '#A4610696'
-          id: DirtHeavy
-          coordinates: -33,-12
+          id: Dirt
+          coordinates: -51,-13
         1999:
           cleanable: True
           color: '#A4610696'
@@ -15862,11 +16199,11 @@ entities:
           color: '#A4610696'
           id: DirtHeavy
           coordinates: -45,-13
-        2004:
+        2812:
           cleanable: True
           color: '#A4610696'
-          id: DirtHeavy
-          coordinates: -47,-12
+          id: Dirt
+          coordinates: -47,-13
         2005:
           cleanable: True
           color: '#A4610696'
@@ -16002,16 +16339,10 @@ entities:
           color: '#A4610696'
           id: DirtHeavy
           coordinates: -45,-17
-        2032:
-          cleanable: True
-          color: '#A4610696'
-          id: DirtHeavy
+        2883:
+          color: '#FFFFFFFF'
+          id: BrickTileWhiteLineS
           coordinates: -38,-23
-        2033:
-          cleanable: True
-          color: '#A4610696'
-          id: DirtHeavy
-          coordinates: -36,-22
         2034:
           cleanable: True
           color: '#A4610696'
@@ -16037,11 +16368,6 @@ entities:
           color: '#A4610696'
           id: Dirt
           coordinates: -43,-30
-        2529:
-          cleanable: True
-          color: '#A4610696'
-          id: Dirt
-          coordinates: -36,-22
         2530:
           cleanable: True
           color: '#A4610696'
@@ -16067,16 +16393,16 @@ entities:
           color: '#A4610696'
           id: Dirt
           coordinates: -34,-3
-        2588:
+        2800:
           cleanable: True
           color: '#A4610696'
           id: Dirt
-          coordinates: -33,-2
-        2667:
+          coordinates: -38,-5
+        2814:
           cleanable: True
           color: '#A4610696'
           id: Dirt
-          coordinates: -35,-12
+          coordinates: -54,-13
         2668:
           cleanable: True
           color: '#A4610696'
@@ -16112,16 +16438,76 @@ entities:
           color: '#A4610696'
           id: Dirt
           coordinates: -36,-4
-        2677:
+        2802:
           cleanable: True
           color: '#A4610696'
           id: Dirt
-          coordinates: -39,-3
-        2678:
+          coordinates: -38,-3
+        2801:
           cleanable: True
           color: '#A4610696'
           id: Dirt
-          coordinates: -39,-4
+          coordinates: -39,-2
+        2815:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -54,-15
+        2816:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -51,-15
+        2817:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -57,-11
+        2818:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -59,-11
+        2829:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -57,-12
+        2830:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -54,-20
+        2831:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -42,-14
+        2832:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -42,-10
+        2833:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -33,-13
+        2867:
+          cleanable: True
+          color: '#A4610696'
+          id: DirtLight
+          coordinates: -44,-32
+        2868:
+          cleanable: True
+          color: '#A4610696'
+          id: DirtLight
+          coordinates: -44,-30
+        2869:
+          cleanable: True
+          color: '#A4610696'
+          id: DirtMedium
+          coordinates: -44,-30
       -2,-2:
         746:
           color: '#FFFFFFFF'
@@ -16509,11 +16895,11 @@ entities:
           color: '#A4610696'
           id: Dirt
           coordinates: -37,-44
-        2249:
+        2863:
           cleanable: True
           color: '#A4610696'
-          id: Dirt
-          coordinates: -35,-45
+          id: DirtLight
+          coordinates: -34,-44
         2250:
           cleanable: True
           color: '#A4610696'
@@ -16609,11 +16995,11 @@ entities:
           color: '#A4610696'
           id: Dirt
           coordinates: -43,-44
-        2277:
+        2862:
           cleanable: True
           color: '#A4610696'
-          id: Dirt
-          coordinates: -35,-45
+          id: DirtLight
+          coordinates: -33,-44
         2719:
           cleanable: True
           color: '#A4610696'
@@ -16634,6 +17020,26 @@ entities:
           color: '#A4610696'
           id: Dirt
           coordinates: -38,-48
+        2864:
+          cleanable: True
+          color: '#A4610696'
+          id: DirtLight
+          coordinates: -33,-46
+        2865:
+          cleanable: True
+          color: '#A4610696'
+          id: DirtLight
+          coordinates: -44,-44
+        2866:
+          cleanable: True
+          color: '#A4610696'
+          id: DirtLight
+          coordinates: -43,-35
+        2870:
+          cleanable: True
+          color: '#A4610696'
+          id: DirtMedium
+          coordinates: -50,-44
       -2,0:
         912:
           color: '#FFFFFFFF'
@@ -16825,16 +17231,6 @@ entities:
           color: '#A4610696'
           id: DirtHeavy
           coordinates: 42,2
-        1963:
-          cleanable: True
-          color: '#A4610696'
-          id: DirtHeavy
-          coordinates: 43,5
-        1964:
-          cleanable: True
-          color: '#A4610696'
-          id: DirtHeavy
-          coordinates: 42,7
         1965:
           cleanable: True
           color: '#A4610696'
@@ -16870,11 +17266,6 @@ entities:
           color: '#A4610696'
           id: Dirt
           coordinates: 42,3
-        2486:
-          cleanable: True
-          color: '#A4610696'
-          id: Dirt
-          coordinates: 43,5
         2487:
           cleanable: True
           color: '#A4610696'
@@ -16895,6 +17286,16 @@ entities:
           color: '#A4610696'
           id: Dirt
           coordinates: 47,2
+        2762:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: 43,3
+        2763:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: 43,2
       1,-1:
         1387:
           color: '#FFFFFFFF'
@@ -16904,11 +17305,6 @@ entities:
           color: '#FFFFFFFF'
           id: Bot
           coordinates: 47,-5
-        1544:
-          cleanable: True
-          color: '#A4610696'
-          id: DirtLight
-          coordinates: 32,-12
         1545:
           cleanable: True
           color: '#A4610696'
@@ -16954,11 +17350,6 @@ entities:
           color: '#A4610641'
           id: Dirt
           coordinates: 38,-12
-        1819:
-          cleanable: True
-          color: '#A4610641'
-          id: Dirt
-          coordinates: 42,-13
         1820:
           cleanable: True
           color: '#A4610641'
@@ -16979,26 +17370,11 @@ entities:
           color: '#A4610641'
           id: Dirt
           coordinates: 43,-4
-        1837:
-          cleanable: True
-          color: '#A4610641'
-          id: Dirt
-          coordinates: 32,-12
         1838:
           cleanable: True
           color: '#A4610641'
           id: Dirt
           coordinates: 37,-11
-        1839:
-          cleanable: True
-          color: '#A4610641'
-          id: Dirt
-          coordinates: 40,-13
-        1951:
-          cleanable: True
-          color: '#A4610696'
-          id: DirtHeavy
-          coordinates: 32,-12
         1952:
           cleanable: True
           color: '#A4610696'
@@ -17069,16 +17445,6 @@ entities:
           color: '#A4610696'
           id: DirtHeavy
           coordinates: 35,-13
-        2470:
-          cleanable: True
-          color: '#A4610696'
-          id: Dirt
-          coordinates: 32,-12
-        2471:
-          cleanable: True
-          color: '#A4610696'
-          id: Dirt
-          coordinates: 32,-12
         2472:
           cleanable: True
           color: '#A4610696'
@@ -17094,21 +17460,16 @@ entities:
           color: '#A4610696'
           id: Dirt
           coordinates: 37,-13
-        2475:
+        2761:
           cleanable: True
           color: '#A4610696'
           id: Dirt
-          coordinates: 40,-13
+          coordinates: 43,-7
         2476:
           cleanable: True
           color: '#A4610696'
           id: Dirt
           coordinates: 42,-12
-        2477:
-          cleanable: True
-          color: '#A4610696'
-          id: Dirt
-          coordinates: 42,-13
         2478:
           cleanable: True
           color: '#A4610696'
@@ -17199,6 +17560,56 @@ entities:
           color: '#334E6DC8'
           id: BrickTileWhiteLineE
           coordinates: -67,-14
+        2819:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -65,-11
+        2820:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -65,-13
+        2821:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -70,-13
+        2822:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -69,-12
+        2823:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -68,-11
+        2824:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -67,-11
+        2825:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -67,-13
+        2826:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -68,-13
+        2827:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -69,-13
+        2828:
+          cleanable: True
+          color: '#A4610696'
+          id: Dirt
+          coordinates: -67,-12
     type: DecalGrid
   - tiles:
       -1,-1: 0
@@ -17273,7 +17684,7 @@ entities:
       -13,-4: 0
       -13,-3: 0
       -13,-2: 0
-      -13,-1: 0
+      -13,-1: 1
       -12,-16: 0
       -12,-15: 0
       -12,-14: 0
@@ -17298,7 +17709,7 @@ entities:
       -11,-11: 0
       -11,-10: 0
       -11,-9: 0
-      -11,-8: 0
+      -11,-8: 1
       -11,-7: 0
       -11,-6: 0
       -11,-5: 0
@@ -17314,7 +17725,7 @@ entities:
       -10,-11: 0
       -10,-10: 0
       -10,-9: 0
-      -10,-8: 0
+      -10,-8: 1
       -10,-7: 0
       -10,-6: 0
       -10,-5: 0
@@ -17330,14 +17741,14 @@ entities:
       -9,-11: 0
       -9,-10: 0
       -9,-9: 0
-      -9,-8: 0
+      -9,-8: 1
       -9,-7: 0
       -9,-6: 0
       -9,-5: 0
       -9,-4: 0
       -9,-3: 0
       -9,-2: 0
-      -9,-1: 0
+      -9,-1: 1
       -8,-16: 0
       -8,-15: 0
       -8,-14: 0
@@ -17481,9 +17892,9 @@ entities:
       1,-13: 0
       1,-12: 0
       1,-11: 0
-      1,-10: 0
+      1,-10: 1
       1,-9: 0
-      1,-8: 0
+      1,-8: 1
       1,-7: 0
       1,-6: 0
       1,-5: 0
@@ -17495,7 +17906,7 @@ entities:
       2,-13: 0
       2,-12: 0
       2,-11: 0
-      2,-10: 0
+      2,-10: 1
       2,-9: 0
       2,-8: 0
       2,-7: 0
@@ -17615,7 +18026,7 @@ entities:
       9,-5: 0
       9,-4: 0
       9,-3: 0
-      9,-2: 0
+      9,-2: 1
       9,-1: 0
       10,-16: 0
       10,-15: 0
@@ -17647,7 +18058,7 @@ entities:
       11,-5: 0
       11,-4: 0
       11,-3: 0
-      11,-2: 0
+      11,-2: 1
       11,-1: 0
       12,-16: 0
       12,-15: 0
@@ -17761,7 +18172,7 @@ entities:
       -14,13: 0
       -14,14: 0
       -14,15: 0
-      -13,0: 0
+      -13,0: 1
       -13,1: 0
       -13,2: 0
       -13,3: 0
@@ -17846,7 +18257,7 @@ entities:
       -8,3: 0
       -8,4: 0
       -8,5: 0
-      -8,6: 0
+      -8,6: 1
       -8,7: 0
       -8,8: 0
       -8,9: 0
@@ -17934,7 +18345,7 @@ entities:
       -2,3: 0
       -2,4: 0
       -2,5: 0
-      -2,6: 0
+      -2,6: 1
       -2,7: 0
       -2,8: 0
       -2,9: 0
@@ -18081,7 +18492,7 @@ entities:
       9,1: 0
       9,2: 0
       9,3: 0
-      9,4: 0
+      9,4: 1
       9,5: 0
       9,6: 0
       9,7: 0
@@ -18099,7 +18510,7 @@ entities:
       10,6: 0
       10,7: 0
       10,8: 0
-      10,9: 0
+      10,9: 1
       10,10: 0
       10,11: 0
       10,12: 0
@@ -18107,7 +18518,7 @@ entities:
       11,1: 0
       11,2: 0
       11,3: 0
-      11,4: 0
+      11,4: 1
       11,5: 0
       11,6: 0
       11,7: 0
@@ -18115,7 +18526,7 @@ entities:
       11,9: 0
       11,10: 0
       11,11: 0
-      11,12: 0
+      11,12: 1
       12,0: 0
       12,1: 0
       12,2: 0
@@ -18141,7 +18552,7 @@ entities:
       13,9: 0
       13,10: 0
       13,11: 0
-      13,12: 0
+      13,12: 1
       13,13: 0
       13,14: 0
       13,15: 0
@@ -18189,12 +18600,12 @@ entities:
       16,9: 0
       16,10: 0
       16,11: 0
-      16,12: 0
+      16,12: 1
       16,13: 0
       16,14: 0
       16,15: 0
       17,0: 0
-      17,1: 0
+      17,1: 1
       17,2: 0
       17,3: 0
       17,4: 0
@@ -18218,7 +18629,7 @@ entities:
       18,9: 0
       18,10: 0
       18,11: 0
-      18,12: 0
+      18,12: 1
       19,0: 0
       19,1: 0
       19,2: 0
@@ -18231,7 +18642,7 @@ entities:
       19,9: 0
       19,10: 0
       19,11: 0
-      19,12: 0
+      19,12: 1
       20,0: 0
       20,1: 0
       20,2: 0
@@ -18274,7 +18685,7 @@ entities:
       23,0: 0
       23,1: 0
       23,2: 0
-      23,3: 0
+      23,3: 1
       23,4: 0
       23,5: 0
       23,6: 0
@@ -18291,9 +18702,9 @@ entities:
       24,4: 0
       24,5: 0
       24,6: 0
-      24,7: 0
+      24,7: 1
       24,8: 0
-      24,9: 0
+      24,9: 1
       24,10: 0
       24,11: 0
       24,12: 0
@@ -18302,11 +18713,11 @@ entities:
       25,2: 0
       25,3: 0
       25,4: 0
-      25,5: 0
+      25,5: 1
       25,6: 0
       25,7: 0
       25,8: 0
-      25,9: 0
+      25,9: 1
       25,10: 0
       25,11: 0
       25,12: 0
@@ -18336,7 +18747,7 @@ entities:
       27,10: 0
       27,11: 0
       27,12: 0
-      28,0: 0
+      28,0: 1
       28,1: 0
       28,2: 0
       28,3: 0
@@ -18408,7 +18819,7 @@ entities:
       17,-12: 0
       17,-11: 0
       17,-10: 0
-      17,-9: 0
+      17,-9: 1
       17,-8: 0
       17,-7: 0
       17,-6: 0
@@ -18424,7 +18835,7 @@ entities:
       18,-12: 0
       18,-11: 0
       18,-10: 0
-      18,-9: 0
+      18,-9: 1
       18,-8: 0
       18,-7: 0
       18,-6: 0
@@ -18440,16 +18851,16 @@ entities:
       19,-12: 0
       19,-11: 0
       19,-10: 0
-      19,-9: 0
+      19,-9: 1
       19,-8: 0
       19,-7: 0
       19,-6: 0
-      19,-5: 0
-      19,-4: 0
+      19,-5: 1
+      19,-4: 1
       19,-3: 0
       19,-2: 0
       19,-1: 0
-      20,-16: 0
+      20,-16: 1
       20,-15: 0
       20,-14: 0
       20,-13: 0
@@ -18473,7 +18884,7 @@ entities:
       21,-11: 0
       21,-10: 0
       21,-9: 0
-      21,-8: 0
+      21,-8: 1
       21,-7: 0
       21,-6: 0
       21,-5: 0
@@ -18487,9 +18898,9 @@ entities:
       22,-13: 0
       22,-12: 0
       22,-11: 0
-      22,-10: 0
+      22,-10: 1
       22,-9: 0
-      22,-8: 0
+      22,-8: 1
       22,-7: 0
       22,-6: 0
       22,-5: 0
@@ -18503,9 +18914,9 @@ entities:
       23,-13: 0
       23,-12: 0
       23,-11: 0
-      23,-10: 0
+      23,-10: 1
       23,-9: 0
-      23,-8: 0
+      23,-8: 1
       23,-7: 0
       23,-6: 0
       23,-5: 0
@@ -18657,7 +19068,7 @@ entities:
       -31,4: 0
       -31,5: 0
       -31,6: 0
-      -31,7: 0
+      -31,7: 1
       -31,8: 0
       -31,9: 0
       -31,10: 0
@@ -18779,7 +19190,7 @@ entities:
       -24,14: 0
       -24,15: 0
       -23,0: 0
-      -23,1: 0
+      -23,1: 1
       -23,2: 0
       -23,3: 0
       -23,4: 0
@@ -18801,7 +19212,7 @@ entities:
       -22,4: 0
       -22,5: 0
       -22,6: 0
-      -22,7: 0
+      -22,7: 1
       -22,8: 0
       -22,9: 0
       -22,10: 0
@@ -18817,7 +19228,7 @@ entities:
       -21,4: 0
       -21,5: 0
       -21,6: 0
-      -21,7: 0
+      -21,7: 1
       -21,8: 0
       -21,9: 0
       -21,10: 0
@@ -18843,7 +19254,7 @@ entities:
       -20,14: 0
       -20,15: 0
       -19,0: 0
-      -19,1: 0
+      -19,1: 1
       -19,2: 0
       -19,3: 0
       -19,4: 0
@@ -18939,7 +19350,7 @@ entities:
       -30,-2: 0
       -30,-1: 0
       -29,-16: 0
-      -29,-15: 0
+      -29,-15: 2
       -29,-14: 0
       -29,-13: 0
       -29,-12: 0
@@ -19062,7 +19473,7 @@ entities:
       -22,-7: 0
       -22,-6: 0
       -22,-5: 0
-      -22,-4: 0
+      -22,-4: 1
       -22,-3: 0
       -22,-2: 0
       -22,-1: 0
@@ -19175,17 +19586,17 @@ entities:
       -31,-22: 0
       -31,-21: 0
       -31,-20: 0
-      -31,-19: 0
+      -31,-19: 1
       -31,-18: 0
       -31,-17: 0
       -30,-32: 0
       -30,-31: 0
       -30,-30: 0
       -30,-29: 0
-      -30,-28: 0
-      -30,-27: 0
-      -30,-26: 0
-      -30,-25: 0
+      -30,-28: 1
+      -30,-27: 1
+      -30,-26: 1
+      -30,-25: 1
       -30,-24: 0
       -30,-23: 0
       -30,-22: 0
@@ -19196,7 +19607,7 @@ entities:
       -30,-17: 0
       -29,-32: 0
       -29,-31: 0
-      -29,-30: 0
+      -29,-30: 1
       -29,-29: 0
       -29,-28: 0
       -29,-27: 0
@@ -19239,7 +19650,7 @@ entities:
       -27,-22: 0
       -27,-21: 0
       -27,-20: 0
-      -27,-19: 0
+      -27,-19: 1
       -27,-18: 0
       -27,-17: 0
       -26,-32: 0
@@ -19255,7 +19666,7 @@ entities:
       -26,-22: 0
       -26,-21: 0
       -26,-20: 0
-      -26,-19: 0
+      -26,-19: 1
       -26,-18: 0
       -26,-17: 0
       -25,-32: 0
@@ -19280,8 +19691,8 @@ entities:
       -24,-29: 0
       -24,-28: 0
       -24,-27: 0
-      -24,-26: 0
-      -24,-25: 0
+      -24,-26: 1
+      -24,-25: 1
       -24,-24: 0
       -24,-23: 0
       -24,-22: 0
@@ -19344,7 +19755,7 @@ entities:
       -20,-29: 0
       -20,-28: 0
       -20,-27: 0
-      -20,-26: 0
+      -20,-26: 1
       -20,-25: 0
       -20,-24: 0
       -20,-23: 0
@@ -19360,7 +19771,7 @@ entities:
       -19,-29: 0
       -19,-28: 0
       -19,-27: 0
-      -19,-26: 0
+      -19,-26: 1
       -19,-25: 0
       -19,-24: 0
       -19,-23: 0
@@ -19486,7 +19897,7 @@ entities:
       -11,-30: 0
       -11,-29: 0
       -11,-28: 0
-      -11,-27: 0
+      -11,-27: 1
       -11,-26: 0
       -11,-25: 0
       -11,-24: 0
@@ -19571,9 +19982,9 @@ entities:
       -6,-22: 0
       -6,-21: 0
       -6,-20: 0
-      -6,-19: 0
-      -6,-18: 0
-      -6,-17: 0
+      -6,-19: 1
+      -6,-18: 1
+      -6,-17: 1
       -5,-32: 0
       -5,-31: 0
       -5,-30: 0
@@ -19619,7 +20030,7 @@ entities:
       -3,-20: 0
       -3,-19: 0
       -3,-18: 0
-      -3,-17: 0
+      -3,-17: 1
       -2,-32: 0
       -2,-31: 0
       -2,-30: 0
@@ -19779,7 +20190,7 @@ entities:
       7,-19: 0
       7,-18: 0
       7,-17: 0
-      8,-32: 0
+      8,-32: 1
       8,-31: 0
       8,-30: 0
       8,-29: 0
@@ -19798,7 +20209,7 @@ entities:
       9,-32: 0
       9,-31: 0
       9,-30: 0
-      9,-29: 0
+      9,-29: 1
       9,-28: 0
       9,-27: 0
       9,-26: 0
@@ -19814,7 +20225,7 @@ entities:
       10,-32: 0
       10,-31: 0
       10,-30: 0
-      10,-29: 0
+      10,-29: 1
       10,-28: 0
       10,-27: 0
       10,-26: 0
@@ -19830,7 +20241,7 @@ entities:
       11,-32: 0
       11,-31: 0
       11,-30: 0
-      11,-29: 0
+      11,-29: 1
       11,-28: 0
       11,-27: 0
       11,-26: 0
@@ -19984,9 +20395,9 @@ entities:
       20,-22: 0
       20,-21: 0
       20,-20: 0
-      20,-19: 0
-      20,-18: 0
-      20,-17: 0
+      20,-19: 1
+      20,-18: 1
+      20,-17: 1
       21,-32: 0
       21,-31: 0
       21,-30: 0
@@ -20014,7 +20425,7 @@ entities:
       22,-24: 0
       22,-23: 0
       22,-22: 0
-      22,-21: 0
+      22,-21: 1
       22,-20: 0
       22,-19: 0
       22,-18: 0
@@ -20164,7 +20575,7 @@ entities:
       12,31: 0
       13,16: 0
       13,17: 0
-      13,18: 0
+      13,18: 1
       13,19: 0
       13,20: 0
       13,21: 0
@@ -20227,9 +20638,9 @@ entities:
       34,2: 0
       34,3: 0
       34,4: 0
-      34,5: 0
+      34,5: 1
       34,6: 0
-      34,7: 0
+      34,7: 1
       34,8: 0
       34,9: 0
       34,10: 0
@@ -20392,9 +20803,9 @@ entities:
       34,-10: 0
       34,-7: 0
       34,-6: 0
-      34,-5: 0
+      34,-5: 1
       34,-4: 0
-      34,-3: 0
+      34,-3: 1
       34,-2: 0
       34,-1: 0
       35,-14: 0
@@ -20758,7 +21169,7 @@ entities:
       -16,-35: 0
       -16,-34: 0
       -16,-33: 0
-      -15,-48: 0
+      -15,-48: 1
       -15,-47: 0
       -15,-46: 0
       -15,-45: 0
@@ -21119,7 +21530,7 @@ entities:
       7,-33: 0
       8,-48: 0
       8,-47: 0
-      8,-46: 0
+      8,-46: 1
       8,-45: 0
       8,-44: 0
       8,-43: 0
@@ -21231,7 +21642,7 @@ entities:
       14,-33: 0
       15,-48: 0
       15,-47: 0
-      15,-46: 0
+      15,-46: 1
       15,-45: 0
       15,-44: 0
       15,-43: 0
@@ -21347,7 +21758,7 @@ entities:
       -26,-45: 0
       -26,-44: 0
       -26,-43: 0
-      -26,-42: 0
+      -26,-42: 1
       -26,-41: 0
       -26,-40: 0
       -26,-39: 0
@@ -21363,7 +21774,7 @@ entities:
       -25,-45: 0
       -25,-44: 0
       -25,-43: 0
-      -25,-42: 0
+      -25,-42: 1
       -25,-41: 0
       -25,-40: 0
       -25,-39: 0
@@ -21374,12 +21785,12 @@ entities:
       -25,-34: 0
       -25,-33: 0
       -24,-48: 0
-      -24,-47: 0
+      -24,-47: 1
       -24,-46: 0
       -24,-45: 0
       -24,-44: 0
       -24,-43: 0
-      -24,-42: 0
+      -24,-42: 1
       -24,-41: 0
       -24,-40: 0
       -24,-39: 0
@@ -21390,7 +21801,7 @@ entities:
       -24,-34: 0
       -24,-33: 0
       -23,-48: 0
-      -23,-47: 0
+      -23,-47: 1
       -23,-46: 0
       -23,-45: 0
       -23,-44: 0
@@ -21450,9 +21861,9 @@ entities:
       -20,-38: 0
       -20,-37: 0
       -20,-36: 0
-      -20,-35: 0
+      -20,-35: 1
       -20,-34: 0
-      -20,-33: 0
+      -20,-33: 1
       -19,-48: 0
       -19,-47: 0
       -19,-46: 0
@@ -21466,7 +21877,7 @@ entities:
       -19,-38: 0
       -19,-37: 0
       -19,-36: 0
-      -19,-35: 0
+      -19,-35: 1
       -19,-34: 0
       -19,-33: 0
       -18,-48: 0
@@ -21482,7 +21893,7 @@ entities:
       -18,-38: 0
       -18,-37: 0
       -18,-36: 0
-      -18,-35: 0
+      -18,-35: 1
       -18,-34: 0
       -18,-33: 0
       -17,-48: 0
@@ -21503,11 +21914,11 @@ entities:
       -17,-33: 0
       16,-48: 0
       16,-47: 0
-      16,-46: 0
+      16,-46: 1
       16,-45: 0
       16,-44: 0
-      16,-43: 0
-      16,-42: 0
+      16,-43: 1
+      16,-42: 1
       16,-41: 0
       16,-40: 0
       16,-39: 0
@@ -21532,7 +21943,7 @@ entities:
       17,-36: 0
       17,-35: 0
       17,-34: 0
-      17,-33: 0
+      17,-33: 1
       18,-48: 0
       18,-47: 0
       18,-46: 0
@@ -21668,8 +22079,8 @@ entities:
       2,-54: 0
       2,-53: 0
       2,-52: 0
-      2,-51: 0
-      2,-50: 0
+      2,-51: 1
+      2,-50: 1
       2,-49: 0
       3,-63: 0
       3,-62: 0
@@ -21875,7 +22286,7 @@ entities:
       -15,-55: 0
       -15,-54: 0
       -15,-53: 0
-      -15,-52: 0
+      -15,-52: 1
       -15,-51: 0
       -15,-50: 0
       -15,-49: 0
@@ -21934,7 +22345,7 @@ entities:
       -11,-60: 0
       -11,-59: 0
       -11,-58: 0
-      -11,-57: 0
+      -11,-57: 1
       -11,-56: 0
       -11,-55: 0
       -11,-54: 0
@@ -21950,7 +22361,7 @@ entities:
       -10,-60: 0
       -10,-59: 0
       -10,-58: 0
-      -10,-57: 0
+      -10,-57: 1
       -10,-56: 0
       -10,-55: 0
       -10,-54: 0
@@ -22002,9 +22413,9 @@ entities:
       -7,-56: 0
       -7,-55: 0
       -7,-54: 0
-      -7,-53: 0
-      -7,-52: 0
-      -7,-51: 0
+      -7,-53: 1
+      -7,-52: 1
+      -7,-51: 1
       -7,-50: 0
       -7,-49: 0
       -6,-64: 0
@@ -22023,8 +22434,8 @@ entities:
       -6,-51: 0
       -6,-50: 0
       -6,-49: 0
-      -5,-64: 0
-      -5,-63: 0
+      -5,-64: 1
+      -5,-63: 1
       -5,-62: 0
       -5,-61: 0
       -5,-60: 0
@@ -22059,7 +22470,7 @@ entities:
       -3,-63: 0
       -3,-62: 0
       -3,-61: 0
-      -3,-60: 0
+      -3,-60: 1
       -3,-59: 0
       -3,-58: 0
       -3,-57: 0
@@ -22068,14 +22479,14 @@ entities:
       -3,-54: 0
       -3,-53: 0
       -3,-52: 0
-      -3,-51: 0
+      -3,-51: 1
       -3,-50: 0
-      -3,-49: 0
+      -3,-49: 1
       -2,-64: 0
       -2,-63: 0
       -2,-62: 0
       -2,-61: 0
-      -2,-60: 0
+      -2,-60: 1
       -2,-59: 0
       -2,-58: 0
       -2,-57: 0
@@ -22086,7 +22497,7 @@ entities:
       -2,-52: 0
       -2,-51: 0
       -2,-50: 0
-      -2,-49: 0
+      -2,-49: 1
       -1,-64: 0
       -1,-63: 0
       -1,-62: 0
@@ -22102,7 +22513,7 @@ entities:
       -1,-52: 0
       -1,-51: 0
       -1,-50: 0
-      -1,-49: 0
+      -1,-49: 1
       -32,-64: 0
       -32,-63: 0
       -32,-62: 0
@@ -22140,10 +22551,10 @@ entities:
       -30,-62: 0
       -30,-61: 0
       -30,-60: 0
-      -30,-59: 0
+      -30,-59: 1
       -30,-58: 0
       -30,-57: 0
-      -30,-56: 0
+      -30,-56: 1
       -30,-55: 0
       -30,-54: 0
       -30,-53: 0
@@ -22156,11 +22567,11 @@ entities:
       -29,-62: 0
       -29,-61: 0
       -29,-60: 0
-      -29,-59: 0
+      -29,-59: 1
       -29,-58: 0
       -29,-57: 0
       -29,-56: 0
-      -29,-55: 0
+      -29,-55: 1
       -29,-54: 0
       -29,-53: 0
       -29,-52: 0
@@ -22217,7 +22628,7 @@ entities:
       -26,-49: 0
       -25,-64: 0
       -25,-63: 0
-      -25,-62: 0
+      -25,-62: 1
       -25,-61: 0
       -25,-60: 0
       -25,-59: 0
@@ -22246,7 +22657,7 @@ entities:
       -24,-52: 0
       -24,-51: 0
       -24,-50: 0
-      -24,-49: 0
+      -24,-49: 1
       -23,-64: 0
       -23,-63: 0
       -23,-62: 0
@@ -22262,13 +22673,13 @@ entities:
       -23,-52: 0
       -23,-51: 0
       -23,-50: 0
-      -23,-49: 0
+      -23,-49: 1
       -22,-64: 0
       -22,-63: 0
       -22,-62: 0
       -22,-61: 0
       -22,-60: 0
-      -22,-59: 0
+      -22,-59: 1
       -22,-58: 0
       -22,-57: 0
       -22,-56: 0
@@ -22278,13 +22689,13 @@ entities:
       -22,-52: 0
       -22,-51: 0
       -22,-50: 0
-      -22,-49: 0
+      -22,-49: 1
       -21,-64: 0
       -21,-63: 0
       -21,-62: 0
       -21,-61: 0
       -21,-60: 0
-      -21,-59: 0
+      -21,-59: 1
       -21,-58: 0
       -21,-57: 0
       -21,-56: 0
@@ -22744,7 +23155,7 @@ entities:
       -44,-23: 0
       -44,-22: 0
       -44,-21: 0
-      -44,-20: 0
+      -44,-20: 1
       -44,-19: 0
       -44,-18: 0
       -44,-17: 0
@@ -22762,14 +23173,14 @@ entities:
       -43,-21: 0
       -43,-20: 0
       -43,-19: 0
-      -43,-18: 0
-      -43,-17: 0
+      -43,-18: 1
+      -43,-17: 1
       -42,-32: 0
       -42,-31: 0
       -42,-30: 0
       -42,-29: 0
       -42,-28: 0
-      -42,-27: 0
+      -42,-27: 1
       -42,-26: 0
       -42,-25: 0
       -42,-24: 0
@@ -22832,7 +23243,7 @@ entities:
       -38,-31: 0
       -38,-30: 0
       -38,-29: 0
-      -38,-28: 0
+      -38,-28: 1
       -38,-27: 0
       -38,-26: 0
       -38,-25: 0
@@ -22858,7 +23269,7 @@ entities:
       -37,-21: 0
       -37,-20: 0
       -37,-19: 0
-      -37,-18: 0
+      -37,-18: 1
       -37,-17: 0
       -36,-32: 0
       -36,-31: 0
@@ -22912,10 +23323,10 @@ entities:
       -33,-31: 0
       -33,-30: 0
       -33,-29: 0
-      -33,-28: 0
-      -33,-27: 0
-      -33,-26: 0
-      -33,-25: 0
+      -33,-28: 1
+      -33,-27: 1
+      -33,-26: 1
+      -33,-25: 1
       -33,-24: 0
       -33,-23: 0
       -33,-22: 0
@@ -23003,7 +23414,7 @@ entities:
       -44,-3: 0
       -44,-2: 0
       -44,-1: 0
-      -43,-16: 0
+      -43,-16: 1
       -43,-15: 0
       -43,-14: 0
       -43,-13: 0
@@ -23044,11 +23455,11 @@ entities:
       -41,-10: 0
       -41,-9: 0
       -41,-8: 0
-      -41,-7: 0
-      -41,-6: 0
-      -41,-5: 0
+      -41,-7: 1
+      -41,-6: 1
+      -41,-5: 1
       -41,-4: 0
-      -41,-3: 0
+      -41,-3: 1
       -41,-2: 0
       -41,-1: 0
       -40,-16: 0
@@ -23074,10 +23485,10 @@ entities:
       -39,-12: 0
       -39,-11: 0
       -39,-10: 0
-      -39,-9: 0
-      -39,-8: 0
-      -39,-7: 0
-      -39,-6: 0
+      -39,-9: 1
+      -39,-8: 1
+      -39,-7: 1
+      -39,-6: 1
       -39,-5: 0
       -39,-4: 0
       -39,-3: 0
@@ -23110,7 +23521,7 @@ entities:
       -37,-8: 0
       -37,-7: 0
       -37,-6: 0
-      -37,-5: 0
+      -37,-5: 1
       -37,-4: 0
       -37,-3: 0
       -37,-2: 0
@@ -23131,14 +23542,14 @@ entities:
       -36,-3: 0
       -36,-2: 0
       -36,-1: 0
-      -35,-16: 0
+      -35,-16: 1
       -35,-15: 0
       -35,-14: 0
       -35,-13: 0
       -35,-12: 0
       -35,-11: 0
       -35,-10: 0
-      -35,-9: 0
+      -35,-9: 1
       -35,-8: 0
       -35,-7: 0
       -35,-6: 0
@@ -23170,7 +23581,7 @@ entities:
       -33,-12: 0
       -33,-11: 0
       -33,-10: 0
-      -33,-9: 0
+      -33,-9: 1
       -33,-8: 0
       -33,-7: 0
       -33,-6: 0
@@ -23229,13 +23640,13 @@ entities:
       -45,6: 0
       -45,7: 0
       -45,8: 0
-      -45,9: 1
+      -45,9: 3
       -45,10: 0
-      -45,11: 2
+      -45,11: 4
       -45,12: 0
-      -45,13: 3
+      -45,13: 5
       -45,14: 0
-      -45,15: 3
+      -45,15: 5
       -44,0: 0
       -44,1: 0
       -44,2: 0
@@ -23245,13 +23656,13 @@ entities:
       -44,6: 0
       -44,7: 0
       -44,8: 0
-      -44,9: 1
+      -44,9: 3
       -44,10: 0
-      -44,11: 2
+      -44,11: 4
       -44,12: 0
-      -44,13: 3
+      -44,13: 5
       -44,14: 0
-      -44,15: 3
+      -44,15: 5
       -43,0: 0
       -43,1: 0
       -43,2: 0
@@ -23261,13 +23672,13 @@ entities:
       -43,6: 0
       -43,7: 0
       -43,8: 0
-      -43,9: 1
+      -43,9: 3
       -43,10: 0
-      -43,11: 2
+      -43,11: 4
       -43,12: 0
-      -43,13: 3
+      -43,13: 5
       -43,14: 0
-      -43,15: 3
+      -43,15: 5
       -42,0: 0
       -42,1: 0
       -42,2: 0
@@ -23287,7 +23698,7 @@ entities:
       -41,0: 0
       -41,1: 0
       -41,2: 0
-      -41,3: 0
+      -41,3: 1
       -41,4: 0
       -41,5: 0
       -41,6: 0
@@ -23316,7 +23727,7 @@ entities:
       -40,13: 0
       -40,14: 0
       -40,15: 0
-      -39,0: 0
+      -39,0: 1
       -39,1: 0
       -39,2: 0
       -39,3: 0
@@ -23381,8 +23792,8 @@ entities:
       -36,14: 0
       -36,15: 0
       -35,0: 0
-      -35,1: 0
-      -35,2: 0
+      -35,1: 1
+      -35,2: 1
       -35,3: 0
       -35,4: 0
       -35,5: 0
@@ -23414,9 +23825,9 @@ entities:
       -34,15: 0
       -33,0: 0
       -33,1: 0
-      -33,2: 0
-      -33,3: 0
-      -33,4: 0
+      -33,2: 1
+      -33,3: 1
+      -33,4: 1
       -33,5: 0
       -33,6: 0
       -33,7: 0
@@ -23469,7 +23880,7 @@ entities:
       -46,-42: 0
       -46,-41: 0
       -46,-40: 0
-      -46,-39: 0
+      -46,-39: 1
       -46,-38: 0
       -46,-37: 0
       -46,-36: 0
@@ -23554,7 +23965,7 @@ entities:
       -41,-37: 0
       -41,-36: 0
       -41,-35: 0
-      -41,-34: 0
+      -41,-34: 1
       -41,-33: 0
       -40,-48: 0
       -40,-47: 0
@@ -23767,7 +24178,7 @@ entities:
       -42,-53: 0
       -42,-52: 0
       -42,-51: 0
-      -42,-50: 0
+      -42,-50: 1
       -42,-49: 0
       -41,-63: 0
       -41,-62: 0
@@ -23803,7 +24214,7 @@ entities:
       -39,-62: 0
       -39,-61: 0
       -39,-60: 0
-      -39,-59: 0
+      -39,-59: 1
       -39,-58: 0
       -39,-57: 0
       -39,-56: 0
@@ -23818,7 +24229,7 @@ entities:
       -38,-62: 0
       -38,-61: 0
       -38,-60: 0
-      -38,-59: 0
+      -38,-59: 1
       -38,-58: 0
       -38,-57: 0
       -38,-56: 0
@@ -23826,9 +24237,9 @@ entities:
       -38,-54: 0
       -38,-53: 0
       -38,-52: 0
-      -38,-51: 0
-      -38,-50: 0
-      -38,-49: 0
+      -38,-51: 1
+      -38,-50: 1
+      -38,-49: 1
       -37,-63: 0
       -37,-62: 0
       -37,-61: 0
@@ -24088,7 +24499,7 @@ entities:
       -52,-45: 0
       -52,-44: 0
       -52,-43: 0
-      -52,-42: 0
+      -52,-42: 1
       -52,-41: 0
       -52,-40: 0
       -52,-39: 0
@@ -24105,8 +24516,8 @@ entities:
       -51,-44: 0
       -51,-43: 0
       -51,-42: 0
-      -51,-41: 0
-      -51,-40: 0
+      -51,-41: 1
+      -51,-40: 1
       -51,-39: 0
       -51,-38: 0
       -51,-37: 0
@@ -24175,7 +24586,7 @@ entities:
       -63,-22: 0
       -63,-21: 0
       -63,-20: 0
-      -63,-19: 0
+      -63,-19: 1
       -63,-18: 0
       -63,-17: 0
       -62,-32: 0
@@ -24283,7 +24694,7 @@ entities:
       -56,-26: 0
       -56,-25: 0
       -56,-24: 0
-      -56,-23: 0
+      -56,-23: 1
       -56,-22: 0
       -56,-21: 0
       -56,-20: 0
@@ -24299,12 +24710,12 @@ entities:
       -55,-26: 0
       -55,-25: 0
       -55,-24: 0
-      -55,-23: 0
+      -55,-23: 1
       -55,-22: 0
       -55,-21: 0
-      -55,-20: 0
-      -55,-19: 0
-      -55,-18: 0
+      -55,-20: 1
+      -55,-19: 1
+      -55,-18: 1
       -55,-17: 0
       -54,-32: 0
       -54,-31: 0
@@ -24315,7 +24726,7 @@ entities:
       -54,-26: 0
       -54,-25: 0
       -54,-24: 0
-      -54,-23: 0
+      -54,-23: 1
       -54,-22: 0
       -54,-21: 0
       -54,-20: 0
@@ -24323,9 +24734,9 @@ entities:
       -54,-18: 0
       -54,-17: 0
       -53,-32: 0
-      -53,-31: 0
+      -53,-31: 1
       -53,-30: 0
-      -53,-29: 0
+      -53,-29: 1
       -53,-28: 0
       -53,-27: 0
       -53,-26: 0
@@ -24339,9 +24750,9 @@ entities:
       -53,-18: 0
       -53,-17: 0
       -52,-32: 0
-      -52,-31: 0
+      -52,-31: 1
       -52,-30: 0
-      -52,-29: 0
+      -52,-29: 1
       -52,-28: 0
       -52,-27: 0
       -52,-26: 0
@@ -24350,7 +24761,7 @@ entities:
       -52,-23: 0
       -52,-22: 0
       -52,-21: 0
-      -52,-20: 0
+      -52,-20: 1
       -52,-19: 0
       -52,-18: 0
       -52,-17: 0
@@ -24366,7 +24777,7 @@ entities:
       -51,-23: 0
       -51,-22: 0
       -51,-21: 0
-      -51,-20: 0
+      -51,-20: 1
       -51,-19: 0
       -51,-18: 0
       -51,-17: 0
@@ -24383,8 +24794,8 @@ entities:
       -50,-22: 0
       -50,-21: 0
       -50,-20: 0
-      -50,-19: 0
-      -50,-18: 0
+      -50,-19: 1
+      -50,-18: 1
       -50,-17: 0
       -49,-32: 0
       -49,-31: 0
@@ -24473,8 +24884,8 @@ entities:
       -58,-8: 0
       -58,-7: 0
       -57,-16: 0
-      -57,-15: 0
-      -57,-14: 0
+      -57,-15: 1
+      -57,-14: 1
       -57,-13: 0
       -57,-12: 0
       -57,-11: 0
@@ -24598,9 +25009,9 @@ entities:
       -46,28: 0
       -46,29: 0
       -45,16: 0
-      -45,17: 4
+      -45,17: 6
       -45,18: 0
-      -45,19: 3
+      -45,19: 5
       -45,20: 0
       -45,21: 0
       -45,22: 0
@@ -24612,9 +25023,9 @@ entities:
       -45,28: 0
       -45,29: 0
       -44,16: 0
-      -44,17: 4
+      -44,17: 6
       -44,18: 0
-      -44,19: 3
+      -44,19: 5
       -44,20: 0
       -44,21: 0
       -44,22: 0
@@ -24626,9 +25037,9 @@ entities:
       -44,28: 0
       -44,29: 0
       -43,16: 0
-      -43,17: 4
+      -43,17: 6
       -43,18: 0
-      -43,19: 3
+      -43,19: 5
       -43,20: 0
       -43,21: 0
       -43,22: 0
@@ -24743,7 +25154,7 @@ entities:
       -36,23: 0
       -36,24: 0
       -36,25: 0
-      -36,26: 3
+      -36,26: 5
       -36,27: 0
       -36,28: 0
       -36,29: 0
@@ -24759,7 +25170,7 @@ entities:
       -35,23: 0
       -35,24: 0
       -35,25: 0
-      -35,26: 3
+      -35,26: 5
       -35,27: 0
       -35,28: 0
       -35,29: 0
@@ -24775,7 +25186,7 @@ entities:
       -34,23: 0
       -34,24: 0
       -34,25: 0
-      -34,26: 3
+      -34,26: 5
       -34,27: 0
       -34,28: 0
       -34,29: 0
@@ -24906,7 +25317,7 @@ entities:
       -26,29: 0
       -25,16: 0
       -25,17: 0
-      -25,18: 0
+      -25,18: 1
       -25,19: 0
       -25,20: 0
       -25,21: 0
@@ -25067,13 +25478,13 @@ entities:
       -50,-49: 0
       -49,-59: 0
       -49,-58: 0
-      -49,-57: 0
+      -49,-57: 1
       -49,-56: 0
       -49,-55: 0
       -49,-54: 0
       -49,-53: 0
       -49,-52: 0
-      -49,-51: 0
+      -49,-51: 1
       -49,-50: 0
       -49,-49: 0
       -74,-14: 0
@@ -25118,7 +25529,7 @@ entities:
       -70,-7: 0
       -69,-16: 0
       -69,-15: 0
-      -69,-14: 0
+      -69,-14: 1
       -69,-13: 0
       -69,-12: 0
       -69,-11: 0
@@ -25233,7 +25644,7 @@ entities:
       -67,-21: 0
       -67,-20: 0
       -67,-19: 0
-      -67,-18: 0
+      -67,-18: 1
       -67,-17: 0
       -66,-32: 0
       -66,-31: 0
@@ -25249,7 +25660,7 @@ entities:
       -66,-21: 0
       -66,-20: 0
       -66,-19: 0
-      -66,-18: 0
+      -66,-18: 1
       -66,-17: 0
       -65,-32: 0
       -65,-31: 0
@@ -25265,7 +25676,7 @@ entities:
       -65,-21: 0
       -65,-20: 0
       -65,-19: 0
-      -65,-18: 0
+      -65,-18: 1
       -65,-17: 0
       -50,13: 0
       -50,14: 0
@@ -26282,12 +26693,47 @@ entities:
       -85,-23: 0
       -15,16: 0
       -12,30: 0
+      -40,-64: 5
+      -39,-64: 5
+      -38,-64: 5
+      -37,-64: 5
+      -30,-65: 5
     uniqueMixes:
     - volume: 2500
       temperature: 293.15
       moles:
       - 21.824879
       - 82.10312
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.15
+      moles:
+      - 21.213781
+      - 79.80423
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.15
+      moles:
+      - 20.619795
+      - 77.56971
       - 0
       - 0
       - 0
@@ -54931,7 +55377,7 @@ entities:
   - pos: -29.5,-52.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -164340.14
+  - SecondsUntilStateChange: -166072.19
     state: Opening
     type: Door
 - uid: 4422
@@ -62445,7 +62891,7 @@ entities:
   - pos: 18.5,-39.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -37261.348
+  - SecondsUntilStateChange: -38993.39
     state: Opening
     type: Door
   - inputs:
@@ -62461,7 +62907,7 @@ entities:
   - pos: 17.5,-39.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -37261.348
+  - SecondsUntilStateChange: -38993.39
     state: Opening
     type: Door
   - inputs:
@@ -79724,7 +80170,7 @@ entities:
     pos: -20.5,-5.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -38998.44
+  - SecondsUntilStateChange: -40730.484
     state: Opening
     type: Door
   - inputs:
@@ -79741,7 +80187,7 @@ entities:
     pos: -20.5,-4.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -38998.44
+  - SecondsUntilStateChange: -40730.484
     state: Opening
     type: Door
   - inputs:
@@ -112118,7 +112564,7 @@ entities:
     pos: -11.5,4.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -39515.355
+  - SecondsUntilStateChange: -41247.4
     state: Opening
     type: Door
   - inputs:
@@ -112135,7 +112581,7 @@ entities:
     pos: -11.5,3.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -39515.355
+  - SecondsUntilStateChange: -41247.4
     state: Opening
     type: Door
   - inputs:
@@ -112152,7 +112598,7 @@ entities:
     pos: 2.5,4.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -39515.355
+  - SecondsUntilStateChange: -41247.4
     state: Opening
     type: Door
   - inputs:
@@ -112169,7 +112615,7 @@ entities:
     pos: 2.5,3.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -39515.355
+  - SecondsUntilStateChange: -41247.4
     state: Opening
     type: Door
   - inputs:
@@ -112185,7 +112631,7 @@ entities:
   - pos: -8.5,11.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -39515.355
+  - SecondsUntilStateChange: -41247.4
     state: Opening
     type: Door
   - inputs:
@@ -112201,7 +112647,7 @@ entities:
   - pos: -6.5,11.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -39515.355
+  - SecondsUntilStateChange: -41247.4
     state: Opening
     type: Door
   - inputs:
@@ -112217,7 +112663,7 @@ entities:
   - pos: -7.5,11.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -39515.355
+  - SecondsUntilStateChange: -41247.4
     state: Opening
     type: Door
   - inputs:
@@ -112233,7 +112679,7 @@ entities:
   - pos: -5.5,11.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -39515.355
+  - SecondsUntilStateChange: -41247.4
     state: Opening
     type: Door
   - inputs:
@@ -112249,7 +112695,7 @@ entities:
   - pos: -3.5,11.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -39515.355
+  - SecondsUntilStateChange: -41247.4
     state: Opening
     type: Door
   - inputs:
@@ -112265,7 +112711,7 @@ entities:
   - pos: -2.5,11.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -39515.355
+  - SecondsUntilStateChange: -41247.4
     state: Opening
     type: Door
   - inputs:
@@ -112281,7 +112727,7 @@ entities:
   - pos: -1.5,11.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -39515.355
+  - SecondsUntilStateChange: -41247.4
     state: Opening
     type: Door
   - inputs:
@@ -112297,7 +112743,7 @@ entities:
   - pos: -0.5,11.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -39515.355
+  - SecondsUntilStateChange: -41247.4
     state: Opening
     type: Door
   - inputs:
@@ -112313,7 +112759,7 @@ entities:
   - pos: -3.5,-8.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -39510.855
+  - SecondsUntilStateChange: -41242.9
     state: Opening
     type: Door
   - inputs:
@@ -112329,7 +112775,7 @@ entities:
   - pos: -2.5,-8.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -39510.855
+  - SecondsUntilStateChange: -41242.9
     state: Opening
     type: Door
   - inputs:
@@ -112345,7 +112791,7 @@ entities:
   - pos: -1.5,-8.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -39510.855
+  - SecondsUntilStateChange: -41242.9
     state: Opening
     type: Door
   - inputs:
@@ -112361,7 +112807,7 @@ entities:
   - pos: -0.5,-8.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -39510.855
+  - SecondsUntilStateChange: -41242.9
     state: Opening
     type: Door
   - inputs:
@@ -112458,7 +112904,7 @@ entities:
   - pos: 13.5,9.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -39329.54
+  - SecondsUntilStateChange: -41061.582
     state: Opening
     type: Door
   - inputs:
@@ -112474,7 +112920,7 @@ entities:
   - pos: 13.5,8.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -39329.54
+  - SecondsUntilStateChange: -41061.582
     state: Opening
     type: Door
   - inputs:
@@ -112490,7 +112936,7 @@ entities:
   - pos: 13.5,7.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -39329.54
+  - SecondsUntilStateChange: -41061.582
     state: Opening
     type: Door
   - inputs:
@@ -112568,7 +113014,7 @@ entities:
   - pos: 8.5,-34.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -39151.723
+  - SecondsUntilStateChange: -40883.766
     state: Opening
     type: Door
   - inputs:
@@ -112584,7 +113030,7 @@ entities:
   - pos: 9.5,-34.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -39151.723
+  - SecondsUntilStateChange: -40883.766
     state: Opening
     type: Door
   - inputs:
@@ -112600,7 +113046,7 @@ entities:
   - pos: 11.5,-33.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -39151.723
+  - SecondsUntilStateChange: -40883.766
     state: Opening
     type: Door
   - inputs:
@@ -118103,844 +118549,6 @@ entities:
   - rot: 1.5707963267948966 rad
     pos: 5.5,-8.5
     parent: 13643
-    type: Transform
-- uid: 13707
-  components:
-  - type: MetaData
-  - pos: 32.112854,-84.9792
-    parent: 5
-    type: Transform
-  - index: 3
-    type: MapGrid
-  - type: Broadphase
-  - angularDamping: 0.05
-    linearDamping: 0.05
-    fixedRotation: False
-    bodyType: Dynamic
-    type: Physics
-  - fixtures:
-    - density: 0.5
-      shape: !type:PolygonShape
-        vertices:
-        - 12.99,-2.99
-        - 12.99,-2.01
-        - 0.01,-2.01
-        - 0.01,-2.99
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      restitution: 0.1
-      id: grid_chunk-0.01--2.99
-    - density: 0.5
-      shape: !type:PolygonShape
-        vertices:
-        - 11.99,-3.99
-        - 11.99,-3.01
-        - 0.01,-3.01
-        - 0.01,-3.99
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      restitution: 0.1
-      id: grid_chunk-0.01--3.99
-    - density: 0.5
-      shape: !type:PolygonShape
-        vertices:
-        - 12.99,-4.99
-        - 12.99,-4.01
-        - 0.01,-4.01
-        - 0.01,-4.99
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      restitution: 0.1
-      id: grid_chunk-0.01--4.99
-    - density: 0.5
-      shape: !type:PolygonShape
-        vertices:
-        - 8.99,1.01
-        - 8.99,1.99
-        - 5.01,1.99
-        - 5.01,1.01
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      restitution: 0.1
-      id: grid_chunk-5.01-1.01
-    - density: 0.5
-      shape: !type:PolygonShape
-        vertices:
-        - 11.99,0.01
-        - 11.99,0.99
-        - 2.01,0.99
-        - 2.01,0.01
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      restitution: 0.1
-      id: grid_chunk-2.01-0.01
-    - density: 0.5
-      shape: !type:PolygonShape
-        vertices:
-        - 11.99,-5.99
-        - 11.99,-5.01
-        - 0.01,-5.01
-        - 0.01,-5.99
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      restitution: 0.1
-      id: grid_chunk-0.01--5.99
-    - density: 0.5
-      shape: !type:PolygonShape
-        vertices:
-        - 12.99,-1.99
-        - 12.99,-1.01
-        - 1.01,-1.01
-        - 1.01,-1.99
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      restitution: 0.1
-      id: grid_chunk-1.01--1.99
-    - density: 0.5
-      shape: !type:PolygonShape
-        vertices:
-        - 11.99,-7.99
-        - 11.99,-6.01
-        - 1.01,-6.01
-        - 1.01,-7.99
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      restitution: 0.1
-      id: grid_chunk-1.01--7.99
-    - density: 0.5
-      shape: !type:PolygonShape
-        vertices:
-        - 11.99,-0.99
-        - 11.99,-0.01
-        - 1.01,-0.01
-        - 1.01,-0.99
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      restitution: 0.1
-      id: grid_chunk-1.01--0.99
-    type: Fixtures
-  - type: OccluderTree
-  - type: Shuttle
-  - type: GridPathfinding
-  - gravityShakeSound: !type:SoundPathSpecifier
-      path: /Audio/Effects/alert.ogg
-    type: Gravity
-  - chunkCollection:
-      0,-1:
-        0:
-          color: '#FFFFFFFF'
-          id: Remains
-          coordinates: 6.3984947,-1.9947433
-    type: DecalGrid
-  - tiles:
-      -1,-7: 0
-      -1,-6: 0
-      -1,-5: 0
-      -1,-4: 0
-      -1,-3: 0
-      -1,-2: 0
-      -1,-1: 0
-      0,-8: 0
-      0,-7: 0
-      0,-6: 0
-      0,-5: 0
-      0,-4: 0
-      0,-3: 0
-      0,-2: 0
-      0,-1: 0
-      1,-8: 0
-      1,-7: 0
-      1,-6: 0
-      1,-5: 0
-      1,-4: 0
-      1,-3: 0
-      1,-2: 0
-      1,-1: 0
-      2,-8: 0
-      2,-7: 0
-      2,-6: 0
-      2,-5: 0
-      2,-4: 0
-      2,-3: 0
-      2,-2: 0
-      2,-1: 0
-      3,-8: 0
-      3,-7: 0
-      3,-6: 0
-      3,-5: 0
-      3,-4: 0
-      3,-3: 0
-      3,-2: 0
-      3,-1: 0
-      4,-8: 0
-      4,-7: 0
-      4,-6: 0
-      4,-5: 0
-      4,-4: 0
-      4,-3: 0
-      4,-2: 0
-      4,-1: 0
-      5,-8: 0
-      5,-7: 0
-      5,-6: 0
-      5,-5: 0
-      5,-4: 0
-      5,-3: 0
-      5,-2: 0
-      5,-1: 0
-      6,-8: 0
-      6,-7: 0
-      6,-6: 0
-      6,-5: 0
-      6,-4: 0
-      6,-3: 0
-      6,-2: 0
-      6,-1: 0
-      7,-8: 0
-      7,-7: 0
-      7,-6: 0
-      7,-5: 0
-      7,-4: 0
-      7,-3: 0
-      7,-2: 0
-      7,-1: 0
-      8,-8: 0
-      8,-7: 0
-      8,-6: 0
-      8,-5: 0
-      8,-4: 0
-      8,-3: 0
-      8,-2: 0
-      8,-1: 0
-      9,-8: 0
-      9,-7: 0
-      9,-6: 0
-      9,-5: 0
-      9,-4: 0
-      9,-3: 0
-      9,-2: 0
-      9,-1: 0
-      10,-8: 0
-      10,-7: 0
-      10,-6: 0
-      10,-5: 0
-      10,-4: 0
-      10,-3: 0
-      10,-2: 0
-      10,-1: 0
-      11,-8: 0
-      11,-7: 0
-      11,-6: 0
-      11,-5: 0
-      11,-4: 0
-      11,-3: 0
-      11,-2: 0
-      11,-1: 0
-      12,-5: 0
-      12,-3: 0
-      12,-2: 0
-      2,0: 0
-      3,0: 0
-      4,0: 0
-      5,0: 0
-      5,1: 0
-      6,0: 0
-      6,1: 0
-      7,0: 0
-      7,1: 0
-      8,0: 0
-      8,1: 0
-      9,0: 0
-      10,0: 0
-      11,0: 0
-    uniqueMixes:
-    - volume: 2500
-      temperature: 293.15
-      moles:
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    type: GridAtmosphere
-  - type: RadiationGridResistance
-- uid: 13708
-  type: WallWood
-  components:
-  - pos: 8.5,-7.5
-    parent: 13707
-    type: Transform
-- uid: 13709
-  type: WallWood
-  components:
-  - pos: 7.5,-7.5
-    parent: 13707
-    type: Transform
-- uid: 13710
-  type: WallWood
-  components:
-  - pos: 4.5,-7.5
-    parent: 13707
-    type: Transform
-- uid: 13711
-  type: WallWood
-  components:
-  - pos: 3.5,-7.5
-    parent: 13707
-    type: Transform
-- uid: 13712
-  type: PlasmaWindow
-  components:
-  - pos: 6.5,-7.5
-    parent: 13707
-    type: Transform
-- uid: 13713
-  type: PlasmaWindow
-  components:
-  - pos: 5.5,-7.5
-    parent: 13707
-    type: Transform
-- uid: 13714
-  type: WallWood
-  components:
-  - pos: 3.5,-6.5
-    parent: 13707
-    type: Transform
-- uid: 13715
-  type: WallWood
-  components:
-  - pos: 3.5,-5.5
-    parent: 13707
-    type: Transform
-- uid: 13716
-  type: WallWood
-  components:
-  - pos: 3.5,-4.5
-    parent: 13707
-    type: Transform
-- uid: 13717
-  type: WallWood
-  components:
-  - pos: 4.5,-4.5
-    parent: 13707
-    type: Transform
-- uid: 13718
-  type: WallWood
-  components:
-  - pos: 5.5,-4.5
-    parent: 13707
-    type: Transform
-- uid: 13719
-  type: WallWood
-  components:
-  - pos: 6.5,-4.5
-    parent: 13707
-    type: Transform
-- uid: 13720
-  type: WallWood
-  components:
-  - pos: 6.5,-3.5
-    parent: 13707
-    type: Transform
-- uid: 13721
-  type: WallWood
-  components:
-  - pos: 9.5,-7.5
-    parent: 13707
-    type: Transform
-- uid: 13722
-  type: WallWood
-  components:
-  - pos: 9.5,-6.5
-    parent: 13707
-    type: Transform
-- uid: 13723
-  type: WallWood
-  components:
-  - pos: 9.5,-5.5
-    parent: 13707
-    type: Transform
-- uid: 13724
-  type: WallWood
-  components:
-  - pos: 9.5,-4.5
-    parent: 13707
-    type: Transform
-- uid: 13725
-  type: WallWood
-  components:
-  - pos: 9.5,-3.5
-    parent: 13707
-    type: Transform
-- uid: 13726
-  type: AsteroidRock
-  components:
-  - pos: 1.5,-7.5
-    parent: 13707
-    type: Transform
-- uid: 13727
-  type: AsteroidRock
-  components:
-  - pos: 1.5,-6.5
-    parent: 13707
-    type: Transform
-- uid: 13728
-  type: AsteroidRock
-  components:
-  - pos: 1.5,-5.5
-    parent: 13707
-    type: Transform
-- uid: 13729
-  type: AsteroidRock
-  components:
-  - pos: 1.5,-4.5
-    parent: 13707
-    type: Transform
-- uid: 13730
-  type: AsteroidRock
-  components:
-  - pos: 1.5,-3.5
-    parent: 13707
-    type: Transform
-- uid: 13731
-  type: AsteroidRock
-  components:
-  - pos: 1.5,-2.5
-    parent: 13707
-    type: Transform
-- uid: 13732
-  type: AsteroidRock
-  components:
-  - pos: 2.5,-7.5
-    parent: 13707
-    type: Transform
-- uid: 13733
-  type: AsteroidRock
-  components:
-  - pos: 2.5,-6.5
-    parent: 13707
-    type: Transform
-- uid: 13734
-  type: AsteroidRock
-  components:
-  - pos: 2.5,-5.5
-    parent: 13707
-    type: Transform
-- uid: 13735
-  type: AsteroidRock
-  components:
-  - pos: 2.5,-4.5
-    parent: 13707
-    type: Transform
-- uid: 13736
-  type: AsteroidRock
-  components:
-  - pos: 2.5,-3.5
-    parent: 13707
-    type: Transform
-- uid: 13737
-  type: AsteroidRock
-  components:
-  - pos: 2.5,-2.5
-    parent: 13707
-    type: Transform
-- uid: 13738
-  type: AsteroidRock
-  components:
-  - pos: 3.5,-3.5
-    parent: 13707
-    type: Transform
-- uid: 13739
-  type: AsteroidRock
-  components:
-  - pos: 0.5,-3.5
-    parent: 13707
-    type: Transform
-- uid: 13740
-  type: AsteroidRock
-  components:
-  - pos: 4.5,-3.5
-    parent: 13707
-    type: Transform
-- uid: 13741
-  type: AsteroidRock
-  components:
-  - pos: 0.5,-2.5
-    parent: 13707
-    type: Transform
-- uid: 13742
-  type: AsteroidRock
-  components:
-  - pos: 5.5,-3.5
-    parent: 13707
-    type: Transform
-- uid: 13743
-  type: AsteroidRock
-  components:
-  - pos: 5.5,-2.5
-    parent: 13707
-    type: Transform
-- uid: 13744
-  type: WallWood
-  components:
-  - pos: 9.5,-2.5
-    parent: 13707
-    type: Transform
-- uid: 13745
-  type: WallWood
-  components:
-  - pos: 6.5,-2.5
-    parent: 13707
-    type: Transform
-- uid: 13746
-  type: WallWood
-  components:
-  - pos: 7.5,-2.5
-    parent: 13707
-    type: Transform
-- uid: 13747
-  type: WallWood
-  components:
-  - pos: 8.5,-4.5
-    parent: 13707
-    type: Transform
-- uid: 13748
-  type: AsteroidRock
-  components:
-  - pos: 2.5,-1.5
-    parent: 13707
-    type: Transform
-- uid: 13749
-  type: AsteroidRock
-  components:
-  - pos: 2.5,-0.5
-    parent: 13707
-    type: Transform
-- uid: 13750
-  type: AsteroidRock
-  components:
-  - pos: 0.5,-4.5
-    parent: 13707
-    type: Transform
-- uid: 13751
-  type: AsteroidRock
-  components:
-  - pos: 3.5,-0.5
-    parent: 13707
-    type: Transform
-- uid: 13752
-  type: AsteroidRock
-  components:
-  - pos: 1.5,-1.5
-    parent: 13707
-    type: Transform
-- uid: 13753
-  type: AsteroidRock
-  components:
-  - pos: 4.5,-0.5
-    parent: 13707
-    type: Transform
-- uid: 13754
-  type: AsteroidRock
-  components:
-  - pos: 2.5,0.5
-    parent: 13707
-    type: Transform
-- uid: 13755
-  type: AsteroidRock
-  components:
-  - pos: 5.5,-0.5
-    parent: 13707
-    type: Transform
-- uid: 13756
-  type: AsteroidRock
-  components:
-  - pos: 4.5,0.5
-    parent: 13707
-    type: Transform
-- uid: 13757
-  type: AsteroidRock
-  components:
-  - pos: 5.5,0.5
-    parent: 13707
-    type: Transform
-- uid: 13758
-  type: AsteroidRock
-  components:
-  - pos: 6.5,0.5
-    parent: 13707
-    type: Transform
-- uid: 13759
-  type: AsteroidRock
-  components:
-  - pos: 7.5,0.5
-    parent: 13707
-    type: Transform
-- uid: 13760
-  type: AsteroidRock
-  components:
-  - pos: 8.5,0.5
-    parent: 13707
-    type: Transform
-- uid: 13761
-  type: AsteroidRock
-  components:
-  - pos: 9.5,0.5
-    parent: 13707
-    type: Transform
-- uid: 13762
-  type: AsteroidRock
-  components:
-  - pos: 10.5,0.5
-    parent: 13707
-    type: Transform
-- uid: 13763
-  type: AsteroidRock
-  components:
-  - pos: 10.5,-0.5
-    parent: 13707
-    type: Transform
-- uid: 13764
-  type: AsteroidRock
-  components:
-  - pos: 10.5,-1.5
-    parent: 13707
-    type: Transform
-- uid: 13765
-  type: AsteroidRock
-  components:
-  - pos: 11.5,-0.5
-    parent: 13707
-    type: Transform
-- uid: 13766
-  type: AsteroidRock
-  components:
-  - pos: 11.5,-1.5
-    parent: 13707
-    type: Transform
-- uid: 13767
-  type: AsteroidRock
-  components:
-  - pos: 10.5,-2.5
-    parent: 13707
-    type: Transform
-- uid: 13768
-  type: AsteroidRock
-  components:
-  - pos: 10.5,-3.5
-    parent: 13707
-    type: Transform
-- uid: 13769
-  type: AsteroidRock
-  components:
-  - pos: 10.5,-4.5
-    parent: 13707
-    type: Transform
-- uid: 13770
-  type: AsteroidRock
-  components:
-  - pos: 10.5,-5.5
-    parent: 13707
-    type: Transform
-- uid: 13771
-  type: AsteroidRock
-  components:
-  - pos: 10.5,-6.5
-    parent: 13707
-    type: Transform
-- uid: 13772
-  type: AsteroidRock
-  components:
-  - pos: 11.5,-2.5
-    parent: 13707
-    type: Transform
-- uid: 13773
-  type: AsteroidRock
-  components:
-  - pos: 11.5,-3.5
-    parent: 13707
-    type: Transform
-- uid: 13774
-  type: AsteroidRock
-  components:
-  - pos: 11.5,-4.5
-    parent: 13707
-    type: Transform
-- uid: 13775
-  type: AsteroidRock
-  components:
-  - pos: 11.5,-5.5
-    parent: 13707
-    type: Transform
-- uid: 13776
-  type: AsteroidRock
-  components:
-  - pos: 11.5,-6.5
-    parent: 13707
-    type: Transform
-- uid: 13777
-  type: AsteroidRock
-  components:
-  - pos: 10.5,-7.5
-    parent: 13707
-    type: Transform
-- uid: 13778
-  type: WoodDoor
-  components:
-  - pos: 8.5,-2.5
-    parent: 13707
-    type: Transform
-- uid: 13779
-  type: WoodDoor
-  components:
-  - pos: 7.5,-4.5
-    parent: 13707
-    type: Transform
-- uid: 13780
-  type: AsteroidRock
-  components:
-  - pos: 5.5,1.5
-    parent: 13707
-    type: Transform
-- uid: 13781
-  type: AsteroidRock
-  components:
-  - pos: 6.5,1.5
-    parent: 13707
-    type: Transform
-- uid: 13782
-  type: AsteroidRock
-  components:
-  - pos: 7.5,1.5
-    parent: 13707
-    type: Transform
-- uid: 13783
-  type: AsteroidRock
-  components:
-  - pos: 12.5,-1.5
-    parent: 13707
-    type: Transform
-- uid: 13784
-  type: AsteroidRock
-  components:
-  - pos: 12.5,-2.5
-    parent: 13707
-    type: Transform
-- uid: 13785
-  type: AsteroidRock
-  components:
-  - pos: 9.5,-0.5
-    parent: 13707
-    type: Transform
-- uid: 13786
-  type: SpawnMobBear
-  components:
-  - pos: 3.5,-1.5
-    parent: 13707
-    type: Transform
-- uid: 13787
-  type: SpawnMobBear
-  components:
-  - pos: 9.5,-1.5
-    parent: 13707
-    type: Transform
-- uid: 13788
-  type: HeadSkeleton
-  components:
-  - flags: SessionSpecific
-    type: MetaData
-  - pos: 4.4721184,-2.1759186
-    parent: 13707
-    type: Transform
-  - action:
-      checkCanInteract: False
-      icon: Interface/Actions/scream.png
-      name: action-name-scream
-      description: AAAAAAAAAAAAAAAAAAAAAAAAA
-      keywords: []
-      useDelay: 10
-      event: !type:ScreamActionEvent {}
-    type: Vocal
-- uid: 13789
-  type: AirCanister
-  components:
-  - pos: 8.5,-5.5
-    parent: 13707
-    type: Transform
-- uid: 13790
-  type: Bed
-  components:
-  - pos: 4.5,-6.5
-    parent: 13707
-    type: Transform
-- uid: 13791
-  type: BedsheetCosmos
-  components:
-  - pos: 4.5,-6.5
-    parent: 13707
-    type: Transform
-- uid: 13792
-  type: TableWood
-  components:
-  - pos: 4.5,-5.5
-    parent: 13707
-    type: Transform
-- uid: 13793
-  type: DrinkCognacBottleFull
-  components:
-  - pos: 4.214905,-5.2485123
-    parent: 13707
-    type: Transform
-- uid: 13794
-  type: DrinkCognacGlass
-  components:
-  - pos: 4.4562874,-5.1917496
-    parent: 13707
-    type: Transform
-- uid: 13795
-  type: FoodDonutChaos
-  components:
-  - pos: 4.697666,-5.418808
-    parent: 13707
-    type: Transform
-- uid: 13796
-  type: ClosetBase
-  components:
-  - pos: 8.5,-6.5
-    parent: 13707
-    type: Transform
-- uid: 13797
-  type: VendingMachineMagivend
-  components:
-  - flags: SessionSpecific
-    type: MetaData
-  - pos: 7.5,-6.5
-    parent: 13707
     type: Transform
 - uid: 13799
   type: Poweredlight
