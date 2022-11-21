@@ -321,14 +321,18 @@
   description: Inject this and on death you'll create a large explosion. Huge team casualty cost, use at own risk. Replaces internal micro bomb.
   productEntity: MacroBombImplanter
   cost:
-    Telecrystal: 20
+    Telecrystal: 25
   categories:
     - UplinkUtility
   conditions:
     - !type:StoreWhitelistCondition
-      blacklist:
+      whitelist:
         tags:
-          - TraitorUplink
+          - NukeOpsUplink
+    - !type:BuyerWhitelistCondition
+      blacklist:
+        components:
+          - SurplusBundle
 
 # Bundles
 
