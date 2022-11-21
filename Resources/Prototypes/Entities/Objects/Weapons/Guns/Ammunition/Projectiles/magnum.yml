@@ -7,7 +7,7 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 20
+        Piercing: 22
 
 - type: entity
   id: BulletMagnumHighVelocity
