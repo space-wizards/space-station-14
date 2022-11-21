@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Boxing gloves now have the fist weapon arc., type: Fix}
-  id: 2188
-  time: '2022-08-25T13:38:14.0000000+00:00'
 - author: PJB3005
   changes:
   - {message: Clowns now go BONK on tables, type: Add}
@@ -2958,3 +2953,9 @@ Entries:
       infinitely., type: Fix}
   id: 2687
   time: '2022-11-21T02:50:43.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Fixed mice and other small entities becoming unable to move sometimes
+      after they leave a container., type: Fix}
+  id: 2688
+  time: '2022-11-21T03:34:54.0000000+00:00'
