@@ -150,7 +150,7 @@ public sealed class HeadsetSystem : EntitySystem
     {
         src.Channels.Clear();
         foreach (EntityUid i in src.KeyContainer.ContainedEntities)
-            if (TryComp<EncryptionKeyComponent?>(i, out var key))
+            if (TryComp<EncryptionKeyComponent>(i, out var key))
                 UploadChannelsFromKey(src, key);
         return;
     }
@@ -161,7 +161,7 @@ public sealed class HeadsetSystem : EntitySystem
         {
             return;
         }
-        if (TryComp<EncryptionKeyComponent?>(args.Used, out var key))
+        if (TryComp<EncryptionKeyComponent>(args.Used, out var key))
         {
             if (component.KeySlotsAmount > component.KeyContainer.ContainedEntities.Count)
                 if (_container.TryRemoveFromContainer(args.Used) && InstallKey(component, args.Used, key))
@@ -171,9 +171,8 @@ public sealed class HeadsetSystem : EntitySystem
                 }
             else
                 _popupSystem.PopupEntity(Loc.GetString("headset-encryption-key-slots-already-full"), uid, Filter.Entities(args.User));
-            return;
         } 
-        if (TryComp<ToolComponent?>(args.Used, out var tool))
+        if (TryComp<ToolComponent>(args.Used, out var tool))
         {
             if (component.KeyContainer.ContainedEntities.Count > 0)
                 if (_toolSystem.UseTool(
