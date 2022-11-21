@@ -41,7 +41,7 @@ public sealed class VocalSystem : EntitySystem
         // snowflake case for wilhelm scream easter egg
         if (args.Emote.ID == component.ScreamId)
         {
-            args.Handled = TryScream(uid, component);
+            args.Handled = TryPlayScreamSound(uid, component);
             return;
         }
 
@@ -60,7 +60,7 @@ public sealed class VocalSystem : EntitySystem
         return true;
     }
 
-    private bool TryScream(EntityUid uid, VocalComponent component)
+    private bool TryPlayScreamSound(EntityUid uid, VocalComponent component)
     {
         if (_random.Prob(component.WilhelmProbability))
         {

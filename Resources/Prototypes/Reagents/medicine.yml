@@ -422,7 +422,8 @@
         key: Stutter
         component: StutteringAccent
       - !type:Jitter
-      - !type:Scream
+      - !type:Emote
+        emote: Scream
         probability: 0.2
       - !type:PopupMessage
         type: Local

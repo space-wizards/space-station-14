@@ -23,7 +23,7 @@ public partial class ChatSystem
         CacheEmotes();
     }
 
-    public void CacheEmotes()
+    private void CacheEmotes()
     {
         _wordEmoteDict.Clear();
         var emotes = _prototypeManager.EnumeratePrototypes<EmotePrototype>();
@@ -33,8 +33,14 @@ public partial class ChatSystem
             {
                 if (_wordEmoteDict.ContainsKey(word))
                 {
+                    string errMsg;
                     var existingId = _wordEmoteDict[word].ID;
-                    Sawmill.Error($"Duplicate of emote word {word} in emotes {emote.ID} and {existingId}");
+                    if (emote.ID != existingId)
+                        errMsg = $"Duplicate of emote word {word} in emotes {emote.ID} and {existingId}";
+                    else
+                        errMsg = $"Duplicate of emote word {word} in emotes {emote.ID} and {existingId}";
+
+                    Sawmill.Error(errMsg);
                     continue;
                 }
 
@@ -43,16 +49,33 @@ public partial class ChatSystem
         }
     }
 
-    public bool TryEmote(EntityUid uid, string action)
+    public void TryEmoteWithoutChat(EntityUid uid, string emoteId)
     {
-        var actionLower = action.ToLower();
+        var proto = _prototypeManager.Index<EmotePrototype>(emoteId);
+        TryEmoteWithoutChat(uid, proto);
+    }
+
+    public void TryEmoteWithoutChat(EntityUid uid, EmotePrototype proto)
+    {
+        if (!_actionBlocker.CanEmote(uid))
+            return;
+
+        InvokeEmoteEvent(uid, proto);
+    }
+
+    private void TryEmote(EntityUid uid, string textInput)
+    {
+        var actionLower = textInput.ToLower();
         if (!_wordEmoteDict.TryGetValue(actionLower, out var emote))
-            return false;
+            return;
 
-        var ev = new EmoteEvent(emote);
+        InvokeEmoteEvent(uid, emote);
+    }
+
+    private void InvokeEmoteEvent(EntityUid uid, EmotePrototype proto)
+    {
+        var ev = new EmoteEvent(proto);
         RaiseLocalEvent(uid, ref ev);
-
-        return ev.Handled;
     }
 }
 
