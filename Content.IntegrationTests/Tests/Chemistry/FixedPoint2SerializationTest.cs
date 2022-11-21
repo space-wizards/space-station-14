@@ -25,6 +25,21 @@ namespace Content.IntegrationTests.Tests.Chemistry
         }
 
         [Test]
+        public void SerializeNullTest()
+        {
+            var node = Serialization.WriteValue<FixedPoint2?>(null);
+            Assert.That(node.IsNull);
+        }
+
+        [Test]
+        public void SerializeNullableValueTest()
+        {
+            var node = Serialization.WriteValue<FixedPoint2?>(FixedPoint2.New(2.5f));
+            Assert.That(node is ValueDataNode);
+            Assert.That(((ValueDataNode)node).Value, Is.EqualTo("2.5"));
+        }
+
+        [Test]
         public void DeserializeNullDefinitionTest()
         {
             var node = new MappingDataNode().Add("unit", ValueDataNode.Null());
