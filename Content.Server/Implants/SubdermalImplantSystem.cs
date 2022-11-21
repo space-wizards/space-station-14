@@ -1,6 +1,7 @@
 ﻿using Content.Server.Cuffs.Components;
 using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
+using Content.Shared.Interaction.Events;
 using Content.Shared.MobState;
 using Robust.Shared.Containers;
 
@@ -17,6 +18,7 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
         SubscribeLocalEvent<SubdermalImplantComponent, UseFreedomImplantEvent>(OnFreedomImplant);
 
         SubscribeLocalEvent<ImplantedComponent, MobStateChangedEvent>(RelayToImplantEvent);
+        SubscribeLocalEvent<ImplantedComponent, SuicideEvent>(RelayToImplantEvent);
     }
 
     private void OnFreedomImplant(EntityUid uid, SubdermalImplantComponent component, UseFreedomImplantEvent args)
