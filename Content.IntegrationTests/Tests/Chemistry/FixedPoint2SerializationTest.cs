@@ -27,7 +27,7 @@ namespace Content.IntegrationTests.Tests.Chemistry
         [Test]
         public void DeserializeNullDefinitionTest()
         {
-            var node = new MappingDataNode().Add("unit", "null");
+            var node = new MappingDataNode().Add("unit", ValueDataNode.Null());
             var definition = Serialization.Read<FixedPoint2TestDefinition>(node);
 
             Assert.That(definition.Unit, Is.Null);

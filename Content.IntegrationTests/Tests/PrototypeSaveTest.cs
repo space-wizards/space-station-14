@@ -238,6 +238,10 @@ public sealed class PrototypeSaveTest
                     {
                         foreach (var (compType, comp) in prototype.Components)
                         {
+                            if (compType == "Damageable")
+                            {
+                                Console.WriteLine("");
+                            }
                             protoData.Add(compType, seriMan.WriteValueAs<MappingDataNode>(comp.Component.GetType(), comp.Component, context: context));
                         }
                     }
