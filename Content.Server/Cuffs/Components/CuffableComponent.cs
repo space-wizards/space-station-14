@@ -263,8 +263,8 @@ namespace Content.Server.Cuffs.Components
                     cuff.Broken = true;
 
                     var meta = _entMan.GetComponent<MetaDataComponent>(cuffsToRemove.Value);
-                    meta.EntityName = cuff.BrokenName;
-                    meta.EntityDescription = cuff.BrokenDesc;
+                    meta.EntityName = Loc.GetString(cuff.BrokenName);
+                    meta.EntityDescription = Loc.GetString(cuff.BrokenDesc);
 
                     if (_entMan.TryGetComponent<SpriteComponent?>(cuffsToRemove, out var sprite) && cuff.BrokenState != null)
                     {

@@ -196,9 +196,10 @@ namespace Content.Server.Pointing.EntitySystems
 
                 var tileDef = _tileDefinitionManager[tileRef?.Tile.TypeId ?? 0];
 
-                selfMessage = Loc.GetString("pointing-system-point-at-tile", ("tileName", tileDef.Name));
+                var name = Loc.GetString(tileDef.Name);
+                selfMessage = Loc.GetString("pointing-system-point-at-tile", ("tileName", name));
 
-                viewerMessage = Loc.GetString("pointing-system-other-point-at-tile", ("otherName", playerName), ("tileName", tileDef.Name));
+                viewerMessage = Loc.GetString("pointing-system-other-point-at-tile", ("otherName", playerName), ("tileName", name));
             }
 
             _pointers[session] = _gameTiming.CurTime;
