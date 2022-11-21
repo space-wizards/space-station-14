@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Popups for wielding now display the correct text., type: Fix}
-  id: 2190
-  time: '2022-08-25T13:42:13.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Removed ratatouille (held mice and holo parasites no longer affect what
@@ -2959,3 +2954,8 @@ Entries:
   - {message: Added a renovated Moose Station, type: Add}
   id: 2689
   time: '2022-11-21T09:20:08.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed not showing ban ids in a player's ban list., type: Fix}
+  id: 2690
+  time: '2022-11-21T19:04:24.0000000+00:00'
