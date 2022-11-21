@@ -1,5 +1,5 @@
-traversal-distorter-set-in = Traversal bias set to "in"
-traversal-distorter-set-out = Traversal bias set to "out"
-traversal-distorter-desc-in = The affected artifact's traversal now favors moving inwards to the beginning.
-traversal-distorter-desc-out = The affected artifact's traversal now favors moving outwards towards more dangerous nodes.
-traversal-distorter-upgrade-bias = Bias effectiveness
+traversal-distorter-set-in = Поиск цепочек эффектов настроен на поиск "в глубину"
+traversal-distorter-set-out = Поиск цепочек эффектов настроен на поиск "к поверхности"
+traversal-distorter-desc-in = Активация артефакта с большей вероятностью продвинет его исследование в глубину, к начальномму эффекту.
+traversal-distorter-desc-out = Активация артефакта с большей вероятностью продвинет его исследование к поверхности, к поздним и более опасным эффектам.
+traversal-distorter-upgrade-bias = шанс изменения цепочки эффектов

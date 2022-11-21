@@ -1,6 +1,6 @@
 ent-MachineArtifactAnalyzer = анализатор артефактов
     .desc = Платформа, позволяющая выполнять анализ различных типов артефактов.
     .suffix = { "" }
-ent-MachineTraversalDistorter = traversal distorter
-    .desc = A machine capable of distorting the traversal of artifact nodes.
+ent-MachineTraversalDistorter = поперечный искатель
+    .desc = Прибор, способный влиять на открываемые цепочки эффектов артефактов.
     .suffix = { "" }
