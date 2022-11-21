@@ -51,7 +51,8 @@ public partial class ChatSystem
 
     public void TryEmoteWithoutChat(EntityUid uid, string emoteId)
     {
-        var proto = _prototypeManager.Index<EmotePrototype>(emoteId);
+        if (!_prototypeManager.TryIndex<EmotePrototype>(emoteId, out var proto))
+            return;
         TryEmoteWithoutChat(uid, proto);
     }
 

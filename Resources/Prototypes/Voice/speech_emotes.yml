@@ -25,3 +25,11 @@
     - laughs
     - laughing
     - laughed
+
+- type: emote
+  id: Groan
+  words:
+    - groan
+    - groans
+    - groaning
+    - groaned

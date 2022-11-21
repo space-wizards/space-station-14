@@ -26,6 +26,7 @@ using Content.Shared.Popups;
 using Content.Server.Atmos.Miasma;
 using Content.Server.Humanoid;
 using Content.Server.IdentityManagement;
+using Content.Shared.Chat.Prototypes;
 using Content.Shared.Humanoid;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Weapons.Melee;
@@ -111,10 +112,11 @@ namespace Content.Server.Zombies
             var combat = AddComp<CombatModeComponent>(target);
             combat.IsInCombatMode = true;
 
-            var vocal = EnsureComp<VocalComponent>(target);
-            var scream = new SoundCollectionSpecifier ("ZombieScreams");
-            //vocal.FemaleScream = scream;
-            //vocal.MaleScream = scream;
+            if (_proto.TryIndex("Zombie", out EmoteSoundsPrototype? sounds))
+            {
+                var vocal = EnsureComp<VocalComponent>(target);
+                vocal.EmoteSounds = sounds;
+            }
 
             //This is the actual damage of the zombie. We assign the visual appearance
             //and range here because of stuff we'll find out later

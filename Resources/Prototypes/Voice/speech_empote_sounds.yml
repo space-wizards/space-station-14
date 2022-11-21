@@ -17,3 +17,13 @@
       collection: FemaleScreams
     Laugh:
       collection: FemaleLaugh
+
+- type: emoteSounds
+  id: Zombie
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      collection: ZombieScreams
+    Groan:
+      collection: ZombieScreams

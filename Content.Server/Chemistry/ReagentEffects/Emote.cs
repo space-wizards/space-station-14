@@ -7,7 +7,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Chemistry.ReagentEffects;
 
 /// <summary>
-///     Forces someone to audibly emote (scream, laugh, etc).
+///     Tries to force someone to emote (scream, laugh, etc).
 /// </summary>
 [UsedImplicitly]
 public sealed class Emote : ReagentEffect
