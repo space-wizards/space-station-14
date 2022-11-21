@@ -130,7 +130,7 @@ public sealed class BodySystem : SharedBodySystem
         InitPart(partComponent, prototype, prototype.Root);
     }
 
-    public override HashSet<EntityUid> GibBody(EntityUid? bodyId, bool gibOrgans = false, BodyComponent? body = null)
+    public override HashSet<EntityUid> GibBody(EntityUid? bodyId, bool gibOrgans = false, BodyComponent? body = null, bool deleteItems = false)
     {
         if (bodyId == null || !Resolve(bodyId.Value, ref body, false))
             return new HashSet<EntityUid>();
@@ -150,9 +150,16 @@ public sealed class BodySystem : SharedBodySystem
             {
                 foreach (var ent in cont.ContainedEntities)
                 {
-                    cont.ForceRemove(ent);
-                    Transform(ent).Coordinates = coordinates;
-                    ent.RandomOffset(0.25f);
+                    if (deleteItems)
+                    {
+                        QueueDel(ent);
+                    }
+                    else
+                    {
+                        cont.ForceRemove(ent);
+                        Transform(ent).Coordinates = coordinates;
+                        ent.RandomOffset(0.25f);
+                    }
                 }
             }
         }

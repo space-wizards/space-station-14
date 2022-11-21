@@ -280,6 +280,60 @@
   categories:
   - UplinkUtility
 
+# Utility-Implants
+
+- type: listing
+  id: UplinkStorageImplanter
+  icon: /Textures/Clothing/Back/Backpacks/backpack.rsi/icon.png
+  name: Storage Implanter
+  description: Hide goodies inside of yourself with new bluespace technology!
+  productEntity: StorageImplanter
+  cost:
+    Telecrystal: 12
+  categories:
+    - UplinkUtility
+  conditions:
+    - !type:StoreWhitelistCondition
+      blacklist:
+        tags:
+          - NukeOpsUplink
+
+- type: listing
+  id: UplinkFreedomImplanter
+  icon: /Textures/Actions/Implants/implants.rsi/freedom.png
+  name: Freedom Implanter
+  description: Get away from those nasty sec officers with this three use implant!
+  productEntity: FreedomImplanter
+  cost:
+    Telecrystal: 10
+  categories:
+    - UplinkUtility
+  conditions:
+    - !type:StoreWhitelistCondition
+      blacklist:
+        tags:
+          - NukeOpsUplink
+
+- type: listing
+  id: UplinkMacroBombImplanter
+  icon: /Textures/Actions/Implants/implants.rsi/explosive.png
+  name: Macro Bomb Implanter
+  description: Inject this and on death you'll create a large explosion. Huge team casualty cost, use at own risk. Replaces internal micro bomb.
+  productEntity: MacroBombImplanter
+  cost:
+    Telecrystal: 25
+  categories:
+    - UplinkUtility
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - NukeOpsUplink
+    - !type:BuyerWhitelistCondition
+      blacklist:
+        components:
+          - SurplusBundle
+
 # Bundles
 
 - type: listing
