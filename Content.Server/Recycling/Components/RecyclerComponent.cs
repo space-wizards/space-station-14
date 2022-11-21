@@ -43,5 +43,7 @@ namespace Content.Server.Recycling.Components
 
         // Ratelimit sounds to avoid spam
         public TimeSpan LastSound;
+
+        public int ItemsProcessed;
     }
 }

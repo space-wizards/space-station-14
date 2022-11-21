@@ -40,11 +40,7 @@
     anchored: true
     noRot: false
   - type: ApcPowerReceiver
-    powerLoad: 15000 #really freaking high
-    needsPower: false #only turns on when scanning
-  - type: UpgradePowerDraw
-    powerDrawMultiplier: 0.80
-    scaling: Exponential
+    powerLoad: 15000
   - type: ArtifactAnalyzer
   - type: DeviceNetwork
     deviceNetId: Wired
