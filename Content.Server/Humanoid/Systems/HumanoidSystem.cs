@@ -90,7 +90,7 @@ public sealed partial class HumanoidSystem : SharedHumanoidSystem
         }
 
         SetSpecies(uid, profile.Species, false, humanoid);
-        humanoid.Sex = profile.Sex;
+        SetSex(uid, profile.Sex, false, humanoid);
 
         SetSkinColor(uid, profile.Appearance.SkinColor, false);
         SetBaseLayerColor(uid, HumanoidVisualLayers.Eyes, profile.Appearance.EyeColor, false);
@@ -139,7 +139,7 @@ public sealed partial class HumanoidSystem : SharedHumanoidSystem
 
         targetHumanoid.Species = sourceHumanoid.Species;
         targetHumanoid.SkinColor = sourceHumanoid.SkinColor;
-        targetHumanoid.Sex = sourceHumanoid.Sex;
+        SetSex(target, sourceHumanoid.Sex, false, targetHumanoid);
         targetHumanoid.CustomBaseLayers = new(sourceHumanoid.CustomBaseLayers);
         targetHumanoid.CurrentMarkings = new(sourceHumanoid.CurrentMarkings);
 
@@ -171,6 +171,28 @@ public sealed partial class HumanoidSystem : SharedHumanoidSystem
         humanoid.CurrentMarkings.FilterSpecies(species, _markingManager);
         var oldMarkings = humanoid.CurrentMarkings.GetForwardEnumerator().ToList();
         humanoid.CurrentMarkings = new(oldMarkings, prototype.MarkingPoints, _markingManager, _prototypeManager);
+
+        if (sync)
+        {
+            Synchronize(uid, humanoid);
+        }
+    }
+
+    /// <summary>
+    ///     Set a humanoid mob's sex. This will not change their gender.
+    /// </summary>
+    /// <param name="uid">The humanoid mob's UID.</param>
+    /// <param name="sex">The sex to set the mob to.</param>
+    /// <param name="sync">Whether to immediately synchronize this to the humanoid mob, or not.</param>
+    /// <param name="humanoid">Humanoid component of the entity</param>
+    public void SetSex(EntityUid uid, Sex sex, bool sync = true, HumanoidComponent? humanoid = null)
+    {
+        if (!Resolve(uid, ref humanoid) || humanoid.Sex == sex)
+            return;
+
+        var oldSex = humanoid.Sex;
+        humanoid.Sex = sex;
+        RaiseLocalEvent(new SexChangedEvent(oldSex, sex));
 
         if (sync)
         {
