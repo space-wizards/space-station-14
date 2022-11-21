@@ -1,5 +1,4 @@
 using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Humanoid;
 using Robust.Shared.Audio;
@@ -9,14 +8,11 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Speech.Components;
 
 /// <summary>
-///     Component required for entities to be able to scream.
+///     Component required for entities to be able to do vocal emotions.
 /// </summary>
 [RegisterComponent]
 public sealed class VocalComponent : Component
 {
-    [DataField("sounds", customTypeSerializer: typeof(PrototypeIdValueDictionarySerializer<Sex, EmoteSoundsPrototype>))]
-    public Dictionary<Sex, string>? SoundsBySex;
-
     [DataField("screamId", customTypeSerializer: typeof(PrototypeIdSerializer<EmotePrototype>))]
     public string ScreamId = "Scream";
 
@@ -26,11 +22,8 @@ public sealed class VocalComponent : Component
     [DataField("wilhelmProbability")]
     public float WilhelmProbability = 0.01f;
 
-    [DataField("actionId", customTypeSerializer:typeof(PrototypeIdSerializer<InstantActionPrototype>))]
-    public string ActionId = "Scream";
-
-    [DataField("action")] // must be a data-field to properly save cooldown when saving game state.
-    public InstantAction? ScreamAction = null;
+    [DataField("sounds", customTypeSerializer: typeof(PrototypeIdValueDictionarySerializer<Sex, EmoteSoundsPrototype>))]
+    public Dictionary<Sex, string>? Sounds;
 
     [ViewVariables]
     public EmoteSoundsPrototype? EmoteSounds = null;
