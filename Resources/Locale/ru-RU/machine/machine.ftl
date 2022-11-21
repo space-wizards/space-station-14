@@ -9,3 +9,7 @@ machine-upgrade-not-upgraded = Параметр [color=yellow]{ $upgraded }[/col
 upgrade-power-draw = потребление энергии
 upgrade-max-charge = максимальный запас энергии
 upgrade-power-supply = производство энергии
+two-way-lever-left = push left
+two-way-lever-right = push right
+two-way-lever-cant = can't push the lever that way!
+recycler-count-items = Recycled { $items } objects.

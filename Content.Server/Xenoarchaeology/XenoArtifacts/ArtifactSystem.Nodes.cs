@@ -1,6 +1,5 @@
 using System.Linq;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
-using Content.Shared.Item;
 using Content.Shared.Xenoarchaeology.XenoArtifacts;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -14,7 +13,7 @@ public sealed partial class ArtifactSystem
     [Dependency] private readonly IComponentFactory _componentFactory = default!;
     [Dependency] private readonly ISerializationManager _serialization = default!;
 
-    private const int MaxEdgesPerNode = 3;
+    private const int MaxEdgesPerNode = 4;
 
     /// <summary>
     /// Generate an Artifact tree with fully developed nodes.
@@ -162,16 +161,15 @@ public sealed partial class ArtifactSystem
         }
 
         component.CurrentNode = node;
-        node.Discovered = true;
 
         var allComponents = node.Effect.Components.Concat(node.Effect.PermanentComponents).Concat(node.Trigger.Components);
         foreach (var (name, entry) in allComponents)
         {
             var reg = _componentFactory.GetRegistration(name);
 
-            if (EntityManager.HasComponent(uid, reg.Type))
+            if (node.Discovered && EntityManager.HasComponent(uid, reg.Type))
             {
-                // Don't re-add permanent components
+                // Don't re-add permanent components unless this is the first time you've entered this node
                 if (node.Effect.PermanentComponents.ContainsKey(name))
                     continue;
 
@@ -187,6 +185,7 @@ public sealed partial class ArtifactSystem
             EntityManager.AddComponent(uid, (Component) temp!, true);
         }
 
+        node.Discovered = true;
         RaiseLocalEvent(uid, new ArtifactNodeEnteredEvent(component.CurrentNode.Id));
     }
 

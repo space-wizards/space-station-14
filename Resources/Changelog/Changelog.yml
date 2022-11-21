@@ -1,61 +1,4 @@
 Entries:
-- author: Flareguy
-  changes:
-  - {message: 'Touched up and re-shaded the Medical, Cargo, and Scientist jumpsuit
-      sprites.', type: Tweak}
-  - {message: Touched up and re-shaded all three labcoats., type: Tweak}
-  - {message: Medical backpacks and satchels now correctly use a blue cross instead
-      of a green one., type: Tweak}
-  - {message: Recolored the Cargo cap to reflect the new colors the jumpsuit has.,
-    type: Tweak}
-  - {message: Gave the Quartermaster a unique recolored cap that reflects his new
-      jumpsuit colors., type: Add}
-  id: 2180
-  time: '2022-08-23T02:28:11.0000000+00:00'
-- author: TekuNut
-  changes:
-  - {message: Xenos can no longer pry doors open from afar., type: Fix}
-  id: 2181
-  time: '2022-08-23T10:31:54.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed players being unable to suppress their inner ballerina (fix player's
-      getting stuck with angular velocity. no more eternal spinning)., type: Fix}
-  id: 2182
-  time: '2022-08-23T11:59:47.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Shields no longer randomly break upon healing the user., type: Fix}
-  id: 2183
-  time: '2022-08-23T12:00:06.0000000+00:00'
-- author: martin69420
-  changes:
-  - {message: Added wall lockers, type: Add}
-  id: 2184
-  time: '2022-08-24T07:08:57.0000000+00:00'
-- author: keronshb
-  changes:
-  - {message: 'Adds the Ensnaring Component. If a player gets ensnared by something
-      with it, their movement will be impeded.', type: Add}
-  - {message: Bolas no longer have a knockdown/stun chance and now ensnare instead.,
-    type: Tweak}
-  id: 2185
-  time: '2022-08-24T14:50:31.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: WallmountSubstationElectronics Are now printable., type: Fix}
-  id: 2186
-  time: '2022-08-25T13:23:03.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: You can no longer inject chems into cigarettes., type: Remove}
-  id: 2187
-  time: '2022-08-25T13:35:23.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Boxing gloves now have the fist weapon arc., type: Fix}
-  id: 2188
-  time: '2022-08-25T13:38:14.0000000+00:00'
 - author: PJB3005
   changes:
   - {message: Clowns now go BONK on tables, type: Add}
@@ -2951,3 +2894,68 @@ Entries:
   - {message: Nukie planet has been fixed., type: Fix}
   id: 2679
   time: '2022-11-19T05:24:31.0000000+00:00'
+- author: Mervill
+  changes:
+  - {message: Paper and some misc other objects are now recyclable, type: Add}
+  - {message: Recycler counts the number of recycled items, type: Add}
+  - {message: Two way levels can be switched in a specific direction with the right-click
+      menu, type: Add}
+  id: 2680
+  time: '2022-11-19T16:05:44.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed weird zombie attack animations., type: Fix}
+  id: 2681
+  time: '2022-11-19T16:07:09.0000000+00:00'
+- author: ODJ
+  changes:
+  - {message: Lighthouse Station, type: Remove}
+  id: 2682
+  time: '2022-11-20T04:34:38.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: 'Subdermal Implants and Implanters have been added! Subdermal Implants
+      give the user a variety of functions and can either be a passive type (something
+      consistently happens), a reactive type (something happens on death), and/or
+      an activation type (something happens on button press). Implanters handle implants/removals.',
+    type: Add}
+  - {message: Macro Bomb implants have been added to the nuclear operative uplink.
+      They make a massive explosion upon death., type: Add}
+  - {message: Freedom and Storage implants have been added to the traitor uplink.
+      Freedom implants are limited use and allow you to break out of cuffs. Storage
+      implants allow you to store an item in hidden storage., type: Add}
+  - {message: 'Sad Trombone implant was added to clowns on spawn. If they die, a sad
+      tune planes.', type: Add}
+  - {message: Tracking implants have been added to cargo under armory. They'll track
+      whoever's been implanted via the suit sensor network, type: Add}
+  - {message: Implanters have been added to the medical lathe., type: Add}
+  id: 2683
+  time: '2022-11-20T06:49:37.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Magnet artifacts can now be activated with magboots., type: Add}
+  id: 2684
+  time: '2022-11-20T06:52:32.0000000+00:00'
+- author: illersaver
+  changes:
+  - {message: Added damage to gas tanks and utensils!, type: Add}
+  id: 2685
+  time: '2022-11-20T18:43:24.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a bug causing gas/fire visuals to sometimes not update properly.,
+    type: Fix}
+  id: 2686
+  time: '2022-11-21T02:50:02.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: You can no longer use an RPED to increase a generator's power output
+      infinitely., type: Fix}
+  id: 2687
+  time: '2022-11-21T02:50:43.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Fixed mice and other small entities becoming unable to move sometimes
+      after they leave a container., type: Fix}
+  id: 2688
+  time: '2022-11-21T03:34:54.0000000+00:00'
