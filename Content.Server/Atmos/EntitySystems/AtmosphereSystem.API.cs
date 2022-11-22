@@ -296,7 +296,7 @@ public partial class AtmosphereSystem
         (EntityUid GridId, Vector2i Tile, ReactionResult Result = default, bool Handled = false);
 
     [ByRefEvent] private record struct IsTileAirBlockedMethodEvent
-        (EntityUid Grid, Vector2i Tile, AtmosDirection Direction = AtmosDirection.All, MapGridComponent? MapGridComponent = null, bool Result = false, bool Handled = false);
+        (EntityUid Grid, Vector2i Tile, AtmosDirection Direction = AtmosDirection.All, MapGridComponent? MapGridComponent = null, bool Result = false, bool Handled = false, bool NoAir = false);
 
     [ByRefEvent] private record struct IsTileSpaceMethodEvent
         (EntityUid? Grid, EntityUid? Map, Vector2i Tile, MapGridComponent? MapGridComponent = null, bool Result = true, bool Handled = false);
