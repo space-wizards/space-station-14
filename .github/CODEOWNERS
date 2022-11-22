@@ -3,7 +3,7 @@
 # Moony's Gargantuan List Of Things She Cares About, or MGLOTSCA for short.
 # You need to add your name to these entries, not make a new one, if you care about them.
 /Content.*/Bql/ @moonheart08
-/Content.*/Administration/ @moonheart08 @DrSmugleaf
+/Content.*/Administration/ @moonheart08 @PaulRitter @DrSmugleaf
 /Content.*/Station/ @moonheart08
 /Content.*/Maps/ @moonheart08
 /Content.*/GameTicking/ @moonheart08 @Zumorica
@@ -49,8 +49,15 @@
 /Content.*/Explosion/ @ElectroJr
 
 /Content.IntegrationTests/ @Wrexbe
-
-/Content.YAMLLinter @DrSmugleaf
+/Content.YAMLLinter @PaulRitter @DrSmugleaf
+/Content.*/Inventory @PaulRitter
+/Content.*/Arcade @PaulRitter
+/Content.*/Conveyor @PaulRitter
+/Content.*/Decals @PaulRitter
+/Content.*/Objectives @PaulRitter
+/Content.*/MachineLinking @PaulRitter
+/Content.*/Crayon @PaulRitter
+/Content.*/Clothing @PaulRitter
 
 # Be they Fluent translations or Freemarker templates, I know them both!
 *.ftl @RemieRichards

@@ -9,6 +9,7 @@ using Content.Shared.FixedPoint;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 
@@ -18,7 +19,7 @@ namespace Content.IntegrationTests.Tests.Fluids;
 [TestOf(typeof(FluidSpreaderSystem))]
 public sealed class FluidSpill
 {
-    private static PuddleComponent? GetPuddle(IEntityManager entityManager, IMapGrid mapGrid, Vector2i pos)
+    private static PuddleComponent? GetPuddle(IEntityManager entityManager, MapGridComponent mapGrid, Vector2i pos)
     {
         foreach (var uid in mapGrid.GetAnchoredEntities(pos))
         {

@@ -13,6 +13,7 @@ using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
 using Microsoft.Extensions.Options;
 using Robust.Server.GameObjects;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 
 namespace Content.Server.Doors.Systems
@@ -233,7 +234,7 @@ namespace Content.Server.Doors.Systems
             if (!TryComp(xform.ParentUid, out GridAtmosphereComponent? gridAtmosphere))
                 return (false, false);
 
-            var grid = Comp<MapGridComponent>(xform.ParentUid).Grid;
+            var grid = Comp<MapGridComponent>(xform.ParentUid);
             var pos = grid.CoordinatesToTile(xform.Coordinates);
             var minPressure = float.MaxValue;
             var maxPressure = float.MinValue;
