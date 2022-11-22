@@ -6,7 +6,8 @@ ban-list-header-expires = Снятие бана
 ban-list-header-banning-admin = Админ
 
 ban-list-title = Баны для {$player}
-ban-list-hidden = Спрятан
+ban-list-view = Просмотр
+ban-list-id = ID: {$id}
 ban-list-ip = IP: {$ip}
 ban-list-hwid = HWID: {$hwid}
 ban-list-guid = GUID: {$guid}

@@ -1,1 +1,1 @@
-stasis-bed-component-upgrade-stasis = эффект стазиса
+stasis-bed-component-upgrade-stasis = Эффект стазиса

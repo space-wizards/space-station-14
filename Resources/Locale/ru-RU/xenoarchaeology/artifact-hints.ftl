@@ -10,6 +10,11 @@ artifact-effect-hint-consumption = Потребление энергии
 artifact-effect-hint-release = Высвобождение энергии
 artifact-effect-hint-biochemical = Биохимическое воздействие
 artifact-effect-hint-destruction = Полномасштабные разрушения
+artifact-effect-hint-gun = Маленький ускоритель частиц
+artifact-effect-hint-multitool = Конгломерат устройств
+artifact-effect-hint-storage = Внутренняя камера
+artifact-effect-hint-drill = Зазубренный вращатель
+artifact-effect-hint-soap = Смазанная поверхность
 
 # the triggers should be more obvious than the effects
 # gives people an idea of what to do: don't be too specific (i.e. no "welders")
@@ -25,3 +30,4 @@ artifact-trigger-hint-death = Эссенция жизни
 artifact-trigger-hint-radiation = Радиация
 artifact-trigger-hint-pressure = Экстремальное давление
 artifact-trigger-hint-gas = Газ
+artifact-trigger-hint-land = Активное замедление

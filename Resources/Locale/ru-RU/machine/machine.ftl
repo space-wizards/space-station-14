@@ -11,3 +11,9 @@ machine-upgrade-not-upgraded = [color=yellow]{CAPITALIZE($upgraded)}[/color] н�
 upgrade-power-draw = потребляемая мощность
 upgrade-max-charge = максимальный заряд
 upgrade-power-supply = блок питания
+
+two-way-lever-left = нажать влево
+two-way-lever-right = нажать вправо
+two-way-lever-cant = нельзя нажать рычаг в этом направлении!
+
+recycler-count-items = Переработано {$items} объектов.

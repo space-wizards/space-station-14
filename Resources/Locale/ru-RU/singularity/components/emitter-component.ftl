@@ -9,4 +9,4 @@ comp-emitter-turned-off = { $target } отключается.
 comp-emitter-not-anchored = { $target } не закреплён!
 
 # Upgrades
-emitter-component-upgrade-fire-rate = частота выстрелов
+emitter-component-upgrade-fire-rate = Частота выстрелов
