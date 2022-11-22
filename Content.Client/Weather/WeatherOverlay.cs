@@ -22,7 +22,6 @@ public sealed class WeatherOverlay : Overlay
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
-    [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
     [Dependency] private readonly IResourceCache _cache = default!;
     private readonly SpriteSystem _sprite;
     private readonly WeatherSystem _weather;
@@ -38,11 +37,6 @@ public sealed class WeatherOverlay : Overlay
         _sprite = sprite;
         IoCManager.InjectDependencies(this);
     }
-
-    // TODO: WeatherComponent on the map.
-    // TODO: Fade-in
-    // TODO: Scrolling(?) like parallax
-    // TODO: Need affected tiles and effects to apply.
 
     protected override bool BeforeDraw(in OverlayDrawArgs args)
     {
@@ -80,7 +74,6 @@ public sealed class WeatherOverlay : Overlay
         var worldAABB = args.WorldAABB;
         var worldBounds = args.WorldBounds;
         var invMatrix = args.Viewport.GetWorldToLocalMatrix();
-        var rotation = args.Viewport.Eye?.Rotation ?? Angle.Zero;
         var position = args.Viewport.Eye?.Position.Position ?? Vector2.Zero;
 
         if (_blep?.Texture.Size != args.Viewport.Size)
@@ -99,7 +92,7 @@ public sealed class WeatherOverlay : Overlay
 
             foreach (var grid in _mapManager.FindGridsIntersecting(mapId, worldAABB))
             {
-                var matrix = xformQuery.GetComponent(grid.GridEntityId).WorldMatrix;
+                var matrix = xformQuery.GetComponent(grid.Owner).WorldMatrix;
                 Matrix3.Multiply(in matrix, in invMatrix, out var matty);
                 worldHandle.SetTransform(matty);
 
@@ -125,7 +118,6 @@ public sealed class WeatherOverlay : Overlay
         worldHandle.DrawTextureRect(_blep.Texture, worldBounds);
         Texture? sprite = null;
         var curTime = _timing.RealTime;
-        // TODO: Cache this shit.
 
         switch (weatherProto.Sprite)
         {
@@ -173,8 +165,8 @@ public sealed class WeatherOverlay : Overlay
         // - No rotation
         // - Storing state across frames to do scrolling and just having it always do topdown.
 
-        var scale = 1f;
-        var slowness = 0f;
+        const float scale = 1f;
+        const float slowness = 0f;
         var scrolling = Vector2.Zero;
 
         // Size of the texture in world units.

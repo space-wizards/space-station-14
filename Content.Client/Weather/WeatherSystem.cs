@@ -15,6 +15,7 @@ namespace Content.Client.Weather;
 
 public sealed class WeatherSystem : SharedWeatherSystem
 {
+    [Dependency] private readonly IOverlayManager _overlayManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly MetaDataSystem _metadata = default!;
@@ -23,8 +24,7 @@ public sealed class WeatherSystem : SharedWeatherSystem
     public override void Initialize()
     {
         base.Initialize();
-        var overlayManager = IoCManager.Resolve<IOverlayManager>();
-        overlayManager.AddOverlay(new WeatherOverlay(EntityManager.System<SpriteSystem>(), this));
+        _overlayManager.AddOverlay(new WeatherOverlay(EntityManager.System<SpriteSystem>(), this));
         SubscribeLocalEvent<WeatherComponent, ComponentHandleState>(OnWeatherHandleState);
     }
 
@@ -51,7 +51,7 @@ public sealed class WeatherSystem : SharedWeatherSystem
         // TODO: Average alpha across nearby 2x2 tiles.
         // At least, if we can change position
 
-        if (_timing.IsFirstTimePredicted && component.Stream != null)
+        if (Timing.IsFirstTimePredicted && component.Stream != null)
         {
             var stream = (AudioSystem.PlayingStream) component.Stream;
             var alpha = GetPercent(component, mapUid.Value, weather);
@@ -120,20 +120,17 @@ public sealed class WeatherSystem : SharedWeatherSystem
                 }
 
             }
-            // Full volume if not on grid
 
+            // Full volume if not on grid
             stream.Gain = alpha;
             stream.Source.SetOcclusion(occlusion);
         }
-
-        // TODO: Frames and stuff
-        // TODO: Audio
     }
 
     public float GetPercent(WeatherComponent component, EntityUid mapUid, WeatherPrototype weatherProto)
     {
         var pauseTime = _metadata.GetPauseTime(mapUid);
-        var elapsed = _timing.CurTime - (component.StartTime + pauseTime);
+        var elapsed = Timing.CurTime - (component.StartTime + pauseTime);
         var duration = component.Duration;
         var remaining = duration - elapsed;
         float alpha;
@@ -159,7 +156,7 @@ public sealed class WeatherSystem : SharedWeatherSystem
         if (!base.SetState(component, state, prototype))
             return false;
 
-        if (_timing.IsFirstTimePredicted)
+        if (Timing.IsFirstTimePredicted)
         {
             // TODO: Fades
             component.Stream?.Stop();
@@ -180,7 +177,7 @@ public sealed class WeatherSystem : SharedWeatherSystem
             EndWeather(component);
 
             if (state.Weather != null)
-                StartWeather(component, _protoMan.Index<WeatherPrototype>(state.Weather));
+                StartWeather(component, ProtoMan.Index<WeatherPrototype>(state.Weather));
         }
 
         component.EndTime = state.EndTime;
@@ -190,7 +187,6 @@ public sealed class WeatherSystem : SharedWeatherSystem
     public override void Shutdown()
     {
         base.Shutdown();
-        var overlayManager = IoCManager.Resolve<IOverlayManager>();
-        overlayManager.RemoveOverlay<WeatherOverlay>();
+        _overlayManager.RemoveOverlay<WeatherOverlay>();
     }
 }

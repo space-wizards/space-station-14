@@ -11,11 +11,11 @@ namespace Content.Shared.Weather;
 
 public abstract class SharedWeatherSystem : EntitySystem
 {
-    [Dependency] protected readonly IGameTiming _timing = default!;
+    [Dependency] protected readonly IGameTiming Timing = default!;
     [Dependency] protected readonly IMapManager MapManager = default!;
-    [Dependency] protected readonly IPrototypeManager _protoMan = default!;
+    [Dependency] protected readonly IPrototypeManager ProtoMan = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] protected readonly ITileDefinitionManager _tileDefManager = default!;
+    [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
     [Dependency] private readonly MetaDataSystem _metadata = default!;
 
     protected ISawmill Sawmill = default!;
@@ -55,11 +55,11 @@ public abstract class SharedWeatherSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        if (!_timing.IsFirstTimePredicted)
+        if (!Timing.IsFirstTimePredicted)
             return;
 
         // TODO: Active component.
-        var curTime = _timing.CurTime;
+        var curTime = Timing.CurTime;
 
         foreach (var (comp, metadata) in EntityQuery<WeatherComponent, MetaDataComponent>())
         {
@@ -77,7 +77,7 @@ public abstract class SharedWeatherSystem : EntitySystem
             }
 
             // Admin messed up or the likes.
-            if (!_protoMan.TryIndex<WeatherPrototype>(comp.Weather, out var weatherProto))
+            if (!ProtoMan.TryIndex<WeatherPrototype>(comp.Weather, out var weatherProto))
             {
                 // TODO: LOG
                 EndWeather(comp);
@@ -95,7 +95,7 @@ public abstract class SharedWeatherSystem : EntitySystem
             else
             {
                 var startTime = comp.StartTime + pauseTime;
-                var elapsed = _timing.CurTime - startTime;
+                var elapsed = Timing.CurTime - startTime;
 
                 if (elapsed < weatherProto.StartupTime)
                 {
@@ -128,8 +128,8 @@ public abstract class SharedWeatherSystem : EntitySystem
         component.Weather = weather.ID;
         // TODO: ENGINE PR
         var duration = _random.NextDouble(weather.DurationMinimum.TotalSeconds, weather.DurationMaximum.TotalSeconds);
-        component.EndTime = _timing.CurTime + TimeSpan.FromSeconds(duration);
-        component.StartTime = _timing.CurTime;
+        component.EndTime = Timing.CurTime + TimeSpan.FromSeconds(duration);
+        component.StartTime = Timing.CurTime;
         DebugTools.Assert(component.State == WeatherState.Invalid);
         Dirty(component);
     }
