@@ -107,7 +107,7 @@ namespace Content.Server.Recycling
         {
             if (component.Enabled)
             {
-                _ambience.SetAmbience(component.Owner, args.Powered);
+                _ambience.SetAmbience(uid, args.Powered);
             }
         }
 
