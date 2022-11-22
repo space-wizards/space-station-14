@@ -75,7 +75,7 @@ public sealed class PlanetCommand : IConsoleCommand
         footstep.Sound = new SoundCollectionSpecifier("FootstepGrass");
         _entManager.Dirty(footstep);
 
-        // Real soon buddy _entManager.EnsureComponent<MapGridComponent>(mapUid);
+        _entManager.EnsureComponent<MapGridComponent>(mapUid);
         shell.WriteLine(Loc.GetString("cmd-planet-success", ("mapId", mapId)));
     }
 }
