@@ -18,7 +18,7 @@
                 <Label Text="What kind of map editor is this? You can't even open anything!"/>
             </PanelContainer>
             <LayoutContainer Name="ViewportContainer" HorizontalExpand="True" VerticalExpand="True">
-                    <controls:MainViewport Name="MainViewport"/>
+                <controls:MainViewport Name="MainViewport"/>
             </LayoutContainer>
         </SplitContainer>
     </BoxContainer>

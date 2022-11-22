@@ -14,6 +14,17 @@ namespace Content.Client.Decals
         public readonly Dictionary<EntityUid, SortedDictionary<int, SortedDictionary<uint, Decal>>> DecalRenderIndex = new();
         private readonly Dictionary<EntityUid, Dictionary<uint, int>> _decalZIndexIndex = new();
 
+        public bool Visible
+        {
+            get => _overlayManager.HasOverlay<DecalOverlay>();
+            set
+            {
+                if (Visible != value)
+                    ToggleOverlay();
+            }
+
+        }
+
         public override void Initialize()
         {
             base.Initialize();

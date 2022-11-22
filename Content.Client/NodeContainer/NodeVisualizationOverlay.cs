@@ -1,8 +1,12 @@
 using System.Text;
+using Content.Client.Examine;
 using Content.Client.Resources;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.ResourceManagement;
+using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.Controls;
+using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
@@ -13,11 +17,13 @@ namespace Content.Client.NodeContainer
 {
     public sealed class NodeVisualizationOverlay : Overlay
     {
+
         private readonly NodeGroupSystem _system;
         private readonly EntityLookupSystem _lookup;
         private readonly IMapManager _mapManager;
         private readonly IInputManager _inputManager;
         private readonly IEntityManager _entityManager;
+        private readonly IUserInterfaceManager _userInterface = default!;
 
         private readonly Dictionary<(int, int), NodeRenderData> _nodeIndex = new();
         private readonly Dictionary<EntityUid, Dictionary<Vector2i, List<(GroupData, NodeDatum)>>> _gridIndex = new ();
@@ -28,6 +34,8 @@ namespace Content.Client.NodeContainer
         private (int group, int node)? _hovered;
         private float _time;
 
+        private Popup? _popup = null;
+
         public override OverlaySpace Space => OverlaySpace.ScreenSpace | OverlaySpace.WorldSpace;
 
         public NodeVisualizationOverlay(
@@ -36,13 +44,15 @@ namespace Content.Client.NodeContainer
             IMapManager mapManager,
             IInputManager inputManager,
             IResourceCache cache,
-            IEntityManager entityManager)
+            IEntityManager entityManager,
+            IUserInterfaceManager userInterface)
         {
             _system = system;
             _lookup = lookup;
             _mapManager = mapManager;
             _inputManager = inputManager;
             _entityManager = entityManager;
+            _userInterface = userInterface;
 
             _font = cache.GetFont("/Fonts/NotoSans/NotoSans-Regular.ttf", 12);
         }
@@ -61,14 +71,21 @@ namespace Content.Client.NodeContainer
 
         private void DrawScreen(in OverlayDrawArgs args)
         {
-            var mousePos = _inputManager.MouseScreenPosition.Position;
+            var mousePos = _userInterface.MousePositionScaled;
             _mouseWorldPos = args
                 .ViewportControl!
-                .ScreenToMap(new Vector2(mousePos.X, mousePos.Y))
+                .ScreenToMap(mousePos.Position)
                 .Position;
 
             if (_hovered == null)
+            {
+                if (_popup is not null)
+                {
+                    _popup.Dispose();
+                    _popup = null;
+                }
                 return;
+            }
 
             var (groupId, nodeId) = _hovered.Value;
 
@@ -89,7 +106,32 @@ namespace Content.Client.NodeContainer
             sb.Append($"grid pos: {gridTile}\n");
             sb.Append(group.DebugData);
 
-            args.ScreenHandle.DrawString(_font, mousePos + (20, -20), sb.ToString());
+            if (_popup is null)
+            {
+                _popup = new Popup() { MaxWidth = 400 };
+                _userInterface.ModalRoot.AddChild(_popup);
+                var newPanel = new PanelContainer() {Name = "NodeVisPopupPanel"};
+                newPanel.AddStyleClass(ExamineSystem.StyleClassEntityTooltip);
+                newPanel.ModulateSelfOverride = Color.LightGray.WithAlpha(0.90f);
+                _popup!.AddChild(newPanel);
+                _popup.NameScope = new NameScope();
+                _popup.NameScope.Register(newPanel.Name, newPanel);
+
+                var richLabel = new RichTextLabel() { Margin = new Thickness(4, 4, 0, 4), Name = "Label"};
+                newPanel.AddChild(richLabel);
+
+                newPanel.NameScope = new NameScope();
+                newPanel.NameScope.Register(richLabel.Name, richLabel);
+            }
+
+            var panel = _popup.FindControl<PanelContainer>("NodeVisPopupPanel");
+            var text = panel.FindControl<RichTextLabel>("Label");
+            text.SetMessage(sb.ToString());
+
+            panel.Measure(Vector2.Infinity);
+            var size = Vector2.ComponentMax((300, 0), panel.DesiredSize);
+
+            _popup.Open(UIBox2.FromDimensions(mousePos.Position + (20, -20), size));
         }
 
         private void DrawWorld(in OverlayDrawArgs overlayDrawArgs)

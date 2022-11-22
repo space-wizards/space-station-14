@@ -29,9 +29,24 @@ mapping-menus-visibility-markers =
         [true] on
         *[false] off
     })
+
 # Toggleable menu entry for subfloor entity visibility.
 mapping-menus-visibility-subfloor =
     Subfloor ({ $value ->
         [true] on
         *[false] off
     })
+
+# Toggleable menu entry for decal visibility.
+mapping-menus-visibility-decals =
+    Decals ({ $value ->
+    [true] on
+    *[false] off
+        })
+
+# Toggleable menu entry for the node group visualizer.
+mapping-menus-visibility-nodevis =
+    Node Vis ({ $value ->
+    [true] on
+    *[false] off
+            })

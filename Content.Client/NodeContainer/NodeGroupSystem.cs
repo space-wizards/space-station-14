@@ -5,6 +5,7 @@ using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.ResourceManagement;
+using Robust.Client.UserInterface;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -19,6 +20,7 @@ namespace Content.Client.NodeContainer
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
+        [Dependency] private readonly IUserInterfaceManager _userInterface = default!;
 
         public bool VisEnabled { get; private set; }
 
@@ -91,7 +93,8 @@ namespace Content.Client.NodeContainer
                     _mapManager,
                     _inputManager,
                     _resourceCache,
-                    EntityManager);
+                    EntityManager,
+                    _userInterface);
 
                 _overlayManager.AddOverlay(overlay);
             }
