@@ -17,6 +17,7 @@
   - type: BasicEntityAmmoProvider
     proto: ProjectileHealingBolt
     capacity: 10
+    count: 10
 
 - type: entity
   name: staff of entrance
@@ -35,3 +36,4 @@
   - type: BasicEntityAmmoProvider
     proto: ProjectilePolyboltDoor
     capacity: 10
+    count: 10

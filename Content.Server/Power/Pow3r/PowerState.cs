@@ -1,10 +1,11 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Robust.Shared.Utility;
+using static Content.Server.Power.Pow3r.PowerState;
 
 namespace Content.Server.Power.Pow3r
 {
@@ -20,6 +21,7 @@ namespace Content.Server.Power.Pow3r
         public GenIdStorage<Network> Networks = new();
         public GenIdStorage<Load> Loads = new();
         public GenIdStorage<Battery> Batteries = new();
+        public List<List<Network>>? GroupedNets;
 
         public readonly struct NodeId : IEquatable<NodeId>
         {
@@ -167,6 +169,10 @@ namespace Content.Server.Power.Pow3r
 
                 storage.Count = cache.Length;
                 storage._nextFree = nextFree;
+
+                // I think there is some issue with Pow3er's Save & Load to json leading to it constructing invalid GenIdStorages from json?
+                // If you get this error, clear out your data.json
+                DebugTools.Assert(storage.Values.Count() == storage.Count);
 
                 return storage;
             }
@@ -352,20 +358,29 @@ namespace Content.Server.Power.Pow3r
 
             // == Runtime parameters ==
 
-            // Actual power supplied last network update.
+            /// <summary>
+            ///     Actual power supplied last network update.
+            /// </summary>
             [ViewVariables(VVAccess.ReadWrite)] public float CurrentSupply;
 
-            // The amount of power we WANT to be supplying to match grid load.
+            /// <summary>
+            ///     The amount of power we WANT to be supplying to match grid load.
+            /// </summary>
             [ViewVariables(VVAccess.ReadWrite)] [JsonIgnore]
             public float SupplyRampTarget;
 
-            // Position of the supply ramp.
+            /// <summary>
+            ///     Position of the supply ramp.
+            /// </summary>
             [ViewVariables(VVAccess.ReadWrite)] public float SupplyRampPosition;
 
             [ViewVariables] [JsonIgnore] public NodeId LinkedNetwork;
 
-            // In-tick max supply thanks to ramp. Used during calculations.
-            [JsonIgnore] public float EffectiveMaxSupply;
+            /// <summary>
+            ///     Supply available during a tick. The actual current supply will be less than or equal to this. Used
+            ///     during calculations.
+            /// </summary>
+            [JsonIgnore] public float AvailableSupply;
         }
 
         public sealed class Load
@@ -396,7 +411,15 @@ namespace Content.Server.Power.Pow3r
             [ViewVariables(VVAccess.ReadWrite)] public float MaxChargeRate;
             [ViewVariables(VVAccess.ReadWrite)] public float MaxThroughput; // 0 = infinite cuz imgui
             [ViewVariables(VVAccess.ReadWrite)] public float MaxSupply;
+
+            /// <summary>
+            ///     The batteries supply ramp tolerance. This is an always available supply added to the ramped supply.
+            /// </summary>
+            /// <remarks>
+            ///     Note that this MUST BE GREATER THAN ZERO, otherwise the current battery ramping calculation will not work.
+            /// </remarks>
             [ViewVariables(VVAccess.ReadWrite)] public float SupplyRampTolerance = 5000;
+
             [ViewVariables(VVAccess.ReadWrite)] public float SupplyRampRate = 5000;
             [ViewVariables(VVAccess.ReadWrite)] public float Efficiency = 1;
 
@@ -413,11 +436,11 @@ namespace Content.Server.Power.Pow3r
             [ViewVariables(VVAccess.ReadWrite)] [JsonIgnore]
             public bool LoadingMarked;
 
+            /// <summary>
+            ///     Amount of supply that the battery can provider this tick.
+            /// </summary>
             [ViewVariables(VVAccess.ReadWrite)] [JsonIgnore]
-            public bool LoadingDemandMarked;
-
-            [ViewVariables(VVAccess.ReadWrite)] [JsonIgnore]
-            public float TempMaxSupply;
+            public float AvailableSupply;
 
             [ViewVariables(VVAccess.ReadWrite)] [JsonIgnore]
             public float DesiredPower;
@@ -430,6 +453,13 @@ namespace Content.Server.Power.Pow3r
 
             [ViewVariables(VVAccess.ReadWrite)] [JsonIgnore]
             public NodeId LinkedNetworkDischarging;
+
+            /// <summary>
+            ///  Theoretical maximum effective supply, assuming the network providing power to this battery continues to supply it
+            ///  at the same rate.
+            /// </summary>
+            [ViewVariables]
+            public float MaxEffectiveSupply;
         }
 
         // Readonly breaks json serialization.
@@ -438,21 +468,37 @@ namespace Content.Server.Power.Pow3r
         {
             [ViewVariables] public NodeId Id;
 
+            /// <summary>
+            ///     Power generators
+            /// </summary>
             [ViewVariables] public List<NodeId> Supplies = new();
 
+            /// <summary>
+            ///     Power consumers.
+            /// </summary>
             [ViewVariables] public List<NodeId> Loads = new();
 
-            // "Loading" means the network is connected to the INPUT port of the battery.
-            [ViewVariables] public List<NodeId> BatteriesCharging = new();
+            /// <summary>
+            ///     Batteries that are draining power from this network (connected to the INPUT port of the battery).
+            /// </summary>
+            [ViewVariables] public List<NodeId> BatteryLoads = new();
 
-            // "Supplying" means the network is connected to the OUTPUT port of the battery.
-            [ViewVariables] public List<NodeId> BatteriesDischarging = new();
+            /// <summary>
+            ///     Batteries that are supplying power to this network (connected to the OUTPUT port of the battery).
+            /// </summary>
+            [ViewVariables] public List<NodeId> BatterySupplies = new();
 
-            [ViewVariables] public float LastAvailableSupplySum = 0f;
-            [ViewVariables] public float LastMaxSupplySum = 0f;
+            /// <summary>
+            ///     Available supply, including both normal supplies and batteries.
+            /// </summary>
+            [ViewVariables] public float LastCombinedSupply = 0f;
+
+            /// <summary>
+            ///     Theoretical maximum supply, including both normal supplies and batteries.
+            /// </summary>
+            [ViewVariables] public float LastCombinedMaxSupply = 0f;
 
             [ViewVariables] [JsonIgnore] public int Height;
-            [JsonIgnore] public bool HeightTouched;
         }
     }
 }

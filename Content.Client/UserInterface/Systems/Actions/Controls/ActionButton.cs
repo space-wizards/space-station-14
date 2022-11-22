@@ -1,4 +1,4 @@
-﻿using Content.Client.Actions.UI;
+using Content.Client.Actions.UI;
 using Content.Client.Cooldown;
 using Content.Client.Stylesheets;
 using Content.Shared.Actions;
@@ -274,7 +274,7 @@ public sealed class ActionButton : Control
             return;
         }
 
-        if ((Controller.SelectingTargetFor?.Action == Action || Action.Toggled) && Action.IconOn != null)
+        if ((Controller.SelectingTargetFor == Action || Action.Toggled) && Action.IconOn != null)
             SetActionIcon(Action.IconOn.Frame0());
         else
             SetActionIcon(Action.Icon?.Frame0());
@@ -391,7 +391,7 @@ public sealed class ActionButton : Control
         }
 
         // if it's toggled on, always show the toggled on style (currently same as depressed style)
-        if (Action.Toggled || Controller.SelectingTargetFor == this)
+        if (Action.Toggled || Controller.SelectingTargetFor == Action)
         {
             // when there's a toggle sprite, we're showing that sprite instead of highlighting this slot
             SetOnlyStylePseudoClass(Action.IconOn != null

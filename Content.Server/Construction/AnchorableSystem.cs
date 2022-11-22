@@ -51,9 +51,9 @@ namespace Content.Server.Construction
             component.CancelToken = null;
             var xform = Transform(uid);
 
-            RaiseLocalEvent(uid, new BeforeUnanchoredEvent(args.User, args.Using), false);
+            RaiseLocalEvent(uid, new BeforeUnanchoredEvent(args.User, args.Using));
             xform.Anchored = false;
-            RaiseLocalEvent(uid, new UserUnanchoredEvent(args.User, args.Using), false);
+            RaiseLocalEvent(uid, new UserUnanchoredEvent(args.User, args.Using));
 
             _popup.PopupEntity(Loc.GetString("anchorable-unanchored"), uid, Filter.Pvs(uid, entityManager: EntityManager));
 
@@ -93,9 +93,9 @@ namespace Content.Server.Construction
             if (component.Snap)
                 xform.Coordinates = xform.Coordinates.SnapToGrid(EntityManager, _mapManager);
 
-            RaiseLocalEvent(uid, new BeforeAnchoredEvent(args.User, args.Using), false);
+            RaiseLocalEvent(uid, new BeforeAnchoredEvent(args.User, args.Using));
             xform.Anchored = true;
-            RaiseLocalEvent(uid, new UserAnchoredEvent(args.User, args.Using), false);
+            RaiseLocalEvent(uid, new UserAnchoredEvent(args.User, args.Using));
 
             _popup.PopupEntity(Loc.GetString("anchorable-anchored"), uid, Filter.Pvs(uid, entityManager: EntityManager));
 
@@ -155,16 +155,13 @@ namespace Content.Server.Construction
 
             // Need to cast the event or it will be raised as BaseAnchoredAttemptEvent.
             if (anchoring)
-                RaiseLocalEvent(uid, (AnchorAttemptEvent) attempt, false);
+                RaiseLocalEvent(uid, (AnchorAttemptEvent) attempt);
             else
-                RaiseLocalEvent(uid, (UnanchorAttemptEvent) attempt, false);
+                RaiseLocalEvent(uid, (UnanchorAttemptEvent) attempt);
 
             anchorable.Delay += attempt.Delay;
 
-            if (attempt.Cancelled)
-                return false;
-
-            return true;
+            return !attempt.Cancelled;
         }
 
         /// <summary>

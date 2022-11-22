@@ -1,0 +1,45 @@
+- type: ore
+  id: OreSteel
+  oreEntity: SteelOre1
+  minOreYield: 3
+  maxOreYield: 7
+
+- type: ore
+  id: OreSpaceQuartz
+  oreEntity: SpaceQuartz1
+  minOreYield: 3
+  maxOreYield: 7
+
+- type: ore
+  id: OreGold
+  oreEntity: GoldOre1
+  minOreYield: 2
+  maxOreYield: 5
+
+- type: ore
+  id: OrePlasma
+  oreEntity: PlasmaOre1
+  minOreYield: 2
+  maxOreYield: 5
+
+- type: ore
+  id: OreSilver
+  oreEntity: SilverOre1
+  minOreYield: 1
+  maxOreYield: 3
+
+- type: ore
+  id: OreUranium
+  oreEntity: UraniumOre1
+  minOreYield: 1
+  maxOreYield: 3
+
+- type: weightedRandom
+  id: RandomOreDistributionStandard
+  weights:
+    OreSteel: 10
+    OreSpaceQuartz: 8
+    OreGold: 2
+    OrePlasma: 4
+    OreSilver: 1
+    OreUranium: 1

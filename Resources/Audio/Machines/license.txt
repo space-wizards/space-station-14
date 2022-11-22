@@ -17,3 +17,7 @@ reclaimer_startup.ogg - https://freesound.org/people/cmorris035/sounds/319152/, 
 airlock_open.ogg and airlock_close.ogg are from: https://github.com/tgstation/tgstation/tree/5f5002b21253354c20ea224be3f604d79299b37e/sound/machines
 
 machine_vend_hot_drink.ogg original from https://freesound.org/people/waxsocks/sounds/402603/ CC0 (by waxsocks) and edited
+
+scan_loop.ogg from https://freesound.org/people/steaq/sounds/509249/ CC-0 by steaq
+
+scan_finish.ogg from https://freesound.org/people/pan14/sounds/263133/ CC-0 by pan14

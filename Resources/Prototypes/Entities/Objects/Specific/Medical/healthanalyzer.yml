@@ -10,6 +10,7 @@
     state: analyzer
   - type: ActivatableUI
     key: enum.HealthAnalyzerUiKey.Key
+    closeOnHandDeselect: false
   - type: UserInterface
     interfaces:
       - key: enum.HealthAnalyzerUiKey.Key

@@ -268,7 +268,7 @@ public abstract class SharedActionsSystem : EntitySystem
         return _interactionSystem.InRangeUnobstructed(user, coords, range: action.Range);
     }
 
-    protected void PerformAction(ActionsComponent component, ActionType action, BaseActionEvent? actionEvent, TimeSpan curTime)
+    public void PerformAction(ActionsComponent component, ActionType action, BaseActionEvent? actionEvent, TimeSpan curTime)
     {
         var handled = false;
 
@@ -326,7 +326,7 @@ public abstract class SharedActionsSystem : EntitySystem
 
         var filter = Filter.Pvs(performer).RemoveWhereAttachedEntity(e => e == performer);
 
-        _audio.Play(action.Sound, filter, performer, action.AudioParams);
+        _audio.Play(action.Sound, filter, performer, true, action.AudioParams);
 
         if (string.IsNullOrWhiteSpace(action.Popup))
             return true;

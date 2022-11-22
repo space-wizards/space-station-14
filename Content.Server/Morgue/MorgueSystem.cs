@@ -1,9 +1,9 @@
 using Content.Server.Morgue.Components;
-using Content.Shared.Morgue;
-using Content.Shared.Examine;
-using Robust.Server.GameObjects;
 using Content.Server.Storage.Components;
 using Content.Shared.Body.Components;
+using Content.Shared.Examine;
+using Content.Shared.Morgue;
+using Robust.Server.GameObjects;
 
 namespace Content.Server.Morgue;
 
@@ -61,7 +61,7 @@ public sealed class MorgueSystem : EntitySystem
 
         foreach (var ent in storage.Contents.ContainedEntities)
         {
-            if (!hasMob && HasComp<SharedBodyComponent>(ent))
+            if (!hasMob && HasComp<BodyComponent>(ent))
                 hasMob = true;
 
             if (HasComp<ActorComponent?>(ent))

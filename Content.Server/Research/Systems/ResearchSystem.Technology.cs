@@ -14,7 +14,7 @@ public sealed partial class ResearchSystem
 
     private void OnTechnologyGetState(EntityUid uid, TechnologyDatabaseComponent component, ref ComponentGetState args)
     {
-        args.State = new TechnologyDatabaseState(component.Technologies);
+        args.State = new TechnologyDatabaseState(component.TechnologyIds);
     }
 
     /// <summary>
@@ -26,7 +26,7 @@ public sealed partial class ResearchSystem
     /// <param name="twoway">Whether the other database should be synced against this one too or not.</param>
     public void Sync(TechnologyDatabaseComponent component, TechnologyDatabaseComponent otherDatabase, bool twoway = true)
     {
-        foreach (var tech in otherDatabase.Technologies)
+        foreach (var tech in otherDatabase.TechnologyIds)
         {
             if (!component.IsTechnologyUnlocked(tech)) AddTechnology(component, tech);
         }
@@ -62,7 +62,7 @@ public sealed partial class ResearchSystem
     {
         if (!component.CanUnlockTechnology(technology)) return false;
 
-        AddTechnology(component, technology);
+        AddTechnology(component, technology.ID);
         Dirty(component);
         return true;
     }
@@ -71,8 +71,8 @@ public sealed partial class ResearchSystem
     ///     Adds a technology to the database without checking if it could be unlocked.
     /// </summary>
     /// <param name="technology"></param>
-    public void AddTechnology(TechnologyDatabaseComponent component, TechnologyPrototype technology)
+    public void AddTechnology(TechnologyDatabaseComponent component, string technology)
     {
-        component.Technologies.Add(technology);
+        component.TechnologyIds.Add(technology);
     }
 }

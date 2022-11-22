@@ -13,6 +13,8 @@ using Content.Shared.Item;
 using Content.Shared.Movement.Components;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
+using Content.Shared.Pulling;
+using Content.Shared.Pulling.Components;
 using Content.Shared.Throwing;
 using Content.Shared.Timing;
 using Content.Shared.Verbs;
@@ -51,6 +53,7 @@ namespace Content.Shared.Interaction
         [Dependency] private readonly SharedVerbSystem _verbSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly UseDelaySystem _useDelay = default!;
+        [Dependency] private readonly SharedPullingSystem _pullSystem = default!;
 
         private const CollisionGroup InRangeUnobstructedMask
             = CollisionGroup.Impassable | CollisionGroup.InteractImpassable;
@@ -75,6 +78,8 @@ namespace Content.Shared.Interaction
                     new PointerInputCmdHandler(HandleUseInteraction))
                 .Bind(ContentKeyFunctions.ActivateItemInWorld,
                     new PointerInputCmdHandler(HandleActivateItemInWorld))
+                .Bind(ContentKeyFunctions.TryPullObject,
+                    new PointerInputCmdHandler(HandleTryPullObject))
                 .Register<SharedInteractionSystem>();
         }
 
@@ -115,6 +120,30 @@ namespace Content.Shared.Interaction
             args.Cancel();
         }
 
+        private bool HandleTryPullObject(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
+        {
+            if (!ValidateClientInput(session, coords, uid, out var userEntity))
+            {
+                Logger.InfoS("system.interaction", $"TryPullObject input validation failed");
+                return true;
+            }
+
+            //is this user trying to pull themself?
+            if (userEntity.Value == uid)
+                return false;
+
+            if (Deleted(uid))
+                return false;
+
+            if (!InRangeUnobstructed(userEntity.Value, uid, popup: true))
+                return false;
+
+            if (!TryComp(uid, out SharedPullableComponent? pull))
+                return false;
+
+            _pullSystem.TogglePull(userEntity.Value, pull);
+            return false;
+        }
 
         /// <summary>
         ///     Handles the event were a client uses an item in their inventory or in their hands, either by
@@ -198,7 +227,7 @@ namespace Content.Shared.Interaction
             if (target != null && Deleted(target.Value))
                 return;
 
-            if (TryComp(user, out SharedCombatModeComponent? combatMode) && combatMode.IsInCombatMode)
+            if (!altInteract && TryComp(user, out SharedCombatModeComponent? combatMode) && combatMode.IsInCombatMode)
             {
                 // Eat the input
                 return;
@@ -232,7 +261,11 @@ namespace Content.Shared.Interaction
                 if (target != null)
                 {
                     var ev = new InteractNoHandEvent(user, target.Value);
-                    RaiseLocalEvent(user, ev, true);
+                    RaiseLocalEvent(user, ev);
+
+                    var interactedEv = new InteractedNoHandEvent(target.Value, user);
+                    RaiseLocalEvent(target.Value, interactedEv);
+                    DoContactInteraction(user, target.Value, ev);
                 }
                 return;
             }
@@ -287,6 +320,7 @@ namespace Content.Shared.Interaction
             var message = new InteractHandEvent(user, target);
             RaiseLocalEvent(target, message, true);
             _adminLogger.Add(LogType.InteractHand, LogImpact.Low, $"{ToPrettyString(user):user} interacted with {ToPrettyString(target):target}");
+            DoContactInteraction(user, target, message);
             if (message.Handled)
                 return;
 
@@ -307,6 +341,9 @@ namespace Content.Shared.Interaction
             {
                 var rangedMsg = new RangedInteractEvent(user, used, target.Value, clickLocation);
                 RaiseLocalEvent(target.Value, rangedMsg, true);
+
+                // We contact the USED entity, but not the target.
+                DoContactInteraction(user, used, rangedMsg);
 
                 if (rangedMsg.Handled)
                     return;
@@ -516,9 +553,11 @@ namespace Content.Shared.Interaction
                     range = (originPos.Position - targetPos.Position).Length;
                 }
             }
+            // No fixtures, e.g. wallmounts.
             else
             {
                 originPos = Transform(origin).MapPosition;
+                targetRot = Transform(Transform(other).ParentUid).LocalRotation + otherAngle;
             }
 
             // Do a raycast to check if relevant
@@ -691,6 +730,9 @@ namespace Content.Shared.Interaction
         {
             var ev = new BeforeRangedInteractEvent(user, used, target, clickLocation, canReach);
             RaiseLocalEvent(used, ev);
+
+            // We contact the USED entity, but not the target.
+            DoContactInteraction(user, used, ev);
             return ev.Handled;
         }
 
@@ -719,6 +761,9 @@ namespace Content.Shared.Interaction
             // all interactions should only happen when in range / unobstructed, so no range check is needed
             var interactUsingEvent = new InteractUsingEvent(user, used, target, clickLocation);
             RaiseLocalEvent(target, interactUsingEvent, true);
+            DoContactInteraction(user, used, interactUsingEvent);
+            DoContactInteraction(user, target, interactUsingEvent);
+            DoContactInteraction(used, target, interactUsingEvent);
             if (interactUsingEvent.Handled)
                 return;
 
@@ -734,7 +779,14 @@ namespace Content.Shared.Interaction
                 target = null;
 
             var afterInteractEvent = new AfterInteractEvent(user, used, target, clickLocation, canReach);
-            RaiseLocalEvent(used, afterInteractEvent, false);
+            RaiseLocalEvent(used, afterInteractEvent);
+            DoContactInteraction(user, used, afterInteractEvent);
+            if (canReach)
+            {
+                DoContactInteraction(user, target, afterInteractEvent);
+                DoContactInteraction(used, target, afterInteractEvent);
+            }
+
             if (afterInteractEvent.Handled)
                 return;
 
@@ -743,6 +795,13 @@ namespace Content.Shared.Interaction
 
             var afterInteractUsingEvent = new AfterInteractUsingEvent(user, used, target, clickLocation, canReach);
             RaiseLocalEvent(target.Value, afterInteractUsingEvent);
+
+            DoContactInteraction(user, used, afterInteractUsingEvent);
+            if (canReach)
+            {
+                DoContactInteraction(user, target, afterInteractUsingEvent);
+                DoContactInteraction(used, target, afterInteractUsingEvent);
+            }
         }
 
         #region ActivateItemInWorld
@@ -801,6 +860,7 @@ namespace Content.Shared.Interaction
             if (!activateMsg.Handled)
                 return false;
 
+            DoContactInteraction(user, used, activateMsg);
             _useDelay.BeginDelay(used, delayComponent);
             _adminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}");
             return true;
@@ -838,6 +898,7 @@ namespace Content.Shared.Interaction
             RaiseLocalEvent(used, useMsg, true);
             if (useMsg.Handled)
             {
+                DoContactInteraction(user, used, useMsg);
                 _useDelay.BeginDelay(used, delayComponent);
                 return true;
             }
@@ -945,6 +1006,22 @@ namespace Content.Shared.Interaction
             }
 
             return true;
+        }
+
+        /// <summary>
+        ///     Simple convenience function to raise contact events (disease, forensics, etc).
+        /// </summary>
+        public void DoContactInteraction(EntityUid uidA, EntityUid? uidB, HandledEntityEventArgs? args = null)
+        {
+            if (uidB == null || args?.Handled == false)
+                return;
+
+            // Entities may no longer exist (banana was eaten, or human was exploded)?
+            if (!Exists(uidA) || !Exists(uidB))
+                return;
+
+            RaiseLocalEvent(uidA, new ContactInteractionEvent(uidB.Value));
+            RaiseLocalEvent(uidB.Value, new ContactInteractionEvent(uidA));
         }
     }
 

@@ -27,8 +27,6 @@
   components:
   - type: BodyPart
     partType: Hand
-    size: 1
-    compatibility: Biological
     symmetry: Left
 
 - type: entity
@@ -39,8 +37,6 @@
   components:
   - type: BodyPart
     partType: Leg
-    size: 1
-    compatibility: Biological
 
 - type: entity
   id: FeetAnimal
@@ -50,8 +46,6 @@
   components:
   - type: BodyPart
     partType: Foot
-    size: 1
-    compatibility: Biological
 
 - type: entity
   id: TorsoAnimal
@@ -61,113 +55,5 @@
   components:
   - type: BodyPart
     partType: Torso
-    size: 7
-    compatibility: Biological
-    mechanisms:
-    - OrganAnimalLungs
-    - OrganAnimalStomach
-    - OrganAnimalLiver
-    - OrganAnimalHeart
-    - OrganAnimalKidneys
   - type: Damageable
     damageContainer: Biological
-
-- type: entity
-  id: BaseAnimalOrgan
-  parent: BaseItem
-  abstract: true
-  components:
-  - type: Mechanism
-  - type: Sprite
-    netsync: false
-    sprite: Mobs/Species/Human/organs.rsi
-  - type: StaticPrice
-    price: 50
-
-- type: entity
-  id: OrganAnimalLungs
-  parent: BaseAnimalOrgan
-  name: lungs
-  noSpawn: true
-  components:
-  - type: Mechanism
-    size: 1
-    compatibility: Biological
-  - type: Lung
-  - type: Metabolizer
-    removeEmpty: true
-    solutionOnBody: false
-    solution: "Lung"
-    metabolizerTypes: [ Animal ]
-    groups:
-    - id: Gas
-      rateModifier: 100.0
-
-- type: entity
-  id: OrganAnimalStomach
-  parent: BaseAnimalOrgan
-  name: stomach
-  noSpawn: true
-  components:
-  - type: Mechanism
-    size: 1
-    compatibility: Biological
-  - type: SolutionContainerManager
-    solutions:
-      stomach:
-        maxVol: 100
-  - type: Stomach
-    maxVolume: 10
-  - type: Metabolizer
-    maxReagents: 3
-    metabolizerTypes: [Animal]
-    groups:
-    - id: Food
-    - id: Drink
-
-- type: entity
-  id: OrganAnimalLiver
-  parent: BaseAnimalOrgan
-  name: liver
-  noSpawn: true
-  components:
-  - type: Mechanism
-    size: 1
-    compatibility: Biological
-  - type: Metabolizer
-    maxReagents: 1
-    metabolizerTypes: [Animal]
-    groups:
-    - id: Alcohol
-      rateModifier: 0.1
-
-- type: entity
-  id: OrganAnimalHeart
-  parent: BaseAnimalOrgan
-  name: heart
-  noSpawn: true
-  components:
-  - type: Mechanism
-    size: 1
-    compatibility: Biological
-  - type: Metabolizer
-    maxReagents: 2
-    metabolizerTypes: [Animal]
-    groups:
-    - id: Medicine
-    - id: Poison
-    - id: Narcotic
-
-- type: entity
-  id: OrganAnimalKidneys
-  parent: BaseAnimalOrgan
-  name: kidneys
-  noSpawn: true
-  components:
-  - type: Mechanism
-    size: 1
-    compatibility: Biological
-  - type: Metabolizer
-    maxReagents: 5
-    metabolizerTypes: [Animal]
-    removeEmpty: true

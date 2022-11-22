@@ -94,6 +94,7 @@
       0: Alive
       50: Critical
       100: Dead
+  - type: Stamina
   - type: Destructible
     thresholds:
     - trigger:
@@ -114,8 +115,9 @@
     - TemporaryBlindness
     - Pacified
   - type: Body
-    template: AnimalTemplate
-    preset: AnimalPreset
+    prototype: Animal
+  - type: InjectableSolution
+    solution: chemicals
   - type: Examiner
   - type: MeleeWeapon
     hidden: true
@@ -137,7 +139,6 @@
   - type: Polymorphable
   - type: Pullable
   - type: Buckle
-  - type: DiseaseCarrier
   - type: Recyclable
     safe: false
   - type: StandingState

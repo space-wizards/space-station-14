@@ -250,19 +250,23 @@ namespace Content.Shared.Maps
         /// <summary>
         /// Creates a box the size of a tile, at the same position in the world as the tile.
         /// </summary>
+        [Obsolete]
         private static bool GetWorldTileBox(TileRef turf, out Box2Rotated res)
         {
+            var entManager = IoCManager.Resolve<IEntityManager>();
             var map = IoCManager.Resolve<IMapManager>();
 
             if (map.TryGetGrid(turf.GridUid, out var tileGrid))
             {
+                var gridRot = entManager.GetComponent<TransformComponent>(tileGrid.GridEntityId).WorldRotation;
+
                 // This is scaled to 90 % so it doesn't encompass walls on other tiles.
                 var tileBox = Box2.UnitCentered.Scale(0.9f);
                 tileBox = tileBox.Scale(tileGrid.TileSize);
                 var worldPos = tileGrid.GridTileToWorldPos(turf.GridIndices);
                 tileBox = tileBox.Translated(worldPos);
                 // Now tileBox needs to be rotated to match grid rotation
-                res = new Box2Rotated(tileBox, tileGrid.WorldRotation, worldPos);
+                res = new Box2Rotated(tileBox, gridRot, worldPos);
                 return true;
             }
 

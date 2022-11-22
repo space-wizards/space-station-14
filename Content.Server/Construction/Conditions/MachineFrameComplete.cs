@@ -25,14 +25,16 @@ namespace Content.Server.Construction.Conditions
             if (!entityManager.TryGetComponent(uid, out MachineFrameComponent? machineFrame))
                 return false;
 
-            return EntitySystem.Get<MachineFrameSystem>().IsComplete(machineFrame);
+            return entityManager.EntitySysManager.GetEntitySystem<MachineFrameSystem>().IsComplete(machineFrame);
         }
 
         public bool DoExamine(ExaminedEvent args)
         {
             var entity = args.Examined;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<MachineFrameComponent?>(entity, out var machineFrame))
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+
+            if (!entityManager.TryGetComponent<MachineFrameComponent?>(entity, out var machineFrame))
                 return false;
 
             if (!machineFrame.HasBoard)
@@ -41,18 +43,20 @@ namespace Content.Server.Construction.Conditions
                 return true;
             }
 
-            if (EntitySystem.Get<MachineFrameSystem>().IsComplete(machineFrame)) return false;
+            if (entityManager.EntitySysManager.GetEntitySystem<MachineFrameSystem>().IsComplete(machineFrame))
+                return false;
 
             args.Message.AddMarkup(Loc.GetString("construction-condition-machine-frame-requirement-label") + "\n");
             foreach (var (part, required) in machineFrame.Requirements)
             {
                 var amount = required - machineFrame.Progress[part];
 
-                if(amount == 0) continue;
+                if(amount == 0)
+                    continue;
 
                 args.Message.AddMarkup(Loc.GetString("construction-condition-machine-frame-required-element-entry",
                                            ("amount", amount),
-                                           ("elementName", Loc.GetString(part.ToString())))
+                                           ("elementName", Loc.GetString(part)))
                                        + "\n");
             }
 
@@ -60,11 +64,12 @@ namespace Content.Server.Construction.Conditions
             {
                 var amount = required - machineFrame.MaterialProgress[material];
 
-                if(amount == 0) continue;
+                if(amount == 0)
+                    continue;
 
                 args.Message.AddMarkup(Loc.GetString("construction-condition-machine-frame-required-element-entry",
                                            ("amount", amount),
-                                           ("elementName", Loc.GetString(material.ToString())))
+                                           ("elementName", Loc.GetString(material)))
                                        + "\n");
             }
 
@@ -72,7 +77,8 @@ namespace Content.Server.Construction.Conditions
             {
                 var amount = info.Amount - machineFrame.ComponentProgress[compName];
 
-                if(amount == 0) continue;
+                if(amount == 0)
+                    continue;
 
                 args.Message.AddMarkup(Loc.GetString("construction-condition-machine-frame-required-element-entry",
                                                 ("amount", info.Amount),
@@ -84,7 +90,8 @@ namespace Content.Server.Construction.Conditions
             {
                 var amount = info.Amount - machineFrame.TagProgress[tagName];
 
-                if(amount == 0) continue;
+                if(amount == 0)
+                    continue;
 
                 args.Message.AddMarkup(Loc.GetString("construction-condition-machine-frame-required-element-entry",
                                            ("amount", info.Amount),

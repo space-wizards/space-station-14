@@ -1,13 +1,16 @@
-using Content.Shared.Damage;
-using Content.Server.Body.Components;
+using Content.Server.Body.Systems;
 using Content.Server.MobState;
+using Content.Shared.Body.Components;
+using Content.Shared.Damage;
 
 namespace Content.Server.Salvage;
 
 public sealed class SalvageMobRestrictionsSystem : EntitySystem
 {
+    [Dependency] private readonly BodySystem _bodySystem = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -55,7 +58,7 @@ public sealed class SalvageMobRestrictionsSystem : EntitySystem
             if (bodyQuery.TryGetComponent(target, out var body))
             {
                 // Just because.
-                body.Gib();
+                _bodySystem.GibBody(target, body: body);
             }
             else if (damageQuery.TryGetComponent(target, out var damageableComponent))
             {

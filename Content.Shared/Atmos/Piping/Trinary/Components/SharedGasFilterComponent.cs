@@ -50,9 +50,9 @@ namespace Content.Shared.Atmos.Piping.Trinary.Components
     [Serializable, NetSerializable]
     public sealed class GasFilterSelectGasMessage : BoundUserInterfaceMessage
     {
-        public int ID { get; }
+        public int? ID { get; }
 
-        public GasFilterSelectGasMessage(int id)
+        public GasFilterSelectGasMessage(int? id)
         {
             ID = id;
         }

@@ -160,7 +160,7 @@
     dynamicRecipes:
       - LightTube
       - LightBulb
-      - SheetSteel
+      - SheetSteel #these sheet recipe costs don't scale with upgrades
       - SheetGlass1
       - SheetRGlass
       - SheetPlastic
@@ -185,6 +185,7 @@
       - CryostasisBeaker
       - Dropper
       - Syringe
+      - Implanter
       - PillCanister
       - ChemistryEmptyBottle01
       - Drone
@@ -220,7 +221,8 @@
       - VoiceTrigger
       - PowerCellSmall
       - PowerCellMedium
-      - PowerCellHigh
+      - PowerCellHigh  
+      - RPED
       - ProximitySensor
       - LeftArmBorg
       - RightArmBorg
@@ -250,6 +252,12 @@
     idleState: icon
     runningState: building
     dynamicRecipes:
+      - FirelockElectronics
+      - DoorElectronics
+      - APCElectronics
+      - AirAlarmElectronics
+      - FireAlarmElectronics
+      - MailingUnitElectronics
       - SMESMachineCircuitboard
       - SubstationMachineCircuitboard
       - ThermomachineFreezerMachineCircuitBoard
@@ -271,12 +279,14 @@
       - SurveillanceWirelessCameraAnchoredCircuitboard
       - HydroponicsTrayMachineCircuitboard
       - SolarControlComputerCircuitboard
+      - PowerComputerCircuitboard
       - AutolatheMachineCircuitboard
       - ProtolatheMachineCircuitboard
       - ReagentGrinderMachineCircuitboard
       - MicrowaveMachineCircuitboard
       - UniformPrinterMachineCircuitboard
       - ShuttleConsoleCircuitboard
+      - RadarConsoleCircuitboard
       - CircuitImprinterMachineCircuitboard
       - DawInstrumentMachineCircuitboard
       - CloningConsoleComputerCircuitboard
@@ -289,6 +299,10 @@
       - WallmountSubstationElectronics
       - EmitterCircuitboard
       - GasRecyclerMachineCircuitboard
+      - SeedExtractorMachineCircuitboard
+      - AnalysisComputerCircuitboard
+      - ArtifactAnalyzerMachineCircuitboard
+      - TraversalDistorterMachineCircuitboard
   - type: MaterialStorage
     whitelist:
       tags:
@@ -324,7 +338,10 @@
       - Flash
       - FlashPayload
       - Handcuffs
+      - Zipties
       - Stunbaton
+      - ForensicPad
+      - ClothingEyesGlassesSecurity
       - RiotShield
       - CartridgePistol
       - CartridgeMagnum
@@ -338,6 +355,9 @@
       - CartridgeCaselessRifleRubber
       - CartridgeLightRifleRubber
       - CartridgeRifleRubber
+      - TargetHuman
+      - TargetSyndicate
+      - TargetClown
   - type: MaterialStorage
     whitelist:
       tags:
@@ -368,6 +388,7 @@
   - type: Lathe
     idleState: icon
     runningState: icon
+    machinePartPrintSpeed: Laser
     dynamicRecipes:
       - HandheldHealthAnalyzer
       - ClothingHandsGlovesLatex
@@ -386,6 +407,7 @@
       - CryostasisBeaker
       - Dropper
       - Syringe
+      - Implanter
       - PillCanister
       - BodyBag
       - ChemistryEmptyBottle01
@@ -475,6 +497,12 @@
       - ClothingOuterWinterHoS
       - ClothingOuterWinterQM
       - ClothingOuterWinterRD
+      - ClothingNeckMantleCap
+      - ClothingNeckMantleCE
+      - ClothingNeckMantleCMO
+      - ClothingNeckMantleHOP
+      - ClothingNeckMantleHOS
+      - ClothingNeckMantleRD
       - ClothingOuterWinterMusician
       - ClothingOuterWinterClown
       - ClothingOuterWinterMime

@@ -3,11 +3,13 @@ using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
 using Content.Server.Explosion.Components;
 using Content.Server.NodeContainer.EntitySystems;
+using Content.Server.NPC.Pathfinding;
 using Content.Shared.Camera;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Explosion;
 using Content.Shared.GameTicking;
+using Content.Shared.Inventory;
 using Content.Shared.Throwing;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
@@ -31,6 +33,7 @@ public sealed partial class ExplosionSystem : EntitySystem
 
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly NodeGroupSystem _nodeGroupSystem = default!;
+    [Dependency] private readonly PathfindingSystem _pathfindingSystem = default!;
     [Dependency] private readonly SharedCameraRecoilSystem _recoilSystem = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
@@ -63,6 +66,10 @@ public sealed partial class ExplosionSystem : EntitySystem
         SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoved);
         SubscribeLocalEvent<GridStartupEvent>(OnGridStartup);
         SubscribeLocalEvent<ExplosionResistanceComponent, GetExplosionResistanceEvent>(OnGetResistance);
+
+        // as long as explosion-resistance mice are never added, this should be fine (otherwise a mouse-hat will transfer it's power to the wearer).
+        SubscribeLocalEvent<ExplosionResistanceComponent, InventoryRelayedEvent<GetExplosionResistanceEvent>>((e, c, ev) => OnGetResistance(e, c, ev.Args));
+
         SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
 
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnReset);
@@ -80,14 +87,16 @@ public sealed partial class ExplosionSystem : EntitySystem
     {
         _explosionQueue.Clear();
         _activeExplosion = null;
-        _nodeGroupSystem.Snoozing = false;
+        _nodeGroupSystem.PauseUpdating = false;
+        _pathfindingSystem.PauseUpdating = false;
     }
 
     public override void Shutdown()
     {
         base.Shutdown();
         UnsubscribeCvars();
-        _nodeGroupSystem.Snoozing = false;
+        _nodeGroupSystem.PauseUpdating = false;
+        _pathfindingSystem.PauseUpdating = false;
     }
 
     private void OnGetResistance(EntityUid uid, ExplosionResistanceComponent component, GetExplosionResistanceEvent args)
@@ -310,7 +319,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         Dictionary<EntityUid, Dictionary<int, List<Vector2i>>> tileLists = new();
         foreach (var grid in gridData)
         {
-            tileLists.Add(grid.Grid.GridEntityId, grid.TileLists);
+            tileLists.Add(grid.Grid.Owner, grid.TileLists);
         }
 
         return new ExplosionEvent(_explosionCounter, epicenter, id, iterationIntensity, spaceTiles, tileLists, spaceMatrix, spaceData?.TileSize ?? DefaultTileSize);

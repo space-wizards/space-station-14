@@ -87,3 +87,6 @@ reagent-desc-oculine = Heals eye damage.
 
 reagent-name-ethylredoxrazine = ethylredoxrazine
 reagent-desc-ethylredoxrazine = Neutralises the effects of alcohol in the blood stream. Though it is commonly needed, it is rarely requested.
+
+reagent-name-cognizine = cognizine
+reagent-desc-cognizine = A mysterious chemical which is able to make any non-sentient creature sentient.

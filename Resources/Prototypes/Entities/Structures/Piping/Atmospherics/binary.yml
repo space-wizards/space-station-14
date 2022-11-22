@@ -46,6 +46,7 @@
           False: { state: pumpPressure }
   - type: PipeColorVisuals
   - type: GasPressurePump
+    enabled: false
   - type: UserInterface
     interfaces:
       - key: enum.GasPressurePumpUiKey.Key
@@ -86,6 +87,7 @@
             False: { state: pumpVolume }
     - type: PipeColorVisuals
     - type: GasVolumePump
+      enabled: false
     - type: UserInterface
       interfaces:
         - key: enum.GasVolumePumpUiKey.Key

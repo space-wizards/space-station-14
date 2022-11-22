@@ -13,7 +13,7 @@
 - type: listing
   id: UplinkRevolverPython
   name: Python
-  description: A loud and deadly revolver. Uses .40 Magnum.
+  description: A loud and deadly revolver. Uses .45 Magnum.
   productEntity: WeaponRevolverPython
   cost:
     Telecrystal: 8
@@ -239,6 +239,16 @@
   categories:
   - UplinkUtility
 
+- type: listing
+  id: UplinkStealthBox
+  name: Stealth Box
+  description: A box outfitted with stealth technology, sneak around with this and don't move too fast now!
+  productEntity: StealthBox
+  cost:
+    Telecrystal: 10
+  categories:
+    - UplinkUtility
+
 #TODO: Increase the price of this to 4-5/remove it when we get encrpytion keys
 - type: listing
   id: UplinkHeadset
@@ -269,6 +279,60 @@
     Telecrystal: 5
   categories:
   - UplinkUtility
+
+# Utility-Implants
+
+- type: listing
+  id: UplinkStorageImplanter
+  icon: /Textures/Clothing/Back/Backpacks/backpack.rsi/icon.png
+  name: Storage Implanter
+  description: Hide goodies inside of yourself with new bluespace technology!
+  productEntity: StorageImplanter
+  cost:
+    Telecrystal: 12
+  categories:
+    - UplinkUtility
+  conditions:
+    - !type:StoreWhitelistCondition
+      blacklist:
+        tags:
+          - NukeOpsUplink
+
+- type: listing
+  id: UplinkFreedomImplanter
+  icon: /Textures/Actions/Implants/implants.rsi/freedom.png
+  name: Freedom Implanter
+  description: Get away from those nasty sec officers with this three use implant!
+  productEntity: FreedomImplanter
+  cost:
+    Telecrystal: 10
+  categories:
+    - UplinkUtility
+  conditions:
+    - !type:StoreWhitelistCondition
+      blacklist:
+        tags:
+          - NukeOpsUplink
+
+- type: listing
+  id: UplinkMacroBombImplanter
+  icon: /Textures/Actions/Implants/implants.rsi/explosive.png
+  name: Macro Bomb Implanter
+  description: Inject this and on death you'll create a large explosion. Huge team casualty cost, use at own risk. Replaces internal micro bomb.
+  productEntity: MacroBombImplanter
+  cost:
+    Telecrystal: 25
+  categories:
+    - UplinkUtility
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - NukeOpsUplink
+    - !type:BuyerWhitelistCondition
+      blacklist:
+        components:
+          - SurplusBundle
 
 # Bundles
 
@@ -366,6 +430,7 @@
 
 - type: listing
   id: UplinkToolbox
+  description: A full compliment of tools for the mechanically inclined traitor. Includes a pair of insulated combat gloves, syndicate gas mask and a shoulder holster.
   productEntity: ToolboxSyndicateFilled
   cost:
     Telecrystal: 2
@@ -374,6 +439,7 @@
 
 - type: listing
   id: UplinkSyndicateJawsOfLife
+  description: A combined prying and cutting tool. Useful for entering the station or its departments.
   productEntity: SyndicateJawsOfLife
   cost:
     Telecrystal: 2
@@ -535,14 +601,6 @@
   - UplinkMisc
 
 - type: listing
-  id: UplinkRevolverCapGun
-  productEntity: RevolverCapGun
-  cost:
-    Telecrystal: 4
-  categories:
-  - UplinkMisc
-
-- type: listing
   id: UplinkCigarettes
   productEntity: CigPackSyndicate
   cost:
@@ -611,6 +669,14 @@
  # Pointless
 
 - type: listing
+  id: UplinkRevolverCapGun
+  productEntity: RevolverCapGun
+  cost:
+    Telecrystal: 4
+  categories:
+  - UplinkPointless
+
+- type: listing
   id: UplinkSyndicateStamp
   productEntity: RubberStampSyndicate
   cost:
@@ -624,7 +690,7 @@
   description: UwU
   productEntity: ClothingHeadHatCatEars
   cost:
-    Telecrystal: 21
+    Telecrystal: 26
   categories:
   - UplinkPointless
 
@@ -647,6 +713,8 @@
 - type: listing
   id: UplinkCostumeClown
   productEntity: ClothingBackpackDuffelSyndicateCostumeClown
+  name: clown costume duffel bag
+  description: Contains a complete Clown outfit. Includes PDA and service radio.
   cost:
     Telecrystal: 4
   categories:

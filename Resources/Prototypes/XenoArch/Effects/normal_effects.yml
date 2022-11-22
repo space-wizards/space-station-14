@@ -1,0 +1,317 @@
+﻿- type: artifactEffect
+  id: EffectBadFeeling
+  targetDepth: 0
+  effectHint: artifact-effect-hint-mental
+  components:
+  - type: TelepathicArtifact
+    messages:
+    - badfeeling-artifact-1
+    - badfeeling-artifact-2
+    - badfeeling-artifact-3
+    - badfeeling-artifact-4
+    - badfeeling-artifact-5
+    - badfeeling-artifact-6
+    - badfeeling-artifact-7
+    - badfeeling-artifact-8
+    - badfeeling-artifact-9
+    - badfeeling-artifact-10
+    - badfeeling-artifact-11
+    - badfeeling-artifact-12
+    - badfeeling-artifact-13
+    - badfeeling-artifact-14
+    - badfeeling-artifact-15
+    drastic:
+    - badfeeling-artifact-drastic-1
+    - badfeeling-artifact-drastic-2
+    - badfeeling-artifact-drastic-3
+    - badfeeling-artifact-drastic-4
+    - badfeeling-artifact-drastic-5
+    - badfeeling-artifact-drastic-6
+
+- type: artifactEffect
+  id: EffectGoodFeeling
+  targetDepth: 0
+  effectHint: artifact-effect-hint-mental
+  components:
+  - type: TelepathicArtifact
+    messages:
+    - goodfeeling-artifact-1
+    - goodfeeling-artifact-2
+    - goodfeeling-artifact-3
+    - goodfeeling-artifact-4
+    - goodfeeling-artifact-5
+    - goodfeeling-artifact-6
+    - goodfeeling-artifact-7
+    - goodfeeling-artifact-8
+    - goodfeeling-artifact-9
+    - goodfeeling-artifact-10
+    - goodfeeling-artifact-11
+    - goodfeeling-artifact-12
+    - goodfeeling-artifact-13
+    - goodfeeling-artifact-14
+    drastic:
+    - goodfeeling-artifact-drastic-1
+    - goodfeeling-artifact-drastic-2
+    - goodfeeling-artifact-drastic-3
+    - goodfeeling-artifact-drastic-4
+    - goodfeeling-artifact-drastic-5
+    - goodfeeling-artifact-drastic-6
+
+- type: artifactEffect
+  id: EffectJunkSpawn
+  targetDepth: 0
+  effectHint: artifact-effect-hint-creation
+  components:
+  - type: SpawnArtifact
+    maxSpawns: 10
+    consistentSpawns: false
+    possiblePrototypes:
+    - FoodPacketSyndiTrash
+    - FoodPacketSemkiTrash
+    - FoodPacketBoritosTrash
+    - FoodPacketCheesieTrash
+    - FoodPacketChipsTrash
+    - FoodPacketChocolateTrash
+    - FoodPacketChowMeinTrash
+    - FoodPacketEnergyTrash
+    - FoodPacketPopcornTrash
+    - FoodPacketRaisinsTrash
+    - RandomInstruments
+    - ToySpawner
+
+- type: artifactEffect
+  id: EffectLightFlicker
+  targetDepth: 0
+  effectHint: artifact-effect-hint-electrical-interference
+  components:
+  - type: LightFlickerArtifact
+
+- type: artifactEffect
+  id: EffectPointLight
+  targetDepth: 0
+  components:
+  - type: PointLight
+    radius: 2
+    energy: 5
+    color: "#27153b"
+
+- type: artifactEffect #bornana
+  id: EffectBananaSpawn
+  targetDepth: 0
+  effectHint: artifact-effect-hint-creation
+  components:
+  - type: SpawnArtifact
+    maxSpawns: 20
+    possiblePrototypes:
+    - FoodBanana
+
+- type: artifactEffect
+  id: EffectCold
+  targetDepth: 1
+  effectHint: artifact-effect-hint-consumption
+  components:
+  - type: TemperatureArtifact
+    targetTemp: 150
+
+- type: artifactEffect
+  id: EffectThrow
+  targetDepth: 1
+  effectHint: artifact-effect-hint-environment
+  components:
+  - type: ThrowArtifact
+
+- type: artifactEffect
+  id: EffectFoamMild
+  targetDepth: 1
+  effectHint: artifact-effect-hint-biochemical
+  components:
+  - type: FoamArtifact
+    reagents:
+    - Oxygen
+    - Plasma
+    - Blood
+    - SpaceCleaner
+    - Nutriment
+    - SpaceLube
+    - Ethanol
+    - Mercury
+    - VentCrud
+    - WeldingFuel
+
+- type: artifactEffect
+  id: EffectInstrumentSpawn
+  targetDepth: 1
+  effectHint: artifact-effect-hint-creation
+  components:
+  - type: SpawnArtifact
+    maxSpawns: 5
+    possiblePrototypes:
+    - RandomInstruments
+
+- type: artifactEffect
+  id: EffectAngryCarpSpawn
+  targetDepth: 2
+  effectHint: artifact-effect-hint-environment
+  components:
+  - type: SpawnArtifact
+    maxSpawns: 5
+    possiblePrototypes:
+    - MobCarpHolo
+    - MobCarpMagic
+
+- type: artifactEffect
+  id: EffectRadiate
+  targetDepth: 2
+  effectHint: artifact-effect-hint-release
+  components:
+  - type: RadiationSource
+    intensity: 2
+
+- type: artifactEffect
+  id: EffectKnock
+  targetDepth: 2
+  effectHint: artifact-effect-hint-electrical-interference
+  components:
+  - type: KnockArtifact
+
+- type: artifactEffect
+  id: EffectShatterWindows
+  targetDepth: 2
+  effectHint: artifact-effect-hint-environment
+  components:
+  - type: DamageNearbyArtifact
+    damageChance: 0.75
+    whitelist:
+      tags:
+      - Window
+    damage:
+      types:
+        Structural: 100
+
+- type: artifactEffect
+  id: EffectGas
+  targetDepth: 2
+  effectHint: artifact-effect-hint-environment
+  components:
+  - type: GasArtifact
+
+- type: artifactEffect
+  id: EffectBlink
+  targetDepth: 2
+  effectHint: artifact-effect-hint-displacement
+  components:
+  - type: RandomTeleportArtifact
+
+- type: artifactEffect
+  id: EffectMaterialSpawn
+  targetDepth: 3
+  effectHint: artifact-effect-hint-creation
+  components:
+  - type: SpawnArtifact
+    maxSpawns: 5
+    consistentSpawn: false
+    possiblePrototypes:
+    - SheetGlass
+    - SheetSteel
+    - SheetPlastic
+
+- type: artifactEffect
+  id: EffectShuffle
+  targetDepth: 3
+  effectHint: artifact-effect-hint-displacement
+  components:
+  - type: ShuffleArtifact
+  - type: TelepathicArtifact
+    range: 7.5
+    messages:
+    - shuffle-artifact-popup
+
+- type: artifactEffect
+  id: EffectT3PartsSpawn
+  targetDepth: 3
+  effectHint: artifact-effect-hint-creation
+  components:
+  - type: SpawnArtifact
+    maxSpawns: 10
+    consistentSpawn: false
+    possiblePrototypes:
+    - SuperCapacitorStockPart
+    - PhasicScanningModuleStockPart
+    - PicoManipulatorStockPart
+    - UltraHighPowerMicroLaserStockPart
+    - SuperMatterBinStockPart
+
+- type: artifactEffect
+  id: EffectDisease
+  targetDepth: 3
+  effectHint: artifact-effect-hint-biochemical
+  components:
+  - type: DiseaseArtifact
+    diseasePrototypes:
+    - VanAusdallsRobovirus
+    - OwOnavirus
+    - BleedersBite
+    - Ultragigacancer
+    - MemeticAmirmir
+    - TongueTwister
+    - AMIV
+
+- type: artifactEffect
+  id: EffectRareMaterialSpawn
+  targetDepth: 3
+  effectHint: artifact-effect-hint-creation
+  components:
+  - type: SpawnArtifact
+    maxSpawns: 15
+    consistentSpawn: false
+    possiblePrototypes:
+    - SilverOre1
+    - PlasmaOre1
+    - GoldOre1
+    - UraniumOre1
+
+- type: artifactEffect
+  id: EffectHeat
+  targetDepth: 3
+  effectHint: artifact-effect-hint-release
+  components:
+  - type: TemperatureArtifact
+    targetTemp: 450
+
+- type: artifactEffect
+  id: EffectFoamDangerous
+  targetDepth: 3
+  effectHint: artifact-effect-hint-biochemical
+  components:
+  - type: FoamArtifact
+    spreadDuration: 0.5
+    duration: 5
+    reagents:
+    - Tritium
+    - Plasma
+    - SulfuricAcid
+    - SpaceDrugs
+    - Nocturine
+    - MuteToxin
+    - Napalm
+    - CarpoToxin
+    - ChloralHydrate
+    - Mold
+    - Amatoxin
+
+- type: artifactEffect
+  id: EffectIgnite
+  targetDepth: 3
+  effectHint: artifact-effect-hint-release
+  components:
+  - type: IgniteArtifact
+
+- type: artifactEffect
+  id: EffectSingulo
+  targetDepth: 100
+  effectHint: artifact-effect-hint-destruction
+  components:
+  - type: SpawnArtifact
+    maxSpawns: 1
+    possiblePrototypes:
+    - Singularity

@@ -3,7 +3,7 @@ using Content.Server.Body.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Administration.Logs;
-using Content.Shared.Body.Components;
+using Content.Shared.Body.Organ;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
@@ -18,6 +18,7 @@ namespace Content.Server.Body.Systems
     [UsedImplicitly]
     public sealed class MetabolizerSystem : EntitySystem
     {
+        [Dependency] private readonly BodySystem _bodySystem = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
@@ -37,30 +38,27 @@ namespace Content.Server.Body.Systems
             {
                 _solutionContainerSystem.EnsureSolution(uid, component.SolutionName);
             }
-            else
+            else if (CompOrNull<OrganComponent>(uid)?.Body is { } body)
             {
-                if (EntityManager.TryGetComponent<MechanismComponent>(uid, out var mech))
-                {
-                    if (mech.Body != null)
-                    {
-                        _solutionContainerSystem.EnsureSolution((mech.Body).Owner, component.SolutionName);
-                    }
-                }
+                _solutionContainerSystem.EnsureSolution(body, component.SolutionName);
             }
         }
 
-        private void OnApplyMetabolicMultiplier(EntityUid uid, MetabolizerComponent component, ApplyMetabolicMultiplierEvent args)
+        private void OnApplyMetabolicMultiplier(EntityUid uid, MetabolizerComponent component,
+            ApplyMetabolicMultiplierEvent args)
         {
             if (args.Apply)
             {
                 component.UpdateFrequency *= args.Multiplier;
                 return;
             }
+
             component.UpdateFrequency /= args.Multiplier;
             // Reset the accumulator properly
             if (component.AccumulatedFrametime >= component.UpdateFrequency)
                 component.AccumulatedFrametime = component.UpdateFrequency;
         }
+
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
@@ -78,33 +76,27 @@ namespace Content.Server.Body.Systems
             }
         }
 
-        private void TryMetabolize(EntityUid uid, MetabolizerComponent? meta=null, MechanismComponent? mech=null)
+        private void TryMetabolize(EntityUid uid, MetabolizerComponent? meta = null, OrganComponent? organ = null)
         {
             if (!Resolve(uid, ref meta))
                 return;
 
-            Resolve(uid, ref mech, false);
+            Resolve(uid, ref organ, false);
 
             // First step is get the solution we actually care about
             Solution? solution = null;
             EntityUid? solutionEntityUid = null;
-            EntityUid? bodyEntityUid = mech?.Body?.Owner;
 
             SolutionContainerManagerComponent? manager = null;
 
             if (meta.SolutionOnBody)
             {
-                if (mech != null)
+                if (organ?.Body is { } body)
                 {
-                    var body = mech.Body;
-
-                    if (body != null)
-                    {
-                        if (!Resolve((body).Owner, ref manager, false))
-                            return;
-                        _solutionContainerSystem.TryGetSolution((body).Owner, meta.SolutionName, out solution, manager);
-                        solutionEntityUid = body.Owner;
-                    }
+                    if (!Resolve(body, ref manager, false))
+                        return;
+                    _solutionContainerSystem.TryGetSolution(body, meta.SolutionName, out solution, manager);
+                    solutionEntityUid = body;
                 }
             }
             else
@@ -133,7 +125,8 @@ namespace Content.Server.Body.Systems
                 if (proto.Metabolisms == null)
                 {
                     if (meta.RemoveEmpty)
-                        _solutionContainerSystem.TryRemoveReagent(solutionEntityUid.Value, solution, reagent.ReagentId, FixedPoint2.New(1));
+                        _solutionContainerSystem.TryRemoveReagent(solutionEntityUid.Value, solution, reagent.ReagentId,
+                            FixedPoint2.New(1));
                     continue;
                 }
 
@@ -170,7 +163,7 @@ namespace Content.Server.Body.Systems
                             continue;
                     }
 
-                    var actualEntity = bodyEntityUid != null ? bodyEntityUid.Value : solutionEntityUid.Value;
+                    var actualEntity = organ?.Body ?? solutionEntityUid.Value;
                     var args = new ReagentEffectArgs(actualEntity, (meta).Owner, solution, proto, mostToRemove,
                         EntityManager, null, entry);
 
@@ -192,16 +185,20 @@ namespace Content.Server.Body.Systems
 
                 // remove a certain amount of reagent
                 if (mostToRemove > FixedPoint2.Zero)
-                    _solutionContainerSystem.TryRemoveReagent(solutionEntityUid.Value, solution, reagent.ReagentId, mostToRemove);
+                    _solutionContainerSystem.TryRemoveReagent(solutionEntityUid.Value, solution, reagent.ReagentId,
+                        mostToRemove);
             }
         }
     }
+
     public sealed class ApplyMetabolicMultiplierEvent : EntityEventArgs
     {
         // The entity whose metabolism is being modified
-        public  EntityUid Uid;
+        public EntityUid Uid;
+
         // What the metabolism's update rate will be multiplied by
-        public  float Multiplier;
+        public float Multiplier;
+
         // Apply this multiplier or ignore / reset it?
         public bool Apply;
     }

@@ -1,0 +1,43 @@
+﻿- type: body
+  id: Slime
+  name: "slime"
+  root: torso
+  slots:
+    head:
+      part: HeadSlime
+      connections:
+      - torso
+    torso:
+      part: TorsoSlime
+      connections:
+      - left arm
+      - right arm
+      - left leg
+      - right leg
+      organs:
+        core: SentientSlimeCore
+        lungs: OrganSlimeLungs
+    right arm:
+      part: RightArmSlime
+      connections:
+      - right hand
+    left arm:
+      part: LeftArmSlime
+      connections:
+      - left hand
+    right hand:
+      part: RightHandSlime
+    left hand:
+      part: LeftHandSlime
+    right leg:
+      part: RightLegSlime
+      connections:
+      - right foot
+    left leg:
+      part: LeftLegSlime
+      connections:
+      - left foot
+    right foot:
+      part: RightFootSlime
+    left foot:
+      part: LeftFootSlime

@@ -1,6 +1,8 @@
 using System.Linq;
 using Content.Client.UserInterface.Systems.MenuBar.Widgets;
 using Content.Shared.Construction.Prototypes;
+using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
 using Robust.Client.Placement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -67,7 +69,6 @@ namespace Content.Client.Construction.UI
         /// <summary>
         /// Constructs a new instance of <see cref="ConstructionMenuPresenter" />.
         /// </summary>
-        /// <param name="gameHud">GUI that is being presented to.</param>
         public ConstructionMenuPresenter()
         {
             // This is a lot easier than a factory
@@ -203,8 +204,9 @@ namespace Content.Client.Construction.UI
 
         private void PopulateInfo(ConstructionPrototype prototype)
         {
+            var spriteSys = _systemManager.GetEntitySystem<SpriteSystem>();
             _constructionView.ClearRecipeInfo();
-            _constructionView.SetRecipeInfo(prototype.Name, prototype.Description, prototype.Icon.Frame0(), prototype.Type != ConstructionType.Item);
+            _constructionView.SetRecipeInfo(prototype.Name, prototype.Description, spriteSys.Frame0(prototype.Icon), prototype.Type != ConstructionType.Item);
 
             var stepList = _constructionView.RecipeStepList;
             GenerateStepList(prototype, stepList);
@@ -215,19 +217,24 @@ namespace Content.Client.Construction.UI
             if (_constructionSystem?.GetGuide(prototype) is not { } guide)
                 return;
 
+            var spriteSys = _systemManager.GetEntitySystem<SpriteSystem>();
+
             foreach (var entry in guide.Entries)
             {
                 var text = entry.Arguments != null
                     ? Loc.GetString(entry.Localization, entry.Arguments) : Loc.GetString(entry.Localization);
 
                 if (entry.EntryNumber is {} number)
+                {
                     text = Loc.GetString("construction-presenter-step-wrapper",
                         ("step-number", number), ("text", text));
+                }
 
                 // The padding needs to be applied regardless of text length... (See PadLeft documentation)
                 text = text.PadLeft(text.Length + entry.Padding);
 
-                stepList.AddItem(text, entry.Icon?.Frame0(), false);
+                var icon = entry.Icon != null ? spriteSys.Frame0(entry.Icon) : Texture.Transparent;
+                stepList.AddItem(text, icon, false);
             }
         }
 
@@ -281,7 +288,7 @@ namespace Content.Client.Construction.UI
         {
             if (_selected == null || _selected.Type != ConstructionType.Structure) return;
 
-            var constructSystem = EntitySystem.Get<ConstructionSystem>();
+            var constructSystem = _systemManager.GetEntitySystem<ConstructionSystem>();
 
             _placementManager.BeginPlacing(new PlacementInformation()
             {

@@ -1,6 +1,10 @@
 ﻿- type: trait
   id: UncontrollableSneezing
-  name: Runny nose
+  name: trait-sneezing-name
+  description: trait-sneezing-desc
+  whitelist:
+    components:
+      - DiseaseCarrier
   components:
     - type: UncontrollableSnough
       snoughSound:

@@ -80,8 +80,7 @@
       - map: [ "pocket1" ]
       - map: [ "pocket2" ]
   - type: Body
-    template: HumanoidTemplate
-    preset: VoxPreset
+    prototype: Vox
   # Vox nitrogen stuff is handled in their metabolism
   - type: Respirator
     damage:
@@ -110,6 +109,5 @@
   - type: Humanoid
     species: Vox
   - type: Body
-    template: HumanoidTemplate
-    preset: VoxPreset
+    prototype: Vox
 

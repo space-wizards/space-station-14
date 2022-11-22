@@ -18,6 +18,7 @@
   - type: Paper
   - type: ActivatableUI
     key: enum.PaperUiKey.Key
+    closeOnHandDeselect: false
   - type: UserInterface
     interfaces:
     - key: enum.PaperUiKey.Key
@@ -29,6 +30,7 @@
     - Document
   - type: Appearance
   - type: PaperVisuals
+  - type: Recyclable
 
 - type: entity
   parent: Paper
@@ -75,6 +77,7 @@
     sprite: Objects/Misc/bureaucracy.rsi
     heldPrefix: pen
     size: 2
+  - type: Recyclable
 
 - type: entity
   name: Cybersun pen

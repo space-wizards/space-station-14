@@ -167,18 +167,18 @@
 
 - type: entity
   parent: DrinkBottleBaseFull
-  id: DrinkKahluaBottleFull
-  name: kahlua bottle
-  description: A widely known, Mexican coffee-flavoured liqueur. In production since 1936, HONK.
+  id: DrinkCoffeeLiqueurBottleFull
+  name: coffee liqueur bottle
+  description: The great taste of coffee with none of the benifits.
   components:
   - type: SolutionContainerManager
     solutions:
       drink:
         reagents:
-        - ReagentId: Kahlua
+        - ReagentId: CoffeeLiqueur
           Quantity: 100
   - type: Sprite
-    sprite: Objects/Consumable/Drinks/kahluabottle.rsi
+    sprite: Objects/Consumable/Drinks/coffeeliqueurbottle.rsi
 
 - type: entity
   parent: DrinkBottleBaseFull

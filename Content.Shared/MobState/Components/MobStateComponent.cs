@@ -23,7 +23,6 @@ namespace Content.Shared.MobState.Components
         ///     to or higher than the int key, but lower than the next threshold.
         ///     Ordered from lowest to highest.
         /// </summary>
-        [ViewVariables]
         [DataField("thresholds")]
         public readonly SortedDictionary<int, DamageState> _lowestToHighestStates = new();
 

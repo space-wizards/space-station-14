@@ -27,9 +27,9 @@ namespace Content.Shared.Construction.Conditions
             return result;
         }
 
-        public ConstructionGuideEntry? GenerateGuideEntry()
+        public ConstructionGuideEntry GenerateGuideEntry()
         {
-            return new ConstructionGuideEntry()
+            return new ConstructionGuideEntry
             {
                 Localization = "construction-guide-condition-empty-or-window-valid-in-tile"
             };

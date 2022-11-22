@@ -94,8 +94,7 @@
     prototype: UniformPrinter
     requirements:
       MatterBin: 1
-      Manipulator: 1
-      Laser: 1
+      Laser: 2
 
 - type: entity
   id: VaccinatorMachineCircuitboard
@@ -131,6 +130,39 @@
       Laser: 2
     materialRequirements:
       Cable: 5
+
+- type: entity
+  id: ArtifactAnalyzerMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: artifact analyzer machine board
+  description: A machine printed circuit board for an artifact analyzer
+  components:
+    - type: Sprite
+      state: science
+    - type: MachineBoard
+      prototype: MachineArtifactAnalyzer
+      requirements:
+        ScanningModule: 3
+        Capacitor: 1
+      materialRequirements:
+        Glass: 5
+
+- type: entity
+  id: TraversalDistorterMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: traversal distorter machine board
+  description: A machine printed circuit board for a traversal distorter
+  components:
+    - type: Sprite
+      state: science
+    - type: MachineBoard
+      prototype: MachineTraversalDistorter
+      requirements:
+        ScanningModule: 1
+        Capacitor: 2
+      materialRequirements:
+        Steel: 5 
+        Cable: 1
 
 - type: entity
   id: ThermomachineFreezerMachineCircuitBoard
@@ -182,10 +214,10 @@
     prototype: PortableScrubber
     requirements:
       MatterBin: 3
-      Laser: 2
-      ScanningModule: 1
+      Manipulator: 2
     materialRequirements:
       Cable: 5
+      Glass: 2
 
 - type: entity
   id: CloningPodMachineCircuitboard
@@ -215,11 +247,10 @@
     - type: MachineBoard
       prototype: MedicalScanner
       requirements:
-        ScanningModule: 1
-        Manipulator: 1
-        Laser: 1
+        ScanningModule: 2
+        Capacitor: 1
       materialRequirements:
-        Glass: 1
+        Glass: 5
         Cable: 1
 
 - type: entity
@@ -307,6 +338,24 @@
           Amount: 2
           DefaultPrototype: Beaker
           ExamineName: Glass Beaker
+
+- type: entity
+  id: SeedExtractorMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: seed extractor machine board
+  description: A machine printed circuit board for a seed extractor
+  components:
+    - type: Sprite
+      state: service
+    - type: MachineBoard
+      prototype: SeedExtractor
+      requirements:
+        Manipulator: 2
+        Capacitor: 1
+      materialRequirements:
+        # replacing the console screen
+        Glass: 1
+        Cable: 2
 
 - type: entity
   id: SMESMachineCircuitboard
@@ -408,9 +457,9 @@
     - type: MachineBoard
       prototype: KitchenReagentGrinder
       requirements:
-        Laser: 1
-        ScanningModule: 1
+        Capacitor: 1
         MatterBin: 2
+        Manipulator: 2
       tagRequirements:
         GlassBeaker:
           Amount: 1
@@ -467,7 +516,7 @@
     - type: MachineBoard
       prototype: KitchenMicrowave
       requirements:
-        MatterBin: 1
+        Capacitor: 1
         Laser: 1
       materialRequirements:
         Glass: 2
@@ -550,6 +599,9 @@
   components:
   - type: MachineBoard
     prototype: GasRecycler
+    requirements:
+      Laser: 2
+      Manipulator: 2
     materialRequirements:
       Steel: 10
-      Plasma: 10
+      Plasma: 5

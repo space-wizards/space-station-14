@@ -49,8 +49,7 @@
         Slash: 12
         Piercing: 8
   - type: Body
-    template: AnimalTemplate
-    preset: RatPreset
+    prototype: Rat
   - type: Appearance
   - type: DamageStateVisuals
     rotate: true
@@ -198,6 +197,8 @@
       0: Alive
       40: Critical
       60: Dead
+  - type: Stamina
+    excess: 60
   - type: MeleeWeapon
     hidden: true
     angle: 0
@@ -207,8 +208,7 @@
         Slash: 5
         Piercing: 3
   - type: Body
-    template: AnimalTemplate
-    preset: RatPreset
+    prototype: Rat
   - type: Appearance
   - type: DamageStateVisuals
     rotate: true

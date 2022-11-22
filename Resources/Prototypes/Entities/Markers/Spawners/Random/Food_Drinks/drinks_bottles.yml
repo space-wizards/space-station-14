@@ -1,0 +1,38 @@
+- type: entity
+  id: RandomDrinkBottle
+  name: random drink spawner
+  suffix: Bottle
+  parent: MarkerBase
+  placement:
+    mode: AlignTileAny
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - texture: Objects/Consumable/Drinks/ginbottle.rsi/icon.png 
+  - type: RandomSpawner
+  #small item
+    prototypes:
+      - DrinkAbsintheBottleFull
+      - DrinkBlueCuracaoBottleFull
+      - DrinkCognacBottleFull
+      - DrinkGrenadineBottleFull
+      - DrinkGinBottleFull
+      - DrinkGoldschlagerBottleFull
+      - DrinkCoffeeLiqueurBottleFull
+      - DrinkMelonLiquorBottleFull
+      - DrinkPatronBottleFull
+      - DrinkRumBottleFull
+      - DrinkTequilaBottleFull
+      - DrinkVermouthBottleFull
+      - DrinkVodkaBottleFull
+      - DrinkWhiskeyBottleFull
+      - DrinkWineBottleFull
+      - DrinkBeer
+      - DrinkAleBottleFull
+    chance: 0.8
+    offset: 0.0
+    #rare
+    rarePrototypes:
+      - DrinkPoisonWinebottleFull
+    rareChance: 0.01

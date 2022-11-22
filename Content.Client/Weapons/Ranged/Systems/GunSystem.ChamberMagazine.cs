@@ -1,4 +1,5 @@
 using Content.Shared.Examine;
+using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Containers;
@@ -12,16 +13,18 @@ public sealed partial class GunSystem
         base.InitializeChamberMagazine();
         SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, AmmoCounterControlEvent>(OnChamberMagazineCounter);
         SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, UpdateAmmoCounterEvent>(OnChamberMagazineAmmoUpdate);
-        SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, EntRemovedFromContainerMessage>(OnChamberEntRemove);
     }
 
-    private void OnChamberEntRemove(EntityUid uid, ChamberMagazineAmmoProviderComponent component, EntRemovedFromContainerMessage args)
+    protected override void OnMagazineSlotChange(EntityUid uid, MagazineAmmoProviderComponent component, ContainerModifiedMessage args)
     {
-        if (args.Container.ID != ChamberSlot) return;
+        base.OnMagazineSlotChange(uid, component, args);
+
+        if (ChamberSlot != args.Container.ID || args is not EntRemovedFromContainerMessage removedArgs)
+            return;
 
         // This is dirty af. Prediction moment.
         // We may be predicting spawning entities and the engine just removes them from the container so we'll just delete them.
-        if (args.Entity.IsClientSide())
+        if (removedArgs.Entity.IsClientSide())
             QueueDel(args.Entity);
 
         // AFAIK the only main alternative is having some client-specific handling via a bool or otherwise for the state.
