@@ -1,7 +1,6 @@
 ﻿<controls:FancyWindow xmlns="https://spacestation14.io"
                       xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
                       xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-                      xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
                       Title="{Loc 'mech-menu-title'}"
                       MinSize="350 440"
                       SetSize="350 440">
@@ -18,7 +17,7 @@
                    HorizontalAlignment="Left"
                    Access="Public"
                    HorizontalExpand="True" />
-            <Label Name="EquipmentAmountDisplay"
+            <Label Name="SlotDisplay"
                    Text="Open Slots: 2"
                    HorizontalAlignment="Right"
                    Access="Public"
@@ -35,21 +34,26 @@
             </SpriteView>
         </BoxContainer>
         <BoxContainer VerticalExpand="True" Margin="10 0 10 10" Orientation="Vertical">
-            <ScrollContainer
-                HScrollEnabled="False"
-                HorizontalExpand="True"
-                MinSize="100 256"
-                SizeFlagsStretchRatio="2"
-                VerticalExpand="True">
-                <BoxContainer
-                    Name="StoreListingsContainer"
+            <PanelContainer VerticalExpand="True" MinSize="0 200">
+                <PanelContainer.PanelOverride>
+                    <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" />
+                </PanelContainer.PanelOverride>
+                <ScrollContainer
+                    HScrollEnabled="False"
+                    HorizontalExpand="True"
                     MinSize="100 256"
-                    Orientation="Vertical"
                     SizeFlagsStretchRatio="2"
                     VerticalExpand="True">
-                    <!--  Listings are added here by code  -->
-                </BoxContainer>
-            </ScrollContainer>
+                    <BoxContainer
+                        Name="StoreListingsContainer"
+                        MinSize="100 256"
+                        Orientation="Vertical"
+                        SizeFlagsStretchRatio="2"
+                        VerticalExpand="True">
+                        <!--  Listings are added here by code  -->
+                    </BoxContainer>
+                </ScrollContainer>
+            </PanelContainer>
         </BoxContainer>
     </BoxContainer>
 </controls:FancyWindow>

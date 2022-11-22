@@ -10,7 +10,6 @@ namespace Content.Client.Mech.Ui;
 public sealed partial class MechMenu : FancyWindow
 {
     [Dependency] private readonly IEntityManager _ent = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
 
     private EntityUid _mech;
 
@@ -26,9 +25,16 @@ public sealed partial class MechMenu : FancyWindow
 
         MechView.Sprite = sprite;
 
-        for (var i = 0; i < 10; i++)
+        if (!_ent.TryGetComponent<MechComponent>(mech, out var mechComp))
+            return;
+
+        foreach (var e in mechComp.EquipmentContainer.ContainedEntities)
         {
-            var foo = new MechEquipmentControl("foo", sprite);
+            if (!_ent.TryGetComponent<SpriteComponent>(e, out var spr) ||
+                !_ent.TryGetComponent<MetaDataComponent>(e, out var me))
+                continue;
+
+            var foo = new MechEquipmentControl(me.EntityName, spr);
             StoreListingsContainer.AddChild(foo);
         }
     }
