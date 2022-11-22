@@ -9,7 +9,7 @@ machine-upgrade-not-upgraded = Параметр [color=yellow]{ $upgraded }[/col
 upgrade-power-draw = потребление энергии
 upgrade-max-charge = максимальный запас энергии
 upgrade-power-supply = производство энергии
-two-way-lever-left = push left
-two-way-lever-right = push right
-two-way-lever-cant = can't push the lever that way!
-recycler-count-items = Recycled { $items } objects.
+two-way-lever-left = Вы сдвигаете рычаг влево
+two-way-lever-right = Вы сдвигаете рычаг вправо
+two-way-lever-cant = Рычаг не может быть сдвинут в эту сторону!
+recycler-count-items = Переработано объектов: { $items }.
