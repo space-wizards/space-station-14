@@ -71,7 +71,7 @@ namespace Content.Client.NodeContainer
 
         private void DrawScreen(in OverlayDrawArgs args)
         {
-            var mousePos = _userInterface.MousePositionScaled;
+            var mousePos = _inputManager.MouseScreenPosition;
             _mouseWorldPos = args
                 .ViewportControl!
                 .ScreenToMap(mousePos.Position)
@@ -131,7 +131,7 @@ namespace Content.Client.NodeContainer
             panel.Measure(Vector2.Infinity);
             var size = Vector2.ComponentMax((300, 0), panel.DesiredSize);
 
-            _popup.Open(UIBox2.FromDimensions(mousePos.Position + (20, -20), size));
+            _popup.Open(UIBox2.FromDimensions(_userInterface.MousePositionScaled.Position + (20, -20), size));
         }
 
         private void DrawWorld(in OverlayDrawArgs overlayDrawArgs)
@@ -143,7 +143,10 @@ namespace Content.Client.NodeContainer
 
             var map = overlayDrawArgs.Viewport.Eye?.Position.MapId ?? default;
             if (map == MapId.Nullspace)
+            {
+                _hovered = default;
                 return;
+            }
 
             _hovered = default;
 
@@ -213,7 +216,7 @@ namespace Content.Client.NodeContainer
                     var groupData = nodeRenderData.GroupData;
                     var color = groupData.Color;
 
-                    if (!_hovered.HasValue)
+                    if (!_hovered.HasValue || _popup == null)
                         color.A = 0.5f;
                     else if (_hovered.Value.group != groupData.NetId)
                         color.A = 0.2f;
