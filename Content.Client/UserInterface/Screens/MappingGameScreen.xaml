@@ -1,0 +1,25 @@
+﻿<screens:MappingGameScreen
+    xmlns="https://spacestation14.io"
+    xmlns:screens="clr-namespace:Content.Client.UserInterface.Screens"
+    xmlns:menuBar="clr-namespace:Content.Client.UserInterface.Systems.MenuBar.Widgets"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+    Name="MappingHud"
+    VerticalExpand="False"
+    VerticalAlignment="Bottom"
+    HorizontalAlignment="Center">
+    <BoxContainer Name="ScreenContainer" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+        <MenuBar Name="MappingMenu"/>
+        <SplitContainer Name="InnerScreenContainer" HorizontalExpand="True" VerticalExpand="True">
+            <PanelContainer HorizontalExpand="True" VerticalExpand="True">
+                <PanelContainer.PanelOverride>
+                    <graphics:StyleBoxFlat BackgroundColor="#0F0F0F" />
+                </PanelContainer.PanelOverride>
+                <Label Text="What kind of map editor is this? You can't even open anything!"/>
+            </PanelContainer>
+            <LayoutContainer Name="ViewportContainer" HorizontalExpand="True" VerticalExpand="True">
+                    <controls:MainViewport Name="MainViewport"/>
+            </LayoutContainer>
+        </SplitContainer>
+    </BoxContainer>
+</screens:MappingGameScreen>

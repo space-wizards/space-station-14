@@ -62,6 +62,7 @@ namespace Content.Client.Input
             human.AddFunction(ContentKeyFunctions.Arcade3);
 
             // actions should be common (for ghosts, mobs, etc)
+            // MAPPING DOESN"T USE ACTIONS *scream i'm not refactoring this right now --moony
             common.AddFunction(ContentKeyFunctions.OpenActionsMenu);
 
             foreach (var boundKey in ContentKeyFunctions.GetHotbarBoundKeys())
@@ -96,6 +97,13 @@ namespace Content.Client.Input
             common.AddFunction(ContentKeyFunctions.OpenTileSpawnWindow);
             common.AddFunction(ContentKeyFunctions.OpenDecalSpawnWindow);
             common.AddFunction(ContentKeyFunctions.OpenAdminMenu);
+
+            var mapping = contexts.New("mapping", "common");
+            mapping.AddFunction(EngineKeyFunctions.MoveUp);
+            mapping.AddFunction(EngineKeyFunctions.MoveDown);
+            mapping.AddFunction(EngineKeyFunctions.MoveLeft);
+            mapping.AddFunction(EngineKeyFunctions.MoveRight);
+            mapping.AddFunction(ContentKeyFunctions.MouseMiddle);
         }
     }
 }
