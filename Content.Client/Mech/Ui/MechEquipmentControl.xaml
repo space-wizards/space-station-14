@@ -1,0 +1,15 @@
+<Control xmlns="https://spacestation14.io">
+    <PanelContainer StyleClasses="BackgroundDark"></PanelContainer>
+    <BoxContainer HorizontalExpand="True" VerticalExpand="True" Orientation="Horizontal">
+        <SpriteView
+            Name="StoreItemTexture"
+            OverrideDirection="South"
+            MinSize="32 32"
+            Scale="1 1"/>
+        <RichTextLabel Name="StoreItemDescription" VerticalAlignment="Center"/>
+        <BoxContainer HorizontalExpand="True" HorizontalAlignment="Right">
+            <Button Text="Enable" MinHeight="40" SetHeight="40" HorizontalExpand="True"></Button>
+            <Button Text="Remove" MinHeight="40" SetHeight="40" HorizontalExpand="True"></Button>
+        </BoxContainer>
+    </BoxContainer>
+</Control>

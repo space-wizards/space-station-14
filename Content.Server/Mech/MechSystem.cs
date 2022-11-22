@@ -3,7 +3,6 @@ using Content.Shared.Mech;
 using Content.Shared.Mech.Components;
 using Content.Shared.Mech.EntitySystems;
 using Content.Shared.Verbs;
-using Microsoft.CodeAnalysis;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 
@@ -21,6 +20,7 @@ public sealed class MechSystem : SharedMechSystem
         base.Initialize();
 
         SubscribeLocalEvent<MechComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<MechComponent, MechOpenUiEvent>(OnOpenUi);
         SubscribeLocalEvent<MechComponent, GetVerbsEvent<AlternativeVerb>>(OnAlternativeVerb);
 
         SubscribeLocalEvent<MechPilotComponent, InhaleLocationEvent>(OnInhale);
@@ -40,11 +40,17 @@ public sealed class MechSystem : SharedMechSystem
         component.Integrity = component.MaxIntegrity;
     }
 
+    private void OnOpenUi(EntityUid uid, MechComponent component, MechOpenUiEvent args)
+    {
+        ToggleMechUi(uid, component);
+    }
+
     private void OnAlternativeVerb(EntityUid uid, MechComponent component, GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract)
             return;
 
+        //TODO: doafters for climbing in and out
         if (CanInsert(uid, args.User, component))
         {
             var v = new AlternativeVerb
@@ -52,7 +58,13 @@ public sealed class MechSystem : SharedMechSystem
                 Act = () => TryInsert(uid, args.User, component),
                 Text = Loc.GetString("mech-verb-enter")
             };
+            var u = new AlternativeVerb //can't hijack someone else's mech
+            {
+                Act = () => ToggleMechUi(uid, component, args.User),
+                Text = Loc.GetString("mech-ui-open-verb")
+            };
             args.Verbs.Add(v);
+            args.Verbs.Add(u);
         }
         else if (!IsEmpty(component))
         {
@@ -62,17 +74,11 @@ public sealed class MechSystem : SharedMechSystem
                 Text = Loc.GetString("mech-verb-exit"),
                 Priority = 1 // Promote to top to make ejecting the ALT-click action
             };
-            var u = new AlternativeVerb //can't hijack someone else's mech
-            {
-                Act = () => OpenMechUi(uid, component, args.User),
-                Text = Loc.GetString("mech-ui-open-verb")
-            };
             args.Verbs.Add(v);
-            args.Verbs.Add(u);
         }
     }
 
-    private void OpenMechUi(EntityUid uid, MechComponent? component = null, EntityUid? user = null)
+    private void ToggleMechUi(EntityUid uid, MechComponent? component = null, EntityUid? user = null)
     {
         if (!Resolve(uid, ref component))
             return;
@@ -80,7 +86,10 @@ public sealed class MechSystem : SharedMechSystem
         if (user == null)
             return;
 
-        var bui = _ui.GetUi(uid, MechUiKey.Key);
+        if (!TryComp<ActorComponent>(user, out var actor))
+            return;
+
+        _ui.TryToggleUi(uid, MechUiKey.Key, actor.PlayerSession);
     }
 
     public override bool TryInsert(EntityUid uid, EntityUid? toInsert, SharedMechComponent? component = null)
