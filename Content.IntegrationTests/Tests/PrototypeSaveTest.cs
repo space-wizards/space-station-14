@@ -8,6 +8,7 @@ using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager;
@@ -38,95 +39,7 @@ public sealed class PrototypeSaveTest
         // TODO fix more prototypes
         // The rest of these prototypes (probably) shouldn't be getting ignored.
         // There should be an issue up tracking all of these prototypes, indicating that still need to get fixed.
-        "WeaponProtoKineticAccelerator",
-        "WeaponStaffHealing",
-        "WeaponStaffPolymorphDoor",
-        "WeaponWandPolymorphCarp",
-        "WeaponWandPolymorphMonkey",
-        "WeaponWandFireball",
-        "WeaponWandDeath",
-        "WeaponWandPolymorphDoor",
-        "GlowstickBase",
-        "GlowstickRed",
-        "GlowstickPurple",
-        "GlowstickYellow",
-        "GlowstickBlue",
-        "Thruster",
-        "Gyroscope",
-        "RemoteSignaller",
-        "filingCabinet",
-        "filingCabinetTall",
-        "filingCabinetDrawer",
-        "WeaponLauncherChinaLake",
-        "WeaponLauncherRocket",
-        "WeaponLauncherMultipleRocket",
-        "JawsOfLife",
-        "SyndicateJawsOfLife",
-        "LightReplacer",
-        "PowerDrill",
-        "Omnitool",
-        "GasPressurePump",
-        "GasVolumePump",
-        "PortableScrubber",
-        "ParticleAcceleratorControlBox",
-        "GasFilter",
-        "GasFilterFlipped",
-        "GasMixer",
-        "GasMixerFlipped",
-        "HospitalCurtainsOpen",
-        "CargoPallet",
-        "DisposalHolder",
-        "ParticlesProjectile",
-        "AMEController",
-        "AMEControllerUnanchored",
-        "MopBucket",
-        "JanitorialTrolley",
-        "FloorDrain",
-        "OrganHumanLungs",
-        "SprayBottle",
-        "OrganRatLungs",
-        "SentientSlimeCore",
-        "OrganSlimeLungs",
-        "OrganVoxLungs",
-        "OrganAnimalLungs",
-        "Floodlight",
-        "EmergencyMedipen",
-        "AntiPoisonMedipen",
-        "SpaceMedipen",
-        "HolosignWetFloor",
         "HeadSkeleton",
-        "PoweredSmallLightEmpty",
-        "PoweredSmallLight",
-        "PoweredLightPostSmallEmpty",
-        "PoweredLightPostSmall",
-        "DeployableBarrier",
-        "CrateArtifactContainer",
-        "CloningPod",
-        "DrinkColaCan",
-        "WeaponImprovisedPneumaticCannon",
-        "LauncherCreamPie",
-        "GravityGenerator",
-        "GravityGeneratorMini",
-        "MagazinePistolSubMachineGunTopMounted",
-        "EpinephrineChemistryBottle",
-        "RobustHarvestChemistryBottle",
-        "NocturineChemistryBottle",
-        "EphedrineChemistryBottle",
-        "OmnizineChemistryBottle",
-        "Beaker",
-        "LargeBeaker",
-        "CryostasisBeaker",
-        "BluespaceBeaker",
-        "ClusterBang",
-        "ClusterBangFull",
-        "Vaccinator",
-        "AirlockExternalShuttleLocked",
-        "AirlockExternalGlassShuttleLocked",
-        "AirlockExternalGlassShuttleEmergencyLocked",
-        "ClothingHeadHatChef",
-        "Bucket",
-        "AirlockShuttle",
-        "AirlockGlassShuttle",
         // The followjng are all fixture-less phsyics entities that set can-collide to false on init.
         "CarpRift",
         "GasMinerOxygen",
@@ -175,7 +88,7 @@ public sealed class PrototypeSaveTest
         var compFact = server.ResolveDependency<IComponentFactory>();
 
         var prototypes = new List<EntityPrototype>();
-        IMapGrid grid = default!;
+        MapGridComponent grid = default!;
         EntityUid uid;
         MapId mapId = default;
 

@@ -183,7 +183,7 @@ namespace Content.Server.VendingMachines
                 return;
 
             vendComponent.Denying = true;
-            _audioSystem.Play(vendComponent.SoundDeny, Filter.Pvs(vendComponent.Owner), vendComponent.Owner, AudioParams.Default.WithVolume(-2f));
+            _audioSystem.PlayPvs(vendComponent.SoundDeny, vendComponent.Owner, AudioParams.Default.WithVolume(-2f));
             TryUpdateVisualState(uid, vendComponent);
         }
 
@@ -254,7 +254,7 @@ namespace Content.Server.VendingMachines
             entry.Amount--;
             UpdateVendingMachineInterfaceState(vendComponent);
             TryUpdateVisualState(uid, vendComponent);
-            _audioSystem.Play(vendComponent.SoundVend, Filter.Pvs(vendComponent.Owner), vendComponent.Owner, AudioParams.Default.WithVolume(-2f));
+            _audioSystem.PlayPvs(vendComponent.SoundVend, vendComponent.Owner, AudioParams.Default.WithVolume(-2f));
         }
 
         /// <summary>

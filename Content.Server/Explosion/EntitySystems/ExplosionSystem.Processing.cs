@@ -4,6 +4,7 @@ using Content.Shared.Explosion;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Dynamics;
@@ -63,7 +64,8 @@ public sealed partial class ExplosionSystem : EntitySystem
             return;
 
         _activeExplosion = null;
-        _nodeGroupSystem.Snoozing = false;
+        _nodeGroupSystem.PauseUpdating = false;
+        _pathfindingSystem.PauseUpdating = false;
     }
 
     /// <summary>
@@ -107,7 +109,8 @@ public sealed partial class ExplosionSystem : EntitySystem
                 // just a lil nap
                 if (SleepNodeSys)
                 {
-                    _nodeGroupSystem.Snoozing = true;
+                    _nodeGroupSystem.PauseUpdating = true;
+                    _pathfindingSystem.PauseUpdating = true;
                     // snooze grid-chunk regeneration?
                     // snooze power network (recipients look for new suppliers as wires get destroyed).
                 }
@@ -136,7 +139,8 @@ public sealed partial class ExplosionSystem : EntitySystem
                 // Ensure the system does not get stuck in an error-loop.
                 _activeExplosion = null;
                 RaiseNetworkEvent(new ExplosionOverlayUpdateEvent(_explosionCounter, int.MaxValue));
-                _nodeGroupSystem.Snoozing = false;
+                _nodeGroupSystem.PauseUpdating = false;
+                _pathfindingSystem.PauseUpdating = false;
                 throw;
             }
 #endif
@@ -163,7 +167,8 @@ public sealed partial class ExplosionSystem : EntitySystem
         RaiseNetworkEvent(new ExplosionOverlayUpdateEvent(_explosionCounter, int.MaxValue));
 
         //wakey wakey
-        _nodeGroupSystem.Snoozing = false;
+        _nodeGroupSystem.PauseUpdating = false;
+        _pathfindingSystem.PauseUpdating = false;
     }
 
     /// <summary>
@@ -190,7 +195,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     /// </summary>
     /// <returns>True if the underlying tile can be uprooted, false if the tile is blocked by a dense entity</returns>
     internal bool ExplodeTile(BroadphaseComponent lookup,
-        IMapGrid grid,
+        MapGridComponent grid,
         Vector2i tile,
         float throwForce,
         DamageSpecifier damage,
@@ -490,7 +495,7 @@ sealed class Explosion
         /// <summary>
         ///     The actual grid that this corresponds to. If null, this implies space.
         /// </summary>
-        public IMapGrid? MapGrid;
+        public MapGridComponent? MapGrid;
     }
 
     private readonly List<ExplosionData> _explosionData = new();
@@ -539,7 +544,7 @@ sealed class Explosion
     // Variables used for enumerating over tiles, grids, etc
     private DamageSpecifier _currentDamage = default!;
     private BroadphaseComponent _currentLookup = default!;
-    private IMapGrid? _currentGrid;
+    private MapGridComponent? _currentGrid;
     private float _currentIntensity;
     private float _currentThrowForce;
     private List<Vector2i>.Enumerator _currentEnumerator;
@@ -549,7 +554,7 @@ sealed class Explosion
     ///     The set of tiles that need to be updated when the explosion has finished processing. Used to avoid having
     ///     the explosion trigger chunk regeneration & shuttle-system processing every tick.
     /// </summary>
-    private readonly Dictionary<IMapGrid, List<(Vector2i, Tile)>> _tileUpdateDict = new();
+    private readonly Dictionary<MapGridComponent, List<(Vector2i, Tile)>> _tileUpdateDict = new();
 
     // Entity Queries
     private readonly EntityQuery<TransformComponent> _xformQuery;
@@ -638,7 +643,7 @@ sealed class Explosion
             _explosionData.Add(new()
             {
                 TileLists = grid.TileLists,
-                Lookup = entMan.GetComponent<BroadphaseComponent>(grid.Grid.GridEntityId),
+                Lookup = entMan.GetComponent<BroadphaseComponent>(grid.Grid.Owner),
                 MapGrid = grid.Grid
             });
         }

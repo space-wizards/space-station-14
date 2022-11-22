@@ -16,7 +16,6 @@ namespace Content.Shared.Construction.Prototypes
         [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
-        [ViewVariables]
         [DataField("start")]
         public string? Start { get; }
 

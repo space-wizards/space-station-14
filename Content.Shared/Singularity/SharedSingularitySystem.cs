@@ -2,6 +2,7 @@ using Content.Shared.Ghost;
 using Content.Shared.Radiation;
 using Content.Shared.Radiation.Components;
 using Content.Shared.Singularity.Components;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
@@ -65,7 +66,7 @@ namespace Content.Shared.Singularity
             var otherUid = args.BodyB.Owner;
 
             // For prediction reasons always want the client to ignore these.
-            if (EntityManager.HasComponent<IMapGridComponent>(otherUid) ||
+            if (EntityManager.HasComponent<MapGridComponent>(otherUid) ||
                 EntityManager.HasComponent<SharedGhostComponent>(otherUid))
             {
                 args.Cancelled = true;

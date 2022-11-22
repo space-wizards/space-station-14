@@ -227,7 +227,7 @@ namespace Content.Shared.Interaction
             if (target != null && Deleted(target.Value))
                 return;
 
-            if (TryComp(user, out SharedCombatModeComponent? combatMode) && combatMode.IsInCombatMode)
+            if (!altInteract && TryComp(user, out SharedCombatModeComponent? combatMode) && combatMode.IsInCombatMode)
             {
                 // Eat the input
                 return;
@@ -262,6 +262,9 @@ namespace Content.Shared.Interaction
                 {
                     var ev = new InteractNoHandEvent(user, target.Value);
                     RaiseLocalEvent(user, ev);
+
+                    var interactedEv = new InteractedNoHandEvent(target.Value, user);
+                    RaiseLocalEvent(target.Value, interactedEv);
                     DoContactInteraction(user, target.Value, ev);
                 }
                 return;

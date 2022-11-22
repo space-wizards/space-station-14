@@ -54,6 +54,7 @@ namespace Content.Server.Kitchen.EntitySystems
             SubscribeLocalEvent<MicrowaveComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<MicrowaveComponent, SuicideEvent>(OnSuicide);
             SubscribeLocalEvent<MicrowaveComponent, RefreshPartsEvent>(OnRefreshParts);
+            SubscribeLocalEvent<MicrowaveComponent, UpgradeExamineEvent>(OnUpgradeExamine);
 
             SubscribeLocalEvent<MicrowaveComponent, MicrowaveStartCookMessage>((u,c,_) => Wzhzhzh(u,c));
             SubscribeLocalEvent<MicrowaveComponent, MicrowaveEjectMessage>(OnEjectMessage);
@@ -71,7 +72,7 @@ namespace Content.Server.Kitchen.EntitySystems
             SetAppearance(microwaveComponent, MicrowaveVisualState.Cooking);
 
             microwaveComponent.PlayingStream =
-                _audio.Play(microwaveComponent.LoopingSound, Filter.Pvs(uid), uid, AudioParams.Default.WithLoop(true).WithMaxDistance(5));
+                _audio.PlayPvs(microwaveComponent.LoopingSound, uid, AudioParams.Default.WithLoop(true).WithMaxDistance(5));
         }
 
         private void OnCookStop(EntityUid uid, ActiveMicrowaveComponent component, ComponentShutdown args)
@@ -274,6 +275,11 @@ namespace Content.Server.Kitchen.EntitySystems
         {
             var cookRating = args.PartRatings[component.MachinePartCookTimeMultiplier];
             component.CookTimeMultiplier = MathF.Pow(component.CookTimeScalingConstant, cookRating - 1);
+        }
+
+        private void OnUpgradeExamine(EntityUid uid, MicrowaveComponent component, UpgradeExamineEvent args)
+        {
+            args.AddPercentageUpgrade("microwave-component-upgrade-cook-time", component.CookTimeMultiplier);
         }
 
         public void UpdateUserInterfaceState(EntityUid uid, MicrowaveComponent component)

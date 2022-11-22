@@ -12,6 +12,7 @@ namespace Content.Server.Power.EntitySystems
             base.Initialize();
 
             SubscribeLocalEvent<UpgradeBatteryComponent, RefreshPartsEvent>(OnRefreshParts);
+            SubscribeLocalEvent<UpgradeBatteryComponent, UpgradeExamineEvent>(OnUpgradeExamine);
         }
 
         public void OnRefreshParts(EntityUid uid, UpgradeBatteryComponent component, RefreshPartsEvent args)
@@ -21,6 +22,15 @@ namespace Content.Server.Power.EntitySystems
             if (TryComp<BatteryComponent>(uid, out var batteryComp))
             {
                 batteryComp.MaxCharge = MathF.Pow(component.MaxChargeMultiplier, capacitorRating - 1) * component.BaseMaxCharge;
+            }
+        }
+
+        private void OnUpgradeExamine(EntityUid uid, UpgradeBatteryComponent component, UpgradeExamineEvent args)
+        {
+            // UpgradeBatteryComponent.MaxChargeMultiplier is not the actual multiplier, so we have to do this.
+            if (TryComp<BatteryComponent>(uid, out var batteryComp))
+            {
+                args.AddPercentageUpgrade("upgrade-max-charge", batteryComp.MaxCharge / component.BaseMaxCharge);
             }
         }
     }

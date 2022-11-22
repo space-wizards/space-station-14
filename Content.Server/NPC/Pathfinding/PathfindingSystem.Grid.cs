@@ -10,6 +10,7 @@ using Content.Shared.Physics;
 using Microsoft.Extensions.ObjectPool;
 using Robust.Shared.Collections;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
@@ -26,6 +27,15 @@ public sealed partial class PathfindingSystem
     // Stuff like chairs have collision but aren't relevant for mobs.
     public const int PathfindingCollisionMask = (int) CollisionGroup.MobMask;
     public const int PathfindingCollisionLayer = (int) CollisionGroup.MobLayer;
+
+    /// <summary>
+    ///     If true, UpdateGrid() will not process grids.
+    /// </summary>
+    /// <remarks>
+    ///     Useful if something like a large explosion is in the process of shredding the grid, as it avoids uneccesary
+    ///     updating.
+    /// </remarks>
+    public bool PauseUpdating = false;
 
     private readonly Stopwatch _stopwatch = new();
 
@@ -66,6 +76,9 @@ public sealed partial class PathfindingSystem
 
     private void UpdateGrid()
     {
+        if (PauseUpdating)
+            return;
+
         var curTime = _timing.CurTime;
 #if DEBUG
         var updateCount = 0;
@@ -78,7 +91,7 @@ public sealed partial class PathfindingSystem
         {
             if (comp.DirtyChunks.Count == 0 ||
                 comp.NextUpdate < curTime ||
-                !TryComp<IMapGridComponent>(comp.Owner, out var mapGridComp))
+                !TryComp<MapGridComponent>(comp.Owner, out var mapGridComp))
             {
                 continue;
             }
@@ -128,7 +141,7 @@ public sealed partial class PathfindingSystem
                 var fixturesQuery = GetEntityQuery<FixturesComponent>();
                 var physicsQuery = GetEntityQuery<PhysicsComponent>();
                 var xformQuery = GetEntityQuery<TransformComponent>();
-                BuildBreadcrumbs(dirt[i], mapGridComp.Grid, accessQuery, destructibleQuery, doorQuery, fixturesQuery,
+                BuildBreadcrumbs(dirt[i], mapGridComp, accessQuery, destructibleQuery, doorQuery, fixturesQuery,
                     physicsQuery, xformQuery);
             });
 
@@ -238,7 +251,7 @@ public sealed partial class PathfindingSystem
     {
         if (!TryComp<PhysicsComponent>(ev.Sender, out var body) ||
             body.BodyType != BodyType.Static ||
-            HasComp<IMapGridComponent>(ev.Sender) ||
+            HasComp<MapGridComponent>(ev.Sender) ||
             ev.OldPosition.Equals(ev.NewPosition))
         {
             return;
@@ -350,7 +363,7 @@ public sealed partial class PathfindingSystem
     }
 
     private void BuildBreadcrumbs(GridPathfindingChunk chunk,
-        IMapGrid grid,
+        MapGridComponent grid,
         EntityQuery<AccessReaderComponent> accessQuery,
         EntityQuery<DestructibleComponent> destructibleQuery,
         EntityQuery<DoorComponent> doorQuery,

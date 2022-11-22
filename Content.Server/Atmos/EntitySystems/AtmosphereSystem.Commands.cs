@@ -6,6 +6,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Maps;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Atmos.EntitySystems;
 
@@ -72,7 +73,7 @@ public sealed partial class AtmosphereSystem
                return;
            }
 
-           if (!TryComp(euid, out IMapGridComponent? gridComp))
+           if (!TryComp(euid, out MapGridComponent? gridComp))
            {
                shell.WriteError($"Euid '{euid}' does not exist or is not a grid.");
                return;
@@ -100,7 +101,7 @@ public sealed partial class AtmosphereSystem
 
                tile.Clear();
                var mixtureId = 0;
-               foreach (var entUid in gridComp.Grid.GetAnchoredEntities(indices))
+               foreach (var entUid in gridComp.GetAnchoredEntities(indices))
                {
                    if (!TryComp(entUid, out AtmosFixMarkerComponent? afm))
                        continue;

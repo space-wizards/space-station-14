@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using static Robust.Client.GameObjects.SpriteComponent;
 
 namespace Content.Client.IconSmoothing
@@ -185,7 +186,7 @@ namespace Content.Client.IconSmoothing
 
             var xform = xformQuery.GetComponent(uid);
 
-            IMapGrid? grid = null;
+            MapGridComponent? grid = null;
 
             if (xform.Anchored)
             {
@@ -209,7 +210,7 @@ namespace Content.Client.IconSmoothing
             }
         }
 
-        private void CalculateNewSpriteCardinal(IMapGrid? grid, IconSmoothComponent smooth, SpriteComponent sprite, TransformComponent xform, EntityQuery<IconSmoothComponent> smoothQuery)
+        private void CalculateNewSpriteCardinal(MapGridComponent? grid, IconSmoothComponent smooth, SpriteComponent sprite, TransformComponent xform, EntityQuery<IconSmoothComponent> smoothQuery)
         {
             var dirs = CardinalConnectDirs.None;
 
@@ -243,7 +244,7 @@ namespace Content.Client.IconSmoothing
             return false;
         }
 
-        private void CalculateNewSpriteCorners(IMapGrid? grid, IconSmoothComponent smooth, SpriteComponent sprite, TransformComponent xform, EntityQuery<IconSmoothComponent> smoothQuery)
+        private void CalculateNewSpriteCorners(MapGridComponent? grid, IconSmoothComponent smooth, SpriteComponent sprite, TransformComponent xform, EntityQuery<IconSmoothComponent> smoothQuery)
         {
             var (cornerNE, cornerNW, cornerSW, cornerSE) = grid == null
                 ? (CornerFill.None, CornerFill.None, CornerFill.None, CornerFill.None)
@@ -260,7 +261,7 @@ namespace Content.Client.IconSmoothing
             sprite.LayerSetState(CornerLayers.NW, $"{smooth.StateBase}{(int) cornerNW}");
         }
 
-        private (CornerFill ne, CornerFill nw, CornerFill sw, CornerFill se) CalculateCornerFill(IMapGrid grid, IconSmoothComponent smooth, TransformComponent xform, EntityQuery<IconSmoothComponent> smoothQuery)
+        private (CornerFill ne, CornerFill nw, CornerFill sw, CornerFill se) CalculateCornerFill(MapGridComponent grid, IconSmoothComponent smooth, TransformComponent xform, EntityQuery<IconSmoothComponent> smoothQuery)
         {
             var pos = grid.TileIndicesFor(xform.Coordinates);
             var n = MatchingEntity(smooth, grid.GetAnchoredEntities(pos.Offset(Direction.North)), smoothQuery);

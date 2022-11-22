@@ -1,21 +1,21 @@
 using System.Diagnostics.CodeAnalysis;
-using Content.Server.Lathe.Components;
-using Content.Shared.Lathe;
-using Content.Shared.Materials;
-using Content.Shared.Research.Prototypes;
-using Content.Server.Research.Components;
-using Content.Server.Research;
-using Content.Shared.Research.Components;
-using Robust.Server.GameObjects;
-using Robust.Shared.Prototypes;
-using JetBrains.Annotations;
 using System.Linq;
 using Content.Server.Construction;
+using Content.Server.Lathe.Components;
 using Content.Server.Materials;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Server.Research;
+using Content.Server.Research.Components;
 using Content.Server.UserInterface;
+using Content.Shared.Lathe;
+using Content.Shared.Materials;
+using Content.Shared.Research.Components;
+using Content.Shared.Research.Prototypes;
+using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Lathe
@@ -39,6 +39,7 @@ namespace Content.Server.Lathe
             SubscribeLocalEvent<LatheComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<LatheComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<LatheComponent, RefreshPartsEvent>(OnPartsRefresh);
+            SubscribeLocalEvent<LatheComponent, UpgradeExamineEvent>(OnUpgradeExamine);
 
             SubscribeLocalEvent<LatheComponent, LatheQueueRecipeMessage>(OnLatheQueueRecipeMessage);
             SubscribeLocalEvent<LatheComponent, LatheSyncRequestMessage>(OnLatheSyncRequestMessage);
@@ -202,8 +203,9 @@ namespace Content.Server.Lathe
                 return;
 
             //gets all of the techs that are unlocked and also in the DynamicRecipes list
-            var allTechs = (from tech in component.Technologies
-                from recipe in tech.UnlockedRecipes
+            var allTechs = (from technology in from tech in component.TechnologyIds
+                    select _proto.Index<TechnologyPrototype>(tech)
+                from recipe in technology.UnlockedRecipes
                 where latheComponent.DynamicRecipes.Contains(recipe)
                 select recipe).ToList();
 
@@ -275,6 +277,11 @@ namespace Content.Server.Lathe
             Dirty(component);
         }
 
+        private void OnUpgradeExamine(EntityUid uid, LatheComponent component, UpgradeExamineEvent args)
+        {
+            args.AddPercentageUpgrade("lathe-component-upgrade-speed", 1 / component.TimeMultiplier);
+            args.AddPercentageUpgrade("lathe-component-upgrade-material-use", component.MaterialUseMultiplier);
+        }
 
         protected override bool HasRecipe(EntityUid uid, LatheRecipePrototype recipe, LatheComponent component)
         {

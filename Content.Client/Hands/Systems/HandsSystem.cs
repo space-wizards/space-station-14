@@ -242,6 +242,11 @@ namespace Content.Client.Hands.Systems
 
             _verbs.VerbMenu.OpenVerbMenu(entity);
         }
+        
+        public void UIHandAltActivateItem(string handName)
+        {
+            RaisePredictiveEvent(new RequestHandAltInteractEvent(handName));
+        }
 
         #region visuals
 

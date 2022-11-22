@@ -23,6 +23,20 @@
     size: 1
 
 - type: entity
+  id: CigarSpent
+  parent: Cigar
+  suffix: spent
+  components:
+  - type: Sprite
+    state: burnt-icon
+  - type: Smokable
+    state: Burnt
+  - type: SolutionContainerManager
+    solutions:
+      smokable:
+        maxVol: 20
+
+- type: entity
   id: CigarGold
   parent: Cigar
   name: premium Havanian cigar
@@ -38,3 +52,17 @@
     equippedPrefix: unlit
   - type: Item
     size: 1
+
+- type: entity
+  id: CigarGoldSpent
+  parent: CigarGold
+  suffix: spent
+  components:
+  - type: Sprite
+    state: burnt-icon
+  - type: Smokable
+    state: Burnt
+  - type: SolutionContainerManager
+    solutions:
+      smokable:
+        maxVol: 20

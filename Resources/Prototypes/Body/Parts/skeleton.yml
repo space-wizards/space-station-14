@@ -52,6 +52,7 @@
       baseSprintSpeed: 0
     - type: Speech
     - type: SkeletonAccent
+    - type: Actions
     - type: Vocal
       maleScream: /Audio/Voice/Skeleton/skeleton_scream.ogg
       femaleScream: /Audio/Voice/Skeleton/skeleton_scream.ogg
@@ -61,7 +62,6 @@
         proper: true
     - type: Examiner
     - type: DoAfter
-    - type: Actions
     - type: MobState
       thresholds:
         0: Alive

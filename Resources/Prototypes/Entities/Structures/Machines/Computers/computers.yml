@@ -337,6 +337,46 @@
 
 - type: entity
   parent: BaseComputer
+  id: ComputerAnalysisConsole
+  name: analysis console
+  description: A computer used to interface with the artifact analyzer.
+  components:
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer
+      key: tech_key
+      screen: artifact
+  - type: ResearchClient
+  - type: AnalysisConsole
+  - type: DeviceList
+  - type: DeviceNetwork
+    deviceNetId: Wired
+  - type: SignalTransmitter
+    transmissionRange: 5
+    outputs:
+      ArtifactAnalyzerSender: []
+  - type: ActivatableUI
+    key: enum.ArtifactAnalzyerUiKey.Key
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+    - key: enum.ArtifactAnalzyerUiKey.Key
+      type: AnalysisConsoleBoundUserInterface
+    - key: enum.ResearchClientUiKey.Key
+      type: ResearchClientBoundUserInterface
+  - type: ApcPowerReceiver
+    powerLoad: 1000
+    priority: Low
+  - type: ExtensionCableReceiver
+  - type: Computer
+    board: AnalysisComputerCircuitboard
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#b53ca1"
+
+- type: entity
+  parent: BaseComputer
   id: ComputerId
   name: ID card computer
   description: Terminal for programming Nanotrasen employee ID cards to access parts of the station.
@@ -647,6 +687,7 @@
     - type: ActivatableUI
       key: enum.SurveillanceCameraMonitorUiKey.Key
     - type: ActivatableUIRequiresPower
+    - type: ActivatableUIRequiresVision
     - type: Transform
       anchored: true
     - type: UserInterface
@@ -681,6 +722,7 @@
     - type: ActivatableUI
       key: enum.SurveillanceCameraMonitorUiKey.Key
     - type: ActivatableUIRequiresPower
+    - type: ActivatableUIRequiresVision
     - type: Transform
       anchored: true
     - type: UserInterface

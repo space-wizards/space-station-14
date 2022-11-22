@@ -18,12 +18,12 @@ public abstract class NPCCombatOperator : HTNOperator
     protected InteractionSystem Interaction = default!;
     private PathfindingSystem _pathfinding = default!;
 
-    [ViewVariables, DataField("key")] public string Key = "CombatTarget";
+    [DataField("key")] public string Key = "CombatTarget";
 
     /// <summary>
     /// The EntityCoordinates of the specified target.
     /// </summary>
-    [ViewVariables, DataField("keyCoordinates")]
+    [DataField("keyCoordinates")]
     public string KeyCoordinates = "CombatTargetCoordinates";
 
     /// <summary>
@@ -69,7 +69,7 @@ public abstract class NPCCombatOperator : HTNOperator
         var radius = blackboard.GetValueOrDefault<float>(NPCBlackboard.VisionRadius, EntManager);
         var targets = new List<(EntityUid Entity, float Rating, float Distance)>();
 
-        blackboard.TryGetValue<EntityUid>(Key, out var existingTarget);
+        blackboard.TryGetValue<EntityUid>(Key, out var existingTarget, EntManager);
         var xformQuery = EntManager.GetEntityQuery<TransformComponent>();
         var mobQuery = EntManager.GetEntityQuery<MobStateComponent>();
         var canMove = blackboard.GetValueOrDefault<bool>(NPCBlackboard.CanMove, EntManager);

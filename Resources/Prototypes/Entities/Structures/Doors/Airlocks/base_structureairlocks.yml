@@ -74,6 +74,12 @@
   - type: Wires
     BoardName: "Airlock Control"
     LayoutId: Airlock
+  - type: DoorSignalControl
+  - type: SignalReceiver
+    inputs:
+      Open: []
+      Close: []
+      Toggle: []
   - type: UserInterface
     interfaces:
     - key: enum.WiresUiKey.Key
