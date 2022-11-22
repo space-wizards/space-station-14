@@ -48,7 +48,7 @@
     interactSuccessSound:
       path: /Audio/Animals/fox_squeak.ogg
   - type: SentienceTarget
-    flavorKind: organic
+    flavorKind: station-event-random-sentience-flavor-organic
   - type: Bloodstream
     bloodMaxVolume: 50
   - type: ReplacementAccent
@@ -98,6 +98,8 @@
       0: Alive
       5: Critical
       10: Dead
+  - type: Stamina
+    excess: 10
   - type: Appearance
   - type: DamageStateVisuals
     rotate: true
@@ -197,7 +199,7 @@
   - type: ReplacementAccent
     accent: chicken
   - type: SentienceTarget
-    flavorKind: organic
+    flavorKind: station-event-random-sentience-flavor-organic
 
 - type: entity
   name: mallard duck #Quack
@@ -248,7 +250,7 @@
   - type: ReplacementAccent
     accent: duck
   - type: SentienceTarget
-    flavorKind: organic
+    flavorKind: station-event-random-sentience-flavor-organic
 
 - type: entity
   name: white duck #Quack
@@ -680,7 +682,7 @@
   - type: NameIdentifier
     group: Monkey
   - type: SentienceTarget
-    flavorKind: primate
+    flavorKind: station-event-random-sentience-flavor-primate
   - type: Inventory
     templateId: monkey
   - type: Fixtures
@@ -1342,6 +1344,14 @@
       layer:
       - MobLayer
   - type: Appearance
+  - type: Inventory
+    speciesId: possum
+    templateId: pet
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+    - key: enum.StrippingUiKey.Key
+      type: StrippableBoundUserInterface
   - type: DamageStateVisuals
     states:
       Alive:
@@ -1388,6 +1398,14 @@
       layer:
       - MobLayer
   - type: Appearance
+  - type: Inventory
+    speciesId: possum #close enough
+    templateId: pet
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+    - key: enum.StrippingUiKey.Key
+      type: StrippableBoundUserInterface
   - type: DamageStateVisuals
     states:
       Alive:
@@ -1434,6 +1452,14 @@
       layer:
       - MobLayer
   - type: Appearance
+  - type: Inventory
+    speciesId: fox
+    templateId: pet
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+    - key: enum.StrippingUiKey.Key
+      type: StrippableBoundUserInterface
   - type: DamageStateVisuals
     states:
       Alive:
@@ -1481,6 +1507,14 @@
       - MobMask
       layer:
       - MobLayer
+  - type: Inventory
+    speciesId: dog
+    templateId: pet
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+    - key: enum.StrippingUiKey.Key
+      type: StrippableBoundUserInterface
   - type: DamageStateVisuals
     states:
       Alive:
@@ -1505,7 +1539,7 @@
     attributes:
       gender: epicene
   - type: SentienceTarget
-    flavorKind: corgi
+    flavorKind: station-event-random-sentience-flavor-corgi
   - type: Puller
   - type: MobPrice
     price: 200
@@ -1591,6 +1625,9 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: puppy
   - type: Appearance
+  - type: Inventory
+    speciesId: puppy
+    templateId: pet
   - type: DamageStateVisuals
     states:
       Alive:
@@ -1627,6 +1664,14 @@
       layer:
       - MobLayer
   - type: Appearance
+  - type: Inventory
+    speciesId: cat
+    templateId: pet
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+    - key: enum.StrippingUiKey.Key
+      type: StrippableBoundUserInterface
   - type: DamageStateVisuals
     states:
       Alive:
@@ -1761,6 +1806,14 @@
       layer:
       - MobLayer
   - type: Appearance
+  - type: Inventory
+    speciesId: sloth
+    templateId: pet
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+    - key: enum.StrippingUiKey.Key
+      type: StrippableBoundUserInterface
   - type: DamageStateVisuals
     states:
       Alive:
@@ -1807,6 +1860,14 @@
       layer:
       - MobLayer
   - type: Appearance
+  - type: Inventory
+    speciesId: fox #close enough
+    templateId: pet
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+    - key: enum.StrippingUiKey.Key
+      type: StrippableBoundUserInterface
   - type: DamageStateVisuals
     states:
       Alive:

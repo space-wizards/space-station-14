@@ -9,6 +9,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 
@@ -129,7 +130,7 @@ namespace Content.IntegrationTests.Tests
             var componentFactory = server.ResolveDependency<IComponentFactory>();
             var tileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
 
-            IMapGrid grid = default;
+            MapGridComponent grid = default;
 
             await server.WaitPost(() =>
             {
@@ -224,7 +225,7 @@ namespace Content.IntegrationTests.Tests
             var componentFactory = server.ResolveDependency<IComponentFactory>();
             var tileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
 
-            IMapGrid grid = default;
+            MapGridComponent grid = default;
 
             await server.WaitPost(() =>
             {

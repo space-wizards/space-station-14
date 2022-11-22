@@ -52106,9 +52106,6 @@ entities:
   - pos: 48.5,-39.5
     parent: 60
     type: Transform
-  - SecondsUntilStateChange: -37148.992
-    state: Opening
-    type: Door
 - uid: 3729
   type: PoweredSmallLight
   components:
@@ -123765,9 +123762,6 @@ entities:
   - pos: 31.5,-19.5
     parent: 60
     type: Transform
-  - SecondsUntilStateChange: -30661.895
-    state: Closing
-    type: Door
 - uid: 14524
   type: ReinforcedWindow
   components:

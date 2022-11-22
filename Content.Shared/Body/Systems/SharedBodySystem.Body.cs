@@ -28,6 +28,7 @@ public partial class SharedBodySystem
 
         var prototype = Prototypes.Index<BodyPrototype>(body.Prototype);
         InitBody(body, prototype);
+        Dirty(body); // Client doesn't actually spawn the body, need to sync it
     }
 
     private void OnBodyGetState(EntityUid uid, BodyComponent body, ref ComponentGetState args)
@@ -161,7 +162,7 @@ public partial class SharedBodySystem
     }
 
     public virtual HashSet<EntityUid> GibBody(EntityUid? partId, bool gibOrgans = false,
-        BodyComponent? body = null)
+        BodyComponent? body = null, bool deleteItems = false)
     {
         if (partId == null || !Resolve(partId.Value, ref body, false))
             return new HashSet<EntityUid>();
