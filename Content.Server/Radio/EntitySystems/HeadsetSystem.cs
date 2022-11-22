@@ -38,6 +38,7 @@ public sealed class HeadsetSystem : EntitySystem
         SubscribeLocalEvent<HeadsetComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<HeadsetComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<HeadsetComponent, EntInsertedIntoContainerMessage>(OnContainerModified);
+        SubscribeLocalEvent<HeadsetComponent, EntRemovedFromContainerMessage>(OnContainerModified);
     }
 
     private void OnSpeak(EntityUid uid, WearingHeadsetComponent component, EntitySpokeEvent args)
@@ -197,13 +198,14 @@ public sealed class HeadsetSystem : EntitySystem
 
     private void OnContainerModified(EntityUid uid, HeadsetComponent component, ContainerModifiedMessage args)
     {
-        if ((args.Container.ID == HeadsetComponent.KeyContainerName))
-            if (TryComp<EncryptionKeyComponent>(args.Entity, out var added))
-            {
-                UploadChannelsFromKey(component, added);
-                PushRadioChannelsToOwner(uid, component, EnsureComp<ActiveRadioComponent>(uid));
-            }
-        else
-            RecalculateChannels(component);
+        if (args.Container.ID == HeadsetComponent.KeyContainerName)
+            if(args.Container.ContainedEntities.Contains(args.Entity))
+                if (TryComp<EncryptionKeyComponent>(args.Entity, out var added))
+                {
+                    UploadChannelsFromKey(component, added);
+                    PushRadioChannelsToOwner(uid, component, EnsureComp<ActiveRadioComponent>(uid));
+                }
+            else
+                RecalculateChannels(component);
     }
 }
