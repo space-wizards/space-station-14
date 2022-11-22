@@ -215,3 +215,16 @@
   - type: ConditionalSpawner
     prototypes:
     - MobBearSpace
+
+- type: entity
+  name: Alexander Spawner
+  id: SpawnMobAlexander
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobAlexander

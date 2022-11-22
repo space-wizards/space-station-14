@@ -1890,3 +1890,52 @@
   - type: Grammar
     attributes:
       gender: epicene
+
+- type: entity
+  name: pig
+  parent: SimpleMobBase
+  id: MobPig
+  description: Oink.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: pig
+      sprite: Mobs/Animals/pig.rsi
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      density: 250
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
+  - type: Appearance
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: pig
+      Critical:
+        Base: dead
+      Dead:
+        Base: dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeat
+      amount: 6
+  - type: Grammar
+    attributes:
+      gender: epicene
+  - type: InteractionPopup
+    successChance: 0.7
+    interactSuccessString: petting-success-pig
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/pig_oink.ogg
+  - type: ReplacementAccent
+    accent: pig
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-organic
