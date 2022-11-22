@@ -3,6 +3,7 @@ using Content.Server.Humanoid;
 using Content.Server.Speech.Components;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Humanoid;
+using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -52,8 +53,21 @@ public sealed class VocalSystem : EntitySystem
     private bool TryPlayEmoteSound(EntityUid uid, VocalComponent component, string emoteId)
     {
         var proto = component.EmoteSounds;
-        if (proto == null || !proto.Sounds.TryGetValue(emoteId, out var sound))
+        if (proto == null)
             return false;
+
+        SoundSpecifier? sound;
+        if (proto.Sound != null)
+        {
+            // use main override sound
+            sound = proto.Sound;
+        }
+        else
+        {
+            // use regular sound by emote key
+            if (!proto.Sounds.TryGetValue(emoteId, out sound))
+                return false;
+        }
 
         var param = proto.Params ?? sound.Params;
         _audio.PlayPvs(sound, uid, param);
