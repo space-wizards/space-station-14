@@ -144,7 +144,6 @@ public sealed class HeadsetSystem : EntitySystem
     {
         foreach (var j in key.Channels)
             src.Channels.Add(j);
-        return;
     }
     private void RecalculateChannels(HeadsetComponent src)
     {
@@ -152,7 +151,6 @@ public sealed class HeadsetSystem : EntitySystem
         foreach (EntityUid i in src.KeyContainer.ContainedEntities)
             if (TryComp<EncryptionKeyComponent>(i, out var key))
                 UploadChannelsFromKey(src, key);
-        return;
     }
 
     private void OnInteractUsing(EntityUid uid, HeadsetComponent component, InteractUsingEvent args)
