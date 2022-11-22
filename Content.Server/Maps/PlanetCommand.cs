@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Administration;
 using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
@@ -77,5 +78,18 @@ public sealed class PlanetCommand : IConsoleCommand
 
         _entManager.EnsureComponent<MapGridComponent>(mapUid);
         shell.WriteLine(Loc.GetString("cmd-planet-success", ("mapId", mapId)));
+    }
+
+    public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    {
+        if (args.Length != 1)
+        {
+            return CompletionResult.Empty;
+        }
+
+        var options = _entManager.EntityQuery<MapComponent>(true)
+            .Select(o => new CompletionOption(o.WorldMap.ToString(), "MapId"));
+
+        return CompletionResult.FromOptions(options);
     }
 }
