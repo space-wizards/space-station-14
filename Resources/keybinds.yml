@@ -226,6 +226,16 @@ binds:
   type: State
   key: Right
   canRepeat: true
+- function: TextCursorUp
+  type: State
+  key: Up
+  canRepeat: true
+  priority: 2
+- function: TextCursorDown
+  type: State
+  key: Down
+  canRepeat: true
+  priority: 2
 - function: TextCursorWordLeft
   type: State
   key: Left
@@ -257,6 +267,18 @@ binds:
   mod1: Shift
   canRepeat: true
   allowSubCombs: true
+- function: TextCursorSelectUp
+  type: State
+  key: Up
+  mod1: Shift
+  canRepeat: true
+  allowSubCombs: true
+- function: TextCursorSelectDown
+  type: State
+  key: Down
+  mod1: Shift
+  canRepeat: true
+  allowSubCombs: true
 - function: TextCursorSelectWordLeft
   type: State
   key: Left
@@ -285,6 +307,14 @@ binds:
 - function: TextBackspace
   type: State
   key: BackSpace
+  canRepeat: true
+- function: TextNewline
+  type: State
+  key: Return
+  canRepeat: true
+- function: TextNewline
+  type: State
+  key: NumpadEnter
   canRepeat: true
 - function: TextSubmit
   type: State

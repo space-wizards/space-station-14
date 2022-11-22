@@ -176,6 +176,25 @@
      Glass: 900
      Gold: 100
 
+- type: latheRecipe
+  id: ArtifactAnalyzerMachineCircuitboard
+  icon: Objects/Misc/module.rsi/science.png
+  result: ArtifactAnalyzerMachineCircuitboard
+  completetime: 4
+  materials:
+     Steel: 100
+     Glass: 900
+     Gold: 100
+
+- type: latheRecipe
+  id: TraversalDistorterMachineCircuitboard
+  icon: Objects/Misc/module.rsi/science.png
+  result: TraversalDistorterMachineCircuitboard
+  completetime: 4
+  materials:
+     Steel: 100
+     Glass: 900
+     Gold: 100
 
 - type: latheRecipe
   id: ReagentGrinderMachineCircuitboard
@@ -185,6 +204,16 @@
   materials:
      Steel: 100
      Glass: 900
+
+- type: latheRecipe
+  id: AnalysisComputerCircuitboard
+  icon: Objects/Misc/module.rsi/cpu_science.png
+  result: AnalysisComputerCircuitboard
+  completetime: 4
+  materials:
+     Steel: 100
+     Glass: 900
+     Gold: 100
 
 - type: latheRecipe
   id: CrewMonitoringComputerCircuitboard

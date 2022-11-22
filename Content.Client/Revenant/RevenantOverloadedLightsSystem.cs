@@ -18,7 +18,9 @@ public sealed class RevenantOverloadedLightsSystem : SharedRevenantOverloadedLig
     {
         base.Update(frameTime);
 
-        foreach (var (comp, light) in  EntityQuery<RevenantOverloadedLightsComponent, PointLightComponent>())
+        var enumerator = EntityQueryEnumerator<RevenantOverloadedLightsComponent, PointLightComponent>();
+
+        while (enumerator.MoveNext(out var comp, out var light))
         {
             //this looks cool :HECK:
             light.Energy = 2f * Math.Abs((float) Math.Sin(0.25 * Math.PI * comp.Accumulator));

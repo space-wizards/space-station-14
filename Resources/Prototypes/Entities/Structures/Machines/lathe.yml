@@ -185,6 +185,7 @@
       - CryostasisBeaker
       - Dropper
       - Syringe
+      - Implanter
       - PillCanister
       - ChemistryEmptyBottle01
       - Drone
@@ -220,7 +221,8 @@
       - VoiceTrigger
       - PowerCellSmall
       - PowerCellMedium
-      - PowerCellHigh
+      - PowerCellHigh  
+      - RPED
       - ProximitySensor
       - LeftArmBorg
       - RightArmBorg
@@ -298,6 +300,9 @@
       - EmitterCircuitboard
       - GasRecyclerMachineCircuitboard
       - SeedExtractorMachineCircuitboard
+      - AnalysisComputerCircuitboard
+      - ArtifactAnalyzerMachineCircuitboard
+      - TraversalDistorterMachineCircuitboard
   - type: MaterialStorage
     whitelist:
       tags:
@@ -333,7 +338,10 @@
       - Flash
       - FlashPayload
       - Handcuffs
+      - Zipties
       - Stunbaton
+      - ForensicPad
+      - ClothingEyesGlassesSecurity
       - RiotShield
       - CartridgePistol
       - CartridgeMagnum
@@ -347,6 +355,9 @@
       - CartridgeCaselessRifleRubber
       - CartridgeLightRifleRubber
       - CartridgeRifleRubber
+      - TargetHuman
+      - TargetSyndicate
+      - TargetClown
   - type: MaterialStorage
     whitelist:
       tags:
@@ -396,6 +407,7 @@
       - CryostasisBeaker
       - Dropper
       - Syringe
+      - Implanter
       - PillCanister
       - BodyBag
       - ChemistryEmptyBottle01

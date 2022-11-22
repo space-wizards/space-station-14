@@ -49,8 +49,8 @@ public sealed partial class ConstructionSystem
             {
                 _examineSystem.SendExamineTooltip(args.User, uid, markup, getVerbs: false, centerAtCursor: false);
             },
-            Text = Loc.GetString("machine-examinable-verb-text"),
-            Message = Loc.GetString("machine-examinable-verb-message"),
+            Text = Loc.GetString("machine-upgrade-examinable-verb-text"),
+            Message = Loc.GetString("machine-upgrade-examinable-verb-message"),
             Category = VerbCategory.Examine,
             IconTexture = "/Textures/Interface/VerbIcons/pickup.svg.192dpi.png"
         };
@@ -76,8 +76,8 @@ public sealed partial class ConstructionSystem
         var output = new Dictionary<string, float>();
         foreach (var type in _prototypeManager.EnumeratePrototypes<MachinePartPrototype>())
         {
-            var amount = 0;
-            var sumRating = 0;
+            var amount = 0f;
+            var sumRating = 0f;
             foreach (var part in parts.Where(part => part.PartType == type.ID))
             {
                 amount++;

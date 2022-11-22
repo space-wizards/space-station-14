@@ -9,7 +9,6 @@ public sealed class ResistLockerComponent : Component
     /// <summary>
     /// How long will this locker take to kick open, defaults to 2 minutes
     /// </summary>
-    [ViewVariables]
     [DataField("resistTime")]
     public float ResistTime = 120f;
 

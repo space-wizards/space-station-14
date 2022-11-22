@@ -1,9 +1,6 @@
 using System.Threading;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.FixedPoint;
-using Content.Server.UserInterface;
-using Robust.Server.GameObjects;
-using Content.Shared.Chemistry;
 
 namespace Content.Server.Chemistry.Components
 {
@@ -21,9 +18,17 @@ namespace Content.Server.Chemistry.Components
         /// Whether or not the injector is able to draw from containers or if it's a single use
         /// device that can only inject.
         /// </summary>
-        [ViewVariables]
         [DataField("injectOnly")]
         public bool InjectOnly;
+
+        /// <summary>
+        /// Whether or not the injector is able to draw from or inject from mobs
+        /// </summary>
+        /// <remarks>
+        ///     for example: droppers would ignore mobs
+        /// </remarks>
+        [DataField("ignoreMobs")]
+        public bool IgnoreMobs = false;
 
         /// <summary>
         ///     The minimum amount of solution that can be transferred at once from this solution.
@@ -72,6 +77,7 @@ namespace Content.Server.Chemistry.Components
         /// only ever be set to Inject
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("toggleState")]
         public InjectorToggleMode ToggleState
         {
             get => _toggleState;

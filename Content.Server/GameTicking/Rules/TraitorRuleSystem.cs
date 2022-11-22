@@ -193,7 +193,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem
         var difficulty = 0f;
         for (var pick = 0; pick < maxPicks && maxDifficulty > difficulty; pick++)
         {
-            var objective = _objectivesManager.GetRandomObjective(traitorRole.Mind);
+            var objective = _objectivesManager.GetRandomObjective(traitorRole.Mind, "TraitorObjectiveGroups");
             if (objective == null) continue;
             if (traitorRole.Mind.TryAddObjective(objective))
                 difficulty += objective.Difficulty;

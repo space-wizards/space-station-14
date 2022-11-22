@@ -9,7 +9,6 @@ namespace Content.Server.Construction.Components
     [RegisterComponent]
     public sealed class ComputerBoardComponent : Component
     {
-        [ViewVariables]
         [DataField("prototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string? Prototype { get; private set; }
     }
