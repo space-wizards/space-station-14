@@ -166,7 +166,7 @@ public sealed class HeadsetSystem : EntitySystem
                 if (_container.TryRemoveFromContainer(args.Used) && InstallKey(component, args.Used, key))
                 {
                     _popupSystem.PopupEntity(Loc.GetString("headset-encryption-key-successfully-installed"), uid, Filter.Entities(args.User));
-                    _audio.PlayPvs(_audio.GetSound(component.KeyInsertionSound), args.Target);
+                    _audio.PlayPvs(component.KeyInsertionSound, args.Target);
                 }
             else
                 _popupSystem.PopupEntity(Loc.GetString("headset-encryption-key-slots-already-full"), uid, Filter.Entities(args.User));
@@ -189,7 +189,7 @@ public sealed class HeadsetSystem : EntitySystem
                     component.Channels.Clear();
 
                     _popupSystem.PopupEntity(Loc.GetString("headset-encryption-keys-all-extrated"), uid, Filter.Entities(args.User));
-                    _audio.PlayPvs(_audio.GetSound(component.KeyExtractionSound), args.Target);
+                    _audio.PlayPvs(component.KeyExtractionSound, args.Target);
                 }
             else
                 _popupSystem.PopupEntity(Loc.GetString("headset-encryption-keys-no-keys"), uid, Filter.Entities(args.User));
