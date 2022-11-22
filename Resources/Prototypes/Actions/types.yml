@@ -23,6 +23,39 @@
   event: !type:ToggleActionEvent
 
 - type: instantAction
+  id: OpenStorageImplant
+  name: open-storage-implant-action-name
+  description: open-storage-implant-action-description
+  itemIconStyle: BigAction
+  icon:
+    sprite: Clothing/Back/Backpacks/backpack.rsi
+    state: icon
+  event: !type:OpenStorageImplantEvent
+
+- type: instantAction
+  id: ActivateMicroBomb
+  name: activate-micro-bomb-action-name
+  description: activate-micro-bomb-action-description
+  checkCanInteract: false
+  itemIconStyle: BigAction
+  icon:
+    sprite: Actions/Implants/implants.rsi
+    state: explosive
+  event: !type:ActivateImplantEvent
+
+- type: instantAction
+  id: ActivateFreedomImplant
+  name: use-freedom-implant-action-name
+  description: use-freedom-implant-action-description
+  charges: 3
+  checkCanInteract: false
+  itemIconStyle: BigAction
+  icon:
+    sprite: Actions/Implants/implants.rsi
+    state: freedom
+  event: !type:UseFreedomImplantEvent
+
+- type: instantAction
   id: ToggleSuitHelmet
   name: action-name-hardsuit
   description: action-description-hardsuit

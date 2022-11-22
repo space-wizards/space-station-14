@@ -203,7 +203,7 @@ namespace Content.Server.Atmos.EntitySystems
             component.ConnectStream?.Stop();
 
             if (component.ConnectSound != null)
-                component.ConnectStream = _audioSys.Play(component.ConnectSound, Filter.Pvs(component.Owner, entityManager: EntityManager), component.Owner, component.ConnectSound.Params);
+                component.ConnectStream = _audioSys.PlayPvs(component.ConnectSound, component.Owner);
 
             UpdateUserInterface(component);
         }
@@ -222,7 +222,7 @@ namespace Content.Server.Atmos.EntitySystems
             component.DisconnectStream?.Stop();
 
             if (component.DisconnectSound != null)
-                component.DisconnectStream = _audioSys.Play(component.DisconnectSound, Filter.Pvs(component.Owner, entityManager: EntityManager), component.Owner, component.DisconnectSound.Params);
+                component.DisconnectStream = _audioSys.PlayPvs(component.DisconnectSound, component.Owner);
 
             UpdateUserInterface(component);
         }
@@ -281,7 +281,7 @@ namespace Content.Server.Atmos.EntitySystems
                     if(environment != null)
                         _atmosphereSystem.Merge(environment, component.Air);
 
-                    _audioSys.Play(component.RuptureSound, Filter.Pvs(component.Owner), Transform(component.Owner).Coordinates, AudioParams.Default.WithVariation(0.125f));
+                    _audioSys.Play(component.RuptureSound, Filter.Pvs(component.Owner), Transform(component.Owner).Coordinates, true, AudioParams.Default.WithVariation(0.125f));
 
                     QueueDel(component.Owner);
                     return;
