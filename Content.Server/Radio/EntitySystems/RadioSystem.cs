@@ -6,6 +6,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Radio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Network;
+using Robust.Shared.Replays;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Radio.EntitySystems;
@@ -16,6 +17,7 @@ namespace Content.Server.Radio.EntitySystems;
 public sealed class RadioSystem : EntitySystem
 {
     [Dependency] private readonly INetManager _netMan = default!;
+    [Dependency] private readonly IReplayRecordingManager _replay = default!;
 
     // set used to prevent radio feedback loops.
     private readonly HashSet<string> _messages = new();
@@ -82,8 +84,7 @@ public sealed class RadioSystem : EntitySystem
             RaiseLocalEvent(radio.Owner, ev);
         }
 
-        // _replay.QueueReplayMessage(chat);
-
+        _replay.QueueReplayMessage(chat);
         _messages.Remove(message);
     }
 }

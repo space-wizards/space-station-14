@@ -13,6 +13,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
+using Robust.Shared.Replays;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Chat.Managers
@@ -30,15 +31,13 @@ namespace Content.Server.Chat.Managers
             { "revolutionary", "#aa00ff" }
         };
 
+        [Dependency] private readonly IReplayRecordingManager _replay = default!;
         [Dependency] private readonly IServerNetManager _netManager = default!;
         [Dependency] private readonly IMoMMILink _mommiLink = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly IServerPreferencesManager _preferencesManager = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-
-        private StationSystem _stationSystem = default!;
 
         /// <summary>
         /// The maximum length a player-sent message can be sent
@@ -50,7 +49,6 @@ namespace Content.Server.Chat.Managers
 
         public void Initialize()
         {
-            _stationSystem = _entityManager.EntitySysManager.GetEntitySystem<StationSystem>();
             _netManager.RegisterNetMessage<MsgChatMessage>();
 
             _configurationManager.OnValueChanged(CCVars.OocEnabled, OnOocEnabledChanged, true);
@@ -207,8 +205,8 @@ namespace Content.Server.Chat.Managers
             var msg = new ChatMessage(channel, message, wrappedMessage, source, hideChat, colorOverride);
             _netManager.ServerSendMessage(new MsgChatMessage() { Message = msg }, client);
 
-            //if (recordReplay)
-            //   _replay.QueueReplayMessage(msg);
+            if (recordReplay)
+                _replay.QueueReplayMessage(msg);
         }
 
         public void ChatMessageToMany(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, bool recordReplay, IEnumerable<INetChannel> clients, Color? colorOverride = null)
@@ -219,8 +217,8 @@ namespace Content.Server.Chat.Managers
             var msg = new ChatMessage(channel, message, wrappedMessage, source, hideChat, colorOverride);
             _netManager.ServerSendToMany(new MsgChatMessage() { Message = msg }, clients);
 
-            //if (recordReplay)
-            //    _replay.QueueReplayMessage(msg);
+            if (recordReplay)
+                _replay.QueueReplayMessage(msg);
         }
 
         public void ChatMessageToManyFiltered(Filter filter, ChatChannel channel, string message, string wrappedMessage, EntityUid source,
@@ -243,8 +241,8 @@ namespace Content.Server.Chat.Managers
             var msg = new ChatMessage(channel, message, wrappedMessage, source, hideChat, colorOverride);
             _netManager.ServerSendToAll(new MsgChatMessage() { Message = msg });
 
-            //if (recordReplay)
-            //    _replay.QueueReplayMessage(msg);
+            if (recordReplay)
+                _replay.QueueReplayMessage(msg);
         }
 
         public bool MessageCharacterLimit(IPlayerSession? player, string message)
