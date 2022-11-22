@@ -42,6 +42,6 @@ public sealed class FlyBySoundSystem : SharedFlyBySoundSystem
         }
 
         // Play attached to our entity because the projectile may immediately delete or the likes.
-        _audio.Play(component.Sound, Filter.Local(), attachedEnt.Value);
+        _audio.Play(component.Sound, Filter.Local(), attachedEnt.Value, false);
     }
 }
