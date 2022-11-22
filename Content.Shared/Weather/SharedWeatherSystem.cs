@@ -1,4 +1,5 @@
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -25,7 +26,7 @@ public abstract class SharedWeatherSystem : EntitySystem
         Sawmill = Logger.GetSawmill("weather");
     }
 
-    public bool CanWeatherAffect(IMapGrid grid, TileRef tileRef, WeatherPrototype weatherProto, EntityQuery<PhysicsComponent> bodyQuery)
+    public bool CanWeatherAffect(MapGridComponent grid, TileRef tileRef, WeatherPrototype weatherProto, EntityQuery<PhysicsComponent> bodyQuery)
     {
         if (tileRef.Tile.IsEmpty)
             return true;

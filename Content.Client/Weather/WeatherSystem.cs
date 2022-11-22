@@ -164,7 +164,7 @@ public sealed class WeatherSystem : SharedWeatherSystem
             // TODO: Fades
             component.Stream?.Stop();
             component.Stream = null;
-            component.Stream = _audio.PlayGlobal(prototype.Sound, Filter.Local());
+            component.Stream = _audio.PlayGlobal(prototype.Sound, Filter.Local(), true);
         }
 
         return true;
