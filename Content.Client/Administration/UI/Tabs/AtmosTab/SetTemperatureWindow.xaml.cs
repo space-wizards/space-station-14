@@ -9,6 +9,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 
 namespace Content.Client.Administration.UI.Tabs.AtmosTab
 {
@@ -16,7 +17,7 @@ namespace Content.Client.Administration.UI.Tabs.AtmosTab
     [UsedImplicitly]
     public sealed partial class SetTemperatureWindow : DefaultWindow
     {
-        private IEnumerable<IMapGrid>? _data;
+        private IEnumerable<MapGridComponent>? _data;
 
         protected override void EnteredTree()
         {
