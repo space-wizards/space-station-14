@@ -24,11 +24,14 @@ namespace Content.Server.Chat.Managers
         void SendAdminAnnouncement(string message);
 
         void ChatMessageToOne(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat,
-            INetChannel client, Color? colorOverride = null);
-        void ChatMessageToMany(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat,
+            INetChannel client, Color? colorOverride = null, bool recordReplay = false);
+
+        void ChatMessageToMany(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, bool recordReplay,
             IEnumerable<INetChannel> clients, Color? colorOverride = null);
-        void ChatMessageToManyFiltered(Filter filter, ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, Color? colorOverride);
-        void ChatMessageToAll(ChatChannel channel, string message, string wrappedMessage, Color? colorOverride = null);
+
+        void ChatMessageToManyFiltered(Filter filter, ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, bool recordReplay, Color? colorOverride);
+
+        void ChatMessageToAll(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, bool recordReplay, Color? colorOverride = null);
 
         bool MessageCharacterLimit(IPlayerSession player, string message);
     }
