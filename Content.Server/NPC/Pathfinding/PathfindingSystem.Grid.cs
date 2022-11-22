@@ -84,6 +84,10 @@ public sealed partial class PathfindingSystem
         var updateCount = 0;
 #endif
         _stopwatch.Restart();
+        var options = new ParallelOptions()
+        {
+            MaxDegreeOfParallelism = _parallel.ParallelProcessCount,
+        };
 
         // We defer chunk updates because rebuilding a navmesh is hella costly
         // If we're paused then NPCs can't run anyway.
@@ -132,7 +136,7 @@ public sealed partial class PathfindingSystem
             // This is for map <> grid pathfinding
 
             // Without parallel this is roughly 3x slower on my desktop.
-            Parallel.For(0, dirt.Length, i =>
+            Parallel.For(0, dirt.Length, options, i =>
             {
                 // Doing the queries per task seems faster.
                 var accessQuery = GetEntityQuery<AccessReaderComponent>();
@@ -160,7 +164,7 @@ public sealed partial class PathfindingSystem
             {
                 var it1 = it;
 
-                Parallel.For(0, dirt.Length, j =>
+                Parallel.For(0, dirt.Length, options, j =>
                 {
                     var chunk = dirt[j];
                     // Check if the chunk is safe on this iteration.
