@@ -14,7 +14,6 @@ public sealed class ContainmentFieldGeneratorComponent : SharedContainmentFieldG
     /// <summary>
     /// Store power with a cap. Decrease over time if not being powered from source.
     /// </summary>
-    [ViewVariables]
     [DataField("powerBuffer")]
     public int PowerBuffer
     {
@@ -46,21 +45,18 @@ public sealed class ContainmentFieldGeneratorComponent : SharedContainmentFieldG
     /// <summary>
     /// Used to check if it's received power recently.
     /// </summary>
-    [ViewVariables]
     [DataField("accumulator")]
     public float Accumulator;
 
     /// <summary>
     /// How many seconds should the generators wait before losing power?
     /// </summary>
-    [ViewVariables]
     [DataField("threshold")]
     public float Threshold = 10f;
 
     /// <summary>
     /// How many tiles should this field check before giving up?
     /// </summary>
-    [ViewVariables]
     [DataField("maxLength")]
     public float MaxLength = 8F;
 
@@ -87,7 +83,6 @@ public sealed class ContainmentFieldGeneratorComponent : SharedContainmentFieldG
     /// <summary>
     /// The masks the raycast should not go through
     /// </summary>
-    [ViewVariables]
     [DataField("collisionMask")]
     public int CollisionMask = (int) (CollisionGroup.MobMask | CollisionGroup.Impassable | CollisionGroup.MachineMask | CollisionGroup.Opaque);
 

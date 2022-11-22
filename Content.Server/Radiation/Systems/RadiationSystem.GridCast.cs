@@ -3,6 +3,7 @@ using Content.Shared.Radiation.Components;
 using Content.Shared.Radiation.Systems;
 using Robust.Shared.Collections;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -118,7 +119,7 @@ public partial class RadiationSystem
         {
             if (!gridQuery.TryGetComponent(sourceTrs.GridUid.Value, out var gridComponent))
                 return ray;
-            return Gridcast(gridComponent.Grid, ray, saveVisitedTiles, resistanceQuery, sourceTrs, destTrs, transformQuery.GetComponent(sourceTrs.GridUid.Value));
+            return Gridcast(gridComponent, ray, saveVisitedTiles, resistanceQuery, sourceTrs, destTrs, transformQuery.GetComponent(sourceTrs.GridUid.Value));
         }
 
         // lets check how many grids are between source and destination
@@ -142,7 +143,7 @@ public partial class RadiationSystem
         return ray;
     }
 
-    private RadiationRay Gridcast(IMapGrid grid, RadiationRay ray, bool saveVisitedTiles,
+    private RadiationRay Gridcast(MapGridComponent grid, RadiationRay ray, bool saveVisitedTiles,
         EntityQuery<RadiationGridResistanceComponent> resistanceQuery,
         TransformComponent sourceTrs,
         TransformComponent destTrs,

@@ -143,14 +143,14 @@
         amount: 0.2
 
 - type: reagent
-  id: Kahlua
-  name: reagent-name-kahlua
+  id: CoffeeLiqueur
+  name: reagent-name-coffeeliqueur
   parent: BaseAlcohol
-  desc: reagent-desc-kahlua
+  desc: reagent-desc-coffeeliqueur
   physicalDesc: reagent-physical-desc-cloudy
   flavor: coffeeliquor
   color: "#664300"
-  spritePath: kahluaglass.rsi
+  spritePath: coffeeliqueurglass.rsi
 
 - type: reagent
   id: MelonLiquor

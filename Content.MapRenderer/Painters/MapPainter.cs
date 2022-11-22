@@ -9,6 +9,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 using SixLabors.ImageSharp;
@@ -59,7 +60,7 @@ namespace Content.MapRenderer.Painters
 
             var tilePainter = new TilePainter(client, server);
             var entityPainter = new GridPainter(client, server);
-            IMapGrid[] grids = null!;
+            MapGridComponent[] grids = null!;
             var xformQuery = sEntityManager.GetEntityQuery<TransformComponent>();
 
             await server.WaitPost(() =>
