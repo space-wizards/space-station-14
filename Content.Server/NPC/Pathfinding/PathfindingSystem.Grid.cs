@@ -10,6 +10,7 @@ using Content.Shared.Physics;
 using Microsoft.Extensions.ObjectPool;
 using Robust.Shared.Collections;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
@@ -140,7 +141,7 @@ public sealed partial class PathfindingSystem
                 var fixturesQuery = GetEntityQuery<FixturesComponent>();
                 var physicsQuery = GetEntityQuery<PhysicsComponent>();
                 var xformQuery = GetEntityQuery<TransformComponent>();
-                BuildBreadcrumbs(dirt[i], mapGridComp.Grid, accessQuery, destructibleQuery, doorQuery, fixturesQuery, physicsQuery, xformQuery);
+                BuildBreadcrumbs(dirt[i], mapGridComp, accessQuery, destructibleQuery, doorQuery, fixturesQuery, physicsQuery, xformQuery);
             }
 
             const int Division = 4;
@@ -361,7 +362,7 @@ public sealed partial class PathfindingSystem
     }
 
     private void BuildBreadcrumbs(GridPathfindingChunk chunk,
-        IMapGrid grid,
+        MapGridComponent grid,
         EntityQuery<AccessReaderComponent> accessQuery,
         EntityQuery<DestructibleComponent> destructibleQuery,
         EntityQuery<DoorComponent> doorQuery,

@@ -4,6 +4,7 @@ using System.Linq;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Timing;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
@@ -26,7 +27,7 @@ namespace Content.MapRenderer.Painters
             _cResourceCache = client.ResolveDependency<IResourceCache>();
         }
 
-        public void Run(Image gridCanvas, IMapGrid grid)
+        public void Run(Image gridCanvas, MapGridComponent grid)
         {
             var stopwatch = new Stopwatch();
             stopwatch.Start();
