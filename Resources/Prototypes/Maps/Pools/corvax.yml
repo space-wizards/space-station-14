@@ -2,4 +2,4 @@
   id: CorvaxMapPool
   maps:
     - CorvaxDelta
-    - Box
+    - CorvaxBox
