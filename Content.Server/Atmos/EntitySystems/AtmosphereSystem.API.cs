@@ -4,6 +4,7 @@ using Content.Server.Atmos.Reactions;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Shared.Atmos;
 using Robust.Server.GameObjects;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Atmos.EntitySystems;
@@ -107,8 +108,16 @@ public partial class AtmosphereSystem
         else
             RaiseLocalEvent(ref ev);
 
+        if (ev.Handled)
+            return ev.Mixtures;
+
         // Default to a space mixture... This is a space game, after all!
-        return ev.Mixtures ?? new GasMixture?[tiles.Count];
+        ev.Mixtures ??= new GasMixture?[tiles.Count];
+        for (var i = 0; i < tiles.Count; i++)
+        {
+            ev.Mixtures[i] ??= GasMixture.SpaceGas;
+        }
+        return ev.Mixtures;
     }
 
     public GasMixture? GetTileMixture(EntityUid? gridUid, EntityUid? mapUid, Vector2i tile, bool excite = false)

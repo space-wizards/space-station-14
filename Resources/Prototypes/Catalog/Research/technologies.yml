@@ -51,6 +51,7 @@
     - ClothingHandsGlovesNitrile
     - ClothingMaskSterile
     - DiseaseSwab
+    - Implanter
 
 - type: technology
   name: technologies-advanced-botany
@@ -245,6 +246,7 @@
     - FireAlarmElectronics
     - MailingUnitElectronics
     - HolofanProjector
+    - RPED
 
 - type: technology
   name: technologies-material-sheet-printing
@@ -438,7 +440,6 @@
   requiredPoints: 8000
   requiredTechnologies:
     - BasicPartsTechnology
-    - IndustrialEngineering
     - PowerCellBasic
   unlockedRecipes:
     - AdvancedCapacitorStockPart
@@ -446,6 +447,7 @@
     - HighPowerMicroLaserStockPart
     - NanoManipulatorStockPart
     - AdvancedScanningModuleStockPart
+    - TraversalDistorterMachineCircuitboard #sigh
 
 # Bluespace Theory Technology Tree
 
