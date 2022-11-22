@@ -17,6 +17,13 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         [DataField("container")]
         public string ContainerName { get; set; } = "GasCanisterTankHolder";
 
+        /// <summary>
+        ///     Entity prototype for the broken version of the canister.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("brokenCanister")]
+        public string BrokenCanister { get; set; } = "GasCanisterBrokenBase";
+
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("gasMixture")]
         public GasMixture Air { get; set; } = new();

@@ -46,13 +46,9 @@
             - !type:PlaySoundBehavior
               sound:
                 path: /Audio/Effects/metalbreak.ogg
-            - !type:SpawnEntitiesBehavior
-              spawn:
-                GasCanisterBrokenBase:
-                  min: 1
-                  max: 1
             - !type:DoActsBehavior
               acts: [ "Destruction" ]
+            - !type:DumpCanisterBehavior
     - type: Damageable
       damageContainer: Inorganic
       damageModifierSet: Metallic
@@ -98,6 +94,7 @@
       layers:
         - state: yellow
     - type: GasCanister
+      brokenCanister: StorageCanisterBroken
       gasMixture:
         volume: 1000
         moles: # List of gasses for easy reference
@@ -108,22 +105,6 @@
           - 0 # Tritium
           - 0 # Water vapor
         temperature: 293.15
-    - type: Destructible
-      thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 300
-        behaviors:
-        - !type:PlaySoundBehavior
-          sound:
-            path: /Audio/Effects/metalbreak.ogg
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            StorageCanisterBroken:
-              min: 1
-              max: 1
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
 
 # Filled canisters, contain 1871.71051 moles each
 
@@ -135,28 +116,13 @@
     layers:
       - state: grey
   - type: GasCanister
+    brokenCanister: AirCanisterBroken
     gasMixture:
       volume: 1000
       moles:
         - 393.0592071 # oxygen 21%
         - 1478.6513029 # nitrogen 79%
       temperature: 293.15
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 300
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          path: /Audio/Effects/metalbreak.ogg
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          AirCanisterBroken:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
 
 - type: entity
   parent: GasCanister
@@ -166,27 +132,12 @@
     layers:
       - state: blue
   - type: GasCanister
+    brokenCanister: OxygenCanisterBroken
     gasMixture:
       volume: 1000
       moles:
         - 1871.71051 # oxygen
       temperature: 293.15
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 300
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          path: /Audio/Effects/metalbreak.ogg
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          OxygenCanisterBroken:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
 
 - type: entity
   parent: GasCanister
@@ -196,28 +147,13 @@
       layers:
         - state: red
     - type: GasCanister
+      brokenCanister: NitrogenCanisterBroken
       gasMixture:
         volume: 1000
         moles:
           - 0 # oxygen
           - 1871.71051 # nitrogen
         temperature: 293.15
-    - type: Destructible
-      thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 300
-        behaviors:
-        - !type:PlaySoundBehavior
-          sound:
-            path: /Audio/Effects/metalbreak.ogg
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            NitrogenCanisterBroken:
-              min: 1
-              max: 1
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
 
 - type: entity
   parent: GasCanister
@@ -227,6 +163,7 @@
       layers:
         - state: black
     - type: GasCanister
+      brokenCanister: CarbonDioxideCanisterBroken
       gasMixture:
         volume: 1000
         moles:
@@ -234,22 +171,6 @@
           - 0 # nitrogen
           - 1871.71051 # CO2
         temperature: 293.15
-    - type: Destructible
-      thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 300
-        behaviors:
-        - !type:PlaySoundBehavior
-          sound:
-            path: /Audio/Effects/metalbreak.ogg
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            CarbonDioxideCanisterBroken:
-              min: 1
-              max: 1
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
     - type: Lock
       locked: true
 
@@ -261,6 +182,7 @@
       layers:
         - state: orange
     - type: GasCanister
+      brokenCanister: PlasmaCanisterBroken
       gasMixture:
         volume: 1000
         moles:
@@ -269,23 +191,6 @@
           - 0 # carbon dioxide
           - 1871.71051 # plasma
         temperature: 293.15
-    - type: Destructible
-      thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 300
-        behaviors:
-        - !type:PlaySoundBehavior
-          sound:
-            path: /Audio/Effects/metalbreak.ogg
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            PlasmaCanisterBroken:
-              min: 1
-              max: 1
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-        - !type:DumpCanisterBehavior
     - type: Lock
       locked: true
 
@@ -297,6 +202,7 @@
       layers:
         - state: green
     - type: GasCanister
+      brokenCanister: TritiumCanisterBroken
       gasMixture:
         volume: 1000
         moles:
@@ -306,22 +212,6 @@
           - 0 # Plasma
           - 1871.71051 # Tritium
         temperature: 293.15
-    - type: Destructible
-      thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 300
-        behaviors:
-        - !type:PlaySoundBehavior
-          sound:
-            path: /Audio/Effects/metalbreak.ogg
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            TritiumCanisterBroken:
-              min: 1
-              max: 1
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
     - type: Lock
       locked: true
 
@@ -333,6 +223,7 @@
       layers:
         - state: water_vapor
     - type: GasCanister
+      brokenCanister: WaterVaporCanisterBroken
       gasMixture:
         volume: 1000
         moles:
@@ -343,22 +234,6 @@
           - 0 # Tritium
           - 1871.71051 # Water vapor
         temperature: 293.15
-    - type: Destructible
-      thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 300
-        behaviors:
-        - !type:PlaySoundBehavior
-          sound:
-            path: /Audio/Effects/metalbreak.ogg
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            WaterVaporCanisterBroken:
-              min: 1
-              max: 1
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
 
 - type: entity
   parent: GasCanister
@@ -368,6 +243,7 @@
       layers:
         - state: greenys
     - type: GasCanister
+      brokenCanister: MiasmaCanisterBroken
       gasMixture:
         volume: 1000
         moles:
@@ -379,22 +255,6 @@
           - 0 #  Water vapor
           - 1871.71051 # Miasma
         temperature: 293.15
-    - type: Destructible
-      thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 300
-        behaviors:
-        - !type:PlaySoundBehavior
-          sound:
-            path: /Audio/Effects/metalbreak.ogg
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            MiasmaCanisterBroken:
-              min: 1
-              max: 1
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
     - type: Lock
       locked: true
 
@@ -406,6 +266,7 @@
       layers:
         - state: redws
     - type: GasCanister
+      brokenCanister: NitrousOxideCanisterBroken
       gasMixture:
         volume: 1000
         moles:
@@ -418,22 +279,6 @@
           - 0 # Miasma
           - 1871.71051 # N2O
         temperature: 293.15
-    - type: Destructible
-      thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 300
-        behaviors:
-        - !type:PlaySoundBehavior
-          sound:
-            path: /Audio/Effects/metalbreak.ogg
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            NitrousOxideCanisterBroken:
-              min: 1
-              max: 1
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
 
 - type: entity
   parent: GasCanister
@@ -443,6 +288,7 @@
     layers:
     - state: frezon
   - type: GasCanister
+    brokenCanister: FrezonCanisterBroken
     gasMixture:
       volume: 1000
       moles:
@@ -455,22 +301,6 @@
       - 0 # Miasma
       - 1871.71051 # Frezon
       temperature: 293.15
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 300
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          path: /Audio/Effects/metalbreak.ogg
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          FrezonCanisterBroken:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: Lock
     locked: true
 
