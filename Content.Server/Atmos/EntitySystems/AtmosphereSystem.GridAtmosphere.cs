@@ -250,7 +250,6 @@ public sealed partial class AtmosphereSystem
             }
         }
 
-        args.NoAir = false;
         args.Result = false;
         args.Handled = true;
     }
