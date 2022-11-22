@@ -116,7 +116,7 @@ namespace Content.Server.Recycling
             if (component.Enabled && args.OurFixture.ID != RecyclerColliderName)
                 return;
 
-            if (TryComp(component.Owner, out ApcPowerReceiverComponent? apcPower))
+            if (TryComp(uid, out ApcPowerReceiverComponent? apcPower))
             {
                 if (!apcPower.Powered)
                     return;
