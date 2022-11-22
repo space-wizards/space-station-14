@@ -139,6 +139,16 @@
   group: market
 
 - type: cargoProduct
+  id: LivestockPig
+  icon:
+    sprite: Mobs/Animals/pig.rsi
+    state: pig
+  product: CrateNPCPig
+  cost: 1000
+  category: Livestock
+  group: market
+
+- type: cargoProduct
   id: LivestockSnake
   icon:
     sprite: Mobs/Animals/snake.rsi
