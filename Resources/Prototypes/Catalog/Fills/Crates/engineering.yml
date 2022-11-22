@@ -105,3 +105,20 @@
     contents:
       - id: JetpackMini
         amount: 2
+
+- type: entity
+  id: CrateAirlockKit
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: SheetSteel
+        amount: 2
+      - id: CableApcStack
+        amount: 2
+      - id: DoorElectronics
+        amount: 12
+      - id: Screwdriver
+        amount: 1
+      - id: Wrench
+        amount: 1
