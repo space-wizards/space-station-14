@@ -7,6 +7,7 @@ using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Systems;
 
 namespace Content.Server.Disposal.Unit.EntitySystems
 {
@@ -17,6 +18,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         [Dependency] private readonly DisposalUnitSystem _disposalUnitSystem = default!;
         [Dependency] private readonly DisposalTubeSystem _disposalTubeSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
 
         public void ExitDisposals(EntityUid uid, DisposalHolderComponent? holder = null, TransformComponent? holderTransform = null)
         {
@@ -50,13 +52,8 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             {
                 RemComp<BeingDisposedComponent>(entity);
 
-                if (EntityManager.TryGetComponent(entity, out IPhysBody? physics))
-                {
-                    physics.CanCollide = true;
-                }
-
                 var meta = MetaData(entity);
-                holder.Container.ForceRemove(entity, EntityManager, meta);
+                holder.Container.Remove(entity, EntityManager, meta: meta, reparent: false, force: true);
 
                 var xform = Transform(entity);
                 if (xform.ParentUid != uid)
@@ -66,6 +63,12 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                     duc.Container.Insert(entity, EntityManager, xform, meta: meta);
                 else
                     xform.AttachToGridOrMap();
+
+                if (EntityManager.TryGetComponent(entity, out IPhysBody? physics))
+                {
+                    physics.CanCollide = true;
+                    _physicsSystem.WakeBody(entity);
+                }
             }
 
             if (duc != null)
@@ -174,7 +177,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
                 // Past this point, we are performing inter-tube transfer!
                 // Remove current tube content
-                currentTube.Contents.ForceRemove(holder.Owner);
+                currentTube.Contents.Remove(holder.Owner, reparent: false, force: true);
 
                 // Find next tube
                 var nextTube = _disposalTubeSystem.NextTubeFor(currentTube.Owner, holder.CurrentDirection);
