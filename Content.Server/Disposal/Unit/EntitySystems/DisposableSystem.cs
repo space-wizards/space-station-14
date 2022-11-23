@@ -8,6 +8,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Physics.Components;
 
 namespace Content.Server.Disposal.Unit.EntitySystems
 {
@@ -64,10 +65,9 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 else
                     xform.AttachToGridOrMap();
 
-                if (EntityManager.TryGetComponent(entity, out IPhysBody? physics))
+                if (EntityManager.TryGetComponent(entity, out PhysicsComponent? physics))
                 {
-                    physics.CanCollide = true;
-                    _physicsSystem.WakeBody(entity);
+                    _physicsSystem.WakeBody(entity, physics);
                 }
             }
 
