@@ -17,9 +17,13 @@ namespace Content.Client.UserInterface.Controls
 
         public ScalingViewport Viewport { get; }
 
+        public bool UserZoomable { get; set; } = false;
+        public float MouseZoomSensitivity = 1.0f;
+
         public MainViewport()
         {
             IoCManager.InjectDependencies(this);
+            MouseFilter = MouseFilterMode.Pass;
 
             Viewport = new ScalingViewport
             {
@@ -29,6 +33,19 @@ namespace Content.Client.UserInterface.Controls
             };
 
             AddChild(Viewport);
+        }
+
+        public static Vector2 MaxZoom = new(16.0f, 16.0f);
+        public static Vector2 MinZoom = new(0.5f, 0.5f);
+
+        protected override void MouseWheel(GUIMouseWheelEventArgs args)
+        {
+            base.MouseWheel(args);
+            var adj = MathF.MaxMagnitude(args.Delta.X, args.Delta.Y) * MouseZoomSensitivity;
+
+            Viewport.Eye!.Zoom = Vector2.ComponentMax(Vector2.ComponentMin(MaxZoom, Viewport.Eye!.Zoom + (adj, adj)), MinZoom);
+
+            args.Handle();
         }
 
         protected override void EnteredTree()

@@ -1,0 +1,26 @@
+﻿- type: parallax
+  id: MappingPurpleChecker
+  layers:
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Mapping/purple_checker.png"
+      slowness: 0
+      scale: "4, 4"
+
+- type: parallax
+  id: MappingGrayChecker
+  layers:
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Mapping/gray_checker.png"
+      slowness: 0
+      scale: "4, 4"
+
+- type: parallax
+  id: MappingSDMM
+  layers:
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Mapping/sdmm.png"
+      slowness: 0
+      scale: "4, 4"

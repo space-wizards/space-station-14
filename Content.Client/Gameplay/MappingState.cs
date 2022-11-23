@@ -1,8 +1,10 @@
-﻿using Content.Client.UserInterface.Controls;
+﻿using Content.Client.Parallax;
+using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Screens;
 using Content.Client.UserInterface.Systems.Viewport;
 using Content.Client.Viewport;
 using Content.Shared.CCVar;
+using Content.Shared.Mapping;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
@@ -22,11 +24,16 @@ public sealed class MappingState : GameplayStateBase, IMainViewportState
     [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
     [Dependency] private readonly IEntityManager _entMan = default!;
+    [Dependency] private readonly IEntitySystemManager _entSys = default!;
+    [Dependency] private readonly IEntityNetworkManager _entNet = default!;
     [Dependency] private readonly IInputManager _input = default!;
+
+    public const string MappingParallax = "MappingSDMM";
 
     private FpsCounter _fpsCounter = default!;
 
     private readonly ViewportUIController _viewportController;
+    private readonly ParallaxSystem _parallaxSystem;
 
     public MainViewport Viewport => _uiManager.ActiveScreen!.GetWidget<MainViewport>()!;
 
@@ -34,6 +41,7 @@ public sealed class MappingState : GameplayStateBase, IMainViewportState
     {
         IoCManager.InjectDependencies(this);
         _viewportController = _uiManager.GetUIController<ViewportUIController>();
+        _parallaxSystem = _entSys.GetEntitySystem<ParallaxSystem>();
     }
 
     protected override void Startup()
@@ -49,7 +57,9 @@ public sealed class MappingState : GameplayStateBase, IMainViewportState
         _fpsCounter.Visible = _configurationManager.GetCVar(CCVars.HudFpsCounterVisible);
         _configurationManager.OnValueChanged(CCVars.HudFpsCounterVisible, (show) => { _fpsCounter.Visible = show; });
         _configurationManager.OnValueChanged(CCVars.UILayout, ReloadMainScreenValueChange);
-        _input.Contexts.SetActiveContext("mapping");
+        _entNet.SendSystemNetworkMessage(new EnterMappingMode());
+        _entMan.EventBus.RaiseEvent(EventSource.Local, new EnterMappingMode());
+        _parallaxSystem.Override = MappingParallax;
     }
 
     protected override void Shutdown()
@@ -61,7 +71,9 @@ public sealed class MappingState : GameplayStateBase, IMainViewportState
         _uiManager.ClearWindows();
         _configurationManager.UnsubValueChanged(CCVars.UILayout, ReloadMainScreenValueChange);
         UnloadMainScreen();
-        _input.Contexts.SetActiveContext("human");
+        _entNet.SendSystemNetworkMessage(new ExitMappingMode());
+        _entMan.EventBus.RaiseEvent(EventSource.Local, new ExitMappingMode());
+        _parallaxSystem.Override = null;
     }
 
     private void ReloadMainScreenValueChange(string _)

@@ -16,6 +16,8 @@ public sealed class ParallaxSystem : SharedParallaxSystem
 
     private const string Fallback = "Default";
 
+    public string? Override = null;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -66,6 +68,9 @@ public sealed class ParallaxSystem : SharedParallaxSystem
 
     public string GetParallax(EntityUid mapUid)
     {
+        if (Override is not null)
+            return Override;
+
         return TryComp<ParallaxComponent>(mapUid, out var parallax) ? parallax.Parallax : Fallback;
     }
 }

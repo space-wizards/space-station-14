@@ -15,10 +15,14 @@
                 <PanelContainer.PanelOverride>
                     <graphics:StyleBoxFlat BackgroundColor="#0F0F0F" />
                 </PanelContainer.PanelOverride>
-                <Label Text="What kind of map editor is this? You can't even open anything!"/>
+                <BoxContainer Orientation="Vertical">
+                    <BoxContainer VerticalAlignment="Top">
+                        <TabContainer/>
+                    </BoxContainer>
+                </BoxContainer>
             </PanelContainer>
             <LayoutContainer Name="ViewportContainer" HorizontalExpand="True" VerticalExpand="True">
-                <controls:MainViewport Name="MainViewport"/>
+                <controls:MainViewport Name="MainViewport" UserZoomable="True"/>
             </LayoutContainer>
         </SplitContainer>
     </BoxContainer>
