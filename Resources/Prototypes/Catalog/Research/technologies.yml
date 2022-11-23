@@ -434,8 +434,8 @@
   id: RipleyTechnology
   description: technologies-ripley-technology-description
   icon:
-    sprite: Objects/Specific/Mechs/mecha.rsi
-    state: ripley
+    sprite: Objects/Specific/Mech/mecha.rsi
+    state: ripley-open
   requiredPoints: 20000
   requiredTechnologies:
     - CompactPowerTechnology

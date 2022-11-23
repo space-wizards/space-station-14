@@ -8,6 +8,7 @@ namespace Content.Server.Mech;
 
 public sealed class MechEquipmentSystem : EntitySystem
 {
+    [Dependency] private readonly MechSystem _mech = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
 
@@ -61,6 +62,7 @@ public sealed class MechEquipmentSystem : EntitySystem
         if (!TryComp<MechComponent>(args.Mech, out var mechComp))
             return;
         mechComp.EquipmentContainer.Insert(uid, EntityManager);
+        _mech.UpdateUserInterface(args.Mech, mechComp);
     }
 
     private void OnCancelled(EntityUid uid, MechEquipmentComponent component, MechEquipmentInstallCancelled args)

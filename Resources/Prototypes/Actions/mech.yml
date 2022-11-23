@@ -5,6 +5,7 @@
   itemIconStyle: NoItem
   icon: Objects/Consumable/Food/egg.rsi/icon.png
   event: !type:MechToggleEquipmentEvent
+  useDelay: 0.5
 
 - type: instantAction
   id: MechOpenUI
@@ -13,3 +14,4 @@
   itemIconStyle: NoItem
   icon: Objects/Consumable/Food/egg.rsi/icon.png
   event: !type:MechOpenUiEvent
+  useDelay: 1

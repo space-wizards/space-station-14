@@ -33,6 +33,7 @@ public sealed class MechBoundUserInterface : BoundUserInterface
         switch (state)
         {
             case MechBoundUserInterfaceState msg:
+                _menu?.UpdateMechStats();
                 _menu?.UpdateEquipmentView(msg);
                 break;
         }

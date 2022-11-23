@@ -1,10 +1,8 @@
 ﻿namespace Content.Shared.Mech.Equipment.Components;
 
-/// <summary>
-/// This is used for...
-/// </summary>
 [RegisterComponent]
 public sealed class MechGrabberComponent : Component
 {
-    
+    [DataField("energyPerGrab")]
+    public float EnergyPerGrab = -5;
 }

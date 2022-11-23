@@ -11,6 +11,7 @@ using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
 using Robust.Shared.Containers;
+using Robust.Shared.GameStates;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -32,15 +33,44 @@ public abstract class SharedMechSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<SharedMechComponent, MechToggleEquipmentEvent>(OnToggleEquipmentAction);
+        SubscribeLocalEvent<SharedMechComponent, ComponentGetState>(OnGetState);
+        SubscribeLocalEvent<SharedMechComponent, ComponentHandleState>(OnHandleState);
 
+        SubscribeLocalEvent<SharedMechComponent, MechToggleEquipmentEvent>(OnToggleEquipmentAction);
         SubscribeLocalEvent<SharedMechComponent, InteractNoHandEvent>(RelayInteractionEvent);
         SubscribeLocalEvent<SharedMechComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<SharedMechComponent, DestructionEventArgs>(OnDestruction);
     }
 
+    #region State Handling
+    private void OnGetState(EntityUid uid, SharedMechComponent component, ref ComponentGetState args)
+    {
+        args.State = new MechComponentState
+        {
+            Integrity = component.Integrity,
+            MaxIntegrity = component.MaxIntegrity,
+            Energy = component.Energy,
+            MaxEnergy = component.MaxEnergy,
+            CurrentSelectedEquipment = component.CurrentSelectedEquipment
+        };
+    }
+
+    private void OnHandleState(EntityUid uid, SharedMechComponent component, ref ComponentHandleState args)
+    {
+        if (args.Current is not MechComponentState state)
+            return;
+
+        component.Integrity = state.Integrity;
+        component.MaxIntegrity = state.MaxIntegrity;
+        component.Energy = state.Energy;
+        component.MaxEnergy = state.MaxEnergy;
+        component.CurrentSelectedEquipment = state.CurrentSelectedEquipment;
+    }
+    #endregion
+
     private void OnToggleEquipmentAction(EntityUid uid, SharedMechComponent component, MechToggleEquipmentEvent args)
     {
+        args.Handled = true;
         CycleEquipment(uid);
     }
 
@@ -160,7 +190,7 @@ public abstract class SharedMechSystem : EntitySystem
         return IsEmpty(component) && _actionBlocker.CanMove(toInsert) && HasComp<BodyComponent>(toInsert);
     }
 
-    public virtual void UpdateUserInterface(EntityUid uid, SharedMechComponent component)
+    public virtual void UpdateUserInterface(EntityUid uid, SharedMechComponent? component = null)
     {
 
     }

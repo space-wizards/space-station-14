@@ -1,5 +1,4 @@
-﻿using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
+﻿using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.Serialization;
@@ -7,7 +6,6 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.Mech.Components;
 
-//TODO: make some fucking network replication
 public abstract class SharedMechComponent : Component
 {
     //TODO: implement integrity
@@ -63,25 +61,15 @@ public abstract class SharedMechComponent : Component
     #endregion
 }
 
+/// <summary>
+/// Contains network state for SharedMechComponent.
+/// </summary>
 [Serializable, NetSerializable]
-public enum MechVisuals : byte
+public sealed class MechComponentState : ComponentState
 {
-    Open, //whether or not it's open and has a rider
-    Broken //if it broke and no longer works.
-}
-
-[Serializable, NetSerializable]
-public enum MechVisualLayers : byte
-{
-    Base
-}
-
-public sealed class MechToggleEquipmentEvent : InstantActionEvent
-{
-
-}
-
-public sealed class MechOpenUiEvent : InstantActionEvent
-{
-
+    public float Integrity;
+    public float MaxIntegrity;
+    public float Energy;
+    public float MaxEnergy;
+    public EntityUid? CurrentSelectedEquipment;
 }

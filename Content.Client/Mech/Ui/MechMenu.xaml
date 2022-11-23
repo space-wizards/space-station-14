@@ -8,17 +8,14 @@
         <BoxContainer Margin="10 10 10 10" Orientation="Horizontal">
             <BoxContainer Orientation="Vertical">
             <Label Name="IntegrityDisplay"
-                   Text="Integrity: 300"
                    HorizontalAlignment="Left"
                    Access="Public"
                    HorizontalExpand="True" />
             <Label Name="EnergyDisplay"
-                   Text="Energy: 220"
                    HorizontalAlignment="Left"
                    Access="Public"
                    HorizontalExpand="True" />
             <Label Name="SlotDisplay"
-                   Text="Open Slots: 2"
                    HorizontalAlignment="Right"
                    Access="Public"
                    HorizontalExpand="True" />
@@ -45,7 +42,7 @@
                     SizeFlagsStretchRatio="2"
                     VerticalExpand="True">
                     <BoxContainer
-                        Name="StoreListingsContainer"
+                        Name="EquipmentControlContainer"
                         MinSize="100 256"
                         Orientation="Vertical"
                         SizeFlagsStretchRatio="2"

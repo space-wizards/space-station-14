@@ -24,9 +24,8 @@ public sealed class MechSystem : SharedMechSystem
         base.Initialize();
 
         SubscribeLocalEvent<MechComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<MechComponent, MechOpenUiEvent>(OnOpenUi);
         SubscribeLocalEvent<MechComponent, GetVerbsEvent<AlternativeVerb>>(OnAlternativeVerb);
-
+        SubscribeLocalEvent<MechComponent, MechOpenUiEvent>(OnOpenUi);
         SubscribeLocalEvent<MechComponent, MechEntryFinishedEvent>(OnEntryFinished);
         SubscribeLocalEvent<MechComponent, MechEntryCanclledEvent>(OnEntryExitCancelled);
         SubscribeLocalEvent<MechComponent, MechExitFinishedEvent>(OnExitFinished);
@@ -53,6 +52,7 @@ public sealed class MechSystem : SharedMechSystem
 
     private void OnOpenUi(EntityUid uid, MechComponent component, MechOpenUiEvent args)
     {
+        args.Handled = true;
         ToggleMechUi(uid, component);
     }
 
@@ -106,6 +106,7 @@ public sealed class MechSystem : SharedMechSystem
                     _doAfter.DoAfter(new DoAfterEventArgs(args.User, delay, component.EntryTokenSource.Token, uid)
                     {
                         BreakOnUserMove = true,
+                        BreakOnTargetMove = true,
                         BreakOnStun = true,
                         TargetFinishedEvent = new MechExitFinishedEvent(),
                         TargetCancelledEvent = new MechExitCanclledEvent()
@@ -144,18 +145,22 @@ public sealed class MechSystem : SharedMechSystem
         if (!TryComp<ActorComponent>(user, out var actor))
             return;
 
+        UpdateUserInterface(uid, component);
         _ui.TryToggleUi(uid, MechUiKey.Key, actor.PlayerSession);
     }
 
-    public override void UpdateUserInterface(EntityUid uid, SharedMechComponent component)
+    public override void UpdateUserInterface(EntityUid uid, SharedMechComponent? component = null)
     {
+        if (!Resolve(uid, ref component))
+            return;
+
         base.UpdateUserInterface(uid, component);
 
         var state = new MechBoundUserInterfaceState();
         foreach (var equipment in component.EquipmentContainer.ContainedEntities)
         {
             var ev = new MechEquipmentGetUiInformationEvent(new MechEquipmentUiInformation(equipment));
-            RaiseLocalEvent(equipment, ev);
+            RaiseLocalEvent(equipment, ref ev);
 
             state.EquipmentInfo.Add(ev.Information);
         }
