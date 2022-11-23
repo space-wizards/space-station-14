@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Removed ratatouille (held mice and holo parasites no longer affect what
-      direction a player is facing), type: Fix}
-  id: 2191
-  time: '2022-08-25T23:39:25.0000000+00:00'
 - author: Myctai
   changes:
   - {message: nonlethals crate icon no longer suggests that crate contains tasers
@@ -2959,3 +2953,8 @@ Entries:
   - {message: Fixed not showing ban ids in a player's ban list., type: Fix}
   id: 2690
   time: '2022-11-21T19:04:24.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix some mapgrids not being sent to clients., type: Fix}
+  id: 2691
+  time: '2022-11-22T09:28:09.0000000+00:00'
