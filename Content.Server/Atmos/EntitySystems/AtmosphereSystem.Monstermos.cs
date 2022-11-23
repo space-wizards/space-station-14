@@ -497,7 +497,7 @@ namespace Content.Server.Atmos.EntitySystems
             Array.Clear(_depressurizeProgressionOrder, 0, Atmospherics.MonstermosHardTileLimit * 2);
         }
 
-        private void ConsiderFirelocks(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, TileAtmosphere other, GasTileOverlayComponent? visuals, IMapGrid mapGrid)
+        private void ConsiderFirelocks(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, TileAtmosphere other, GasTileOverlayComponent? visuals, MapGridComponent mapGrid)
         {
             var reconsiderAdjacent = false;
 
