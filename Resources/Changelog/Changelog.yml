@@ -1,10 +1,4 @@
 Entries:
-- author: FunkySphere
-  changes:
-  - {message: Margherita pizza slice is no longer sliceable into multiple meat pizza
-      slices., type: Fix}
-  id: 2193
-  time: '2022-08-27T09:59:16.0000000+00:00'
 - author: biometricPsychography
   changes:
   - {message: Made the dead state of the snake more dead (fix snakes death animation/sprite).,
@@ -2958,3 +2952,9 @@ Entries:
     type: Fix}
   id: 2692
   time: '2022-11-23T06:35:06.0000000+00:00'
+- author: Mervill
+  changes:
+  - {message: Items dropped onto a moving Conveyor by the disposal network move immediately,
+    type: Fix}
+  id: 2693
+  time: '2022-11-23T07:38:39.0000000+00:00'
