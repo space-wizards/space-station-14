@@ -5,26 +5,18 @@ using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Explosion.Components;
 using Content.Server.Flash;
 using Content.Server.Flash.Components;
-using Content.Server.Sticky.Events;
-using Content.Shared.Actions;
-using Content.Shared.Body.Components;
-using JetBrains.Annotations;
-using Robust.Shared.Audio;
-using Robust.Shared.Physics;
-using Robust.Shared.Physics.Dynamics;
-using Robust.Shared.Player;
-using Content.Shared.Trigger;
 using Content.Shared.Database;
-using Content.Shared.Explosion;
 using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
-using Content.Shared.MobState;
 using Content.Shared.Payload.Components;
 using Content.Shared.StepTrigger.Systems;
-using Robust.Server.Containers;
+using Content.Shared.Trigger;
+using JetBrains.Annotations;
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Player;
 
 namespace Content.Server.Explosion.EntitySystems
 {
@@ -63,12 +55,12 @@ namespace Content.Server.Explosion.EntitySystems
             InitializeSignal();
             InitializeTimedCollide();
             InitializeVoice();
+            InitializeMobstate();
 
             SubscribeLocalEvent<TriggerOnCollideComponent, StartCollideEvent>(OnTriggerCollide);
             SubscribeLocalEvent<TriggerOnActivateComponent, ActivateInWorldEvent>(OnActivate);
             SubscribeLocalEvent<TriggerImplantActionComponent, ActivateImplantEvent>(OnImplantTrigger);
             SubscribeLocalEvent<TriggerOnStepTriggerComponent, StepTriggeredEvent>(OnStepTriggered);
-            SubscribeLocalEvent<TriggerOnMobstateChangeComponent, MobStateChangedEvent>(OnMobStateChanged);
 
             SubscribeLocalEvent<DeleteOnTriggerComponent, TriggerEvent>(HandleDeleteTrigger);
             SubscribeLocalEvent<ExplodeOnTriggerComponent, TriggerEvent>(HandleExplodeTrigger);
@@ -128,29 +120,6 @@ namespace Content.Server.Explosion.EntitySystems
         private void OnStepTriggered(EntityUid uid, TriggerOnStepTriggerComponent component, ref StepTriggeredEvent args)
         {
             Trigger(uid, args.Tripper);
-        }
-
-        private void OnMobStateChanged(EntityUid uid, TriggerOnMobstateChangeComponent component, MobStateChangedEvent args)
-        {
-            if (component.MobState < args.CurrentMobState)
-                return;
-
-            //This chains Mobstate Changed triggers with OnUseTimerTrigger if they have it
-            //Very useful for things that require a mobstate change and a timer
-            if (TryComp<OnUseTimerTriggerComponent>(uid, out var timerTrigger))
-            {
-                HandleTimerTrigger(
-                    uid,
-                    args.Origin,
-                    timerTrigger.Delay,
-                    timerTrigger.BeepInterval,
-                    timerTrigger.InitialBeepDelay,
-                    timerTrigger.BeepSound,
-                    timerTrigger.BeepParams);
-            }
-
-            else
-                Trigger(uid);
         }
 
         public bool Trigger(EntityUid trigger, EntityUid? user = null)

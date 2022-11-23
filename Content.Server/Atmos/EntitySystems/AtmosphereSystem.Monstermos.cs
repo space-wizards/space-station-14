@@ -5,11 +5,11 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Database;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using System.Linq;
-using static Content.Shared.Disposal.Components.SharedDisposalUnitComponent;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -27,7 +27,7 @@ namespace Content.Server.Atmos.EntitySystems
         private readonly TileAtmosphere[] _depressurizeSpaceTiles = new TileAtmosphere[Atmospherics.MonstermosHardTileLimit];
         private readonly TileAtmosphere[] _depressurizeProgressionOrder = new TileAtmosphere[Atmospherics.MonstermosHardTileLimit * 2];
 
-        private void EqualizePressureInZone(IMapGrid mapGrid, GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, int cycleNum, GasTileOverlayComponent? visuals)
+        private void EqualizePressureInZone(MapGridComponent mapGrid, GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, int cycleNum, GasTileOverlayComponent? visuals)
         {
             if (tile.Air == null || (tile.MonstermosInfo.LastCycle >= cycleNum))
                 return; // Already done.
@@ -356,7 +356,7 @@ namespace Content.Server.Atmos.EntitySystems
             Array.Clear(_equalizeQueue, 0, Atmospherics.MonstermosTileLimit);
         }
 
-        private void ExplosivelyDepressurize(IMapGrid mapGrid, GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, int cycleNum, GasTileOverlayComponent? visuals)
+        private void ExplosivelyDepressurize(MapGridComponent mapGrid, GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, int cycleNum, GasTileOverlayComponent? visuals)
         {
             // Check if explosive depressurization is enabled and if the tile is valid.
             if (!MonstermosDepressurization || tile.Air == null)
@@ -602,7 +602,7 @@ namespace Content.Server.Atmos.EntitySystems
             adj.MonstermosInfo[direction.GetOpposite()] -= amount;
         }
 
-        private void HandleDecompressionFloorRip(IMapGrid mapGrid, TileAtmosphere tile, float sum)
+        private void HandleDecompressionFloorRip(MapGridComponent mapGrid, TileAtmosphere tile, float sum)
         {
             if (!MonstermosRipTiles)
                 return;
