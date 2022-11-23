@@ -17,6 +17,7 @@ using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
@@ -115,7 +116,7 @@ public sealed partial class ShuttleSystem
    /// </summary>
    private bool ValidSpawn(MapGridComponent grid, Box2 area)
    {
-       return !grid.Grid.GetLocalTilesIntersecting(area).Any();
+       return !grid.GetLocalTilesIntersecting(area).Any();
    }
 
    private DockingConfig? GetDockingConfig(ShuttleComponent component, EntityUid targetGrid)
@@ -131,7 +132,7 @@ public sealed partial class ShuttleSystem
        var targetGridRotation = targetGridAngle.ToVec();
 
        var shuttleDocks = GetDocks(component.Owner);
-       var shuttleAABB = Comp<MapGridComponent>(component.Owner).Grid.LocalAABB;
+       var shuttleAABB = Comp<MapGridComponent>(component.Owner).LocalAABB;
 
        var validDockConfigs = new List<DockingConfig>();
 
