@@ -136,7 +136,7 @@
     components:
     - Item
   permanentComponents:
-  - type: TilePrying
+  - type: ToolWorksWithTiles
   - type: SignalLinker
   - type: Tool
     qualities:

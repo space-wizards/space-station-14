@@ -36,7 +36,7 @@
   - type: Tool
     qualities:
       - Prying
-  - type: TilePrying
+  - type: ToolWorksWithTiles
 
 - type: entity
   id: FireAxeFlaming

@@ -20,7 +20,7 @@
     damage:
       types:
         Slash: 10
-  - type: TilePrying
+  - type: ToolWorksWithTiles
   - type: Tool
     qualities:
       - Prying

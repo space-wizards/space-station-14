@@ -35,8 +35,6 @@ namespace Content.Server.Tools
         {
             base.Initialize();
 
-            InitializeTilePrying();
-            InitializeLatticeCutting();
             InitializeWelders();
             InitializeToolWithTile();
 

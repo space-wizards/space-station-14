@@ -34,7 +34,7 @@
           cutters: Rainbow
   - type: Item
     sprite: Objects/Tools/wirecutters.rsi
-  - type: LatticeCutting
+  - type: ToolWorksWithTiles
   - type: StaticPrice
     price: 40
 
@@ -138,7 +138,6 @@
       - Prying
     useSound:
       path: /Audio/Items/crowbar.ogg
-  #- type: TilePrying
   - type: ToolWorksWithTiles
   - type: StaticPrice
     price: 40
@@ -316,7 +315,7 @@
   - type: Item
     sprite: Objects/Tools/omnitool.rsi
     size: 20
-  - type: TilePrying
+  - type: ToolWorksWithTiles
   - type: SignalLinker
   - type: Tool
     qualities:
