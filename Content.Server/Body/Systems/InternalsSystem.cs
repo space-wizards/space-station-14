@@ -271,5 +271,5 @@ public sealed class InternalsSystem : EntitySystem
         public readonly GasTankComponent Tank = Tank;
     }
 
-    private readonly record struct ToggleOtherInternalsCancelledEvent {}
+    private readonly record struct ToggleOtherInternalsCancelledEvent;
 }
