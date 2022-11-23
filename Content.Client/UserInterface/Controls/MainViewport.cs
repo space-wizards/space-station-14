@@ -41,6 +41,9 @@ namespace Content.Client.UserInterface.Controls
         protected override void MouseWheel(GUIMouseWheelEventArgs args)
         {
             base.MouseWheel(args);
+            if (!UserZoomable)
+                return;
+
             var adj = MathF.MaxMagnitude(args.Delta.X, args.Delta.Y) * MouseZoomSensitivity;
 
             Viewport.Eye!.Zoom = Vector2.ComponentMax(Vector2.ComponentMin(MaxZoom, Viewport.Eye!.Zoom + (adj, adj)), MinZoom);
