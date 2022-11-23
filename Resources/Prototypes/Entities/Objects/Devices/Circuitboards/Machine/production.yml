@@ -148,6 +148,23 @@
         Glass: 5
 
 - type: entity
+  id: TraversalDistorterMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: traversal distorter machine board
+  description: A machine printed circuit board for a traversal distorter
+  components:
+    - type: Sprite
+      state: science
+    - type: MachineBoard
+      prototype: MachineTraversalDistorter
+      requirements:
+        ScanningModule: 1
+        Capacitor: 2
+      materialRequirements:
+        Steel: 5 
+        Cable: 1
+
+- type: entity
   id: ThermomachineFreezerMachineCircuitBoard
   parent: BaseMachineCircuitboard
   name: freezer thermomachine machine board
@@ -230,11 +247,10 @@
     - type: MachineBoard
       prototype: MedicalScanner
       requirements:
-        ScanningModule: 1
-        Manipulator: 1
-        Laser: 1
+        ScanningModule: 2
+        Capacitor: 1
       materialRequirements:
-        Glass: 1
+        Glass: 5
         Cable: 1
 
 - type: entity

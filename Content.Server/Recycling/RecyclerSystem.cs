@@ -8,6 +8,7 @@ using Content.Server.Recycling.Components;
 using Content.Shared.Audio;
 using Content.Shared.Body.Components;
 using Content.Shared.Emag.Systems;
+using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Recycling;
@@ -33,9 +34,15 @@ namespace Content.Server.Recycling
 
         public override void Initialize()
         {
+            SubscribeLocalEvent<RecyclerComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<RecyclerComponent, StartCollideEvent>(OnCollide);
             SubscribeLocalEvent<RecyclerComponent, GotEmaggedEvent>(OnEmagged);
             SubscribeLocalEvent<RecyclerComponent, SuicideEvent>(OnSuicide);
+        }
+
+        private void OnExamined(EntityUid uid, RecyclerComponent component, ExaminedEvent args)
+        {
+            args.PushMarkup(Loc.GetString("recycler-count-items", ("items", component.ItemsProcessed)));
         }
 
         private void OnSuicide(EntityUid uid, RecyclerComponent component, SuicideEvent args)
@@ -119,6 +126,8 @@ namespace Content.Server.Recycling
                 SoundSystem.Play(component.Sound.GetSound(), Filter.Pvs(component.Owner, entityManager: EntityManager), component.Owner, AudioHelpers.WithVariation(0.01f).WithVolume(-3));
                 component.LastSound = _timing.CurTime;
             }
+
+            component.ItemsProcessed++;
         }
 
         private bool CanGib(RecyclerComponent component, EntityUid entity)

@@ -8,6 +8,7 @@ using Content.Shared.FixedPoint;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Timing;
 
 namespace Content.IntegrationTests.Tests.Fluids
@@ -54,7 +55,7 @@ namespace Content.IntegrationTests.Tests.Fluids
             var entitySystemManager = server.ResolveDependency<IEntitySystemManager>();
             var spillSystem = entitySystemManager.GetEntitySystem<SpillableSystem>();
 
-            IMapGrid grid = null;
+            MapGridComponent grid = null;
 
             // Remove all tiles
             await server.WaitPost(() =>
@@ -93,7 +94,7 @@ namespace Content.IntegrationTests.Tests.Fluids
             var metaSystem = entityManager.EntitySysManager.GetEntitySystem<MetaDataSystem>();
 
             MapId sMapId = default;
-            IMapGrid sGrid;
+            MapGridComponent sGrid;
             EntityUid sGridId = default;
             EntityCoordinates sCoordinates = default;
 

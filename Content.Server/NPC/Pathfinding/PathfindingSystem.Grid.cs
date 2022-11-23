@@ -10,6 +10,7 @@ using Content.Shared.Physics;
 using Microsoft.Extensions.ObjectPool;
 using Robust.Shared.Collections;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
@@ -83,6 +84,10 @@ public sealed partial class PathfindingSystem
         var updateCount = 0;
 #endif
         _stopwatch.Restart();
+        var options = new ParallelOptions()
+        {
+            MaxDegreeOfParallelism = _parallel.ParallelProcessCount,
+        };
 
         // We defer chunk updates because rebuilding a navmesh is hella costly
         // If we're paused then NPCs can't run anyway.
@@ -131,7 +136,7 @@ public sealed partial class PathfindingSystem
             // This is for map <> grid pathfinding
 
             // Without parallel this is roughly 3x slower on my desktop.
-            for (var i = 0; i < dirt.Length; i++)
+            Parallel.For(0, dirt.Length, options, i =>
             {
                 // Doing the queries per task seems faster.
                 var accessQuery = GetEntityQuery<AccessReaderComponent>();
@@ -140,8 +145,9 @@ public sealed partial class PathfindingSystem
                 var fixturesQuery = GetEntityQuery<FixturesComponent>();
                 var physicsQuery = GetEntityQuery<PhysicsComponent>();
                 var xformQuery = GetEntityQuery<TransformComponent>();
-                BuildBreadcrumbs(dirt[i], mapGridComp.Grid, accessQuery, destructibleQuery, doorQuery, fixturesQuery, physicsQuery, xformQuery);
-            }
+                BuildBreadcrumbs(dirt[i], mapGridComp, accessQuery, destructibleQuery, doorQuery, fixturesQuery,
+                    physicsQuery, xformQuery);
+            });
 
             const int Division = 4;
 
@@ -158,7 +164,7 @@ public sealed partial class PathfindingSystem
             {
                 var it1 = it;
 
-                Parallel.For(0, dirt.Length, j =>
+                Parallel.For(0, dirt.Length, options, j =>
                 {
                     var chunk = dirt[j];
                     // Check if the chunk is safe on this iteration.
@@ -361,7 +367,7 @@ public sealed partial class PathfindingSystem
     }
 
     private void BuildBreadcrumbs(GridPathfindingChunk chunk,
-        IMapGrid grid,
+        MapGridComponent grid,
         EntityQuery<AccessReaderComponent> accessQuery,
         EntityQuery<DestructibleComponent> destructibleQuery,
         EntityQuery<DoorComponent> doorQuery,
@@ -374,13 +380,11 @@ public sealed partial class PathfindingSystem
         var points = chunk.Points;
         var gridOrigin = chunk.Origin * ChunkSize;
         var tileEntities = new ValueList<EntityUid>();
-
-        // TODO: Pool this or something
-        var chunkPolys = new List<PathPoly>[ChunkSize * ChunkSize];
+        var chunkPolys = chunk.BufferPolygons;
 
         for (var i = 0; i < chunkPolys.Length; i++)
         {
-            chunkPolys[i] = new List<PathPoly>();
+            chunkPolys[i].Clear();
         }
 
         var tilePolys = new ValueList<Box2i>(SubStep);
@@ -576,43 +580,6 @@ public sealed partial class PathfindingSystem
             }
         }
 
-        // Check if the tiles match
-        for (var x = 0; x < ChunkSize; x++)
-        {
-            for (var y = 0; y < ChunkSize; y++)
-            {
-                var index = x * ChunkSize + y;
-                var polys = chunkPolys[index];
-                var existing = chunk.Polygons[index];
-
-                var isEquivalent = true;
-
-                if (polys.Count == existing.Count)
-                {
-                    // May want to update damage or the likes if it's different but not invalidate the ref.
-                    for (var i = 0; i < existing.Count; i++)
-                    {
-                        var ePoly = existing[i];
-                        var poly = polys[i];
-
-                        if (!ePoly.IsEquivalent(poly))
-                        {
-                            isEquivalent = false;
-                            break;
-                        }
-
-                        ePoly.Data.Damage = poly.Data.Damage;
-                    }
-
-                    if (isEquivalent)
-                        continue;
-                }
-
-                ClearTilePolys(existing);
-                existing.AddRange(polys);
-            }
-        }
-
         // _sawmill.Debug($"Built breadcrumbs in {sw.Elapsed.TotalMilliseconds}ms");
         SendBreadcrumbs(chunk, grid.GridEntityId);
     }
@@ -649,7 +616,48 @@ public sealed partial class PathfindingSystem
     {
         var sw = new Stopwatch();
         sw.Start();
+
+        // After the breadcrumbs step need to determine which polygons need rebuilding. Can't do this above
+        // as we are tampering with neighbor nodes.
         var chunkPolys = chunk.Polygons;
+        var bufferPolygons = chunk.BufferPolygons;
+
+        for (var x = 0; x < ChunkSize; x++)
+        {
+            for (var y = 0; y < ChunkSize; y++)
+            {
+                var index = x * ChunkSize + y;
+                var polys = bufferPolygons[index];
+                var existing = chunkPolys[index];
+
+                var isEquivalent = true;
+
+                if (polys.Count == existing.Count)
+                {
+                    // May want to update damage or the likes if it's different but not invalidate the ref.
+                    for (var i = 0; i < existing.Count; i++)
+                    {
+                        var ePoly = existing[i];
+                        var poly = polys[i];
+
+                        if (!ePoly.IsEquivalent(poly))
+                        {
+                            isEquivalent = false;
+                            break;
+                        }
+
+                        ePoly.Data.Damage = poly.Data.Damage;
+                    }
+
+                    if (isEquivalent)
+                        continue;
+                }
+
+                ClearTilePolys(existing);
+                existing.AddRange(polys);
+            }
+        }
+
         component.Chunks.TryGetValue(chunk.Origin + new Vector2i(-1, 0), out var leftChunk);
         component.Chunks.TryGetValue(chunk.Origin + new Vector2i(0, -1), out var bottomChunk);
         component.Chunks.TryGetValue(chunk.Origin + new Vector2i(1, 0), out var rightChunk);

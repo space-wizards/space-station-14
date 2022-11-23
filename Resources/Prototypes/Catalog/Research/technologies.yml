@@ -51,6 +51,7 @@
     - ClothingHandsGlovesNitrile
     - ClothingMaskSterile
     - DiseaseSwab
+    - Implanter
 
 - type: technology
   name: technologies-advanced-botany
@@ -446,6 +447,7 @@
     - HighPowerMicroLaserStockPart
     - NanoManipulatorStockPart
     - AdvancedScanningModuleStockPart
+    - TraversalDistorterMachineCircuitboard #sigh
 
 # Bluespace Theory Technology Tree
 
