@@ -134,7 +134,8 @@ public sealed partial class ExplosionSystem : EntitySystem
             catch (Exception e)
             {
                 // Ensure the system does not get stuck in an error-loop.
-                QueueDel(_activeExplosion.VisualEnt);
+                if (_activeExplosion != null)
+                    QueueDel(_activeExplosion.VisualEnt);
                 _activeExplosion = null;
                 _nodeGroupSystem.PauseUpdating = false;
                 _pathfindingSystem.PauseUpdating = false;
