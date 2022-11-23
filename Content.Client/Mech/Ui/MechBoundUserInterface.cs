@@ -1,3 +1,4 @@
+using Content.Shared.Mech;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 
@@ -29,6 +30,12 @@ public sealed class MechBoundUserInterface : BoundUserInterface
     {
         base.UpdateState(state);
 
+        switch (state)
+        {
+            case MechBoundUserInterfaceState msg:
+                _menu?.UpdateEquipmentView(msg);
+                break;
+        }
     }
 
     protected override void Dispose(bool disposing)

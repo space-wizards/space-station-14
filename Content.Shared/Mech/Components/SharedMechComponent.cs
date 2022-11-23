@@ -18,6 +18,12 @@ public abstract class SharedMechComponent : Component
     public float MaxIntegrity = 300;
 
     [ViewVariables(VVAccess.ReadWrite)]
+    public float Energy;
+
+    [DataField("maxEnergy")]
+    public float MaxEnergy = 200;
+
+    [ViewVariables(VVAccess.ReadWrite)]
     public bool Broken = false;
 
     [ViewVariables(VVAccess.ReadWrite)]

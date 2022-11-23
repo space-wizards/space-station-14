@@ -430,6 +430,20 @@
     - RightArmBorg
 
 - type: technology
+  name: technologies-ripley-technology
+  id: RipleyTechnology
+  description: technologies-ripley-technology-description
+  icon:
+    sprite: Objects/Specific/Mechs/mecha.rsi
+    state: ripley
+  requiredPoints: 20000
+  requiredTechnologies:
+    - CompactPowerTechnology
+    - AdvancedPartsTechnology
+  unlockedRecipes:
+    - ProximitySensor
+
+- type: technology
   name: technologies-adv-parts-technology
   id: AdvancedPartsTechnology
   description: technologies-adv-parts-technology-description

@@ -1,4 +1,5 @@
-﻿using Content.Server.Atmos;
+﻿using System.Threading;
+using Content.Server.Atmos;
 using Content.Shared.Mech.Components;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -11,6 +12,14 @@ namespace Content.Server.Mech;
 [ComponentReference(typeof(SharedMechComponent))]
 public sealed class MechComponent : SharedMechComponent
 {
+    [DataField("entryDelay")]
+    public float EntryDelay = 3;
+
+    [DataField("exitDelay")]
+    public float ExitDelay = 3;
+
+    public CancellationTokenSource? EntryTokenSource;
+
     [DataField("airtight"), ViewVariables(VVAccess.ReadWrite)]
     public bool Airtight = false;
 
@@ -21,4 +30,29 @@ public sealed class MechComponent : SharedMechComponent
     [ViewVariables(VVAccess.ReadWrite)]
     public GasMixture Air = new (GasMixVolume);
     public const float GasMixVolume = 70f;
+}
+
+public sealed class MechEntryFinishedEvent : EntityEventArgs
+{
+    public EntityUid User;
+
+    public MechEntryFinishedEvent(EntityUid user)
+    {
+        User = user;
+    }
+}
+
+public sealed class MechEntryCanclledEvent : EntityEventArgs
+{
+
+}
+
+public sealed class MechExitFinishedEvent : EntityEventArgs
+{
+
+}
+
+public sealed class MechExitCanclledEvent : EntityEventArgs
+{
+
 }

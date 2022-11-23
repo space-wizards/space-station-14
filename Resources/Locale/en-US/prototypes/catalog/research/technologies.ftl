@@ -60,3 +60,6 @@ technologies-adv-parts-technology-description = Good for upgrading machines.
 
 technologies-robotics-technology = Robotics technology
 technologies-robotics-technology-description = Robot parts.
+
+technologies-ripley-technology = Exosuit: Ripley
+technologies-ripley-technology-description = The latest and greatest in mechanized cargo construction.

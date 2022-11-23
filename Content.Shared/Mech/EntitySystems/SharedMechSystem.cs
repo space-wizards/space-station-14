@@ -61,9 +61,7 @@ public abstract class SharedMechSystem : EntitySystem
 
     private void OnDestruction(EntityUid uid, SharedMechComponent component, DestructionEventArgs args)
     {
-        component.Broken = true;
-        TryEject(uid, component);
-        UpdateAppearance(uid, component);
+        BreakMech(uid, component);
     }
 
     private void SetupUser(EntityUid mech, EntityUid pilot, SharedMechComponent? component = null)
@@ -91,6 +89,16 @@ public abstract class SharedMechSystem : EntitySystem
         RemComp<InteractionRelayComponent>(pilot);
 
         _actions.RemoveProvidedActions(pilot, mech);
+    }
+
+    public void BreakMech(EntityUid uid, SharedMechComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        TryEject(uid, component);
+        component.Broken = true;
+        UpdateAppearance(uid, component);
     }
 
     public void CycleEquipment(EntityUid uid, SharedMechComponent? component = null)
@@ -125,6 +133,20 @@ public abstract class SharedMechSystem : EntitySystem
             _popup.PopupEntity(popupString, uid, Filter.Pvs(uid));
     }
 
+    public bool TryChangeEnergy(EntityUid uid, float delta, SharedMechComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return false;
+
+        if (component.Energy + delta < 0)
+            return false;
+
+        component.Energy = Math.Clamp(component.Energy + delta, 0, component.MaxEnergy);
+        Dirty(component);
+        UpdateUserInterface(uid, component);
+        return true;
+    }
+
     public bool IsEmpty(SharedMechComponent component)
     {
         return component.PilotSlot.ContainedEntity == null;
@@ -136,6 +158,11 @@ public abstract class SharedMechSystem : EntitySystem
             return false;
 
         return IsEmpty(component) && _actionBlocker.CanMove(toInsert) && HasComp<BodyComponent>(toInsert);
+    }
+
+    public virtual void UpdateUserInterface(EntityUid uid, SharedMechComponent component)
+    {
+
     }
 
     public virtual bool TryInsert(EntityUid uid, EntityUid? toInsert, SharedMechComponent? component = null)
@@ -171,7 +198,7 @@ public abstract class SharedMechSystem : EntitySystem
         return true;
     }
 
-    public void UpdateAppearance(EntityUid uid, SharedMechComponent? component = null, AppearanceComponent? appearance = null)
+    private void UpdateAppearance(EntityUid uid, SharedMechComponent? component = null, AppearanceComponent? appearance = null)
     {
         if (!Resolve(uid, ref component, ref appearance, false))
             return;

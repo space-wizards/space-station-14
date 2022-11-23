@@ -27,8 +27,19 @@ public sealed class MechEquipmentUiInformation
     }
 }
 
+[ByRefEvent]
+public struct MechEquipmentGetUiInformationEvent
+{
+    public MechEquipmentUiInformation Information;
+
+    public MechEquipmentGetUiInformationEvent(MechEquipmentUiInformation information)
+    {
+        Information = information;
+    }
+}
+
 [Serializable, NetSerializable]
 public sealed class MechBoundUserInterfaceState : BoundUserInterfaceState
 {
-    public List<MechEquipmentUiInformation> EquipmentUi = new List<MechEquipmentUiInformation>();
+    public List<MechEquipmentUiInformation> EquipmentInfo = new List<MechEquipmentUiInformation>();
 }

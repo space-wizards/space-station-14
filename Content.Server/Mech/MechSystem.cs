@@ -1,4 +1,7 @@
-﻿using Content.Server.Atmos.EntitySystems;
+﻿using System.Linq;
+using System.Threading;
+using Content.Server.Atmos.EntitySystems;
+using Content.Server.DoAfter;
 using Content.Shared.Mech;
 using Content.Shared.Mech.Components;
 using Content.Shared.Mech.EntitySystems;
@@ -11,6 +14,7 @@ namespace Content.Server.Mech;
 public sealed class MechSystem : SharedMechSystem
 {
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
+    [Dependency] private readonly DoAfterSystem _doAfter = default!;
     [Dependency] private readonly IMapManager _map = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
@@ -23,6 +27,11 @@ public sealed class MechSystem : SharedMechSystem
         SubscribeLocalEvent<MechComponent, MechOpenUiEvent>(OnOpenUi);
         SubscribeLocalEvent<MechComponent, GetVerbsEvent<AlternativeVerb>>(OnAlternativeVerb);
 
+        SubscribeLocalEvent<MechComponent, MechEntryFinishedEvent>(OnEntryFinished);
+        SubscribeLocalEvent<MechComponent, MechEntryCanclledEvent>(OnEntryExitCancelled);
+        SubscribeLocalEvent<MechComponent, MechExitFinishedEvent>(OnExitFinished);
+        SubscribeLocalEvent<MechComponent, MechExitCanclledEvent>(OnEntryExitCancelled);
+
         SubscribeLocalEvent<MechPilotComponent, InhaleLocationEvent>(OnInhale);
         SubscribeLocalEvent<MechPilotComponent, ExhaleLocationEvent>(OnExhale);
         SubscribeLocalEvent<MechPilotComponent, AtmosExposedGetAirEvent>(OnExpose);
@@ -31,13 +40,15 @@ public sealed class MechSystem : SharedMechSystem
     private void OnMapInit(EntityUid uid, MechComponent component, MapInitEvent args)
     {
         var xform = Transform(uid);
-        foreach (var equipment in component.StartingEquipment)
+        foreach (var ent in component.StartingEquipment.Select(equipment => Spawn(equipment, xform.Coordinates)))
         {
-            var ent = Spawn(equipment, xform.Coordinates);
             component.EquipmentContainer.Insert(ent);
         }
 
         component.Integrity = component.MaxIntegrity;
+        component.Energy = component.MaxEnergy;
+
+        Dirty(component);
     }
 
     private void OnOpenUi(EntityUid uid, MechComponent component, MechOpenUiEvent args)
@@ -50,32 +61,76 @@ public sealed class MechSystem : SharedMechSystem
         if (!args.CanAccess || !args.CanInteract)
             return;
 
-        //TODO: doafters for climbing in and out
         if (CanInsert(uid, args.User, component))
         {
-            var v = new AlternativeVerb
+            var enterVerb = new AlternativeVerb
             {
-                Act = () => TryInsert(uid, args.User, component),
-                Text = Loc.GetString("mech-verb-enter")
+                Text = Loc.GetString("mech-verb-enter"),
+                Act = () =>
+                {
+                    if (component.EntryTokenSource != null)
+                        return;
+                    component.EntryTokenSource = new CancellationTokenSource();
+                    _doAfter.DoAfter(new DoAfterEventArgs(args.User, component.EntryDelay, component.EntryTokenSource.Token, uid)
+                    {
+                        BreakOnUserMove = true,
+                        BreakOnStun = true,
+                        TargetFinishedEvent = new MechEntryFinishedEvent(args.User),
+                        TargetCancelledEvent = new MechEntryCanclledEvent()
+                    });
+                }
             };
-            var u = new AlternativeVerb //can't hijack someone else's mech
+            var openUiVerb = new AlternativeVerb //can't hijack someone else's mech
             {
                 Act = () => ToggleMechUi(uid, component, args.User),
                 Text = Loc.GetString("mech-ui-open-verb")
             };
-            args.Verbs.Add(v);
-            args.Verbs.Add(u);
+            args.Verbs.Add(enterVerb);
+            args.Verbs.Add(openUiVerb);
         }
         else if (!IsEmpty(component))
         {
-            var v = new AlternativeVerb
+            var ejectVerb = new AlternativeVerb
             {
-                Act = () => TryEject(uid, component),
                 Text = Loc.GetString("mech-verb-exit"),
-                Priority = 1 // Promote to top to make ejecting the ALT-click action
+                Priority = 1, // Promote to top to make ejecting the ALT-click action
+                Act = () =>
+                {
+                    if (component.EntryTokenSource != null)
+                        return;
+                    var delay = component.ExitDelay;
+                    if (args.User == component.PilotSlot.ContainedEntity)
+                        delay *= 0.5f;
+
+                    component.EntryTokenSource = new CancellationTokenSource();
+                    _doAfter.DoAfter(new DoAfterEventArgs(args.User, delay, component.EntryTokenSource.Token, uid)
+                    {
+                        BreakOnUserMove = true,
+                        BreakOnStun = true,
+                        TargetFinishedEvent = new MechExitFinishedEvent(),
+                        TargetCancelledEvent = new MechExitCanclledEvent()
+                    });
+                }
             };
-            args.Verbs.Add(v);
+            args.Verbs.Add(ejectVerb);
         }
+    }
+
+    private void OnEntryFinished(EntityUid uid, MechComponent component, MechEntryFinishedEvent args)
+    {
+        component.EntryTokenSource = null;
+        TryInsert(uid, args.User, component);
+    }
+
+    private void OnExitFinished(EntityUid uid, MechComponent component, MechExitFinishedEvent args)
+    {
+        component.EntryTokenSource = null;
+        TryEject(uid, component);
+    }
+
+    private void OnEntryExitCancelled(EntityUid uid, MechComponent component, EntityEventArgs args)
+    {
+        component.EntryTokenSource = null;
     }
 
     private void ToggleMechUi(EntityUid uid, MechComponent? component = null, EntityUid? user = null)
@@ -90,6 +145,22 @@ public sealed class MechSystem : SharedMechSystem
             return;
 
         _ui.TryToggleUi(uid, MechUiKey.Key, actor.PlayerSession);
+    }
+
+    public override void UpdateUserInterface(EntityUid uid, SharedMechComponent component)
+    {
+        base.UpdateUserInterface(uid, component);
+
+        var state = new MechBoundUserInterfaceState();
+        foreach (var equipment in component.EquipmentContainer.ContainedEntities)
+        {
+            var ev = new MechEquipmentGetUiInformationEvent(new MechEquipmentUiInformation(equipment));
+            RaiseLocalEvent(equipment, ev);
+
+            state.EquipmentInfo.Add(ev.Information);
+        }
+
+        _ui.TrySetUiState(uid, MechUiKey.Key, state);
     }
 
     public override bool TryInsert(EntityUid uid, EntityUid? toInsert, SharedMechComponent? component = null)
