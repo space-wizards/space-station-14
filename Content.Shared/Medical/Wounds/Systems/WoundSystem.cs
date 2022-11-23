@@ -133,7 +133,7 @@ public sealed class WoundSystem : EntitySystem
         wound.IntegrityDamageDealt = integrityDamage;
         wound.OverflowDamageDealt = overflowDamage;
 
-        if (woundable.Health + woundable.Integrity <= FixedPoint2.Zero)
+        if (woundable.Integrity <= FixedPoint2.Zero)
             DestroyWoundable(woundableId);
 
         return true;
