@@ -36,7 +36,7 @@ public sealed class ExplosionOverlay : Overlay
         foreach (var (comp, appearance) in _entMan.EntityQuery<ExplosionVisualsComponent, AppearanceComponent>(true))
         {
             if (!appearance.TryGetData(ExplosionAppearanceData.Progress, out int index))
-                return;
+                continue;
 
             index = Math.Min(index, comp.Intensity.Count);
             DrawExplosion(drawHandle, args.WorldBounds, comp, index, xforms);
