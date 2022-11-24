@@ -1,11 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Moving between grids should now be smooth., type: Fix}
-  - {message: Fixed the eye rotation on spawn and also when the shuttle goes FTL.,
-    type: Fix}
-  id: 2195
-  time: '2022-08-29T05:05:53.0000000+00:00'
 - author: FunkySphere
   changes:
   - {message: 'magboots, galoshes and flippers no longer butcherable', type: Tweak}
@@ -2957,3 +2950,8 @@ Entries:
   - {message: Chameleon masks and helmets can hide your identity., type: Tweak}
   id: 2694
   time: '2022-11-24T02:02:55.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Maybe fix grid clipping., type: Fix}
+  id: 2695
+  time: '2022-11-24T05:54:21.0000000+00:00'
