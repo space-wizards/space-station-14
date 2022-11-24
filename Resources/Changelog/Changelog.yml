@@ -1,12 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Cloners now require biomass., type: Add}
-  - {message: Cloners have a chance of failure based off of the body's genetic damage.,
-    type: Add}
-  - {message: Added biomass material and biomass reclaimers., type: Add}
-  id: 2199
-  time: '2022-08-30T02:31:28.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: The zombie midround event now just starts zombie mode., type: Add}
@@ -2957,3 +2949,8 @@ Entries:
     type: Add}
   id: 2698
   time: '2022-11-24T07:31:17.0000000+00:00'
+- author: Vordenburg
+  changes:
+  - {message: Individual stations can now have specific emergency shuttles., type: Tweak}
+  id: 2699
+  time: '2022-11-24T18:28:04.0000000+00:00'
