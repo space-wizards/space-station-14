@@ -1,9 +1,4 @@
 Entries:
-- author: LordEclipse
-  changes:
-  - {message: Medical Intern PDA's now have Health Analyzers built into them., type: Tweak}
-  id: 2197
-  time: '2022-08-29T23:32:20.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Pull chains with your besties should be much faster., type: Tweak}
@@ -2955,3 +2950,9 @@ Entries:
   - {message: Omnitool can cut lattice and pry unpowered doors, type: Fix}
   id: 2696
   time: '2022-11-24T06:00:34.0000000+00:00'
+- author: JustinTrotter
+  changes:
+  - {message: Welder tanks explode when shot with projectile guns. (Also don't poke
+      them with a spear), type: Add}
+  id: 2697
+  time: '2022-11-24T06:01:51.0000000+00:00'
