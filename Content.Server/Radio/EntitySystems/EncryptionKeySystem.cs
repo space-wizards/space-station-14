@@ -4,7 +4,6 @@ using Content.Shared.Radio;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Radio.EntitySystems;
-
 public sealed class EncryptionKeySystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _protoManager = default!;

@@ -2,7 +2,10 @@ using Content.Shared.Radio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
 namespace Content.Server.Radio.Components;
-
+/// <summary>
+///     This component currently using for providing access to channels for "HeadsetComponent"s.
+///     It should be used for intercoms and other radios in future.
+/// </summary>
 [RegisterComponent]
 public sealed class EncryptionKeyComponent : Component
 {
