@@ -252,7 +252,7 @@
 #TODO: Increase the price of this to 4-5/remove it when we get encrpytion keys
 - type: listing
   id: UplinkHeadset
-  name: Syndicate Overear-Headset
+  name: Syndicate Over-ear Headset
   description: A headset that allows you to listen in on departmental channels, or contact other traitors.
   productEntity: ClothingHeadsetAltSyndicate
   cost:
