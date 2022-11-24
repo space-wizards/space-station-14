@@ -21,7 +21,7 @@ public sealed class MechGrabberSystem : EntitySystem
 
     private void OnGetUiInfo(EntityUid uid, MechGrabberComponent component, ref MechEquipmentGetUiInformationEvent args)
     {
-        args.Information.CanBeEjected = true;
+        args.Information.CanBeRemoved = true;
         args.Information.CanBeEnabled = false;
     }
 

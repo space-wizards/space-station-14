@@ -9,6 +9,9 @@ namespace Content.Client.Mech.Ui;
 [GenerateTypedNameReferences]
 public sealed partial class MechEquipmentControl : Control
 {
+    public event Action<bool>? OnEnableButtonPressed;
+    public event Action? OnRemoveButtonPressed;
+
     public MechEquipmentControl(string itemName, MechEquipmentUiInformation info, SpriteComponent? sprite = null)
     {
         RobustXamlLoader.Load(this);
@@ -17,6 +20,9 @@ public sealed partial class MechEquipmentControl : Control
         EquipmentView.Sprite = sprite;
 
         EnableButton.Visible = info.CanBeEnabled;
-        RemoveButton.Visible = info.CanBeEjected;
+        RemoveButton.Visible = info.CanBeRemoved;
+
+        EnableButton.OnPressed += _ => OnEnableButtonPressed?.Invoke(!EnableButton.Disabled);
+        RemoveButton.OnPressed += _ => OnRemoveButtonPressed?.Invoke();
     }
 }

@@ -31,6 +31,9 @@ public sealed class MechSystem : SharedMechSystem
         SubscribeLocalEvent<MechComponent, MechExitFinishedEvent>(OnExitFinished);
         SubscribeLocalEvent<MechComponent, MechExitCanclledEvent>(OnEntryExitCancelled);
 
+        SubscribeLocalEvent<SharedMechComponent, MechEquipmentToggleMessage>(OnEnableEquipmentMessage);
+        SubscribeLocalEvent<SharedMechComponent, MechEquipmentRemoveMessage>(OnRemoveEquipmentMessage);
+
         SubscribeLocalEvent<MechPilotComponent, InhaleLocationEvent>(OnInhale);
         SubscribeLocalEvent<MechPilotComponent, ExhaleLocationEvent>(OnExhale);
         SubscribeLocalEvent<MechPilotComponent, AtmosExposedGetAirEvent>(OnExpose);
@@ -48,6 +51,31 @@ public sealed class MechSystem : SharedMechSystem
         component.Energy = component.MaxEnergy;
 
         Dirty(component);
+    }
+
+    private void OnEnableEquipmentMessage(EntityUid uid, SharedMechComponent component, MechEquipmentToggleMessage args)
+    {
+        var ev = new MechEquipmentGetUiInformationEvent(new MechEquipmentUiInformation(args.Equipment));
+        RaiseLocalEvent(args.Equipment, ref ev);
+
+        if (!ev.Information.CanBeEnabled) //assure that this is valid
+            return;
+
+        //TODO: enable
+    }
+
+    private void OnRemoveEquipmentMessage(EntityUid uid, SharedMechComponent component, MechEquipmentRemoveMessage args)
+    {
+        var ev = new MechEquipmentGetUiInformationEvent(new MechEquipmentUiInformation(args.Equipment));
+        RaiseLocalEvent(args.Equipment, ref ev);
+
+        if (!ev.Information.CanBeRemoved) //assure that this is valid
+            return;
+
+        if (!component.EquipmentContainer.ContainedEntities.Contains(args.Equipment))
+            return;
+
+        RemoveEquipment(uid, args.Equipment, component);
     }
 
     private void OnOpenUi(EntityUid uid, MechComponent component, MechOpenUiEvent args)

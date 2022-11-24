@@ -11,6 +11,9 @@ mech-ui-open-verb = Open control panel
 
 mech-menu-title = mech control panel
 
+mech-equipment-control-enable = Enable
+mech-equipment-control-remove = Remove
+
 mech-integrity-display = Integrity: {$amount}
 mech-energy-display = Energy: {$amount}
 mech-slot-display = Open Slots: {$amount}

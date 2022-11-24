@@ -72,4 +72,5 @@ public sealed class MechComponentState : ComponentState
     public float Energy;
     public float MaxEnergy;
     public EntityUid? CurrentSelectedEquipment;
+    public bool Broken;
 }

@@ -33,7 +33,7 @@ public sealed class MechEquipmentUiInformation
 
     public bool CanBeEnabled = false;
 
-    public bool CanBeEjected = true;
+    public bool CanBeRemoved = true;
 
     public MechEquipmentUiInformation(EntityUid equipment)
     {
@@ -56,6 +56,31 @@ public struct MechEquipmentGetUiInformationEvent
 public sealed class MechBoundUserInterfaceState : BoundUserInterfaceState
 {
     public List<MechEquipmentUiInformation> EquipmentInfo = new();
+}
+
+[Serializable, NetSerializable]
+public sealed class MechEquipmentToggleMessage : BoundUserInterfaceMessage
+{
+    public EntityUid Equipment;
+
+    public bool Enabled;
+
+    public MechEquipmentToggleMessage(EntityUid equipment, bool enabled)
+    {
+        Equipment = equipment;
+        Enabled = enabled;
+    }
+}
+
+[Serializable, NetSerializable]
+public sealed class MechEquipmentRemoveMessage : BoundUserInterfaceMessage
+{
+    public EntityUid Equipment;
+
+    public MechEquipmentRemoveMessage(EntityUid equipment)
+    {
+        Equipment = equipment;
+    }
 }
 
 public sealed class MechToggleEquipmentEvent : InstantActionEvent

@@ -10,9 +10,9 @@
             RectClipContent="True"/>
         <RichTextLabel Name="EquipmentName" VerticalAlignment="Center"/>
         <BoxContainer Orientation="Vertical" HorizontalExpand="True" HorizontalAlignment="Right" VerticalAlignment="Center">
-            <Button Name="EnableButton" Text="Enable" SetHeight="30" HorizontalExpand="True" ToggleMode="True"></Button>
+            <Button Name="EnableButton" Text="{Loc 'mech-equipment-control-enable'}" SetHeight="30" HorizontalExpand="True" ToggleMode="True"></Button>
             <BoxContainer MinHeight="5"></BoxContainer>
-            <Button Name="RemoveButton" Text="Remove" SetHeight="30" HorizontalExpand="True"></Button>
+            <Button Name="RemoveButton" Text="{Loc 'mech-equipment-control-remove'}" SetHeight="30" HorizontalExpand="True"></Button>
         </BoxContainer>
     </BoxContainer>
     </Button>
