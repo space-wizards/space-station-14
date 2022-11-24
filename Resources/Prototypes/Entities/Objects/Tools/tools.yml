@@ -327,7 +327,6 @@
       - Screwing
     speed: 1.2 # Kept for future adjustments. Currently 1.2x for balance
     useSound: /Audio/Items/drill_use.ogg
-  - type: LatticeCutting
   - type: MultipleTool
     statusShowBehavior: true
     entries:

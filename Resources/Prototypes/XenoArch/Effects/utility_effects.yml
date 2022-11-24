@@ -143,7 +143,6 @@
     interfaces:
       - key: enum.SignalLinkerUiKey.Key
         type: SignalPortSelectorBoundUserInterface
-  - type: LatticeCutting
   - type: Tool
     qualities:
     - Screwing
