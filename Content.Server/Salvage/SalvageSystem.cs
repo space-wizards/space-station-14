@@ -16,11 +16,13 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using System.Linq;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Salvage
 {
-    public sealed class SalvageSystem : EntitySystem
+    public sealed partial class SalvageSystem : EntitySystem
     {
+        [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
@@ -50,6 +52,8 @@ namespace Content.Server.Salvage
 
             // Can't use RoundRestartCleanupEvent, I need to clean up before the grid, and components are gone to prevent the announcements
             SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRoundEnd);
+
+            InitializeExpeditions();
         }
 
         private void OnRoundEnd(GameRunLevelChangedEvent ev)
@@ -431,6 +435,8 @@ namespace Content.Server.Salvage
                     state.ActiveMagnets.Remove(magnet);
                 }
             }
+
+            UpdateExpeditions();
         }
     }
 

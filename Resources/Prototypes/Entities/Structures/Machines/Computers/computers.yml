@@ -665,6 +665,34 @@
     speechSounds: Pai
 
 - type: entity
+  id: ComputerSalvageExpedition
+  parent: BaseComputer
+  name: salvage expeditions computer
+  description: Used take salvage missions.
+  components:
+    - type: Appearance
+      visuals:
+        - type: ComputerVisualizer
+          key: tech_key
+          screen: mining
+    - type: SalvageExpeditionConsole
+    - type: ActivatableUI
+      key: enum.SalvageConsoleUiKey.Expedition
+    - type: ActivatableUIRequiresPower
+    - type: UserInterface
+      interfaces:
+        - key: enum.SalvageConsoleUiKey.Expedition
+          type: SalvageExpeditionConsoleBoundUserInterface
+    - type: Computer
+      board: SalvageExpeditionsComputerCircuitboard
+    - type: PointLight
+      radius: 1.5
+      energy: 1.6
+      color: "#b89f25"
+    - type: AccessReader
+      access: [["Salvage"]]
+
+- type: entity
   parent: BaseComputer
   id: ComputerSurveillanceCameraMonitor
   name: camera monitor
