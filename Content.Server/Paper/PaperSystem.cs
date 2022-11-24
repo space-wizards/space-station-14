@@ -59,8 +59,7 @@ namespace Content.Server.Paper
                 return;
 
             if (paperComp.Content != "")
-                args.Message.PushNewline();
-                args.Message.AddMarkup(
+                args.PushMarkup(
                     Loc.GetString(
                         "paper-component-examine-detail-has-words", ("paper", uid)
                     )
@@ -68,9 +67,8 @@ namespace Content.Server.Paper
 
             if (paperComp.StampedBy.Count > 0)
             {
-                args.Message.PushNewline();
                 string commaSeparated = string.Join(", ", paperComp.StampedBy);
-                args.Message.AddMarkup(
+                args.PushMarkup(
                     Loc.GetString(
                         "paper-component-examine-detail-stamped-by", ("paper", uid), ("stamps", commaSeparated))
                 );
