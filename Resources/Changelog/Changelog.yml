@@ -1,9 +1,4 @@
 Entries:
-- author: FunkySphere
-  changes:
-  - {message: 'magboots, galoshes and flippers no longer butcherable', type: Tweak}
-  id: 2196
-  time: '2022-08-29T17:59:17.0000000+00:00'
 - author: LordEclipse
   changes:
   - {message: Medical Intern PDA's now have Health Analyzers built into them., type: Tweak}
@@ -2955,3 +2950,8 @@ Entries:
   - {message: Maybe fix grid clipping., type: Fix}
   id: 2695
   time: '2022-11-24T05:54:21.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Omnitool can cut lattice and pry unpowered doors, type: Fix}
+  id: 2696
+  time: '2022-11-24T06:00:34.0000000+00:00'
