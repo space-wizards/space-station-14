@@ -48,7 +48,7 @@ public sealed partial class ExplosionSystem : EntitySystem
             candidateGrid.TryGetTileRef(candidateGrid.WorldToTile(epicenter.Position), out var tileRef) &&
             !tileRef.Tile.IsEmpty)
         {
-            epicentreGrid = candidateGrid.GridEntityId;
+            epicentreGrid = candidateGrid.Owner;
             initialTile = tileRef.GridIndices;
         }
         else if (referenceGrid != null)
@@ -85,7 +85,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         var spaceAngle = Angle.Zero;
         if (referenceGrid != null)
         {
-            var xform = Transform(_mapManager.GetGrid(referenceGrid.Value).GridEntityId);
+            var xform = Transform(_mapManager.GetGrid(referenceGrid.Value).Owner);
             spaceMatrix = xform.WorldMatrix;
             spaceAngle = xform.WorldRotation;
         }
@@ -276,10 +276,10 @@ public sealed partial class ExplosionSystem : EntitySystem
 
         foreach (var grid in _mapManager.FindGridsIntersecting(epicenter.MapId, box))
         {
-            if (TryComp(grid.GridEntityId, out PhysicsComponent? physics) && physics.Mass > mass)
+            if (TryComp(grid.Owner, out PhysicsComponent? physics) && physics.Mass > mass)
             {
                 mass = physics.Mass;
-                referenceGrid = grid.GridEntityId;
+                referenceGrid = grid.Owner;
             }
         }
 
@@ -295,7 +295,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         radius *= 4;
         box = Box2.CenteredAround(epicenter.Position, (radius, radius));
         var mapGrids = _mapManager.FindGridsIntersecting(epicenter.MapId, box).ToList();
-        var grids = mapGrids.Select(x => x.GridEntityId).ToList();
+        var grids = mapGrids.Select(x => x.Owner).ToList();
 
         if (referenceGrid != null)
             return (grids, referenceGrid, radius);
@@ -303,10 +303,10 @@ public sealed partial class ExplosionSystem : EntitySystem
         // We still don't have are reference grid. So lets also look in the enlarged region
         foreach (var grid in mapGrids)
         {
-            if (TryComp(grid.GridEntityId, out PhysicsComponent? physics) && physics.Mass > mass)
+            if (TryComp(grid.Owner, out PhysicsComponent? physics) && physics.Mass > mass)
             {
                 mass = physics.Mass;
-                referenceGrid = grid.GridEntityId;
+                referenceGrid = grid.Owner;
             }
         }
 

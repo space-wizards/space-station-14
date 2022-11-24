@@ -319,7 +319,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         Dictionary<EntityUid, Dictionary<int, List<Vector2i>>> tileLists = new();
         foreach (var grid in gridData)
         {
-            tileLists.Add(grid.Grid.Owner, grid.TileLists);
+            tileLists.Add(((Component) grid.Grid).Owner, grid.TileLists);
         }
 
         return new ExplosionEvent(_explosionCounter, epicenter, id, iterationIntensity, spaceTiles, tileLists, spaceMatrix, spaceData?.TileSize ?? DefaultTileSize);

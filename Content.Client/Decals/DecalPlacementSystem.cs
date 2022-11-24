@@ -105,7 +105,7 @@ public sealed class DecalPlacementSystem : EntitySystem
 
         args.Handled = true;
 
-        var coords =  EntityCoordinates.FromMap(grid.GridEntityId, args.Target, EntityManager);
+        var coords =  EntityCoordinates.FromMap(grid.Owner, args.Target, EntityManager);
 
         if (args.Snap)
         {
