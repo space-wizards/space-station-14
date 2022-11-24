@@ -1,44 +1,4 @@
 Entries:
-- author: Myctai
-  changes:
-  - {message: nonlethals crate icon no longer suggests that crate contains tasers
-      (crate actually contains disablers), type: Fix}
-  id: 2192
-  time: '2022-08-27T05:54:24.0000000+00:00'
-- author: FunkySphere
-  changes:
-  - {message: Margherita pizza slice is no longer sliceable into multiple meat pizza
-      slices., type: Fix}
-  id: 2193
-  time: '2022-08-27T09:59:16.0000000+00:00'
-- author: biometricPsychography
-  changes:
-  - {message: Made the dead state of the snake more dead (fix snakes death animation/sprite).,
-    type: Fix}
-  id: 2194
-  time: '2022-08-28T22:34:22.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Moving between grids should now be smooth., type: Fix}
-  - {message: Fixed the eye rotation on spawn and also when the shuttle goes FTL.,
-    type: Fix}
-  id: 2195
-  time: '2022-08-29T05:05:53.0000000+00:00'
-- author: FunkySphere
-  changes:
-  - {message: 'magboots, galoshes and flippers no longer butcherable', type: Tweak}
-  id: 2196
-  time: '2022-08-29T17:59:17.0000000+00:00'
-- author: LordEclipse
-  changes:
-  - {message: Medical Intern PDA's now have Health Analyzers built into them., type: Tweak}
-  id: 2197
-  time: '2022-08-29T23:32:20.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Pull chains with your besties should be much faster., type: Tweak}
-  id: 2198
-  time: '2022-08-30T02:19:25.0000000+00:00'
 - author: Rane
   changes:
   - {message: Cloners now require biomass., type: Add}
@@ -2958,3 +2918,42 @@ Entries:
   - {message: Fix some mapgrids not being sent to clients., type: Fix}
   id: 2691
   time: '2022-11-22T09:28:09.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix exception when shooting with your mouse outside of the window.,
+    type: Fix}
+  id: 2692
+  time: '2022-11-23T06:35:06.0000000+00:00'
+- author: Mervill
+  changes:
+  - {message: Items dropped onto a moving Conveyor by the disposal network move immediately,
+    type: Fix}
+  id: 2693
+  time: '2022-11-23T07:38:39.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Chameleon masks and helmets can hide your identity., type: Tweak}
+  id: 2694
+  time: '2022-11-24T02:02:55.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Maybe fix grid clipping., type: Fix}
+  id: 2695
+  time: '2022-11-24T05:54:21.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Omnitool can cut lattice and pry unpowered doors, type: Fix}
+  id: 2696
+  time: '2022-11-24T06:00:34.0000000+00:00'
+- author: JustinTrotter
+  changes:
+  - {message: Welder tanks explode when shot with projectile guns. (Also don't poke
+      them with a spear), type: Add}
+  id: 2697
+  time: '2022-11-24T06:01:51.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Map ambient lighting can now be controlled by admins via RGBLightController.,
+    type: Add}
+  id: 2698
+  time: '2022-11-24T07:31:17.0000000+00:00'
