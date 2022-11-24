@@ -118,7 +118,3 @@
         amount: 2
       - id: DoorElectronics
         amount: 12
-      - id: Screwdriver
-        amount: 1
-      - id: Wrench
-        amount: 1
