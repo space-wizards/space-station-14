@@ -1,7 +1,8 @@
 ghost-gui-return-to-body-button = Return to body
 ghost-gui-ghost-warp-button = Ghost Warp
 ghost-gui-ghost-roles-button = Ghost Roles ({$count})
-ghost-gui-toggle-ghost-visibility-button = Toggle Ghosts
+ghost-gui-toggle-ghost-visibility-name = Toggle Ghosts
+ghost-gui-toggle-ghost-visibility-desc = Toggle the visibility of other ghosts.
 ghost-gui-toggle-lighting-manager-name = Toggle Lighting
 ghost-gui-toggle-lighting-manager-desc = Toggle light rendering to better observe dark areas or to see what players see.
 

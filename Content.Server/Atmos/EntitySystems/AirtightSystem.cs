@@ -3,6 +3,7 @@ using Content.Server.Explosion.EntitySystems;
 using Content.Shared.Atmos;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -31,7 +32,7 @@ namespace Content.Server.Atmos.EntitySystems
                 var moveEvent = new MoveEvent(airtight.Owner, default, default, Angle.Zero, xform.LocalRotation, xform, false);
                 OnAirtightRotated(uid, airtight, ref moveEvent);
             }
-            
+
             UpdatePosition(airtight);
         }
 
@@ -58,7 +59,7 @@ namespace Content.Server.Atmos.EntitySystems
             var gridId = xform.GridUid;
             var coords = xform.Coordinates;
 
-            var tilePos = grid.Grid.TileIndicesFor(coords);
+            var tilePos = grid.TileIndicesFor(coords);
 
             // Update and invalidate new position.
             airtight.LastPosition = (gridId.Value, tilePos);
@@ -118,11 +119,7 @@ namespace Content.Server.Atmos.EntitySystems
             var query = EntityManager.GetEntityQuery<AirtightComponent>();
             _explosionSystem.UpdateAirtightMap(gridId, pos, query);
             // TODO make atmos system use query
-            _atmosphereSystem.UpdateAdjacent(gridUid, pos);
             _atmosphereSystem.InvalidateTile(gridUid, pos);
-
-            if(fixVacuum)
-                _atmosphereSystem.FixTileVacuum(gridUid, pos);
         }
 
         private AtmosDirection Rotate(AtmosDirection myDirection, Angle myAngle)

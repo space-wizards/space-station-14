@@ -1,7 +1,7 @@
 ﻿- type: trait
   id: Blindness
-  name: Blindness
-  description: You lack vision
+  name: trait-blindness-name
+  description: trait-blindness-desc
   whitelist:
     components:
       - Blindable
@@ -10,8 +10,8 @@
 
 - type: trait
   id: Narcolepsy
-  name: Narcolepsy
-  description: You fall asleep randomly
+  name: trait-narcolepsy-name
+  description: trait-narcolepsy-decs
   components:
     - type: Narcolepsy
       timeBetweenIncidents: 300, 600
@@ -19,6 +19,6 @@
 
 - type: trait
   id: Pacifist
-  name: Pacifist
+  name: trait-pacifist-name
   components:
     - type: Pacifist

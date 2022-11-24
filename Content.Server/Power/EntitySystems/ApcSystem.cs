@@ -178,7 +178,7 @@ namespace Content.Server.Power.EntitySystems
                 return ApcExternalPowerState.None;
             }
 
-            var delta = netBat.CurrentReceiving - netBat.LoadingNetworkDemand;
+            var delta = netBat.CurrentReceiving - netBat.CurrentSupply;
             if (!MathHelper.CloseToPercent(delta, 0, 0.1f) && delta < 0)
             {
                 return ApcExternalPowerState.Low;

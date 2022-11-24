@@ -5,7 +5,6 @@ namespace Content.Server.Atmos.Piping.Binary.Components
     [RegisterComponent]
     public sealed class GasValveComponent : Component
     {
-        [ViewVariables]
         [DataField("open")]
         public bool Open { get; set; } = true;
 

@@ -14,7 +14,6 @@ namespace Content.Server.Disease.Components
         /// How long it takes to swab someone.
         /// </summary>
         [DataField("swabDelay")]
-        [ViewVariables]
         public float SwabDelay = 2f;
         /// <summary>
         /// If this swab has been used

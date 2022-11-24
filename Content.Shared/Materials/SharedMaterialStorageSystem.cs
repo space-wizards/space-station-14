@@ -166,7 +166,6 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
         }
 
         var multiplier = TryComp<SharedStackComponent>(toInsert, out var stackComponent) ? stackComponent.Count : 1;
-
         var totalVolume = 0;
         foreach (var (mat, vol) in component.Storage)
         {

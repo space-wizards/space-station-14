@@ -97,6 +97,9 @@
   id: CartridgeMagnum
 
 - type: Tag
+  id: CartridgeMagnumHC
+
+- type: Tag
   id: CartridgePistol
 
 - type: Tag
@@ -378,6 +381,9 @@
   id: NoSpinOnThrow
 
 - type: Tag
+  id: NoBlockAnchoring
+
+- type: Tag
   id: NukeOpsUplink
 
 - type: Tag
@@ -390,10 +396,19 @@
   id: Payload # for grenade/bomb crafting
 
 - type: Tag
+  id: MacroBomb
+
+- type: Tag
+  id: MicroBomb
+
+- type: Tag
   id: PaintableAirlock
 
 - type: Tag
   id: PercussionInstrument
+
+- type: Tag
+  id: PetWearable
 
 - type: Tag
   id: Pickaxe
@@ -430,6 +445,9 @@
 
 - type: Tag
   id: PussyWagonKeys
+
+- type: Tag
+  id: Radio
 
 - type: Tag
   id: RawMaterial
@@ -473,7 +491,7 @@
 
 - type: Tag
   id: Smokable
-  
+
 - type: Tag
   id: Soap
 
@@ -488,6 +506,21 @@
 
 - type: Tag
   id: Spear
+
+- type: Tag
+  id: SpeedLoaderCap
+
+- type: Tag
+  id: SpeedLoaderMagnum
+
+- type: Tag
+  id: SpeedLoaderMagnumHC
+
+- type: Tag
+  id: SpeedLoaderPistol
+
+- type: Tag
+  id: SpeedLoaderRifle
 
 - type: Tag
   id: StringInstrument
@@ -555,3 +588,5 @@
 - type: Tag
   id: Write
 
+- type: Tag
+  id: SubdermalImplant

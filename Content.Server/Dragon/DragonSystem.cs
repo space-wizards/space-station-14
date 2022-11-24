@@ -147,7 +147,7 @@ namespace Content.Server.Dragon
                     var location = Transform(comp.Owner).LocalPosition;
 
                     _chat.DispatchGlobalAnnouncement(Loc.GetString("carp-rift-warning", ("location", location)), playSound: false, colorOverride: Color.Red);
-                    _audioSystem.PlayGlobal("/Audio/Misc/notice1.ogg", Filter.Broadcast());
+                    _audioSystem.PlayGlobal("/Audio/Misc/notice1.ogg", Filter.Broadcast(), true);
                 }
 
                 if (comp.SpawnAccumulator > comp.SpawnCooldown)
@@ -258,7 +258,7 @@ namespace Content.Server.Dragon
             var carpUid = Spawn(component.RiftPrototype, xform.MapPosition);
             component.Rifts.Add(carpUid);
             Comp<DragonRiftComponent>(carpUid).Dragon = uid;
-            _audioSystem.Play("/Audio/Weapons/Guns/Gunshots/rocket_launcher.ogg", Filter.Pvs(carpUid, entityManager: EntityManager), carpUid);
+            _audioSystem.PlayPvs("/Audio/Weapons/Guns/Gunshots/rocket_launcher.ogg", carpUid);
         }
 
         #endregion
@@ -327,7 +327,7 @@ namespace Content.Server.Dragon
         private void Roar(DragonComponent component)
         {
             if (component.SoundRoar != null)
-                _audioSystem.Play(component.SoundRoar, Filter.Pvs(component.Owner, 4f, EntityManager), component.Owner, component.SoundRoar.Params);
+                _audioSystem.Play(component.SoundRoar, Filter.Pvs(component.Owner, 4f, EntityManager), component.Owner, true, component.SoundRoar.Params);
         }
 
         private void OnStartup(EntityUid uid, DragonComponent component, ComponentStartup args)

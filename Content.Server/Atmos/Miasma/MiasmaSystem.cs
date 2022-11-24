@@ -11,6 +11,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Atmos.Miasma
 {
@@ -20,7 +21,9 @@ namespace Content.Server.Atmos.Miasma
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly SharedMobStateSystem _mobState = default!;
+        [Dependency] private readonly MetaDataSystem _metaDataSystem = default!;
 
+        [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
         /// System Variables
@@ -62,11 +65,11 @@ namespace Content.Server.Atmos.Miasma
         /// </summary>
 
         /// <summary>
-        /// This ticks up to PoolRepickTime.
-        /// After that, it resets to 0.
-        /// Any infection will also reset it to 0.
+        /// The target time it waits until..
+        /// After that, it resets current time + _poolRepickTime.
+        /// Any infection will also reset it to current time + _poolRepickTime.
         /// </summary>
-        private float _poolAccumulator = 0f;
+        private TimeSpan _diseaseTime = TimeSpan.FromMinutes(5);
 
         /// <summary>
         /// How long without an infection before we pick a new disease.
@@ -77,29 +80,26 @@ namespace Content.Server.Atmos.Miasma
         {
             base.Update(frameTime);
             // Disease pool
-            _poolAccumulator += frameTime;
 
-            if (_poolAccumulator > _poolRepickTime.TotalSeconds)
+            if (_timing.CurTime >= _diseaseTime)
             {
-                _poolAccumulator = 0f;
+                _diseaseTime = _timing.CurTime + _poolRepickTime;
                 _poolDisease = _random.Pick(MiasmaDiseasePool);
             }
 
             // Rotting
-            foreach (var (rotting, perishable) in EntityQuery<RottingComponent, PerishableComponent>())
+            foreach (var (rotting, perishable, metadata) in EntityQuery<RottingComponent, PerishableComponent, MetaDataComponent>())
             {
                 if (!perishable.Progressing)
                     continue;
 
-                perishable.DeathAccumulator += frameTime;
-                if (perishable.DeathAccumulator < perishable.RotAfter.TotalSeconds)
+                if (!IsRotting(perishable, metadata))
                     continue;
 
-                perishable.RotAccumulator += frameTime;
-                if (perishable.RotAccumulator < _rotUpdateRate) // This is where it starts to get noticable on larger animals, no need to run every second
+                if (_timing.CurTime < perishable.RotNextUpdate) // This is where it starts to get noticable on larger animals, no need to run every second
                     continue;
 
-                perishable.RotAccumulator -= _rotUpdateRate;
+                perishable.RotNextUpdate = _timing.CurTime + TimeSpan.FromSeconds(_rotUpdateRate);
 
                 EnsureComp<FliesComponent>(perishable.Owner);
 
@@ -152,8 +152,8 @@ namespace Content.Server.Atmos.Miasma
             RemComp<FliesComponent>(uid);
             if (TryComp<PerishableComponent>(uid, out var perishable))
             {
-                perishable.DeathAccumulator = 0;
-                perishable.RotAccumulator = 0;
+                perishable.TimeOfDeath = TimeSpan.Zero;
+                perishable.RotNextUpdate = TimeSpan.Zero;
             }
         }
 
@@ -161,14 +161,31 @@ namespace Content.Server.Atmos.Miasma
         {
             if (HasComp<BodyPreservedComponent>(uid))
                 return;
-            bool decompose = (args.CurrentTemperature > 274f);
+            bool decompose = (args.CurrentTemperature > Atmospherics.T0C + 0.85f);
             ToggleDecomposition(uid, decompose);
         }
 
         private void OnMobStateChanged(EntityUid uid, PerishableComponent component, MobStateChangedEvent args)
         {
             if (_mobState.IsDead(uid))
+            {
                 EnsureComp<RottingComponent>(uid);
+                component.TimeOfDeath = _timing.CurTime;
+            }
+        }
+
+        /// <summary>
+        ///     Has enough time passed for <paramref name="perishable"/> to start rotting?
+        /// </summary>
+        private bool IsRotting(PerishableComponent perishable, MetaDataComponent? metadata = null)
+        {
+            if (perishable.TimeOfDeath == TimeSpan.Zero)
+                return false;
+
+            if (_timing.CurTime >= perishable.TimeOfDeath + perishable.RotAfter + _metaDataSystem.GetPauseTime(perishable.Owner, metadata))
+                return true;
+
+            return false;
         }
 
         private void OnGibbed(EntityUid uid, PerishableComponent component, BeingGibbedEvent args)
@@ -176,10 +193,10 @@ namespace Content.Server.Atmos.Miasma
             if (!TryComp<PhysicsComponent>(uid, out var physics))
                 return;
 
-            if (!component.Rotting)
+            if (!IsRotting(component))
                 return;
 
-            var molsToDump = (component.MolsPerSecondPerUnitMass * physics.FixturesMass) * component.DeathAccumulator;
+            var molsToDump = (component.MolsPerSecondPerUnitMass * physics.FixturesMass) * (float)(_timing.CurTime - component.TimeOfDeath).TotalSeconds;
             var transform = Transform(uid);
             var indices = _transformSystem.GetGridOrMapTilePosition(uid, transform);
             var tileMix = _atmosphereSystem.GetTileMixture(transform.GridUid, null, indices, true);
@@ -192,9 +209,10 @@ namespace Content.Server.Atmos.Miasma
 
         private void OnExamined(EntityUid uid, PerishableComponent component, ExaminedEvent args)
         {
-            if (!component.Rotting)
+            if (!IsRotting(component))
                 return;
-            var stage = component.DeathAccumulator / component.RotAfter.TotalSeconds;
+
+            var stage = (_timing.CurTime - component.TimeOfDeath).TotalSeconds / component.RotAfter.TotalSeconds;
             var description = stage switch {
                 >= 3 => "miasma-extremely-bloated",
                 >= 2 => "miasma-bloated",
@@ -246,7 +264,7 @@ namespace Content.Server.Atmos.Miasma
 
         public void ToggleDecomposition(EntityUid uid, bool decompose, PerishableComponent? perishable = null)
         {
-            if (Terminating(uid) || !Resolve(uid, ref perishable))
+            if (Terminating(uid) || !Resolve(uid, ref perishable, false))
                 return;
 
             if (decompose == perishable.Progressing) // Saved a few cycles
@@ -254,7 +272,7 @@ namespace Content.Server.Atmos.Miasma
 
             perishable.Progressing = decompose;
 
-            if (!perishable.Rotting)
+            if (!IsRotting(perishable))
                 return;
 
             if (decompose)
@@ -290,7 +308,7 @@ namespace Content.Server.Atmos.Miasma
         public string RequestPoolDisease()
         {
             // We reset the current time on this outbreak so people don't get unlucky at the transition time
-            _poolAccumulator = 0f;
+            _diseaseTime = _timing.CurTime + _poolRepickTime;
             return _poolDisease;
         }
     }
