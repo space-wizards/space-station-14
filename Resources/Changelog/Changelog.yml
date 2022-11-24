@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Pull chains with your besties should be much faster., type: Tweak}
-  id: 2198
-  time: '2022-08-30T02:19:25.0000000+00:00'
 - author: Rane
   changes:
   - {message: Cloners now require biomass., type: Add}
@@ -2956,3 +2951,9 @@ Entries:
       them with a spear), type: Add}
   id: 2697
   time: '2022-11-24T06:01:51.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Map ambient lighting can now be controlled by admins via RGBLightController.,
+    type: Add}
+  id: 2698
+  time: '2022-11-24T07:31:17.0000000+00:00'
