@@ -1,10 +1,4 @@
 Entries:
-- author: biometricPsychography
-  changes:
-  - {message: Made the dead state of the snake more dead (fix snakes death animation/sprite).,
-    type: Fix}
-  id: 2194
-  time: '2022-08-28T22:34:22.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Moving between grids should now be smooth., type: Fix}
@@ -2958,3 +2952,8 @@ Entries:
     type: Fix}
   id: 2693
   time: '2022-11-23T07:38:39.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Chameleon masks and helmets can hide your identity., type: Tweak}
+  id: 2694
+  time: '2022-11-24T02:02:55.0000000+00:00'
