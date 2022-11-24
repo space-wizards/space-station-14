@@ -83,22 +83,10 @@ namespace Content.Server.Atmos.EntitySystems
                     tile.Air = GetTileMixture(null, mapUid, indices);
                     tile.MolesArchived = tile.Air != null ? new float[Atmospherics.AdjustedNumberOfGases] : null;
                     tile.Space = IsTileSpace(null, mapUid, indices, mapGridComp);
-                } else if (isAirBlocked)
+                }
+                else if (isAirBlocked)
                 {
-                    var nullAir = false;
-
-                    var enumerator = GetObstructingComponentsEnumerator(mapGridComp, indices);
-
-                    while (enumerator.MoveNext(out var airtight))
-                    {
-                        if (!airtight.NoAirWhenFullyAirBlocked)
-                            continue;
-
-                        nullAir = true;
-                        break;
-                    }
-
-                    if (nullAir)
+                    if (airBlockedEv.NoAir)
                     {
                         tile.Air = null;
                         tile.MolesArchived = null;
