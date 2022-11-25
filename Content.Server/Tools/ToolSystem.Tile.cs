@@ -38,7 +38,7 @@ public sealed partial class ToolSystem
 
         var tileRef = grid.GetTileRef(args.Coordinates);
 
-        if (tileRef.IsBlockedTurf(true))
+        if (component.RequiresUnobstructed && tileRef.IsBlockedTurf(true))
             return;
         
         if (tileRef.TryDeconstructWithToolQualities(tool.Qualities, _mapManager, _tileDefinitionManager, EntityManager))
@@ -75,7 +75,7 @@ public sealed partial class ToolSystem
         if (!tileDef.DeconstructToolQualities.ContainsAll(tool.Qualities))
             return false;
 
-        if (tileRef.IsBlockedTurf(true))
+        if (component.RequiresUnobstructed && tileRef.IsBlockedTurf(true))
             return false;
 
         var tokenSource = new CancellationTokenSource();
