@@ -69,13 +69,15 @@ public sealed class PrayerSystem : EntitySystem
     /// <param name="target">The IPlayerSession that you want to send the message to</param>
     /// <param name="messageString">The main message sent to the player via the chatbox</param>
     /// <param name="popupMessage">The popup to notify the player, also prepended to the messageString</param>
-    public void SendSubtleMessage(IPlayerSession target, string popupMessage, string messageString = "EIOWHGPU")
+    public void SendSubtleMessage(IPlayerSession target, string messageString, string popupMessage)
     {
         if (target.AttachedEntity == null)
             return;
 
+        var message = popupMessage == "" ? "" : popupMessage + $" \"{messageString}\"";
+
         _popupSystem.PopupEntity(popupMessage, target.AttachedEntity.Value, Filter.Empty().AddPlayer(target), PopupType.Large);
-        _chatManager.ChatMessageToOne(ChatChannel.Local, messageString, popupMessage + " \"{$message}\"", EntityUid.Invalid, false, target.ConnectedClient);
+        _chatManager.ChatMessageToOne(ChatChannel.Local, messageString, message, EntityUid.Invalid, false, target.ConnectedClient);
     }
 
     /// <summary>
@@ -94,6 +96,6 @@ public sealed class PrayerSystem : EntitySystem
 
         _popupSystem.PopupEntity(Loc.GetString("prayer-popup-notify-sent"), sender.AttachedEntity.Value, Filter.Empty().AddPlayer(sender), PopupType.Medium);
 
-        _chatManager.SendAdminAnnouncement(Loc.GetString("prayer-chat-notify", ("message", message)));
+        _chatManager.SendAdminAnnouncement(Loc.GetString("prayer-chat-notify", ("name", sender.Name), ("message", message)));
     }
 }
