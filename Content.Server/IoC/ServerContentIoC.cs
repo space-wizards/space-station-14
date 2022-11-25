@@ -9,6 +9,7 @@ using Content.Server.Database;
 using Content.Server.EUI;
 using Content.Server.GhostKick;
 using Content.Server.Info;
+using Content.Server.JoinQueue;
 using Content.Server.Maps;
 using Content.Server.MoMMI;
 using Content.Server.NodeContainer.NodeGroups;
@@ -55,6 +56,7 @@ namespace Content.Server.IoC
             IoCManager.Register<IAdminLogManager, AdminLogManager>();
             IoCManager.Register<PlayTimeTrackingManager>();
             IoCManager.Register<UserDbDataManager>();
+            IoCManager.Register<JoinQueueManager>();
         }
     }
 }

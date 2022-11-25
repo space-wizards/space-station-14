@@ -12,6 +12,7 @@ using Content.Server.GhostKick;
 using Content.Server.GuideGenerator;
 using Content.Server.Info;
 using Content.Server.IoC;
+using Content.Server.JoinQueue;
 using Content.Server.Maps;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.Players.PlayTimeTracking;
@@ -96,6 +97,7 @@ namespace Content.Server.Entry
                 IoCManager.Resolve<IGamePrototypeLoadManager>().Initialize();
                 IoCManager.Resolve<NetworkResourceManager>().Initialize();
                 IoCManager.Resolve<GhostKickManager>().Initialize();
+                IoCManager.Resolve<JoinQueueManager>().Initialize();
 
                 _voteManager.Initialize();
                 _updateManager.Initialize();

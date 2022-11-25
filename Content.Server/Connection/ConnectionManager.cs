@@ -15,6 +15,7 @@ namespace Content.Server.Connection
     public interface IConnectionManager
     {
         void Initialize();
+        Task<bool> HavePrivilegedJoin(NetUserId userId);
     }
 
     /// <summary>
@@ -98,9 +99,7 @@ namespace Content.Server.Connection
                 // Or hardware ID checks disabled.
                 hwId = null;
             }
-
-            var adminData = await _dbManager.GetAdminDataForAsync(e.UserId);
-
+            
             if (_cfg.GetCVar(CCVars.PanicBunkerEnabled))
             {
                 var record = await _dbManager.GetPlayerRecordByUserId(userId);
@@ -112,10 +111,9 @@ namespace Content.Server.Connection
                 }
             }
 
-            var wasInGame = EntitySystem.TryGet<GameTicker>(out var ticker) &&
-                            ticker.PlayerGameStatuses.TryGetValue(userId, out var status) &&
-                            status == PlayerGameStatus.JoinedGame;
-            if ((_plyMgr.PlayerCount >= _cfg.GetCVar(CCVars.SoftMaxPlayers) && adminData is null) && !wasInGame)
+            var isPrivileged = await HavePrivilegedJoin(e.UserId);
+            var isQueueEnabled = _cfg.GetCVar(CCVars.QueueEnabled);
+            if (_plyMgr.PlayerCount >= _cfg.GetCVar(CCVars.SoftMaxPlayers) && !isPrivileged && !isQueueEnabled)
             {
                 return (ConnectionDenyReason.Full, Loc.GetString("soft-player-cap-full"), null);
             }
@@ -127,6 +125,7 @@ namespace Content.Server.Connection
                 return (ConnectionDenyReason.Ban, firstBan.DisconnectMessage, bans);
             }
 
+            var adminData = await _dbManager.GetAdminDataForAsync(e.UserId);
             if (_cfg.GetCVar(CCVars.WhitelistEnabled)
                 && await _db.GetWhitelistStatusAsync(userId) == false
                 && adminData is null)
@@ -153,6 +152,15 @@ namespace Content.Server.Connection
             var assigned = new NetUserId(Guid.NewGuid());
             await _db.AssignUserIdAsync(name, assigned);
             return assigned;
+        }
+        
+        public async Task<bool> HavePrivilegedJoin(NetUserId userId)
+        {
+            var isAdmin = await _dbManager.GetAdminDataForAsync(userId) != null;
+            var wasInGame = EntitySystem.TryGet<GameTicker>(out var ticker) &&
+                            ticker.PlayerGameStatuses.TryGetValue(userId, out var status) &&
+                            status == PlayerGameStatus.JoinedGame;
+            return isAdmin || wasInGame;
         }
     }
 }

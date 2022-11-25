@@ -1331,5 +1331,15 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<float>
             PlayTimeSaveInterval = CVarDef.Create("playtime.save_interval", 900f, CVar.SERVERONLY);
+
+        /*
+         * Queue
+         */
+
+        /// <summary>
+        ///     Controls if the connections queue is enabled. If enabled stop kicking new players after `SoftMaxPlayers` cap and instead add them to queue.
+        /// </summary>
+        public static readonly CVarDef<bool>
+            QueueEnabled = CVarDef.Create("queue.enabled", false, CVar.SERVERONLY);
     }
 }

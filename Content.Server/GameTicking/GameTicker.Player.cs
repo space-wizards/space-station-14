@@ -34,10 +34,6 @@ namespace Content.Server.GameTicking
                     if (session.Data.ContentDataUncast == null)
                         session.Data.ContentDataUncast = new PlayerData(session.UserId, args.Session.Name);
 
-                    // Make the player actually join the game.
-                    // timer time must be > tick length
-                    Timer.Spawn(0, args.Session.JoinGame);
-
                     _chatManager.SendAdminAnnouncement(Loc.GetString("player-join-message", ("name", args.Session.Name)));
 
                     if (LobbyEnabled && _roundStartCountdownHasNotStartedYetDueToNoPlayers)
@@ -88,7 +84,9 @@ namespace Content.Server.GameTicking
                 {
                     _chatManager.SendAdminAnnouncement(Loc.GetString("player-leave-message", ("name", args.Session.Name)));
 
-                    _userDb.ClientDisconnected(session);
+                    if (_playerGameStatuses.ContainsKey(args.Session.UserId)) // Delete data only if player was in game
+                        _userDb.ClientDisconnected(session);
+                    
                     break;
                 }
             }
