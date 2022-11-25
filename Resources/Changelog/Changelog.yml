@@ -1,11 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: Fixed issues with ID cards displaying whitespace and empty names., type: Fix}
-  id: 2201
-  time: '2022-08-30T02:38:01.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: The Cargo Tech and QM job icons have been swapped., type: Fix}
   id: 2202
   time: '2022-08-30T02:39:23.0000000+00:00'
@@ -2953,3 +2948,9 @@ Entries:
   - {message: Added the Courser class evacuation shuttle., type: Add}
   id: 2700
   time: '2022-11-25T08:18:17.0000000+00:00'
+- author: Mervill
+  changes:
+  - {message: Recycler can no longer recycle things if it's unpowered., type: Fix}
+  - {message: Fix conveyor assemblies being un-interactable after deconstruct, type: Fix}
+  id: 2701
+  time: '2022-11-25T09:00:41.0000000+00:00'
