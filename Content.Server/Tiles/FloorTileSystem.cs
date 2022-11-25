@@ -5,6 +5,7 @@ using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
@@ -94,11 +95,11 @@ namespace Content.Server.Tiles
             return false;
         }
 
-        private void PlaceAt(IMapGrid mapGrid, EntityCoordinates location, ushort tileId, SoundSpecifier placeSound, float offset = 0)
+        private void PlaceAt(MapGridComponent mapGrid, EntityCoordinates location, ushort tileId, SoundSpecifier placeSound, float offset = 0)
         {
             var variant = _random.Pick(((ContentTileDefinition) _tileDefinitionManager[tileId]).PlacementVariants);
             mapGrid.SetTile(location.Offset(new Vector2(offset, offset)), new Tile(tileId, 0, variant));
-            _audio.Play(placeSound, Filter.Pvs(location), location, AudioHelpers.WithVariation(0.125f, _random));
+            _audio.Play(placeSound, Filter.Pvs(location), location, true, AudioHelpers.WithVariation(0.125f, _random));
         }
     }
 }

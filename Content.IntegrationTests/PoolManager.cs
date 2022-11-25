@@ -23,6 +23,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -752,7 +753,7 @@ public sealed class PoolSettings
 public sealed class TestMapData
 {
     public MapId MapId { get; set; }
-    public IMapGrid MapGrid { get; set; }
+    public MapGridComponent MapGrid { get; set; }
     public EntityCoordinates GridCoords { get; set; }
     public MapCoordinates MapCoords { get; set; }
     public TileRef Tile { get; set; }

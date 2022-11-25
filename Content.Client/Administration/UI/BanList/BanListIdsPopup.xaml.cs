@@ -7,10 +7,11 @@ namespace Content.Client.Administration.UI.BanList;
 [GenerateTypedNameReferences]
 public sealed partial class BanListIdsPopup : Popup
 {
-    public BanListIdsPopup(string? ip, string? hwid, string? guid)
+    public BanListIdsPopup(string? id, string? ip, string? hwid, string? guid)
     {
         RobustXamlLoader.Load(this);
 
+        ID.Text = id;
         IP.Text = ip;
         HWId.Text = hwid;
         GUID.Text = guid;
