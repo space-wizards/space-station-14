@@ -1,5 +1,7 @@
+# vocal emotes
 - type: emote
   id: Scream
+  category: Vocal
   words:
     - scream
     - screams
@@ -20,6 +22,7 @@
 
 - type: emote
   id: Laugh
+  category: Vocal
   words:
     - laugh
     - laughs
@@ -28,6 +31,7 @@
 
 - type: emote
   id: Groan
+  category: Vocal
   words:
     - groan
     - groans
