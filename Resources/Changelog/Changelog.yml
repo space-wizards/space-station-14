@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: The Cargo Tech and QM job icons have been swapped., type: Fix}
-  id: 2202
-  time: '2022-08-30T02:39:23.0000000+00:00'
 - author: Rane
   changes:
   - {message: Silicons will no longer take damage from glass shards. Flying mobs are
@@ -2954,3 +2949,8 @@ Entries:
   - {message: Fix conveyor assemblies being un-interactable after deconstruct, type: Fix}
   id: 2701
   time: '2022-11-25T09:00:41.0000000+00:00'
+- author: Gaxeer
+  changes:
+  - {message: add missing flame to cowelder, type: Fix}
+  id: 2702
+  time: '2022-11-25T11:27:45.0000000+00:00'
