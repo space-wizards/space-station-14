@@ -12,6 +12,7 @@ using Content.Shared.Singularity.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
 // using static Content.Shared.Wires.SharedWiresComponent;
 using Timer = Robust.Shared.Timing.Timer;
@@ -344,7 +345,7 @@ namespace Content.Server.ParticleAccelerator.Components
             // Find fuel chamber first by scanning cardinals.
             if (xform.Anchored && _entMan.TryGetComponent(xform.GridUid, out MapGridComponent? grid))
             {
-                foreach (var maybeFuel in grid.Grid.GetCardinalNeighborCells(xform.Coordinates))
+                foreach (var maybeFuel in grid.GetCardinalNeighborCells(xform.Coordinates))
                 {
                     if (_entMan.TryGetComponent(maybeFuel, out _partFuelChamber))
                     {

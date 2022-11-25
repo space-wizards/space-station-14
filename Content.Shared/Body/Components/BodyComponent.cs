@@ -12,15 +12,12 @@ namespace Content.Shared.Body.Components;
 [Access(typeof(SharedBodySystem))]
 public sealed class BodyComponent : Component, IDraggable
 {
-    [ViewVariables]
     [DataField("prototype", customTypeSerializer: typeof(PrototypeIdSerializer<BodyPrototype>))]
     public readonly string? Prototype;
 
-    [ViewVariables]
     [DataField("root")]
     public BodyPartSlot Root = default!;
 
-    [ViewVariables]
     [DataField("gibSound")]
     public SoundSpecifier GibSound = new SoundCollectionSpecifier("gib");
 

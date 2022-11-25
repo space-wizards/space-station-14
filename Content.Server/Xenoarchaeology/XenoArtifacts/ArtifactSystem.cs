@@ -1,6 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Cargo.Systems;
+using Content.Server.Power.EntitySystems;
+using Content.Server.Xenoarchaeology.Equipment.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
 using JetBrains.Annotations;
 using Robust.Shared.Random;
@@ -22,6 +24,8 @@ public sealed partial class ArtifactSystem : EntitySystem
 
         SubscribeLocalEvent<ArtifactComponent, MapInitEvent>(OnInit);
         SubscribeLocalEvent<ArtifactComponent, PriceCalculationEvent>(GetPrice);
+
+        InitializeCommands();
     }
 
     private void OnInit(EntityUid uid, ArtifactComponent component, MapInitEvent args)
@@ -105,7 +109,7 @@ public sealed partial class ArtifactSystem : EntitySystem
 
         component.NodeTree = new ArtifactTree();
 
-        GenerateArtifactNodeTree(ref component.NodeTree, nodeAmount);
+        GenerateArtifactNodeTree(component.Owner, ref component.NodeTree, nodeAmount);
         EnterNode(component.Owner, ref component.NodeTree.StartNode, component);
     }
 
@@ -158,15 +162,48 @@ public sealed partial class ArtifactSystem : EntitySystem
         component.CurrentNode.Triggered = true;
         if (component.CurrentNode.Edges.Any())
         {
-            var undiscoveredNodes = component.CurrentNode.Edges.Where(x => !x.Discovered).ToList();
-
-            var newNode = _random.Pick(component.CurrentNode.Edges);
-            if (undiscoveredNodes.Any() && _random.Prob(0.75f))
-            {
-                newNode = _random.Pick(undiscoveredNodes);
-            }
+            var newNode = GetNewNode(component);
+            if (newNode == null)
+                return;
             EnterNode(uid, ref newNode, component);
         }
+    }
+
+    private ArtifactNode? GetNewNode(ArtifactComponent component)
+    {
+        if (component.CurrentNode == null)
+            return null;
+
+        var allNodes = component.CurrentNode.Edges;
+
+        if (TryComp<BiasedArtifactComponent>(component.Owner, out var bias) &&
+            TryComp<TraversalDistorterComponent>(bias.Provider, out var trav) &&
+            _random.Prob(trav.BiasChance) &&
+            this.IsPowered(bias.Provider, EntityManager))
+        {
+            switch (trav.BiasDirection)
+            {
+                case BiasDirection.In:
+                    var foo = allNodes.Where(x => x.Depth < component.CurrentNode.Depth).ToList();
+                    if (foo.Any())
+                        allNodes = foo;
+                    break;
+                case BiasDirection.Out:
+                    var bar = allNodes.Where(x => x.Depth > component.CurrentNode.Depth).ToList();
+                    if (bar.Any())
+                        allNodes = bar;
+                    break;
+            }
+        }
+
+        var undiscoveredNodes = allNodes.Where(x => !x.Discovered).ToList();
+        var newNode = _random.Pick(allNodes);
+        if (undiscoveredNodes.Any() && _random.Prob(0.75f))
+        {
+            newNode = _random.Pick(undiscoveredNodes);
+        }
+
+        return newNode;
     }
 
     /// <summary>

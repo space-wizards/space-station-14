@@ -1,6 +1,7 @@
 using Content.Shared.Movement.Components;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Movement.Systems;
 
@@ -22,6 +23,12 @@ public abstract partial class SharedMoverController
         if (!Resolve(uid, ref component))
             return;
 
+        if (uid == relayEntity)
+        {
+            Logger.Error($"An entity attempted to relay movement to itself. Entity:{ToPrettyString(uid)}");
+            return;
+        }
+
         component.RelayEntity = relayEntity;
         Dirty(component);
     }
@@ -37,6 +44,7 @@ public abstract partial class SharedMoverController
     {
         if (args.Current is not RelayInputMoverComponentState state) return;
 
+        DebugTools.Assert(state.Entity != uid);
         component.RelayEntity = state.Entity;
     }
 

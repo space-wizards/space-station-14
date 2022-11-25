@@ -22,8 +22,8 @@ reagent-desc-ethanol = A simple alcohol, makes you drunk if consumed, flammable.
 reagent-name-gin = gin
 reagent-desc-gin = A distilled alcoholic drink that derives its predominant flavour from juniper berries.
 
-reagent-name-kahlua = kahlua
-reagent-desc-kahlua = A widely known, Mexican coffee-flavoured liqueur.
+reagent-name-coffeeliqueur = coffee liqueur
+reagent-desc-coffeeliqueur = Liquor flavoured with cold brewed coffee and spices.
 
 reagent-name-melon-liquor = melon liquor
 reagent-desc-melon-liquor = A relatively sweet and fruity 46 proof liquor.
