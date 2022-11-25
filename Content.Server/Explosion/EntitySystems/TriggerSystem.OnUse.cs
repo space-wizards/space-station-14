@@ -1,9 +1,8 @@
 using Content.Server.Explosion.Components;
 using Content.Server.Sticky.Events;
 using Content.Shared.Examine;
-using Content.Shared.Popups;
 using Content.Shared.Interaction.Events;
-using Content.Shared.MobState;
+using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Player;
 
@@ -142,7 +141,8 @@ public sealed partial class TriggerSystem
 
     private void OnTimerUse(EntityUid uid, OnUseTimerTriggerComponent component, UseInHandEvent args)
     {
-        if (args.Handled) return;
+        if (args.Handled)
+            return;
 
         HandleTimerTrigger(
             uid,

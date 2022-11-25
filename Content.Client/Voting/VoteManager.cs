@@ -119,7 +119,7 @@ namespace Content.Client.Voting
 
                 @new = true;
                 IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>()
-                    .PlayGlobal("/Audio/Effects/voteding.ogg", Filter.Local());
+                    .PlayGlobal("/Audio/Effects/voteding.ogg", Filter.Local(), false);
 
                 // New vote from the server.
                 var vote = new ActiveVote(voteId)

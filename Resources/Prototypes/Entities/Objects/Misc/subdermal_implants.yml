@@ -154,8 +154,9 @@
       permanent: true
     - type: TriggerOnMobstateChange #Chains with OnUseTimerTrigger
       mobState: Dead
+      preventSuicide: true
     - type: OnUseTimerTrigger
-      delay: 5
+      delay: 7
       initialBeepDelay: 0
       beepSound: /Audio/Machines/Nuke/general_beep.ogg
     - type: ExplodeOnTrigger
@@ -163,9 +164,9 @@
       deleteItems: true
     - type: Explosive
       explosionType: Default
-      totalIntensity: 4000
-      intensitySlope: 5
-      maxIntensity: 50
+      totalIntensity: 3500
+      intensitySlope: 15
+      maxIntensity: 70
       canCreateVacuum: true
     - type: Tag
       tags:
