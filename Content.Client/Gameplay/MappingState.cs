@@ -1,4 +1,6 @@
-﻿using Content.Client.Parallax;
+﻿using Content.Client.Hands;
+using Content.Client.Mapping.Overlays;
+using Content.Client.Parallax;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Screens;
 using Content.Client.UserInterface.Systems.Viewport;
@@ -49,6 +51,9 @@ public sealed class MappingState : GameplayStateBase, IMainViewportState
         base.Startup();
 
         LoadMainScreen();
+
+        _overlayManager.AddOverlay(new MappingActivityOverlay());
+        _overlayManager.AddOverlay(new ShowHandItemOverlay());
         // FPS counter.
         // yeah this can just stay here, whatever
         // look ma COPY PASTE! --future coder
@@ -65,6 +70,8 @@ public sealed class MappingState : GameplayStateBase, IMainViewportState
     protected override void Shutdown()
     {
         base.Shutdown();
+        _overlayManager.RemoveOverlay<MappingActivityOverlay>();
+        _overlayManager.RemoveOverlay<ShowHandItemOverlay>();
         // Clear viewport to some fallback, whatever.
         _eyeManager.MainViewport = UserInterfaceManager.MainViewport;
         _fpsCounter.Dispose();
