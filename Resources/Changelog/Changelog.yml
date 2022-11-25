@@ -1,12 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: The zombie midround event now just starts zombie mode., type: Add}
-  - {message: Zombie melee infection rates have been lowered., type: Tweak}
-  id: 2200
-  time: '2022-08-30T02:35:19.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: Fixed issues with ID cards displaying whitespace and empty names., type: Fix}
   id: 2201
   time: '2022-08-30T02:38:01.0000000+00:00'
@@ -2954,3 +2948,8 @@ Entries:
   - {message: Individual stations can now have specific emergency shuttles., type: Tweak}
   id: 2699
   time: '2022-11-24T18:28:04.0000000+00:00'
+- author: Checkraze
+  changes:
+  - {message: Added the Courser class evacuation shuttle., type: Add}
+  id: 2700
+  time: '2022-11-25T08:18:17.0000000+00:00'
