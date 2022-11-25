@@ -194,13 +194,31 @@ public abstract class DrawingLikeTool : Tool
     {
         if (false)
         {
-            // blah blah attach to anchor entity instead of grid.
+            // TODO: blah blah attach to anchor entity instead of grid.
         }
 
-        if (_map.TryFindGridAt(coords.ToMap(_entity), out var grid))
+        var mapCoords = coords.ToMap(_entity);
+        if (_map.TryFindGridAt(mapCoords, out var grid))
         {
-
+            return EntityCoordinates.FromMap(grid.Owner, mapCoords);
         }
+
+        return coords;
+    }
+
+    public virtual EntityCoordinates Reanchor(MapCoordinates mapCoords)
+    {
+        if (false)
+        {
+            // TODO: blah blah attach to anchor entity instead of grid.
+        }
+
+        if (_map.TryFindGridAt(mapCoords, out var grid))
+        {
+            return EntityCoordinates.FromMap(grid.Owner, mapCoords);
+        }
+
+        return EntityCoordinates.FromMap(_map, mapCoords);
     }
 
     public override void FrameUpdate(float delta)
@@ -215,7 +233,8 @@ public abstract class DrawingLikeTool : Tool
             QuitDrawing();
             return; // Left viewport.
         }
-        var coords = EntityCoordinates.FromMap(_map, mapCoords);
+
+        var coords = Reanchor(mapCoords);
 
         if (_mode == Mode.Point)
         {
@@ -257,7 +276,7 @@ public abstract class DrawingLikeTool : Tool
         if (_activeDrawing)
             return false;
 
-        InitialClickPoint = args.Coordinates;
+        InitialClickPoint = Reanchor(args.Coordinates);
         StartDrawing(Mode.Line);
         return true;
     }
@@ -267,7 +286,7 @@ public abstract class DrawingLikeTool : Tool
         if (_activeDrawing)
             return false;
 
-        InitialClickPoint = args.Coordinates;
+        InitialClickPoint = Reanchor(args.Coordinates);
         StartDrawing(Mode.Rect);
         return true;
     }
@@ -316,7 +335,7 @@ public abstract class DrawingLikeTool : Tool
 
     private bool PlaceKeyDown(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
     {
-        InitialClickPoint = coords;
+        InitialClickPoint = Reanchor(coords);
         StartDrawing(Mode.Point);
         if (ValidateDrawPoint(coords))
             DoDrawPoint(coords);
