@@ -11,10 +11,10 @@ public sealed class EmoteSoundsPrototype : IPrototype
     public string ID { get; } = default!;
 
     [DataField("sound")]
-    public SoundSpecifier? Sound;
+    public SoundSpecifier? FallbackSound;
 
     [DataField("params")]
-    public AudioParams? Params;
+    public AudioParams? GeneralParams;
 
     [DataField("sounds", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<SoundSpecifier, EmoteSoundsPrototype>))]
     public Dictionary<string, SoundSpecifier> Sounds = new();

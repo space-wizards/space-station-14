@@ -3,7 +3,6 @@ using Content.Server.Humanoid;
 using Content.Server.Speech.Components;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Humanoid;
-using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -14,6 +13,7 @@ public sealed class VocalSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly ChatSystem _chat = default!;
 
     public override void Initialize()
     {
@@ -47,31 +47,7 @@ public sealed class VocalSystem : EntitySystem
         }
 
         // just play regular sound based on emote proto
-        args.Handled = TryPlayEmoteSound(uid, component, args.Emote.ID);
-    }
-
-    private bool TryPlayEmoteSound(EntityUid uid, VocalComponent component, string emoteId)
-    {
-        var proto = component.EmoteSounds;
-        if (proto == null)
-            return false;
-
-        SoundSpecifier? sound;
-        if (proto.Sound != null)
-        {
-            // use main override sound
-            sound = proto.Sound;
-        }
-        else
-        {
-            // use regular sound by emote key
-            if (!proto.Sounds.TryGetValue(emoteId, out sound))
-                return false;
-        }
-
-        var param = proto.Params ?? sound.Params;
-        _audio.PlayPvs(sound, uid, param);
-        return true;
+        args.Handled = _chat.TryPlayEmoteSound(uid, component.EmoteSounds, args.Emote);
     }
 
     private bool TryPlayScreamSound(EntityUid uid, VocalComponent component)
@@ -82,7 +58,7 @@ public sealed class VocalSystem : EntitySystem
             return true;
         }
 
-        return TryPlayEmoteSound(uid, component, component.ScreamId);
+        return _chat.TryPlayEmoteSound(uid, component.EmoteSounds, component.ScreamId);
     }
 
     private void LoadSounds(EntityUid uid, VocalComponent component, Sex? sex = null)
