@@ -15,11 +15,11 @@ public sealed class MechGrabberSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<MechGrabberComponent, MechEquipmentGetUiInformationEvent>(OnGetUiInfo);
+        SubscribeLocalEvent<MechGrabberComponent, EquipmentGetInformationEvent>(OnGetUiInfo);
         SubscribeLocalEvent<MechGrabberComponent, InteractNoHandEvent>(OnInteract);
     }
 
-    private void OnGetUiInfo(EntityUid uid, MechGrabberComponent component, ref MechEquipmentGetUiInformationEvent args)
+    private void OnGetUiInfo(EntityUid uid, MechGrabberComponent component, ref EquipmentGetInformationEvent args)
     {
         args.Information.CanBeRemoved = true;
         args.Information.CanBeEnabled = false;

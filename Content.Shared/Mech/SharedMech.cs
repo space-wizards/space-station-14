@@ -42,13 +42,27 @@ public sealed class MechEquipmentUiInformation
 }
 
 [ByRefEvent]
-public struct MechEquipmentGetUiInformationEvent
+public struct EquipmentGetInformationEvent
 {
     public MechEquipmentUiInformation Information;
 
-    public MechEquipmentGetUiInformationEvent(MechEquipmentUiInformation information)
+    public EquipmentGetInformationEvent(MechEquipmentUiInformation information)
     {
         Information = information;
+    }
+}
+
+/// <summary>
+/// Toggles a piece of mech equipment either on or off
+/// </summary>
+[ByRefEvent]
+public struct MechEquipmentToggleEvent
+{
+    public bool Enabled;
+
+    public MechEquipmentToggleEvent(bool enabled)
+    {
+        Enabled = enabled;
     }
 }
 

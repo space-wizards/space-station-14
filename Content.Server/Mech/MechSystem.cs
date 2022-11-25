@@ -55,18 +55,25 @@ public sealed class MechSystem : SharedMechSystem
 
     private void OnEnableEquipmentMessage(EntityUid uid, SharedMechComponent component, MechEquipmentToggleMessage args)
     {
-        var ev = new MechEquipmentGetUiInformationEvent(new MechEquipmentUiInformation(args.Equipment));
+        if (!Exists(args.Equipment) || Deleted(args.Equipment))
+            return;
+
+        var ev = new EquipmentGetInformationEvent(new MechEquipmentUiInformation(args.Equipment));
         RaiseLocalEvent(args.Equipment, ref ev);
 
         if (!ev.Information.CanBeEnabled) //assure that this is valid
             return;
 
-        //TODO: enable
+        var toggleEv = new MechEquipmentToggleEvent(args.Enabled);
+        RaiseLocalEvent(args.Equipment, ref toggleEv);
     }
 
     private void OnRemoveEquipmentMessage(EntityUid uid, SharedMechComponent component, MechEquipmentRemoveMessage args)
     {
-        var ev = new MechEquipmentGetUiInformationEvent(new MechEquipmentUiInformation(args.Equipment));
+        if (!Exists(args.Equipment) || Deleted(args.Equipment))
+            return;
+
+        var ev = new EquipmentGetInformationEvent(new MechEquipmentUiInformation(args.Equipment));
         RaiseLocalEvent(args.Equipment, ref ev);
 
         if (!ev.Information.CanBeRemoved) //assure that this is valid
@@ -187,7 +194,7 @@ public sealed class MechSystem : SharedMechSystem
         var state = new MechBoundUserInterfaceState();
         foreach (var equipment in component.EquipmentContainer.ContainedEntities)
         {
-            var ev = new MechEquipmentGetUiInformationEvent(new MechEquipmentUiInformation(equipment));
+            var ev = new EquipmentGetInformationEvent(new MechEquipmentUiInformation(equipment));
             RaiseLocalEvent(equipment, ref ev);
 
             state.EquipmentInfo.Add(ev.Information);

@@ -1,7 +1,7 @@
 - type: entity
   id: BaseMech
   save: false
-  abstract: false
+  abstract: true
   components:
   - type: Sprite
     netsync: false
@@ -63,3 +63,9 @@
         sound:
           path: /Audio/Effects/metalbreak.ogg
       - !type:ExplodeBehavior
+
+- type: entity
+  id: MechRipley
+  parent: BaseMech
+  name: ripley
+  description: Cargo's favorite robotic box hauling friend.

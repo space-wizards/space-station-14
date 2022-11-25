@@ -446,12 +446,24 @@
 - type: Tag
   id: RawMaterial
 
+- type: Tag
+  id: RCDDeconstructWhitelist
+
 # Give this to something that doesn't need any special recycler behavior and just needs deleting.
 - type: Tag
   id: Recyclable
 
 - type: Tag
-  id: RCDDeconstructWhitelist
+  id: RipleyLArm
+
+- type: Tag
+  id: RipleyLLeg
+
+- type: Tag
+  id: RipleyRLeg
+
+- type: Tag
+  id: RipleyRArm
 
 - type: Tag
   id: RodMetal1
