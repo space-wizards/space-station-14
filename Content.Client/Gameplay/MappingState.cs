@@ -29,6 +29,7 @@ public sealed class MappingState : GameplayStateBase, IMainViewportState
     [Dependency] private readonly IEntitySystemManager _entSys = default!;
     [Dependency] private readonly IEntityNetworkManager _entNet = default!;
     [Dependency] private readonly IInputManager _input = default!;
+    [Dependency] private readonly ILightManager _light = default!;
 
     public const string MappingParallax = "MappingSDMM";
 
@@ -52,6 +53,9 @@ public sealed class MappingState : GameplayStateBase, IMainViewportState
 
         LoadMainScreen();
 
+        // Force off lighting for convenience.
+        _light.Enabled = false;
+        _light.DrawHardFov = false;
         _overlayManager.AddOverlay(new MappingActivityOverlay());
         _overlayManager.AddOverlay(new ShowHandItemOverlay());
         // FPS counter.

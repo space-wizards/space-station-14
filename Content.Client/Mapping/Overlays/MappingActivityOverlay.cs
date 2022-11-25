@@ -23,7 +23,7 @@ public sealed class MappingActivityOverlay : Overlay
 
     private readonly IRenderTexture _renderBackbuffer;
 
-    public override OverlaySpace Space => OverlaySpace.WorldSpace;
+    public override OverlaySpace Space => OverlaySpace.ScreenSpace;
 
     public MappingActivityOverlay()
     {

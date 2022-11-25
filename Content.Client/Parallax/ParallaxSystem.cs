@@ -16,7 +16,25 @@ public sealed class ParallaxSystem : SharedParallaxSystem
 
     private const string Fallback = "Default";
 
-    public string? Override = null;
+    private string? _override = null;
+    public string? Override
+    {
+        get => _override;
+        set
+        {
+            if (value is null)
+            {
+                _override = null;
+                return;
+            }
+
+            if (!_parallax.IsLoaded(value))
+            {
+                _parallax.LoadParallaxByName(value);
+                _override = value;
+            }
+        }
+    }
 
     public override void Initialize()
     {
