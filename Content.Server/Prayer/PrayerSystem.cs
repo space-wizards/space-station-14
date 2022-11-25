@@ -7,7 +7,6 @@ using Content.Shared.Popups;
 using Robust.Server.Player;
 using Robust.Shared.Player;
 using Content.Shared.Chat;
-using Content.Shared.Prayer;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 
