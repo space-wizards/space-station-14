@@ -36,3 +36,13 @@
     - giggles
     - giggling
     - giggled
+
+# hand emotes
+- type: emote
+  id: Clap
+  category: Hands
+  words:
+    - clap
+    - claps
+    - clapping
+    - clapped

@@ -8,3 +8,11 @@
   id: FemaleLaugh
   files:
     - /Audio/Voice/Human/womanlaugh.ogg
+
+- type: soundCollection
+  id: Claps
+  files:
+    - /Audio/Effects/Emotes/clap1.ogg
+    - /Audio/Effects/Emotes/clap2.ogg
+    - /Audio/Effects/Emotes/clap3.ogg
+    - /Audio/Effects/Emotes/clap4.ogg

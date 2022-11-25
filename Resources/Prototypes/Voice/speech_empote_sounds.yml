@@ -36,6 +36,13 @@
     params:
       variation: 0.125
 
+# body emotes
+- type: emoteSounds
+  id: GeneralBodyEmotes
+  sounds:
+    Clap:
+      collection: Claps
+
 # mobs
 - type: emoteSounds
   id: Zombie
