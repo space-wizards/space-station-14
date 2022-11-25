@@ -28,12 +28,11 @@
     - laughs
     - laughing
     - laughed
-
-- type: emote
-  id: Groan
-  category: Vocal
-  words:
-    - groan
-    - groans
-    - groaning
-    - groaned
+    - chuckle
+    - chuckles
+    - chuckled
+    - chuckling
+    - giggle
+    - giggles
+    - giggling
+    - giggled
