@@ -31,40 +31,49 @@ public sealed class JoinQueueManager
     {
         _netManager.RegisterNetMessage<MsgQueueUpdate>();
         
-        _cfg.OnValueChanged(CCVars.QueueEnabled, (v) => _isEnabled = v, true);
+        _cfg.OnValueChanged(CCVars.QueueEnabled, OnQueueCVarChanged, true);
         _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
+    }
+    
+    private void OnQueueCVarChanged(bool value)
+    {
+        _isEnabled = value;
+
+        if (!value)
+        {
+            foreach (var session in _queue)
+            {
+                session.ConnectedClient.Disconnect("Queue was disabled");
+            }
+        }
     }
 
     private async void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
     {
-        switch (e.NewStatus)
+        if (e.NewStatus == SessionStatus.Connected)
         {
-            case SessionStatus.Connected:
+            if (!_isEnabled)
             {
-                if (!_isEnabled)
-                {
-                    SendToGame(e.Session);
-                    return;
-                }
-                
-                var isPrivileged = await _connectionManager.HavePrivilegedJoin(e.Session.UserId);
-                var haveFreeSlot = _playerManager.PlayerCount < _cfg.GetCVar(CCVars.SoftMaxPlayers);
-                if (isPrivileged || haveFreeSlot)
-                {
-                    SendToGame(e.Session);
-                    return;
-                }
-                
-                _queue.Add(e.Session);
-                ProcessQueue(false);
-                break;
+                SendToGame(e.Session);
+                return;
             }
-            case SessionStatus.Disconnected:
+                
+            var isPrivileged = await _connectionManager.HavePrivilegedJoin(e.Session.UserId);
+            var haveFreeSlot = _playerManager.PlayerCount < _cfg.GetCVar(CCVars.SoftMaxPlayers);
+            if (isPrivileged || haveFreeSlot)
             {
-                _queue.Remove(e.Session);
-                ProcessQueue(true);
-                break;
+                SendToGame(e.Session);
+                return;
             }
+                
+            _queue.Add(e.Session);
+            ProcessQueue(false);
+        }
+
+        if (e.NewStatus == SessionStatus.Disconnected)
+        {
+            _queue.Remove(e.Session);
+            ProcessQueue(true);
         }
     }
     
