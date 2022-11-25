@@ -94,6 +94,7 @@ ui-options-function-camera-rotate-right = Rotate right
 ui-options-function-camera-reset = Reset
 
 ui-options-function-use = Use
+ui-options-function-use-secondary = Use secondary
 ui-options-function-alt-use = Alt use
 ui-options-function-wide-attack = Wide attack
 ui-options-function-activate-item-in-hand = Activate item in hand
@@ -126,7 +127,7 @@ ui-options-function-open-character-menu = Open character menu
 ui-options-function-open-context-menu = Open context menu
 ui-options-function-open-crafting-menu = Open crafting menu
 ui-options-function-open-inventory-menu = Open inventory
-ui-options-function-open-ahelp = Open admin help
+ui-options-function-open-a-help = Open admin help
 ui-options-function-open-abilities-menu = Open action menu
 ui-options-function-open-entity-spawn-window = Open entity spawn menu
 ui-options-function-open-sandbox-window = Open sandbox menu
@@ -168,6 +169,7 @@ ui-options-function-loadout6 = Hotbar Loadout 6
 ui-options-function-loadout7 = Hotbar Loadout 7
 ui-options-function-loadout8 = Hotbar Loadout 8
 ui-options-function-loadout9 = Hotbar Loadout 9
+ui-options-function-loadout0 = Hotbar Loadout 0
 
 ui-options-function-shuttle-strafe-up = Strafe up
 ui-options-function-shuttle-strafe-right = Strafe right

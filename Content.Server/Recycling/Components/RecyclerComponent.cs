@@ -11,7 +11,7 @@ namespace Content.Server.Recycling.Components
         [Dependency] private readonly IEntityManager _entMan = default!;
 
         [DataField("enabled")]
-        public bool Enabled = true;
+        public bool Enabled;
 
         /// <summary>
         ///     Whether or not sentient beings will be recycled
@@ -27,14 +27,6 @@ namespace Content.Server.Recycling.Components
         [DataField("efficiency")]
         internal float Efficiency = 0.25f;
 
-        private void Clean()
-        {
-            if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
-            {
-                appearance.SetData(RecyclerVisuals.Bloody, false);
-            }
-        }
-
         /// <summary>
         /// Default sound to play when recycling
         /// </summary>
@@ -43,5 +35,7 @@ namespace Content.Server.Recycling.Components
 
         // Ratelimit sounds to avoid spam
         public TimeSpan LastSound;
+
+        public int ItemsProcessed;
     }
 }

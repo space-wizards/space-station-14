@@ -28,6 +28,11 @@
   - type: Utensil
     types:
     - Fork
+  - type: MeleeWeapon
+    attackRate: 1.5
+    damage:
+      types:
+        Piercing: 5
 
 - type: entity
   parent: UtensilBase
@@ -61,6 +66,11 @@
   - type: Utensil
     types:
     - Spoon
+  - type: MeleeWeapon
+    attackRate: 1.5
+    damage:
+      types:
+        Blunt: 1
 
 - type: entity
   parent: UtensilBase

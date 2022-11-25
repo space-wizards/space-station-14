@@ -1,190 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Machine boards now have different appearances depending on department.,
-    type: Tweak}
-  id: 2172
-  time: '2022-08-19T00:10:20.0000000+00:00'
-- author: Elijahrane
-  changes:
-  - {message: You no longer get better at pushing people over the worse you are at
-      disarming., type: Fix}
-  id: 2173
-  time: '2022-08-20T02:14:55.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Shot glasses can now only hold 10u of liquid., type: Tweak}
-  id: 2174
-  time: '2022-08-20T02:27:48.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Most circuitry has been resprited., type: Tweak}
-  - {message: Most computers now have department-based sprites for their circuit board.,
-    type: Add}
-  id: 2175
-  time: '2022-08-20T02:50:19.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: The blurry effect from eye damage has been replaced with a dim overlay
-      filter., type: Tweak}
-  id: 2176
-  time: '2022-08-20T20:17:58.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: 'Added the classic "space station 14" sign, coming to a station near
-      you.', type: Add}
-  id: 2177
-  time: '2022-08-21T11:44:38.0000000+00:00'
-- author: martin69420
-  changes:
-  - {message: Fixed playtime requirement tooltips not showing on roles with no open
-      slots, type: Fix}
-  - {message: Tweaked playtime requirement tooltip text slightly, type: Tweak}
-  id: 2178
-  time: '2022-08-21T19:14:24.0000000+00:00'
-- author: Myctai
-  changes:
-  - {message: 'Barozine in overdose will cause you to vomit, potentially saving you
-      from fatal poisoning!', type: Add}
-  id: 2179
-  time: '2022-08-22T08:50:46.0000000+00:00'
-- author: Flareguy
-  changes:
-  - {message: 'Touched up and re-shaded the Medical, Cargo, and Scientist jumpsuit
-      sprites.', type: Tweak}
-  - {message: Touched up and re-shaded all three labcoats., type: Tweak}
-  - {message: Medical backpacks and satchels now correctly use a blue cross instead
-      of a green one., type: Tweak}
-  - {message: Recolored the Cargo cap to reflect the new colors the jumpsuit has.,
-    type: Tweak}
-  - {message: Gave the Quartermaster a unique recolored cap that reflects his new
-      jumpsuit colors., type: Add}
-  id: 2180
-  time: '2022-08-23T02:28:11.0000000+00:00'
-- author: TekuNut
-  changes:
-  - {message: Xenos can no longer pry doors open from afar., type: Fix}
-  id: 2181
-  time: '2022-08-23T10:31:54.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed players being unable to suppress their inner ballerina (fix player's
-      getting stuck with angular velocity. no more eternal spinning)., type: Fix}
-  id: 2182
-  time: '2022-08-23T11:59:47.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Shields no longer randomly break upon healing the user., type: Fix}
-  id: 2183
-  time: '2022-08-23T12:00:06.0000000+00:00'
-- author: martin69420
-  changes:
-  - {message: Added wall lockers, type: Add}
-  id: 2184
-  time: '2022-08-24T07:08:57.0000000+00:00'
-- author: keronshb
-  changes:
-  - {message: 'Adds the Ensnaring Component. If a player gets ensnared by something
-      with it, their movement will be impeded.', type: Add}
-  - {message: Bolas no longer have a knockdown/stun chance and now ensnare instead.,
-    type: Tweak}
-  id: 2185
-  time: '2022-08-24T14:50:31.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: WallmountSubstationElectronics Are now printable., type: Fix}
-  id: 2186
-  time: '2022-08-25T13:23:03.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: You can no longer inject chems into cigarettes., type: Remove}
-  id: 2187
-  time: '2022-08-25T13:35:23.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Boxing gloves now have the fist weapon arc., type: Fix}
-  id: 2188
-  time: '2022-08-25T13:38:14.0000000+00:00'
-- author: PJB3005
-  changes:
-  - {message: Clowns now go BONK on tables, type: Add}
-  id: 2189
-  time: '2022-08-25T13:41:37.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Popups for wielding now display the correct text., type: Fix}
-  id: 2190
-  time: '2022-08-25T13:42:13.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Removed ratatouille (held mice and holo parasites no longer affect what
-      direction a player is facing), type: Fix}
-  id: 2191
-  time: '2022-08-25T23:39:25.0000000+00:00'
-- author: Myctai
-  changes:
-  - {message: nonlethals crate icon no longer suggests that crate contains tasers
-      (crate actually contains disablers), type: Fix}
-  id: 2192
-  time: '2022-08-27T05:54:24.0000000+00:00'
-- author: FunkySphere
-  changes:
-  - {message: Margherita pizza slice is no longer sliceable into multiple meat pizza
-      slices., type: Fix}
-  id: 2193
-  time: '2022-08-27T09:59:16.0000000+00:00'
-- author: biometricPsychography
-  changes:
-  - {message: Made the dead state of the snake more dead (fix snakes death animation/sprite).,
-    type: Fix}
-  id: 2194
-  time: '2022-08-28T22:34:22.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Moving between grids should now be smooth., type: Fix}
-  - {message: Fixed the eye rotation on spawn and also when the shuttle goes FTL.,
-    type: Fix}
-  id: 2195
-  time: '2022-08-29T05:05:53.0000000+00:00'
-- author: FunkySphere
-  changes:
-  - {message: 'magboots, galoshes and flippers no longer butcherable', type: Tweak}
-  id: 2196
-  time: '2022-08-29T17:59:17.0000000+00:00'
-- author: LordEclipse
-  changes:
-  - {message: Medical Intern PDA's now have Health Analyzers built into them., type: Tweak}
-  id: 2197
-  time: '2022-08-29T23:32:20.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Pull chains with your besties should be much faster., type: Tweak}
-  id: 2198
-  time: '2022-08-30T02:19:25.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Cloners now require biomass., type: Add}
-  - {message: Cloners have a chance of failure based off of the body's genetic damage.,
-    type: Add}
-  - {message: Added biomass material and biomass reclaimers., type: Add}
-  id: 2199
-  time: '2022-08-30T02:31:28.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: The zombie midround event now just starts zombie mode., type: Add}
-  - {message: Zombie melee infection rates have been lowered., type: Tweak}
-  id: 2200
-  time: '2022-08-30T02:35:19.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed issues with ID cards displaying whitespace and empty names., type: Fix}
-  id: 2201
-  time: '2022-08-30T02:38:01.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: The Cargo Tech and QM job icons have been swapped., type: Fix}
-  id: 2202
-  time: '2022-08-30T02:39:23.0000000+00:00'
 - author: Rane
   changes:
   - {message: Silicons will no longer take damage from glass shards. Flying mobs are
@@ -2956,3 +2770,187 @@ Entries:
       the chance that cloning fails on a body., type: Add}
   id: 2671
   time: '2022-11-16T21:02:37.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Item artifacts. Artifact spawns may now spawn handheld artifacts, which
+      have a suite of new triggers and very useful effects, with more coming.', type: Add}
+  id: 2672
+  time: '2022-11-17T17:40:05.0000000+00:00'
+- author: nikthechampiongr
+  changes:
+  - {message: Fixes access permissions for maintenance door on saltern., type: Fix}
+  id: 2673
+  time: '2022-11-18T04:42:38.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Added the Traversal Distorter, a machine capable of pushing Artifacts''
+      random node traversal in certain directions. Simply place an artifact on the
+      machine and you can choose how you want to encourage it.', type: Add}
+  id: 2674
+  time: '2022-11-18T04:43:18.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Item artifacts can now be scanned., type: Fix}
+  id: 2675
+  time: '2022-11-18T21:59:58.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: The 'toggle ghosts' button while a ghost is now an action., type: Tweak}
+  id: 2676
+  time: '2022-11-18T22:30:54.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: Fixes an issue where teleporting would happen if someone raised a riot
+      shield, type: Fix}
+  id: 2677
+  time: '2022-11-19T03:51:55.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: the RPED can now actually be printed at protolathes., type: Fix}
+  id: 2678
+  time: '2022-11-19T04:25:54.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Nukie planet has been fixed., type: Fix}
+  id: 2679
+  time: '2022-11-19T05:24:31.0000000+00:00'
+- author: Mervill
+  changes:
+  - {message: Paper and some misc other objects are now recyclable, type: Add}
+  - {message: Recycler counts the number of recycled items, type: Add}
+  - {message: Two way levels can be switched in a specific direction with the right-click
+      menu, type: Add}
+  id: 2680
+  time: '2022-11-19T16:05:44.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed weird zombie attack animations., type: Fix}
+  id: 2681
+  time: '2022-11-19T16:07:09.0000000+00:00'
+- author: ODJ
+  changes:
+  - {message: Lighthouse Station, type: Remove}
+  id: 2682
+  time: '2022-11-20T04:34:38.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: 'Subdermal Implants and Implanters have been added! Subdermal Implants
+      give the user a variety of functions and can either be a passive type (something
+      consistently happens), a reactive type (something happens on death), and/or
+      an activation type (something happens on button press). Implanters handle implants/removals.',
+    type: Add}
+  - {message: Macro Bomb implants have been added to the nuclear operative uplink.
+      They make a massive explosion upon death., type: Add}
+  - {message: Freedom and Storage implants have been added to the traitor uplink.
+      Freedom implants are limited use and allow you to break out of cuffs. Storage
+      implants allow you to store an item in hidden storage., type: Add}
+  - {message: 'Sad Trombone implant was added to clowns on spawn. If they die, a sad
+      tune planes.', type: Add}
+  - {message: Tracking implants have been added to cargo under armory. They'll track
+      whoever's been implanted via the suit sensor network, type: Add}
+  - {message: Implanters have been added to the medical lathe., type: Add}
+  id: 2683
+  time: '2022-11-20T06:49:37.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Magnet artifacts can now be activated with magboots., type: Add}
+  id: 2684
+  time: '2022-11-20T06:52:32.0000000+00:00'
+- author: illersaver
+  changes:
+  - {message: Added damage to gas tanks and utensils!, type: Add}
+  id: 2685
+  time: '2022-11-20T18:43:24.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a bug causing gas/fire visuals to sometimes not update properly.,
+    type: Fix}
+  id: 2686
+  time: '2022-11-21T02:50:02.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: You can no longer use an RPED to increase a generator's power output
+      infinitely., type: Fix}
+  id: 2687
+  time: '2022-11-21T02:50:43.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Fixed mice and other small entities becoming unable to move sometimes
+      after they leave a container., type: Fix}
+  id: 2688
+  time: '2022-11-21T03:34:54.0000000+00:00'
+- author: checkraze
+  changes:
+  - {message: Added a renovated Moose Station, type: Add}
+  id: 2689
+  time: '2022-11-21T09:20:08.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed not showing ban ids in a player's ban list., type: Fix}
+  id: 2690
+  time: '2022-11-21T19:04:24.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix some mapgrids not being sent to clients., type: Fix}
+  id: 2691
+  time: '2022-11-22T09:28:09.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix exception when shooting with your mouse outside of the window.,
+    type: Fix}
+  id: 2692
+  time: '2022-11-23T06:35:06.0000000+00:00'
+- author: Mervill
+  changes:
+  - {message: Items dropped onto a moving Conveyor by the disposal network move immediately,
+    type: Fix}
+  id: 2693
+  time: '2022-11-23T07:38:39.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Chameleon masks and helmets can hide your identity., type: Tweak}
+  id: 2694
+  time: '2022-11-24T02:02:55.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Maybe fix grid clipping., type: Fix}
+  id: 2695
+  time: '2022-11-24T05:54:21.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Omnitool can cut lattice and pry unpowered doors, type: Fix}
+  id: 2696
+  time: '2022-11-24T06:00:34.0000000+00:00'
+- author: JustinTrotter
+  changes:
+  - {message: Welder tanks explode when shot with projectile guns. (Also don't poke
+      them with a spear), type: Add}
+  id: 2697
+  time: '2022-11-24T06:01:51.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Map ambient lighting can now be controlled by admins via RGBLightController.,
+    type: Add}
+  id: 2698
+  time: '2022-11-24T07:31:17.0000000+00:00'
+- author: Vordenburg
+  changes:
+  - {message: Individual stations can now have specific emergency shuttles., type: Tweak}
+  id: 2699
+  time: '2022-11-24T18:28:04.0000000+00:00'
+- author: Checkraze
+  changes:
+  - {message: Added the Courser class evacuation shuttle., type: Add}
+  id: 2700
+  time: '2022-11-25T08:18:17.0000000+00:00'
+- author: Mervill
+  changes:
+  - {message: Recycler can no longer recycle things if it's unpowered., type: Fix}
+  - {message: Fix conveyor assemblies being un-interactable after deconstruct, type: Fix}
+  id: 2701
+  time: '2022-11-25T09:00:41.0000000+00:00'
+- author: Gaxeer
+  changes:
+  - {message: add missing flame to cowelder, type: Fix}
+  id: 2702
+  time: '2022-11-25T11:27:45.0000000+00:00'

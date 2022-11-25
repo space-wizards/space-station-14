@@ -791,8 +791,7 @@ entities:
   components:
   - name: Syndicate Outpost
     type: MetaData
-  - pos: -23.318382,8.069332
-    parent: null
+  - parent: 1295
     type: Transform
   - whitelist:
       tags:
@@ -805,7 +804,722 @@ entities:
     fixedRotation: False
     bodyType: Dynamic
     type: Physics
-  - fixtures: []
+  - fixtures:
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - -0.01,-15.99
+        - -0.01,-0.01
+        - -10.99,-0.01
+        - -10.99,-15.99
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk--10.99--15.99
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - 15.99,-15.99
+        - 15.99,-0.01
+        - 0.01,-0.01
+        - 0.01,-15.99
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk-0.01--15.99
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - 15.99,0.01
+        - 15.99,15.99
+        - 0.01,15.99
+        - 0.01,0.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk-0.01-0.01
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - -0.01,0.01
+        - -0.01,0.99
+        - -10.99,0.99
+        - -10.99,0.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk--10.99-0.01
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - -0.01,1.01
+        - -0.01,15.99
+        - -15.99,15.99
+        - -15.99,1.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk--15.99-1.01
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - 31.99,-15.99
+        - 31.99,-12.01
+        - 16.01,-12.01
+        - 16.01,-15.99
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk-16.01--15.99
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - 30.99,-11.99
+        - 30.99,-8.01
+        - 16.01,-8.01
+        - 16.01,-11.99
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk-16.01--11.99
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - 31.99,-7.99
+        - 31.99,-0.01
+        - 16.01,-0.01
+        - 16.01,-7.99
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk-16.01--7.99
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - 4.99,-27.99
+        - 4.99,-27.01
+        - 0.01,-27.01
+        - 0.01,-27.99
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk-0.01--27.99
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - 3.99,-26.99
+        - 3.99,-25.01
+        - 0.01,-25.01
+        - 0.01,-26.99
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk-0.01--26.99
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - 8.99,-24.99
+        - 8.99,-24.01
+        - 0.01,-24.01
+        - 0.01,-24.99
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk-0.01--24.99
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - 15.99,-24.99
+        - 15.99,-24.01
+        - 15.01,-24.01
+        - 15.01,-24.99
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk-15.01--24.99
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - 15.99,-23.99
+        - 15.99,-16.01
+        - 0.01,-16.01
+        - 0.01,-23.99
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk-0.01--23.99
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - -0.01,-27.99
+        - -0.01,-24.01
+        - -1.99,-24.01
+        - -1.99,-27.99
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk--1.99--27.99
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - -0.01,-23.99
+        - -0.01,-20.01
+        - -15.99,-20.01
+        - -15.99,-23.99
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk--15.99--23.99
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - -0.01,-19.99
+        - -0.01,-16.01
+        - -10.99,-16.01
+        - -10.99,-19.99
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk--10.99--19.99
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - -0.01,16.01
+        - -0.01,22.99
+        - -15.99,22.99
+        - -15.99,16.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk--15.99-16.01
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - -2.01,23.01
+        - -2.01,29.99
+        - -15.99,29.99
+        - -15.99,23.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk--15.99-23.01
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - -11.01,30.01
+        - -11.01,30.99
+        - -15.99,30.99
+        - -15.99,30.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk--15.99-30.01
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - 15.99,16.01
+        - 15.99,21.99
+        - 0.01,21.99
+        - 0.01,16.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk-0.01-16.01
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - 15.99,22.01
+        - 15.99,22.99
+        - 9.01,22.99
+        - 9.01,22.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk-9.01-22.01
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - 15.99,23.01
+        - 15.99,31.99
+        - 10.01,31.99
+        - 10.01,23.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk-10.01-23.01
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - 25.99,16.01
+        - 25.99,18.99
+        - 16.01,18.99
+        - 16.01,16.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk-16.01-16.01
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - 23.99,19.01
+        - 23.99,19.99
+        - 16.01,19.99
+        - 16.01,19.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk-16.01-19.01
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - 22.99,20.01
+        - 22.99,21.99
+        - 16.01,21.99
+        - 16.01,20.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk-16.01-20.01
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - 21.99,22.01
+        - 21.99,30.99
+        - 16.01,30.99
+        - 16.01,22.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk-16.01-22.01
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - 20.99,31.01
+        - 20.99,31.99
+        - 16.01,31.99
+        - 16.01,31.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk-16.01-31.01
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - 31.99,0.01
+        - 31.99,6.99
+        - 16.01,6.99
+        - 16.01,0.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk-16.01-0.01
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - 29.99,7.01
+        - 29.99,9.99
+        - 16.01,9.99
+        - 16.01,7.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk-16.01-7.01
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - 26.99,10.01
+        - 26.99,11.99
+        - 16.01,11.99
+        - 16.01,10.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk-16.01-10.01
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - 25.99,12.01
+        - 25.99,15.99
+        - 16.01,15.99
+        - 16.01,12.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk-16.01-12.01
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - 30.99,-24.99
+        - 30.99,-24.01
+        - 16.01,-24.01
+        - 16.01,-24.99
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk-16.01--24.99
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - 31.99,-23.99
+        - 31.99,-16.01
+        - 16.01,-16.01
+        - 16.01,-23.99
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk-16.01--23.99
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - -16.01,1.01
+        - -16.01,4.99
+        - -31.99,4.99
+        - -31.99,1.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk--31.99-1.01
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - -16.01,5.01
+        - -16.01,7.99
+        - -19.99,7.99
+        - -19.99,5.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk--19.99-5.01
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - -16.01,8.01
+        - -16.01,11.99
+        - -21.99,11.99
+        - -21.99,8.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk--21.99-8.01
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - -16.01,12.01
+        - -16.01,12.99
+        - -22.99,12.99
+        - -22.99,12.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk--22.99-12.01
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - -16.01,13.01
+        - -16.01,15.99
+        - -23.99,15.99
+        - -23.99,13.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk--23.99-13.01
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - -16.01,16.01
+        - -16.01,17.99
+        - -23.99,17.99
+        - -23.99,16.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk--23.99-16.01
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - -16.01,18.01
+        - -16.01,19.99
+        - -22.99,19.99
+        - -22.99,18.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk--22.99-18.01
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - -16.01,20.01
+        - -16.01,20.99
+        - -23.99,20.99
+        - -23.99,20.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk--23.99-20.01
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - -16.01,21.01
+        - -16.01,28.99
+        - -24.99,28.99
+        - -24.99,21.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk--24.99-21.01
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - -16.01,29.01
+        - -16.01,30.99
+        - -25.99,30.99
+        - -25.99,29.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk--25.99-29.01
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - -17.01,31.01
+        - -17.01,31.99
+        - -25.99,31.99
+        - -25.99,31.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk--25.99-31.01
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - -16.01,-23.99
+        - -16.01,-20.01
+        - -31.99,-20.01
+        - -31.99,-23.99
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk--31.99--23.99
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - 32.99,0.01
+        - 32.99,1.99
+        - 32.01,1.99
+        - 32.01,0.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk-32.01-0.01
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - 33.99,-15.99
+        - 33.99,-12.01
+        - 32.01,-12.01
+        - 32.01,-15.99
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk-32.01--15.99
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - 32.99,-3.99
+        - 32.99,-0.01
+        - 32.01,-0.01
+        - 32.01,-3.99
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk-32.01--3.99
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - 32.99,-22.99
+        - 32.99,-22.01
+        - 32.01,-22.01
+        - 32.01,-22.99
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk-32.01--22.99
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - 33.99,-21.99
+        - 33.99,-16.01
+        - 32.01,-16.01
+        - 32.01,-21.99
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk-32.01--21.99
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - -22.01,32.01
+        - -22.01,32.99
+        - -25.99,32.99
+        - -25.99,32.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk--25.99-32.01
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - -32.01,-23.99
+        - -32.01,-20.01
+        - -35.99,-20.01
+        - -35.99,-23.99
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk--35.99--23.99
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - 15.99,32.01
+        - 15.99,32.99
+        - 10.01,32.99
+        - 10.01,32.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk-10.01-32.01
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - 20.99,32.01
+        - 20.99,32.99
+        - 16.01,32.99
+        - 16.01,32.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk-16.01-32.01
+    - density: 0.5
+      shape: !type:PolygonShape
+        vertices:
+        - -32.01,1.01
+        - -32.01,4.99
+        - -34.99,4.99
+        - -34.99,1.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      restitution: 0.1
+      id: grid_chunk--34.99-1.01
     type: Fixtures
   - gravityShakeSound: !type:SoundPathSpecifier
       path: /Audio/Effects/alert.ogg
@@ -5751,8 +6465,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 21.213781
-      - 79.80423
+      - 19.481253
+      - 73.28662
       - 0
       - 0
       - 0
@@ -13387,6 +14101,35 @@ entities:
   - pos: 0.5,10.5
     parent: 104
     type: Transform
+- uid: 1295
+  components:
+  - type: MetaData
+  - type: Transform
+  - index: 3
+    type: Map
+  - type: PhysicsMap
+  - type: Broadphase
+  - type: OccluderTree
+  - parallax: Sky
+    type: Parallax
+  - space: False
+    mixture:
+      volume: 2500
+      temperature: 248.15
+      moles:
+      - 21.824879
+      - 82.10312
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    type: MapAtmosphere
 - uid: 1320
   type: SurveillanceCameraGeneral
   components:

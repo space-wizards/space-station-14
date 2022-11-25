@@ -3,6 +3,7 @@ using Content.Server.Explosion.EntitySystems;
 using Content.Shared.Atmos;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -58,7 +59,7 @@ namespace Content.Server.Atmos.EntitySystems
             var gridId = xform.GridUid;
             var coords = xform.Coordinates;
 
-            var tilePos = grid.Grid.TileIndicesFor(coords);
+            var tilePos = grid.TileIndicesFor(coords);
 
             // Update and invalidate new position.
             airtight.LastPosition = (gridId.Value, tilePos);
