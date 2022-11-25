@@ -7,7 +7,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Mapping.Tools;
 
-public sealed class DrawTool : DrawingLikeTool
+public sealed class EntityDrawTool : DrawingLikeTool
 {
     [Dependency] private readonly IUserInterfaceManager _userInterface = default!;
     [Dependency] private readonly IEntityManager _entMan = default!;
@@ -80,7 +80,7 @@ public sealed class DrawTool : DrawingLikeTool
         return true;
     }
 
-    public DrawTool()
+    public EntityDrawTool()
     {
         IoCManager.InjectDependencies(this);
     }

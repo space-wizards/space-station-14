@@ -70,7 +70,7 @@ public sealed partial class MappingGameScreen : UIScreen
 
         RebuildVisibilityMenu();
         MappingMenu.Menus.Add(VisibilityMenu);
-        ActivateTool(typeof(DrawTool));
+        ActivateTool(typeof(EntityDrawTool));
     }
 
     protected override void OnUnloaded()

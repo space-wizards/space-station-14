@@ -42,6 +42,6 @@ public sealed class MappingToolsSystem : EntitySystem
             return;
 
         var ent = Spawn(msg.Prototype, msg.Point);
-        Transform(ent).LocalRotation = msg.Rotation;
+        Transform(ent).LocalRotation = Angle.FromDegrees(msg.Rotation);
     }
 }
