@@ -4,6 +4,7 @@ using Content.Server.Explosion.EntitySystems;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
 
 namespace Content.Server.AME
@@ -37,7 +38,7 @@ namespace Content.Server.AME
             base.LoadNodes(groupNodes);
 
             var mapManager = IoCManager.Resolve<IMapManager>();
-            IMapGrid? grid = null;
+            MapGridComponent? grid = null;
 
             foreach (var node in groupNodes)
             {

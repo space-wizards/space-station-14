@@ -28,10 +28,10 @@ public sealed class ServerGlobalSoundSystem : SharedGlobalSoundSystem
         _conHost.UnregisterCommand("playglobalsound");
     }
 
-    private void PlayAdminGlobal(Filter playerFilter, string filename, AudioParams? audioParams = null)
+    private void PlayAdminGlobal(Filter playerFilter, string filename, AudioParams? audioParams = null, bool replay = true)
     {
         var msg = new AdminSoundEvent(filename, audioParams);
-        RaiseNetworkEvent(msg, playerFilter);
+        RaiseNetworkEvent(msg, playerFilter, recordReplay: replay);
     }
 
     private Filter GetStationAndPvs(EntityUid source)
@@ -50,6 +50,10 @@ public sealed class ServerGlobalSoundSystem : SharedGlobalSoundSystem
 
     public void StopStationEventMusic(EntityUid source, StationEventMusicType type)
     {
+        // TODO REPLAYS
+        // these start & stop events are gonna be a PITA
+        // theres probably some nice way of handling them. Maybe it just needs dedicated replay data (in which case these events should NOT get recorded).
+
         var msg = new StopStationEventMusic(type);
         var filter = GetStationAndPvs(source);
         RaiseNetworkEvent(msg, filter);
@@ -73,6 +77,8 @@ public sealed class ServerGlobalSoundSystem : SharedGlobalSoundSystem
     {
         Filter filter;
         var audio = AudioParams.Default.WithVolume(-8);
+
+        bool replay = true;
 
         switch (args.Length)
         {
@@ -110,6 +116,9 @@ public sealed class ServerGlobalSoundSystem : SharedGlobalSoundSystem
                 }
                 else
                 {
+                    // TODO REPLAYS uhhh.. what to do with this?
+                    replay = false;
+
                     filter = Filter.Empty();
 
                     // Skip the first argument, which is the sound path.
@@ -130,6 +139,6 @@ public sealed class ServerGlobalSoundSystem : SharedGlobalSoundSystem
                 break;
         }
 
-        PlayAdminGlobal(filter, args[0], audio);
+        PlayAdminGlobal(filter, args[0], audio, replay);
     }
 }

@@ -87,10 +87,7 @@ namespace Content.Server.GameTicking
 
         private void SendServerMessage(string message)
         {
-            var msg = new MsgChatMessage();
-            msg.Channel = ChatChannel.Server;
-            msg.Message = message;
-            IoCManager.Resolve<IServerNetManager>().ServerSendToAll(msg);
+            _chatManager.ChatMessageToAll(ChatChannel.Server, message, "", default, false, true);
         }
 
         public override void Update(float frameTime)
