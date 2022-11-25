@@ -15,6 +15,7 @@ using Content.Shared.Damage;
 using Content.Shared.GameTicking;
 using Content.Shared.Roles;
 using Robust.Server;
+using Robust.Server.GameObjects;
 using Robust.Server.Maps;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
@@ -32,6 +33,8 @@ namespace Content.Server.GameTicking
 {
     public sealed partial class GameTicker : SharedGameTicker
     {
+        [Dependency] private readonly MapLoaderSystem _map = default!;
+
         [ViewVariables] private bool _initialized;
         [ViewVariables] private bool _postInitialized;
 
@@ -82,10 +85,7 @@ namespace Content.Server.GameTicking
 
         private void SendServerMessage(string message)
         {
-            var msg = new MsgChatMessage();
-            msg.Channel = ChatChannel.Server;
-            msg.Message = message;
-            IoCManager.Resolve<IServerNetManager>().ServerSendToAll(msg);
+            _chatManager.ChatMessageToAll(ChatChannel.Server, message, "", default, false, true);
         }
 
         public override void Update(float frameTime)
@@ -95,7 +95,6 @@ namespace Content.Server.GameTicking
         }
 
         [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly IMapLoader _mapLoader = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;

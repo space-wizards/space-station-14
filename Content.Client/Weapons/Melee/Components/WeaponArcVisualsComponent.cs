@@ -6,7 +6,7 @@ namespace Content.Client.Weapons.Melee.Components;
 [RegisterComponent]
 public sealed class WeaponArcVisualsComponent : Component
 {
-    [ViewVariables, DataField("animation")]
+    [DataField("animation")]
     public WeaponArcAnimation Animation = WeaponArcAnimation.None;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("fadeOut")]

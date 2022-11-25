@@ -15,18 +15,18 @@ public sealed class PickNearbyInjectableOperator : HTNOperator
     private EntityLookupSystem _lookup = default!;
     private PathfindingSystem _pathfinding = default!;
 
-    [ViewVariables, DataField("rangeKey")] public string RangeKey = NPCBlackboard.MedibotInjectRange;
+    [DataField("rangeKey")] public string RangeKey = NPCBlackboard.MedibotInjectRange;
 
     /// <summary>
     /// Target entity to inject
     /// </summary>
-    [ViewVariables, DataField("targetKey", required: true)]
+    [DataField("targetKey", required: true)]
     public string TargetKey = string.Empty;
 
     /// <summary>
     /// Target entitycoordinates to move to.
     /// </summary>
-    [ViewVariables, DataField("targetMoveKey", required: true)]
+    [DataField("targetMoveKey", required: true)]
     public string TargetMoveKey = string.Empty;
 
     public override void Initialize(IEntitySystemManager sysManager)
@@ -41,7 +41,7 @@ public sealed class PickNearbyInjectableOperator : HTNOperator
     {
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
 
-        if (!blackboard.TryGetValue<float>(RangeKey, out var range))
+        if (!blackboard.TryGetValue<float>(RangeKey, out var range, _entManager))
             return (false, null);
 
         var damageQuery = _entManager.GetEntityQuery<DamageableComponent>();
