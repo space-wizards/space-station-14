@@ -51,7 +51,6 @@ public sealed class MappingActivityOverlay : Overlay
         var screen = args.ScreenHandle;
         var offset = _cfg.GetCVar(CCVars.HudHeldItemOffset);
         var mousePos = _inputManager.MouseScreenPosition.Position;
-        var worldPos = _eye.ScreenToMap(mousePos).Position;
 
         if (_userInterface.ActiveScreen is not MappingGameScreen mapScreen)
             return;
@@ -62,7 +61,7 @@ public sealed class MappingActivityOverlay : Overlay
         tool.Draw(args);
 
         var f0 = spriteSys.Frame0(tool.ToolActivityIcon);
-        screen.DrawTexture(f0, worldPos - f0.Size / 2 + offset, Color.White.WithAlpha(0.75f));
+        screen.DrawTexture(f0, mousePos - f0.Size / 2 + offset, Color.White.WithAlpha(0.75f));
 
     }
 }
