@@ -2933,10 +2933,8 @@ entities:
     parent: 0
     type: Transform
 - uid: 197
-  type: VendingMachineSec
+  type: LockerEvidence
   components:
-  - flags: SessionSpecific
-    type: MetaData
   - pos: 1.5,7.5
     parent: 0
     type: Transform
