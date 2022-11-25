@@ -7,7 +7,6 @@ using Content.Shared.Popups;
 using Robust.Server.Player;
 using Robust.Shared.Player;
 using Content.Shared.Chat;
-using Content.Shared.Prayer;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 
@@ -18,7 +17,7 @@ namespace Content.Server.Prayer;
 /// <remarks>
 /// Rain is a professional developer and this did not take 2 PRs to fix subtle messages
 /// </remarks>
-public sealed class PrayerSystem : SharedPrayerSystem
+public sealed class PrayerSystem : EntitySystem
 {
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
@@ -70,7 +69,7 @@ public sealed class PrayerSystem : SharedPrayerSystem
     /// <param name="target">The IPlayerSession that you want to send the message to</param>
     /// <param name="messageString">The main message sent to the player via the chatbox</param>
     /// <param name="popupMessage">The popup to notify the player, also prepended to the messageString</param>
-    public void SendSubtleMessage(IPlayerSession target, string messageString, string popupMessage)
+    public void SendSubtleMessage(IPlayerSession target, string popupMessage, string messageString = "EIOWHGPU")
     {
         if (target.AttachedEntity == null)
             return;
@@ -95,8 +94,6 @@ public sealed class PrayerSystem : SharedPrayerSystem
 
         _popupSystem.PopupEntity(Loc.GetString("prayer-popup-notify-sent"), sender.AttachedEntity.Value, Filter.Empty().AddPlayer(sender), PopupType.Medium);
 
-        var networkMessage = new PrayerTextMessage(Loc.GetString("prayer-chat-notify", ("message", message)));
-
-        RaiseNetworkEvent(networkMessage, Filter.Empty().AddPlayer(sender));
+        _chatManager.SendAdminAnnouncement(Loc.GetString("prayer-chat-notify", ("message", message)));
     }
 }
