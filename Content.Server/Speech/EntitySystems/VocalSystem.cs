@@ -6,7 +6,7 @@ using Content.Shared.Humanoid;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
-namespace Content.Server.Speech;
+namespace Content.Server.Speech.EntitySystems;
 
 public sealed class VocalSystem : EntitySystem
 {
