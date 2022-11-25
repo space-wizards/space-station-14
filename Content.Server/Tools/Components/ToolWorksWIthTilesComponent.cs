@@ -15,10 +15,6 @@ public sealed class ToolWorksWithTilesComponent : Component
     [DataField("delay")]
     public float Delay = 0.25f;
 
-    [ViewVariables]
-    [DataField("adminLog")]
-    public bool AdminLog = false;
-
     /// <summary>
     /// Used for do_afters.
     /// </summary>

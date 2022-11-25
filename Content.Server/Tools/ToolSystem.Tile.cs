@@ -4,6 +4,7 @@ using Content.Server.Tools.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
 using Content.Shared.Tools.Components;
+using Content.Shared.Database;
 using Robust.Shared.Map;
 
 namespace Content.Server.Tools;
@@ -35,16 +36,14 @@ public sealed partial class ToolSystem
         if (!TryComp(component.Owner, out ToolComponent? tool))
             return;
 
-        //if (!_interactionSystem.InRangeUnobstructed(user, coordinates, popup: false))
-            //return false;
-
         var tileRef = grid.GetTileRef(args.Coordinates);
 
         if (tileRef.IsBlockedTurf(true))
             return;
-
-        tileRef.TryDeconstructWithToolQualities(tool.Qualities, _mapManager, _tileDefinitionManager, EntityManager);
-        // TODO admin log esp cutting lattice
+        
+        if (tileRef.TryDeconstructWithToolQualities(tool.Qualities, _mapManager, _tileDefinitionManager, EntityManager))
+            _adminLogger.Add(LogType.TileEdited, LogImpact.Medium,
+                $"{_entityManager.ToPrettyString(args.User):player} used {_entityManager.ToPrettyString(uid)} to edit the tile at {args.Coordinates}");
     }
 
     private void OnToolWithTileAfterInteract(EntityUid uid, ToolWorksWithTilesComponent component, AfterInteractEvent args)
