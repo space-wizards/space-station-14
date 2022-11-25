@@ -17,7 +17,11 @@
                 </PanelContainer.PanelOverride>
                 <BoxContainer Orientation="Vertical">
                     <BoxContainer VerticalAlignment="Top">
-                        <TabContainer/>
+                        <TabContainer Name="BasicSettingsTabs" MinWidth="300">
+                            <BoxContainer Name="ToolWidgetContainer" HorizontalExpand="True">
+
+                            </BoxContainer>
+                        </TabContainer>
                     </BoxContainer>
                 </BoxContainer>
             </PanelContainer>

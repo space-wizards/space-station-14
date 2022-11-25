@@ -1,3 +1,11 @@
-﻿<widgets:DrawToolWidget xmlns:widgets="clr-namespace:Content.Client.Mapping.Tools.Widgets">
-
+﻿<widgets:DrawToolWidget xmlns:widgets="clr-namespace:Content.Client.Mapping.Tools.Widgets"
+                        xmlns="https://spacestation14.io">
+    <GridContainer Columns="2">
+        <Label Text="Prototype"/>
+        <LineEdit Name="PrototypeEdit"/>
+        <Label Text="Rotation"/>
+        <SpinBox Name="RotationEdit" Value="0"/>
+        <Label Text="Rot adj"/>
+        <SpinBox Name="RotationAdjustEdit" Value="90"/>
+    </GridContainer>
 </widgets:DrawToolWidget>

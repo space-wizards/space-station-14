@@ -57,8 +57,8 @@ public sealed class MappingState : GameplayStateBase, IMainViewportState
         _fpsCounter.Visible = _configurationManager.GetCVar(CCVars.HudFpsCounterVisible);
         _configurationManager.OnValueChanged(CCVars.HudFpsCounterVisible, (show) => { _fpsCounter.Visible = show; });
         _configurationManager.OnValueChanged(CCVars.UILayout, ReloadMainScreenValueChange);
-        _entNet.SendSystemNetworkMessage(new EnterMappingMode());
-        _entMan.EventBus.RaiseEvent(EventSource.Local, new EnterMappingMode());
+        _entNet.SendSystemNetworkMessage(new EnterMappingModeEvent());
+        _entMan.EventBus.RaiseEvent(EventSource.Local, new EnterMappingModeEvent());
         _parallaxSystem.Override = MappingParallax;
     }
 
@@ -71,8 +71,8 @@ public sealed class MappingState : GameplayStateBase, IMainViewportState
         _uiManager.ClearWindows();
         _configurationManager.UnsubValueChanged(CCVars.UILayout, ReloadMainScreenValueChange);
         UnloadMainScreen();
-        _entNet.SendSystemNetworkMessage(new ExitMappingMode());
-        _entMan.EventBus.RaiseEvent(EventSource.Local, new ExitMappingMode());
+        _entNet.SendSystemNetworkMessage(new ExitMappingModeEvent());
+        _entMan.EventBus.RaiseEvent(EventSource.Local, new ExitMappingModeEvent());
         _parallaxSystem.Override = null;
     }
 

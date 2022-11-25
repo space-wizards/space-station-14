@@ -1,4 +1,5 @@
 ﻿using Robust.Client.Graphics;
+using Robust.Client.Input;
 using Robust.Client.UserInterface;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
@@ -30,14 +31,45 @@ public abstract class Tool
 
     }
 
+    public virtual void Draw(in OverlayDrawArgs args)
+    {
+
+    }
+
+    public virtual void FrameUpdate(float delta)
+    {
+
+    }
+
     public virtual void Shutdown()
     {
 
     }
 }
 
+public interface IDrawingLikeToolConfiguration
+{
+    /// <summary>
+    /// The angle in degrees.
+    /// </summary>
+    /// <remarks>Degrees was used to avoid tiny error buildups over time with radians.</remarks>
+    public float Rotation { get; set; }
+    public float RotationAdjust { get; set; }
+
+    public string Prototype { get; set; }
+}
+
+/// <summary>
+/// For tools that function an awful lot like drawing something.
+/// </summary>
 public abstract class DrawingLikeTool : Tool
 {
+    [Dependency] private readonly IEntityManager _entity = default!;
+    [Dependency] private readonly IUserInterfaceManager _userInterface = default!;
+    [Dependency] private readonly IEyeManager _eye = default!;
+    [Dependency] private readonly IMapManager _map = default!;
+    [Dependency] private readonly IInputManager _input = default!;
+
     protected EntityCoordinates? InitialClickPoint = null;
 
     /// <summary>
@@ -85,14 +117,28 @@ public abstract class DrawingLikeTool : Tool
     public abstract bool DoDrawLine(EntityCoordinates start, EntityCoordinates end);
     public abstract bool DoDrawRect(EntityCoordinates start, EntityCoordinates end);
 
+    private IDrawingLikeToolConfiguration GetConfig()
+    {
+        return (IDrawingLikeToolConfiguration) _userInterface.ActiveScreen![ToolConfigurationControl]!;
+    }
+
     /// <summary>
     /// Called when the rotate keybind is hit, handle as you will.
     /// Recommended to have a "by how much" option in the tool config panel.
     /// </summary>
     public virtual void Rotate()
     {
+        var config = GetConfig();
+        config.Rotation = (config.Rotation + config.RotationAdjust) % 360;
     }
 
+    public DrawingLikeTool()
+    {
+        IoCManager.InjectDependencies(this);
+
+        if (!typeof(IDrawingLikeToolConfiguration).IsAssignableFrom(ToolConfigurationControl))
+            throw new Exception($"The tool of type {this.GetType().FullName} has an invalid configuration control");
+    }
 
     public override void Startup()
     {
@@ -102,7 +148,88 @@ public abstract class DrawingLikeTool : Tool
             .Bind(EngineKeyFunctions.EditorLinePlace, new PointerInputCmdHandler(LinePlaceTriggered))
             .Bind(EngineKeyFunctions.EditorGridPlace, new PointerInputCmdHandler(GridPlaceTriggered))
             .Bind(EngineKeyFunctions.EditorRotateObject, new PointerInputCmdHandler(RotateTriggered))
+            .Bind(EngineKeyFunctions.EditorCancelPlace, new PointerInputCmdHandler(CancelPlaceTriggered))
             .Register<DrawingLikeTool>();
+    }
+
+    // i know this sounds like it's drawing objects but no this is for rendering on the screen and i'm just following naming convention
+    public override void Draw(in OverlayDrawArgs args)
+    {
+        var mapCoords = _eye.ScreenToMap(_input.MouseScreenPosition);
+        if (mapCoords == default)
+        {
+            return; // Left viewport.
+        }
+        var coords = EntityCoordinates.FromMap(_map, mapCoords);
+
+        if (!_activeDrawing)
+        {
+            PreviewDrawPoint(coords, args);
+            return;
+        }
+
+        switch (_mode)
+        {
+            case Mode.Point:
+            {
+                PreviewDrawPoint(coords, args);
+                break;
+            }
+            case Mode.Line:
+            {
+                PreviewDrawLine(InitialClickPoint!.Value, coords, args);
+                break;
+            }
+            case Mode.Rect:
+            {
+                PreviewDrawRect(InitialClickPoint!.Value, coords, args);
+                break;
+            }
+            default:
+                throw new ArgumentOutOfRangeException(nameof(_mode), $"Did you add a new mode? Forgot to account for it in {nameof(Draw)}");
+        }
+    }
+
+    public virtual EntityCoordinates Reanchor(EntityCoordinates coords)
+    {
+        if (false)
+        {
+            // blah blah attach to anchor entity instead of grid.
+        }
+
+        if (_map.TryFindGridAt(coords.ToMap(_entity), out var grid))
+        {
+
+        }
+    }
+
+    public override void FrameUpdate(float delta)
+    {
+        base.FrameUpdate(delta);
+        if (!_activeDrawing)
+            return;
+
+        var mapCoords = _eye.ScreenToMap(_input.MouseScreenPosition);
+        if (mapCoords == default)
+        {
+            QuitDrawing();
+            return; // Left viewport.
+        }
+        var coords = EntityCoordinates.FromMap(_map, mapCoords);
+
+        if (_mode == Mode.Point)
+        {
+            // We're scribbling.
+
+            if (!ValidateNewInitialPoint(coords))
+                return; // we didn't scribble hard enough :(
+
+            var oldInitial = InitialClickPoint;
+            InitialClickPoint = coords;
+            if (ValidateDrawPoint(coords))
+                DoDrawPoint(coords);
+        }
+        // if we're not scribbling there's nothing to do.
     }
 
     public override void Shutdown()
@@ -115,26 +242,84 @@ public abstract class DrawingLikeTool : Tool
 
     private bool RotateTriggered(in PointerInputCmdHandler.PointerInputCmdArgs args)
     {
-        throw new NotImplementedException();
+        Rotate();
+        return true;
+    }
+
+    private bool CancelPlaceTriggered(in PointerInputCmdHandler.PointerInputCmdArgs args)
+    {
+        QuitDrawing();
+        return true;
     }
 
     private bool LinePlaceTriggered(in PointerInputCmdHandler.PointerInputCmdArgs args)
     {
-        throw new NotImplementedException();
+        if (_activeDrawing)
+            return false;
+
+        InitialClickPoint = args.Coordinates;
+        StartDrawing(Mode.Line);
+        return true;
     }
 
     private bool GridPlaceTriggered(in PointerInputCmdHandler.PointerInputCmdArgs args)
     {
-        throw new NotImplementedException();
+        if (_activeDrawing)
+            return false;
+
+        InitialClickPoint = args.Coordinates;
+        StartDrawing(Mode.Rect);
+        return true;
+    }
+
+    private bool _activeDrawing = false;
+    private Mode _mode = Mode.Point;
+
+    private void StartDrawing(Mode mode)
+    {
+        _activeDrawing = true;
+        _mode = mode;
+    }
+
+    private void QuitDrawing()
+    {
+        _activeDrawing = false;
     }
 
     private bool PlaceKeyUp(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
     {
-        throw new NotImplementedException();
+        switch (_mode)
+        {
+            case Mode.Point:
+            {
+                break;
+            }
+            case Mode.Line:
+            {
+                if (ValidateDrawLine(InitialClickPoint!.Value, coords))
+                    DoDrawLine(InitialClickPoint!.Value, coords);
+                break;
+            }
+            case Mode.Rect:
+            {
+                if (ValidateDrawRect(InitialClickPoint!.Value, coords))
+                    DoDrawRect(InitialClickPoint!.Value, coords);
+                break;
+            }
+            default:
+                throw new ArgumentOutOfRangeException(nameof(_mode), $"Did you add a new mode? Forgot to account for it in {nameof(PlaceKeyUp)}");
+        }
+
+        QuitDrawing();
+        return true;
     }
 
     private bool PlaceKeyDown(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
     {
-        throw new NotImplementedException();
+        InitialClickPoint = coords;
+        StartDrawing(Mode.Point);
+        if (ValidateDrawPoint(coords))
+            DoDrawPoint(coords);
+        return true;
     }
 }

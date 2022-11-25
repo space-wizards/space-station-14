@@ -14,7 +14,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.Mapping;
 
 /// <summary>
-///     Handles autosaving maps.
+///     Handles various mapping tasks like autosave and tools.
 /// </summary>
 public sealed class MappingSystem : EntitySystem
 {

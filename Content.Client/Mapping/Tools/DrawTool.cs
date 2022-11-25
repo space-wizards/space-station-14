@@ -1,5 +1,7 @@
 ﻿using Content.Client.Mapping.Tools.Widgets;
+using Content.Shared.Mapping;
 using Robust.Client.Graphics;
+using Robust.Client.UserInterface;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
 
@@ -7,6 +9,7 @@ namespace Content.Client.Mapping.Tools;
 
 public sealed class DrawTool : DrawingLikeTool
 {
+    [Dependency] private readonly IUserInterfaceManager _userInterface = default!;
     [Dependency] private readonly IEntityManager _entMan = default!;
     [Dependency] private readonly IEntitySystemManager _entSys = default!;
     [Dependency] private readonly IEntityNetworkManager _entNet = default!;
@@ -15,6 +18,21 @@ public sealed class DrawTool : DrawingLikeTool
         new SpriteSpecifier.Texture(new ResourcePath("/Textures/Mapping/gray_checker.png"));
 
     public override Type ToolConfigurationControl => typeof(DrawToolWidget);
+
+    private DrawToolWidget GetConfig()
+    {
+        return _userInterface.ActiveScreen!.GetWidget<DrawToolWidget>()!;
+    }
+
+    protected override bool ValidateNewInitialPoint(EntityCoordinates @new)
+    {
+        if (@new.TryDistance(_entMan, InitialClickPoint!.Value, out var dist) && dist > 1.0f)
+        {
+            return true;
+        }
+
+        return false;
+    }
 
     public override bool ValidateDrawPoint(EntityCoordinates point)
     {
@@ -45,22 +63,20 @@ public sealed class DrawTool : DrawingLikeTool
 
     public override bool DoDrawPoint(EntityCoordinates point)
     {
-        if (!ValidateDrawPoint(point))
-            return false;
+        var config = GetConfig();
+        _entNet.SendSystemNetworkMessage(new MappingDrawToolDrawEntityPointEvent(config.Prototype, EntityCoordinates.Invalid, config.Rotation, point));
         return true;
     }
 
     public override bool DoDrawLine(EntityCoordinates start, EntityCoordinates end)
     {
-        if (!ValidateDrawLine(start, end))
-            return false;
+
         return true;
     }
 
     public override bool DoDrawRect(EntityCoordinates start, EntityCoordinates end)
     {
-        if (!ValidateDrawRect(start, end))
-            return false;
+
         return true;
     }
 
