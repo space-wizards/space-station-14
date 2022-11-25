@@ -2,7 +2,7 @@
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 
-namespace Content.Server.JoinQueue;
+namespace Content.Shared.JoinQueue;
 
 public sealed class MsgQueueUpdate : NetMessage
 {

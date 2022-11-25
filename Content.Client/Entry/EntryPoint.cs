@@ -8,6 +8,7 @@ using Content.Client.GhostKick;
 using Content.Client.Info;
 using Content.Client.Input;
 using Content.Client.IoC;
+using Content.Client.JoinQueue;
 using Content.Client.Launcher;
 using Content.Client.MainMenu;
 using Content.Client.Parallax.Managers;
@@ -72,6 +73,7 @@ namespace Content.Client.Entry
         [Dependency] private readonly ExtendedDisconnectInformationManager _extendedDisconnectInformation = default!;
         [Dependency] private readonly PlayTimeTrackingManager _playTimeTracking = default!;
         [Dependency] private readonly ContentLocalizationManager _contentLoc = default!;
+        [Dependency] private readonly JoinQueueManager _queueManager = default!;
 
         public const int NetBufferSizeOverride = 2;
 
@@ -171,6 +173,7 @@ namespace Content.Client.Entry
             _gamePrototypeLoadManager.Initialize();
             _networkResources.Initialize();
             _userInterfaceManager.SetDefaultTheme("SS14DefaultTheme");
+            _queueManager.Initialize();
 
             _baseClient.RunLevelChanged += (_, args) =>
             {
