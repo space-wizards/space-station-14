@@ -70,9 +70,9 @@
     key: enum.StoreUiKey.Key
   - type: Store
     preset: StorePresetUplink
-    balance: 
+    balance:
       Telecrystal: 0
-  
+
 - type: entity
   parent: BaseUplinkRadio
   id: BaseUplinkRadio20TC

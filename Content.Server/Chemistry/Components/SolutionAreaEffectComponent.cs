@@ -6,6 +6,7 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -73,8 +74,7 @@ namespace Content.Server.Chemistry.Components
             if (!_entities.TryGetComponent(xform.GridUid, out MapGridComponent? gridComp))
                 return;
 
-            var grid = gridComp.Grid;
-            var origin = grid.TileIndicesFor(xform.Coordinates);
+            var origin = gridComp.TileIndicesFor(xform.Coordinates);
 
             DebugTools.Assert(xform.Anchored, "Area effect entity prototypes must be anchored.");
 
@@ -82,10 +82,10 @@ namespace Content.Server.Chemistry.Components
             {
                 // Currently no support for spreading off or across grids.
                 var index = origin + dir.ToIntVec();
-                if (!grid.TryGetTileRef(index, out var tile) || tile.Tile.IsEmpty)
+                if (!gridComp.TryGetTileRef(index, out var tile) || tile.Tile.IsEmpty)
                     return;
 
-                foreach (var neighbor in grid.GetAnchoredEntities(index))
+                foreach (var neighbor in gridComp.GetAnchoredEntities(index))
                 {
                     if (_entities.TryGetComponent(neighbor,
                         out SolutionAreaEffectComponent? comp) && comp.Inception == Inception)
@@ -100,7 +100,7 @@ namespace Content.Server.Chemistry.Components
 
                 var newEffect = _entities.SpawnEntity(
                     meta.EntityPrototype.ID,
-                    grid.GridTileToLocal(index));
+                    gridComp.GridTileToLocal(index));
 
                 if (!_entities.TryGetComponent(newEffect, out SolutionAreaEffectComponent? effectComponent))
                 {
