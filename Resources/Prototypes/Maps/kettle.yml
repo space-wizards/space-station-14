@@ -6,6 +6,7 @@
   stations:
     Kettle:
       mapNameTemplate: '{0} Kettle {1}'
+      emergencyShuttlePath: /Maps/Shuttles/emergency_courser.yml
       nameGenerator:
         !type:NanotrasenNameGenerator
         prefixCreator: '14'
