@@ -1,3 +1,4 @@
+using Content.Shared.Chat.Prototypes;
 using Content.Shared.Roles;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -60,5 +61,10 @@ namespace Content.Shared.Zombies
         /// </summary>
         [DataField("zombieRoleId", customTypeSerializer: typeof(PrototypeIdSerializer<AntagPrototype>))]
         public readonly string ZombieRoleId = "Zombie";
+
+        [DataField("emoteId", customTypeSerializer: typeof(PrototypeIdSerializer<EmoteSoundsPrototype>))]
+        public string? EmoteSoundsId = "Zombie";
+
+        public EmoteSoundsPrototype? EmoteSounds;
     }
 }
