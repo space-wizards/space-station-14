@@ -45,7 +45,7 @@
     Snap:
       collection: Snaps
       params:
-        volume: -4
+        volume: -6
 
 # mobs
 - type: emoteSounds
