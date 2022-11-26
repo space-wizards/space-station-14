@@ -31,6 +31,7 @@ public sealed class GasTileOverlayState : ComponentState, IComponentDeltaState
     public readonly Dictionary<Vector2i, GasOverlayChunk> Chunks;
     public bool FullState => AllChunks == null;
 
+    // required to infer deleted/missing chunks for delta states
     public HashSet<Vector2i>? AllChunks;
 
     public GasTileOverlayState(Dictionary<Vector2i, GasOverlayChunk> chunks)
@@ -64,15 +65,15 @@ public sealed class GasTileOverlayState : ComponentState, IComponentDeltaState
 
         var chunks = new Dictionary<Vector2i, GasOverlayChunk>(state.Chunks.Count);
 
-        foreach (var (chunk, data) in state.Chunks)
-        {
-            if (AllChunks!.Contains(chunk) && !Chunks.ContainsKey(chunk))
-                state.Chunks[chunk] = new(data);
-        }
-
         foreach (var (chunk, data) in Chunks)
         {
-            state.Chunks[chunk] = new(data);
+            chunks[chunk] = new(data);
+        }
+
+        foreach (var (chunk, data) in state.Chunks)
+        {
+            if (AllChunks!.Contains(chunk))
+                chunks.TryAdd(chunk, new(data));
         }
 
         return new GasTileOverlayState(chunks);
