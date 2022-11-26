@@ -4,15 +4,11 @@
   mapPath: /Maps/dart.yml
   minPlayers: 0
   stations:
-    Dart:
+    Station:
       mapNameTemplate: '{0} Dart ERT {1}'
       nameGenerator:
         !type:NanotrasenNameGenerator
         prefixCreator: '14'
       overflowJobs: []
       availableJobs:
-        ERTLeader: [ 0, 1 ]
-        ERTEngineer: [ 0, 1 ]
-        ERTSecurity: [ 0, 1 ]
-        ERTMedical: [ 0, 1 ]
-        ERTJanitor: [ 0, 1 ]
+        Captain: [ 1, 1 ]
