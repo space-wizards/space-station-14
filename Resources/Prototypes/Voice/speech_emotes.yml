@@ -46,3 +46,17 @@
     - claps
     - clapping
     - clapped
+
+- type: emote
+  id: Snap
+  category: Hands
+  words:
+    - snap
+    - snaps
+    - snapping
+    - snapped
+    - snap fingers
+    - snaps fingers
+    - snapping fingers
+    - snapped fingers
+

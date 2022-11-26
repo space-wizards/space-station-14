@@ -42,6 +42,10 @@
   sounds:
     Clap:
       collection: Claps
+    Snap:
+      collection: Snaps
+      params:
+        volume: -4
 
 # mobs
 - type: emoteSounds
