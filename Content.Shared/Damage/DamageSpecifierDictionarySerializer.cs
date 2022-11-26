@@ -1,10 +1,10 @@
-﻿using System.Text.Json.Serialization;
-using Content.Shared.Damage.Prototypes;
+﻿using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Markdown.Mapping;
 using Robust.Shared.Serialization.Markdown.Validation;
+using Robust.Shared.Serialization.Markdown.Value;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 using Robust.Shared.Serialization.TypeSerializers.Interfaces;
 
@@ -16,29 +16,21 @@ public sealed class DamageSpecifierDictionarySerializer : ITypeReader<Dictionary
     private ITypeValidator<Dictionary<string, FixedPoint2>, MappingDataNode> _damageTypeSerializer = new PrototypeIdDictionarySerializer<FixedPoint2, DamageTypePrototype>();
     private ITypeValidator<Dictionary<string, FixedPoint2>, MappingDataNode> _damageGroupSerializer = new PrototypeIdDictionarySerializer<FixedPoint2, DamageGroupPrototype>();
 
-    [JsonPropertyName("types")]
-    [DataField("types", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, DamageTypePrototype>))]
-    private readonly Dictionary<string,FixedPoint2>? _damageTypeDictionary;
-
-    [JsonPropertyName("groups")]
-    [DataField("groups", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, DamageGroupPrototype>))]
-    private readonly Dictionary<string, FixedPoint2>? _damageGroupDictionary;
-
     public ValidationNode Validate(ISerializationManager serializationManager, MappingDataNode node,
         IDependencyCollection dependencies, ISerializationContext? context = null)
     {
-        var vals = new List<ValidationNode>();
+        var vals = new Dictionary<ValidationNode, ValidationNode>();
         if (node.TryGet<MappingDataNode>("types", out var typesNode))
         {
-            vals.Add(_damageTypeSerializer.Validate(serializationManager, typesNode, dependencies, context));
+            vals.Add(new ValidatedValueNode(new ValueDataNode("types")), _damageTypeSerializer.Validate(serializationManager, typesNode, dependencies, context));
         }
 
         if (node.TryGet<MappingDataNode>("groups", out var groupsNode))
         {
-            vals.Add(_damageGroupSerializer.Validate(serializationManager, groupsNode, dependencies, context));
+            vals.Add(new ValidatedValueNode(new ValueDataNode("groups")), _damageGroupSerializer.Validate(serializationManager, groupsNode, dependencies, context));
         }
 
-        return new ValidatedSequenceNode(vals);
+        return new ValidatedMappingNode(vals);
     }
 
     public Dictionary<string, FixedPoint2> Read(ISerializationManager serializationManager, MappingDataNode node, IDependencyCollection dependencies,
