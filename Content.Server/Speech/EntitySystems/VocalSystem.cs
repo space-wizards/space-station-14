@@ -1,6 +1,8 @@
+using Content.Server.Actions;
 using Content.Server.Chat.Systems;
 using Content.Server.Humanoid;
 using Content.Server.Speech.Components;
+using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Humanoid;
 using Robust.Shared.Prototypes;
@@ -14,19 +16,38 @@ public sealed class VocalSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly ActionsSystem _actions = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<VocalComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<VocalComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<VocalComponent, SexChangedEvent>(OnSexChanged);
         SubscribeLocalEvent<VocalComponent, EmoteEvent>(OnEmote);
+        SubscribeLocalEvent<VocalComponent, ScreamActionEvent>(OnScreamAction);
     }
 
     private void OnStartup(EntityUid uid, VocalComponent component, ComponentStartup args)
     {
+        // try to add scream action when vocal comp added
+        if (_proto.TryIndex(component.ScreamActionId, out InstantActionPrototype? proto))
+        {
+            component.ScreamAction = new InstantAction(proto);
+            _actions.AddAction(uid, component.ScreamAction, null);
+        }
+
         LoadSounds(uid, component);
+    }
+
+    private void OnShutdown(EntityUid uid, VocalComponent component, ComponentShutdown args)
+    {
+        // remove scream action when component removed
+        if (component.ScreamAction != null)
+        {
+            _actions.RemoveAction(uid, component.ScreamAction);
+        }
     }
 
     private void OnSexChanged(EntityUid uid, VocalComponent component, SexChangedEvent args)
@@ -48,6 +69,11 @@ public sealed class VocalSystem : EntitySystem
 
         // just play regular sound based on emote proto
         args.Handled = _chat.TryPlayEmoteSound(uid, component.EmoteSounds, args.Emote);
+    }
+
+    private void OnScreamAction(EntityUid uid, VocalComponent component, ScreamActionEvent args)
+    {
+        _chat.TryEmoteWithChat(uid, component.ScreamActionId);
     }
 
     private bool TryPlayScreamSound(EntityUid uid, VocalComponent component)

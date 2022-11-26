@@ -31,22 +31,33 @@ public partial class ChatSystem
         {
             foreach (var word in emote.Words)
             {
-                if (_wordEmoteDict.ContainsKey(word))
+                var lowerWord = word.ToLower();
+                if (_wordEmoteDict.ContainsKey(lowerWord))
                 {
-                    string errMsg;
-                    var existingId = _wordEmoteDict[word].ID;
-                    if (emote.ID != existingId)
-                        errMsg = $"Duplicate of emote word {word} in emotes {emote.ID} and {existingId}";
-                    else
-                        errMsg = $"Word {word} in emote {existingId} repeated multiple times";
-
+                    var existingId = _wordEmoteDict[lowerWord].ID;
+                    var errMsg = $"Duplicate of emote word {lowerWord} in emotes {emote.ID} and {existingId}";
                     Sawmill.Error(errMsg);
                     continue;
                 }
 
-                _wordEmoteDict.Add(word, emote);
+                _wordEmoteDict.Add(lowerWord, emote);
             }
         }
+    }
+
+    public void TryEmoteWithChat(EntityUid uid, string emoteId, bool hideChat = true,
+        bool hideGlobalGhostChat = false, string? nameOverride = null)
+    {
+        if (!_prototypeManager.TryIndex<EmotePrototype>(emoteId, out var proto))
+            return;
+        TryEmoteWithChat(uid, proto, hideChat, hideGlobalGhostChat, nameOverride);
+    }
+
+    public void TryEmoteWithChat(EntityUid uid, EmotePrototype proto, bool hideChat = true,
+        bool hideGlobalGhostChat = false, string? nameOverride = null)
+    {
+        SendEntityEmote(uid, "temp", hideChat, hideGlobalGhostChat, nameOverride, false);
+        TryEmoteWithoutChat(uid, proto);
     }
 
     public void TryEmoteWithoutChat(EntityUid uid, string emoteId)
@@ -64,7 +75,7 @@ public partial class ChatSystem
         InvokeEmoteEvent(uid, proto);
     }
 
-    private void TryEmote(EntityUid uid, string textInput)
+    private void TryEmoteChatInput(EntityUid uid, string textInput)
     {
         var actionLower = textInput.ToLower();
         if (!_wordEmoteDict.TryGetValue(actionLower, out var emote))

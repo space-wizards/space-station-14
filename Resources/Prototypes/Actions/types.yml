@@ -1,4 +1,13 @@
 - type: instantAction
+  id: Scream
+  useDelay: 10
+  icon: Interface/Actions/scream.png
+  name: action-name-scream
+  description: action-description-scream
+  serverEvent: !type:ScreamActionEvent
+  checkCanInteract: false
+
+- type: instantAction
   id: TurnUndead
   name: turn-undead-action-name
   description: turn-undead-action-description
