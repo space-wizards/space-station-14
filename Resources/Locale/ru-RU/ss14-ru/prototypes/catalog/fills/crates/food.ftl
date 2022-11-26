@@ -1,9 +1,9 @@
-ent-CrateFoodPizza = { ent-CratePlastic }
-    .desc = { ent-CratePlastic.desc }
+ent-CrateFoodPizza = экстренная доставка пиццы
+    .desc = Внесите свой вклад в борьбу с голодом на станции, доставляя пиццу в отделы с недостаточным финансированием!
     .suffix = { "" }
-ent-CrateFoodMRE = { ent-CratePlastic }
-    .desc = { ent-CratePlastic.desc }
+ent-CrateFoodMRE = ящик ИРП
+    .desc = Армейские обеды, которыми можно накормить целый отдел.
     .suffix = { "" }
-ent-CrateFoodCooking = { ent-CratePlastic }
-    .desc = { ent-CratePlastic.desc }
+ent-CrateFoodCooking = ящик кухонных припасов
+    .desc = Дополнительные кухонные припасы на случай отсутствия ботаников.
     .suffix = { "" }
