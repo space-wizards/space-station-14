@@ -1,30 +1,6 @@
 Entries:
 - author: Rane
   changes:
-  - {message: Cloners now require biomass., type: Add}
-  - {message: Cloners have a chance of failure based off of the body's genetic damage.,
-    type: Add}
-  - {message: Added biomass material and biomass reclaimers., type: Add}
-  id: 2199
-  time: '2022-08-30T02:31:28.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: The zombie midround event now just starts zombie mode., type: Add}
-  - {message: Zombie melee infection rates have been lowered., type: Tweak}
-  id: 2200
-  time: '2022-08-30T02:35:19.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed issues with ID cards displaying whitespace and empty names., type: Fix}
-  id: 2201
-  time: '2022-08-30T02:38:01.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: The Cargo Tech and QM job icons have been swapped., type: Fix}
-  id: 2202
-  time: '2022-08-30T02:39:23.0000000+00:00'
-- author: Rane
-  changes:
   - {message: Silicons will no longer take damage from glass shards. Flying mobs are
       still bugged., type: Fix}
   id: 2203
@@ -2957,3 +2933,24 @@ Entries:
     type: Add}
   id: 2698
   time: '2022-11-24T07:31:17.0000000+00:00'
+- author: Vordenburg
+  changes:
+  - {message: Individual stations can now have specific emergency shuttles., type: Tweak}
+  id: 2699
+  time: '2022-11-24T18:28:04.0000000+00:00'
+- author: Checkraze
+  changes:
+  - {message: Added the Courser class evacuation shuttle., type: Add}
+  id: 2700
+  time: '2022-11-25T08:18:17.0000000+00:00'
+- author: Mervill
+  changes:
+  - {message: Recycler can no longer recycle things if it's unpowered., type: Fix}
+  - {message: Fix conveyor assemblies being un-interactable after deconstruct, type: Fix}
+  id: 2701
+  time: '2022-11-25T09:00:41.0000000+00:00'
+- author: Gaxeer
+  changes:
+  - {message: add missing flame to cowelder, type: Fix}
+  id: 2702
+  time: '2022-11-25T11:27:45.0000000+00:00'
