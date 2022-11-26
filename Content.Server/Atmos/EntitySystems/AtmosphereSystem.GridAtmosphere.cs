@@ -241,6 +241,7 @@ public sealed partial class AtmosphereSystem
             // We set the directions that are air-blocked so far,
             // as you could have a full obstruction with only 4 directional air blockers.
             directions |= obstructingComponent.AirBlockedDirection;
+            args.NoAir |= obstructingComponent.NoAirWhenFullyAirBlocked;
 
             if (directions.IsFlagSet(args.Direction))
             {
