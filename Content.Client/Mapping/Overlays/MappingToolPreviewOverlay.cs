@@ -1,9 +1,4 @@
-﻿using Content.Client.Hands;
-using Content.Client.UserInterface.Controls;
-using Content.Client.UserInterface.Screens;
-using Content.Client.Viewport;
-using Content.Shared.CCVar;
-using Robust.Client.GameObjects;
+﻿using Content.Client.UserInterface.Screens;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
@@ -12,7 +7,7 @@ using Robust.Shared.Enums;
 
 namespace Content.Client.Mapping.Overlays;
 
-public sealed class MappingActivityOverlay : Overlay
+public sealed class MappingToolPreviewOverlay : Overlay
 {
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IInputManager _inputManager = default!;
@@ -21,27 +16,21 @@ public sealed class MappingActivityOverlay : Overlay
     [Dependency] private readonly IEntityManager _entMan = default!;
     [Dependency] private readonly IUserInterfaceManager _userInterface = default!;
 
-    public override OverlaySpace Space => OverlaySpace.ScreenSpace;
+    public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
-    public MappingActivityOverlay()
+    public MappingToolPreviewOverlay()
     {
         IoCManager.InjectDependencies(this);
     }
 
     protected override void Draw(in OverlayDrawArgs args)
     {
-        var spriteSys = _entMan.EntitySysManager.GetEntitySystem<SpriteSystem>();
-        var screen = args.ScreenHandle;
-        var offset = _cfg.GetCVar(CCVars.HudHeldItemOffset);
-        var mousePos = _inputManager.MouseScreenPosition.Position;
-
         if (_userInterface.ActiveScreen is not MappingGameScreen mapScreen)
             return;
 
         if (mapScreen.ActiveTool is not { } tool)
             return;
 
-        var f0 = spriteSys.Frame0(tool.ToolActivityIcon);
-        screen.DrawTexture(f0, mousePos - f0.Size / 2 + offset, Color.White.WithAlpha(0.75f));
+        tool.Draw(args);
     }
 }

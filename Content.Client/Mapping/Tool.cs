@@ -1,10 +1,13 @@
-﻿using Robust.Client.Graphics;
+﻿using Content.Client.Mapping.Snapping;
+using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Sandboxing;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Mapping;
@@ -55,8 +58,22 @@ public interface IDrawingLikeToolConfiguration
     /// <remarks>Degrees was used to avoid tiny error buildups over time with radians.</remarks>
     public float Rotation { get; set; }
     public float RotationAdjust { get; set; }
+    public string Prototype { get; }
 
-    public string Prototype { get; set; }
+    public SnappingModeImpl? SnappingMode { get; }
+
+    protected Dictionary<string, SnappingModeImpl?> Modes { get;}
+
+    public void SetupModes(List<string> modePrototypes)
+    {
+        var protoMan = IoCManager.Resolve<IPrototypeManager>();
+        Modes.Add("Freehand", null);
+        foreach (var modeTy in modePrototypes)
+        {
+            var proto = protoMan.Index<SnappingModePrototype>(modeTy);
+            Modes.Add(proto.Name, proto.Config.Clone());
+        }
+    }
 }
 
 /// <summary>
@@ -160,7 +177,8 @@ public abstract class DrawingLikeTool : Tool
         {
             return; // Left viewport.
         }
-        var coords = EntityCoordinates.FromMap(_map, mapCoords);
+
+        var coords = Reanchor(mapCoords);
 
         if (!_activeDrawing)
         {
@@ -190,7 +208,7 @@ public abstract class DrawingLikeTool : Tool
         }
     }
 
-    public virtual EntityCoordinates Reanchor(EntityCoordinates coords)
+    public virtual EntityCoordinates Reanchor(EntityCoordinates coords, bool snap = false)
     {
         if (false)
         {
@@ -198,27 +216,42 @@ public abstract class DrawingLikeTool : Tool
         }
 
         var mapCoords = coords.ToMap(_entity);
+        var newCoords = coords;
         if (_map.TryFindGridAt(mapCoords, out var grid))
         {
-            return EntityCoordinates.FromMap(grid.Owner, mapCoords);
+            newCoords = EntityCoordinates.FromMap(grid.Owner, mapCoords);
         }
 
-        return coords;
+        var cfg = GetConfig();
+        if (cfg.SnappingMode is { } mode)
+            return mode.Snap(newCoords);
+
+        return newCoords;
     }
 
-    public virtual EntityCoordinates Reanchor(MapCoordinates mapCoords)
+    public virtual EntityCoordinates Reanchor(MapCoordinates mapCoords, bool snap = false)
     {
         if (false)
         {
             // TODO: blah blah attach to anchor entity instead of grid.
         }
 
+        EntityCoordinates entCoords;
+
         if (_map.TryFindGridAt(mapCoords, out var grid))
         {
-            return EntityCoordinates.FromMap(grid.Owner, mapCoords);
+            entCoords = EntityCoordinates.FromMap(grid.Owner, mapCoords);
+        }
+        else
+        {
+            entCoords = EntityCoordinates.FromMap(_map, mapCoords);
         }
 
-        return EntityCoordinates.FromMap(_map, mapCoords);
+        var cfg = GetConfig();
+        if (cfg.SnappingMode is { } mode)
+            return mode.Snap(entCoords);
+
+        return entCoords;
     }
 
     public override void FrameUpdate(float delta)
@@ -337,8 +370,8 @@ public abstract class DrawingLikeTool : Tool
     {
         InitialClickPoint = Reanchor(coords);
         StartDrawing(Mode.Point);
-        if (ValidateDrawPoint(coords))
-            DoDrawPoint(coords);
+        if (ValidateDrawPoint(InitialClickPoint!.Value))
+            DoDrawPoint(InitialClickPoint!.Value);
         return true;
     }
 }

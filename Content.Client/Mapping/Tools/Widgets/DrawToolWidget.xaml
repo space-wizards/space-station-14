@@ -7,5 +7,7 @@
         <SpinBox Name="RotationEdit" Value="0"/>
         <Label Text="Rot adj"/>
         <SpinBox Name="RotationAdjustEdit" Value="90"/>
+        <Label Text="Snap mode"/>
+        <OptionButton Name="SnapOptions"/>
     </GridContainer>
 </widgets:DrawToolWidget>

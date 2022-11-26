@@ -1,0 +1,30 @@
+﻿- type: snappingMode
+  id: TileSnap
+  name: Tile
+  config:
+    !type:AlignedSnappingMode
+
+- type: snappingMode
+  id: TileSnapCorner
+  name: Tile (Corner)
+  config:
+    !type:AlignedSnappingMode
+    offset: 0, 0
+    initialOffset: 0.5, 0.5
+
+- type: snappingMode
+  id: TileSnapQuarter
+  name: Quarter-tile
+  config:
+    !type:AlignedSnappingMode
+    divisor: 2
+    offset: 0.25, 0.25
+
+- type: snappingMode
+  id: TileSnapQuarterCorner
+  name: Quarter-tile (Corner)
+  config:
+    !type:AlignedSnappingMode
+    divisor: 2
+    offset: 0, 0
+    initialOffset: 0.25, 0.25

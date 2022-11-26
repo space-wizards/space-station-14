@@ -57,7 +57,7 @@ public sealed class MappingState : GameplayStateBase, IMainViewportState
         _light.Enabled = false;
         _light.DrawHardFov = false;
         _overlayManager.AddOverlay(new MappingActivityOverlay());
-        _overlayManager.AddOverlay(new ShowHandItemOverlay());
+        _overlayManager.AddOverlay(new MappingToolPreviewOverlay());
         // FPS counter.
         // yeah this can just stay here, whatever
         // look ma COPY PASTE! --future coder
@@ -75,7 +75,7 @@ public sealed class MappingState : GameplayStateBase, IMainViewportState
     {
         base.Shutdown();
         _overlayManager.RemoveOverlay<MappingActivityOverlay>();
-        _overlayManager.RemoveOverlay<ShowHandItemOverlay>();
+        _overlayManager.RemoveOverlay<MappingToolPreviewOverlay>();
         // Clear viewport to some fallback, whatever.
         _eyeManager.MainViewport = UserInterfaceManager.MainViewport;
         _fpsCounter.Dispose();
