@@ -252,8 +252,8 @@ namespace Content.Server.Power.Pow3r
                 // available supply. IMO this is undesirable, but I can't think of an easy fix ATM.
 
                 battery.CurrentStorage -= frameTime * battery.CurrentSupply;
-                DebugTools.Assert(battery.CurrentStorage >= 0 || MathHelper.CloseTo(battery.CurrentStorage, 0, 1e-5));
                 battery.CurrentStorage = MathF.Max(0, battery.CurrentStorage);
+                DebugTools.Assert(battery.CurrentStorage >= 0 || MathHelper.CloseTo(battery.CurrentStorage, 0, 1e-5));
 
                 battery.SupplyRampTarget = battery.MaxEffectiveSupply * relativeTargetBatteryOutput - battery.CurrentReceiving * battery.Efficiency;
 
