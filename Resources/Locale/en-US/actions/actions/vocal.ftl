@@ -1,1 +1,0 @@
-action-name-scream = Scream

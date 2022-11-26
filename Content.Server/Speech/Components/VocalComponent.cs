@@ -1,4 +1,3 @@
-using Content.Shared.Actions;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Humanoid;
 using Robust.Shared.Audio;
@@ -28,5 +27,3 @@ public sealed class VocalComponent : Component
     [ViewVariables]
     public EmoteSoundsPrototype? EmoteSounds = null;
 }
-
-public sealed class ScreamActionEvent : InstantActionEvent { };
