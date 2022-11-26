@@ -113,8 +113,8 @@
   - type: StorageFill
     contents:
       - id: SheetSteel
-        amount: 2
+        amount: 1
       - id: CableApcStack
-        amount: 2
+        amount: 1
       - id: DoorElectronics
-        amount: 12
+        amount: 6
