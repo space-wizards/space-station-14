@@ -12,8 +12,8 @@ upgrade-power-draw = потребляемая мощность
 upgrade-max-charge = максимальный заряд
 upgrade-power-supply = блок питания
 
-two-way-lever-left = нажать влево
-two-way-lever-right = нажать вправо
-two-way-lever-cant = нельзя нажать рычаг в этом направлении!
+two-way-lever-left = Вы сдвигаете рычаг влево
+two-way-lever-right = Вы сдвигаете рычаг вправо
+two-way-lever-cant = Рычаг не может быть сдвинут в эту сторону!
 
 recycler-count-items = Переработано {$items} объектов.
