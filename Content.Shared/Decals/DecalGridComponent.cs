@@ -60,9 +60,9 @@ namespace Content.Shared.Decals
         public Dictionary<Vector2i, DecalChunk> Chunks;
         public bool FullState => AllChunks == null;
 
-        // required to infre deleted/missing chunks for delta states
-        public HashSet<Vector2i>? AllChunks; 
-        
+        // required to infer deleted/missing chunks for delta states
+        public HashSet<Vector2i>? AllChunks;
+
         public DecalGridState(Dictionary<Vector2i, DecalChunk> chunks)
         {
             Chunks = chunks;
@@ -94,17 +94,16 @@ namespace Content.Shared.Decals
 
             var chunks = new Dictionary<Vector2i, DecalChunk>(state.Chunks.Count);
 
-            foreach (var (chunk, data) in state.Chunks)
-            {
-                if (AllChunks!.Contains(chunk) && !Chunks.ContainsKey(chunk))
-                    state.Chunks[chunk] = new(data);
-            }
-
             foreach (var (chunk, data) in Chunks)
             {
-                state.Chunks[chunk] = new(data);
+                chunks[chunk] = new(data);
             }
 
+            foreach (var (chunk, data) in state.Chunks)
+            {
+                if (AllChunks!.Contains(chunk))
+                    chunks.TryAdd(chunk, new(data));
+            }
             return new DecalGridState(chunks);
         }
     }
