@@ -54,7 +54,7 @@ public sealed class DamageSpecifierDictionarySerializer : ITypeReader<Dictionary
             {
                 // This can happen if deserialized before prototypes are loaded.
                 // i made this a warning bc it was failing tests -paul
-                dependencies.Resolve<ILogManager>().RootSawmill.Warning($"Unknown damage group given to DamageSpecifier: {entry.Key}");
+                dependencies.Resolve<ILogManager>().RootSawmill.Error($"Unknown damage group given to DamageSpecifier: {entry.Key}");
                 continue;
             }
 
