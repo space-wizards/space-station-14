@@ -6,6 +6,7 @@
   stations:
     Pillar:
       mapNameTemplate: '{0} NSSPillar {1}'
+      emergencyShuttlePath: /Maps/Shuttles/emergency_courser.yml
       nameGenerator:
         !type:NanotrasenNameGenerator
         prefixCreator: '14'
