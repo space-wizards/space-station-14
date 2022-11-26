@@ -396,6 +396,12 @@
   id: Payload # for grenade/bomb crafting
 
 - type: Tag
+  id: MacroBomb
+
+- type: Tag
+  id: MicroBomb
+
+- type: Tag
   id: PaintableAirlock
 
 - type: Tag
@@ -594,3 +600,5 @@
 - type: Tag
   id: Write
 
+- type: Tag
+  id: SubdermalImplant
