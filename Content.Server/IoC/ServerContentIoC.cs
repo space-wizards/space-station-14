@@ -5,6 +5,7 @@ using Content.Server.Administration.Notes;
 using Content.Server.Afk;
 using Content.Server.Chat.Managers;
 using Content.Server.Connection;
+using Content.Server.Corvax.JoinQueue;
 using Content.Server.Corvax.Sponsors;
 using Content.Server.Database;
 using Content.Server.EUI;
@@ -57,6 +58,7 @@ namespace Content.Server.IoC
             IoCManager.Register<PlayTimeTrackingManager>();
             IoCManager.Register<UserDbDataManager>();
             IoCManager.Register<ServerSponsorsManager>(); // Corvax-Sponsors
+            IoCManager.Register<JoinQueueManager>(); // Corvax-Queue
         }
     }
 }

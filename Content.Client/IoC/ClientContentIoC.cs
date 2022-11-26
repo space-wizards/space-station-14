@@ -2,6 +2,7 @@
 using Content.Client.Changelog;
 using Content.Client.Chat.Managers;
 using Content.Client.Clickable;
+using Content.Client.Corvax.JoinQueue;
 using Content.Client.Corvax.Sponsors;
 using Content.Client.Options;
 using Content.Client.Eui;
@@ -44,6 +45,7 @@ namespace Content.Client.IoC
             IoCManager.Register<ExtendedDisconnectInformationManager>();
             IoCManager.Register<PlayTimeTrackingManager>();
             IoCManager.Register<ClientSponsorsManager>(); // Corvax-Sponsors
+            IoCManager.Register<JoinQueueManager>(); // Corvax-Queue
         }
     }
 }

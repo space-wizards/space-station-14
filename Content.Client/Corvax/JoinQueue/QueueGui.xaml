@@ -1,0 +1,34 @@
+﻿<Control xmlns="https://spacestation14.io"
+         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+         xmlns:parallax="clr-namespace:Content.Client.Parallax"
+         xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls">
+    <parallax:ParallaxControl />
+    <Control HorizontalAlignment="Center" VerticalAlignment="Center">
+        <PanelContainer StyleClasses="AngleRect" />
+        <BoxContainer Orientation="Vertical" MinSize="200 200">
+            <BoxContainer Orientation="Horizontal">
+                <Label Margin="8 0 0 0" Text="{Loc 'queue-title'}"
+                       StyleClasses="LabelHeading" VAlign="Center" />
+                <Button Name="QuitButton" Text="{Loc 'queue-quit'}"
+                        HorizontalAlignment="Right" HorizontalExpand="True" />
+            </BoxContainer>
+            <controls:HighDivider />
+            <BoxContainer Orientation="Vertical" VerticalExpand="True" Margin="0 20 0 0">
+                <BoxContainer Orientation="Vertical">
+                    <BoxContainer Orientation="Vertical" VerticalExpand="True">
+                        <Label Text="{Loc 'queue-position'}" Align="Center" />
+                        <Label Name="QueuePosition" StyleClasses="LabelHeading" Align="Center" />
+                    </BoxContainer>
+                    <BoxContainer Orientation="Vertical" VerticalExpand="True" Margin="0 10 0 0">
+                        <Label Text="{Loc 'queue-total'}" Align="Center" />
+                        <Label Name="QueueTotal" StyleClasses="LabelHeading" Align="Center" />
+                    </BoxContainer>
+                </BoxContainer>
+            </BoxContainer>
+            <BoxContainer Orientation="Horizontal" VerticalAlignment="Bottom" Margin="0 20 0 0">
+                <Button Name="PriorityJoinButton" Text="{Loc 'queue-priority-join'}" HorizontalExpand="True" StyleClasses="OpenRight" />
+            </BoxContainer>
+        </BoxContainer>
+    </Control>
+</Control>
