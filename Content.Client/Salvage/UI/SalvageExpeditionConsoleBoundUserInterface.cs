@@ -1,3 +1,4 @@
+using Content.Shared.Salvage;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 
@@ -16,6 +17,14 @@ public sealed class SalvageExpeditionConsoleBoundUserInterface : BoundUserInterf
     {
         base.Open();
         _window = new SalvageExpeditionWindow();
+        _window.ClaimMission += index =>
+        {
+            SendMessage(new ClaimSalvageMessage()
+            {
+                Index = index,
+            });
+        };
+        _window.OnClose += Close;
         _window?.OpenCentered();
     }
 
@@ -24,5 +33,15 @@ public sealed class SalvageExpeditionConsoleBoundUserInterface : BoundUserInterf
         base.Dispose(disposing);
         _window?.Dispose();
         _window = null;
+    }
+
+    protected override void UpdateState(BoundUserInterfaceState state)
+    {
+        base.UpdateState(state);
+
+        if (state is not SalvageExpeditionConsoleState current)
+            return;
+
+        _window?.UpdateState(current);
     }
 }

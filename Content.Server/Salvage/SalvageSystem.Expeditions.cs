@@ -1,7 +1,9 @@
 using System.Linq;
+using Content.Server.CPUJob.JobQueues.Queues;
 using Content.Server.Station.Systems;
 using Content.Shared.Salvage;
 using Robust.Server.GameObjects;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Salvage;
 
@@ -9,11 +11,31 @@ public sealed partial class SalvageSystem
 {
     private const int MissionLimit = 5;
 
+    private JobQueue _salvageQueue = new();
+
     private void InitializeExpeditions()
     {
         SubscribeLocalEvent<StationInitializedEvent>(OnSalvageExpStationInit);
         SubscribeLocalEvent<SalvageExpeditionConsoleComponent, ComponentInit>(OnSalvageExpInit);
         SubscribeLocalEvent<SalvageExpeditionConsoleComponent, EntParentChangedMessage>(OnSalvageExpParent);
+        SubscribeLocalEvent<SalvageExpeditionConsoleComponent, ClaimSalvageMessage>(OnSalvageClaimMessage);
+    }
+
+    private void OnSalvageClaimMessage(EntityUid uid, SalvageExpeditionConsoleComponent component, ClaimSalvageMessage args)
+    {
+        var station = _station.GetOwningStation(uid);
+
+        if (!TryComp<SalvageExpeditionDataComponent>(station, out var data))
+            return;
+
+        if (!data.AvailableMissions.TryGetValue(args.Index, out var mission))
+            return;
+
+        data.AvailableMissions.Remove(args.Index);
+
+        // TODO: Lockouts
+        // TODO: Mark it as claimed.
+        SpawnMission(mission);
     }
 
     private void OnSalvageExpInit(EntityUid uid, SalvageExpeditionConsoleComponent component, ComponentInit args)
@@ -45,10 +67,9 @@ public sealed partial class SalvageSystem
                 UpdateConsoles(comp);
             }
         }
-    }
 
-    [Dependency] private readonly StationSystem _station = default!;
-    [Dependency] private readonly UserInterfaceSystem _ui = default!;
+        _salvageQueue.Process();
+    }
 
     private void GenerateMissions(SalvageExpeditionDataComponent component)
     {
@@ -62,6 +83,7 @@ public sealed partial class SalvageSystem
             {
                 Index = component.NextIndex,
                 MissionType = SalvageMissionType.Structure,
+                Seed = _random.Next(),
             };
 
             component.AvailableMissions[component.NextIndex++] = mission;
@@ -103,5 +125,27 @@ public sealed partial class SalvageSystem
         }
 
         _ui.TrySetUiState(component.Owner, SalvageConsoleUiKey.Expedition, state);
+    }
+
+    private void SpawnMission(SalvageMission mission)
+    {
+        var seed = new Random(mission.Seed);
+        var mapId = _mapManager.CreateMap();
+        var grid = EnsureComp<MapGridComponent>(_mapManager.GetMapEntityId(mapId));
+
+        // No point raising an event for this IG considering it's just gonna ba procgen thing?
+        SalvageJob job;
+
+        switch (mission.Environment)
+        {
+            case SalvageEnvironment.Caves:
+                // CA
+                job = new SalvageJob(0.005);
+                break;
+            default:
+                return;
+        }
+
+        _salvageQueue.EnqueueJob(job);
     }
 }

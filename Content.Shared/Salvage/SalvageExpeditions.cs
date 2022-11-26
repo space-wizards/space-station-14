@@ -15,11 +15,21 @@ public sealed class SalvageExpeditionConsoleState : BoundUserInterfaceState
     }
 }
 
+/// <summary>
+/// Used to interact with salvage expeditions and claim them.
+/// </summary>
 [RegisterComponent, NetworkedComponent]
 public sealed class SalvageExpeditionConsoleComponent : Component
 {
 
 }
+
+[Serializable, NetSerializable]
+public sealed class ClaimSalvageMessage : BoundUserInterfaceMessage
+{
+    public ushort Index;
+}
+
 
 /// <summary>
 /// Added per station to store data on their available salvage missions.
@@ -51,13 +61,25 @@ public sealed class SalvageMission
     [ViewVariables]
     public SalvageMissionType MissionType = SalvageMissionType.Invalid;
 
+    [ViewVariables]
+    public SalvageEnvironment Environment = SalvageEnvironment.Invalid;
+
     [ViewVariables] public TimeSpan Duration;
+
+    [ViewVariables] public int Seed;
 
     // TODO: Config
 
     // TODO: Environment modifiers
 
     // TODO: Hazard pay
+}
+
+[Serializable, NetSerializable]
+public enum SalvageEnvironment : byte
+{
+    Invalid = 0,
+    Caves,
 }
 
 [Serializable, NetSerializable]
@@ -70,7 +92,6 @@ public enum SalvageMissionType : byte
     /// </summary>
     Structure,
 }
-
 
 [Serializable, NetSerializable]
 public enum SalvageConsoleUiKey : byte
