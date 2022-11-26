@@ -70,9 +70,6 @@ public sealed class VocalSystem : EntitySystem
 
         if (!component.Sounds.TryGetValue(sex.Value, out var protoId))
             return;
-        if (!_proto.TryIndex(protoId, out EmoteSoundsPrototype? proto))
-            return;
-
-        component.EmoteSounds = proto;
+        _proto.TryIndex(protoId, out component.EmoteSounds);
     }
 }

@@ -1,3 +1,5 @@
+using Content.Server.Humanoid;
+using Content.Server.Speech.EntitySystems;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Humanoid;
 using Robust.Shared.Audio;
@@ -10,8 +12,16 @@ namespace Content.Server.Speech.Components;
 ///     Component required for entities to be able to do vocal emotions.
 /// </summary>
 [RegisterComponent]
+[Access(typeof(VocalSystem))]
 public sealed class VocalComponent : Component
 {
+    /// <summary>
+    ///     Emote sounds prototype id for each sex (not gender).
+    ///     Entities without <see cref="HumanoidComponent"/> considered to be <see cref="Sex.Unsexed"/>.
+    /// </summary>
+    [DataField("sounds", customTypeSerializer: typeof(PrototypeIdValueDictionarySerializer<Sex, EmoteSoundsPrototype>))]
+    public Dictionary<Sex, string>? Sounds;
+
     [DataField("screamId", customTypeSerializer: typeof(PrototypeIdSerializer<EmotePrototype>))]
     public string ScreamId = "Scream";
 
@@ -21,9 +31,10 @@ public sealed class VocalComponent : Component
     [DataField("wilhelmProbability")]
     public float WilhelmProbability = 0.01f;
 
-    [DataField("sounds", customTypeSerializer: typeof(PrototypeIdValueDictionarySerializer<Sex, EmoteSoundsPrototype>))]
-    public Dictionary<Sex, string>? Sounds;
-
+    /// <summary>
+    ///     Currently loaded emote sounds prototype, based on entity sex.
+    ///     Null if no valid prototype for entity sex was found.
+    /// </summary>
     [ViewVariables]
     public EmoteSoundsPrototype? EmoteSounds = null;
 }
