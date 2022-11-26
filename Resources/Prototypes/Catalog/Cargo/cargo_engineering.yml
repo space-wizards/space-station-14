@@ -74,6 +74,6 @@
     sprite: Objects/Tools/Toolboxes/toolbox_yellow.rsi
     state: icon
   product: CrateAirlockKit
-  cost: 2200
+  cost: 1100
   category: Engineering
   group: market
