@@ -14,21 +14,37 @@ public sealed partial class WoundSystem
             return;
         _healingTimer -= HealingTickRate;
 
-        foreach (var wound in EntityQuery<WoundComponent>())
+        foreach (var woundable in EntityQuery<WoundableComponent>())
         {
-            HealWound(wound);
+            foreach (var wound in GetAllWoundComponents(woundable.Owner))
+            {
+                HealWound(woundable,wound);
+            }
+            HealWoundable(woundable);
         }
     }
 
-    private void HealWound(WoundComponent wound)
+    private void HealWoundable(WoundableComponent woundable)
     {
-        if (wound.Parent == EntityUid.Invalid || wound.BaseHealingRate + wound.HealingModifier == 0)
+        var healthCap = woundable.HealthCap - woundable.HealthCapDamage;
+        if (woundable.BaseHealingRate + woundable.HealingModifier == 0 || healthCap <= 0)
+            return; //if the woundable doesn't heal, do nothing
+
+        var healing = woundable.BaseHealingRate + woundable.HealingMultiplier * woundable.HealingModifier;
+        if (woundable.Health < healthCap)
+            woundable.Health = Math.Clamp(woundable.Health+healing, 0.0f, healthCap);
+
+    }
+
+    private void HealWound(WoundableComponent woundable, WoundComponent wound)
+    {
+        if (wound.BaseHealingRate + wound.HealingModifier == 0)
             return; //if the wound doesn't heal, do nothing
         //we want to decrease severity so we need to invert the healing rate to become the severity delta.
         var severityDecrease =  -(wound.BaseHealingRate + wound.HealingMultiplier * wound.HealingModifier);
-        AddWoundSeverity(wound.Parent, wound.Owner, severityDecrease,null , wound);
+        AddWoundSeverity(woundable.Owner, wound.Owner, severityDecrease,woundable , wound);
         if (wound.SeverityPercentage <= 0.0f)
-            FullyHealWound(wound.Parent, wound.Owner, null, wound);
+            FullyHealWound(woundable.Owner, wound.Owner, woundable, wound);
     }
     public bool FullyHealWound(EntityUid woundableId, EntityUid woundId, WoundableComponent? woundable = null,
         WoundComponent? wound = null)

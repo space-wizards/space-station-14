@@ -60,6 +60,25 @@ public sealed partial class WoundSystem
         return success;
     }
 
+    public IReadOnlyList<EntityUid> GetAllWoundEntities(EntityUid woundableId)
+    {
+        return _containers.GetContainer(woundableId, WoundContainerId).ContainedEntities;
+    }
+
+    public IReadOnlyList<WoundComponent> GetAllWoundComponents(EntityUid woundableId)
+    {
+        List<WoundComponent> components = new();
+        foreach (var entityUid in GetAllWoundEntities(woundableId))
+        {
+            if (TryComp<WoundComponent>(entityUid, out var woundComp))
+            {
+                components.Add((woundComp));
+            }
+        }
+        return components;
+    }
+
+
     public bool ApplyTraumaToPart(EntityUid target, string traumaType, TraumaDamage traumaDamage)
     {
         // TODO wounds before merge turn into tryget
@@ -68,7 +87,7 @@ public sealed partial class WoundSystem
 
         var modifiedDamage = ApplyTraumaModifiers(traumaType, woundable.TraumaResistance, traumaDamage.Damage);
         return TryChooseWound(traumaType, modifiedDamage, out var woundId) &&
-               AddWound(woundableId, woundId, woundable) && ApplyRawWoundDamage(woundableId, modifiedDamage, woundable);
+               AddWound(woundableId, woundId, woundable) && ApplyRawWoundDamage(woundableId, modifiedDamage.Float(), woundable);
     }
 
     private FixedPoint2 ApplyTraumaModifiers(string traumaType, TraumaModifierSet? modifiers, FixedPoint2 damage)
@@ -98,12 +117,12 @@ public sealed partial class WoundSystem
             return false;
         wound.Parent = woundableId;
         Dirty(wound);
-        woundable.HealthCapDamage += wound.SeverityPercentage * wound.HealthCapDamage;
+        woundable.HealthCapDamage += wound.SeverityPercentage * wound.HealthCapDamage.Float();
         ApplyRawIntegrityDamage(woundableId, wound.IntegrityDamage, woundable);
         return true;
     }
 
-    public bool ApplyRawWoundDamage(EntityUid woundableId, FixedPoint2 woundDamage,
+    public bool ApplyRawWoundDamage(EntityUid woundableId, float woundDamage,
         WoundableComponent? woundable = null)
     {
         if (!Resolve(woundableId, ref woundable, false))
@@ -156,7 +175,7 @@ public sealed partial class WoundSystem
         var severityDelta = newSeverity - wound.SeverityPercentage;
         if (severityDelta == 0)
             return;
-        var healthCapDamageDelta = severityDelta * wound.HealthCapDamage;
+        var healthCapDamageDelta = severityDelta * wound.HealthCapDamage.Float();
         woundable.HealthCapDamage += healthCapDamageDelta;
         wound.SeverityPercentage = newSeverity;
     }
