@@ -1,9 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: A new Wizard's Den Roleplay server will be coming soon., type: Add}
-  id: 2206
-  time: '2022-08-31T10:25:14.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Area pickup no longer picks up on cancellation., type: Fix}
@@ -2954,3 +2949,8 @@ Entries:
   - {message: Item artifacts can now be sprayed properly., type: Fix}
   id: 2705
   time: '2022-11-27T08:01:41.0000000+00:00'
+- author: Pangogie
+  changes:
+  - {message: Chemists have stopped pouring dangerous chemicals into the vents., type: Tweak}
+  id: 2706
+  time: '2022-11-27T10:27:02.0000000+00:00'
