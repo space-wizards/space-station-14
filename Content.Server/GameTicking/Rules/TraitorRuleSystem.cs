@@ -159,7 +159,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem
         return results;
     }
 
-    public bool MakeTraitor(IPlayerSession traitor)
+    public bool MakeTraitor(IPlayerSession traitor, bool spawnWithUplink = true)
     {
         var mind = traitor.Data.ContentData()?.Mind;
         if (mind == null)
@@ -177,7 +177,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem
         if (mind.CurrentJob != null)
             startingBalance = Math.Max(startingBalance - mind.CurrentJob.Prototype.AntagAdvantage, 0);
 
-        if (!_uplink.AddUplink(mind.OwnedEntity!.Value, startingBalance))
+        if (spawnWithUplink && !_uplink.AddUplink(mind.OwnedEntity!.Value, startingBalance))
             return false;
 
         var antagPrototype = _prototypeManager.Index<AntagPrototype>(TraitorPrototypeID);

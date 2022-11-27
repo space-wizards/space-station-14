@@ -60,8 +60,8 @@ namespace Content.Server.Ghost.Roles.Components
                 _entMan.QueueDeleteEntity(Owner);
 
             var traitorRuleSystem = _entMan.EntitySysManager.GetEntitySystem<TraitorRuleSystem>();
-            traitorRuleSystem.MakeTraitor(session);
-            
+            traitorRuleSystem.MakeTraitor(session, false); // reinforcements don't get uplinks
+
             return true;
         }
     }
