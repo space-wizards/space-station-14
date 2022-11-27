@@ -5,6 +5,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Medical.Wounds.Components;
 using Content.Shared.Medical.Wounds.Prototypes;
 using Robust.Shared.Containers;
+using Robust.Shared.GameStates;
 using Robust.Shared.Random;
 
 namespace Content.Shared.Medical.Wounds.Systems;
@@ -22,6 +23,22 @@ public sealed partial class WoundSystem
         {
             _cachedWounds.Add(traumaType.ID, new WoundTable(traumaType));
         }
+
+        SubscribeLocalEvent<WoundComponent, ComponentGetState>(OnWoundGetState);
+        SubscribeLocalEvent<WoundComponent, ComponentHandleState>(OnWoundHandleState);
+    }
+
+    private void OnWoundGetState(EntityUid uid, WoundComponent wound, ref ComponentGetState args)
+    {
+        args.State = new WoundComponentState(wound.Parent);
+    }
+
+    private void OnWoundHandleState(EntityUid uid, WoundComponent wound, ref ComponentHandleState args)
+    {
+        if (args.Current is not WoundComponentState state)
+            return;
+
+        wound.Parent = state.Parent;
     }
 
     public bool TryApplyTrauma(EntityUid target, TraumaInflicterComponent inflicter)
@@ -70,7 +87,7 @@ public sealed partial class WoundSystem
 
     private bool AddWound(EntityUid woundableId, string woundPrototypeId, WoundableComponent? woundable = null)
     {
-        if (!Resolve(woundableId, ref woundable, false))
+        if (!Resolve(woundableId, ref woundable, false) || _net.IsClient)
             return false;
 
         var woundId = Spawn(woundPrototypeId, woundableId.ToCoordinates());
@@ -80,6 +97,7 @@ public sealed partial class WoundSystem
         if (!wounds.Insert(woundId))
             return false;
         wound.Parent = woundableId;
+        Dirty(wound);
         woundable.HealthCapDamage += wound.SeverityPercentage * wound.HealthCapDamage;
         ApplyRawIntegrityDamage(woundableId, wound.IntegrityDamage, woundable);
         return true;
@@ -146,20 +164,21 @@ public sealed partial class WoundSystem
     public bool RemoveWound(EntityUid woundableId, EntityUid woundId,bool makeScar = false, WoundableComponent? woundable = null,
         WoundComponent? wound = null)
     {
-        if (!Resolve(woundableId, ref woundable, false))
+        if (!Resolve(woundableId, ref woundable, false) ||
+            !Resolve(woundId, ref wound, false))
             return false;
-        if (!Resolve(woundId, ref wound, false))
-            return false;
-        var woundContainer = _containers.GetContainer(woundableId, WoundContainerId);
-        if (!woundContainer.Remove(woundId))
-            return false;
+
+        _containers.RemoveEntity(woundableId, woundId);
         wound.Parent = EntityUid.Invalid;
+        Dirty(wound);
         UpdateWoundSeverity(woundable, wound, 0);
+
         if (makeScar && wound.ScarWound != null)
-        {
             AddWound(woundableId, wound.ScarWound, woundable);
-        }
-        EntityManager.DeleteEntity(woundId);
+
+        if (_net.IsServer)
+            EntityManager.DeleteEntity(woundId);
+
         return true;
     }
 

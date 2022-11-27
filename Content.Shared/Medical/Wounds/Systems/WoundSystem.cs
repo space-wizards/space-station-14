@@ -4,6 +4,7 @@ using Content.Shared.Body.Systems;
 using Content.Shared.Medical.Wounds.Components;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Containers;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -12,6 +13,7 @@ namespace Content.Shared.Medical.Wounds.Systems;
 public sealed partial class WoundSystem : EntitySystem
 {
     private const string WoundContainerId = "WoundSystemWounds";
+    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 
