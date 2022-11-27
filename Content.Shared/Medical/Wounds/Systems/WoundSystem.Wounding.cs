@@ -9,6 +9,7 @@ using Robust.Shared.Random;
 
 namespace Content.Shared.Medical.Wounds.Systems;
 
+//TODO: Convert to use entity hierarchies instead of containers to store wounds
 public sealed partial class WoundSystem
 {
     private readonly Dictionary<string, WoundTable> _cachedWounds = new();
@@ -78,6 +79,7 @@ public sealed partial class WoundSystem
         var wounds = _containers.EnsureContainer<Container>(woundableId, WoundContainerId);
         if (!wounds.Insert(woundId))
             return false;
+        wound.Parent = woundable;
         SetWoundSeverity(woundableId, woundId, wound.SeverityPercentage, woundable, wound);
         ApplyRawIntegrityDamage(woundableId, wound.IntegrityDamage, woundable);
         return true;
@@ -106,7 +108,7 @@ public sealed partial class WoundSystem
         return true;
     }
 
-    public bool IncreaseWoundSeverity(EntityUid woundableId, EntityUid woundId, float severityIncrease,
+    public bool AddWoundSeverity(EntityUid woundableId, EntityUid woundId, float severityIncrease,
         WoundableComponent? woundable = null,
         WoundComponent? wound = null)
     {
@@ -114,19 +116,7 @@ public sealed partial class WoundSystem
             return false;
         if (!Resolve(woundId, ref wound, false))
             return false;
-        ApplyWoundSeverityDelta(woundable, wound, wound.SeverityPercentage + severityIncrease);
-        return true;
-    }
-
-    public bool DecreaseWoundSeverity(EntityUid woundableId, EntityUid woundId, float severityDecrease,
-        WoundableComponent? woundable = null,
-        WoundComponent? wound = null)
-    {
-        if (!Resolve(woundableId, ref woundable, false))
-            return false;
-        if (!Resolve(woundId, ref wound, false))
-            return false;
-        ApplyWoundSeverityDelta(woundable, wound, wound.SeverityPercentage - severityDecrease);
+        UpdateWoundSeverity(woundable, wound, wound.SeverityPercentage + severityIncrease);
         return true;
     }
 
@@ -138,11 +128,11 @@ public sealed partial class WoundSystem
             return false;
         if (!Resolve(woundId, ref wound, false))
             return false;
-        ApplyWoundSeverityDelta(woundable, wound, severityAmount);
+        UpdateWoundSeverity(woundable, wound, severityAmount);
         return true;
     }
 
-    private void ApplyWoundSeverityDelta(WoundableComponent woundable, WoundComponent wound, float newSeverity)
+    private void UpdateWoundSeverity(WoundableComponent woundable, WoundComponent wound, float newSeverity)
     {
         newSeverity = Math.Clamp(newSeverity, 0.0f, 1.0f);
         var severityDelta = newSeverity - wound.SeverityPercentage;
@@ -150,7 +140,7 @@ public sealed partial class WoundSystem
         woundable.HealthCapDamage += healthCapDamageDelta;
     }
 
-    public bool RemoveWound(EntityUid woundableId, EntityUid woundId, WoundableComponent? woundable = null,
+    public bool RemoveWound(EntityUid woundableId, EntityUid woundId,bool makeScar = false, WoundableComponent? woundable = null,
         WoundComponent? wound = null)
     {
         if (!Resolve(woundableId, ref woundable, false))
@@ -160,7 +150,11 @@ public sealed partial class WoundSystem
         var woundContainer = _containers.GetContainer(woundableId, WoundContainerId);
         if (!woundContainer.Remove(woundId))
             return false;
-        ApplyWoundSeverityDelta(woundable, wound, 0);
+        UpdateWoundSeverity(woundable, wound, 0);
+        if (makeScar && wound.ScarWound != null)
+        {
+            AddWound(woundableId, wound.ScarWound, woundable);
+        }
         return true;
     }
 

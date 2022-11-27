@@ -12,12 +12,13 @@ namespace Content.Shared.Medical.Wounds.Systems;
 public sealed partial class WoundSystem : EntitySystem
 {
     private const string WoundContainerId = "WoundSystemWounds";
-
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 
     [Dependency] private readonly SharedBodySystem _body = default!;
     [Dependency] private readonly SharedContainerSystem _containers = default!;
+
+
 
     public override void Initialize()
     {
@@ -26,6 +27,11 @@ public sealed partial class WoundSystem : EntitySystem
 
         SubscribeLocalEvent<BodyComponent, AttackedEvent>(OnBodyAttacked);
         SubscribeLocalEvent<WoundableComponent, ComponentInit>(OnWoundableCreated);
+    }
+
+    public override void Update(float frameTime)
+    {
+        UpdateHealing(frameTime);
     }
 
     //TODO: Smug will this break networking? - Jez
