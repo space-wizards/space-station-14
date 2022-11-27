@@ -12,6 +12,7 @@ public sealed partial class NukeSystem
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IAdminLogManager _adminLog = default!;
+    [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
 
     public void NukeDiskInitialize()
     {
@@ -51,27 +52,42 @@ public sealed partial class NukeSystem
     {
         var diskGridUid = component.StationMap.Item2;
 
-        if (!_mapManager.TryGetGrid(diskGridUid, out var grid) || !component.Respawn || !TryComp<StationMemberComponent>(diskGridUid, out var stationMember))
+        if (!component.Respawn || !TryComp<StationMemberComponent>(diskGridUid, out var stationMember) || stationMember.Station != component.Station)
             return;
 
-        var xform = Transform(diskGridUid.Value);
-        var mapPos = xform.MapPosition;
-        var circle = new Circle(mapPos.Position, 2);
-
-        foreach (var tile in grid.GetTilesIntersecting(circle))
+        if (TryFindRandomTile(diskGridUid.Value, 100, out var coords))
         {
-            //If it's not a station or the same station, don't spawn a disk
-            if (stationMember.Station != component.Station)
-                return;
-
-            if (tile.IsSpace() || tile.IsBlockedTurf(true))
-                continue;
-
-            mapPos = tile.GridPosition().ToMap(EntityManager);
+            Spawn(component.Disk, coords.ToMap(EntityManager));
+            _adminLog.Add(LogType.Respawn, LogImpact.High, $"The nuclear disk was deleted and was respawned at {coords.ToMap(EntityManager)}");
         }
 
-        Spawn(component.Disk, mapPos);
-        _adminLog.Add(LogType.Respawn, LogImpact.High, $"The nuclear disk was deleted and was respawned at {mapPos}");
+        //If the above fails, spawn at the center of the grid on the station
+        else
+        {
+            var xform = Transform(diskGridUid.Value);
+            var mapPos = xform.MapPosition;
+            var circle = new Circle(mapPos.Position, 2);
+
+            if (!_mapManager.TryGetGrid(diskGridUid.Value, out var grid))
+                return;
+
+            foreach (var tile in grid.GetTilesIntersecting(circle))
+            {
+                if (tile.IsSpace(_tileDefinitionManager) || tile.IsBlockedTurf(true))
+                    continue;
+
+                mapPos = tile.GridPosition().ToMap(EntityManager);
+            }
+
+            Spawn(component.Disk, mapPos);
+            _adminLog.Add(LogType.Respawn, LogImpact.High, $"The nuclear disk was deleted and was respawned at {mapPos}");
+        }
+    }
+
+    private void SpawnEntity(string disk, MapCoordinates mapCoords)
+    {
+
+
     }
 
     private void OnRoundEnd()
@@ -83,5 +99,53 @@ public sealed partial class NukeSystem
         {
             disk.Respawn = false;
         }
+    }
+
+    /// <summary>
+    /// Try to find a random safe tile on the supplied grid
+    /// </summary>
+    /// <param name="targetGrid">The grid that you're looking for a safe tile on</param>
+    /// <param name="maxAttempts">The maximum amount of attempts it should try before it gives up</param>
+    /// <param name="targetCoords">If successful, the coordinates of the safe tile</param>
+    /// <returns></returns>
+    public bool TryFindRandomTile(EntityUid targetGrid, int maxAttempts, out EntityCoordinates targetCoords)
+    {
+        targetCoords = EntityCoordinates.Invalid;
+
+        if (!_mapManager.TryGetGrid(targetGrid, out var grid))
+            return false;
+
+        var xform = Transform(targetGrid);
+
+        if (!grid.TryGetTileRef(xform.Coordinates, out var tileRef))
+            return false;
+
+        var tile = tileRef.GridIndices;
+
+        var found = false;
+        var (gridPos, _, gridMatrix) = xform.GetWorldPositionRotationMatrix();
+        var gridBounds = gridMatrix.TransformBox(grid.LocalAABB);
+
+        //Obviously don't put anything ridiculous in here
+        for (var i = 0; i < maxAttempts; i++)
+        {
+            var randomX = _random.Next((int) gridBounds.Left, (int) gridBounds.Right);
+            var randomY = _random.Next((int) gridBounds.Bottom, (int) gridBounds.Top);
+
+            tile = new Vector2i(randomX - (int) gridPos.X, randomY - (int) gridPos.Y);
+            var newTileRef = tile.GetTileRef(targetGrid);
+
+            if (newTileRef.IsSpace(_tileDefinitionManager) || newTileRef.IsBlockedTurf(true))
+                continue;
+
+            found = true;
+            targetCoords = grid.GridTileToLocal(tile);
+            break;
+        }
+
+        if (!found)
+            return false;
+
+        return true;
     }
 }
