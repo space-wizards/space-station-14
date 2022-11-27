@@ -84,12 +84,6 @@ public sealed partial class NukeSystem
         }
     }
 
-    private void SpawnEntity(string disk, MapCoordinates mapCoords)
-    {
-
-
-    }
-
     private void OnRoundEnd()
     {
         var diskQuery = EntityQuery<NukeDiskComponent>();
