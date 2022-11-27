@@ -202,7 +202,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem
         //give traitors their codewords to keep in their character info menu
         traitorRole.Mind.Briefing = Loc.GetString("traitor-role-codewords", ("codewords", string.Join(", ", Codewords)));
 
-        _sharedAudioSystem.PlayGlobal(_addedSound, Filter.Empty().AddPlayer(traitor), AudioParams.Default);
+        _sharedAudioSystem.PlayGlobal(_addedSound, traitor, AudioParams.Default);
         return true;
     }
 
