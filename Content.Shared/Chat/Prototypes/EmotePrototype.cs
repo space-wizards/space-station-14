@@ -21,12 +21,19 @@ public sealed class EmotePrototype : IPrototype
     public EmoteCategory Category = EmoteCategory.General;
 
     /// <summary>
+    ///     Collection of words that will be send to chat if emote will be activated.
+    ///     One of this words will be picked randomly.
+    /// </summary>
+    [DataField("chatMessages")]
+    public List<string> ChatMessages = new();
+
+    /// <summary>
     ///     Trigger words for emote. Case independent.
     ///     When typed into players chat they will activate emote event.
     ///     All words should be unique across all emote prototypes.
     /// </summary>
-    [DataField("words")]
-    public HashSet<string> Words = new();
+    [DataField("chatTriggers")]
+    public HashSet<string> ChatTriggers = new();
 }
 
 /// <summary>

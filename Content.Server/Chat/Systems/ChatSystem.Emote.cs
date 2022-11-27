@@ -1,5 +1,6 @@
 using Content.Shared.Chat.Prototypes;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Server.Chat.Systems;
 
@@ -29,7 +30,7 @@ public partial class ChatSystem
         var emotes = _prototypeManager.EnumeratePrototypes<EmotePrototype>();
         foreach (var emote in emotes)
         {
-            foreach (var word in emote.Words)
+            foreach (var word in emote.ChatTriggers)
             {
                 var lowerWord = word.ToLower();
                 if (_wordEmoteDict.ContainsKey(lowerWord))
@@ -45,7 +46,7 @@ public partial class ChatSystem
         }
     }
 
-    public void TryEmoteWithChat(EntityUid uid, string emoteId, bool hideChat = true,
+    public void TryEmoteWithChat(EntityUid uid, string emoteId, bool hideChat = false,
         bool hideGlobalGhostChat = false, string? nameOverride = null)
     {
         if (!_prototypeManager.TryIndex<EmotePrototype>(emoteId, out var proto))
@@ -53,10 +54,17 @@ public partial class ChatSystem
         TryEmoteWithChat(uid, proto, hideChat, hideGlobalGhostChat, nameOverride);
     }
 
-    public void TryEmoteWithChat(EntityUid uid, EmotePrototype proto, bool hideChat = true,
+    public void TryEmoteWithChat(EntityUid uid, EmotePrototype proto, bool hideChat = false,
         bool hideGlobalGhostChat = false, string? nameOverride = null)
     {
-        SendEntityEmote(uid, "temp", hideChat, hideGlobalGhostChat, nameOverride, false);
+        // check if proto has valid message for chat
+        if (proto.ChatMessages.Count != 0)
+        {
+            var action = _random.Pick(proto.ChatMessages);
+            SendEntityEmote(uid, action, hideChat, hideGlobalGhostChat, nameOverride, false);
+        }
+
+        // do the rest of emote event logic here
         TryEmoteWithoutChat(uid, proto);
     }
 

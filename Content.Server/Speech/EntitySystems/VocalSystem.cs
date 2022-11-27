@@ -73,7 +73,11 @@ public sealed class VocalSystem : EntitySystem
 
     private void OnScreamAction(EntityUid uid, VocalComponent component, ScreamActionEvent args)
     {
+        if (args.Handled)
+            return;
+
         _chat.TryEmoteWithChat(uid, component.ScreamActionId);
+        args.Handled = true;
     }
 
     private bool TryPlayScreamSound(EntityUid uid, VocalComponent component)

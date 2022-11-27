@@ -2,7 +2,8 @@
 - type: emote
   id: Scream
   category: Vocal
-  words:
+  chatMessages: [screams, yells]
+  chatTriggers:
     - scream
     - screams
     - screaming
@@ -23,7 +24,8 @@
 - type: emote
   id: Laugh
   category: Vocal
-  words:
+  chatMessages: [laughs]
+  chatTriggers:
     - laugh
     - laughs
     - laughing
@@ -41,7 +43,8 @@
 - type: emote
   id: Clap
   category: Hands
-  words:
+  chatMessages: [claps]
+  chatTriggers:
     - clap
     - claps
     - clapping
@@ -50,7 +53,8 @@
 - type: emote
   id: Snap
   category: Hands
-  words:
+  chatMessages: [snaps fingers]
+  chatTriggers:
     - snap
     - snaps
     - snapping
