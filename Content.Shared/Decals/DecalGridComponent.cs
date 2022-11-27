@@ -47,7 +47,7 @@ namespace Content.Shared.Decals
             }
         }
 
-        [Serializable, NetSerializable]
+        [DataRecord, Serializable, NetSerializable]
         public record DecalGridChunkCollection(Dictionary<Vector2i, DecalChunk> ChunkCollection)
         {
             public uint NextUid;

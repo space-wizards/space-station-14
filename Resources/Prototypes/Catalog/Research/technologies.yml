@@ -51,6 +51,7 @@
     - ClothingHandsGlovesNitrile
     - ClothingMaskSterile
     - DiseaseSwab
+    - Implanter
 
 - type: technology
   name: technologies-advanced-botany
@@ -425,6 +426,7 @@
   requiredTechnologies:
     - CompactPowerTechnology
   unlockedRecipes:
+    - ExosuitFabricatorMachineCircuitboard
     - ProximitySensor
     - LeftArmBorg
     - RightArmBorg

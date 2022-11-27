@@ -1,13 +1,13 @@
 - type: gameMap
-  id: Saltern
-  mapName: 'Saltern'
-  mapPath: /Maps/saltern.yml
+  id: Moose
+  mapName: 'Moose'
+  mapPath: /Maps/moose.yml
   minPlayers: 0
   maxPlayers: 35
   fallback: true
   stations:
-    Saltern:
-      mapNameTemplate: '{0} Saltern {1}'
+    Moose:
+      mapNameTemplate: '{0} Moose {1}'
       nameGenerator:
         !type:NanotrasenNameGenerator
         prefixCreator: '14'
@@ -25,7 +25,7 @@
         Captain: [ 1, 1 ]
         HeadOfPersonnel: [ 1, 1 ]
         ChiefEngineer: [ 1, 1 ]
-        StationEngineer: [ 3, 3 ]
+        StationEngineer: [ 2, 3 ]
         AtmosphericTechnician: [ 2, 2 ]
         ChiefMedicalOfficer: [ 1, 1 ]
         MedicalDoctor: [ 2, 2 ]
@@ -33,7 +33,7 @@
         ResearchDirector: [ 1, 1 ]
         Scientist: [ 3, 3 ]
         HeadOfSecurity: [ 1, 1 ]
-        SecurityOfficer: [ 3, 3 ]
+        SecurityOfficer: [ 2, 3 ]
         Chaplain: [ 1, 1 ]
         Librarian: [ 1, 1 ]
         Musician: [ 1, 1 ]
