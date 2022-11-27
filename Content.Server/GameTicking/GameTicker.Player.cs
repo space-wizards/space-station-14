@@ -19,6 +19,7 @@ namespace Content.Server.GameTicking
         {
             _playerManager.PlayerStatusChanged += PlayerStatusChanged;
         }
+
         private void PlayerStatusChanged(object? sender, SessionStatusEventArgs args)
         {
             var session = args.Session;
@@ -35,7 +36,7 @@ namespace Content.Server.GameTicking
 
                     // Make the player actually join the game.
                     // timer time must be > tick length
-                    // Timer.Spawn(0, args.Session.JoinGame); // Corvax-Queue: Moved to `JoinQueueManager`
+                    Timer.Spawn(0, args.Session.JoinGame);
 
                     _chatManager.SendAdminAnnouncement(Loc.GetString("player-join-message", ("name", args.Session.Name)));
 
@@ -87,8 +88,7 @@ namespace Content.Server.GameTicking
                 {
                     _chatManager.SendAdminAnnouncement(Loc.GetString("player-leave-message", ("name", args.Session.Name)));
 
-                    if (_playerGameStatuses.ContainsKey(args.Session.UserId)) // Corvax-Queue: Delete data only if player was in game
-                        _userDb.ClientDisconnected(session);
+                    _userDb.ClientDisconnected(session);
                     break;
                 }
             }
