@@ -144,7 +144,6 @@ namespace Content.Shared.Damage
         {
             if (!uid.HasValue || !Resolve(uid.Value, ref damageable, false))
             {
-                // TODO BODY SYSTEM pass damage onto body system
                 return null;
             }
 

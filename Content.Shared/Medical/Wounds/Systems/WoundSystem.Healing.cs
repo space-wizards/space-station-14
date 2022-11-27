@@ -1,4 +1,5 @@
-﻿using Content.Shared.Medical.Wounds.Components;
+﻿using Content.Shared.FixedPoint;
+using Content.Shared.Medical.Wounds.Components;
 
 namespace Content.Shared.Medical.Wounds.Systems;
 
@@ -16,10 +17,12 @@ public sealed partial class WoundSystem
 
         foreach (var woundable in EntityQuery<WoundableComponent>())
         {
+            // TODO wounds before merge iterate wounds separately
             foreach (var wound in GetAllWoundComponents(woundable.Owner))
             {
                 HealWound(woundable,wound);
             }
+
             HealWoundable(woundable);
         }
     }
@@ -32,8 +35,7 @@ public sealed partial class WoundSystem
 
         var healing = (woundable.BaseHealingRate + woundable.HealingModifier) * woundable.HealingMultiplier;
         if (woundable.Health < healthCap)
-            woundable.Health = Math.Clamp(woundable.Health+healing, 0.0f, healthCap);
-
+            woundable.Health = FixedPoint2.Clamp(woundable.Health+healing, FixedPoint2.Zero, healthCap);
     }
 
     private void HealWound(WoundableComponent woundable, WoundComponent wound)
@@ -43,7 +45,7 @@ public sealed partial class WoundSystem
         //we want to decrease severity so we need to invert the healing rate to become the severity delta.
         var severityDecrease =  -((wound.BaseHealingRate + wound.HealingModifier) * wound.HealingMultiplier);
         AddWoundSeverity(woundable.Owner, wound.Owner, severityDecrease,woundable , wound);
-        if (wound.SeverityPercentage <= 0.0f)
+        if (wound.Severity <= 0.0f)
             FullyHealWound(woundable.Owner, wound.Owner, woundable, wound);
     }
     public bool FullyHealWound(EntityUid woundableId, EntityUid woundId, WoundableComponent? woundable = null,
@@ -57,7 +59,7 @@ public sealed partial class WoundSystem
         return RemoveWound(woundableId, woundId, true, woundable, wound);
     }
 
-    public bool AddHealingModifier (EntityUid woundId, float additionalHealing, WoundComponent? wound = null)
+    public bool AddHealingModifier (EntityUid woundId, FixedPoint2 additionalHealing, WoundComponent? wound = null)
     {
         if (!Resolve(woundId, ref wound, false))
             return false;
@@ -65,7 +67,7 @@ public sealed partial class WoundSystem
         return true;
     }
 
-    public bool SetHealingModifier (EntityUid woundId, float newHealingModifier, WoundComponent? wound = null)
+    public bool SetHealingModifier (EntityUid woundId, FixedPoint2 newHealingModifier, WoundComponent? wound = null)
     {
         if (!Resolve(woundId, ref wound, false))
             return false;
@@ -73,7 +75,7 @@ public sealed partial class WoundSystem
         return true;
     }
 
-    public bool AddHealingMultipler (EntityUid woundId, float multiplier, WoundComponent? wound = null)
+    public bool AddHealingMultipler (EntityUid woundId, FixedPoint2 multiplier, WoundComponent? wound = null)
     {
         if (!Resolve(woundId, ref wound, false))
             return false;
@@ -81,7 +83,7 @@ public sealed partial class WoundSystem
         return true;
     }
 
-    public bool SetHealingMultiplier (EntityUid woundId, float multiplier, WoundComponent? wound = null)
+    public bool SetHealingMultiplier (EntityUid woundId, FixedPoint2 multiplier, WoundComponent? wound = null)
     {
         if (!Resolve(woundId, ref wound, false))
             return false;

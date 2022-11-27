@@ -17,19 +17,18 @@ public sealed class WoundComponent : Component
     [DataField("scarWound", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string? ScarWound;
 
-    //TODO: implement fixedpoint4
     [DataField("healthDamage")] public FixedPoint2 HealthCapDamage;
 
     [DataField("integrityDamage")] public FixedPoint2 IntegrityDamage;
 
-    [DataField("severityPercentage")] public float SeverityPercentage = 1.0f;
+    [DataField("severityPercentage")] public FixedPoint2 Severity = 100;
 
     //How many severity points per woundTick does this part heal passively
-    [DataField("baseHealingRate")] public float BaseHealingRate = 0.05f;
+    [DataField("baseHealingRate")] public FixedPoint2 BaseHealingRate = 0.05f;
 
     //How many severity points per woundTick does this part heal ontop of the base rate
-    [DataField("healingModifier")] public float HealingModifier;
+    [DataField("healingModifier")] public FixedPoint2 HealingModifier;
 
     //How much to multiply the Healing modifier
-    [DataField("healingMultiplier")] public float HealingMultiplier = 1.0f;
+    [DataField("healingMultiplier")] public FixedPoint2 HealingMultiplier = 1.0f;
 }

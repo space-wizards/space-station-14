@@ -21,21 +21,21 @@ public sealed class WoundableComponent : Component
 
     //TODO: implement FixedPoint4
     //How much health does this woundable have, when this reaches 0, it starts taking structural damage
-    [DataField("startingHealth")] public float Health = -1;
+    [DataField("startingHealth")] public FixedPoint2 Health = -1;
 
     //The maximum health this part can have
-    [DataField("health", required: true)] public float HealthCap;
+    [DataField("health", required: true)] public FixedPoint2 HealthCap;
     //The amount maximum health is decreased by, this is affected by wounds
-    [DataField("healthCapDamage")] public float HealthCapDamage;
+    [DataField("healthCapDamage")] public FixedPoint2 HealthCapDamage;
 
     //How much health per woundTick does this part heal passively
-    [DataField("baseHealingRate")] public float BaseHealingRate = 0.1f;
+    [DataField("baseHealingRate")] public FixedPoint2 BaseHealingRate = 0.1f;
 
     //How much health per woundTick does this part heal ontop of the base rate
-    [DataField("healingModifier")] public float HealingModifier;
+    [DataField("healingModifier")] public FixedPoint2 HealingModifier;
 
     //How much multiply the Healing modifier
-    [DataField("healingMultiplier")] public float HealingMultiplier = 1.0f;
+    [DataField("healingMultiplier")] public FixedPoint2 HealingMultiplier = 1.0f;
 
     //How well is this woundable holding up, when this reaches 0 the entity is destroyed/gibbed!
     [DataField("integrity", required: true)]
