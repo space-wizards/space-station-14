@@ -87,7 +87,7 @@ public sealed partial class WoundSystem
 
         var modifiedDamage = ApplyTraumaModifiers(traumaType, woundable.TraumaResistance, traumaDamage.Damage);
         return TryChooseWound(traumaType, modifiedDamage, out var woundId) &&
-               AddWound(woundableId, woundId, woundable) && ApplyRawWoundDamage(woundableId, modifiedDamage.Float(), woundable);
+               AddWound(woundableId, woundId, woundable) && ApplyRawWoundDamage(woundableId, modifiedDamage, woundable);
     }
 
     private FixedPoint2 ApplyTraumaModifiers(string traumaType, TraumaModifierSet? modifiers, FixedPoint2 damage)
@@ -117,13 +117,12 @@ public sealed partial class WoundSystem
             return false;
         wound.Parent = woundableId;
         Dirty(wound);
-        woundable.HealthCapDamage += wound.SeverityPercentage * wound.HealthCapDamage.Float();
+        woundable.HealthCapDamage += wound.Severity * wound.HealthCapDamage;
         ApplyRawIntegrityDamage(woundableId, wound.IntegrityDamage, woundable);
         return true;
     }
 
-    public bool ApplyRawWoundDamage(EntityUid woundableId, float woundDamage,
-        WoundableComponent? woundable = null)
+    public bool ApplyRawWoundDamage(EntityUid woundableId, FixedPoint2 woundDamage, WoundableComponent? woundable = null)
     {
         if (!Resolve(woundableId, ref woundable, false))
             return false;
@@ -145,7 +144,7 @@ public sealed partial class WoundSystem
         return true;
     }
 
-    public bool AddWoundSeverity(EntityUid woundableId, EntityUid woundId, float severityIncrease,
+    public bool AddWoundSeverity(EntityUid woundableId, EntityUid woundId, FixedPoint2 severityIncrease,
         WoundableComponent? woundable = null,
         WoundComponent? wound = null)
     {
@@ -153,11 +152,11 @@ public sealed partial class WoundSystem
             return false;
         if (!Resolve(woundId, ref wound, false))
             return false;
-        UpdateWoundSeverity(woundable, wound, wound.SeverityPercentage + severityIncrease);
+        UpdateWoundSeverity(woundable, wound, wound.Severity + severityIncrease);
         return true;
     }
 
-    public bool SetWoundSeverity(EntityUid woundableId, EntityUid woundId, float severityAmount,
+    public bool SetWoundSeverity(EntityUid woundableId, EntityUid woundId, FixedPoint2 severityAmount,
         WoundableComponent? woundable = null,
         WoundComponent? wound = null)
     {
@@ -169,15 +168,15 @@ public sealed partial class WoundSystem
         return true;
     }
 
-    private void UpdateWoundSeverity(WoundableComponent woundable, WoundComponent wound, float newSeverity)
+    private void UpdateWoundSeverity(WoundableComponent woundable, WoundComponent wound, FixedPoint2 newSeverity)
     {
-        newSeverity = Math.Clamp(newSeverity, 0.0f, 1.0f);
-        var severityDelta = newSeverity - wound.SeverityPercentage;
+        newSeverity = FixedPoint2.Clamp(newSeverity, FixedPoint2.Zero, 100);
+        var severityDelta = newSeverity - wound.Severity;
         if (severityDelta == 0)
             return;
-        var healthCapDamageDelta = severityDelta * wound.HealthCapDamage.Float();
+        var healthCapDamageDelta = severityDelta * wound.HealthCapDamage;
         woundable.HealthCapDamage += healthCapDamageDelta;
-        wound.SeverityPercentage = newSeverity;
+        wound.Severity = newSeverity;
     }
 
     public bool RemoveWound(EntityUid woundableId, EntityUid woundId,bool makeScar = false, WoundableComponent? woundable = null,
@@ -190,7 +189,7 @@ public sealed partial class WoundSystem
         _containers.RemoveEntity(woundableId, woundId);
         wound.Parent = EntityUid.Invalid;
         Dirty(wound);
-        UpdateWoundSeverity(woundable, wound, 0);
+        UpdateWoundSeverity(woundable, wound, FixedPoint2.Zero);
 
         if (makeScar && wound.ScarWound != null)
             AddWound(woundableId, wound.ScarWound, woundable);
