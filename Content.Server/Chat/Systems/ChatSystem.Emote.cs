@@ -37,7 +37,7 @@ public partial class ChatSystem
                 {
                     var existingId = _wordEmoteDict[lowerWord].ID;
                     var errMsg = $"Duplicate of emote word {lowerWord} in emotes {emote.ID} and {existingId}";
-                    Sawmill.Error(errMsg);
+                    Logger.Error(errMsg);
                     continue;
                 }
 
