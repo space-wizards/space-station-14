@@ -31,7 +31,7 @@ public sealed partial class WoundSystem
         if (woundable.BaseHealingRate + woundable.HealingModifier == 0 || healthCap <= 0)
             return; //if the woundable doesn't heal, do nothing
 
-        var healing = woundable.BaseHealingRate + woundable.HealingMultiplier * woundable.HealingModifier;
+        var healing = (woundable.BaseHealingRate + woundable.HealingModifier) * woundable.HealingMultiplier;
         if (woundable.Health < healthCap)
             woundable.Health = FixedPoint2.Clamp(woundable.Health+healing, FixedPoint2.Zero, healthCap);
     }
@@ -41,7 +41,7 @@ public sealed partial class WoundSystem
         if (wound.BaseHealingRate + wound.HealingModifier == 0)
             return; //if the wound doesn't heal, do nothing
         //we want to decrease severity so we need to invert the healing rate to become the severity delta.
-        var severityDecrease =  -(wound.BaseHealingRate + wound.HealingMultiplier * wound.HealingModifier);
+        var severityDecrease =  -((wound.BaseHealingRate + wound.HealingModifier) * wound.HealingMultiplier);
         AddWoundSeverity(woundable.Owner, wound.Owner, severityDecrease,woundable , wound);
         if (wound.Severity <= 0.0f)
             FullyHealWound(woundable.Owner, wound.Owner, woundable, wound);

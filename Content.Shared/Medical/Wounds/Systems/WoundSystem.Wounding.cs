@@ -87,7 +87,7 @@ public sealed partial class WoundSystem
 
         var modifiedDamage = ApplyTraumaModifiers(traumaType, woundable.TraumaResistance, traumaDamage.Damage);
         return TryChooseWound(traumaType, modifiedDamage, out var woundId) &&
-               AddWound(woundableId, woundId, woundable) && ApplyRawWoundDamage(woundableId, modifiedDamage, woundable);
+               ApplyRawWoundDamage(woundableId, modifiedDamage, woundable) && AddWound(woundableId, woundId, woundable);
     }
 
     private FixedPoint2 ApplyTraumaModifiers(string traumaType, TraumaModifierSet? modifiers, FixedPoint2 damage)
