@@ -46,28 +46,47 @@ public partial class ChatSystem
         }
     }
 
-    public void TryEmoteWithChat(EntityUid uid, string emoteId, bool hideChat = false,
+    /// <summary>
+    ///     Makes selected entity to emote using <see cref="EmotePrototype"/> and sends message to chat.
+    /// </summary>
+    /// <param name="source">The entity that is speaking</param>
+    /// <param name="emoteId">The id of emote prototype. Should have valid <see cref="EmotePrototype.ChatMessages"/></param>
+    /// <param name="hideChat">Whether or not this message should appear in the chat window</param>
+    /// <param name="hideGlobalGhostChat">Whether or not this message should appear in the chat window for out-of-range ghosts (which otherwise ignore range restrictions)</param>
+    /// <param name="nameOverride">The name to use for the speaking entity. Usually this should just be modified via <see cref="TransformSpeakerNameEvent"/>. If this is set, the event will not get raised.</param>
+    public void TryEmoteWithChat(EntityUid source, string emoteId, bool hideChat = false,
         bool hideGlobalGhostChat = false, string? nameOverride = null)
     {
         if (!_prototypeManager.TryIndex<EmotePrototype>(emoteId, out var proto))
             return;
-        TryEmoteWithChat(uid, proto, hideChat, hideGlobalGhostChat, nameOverride);
+        TryEmoteWithChat(source, proto, hideChat, hideGlobalGhostChat, nameOverride);
     }
 
-    public void TryEmoteWithChat(EntityUid uid, EmotePrototype proto, bool hideChat = false,
+    /// <summary>
+    ///     Makes selected entity to emote using <see cref="EmotePrototype"/> and sends message to chat.
+    /// </summary>
+    /// <param name="source">The entity that is speaking</param>
+    /// <param name="emote">The emote prototype. Should have valid <see cref="EmotePrototype.ChatMessages"/></param>
+    /// <param name="hideChat">Whether or not this message should appear in the chat window</param>
+    /// <param name="hideGlobalGhostChat">Whether or not this message should appear in the chat window for out-of-range ghosts (which otherwise ignore range restrictions)</param>
+    /// <param name="nameOverride">The name to use for the speaking entity. Usually this should just be modified via <see cref="TransformSpeakerNameEvent"/>. If this is set, the event will not get raised.</param>
+    public void TryEmoteWithChat(EntityUid source, EmotePrototype emote, bool hideChat = false,
         bool hideGlobalGhostChat = false, string? nameOverride = null)
     {
         // check if proto has valid message for chat
-        if (proto.ChatMessages.Count != 0)
+        if (emote.ChatMessages.Count != 0)
         {
-            var action = _random.Pick(proto.ChatMessages);
-            SendEntityEmote(uid, action, hideChat, hideGlobalGhostChat, nameOverride, false);
+            var action = _random.Pick(emote.ChatMessages);
+            SendEntityEmote(source, action, hideChat, hideGlobalGhostChat, nameOverride, false);
         }
 
         // do the rest of emote event logic here
-        TryEmoteWithoutChat(uid, proto);
+        TryEmoteWithoutChat(source, emote);
     }
 
+    /// <summary>
+    ///     Makes selected entity to emote using <see cref="EmotePrototype"/> without sending any messages to chat.
+    /// </summary>
     public void TryEmoteWithoutChat(EntityUid uid, string emoteId)
     {
         if (!_prototypeManager.TryIndex<EmotePrototype>(emoteId, out var proto))
@@ -75,6 +94,9 @@ public partial class ChatSystem
         TryEmoteWithoutChat(uid, proto);
     }
 
+    /// <summary>
+    ///     Makes selected entity to emote using <see cref="EmotePrototype"/> without sending any messages to chat.
+    /// </summary>
     public void TryEmoteWithoutChat(EntityUid uid, EmotePrototype proto)
     {
         if (!_actionBlocker.CanEmote(uid))
@@ -83,26 +105,19 @@ public partial class ChatSystem
         InvokeEmoteEvent(uid, proto);
     }
 
-    private void TryEmoteChatInput(EntityUid uid, string textInput)
-    {
-        var actionLower = textInput.ToLower();
-        if (!_wordEmoteDict.TryGetValue(actionLower, out var emote))
-            return;
-
-        InvokeEmoteEvent(uid, emote);
-    }
-
-    private void InvokeEmoteEvent(EntityUid uid, EmotePrototype proto)
-    {
-        var ev = new EmoteEvent(proto);
-        RaiseLocalEvent(uid, ref ev);
-    }
-
+    /// <summary>
+    ///     Tries to find and play relevant emote sound in emote sounds collection.
+    /// </summary>
+    /// <returns>True if emote sound was played.</returns>
     public bool TryPlayEmoteSound(EntityUid uid, EmoteSoundsPrototype? proto, EmotePrototype emote)
     {
         return TryPlayEmoteSound(uid, proto, emote.ID);
     }
 
+    /// <summary>
+    ///     Tries to find and play relevant emote sound in emote sounds collection.
+    /// </summary>
+    /// <returns>True if emote sound was played.</returns>
     public bool TryPlayEmoteSound(EntityUid uid, EmoteSoundsPrototype? proto, string emoteId)
     {
         if (proto == null)
@@ -122,8 +137,27 @@ public partial class ChatSystem
         _audio.PlayPvs(sound, uid, param);
         return true;
     }
+
+    private void TryEmoteChatInput(EntityUid uid, string textInput)
+    {
+        var actionLower = textInput.ToLower();
+        if (!_wordEmoteDict.TryGetValue(actionLower, out var emote))
+            return;
+
+        InvokeEmoteEvent(uid, emote);
+    }
+
+    private void InvokeEmoteEvent(EntityUid uid, EmotePrototype proto)
+    {
+        var ev = new EmoteEvent(proto);
+        RaiseLocalEvent(uid, ref ev);
+    }
 }
 
+/// <summary>
+///     Raised by chat system when entity made some emote.
+///     Use it to play sound, change sprite or something else.
+/// </summary>
 [ByRefEvent]
 public struct EmoteEvent
 {
