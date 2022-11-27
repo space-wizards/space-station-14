@@ -12,5 +12,11 @@ public sealed class WoundComponent : Component
 
     [DataField("integrityDamage")] public FixedPoint2 IntegrityDamage;
 
-    [DataField("severityPercentage")] public FixedPoint2 SeverityPercentage = 1.0;
+    [DataField("severityPercentage")] public float SeverityPercentage = 1.0f;
+
+    //How many severity points per woundTick does this part heal passively
+    [DataField("baseHealingRate")] public float BaseHealingRate = 0.05f;
+
+    //How many severity points per woundTick does this part heal ontop of the base rate
+    [DataField("healingModifier")] public float HealingModifier;
 }

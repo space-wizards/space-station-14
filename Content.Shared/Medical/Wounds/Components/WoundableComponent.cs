@@ -26,9 +26,7 @@ public sealed class WoundableComponent : Component
     [DataField("healthCap", required: true)]
     public FixedPoint2 HealthCap;
 
-    // public FixedPoint2 HealthCap => _healthCap - HealthCapDamage < 0 ? 0 : _healthCap - HealthCapDamage;
-
-        //The amount maximum health is decreased by, this is affected by wounds
+    //The amount maximum health is decreased by, this is affected by wounds
     [DataField("healthCapDamage")] public FixedPoint2 HealthCapDamage;
 
     //How well is this woundable holding up, when this reaches 0 the entity is destroyed/gibbed!
