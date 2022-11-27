@@ -40,7 +40,7 @@ namespace Content.Client.Audio
         private float _ambienceVolume = 0.0f;
 
         // Note that except for some rare exceptions, every ambient sound source appears to be static. So:
-        // TODO AMBIENT SOUND Use only static queires
+        // TODO AMBIENT SOUND Use only static queries
         // This would make all the lookups significantly faster. There are some rare exceptions, like flies, vehicles,
         // and the singularity. But those can just play sounds via some other system. Alternatively: give ambient sound
         // its own client-side tree to avoid this issue altogether.
@@ -204,8 +204,8 @@ namespace Content.Client.Audio
 
                 var list = sourceDict.GetOrNew(key);
 
-                // wtf is this sorting even for? If its for prioritizing higher playing more audible sounds before others, shouldn't further away be counteracting higher volume?
-                list.Add(range * (ambientComp.Volume + 32), ambientComp);
+                // Prioritize far away & loud sounds.
+                list.Add(-range * (ambientComp.Volume + 32), ambientComp);
             }
 
             return sourceDict;
