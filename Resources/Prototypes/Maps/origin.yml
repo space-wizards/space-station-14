@@ -6,6 +6,7 @@
   stations:
     Origin:
       mapNameTemplate: '{0} Origin Station {1}'
+      emergencyShuttlePath: /Maps/Shuttles/emergency_courser.yml
       nameGenerator:
         !type:NanotrasenNameGenerator
         prefixCreator: '14'
