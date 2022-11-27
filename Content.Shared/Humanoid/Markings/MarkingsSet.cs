@@ -166,6 +166,36 @@ public sealed class MarkingSet
         }
     }
 
+    // Corvax-Sponsors-Start
+    /// <summary>
+    ///     Filters sponsor markings unavailable for not sponsors check that from their prototype and allowed param
+    /// </summary>
+    /// <param name="sponsorMarkings">Sponsor markings that allowed to have.</param>
+    /// <param name="markingManager">Prototype manager.</param>
+    public void FilterSponsor(string[] sponsorMarkings, MarkingManager? markingManager = null)
+    {
+        IoCManager.Resolve(ref markingManager);
+
+        var toRemove = new List<(MarkingCategories category, string id)>();
+        foreach (var (category, list) in _markings)
+        {
+            foreach (var marking in list)
+            {
+                var restrictedToHave = sponsorMarkings.Contains(marking.MarkingId);
+                if (restrictedToHave)
+                {
+                    toRemove.Add((category, marking.MarkingId));
+                }
+            }
+        }
+
+        foreach (var marking in toRemove)
+        {
+            Remove(marking.category, marking.id);
+        }
+    }
+    // Corvax-Sponsors-End
+
     /// <summary>
     ///     Ensures that all markings in this set are valid.
     /// </summary>
