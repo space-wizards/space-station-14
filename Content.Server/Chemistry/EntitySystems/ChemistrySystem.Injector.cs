@@ -187,7 +187,7 @@ public sealed partial class ChemistrySystem
 
     private void OnInjectorStartup(EntityUid uid, InjectorComponent component, ComponentStartup args)
     {
-        /// ???? why ?????
+        // Necessary for the Client-side InjectorStatusControl to get the appropriate Volume values.
         Dirty(component);
     }
 
