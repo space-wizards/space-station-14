@@ -19,6 +19,7 @@ namespace Content.Server.Tabletop
 
         public override void Initialize()
         {
+            base.Initialize();
             SubscribeNetworkEvent<TabletopStopPlayingEvent>(OnStopPlaying);
             SubscribeLocalEvent<TabletopGameComponent, ActivateInWorldEvent>(OnTabletopActivate);
             SubscribeLocalEvent<TabletopGameComponent, ComponentShutdown>(OnGameShutdown);
@@ -27,7 +28,21 @@ namespace Content.Server.Tabletop
             SubscribeLocalEvent<TabletopGameComponent, GetVerbsEvent<ActivationVerb>>(AddPlayGameVerb);
 
             InitializeMap();
-            InitializeDraggable();
+        }
+
+        protected override void OnTabletopMove(TabletopMoveEvent msg, EntitySessionEventArgs args)
+        {
+            if (args.SenderSession is not IPlayerSession playerSession)
+                return;
+
+            if (!TryComp(msg.TableUid, out TabletopGameComponent? tabletop) || tabletop.Session is not { } session)
+                return;
+
+            // Check if player is actually playing at this table
+            if (!session.Players.ContainsKey(playerSession))
+                return;
+
+            base.OnTabletopMove(msg, args);
         }
 
         /// <summary>

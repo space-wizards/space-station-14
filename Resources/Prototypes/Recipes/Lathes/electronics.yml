@@ -148,6 +148,15 @@
      Glass: 900
 
 - type: latheRecipe
+  id: ExosuitFabricatorMachineCircuitboard
+  icon: Objects/Misc/module.rsi/science.png
+  result: ExosuitFabricatorMachineCircuitboard
+  completetime: 5
+  materials:
+     Steel: 100
+     Glass: 900
+
+- type: latheRecipe
   id: UniformPrinterMachineCircuitboard
   icon: Objects/Misc/module.rsi/id_mod.png
   result: UniformPrinterMachineCircuitboard
