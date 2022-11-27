@@ -9,6 +9,6 @@ namespace Content.Client.CartridgeLoader;
 [RegisterComponent]
 public sealed class CartridgeUiComponent : Component
 {
-    [DataField("ui", true, customTypeSerializer: typeof(CartridgeUISerializer))]
+    [DataField("ui", true)]
     public CartridgeUI? Ui = default;
 }
