@@ -443,6 +443,8 @@
   - RoboticsTechnology
   - PowerCellBasic
   unlockedRecipes:
+  - RipleyCentralElectronics
+  - RipleyPeripheralsElectronics
   - RipleyHarness
   - RipleyLArm
   - RipleyRArm

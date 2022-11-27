@@ -280,6 +280,27 @@
     Steel: 100
     Glass: 900
     Gold: 100
+
+- type: latheRecipe
+  id: RipleyCentralElectronics
+  icon: Objects/Misc/module.rsi/mainboard.png
+  result: RipleyCentralElectronics
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+    Gold: 100
+
+- type: latheRecipe
+  id: RipleyPeripheralsElectronics
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: RipleyPeripheralsElectronics
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+    Gold: 100
+
 # Power
 - type: latheRecipe
   id: APCElectronics
