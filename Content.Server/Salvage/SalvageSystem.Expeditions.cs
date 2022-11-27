@@ -11,7 +11,7 @@ public sealed partial class SalvageSystem
 {
     private const int MissionLimit = 5;
 
-    private JobQueue _salvageQueue = new();
+    private readonly JobQueue _salvageQueue = new();
 
     private void InitializeExpeditions()
     {
@@ -25,17 +25,17 @@ public sealed partial class SalvageSystem
     {
         var station = _station.GetOwningStation(uid);
 
-        if (!TryComp<SalvageExpeditionDataComponent>(station, out var data))
+        if (!TryComp<SalvageExpeditionDataComponent>(station, out var data) || data.Claimed)
             return;
 
-        if (!data.AvailableMissions.TryGetValue(args.Index, out var mission))
+        if (!data.Missions.TryGetValue(args.Index, out var mission))
             return;
 
-        data.AvailableMissions.Remove(args.Index);
-
-        // TODO: Lockouts
         // TODO: Mark it as claimed.
         SpawnMission(mission);
+
+        data.ActiveMission = args.Index;
+        UpdateConsoles(data);
     }
 
     private void OnSalvageExpInit(EntityUid uid, SalvageExpeditionConsoleComponent component, ComponentInit args)
@@ -73,9 +73,9 @@ public sealed partial class SalvageSystem
 
     private void GenerateMissions(SalvageExpeditionDataComponent component)
     {
-        component.AvailableMissions.Clear();
+        component.Missions.Clear();
+        int timeBlock = 15;
 
-        // TODO: Random time
         // TODO: sealed record
         for (var i = 0; i < MissionLimit; i++)
         {
@@ -84,9 +84,10 @@ public sealed partial class SalvageSystem
                 Index = component.NextIndex,
                 MissionType = SalvageMissionType.Structure,
                 Seed = _random.Next(),
+                Duration = TimeSpan.FromSeconds(_random.Next(9 * 60 / timeBlock, 12 * 60 / timeBlock) * timeBlock),
             };
 
-            component.AvailableMissions[component.NextIndex++] = mission;
+            component.Missions[component.NextIndex++] = mission;
         }
     }
 
@@ -107,7 +108,8 @@ public sealed partial class SalvageSystem
 
     private SalvageExpeditionConsoleState GetState(SalvageExpeditionDataComponent component)
     {
-        return new SalvageExpeditionConsoleState(component.AvailableMissions.Values.ToList());
+        var missions = component.Missions.Values.ToList();
+        return new SalvageExpeditionConsoleState(component.Claimed, component.ActiveMission, missions);
     }
 
     private void UpdateConsole(SalvageExpeditionConsoleComponent component)
@@ -121,7 +123,7 @@ public sealed partial class SalvageSystem
         }
         else
         {
-            state = new SalvageExpeditionConsoleState(new List<SalvageMission>());
+            state = new SalvageExpeditionConsoleState(false, 0, new List<SalvageMission>());
         }
 
         _ui.TrySetUiState(component.Owner, SalvageConsoleUiKey.Expedition, state);

@@ -21,7 +21,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Salvage
 {
-    public sealed partial class SalvageSystem : EntitySystem
+    public sealed partial class SalvageSystem : SharedSalvageSystem
     {
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;

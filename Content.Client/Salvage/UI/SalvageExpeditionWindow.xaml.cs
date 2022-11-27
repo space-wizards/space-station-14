@@ -34,6 +34,9 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
             {
                 Text = "Claim",
                 HorizontalAlignment = HAlignment.Right,
+                Pressed = state.ActiveMission == mission.Index,
+                ToggleMode = true,
+                Disabled = state.Claimed,
             };
 
             claimButton.OnPressed += args =>
@@ -46,6 +49,15 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
                 Orientation = BoxContainer.LayoutOrientation.Vertical
             };
 
+            if (state.ActiveMission == mission.Index)
+            {
+                lBox.AddChild(new Label()
+                {
+                    Text = "Active",
+                    FontColorOverride = StyleNano.ConcerningOrangeFore,
+                });
+            }
+
             // Mission
             lBox.AddChild(new Label()
             {
@@ -55,6 +67,18 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
             lBox.AddChild(new Label()
             {
                 Text = mission.MissionType.ToString(),
+                FontColorOverride = Color.Gold,
+                HorizontalAlignment = HAlignment.Left,
+            });
+
+            lBox.AddChild(new Label()
+            {
+                Text = $"Duration:"
+            });
+
+            lBox.AddChild(new Label()
+            {
+                Text = mission.Duration.ToString(),
                 FontColorOverride = Color.Gold,
                 HorizontalAlignment = HAlignment.Left,
             });
@@ -72,6 +96,16 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
                 HorizontalAlignment = HAlignment.Left,
             });
 
+            var claimBox = new BoxContainer()
+            {
+                Orientation = BoxContainer.LayoutOrientation.Vertical,
+                Children =
+                {
+                    claimButton,
+                    new Control(),
+                }
+            };
+
             var box = new BoxContainer()
             {
                 Orientation = BoxContainer.LayoutOrientation.Horizontal,
@@ -82,7 +116,7 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
                     {
                         HorizontalExpand = true,
                     },
-                    claimButton,
+                    claimBox,
                 },
                 HorizontalExpand = true,
             };

@@ -7,10 +7,14 @@ namespace Content.Shared.Salvage;
 [Serializable, NetSerializable]
 public sealed class SalvageExpeditionConsoleState : BoundUserInterfaceState
 {
+    public bool Claimed;
+    public ushort ActiveMission;
     public List<SalvageMission> Missions;
 
-    public SalvageExpeditionConsoleState(List<SalvageMission> missions)
+    public SalvageExpeditionConsoleState(bool claimed, ushort activeMission, List<SalvageMission> missions)
     {
+        Claimed = claimed;
+        ActiveMission = activeMission;
         Missions = missions;
     }
 }
@@ -41,15 +45,23 @@ public sealed class SalvageExpeditionDataComponent : Component
     public TimeSpan Cooldown = TimeSpan.FromMinutes(5);
 
     /// <summary>
+    /// Is there an active salvage expedition.
+    /// </summary>
+    [ViewVariables]
+    public bool Claimed => ActiveMission != 0;
+
+    /// <summary>
     /// Nexy time salvage missions are offered.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("nextOffer", customTypeSerializer:typeof(TimeOffsetSerializer))]
     public TimeSpan NextOffer;
 
     [ViewVariables]
-    public readonly Dictionary<ushort, SalvageMission> AvailableMissions = new();
+    public readonly Dictionary<ushort, SalvageMission> Missions = new();
 
-    public ushort NextIndex = 0;
+    [ViewVariables] public ushort ActiveMission;
+
+    public ushort NextIndex = 1;
 }
 
 [Serializable, NetSerializable]
