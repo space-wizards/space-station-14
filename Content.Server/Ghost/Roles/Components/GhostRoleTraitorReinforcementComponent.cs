@@ -2,11 +2,11 @@ using Content.Server.Mind.Commands;
 using Content.Server.Mind.Components;
 using JetBrains.Annotations;
 using Robust.Server.Player;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Content.Server.Ghost.Roles.Events;
 using Content.Server.GameTicking.Rules;
 using Content.Server.Humanoid.Systems;
+using Content.Shared.Humanoid.Prototypes;
 
 namespace Content.Server.Ghost.Roles.Components
 {
@@ -24,7 +24,7 @@ namespace Content.Server.Ghost.Roles.Components
 
         [CanBeNull]
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("randomHumanoidSettings", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        [DataField("randomHumanoidSettings", customTypeSerializer: typeof(PrototypeIdSerializer<RandomHumanoidSettingsPrototype>))]
         public string? RandomHumanoidSettings { get; private set; }
 
         public override bool Take(IPlayerSession session)
