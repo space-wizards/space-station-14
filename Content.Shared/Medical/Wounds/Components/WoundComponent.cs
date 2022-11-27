@@ -17,6 +17,7 @@ public sealed class WoundComponent : Component
     [DataField("scarWound", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string? ScarWound;
 
+    //TODO: implement fixedpoint4
     [DataField("healthDamage")] public FixedPoint2 HealthCapDamage;
 
     [DataField("integrityDamage")] public FixedPoint2 IntegrityDamage;
