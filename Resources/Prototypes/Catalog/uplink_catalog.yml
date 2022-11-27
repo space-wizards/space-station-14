@@ -233,7 +233,7 @@
   name: Reinforcement Teleporter
   description: Teleport in an agent of extremely questionable quality. No off button, buy this if you're ready to party. They have a pistol with no reserve ammo, and a knife. That's it.
   productEntity: ReinforcementTeleporterSyndicate
-  icon: Objects/Devices/communication.rsi/old-radio.png
+  icon: Objects/Devices/communication.rsi/syndibackupcaller.png
   cost:
     Telecrystal: 25
   categories:
