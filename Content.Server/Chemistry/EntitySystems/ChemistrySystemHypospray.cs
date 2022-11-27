@@ -23,6 +23,13 @@ namespace Content.Server.Chemistry.EntitySystems
             SubscribeLocalEvent<HyposprayComponent, MeleeHitEvent>(OnAttack);
             SubscribeLocalEvent<HyposprayComponent, SolutionChangedEvent>(OnSolutionChange);
             SubscribeLocalEvent<HyposprayComponent, UseInHandEvent>(OnUseInHand);
+            SubscribeLocalEvent<HyposprayComponent, ComponentStartup>(OnStartup);
+        }
+
+        private void OnStartup(EntityUid uid, HyposprayComponent component, ComponentStartup args)
+        {
+            // Necessary for the Client-side HyposprayStatusControl to get the appropriate Volume values.
+            Dirty(component);
         }
 
         private void OnUseInHand(EntityUid uid, HyposprayComponent component, UseInHandEvent args)
