@@ -125,7 +125,7 @@ public partial class SharedBodySystem
     {
         if (id == null ||
             !Resolve(id.Value, ref body, false) ||
-            !TryComp(body.Root.Child, out BodyPartComponent? part))
+            !TryComp(body.Root?.Child, out BodyPartComponent? part))
             yield break;
 
         yield return (body.Root.Child.Value, part);
@@ -155,7 +155,7 @@ public partial class SharedBodySystem
         if (bodyId == null || !Resolve(bodyId.Value, ref body, false))
             yield break;
 
-        foreach (var slot in GetPartAllSlots(body.Root.Child))
+        foreach (var slot in GetPartAllSlots(body.Root?.Child))
         {
             yield return slot;
         }
