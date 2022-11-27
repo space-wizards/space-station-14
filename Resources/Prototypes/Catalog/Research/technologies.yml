@@ -437,13 +437,17 @@
   description: technologies-ripley-technology-description
   icon:
     sprite: Objects/Specific/Mech/mecha.rsi
-    state: ripley-open
+    state: ripley
   requiredPoints: 20000
   requiredTechnologies:
-    - CompactPowerTechnology
-    - AdvancedPartsTechnology
+  - RoboticsTechnology
+  - PowerCellBasic
   unlockedRecipes:
-    - ProximitySensor
+  - RipleyHarness
+  - RipleyLArm
+  - RipleyRArm
+  - RipleyLLeg
+  - RipleyRLeg
 
 - type: technology
   name: technologies-adv-parts-technology
