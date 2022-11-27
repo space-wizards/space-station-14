@@ -10,7 +10,7 @@ public sealed partial class WoundSystem
     private void UpdateHealing(float frameTime)
     {
         _healingTimer += frameTime;
-        if (_healingTimer < 3f)
+        if (_healingTimer < HealingTickRate)
             return;
         _healingTimer -= HealingTickRate;
 
