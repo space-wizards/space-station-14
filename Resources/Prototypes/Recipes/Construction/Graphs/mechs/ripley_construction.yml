@@ -155,12 +155,12 @@
     - !type:SpriteStateChange
       state: ripley18
     edges:
-    - to: finish
+    - to: ripley
       steps:
       - tool: Welding
         doAfter: 1
 
-  - node: finish
+  - node: ripley
     actions:
     - !type:SpawnPrototype
       prototype: MechRipley

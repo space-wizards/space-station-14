@@ -39,7 +39,7 @@
   parent: BaseMechPart
   id: RipleyHarness
   name: ripley harness
-  description: Ripley mech core component
+  description: The core of the ripley mech
   components:
   - type: Appearance
   - type: ItemMapper
@@ -136,4 +136,4 @@
   - type: Construction
     graph: Ripley
     node: start
-    defaultTarget: finish
+    defaultTarget: ripley
