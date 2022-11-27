@@ -1,0 +1,23 @@
+﻿<controls:BodyPartEntry
+    xmlns="https://spacestation14.io"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Systems.Medical.Controls"
+    VerticalAlignment="Bottom"
+    HorizontalAlignment="Center"
+    Orientation="Vertical"
+    MinSize="150 0">
+    <Label Name="BodyPartName" ClipText="True" Access="Public"/>
+    <BoxContainer Orientation="Horizontal">
+        <Label Text="Appearance: " ClipText="True"/>
+        <Label Name="DamageView" ClipText="True" Access="Public"/>
+        <Label Text=" | " />
+        <Label Text="Status: " ClipText="True"/>
+        <Label Name="StructureView" ClipText="True" Access="Public"/>
+    </BoxContainer>
+    <Label Text="Wounds: " ClipText="True"/>
+    <ScrollContainer
+        Name = "WoundDisplay"
+        Access="Public"
+        >
+    </ScrollContainer>
+
+</controls:BodyPartEntry>

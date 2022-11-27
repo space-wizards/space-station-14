@@ -1,0 +1,28 @@
+﻿<windows:MedicalWindow
+    xmlns="https://spacestation14.io"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Systems.Medical.Controls"
+    xmlns:windows="clr-namespace:Content.Client.UserInterface.Systems.Medical.Windows"
+    Name="MedicalDisplay"
+    HorizontalExpand="True"
+    Title="Medical"
+    VerticalExpand="True">
+    <BoxContainer
+        Orientation="Horizontal">
+        <BoxContainer
+            Name="LeftColumn">
+            <controls:MedicalDoll
+                Name="Preview"
+                Access= "Public"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                />
+        </BoxContainer>
+        <BoxContainer
+            Name="RightColumn">
+            <Label Text="Wounds" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <ScrollContainer Name = "WoundList">
+                
+            </ScrollContainer>
+        </BoxContainer>
+    </BoxContainer>
+</windows:MedicalWindow>
