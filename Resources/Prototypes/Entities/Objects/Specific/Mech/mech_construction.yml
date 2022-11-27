@@ -133,6 +133,9 @@
     netsync: true #it's just gotta be this way.
     noRot: true
     state: ripley0
+  - type: Appearance
+  - type: MechAssemblyVisuals
+    statePrefix: ripley
   - type: Construction
     graph: Ripley
     node: start

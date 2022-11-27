@@ -4,159 +4,117 @@
   graph:
   - node: start
     edges:
-    - to: phase1
+    - to: ripley
       steps:
       - tool: Anchoring
         doAfter: 1
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 1
 
-  - node: phase1
-    actions:
-    - !type:SpriteStateChange
-      state: ripley1
-    edges:
-    - to: phase2
-      steps:
       - tool: Screwing
         doAfter: 1
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 2
 
-  - node: phase2
-    actions:
-    - !type:SpriteStateChange
-      state: ripley2
-    edges:
-    - to: phase3
-      steps:
-       - material: Cable
+      - material: Cable
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 3
 
-  - node: phase3
-    actions:
-    - !type:SpriteStateChange
-      state: ripley3
-    edges:
-    - to: phase4
-      steps:
       - tool: Cutting
         doAfter: 1
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 4
 
-  - node: phase4
-    actions:
-    - !type:SpriteStateChange
-      state: ripley4
-    edges:
-    - to: phase5
-      steps:
       - tag: RipleyCentralControlModule
         name: ripley central control module
         icon:
           sprite: "Objects/Misc/module.rsi"
           state: "mainboard"
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 5
 
-  - node: phase5
-    actions:
-    - !type:SpriteStateChange
-      state: ripley5
-    edges:
-    - to: phase6
-      steps:
       - tool: Screwing
         doAfter: 1
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 6
 
-  - node: phase6
-    actions:
-    - !type:SpriteStateChange
-      state: ripley6
-    edges:
-    - to: phase7
-      steps:
       - tag: RipleyPeripheralsControlModule
         name: ripley peripherals control module
         icon:
           sprite: "Objects/Misc/module.rsi"
           state: id_mod
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 7
 
-  - node: phase7
-    actions:
-    - !type:SpriteStateChange
-      state: ripley7
-    edges:
-    - to: phase8
-      steps:
       - tool: Screwing
         doAfter: 1
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 12
 
 #i omitted the steps involving inserting machine parts because
 #currently mechs don't support upgrading. add them back in once that's squared away.
 
-  - node: phase8
-    actions:
-    - !type:SpriteStateChange
-      state: ripley12
-    edges:
-    - to: phase9
-      steps:
       - component: PowerCell
         name: power cell
         icon:
           sprite: Objects/Power/power_cells.rsi
           state: small
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 13
 
-  - node: phase9
-    actions:
-    - !type:SpriteStateChange
-      state: ripley13
-    edges:
-    - to: phase10
-      steps:
       - tool: Screwing
         doAfter: 1
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 14
 
-  - node: phase10
-    actions:
-    - !type:SpriteStateChange
-      state: ripley14
-    edges:
-    - to: phase11
-      steps:
       - material: Steel
         amount: 5
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 15
 
-  - node: phase11
-    actions:
-    - !type:SpriteStateChange
-      state: ripley15
-    edges:
-    - to: phase12
-      steps:
       - tool: Anchoring
         doAfter: 1
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 16
 
-  - node: phase12
-    actions:
-    - !type:SpriteStateChange
-      state: ripley16
-    edges:
-    - to: phase13
-      steps:
       - tool: Welding
         doAfter: 1
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 17
 
-  - node: phase13
-    actions:
-    - !type:SpriteStateChange
-      state: ripley17
-    edges:
-    - to: phase14
-      steps:
       - material: MetalRod
         amount: 10
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 18
 
-  - node: phase14
-    actions:
-    - !type:SpriteStateChange
-      state: ripley18
-    edges:
-    - to: ripley
-      steps:
       - tool: Welding
         doAfter: 1
 

@@ -17,6 +17,12 @@ public enum MechVisuals : byte
 }
 
 [Serializable, NetSerializable]
+public enum MechAssemblyVisuals : byte
+{
+    State
+}
+
+[Serializable, NetSerializable]
 public enum MechVisualLayers : byte
 {
     Base
