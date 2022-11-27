@@ -460,6 +460,12 @@
   id: Recyclable
 
 - type: Tag
+  id: RipleyCentralControlModule
+
+- type: Tag
+  id: RipleyPeripheralsControlModule
+
+- type: Tag
   id: RipleyLArm
 
 - type: Tag

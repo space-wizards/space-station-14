@@ -1,0 +1,167 @@
+﻿- type: constructionGraph
+  id: Ripley
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: phase1
+      steps:
+      - tool: Anchoring
+        doAfter: 1
+
+  - node: phase1
+    actions:
+    - !type:SpriteStateChange
+      state: ripley1
+    edges:
+    - to: phase2
+      steps:
+      - tool: Screwing
+        doAfter: 1
+
+  - node: phase2
+    actions:
+    - !type:SpriteStateChange
+      state: ripley2
+    edges:
+    - to: phase3
+      steps:
+       - material: Cable
+
+  - node: phase3
+    actions:
+    - !type:SpriteStateChange
+      state: ripley3
+    edges:
+    - to: phase4
+      steps:
+      - tool: Cutting
+        doAfter: 1
+
+  - node: phase4
+    actions:
+    - !type:SpriteStateChange
+      state: ripley4
+    edges:
+    - to: phase5
+      steps:
+      - tag: RipleyCentralControlModule
+        name: ripley central control module
+        icon:
+          sprite: "Objects/Misc/module.rsi"
+          state: "mainboard"
+
+  - node: phase5
+    actions:
+    - !type:SpriteStateChange
+      state: ripley5
+    edges:
+    - to: phase6
+      steps:
+      - tool: Screwing
+        doAfter: 1
+
+  - node: phase6
+    actions:
+    - !type:SpriteStateChange
+      state: ripley6
+    edges:
+    - to: phase7
+      steps:
+      - tag: RipleyPeripheralsControlModule
+        name: ripley peripherals control module
+        icon:
+          sprite: "Objects/Misc/module.rsi"
+          state: id_mod
+
+  - node: phase7
+    actions:
+    - !type:SpriteStateChange
+      state: ripley7
+    edges:
+    - to: phase8
+      steps:
+      - tool: Screwing
+        doAfter: 1
+
+#i omitted the steps involving inserting machine parts because
+#currently mechs don't support upgrading. add them back in once that's squared away.
+
+  - node: phase8
+    actions:
+    - !type:SpriteStateChange
+      state: ripley12
+    edges:
+    - to: phase9
+      steps:
+      - component: PowerCell
+        name: power cell
+        icon:
+          sprite: Objects/Power/power_cells.rsi
+          state: small
+
+  - node: phase9
+    actions:
+    - !type:SpriteStateChange
+      state: ripley13
+    edges:
+    - to: phase10
+      steps:
+      - tool: Screwing
+        doAfter: 1
+
+  - node: phase10
+    actions:
+    - !type:SpriteStateChange
+      state: ripley14
+    edges:
+    - to: phase11
+      steps:
+      - material: Steel
+        amount: 5
+
+  - node: phase11
+    actions:
+    - !type:SpriteStateChange
+      state: ripley15
+    edges:
+    - to: phase12
+      steps:
+      - tool: Anchoring
+        doAfter: 1
+
+  - node: phase12
+    actions:
+    - !type:SpriteStateChange
+      state: ripley16
+    edges:
+    - to: phase13
+      steps:
+      - tool: Welding
+        doAfter: 1
+
+  - node: phase13
+    actions:
+    - !type:SpriteStateChange
+      state: ripley17
+    edges:
+    - to: phase14
+      steps:
+      - material: MetalRod
+        amount: 10
+
+  - node: phase14
+    actions:
+    - !type:SpriteStateChange
+      state: ripley18
+    edges:
+    - to: finish
+      steps:
+      - tool: Welding
+        doAfter: 1
+
+  - node: finish
+    actions:
+    - !type:SpawnPrototype
+      prototype: MechRipley
+    - !type:DeleteEntity

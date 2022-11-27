@@ -41,9 +41,6 @@
   name: ripley harness
   description: Ripley mech core component
   components:
-  - type: Storage
-    popup: false
-    capacity: 500
   - type: Appearance
   - type: ItemMapper
     mapLayers:
@@ -64,8 +61,16 @@
           tags:
           - RipleyRLeg
     sprite: Objects/Specific/Mech/ripley_construction.rsi
-  - type: Transform
-    noRot: true
+  - type: ContainerContainer
+    containers:
+      mech-assembly-container: !type:Container
+  - type: MechAssembly
+    finishedPrototype: RipleyChassis
+    requiredParts:
+      RipleyLArm: false
+      RipleyRArm: false
+      RipleyLLeg: false
+      RipleyRLeg: false
   - type: Sprite
     state: ripley_harness+o
     noRot: true
@@ -117,3 +122,18 @@
   - type: Tag
     tags:
     - RipleyRArm
+
+- type: entity
+  id: RipleyChassis
+  parent: BaseMechPart
+  name: ripley chassis
+  description: An in-progress construction of a ripley mech.
+  components:
+  - type: Sprite
+    netsync: true #it's just gotta be this way.
+    noRot: true
+    state: ripley0
+  - type: Construction
+    graph: Ripley
+    node: start
+    defaultTarget: finish
