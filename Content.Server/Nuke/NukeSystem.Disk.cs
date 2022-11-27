@@ -42,23 +42,24 @@ public sealed partial class NukeSystem
         var xform = Transform(uid);
 
         if (originStation != null)
-        {
             component.Station = originStation.Value;
-            component.StationMap = (xform.MapID, xform.GridUid);
-        }
+
+        //Set this up anyway in case originStation fails to set up properly for some reason
+        component.StationMap = (xform.MapID, xform.GridUid);
     }
 
     private void OnDiskShutdown(EntityUid uid, NukeDiskComponent component, ComponentShutdown args)
     {
         var diskGridUid = component.StationMap.Item2;
 
-        if (!component.Respawn || !TryComp<StationMemberComponent>(diskGridUid, out var stationMember) || stationMember.Station != component.Station)
+        if (!component.Respawn || !HasComp<StationMemberComponent>(diskGridUid))
             return;
 
-        if (TryFindRandomTile(diskGridUid.Value, 100, out var coords))
+        if (TryFindRandomTile(diskGridUid.Value, 10, out var coords))
         {
-            Spawn(component.Disk, coords.ToMap(EntityManager));
-            _adminLog.Add(LogType.Respawn, LogImpact.High, $"The nuclear disk was deleted and was respawned at {coords.ToMap(EntityManager)}");
+            var mapCoords = coords.ToMap(EntityManager);
+            Spawn(component.Disk, mapCoords);
+            _adminLog.Add(LogType.Respawn, LogImpact.High, $"The nuclear disk was deleted and was respawned at {mapCoords}");
         }
 
         //If the above fails, spawn at the center of the grid on the station
@@ -127,14 +128,22 @@ public sealed partial class NukeSystem
             var randomY = _random.Next((int) gridBounds.Bottom, (int) gridBounds.Top);
 
             tile = new Vector2i(randomX - (int) gridPos.X, randomY - (int) gridPos.Y);
-            var newTileRef = tile.GetTileRef(targetGrid);
+            var mapPos = grid.GridTileToWorldPos(tile);
+            var circle = new Circle(mapPos, 2);
 
-            if (newTileRef.IsSpace(_tileDefinitionManager) || newTileRef.IsBlockedTurf(true))
-                continue;
+            foreach (var newTileRef in grid.GetTilesIntersecting(circle))
+            {
+                if (newTileRef.IsSpace(_tileDefinitionManager) || newTileRef.IsBlockedTurf(true))
+                    continue;
 
-            found = true;
-            targetCoords = grid.GridTileToLocal(tile);
-            break;
+                found = true;
+                targetCoords = grid.GridTileToLocal(tile);
+                break;
+            }
+
+            //Found a safe tile, no need to continue
+            if (found)
+                break;
         }
 
         if (!found)
