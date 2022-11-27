@@ -5,7 +5,6 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Medical.Wounds.Components;
 using Content.Shared.Medical.Wounds.Prototypes;
 using Robust.Shared.Containers;
-using Robust.Shared.GameStates;
 using Robust.Shared.Random;
 
 namespace Content.Shared.Medical.Wounds.Systems;
@@ -23,22 +22,6 @@ public sealed partial class WoundSystem
         {
             _cachedWounds.Add(traumaType.ID, new WoundTable(traumaType));
         }
-
-        SubscribeLocalEvent<WoundComponent, ComponentGetState>(OnWoundGetState);
-        SubscribeLocalEvent<WoundComponent, ComponentHandleState>(OnWoundHandleState);
-    }
-
-    private void OnWoundGetState(EntityUid uid, WoundComponent wound, ref ComponentGetState args)
-    {
-        args.State = new WoundComponentState(wound.Parent);
-    }
-
-    private void OnWoundHandleState(EntityUid uid, WoundComponent wound, ref ComponentHandleState args)
-    {
-        if (args.Current is not WoundComponentState state)
-            return;
-
-        wound.Parent = state.Parent;
     }
 
     public bool TryApplyTrauma(EntityUid target, TraumaInflicterComponent inflicter)
