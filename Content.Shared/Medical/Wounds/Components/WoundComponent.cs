@@ -12,12 +12,12 @@ public sealed class WoundComponent : Component
 {
     //this is used for caching the parent woundable for use inside and entity query.
     //wounds should NEVER exist without a parent so this will always have a value
-    public WoundableComponent Parent = default!;
+    public EntityUid Parent = default;
 
     [DataField("scarWound", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string? ScarWound;
 
-    [DataField("healthCapDamage")] public FixedPoint2 HealthCapDamage;
+    [DataField("healthDamage")] public FixedPoint2 HealthCapDamage;
 
     [DataField("integrityDamage")] public FixedPoint2 IntegrityDamage;
 

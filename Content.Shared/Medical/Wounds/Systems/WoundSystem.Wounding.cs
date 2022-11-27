@@ -79,8 +79,8 @@ public sealed partial class WoundSystem
         var wounds = _containers.EnsureContainer<Container>(woundableId, WoundContainerId);
         if (!wounds.Insert(woundId))
             return false;
-        wound.Parent = woundable;
-        SetWoundSeverity(woundableId, woundId, wound.SeverityPercentage, woundable, wound);
+        wound.Parent = woundableId;
+        woundable.HealthCapDamage += wound.SeverityPercentage * wound.HealthCapDamage;
         ApplyRawIntegrityDamage(woundableId, wound.IntegrityDamage, woundable);
         return true;
     }
@@ -136,8 +136,11 @@ public sealed partial class WoundSystem
     {
         newSeverity = Math.Clamp(newSeverity, 0.0f, 1.0f);
         var severityDelta = newSeverity - wound.SeverityPercentage;
+        if (severityDelta == 0)
+            return;
         var healthCapDamageDelta = severityDelta * wound.HealthCapDamage;
         woundable.HealthCapDamage += healthCapDamageDelta;
+        wound.SeverityPercentage = newSeverity;
     }
 
     public bool RemoveWound(EntityUid woundableId, EntityUid woundId,bool makeScar = false, WoundableComponent? woundable = null,
@@ -150,11 +153,13 @@ public sealed partial class WoundSystem
         var woundContainer = _containers.GetContainer(woundableId, WoundContainerId);
         if (!woundContainer.Remove(woundId))
             return false;
+        wound.Parent = EntityUid.Invalid;
         UpdateWoundSeverity(woundable, wound, 0);
         if (makeScar && wound.ScarWound != null)
         {
             AddWound(woundableId, wound.ScarWound, woundable);
         }
+        EntityManager.DeleteEntity(woundId);
         return true;
     }
 

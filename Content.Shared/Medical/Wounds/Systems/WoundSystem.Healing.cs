@@ -22,20 +22,23 @@ public sealed partial class WoundSystem
 
     private void HealWound(WoundComponent wound)
     {
-        if (wound.BaseHealingRate + wound.HealingModifier == 0)
+        if (wound.Parent == EntityUid.Invalid || wound.BaseHealingRate + wound.HealingModifier == 0)
             return; //if the wound doesn't heal, do nothing
         //we want to decrease severity so we need to invert the healing rate to become the severity delta.
         var severityDecrease =  -(wound.BaseHealingRate + wound.HealingMultiplier * wound.HealingModifier);
-        AddWoundSeverity(wound.Parent.Owner, wound.Owner, severityDecrease, wound.Parent, wound);
+        AddWoundSeverity(wound.Parent, wound.Owner, severityDecrease,null , wound);
         if (wound.SeverityPercentage <= 0.0f)
-            FullyHealWound(wound.Parent.Owner, wound.Owner, wound.Parent, wound);
+            FullyHealWound(wound.Parent, wound.Owner, null, wound);
     }
     public bool FullyHealWound(EntityUid woundableId, EntityUid woundId, WoundableComponent? woundable = null,
         WoundComponent? wound = null)
     {
         if (!Resolve(woundableId, ref woundable, false))
             return false;
-        return Resolve(woundId, ref wound, false) && RemoveWound(woundableId, woundId, true, woundable, wound);
+        if (!Resolve(woundId, ref wound, false))
+            return false;
+        Logger.Log(LogLevel.Info,"Wound "+ woundId + " Fully Healed!");
+        return RemoveWound(woundableId, woundId, true, woundable, wound);
     }
 
     public bool AddHealingModifier (EntityUid woundId, float additionalHealing, WoundComponent? wound = null)

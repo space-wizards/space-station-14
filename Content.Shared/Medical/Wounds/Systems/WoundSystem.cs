@@ -26,21 +26,11 @@ public sealed partial class WoundSystem : EntitySystem
         _prototypeManager.PrototypesReloaded += _ => CacheWoundData();
 
         SubscribeLocalEvent<BodyComponent, AttackedEvent>(OnBodyAttacked);
-        SubscribeLocalEvent<WoundableComponent, ComponentInit>(OnWoundableCreated);
     }
 
     public override void Update(float frameTime)
     {
         UpdateHealing(frameTime);
-    }
-
-    //TODO: Smug will this break networking? - Jez
-    private void OnWoundableCreated(EntityUid uid, WoundableComponent component, ComponentInit args)
-    {
-        if (component.Health < 0) //if initial woundable health isn't defined default to the woundCap.
-        {
-            component.Health = component.HealthCap;
-        }
     }
 
     private void OnBodyAttacked(EntityUid uid, BodyComponent component, AttackedEvent args)
