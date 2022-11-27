@@ -1,6 +1,8 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Coordinates;
+using Content.Shared.Damage;
+using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
 using Content.Shared.Medical.Wounds.Components;
 using Content.Shared.Medical.Wounds.Prototypes;
@@ -24,51 +26,70 @@ public sealed partial class WoundSystem
         }
     }
 
-    public bool TryApplyTrauma(EntityUid target, TraumaInflicterComponent inflicter)
+    public bool TryApplyTrauma(EntityUid? origin, EntityUid target, DamageSpecifier damage)
     {
         var success = false;
-        foreach (var (traumaType, trauma) in inflicter.Traumas)
+
+        // TODO wounds before merge use the weapon's id, not the user's (origin is the player who used the sword)
+        var inflicter = CompOrNull<TraumaInflicterComponent>(origin);
+
+        foreach (var (type, amount) in damage.DamageDict)
         {
-            success |= ApplyTraumaToPart(target, traumaType, trauma);
+            if (amount <= 0 ||
+                _prototypeManager.Index<DamageTypePrototype>(type).Trauma is not { } traumaId)
+            {
+                continue;
+            }
+
+            success |= ApplyTraumaToPart(target, traumaId, amount);
 
             // TODO wounds before merge add support for non penetrating traumas
-            var type = trauma.PenTraumaType ?? traumaType;
-
-            if (trauma.PenetrationChance > 0 && !_random.Prob(trauma.PenetrationChance.Float()))
+            if (inflicter == null || !inflicter.Traumas.TryGetValue(traumaId, out var trauma))
                 continue;
 
-            success |= ApplyTraumaToPart(target, type, trauma);
+            var penType = trauma.PenType ?? traumaId;
+
+            if (trauma.PenChance > 0 && !_random.Prob(trauma.PenChance.Float()))
+                continue;
+
+            success |= ApplyTraumaToPart(target, penType, amount);
         }
 
         return success;
     }
 
-    public IReadOnlyList<EntityUid> GetAllWoundEntities(EntityUid woundableId)
+    public bool TryGetAllWoundEntities(EntityUid woundableId, [NotNullWhen(true)] out IReadOnlyList<EntityUid>? wounds)
     {
-        return _containers.GetContainer(woundableId, WoundContainerId).ContainedEntities;
-    }
-
-    public IReadOnlyList<WoundComponent> GetAllWoundComponents(EntityUid woundableId)
-    {
-        List<WoundComponent> components = new();
-        foreach (var entityUid in GetAllWoundEntities(woundableId))
+        if (!_containers.TryGetContainer(woundableId, WoundContainerId, out var container) ||
+            container.ContainedEntities.Count == 0)
         {
-            if (TryComp<WoundComponent>(entityUid, out var woundComp))
-            {
-                components.Add((woundComp));
-            }
+            wounds = null;
+            return false;
         }
-        return components;
+
+        wounds = container.ContainedEntities;
+        return true;
     }
 
+    public IEnumerable<WoundComponent> GetAllWoundComponents(EntityUid woundableId)
+    {
+        if (!TryGetAllWoundEntities(woundableId, out var wounds))
+            yield break;
 
-    public bool ApplyTraumaToPart(EntityUid target, string traumaType, TraumaDamage traumaDamage)
+        foreach (var woundId in wounds)
+        {
+            if (TryComp<WoundComponent>(woundId, out var woundComp))
+                yield return woundComp;
+        }
+    }
+
+    public bool ApplyTraumaToPart(EntityUid target, string traumaType, FixedPoint2 damage)
     {
         // TODO wounds before merge turn into tryget
         if (GetValidWoundable(target, traumaType) is not {Target: var woundableId, Woundable: var woundable})
             return false;
 
-        var modifiedDamage = ApplyTraumaModifiers(traumaType, woundable.TraumaResistance, traumaDamage.Damage);
+        var modifiedDamage = ApplyTraumaModifiers(traumaType, woundable.TraumaResistance, damage);
         return TryChooseWound(traumaType, modifiedDamage, out var woundId) &&
                ApplyRawWoundDamage(woundableId, modifiedDamage, woundable) && AddWound(woundableId, woundId, woundable);
     }
@@ -112,7 +133,7 @@ public sealed partial class WoundSystem
         woundable.HealthCapDamage += woundDamage;
         if (woundable.HealthCapDamage < FixedPoint2.Zero)
             ApplyRawIntegrityDamage(woundableId, -woundable.HealthCapDamage, woundable);
-        woundable.HealthCapDamage = 0;
+        woundable.HealthCapDamage = FixedPoint2.Zero;
         return true;
     }
 

@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
+using Content.Shared.Damage;
 using Content.Shared.Medical.Wounds.Components;
-using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Network;
@@ -33,7 +33,7 @@ public sealed partial class WoundSystem : EntitySystem
         SubscribeLocalEvent<WoundComponent, ComponentGetState>(OnWoundGetState);
         SubscribeLocalEvent<WoundComponent, ComponentHandleState>(OnWoundHandleState);
 
-        SubscribeLocalEvent<BodyComponent, AttackedEvent>(OnBodyAttacked);
+        SubscribeLocalEvent<BodyComponent, DamageChangedEvent>(OnBodyDamaged);
     }
 
     private void OnWoundableGetState(EntityUid uid, WoundableComponent component, ref ComponentGetState args)
@@ -105,13 +105,13 @@ public sealed partial class WoundSystem : EntitySystem
         UpdateHealing(frameTime);
     }
 
-    private void OnBodyAttacked(EntityUid uid, BodyComponent component, AttackedEvent args)
+    private void OnBodyDamaged(EntityUid uid, BodyComponent component, DamageChangedEvent args)
     {
-        if (!TryComp(args.Used, out TraumaInflicterComponent? inflicter))
+        if (!args.DamageIncreased || args.DamageDelta == null)
             return;
 
         var parts = _body.GetBodyChildren(uid, component).ToList();
         var part = _random.Pick(parts);
-        TryApplyTrauma(part.Id, inflicter);
+        TryApplyTrauma(args.Origin, part.Id, args.DamageDelta);
     }
 }

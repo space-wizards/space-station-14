@@ -17,10 +17,12 @@ public sealed partial class WoundSystem
 
         foreach (var woundable in EntityQuery<WoundableComponent>())
         {
+            // TODO wounds before merge iterate wounds separately
             foreach (var wound in GetAllWoundComponents(woundable.Owner))
             {
                 HealWound(woundable,wound);
             }
+
             HealWoundable(woundable);
         }
     }
