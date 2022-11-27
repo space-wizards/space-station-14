@@ -668,7 +668,7 @@
       drink:
         maxVol: 50
         reagents:
-        - ReagentId: ErikaSuprise
+        - ReagentId: ErikaSurprise
           Quantity: 50
   - type: Drink
   - type: Sprite
