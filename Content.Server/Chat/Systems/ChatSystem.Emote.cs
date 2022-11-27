@@ -4,6 +4,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Chat.Systems;
 
+// emotes using emote prototype
 public partial class ChatSystem
 {
     private readonly Dictionary<string, EmotePrototype> _wordEmoteDict = new();
@@ -50,7 +51,7 @@ public partial class ChatSystem
     ///     Makes selected entity to emote using <see cref="EmotePrototype"/> and sends message to chat.
     /// </summary>
     /// <param name="source">The entity that is speaking</param>
-    /// <param name="emoteId">The id of emote prototype. Should have valid <see cref="EmotePrototype.ChatMessages"/></param>
+    /// <param name="emoteId">The id of emote prototype. Should has valid <see cref="EmotePrototype.ChatMessages"/></param>
     /// <param name="hideChat">Whether or not this message should appear in the chat window</param>
     /// <param name="hideGlobalGhostChat">Whether or not this message should appear in the chat window for out-of-range ghosts (which otherwise ignore range restrictions)</param>
     /// <param name="nameOverride">The name to use for the speaking entity. Usually this should just be modified via <see cref="TransformSpeakerNameEvent"/>. If this is set, the event will not get raised.</param>
@@ -66,7 +67,7 @@ public partial class ChatSystem
     ///     Makes selected entity to emote using <see cref="EmotePrototype"/> and sends message to chat.
     /// </summary>
     /// <param name="source">The entity that is speaking</param>
-    /// <param name="emote">The emote prototype. Should have valid <see cref="EmotePrototype.ChatMessages"/></param>
+    /// <param name="emote">The emote prototype. Should has valid <see cref="EmotePrototype.ChatMessages"/></param>
     /// <param name="hideChat">Whether or not this message should appear in the chat window</param>
     /// <param name="hideGlobalGhostChat">Whether or not this message should appear in the chat window for out-of-range ghosts (which otherwise ignore range restrictions)</param>
     /// <param name="nameOverride">The name to use for the speaking entity. Usually this should just be modified via <see cref="TransformSpeakerNameEvent"/>. If this is set, the event will not get raised.</param>

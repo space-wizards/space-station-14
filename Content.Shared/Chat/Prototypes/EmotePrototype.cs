@@ -21,8 +21,8 @@ public sealed class EmotePrototype : IPrototype
     public EmoteCategory Category = EmoteCategory.General;
 
     /// <summary>
-    ///     Collection of words that will be send to chat if emote will be activated.
-    ///     One of this words will be picked randomly.
+    ///     Collection of words that will be sent to chat if emote activates.
+    ///     Will be picked randomly from list.
     /// </summary>
     [DataField("chatMessages")]
     public List<string> ChatMessages = new();
@@ -37,8 +37,8 @@ public sealed class EmotePrototype : IPrototype
 }
 
 /// <summary>
-///     IC emote category. Usually source of emote,
-///     like hands, vocal, facial, etc.
+///     IC emote category. Usually physical source of emote,
+///     like hands, voice, face, etc.
 /// </summary>
 [Flags]
 [Serializable, NetSerializable]

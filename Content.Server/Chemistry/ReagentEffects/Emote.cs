@@ -15,12 +15,19 @@ public sealed class Emote : ReagentEffect
     [DataField("emote", customTypeSerializer: typeof(PrototypeIdSerializer<EmotePrototype>))]
     public string? EmoteId;
 
+    [DataField("showInChat")]
+    public bool ShowInChat;
+
     public override void Effect(ReagentEffectArgs args)
     {
         if (EmoteId == null)
             return;
 
         var chatSys = args.EntityManager.System<ChatSystem>();
-        chatSys.TryEmoteWithoutChat(args.SolutionEntity, EmoteId);
+        if (ShowInChat)
+            chatSys.TryEmoteWithChat(args.SolutionEntity, EmoteId, hideGlobalGhostChat: true);
+        else
+            chatSys.TryEmoteWithoutChat(args.SolutionEntity, EmoteId);
+
     }
 }

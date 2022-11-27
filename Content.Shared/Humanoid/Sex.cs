@@ -13,5 +13,9 @@ namespace Content.Shared.Humanoid
         Unsexed,
     }
 
+    /// <summary>
+    ///     Raised when entity has changed their sex.
+    ///     This doesn't handle gender changes.
+    /// </summary>
     public record struct SexChangedEvent(Sex OldSex, Sex NewSex);
 }
