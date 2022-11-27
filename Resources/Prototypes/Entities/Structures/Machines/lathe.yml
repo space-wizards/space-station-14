@@ -223,9 +223,6 @@
       - PowerCellMedium
       - PowerCellHigh  
       - RPED
-      - ProximitySensor
-      - LeftArmBorg
-      - RightArmBorg
       - HolofanProjector
 
 - type: entity
@@ -301,6 +298,7 @@
       - GasRecyclerMachineCircuitboard
       - SeedExtractorMachineCircuitboard
       - AnalysisComputerCircuitboard
+      - ExosuitFabricatorMachineCircuitboard
       - ArtifactAnalyzerMachineCircuitboard
       - TraversalDistorterMachineCircuitboard
   - type: MaterialStorage
@@ -309,6 +307,38 @@
         - Sheet
         - RawMaterial
         - Ingot
+
+- type: entity
+  parent: Protolathe
+  id: ExosuitFabricator
+  name: exosuit fabricator
+  description: Creates parts for robotics and other mechanical needs
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Machines/exosuit_fabricator.rsi
+    layers:
+    - state: fab-idle
+      map: ["enum.LatheVisualLayers.IsRunning"]
+    - state: fab-load
+      map: ["enum.LatheVisualLayers.IsInserting"]
+    - state: fab-o
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Machine
+    board: ExosuitFabricatorMachineCircuitboard
+  - type: Lathe
+    idleState: fab-idle
+    runningState: fab-active
+    dynamicRecipes:
+    - ProximitySensor
+    - LeftArmBorg
+    - RightArmBorg
+  - type: MaterialStorage
+    whitelist:
+      tags:
+      - Sheet
+      - RawMaterial
+      - Ingot
 
 - type: entity
   parent: Protolathe
