@@ -149,12 +149,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         // we have finished processing our tiles. Is there still an ongoing explosion?
         if (_activeExplosion != null)
         {
-            // update the client explosion overlays. This ensures that the fire-effects sync up with the entities currently being damaged.
-            if (_previousTileIteration == _activeExplosion.CurrentIteration)
-                return;
-
-            _previousTileIteration = _activeExplosion.CurrentIteration;
-            _appearance.SetData(_activeExplosion.VisualEnt, ExplosionAppearanceData.Progress, _previousTileIteration + 1);
+            _appearance.SetData(_activeExplosion.VisualEnt, ExplosionAppearanceData.Progress, _activeExplosion.CurrentIteration + 1);
             return;
         }
 

@@ -38,7 +38,7 @@ public sealed class ExplosionOverlay : Overlay
             if (!appearance.TryGetData(ExplosionAppearanceData.Progress, out int index))
                 continue;
 
-            index = Math.Min(index, comp.Intensity.Count);
+            index = Math.Min(index, comp.Intensity.Count - 1);
             DrawExplosion(drawHandle, args.WorldBounds, comp, index, xforms);
         }
 
@@ -80,7 +80,7 @@ public sealed class ExplosionOverlay : Overlay
         ExplosionVisualsComponent exp,
         ushort tileSize)
     {
-        for (var j = 0; j < index; j++)
+        for (var j = 0; j <= index; j++)
         {
             if (!tileSets.TryGetValue(j, out var tiles))
                 continue;
