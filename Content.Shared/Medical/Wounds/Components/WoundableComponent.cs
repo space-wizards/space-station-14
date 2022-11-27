@@ -20,7 +20,16 @@ public sealed class WoundableComponent : Component
     [DataField("traumaPenResistance")] public TraumaModifierSet? TraumaPenResistance;
 
     //How much health does this woundable have, when this reaches 0, it starts taking structural damage
-    [DataField("health")] public FixedPoint2 Health;
+    [DataField("health")] public FixedPoint2 Health = -1;
+
+    //The maximum health this part can have
+    [DataField("healthCap", required: true)]
+    public FixedPoint2 HealthCap;
+
+    // public FixedPoint2 HealthCap => _healthCap - HealthCapDamage < 0 ? 0 : _healthCap - HealthCapDamage;
+
+        //The amount maximum health is decreased by, this is affected by wounds
+    [DataField("healthCapDamage")] public FixedPoint2 HealthCapDamage;
 
     //How well is this woundable holding up, when this reaches 0 the entity is destroyed/gibbed!
     [DataField("integrity", required: true)]

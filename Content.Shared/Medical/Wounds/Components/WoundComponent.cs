@@ -8,13 +8,9 @@ namespace Content.Shared.Medical.Wounds.Components;
 [Access(typeof(WoundSystem))]
 public sealed class WoundComponent : Component
 {
-    [DataField("healthDamage")] public FixedPoint2 HealthDamage;
+    [DataField("healthCapDamage")] public FixedPoint2 HealthCapDamage;
 
     [DataField("integrityDamage")] public FixedPoint2 IntegrityDamage;
 
-    [DataField("healthDamageDealt")] public FixedPoint2 HealthDamageDealt;
-
-    [DataField("integrityDamageDealt")] public FixedPoint2 IntegrityDamageDealt;
-
-    [DataField("overflowDamageDealt")] public FixedPoint2 OverflowDamageDealt;
+    [DataField("severityPercentage")] public FixedPoint2 SeverityPercentage = 1.0;
 }
