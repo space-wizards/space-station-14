@@ -19,6 +19,9 @@ public sealed class SponsorInfo
 
     [JsonPropertyName("priorityJoin")]
     public bool HavePriorityJoin { get; set; } = false;
+    
+    [JsonPropertyName("extraSlots")]
+    public int ExtraSlots { get; set; }
 
     [JsonPropertyName("allowedMarkings")]
     public string[] AllowedMarkings { get; set; } = Array.Empty<string>();
