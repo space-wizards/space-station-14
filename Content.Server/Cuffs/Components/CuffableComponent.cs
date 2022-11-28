@@ -286,7 +286,7 @@ namespace Content.Server.Cuffs.Components
                     sprite.LayerSetState(0, cuff.BrokenState); // TODO: safety check to see if RSI contains the state?
                 }
 
-                _entMan.AddComponent<RecyclableComponent>(cuffsToRemove);
+                _entMan.EnsureComponent<RecyclableComponent>(cuffsToRemove);
             }
 
             CanStillInteract = _entMan.TryGetComponent(Owner, out HandsComponent? handsComponent) && handsComponent.SortedHands.Count() > CuffedHandCount;

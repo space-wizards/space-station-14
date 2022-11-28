@@ -1,102 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Removed ratatouille (held mice and holo parasites no longer affect what
-      direction a player is facing), type: Fix}
-  id: 2191
-  time: '2022-08-25T23:39:25.0000000+00:00'
-- author: Myctai
-  changes:
-  - {message: nonlethals crate icon no longer suggests that crate contains tasers
-      (crate actually contains disablers), type: Fix}
-  id: 2192
-  time: '2022-08-27T05:54:24.0000000+00:00'
-- author: FunkySphere
-  changes:
-  - {message: Margherita pizza slice is no longer sliceable into multiple meat pizza
-      slices., type: Fix}
-  id: 2193
-  time: '2022-08-27T09:59:16.0000000+00:00'
-- author: biometricPsychography
-  changes:
-  - {message: Made the dead state of the snake more dead (fix snakes death animation/sprite).,
-    type: Fix}
-  id: 2194
-  time: '2022-08-28T22:34:22.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Moving between grids should now be smooth., type: Fix}
-  - {message: Fixed the eye rotation on spawn and also when the shuttle goes FTL.,
-    type: Fix}
-  id: 2195
-  time: '2022-08-29T05:05:53.0000000+00:00'
-- author: FunkySphere
-  changes:
-  - {message: 'magboots, galoshes and flippers no longer butcherable', type: Tweak}
-  id: 2196
-  time: '2022-08-29T17:59:17.0000000+00:00'
-- author: LordEclipse
-  changes:
-  - {message: Medical Intern PDA's now have Health Analyzers built into them., type: Tweak}
-  id: 2197
-  time: '2022-08-29T23:32:20.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Pull chains with your besties should be much faster., type: Tweak}
-  id: 2198
-  time: '2022-08-30T02:19:25.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Cloners now require biomass., type: Add}
-  - {message: Cloners have a chance of failure based off of the body's genetic damage.,
-    type: Add}
-  - {message: Added biomass material and biomass reclaimers., type: Add}
-  id: 2199
-  time: '2022-08-30T02:31:28.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: The zombie midround event now just starts zombie mode., type: Add}
-  - {message: Zombie melee infection rates have been lowered., type: Tweak}
-  id: 2200
-  time: '2022-08-30T02:35:19.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed issues with ID cards displaying whitespace and empty names., type: Fix}
-  id: 2201
-  time: '2022-08-30T02:38:01.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: The Cargo Tech and QM job icons have been swapped., type: Fix}
-  id: 2202
-  time: '2022-08-30T02:39:23.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Silicons will no longer take damage from glass shards. Flying mobs are
-      still bugged., type: Fix}
-  id: 2203
-  time: '2022-08-30T06:15:25.0000000+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: Shuttle airlock construction complete! Check the construction menu for
-      the recipe., type: Add}
-  id: 2204
-  time: '2022-08-31T07:28:40.0000000+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: Lattice cutting is here! Apply wirecutters to lattice to deconstruct
-      it., type: Add}
-  id: 2205
-  time: '2022-08-31T08:24:51.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: A new Wizard's Den Roleplay server will be coming soon., type: Add}
-  id: 2206
-  time: '2022-08-31T10:25:14.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Area pickup no longer picks up on cancellation., type: Fix}
-  id: 2207
-  time: '2022-08-31T12:09:31.0000000+00:00'
 - author: DoctorBeard
   changes:
   - {message: vending machine animations and their behaviors are more consistent now,
@@ -2959,3 +2861,96 @@ Entries:
   - {message: Fixed not showing ban ids in a player's ban list., type: Fix}
   id: 2690
   time: '2022-11-21T19:04:24.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix some mapgrids not being sent to clients., type: Fix}
+  id: 2691
+  time: '2022-11-22T09:28:09.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix exception when shooting with your mouse outside of the window.,
+    type: Fix}
+  id: 2692
+  time: '2022-11-23T06:35:06.0000000+00:00'
+- author: Mervill
+  changes:
+  - {message: Items dropped onto a moving Conveyor by the disposal network move immediately,
+    type: Fix}
+  id: 2693
+  time: '2022-11-23T07:38:39.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Chameleon masks and helmets can hide your identity., type: Tweak}
+  id: 2694
+  time: '2022-11-24T02:02:55.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Maybe fix grid clipping., type: Fix}
+  id: 2695
+  time: '2022-11-24T05:54:21.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Omnitool can cut lattice and pry unpowered doors, type: Fix}
+  id: 2696
+  time: '2022-11-24T06:00:34.0000000+00:00'
+- author: JustinTrotter
+  changes:
+  - {message: Welder tanks explode when shot with projectile guns. (Also don't poke
+      them with a spear), type: Add}
+  id: 2697
+  time: '2022-11-24T06:01:51.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Map ambient lighting can now be controlled by admins via RGBLightController.,
+    type: Add}
+  id: 2698
+  time: '2022-11-24T07:31:17.0000000+00:00'
+- author: Vordenburg
+  changes:
+  - {message: Individual stations can now have specific emergency shuttles., type: Tweak}
+  id: 2699
+  time: '2022-11-24T18:28:04.0000000+00:00'
+- author: Checkraze
+  changes:
+  - {message: Added the Courser class evacuation shuttle., type: Add}
+  id: 2700
+  time: '2022-11-25T08:18:17.0000000+00:00'
+- author: Mervill
+  changes:
+  - {message: Recycler can no longer recycle things if it's unpowered., type: Fix}
+  - {message: Fix conveyor assemblies being un-interactable after deconstruct, type: Fix}
+  id: 2701
+  time: '2022-11-25T09:00:41.0000000+00:00'
+- author: Gaxeer
+  changes:
+  - {message: add missing flame to cowelder, type: Fix}
+  id: 2702
+  time: '2022-11-25T11:27:45.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Added the Exosuit Fabricator, the center of all (future) robotics and
+      exosuit production!', type: Add}
+  id: 2703
+  time: '2022-11-27T03:36:27.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed missing text regarding voice triggers., type: Fix}
+  id: 2704
+  time: '2022-11-27T08:01:17.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Microwave and radiation triggers have been combined, to reduce confusion.',
+    type: Fix}
+  - {message: Item artifacts can now be sprayed properly., type: Fix}
+  id: 2705
+  time: '2022-11-27T08:01:41.0000000+00:00'
+- author: Pangogie
+  changes:
+  - {message: Chemists have stopped pouring dangerous chemicals into the vents., type: Tweak}
+  id: 2706
+  time: '2022-11-27T10:27:02.0000000+00:00'
+- author: Vordenburg
+  changes:
+  - {message: The RPG-7 can be loaded again with its proper ammo., type: Fix}
+  id: 2707
+  time: '2022-11-28T02:47:28.0000000+00:00'

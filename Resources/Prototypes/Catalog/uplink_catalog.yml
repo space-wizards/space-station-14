@@ -249,13 +249,14 @@
   categories:
     - UplinkUtility
 
+#TODO: Increase the price to 4 when flashbang prof.
 - type: listing
   id: UplinkHeadset
-  name: Syndicate Headset - Overear-Headset
-  description: A headset that allows you to listen in on departmental channels, or contact other our agents. Should be flashbang proof.
+  name: Syndicate Headset - Over-ear Headset
+  description: A headset that allows you to listen in on departmental channels, or contact our other agents.
   productEntity: ClothingHeadsetAltSyndicate
   cost:
-    Telecrystal: 4
+    Telecrystal: 3
   categories:
   - UplinkUtility
 

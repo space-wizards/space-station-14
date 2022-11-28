@@ -8,7 +8,6 @@ using Content.Shared.Inventory;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Content.Shared.Verbs;
-using Robust.Server.GameObjects;
 using Content.Server.Popups;
 using Robust.Shared.Player;
 using Content.Server.DoAfter;
@@ -21,11 +20,11 @@ public sealed class InternalsSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly AtmosphereSystem _atmos = default!;
+    [Dependency] private readonly DoAfterSystem _doAfter = default!;
     [Dependency] private readonly GasTankSystem _gasTank = default!;
     [Dependency] private readonly HandsSystem _hands = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
-    [Dependency] private readonly DoAfterSystem _doAfter = default!;
 
     public override void Initialize()
     {
@@ -35,8 +34,8 @@ public sealed class InternalsSystem : EntitySystem
         SubscribeLocalEvent<InternalsComponent, ComponentStartup>(OnInternalsStartup);
         SubscribeLocalEvent<InternalsComponent, ComponentShutdown>(OnInternalsShutdown);
         SubscribeLocalEvent<InternalsComponent, GetVerbsEvent<InteractionVerb>>(OnGetInteractionVerbs);
-        SubscribeLocalEvent<ToggleOtherInternalsCompleteEvent>(OnToggleOtherInternalsComplete);
-        SubscribeLocalEvent<ToggleOtherInternalsCancelledEvent>(OnToggleOtherInternalCanceled);
+        SubscribeLocalEvent<InternalsComponent, ToggleOtherInternalsCompleteEvent>(OnToggleOtherInternalsComplete);
+        SubscribeLocalEvent<InternalsComponent, ToggleOtherInternalsCancelledEvent>(OnToggleOtherInternalCanceled);
     }
 
     private void OnGetInteractionVerbs(EntityUid uid, InternalsComponent component, GetVerbsEvent<InteractionVerb> args)
@@ -44,63 +43,11 @@ public sealed class InternalsSystem : EntitySystem
         if (!args.CanAccess || !args.CanInteract || args.Hands == null)
             return;
 
-        if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
-            return;
-
         InteractionVerb verb = new()
         {
             Act = () =>
             {
-                var entManager = IoCManager.Resolve<IEntityManager>();
-                if (!entManager.TryGetComponent<InternalsComponent>(uid, out var internals)) return;
-
-                // Toggle off if they're on
-                if (AreInternalsWorking(component))
-                {
-                    DisconnectTank(component);
-                    return;
-                }
-
-                // If they're not on then check if we have a mask to use
-                if (component.BreathToolEntity == null)
-                {
-                    _popupSystem.PopupEntity(Loc.GetString("internals-no-breath-tool"), args.User, Filter.Entities(args.User));
-                    return;
-                }
-
-                var tank = FindBestGasTank(component);
-                if (tank == null)
-                {
-                    _popupSystem.PopupEntity(Loc.GetString("internals-no-tank"), args.User, Filter.Entities(args.User));
-                    return;
-                }
-
-                // Is the target not you? If yes, use a do-after to give them time to respond.
-                if (args.User != args.Target)
-                {
-                    component.CancelToken = new CancellationTokenSource();
-                    _doAfter.DoAfter(new DoAfterEventArgs(args.User, component.Delay, component.CancelToken.Token, args.Target)
-                    {
-                        BreakOnUserMove = true,
-                        BreakOnDamage = true,
-                        BreakOnStun = true,
-                        BreakOnTargetMove = true,
-                        MovementThreshold = 0.1f,
-                        BroadcastFinishedEvent = new ToggleOtherInternalsCompleteEvent()
-                        {
-                            Component = component,
-                            User = args.User,
-                            Target = args.Target,
-                            Tank = tank
-                        },
-                        BroadcastCancelledEvent = new ToggleOtherInternalsCancelledEvent()
-                        {
-                            Component = component,
-                        }
-                    });
-                    return;
-                }
-                entManager.EntitySysManager.GetEntitySystem<GasTankSystem>().ConnectToInternals(tank);
+                ToggleInternals(uid, args.User, false, component);
             },
             Message = Loc.GetString("action-description-internals-toggle"),
             IconTexture = "/Textures/Interface/VerbIcons/dot.svg.192dpi.png",
@@ -110,17 +57,66 @@ public sealed class InternalsSystem : EntitySystem
         args.Verbs.Add(verb);
     }
 
-    private void OnToggleOtherInternalsComplete(ToggleOtherInternalsCompleteEvent ev)
+    public void ToggleInternals(EntityUid uid, EntityUid user, bool force, InternalsComponent? internals = null)
     {
-        ev.Component.CancelToken = null;
-        var entManager = IoCManager.Resolve<IEntityManager>();
-        if (ev.Tank != null)
-            entManager.EntitySysManager.GetEntitySystem<GasTankSystem>().ConnectToInternals(ev.Tank);
+        if (!Resolve(uid, ref internals, false))
+        {
+            return;
+        }
+
+        // Toggle off if they're on
+        if (AreInternalsWorking(internals))
+        {
+            DisconnectTank(internals);
+            return;
+        }
+
+        // If they're not on then check if we have a mask to use
+        if (internals.BreathToolEntity == null)
+        {
+            _popupSystem.PopupEntity(Loc.GetString("internals-no-breath-tool"), uid, Filter.Entities(user));
+            return;
+        }
+
+        var tank = FindBestGasTank(internals);
+
+        if (tank == null)
+        {
+            _popupSystem.PopupEntity(Loc.GetString("internals-no-tank"), uid, Filter.Entities(user));
+            return;
+        }
+
+        // Is the target not you? If yes, use a do-after to give them time to respond.
+        if (!force && uid != user)
+        {
+            internals.CancelToken?.Cancel();
+            internals.CancelToken = new CancellationTokenSource();
+            _doAfter.DoAfter(new DoAfterEventArgs(user, internals.Delay, internals.CancelToken.Token, uid)
+            {
+                BreakOnUserMove = true,
+                BreakOnDamage = true,
+                BreakOnStun = true,
+                BreakOnTargetMove = true,
+                MovementThreshold = 0.1f,
+                TargetFinishedEvent = new ToggleOtherInternalsCompleteEvent(user, tank),
+                TargetCancelledEvent = new ToggleOtherInternalsCancelledEvent(),
+            });
+
+            return;
+        }
+
+        _gasTank.ConnectToInternals(tank);
     }
 
-    private static void OnToggleOtherInternalCanceled(ToggleOtherInternalsCancelledEvent ev)
+    private void OnToggleOtherInternalsComplete(EntityUid uid, InternalsComponent component, ToggleOtherInternalsCompleteEvent ev)
     {
-        ev.Component.CancelToken = null;
+        component.CancelToken = null;
+        ToggleInternals(uid, ev.User, true, component);
+    }
+
+    private static void OnToggleOtherInternalCanceled(EntityUid uid, InternalsComponent component, ToggleOtherInternalsCancelledEvent ev)
+    {
+        component.CancelToken = null;
     }
 
     private void OnInternalsStartup(EntityUid uid, InternalsComponent component, ComponentStartup args)
@@ -269,16 +265,11 @@ public sealed class InternalsSystem : EntitySystem
 
         return null;
     }
-    private sealed class ToggleOtherInternalsCompleteEvent : EntityEventArgs
+    private readonly record struct ToggleOtherInternalsCompleteEvent(EntityUid User, GasTankComponent Tank)
     {
-        public InternalsComponent Component = default!;
-        public EntityUid User { get; init; }
-        public EntityUid Target { get; init; }
-        public GasTankComponent? Tank { get; init; }
+        public readonly EntityUid User = User;
+        public readonly GasTankComponent Tank = Tank;
     }
 
-    private sealed class ToggleOtherInternalsCancelledEvent : EntityEventArgs
-    {
-        public InternalsComponent Component = default!;
-    }
+    private readonly record struct ToggleOtherInternalsCancelledEvent;
 }
