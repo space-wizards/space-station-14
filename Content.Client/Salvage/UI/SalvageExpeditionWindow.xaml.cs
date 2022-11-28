@@ -67,7 +67,7 @@ public sealed partial class SalvageExpeditionWindow : DefaultWindow,
 
             lBox.AddChild(new Label()
             {
-                Text = mission.MissionType.ToString(),
+                Text = "Mission",
                 FontColorOverride = Color.Gold,
                 HorizontalAlignment = HAlignment.Left,
             });
@@ -92,7 +92,7 @@ public sealed partial class SalvageExpeditionWindow : DefaultWindow,
 
             lBox.AddChild(new Label()
             {
-                Text = mission.Environment.ToString(),
+                Text = "Environment",
                 FontColorOverride = Color.Gold,
                 HorizontalAlignment = HAlignment.Left,
             });

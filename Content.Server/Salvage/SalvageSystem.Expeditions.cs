@@ -5,6 +5,7 @@ using Content.Server.Station.Systems;
 using Content.Shared.Salvage;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Random;
 
 namespace Content.Server.Salvage;
 
@@ -76,6 +77,7 @@ public sealed partial class SalvageSystem
     {
         component.Missions.Clear();
         int timeBlock = 15;
+        var configs = _prototypeManager.EnumeratePrototypes<SalvageExpeditionPrototype>().ToArray();
 
         // TODO: sealed record
         for (var i = 0; i < MissionLimit; i++)
@@ -83,7 +85,7 @@ public sealed partial class SalvageSystem
             var mission = new SalvageMission()
             {
                 Index = component.NextIndex,
-                MissionType = SalvageMissionType.Structure,
+                Config = _random.Pick(configs).ID,
                 Seed = _random.Next(),
                 Duration = TimeSpan.FromSeconds(_random.Next(9 * 60 / timeBlock, 12 * 60 / timeBlock) * timeBlock),
             };
@@ -141,8 +143,8 @@ public sealed partial class SalvageSystem
 
         switch (config.Environment)
         {
-            case SalvageEnvironment.Caves:
-                job = GetCaveJob(grid.Owner, grid, mission);
+            case SalvageCavesGen:
+                job = GetCaveJob(grid.Owner, grid, mission.Config, mission.Seed);
                 break;
             default:
                 return;

@@ -7,7 +7,7 @@ namespace Content.Server.Salvage.Expeditions;
 /// Per-faction config for Salvage Structure expeditions.
 /// </summary>
 [DataDefinition]
-public sealed class SalvageStructureDestroyFaction : IFactionExpeditionConfig
+public sealed class SalvageStructureFaction : IFactionExpeditionConfig
 {
     [ViewVariables(VVAccess.ReadWrite), DataField("spawn", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string Spawn = default!;

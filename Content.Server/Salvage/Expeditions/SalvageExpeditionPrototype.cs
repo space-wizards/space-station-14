@@ -8,10 +8,10 @@ public sealed class SalvageExpeditionPrototype : IPrototype
 {
     [IdDataField] public string ID { get; } = default!;
 
-    [DataField("config", required: true)] public ISalvageMission Expedition = default!;
+    [DataField("expedition", required: true)] public ISalvageMission Expedition = default!;
 
     [DataField("environment", required: true)]
-    public SalvageEnvironment Environment = SalvageEnvironment.Caves;
+    public ISalvageProcgen Environment = default!;
 
     [DataField("minDuration")]
     public TimeSpan MinDuration = TimeSpan.FromSeconds(9 * 60);

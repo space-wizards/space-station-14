@@ -1,4 +1,3 @@
-using Content.Shared.Salvage;
 using Robust.Shared.Map.Components;
 
 namespace Content.Server.Salvage;
