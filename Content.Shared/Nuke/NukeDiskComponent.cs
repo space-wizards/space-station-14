@@ -15,7 +15,7 @@ public sealed class NukeDiskComponent : Component
 
     [ViewVariables]
     [DataField("stationMap")]
-    public (MapId?, EntityUid?) StationMap;
+    public (EntityUid?, EntityUid?) StationMap;
 
     /// <summary>
     /// Checks if the disk should respawn on the station grid
@@ -25,4 +25,16 @@ public sealed class NukeDiskComponent : Component
     public bool Respawn = true;
 
     public string Disk = "NukeDisk";
+}
+
+public sealed class NukeDiskStationSetupEvent : EntityEventArgs
+{
+    public EntityUid Disk;
+    public NukeDiskComponent DiskComp;
+
+    public NukeDiskStationSetupEvent(EntityUid disk,NukeDiskComponent diskComp)
+    {
+        DiskComp = diskComp;
+        Disk = disk;
+    }
 }

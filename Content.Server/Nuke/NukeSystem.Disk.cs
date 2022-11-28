@@ -1,4 +1,5 @@
 ﻿using Content.Server.Administration.Logs;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.GameTicking;
 using Content.Server.Station.Components;
 using Content.Shared.Database;
@@ -13,11 +14,13 @@ public sealed partial class NukeSystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IAdminLogManager _adminLog = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
+    [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
 
     public void NukeDiskInitialize()
     {
         SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRunLevelChangedDisk);
-        SubscribeLocalEvent<NukeDiskComponent, MapInitEvent>(OnMapDiskInit);
+        SubscribeLocalEvent<NukeDiskStationSetupEvent>(OnSetupDiskStation);
+        SubscribeLocalEvent<NukeDiskComponent, ComponentStartup>(OnDiskStartup);
         SubscribeLocalEvent<NukeDiskComponent, ComponentShutdown>(OnDiskShutdown);
     }
 
@@ -36,52 +39,65 @@ public sealed partial class NukeSystem
         }
     }
 
-    private void OnMapDiskInit(EntityUid uid, NukeDiskComponent component, MapInitEvent args)
+    private void OnSetupDiskStation(NukeDiskStationSetupEvent ev)
     {
-        var originStation = _stationSystem.GetOwningStation(uid);
-        var xform = Transform(uid);
+        var originStation = _stationSystem.GetOwningStation(ev.Disk);
+        var xform = Transform(ev.Disk);
 
         if (originStation != null)
-            component.Station = originStation.Value;
+            ev.DiskComp.Station = originStation.Value;
 
-        //Set this up anyway in case originStation fails to set up properly for some reason
-        component.StationMap = (xform.MapID, xform.GridUid);
+        if (xform.GridUid != null)
+            ev.DiskComp.StationMap = (xform.MapUid, xform.GridUid);
+    }
+
+    private void OnDiskStartup(EntityUid uid, NukeDiskComponent component, ComponentStartup args)
+    {
+        var ev = new NukeDiskStationSetupEvent(uid, component);
+        QueueLocalEvent(ev);
     }
 
     private void OnDiskShutdown(EntityUid uid, NukeDiskComponent component, ComponentShutdown args)
     {
+        var diskMapUid = component.StationMap.Item1;
         var diskGridUid = component.StationMap.Item2;
 
-        if (!component.Respawn || !HasComp<StationMemberComponent>(diskGridUid))
+        if (!component.Respawn || !HasComp<StationMemberComponent>(diskGridUid) || diskMapUid == null)
             return;
 
-        if (TryFindRandomTile(diskGridUid.Value, 10, out var coords))
+        if (TryFindRandomTile(diskGridUid.Value, diskMapUid.Value, 10, out var coords))
         {
-            var mapCoords = coords.ToMap(EntityManager);
-            Spawn(component.Disk, mapCoords);
-            _adminLog.Add(LogType.Respawn, LogImpact.High, $"The nuclear disk was deleted and was respawned at {mapCoords}");
+            Spawn(component.Disk, coords);
+            _adminLog.Add(LogType.Respawn, LogImpact.High, $"The nuclear disk was deleted and was respawned at {coords}");
         }
 
         //If the above fails, spawn at the center of the grid on the station
         else
         {
             var xform = Transform(diskGridUid.Value);
+            var pos = xform.Coordinates;
             var mapPos = xform.MapPosition;
             var circle = new Circle(mapPos.Position, 2);
 
             if (!_mapManager.TryGetGrid(diskGridUid.Value, out var grid))
                 return;
 
+            var found = false;
+
             foreach (var tile in grid.GetTilesIntersecting(circle))
             {
-                if (tile.IsSpace(_tileDefinitionManager) || tile.IsBlockedTurf(true))
+                if (tile.IsSpace(_tileDefinitionManager) || tile.IsBlockedTurf(true) || !_atmosphere.IsTileMixtureProbablySafe(diskGridUid, diskMapUid.Value, grid.TileIndicesFor(mapPos)))
                     continue;
 
-                mapPos = tile.GridPosition().ToMap(EntityManager);
+                pos = tile.GridPosition();
+                found = true;
+
+                if (found)
+                    break;
             }
 
-            Spawn(component.Disk, mapPos);
-            _adminLog.Add(LogType.Respawn, LogImpact.High, $"The nuclear disk was deleted and was respawned at {mapPos}");
+            Spawn(component.Disk, pos);
+            _adminLog.Add(LogType.Respawn, LogImpact.High, $"The nuclear disk was deleted and was respawned at {pos}");
         }
     }
 
@@ -100,10 +116,11 @@ public sealed partial class NukeSystem
     /// Try to find a random safe tile on the supplied grid
     /// </summary>
     /// <param name="targetGrid">The grid that you're looking for a safe tile on</param>
+    /// <param name="targetMap">The map that you're looking for a safe tile on</param>
     /// <param name="maxAttempts">The maximum amount of attempts it should try before it gives up</param>
     /// <param name="targetCoords">If successful, the coordinates of the safe tile</param>
     /// <returns></returns>
-    public bool TryFindRandomTile(EntityUid targetGrid, int maxAttempts, out EntityCoordinates targetCoords)
+    public bool TryFindRandomTile(EntityUid targetGrid, EntityUid targetMap, int maxAttempts, out EntityCoordinates targetCoords)
     {
         targetCoords = EntityCoordinates.Invalid;
 
@@ -129,11 +146,12 @@ public sealed partial class NukeSystem
 
             tile = new Vector2i(randomX - (int) gridPos.X, randomY - (int) gridPos.Y);
             var mapPos = grid.GridTileToWorldPos(tile);
+            var mapTarget = grid.WorldToTile(mapPos);
             var circle = new Circle(mapPos, 2);
 
             foreach (var newTileRef in grid.GetTilesIntersecting(circle))
             {
-                if (newTileRef.IsSpace(_tileDefinitionManager) || newTileRef.IsBlockedTurf(true))
+                if (newTileRef.IsSpace(_tileDefinitionManager) || newTileRef.IsBlockedTurf(true) || !_atmosphere.IsTileMixtureProbablySafe(targetGrid, targetMap, mapTarget))
                     continue;
 
                 found = true;
