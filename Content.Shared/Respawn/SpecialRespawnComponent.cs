@@ -4,7 +4,7 @@ namespace Content.Shared.Respawn;
 
 /// <summary>
 /// This is to be used where you need some item respawned on station if it was deleted somehow in round
-/// Items like the nuke entity.
+/// Items like the nuke disk.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 public sealed class SpecialRespawnComponent: Component
