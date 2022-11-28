@@ -171,16 +171,23 @@ public sealed class MarkingSet
     ///     Filters sponsor markings unavailable for not sponsors check that from their prototype and allowed param
     /// </summary>
     /// <param name="sponsorMarkings">Sponsor markings that allowed to have.</param>
-    /// <param name="markingManager">Prototype manager.</param>
-    public void FilterSponsor(string[] sponsorMarkings, MarkingManager? markingManager = null)
+    /// <param name="markingManager">Markings manager.</param>
+    /// <param name="prototypeManager">Prototype manager.</param>
+    public void FilterSponsor(string[] sponsorMarkings, MarkingManager? markingManager = null, IPrototypeManager? prototypeManager = null)
     {
         IoCManager.Resolve(ref markingManager);
+        IoCManager.Resolve(ref prototypeManager);
 
         var toRemove = new List<(MarkingCategories category, string id)>();
         foreach (var (category, list) in _markings)
         {
             foreach (var marking in list)
             {
+                if (prototypeManager.TryIndex<MarkingPrototype>(marking.MarkingId, out var proto) && !proto.SponsorOnly)
+                {
+                    return;
+                }
+                
                 var allowedToHave = sponsorMarkings.Contains(marking.MarkingId);
                 if (!allowedToHave)
                 {
