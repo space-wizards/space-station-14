@@ -27,7 +27,7 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
         SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRunLevelChanged);
         SubscribeLocalEvent<SpecialRespawnComponent, SpecialRespawnSetupEvent>(OnSpecialRespawnSetup);
         SubscribeLocalEvent<SpecialRespawnComponent, ComponentStartup>(OnStartup);
-        SubscribeLocalEvent<SpecialRespawnComponent, ComponentShutdown>(OnShutdown);
+        SubscribeLocalEvent<SpecialRespawnComponent, EntityTerminatingEvent>(OnTermination);
     }
 
     private void OnRunLevelChanged(GameRunLevelChangedEvent ev)
@@ -73,7 +73,7 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
         RaiseLocalEvent(uid, ev);
     }
 
-    private void OnShutdown(EntityUid uid, SpecialRespawnComponent component, ComponentShutdown args)
+    private void OnTermination(EntityUid uid, SpecialRespawnComponent component, ref EntityTerminatingEvent args)
     {
         var entityMapUid = component.StationMap.Item1;
         var entityGridUid = component.StationMap.Item2;
@@ -81,7 +81,7 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
         if (!component.Respawn || !HasComp<StationMemberComponent>(entityGridUid) || entityMapUid == null)
             return;
 
-        if (!_mapManager.TryGetGrid(entityGridUid, out var grid) || MetaData(grid.GridEntityId).EntityLifeStage == EntityLifeStage.Deleted)
+        if (!_mapManager.TryGetGrid(entityGridUid, out var grid) || MetaData(entityGridUid.Value).EntityLifeStage >= EntityLifeStage.Terminating)
             return;
 
         if (TryFindRandomTile(entityGridUid.Value, entityMapUid.Value, 10, out var coords))
