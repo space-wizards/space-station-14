@@ -29,17 +29,11 @@ public sealed class SpecialRespawnComponent: Component
     /// </summary>
     [ViewVariables]
     [DataField("prototypeID")]
-    public string? Prototype;
+    public string Prototype = "";
 }
 
-public sealed class SpecialRespawnSetupEvent : EntityEventArgs
+[ByRefEvent]
+public struct SpecialRespawnSetupEvent
 {
-    public EntityUid Entity;
-    public SpecialRespawnComponent SpecialRespawnComp;
 
-    public SpecialRespawnSetupEvent(EntityUid entity,SpecialRespawnComponent specialRespawnComp)
-    {
-        Entity = entity;
-        SpecialRespawnComp = specialRespawnComp;
-    }
 }

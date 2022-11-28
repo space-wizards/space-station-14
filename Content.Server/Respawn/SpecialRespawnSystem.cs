@@ -25,7 +25,7 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
         base.Initialize();
 
         SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRunLevelChanged);
-        SubscribeLocalEvent<SpecialRespawnSetupEvent>(OnSpecialRespawnSetup);
+        SubscribeLocalEvent<SpecialRespawnComponent, SpecialRespawnSetupEvent>(OnSpecialRespawnSetup);
         SubscribeLocalEvent<SpecialRespawnComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<SpecialRespawnComponent, ComponentShutdown>(OnShutdown);
     }
@@ -44,16 +44,16 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
         }
     }
 
-    private void OnSpecialRespawnSetup(SpecialRespawnSetupEvent ev)
+    private void OnSpecialRespawnSetup(EntityUid uid, SpecialRespawnComponent component, ref SpecialRespawnSetupEvent ev)
     {
-        var originStation = _stationSystem.GetOwningStation(ev.Entity);
-        var xform = Transform(ev.Entity);
+        var originStation = _stationSystem.GetOwningStation(uid);
+        var xform = Transform(uid);
 
         if (originStation != null)
-            ev.SpecialRespawnComp.Station = originStation.Value;
+            component.Station = originStation.Value;
 
         if (xform.GridUid != null)
-            ev.SpecialRespawnComp.StationMap = (xform.MapUid, xform.GridUid);
+            component.StationMap = (xform.MapUid, xform.GridUid);
     }
 
     private void OnRoundEnd()
@@ -69,8 +69,8 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
 
     private void OnStartup(EntityUid uid, SpecialRespawnComponent component, ComponentStartup args)
     {
-        var ev = new SpecialRespawnSetupEvent(uid, component);
-        QueueLocalEvent(ev);
+        var ev = new SpecialRespawnSetupEvent();
+        RaiseLocalEvent(uid, ref ev);
     }
 
     private void OnShutdown(EntityUid uid, SpecialRespawnComponent component, ComponentShutdown args)
@@ -83,8 +83,7 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
 
         if (TryFindRandomTile(entityGridUid.Value, entityMapUid.Value, 10, out var coords))
         {
-            if (component.Prototype != null)
-                Respawn(component.Prototype, coords);
+            Respawn(component.Prototype, coords);
         }
 
         //If the above fails, spawn at the center of the grid on the station
@@ -112,8 +111,7 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
                     break;
             }
 
-            if (component.Prototype != null)
-                Respawn(component.Prototype, pos);
+            Respawn(component.Prototype, pos);
         }
     }
 
