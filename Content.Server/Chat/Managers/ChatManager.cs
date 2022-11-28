@@ -98,7 +98,7 @@ namespace Content.Server.Chat.Managers
                 ("adminChannelName", Loc.GetString("chat-manager-admin-channel-name")), ("message", FormattedMessage.EscapeText(message)));
 
             ChatMessageToMany(ChatChannel.Admin, message, wrappedMessage, default, false, true, clients);
-            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Admin announcement from {message}: {message}");
+            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Admin announcement: {message}");
         }
 
         public void SendHookOOC(string sender, string message)

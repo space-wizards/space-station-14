@@ -180,7 +180,7 @@ public sealed partial class ArtifactSystem
             comp.Owner = uid;
 
             var temp = (object) comp;
-            _serialization.Copy(entry.Component, ref temp);
+            _serialization.CopyTo(entry.Component, ref temp);
 
             EntityManager.AddComponent(uid, (Component) temp!, true);
         }
