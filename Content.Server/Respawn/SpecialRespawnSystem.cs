@@ -25,7 +25,7 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
         base.Initialize();
 
         SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRunLevelChanged);
-        SubscribeLocalEvent<SpecialRespawnComponent, SpecialRespawnSetupEvent>(OnSpecialRespawnSetup);
+        SubscribeLocalEvent<SpecialRespawnSetupEvent>(OnSpecialRespawnSetup);
         SubscribeLocalEvent<SpecialRespawnComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<SpecialRespawnComponent, EntityTerminatingEvent>(OnTermination);
     }
@@ -44,12 +44,15 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
         }
     }
 
-    private void OnSpecialRespawnSetup(EntityUid uid, SpecialRespawnComponent component, SpecialRespawnSetupEvent ev)
+    private void OnSpecialRespawnSetup(SpecialRespawnSetupEvent ev)
     {
-        var xform = Transform(uid);
+        if (!TryComp<SpecialRespawnComponent>(ev.Entity, out var comp))
+            return;
+
+        var xform = Transform(ev.Entity);
 
         if (xform.GridUid != null)
-            component.StationMap = (xform.MapUid, xform.GridUid);
+            comp.StationMap = (xform.MapUid, xform.GridUid);
     }
 
     private void OnRoundEnd()
@@ -65,8 +68,8 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
 
     private void OnStartup(EntityUid uid, SpecialRespawnComponent component, ComponentStartup args)
     {
-        var ev = new SpecialRespawnSetupEvent();
-        RaiseLocalEvent(uid, ev);
+        var ev = new SpecialRespawnSetupEvent(uid);
+        QueueLocalEvent(ev);
     }
 
     private void OnTermination(EntityUid uid, SpecialRespawnComponent component, ref EntityTerminatingEvent args)

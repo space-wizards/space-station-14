@@ -32,5 +32,10 @@ public sealed class SpecialRespawnComponent: Component
 
 public sealed class SpecialRespawnSetupEvent : EntityEventArgs
 {
+    public EntityUid Entity;
 
+    public SpecialRespawnSetupEvent(EntityUid entity)
+    {
+        Entity = entity;
+    }
 }
