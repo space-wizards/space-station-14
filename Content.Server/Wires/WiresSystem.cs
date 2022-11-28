@@ -463,14 +463,14 @@ public sealed class WiresSystem : EntitySystem
                 args.Handled = true;
             }
         }
-        else if (!component.IsBeingOpen && _toolSystem.HasQuality(args.Used, "Screwing", tool))
+        else if (!component.IsScrewing && _toolSystem.HasQuality(args.Used, "Screwing", tool))
         {
-            component.IsBeingOpen = _toolSystem.UseTool(args.Used, args.User, uid,
+            component.IsScrewing = _toolSystem.UseTool(args.Used, args.User, uid,
                 0f, ScrewTime, new[] { "Screwing" },
                 new WireToolFinishedEvent(uid),
                 new WireToolCanceledEvent(uid),
                 toolComponent: tool);
-            args.Handled = component.IsBeingOpen;
+            args.Handled = component.IsScrewing;
         }
     }
 
@@ -479,7 +479,7 @@ public sealed class WiresSystem : EntitySystem
         if (!EntityManager.TryGetComponent(args.Target, out WiresComponent? component))
             return;
 
-        component.IsBeingOpen = false;
+        component.IsScrewing = false;
         component.IsPanelOpen = !component.IsPanelOpen;
         UpdateAppearance(args.Target);
 
@@ -503,7 +503,7 @@ public sealed class WiresSystem : EntitySystem
         if (!TryComp(ev.Target, out WiresComponent? component))
             return;
 
-        component.IsBeingOpen = false;
+        component.IsScrewing = false;
     }
 
     private void OnExamine(EntityUid uid, WiresComponent component, ExaminedEvent args)
