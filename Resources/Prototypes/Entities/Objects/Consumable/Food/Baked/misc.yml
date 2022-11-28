@@ -397,7 +397,7 @@
   name: cannoli
   parent: FoodBakedBase
   id: FoodBakedCannoli
-  description: A sicilian treat that makes you into a wise guy.
+  description: A Sicilian treat that makes you into a wise guy.
   components:
   - type: Sprite
     state: cannoli
