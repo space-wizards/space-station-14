@@ -7,8 +7,8 @@
   - type: EnergySword
     litDamageBonus:
         types:
-            Slash: 8.5
-            Heat: 8.5
+            Slash: 15
+            Heat: 15
             Blunt: -4.5
     litDisarmMalus: 0.6
   - type: Sprite
