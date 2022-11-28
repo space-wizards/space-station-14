@@ -27,7 +27,7 @@ public sealed partial class ChemistrySystem
     /// <summary>
     ///     Default transfer amounts for the set-transfer verb.
     /// </summary>
-    public static readonly List<int> TransferAmounts = new() { 5, 10, 15};
+    public static readonly List<int> TransferAmounts = new() {1, 5, 10, 15};
     private void InitializeInjector()
     {
         SubscribeLocalEvent<InjectorComponent, GetVerbsEvent<AlternativeVerb>>(AddSetTransferVerbs);
@@ -173,6 +173,10 @@ public sealed partial class ChemistrySystem
         if (HasComp<MobStateComponent>(target) ||
             HasComp<BloodstreamComponent>(target))
         {
+            // Are use using an injector capible of targeting a mob?
+            if (component.IgnoreMobs)
+                return;
+
             InjectDoAfter(component, args.User, target);
             args.Handled = true;
             return;
@@ -394,8 +398,8 @@ public sealed partial class ChemistrySystem
             return;
         }
 
-        // Get transfer amount. May be smaller than _transferAmount if not enough room
-        var realTransferAmount = FixedPoint2.Min(component.TransferAmount, targetSolution.DrawAvailable);
+        // Get transfer amount. May be smaller than _transferAmount if not enough room, also make sure there's room in the injector
+        var realTransferAmount = FixedPoint2.Min(component.TransferAmount, targetSolution.DrawAvailable, solution.AvailableVolume);
 
         if (realTransferAmount <= 0)
         {

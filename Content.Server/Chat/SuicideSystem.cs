@@ -27,26 +27,27 @@ namespace Content.Server.Chat
         {
             // Checks to see if the CannotSuicide tag exits, ghosts instead.
             if (_tagSystem.HasTag(victim, "CannotSuicide"))
-            {
                 return false;
-            }
 
             // Checks to see if the player is dead.
             if (!TryComp<MobStateComponent>(victim, out var mobState) || _mobState.IsDead(victim, mobState))
-            {
                 return false;
-            }
 
-            _adminLogger.Add(LogType.Suicide,
-                            $"{EntityManager.ToPrettyString(victim):player} is committing suicide");
+            _adminLogger.Add(LogType.Suicide, $"{EntityManager.ToPrettyString(victim):player} is committing suicide");
 
             var suicideEvent = new SuicideEvent(victim);
 
+            //Check to see if there were any systems blocking this suicide
+            if (SuicideAttemptBlocked(victim, suicideEvent))
+                return false;
+
             // If you are critical, you wouldn't be able to use your surroundings to suicide, so you do the default suicide
             if (!_mobState.IsCritical(victim, mobState))
-            {
                 EnvironmentSuicideHandler(victim, suicideEvent);
-            }
+
+            if (suicideEvent.AttemptBlocked)
+                return false;
+
             DefaultSuicideHandler(victim, suicideEvent);
 
             ApplyDeath(victim, suicideEvent.Kind!.Value);
@@ -58,7 +59,9 @@ namespace Content.Server.Chat
         /// </summary>
         private static void DefaultSuicideHandler(EntityUid victim, SuicideEvent suicideEvent)
         {
-            if (suicideEvent.Handled) return;
+            if (suicideEvent.Handled)
+                return;
+
             var othersMessage = Loc.GetString("suicide-command-default-text-others", ("name", victim));
             victim.PopupMessageOtherClients(othersMessage);
 
@@ -68,10 +71,26 @@ namespace Content.Server.Chat
         }
 
         /// <summary>
-        /// Raise event to attempt to use held item, or surrounding entities to commit suicide
+        /// Checks to see if there are any other systems that prevent suicide
+        /// </summary>
+        /// <returns>Returns true if there was a blocked attempt</returns>
+        private bool SuicideAttemptBlocked(EntityUid victim, SuicideEvent suicideEvent)
+        {
+            RaiseLocalEvent(victim, suicideEvent, false);
+
+            if (suicideEvent.AttemptBlocked)
+                return true;
+
+            return false;
+        }
+
+        /// <summary>
+        /// Raise event to attempt to use held item, or surrounding entities to attempt to commit suicide
         /// </summary>
         private void EnvironmentSuicideHandler(EntityUid victim, SuicideEvent suicideEvent)
         {
+            var itemQuery = GetEntityQuery<ItemComponent>();
+
             // Suicide by held item
             if (EntityManager.TryGetComponent(victim, out HandsComponent? handsComponent)
                 && handsComponent.ActiveHandEntity is { } item)
@@ -81,8 +100,6 @@ namespace Content.Server.Chat
                 if (suicideEvent.Handled)
                     return;
             }
-
-            var itemQuery = GetEntityQuery<ItemComponent>();
 
             // Suicide by nearby entity (ex: Microwave)
             foreach (var entity in _entityLookupSystem.GetEntitiesInRange(victim, 1, LookupFlags.Approximate | LookupFlags.Anchored))
@@ -106,8 +123,7 @@ namespace Content.Server.Chat
             if (!_prototypeManager.TryIndex<DamageTypePrototype>(kind.ToString(), out var damagePrototype))
             {
                 const SuicideKind fallback = SuicideKind.Blunt;
-                Logger.Error(
-                    $"{nameof(SuicideSystem)} could not find the damage type prototype associated with {kind}. Falling back to {fallback}");
+                Logger.Error($"{nameof(SuicideSystem)} could not find the damage type prototype associated with {kind}. Falling back to {fallback}");
                 damagePrototype = _prototypeManager.Index<DamageTypePrototype>(fallback.ToString());
             }
             const int lethalAmountOfDamage = 200; // TODO: Would be nice to get this number from somewhere else

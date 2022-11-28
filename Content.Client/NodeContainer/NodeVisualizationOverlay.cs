@@ -140,7 +140,9 @@ namespace Content.Client.NodeContainer
             foreach (var (gridId, gridDict) in _gridIndex)
             {
                 var grid = _mapManager.GetGrid(gridId);
-                var lCursorBox = grid.InvWorldMatrix.TransformBox(cursorBox);
+                var (_, _, worldMatrix, invMatrix) = _entityManager.GetComponent<TransformComponent>(grid.GridEntityId).GetWorldPositionRotationMatrixWithInv();
+
+                var lCursorBox = invMatrix.TransformBox(cursorBox);
                 foreach (var (pos, list) in gridDict)
                 {
                     var centerPos = (Vector2) pos + grid.TileSize / 2f;
@@ -159,7 +161,7 @@ namespace Content.Client.NodeContainer
                     }
                 }
 
-                handle.SetTransform(grid.WorldMatrix);
+                handle.SetTransform(worldMatrix);
 
                 foreach (var nodeRenderData in _nodeIndex.Values)
                 {

@@ -6,7 +6,6 @@ namespace Content.Server.Construction.Components
     [RegisterComponent]
     public sealed class MachinePartComponent : Component
     {
-        [ViewVariables]
         [DataField("part", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
         public string PartType { get; private set; } = default!;
 

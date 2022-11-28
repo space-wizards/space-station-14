@@ -10,6 +10,7 @@ using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
@@ -100,7 +101,7 @@ public sealed class StationSystem : EntitySystem
     {
         if (e.NewStatus == SessionStatus.Connected)
         {
-            RaiseNetworkEvent(new StationsUpdatedEvent(_stations), Filter.SinglePlayer(e.Session));
+            RaiseNetworkEvent(new StationsUpdatedEvent(_stations), e.Session);
         }
     }
 
@@ -242,11 +243,11 @@ public sealed class StationSystem : EntitySystem
 
         foreach (var gridUid in component.Grids)
         {
-            if (!TryComp<IMapGridComponent>(gridUid, out var grid) ||
-                grid.Grid.LocalAABB.Size.LengthSquared < largestBounds.Size.LengthSquared)
+            if (!TryComp<MapGridComponent>(gridUid, out var grid) ||
+                grid.LocalAABB.Size.LengthSquared < largestBounds.Size.LengthSquared)
                 continue;
 
-            largestBounds = grid.Grid.LocalAABB;
+            largestBounds = grid.LocalAABB;
             largestGrid = gridUid;
         }
 
@@ -295,7 +296,7 @@ public sealed class StationSystem : EntitySystem
             bounds.Add(bound);
             if (!mapIds.Contains(mapId))
             {
-                mapIds.Add(grid.ParentMapId);
+                mapIds.Add(xform.MapID);
             }
         }
 
@@ -385,7 +386,7 @@ public sealed class StationSystem : EntitySystem
     /// <param name="stationData">Resolve pattern, station data component of station.</param>
     /// <param name="name">The name to assign to the grid if any.</param>
     /// <exception cref="ArgumentException">Thrown when mapGrid or station are not a grid or station, respectively.</exception>
-    public void AddGridToStation(EntityUid station, EntityUid mapGrid, IMapGridComponent? gridComponent = null, StationDataComponent? stationData = null, string? name = null)
+    public void AddGridToStation(EntityUid station, EntityUid mapGrid, MapGridComponent? gridComponent = null, StationDataComponent? stationData = null, string? name = null)
     {
         if (!Resolve(mapGrid, ref gridComponent))
             throw new ArgumentException("Tried to initialize a station on a non-grid entity!", nameof(mapGrid));
@@ -412,7 +413,7 @@ public sealed class StationSystem : EntitySystem
     /// <param name="gridComponent">Resolve pattern, grid component of mapGrid.</param>
     /// <param name="stationData">Resolve pattern, station data component of station.</param>
     /// <exception cref="ArgumentException">Thrown when mapGrid or station are not a grid or station, respectively.</exception>
-    public void RemoveGridFromStation(EntityUid station, EntityUid mapGrid, IMapGridComponent? gridComponent = null, StationDataComponent? stationData = null)
+    public void RemoveGridFromStation(EntityUid station, EntityUid mapGrid, MapGridComponent? gridComponent = null, StationDataComponent? stationData = null)
     {
         if (!Resolve(mapGrid, ref gridComponent))
             throw new ArgumentException("Tried to initialize a station on a non-grid entity!", nameof(mapGrid));
@@ -487,7 +488,7 @@ public sealed class StationSystem : EntitySystem
             return entity;
         }
 
-        if (TryComp<IMapGridComponent>(entity, out _))
+        if (TryComp<MapGridComponent>(entity, out _))
         {
             // We are the station, just check ourselves.
             return CompOrNull<StationMemberComponent>(entity)?.Station;

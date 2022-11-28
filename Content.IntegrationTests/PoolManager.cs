@@ -23,6 +23,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -43,11 +44,9 @@ public static class PoolManager
         (CCVars.DatabaseSqliteDelay.Name, "0", false),
         (CCVars.HolidaysEnabled.Name, "false", false),
         (CCVars.GameMap.Name, "Empty", true),
-        (CCVars.GameMapForced.Name, "true", true),
         (CCVars.AdminLogsQueueSendDelay.Name, "0", true),
         (CCVars.NetPVS.Name, "false", true),
         (CCVars.NPCMaxUpdates.Name, "999999", true),
-        (CCVars.GameMapForced.Name, "true", true),
         (CCVars.SysWinTickPeriod.Name, "0", true),
         (CCVars.ContactMinimumThreads.Name, "1", true),
         (CCVars.ContactMultithreadThreshold.Name, "999", true),
@@ -754,7 +753,7 @@ public sealed class PoolSettings
 public sealed class TestMapData
 {
     public MapId MapId { get; set; }
-    public IMapGrid MapGrid { get; set; }
+    public MapGridComponent MapGrid { get; set; }
     public EntityCoordinates GridCoords { get; set; }
     public MapCoordinates MapCoords { get; set; }
     public TileRef Tile { get; set; }

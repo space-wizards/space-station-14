@@ -7,6 +7,7 @@ using JetBrains.Annotations;
 using Robust.Server.GameStates;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Dynamics;
@@ -130,7 +131,7 @@ namespace Content.Server.Singularity.EntitySystems
         private bool CanDestroy(SharedSingularityComponent component, EntityUid entity)
         {
             return entity != component.Owner &&
-                   !EntityManager.HasComponent<IMapGridComponent>(entity) &&
+                   !EntityManager.HasComponent<MapGridComponent>(entity) &&
                    !EntityManager.HasComponent<GhostComponent>(entity) &&
                    !EntityManager.HasComponent<StationDataComponent>(entity) && // these SHOULD be in null-space... but just in case. Also, maybe someone moves a singularity there..
                    (component.Level > 4 ||
@@ -180,7 +181,7 @@ namespace Content.Server.Singularity.EntitySystems
         private bool CanPull(EntityUid entity)
         {
             return !(EntityManager.HasComponent<GhostComponent>(entity) ||
-                   EntityManager.HasComponent<IMapGridComponent>(entity) ||
+                   EntityManager.HasComponent<MapGridComponent>(entity) ||
                    EntityManager.HasComponent<MapComponent>(entity) ||
                    EntityManager.HasComponent<ServerSingularityComponent>(entity) ||
                    _container.IsEntityInContainer(entity));

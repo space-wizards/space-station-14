@@ -1,5 +1,6 @@
 using Content.Server.GameTicking;
 using Content.Shared.Traits;
+using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager;
 
@@ -28,10 +29,16 @@ public sealed class TraitSystem : EntitySystem
                 return;
             }
 
+            if (traitPrototype.Whitelist != null && !traitPrototype.Whitelist.IsValid(args.Mob))
+                continue;
+
+            if (traitPrototype.Blacklist != null && traitPrototype.Blacklist.IsValid(args.Mob))
+                continue;
+
             // Add all components required by the prototype
             foreach (var entry in traitPrototype.Components.Values)
             {
-                var comp = (Component) _serializationManager.Copy(entry.Component);
+                var comp = (Component) _serializationManager.CreateCopy(entry.Component);
                 comp.Owner = args.Mob;
                 EntityManager.AddComponent(args.Mob, comp);
             }

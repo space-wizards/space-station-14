@@ -349,3 +349,16 @@
       amount: 1
   products:
     Charcoal: 1
+
+- type: reaction
+  id: NorepinephricAcid
+  impact: Medium
+  reactants:
+    Uranium:
+      amount: 2
+    Hydrogen:
+      amount: 1
+    Oxygen:
+      amount: 1
+  products:
+    NorepinephricAcid: 2

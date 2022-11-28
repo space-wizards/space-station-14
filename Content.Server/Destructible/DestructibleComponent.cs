@@ -9,7 +9,6 @@ namespace Content.Server.Destructible
     [RegisterComponent]
     public sealed class DestructibleComponent : Component
     {
-        [ViewVariables]
         [DataField("thresholds")]
         public List<DamageThreshold> Thresholds = new();
 

@@ -1,6 +1,6 @@
 ﻿using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
-using Content.Shared.Buckle.Components;
+using Content.Shared.Buckle;
 using Content.Shared.Doors.Components;
 using Content.Shared.Hands;
 using Content.Shared.Hands.EntitySystems;
@@ -33,6 +33,7 @@ public sealed class BlockingSystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly SharedBuckleSystem _buckleSystem = default!;
 
     public override void Initialize()
     {
@@ -117,13 +118,14 @@ public sealed class BlockingSystem : EntitySystem
     /// Creates a new hard fixture to bodyblock
     /// Also makes the user static to prevent prediction issues
     /// </summary>
-    /// <param name="uid"> The entity with the blocking component</param>
+    /// <param name="item"> The entity with the blocking component</param>
     /// <param name="component"> The <see cref="BlockingComponent"/></param>
     /// <param name="user"> The entity who's using the item to block</param>
     /// <returns></returns>
     public bool StartBlocking(EntityUid item, BlockingComponent component, EntityUid user)
     {
-        if (component.IsBlocking) return false;
+        if (component.IsBlocking)
+            return false;
 
         var xform = Transform(user);
 
@@ -135,8 +137,8 @@ public sealed class BlockingSystem : EntitySystem
 
         if (component.BlockingToggleAction != null)
         {
-            //Don't allow someone to block if they're in a container.
-            if (_containerSystem.IsEntityInContainer(user) || !_mapManager.TryFindGridAt(xform.MapPosition, out var grid))
+            //Don't allow someone to block if they're not parented to a grid
+            if (xform.GridUid != xform.ParentUid)
             {
                 CantBlockError(user);
                 return false;

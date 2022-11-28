@@ -45,6 +45,7 @@ using Content.Shared.Tabletop.Components;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
@@ -87,7 +88,7 @@ public sealed partial class AdminVerbSystem
             return;
 
         // 1984.
-        if (HasComp<IMapComponent>(args.Target) || HasComp<IMapGridComponent>(args.Target))
+        if (HasComp<MapComponent>(args.Target) || HasComp<MapGridComponent>(args.Target))
             return;
 
         Verb explode = new()

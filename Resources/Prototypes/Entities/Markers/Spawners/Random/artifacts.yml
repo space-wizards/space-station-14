@@ -9,16 +9,17 @@
         - texture: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi/ano01.png
     - type: RandomSpawner
       prototypes:
-        - BadfeelingArtifact
-        - GoodfeelingArtifact
-        - AngryMobsSpawnArtifact
-        - JunkSpawnArtifact
-        - BananaSpawnArtifact
-        - HeatArtifact
-        - ColdArtifact
-        - RadiateArtifact
-        - GasArtifact
-        - DiseaseArtifact
+        - SimpleXenoArtifact
+        - MediumXenoArtifact
+        - MediumXenoArtifact
+        - MediumXenoArtifact
+        - MediumXenoArtifact
+        - ComplexXenoArtifact
+        - ComplexXenoArtifact
+        - ComplexXenoArtifact
+        - SimpleXenoArtifactItem
+        - MediumXenoArtifactItem
+        - ComplexXenoArtifactItem
       chance: 1
 
 - type: entity

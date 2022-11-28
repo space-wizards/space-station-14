@@ -95,12 +95,17 @@
     - type: PoweredLightVisualizer
       blinkingSound:
         path: "/Audio/Machines/light_tube_on.ogg"
+  - type: SignalReceiver
+    inputs:
+      On: []
+      Off: []
+      Toggle: []
 
 - type: entity
   id: PoweredLightPostSmall
   name: post light
   description: "A light fixture. Draws power and produces light when equipped with a light tube."
-  suffix:
+  suffix: ""
   parent: PoweredLightPostSmallEmpty
   components:
   - type: Sprite

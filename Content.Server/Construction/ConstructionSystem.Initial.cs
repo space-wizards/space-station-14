@@ -79,8 +79,10 @@ namespace Content.Server.Construction
 
             var pos = Transform(user).MapPosition;
 
-            foreach (var near in _lookupSystem.GetEntitiesInRange(user, 2f, LookupFlags.Approximate))
+            foreach (var near in _lookupSystem.GetEntitiesInRange(pos, 2f, LookupFlags.Contained | LookupFlags.Dynamic | LookupFlags.Sundries | LookupFlags.Approximate))
             {
+                if (near == user)
+                    continue;
                 if (_interactionSystem.InRangeUnobstructed(pos, near, 2f) && _container.IsInSameOrParentContainer(user, near))
                     yield return near;
             }
@@ -306,7 +308,7 @@ namespace Content.Server.Construction
             var targetNode = constructionGraph.Nodes[constructionPrototype.TargetNode];
             var pathFind = constructionGraph.Path(startNode.Name, targetNode.Name);
 
-            if (args.SenderSession.AttachedEntity is not {Valid: true} user || _actionBlocker.CanInteract(user, null))
+            if (args.SenderSession.AttachedEntity is not {Valid: true} user || !_actionBlocker.CanInteract(user, null))
                 return;
 
             if (!HasComp<HandsComponent>(user))

@@ -11,32 +11,27 @@ public sealed class AtmosAlarmThreshold : IPrototype, ISerializationHooks
 {
     [IdDataField]
     public string ID { get; } = default!;
-    [ViewVariables]
     [DataField("ignore")]
     public bool Ignore;
 
     // zero bounds are not allowed - just
     // set the bound to null if you want
     // to disable it
-    [ViewVariables]
     [DataField("upperBound")]
     public float? UpperBound { get; private set; }
 
-    [ViewVariables]
     [DataField("lowerBound")]
     public float? LowerBound { get; private set; }
 
     // upper warning percentage
     // must always cause UpperWarningBound
     // to be smaller
-    [ViewVariables]
     [DataField("upperWarnAround")]
     public float? UpperWarningPercentage { get; private set; }
 
     // lower warning percentage
     // must always cause LowerWarningBound
     // to be larger
-    [ViewVariables]
     [DataField("lowerWarnAround")]
     public float? LowerWarningPercentage { get; private set; }
 

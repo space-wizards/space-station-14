@@ -3,7 +3,6 @@
   mapName: 'Pirate Ship'
   mapPath: /Maps/pirate.yml
   minPlayers: 0
-  votable: false
   stations:
     Station: #TODO: Mapper, add a BecomesStation component to the primary grid of the map.
       mapNameTemplate: '{0} Pirate {1}'

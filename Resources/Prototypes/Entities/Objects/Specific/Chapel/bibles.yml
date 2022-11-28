@@ -18,6 +18,8 @@
     damageOnUntrainedUse: ## What a non-chaplain takes when attempting to heal someone
       groups:
         Burn: 10
+  - type: Prayable
+    bibleUserOnly: true
   - type: Summonable
     specialItem: SpawnPointGhostRemilia
   - type: ItemCooldown

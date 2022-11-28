@@ -90,17 +90,19 @@ namespace Content.Server.Shuttles.Systems
             var enlargedAABB = aabb.Value.Enlarged(DockingRadius * 1.5f);
 
             // Get any docking ports in range on other grids.
-            _mapManager.FindGridsIntersectingEnumerator(dockingXform.MapID, enlargedAABB, out var enumerator);
-
-            while (enumerator.MoveNext(out var otherGrid))
+            foreach (var otherGrid in _mapManager.FindGridsIntersecting(dockingXform.MapID, enlargedAABB))
             {
-                if (otherGrid.GridEntityId == dockingXform.GridUid) continue;
+                if (otherGrid.GridEntityId == dockingXform.GridUid)
+                    continue;
 
                 foreach (var ent in otherGrid.GetAnchoredEntities(enlargedAABB))
                 {
                     if (!TryComp(ent, out DockingComponent? otherDocking) ||
                         !otherDocking.Enabled ||
-                        !TryComp(ent, out PhysicsComponent? otherBody)) continue;
+                        !TryComp(ent, out PhysicsComponent? otherBody))
+                    {
+                        continue;
+                    }
 
                     var otherTransform = otherBody.GetTransform();
                     var otherDockingFixture = _fixtureSystem.GetFixtureOrNull(otherBody, DockingFixture);
@@ -350,26 +352,28 @@ namespace Content.Server.Shuttles.Systems
             dockB.DockJoint = joint;
             dockB.DockJointId = joint.ID;
 
-            if (TryComp<AirlockComponent>(dockA.Owner, out var airlockA))
-            {
-                airlockA.SetBoltsWithAudio(true);
-            }
-
-            if (TryComp<AirlockComponent>(dockB.Owner, out var airlockB))
-            {
-                airlockB.SetBoltsWithAudio(true);
-            }
-
             if (TryComp(dockA.Owner, out DoorComponent? doorA))
-            {
-                doorA.ChangeAirtight = false;
-                _doorSystem.StartOpening(doorA.Owner, doorA);
+            {   
+                if (_doorSystem.TryOpen(doorA.Owner, doorA))
+                {
+                    doorA.ChangeAirtight = false;
+                    if (TryComp<AirlockComponent>(dockA.Owner, out var airlockA))
+                    {
+                        airlockA.SetBoltsWithAudio(true);
+                    }
+                }
             }
 
             if (TryComp(dockB.Owner, out DoorComponent? doorB))
             {
-                doorB.ChangeAirtight = false;
-                _doorSystem.StartOpening(doorB.Owner, doorB);
+                if (_doorSystem.TryOpen(doorB.Owner, doorB))
+                {
+                    doorB.ChangeAirtight = false;
+                    if (TryComp<AirlockComponent>(dockB.Owner, out var airlockB))
+                    {
+                        airlockB.SetBoltsWithAudio(true);
+                    }
+                }
             }
 
             if (_pathfinding.TryCreatePortal(dockAXform.Coordinates, dockBXform.Coordinates, out var handle))
@@ -462,14 +466,18 @@ namespace Content.Server.Shuttles.Systems
 
             if (TryComp(dock.Owner, out DoorComponent? doorA))
             {
-                doorA.ChangeAirtight = true;
-                _doorSystem.TryClose(doorA.Owner, doorA);
+                if (_doorSystem.TryClose(doorA.Owner, doorA))
+                {
+                    doorA.ChangeAirtight = true;
+                }
             }
 
             if (TryComp(dock.DockedWith, out DoorComponent? doorB))
             {
-                doorB.ChangeAirtight = true;
-                _doorSystem.TryClose(doorB.Owner, doorB);
+                if (_doorSystem.TryClose(doorB.Owner, doorB))
+                {
+                    doorB.ChangeAirtight = true;
+                }
             }
 
             if (LifeStage(dock.Owner) < EntityLifeStage.Terminating)

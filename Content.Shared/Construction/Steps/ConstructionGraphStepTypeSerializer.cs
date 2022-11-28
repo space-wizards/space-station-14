@@ -42,7 +42,8 @@ namespace Content.Shared.Construction.Steps
             MappingDataNode node,
             IDependencyCollection dependencies,
             bool skipHook,
-            ISerializationContext? context = null, ConstructionGraphStep? _ = null)
+            ISerializationContext? context = null,
+            ISerializationManager.InstantiationDelegate<ConstructionGraphStep>? instanceProvider = null)
         {
             var type = GetType(node) ??
                        throw new ArgumentException(
