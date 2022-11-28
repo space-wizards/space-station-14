@@ -1,5 +1,4 @@
-﻿using System.Threading;
-using Content.Server.Atmos;
+﻿using Content.Server.Atmos;
 using Content.Shared.Atmos;
 using Content.Shared.Medical.Cryogenics;
 
@@ -61,6 +60,4 @@ public sealed class CryoPodComponent: SharedCryoPodComponent, IGasMixtureHolder
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("pryDelay")]
     public float PryDelay = 5f;
-
-    public CancellationTokenSource? DragDropCancelToken;
 }

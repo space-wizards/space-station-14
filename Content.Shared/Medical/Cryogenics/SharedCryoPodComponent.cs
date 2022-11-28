@@ -1,4 +1,5 @@
-﻿using Content.Shared.Body.Components;
+﻿using System.Threading;
+using Content.Shared.Body.Components;
 using Content.Shared.DragDrop;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
@@ -31,11 +32,12 @@ public abstract class SharedCryoPodComponent: Component, IDragDropOn
 
     public bool IsPrying { get; set; }
 
+    public CancellationTokenSource? DragDropCancelToken;
+
     [Serializable, NetSerializable]
     public enum CryoPodVisuals : byte
     {
         ContainsEntity,
-        PanelOpen,
         IsOn
     }
 

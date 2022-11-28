@@ -119,6 +119,7 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
             BreakOnUserMove = true,
             NeedHand = false,
             TargetFinishedEvent = new DoInsertCryoPodEvent(args.Dragged),
+            TargetCancelledEvent = new DoInsertCancelledCryoPodEvent()
         };
         _doAfterSystem.DoAfter(doAfterArgs);
         args.Handled = true;
