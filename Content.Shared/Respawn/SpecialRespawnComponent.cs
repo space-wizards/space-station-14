@@ -32,8 +32,7 @@ public sealed class SpecialRespawnComponent: Component
     public string Prototype = "";
 }
 
-[ByRefEvent]
-public struct SpecialRespawnSetupEvent
+public sealed class SpecialRespawnSetupEvent : EntityEventArgs
 {
 
 }

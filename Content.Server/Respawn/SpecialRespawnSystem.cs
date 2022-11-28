@@ -44,7 +44,7 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
         }
     }
 
-    private void OnSpecialRespawnSetup(EntityUid uid, SpecialRespawnComponent component, ref SpecialRespawnSetupEvent ev)
+    private void OnSpecialRespawnSetup(EntityUid uid, SpecialRespawnComponent component, SpecialRespawnSetupEvent ev)
     {
         var originStation = _stationSystem.GetOwningStation(uid);
         var xform = Transform(uid);
@@ -70,7 +70,7 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
     private void OnStartup(EntityUid uid, SpecialRespawnComponent component, ComponentStartup args)
     {
         var ev = new SpecialRespawnSetupEvent();
-        RaiseLocalEvent(uid, ref ev);
+        RaiseLocalEvent(uid, ev);
     }
 
     private void OnShutdown(EntityUid uid, SpecialRespawnComponent component, ComponentShutdown args)
