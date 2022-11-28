@@ -29,7 +29,7 @@ public sealed class SpecialRespawnComponent: Component
     /// </summary>
     [ViewVariables]
     [DataField("prototypeID")]
-    public string Prototype = "";
+    public string? Prototype;
 }
 
 public sealed class SpecialRespawnSetupEvent : EntityEventArgs

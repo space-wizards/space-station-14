@@ -83,7 +83,8 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
 
         if (TryFindRandomTile(entityGridUid.Value, entityMapUid.Value, 10, out var coords))
         {
-            Respawn(component.Prototype, coords);
+            if (component.Prototype != null)
+                Respawn(component.Prototype, coords);
         }
 
         //If the above fails, spawn at the center of the grid on the station
@@ -104,14 +105,15 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
                 if (tile.IsSpace(_tileDefinitionManager) || tile.IsBlockedTurf(true) || !_atmosphere.IsTileMixtureProbablySafe(entityGridUid, entityMapUid.Value, grid.TileIndicesFor(mapPos)))
                     continue;
 
-                coords = tile.GridPosition();
+                pos = tile.GridPosition();
                 found = true;
 
                 if (found)
                     break;
             }
 
-            Respawn(component.Prototype, coords);
+            if (component.Prototype != null)
+                Respawn(component.Prototype, pos);
         }
     }
 
