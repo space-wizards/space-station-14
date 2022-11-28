@@ -7,12 +7,11 @@ namespace Content.Server.Salvage;
 
 public sealed class SalvageJob : Job<EntityUid>
 {
-    public SalvageJob(double maxTime, CancellationToken cancellation = default) : base(maxTime, cancellation)
-    {
-    }
+    private Random _random;
 
-    public SalvageJob(double maxTime, IStopwatch stopwatch, CancellationToken cancellation = default) : base(maxTime, stopwatch, cancellation)
+    public SalvageJob(int seed, double maxTime, CancellationToken cancellation = default) : base(maxTime, cancellation)
     {
+        _random = new Random(seed);
     }
 
     protected override Task<EntityUid> Process()

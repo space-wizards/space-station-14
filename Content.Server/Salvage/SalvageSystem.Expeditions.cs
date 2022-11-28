@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server.CPUJob.JobQueues.Queues;
+using Content.Server.Salvage.Expeditions;
 using Content.Server.Station.Systems;
 using Content.Shared.Salvage;
 using Robust.Server.GameObjects;
@@ -11,6 +12,7 @@ public sealed partial class SalvageSystem
 {
     private const int MissionLimit = 5;
 
+    private const double SalvageGenTime = 0.005;
     private readonly JobQueue _salvageQueue = new();
 
     private void InitializeExpeditions()
@@ -31,7 +33,6 @@ public sealed partial class SalvageSystem
         if (!data.Missions.TryGetValue(args.Index, out var mission))
             return;
 
-        // TODO: Mark it as claimed.
         SpawnMission(mission);
 
         data.ActiveMission = args.Index;
@@ -131,18 +132,17 @@ public sealed partial class SalvageSystem
 
     private void SpawnMission(SalvageMission mission)
     {
-        var seed = new Random(mission.Seed);
         var mapId = _mapManager.CreateMap();
         var grid = EnsureComp<MapGridComponent>(_mapManager.GetMapEntityId(mapId));
 
-        // No point raising an event for this IG considering it's just gonna ba procgen thing?
+        // No point raising an event for this when it's 1-1.
         SalvageJob job;
+        var config = _prototypeManager.Index<SalvageExpeditionPrototype>(mission.Config);
 
-        switch (mission.Environment)
+        switch (config.Environment)
         {
             case SalvageEnvironment.Caves:
-                // CA
-                job = new SalvageJob(0.005);
+                job = GetCaveJob(grid.Owner, grid, mission);
                 break;
             default:
                 return;

@@ -1,10 +1,9 @@
-<controls:FancyWindow xmlns="https://spacestation14.io"
-                           xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-                           Title="{Loc 'Salvage expeditions'}"
-                           MinSize="400 400">
+<DefaultWindow xmlns="https://spacestation14.io"
+               Title="{Loc 'Salvage expeditions'}"
+                        MinSize="400 400">
 <BoxContainer Name="Container"
               Orientation="Vertical"
               Margin="5">
 
 </BoxContainer>
-</controls:FancyWindow>
+</DefaultWindow>

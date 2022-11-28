@@ -1,6 +1,7 @@
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Salvage;
 
@@ -33,7 +34,6 @@ public sealed class ClaimSalvageMessage : BoundUserInterfaceMessage
 {
     public ushort Index;
 }
-
 
 /// <summary>
 /// Added per station to store data on their available salvage missions.
@@ -70,19 +70,14 @@ public sealed class SalvageMission
     [ViewVariables]
     public ushort Index;
 
-    [ViewVariables]
-    public SalvageMissionType MissionType = SalvageMissionType.Invalid;
-
-    [ViewVariables]
-    public SalvageEnvironment Environment = SalvageEnvironment.Invalid;
+    [ViewVariables(VVAccess.ReadWrite), DataField("config", required: true)]
+    public string Config = default!;
 
     [ViewVariables] public TimeSpan Duration;
 
     [ViewVariables] public int Seed;
 
-    // TODO: Config
-
-    // TODO: Environment modifiers
+    // TODO: Environment mods
 
     // TODO: Hazard pay
 }
@@ -92,17 +87,6 @@ public enum SalvageEnvironment : byte
 {
     Invalid = 0,
     Caves,
-}
-
-[Serializable, NetSerializable]
-public enum SalvageMissionType : byte
-{
-    Invalid = 0,
-
-    /// <summary>
-    /// Destroy specific structures.
-    /// </summary>
-    Structure,
 }
 
 [Serializable, NetSerializable]

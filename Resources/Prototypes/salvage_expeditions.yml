@@ -1,0 +1,32 @@
+# Expedition configs
+- type: salvageExpedition
+  id: CaveStructures
+  expedition: !type:SalvageStructureDestroy
+  procgen: !type:Caves
+  minDuration: 540
+  maxDuration: 720
+  factions:
+    - Xenos
+
+# Factions
+- type: salvageFaction
+  id: Carps
+  mobWeights:
+    mobCarp: 1
+  configs:
+    - !type:SalvageDestroyStructureFaction
+        spawn: XenoNode
+
+- type: salvageFaction
+  id: Xenos
+  mobWeights:
+    MobXeno: 1
+    MobXenoRunner: 3
+    MobXenoSpitter: 5
+    MobXenoDrone: 5
+    MobPraetorian: 8
+    MobXenoRavager: 8
+    MobXenoQueen: 15
+  configs:
+  - !type:SalvageStructureDestroyFaction
+      spawn: XenoNode
