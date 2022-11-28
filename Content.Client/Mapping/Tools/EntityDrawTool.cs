@@ -83,8 +83,6 @@ public sealed class EntityDrawTool : DrawingLikeTool
                 newSc.AddLayer(texture.Default);
             }
         }
-
-        Logger.Debug($"bwuh, {newEnt}, {newSc.AllLayers.Count()}");
     }
 
     public override SpriteSpecifier ToolActivityIcon =>

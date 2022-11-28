@@ -19,8 +19,6 @@ public sealed class AlignedSnappingMode : SnappingModeImpl
 
     public override Type? SnappingModeConfigControl { get; } = null;
 
-
-
     public override EntityCoordinates Snap(EntityCoordinates coords)
     {
         return coords.WithPosition(((coords.Position + InitialOffset) * Divisor).Floored() / (float)Divisor + Offset);
@@ -28,6 +26,8 @@ public sealed class AlignedSnappingMode : SnappingModeImpl
 
     public override void DrawSnapGuides(EntityCoordinates coords, in OverlayDrawArgs args)
     {
+        var world = args.WorldHandle;
+        var scale = args.Viewport.RenderScale;
         return;
     }
 
@@ -42,7 +42,7 @@ public sealed class AlignedSnappingMode : SnappingModeImpl
 
     public override bool ValidateNewInitialPoint(EntityCoordinates old, EntityCoordinates @new)
     {
-        if (@new.TryDistance(_entity, old, out var dist) && dist >= (1.0f/Divisor))
+        if (Snap(old) != Snap(@new))
         {
             return true;
         }
