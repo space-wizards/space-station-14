@@ -6,7 +6,7 @@
   components:
   - type: NukeDisk
   - type: SpecialRespawn
-    prototypeID: NukeDisk
+    prototype: NukeDisk
   - type: Sprite
     netsync: false
     sprite: Objects/Misc/nukedisk.rsi

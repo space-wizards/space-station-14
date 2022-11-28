@@ -30,7 +30,7 @@ public sealed class SpecialRespawnComponent: Component
     /// The prototypeID of the entity to be respawned
     /// </summary>
     [ViewVariables]
-    [DataField("prototypeID", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [DataField("prototype", required:true, customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string Prototype = "";
 }
 
