@@ -19,7 +19,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Nuke
 {
-    public sealed partial class NukeSystem : EntitySystem
+    public sealed class NukeSystem : EntitySystem
     {
         [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
         [Dependency] private readonly PopupSystem _popups = default!;
@@ -44,7 +44,6 @@ namespace Content.Server.Nuke
         public override void Initialize()
         {
             base.Initialize();
-            NukeDiskInitialize();
 
             SubscribeLocalEvent<NukeComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<NukeComponent, ComponentRemove>(OnRemove);

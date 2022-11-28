@@ -2,31 +2,36 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.GameTicking;
 using Content.Server.Station.Components;
+using Content.Server.Station.Systems;
 using Content.Shared.Database;
 using Content.Shared.Maps;
-using Content.Shared.Nuke;
+using Content.Shared.Respawn;
 using Robust.Shared.Map;
+using Robust.Shared.Random;
 
-namespace Content.Server.Nuke;
+namespace Content.Server.Respawn;
 
-public sealed partial class NukeSystem
+public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IAdminLogManager _adminLog = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly StationSystem _stationSystem = default!;
 
-    public void NukeDiskInitialize()
+    public override void Initialize()
     {
-        SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRunLevelChangedDisk);
-        SubscribeLocalEvent<NukeDiskStationSetupEvent>(OnSetupDiskStation);
-        SubscribeLocalEvent<NukeDiskComponent, ComponentStartup>(OnDiskStartup);
-        SubscribeLocalEvent<NukeDiskComponent, ComponentShutdown>(OnDiskShutdown);
+        base.Initialize();
+
+        SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRunLevelChanged);
+        SubscribeLocalEvent<SpecialRespawnSetupEvent>(OnSpecialRespawnSetup);
+        SubscribeLocalEvent<SpecialRespawnComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<SpecialRespawnComponent, ComponentShutdown>(OnShutdown);
     }
 
-    private void OnRunLevelChangedDisk(GameRunLevelChangedEvent ev)
+    private void OnRunLevelChanged(GameRunLevelChangedEvent ev)
     {
-
         //Try to compensate for restartroundnow command
         if (ev.Old == GameRunLevel.InRound && ev.New == GameRunLevel.PreRoundLobby)
             OnRoundEnd();
@@ -39,80 +44,90 @@ public sealed partial class NukeSystem
         }
     }
 
-    private void OnSetupDiskStation(NukeDiskStationSetupEvent ev)
+    private void OnSpecialRespawnSetup(SpecialRespawnSetupEvent ev)
     {
-        var originStation = _stationSystem.GetOwningStation(ev.Disk);
-        var xform = Transform(ev.Disk);
+        var originStation = _stationSystem.GetOwningStation(ev.Entity);
+        var xform = Transform(ev.Entity);
 
         if (originStation != null)
-            ev.DiskComp.Station = originStation.Value;
+            ev.SpecialRespawnComp.Station = originStation.Value;
 
         if (xform.GridUid != null)
-            ev.DiskComp.StationMap = (xform.MapUid, xform.GridUid);
+            ev.SpecialRespawnComp.StationMap = (xform.MapUid, xform.GridUid);
     }
 
-    private void OnDiskStartup(EntityUid uid, NukeDiskComponent component, ComponentStartup args)
+    private void OnRoundEnd()
     {
-        var ev = new NukeDiskStationSetupEvent(uid, component);
+        var specialRespawnQuery = EntityQuery<SpecialRespawnComponent>();
+
+        //Turn respawning off so the entity doesn't respawn during reset
+        foreach (var entity in specialRespawnQuery)
+        {
+            entity.Respawn = false;
+        }
+    }
+
+    private void OnStartup(EntityUid uid, SpecialRespawnComponent component, ComponentStartup args)
+    {
+        var ev = new SpecialRespawnSetupEvent(uid, component);
         QueueLocalEvent(ev);
     }
 
-    private void OnDiskShutdown(EntityUid uid, NukeDiskComponent component, ComponentShutdown args)
+    private void OnShutdown(EntityUid uid, SpecialRespawnComponent component, ComponentShutdown args)
     {
-        var diskMapUid = component.StationMap.Item1;
-        var diskGridUid = component.StationMap.Item2;
+        var entityMapUid = component.StationMap.Item1;
+        var entityGridUid = component.StationMap.Item2;
 
-        if (!component.Respawn || !HasComp<StationMemberComponent>(diskGridUid) || diskMapUid == null)
+        if (!component.Respawn || !HasComp<StationMemberComponent>(entityGridUid) || entityMapUid == null)
             return;
 
-        if (TryFindRandomTile(diskGridUid.Value, diskMapUid.Value, 10, out var coords))
+        if (TryFindRandomTile(entityGridUid.Value, entityMapUid.Value, 10, out var coords))
         {
-            Spawn(component.Disk, coords);
-            _adminLog.Add(LogType.Respawn, LogImpact.High, $"The nuclear disk was deleted and was respawned at {coords}");
+            Respawn(component.Prototype, coords);
         }
 
         //If the above fails, spawn at the center of the grid on the station
         else
         {
-            var xform = Transform(diskGridUid.Value);
+            var xform = Transform(entityGridUid.Value);
             var pos = xform.Coordinates;
             var mapPos = xform.MapPosition;
             var circle = new Circle(mapPos.Position, 2);
 
-            if (!_mapManager.TryGetGrid(diskGridUid.Value, out var grid))
+            if (!_mapManager.TryGetGrid(entityGridUid.Value, out var grid))
                 return;
 
             var found = false;
 
             foreach (var tile in grid.GetTilesIntersecting(circle))
             {
-                if (tile.IsSpace(_tileDefinitionManager) || tile.IsBlockedTurf(true) || !_atmosphere.IsTileMixtureProbablySafe(diskGridUid, diskMapUid.Value, grid.TileIndicesFor(mapPos)))
+                if (tile.IsSpace(_tileDefinitionManager) || tile.IsBlockedTurf(true) || !_atmosphere.IsTileMixtureProbablySafe(entityGridUid, entityMapUid.Value, grid.TileIndicesFor(mapPos)))
                     continue;
 
-                pos = tile.GridPosition();
+                coords = tile.GridPosition();
                 found = true;
 
                 if (found)
                     break;
             }
 
-            Spawn(component.Disk, pos);
-            _adminLog.Add(LogType.Respawn, LogImpact.High, $"The nuclear disk was deleted and was respawned at {pos}");
-        }
-    }
-
-    private void OnRoundEnd()
-    {
-        var diskQuery = EntityQuery<NukeDiskComponent>();
-
-        //Turn respawning off so the disk doesn't respawn during reset
-        foreach (var disk in diskQuery)
-        {
-            disk.Respawn = false;
+            Respawn(component.Prototype, coords);
         }
     }
 
     /// <summary>
+    /// Respawn the entity and log it.
+    /// </summary>
+    /// <param name="prototype">The prototype being spawned</param>
+    /// <param name="coords">The place where it will be spawned</param>
+    private void Respawn(string prototype, EntityCoordinates coords)
+    {
+        var entity = Spawn(prototype, coords);
+        var name = MetaData(entity).EntityName;
+        _adminLog.Add(LogType.Respawn, LogImpact.High, $"{name} was deleted and was respawned at {coords.ToMap(EntityManager)}");
+    }
+
+        /// <summary>
     /// Try to find a random safe tile on the supplied grid
     /// </summary>
     /// <param name="targetGrid">The grid that you're looking for a safe tile on</param>
