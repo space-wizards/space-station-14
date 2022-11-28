@@ -48,7 +48,7 @@ namespace Content.Shared.CCVar
         /// How large of a range to sample for ambience.
         /// </summary>
         public static readonly CVarDef<float> AmbientRange =
-            CVarDef.Create("ambience.range", 5f, CVar.REPLICATED | CVar.SERVER);
+            CVarDef.Create("ambience.range", 8f, CVar.REPLICATED | CVar.SERVER);
 
         /// <summary>
         /// Maximum simultaneous ambient sounds.
