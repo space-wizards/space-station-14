@@ -81,10 +81,11 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
         if (!component.Respawn || !HasComp<StationMemberComponent>(entityGridUid) || entityMapUid == null)
             return;
 
+        if (!_mapManager.TryGetGrid(entityGridUid, out var grid) || MetaData(grid.GridEntityId).EntityLifeStage == EntityLifeStage.Deleted)
+            return;
+
         if (TryFindRandomTile(entityGridUid.Value, entityMapUid.Value, 10, out var coords))
-        {
             Respawn(component.Prototype, coords);
-        }
 
         //If the above fails, spawn at the center of the grid on the station
         else
@@ -93,9 +94,6 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
             var pos = xform.Coordinates;
             var mapPos = xform.MapPosition;
             var circle = new Circle(mapPos.Position, 2);
-
-            if (!_mapManager.TryGetGrid(entityGridUid.Value, out var grid))
-                return;
 
             var found = false;
 
