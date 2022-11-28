@@ -12,10 +12,6 @@ namespace Content.Shared.Respawn;
 public sealed class SpecialRespawnComponent: Component
 {
     [ViewVariables]
-    [DataField("station")]
-    public EntityUid Station = EntityUid.Invalid;
-
-    [ViewVariables]
     [DataField("stationMap")]
     public (EntityUid?, EntityUid?) StationMap;
 

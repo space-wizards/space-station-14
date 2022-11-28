@@ -46,11 +46,7 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
 
     private void OnSpecialRespawnSetup(EntityUid uid, SpecialRespawnComponent component, SpecialRespawnSetupEvent ev)
     {
-        var originStation = _stationSystem.GetOwningStation(uid);
         var xform = Transform(uid);
-
-        if (originStation != null)
-            component.Station = originStation.Value;
 
         if (xform.GridUid != null)
             component.StationMap = (xform.MapUid, xform.GridUid);
