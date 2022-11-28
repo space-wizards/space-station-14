@@ -21,7 +21,7 @@
         shader: unshaded
         map: [ "blade" ]
   - type: MeleeWeapon
-    attackRate: 1.5
+    attackRate: 1
     soundHit:
       path: /Audio/Weapons/genhit1.ogg
     damage:
