@@ -181,8 +181,8 @@ public sealed class MarkingSet
         {
             foreach (var marking in list)
             {
-                var restrictedToHave = sponsorMarkings.Contains(marking.MarkingId);
-                if (restrictedToHave)
+                var allowedToHave = sponsorMarkings.Contains(marking.MarkingId);
+                if (!allowedToHave)
                 {
                     toRemove.Add((category, marking.MarkingId));
                 }

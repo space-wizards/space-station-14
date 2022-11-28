@@ -36,7 +36,9 @@ public sealed class MsgSponsorInfo : NetMessage
     
     public override void ReadFromBuffer(NetIncomingMessage buffer, IRobustSerializer serializer)
     {
-        if (!buffer.ReadBoolean()) return;
+        var isSponsor = buffer.ReadBoolean();
+        buffer.ReadPadBits();
+        if (!isSponsor) return;
         var length = buffer.ReadVariableInt32();
         using var stream = buffer.ReadAlignedMemory(length);
         serializer.DeserializeDirect(stream, out Info);
@@ -45,6 +47,7 @@ public sealed class MsgSponsorInfo : NetMessage
     public override void WriteToBuffer(NetOutgoingMessage buffer, IRobustSerializer serializer)
     {
         buffer.Write(Info != null);
+        buffer.WritePadBits();
         if (Info == null) return;
         var stream = new MemoryStream();
         serializer.SerializeDirect(stream, Info);
