@@ -83,12 +83,14 @@ public sealed class FaxMachineComponent : Component
     /// Print queue of the incoming message
     /// </summary>
     [ViewVariables]
+    [DataField("printingQueue")]
     public Queue<string> PrintingQueue { get; } = new();
 
     /// <summary>
     /// Message sending timeout
     /// </summary>
     [ViewVariables]
+    [DataField("sendTimeoutRemaining")]
     public float SendTimeoutRemaining;
 
     /// <summary>
