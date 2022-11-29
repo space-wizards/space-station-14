@@ -6,7 +6,7 @@ ent-CrateFoodMRE = MRE crate
 
 ent-CrateFoodCooking = Kitchen supplies crate
     .desc = Extra kitchen supplies, in case the botanists are absent.
-	
+
 ent-CrateFoodDinnerware = Kitchen dinnerware crate
     .desc = Extra kitchen supplies, in case the clown was allowed in the cafeteria unsupervised.
 
