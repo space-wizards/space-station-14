@@ -4,7 +4,7 @@ namespace Content.Server.Salvage.Expeditions;
 /// Destroy the specified number of structures to finish the expedition.
 /// </summary>
 [DataDefinition]
-public sealed class SalvageStructureDestroy : ISalvageMission
+public sealed class SalvageStructure : ISalvageMission
 {
     /// <summary>
     /// Minimum weight to be used for a wave.

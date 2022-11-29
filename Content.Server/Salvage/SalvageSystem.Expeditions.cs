@@ -1,9 +1,17 @@
 using System.Linq;
+using Content.Server.Atmos;
+using Content.Server.Atmos.Components;
 using Content.Server.CPUJob.JobQueues.Queues;
 using Content.Server.Salvage.Expeditions;
 using Content.Server.Station.Systems;
+using Content.Shared.Atmos;
+using Content.Shared.Gravity;
+using Content.Shared.Movement.Components;
+using Content.Shared.Parallax;
 using Content.Shared.Salvage;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
+using Robust.Shared.Console;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
 
@@ -79,6 +87,9 @@ public sealed partial class SalvageSystem
         int timeBlock = 15;
         var configs = _prototypeManager.EnumeratePrototypes<SalvageExpeditionPrototype>().ToArray();
 
+        if (configs.Length == 0)
+            return;
+
         // TODO: sealed record
         for (var i = 0; i < MissionLimit; i++)
         {
@@ -135,7 +146,35 @@ public sealed partial class SalvageSystem
     private void SpawnMission(SalvageMission mission)
     {
         var mapId = _mapManager.CreateMap();
+        var mapUid = _mapManager.GetMapEntityId(mapId);
+        _mapManager.AddUninitializedMap(mapId);
+        MetaDataComponent? metadata = null;
         var grid = EnsureComp<MapGridComponent>(_mapManager.GetMapEntityId(mapId));
+
+        var parallax = EnsureComp<ParallaxComponent>(mapUid);
+        parallax.Parallax = "Grass";
+        Dirty(parallax, metadata);
+        var gravity = EnsureComp<GravityComponent>(mapUid);
+        gravity.Enabled = true;
+        Dirty(gravity, metadata);
+        EnsureComp<MapLightComponent>(mapUid);
+        var atmos = EnsureComp<MapAtmosphereComponent>(mapUid);
+
+        atmos.Space = false;
+        var moles = new float[Atmospherics.TotalNumberOfGases];
+        moles[(int) Gas.Oxygen] = 21.824779f;
+        moles[(int) Gas.Nitrogen] = 82.10312f;
+
+        atmos.Mixture = new GasMixture(2500)
+        {
+            Temperature = 293.15f,
+            Moles = moles,
+        };
+
+        var footstep = EnsureComp<FootstepModifierComponent>(mapUid);
+        footstep.Sound = new SoundCollectionSpecifier("FootstepGrass");
+        Dirty(footstep, metadata);
+        _mapManager.DoMapInitialize(mapId);
 
         // No point raising an event for this when it's 1-1.
         SalvageJob job;
@@ -143,8 +182,8 @@ public sealed partial class SalvageSystem
 
         switch (config.Environment)
         {
-            case SalvageCavesGen:
-                job = GetCaveJob(grid.Owner, grid, mission.Config, mission.Seed);
+            case SalvageCaveGen cave:
+                job = GetCaveJob(grid.Owner, grid, config, cave, mission.Seed);
                 break;
             default:
                 return;
