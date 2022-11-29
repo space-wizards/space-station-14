@@ -72,6 +72,45 @@
   categories:
   - UplinkWeapons
 
+# Ammo
+
+- type: listing
+  id: UplinkPistol9mmMagazine
+  productEntity: MagazinePistol
+  cost:
+    Telecrystal: 2
+  categories:
+  - UplinkWeapons
+
+# For the Mandella
+- type: listing
+  id: UplinkMagazinePistolCaselessRifle
+  productEntity: MagazinePistolCaselessRifle
+  cost:
+    Telecrystal: 2
+  categories:
+  - UplinkWeapons
+
+# For the Inspector
+- type: listing
+  id: UplinkSpeedLoaderMagnum
+  icon: /Textures/Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_speed_loader.rsi/base.png
+  productEntity: SpeedLoaderMagnum
+  cost:
+    Telecrystal: 2
+  categories:
+  - UplinkWeapons
+
+# For the mosin
+- type: listing
+  id: UplinkMosinAmmo
+  description: A box of cartridges for the surplus rifle.
+  productEntity: BoxMagazineLightRifle
+  cost:
+    Telecrystal: 2
+  categories:
+  - UplinkWeapons
+
 # Explosives
 
 - type: listing
@@ -130,45 +169,6 @@
     Telecrystal: 12
   categories:
   - UplinkExplosives
-
-# Ammo
-
-- type: listing
-  id: UplinkPistol9mmMagazine
-  productEntity: MagazinePistol
-  cost:
-    Telecrystal: 2
-  categories:
-  - UplinkAmmo
-
-# For the Mandella
-- type: listing
-  id: UplinkMagazinePistolCaselessRifle
-  productEntity: MagazinePistolCaselessRifle
-  cost:
-    Telecrystal: 2
-  categories:
-  - UplinkAmmo
-
-# For the Inspector
-- type: listing
-  id: UplinkSpeedLoaderMagnum
-  icon: /Textures/Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_speed_loader.rsi/base.png
-  productEntity: SpeedLoaderMagnum
-  cost:
-    Telecrystal: 2
-  categories:
-  - UplinkAmmo
-
-# For the mosin
-- type: listing
-  id: UplinkMosinAmmo
-  description: A box of cartridges for the surplus rifle.
-  productEntity: BoxMagazineLightRifle
-  cost:
-    Telecrystal: 2
-  categories:
-  - UplinkAmmo
 
 #Utility
 
