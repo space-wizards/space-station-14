@@ -22,12 +22,20 @@ namespace Content.Shared.Stacks
         ///     An icon that will be used to represent this stack type.
         /// </summary>
         [DataField("icon")]
-        public SpriteSpecifier? Icon { get; } = null;
+        public SpriteSpecifier? Icon { get; }
 
         /// <summary>
         ///     The entity id that will be spawned by default from this stack.
         /// </summary>
         [DataField("spawn", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string Spawn { get; } = string.Empty;
+
+        /// <summary>
+        ///     The maximum amount of things that can be in a stack.
+        ///     Can be overriden on <see cref="SharedStackComponent"/>
+        ///     if null, simply has unlimited max count.
+        /// </summary>
+        [DataField("maxCount")]
+        public int? MaxCount { get; }
     }
 }

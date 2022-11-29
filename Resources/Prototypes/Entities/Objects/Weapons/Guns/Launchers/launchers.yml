@@ -73,7 +73,7 @@
   - type: BallisticAmmoProvider
     whitelist:
       tags:
-        - Cartridge
+        - CartridgeRocket
     proto: CartridgeRocket
     capacity: 1
     soundInsert:

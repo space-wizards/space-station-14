@@ -1,0 +1,45 @@
+﻿- type: entity
+  parent: BaseItem
+  id: NotekeeperCartridge
+  name: notekeeper cartridge
+  description: A program for keeping notes
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/cartridge.rsi
+    state: cart-y
+    netsync: false
+  - type: Icon
+    sprite: Objects/Devices/cartridge.rsi
+    state: cart-y
+  - type: CartridgeUi
+    ui: !type:NotekeeperUi
+  - type: Cartridge
+    programName: notekeeper-program-name
+    icon:
+      sprite:  Objects/Misc/books.rsi
+      state: book6
+  - type: NotekeeperCartridge
+
+- type: entity
+  parent: BaseItem
+  id: NetProbeCartridge
+  name: NetProbe cartridge
+  description: A program for getting the address and frequency of network devices
+  components:
+    - type: Sprite
+      sprite: Objects/Devices/cartridge.rsi
+      state: cart-y
+      netsync: false
+    - type: Icon
+      sprite: Objects/Devices/cartridge.rsi
+      state: cart-y
+    - type: CartridgeUi
+      ui: !type:NetProbeUi
+    - type: Cartridge
+      programName: net-probe-program-name
+      icon:
+        sprite: Structures/Machines/server.rsi
+        state: server
+    - type: NetProbeCartridge
+
+

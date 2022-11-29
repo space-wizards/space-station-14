@@ -84,6 +84,9 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField("plantMetabolism", serverOnly: true)]
         public readonly List<ReagentEffect> PlantMetabolisms = new(0);
 
+        [DataField("pricePerUnit")]
+        public float PricePerUnit { get; }
+
         /// <summary>
         /// If the substance color is too dark we user a lighter version to make the text color readable when the user examines a solution.
         /// </summary>

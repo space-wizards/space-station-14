@@ -1,0 +1,177 @@
+﻿# Utility effects permanently modify the entity in some way when triggered, and they generally make it 'useful' for some purpose,
+# like turning the artifact into a tool, or gun, or whatever.
+- type: artifactEffect
+  id: EffectRandomInstrument
+  targetDepth: 2
+  effectHint: artifact-effect-hint-mental
+  permanentComponents:
+  - type: Instrument
+  - type: ActivatableUI
+    inHandsOnly: true
+    singleUser: true
+    verbText: verb-instrument-openui
+    key: enum.InstrumentUiKey.Key
+  - type: UserInterface
+    interfaces:
+    - key: enum.InstrumentUiKey.Key
+      type: InstrumentBoundUserInterface
+  - type: RandomInstrumentArtifact
+
+- type: artifactEffect
+  id: EffectStorage
+  targetDepth: 2
+  effectHint: artifact-effect-hint-storage
+  whitelist:
+    components:
+    - Item # it doesnt necessarily have to be restricted from structures, but i think it'll be better that way
+  permanentComponents:
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: [ ]
+  - type: Storage
+    capacity: 50
+
+- type: artifactEffect
+  id: EffectSolutionStorage
+  targetDepth: 2
+  effectHint: artifact-effect-hint-storage
+  whitelist:
+    components:
+    - Item
+  permanentComponents:
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 150
+  - type: FitsInDispenser
+    solution: beaker
+  - type: RefillableSolution
+    solution: beaker
+  - type: DrainableSolution
+    solution: beaker
+  - type: ExaminableSolution
+    solution: beaker
+  - type: DrawableSolution
+    solution: beaker
+  - type: InjectableSolution
+    solution: beaker
+  - type: SolutionTransfer
+    canChangeTransferAmount: true
+  - type: Drink
+    isOpen: true
+    solution: beaker
+
+- type: artifactEffect
+  id: EffectDrill
+  targetDepth: 3
+  effectHint: artifact-effect-hint-drill
+  permanentComponents:
+  - type: GatheringTool
+    damage:
+      types:
+        Structural: 125
+    gatheringTime: 0.50
+    MaxGatheringEntities: 3
+  - type: ItemCooldown
+  - type: MeleeWeapon
+    damage:
+      types:
+        Piercing: 18
+        Blunt: 4
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
+  - type: Sharp
+
+
+- type: artifactEffect
+  id: EffectPowerGen20K
+  targetDepth: 3
+  effectHint: artifact-effect-hint-release
+  blacklist:
+    components:
+    - Item
+  permanentComponents:
+  - type: PowerSupplier
+    supplyRate: 20000
+
+- type: artifactEffect
+  id: EffectBigIron
+  targetDepth: 3
+  effectHint: artifact-effect-hint-gun
+  whitelist:
+    components:
+    - Item
+  permanentComponents:
+  - type: ContainerContainer
+    containers:
+      revolver-ammo: !type:Container
+  - type: RevolverAmmoProvider
+    whitelist:
+      tags:
+      - CartridgeMagnumHC
+      - SpeedLoaderMagnumHC
+    proto: CartridgeMagnumHC
+    capacity: 7
+    chambers: [ True, True, True, True, True, True, True ]
+    ammoSlots: [ null, null, null, null, null, null, null ]
+    soundEject:
+      path: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+  - type: Gun
+    selectedMode: SemiAuto
+    fireRate: 2
+    availableModes:
+    - SemiAuto
+    - FullAuto # no alien revolver in buildings
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
+
+- type: artifactEffect
+  id: EffectMultitool
+  targetDepth: 3
+  effectHint: artifact-effect-hint-multitool
+  whitelist:
+    components:
+    - Item
+  permanentComponents:
+  - type: TilePrying
+  - type: SignalLinker
+    requiredQuality: Pulsing
+  - type: UserInterface
+    interfaces:
+      - key: enum.SignalLinkerUiKey.Key
+        type: SignalPortSelectorBoundUserInterface
+  - type: LatticeCutting
+  - type: Tool
+    qualities:
+    - Screwing
+    speed: 2 # Very powerful multitool to balance out the desire to sell or scrap for points
+    useSound: /Audio/Items/drill_use.ogg
+  - type: MultipleTool
+    statusShowBehavior: true
+    entries:
+    - behavior: Screwing
+      useSound:
+        path: /Audio/Items/drill_use.ogg
+      changeSound:
+        path: /Audio/Items/change_drill.ogg
+    - behavior: Prying
+      useSound:
+        path: /Audio/Items/jaws_pry.ogg
+      changeSound:
+        path: /Audio/Items/change_drill.ogg
+    - behavior: Anchoring
+      useSound:
+        path: /Audio/Items/ratchet.ogg
+      changeSound:
+        path: /Audio/Items/change_drill.ogg
+    - behavior: Cutting
+      useSound:
+        path: /Audio/Items/jaws_cut.ogg
+      changeSound:
+        path: /Audio/Items/change_drill.ogg
+    - behavior: Pulsing
+      changeSound:
+        path: /Audio/Items/change_drill.ogg

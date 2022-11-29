@@ -227,7 +227,7 @@ namespace Content.Shared.Interaction
             if (target != null && Deleted(target.Value))
                 return;
 
-            if (TryComp(user, out SharedCombatModeComponent? combatMode) && combatMode.IsInCombatMode)
+            if (!altInteract && TryComp(user, out SharedCombatModeComponent? combatMode) && combatMode.IsInCombatMode)
             {
                 // Eat the input
                 return;
@@ -557,7 +557,8 @@ namespace Content.Shared.Interaction
             else
             {
                 originPos = Transform(origin).MapPosition;
-                targetRot = Transform(Transform(other).ParentUid).LocalRotation + otherAngle;
+                var otherParent = Transform(other).ParentUid;
+                targetRot = otherParent.IsValid() ? Transform(otherParent).LocalRotation + otherAngle : otherAngle;
             }
 
             // Do a raycast to check if relevant

@@ -1,0 +1,159 @@
+- type: entity
+  id: PartDiona
+  parent: BaseItem
+  name: "diona body part"
+  abstract: true
+  components:
+  - type: Damageable
+    damageContainer: Biological
+  - type: BodyPart
+  - type: ContainerContainer
+    containers:
+      bodypart: !type:Container
+        ents: []
+  - type: Sprite
+    netsync: false
+    sprite: Mobs/Species/Diona/parts.rsi
+  - type: Icon
+    sprite: Mobs/Species/Diona/parts.rsi
+  - type: StaticPrice
+    price: 100
+
+- type: entity
+  id: TorsoDiona
+  name: "diona torso"
+  parent: PartDiona
+  components:
+  - type: Sprite
+    state: "torso_m"
+  - type: Icon
+    state: "torso_m"
+  - type: BodyPart
+    partType: Torso
+
+- type: entity
+  id: HeadDiona
+  name: "diona head"
+  parent: PartDiona
+  components:
+  - type: Sprite
+    state: "head_m"
+  - type: Icon
+    state: "head_m"
+  - type: BodyPart
+    partType: Head
+    vital: true
+  - type: Input
+    context: "ghost"
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 0
+    baseSprintSpeed: 0
+  - type: InputMover
+  - type: GhostOnMove
+  - type: Tag
+    tags:
+      - Head
+
+- type: entity
+  id: LeftArmDiona
+  name: "left diona arm"
+  parent: PartDiona
+  components:
+  - type: Sprite
+    state: "l_arm"
+  - type: Icon
+    state: "l_arm"
+  - type: BodyPart
+    partType: Arm
+    symmetry: Left
+
+- type: entity
+  id: RightArmDiona
+  name: "right diona arm"
+  parent: PartDiona
+  components:
+  - type: Sprite
+    state: "r_arm"
+  - type: Icon
+    state: "r_arm"
+  - type: BodyPart
+    partType: Arm
+    symmetry: Right
+
+- type: entity
+  id: LeftHandDiona
+  name: "left diona hand"
+  parent: PartDiona
+  components:
+  - type: Sprite
+    state: "l_hand"
+  - type: Icon
+    state: "l_hand"
+  - type: BodyPart
+    partType: Hand
+    symmetry: Left
+
+- type: entity
+  id: RightHandDiona
+  name: "right diona hand"
+  parent: PartDiona
+  components:
+  - type: Sprite
+    state: "r_hand"
+  - type: Icon
+    state: "r_hand"
+  - type: BodyPart
+    partType: Hand
+    symmetry: Right
+
+- type: entity
+  id: LeftLegDiona
+  name: "left diona leg"
+  parent: PartDiona
+  components:
+  - type: Sprite
+    state: "l_leg"
+  - type: Icon
+    state: "l_leg"
+  - type: BodyPart
+    partType: Leg
+    symmetry: Left
+
+- type: entity
+  id: RightLegDiona
+  name: "right diona leg"
+  parent: PartDiona
+  components:
+  - type: Sprite
+    state: "r_leg"
+  - type: Icon
+    state: "r_leg"
+  - type: BodyPart
+    partType: Leg
+    symmetry: Right
+
+- type: entity
+  id: LeftFootDiona
+  name: "left diona foot"
+  parent: PartDiona
+  components:
+  - type: Sprite
+    state: "l_foot"
+  - type: Icon
+    state: "l_foot"
+  - type: BodyPart
+    partType: Foot
+    symmetry: Left
+
+- type: entity
+  id: RightFootDiona
+  name: "right diona foot"
+  parent: PartDiona
+  components:
+  - type: Sprite
+    state: "r_foot"
+  - type: Icon
+    state: "r_foot"
+  - type: BodyPart
+    partType: Foot
+    symmetry: Right

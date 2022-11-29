@@ -67,6 +67,7 @@ namespace Content.Client.Ghost
             SubscribeNetworkEvent<GhostUpdateGhostRoleCountEvent>(OnUpdateGhostRoleCount);
 
             SubscribeLocalEvent<GhostComponent, DisableLightingActionEvent>(OnActionPerform);
+            SubscribeLocalEvent<GhostComponent, ToggleGhostsActionEvent>(OnToggleGhosts);
         }
 
         private void OnGhostInit(EntityUid uid, GhostComponent component, ComponentInit args)
@@ -77,6 +78,7 @@ namespace Content.Client.Ghost
             }
 
             _actions.AddAction(uid, component.DisableLightingAction, null);
+            _actions.AddAction(uid, component.ToggleGhostsAction, null);
         }
 
         private void OnActionPerform(EntityUid uid, GhostComponent component, DisableLightingActionEvent args)
@@ -88,9 +90,19 @@ namespace Content.Client.Ghost
             args.Handled = true;
         }
 
+        private void OnToggleGhosts(EntityUid uid, GhostComponent component, ToggleGhostsActionEvent args)
+        {
+            if (args.Handled)
+                return;
+
+            ToggleGhostVisibility();
+            args.Handled = true;
+        }
+
         private void OnGhostRemove(EntityUid uid, GhostComponent component, ComponentRemove args)
         {
             _actions.RemoveAction(uid, component.DisableLightingAction);
+            _actions.RemoveAction(uid, component.ToggleGhostsAction);
             _lightManager.Enabled = true;
 
             if (uid != _playerManager.LocalPlayer?.ControlledEntity)

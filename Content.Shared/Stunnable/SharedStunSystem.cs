@@ -58,6 +58,7 @@ namespace Content.Shared.Stunnable
             SubscribeLocalEvent<KnockedDownComponent, TileFrictionEvent>(OnKnockedTileFriction);
 
             // Attempt event subscriptions.
+            SubscribeLocalEvent<StunnedComponent, ChangeDirectionAttemptEvent>(OnAttempt);
             SubscribeLocalEvent<StunnedComponent, UpdateCanMoveEvent>(OnMoveAttempt);
             SubscribeLocalEvent<StunnedComponent, InteractionAttemptEvent>(OnAttempt);
             SubscribeLocalEvent<StunnedComponent, UseAttemptEvent>(OnAttempt);

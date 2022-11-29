@@ -9,6 +9,7 @@ using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
 using Content.Shared.Storage;
 using Content.Shared.Verbs;
+using Content.Shared.Destructible;
 using Robust.Server.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -18,6 +19,7 @@ namespace Content.Server.Kitchen.EntitySystems;
 public sealed class SharpSystem : EntitySystem
 {
     [Dependency] private readonly BodySystem _bodySystem = default!;
+    [Dependency] private readonly SharedDestructibleSystem _destructibleSystem = default!;
     [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly ContainerSystem _containerSystem = default!;
@@ -108,13 +110,9 @@ public sealed class SharpSystem : EntitySystem
             popupEnt, Filter.Entities(ev.User), popupType);
 
         if (hasBody)
-        {
             _bodySystem.GibBody(body!.Owner, body: body);
-        }
-        else
-        {
-            QueueDel(ev.Entity);
-        }
+
+        _destructibleSystem.DestroyEntity(ev.Entity);
     }
 
     private void OnDoafterCancelled(SharpButcherDoafterCancelled ev)

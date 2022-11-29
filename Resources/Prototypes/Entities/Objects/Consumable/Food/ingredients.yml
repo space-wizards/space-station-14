@@ -433,7 +433,7 @@
   name: cheese wheel
   parent: FoodBakingBase
   id: FoodCheese
-  description: A big wheel of delcious Cheddar.
+  description: A big wheel of delicious Cheddar.
   components:
   - type: FlavorProfile
     flavors:

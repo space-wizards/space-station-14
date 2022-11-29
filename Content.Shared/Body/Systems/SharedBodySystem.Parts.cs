@@ -211,14 +211,11 @@ public partial class SharedBodySystem
 
         if (part.Body is { } newBody)
         {
-            var argsAdded = new BodyPartAddedEventArgs(slot.Id, part);
+            var partAddedEvent = new BodyPartAddedEvent(slot.Id, part);
+            RaiseLocalEvent(newBody, ref partAddedEvent);
 
             // TODO: Body refactor. Somebody is doing it
             // EntitySystem.Get<SharedHumanoidAppearanceSystem>().BodyPartAdded(Owner, argsAdded);
-            foreach (var component in AllComps<IBodyPartAdded>(newBody).ToArray())
-            {
-                component.BodyPartAdded(argsAdded);
-            }
 
             foreach (var organ in GetPartOrgans(partId, part))
             {
@@ -238,7 +235,7 @@ public partial class SharedBodySystem
             part.ParentSlot is not { } slot)
             return false;
 
-        var oldBody = part.Body;
+        var oldBodyNullable = part.Body;
 
         slot.Child = null;
         part.ParentSlot = null;
@@ -252,18 +249,15 @@ public partial class SharedBodySystem
 
         part.Owner.RandomOffset(0.25f);
 
-        if (oldBody != null)
+        if (oldBodyNullable is { } oldBody)
         {
-            var args = new BodyPartRemovedEventArgs(slot.Id, part);
-            foreach (var component in AllComps<IBodyPartRemoved>(oldBody.Value))
-            {
-                component.BodyPartRemoved(args);
-            }
+            var args = new BodyPartRemovedEvent(slot.Id, part);
+            RaiseLocalEvent(oldBody, ref args);
 
             if (part.PartType == BodyPartType.Leg &&
                 !GetBodyChildrenOfType(oldBody, BodyPartType.Leg).Any())
             {
-                Standing.Down(oldBody.Value);
+                Standing.Down(oldBody);
             }
 
             if (part.IsVital && !GetBodyChildrenOfType(oldBody, part.PartType).Any())
@@ -278,7 +272,7 @@ public partial class SharedBodySystem
                 if (organSlot.Child is not { } child)
                     continue;
 
-                RaiseLocalEvent(child, new RemovedFromBodyEvent(oldBody.Value), true);
+                RaiseLocalEvent(child, new RemovedFromBodyEvent(oldBody), true);
             }
         }
 
@@ -355,5 +349,119 @@ public partial class SharedBodySystem
             return false;
 
         return child.ParentSlot?.Child == parentId;
+    }
+
+    public IEnumerable<EntityUid> GetBodyPartAdjacentParts(EntityUid partId, BodyPartComponent? part = null)
+    {
+        if (!Resolve(partId, ref part, false))
+            yield break;
+
+        if (part.ParentSlot != null)
+            yield return part.ParentSlot.Parent;
+
+        foreach (var slot in part.Children.Values)
+        {
+            if (slot.Child != null)
+                yield return slot.Child.Value;
+        }
+    }
+
+    public IEnumerable<(EntityUid AdjacentId, T Component)> GetBodyPartAdjacentPartsComponents<T>(
+        EntityUid partId,
+        BodyPartComponent? part = null)
+        where T : Component
+    {
+        if (!Resolve(partId, ref part, false))
+            yield break;
+
+        var query = GetEntityQuery<T>();
+        foreach (var adjacentId in GetBodyPartAdjacentParts(partId, part))
+        {
+            if (query.TryGetComponent(adjacentId, out var component))
+                yield return (adjacentId, component);
+        }
+    }
+
+    public bool TryGetBodyPartAdjacentPartsComponents<T>(
+        EntityUid partId,
+        [NotNullWhen(true)] out List<(EntityUid AdjacentId, T Component)>? comps,
+        BodyPartComponent? part = null)
+        where T : Component
+    {
+        if (!Resolve(partId, ref part, false))
+        {
+            comps = null;
+            return false;
+        }
+
+        var query = GetEntityQuery<T>();
+        comps = new List<(EntityUid AdjacentId, T Component)>();
+        foreach (var adjacentId in GetBodyPartAdjacentParts(partId, part))
+        {
+            if (query.TryGetComponent(adjacentId, out var component))
+                comps.Add((adjacentId, component));
+        }
+
+        if (comps.Count != 0)
+            return true;
+
+        comps = null;
+        return false;
+    }
+
+    /// <summary>
+    ///     Returns a list of ValueTuples of <see cref="T"/> and OrganComponent on each organ
+    ///     in the given part.
+    /// </summary>
+    /// <param name="uid">The part entity id to check on.</param>
+    /// <param name="part">The part to check for organs on.</param>
+    /// <typeparam name="T">The component to check for.</typeparam>
+    public List<(T Comp, OrganComponent Organ)> GetBodyPartOrganComponents<T>(
+        EntityUid uid,
+        BodyPartComponent? part = null)
+        where T : Component
+    {
+        if (!Resolve(uid, ref part))
+            return new List<(T Comp, OrganComponent Organ)>();
+
+        var query = GetEntityQuery<T>();
+        var list = new List<(T Comp, OrganComponent Organ)>();
+        foreach (var organ in GetPartOrgans(uid, part))
+        {
+            if (query.TryGetComponent(organ.Id, out var comp))
+                list.Add((comp, organ.Component));
+        }
+
+        return list;
+    }
+
+    /// <summary>
+    ///     Tries to get a list of ValueTuples of <see cref="T"/> and OrganComponent on each organs
+    ///     in the given part.
+    /// </summary>
+    /// <param name="uid">The part entity id to check on.</param>
+    /// <param name="comps">The list of components.</param>
+    /// <param name="part">The part to check for organs on.</param>
+    /// <typeparam name="T">The component to check for.</typeparam>
+    /// <returns>Whether any were found.</returns>
+    public bool TryGetBodyPartOrganComponents<T>(
+        EntityUid uid,
+        [NotNullWhen(true)] out List<(T Comp, OrganComponent Organ)>? comps,
+        BodyPartComponent? part = null)
+        where T : Component
+    {
+        if (!Resolve(uid, ref part))
+        {
+            comps = null;
+            return false;
+        }
+
+        comps = GetBodyPartOrganComponents<T>(uid, part);
+
+        if (comps.Count != 0)
+            return true;
+
+        comps = null;
+        return false;
     }
 }

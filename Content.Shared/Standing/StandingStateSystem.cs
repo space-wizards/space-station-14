@@ -101,7 +101,9 @@ namespace Content.Shared.Standing
                 }
             }
 
-            if (!_gameTiming.IsFirstTimePredicted)
+            // check if component was just added or streamed to client
+            // if true, no need to play sound - mob was down before player could seen that
+            if (standingState.LifeStage <= ComponentLifeStage.Starting)
                 return true;
 
             if (playSound)

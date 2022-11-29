@@ -54,7 +54,7 @@
   parent: ClothingHeadEVAHelmetBase
   id: ClothingHeadHelmetEVA
   name: EVA helmet
-  description: A basic helmet designed for extravehicular activies.
+  description: A basic helmet designed for extravehicular activities.
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/eva.rsi

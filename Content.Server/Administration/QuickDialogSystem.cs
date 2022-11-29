@@ -94,7 +94,7 @@ public sealed partial class QuickDialogSystem : EntitySystem
                 entries,
                 did,
                 buttons),
-            Filter.SinglePlayer(session)
+            session
         );
 
         _openDialogs.Add(did, (okAction, cancelAction));
