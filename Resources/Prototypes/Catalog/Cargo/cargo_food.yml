@@ -29,6 +29,26 @@
   group: market
 
 - type: cargoProduct
+  id: FoodDinnerware
+  icon:
+    sprite: Objects/Consumable/Food/plates.rsi
+    state: tin
+  product: CrateFoodDinnerware
+  cost: 1000
+  category: Food
+  group: market
+
+- type: cargoProduct
+  id: FoodBarSupply
+  icon:
+    sprite: Objects/Consumable/Drinks/beerglass.rsi
+    state: icon
+  product: CrateFoodBarSupply
+  cost: 750
+  category: Food
+  group: market
+    
+- type: cargoProduct
   id: FoodCrateKvassTank
   icon:
     sprite: Structures/Storage/kvass.rsi
