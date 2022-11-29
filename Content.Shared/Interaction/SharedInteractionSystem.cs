@@ -557,7 +557,8 @@ namespace Content.Shared.Interaction
             else
             {
                 originPos = Transform(origin).MapPosition;
-                targetRot = Transform(Transform(other).ParentUid).LocalRotation + otherAngle;
+                var otherParent = Transform(other).ParentUid;
+                targetRot = otherParent.IsValid() ? Transform(otherParent).LocalRotation + otherAngle : otherAngle;
             }
 
             // Do a raycast to check if relevant

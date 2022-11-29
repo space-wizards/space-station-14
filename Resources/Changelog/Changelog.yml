@@ -1,32 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Silicons will no longer take damage from glass shards. Flying mobs are
-      still bugged., type: Fix}
-  id: 2203
-  time: '2022-08-30T06:15:25.0000000+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: Shuttle airlock construction complete! Check the construction menu for
-      the recipe., type: Add}
-  id: 2204
-  time: '2022-08-31T07:28:40.0000000+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: Lattice cutting is here! Apply wirecutters to lattice to deconstruct
-      it., type: Add}
-  id: 2205
-  time: '2022-08-31T08:24:51.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: A new Wizard's Den Roleplay server will be coming soon., type: Add}
-  id: 2206
-  time: '2022-08-31T10:25:14.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Area pickup no longer picks up on cancellation., type: Fix}
-  id: 2207
-  time: '2022-08-31T12:09:31.0000000+00:00'
 - author: DoctorBeard
   changes:
   - {message: vending machine animations and their behaviors are more consistent now,
@@ -2954,3 +2926,31 @@ Entries:
   - {message: add missing flame to cowelder, type: Fix}
   id: 2702
   time: '2022-11-25T11:27:45.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Added the Exosuit Fabricator, the center of all (future) robotics and
+      exosuit production!', type: Add}
+  id: 2703
+  time: '2022-11-27T03:36:27.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed missing text regarding voice triggers., type: Fix}
+  id: 2704
+  time: '2022-11-27T08:01:17.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Microwave and radiation triggers have been combined, to reduce confusion.',
+    type: Fix}
+  - {message: Item artifacts can now be sprayed properly., type: Fix}
+  id: 2705
+  time: '2022-11-27T08:01:41.0000000+00:00'
+- author: Pangogie
+  changes:
+  - {message: Chemists have stopped pouring dangerous chemicals into the vents., type: Tweak}
+  id: 2706
+  time: '2022-11-27T10:27:02.0000000+00:00'
+- author: Vordenburg
+  changes:
+  - {message: The RPG-7 can be loaded again with its proper ammo., type: Fix}
+  id: 2707
+  time: '2022-11-28T02:47:28.0000000+00:00'
