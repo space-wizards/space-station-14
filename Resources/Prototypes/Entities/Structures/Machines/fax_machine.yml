@@ -20,7 +20,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-        bounds: "-0.25,-0.4,0.25,0.4"
+        bounds: "-0.25,-0.25,0.25,0.25"
       density: 25
       mask:
       - MachineMask
@@ -56,7 +56,7 @@
   - type: ContainerContainer
     containers:
       Paper: !type:ContainerSlot
-  - type: DeviceNetworkRequiresPowerComponent
+  - type: DeviceNetworkRequiresPower
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: Fax
