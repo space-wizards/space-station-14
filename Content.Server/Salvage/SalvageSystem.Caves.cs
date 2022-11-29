@@ -17,7 +17,7 @@ public sealed partial class SalvageSystem
         var length = width * height;
 
         // CA stuff
-        var solidChance = 0.4;
+        var solidChance = cave.SolidChance;
 
         // Need to double buffer
         Span<bool> cells1 = stackalloc bool[width * height];
@@ -36,7 +36,7 @@ public sealed partial class SalvageSystem
             }
         }
 
-        var simSteps = 2;
+        var simSteps = cave.Steps;
         var useCells = cells1;
 
         for (var i = 0; i < simSteps; i++)
@@ -70,7 +70,6 @@ public sealed partial class SalvageSystem
         }
 
         component.SetTiles(tiles);
-        // TODO: Set asteroids... inside the job.
 
         return new SalvageJob(EntityManager, uid, tiles, seed, SalvageGenTime);
     }

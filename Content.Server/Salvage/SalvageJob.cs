@@ -1,6 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.CPUJob.JobQueues;
+using Content.Server.NPC.Pathfinding;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
@@ -30,6 +31,10 @@ public sealed class SalvageJob : Job<bool>
 
     protected override async Task<bool> Process()
     {
+        // TODO: Just pause the specific map.
+        var pathfinding = _entManager.System<PathfindingSystem>();
+        pathfinding.PauseUpdating = true;
+
         for (var i = 0; i < _tiles.Count; i++)
         {
             var tile = _tiles[i];
@@ -37,10 +42,11 @@ public sealed class SalvageJob : Job<bool>
             // TODO: Tile size.
             _entManager.SpawnEntity("AsteroidRock", new EntityCoordinates(_uid, tile.Indices + new Vector2(0.5f, 0.5f)));
 
-            if (i % 10 == 0)
+            if (i % 20 == 0)
                 await SuspendIfOutOfTime();
         }
 
+        pathfinding.PauseUpdating = false;
         return true;
     }
 }

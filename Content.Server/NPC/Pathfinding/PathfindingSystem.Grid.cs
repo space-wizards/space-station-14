@@ -32,7 +32,7 @@ public sealed partial class PathfindingSystem
     ///     If true, UpdateGrid() will not process grids.
     /// </summary>
     /// <remarks>
-    ///     Useful if something like a large explosion is in the process of shredding the grid, as it avoids uneccesary
+    ///     Useful if something like a large explosion is in the process of shredding the grid, as it avoids unneccesary
     ///     updating.
     /// </remarks>
     public bool PauseUpdating = false;

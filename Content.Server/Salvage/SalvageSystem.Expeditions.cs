@@ -161,7 +161,7 @@ public sealed partial class SalvageSystem
         var atmos = EnsureComp<MapAtmosphereComponent>(mapUid);
 
         atmos.Space = false;
-        var moles = new float[Atmospherics.TotalNumberOfGases];
+        var moles = new float[Atmospherics.AdjustedNumberOfGases];
         moles[(int) Gas.Oxygen] = 21.824779f;
         moles[(int) Gas.Nitrogen] = 82.10312f;
 
@@ -179,6 +179,9 @@ public sealed partial class SalvageSystem
         // No point raising an event for this when it's 1-1.
         SalvageJob job;
         var config = _prototypeManager.Index<SalvageExpeditionPrototype>(mission.Config);
+
+        // TODO: Need to generate mission objectives.
+        // TODO: Spawn hint markers for spawns.
 
         switch (config.Environment)
         {
