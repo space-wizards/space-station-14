@@ -14,8 +14,8 @@
   mobWeights:
     mobCarp: 1
   configs:
-    - !type:SalvageStructureFaction
-        spawn: XenoNode
+    CaveStructures: !type:SalvageStructureFaction
+      spawn: XenoWardingTower
 
 - type: salvageFaction
   id: Xenos
@@ -28,5 +28,5 @@
     MobXenoRavager: 8
     MobXenoQueen: 15
   configs:
-  - !type:SalvageStructureFaction
-      spawn: XenoNode
+    CaveStructuresa: !type:SalvageStructureFaction
+      spawn: XenoWardingTower

@@ -1,3 +1,4 @@
+using Content.Server.NPC.Components;
 using Content.Server.Salvage.Expeditions;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -6,7 +7,12 @@ namespace Content.Server.Salvage;
 
 public sealed partial class SalvageSystem
 {
-    private SalvageJob GetCaveJob(EntityUid uid, MapGridComponent component, SalvageExpeditionPrototype expedition, SalvageCaveGen cave, int seed)
+    private SalvageJob GetCaveJob(
+        EntityUid uid,
+        MapGridComponent component,
+        SalvageExpeditionPrototype expedition,
+        SalvageCaveGen cave,
+        int seed)
     {
         // We'll do the CA generation up front as we can do that pretty quickly
         // All of the spawning and other setup we'll run over multiple ticks as it will likely go over.
@@ -70,8 +76,18 @@ public sealed partial class SalvageSystem
         }
 
         component.SetTiles(tiles);
+        var faction = expedition.Factions[random.Next(expedition.Factions.Count)];
 
-        return new SalvageJob(EntityManager, uid, tiles, seed, SalvageGenTime);
+        return new SalvageJob(
+            EntityManager,
+            uid,
+            component,
+            tiles,
+            new Vector2i(width, height),
+            expedition,
+            _prototypeManager.Index<SalvageFactionPrototype>(faction),
+            random,
+            SalvageGenTime);
     }
 
     private void Step(Span<bool> cells1, Span<bool> cells2, int width, int height)

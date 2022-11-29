@@ -14,6 +14,6 @@ public sealed class SalvageFactionPrototype : IPrototype
     /// <summary>
     /// Per expedition type data for this faction.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("configs")]
-    public List<IFactionExpeditionConfig> Configs = new();
+    [ViewVariables(VVAccess.ReadWrite), DataField("configs", customTypeSerializer:typeof(PrototypeIdDictionarySerializer<IFactionExpeditionConfig, SalvageExpeditionPrototype>))]
+    public Dictionary<string, IFactionExpeditionConfig> Configs = new();
 }
