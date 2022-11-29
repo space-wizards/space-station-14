@@ -36,7 +36,7 @@ namespace Content.Server.Nuke
         }
 
         /// <summary>
-        ///     Send a nuclear code to all faxes
+        ///     Send a nuclear code to all faxes on that station which are authorized to receive nuke codes.
         /// </summary>
         /// <returns>True if at least one fax received codes</returns>
         public bool SendNukeCodes(EntityUid station)

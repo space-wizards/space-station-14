@@ -21,9 +21,9 @@ public sealed class FaxMachineComponent : Component
     public string? DestinationFaxAddress { get; set; }
 
     /// <summary>
-    /// Contains the item to be send, assumes it's paper...
+    /// Contains the item to be sent, assumes it's paper...
     /// </summary>
-    [DataField("paperSlot")]
+    [DataField("paperSlot", required: true)]
     public ItemSlot PaperSlot = new();
 
     /// <summary>
@@ -99,7 +99,7 @@ public sealed class FaxMachineComponent : Component
     public float SendTimeout = 5f;
 
     /// <summary>
-    /// Remain time of inserting animation
+    /// Remaining time of inserting animation
     /// </summary>
     [DataField("insertingTimeRemaining")]
     public float InsertingTimeRemaining;
@@ -111,7 +111,7 @@ public sealed class FaxMachineComponent : Component
     public float InsertionTime = 1.88f; // 0.02 off for correct animation
 
     /// <summary>
-    /// Remain time of printing animation
+    /// Remaining time of printing animation
     /// </summary>
     [DataField("printingTimeRemaining")]
     public float PrintingTimeRemaining;
