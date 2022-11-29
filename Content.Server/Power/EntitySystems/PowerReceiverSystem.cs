@@ -1,4 +1,5 @@
 using Content.Server.Power.Components;
+using Content.Server.Hands.Components;
 using Content.Shared.Examine;
 using Content.Shared.Power;
 using Content.Shared.Verbs;
@@ -85,6 +86,9 @@ namespace Content.Server.Power.EntitySystems
         private void AddSwitchPowerVerb(EntityUid uid, PowerSwitchComponent component, GetVerbsEvent<AlternativeVerb> args)
         {
             if(!args.CanAccess || !args.CanInteract)
+                return;
+
+            if (!HasComp<HandsComponent>(args.User))
                 return;
 
             if (!TryComp<ApcPowerReceiverComponent>(uid, out var receiver))
