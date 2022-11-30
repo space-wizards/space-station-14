@@ -256,7 +256,7 @@ namespace Content.Shared.CCVar
         /// Show reason of disconnect for user or not.
         /// </summary>
         public static readonly CVarDef<bool> PanicBunkerShowReason =
-            CVarDef.Create("game.panic_bunker.show_reason", true, CVar.SERVERONLY);
+            CVarDef.Create("game.panic_bunker.show_reason", false, CVar.SERVERONLY);
 
         /// <summary>
         /// Minimum age of the account (from server's PoV, so from first-seen date) in minutes.
