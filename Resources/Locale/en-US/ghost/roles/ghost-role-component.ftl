@@ -10,3 +10,6 @@ ghost-role-information-giant-spider-name = Giant spider
 ghost-role-information-giant-spider-description = Wreak havoc on the station's inhabitants!
 
 ghost-role-information-cognizine-description = Made conscious with the magic of cognizine.
+
+ghost-role-information-hamster-name = Hamster
+ghost-role-information-hamster-description = A grumpy little ball of fluff.
