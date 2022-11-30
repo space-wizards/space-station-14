@@ -1,14 +1,11 @@
-using Content.Shared.Inventory;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Pulling.Components;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
-using Robust.Shared.Containers;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 
 namespace Content.Client.Physics.Controllers
 {
@@ -137,30 +134,8 @@ namespace Content.Client.Physics.Controllers
                 }
             }
 
-            var mobQuery = GetEntityQuery<MobMoverComponent>();
-            var inventoryQuery = GetEntityQuery<InventoryComponent>();
-            var containerQuery = GetEntityQuery<ContainerManagerComponent>();
-            var footQuery = GetEntityQuery<FootstepModifierComponent>();
-            DebugTools.Assert(!UsedMobMovement.ContainsKey(mover.Owner));
-
             // Server-side should just be handled on its own so we'll just do this shizznit
-            HandleMobMovement(mover, body, xformMover, frameTime, xformQuery, mobQuery, inventoryQuery, containerQuery, footQuery, out var dirtyMover, out var linearVelocity, out var sound, out var audio);
-
-            MetaDataComponent? metadata = null;
-
-            if (dirtyMover)
-            {
-                Dirty(mover, metadata);
-            }
-
-            if (linearVelocity != null)
-            {
-                PhysicsSystem.SetLinearVelocity(body, linearVelocity.Value, false);
-                PhysicsSystem.SetAngularVelocity(body, 0f, false);
-                Dirty(body, metadata);
-            }
-
-            Audio.PlayPredicted(sound, mover.Owner, mover.Owner, audio);
+            HandleMobMovement(mover, body, xformMover, frameTime, xformQuery);
         }
 
         protected override bool CanSound()
