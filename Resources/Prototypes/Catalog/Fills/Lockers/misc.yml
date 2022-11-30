@@ -11,6 +11,8 @@
       - id: ClothingUniformJumpsuitOperative
       - id: ClothingUniformJumpskirtOperative
       - id: ClothingHeadsetAltSyndicate
+      - id: ClothingHeadHatSantahatSpace # Remove this and the santa suit after Christmas Day
+      - id: ClothingOuterSantaSpace
 
 - type: entity
   id: ClosetEmergencyFilledRandom
