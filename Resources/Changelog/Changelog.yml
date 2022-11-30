@@ -1,10 +1,4 @@
 Entries:
-- author: DoctorBeard
-  changes:
-  - {message: vending machine animations and their behaviors are more consistent now,
-    type: Tweak}
-  id: 2208
-  time: '2022-08-31T12:12:09.0000000+00:00'
 - author: tomasalves8
   changes:
   - {message: Portable Flasher, type: Fix}
@@ -2954,3 +2948,9 @@ Entries:
   - {message: The RPG-7 can be loaded again with its proper ammo., type: Fix}
   id: 2707
   time: '2022-11-28T02:47:28.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: It's now possible to reset camera rotation before the lerp starts after
+      traversing a grid., type: Tweak}
+  id: 2708
+  time: '2022-11-29T22:41:27.0000000+00:00'
