@@ -1,8 +1,10 @@
 using System.Linq;
+using Content.Shared.CCVar;
 using Content.Shared.Damage;
 using Content.Shared.Explosion;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
+using Content.Shared.Spawners.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
@@ -15,16 +17,6 @@ namespace Content.Server.Explosion.EntitySystems;
 
 public sealed partial class ExplosionSystem : EntitySystem
 {
-    /// <summary>
-    ///     Used to identify explosions when communicating with the client. Might be needed if more than one explosion is spawned in a single tick.
-    /// </summary>
-    /// <remarks>
-    ///     Overflowing back to 0 should cause no issue, as long as you don't have more than 256 explosions happening in a single tick.
-    /// </remarks>
-    private int _explosionCounter = 0;
-    // maybe should just use a UID/explosion-entity and a state to convey information?
-    // but then need to ignore PVS? Eeehh this works well enough for now.
-
     /// <summary>
     ///     Used to limit explosion processing time. See <see cref="MaxProcessingTime"/>.
     /// </summary>
@@ -63,6 +55,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         if (_activeExplosion?.Epicenter.MapId != ev.Map)
             return;
 
+        QueueDel(_activeExplosion.VisualEnt);
         _activeExplosion = null;
         _nodeGroupSystem.PauseUpdating = false;
         _pathfindingSystem.PauseUpdating = false;
@@ -103,7 +96,6 @@ public sealed partial class ExplosionSystem : EntitySystem
                 if (_activeExplosion == null)
                     continue;
 
-                _explosionCounter++;
                 _previousTileIteration = 0;
 
                 // just a lil nap
@@ -131,14 +123,20 @@ public sealed partial class ExplosionSystem : EntitySystem
 
                 // has the explosion finished processing?
                 if (_activeExplosion.FinishedProcessing)
-                    _activeExplosion = null;
+            {
+                var comp = EnsureComp<TimedDespawnComponent>(_activeExplosion.VisualEnt);
+                comp.Lifetime = _cfg.GetCVar(CCVars.ExplosionPersistence);
+                _appearance.SetData(_activeExplosion.VisualEnt, ExplosionAppearanceData.Progress, int.MaxValue);
+                _activeExplosion = null;
+            }
 #if EXCEPTION_TOLERANCE
             }
             catch (Exception e)
             {
                 // Ensure the system does not get stuck in an error-loop.
+                if (_activeExplosion != null)
+                    QueueDel(_activeExplosion.VisualEnt);
                 _activeExplosion = null;
-                RaiseNetworkEvent(new ExplosionOverlayUpdateEvent(_explosionCounter, int.MaxValue));
                 _nodeGroupSystem.PauseUpdating = false;
                 _pathfindingSystem.PauseUpdating = false;
                 throw;
@@ -151,20 +149,12 @@ public sealed partial class ExplosionSystem : EntitySystem
         // we have finished processing our tiles. Is there still an ongoing explosion?
         if (_activeExplosion != null)
         {
-            // update the client explosion overlays. This ensures that the fire-effects sync up with the entities currently being damaged.
-            if (_previousTileIteration == _activeExplosion.CurrentIteration)
-                return;
-
-            _previousTileIteration = _activeExplosion.CurrentIteration;
-            RaiseNetworkEvent(new ExplosionOverlayUpdateEvent(_explosionCounter, _previousTileIteration + 1));
+            _appearance.SetData(_activeExplosion.VisualEnt, ExplosionAppearanceData.Progress, _activeExplosion.CurrentIteration + 1);
             return;
         }
 
         if (_explosionQueue.Count > 0)
             return;
-
-        // We have finished processing all explosions. Clear client explosion overlays
-        RaiseNetworkEvent(new ExplosionOverlayUpdateEvent(_explosionCounter, int.MaxValue));
 
         //wakey wakey
         _nodeGroupSystem.PauseUpdating = false;
@@ -586,6 +576,8 @@ sealed class Explosion
     private readonly IEntityManager _entMan;
     private readonly ExplosionSystem _system;
 
+    public readonly EntityUid VisualEnt;
+
     /// <summary>
     ///     Initialize a new instance for processing
     /// </summary>
@@ -601,8 +593,10 @@ sealed class Explosion
         int maxTileBreak,
         bool canCreateVacuum,
         IEntityManager entMan,
-        IMapManager mapMan)
+        IMapManager mapMan,
+        EntityUid visualEnt)
     {
+        VisualEnt = visualEnt;
         _system = system;
         ExplosionType = explosionType;
         _tileSetIntensity = tileSetIntensity;
