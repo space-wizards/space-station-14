@@ -38,7 +38,7 @@
   description: A bolt action service rifle that has seen many wars. Not modern by any standard, hand loaded, and terrible recoil, but it is cheap.
   productEntity: WeaponSniperMosin
   cost:
-    Telecrystal: 4
+    Telecrystal: 2
   categories:
   - UplinkWeapons
 
@@ -276,7 +276,7 @@
   description: A gas mask that lets you adjust your voice to whoever you can think of.
   productEntity: ClothingMaskGasVoiceMasker
   cost:
-    Telecrystal: 5
+    Telecrystal: 4
   categories:
   - UplinkUtility
 
@@ -436,7 +436,7 @@
   description: An unholy book capable of summoning a demonic familiar.
   productEntity: BibleNecronomicon
   cost:
-    Telecrystal: 6
+    Telecrystal: 4
   categories:
   - UplinkJob
   conditions:
@@ -457,7 +457,7 @@
   productEntity: ClothingBackpackChameleonFill
   icon: /Textures/Clothing/Uniforms/Jumpsuit/rainbow.rsi/icon.png
   cost:
-    Telecrystal: 4
+    Telecrystal: 6
   categories:
     - UplinkArmor
 
@@ -512,7 +512,7 @@
   description: A simple EVA suit that offers no protection other than what's needed to survive in space.
   productEntity: ClothingBackpackDuffelSyndicateEVABundle
   cost:
-    Telecrystal: 3
+    Telecrystal: 2
   categories:
   - UplinkArmor
 
