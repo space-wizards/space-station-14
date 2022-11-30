@@ -5,7 +5,7 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
-namespace Content.Server.Mech;
+namespace Content.Server.Mech.Components;
 
 /// <inheritdoc/>
 [RegisterComponent, NetworkedComponent]

@@ -1,10 +1,11 @@
 ﻿using Content.Server.DoAfter;
+using Content.Server.Mech.Components;
 using Content.Server.Popups;
 using Content.Shared.Interaction;
 using Content.Shared.Mech.Equipment.Components;
 using Robust.Shared.Player;
 
-namespace Content.Server.Mech;
+namespace Content.Server.Mech.Systems;
 
 public sealed class MechEquipmentSystem : EntitySystem
 {

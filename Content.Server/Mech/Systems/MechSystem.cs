@@ -2,6 +2,7 @@
 using System.Threading;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.DoAfter;
+using Content.Server.Mech.Components;
 using Content.Shared.Mech;
 using Content.Shared.Mech.Components;
 using Content.Shared.Mech.EntitySystems;
@@ -9,7 +10,7 @@ using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 
-namespace Content.Server.Mech;
+namespace Content.Server.Mech.Systems;
 
 public sealed class MechSystem : SharedMechSystem
 {
@@ -53,6 +54,7 @@ public sealed class MechSystem : SharedMechSystem
         Dirty(component);
     }
 
+    //TODO: all of this is getting chunked at some point
     private void OnEnableEquipmentMessage(EntityUid uid, SharedMechComponent component, MechEquipmentToggleMessage args)
     {
         if (!Exists(args.Equipment) || Deleted(args.Equipment))
@@ -133,12 +135,14 @@ public sealed class MechSystem : SharedMechSystem
                 {
                     if (component.EntryTokenSource != null)
                         return;
-                    var delay = component.ExitDelay;
                     if (args.User == component.PilotSlot.ContainedEntity)
-                        delay *= 0.5f;
+                    {
+                        TryEject(uid, component);
+                        return;
+                    }
 
                     component.EntryTokenSource = new CancellationTokenSource();
-                    _doAfter.DoAfter(new DoAfterEventArgs(args.User, delay, component.EntryTokenSource.Token, uid)
+                    _doAfter.DoAfter(new DoAfterEventArgs(args.User, component.ExitDelay, component.EntryTokenSource.Token, uid)
                     {
                         BreakOnUserMove = true,
                         BreakOnTargetMove = true,

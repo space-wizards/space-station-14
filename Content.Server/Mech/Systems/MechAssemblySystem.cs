@@ -1,14 +1,12 @@
-﻿using Content.Shared.Interaction;
+﻿using Content.Server.Mech.Components;
+using Content.Shared.Interaction;
 using Content.Shared.Tag;
 using Content.Shared.Tools.Components;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
 
-namespace Content.Server.Mech;
+namespace Content.Server.Mech.Systems;
 
-/// <summary>
-/// This handles...
-/// </summary>
 public sealed class MechAssemblySystem : EntitySystem
 {
     [Dependency] private readonly ContainerSystem _container = default!;

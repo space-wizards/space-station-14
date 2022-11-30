@@ -45,11 +45,14 @@ public abstract class SharedMechComponent : Component
     [ViewVariables]
     public readonly string EquipmentContainerId = "mech-equipment-container";
 
-    [DataField("mechToggleAction", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
-    public string MechToggleAction = "MechToggleEquipment";
-
+    #region Action Prototypes
+    [DataField("mechCycleAction", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
+    public string MechCycleAction = "MechCycleEquipment";
     [DataField("mechUiAction", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
     public string MechUiAction = "MechOpenUI";
+    [DataField("mechEjectAction", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
+    public string MechEjectAction = "MechEject";
+    #endregion
 
     #region Visualizer States
     [DataField("baseState")]

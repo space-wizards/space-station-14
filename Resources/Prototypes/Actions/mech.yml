@@ -1,7 +1,7 @@
 - type: instantAction
-  id: MechToggleEquipment
-  name: toggle
-  description: Toggle currently selected equipment
+  id: MechCycleEquipment
+  name: action-name-mech-cycle
+  description: action-description-mech-cycle
   itemIconStyle: NoItem
   icon: Interface/Actions/actions_mecha.rsi/mech_cycle_equip_on.png
   event: !type:MechToggleEquipmentEvent
@@ -9,9 +9,17 @@
 
 - type: instantAction
   id: MechOpenUI
-  name: Open Control Panel
-  description: Opens the control panel for the mech.
+  name: action-name-mech-control-panel
+  description: action-description-mech-control-panel
   itemIconStyle: NoItem
   icon: Interface/Actions/actions_mecha.rsi/mech_view_stats.png
   event: !type:MechOpenUiEvent
   useDelay: 1
+
+- type: instantAction
+  id: MechEject
+  name: action-name-mech-eject
+  description: action-description-mech-eject
+  itemIconStyle: NoItem
+  icon: Interface/Actions/actions_mecha.rsi/mech_eject.png
+  event: !type:MechEjectPilotEvent

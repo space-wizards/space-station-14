@@ -112,3 +112,8 @@ public sealed class MechOpenUiEvent : InstantActionEvent
 {
 
 }
+
+public sealed class MechEjectPilotEvent : InstantActionEvent
+{
+
+}

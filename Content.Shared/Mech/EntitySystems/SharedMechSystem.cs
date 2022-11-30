@@ -37,12 +37,11 @@ public abstract class SharedMechSystem : EntitySystem
         SubscribeLocalEvent<SharedMechComponent, ComponentHandleState>(OnHandleState);
 
         SubscribeLocalEvent<SharedMechComponent, MechToggleEquipmentEvent>(OnToggleEquipmentAction);
+        SubscribeLocalEvent<SharedMechComponent, MechEjectPilotEvent>(OnEjectPilotEvent);
         SubscribeLocalEvent<SharedMechComponent, InteractNoHandEvent>(RelayInteractionEvent);
         SubscribeLocalEvent<SharedMechComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<SharedMechComponent, DestructionEventArgs>(OnDestruction);
     }
-
-
 
     #region State Handling
     private void OnGetState(EntityUid uid, SharedMechComponent component, ref ComponentGetState args)
@@ -74,8 +73,18 @@ public abstract class SharedMechSystem : EntitySystem
 
     private void OnToggleEquipmentAction(EntityUid uid, SharedMechComponent component, MechToggleEquipmentEvent args)
     {
+        if (args.Handled)
+            return;
         args.Handled = true;
         CycleEquipment(uid);
+    }
+
+    private void OnEjectPilotEvent(EntityUid uid, SharedMechComponent component, MechEjectPilotEvent args)
+    {
+        if (args.Handled)
+            return;
+        args.Handled = true;
+        TryEject(uid, component);
     }
 
     private void RelayInteractionEvent<TEvent>(EntityUid uid, SharedMechComponent component, TEvent args) where TEvent : notnull
@@ -114,8 +123,9 @@ public abstract class SharedMechSystem : EntitySystem
         _interaction.SetRelay(pilot, mech, irelay);
         rider.Mech = mech;
 
+        _actions.AddAction(pilot, new InstantAction(_prototype.Index<InstantActionPrototype>(component.MechCycleAction)), mech);
         _actions.AddAction(pilot, new InstantAction(_prototype.Index<InstantActionPrototype>(component.MechUiAction)), mech);
-        _actions.AddAction(pilot, new InstantAction(_prototype.Index<InstantActionPrototype>(component.MechToggleAction)), mech);
+        _actions.AddAction(pilot, new InstantAction(_prototype.Index<InstantActionPrototype>(component.MechEjectAction)), mech);
     }
 
     private void RemoveUser(EntityUid mech, EntityUid pilot)
@@ -206,9 +216,12 @@ public abstract class SharedMechSystem : EntitySystem
         return IsEmpty(component) && _actionBlocker.CanMove(toInsert) && HasComp<BodyComponent>(toInsert);
     }
 
+    /// <remarks>
+    /// This is defined here so that UI updates can be accessed from shared.
+    /// </remarks>
     public virtual void UpdateUserInterface(EntityUid uid, SharedMechComponent? component = null)
     {
-        //this is defined here so i can easily queue ui updates from shared
+
     }
 
     public virtual bool TryInsert(EntityUid uid, EntityUid? toInsert, SharedMechComponent? component = null)

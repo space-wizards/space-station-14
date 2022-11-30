@@ -5,7 +5,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
-namespace Content.Server.Mech;
+namespace Content.Server.Mech.Components;
 
 [RegisterComponent]
 public sealed class MechAssemblyComponent : Component
