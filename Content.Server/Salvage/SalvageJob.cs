@@ -70,8 +70,14 @@ public sealed class SalvageJob : Job<bool>
                 await SuspendIfOutOfTime();
         }
 
-        // TODO: Pick random tiles for mob spawns.
+        // Place mob spawn markers
+        for (var i = 0; i < 20; i++)
+        {
+            // TODO: Make the actual marker
+            // TODO: Have some system running it.
+        }
 
+        // Spawn mission objectives.
         if (_prototype.Expedition is SalvageStructure structure)
         {
             var count = _random.Next(structure.MinStructures, structure.MaxStructures);
