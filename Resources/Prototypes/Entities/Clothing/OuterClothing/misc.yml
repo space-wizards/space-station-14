@@ -146,7 +146,7 @@
 - type: entity
   parent: ClothingOuterEVASuitBase
   id: ClothingOuterSantaSpace
-  name: santa suit
+  name: festive santa suit
   description: Infused with the magical power of the Christmas spirit, this Santa suit will protect you from space!
   components:
   - type: Sprite
