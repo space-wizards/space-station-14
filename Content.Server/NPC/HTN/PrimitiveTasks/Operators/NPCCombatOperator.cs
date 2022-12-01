@@ -30,7 +30,6 @@ public abstract class NPCCombatOperator : HTNOperator
     /// Regardless of pathfinding or LOS these are the max we'll check
     /// </summary>
     private const int MaxConsideredTargets = 10;
-    private const int MaxTargetCount = 5;
 
     protected virtual bool IsRanged => false;
 
@@ -77,11 +76,13 @@ public abstract class NPCCombatOperator : HTNOperator
         var mobQuery = EntManager.GetEntityQuery<MobStateComponent>();
         var canMove = blackboard.GetValueOrDefault<bool>(NPCBlackboard.CanMove, EntManager);
         var count = 0;
+        var paths = new List<Task>();
+        // TODO: Really this should be a part of perception so we don't have to constantly re-plan targets.
 
         // Special-case existing target.
         if (EntManager.EntityExists(existingTarget))
         {
-            await UpdateTarget(owner, existingTarget, existingTarget, ownerCoordinates, blackboard, radius, canMove, xformQuery, targets);
+            paths.Add(UpdateTarget(owner, existingTarget, existingTarget, ownerCoordinates, blackboard, radius, canMove, xformQuery, targets));
         }
 
         // TODO: Need a perception system instead
@@ -90,7 +91,8 @@ public abstract class NPCCombatOperator : HTNOperator
                      .GetNearbyHostiles(owner, radius))
         {
             if (mobQuery.TryGetComponent(target, out var mobState) &&
-                mobState.CurrentState > DamageState.Alive)
+                mobState.CurrentState > DamageState.Alive ||
+                target == existingTarget)
             {
                 continue;
             }
@@ -100,11 +102,10 @@ public abstract class NPCCombatOperator : HTNOperator
             if (count >= MaxConsideredTargets)
                 break;
 
-            await UpdateTarget(owner, target, existingTarget, ownerCoordinates, blackboard, radius, canMove, xformQuery, targets);
-
-            if (targets.Count >= MaxTargetCount)
-                break;
+            paths.Add(UpdateTarget(owner, target, existingTarget, ownerCoordinates, blackboard, radius, canMove, xformQuery, targets));
         }
+
+        await Task.WhenAll(paths);
 
         targets.Sort((x, y) => y.Rating.CompareTo(x.Rating));
         return targets;
