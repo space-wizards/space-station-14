@@ -1,11 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: 'The entire engineering department now spawns with some form of welding
-      protection, not just technical assistants.', type: Tweak}
-  - {message: Radiation hoods are no longer only cosmetic., type: Fix}
-  id: 2212
-  time: '2022-09-01T02:08:53.0000000+00:00'
 - author: JustinTrotter
   changes:
   - {message: Increased stripping menu height and reordered inventory, type: Tweak}
@@ -2951,3 +2944,8 @@ Entries:
   - {message: Turrets will now shoot space targets., type: Fix}
   id: 2711
   time: '2022-12-01T15:02:02.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: Kick AFK players, type: Add}
+  id: 2712
+  time: '2022-12-01T16:38:20.0000000+00:00'
