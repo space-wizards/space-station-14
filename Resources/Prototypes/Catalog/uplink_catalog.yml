@@ -124,7 +124,7 @@
 
 - type: listing
   id: UplinkC4Bundle
-  description: Because sometimes quantity is quality. Contains 8 C-4 plastic explosives.
+  description: Because sometimes quantity is quality. Contains 3 C-4 plastic explosives.
   productEntity: ClothingBackpackDuffelSyndicateC4tBundle
   cost:
     Telecrystal: 12

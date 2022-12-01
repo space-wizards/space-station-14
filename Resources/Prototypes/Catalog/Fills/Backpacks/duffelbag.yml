@@ -194,7 +194,7 @@
     - type: StorageFill
       contents:
         - id: C4
-          amount: 8
+          amount: 3
 
 - type: entity
   parent: ClothingBackpackChameleon
