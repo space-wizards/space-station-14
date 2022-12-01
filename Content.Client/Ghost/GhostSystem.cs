@@ -206,4 +206,4 @@ namespace Content.Client.Ghost
             _console.RemoteExecuteCommand(null, "toggleghosts");
         }
     }
-}z
+}
