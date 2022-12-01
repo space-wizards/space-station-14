@@ -6,10 +6,12 @@ using Content.Shared.Body.Components;
 using Content.Shared.Destructible;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Components;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Mech.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
+using Content.Shared.Weapons.Melee;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Player;
@@ -35,12 +37,17 @@ public abstract class SharedMechSystem : EntitySystem
     {
         SubscribeLocalEvent<SharedMechComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<SharedMechComponent, ComponentHandleState>(OnHandleState);
+        SubscribeLocalEvent<MechPilotComponent, ComponentGetState>(OnPilotGetState);
+        SubscribeLocalEvent<MechPilotComponent, ComponentHandleState>(OnPilotHandleState);
 
         SubscribeLocalEvent<SharedMechComponent, MechToggleEquipmentEvent>(OnToggleEquipmentAction);
         SubscribeLocalEvent<SharedMechComponent, MechEjectPilotEvent>(OnEjectPilotEvent);
         SubscribeLocalEvent<SharedMechComponent, InteractNoHandEvent>(RelayInteractionEvent);
         SubscribeLocalEvent<SharedMechComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<SharedMechComponent, DestructionEventArgs>(OnDestruction);
+
+        SubscribeLocalEvent<MechPilotComponent, GetMeleeWeaponEvent>(OnGetMeleeWeapon);
+        SubscribeLocalEvent<MechPilotComponent, CanAttackFromContainerEvent>(OnCanAttackFromContainer);
     }
 
     #region State Handling
@@ -69,6 +76,22 @@ public abstract class SharedMechSystem : EntitySystem
         component.CurrentSelectedEquipment = state.CurrentSelectedEquipment;
         component.Broken = state.Broken;
     }
+
+    private void OnPilotGetState(EntityUid uid, MechPilotComponent component, ref ComponentGetState args)
+    {
+        args.State = new MechPilotComponentState
+        {
+            Mech = component.Mech
+        };
+    }
+
+    private void OnPilotHandleState(EntityUid uid, MechPilotComponent component, ref ComponentHandleState args)
+    {
+        if (args.Current is not MechPilotComponentState state)
+            return;
+
+        component.Mech = state.Mech;
+    }
     #endregion
 
     private void OnToggleEquipmentAction(EntityUid uid, SharedMechComponent component, MechToggleEquipmentEvent args)
@@ -87,15 +110,19 @@ public abstract class SharedMechSystem : EntitySystem
         TryEject(uid, component);
     }
 
-    private void RelayInteractionEvent<TEvent>(EntityUid uid, SharedMechComponent component, TEvent args) where TEvent : notnull
+    private void RelayInteractionEvent(EntityUid uid, SharedMechComponent component, InteractNoHandEvent args)
     {
+        var pilot = component.PilotSlot.ContainedEntity;
+        if (pilot == null)
+            return;
+
+        if (!_timing.IsFirstTimePredicted)
+            return;
+
         if (component.CurrentSelectedEquipment != null)
         {
             RaiseLocalEvent(component.CurrentSelectedEquipment.Value, args);
-            return;
         }
-
-        //TODO: empty-handed interactions?
     }
 
     private void OnStartup(EntityUid uid, SharedMechComponent component, ComponentStartup args)
@@ -122,6 +149,7 @@ public abstract class SharedMechSystem : EntitySystem
         _mover.SetRelay(pilot, mech, relay);
         _interaction.SetRelay(pilot, mech, irelay);
         rider.Mech = mech;
+        Dirty(rider);
 
         _actions.AddAction(pilot, new InstantAction(_prototype.Index<InstantActionPrototype>(component.MechCycleAction)), mech);
         _actions.AddAction(pilot, new InstantAction(_prototype.Index<InstantActionPrototype>(component.MechUiAction)), mech);
@@ -163,14 +191,9 @@ public abstract class SharedMechSystem : EntitySystem
         }
 
         equipmentIndex++;
-        if (equipmentIndex >= allEquipment.Count)
-        {
-            component.CurrentSelectedEquipment = null;
-        }
-        else
-        {
-            component.CurrentSelectedEquipment = allEquipment[equipmentIndex];
-        }
+        component.CurrentSelectedEquipment = equipmentIndex >= allEquipment.Count
+            ? null
+            : allEquipment[equipmentIndex];
 
         var popupString = component.CurrentSelectedEquipment != null
             ? Loc.GetString("mech-equipment-select-popup", ("item", component.CurrentSelectedEquipment))
@@ -255,6 +278,24 @@ public abstract class SharedMechSystem : EntitySystem
         _container.RemoveEntity(uid, pilot);
         UpdateAppearance(uid, component);
         return true;
+    }
+
+    private void OnGetMeleeWeapon(EntityUid uid, MechPilotComponent component, GetMeleeWeaponEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        if (!TryComp<SharedMechComponent>(component.Mech, out var mech))
+            return;
+
+        var weapon = mech.CurrentSelectedEquipment ?? component.Mech;
+        args.Weapon = weapon;
+        args.Handled = true;
+    }
+
+    private void OnCanAttackFromContainer(EntityUid uid, MechPilotComponent component, CanAttackFromContainerEvent args)
+    {
+        args.CanAttack = true;
     }
 
     private void UpdateAppearance(EntityUid uid, SharedMechComponent? component = null, AppearanceComponent? appearance = null)
