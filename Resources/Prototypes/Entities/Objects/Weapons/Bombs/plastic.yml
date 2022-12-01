@@ -66,9 +66,9 @@
   components:
     - type: Explosive #massive structural damage in a wide area
       explosionType: SpecialDemolitionCharge
-      totalIntensity: 200
-      intensitySlope: 30
-      maxIntensity: 40
+      totalIntensity: 160
+      intensitySlope: 20
+      maxIntensity: 20
       canCreateVacuum: true
     - type: ExplodeOnTrigger
     - type: Damageable
