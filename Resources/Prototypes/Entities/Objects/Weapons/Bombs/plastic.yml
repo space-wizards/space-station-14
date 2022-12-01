@@ -57,3 +57,16 @@
           states:
             enum.Trigger.TriggerVisualState.Primed: primed
             enum.Trigger.TriggerVisualState.Unprimed: complete
+
+- type: entity
+  name: composition X-4
+  description: Used to put really big holes in areas when you really don't care how much hole you make. An operative's favorite.
+  parent: C4
+  id: X4
+  components:
+    - type: Explosive #massive structural damage in a wide area
+      explosionType: SpecialDemolitionCharge
+      totalIntensity: 200
+      intensitySlope: 30
+      maxIntensity: 40
+      canCreateVacuum: true
