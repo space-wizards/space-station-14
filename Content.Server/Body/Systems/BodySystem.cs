@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Server.Body.Components;
 using Content.Server.GameTicking;
 using Content.Server.Humanoid;
@@ -146,9 +147,9 @@ public sealed class BodySystem : SharedBodySystem
 
         if (TryComp(bodyId, out ContainerManagerComponent? container))
         {
-            foreach (var cont in container.GetAllContainers())
+            foreach (var cont in container.GetAllContainers().ToArray())
             {
-                foreach (var ent in cont.ContainedEntities)
+                foreach (var ent in cont.ContainedEntities.ToArray())
                 {
                     if (deleteItems)
                     {
