@@ -70,3 +70,23 @@
       intensitySlope: 30
       maxIntensity: 40
       canCreateVacuum: true
+    - type: ExplodeOnTrigger
+    - type: Damageable
+      damageContainer: Inorganic
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 50
+          behaviors:
+            - !type:DoActsBehavior
+              acts: ["Destruction"]
+            - !type:ExplodeBehavior
+    - type: StickyVisualizer
+    - type: Appearance
+      visuals:
+        - type: GenericEnumVisualizer
+          key: enum.Trigger.TriggerVisuals.VisualState
+          states:
+            enum.Trigger.TriggerVisualState.Primed: primed
+            enum.Trigger.TriggerVisualState.Unprimed: complete
