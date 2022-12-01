@@ -130,7 +130,25 @@
     Telecrystal: 12
   categories:
   - UplinkExplosives
+  
+- type: listing
+  id: UplinkX4
+  description: A modified version of C-4 that does massive damage to structures in a wide area.
+  productEntity: C4
+  cost:
+    Telecrystal: 4
+  categories:
+  - UplinkExplosives
 
+- type: listing
+  id: UplinkX4Bundle
+  description: For those times when you just need a room to disappear. Contains 8 X-4 plastic explosives.
+  productEntity: ClothingBackpackDuffelSyndicateX4tBundle
+  cost:
+    Telecrystal: 24
+  categories:
+  - UplinkExplosives
+  
 # Ammo
 
 - type: listing
