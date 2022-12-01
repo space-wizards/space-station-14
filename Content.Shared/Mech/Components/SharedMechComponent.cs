@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Actions.ActionTypes;
+using Content.Shared.FixedPoint;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.Serialization;
@@ -8,18 +9,24 @@ namespace Content.Shared.Mech.Components;
 
 public abstract class SharedMechComponent : Component
 {
-    //TODO: implement integrity
     [ViewVariables(VVAccess.ReadWrite)]
-    public float Integrity;
+    public FixedPoint2 Integrity;
 
     [DataField("maxIntegrity")]
-    public float MaxIntegrity = 300;
+    public FixedPoint2 MaxIntegrity = 300;
 
     [ViewVariables(VVAccess.ReadWrite)]
-    public float Energy;
+    public FixedPoint2 Energy;
 
     [DataField("maxEnergy")]
-    public float MaxEnergy = 200;
+    public FixedPoint2 MaxEnergy = 200;
+
+    /// <summary>
+    /// A multiplier used to calculate how much of the damage done to a mech
+    /// is transfered to the pilot
+    /// </summary>
+    [DataField("mechToPilotDamageMultiplier")]
+    public float MechToPilotDamageMultiplier;
 
     [ViewVariables(VVAccess.ReadWrite)]
     public bool Broken = false;
@@ -70,10 +77,10 @@ public abstract class SharedMechComponent : Component
 [Serializable, NetSerializable]
 public sealed class MechComponentState : ComponentState
 {
-    public float Integrity;
-    public float MaxIntegrity;
-    public float Energy;
-    public float MaxEnergy;
+    public FixedPoint2 Integrity;
+    public FixedPoint2 MaxIntegrity;
+    public FixedPoint2 Energy;
+    public FixedPoint2 MaxEnergy;
     public EntityUid? CurrentSelectedEquipment;
     public bool Broken;
 }

@@ -4,6 +4,7 @@ using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Body.Components;
 using Content.Shared.Destructible;
+using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
@@ -201,6 +202,7 @@ public abstract class SharedMechSystem : EntitySystem
 
         if (_timing.IsFirstTimePredicted)
             _popup.PopupEntity(popupString, uid, Filter.Pvs(uid));
+        Dirty(component);
     }
 
     public void RemoveEquipment(EntityUid uid, EntityUid toRemove, SharedMechComponent? component = null)
@@ -212,7 +214,7 @@ public abstract class SharedMechSystem : EntitySystem
         UpdateUserInterface(uid, component);
     }
 
-    public bool TryChangeEnergy(EntityUid uid, float delta, SharedMechComponent? component = null)
+    public bool TryChangeEnergy(EntityUid uid, FixedPoint2 delta, SharedMechComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return false;
@@ -220,10 +222,31 @@ public abstract class SharedMechSystem : EntitySystem
         if (component.Energy + delta < 0)
             return false;
 
-        component.Energy = Math.Clamp(component.Energy + delta, 0, component.MaxEnergy);
+        component.Energy = FixedPoint2.Clamp(component.Energy + delta, 0, component.MaxEnergy);
         Dirty(component);
         UpdateUserInterface(uid, component);
         return true;
+    }
+
+    public void SetIntegrity(EntityUid uid, FixedPoint2 value, SharedMechComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        component.Integrity = FixedPoint2.Clamp(value, 0, component.MaxIntegrity);
+
+        if (component.Integrity <= 0)
+        {
+            BreakMech(uid, component);
+        }
+        else if (component.Broken)
+        {
+            component.Broken = false;
+            UpdateAppearance(uid, component);
+        }
+
+        Dirty(component);
+        UpdateUserInterface(uid, component);
     }
 
     public bool IsEmpty(SharedMechComponent component)

@@ -3,6 +3,7 @@ using System.Threading;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.DoAfter;
 using Content.Server.Mech.Components;
+using Content.Shared.Damage;
 using Content.Shared.Mech;
 using Content.Shared.Mech.Components;
 using Content.Shared.Mech.EntitySystems;
@@ -15,6 +16,7 @@ namespace Content.Server.Mech.Systems;
 public sealed class MechSystem : SharedMechSystem
 {
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
+    [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
     [Dependency] private readonly IMapManager _map = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
@@ -32,8 +34,9 @@ public sealed class MechSystem : SharedMechSystem
         SubscribeLocalEvent<MechComponent, MechExitFinishedEvent>(OnExitFinished);
         SubscribeLocalEvent<MechComponent, MechExitCanclledEvent>(OnEntryExitCancelled);
 
-        SubscribeLocalEvent<SharedMechComponent, MechEquipmentToggleMessage>(OnEnableEquipmentMessage);
-        SubscribeLocalEvent<SharedMechComponent, MechEquipmentRemoveMessage>(OnRemoveEquipmentMessage);
+        SubscribeLocalEvent<MechComponent, DamageChangedEvent>(OnDamageChanged);
+        SubscribeLocalEvent<MechComponent, MechEquipmentToggleMessage>(OnEnableEquipmentMessage);
+        SubscribeLocalEvent<MechComponent, MechEquipmentRemoveMessage>(OnRemoveEquipmentMessage);
 
         SubscribeLocalEvent<MechPilotComponent, InhaleLocationEvent>(OnInhale);
         SubscribeLocalEvent<MechPilotComponent, ExhaleLocationEvent>(OnExhale);
@@ -86,6 +89,7 @@ public sealed class MechSystem : SharedMechSystem
 
         RemoveEquipment(uid, args.Equipment, component);
     }
+    //TODO: stop chunking here
 
     private void OnOpenUi(EntityUid uid, MechComponent component, MechOpenUiEvent args)
     {
@@ -122,10 +126,11 @@ public sealed class MechSystem : SharedMechSystem
                 Act = () => ToggleMechUi(uid, component, args.User),
                 Text = Loc.GetString("mech-ui-open-verb")
             };
-            args.Verbs.Add(enterVerb);
+            if (!component.Broken)
+                args.Verbs.Add(enterVerb);
             args.Verbs.Add(openUiVerb);
         }
-        else if (!IsEmpty(component))
+        else if (!component.Broken && !IsEmpty(component))
         {
             var ejectVerb = new AlternativeVerb
             {
@@ -171,6 +176,20 @@ public sealed class MechSystem : SharedMechSystem
     private void OnEntryExitCancelled(EntityUid uid, MechComponent component, EntityEventArgs args)
     {
         component.EntryTokenSource = null;
+    }
+
+    private void OnDamageChanged(EntityUid uid, SharedMechComponent component, DamageChangedEvent args)
+    {
+        var integrity = component.MaxIntegrity - args.Damageable.TotalDamage;
+        SetIntegrity(uid, integrity, component);
+
+        if (args.DamageIncreased &&
+            args.DamageDelta != null &&
+            component.PilotSlot.ContainedEntity != null)
+        {
+            var damage = args.DamageDelta * component.MechToPilotDamageMultiplier;
+            _damageable.TryChangeDamage(component.PilotSlot.ContainedEntity, damage);
+        }
     }
 
     private void ToggleMechUi(EntityUid uid, MechComponent? component = null, EntityUid? user = null)
