@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Cuffs.Components;
 using Content.Server.Hands.Components;
 using Content.Shared.ActionBlocker;
@@ -5,6 +6,7 @@ using Content.Shared.Cuffs;
 using Content.Shared.Hands;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
+using Content.Shared.Weapons.Melee.Events;
 using JetBrains.Annotations;
 using Robust.Shared.Player;
 using Content.Shared.Interaction;
@@ -32,6 +34,7 @@ namespace Content.Server.Cuffs
             SubscribeLocalEvent<UncuffAttemptEvent>(OnUncuffAttempt);
             SubscribeLocalEvent<CuffableComponent, GetVerbsEvent<Verb>>(AddUncuffVerb);
             SubscribeLocalEvent<HandcuffComponent, AfterInteractEvent>(OnCuffAfterInteract);
+            SubscribeLocalEvent<HandcuffComponent, MeleeHitEvent>(OnCuffMeleeHit);
             SubscribeLocalEvent<CuffableComponent, EntRemovedFromContainerMessage>(OnCuffsRemoved);
         }
 
@@ -115,6 +118,51 @@ namespace Content.Server.Cuffs
             component.TryUpdateCuff(args.User, target, cuffed);
             args.Handled = true;
         }
+
+        private void OnCuffMeleeHit(EntityUid uid, HandcuffComponent component, MeleeHitEvent args)
+        {   
+            try{
+            if (component.Cuffing)
+                return;
+
+            if (!EntityManager.TryGetComponent<CuffableComponent>(args.HitEntities.First(), out var cuffed))
+                return;
+        
+            // TODO these messages really need third-party variants. I.e., "{$user} starts cuffing {$target}!"
+
+            if (component.Broken)
+            {
+                _popup.PopupEntity(Loc.GetString("handcuff-component-cuffs-broken-error"), args.User, Filter.Entities(args.User));
+                return;
+            }
+
+            if (!EntityManager.TryGetComponent<HandsComponent?>(args.HitEntities.First(), out var hands))
+            {
+                _popup.PopupEntity(Loc.GetString("handcuff-component-target-has-no-hands-error",("targetName", args.HitEntities.First())), args.User, Filter.Entities(args.User));
+                return;
+            }
+
+            if (cuffed.CuffedHandCount >= hands.Count)
+            {
+                _popup.PopupEntity(Loc.GetString("handcuff-component-target-has-no-free-hands-error",("targetName", args.HitEntities.First())), args.User, Filter.Entities(args.User));
+                return;
+            }
+
+            _popup.PopupEntity(Loc.GetString("handcuff-component-start-cuffing-target-message",("targetName", args.HitEntities.First())), args.User, Filter.Entities(args.User));
+            _popup.PopupEntity(Loc.GetString("handcuff-component-start-cuffing-by-other-message",("otherName", args.User)), args.HitEntities.First(), Filter.Entities(args.HitEntities.First()));
+
+            _audio.PlayPvs(component.StartCuffSound, uid);
+
+            component.TryUpdateCuff(args.User, args.HitEntities.First(), cuffed);
+            args.Handled = true;
+            }
+            finally
+            {
+                _audio.PlayPvs(component.StartCuffSound, uid);
+            }
+
+        }
+
 
         private void OnUncuffAttempt(UncuffAttemptEvent args)
         {
