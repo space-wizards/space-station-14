@@ -19,7 +19,7 @@ public sealed class CameraFailure : StationEventSystem
         var cameras = EntityQuery<SurveillanceCameraComponent>().ToList();
         RobustRandom.Shuffle(cameras);
 
-        var cameraAmount = (int) (RobustRandom.Next(2, 4) * Math.Sqrt(modifier));
+        var cameraAmount = (int) (RobustRandom.Next(1, 3) * Math.Sqrt(modifier));
 
         for (var i = 0; i < cameraAmount && i < cameras.Count - 1; i++)
         {
