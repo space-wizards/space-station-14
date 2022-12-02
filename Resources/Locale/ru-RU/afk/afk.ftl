@@ -1,2 +1,2 @@
-afk-system-kick-warning = You will be kicked for being AFK soon!
-afk-system-kick-reason = You were kicked for being AFK!
+afk-system-kick-warning = Скоро вы будете кикнуты за пребывание в AFK!
+afk-system-kick-reason = Вы были кикнуты за пребывание в AFK!
