@@ -8,7 +8,7 @@ namespace Content.Shared.FixedPoint
     ///     Represents a quantity of something, to a precision of 0.01.
     ///     To enforce this level of precision, floats are shifted by 2 decimal points, rounded, and converted to an int.
     /// </summary>
-    [Serializable]
+    [Serializable, CopyByRef]
     public struct FixedPoint2 : ISelfSerialize, IComparable<FixedPoint2>, IEquatable<FixedPoint2>, IFormattable
     {
         private int _value;
