@@ -1,5 +1,6 @@
 using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Popups
@@ -18,13 +19,29 @@ namespace Content.Shared.Popups
         public abstract void PopupCursor(string message, Filter filter, PopupType type=PopupType.Small);
 
         /// <summary>
-        ///     Shows a popup at a world location.
+        ///     Shows a popup at a world location to every entity in PVS range.
         /// </summary>
         /// <param name="message">The message to display.</param>
         /// <param name="coordinates">The coordinates where to display the message.</param>
-        /// <param name="filter">Filter for the players that will see the popup.</param>
         /// <param name="type">Used to customize how this popup should appear visually.</param>
-        public abstract void PopupCoordinates(string message, EntityCoordinates coordinates, Filter filter, PopupType type=PopupType.Small);
+        public abstract void PopupCoordinates(string message, EntityCoordinates coordinates, PopupType type = PopupType.Small);
+
+        /// <summary>
+        ///     Filtered variant of <see cref="PopupCoordinates(string, EntityCoordinates, PopupType)"/>.
+        /// </summary>
+        /// <param name="filter">Filter for the players that will see the popup.</param>
+        /// <param name="recordReplay">If true, this pop-up will be considered as a globally visible pop-up that gets shown during replays.</param>
+        public abstract void PopupCoordinates(string message, EntityCoordinates coordinates, Filter filter, bool recordReplay, PopupType type = PopupType.Small);
+
+        /// <summary>
+        ///     Variant of <see cref="PopupCoordinates(string, EntityCoordinates, PopupType)"/> that sends a pop-up to the player attached to some entity.
+        /// </summary>
+        public abstract void PopupCoordinates(string message, EntityCoordinates coordinates, EntityUid recipient, PopupType type = PopupType.Small);
+
+        /// <summary>
+        ///     Variant of <see cref="PopupCoordinates(string, EntityCoordinates, PopupType)"/> that sends a pop-up to a specific player.
+        /// </summary>
+        public abstract void PopupCoordinates(string message, EntityCoordinates coordinates, ICommonSession recipient, PopupType type = PopupType.Small);
 
         /// <summary>
         ///     Shows a popup above an entity.

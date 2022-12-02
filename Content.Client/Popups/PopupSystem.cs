@@ -9,6 +9,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Robust.Shared.Players;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -48,13 +49,6 @@ namespace Content.Client.Popups
             _aliveCursorLabels.Add(label);
         }
 
-        public void PopupCoordinates(string message, EntityCoordinates coordinates, PopupType type=PopupType.Small)
-        {
-            if (_eyeManager.CurrentMap != Transform(coordinates.EntityId).MapID)
-                return;
-            PopupMessage(message, type, coordinates, null);
-        }
-
         public void PopupEntity(string message, EntityUid uid, PopupType type=PopupType.Small)
         {
             if (!EntityManager.EntityExists(uid))
@@ -86,6 +80,22 @@ namespace Content.Client.Popups
         #endregion
 
         #region Abstract Method Implementations
+        public override void PopupCoordinates(string message, EntityCoordinates coordinates, PopupType type = PopupType.Small)
+        {
+            PopupMessage(message, type, coordinates, null);
+        }
+
+        public override void PopupCoordinates(string message, EntityCoordinates coordinates, ICommonSession recipient, PopupType type = PopupType.Small)
+        {
+            if (_playerManager.LocalPlayer?.Session == recipient)
+                PopupMessage(message, type, coordinates, null);
+        }
+
+        public override void PopupCoordinates(string message, EntityCoordinates coordinates, EntityUid recipient, PopupType type = PopupType.Small)
+        {
+            if (_playerManager.LocalPlayer?.ControlledEntity == recipient)
+                PopupMessage(message, type, coordinates, null);
+        }
 
         public override void PopupCursor(string message, Filter filter, PopupType type=PopupType.Small)
         {
@@ -95,11 +105,8 @@ namespace Content.Client.Popups
             PopupCursor(message, type);
         }
 
-        public override void PopupCoordinates(string message, EntityCoordinates coordinates, Filter filter, PopupType type=PopupType.Small)
+        public override void PopupCoordinates(string message, EntityCoordinates coordinates, Filter filter, bool replayRecord, PopupType type = PopupType.Small)
         {
-            if (!filter.CheckPrediction)
-                return;
-
             PopupCoordinates(message, coordinates, type);
         }
 
