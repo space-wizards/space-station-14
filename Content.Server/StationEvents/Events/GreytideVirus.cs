@@ -1,11 +1,7 @@
 using System.Linq;
 using Content.Server.Doors.Components;
 using Content.Server.Doors.Systems;
-using Content.Server.GameTicking.Rules.Configurations;
 using Content.Shared.Doors.Components;
-using Content.Shared.Doors.Systems;
-using Robust.Shared.Audio;
-using Robust.Shared.Player;
 using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
