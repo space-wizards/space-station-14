@@ -38,7 +38,7 @@ public sealed class TraitSystem : EntitySystem
             // Add all components required by the prototype
             foreach (var entry in traitPrototype.Components.Values)
             {
-                var comp = (Component) _serializationManager.Copy(entry.Component);
+                var comp = (Component) _serializationManager.CreateCopy(entry.Component);
                 comp.Owner = args.Mob;
                 EntityManager.AddComponent(args.Mob, comp);
             }

@@ -1,7 +1,7 @@
 - type: entity
   id: RandomSnacks
   name: random snack spawner
-  #suffix:
+  #suffix: ""
   parent: MarkerBase
   placement:
     mode: AlignTileAny
@@ -9,7 +9,7 @@
   - type: Sprite
     layers:
       - state: red
-      - texture: Objects/Consumable/Food/snacks.rsi/cheesiehonkers.png 
+      - texture: Objects/Consumable/Food/snacks.rsi/cheesiehonkers.png
   - type: RandomSpawner
   #small item
     prototypes:

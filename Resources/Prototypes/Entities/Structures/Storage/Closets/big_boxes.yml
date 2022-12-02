@@ -84,7 +84,7 @@
 - type: entity
   id: GhostBox
   parent: StealthBox
-  suffix:
+  suffix: ""
   name: ghost box
   description: Beware!
   components:
