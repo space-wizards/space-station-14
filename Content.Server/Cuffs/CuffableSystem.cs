@@ -121,7 +121,6 @@ namespace Content.Server.Cuffs
 
         private void OnCuffMeleeHit(EntityUid uid, HandcuffComponent component, MeleeHitEvent args)
         {   
-            try{
             if (component.Cuffing)
                 return;
 
@@ -155,12 +154,6 @@ namespace Content.Server.Cuffs
 
             component.TryUpdateCuff(args.User, args.HitEntities.First(), cuffed);
             args.Handled = true;
-            }
-            finally
-            {
-                _audio.PlayPvs(component.StartCuffSound, uid);
-            }
-
         }
 
 
