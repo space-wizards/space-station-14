@@ -104,7 +104,7 @@ namespace Content.Server.Botany.Systems
 
                     _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-plant-success-message",
                         ("seedName", seed.Name),
-                        ("seedNoun", seed.Noun)), Filter.Entities(args.User), PopupType.Medium);
+                        ("seedNoun", seed.Noun)), args.User, PopupType.Medium);
 
                     component.Seed = seed;
                     component.Dead = false;
@@ -121,7 +121,7 @@ namespace Content.Server.Botany.Systems
                 }
 
                 _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-already-seeded-message",
-                    ("name", Comp<MetaDataComponent>(uid).EntityName)), Filter.Entities(args.User), PopupType.Medium);
+                    ("name", Comp<MetaDataComponent>(uid).EntityName)), args.User, PopupType.Medium);
                 return;
             }
 
@@ -130,7 +130,7 @@ namespace Content.Server.Botany.Systems
                 if (component.WeedLevel > 0)
                 {
                     _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-remove-weeds-message",
-                        ("name", Comp<MetaDataComponent>(uid).EntityName)), Filter.Entities(args.User), PopupType.Medium);
+                        ("name", Comp<MetaDataComponent>(uid).EntityName)), args.User, PopupType.Medium);
                     _popupSystem.PopupEntity(Loc.GetString("plant-holder-component-remove-weeds-others-message",
                         ("otherName", Comp<MetaDataComponent>(args.User).EntityName)), uid, Filter.PvsExcept(args.User));
                     component.WeedLevel = 0;
@@ -138,7 +138,7 @@ namespace Content.Server.Botany.Systems
                 }
                 else
                 {
-                    _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-no-weeds-message"), Filter.Entities(args.User));
+                    _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-no-weeds-message"), args.User);
                 }
 
                 return;
@@ -149,7 +149,7 @@ namespace Content.Server.Botany.Systems
                 if (component.Seed != null)
                 {
                     _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-remove-plant-message",
-                        ("name", Comp<MetaDataComponent>(uid).EntityName)), Filter.Entities(args.User), PopupType.Medium);
+                        ("name", Comp<MetaDataComponent>(uid).EntityName)), args.User, PopupType.Medium);
                     _popupSystem.PopupEntity(Loc.GetString("plant-holder-component-remove-plant-others-message",
                         ("name", Comp<MetaDataComponent>(args.User).EntityName)), uid, Filter.PvsExcept(args.User));
                     component.RemovePlant();
@@ -157,7 +157,7 @@ namespace Content.Server.Botany.Systems
                 else
                 {
                     _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-no-plant-message",
-                        ("name", Comp<MetaDataComponent>(uid).EntityName)), Filter.Entities(args.User));
+                        ("name", Comp<MetaDataComponent>(uid).EntityName)), args.User);
                 }
 
                 return;
@@ -181,13 +181,13 @@ namespace Content.Server.Botany.Systems
                 if (split.TotalVolume == 0)
                 {
                     _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-no-plant-message",
-                        ("owner", args.Used)), Filter.Entities(args.User));
+                        ("owner", args.Used)), args.User);
                     return;
                 }
 
                 _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-spray-message",
                     ("owner", uid),
-                    ("amount", split.TotalVolume)), Filter.Entities(args.User), PopupType.Medium);
+                    ("amount", split.TotalVolume)), args.User, PopupType.Medium);
 
                _solutionSystem.TryAddSolution(targetEntity, targetSolution, split);
 
@@ -200,19 +200,19 @@ namespace Content.Server.Botany.Systems
             {
                 if (component.Seed == null)
                 {
-                    _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-nothing-to-sample-message"), Filter.Entities(args.User));
+                    _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-nothing-to-sample-message"), args.User);
                     return;
                 }
 
                 if (component.Sampled)
                 {
-                    _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-already-sampled-message"), Filter.Entities(args.User));
+                    _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-already-sampled-message"), args.User);
                     return;
                 }
 
                 if (component.Dead)
                 {
-                    _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-dead-plant-message"), Filter.Entities(args.User));
+                    _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-dead-plant-message"), args.User);
                     return;
                 }
 
@@ -220,7 +220,7 @@ namespace Content.Server.Botany.Systems
                 var seed = _botanySystem.SpawnSeedPacket(component.Seed, Transform(args.User).Coordinates);
                 seed.RandomOffset(0.25f);
                 _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-take-sample-message",
-                    ("seedName", component.Seed.DisplayName)), Filter.Entities(args.User));
+                    ("seedName", component.Seed.DisplayName)), args.User);
                 component.Health -= (_random.Next(3, 5) * 10);
 
                 if (_random.Prob(0.3f))
@@ -240,7 +240,7 @@ namespace Content.Server.Botany.Systems
             {
                 _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-compost-message",
                     ("owner", uid),
-                    ("usingItem", args.Used)), Filter.Entities(args.User), PopupType.Medium);
+                    ("usingItem", args.Used)), args.User, PopupType.Medium);
                 _popupSystem.PopupEntity(Loc.GetString("plant-holder-component-compost-others-message",
                     ("user", Identity.Entity(args.User, EntityManager)),
                     ("usingItem", args.Used),

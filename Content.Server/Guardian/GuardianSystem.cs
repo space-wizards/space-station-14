@@ -102,7 +102,8 @@ namespace Content.Server.Guardian
             if (args.Cancelled || args.Target != component.Host)
                 return;
 
-            _popupSystem.PopupCursor(Loc.GetString("guardian-attack-host"), Filter.Entities(uid), PopupType.LargeCaution);
+            // why is this server side code? This should be in shared
+            _popupSystem.PopupCursor(Loc.GetString("guardian-attack-host"), uid, PopupType.LargeCaution);
             args.Cancel();
         }
 

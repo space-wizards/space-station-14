@@ -9,6 +9,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Robust.Shared.Players;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -36,17 +37,6 @@ namespace Content.Client.Popups
         }
 
         #region Actual Implementation
-
-        public void PopupCursor(string message, PopupType type=PopupType.Small)
-        {
-            var label = new CursorPopupLabel(_inputManager.MouseScreenPosition)
-            {
-                Text = message,
-                StyleClasses = { GetStyleClass(type) },
-            };
-            _userInterfaceManager.PopupRoot.AddChild(label);
-            _aliveCursorLabels.Add(label);
-        }
 
         public void PopupCoordinates(string message, EntityCoordinates coordinates, PopupType type=PopupType.Small)
         {
@@ -86,13 +76,27 @@ namespace Content.Client.Popups
         #endregion
 
         #region Abstract Method Implementations
-
-        public override void PopupCursor(string message, Filter filter, PopupType type=PopupType.Small)
+        public override void PopupCursor(string message, PopupType type = PopupType.Small)
         {
-            if (!filter.CheckPrediction)
-                return;
+            var label = new CursorPopupLabel(_inputManager.MouseScreenPosition)
+            {
+                Text = message,
+                StyleClasses = { GetStyleClass(type) },
+            };
+            _userInterfaceManager.PopupRoot.AddChild(label);
+            _aliveCursorLabels.Add(label);
+        }
 
-            PopupCursor(message, type);
+        public override void PopupCursor(string message, ICommonSession recipient, PopupType type = PopupType.Small)
+        {
+            if (_playerManager.LocalPlayer?.Session == recipient)
+                PopupCursor(message, type);
+        }
+
+        public override void PopupCursor(string message, EntityUid recipient, PopupType type = PopupType.Small)
+        {
+            if (_playerManager.LocalPlayer?.ControlledEntity == recipient)
+                PopupCursor(message, type);
         }
 
         public override void PopupCoordinates(string message, EntityCoordinates coordinates, Filter filter, PopupType type=PopupType.Small)

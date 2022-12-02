@@ -129,7 +129,7 @@ public sealed class StaminaSystem : EntitySystem
         var sourceEnt = Identity.Entity(args.Source, EntityManager);
 
         _popup.PopupEntity(Loc.GetString("stunned-component-disarm-success-others", ("source", sourceEnt), ("target", targetEnt)), targetEnt, Filter.PvsExcept(args.Source), PopupType.LargeCaution);
-        _popup.PopupCursor(Loc.GetString("stunned-component-disarm-success", ("target", targetEnt)), Filter.Entities(args.Source), PopupType.Large);
+        _popup.PopupCursor(Loc.GetString("stunned-component-disarm-success", ("target", targetEnt)), args.Source, PopupType.Large);
 
         _adminLogger.Add(LogType.DisarmedKnockdown, LogImpact.Medium, $"{ToPrettyString(args.Source):user} knocked down {ToPrettyString(args.Target):target}");
 

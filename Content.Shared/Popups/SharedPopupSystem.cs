@@ -1,5 +1,6 @@
 using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Popups
@@ -10,12 +11,28 @@ namespace Content.Shared.Popups
     public abstract class SharedPopupSystem : EntitySystem
     {
         /// <summary>
-        ///     Shows a popup on the users' cursors.
+        ///     Shows a popup at the local users' cursor. Does nothing on the server.
         /// </summary>
         /// <param name="message">The message to display.</param>
-        /// <param name="filter">Filter for the players that will see the popup.</param>
+        /// <param name="recipient">Client that will see this popup.</param>
         /// <param name="type">Used to customize how this popup should appear visually.</param>
-        public abstract void PopupCursor(string message, Filter filter, PopupType type=PopupType.Small);
+        public abstract void PopupCursor(string message, PopupType type = PopupType.Small);
+
+        /// <summary>
+        ///     Shows a popup at a users' cursor.
+        /// </summary>
+        /// <param name="message">The message to display.</param>
+        /// <param name="recipient">Client that will see this popup.</param>
+        /// <param name="type">Used to customize how this popup should appear visually.</param>
+        public abstract void PopupCursor(string message, ICommonSession recipient, PopupType type = PopupType.Small);
+
+        /// <summary>
+        ///     Shows a popup at a users' cursor.
+        /// </summary>
+        /// <param name="message">The message to display.</param>
+        /// <param name="recipient">Client that will see this popup.</param>
+        /// <param name="type">Used to customize how this popup should appear visually.</param>
+        public abstract void PopupCursor(string message, EntityUid recipient, PopupType type = PopupType.Small);
 
         /// <summary>
         ///     Shows a popup at a world location.

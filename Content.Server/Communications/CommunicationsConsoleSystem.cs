@@ -208,7 +208,7 @@ namespace Content.Server.Communications
             if (message.Session.AttachedEntity is not {Valid: true} mob) return;
             if (!CanUse(mob, uid))
             {
-                _popupSystem.PopupCursor(Loc.GetString("comms-console-permission-denied"), Filter.Entities(mob), PopupType.Medium);
+                _popupSystem.PopupCursor(Loc.GetString("comms-console-permission-denied"), message.Session, PopupType.Medium);
                 return;
             }
 
