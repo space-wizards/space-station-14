@@ -18,6 +18,9 @@ public sealed class MechComponent : SharedMechComponent
     [DataField("exitDelay")]
     public float ExitDelay = 3;
 
+    [DataField("batteryRemovalDelay")]
+    public float BatteryRemovalDelay = 2;
+
     public CancellationTokenSource? EntryTokenSource;
 
     [DataField("airtight"), ViewVariables(VVAccess.ReadWrite)]
@@ -53,6 +56,16 @@ public sealed class MechExitFinishedEvent : EntityEventArgs
 }
 
 public sealed class MechExitCanclledEvent : EntityEventArgs
+{
+
+}
+
+public sealed class MechRemoveBatteryFinishedEvent : EntityEventArgs
+{
+
+}
+
+public sealed class MechRemoveBatteryCancelledEvent : EntityEventArgs
 {
 
 }

@@ -130,6 +130,7 @@ public abstract class SharedMechSystem : EntitySystem
     {
         component.PilotSlot = _container.EnsureContainer<ContainerSlot>(uid, component.PilotSlotId);
         component.EquipmentContainer = _container.EnsureContainer<Container>(uid, component.EquipmentContainerId);
+        component.BatterySlot = _container.EnsureContainer<ContainerSlot>(uid, component.BatterySlotId);
         UpdateAppearance(uid, component);
     }
 
@@ -167,13 +168,14 @@ public abstract class SharedMechSystem : EntitySystem
         _actions.RemoveProvidedActions(pilot, mech);
     }
 
-    public void BreakMech(EntityUid uid, SharedMechComponent? component = null)
+    public virtual void BreakMech(EntityUid uid, SharedMechComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
 
         TryEject(uid, component);
-        foreach (var ent in component.EquipmentContainer.ContainedEntities)
+        var equipment = new List<EntityUid>(component.EquipmentContainer.ContainedEntities);
+        foreach (var ent in equipment)
         {
             RemoveEquipment(uid, ent, component);
         }
@@ -232,7 +234,8 @@ public abstract class SharedMechSystem : EntitySystem
         UpdateUserInterface(uid, component);
     }
 
-    public bool TryChangeEnergy(EntityUid uid, FixedPoint2 delta, SharedMechComponent? component = null)
+    //TODO: this needs to replicate the energy change to the battery itself
+    public virtual bool TryChangeEnergy(EntityUid uid, FixedPoint2 delta, SharedMechComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return false;

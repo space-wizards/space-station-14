@@ -16,10 +16,16 @@ public abstract class SharedMechComponent : Component
     public FixedPoint2 MaxIntegrity = 300;
 
     [ViewVariables(VVAccess.ReadWrite)]
-    public FixedPoint2 Energy;
+    public FixedPoint2 Energy = 0;
 
     [DataField("maxEnergy")]
-    public FixedPoint2 MaxEnergy = 200;
+    public FixedPoint2 MaxEnergy = 0;
+
+    [ViewVariables]
+    public ContainerSlot BatterySlot = default!;
+
+    [ViewVariables]
+    public readonly string BatterySlotId = "mech-battery-slot";
 
     /// <summary>
     /// A multiplier used to calculate how much of the damage done to a mech

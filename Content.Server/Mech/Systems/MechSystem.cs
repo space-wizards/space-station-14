@@ -3,11 +3,17 @@ using System.Threading;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.DoAfter;
 using Content.Server.Mech.Components;
+using Content.Server.Power.Components;
+using Content.Server.Wires;
 using Content.Shared.Damage;
+using Content.Shared.FixedPoint;
+using Content.Shared.Interaction;
 using Content.Shared.Mech;
 using Content.Shared.Mech.Components;
 using Content.Shared.Mech.EntitySystems;
+using Content.Shared.Tools.Components;
 using Content.Shared.Verbs;
+using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 
@@ -16,16 +22,22 @@ namespace Content.Server.Mech.Systems;
 public sealed class MechSystem : SharedMechSystem
 {
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
+    [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
     [Dependency] private readonly IMapManager _map = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
+
+    private ISawmill _sawmill = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
 
+        _sawmill = Logger.GetSawmill("mech");
+
+        SubscribeLocalEvent<MechComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<MechComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<MechComponent, GetVerbsEvent<AlternativeVerb>>(OnAlternativeVerb);
         SubscribeLocalEvent<MechComponent, MechOpenUiEvent>(OnOpenUi);
@@ -33,6 +45,8 @@ public sealed class MechSystem : SharedMechSystem
         SubscribeLocalEvent<MechComponent, MechEntryCanclledEvent>(OnEntryExitCancelled);
         SubscribeLocalEvent<MechComponent, MechExitFinishedEvent>(OnExitFinished);
         SubscribeLocalEvent<MechComponent, MechExitCanclledEvent>(OnEntryExitCancelled);
+        SubscribeLocalEvent<MechComponent, MechRemoveBatteryFinishedEvent>(OnRemoveBatteryFinished);
+        SubscribeLocalEvent<MechComponent, MechRemoveBatteryCancelledEvent>(OnRemoveBatteryCancelled);
 
         SubscribeLocalEvent<MechComponent, DamageChangedEvent>(OnDamageChanged);
         SubscribeLocalEvent<MechComponent, MechEquipmentRemoveMessage>(OnRemoveEquipmentMessage);
@@ -40,6 +54,54 @@ public sealed class MechSystem : SharedMechSystem
         SubscribeLocalEvent<MechPilotComponent, InhaleLocationEvent>(OnInhale);
         SubscribeLocalEvent<MechPilotComponent, ExhaleLocationEvent>(OnExhale);
         SubscribeLocalEvent<MechPilotComponent, AtmosExposedGetAirEvent>(OnExpose);
+    }
+
+    private void OnInteractUsing(EntityUid uid, MechComponent component, InteractUsingEvent args)
+    {
+        if (TryComp<WiresComponent>(uid, out var wires) && !wires.IsPanelOpen)
+            return;
+
+        if (component.BatterySlot.ContainedEntity == null && TryComp<BatteryComponent>(args.Used, out var battery))
+        {
+            component.BatterySlot.Insert(args.Used);
+            component.Energy = battery.CurrentCharge;
+            component.MaxEnergy = battery.MaxCharge;
+        }
+        else if (component.EntryTokenSource == null &&
+                 TryComp<ToolComponent>(args.Used, out var tool) &&
+                 tool.Qualities.Contains("Prying") &&
+                 component.BatterySlot.ContainedEntity != null)
+        {
+            component.EntryTokenSource = new();
+            _doAfter.DoAfter(new DoAfterEventArgs(args.User, component.BatteryRemovalDelay, component.EntryTokenSource.Token, uid, args.Target)
+            {
+                BreakOnTargetMove = true,
+                BreakOnUserMove = true,
+                TargetFinishedEvent = new MechRemoveBatteryFinishedEvent(),
+                TargetCancelledEvent = new MechRemoveBatteryCancelledEvent()
+            });
+            return;
+        }
+
+        Dirty(component);
+        UpdateUserInterface(uid, component);
+    }
+
+    private void OnRemoveBatteryFinished(EntityUid uid, MechComponent component, MechRemoveBatteryFinishedEvent args)
+    {
+        component.EntryTokenSource = null;
+
+        _container.EmptyContainer(component.BatterySlot);
+        component.Energy = 0;
+        component.MaxEnergy = 0;
+
+        Dirty(component);
+        UpdateUserInterface(uid, component);
+    }
+
+    private void OnRemoveBatteryCancelled(EntityUid uid, MechComponent component, MechRemoveBatteryCancelledEvent args)
+    {
+        component.EntryTokenSource = null;
     }
 
     private void OnMapInit(EntityUid uid, MechComponent component, MapInitEvent args)
@@ -244,6 +306,39 @@ public sealed class MechSystem : SharedMechSystem
             }
         }
 
+        return true;
+    }
+
+    public override void BreakMech(EntityUid uid, SharedMechComponent? component = null)
+    {
+        base.BreakMech(uid, component);
+
+        _ui.TryCloseAll(uid, MechUiKey.Key);
+    }
+
+    public override bool TryChangeEnergy(EntityUid uid, FixedPoint2 delta, SharedMechComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return false;
+
+        if (!base.TryChangeEnergy(uid, delta, component))
+            return false;
+
+        var battery = component.BatterySlot.ContainedEntity;
+        if (battery == null)
+            return false;
+
+        if (!TryComp<BatteryComponent>(battery, out var batteryComp))
+            return false;
+
+        batteryComp.CurrentCharge -= delta.Float();
+        if (batteryComp.CurrentCharge != component.Energy) //if there's a discrepency, we have to resync them
+        {
+            _sawmill.Debug("Battery charge was not equal to mech charge");
+            component.Energy = batteryComp.CurrentCharge;
+            component.MaxEnergy = batteryComp.MaxCharge;
+            Dirty(component);
+        }
         return true;
     }
 

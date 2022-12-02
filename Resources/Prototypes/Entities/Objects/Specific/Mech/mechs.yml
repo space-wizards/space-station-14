@@ -45,6 +45,9 @@
   - type: Physics
     bodyType: KinematicController
   - type: Clickable
+  - type: Wires #we just want the panel
+    BoardName: Mech
+    LayoutId: Mech
   - type: Fixtures
     fixtures:
     - shape:
@@ -60,6 +63,7 @@
     containers:
       mech-pilot-slot: !type:ContainerSlot
       mech-equipment-container: !type:Container
+      mech-battery-slot: !type:ContainerSlot
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
