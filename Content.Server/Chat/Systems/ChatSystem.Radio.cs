@@ -55,7 +55,7 @@ public sealed partial class ChatSystem
         }
 
         // Check now if the remaining message is a targeted radio message
-        if (message.StartsWith(':') && message.Length >= 2)
+        if ((message.StartsWith(':') || message.StartsWith('.')) && message.Length >= 2)
         {
             // Strip remaining message prefix.
             _keyCodes.TryGetValue(message[1], out channel);
