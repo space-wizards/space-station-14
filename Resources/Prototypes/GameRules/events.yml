@@ -83,6 +83,19 @@
     startAfter: 20
 
 - type: gameRule
+  id: GreytideVirus
+  config:
+    !type:StationEventRuleConfiguration
+    id: GreytideVirus
+    weight: 5
+    startAnnouncement: greytide-virus-event-announcement
+    startAudio:
+      path: /Audio/Announcements/attention.ogg
+    startAfter: 20
+    minimumPlayers: 5
+    endAfter: 1
+
+- type: gameRule
   id: KudzuGrowth
   config:
     !type:StationEventRuleConfiguration
