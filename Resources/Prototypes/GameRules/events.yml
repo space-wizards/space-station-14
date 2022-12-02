@@ -27,6 +27,15 @@
     endAfter: 1
 
 - type: gameRule
+  id: CameraFailure
+  config:
+    !type:StationEventRuleConfiguration
+    id: CameraFailure
+    minimumPlayers: 2
+    weight: 5
+    endAfter: 1
+
+- type: gameRule
   id: DiseaseOutbreak
   config:
     !type:StationEventRuleConfiguration
