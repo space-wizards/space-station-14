@@ -57,7 +57,7 @@
   parent: ClothingNeckBase
   id: ClothingNeckMantleHOSShoulder
   name: head of security's shoulder mantle
-  description: Shootouts with nukies are just another tuesday for this HoS. This mantle is a symbol of commitment to the station.
+  description: Shootouts with nukies are just another Tuesday for this HoS. This mantle is a symbol of commitment to the station.
   components:
   - type: Sprite
     sprite: Clothing/Neck/mantles/hosmantle_shoulder.rsi
