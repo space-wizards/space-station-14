@@ -152,8 +152,10 @@
         food:
           maxVol: 20 # For sprinkles or something? Idk.
           reagents:
+            - ReagentId: Ice
+              Quantity: 8
             - ReagentId: Water
-              Quantity: 10
+              Quantity: 2
             - ReagentId: Sugar
               Quantity: 2
 
@@ -168,8 +170,8 @@
       food:
         maxVol: 20
         reagents:
-          - ReagentId: Water
-            Quantity: 10
+          - ReagentId: Ice
+            Quantity: 8
 
 - type: entity
   name: berry snowcone
