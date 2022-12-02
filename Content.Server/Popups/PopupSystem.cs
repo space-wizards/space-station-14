@@ -29,10 +29,27 @@ namespace Content.Server.Popups
                 RaiseNetworkEvent(new PopupCursorEvent(message, type), actor.PlayerSession);
         }
 
-        public override void PopupCoordinates(string message, EntityCoordinates coordinates, Filter filter, PopupType type=PopupType.Small)
+        public override void PopupCoordinates(string message, EntityCoordinates coordinates, Filter filter, bool replayRecord, PopupType type = PopupType.Small)
         {
-            // TODO REPLAYS See above
+            RaiseNetworkEvent(new PopupCoordinatesEvent(message, type, coordinates), filter, replayRecord);
+        }
+
+        public override void PopupCoordinates(string message, EntityCoordinates coordinates, PopupType type = PopupType.Small)
+        {
+            var mapPos = coordinates.ToMap(EntityManager);
+            var filter = Filter.Empty().AddPlayersByPvs(mapPos, entManager: EntityManager, playerMan: _player, cfgMan: _cfg);
             RaiseNetworkEvent(new PopupCoordinatesEvent(message, type, coordinates), filter);
+        }
+
+        public override void PopupCoordinates(string message, EntityCoordinates coordinates, ICommonSession recipient, PopupType type = PopupType.Small)
+        {
+            RaiseNetworkEvent(new PopupCoordinatesEvent(message, type, coordinates), recipient);
+        }
+
+        public override void PopupCoordinates(string message, EntityCoordinates coordinates, EntityUid recipient, PopupType type = PopupType.Small)
+        {
+            if (TryComp(recipient, out ActorComponent? actor))
+                RaiseNetworkEvent(new PopupCoordinatesEvent(message, type, coordinates), actor.PlayerSession);
         }
 
         public override void PopupEntity(string message, EntityUid uid, PopupType type = PopupType.Small)
