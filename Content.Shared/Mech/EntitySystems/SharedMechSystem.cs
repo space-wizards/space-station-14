@@ -234,7 +234,6 @@ public abstract class SharedMechSystem : EntitySystem
         UpdateUserInterface(uid, component);
     }
 
-    //TODO: this needs to replicate the energy change to the battery itself
     public virtual bool TryChangeEnergy(EntityUid uid, FixedPoint2 delta, SharedMechComponent? component = null)
     {
         if (!Resolve(uid, ref component))

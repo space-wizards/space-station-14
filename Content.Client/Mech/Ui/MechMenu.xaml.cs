@@ -34,8 +34,14 @@ public sealed partial class MechMenu : FancyWindow
         if (!_ent.TryGetComponent<SharedMechComponent>(_mech, out var mechComp))
             return;
 
-        IntegrityDisplay.Text = Loc.GetString("mech-integrity-display", ("amount", mechComp.Integrity));
-        EnergyDisplay.Text = Loc.GetString("mech-energy-display", ("amount", mechComp.Energy));
+        var integrityPercent = mechComp.Integrity / mechComp.MaxIntegrity;
+        IntegrityDisplayBar.Value = integrityPercent.Float();
+        IntegrityDisplay.Text = Loc.GetString("mech-integrity-display", ("amount", (integrityPercent*100).Int()));
+
+        var energyPercent = mechComp.Energy / mechComp.MaxEnergy;
+        EnergyDisplayBar.Value = energyPercent.Float();
+        EnergyDisplay.Text = Loc.GetString("mech-energy-display", ("amount", (energyPercent*100).Int()));
+
         SlotDisplay.Text = Loc.GetString("mech-slot-display",
             ("amount", mechComp.MaxEquipmentAmount - mechComp.EquipmentContainer.ContainedEntities.Count));
     }
