@@ -173,6 +173,11 @@ public abstract class SharedMechSystem : EntitySystem
             return;
 
         TryEject(uid, component);
+        foreach (var ent in component.EquipmentContainer.ContainedEntities)
+        {
+            RemoveEquipment(uid, ent, component);
+        }
+
         component.Broken = true;
         UpdateAppearance(uid, component);
     }
@@ -205,12 +210,25 @@ public abstract class SharedMechSystem : EntitySystem
         Dirty(component);
     }
 
+    public void InsertEquipment(EntityUid uid, EntityUid toInsert, SharedMechComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        component.EquipmentContainer.Insert(toInsert, EntityManager);
+        var ev = new MechEquipmentInsertedEvent(uid);
+        RaiseLocalEvent(toInsert, ref ev);
+        UpdateUserInterface(uid, component);
+    }
+
     public void RemoveEquipment(EntityUid uid, EntityUid toRemove, SharedMechComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
 
         component.EquipmentContainer.Remove(toRemove, EntityManager);
+        var ev = new MechEquipmentRemovedEvent(uid);
+        RaiseLocalEvent(toRemove, ref ev);
         UpdateUserInterface(uid, component);
     }
 
@@ -321,7 +339,7 @@ public abstract class SharedMechSystem : EntitySystem
         args.CanAttack = true;
     }
 
-    private void UpdateAppearance(EntityUid uid, SharedMechComponent? component = null, AppearanceComponent? appearance = null)
+    private void UpdateAppearance(EntityUid uid, SharedMechComponent ? component = null, AppearanceComponent? appearance = null)
     {
         if (!Resolve(uid, ref component, ref appearance, false))
             return;

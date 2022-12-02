@@ -28,6 +28,34 @@ public enum MechVisualLayers : byte
     Base
 }
 
+/// <summary>
+/// Event raised on equipment when it is inserted into a mech
+/// </summary>
+[ByRefEvent]
+public readonly struct MechEquipmentInsertedEvent
+{
+    public readonly EntityUid Mech;
+
+    public MechEquipmentInsertedEvent(EntityUid mech)
+    {
+        Mech = mech;
+    }
+}
+
+/// <summary>
+/// Event raised on equipment when it is removed from a mech
+/// </summary>
+[ByRefEvent]
+public readonly struct MechEquipmentRemovedEvent
+{
+    public readonly EntityUid Mech;
+
+    public MechEquipmentRemovedEvent(EntityUid mech)
+    {
+        Mech = mech;
+    }
+}
+
 [Serializable, NetSerializable]
 public sealed class MechBoundUserInterfaceState : BoundUserInterfaceState
 {
@@ -47,15 +75,12 @@ public sealed class MechEquipmentRemoveMessage : BoundUserInterfaceMessage
 
 public sealed class MechToggleEquipmentEvent : InstantActionEvent
 {
-
 }
 
 public sealed class MechOpenUiEvent : InstantActionEvent
 {
-
 }
 
 public sealed class MechEjectPilotEvent : InstantActionEvent
 {
-
 }

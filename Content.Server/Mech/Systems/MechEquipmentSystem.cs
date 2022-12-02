@@ -60,10 +60,7 @@ public sealed class MechEquipmentSystem : EntitySystem
         component.TokenSource = null;
         _popup.PopupEntity(Loc.GetString("mech-equipment-finish-install", ("item", uid)), args.Mech, Filter.Pvs(args.Mech));
 
-        if (!TryComp<MechComponent>(args.Mech, out var mechComp))
-            return;
-        mechComp.EquipmentContainer.Insert(uid, EntityManager);
-        _mech.UpdateUserInterface(args.Mech, mechComp);
+        _mech.InsertEquipment(args.Mech, uid);
     }
 
     private void OnCancelled(EntityUid uid, MechEquipmentComponent component, MechEquipmentInstallCancelled args)

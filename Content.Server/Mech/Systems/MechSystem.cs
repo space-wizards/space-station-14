@@ -75,7 +75,7 @@ public sealed class MechSystem : SharedMechSystem
 
     private void OnAlternativeVerb(EntityUid uid, MechComponent component, GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract)
+        if (!args.CanAccess || !args.CanInteract || component.Broken)
             return;
 
         if (CanInsert(uid, args.User, component))
@@ -102,11 +102,10 @@ public sealed class MechSystem : SharedMechSystem
                 Act = () => ToggleMechUi(uid, component, args.User),
                 Text = Loc.GetString("mech-ui-open-verb")
             };
-            if (!component.Broken)
-                args.Verbs.Add(enterVerb);
+            args.Verbs.Add(enterVerb);
             args.Verbs.Add(openUiVerb);
         }
-        else if (!component.Broken && !IsEmpty(component))
+        else if (!IsEmpty(component))
         {
             var ejectVerb = new AlternativeVerb
             {
@@ -191,7 +190,6 @@ public sealed class MechSystem : SharedMechSystem
         base.UpdateUserInterface(uid, component);
 
         var state = new MechBoundUserInterfaceState();
-
         _ui.TrySetUiState(uid, MechUiKey.Key, state);
     }
 
