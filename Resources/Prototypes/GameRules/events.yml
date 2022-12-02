@@ -36,6 +36,16 @@
     endAfter: 1
 
 - type: gameRule
+  id: CargoIntruders
+  config:
+    !type:StationEventRuleConfiguration
+    id: CargoIntruders
+    minimumPlayers: 20
+    earliestStart: 30
+    weight: 1
+    endAfter: 1
+
+- type: gameRule
   id: DiseaseOutbreak
   config:
     !type:StationEventRuleConfiguration
