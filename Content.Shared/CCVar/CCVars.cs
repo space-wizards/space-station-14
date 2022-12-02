@@ -253,10 +253,22 @@ namespace Content.Shared.CCVar
             CVarDef.Create("game.panic_bunker.enabled", false, CVar.SERVERONLY);
 
         /// <summary>
+        /// Show reason of disconnect for user or not.
+        /// </summary>
+        public static readonly CVarDef<bool> PanicBunkerShowReason =
+            CVarDef.Create("game.panic_bunker.show_reason", false, CVar.SERVERONLY);
+
+        /// <summary>
         /// Minimum age of the account (from server's PoV, so from first-seen date) in minutes.
         /// </summary>
         public static readonly CVarDef<int> PanicBunkerMinAccountAge =
             CVarDef.Create("game.panic_bunker.min_account_age", 1440, CVar.SERVERONLY);
+
+        /// <summary>
+        /// Minimal overall played time.
+        /// </summary>
+        public static readonly CVarDef<int> PanicBunkerMinOverallHours =
+            CVarDef.Create("game.panic_bunker.min_overall_hours", 10, CVar.SERVERONLY);
 
         /// <summary>
         /// Make people bonk when trying to climb certain objects like tables.
@@ -1148,6 +1160,12 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<float> AfkTime =
             CVarDef.Create("afk.time", 60f, CVar.SERVERONLY);
+
+        /// <summary>
+        /// How long seconds a client can go after being detected as AFK before being kicked.
+        /// </summary>
+        public static readonly CVarDef<float> AfkKickTime =
+            CVarDef.Create("afk.kick_time", 600f, CVar.SERVERONLY);
 
         /*
          * IC

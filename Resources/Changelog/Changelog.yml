@@ -1,30 +1,4 @@
 Entries:
-- author: tomasalves8
-  changes:
-  - {message: Portable Flasher, type: Fix}
-  id: 2209
-  time: '2022-08-31T12:27:30.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Damage overlay in the corners should no longer show when dead., type: Fix}
-  id: 2210
-  time: '2022-08-31T12:43:19.0000000+00:00'
-- author: Flareguy
-  changes:
-  - {message: 'Added hazard jumpsuits, now in the nearest Engidrobe vendor near you!',
-    type: Add}
-  - {message: Resprited workboots., type: Tweak}
-  - {message: Ported the hi-vis vest sprite from an older version of /tg/station.,
-    type: Tweak}
-  id: 2211
-  time: '2022-08-31T13:09:54.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: 'The entire engineering department now spawns with some form of welding
-      protection, not just technical assistants.', type: Tweak}
-  - {message: Radiation hoods are no longer only cosmetic., type: Fix}
-  id: 2212
-  time: '2022-09-01T02:08:53.0000000+00:00'
 - author: JustinTrotter
   changes:
   - {message: Increased stripping menu height and reordered inventory, type: Tweak}
@@ -2954,3 +2928,24 @@ Entries:
       traversing a grid., type: Tweak}
   id: 2708
   time: '2022-11-29T22:41:27.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: All station events are no longer capped at a certain number of occurrences.,
+    type: Tweak}
+  id: 2709
+  time: '2022-12-01T05:45:43.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Ghosts can now toggle seeing FoV, type: Add}
+  id: 2710
+  time: '2022-12-01T05:46:04.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Turrets will now shoot space targets., type: Fix}
+  id: 2711
+  time: '2022-12-01T15:02:02.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: Kick AFK players, type: Add}
+  id: 2712
+  time: '2022-12-01T16:38:20.0000000+00:00'
