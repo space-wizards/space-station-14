@@ -35,7 +35,6 @@ public sealed class MechSystem : SharedMechSystem
         SubscribeLocalEvent<MechComponent, MechExitCanclledEvent>(OnEntryExitCancelled);
 
         SubscribeLocalEvent<MechComponent, DamageChangedEvent>(OnDamageChanged);
-        SubscribeLocalEvent<MechComponent, MechEquipmentToggleMessage>(OnEnableEquipmentMessage);
         SubscribeLocalEvent<MechComponent, MechEquipmentRemoveMessage>(OnRemoveEquipmentMessage);
 
         SubscribeLocalEvent<MechPilotComponent, InhaleLocationEvent>(OnInhale);
@@ -57,31 +56,9 @@ public sealed class MechSystem : SharedMechSystem
         Dirty(component);
     }
 
-    //TODO: all of this is getting chunked at some point
-    private void OnEnableEquipmentMessage(EntityUid uid, SharedMechComponent component, MechEquipmentToggleMessage args)
-    {
-        if (!Exists(args.Equipment) || Deleted(args.Equipment))
-            return;
-
-        var ev = new EquipmentGetInformationEvent(new MechEquipmentUiInformation(args.Equipment));
-        RaiseLocalEvent(args.Equipment, ref ev);
-
-        if (!ev.Information.CanBeEnabled) //assure that this is valid
-            return;
-
-        var toggleEv = new MechEquipmentToggleEvent(args.Enabled);
-        RaiseLocalEvent(args.Equipment, ref toggleEv);
-    }
-
     private void OnRemoveEquipmentMessage(EntityUid uid, SharedMechComponent component, MechEquipmentRemoveMessage args)
     {
         if (!Exists(args.Equipment) || Deleted(args.Equipment))
-            return;
-
-        var ev = new EquipmentGetInformationEvent(new MechEquipmentUiInformation(args.Equipment));
-        RaiseLocalEvent(args.Equipment, ref ev);
-
-        if (!ev.Information.CanBeRemoved) //assure that this is valid
             return;
 
         if (!component.EquipmentContainer.ContainedEntities.Contains(args.Equipment))
@@ -89,7 +66,6 @@ public sealed class MechSystem : SharedMechSystem
 
         RemoveEquipment(uid, args.Equipment, component);
     }
-    //TODO: stop chunking here
 
     private void OnOpenUi(EntityUid uid, MechComponent component, MechOpenUiEvent args)
     {
@@ -215,13 +191,6 @@ public sealed class MechSystem : SharedMechSystem
         base.UpdateUserInterface(uid, component);
 
         var state = new MechBoundUserInterfaceState();
-        foreach (var equipment in component.EquipmentContainer.ContainedEntities)
-        {
-            var ev = new EquipmentGetInformationEvent(new MechEquipmentUiInformation(equipment));
-            RaiseLocalEvent(equipment, ref ev);
-
-            state.EquipmentInfo.Add(ev.Information);
-        }
 
         _ui.TrySetUiState(uid, MechUiKey.Key, state);
     }

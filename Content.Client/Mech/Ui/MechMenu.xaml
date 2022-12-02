@@ -16,7 +16,7 @@
                    Access="Public"
                    HorizontalExpand="True" />
             <Label Name="SlotDisplay"
-                   HorizontalAlignment="Right"
+                   HorizontalAlignment="Left"
                    Access="Public"
                    HorizontalExpand="True" />
             </BoxContainer>

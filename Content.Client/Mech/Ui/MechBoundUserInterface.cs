@@ -25,10 +25,6 @@ public sealed class MechBoundUserInterface : BoundUserInterface
         _menu.OnClose += Close;
         _menu.OpenCenteredLeft();
 
-        _menu.OnEnableButtonPressed += (uid, b) =>
-        {
-            SendMessage(new MechEquipmentToggleMessage(uid, b));
-        };
         _menu.OnRemoveButtonPressed += uid =>
         {
             SendMessage(new MechEquipmentRemoveMessage(uid));

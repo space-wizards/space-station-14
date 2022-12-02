@@ -11,6 +11,7 @@
     layers:
     - map: [ "enum.MechVisualLayers.Base" ]
       state: ripley
+  - type: MobMover
   - type: Mech
     baseState: ripley
     openState: ripley-open
@@ -35,10 +36,11 @@
   - type: InteractionOutline
   - type: MovementSpeedModifier
     baseWalkSpeed: 1
-    baseSprintSpeed: 2.5
+    baseSprintSpeed: 2
   - type: Tag
     tags:
     - DoorBumpOpener
+    - FootstepSound
   - type: Pullable
   - type: Physics
     bodyType: KinematicController
@@ -61,9 +63,16 @@
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
+  - type: FootstepModifier
+    footstepSoundCollection:
+      path: /Audio/Mecha/mechmove03.ogg
 
 - type: entity
   id: MechRipley
   parent: BaseMech
   name: ripley
   description: Cargo's favorite robotic box hauling friend.
+  components:
+  - type: FootstepModifier
+    footstepSoundCollection:
+      path: /Audio/Mecha/sound_mecha_hydraulic.ogg
