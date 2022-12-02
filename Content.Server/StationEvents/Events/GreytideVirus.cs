@@ -25,7 +25,7 @@ public sealed class GreytideVirus : StationEventSystem
         var airlocks = EntityQuery<AirlockComponent, DoorComponent>().ToList();
         RobustRandom.Shuffle(airlocks);
 
-        var airlockAmount = (int) (RobustRandom.Next(2, 4) * Math.Sqrt(modifier)); // A small colony of critters.
+        var airlockAmount = (int) (RobustRandom.Next(2, 4) * Math.Sqrt(modifier));
 
         for (var i = 0; i < airlockAmount && i < airlocks.Count - 1; i++)
         {
