@@ -1159,13 +1159,13 @@ namespace Content.Shared.CCVar
         /// How long a client can go without any input before being considered AFK.
         /// </summary>
         public static readonly CVarDef<float> AfkTime =
-            CVarDef.Create("afk.time", 60f, CVar.SERVERONLY);
+            CVarDef.Create("afk.time", 480f, CVar.SERVERONLY);
 
         /// <summary>
         /// How long seconds a client can go after being detected as AFK before being kicked.
         /// </summary>
         public static readonly CVarDef<float> AfkKickTime =
-            CVarDef.Create("afk.kick_time", 600f, CVar.SERVERONLY);
+            CVarDef.Create("afk.kick_time", 120f, CVar.SERVERONLY);
 
         /*
          * IC
