@@ -27,7 +27,8 @@ namespace Content.Shared.Popups
         public abstract void PopupCoordinates(string message, EntityCoordinates coordinates, PopupType type = PopupType.Small);
 
         /// <summary>
-        ///     Filtered variant of <see cref="PopupCoordinates(string, EntityCoordinates, PopupType)"/>.
+        ///     Filtered variant of <see cref="PopupCoordinates(string, EntityCoordinates, PopupType)"/>, which should only be used
+        ///     if the filtering has to be more specific than simply PVS range based.
         /// </summary>
         /// <param name="filter">Filter for the players that will see the popup.</param>
         /// <param name="recordReplay">If true, this pop-up will be considered as a globally visible pop-up that gets shown during replays.</param>
