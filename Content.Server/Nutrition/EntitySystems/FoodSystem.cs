@@ -125,6 +125,11 @@ namespace Content.Server.Nutrition.EntitySystems
                 // logging
                 _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(user):user} is forcing {ToPrettyString(target):target} to eat {ToPrettyString(food.Owner):food} {SolutionContainerSystem.ToPrettyString(foodSolution)}");
             }
+            else
+            {
+                // log voluntary eating
+                _adminLogger.Add(LogType.ForceFeed, LogImpact.Low, $"{ToPrettyString(target):target} is eating {ToPrettyString(food.Owner):food} {SolutionContainerSystem.ToPrettyString(foodSolution)}");
+            }
 
             var moveBreak = user != target;
 
