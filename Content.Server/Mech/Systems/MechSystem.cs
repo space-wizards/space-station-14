@@ -63,14 +63,14 @@ public sealed class MechSystem : SharedMechSystem
 
         if (component.BatterySlot.ContainedEntity == null && TryComp<BatteryComponent>(args.Used, out var battery))
         {
-            component.BatterySlot.Insert(args.Used);
-            component.Energy = battery.CurrentCharge;
-            component.MaxEnergy = battery.MaxCharge;
+            InsertBattery(uid, args.Used, component, battery);
+            return;
         }
-        else if (component.EntryTokenSource == null &&
-                 TryComp<ToolComponent>(args.Used, out var tool) &&
-                 tool.Qualities.Contains("Prying") &&
-                 component.BatterySlot.ContainedEntity != null)
+
+        if (component.EntryTokenSource == null &&
+            TryComp<ToolComponent>(args.Used, out var tool) &&
+            tool.Qualities.Contains("Prying") &&
+            component.BatterySlot.ContainedEntity != null)
         {
             component.EntryTokenSource = new();
             _doAfter.DoAfter(new DoAfterEventArgs(args.User, component.BatteryRemovalDelay, component.EntryTokenSource.Token, uid, args.Target)
@@ -80,23 +80,14 @@ public sealed class MechSystem : SharedMechSystem
                 TargetFinishedEvent = new MechRemoveBatteryFinishedEvent(),
                 TargetCancelledEvent = new MechRemoveBatteryCancelledEvent()
             });
-            return;
         }
-
-        Dirty(component);
-        UpdateUserInterface(uid, component);
     }
 
     private void OnRemoveBatteryFinished(EntityUid uid, MechComponent component, MechRemoveBatteryFinishedEvent args)
     {
         component.EntryTokenSource = null;
 
-        _container.EmptyContainer(component.BatterySlot);
-        component.Energy = 0;
-        component.MaxEnergy = 0;
-
-        Dirty(component);
-        UpdateUserInterface(uid, component);
+        RemoveBattery(uid, component);
     }
 
     private void OnRemoveBatteryCancelled(EntityUid uid, MechComponent component, MechRemoveBatteryCancelledEvent args)
@@ -340,6 +331,35 @@ public sealed class MechSystem : SharedMechSystem
             Dirty(component);
         }
         return true;
+    }
+
+    public void InsertBattery(EntityUid uid, EntityUid toInsert, MechComponent? component = null, BatteryComponent? battery = null)
+    {
+        if (!Resolve(uid, ref component, false))
+            return;
+
+        if (!Resolve(toInsert, ref battery, false))
+            return;
+
+        component.BatterySlot.Insert(toInsert);
+        component.Energy = battery.CurrentCharge;
+        component.MaxEnergy = battery.MaxCharge;
+
+        Dirty(component);
+        UpdateUserInterface(uid, component);
+    }
+
+    public void RemoveBattery(EntityUid uid, MechComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        _container.EmptyContainer(component.BatterySlot);
+        component.Energy = 0;
+        component.MaxEnergy = 0;
+
+        Dirty(component);
+        UpdateUserInterface(uid, component);
     }
 
     #region Atmos Handling

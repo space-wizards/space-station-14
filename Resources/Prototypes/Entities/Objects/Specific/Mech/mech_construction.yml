@@ -36,6 +36,18 @@
     size: 50
 
 - type: entity
+  id: BaseMechConstruct
+  parent: BaseMechPart
+  abstract: true
+  components:
+  - type: Appearance
+  - type: ContainerContainer
+    containers:
+      battery-container: !type:Container
+  - type: MechAssemblyVisuals
+    statePrefix: ripley
+
+- type: entity
   parent: BaseMechPart
   id: RipleyHarness
   name: ripley harness
@@ -125,17 +137,13 @@
 
 - type: entity
   id: RipleyChassis
-  parent: BaseMechPart
+  parent: BaseMechConstruct
   name: ripley chassis
   description: An in-progress construction of a ripley mech.
   components:
   - type: Sprite
-    netsync: true #it's just gotta be this way.
     noRot: true
     state: ripley0
-  - type: Appearance
-  - type: MechAssemblyVisuals
-    statePrefix: ripley
   - type: Construction
     graph: Ripley
     node: start

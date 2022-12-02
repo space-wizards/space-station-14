@@ -72,6 +72,7 @@
 
       - component: PowerCell
         name: power cell
+        store: battery-container
         icon:
           sprite: Objects/Power/power_cells.rsi
           state: small
@@ -120,6 +121,5 @@
 
   - node: ripley
     actions:
-    - !type:SpawnPrototype
-      prototype: MechRipley
-    - !type:DeleteEntity
+    - !type:BuildMech
+      mechPrototype: MechRipley
