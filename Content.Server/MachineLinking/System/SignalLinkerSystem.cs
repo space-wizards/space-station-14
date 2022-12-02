@@ -90,7 +90,7 @@ namespace Content.Server.MachineLinking.System
                     var msg = TryLinkDefaults(uid, linker.SavedTransmitter.Value, args.User, component)
                         ? Loc.GetString("signal-linking-verb-success", ("machine", linker.SavedTransmitter.Value))
                         : Loc.GetString("signal-linking-verb-fail", ("machine", linker.SavedTransmitter.Value));
-                    _popupSystem.PopupEntity(msg, uid, Filter.Entities(args.User));
+                    _popupSystem.PopupEntity(msg, uid, args.User);
                 };
                 return;
             }
@@ -122,7 +122,7 @@ namespace Content.Server.MachineLinking.System
                     var msg = TryLinkDefaults(linker.SavedReceiver.Value, uid, args.User, null, component)
                         ? Loc.GetString("signal-linking-verb-success", ("machine", linker.SavedReceiver.Value))
                         : Loc.GetString("signal-linking-verb-fail", ("machine", linker.SavedReceiver.Value));
-                    _popupSystem.PopupEntity(msg, uid, Filter.Entities(args.User));
+                    _popupSystem.PopupEntity(msg, uid, args.User);
                 };
                 return;
             }

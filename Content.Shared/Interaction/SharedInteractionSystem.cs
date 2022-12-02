@@ -571,7 +571,7 @@ namespace Content.Shared.Interaction
             if (!inRange && popup && _gameTiming.IsFirstTimePredicted)
             {
                 var message = Loc.GetString("interaction-system-user-interaction-cannot-reach");
-                _popupSystem.PopupEntity(message, origin, Filter.Entities(origin));
+                _popupSystem.PopupEntity(message, origin, origin);
             }
 
             return inRange;
@@ -716,7 +716,7 @@ namespace Content.Shared.Interaction
             if (!inRange && popup && _gameTiming.IsFirstTimePredicted)
             {
                 var message = Loc.GetString("interaction-system-user-interaction-cannot-reach");
-                _popupSystem.PopupEntity(message, origin, Filter.Entities(origin));
+                _popupSystem.PopupEntity(message, origin, origin);
             }
 
             return inRange;

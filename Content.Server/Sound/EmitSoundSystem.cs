@@ -49,7 +49,7 @@ namespace Content.Server.Sound
                 if (_random.Prob(soundSpammer.PlayChance))
                 {
                     if (soundSpammer.PopUp != null)
-                        _popupSystem.PopupEntity(Loc.GetString(soundSpammer.PopUp), soundSpammer.Owner, Filter.Pvs(soundSpammer.Owner));
+                        _popupSystem.PopupEntity(Loc.GetString(soundSpammer.PopUp), soundSpammer.Owner);
                     TryEmitSound(soundSpammer);
                 }
             }

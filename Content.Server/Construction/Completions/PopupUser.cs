@@ -22,7 +22,7 @@ namespace Content.Server.Construction.Completions
             if(Cursor)
                 popupSystem.PopupCursor(Loc.GetString(Text), userUid.Value);
             else
-                popupSystem.PopupEntity(Loc.GetString(Text), uid, Filter.Entities(userUid.Value));
+                popupSystem.PopupEntity(Loc.GetString(Text), uid, userUid.Value);
         }
     }
 }

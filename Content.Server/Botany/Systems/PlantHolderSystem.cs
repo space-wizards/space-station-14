@@ -132,7 +132,7 @@ namespace Content.Server.Botany.Systems
                     _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-remove-weeds-message",
                         ("name", Comp<MetaDataComponent>(uid).EntityName)), args.User, PopupType.Medium);
                     _popupSystem.PopupEntity(Loc.GetString("plant-holder-component-remove-weeds-others-message",
-                        ("otherName", Comp<MetaDataComponent>(args.User).EntityName)), uid, Filter.PvsExcept(args.User));
+                        ("otherName", Comp<MetaDataComponent>(args.User).EntityName)), uid, Filter.PvsExcept(args.User), true);
                     component.WeedLevel = 0;
                     component.UpdateSprite();
                 }
@@ -151,7 +151,7 @@ namespace Content.Server.Botany.Systems
                     _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-remove-plant-message",
                         ("name", Comp<MetaDataComponent>(uid).EntityName)), args.User, PopupType.Medium);
                     _popupSystem.PopupEntity(Loc.GetString("plant-holder-component-remove-plant-others-message",
-                        ("name", Comp<MetaDataComponent>(args.User).EntityName)), uid, Filter.PvsExcept(args.User));
+                        ("name", Comp<MetaDataComponent>(args.User).EntityName)), uid, Filter.PvsExcept(args.User), true);
                     component.RemovePlant();
                 }
                 else
@@ -244,7 +244,7 @@ namespace Content.Server.Botany.Systems
                 _popupSystem.PopupEntity(Loc.GetString("plant-holder-component-compost-others-message",
                     ("user", Identity.Entity(args.User, EntityManager)),
                     ("usingItem", args.Used),
-                    ("owner", uid)), uid, Filter.PvsExcept(args.User));
+                    ("owner", uid)), uid, Filter.PvsExcept(args.User), true);
 
                 if (_solutionSystem.TryGetSolution(args.Used, produce.SolutionName, out var solution2))
                 {

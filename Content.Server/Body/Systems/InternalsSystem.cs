@@ -74,7 +74,7 @@ public sealed class InternalsSystem : EntitySystem
         // If they're not on then check if we have a mask to use
         if (internals.BreathToolEntity == null)
         {
-            _popupSystem.PopupEntity(Loc.GetString("internals-no-breath-tool"), uid, Filter.Entities(user));
+            _popupSystem.PopupEntity(Loc.GetString("internals-no-breath-tool"), uid, user);
             return;
         }
 
@@ -82,7 +82,7 @@ public sealed class InternalsSystem : EntitySystem
 
         if (tank == null)
         {
-            _popupSystem.PopupEntity(Loc.GetString("internals-no-tank"), uid, Filter.Entities(user));
+            _popupSystem.PopupEntity(Loc.GetString("internals-no-tank"), uid, user);
             return;
         }
 

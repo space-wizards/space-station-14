@@ -44,7 +44,7 @@ namespace Content.Server.Labels
                 {
                     AddLabelTo(uid, handLabeler, target, out string? result);
                     if (result != null)
-                        _popupSystem.PopupEntity(result, args.User, Filter.Entities(args.User));
+                        _popupSystem.PopupEntity(result, args.User, args.User);
                 },
                 Text = labelerText
             };
@@ -58,7 +58,7 @@ namespace Content.Server.Labels
 
             AddLabelTo(uid, handLabeler, target, out string? result);
             if (result != null)
-                _popupSystem.PopupEntity(result, args.User, Filter.Entities(args.User));
+                _popupSystem.PopupEntity(result, args.User, args.User);
         }
 
         private void AddLabelTo(EntityUid uid, HandLabelerComponent? handLabeler, EntityUid target, out string? result)

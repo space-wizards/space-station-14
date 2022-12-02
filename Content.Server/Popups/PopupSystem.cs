@@ -1,5 +1,7 @@
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
+using Robust.Server.Player;
+using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
@@ -8,6 +10,9 @@ namespace Content.Server.Popups
 {
     public sealed class PopupSystem : SharedPopupSystem
     {
+        [Dependency] private readonly IPlayerManager _player = default!;
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
+
         public override void PopupCursor(string message, PopupType type = PopupType.Small)
         {
             // No local user.
@@ -30,10 +35,27 @@ namespace Content.Server.Popups
             RaiseNetworkEvent(new PopupCoordinatesEvent(message, type, coordinates), filter);
         }
 
-        public override void PopupEntity(string message, EntityUid uid, Filter filter, PopupType type=PopupType.Small)
+        public override void PopupEntity(string message, EntityUid uid, PopupType type = PopupType.Small)
         {
-            // TODO REPLAYS See above
+            var filter = Filter.Empty().AddPlayersByPvs(uid, entityManager:EntityManager, playerMan: _player, cfgMan: _cfg);
             RaiseNetworkEvent(new PopupEntityEvent(message, type, uid), filter);
+        }
+
+        public override void PopupEntity(string message, EntityUid uid, EntityUid recipient, PopupType type=PopupType.Small)
+        {
+            if (TryComp(recipient, out ActorComponent? actor))
+                RaiseNetworkEvent(new PopupEntityEvent(message, type, uid), actor.PlayerSession);
+        }
+
+
+        public override void PopupEntity(string message, EntityUid uid, ICommonSession recipient, PopupType type = PopupType.Small)
+        {
+            RaiseNetworkEvent(new PopupEntityEvent(message, type, uid), recipient);
+        }
+
+        public override void PopupEntity(string message, EntityUid uid, Filter filter, bool recordReplay, PopupType type = PopupType.Small)
+        {
+            RaiseNetworkEvent(new PopupEntityEvent(message, type, uid), filter, recordReplay);
         }
     }
 }

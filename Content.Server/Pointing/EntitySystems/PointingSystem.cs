@@ -127,7 +127,7 @@ namespace Content.Server.Pointing.EntitySystems
 
             if (!InRange(player, coords))
             {
-                _popup.PopupEntity(Loc.GetString("pointing-system-try-point-cannot-reach"), player, Filter.Entities(player));
+                _popup.PopupEntity(Loc.GetString("pointing-system-try-point-cannot-reach"), player, player);
                 return false;
             }
 

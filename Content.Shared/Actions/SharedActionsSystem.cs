@@ -324,7 +324,7 @@ public abstract class SharedActionsSystem : EntitySystem
         if (action.Sound == null && string.IsNullOrWhiteSpace(action.Popup))
             return false;
 
-        var filter = Filter.Pvs(performer).RemoveWhereAttachedEntity(e => e == performer);
+        var filter = Filter.PvsExcept(performer);
 
         _audio.Play(action.Sound, filter, performer, true, action.AudioParams);
 
@@ -335,7 +335,7 @@ public abstract class SharedActionsSystem : EntitySystem
             ? Loc.GetString(action.Popup)
             : Loc.GetString(action.Popup + action.PopupToggleSuffix);
 
-        _popupSystem.PopupEntity(msg, performer, filter);
+        _popupSystem.PopupEntity(msg, performer, filter, true);
 
         return true;
     }

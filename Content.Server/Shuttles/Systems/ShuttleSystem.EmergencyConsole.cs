@@ -92,7 +92,7 @@ public sealed partial class ShuttleSystem
         if (!_configManager.GetCVar(CCVars.EmergencyEarlyLaunchAllowed))
         {
             args.Cancel();
-            _popup.PopupEntity(Loc.GetString("emergency-shuttle-console-no-early-launches"), uid, Filter.Entities(args.User));
+            _popup.PopupEntity(Loc.GetString("emergency-shuttle-console-no-early-launches"), uid, args.User);
             return;
         }
     }

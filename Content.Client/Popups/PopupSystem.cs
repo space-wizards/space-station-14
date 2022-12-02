@@ -45,18 +45,6 @@ namespace Content.Client.Popups
             PopupMessage(message, type, coordinates, null);
         }
 
-        public void PopupEntity(string message, EntityUid uid, PopupType type=PopupType.Small)
-        {
-            if (!EntityManager.EntityExists(uid))
-                return;
-
-            var transform = EntityManager.GetComponent<TransformComponent>(uid);
-            if (_eyeManager.CurrentMap != transform.MapID)
-                return; // TODO: entity may be outside of PVS, but enter PVS at a later time. So the pop-up should still get tracked?
-
-            PopupMessage(message, type, transform.Coordinates, uid);
-        }
-
         private void PopupMessage(string message, PopupType type, EntityCoordinates coordinates, EntityUid? entity = null)
         {
             var label = new WorldPopupLabel(_eyeManager, EntityManager)
@@ -107,12 +95,31 @@ namespace Content.Client.Popups
             PopupCoordinates(message, coordinates, type);
         }
 
-        public override void PopupEntity(string message, EntityUid uid, Filter filter, PopupType type=PopupType.Small)
+        public override void PopupEntity(string message, EntityUid uid, EntityUid recipient, PopupType type = PopupType.Small)
         {
-            if (!filter.CheckPrediction)
+            if (_playerManager.LocalPlayer?.ControlledEntity == recipient)
+                PopupCursor(message, type);
+        }
+
+        public override void PopupEntity(string message, EntityUid uid, ICommonSession recipient, PopupType type = PopupType.Small)
+        {
+            if (_playerManager.LocalPlayer?.Session == recipient)
+                PopupCursor(message, type);
+        }
+
+        public override void PopupEntity(string message, EntityUid uid, Filter filter, bool recordReplay, PopupType type=PopupType.Small)
+        {
+            PopupEntity(message, uid, type);
+        }
+
+        public override void PopupEntity(string message, EntityUid uid, PopupType type = PopupType.Small)
+        {
+            if (!EntityManager.EntityExists(uid))
                 return;
 
-            PopupEntity(message, uid, type);
+            var transform = EntityManager.GetComponent<TransformComponent>(uid);
+
+            PopupMessage(message, type, transform.Coordinates, uid);
         }
 
         #endregion

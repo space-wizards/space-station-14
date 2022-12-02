@@ -86,7 +86,7 @@ public sealed class RadioDeviceSystem : EntitySystem
         {
             var state = Loc.GetString(component.Enabled ? "handheld-radio-component-on-state" : "handheld-radio-component-off-state");
             var message = Loc.GetString("handheld-radio-component-on-use", ("radioState", state));
-            _popup.PopupEntity(message, user, Filter.Entities(user));
+            _popup.PopupEntity(message, user, user);
         }
 
         if (component.Enabled)
@@ -106,7 +106,7 @@ public sealed class RadioDeviceSystem : EntitySystem
         {
             var state = Loc.GetString(component.Enabled ? "handheld-radio-component-on-state" : "handheld-radio-component-off-state");
             var message = Loc.GetString("handheld-radio-component-on-use", ("radioState", state));
-            _popup.PopupEntity(message, user, Filter.Entities(user));
+            _popup.PopupEntity(message, user, user);
         }
 
         if (component.Enabled)

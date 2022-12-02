@@ -233,7 +233,7 @@ namespace Content.Server.Communications
 
                 if (!CanUse(mob, uid))
                 {
-                    _popupSystem.PopupEntity(Loc.GetString("comms-console-permission-denied"), uid, Filter.Entities(mob));
+                    _popupSystem.PopupEntity(Loc.GetString("comms-console-permission-denied"), uid, message.Session);
                     return;
                 }
 
@@ -272,7 +272,7 @@ namespace Content.Server.Communications
             if (message.Session.AttachedEntity is not {Valid: true} mob) return;
             if (!CanUse(mob, uid))
             {
-                _popupSystem.PopupEntity(Loc.GetString("comms-console-permission-denied"), uid, Filter.Entities(mob));
+                _popupSystem.PopupEntity(Loc.GetString("comms-console-permission-denied"), uid, message.Session);
                 return;
             }
             _roundEndSystem.RequestRoundEnd(uid);
@@ -285,7 +285,7 @@ namespace Content.Server.Communications
             if (message.Session.AttachedEntity is not {Valid: true} mob) return;
             if (!CanUse(mob, uid))
             {
-                _popupSystem.PopupEntity(Loc.GetString("comms-console-permission-denied"), uid, Filter.Entities(mob));
+                _popupSystem.PopupEntity(Loc.GetString("comms-console-permission-denied"), uid, message.Session);
                 return;
             }
 
