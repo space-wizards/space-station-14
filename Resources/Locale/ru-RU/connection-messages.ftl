@@ -18,3 +18,6 @@ ban-banned-1 = Вам, или другому пользователю этого
 ban-banned-2 = Причина бана: "{ $reason }"
 soft-player-cap-full = Сервер заполнен!
 panic-bunker-account-denied = Этот сервер находится в режиме "Паника", и вам было отказано в доступе. Обратитесь за помощью к администрации сервера.
+panic-bunker-account-denied-reason = This server is in Panic mode and you were rejected. Reason: "{ $reason }"
+panic-bunker-account-reason-account = Age of account must be more that { $minutes } minutes
+panic-bunker-account-reason-overall = Minimum required overall playing time { $hours } hours
