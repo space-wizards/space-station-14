@@ -442,7 +442,7 @@
     state: stamp-syndicate
 
 - type: entity
-  name: chief engineers's rubber stamp
+  name: chief engineer's rubber stamp
   parent: RubberStampMime
   id: RubberStampCE
   components:

@@ -426,7 +426,7 @@
   name: slugcat jelly-donut
   parent: FoodDonutBase
   id: FoodDonutJellySlugcat
-  description: No holes in this donut incase a suspicious looking pole shows up.
+  description: No holes in this donut in case a suspicious looking pole shows up.
   components:
   - type: Sprite
     state: jelly-slug

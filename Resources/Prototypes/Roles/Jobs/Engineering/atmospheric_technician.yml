@@ -19,7 +19,6 @@
 - type: startingGear
   id: AtmosphericTechnicianGear
   equipment:
-    head:
     jumpsuit: ClothingUniformJumpsuitAtmos
     back: ClothingBackpackEngineeringFilled
     shoes: ClothingShoesColorWhite

@@ -4,7 +4,6 @@
     !type:StationEventRuleConfiguration
     id: BluespaceArtifact
     weight: 5
-    maxOccurrences: 5
     startAfter: 30
     endAfter: 35
 
@@ -15,7 +14,6 @@
     id: BreakerFlip
     weight: 10
     endAfter: 1
-    maxOccurrences: 5
     minimumPlayers: 15
 
 - type: gameRule
@@ -26,7 +24,6 @@
     startAnnouncement: station-event-bureaucratic-error-announcement
     minimumPlayers: 25
     weight: 5
-    maxOccurrences: 2
     endAfter: 1
 
 - type: gameRule
@@ -42,7 +39,6 @@
     weight: 5
     endAfter: 1
     earliestStart: 15
-    maxOccurrences: 3
 
 - type: gameRule
   id: Dragon
@@ -52,7 +48,6 @@
     weight: 10
     endAfter: 2
     earliestStart: 15
-    maxOccurrences: 7
     minimumPlayers: 15
 
 - type: gameRule
@@ -63,7 +58,6 @@
     weight: 5
     endAfter: 1
     earliestStart: 45
-    maxOccurrences: 1
     minimumPlayers: 20
 
 - type: gameRule
@@ -73,7 +67,6 @@
     id: FalseAlarm
     weight: 15
     endAfter: 1
-    maxOccurrences: 5
 
 - type: gameRule
   id: GasLeak
@@ -93,7 +86,6 @@
     earliestStart: 10
     minimumPlayers: 5
     weight: 5
-    maxOccurrences: 1
     startAfter: 20
 
 - type: gameRule
@@ -104,7 +96,6 @@
     earliestStart: 15
     minimumPlayers: 15
     weight: 5
-    maxOccurrences: 2
     startAfter: 50
     endAfter: 240
 
@@ -115,7 +106,6 @@
     id: MeteorSwarm
     earliestStart: 30
     weight: 5
-    maxOccurrences: 2
     minimumPlayers: 20
     startAnnouncement: station-event-meteor-swarm-start-announcement
     endAnnouncement: station-event-meteor-swarm-end-announcement
@@ -137,7 +127,6 @@
     earliestStart: 30
     minimumPlayers: 35
     weight: 5
-    maxOccurrences: 1
     endAfter: 50
 
 - type: gameRule
@@ -146,7 +135,6 @@
     !type:StationEventRuleConfiguration
     id: PowerGridCheck
     weight: 10
-    maxOccurrences: 3
     startAnnouncement: station-event-power-grid-check-start-announcement
     endAnnouncement: station-event-power-grid-check-end-announcement
     startAudio:
@@ -180,7 +168,6 @@
     earliestStart: 15
     minimumPlayers: 15
     weight: 5
-    maxOccurrences: 2
     startAfter: 50
     endAfter: 60
 
@@ -192,7 +179,6 @@
     earliestStart: 15
     minimumPlayers: 15
     weight: 5
-    maxOccurrences: 2
     endAfter: 60
 
 - type: gameRule
@@ -203,4 +189,3 @@
     earliestStart: 50
     weight: 2.5
     endAfter: 1
-    maxOccurrences: 1

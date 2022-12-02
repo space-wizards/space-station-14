@@ -65,5 +65,5 @@ ent-FoodBakedPretzel = poppy pretzel
     .desc = It's all twisted up!
     .suffix = { "" }
 ent-FoodBakedCannoli = cannoli
-    .desc = A sicilian treat that makes you into a wise guy.
+    .desc = A Sicilian treat that makes you into a wise guy.
     .suffix = { "" }

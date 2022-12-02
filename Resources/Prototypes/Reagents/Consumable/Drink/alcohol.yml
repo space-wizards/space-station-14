@@ -605,10 +605,10 @@
         amount: 0.15
 
 - type: reagent
-  id: ErikaSuprise
-  name: reagent-name-erika-suprise
+  id: ErikaSurprise
+  name: reagent-name-erika-surprise
   parent: BaseAlcohol
-  desc: reagent-desc-erika-suprise
+  desc: reagent-desc-erika-surprise
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
   color: "#2E6671"
