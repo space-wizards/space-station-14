@@ -2,6 +2,7 @@
 using Content.Server.Connection;
 using Content.Shared.CCVar;
 using Content.Shared.Corvax.JoinQueue;
+using Prometheus;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
@@ -15,6 +16,23 @@ namespace Content.Server.Corvax.JoinQueue;
 /// </summary>
 public sealed class JoinQueueManager
 {
+    private static readonly Gauge QueueCount = Metrics.CreateGauge(
+        "join_queue_count",
+        "Amount of players in queue.");
+
+    private static readonly Counter QueueBypassCount = Metrics.CreateCounter(
+        "join_queue_bypass_count",
+        "Amount of players who bypassed queue by privileges.");
+    
+    private static readonly Histogram QueueTimings = Metrics.CreateHistogram(
+        "join_queue_timings",
+        "Timings of players in queue",
+        new HistogramConfiguration()
+        {
+            LabelNames = new[] {"type"},
+            Buckets = Histogram.ExponentialBuckets(1, 2, 14),
+        });
+
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IConnectionManager _connectionManager = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
@@ -53,41 +71,47 @@ public sealed class JoinQueueManager
 
     private async void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
     {
-        switch (e.NewStatus)
+        if (e.NewStatus == SessionStatus.Connected)
         {
-            case SessionStatus.Connected:
+            if (!_isEnabled)
             {
-                if (!_isEnabled)
-                {
-                    SendToGame(e.Session);
-                    return;
-                }
-                
-                var isPrivileged = await _connectionManager.HavePrivilegedJoin(e.Session.UserId);
-                var haveFreeSlot = _playerManager.PlayerCount < _cfg.GetCVar(CCVars.SoftMaxPlayers);
-                if (isPrivileged || haveFreeSlot)
-                {
-                    SendToGame(e.Session);
-                    return;
-                }
-                
-                _queue.Add(e.Session);
-                ProcessQueue(false);
-                break;
+                SendToGame(e.Session);
+                return;
             }
-            case SessionStatus.Disconnected:
+                
+            var isPrivileged = await _connectionManager.HavePrivilegedJoin(e.Session.UserId);
+            var currentOnline = _playerManager.PlayerCount - 1; // Do not count current session in general online, because we are still deciding her fate
+            var haveFreeSlot = currentOnline < _cfg.GetCVar(CCVars.SoftMaxPlayers);
+            if (isPrivileged || haveFreeSlot)
             {
-                _queue.Remove(e.Session);
-                ProcessQueue(true);
-                break;
+                SendToGame(e.Session);
+                
+                if (isPrivileged && !haveFreeSlot)
+                    QueueBypassCount.Inc();
+
+                return;
             }
+
+            _queue.Add(e.Session);
+            ProcessQueue(false, e.Session.ConnectedTime);
+        }
+
+        if (e.NewStatus == SessionStatus.Disconnected)
+        {
+            var wasInQueue = _queue.Remove(e.Session);
+            ProcessQueue(true, e.Session.ConnectedTime);
+
+            if (wasInQueue)
+                QueueTimings.WithLabels("Unwaited").Observe((DateTime.UtcNow - e.Session.ConnectedTime).TotalSeconds);
         }
     }
 
     /// <summary>
     ///     If possible, takes the first player in the queue and sends him into the game
     /// </summary>
-    private void ProcessQueue(bool isDisconnect)
+    /// <param name="isDisconnect">Is method called on disconnect event</param>
+    /// <param name="connectedTime">Session connected time for histogram metrics</param>
+    private void ProcessQueue(bool isDisconnect, DateTime connectedTime)
     {
         var players = ActualPlayersCount;
         if (isDisconnect)
@@ -95,14 +119,18 @@ public sealed class JoinQueueManager
         
         var haveFreeSlot = players < _cfg.GetCVar(CCVars.SoftMaxPlayers);
         var queueContains = _queue.Count > 0;
-        if ((!_isEnabled || haveFreeSlot) && queueContains)
+        if (haveFreeSlot && queueContains)
         {
             var session = _queue.First();
             _queue.Remove(session);
+
             SendToGame(session);
+
+            QueueTimings.WithLabels("Waited").Observe((DateTime.UtcNow - connectedTime).TotalSeconds);
         }
 
         SendUpdateMessages();
+        QueueCount.Set(_queue.Count);
     }
 
     /// <summary>
@@ -123,6 +151,7 @@ public sealed class JoinQueueManager
     /// <summary>
     ///     Letting player's session into game, change player state
     /// </summary>
+    /// <param name="s">Player session that will be sent to game</param>
     private void SendToGame(IPlayerSession s)
     {
         Timer.Spawn(0, s.JoinGame);
