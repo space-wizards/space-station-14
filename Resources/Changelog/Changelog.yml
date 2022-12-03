@@ -1,9 +1,4 @@
 Entries:
-- author: JustinTrotter
-  changes:
-  - {message: Increased stripping menu height and reordered inventory, type: Tweak}
-  id: 2213
-  time: '2022-09-01T02:21:02.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: 'Salvages now spawn somewhere near the salvage magnet, rather than directly
@@ -2949,3 +2944,8 @@ Entries:
   - {message: Kick AFK players, type: Add}
   id: 2712
   time: '2022-12-01T16:38:20.0000000+00:00'
+- author: jick
+  changes:
+  - {message: Escape key clears chat input, type: Tweak}
+  id: 2713
+  time: '2022-12-03T01:15:59.0000000+00:00'
