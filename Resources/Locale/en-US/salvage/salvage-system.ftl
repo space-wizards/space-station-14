@@ -1,6 +1,8 @@
 salvage-system-announcement-source = Salvage Control System
 salvage-system-announcement-arrived = A piece of salvagable debris has been pulled in. Estimated hold time: {$timeLeft} seconds.
+salvage-system-announcement-arrived-timeless = A piece of salvagable debris has been pulled in.
 salvage-system-announcement-losing = The magnet is no longer able to hold the salvagable debris. Estimated time until loss: {$timeLeft} seconds.
+salvage-system-announcement-losing-timeless = The magnet is no longer able to hold the salvagable debris.
 salvage-system-announcement-lost = The salvagable debris have been lost.
 
 salvage-system-announcement-spawn-magnet-lost = The salvage magnet has been lost.
@@ -17,5 +19,6 @@ salvage-system-magnet-examined-active = The salvage magnet is holding salvage in
     [1] one second.
     *[other] { $timeLeft } seconds.
 }
+salvage-system-magnet-examined-active-timeless = The salvage magnet is holding salvage in place.
 salvage-system-magnet-examined-releasing = The salvage magnet is releasing the salvage.
 salvage-system-magnet-examined-cooling-down = The salvage magnet is cooling down.

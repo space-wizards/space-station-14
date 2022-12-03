@@ -1205,6 +1205,30 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<string>
             SalvageForced = CVarDef.Create("salvage.forced", "", CVar.SERVERONLY);
 
+        /// <summary>
+        ///     Salvage hold phase time, in seconds. Set to zero to hold indefinetely.
+        /// </summary>
+        public static readonly CVarDef<int>
+            SalvageHoldTime = CVarDef.Create("salvage.hold_time", 240, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Salvage attaching phase time, in seconds. Set to zero to skip to next phase immediately.
+        /// </summary>
+        public static readonly CVarDef<int>
+            SalvageAttachingTime = CVarDef.Create("salvage.attaching_time", 30, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Salvage detaching phase time, in seconds. Set to zero to skip to next phase immediately.
+        /// </summary>
+        public static readonly CVarDef<int>
+            SalvageDetachingTime = CVarDef.Create("salvage.detaching_time", 30, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Salvage cooldown phase time, in seconds. Set to zero to skip to next phase immediately.
+        /// </summary>
+        public static readonly CVarDef<int>
+            SalvageCooldownTime = CVarDef.Create("salvage.cooldown_time", 60, CVar.SERVERONLY);
+
         /*
 
          * Flavor
