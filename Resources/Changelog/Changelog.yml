@@ -1,9 +1,4 @@
 Entries:
-- author: JustinTrotter
-  changes:
-  - {message: Bots can now be stuffed into closets, type: Tweak}
-  id: 2215
-  time: '2022-09-01T02:40:16.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Added a poster celebrating the current state of our forthcoming server.,
@@ -2948,3 +2943,11 @@ Entries:
   - {message: Weld modular mines and grenades to salvage them, type: Tweak}
   id: 2714
   time: '2022-12-03T01:20:38.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: Updated all Engineering jumpsuit sprites, type: Tweak}
+  - {message: Updated the Emergency Firesuit's sprite, type: Tweak}
+  - {message: Partially resprited most hardhats, type: Tweak}
+  - {message: Added the orange hardhat to the engidrobe vendor, type: Tweak}
+  id: 2715
+  time: '2022-12-03T01:41:06.0000000+00:00'
