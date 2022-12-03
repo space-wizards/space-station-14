@@ -115,12 +115,9 @@ public sealed partial class ScrubberControl : BoxContainer
         _data.WideNet = data.WideNet;
         _wideNet.Pressed = _data.WideNet;
 
-        var intersect = _data.FilterGases.Intersect(data.FilterGases);
-
         foreach (var value in Enum.GetValues<Gas>())
         {
-            if (!intersect.Contains(value))
-                _gasControls[value].Pressed = false;
+            _gasControls[value].Pressed = data.FilterGases.Contains(value);
         }
     }
 }
