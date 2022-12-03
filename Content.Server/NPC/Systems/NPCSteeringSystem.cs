@@ -325,6 +325,12 @@ namespace Content.Server.NPC.Systems
             // TODO: Probably need partial planning support i.e. patch from the last node to where the target moved to.
             CheckPath(steering, xform, needsPath, distance);
 
+            if (steering.Pathfind && steering.CurrentPath.Count == 0)
+            {
+                SetDirection(mover, steering, Vector2.Zero, false);
+                return;
+            }
+
             modifierQuery.TryGetComponent(steering.Owner, out var modifier);
             var moveSpeed = GetSprintSpeed(steering.Owner, modifier);
 
