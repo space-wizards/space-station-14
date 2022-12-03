@@ -1,3 +1,4 @@
+using Content.Client.UserInterface.Fragments;
 using Content.Shared.Mech;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
@@ -7,12 +8,15 @@ namespace Content.Client.Mech.Ui;
 [UsedImplicitly]
 public sealed class MechBoundUserInterface : BoundUserInterface
 {
+    [Dependency] private readonly IEntityManager _ent = default!;
+
     private EntityUid _mech;
 
     private MechMenu? _menu;
 
     public MechBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
     {
+        IoCManager.InjectDependencies(this);
         _mech = owner.Owner;
     }
 
@@ -35,12 +39,28 @@ public sealed class MechBoundUserInterface : BoundUserInterface
     {
         base.UpdateState(state);
 
-        switch (state)
+        if (state is not MechBoundUiState msg)
+            return;
+        UpdateEquipmentControls(msg);
+        _menu?.UpdateMechStats();
+        _menu?.UpdateEquipmentView();
+    }
+
+    public void UpdateEquipmentControls(MechBoundUiState state)
+    {
+        if (!_ent.TryGetComponent<MechComponent>(_mech, out var mechComp))
+            return;
+
+        foreach (var ent in mechComp.EquipmentContainer.ContainedEntities)
         {
-            case MechBoundUserInterfaceState msg:
-                _menu?.UpdateMechStats();
-                _menu?.UpdateEquipmentView(msg);
-                break;
+            var ui = GetEquipmentUi(ent);
+            if (ui == null)
+                continue;
+            foreach (var (attached, estate) in state.EquipmentStates)
+            {
+                if (ent == attached)
+                    ui.UpdateState(estate);
+            }
         }
     }
 
@@ -52,6 +72,13 @@ public sealed class MechBoundUserInterface : BoundUserInterface
             return;
 
         _menu?.Close();
+    }
+
+    public UIFragment? GetEquipmentUi(EntityUid? uid)
+    {
+        var component = _ent.GetComponentOrNull<UIFragmentComponent>(uid);
+        component?.Ui?.Setup(this, uid);
+        return component?.Ui;
     }
 }
 

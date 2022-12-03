@@ -10,12 +10,18 @@ public sealed partial class MechEquipmentControl : Control
 {
     public event Action? OnRemoveButtonPressed;
 
-    public MechEquipmentControl(string itemName, SpriteComponent? sprite = null)
+    public MechEquipmentControl(string itemName, SpriteComponent? sprite, Control? fragment)
     {
         RobustXamlLoader.Load(this);
         EquipmentName.SetMessage(itemName);
         EquipmentView.Sprite = sprite;
         RemoveButton.TexturePath = "/Textures/Interface/Nano/cross.svg.png";
+
+        if (fragment != null)
+        {
+            Separator.Visible = true;
+            CustomControlContainer.AddChild(fragment);
+        }
 
         RemoveButton.OnPressed += _ => OnRemoveButtonPressed?.Invoke();
     }

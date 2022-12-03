@@ -1,4 +1,5 @@
-<Control xmlns="https://spacestation14.io">
+<Control xmlns="https://spacestation14.io"
+         xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls">
     <Button Disabled="True"
             Margin="0 0 0 0"
             HorizontalExpand="True"
@@ -18,6 +19,8 @@
                     <TextureButton Name="RemoveButton" Scale="0.5 0.5"></TextureButton>
                 </BoxContainer>
             </BoxContainer>
+            <customControls:HSeparator Name="Separator" StyleClasses="LowDivider" Visible="False"/>
+            <BoxContainer Name="CustomControlContainer" Margin="0 10 0 0" HorizontalExpand="True" VerticalExpand="True"></BoxContainer>
         </BoxContainer>
     </Button>
 </Control>

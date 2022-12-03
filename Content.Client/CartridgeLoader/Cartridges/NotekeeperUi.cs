@@ -15,7 +15,7 @@ public sealed class NotekeeperUi : UIFragment
         return _fragment!;
     }
 
-    public override void Setup(BoundUserInterface userInterface)
+    public override void Setup(BoundUserInterface userInterface, EntityUid? fragmentOwner)
     {
         _fragment = new NotekeeperUiFragment();
         _fragment.OnNoteRemoved += note => SendNotekeeperMessage(NotekeeperUiAction.Remove, note, userInterface);

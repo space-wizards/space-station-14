@@ -4,12 +4,6 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Mech;
 
 [Serializable, NetSerializable]
-public enum MechUiKey : byte
-{
-    Key
-}
-
-[Serializable, NetSerializable]
 public enum MechVisuals : byte
 {
     Open, //whether or not it's open and has a rider
@@ -53,23 +47,6 @@ public readonly struct MechEquipmentRemovedEvent
     public MechEquipmentRemovedEvent(EntityUid mech)
     {
         Mech = mech;
-    }
-}
-
-[Serializable, NetSerializable]
-public sealed class MechBoundUserInterfaceState : BoundUserInterfaceState
-{
-
-}
-
-[Serializable, NetSerializable]
-public sealed class MechEquipmentRemoveMessage : BoundUserInterfaceMessage
-{
-    public EntityUid Equipment;
-
-    public MechEquipmentRemoveMessage(EntityUid equipment)
-    {
-        Equipment = equipment;
     }
 }
 

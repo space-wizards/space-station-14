@@ -19,3 +19,8 @@
   - type: Sprite
     state: mecha_clamp
   - type: MechGrabber
+  - type: UIFragment
+    ui: !type:MechGrabberUi
+  - type: ContainerContainer
+    containers:
+      item-container: !type:Container

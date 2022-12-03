@@ -54,6 +54,10 @@ public sealed class MechSystem : SharedMechSystem
         SubscribeLocalEvent<MechPilotComponent, InhaleLocationEvent>(OnInhale);
         SubscribeLocalEvent<MechPilotComponent, ExhaleLocationEvent>(OnExhale);
         SubscribeLocalEvent<MechPilotComponent, AtmosExposedGetAirEvent>(OnExpose);
+
+        #region Equipment UI message relays
+        SubscribeLocalEvent<MechComponent, MechGrabberEjectMessage>(RecieveEquipmentUiMesssages);
+        #endregion
     }
 
     private void OnInteractUsing(EntityUid uid, MechComponent component, InteractUsingEvent args)
@@ -231,8 +235,18 @@ public sealed class MechSystem : SharedMechSystem
         if (!TryComp<ActorComponent>(user, out var actor))
             return;
 
-        UpdateUserInterface(uid, component);
         _ui.TryToggleUi(uid, MechUiKey.Key, actor.PlayerSession);
+        UpdateUserInterface(uid, component);
+    }
+
+    private void RecieveEquipmentUiMesssages<T>(EntityUid uid, MechComponent component, T args) where T : MechEquipmentUiMessage
+    {
+        var ev = new MechEquipmentUiMessageRelayEvent(args);
+        foreach (var equipment in component.EquipmentContainer.ContainedEntities)
+        {
+            if (args.Equipment == equipment)
+                RaiseLocalEvent(equipment, ev);
+        }
     }
 
     public override void UpdateUserInterface(EntityUid uid, SharedMechComponent? component = null)
@@ -242,8 +256,18 @@ public sealed class MechSystem : SharedMechSystem
 
         base.UpdateUserInterface(uid, component);
 
-        var state = new MechBoundUserInterfaceState();
-        _ui.TrySetUiState(uid, MechUiKey.Key, state);
+        var ev = new MechEquipmentUiStateReadyEvent();
+        foreach (var ent in component.EquipmentContainer.ContainedEntities)
+        {
+            RaiseLocalEvent(ent, ev);
+        }
+
+        var state = new MechBoundUiState
+        {
+            EquipmentStates = ev.States
+        };
+        var ui = _ui.GetUi(uid, MechUiKey.Key);
+        _ui.SetUiState(ui, state);
     }
 
     public override bool TryInsert(EntityUid uid, EntityUid? toInsert, SharedMechComponent? component = null)
