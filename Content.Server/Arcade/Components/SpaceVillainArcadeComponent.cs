@@ -65,7 +65,7 @@ namespace Content.Server.Arcade.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("rewardAmount")]
-        private int _rewardAmount;
+        public int _rewardAmount;
 
         protected override void Initialize()
         {
@@ -121,8 +121,7 @@ namespace Content.Server.Arcade.Components
         {
             if (_rewardAmount > 0)
             {
-                var entityManager = IoCManager.Resolve<IEntityManager>();
-                entityManager.SpawnEntity(_random.Pick(_possibleRewards), entityManager.GetComponent<TransformComponent>(Owner).MapPosition);
+                _entityManager.SpawnEntity(_random.Pick(_possibleRewards), _entityManager.GetComponent<TransformComponent>(Owner).MapPosition);
                 _rewardAmount--;
             }
         }
