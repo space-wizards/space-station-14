@@ -9,6 +9,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mech.Components;
+using Content.Shared.Mech.Equipment.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
@@ -36,7 +37,6 @@ public abstract class SharedMechSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<SharedMechComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<SharedMechComponent, ComponentHandleState>(OnHandleState);
         SubscribeLocalEvent<MechPilotComponent, ComponentGetState>(OnPilotGetState);
         SubscribeLocalEvent<MechPilotComponent, ComponentHandleState>(OnPilotHandleState);
@@ -52,19 +52,6 @@ public abstract class SharedMechSystem : EntitySystem
     }
 
     #region State Handling
-    private void OnGetState(EntityUid uid, SharedMechComponent component, ref ComponentGetState args)
-    {
-        args.State = new MechComponentState
-        {
-            Integrity = component.Integrity,
-            MaxIntegrity = component.MaxIntegrity,
-            Energy = component.Energy,
-            MaxEnergy = component.MaxEnergy,
-            CurrentSelectedEquipment = component.CurrentSelectedEquipment,
-            Broken = component.Broken
-        };
-    }
-
     private void OnHandleState(EntityUid uid, SharedMechComponent component, ref ComponentHandleState args)
     {
         if (args.Current is not MechComponentState state)
@@ -212,25 +199,37 @@ public abstract class SharedMechSystem : EntitySystem
         Dirty(component);
     }
 
-    public void InsertEquipment(EntityUid uid, EntityUid toInsert, SharedMechComponent? component = null)
+    public void InsertEquipment(EntityUid uid, EntityUid toInsert, SharedMechComponent? component = null, MechEquipmentComponent? equipmentComponent = null)
     {
         if (!Resolve(uid, ref component))
             return;
 
+        if (!Resolve(toInsert, ref equipmentComponent))
+            return;
+
+        equipmentComponent.EquipmentOwner = uid;
         component.EquipmentContainer.Insert(toInsert, EntityManager);
         var ev = new MechEquipmentInsertedEvent(uid);
         RaiseLocalEvent(toInsert, ref ev);
         UpdateUserInterface(uid, component);
     }
 
-    public void RemoveEquipment(EntityUid uid, EntityUid toRemove, SharedMechComponent? component = null)
+    public void RemoveEquipment(EntityUid uid, EntityUid toRemove, SharedMechComponent? component = null, MechEquipmentComponent? equipmentComponent = null)
     {
         if (!Resolve(uid, ref component))
             return;
 
+        if (!Resolve(toRemove, ref equipmentComponent))
+            return;
+
+        equipmentComponent.EquipmentOwner = null;
         component.EquipmentContainer.Remove(toRemove, EntityManager);
         var ev = new MechEquipmentRemovedEvent(uid);
         RaiseLocalEvent(toRemove, ref ev);
+
+        if (component.CurrentSelectedEquipment == toRemove)
+            CycleEquipment(uid, component);
+
         UpdateUserInterface(uid, component);
     }
 

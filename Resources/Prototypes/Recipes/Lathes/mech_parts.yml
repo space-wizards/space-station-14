@@ -52,3 +52,14 @@
   materials:
     Steel: 3000
     Glass: 1200
+
+- type: latheRecipe
+  id: MechEquipmentGrabber
+  icon:
+     sprite: Objects/Specific/Mech/mecha_equipment.rsi
+     state: mecha_clamp
+  result: MechEquipmentGrabber
+  completetime: 10
+  materials:
+    Steel: 500
+    Plastic: 200

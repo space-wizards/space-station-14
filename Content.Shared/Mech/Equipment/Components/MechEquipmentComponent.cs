@@ -11,6 +11,12 @@ public sealed class MechEquipmentComponent : Component
     [DataField("installDuration")]
     public float InstallDuration = 5;
 
+    /// <summary>
+    /// The mech that the equipment is inside of.=
+    /// </summary>
+    [ViewVariables]
+    public EntityUid? EquipmentOwner;
+
     public CancellationTokenSource? TokenSource = null;
 }
 

@@ -15,6 +15,7 @@ using Content.Shared.Tools.Components;
 using Content.Shared.Verbs;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 
 namespace Content.Server.Mech.Systems;
@@ -37,6 +38,8 @@ public sealed class MechSystem : SharedMechSystem
 
         _sawmill = Logger.GetSawmill("mech");
 
+        SubscribeLocalEvent<SharedMechComponent, ComponentGetState>(OnGetState);
+
         SubscribeLocalEvent<MechComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<MechComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<MechComponent, GetVerbsEvent<AlternativeVerb>>(OnAlternativeVerb);
@@ -58,6 +61,19 @@ public sealed class MechSystem : SharedMechSystem
         #region Equipment UI message relays
         SubscribeLocalEvent<MechComponent, MechGrabberEjectMessage>(RecieveEquipmentUiMesssages);
         #endregion
+    }
+
+    private void OnGetState(EntityUid uid, SharedMechComponent component, ref ComponentGetState args)
+    {
+        args.State = new MechComponentState
+        {
+            Integrity = component.Integrity,
+            MaxIntegrity = component.MaxIntegrity,
+            Energy = component.Energy,
+            MaxEnergy = component.MaxEnergy,
+            CurrentSelectedEquipment = component.CurrentSelectedEquipment,
+            Broken = component.Broken
+        };
     }
 
     private void OnInteractUsing(EntityUid uid, MechComponent component, InteractUsingEvent args)
@@ -104,7 +120,7 @@ public sealed class MechSystem : SharedMechSystem
         var xform = Transform(uid);
         foreach (var ent in component.StartingEquipment.Select(equipment => Spawn(equipment, xform.Coordinates)))
         {
-            component.EquipmentContainer.Insert(ent);
+            InsertEquipment(uid, ent, component);
         }
 
         component.Integrity = component.MaxIntegrity;
@@ -242,7 +258,8 @@ public sealed class MechSystem : SharedMechSystem
     private void RecieveEquipmentUiMesssages<T>(EntityUid uid, MechComponent component, T args) where T : MechEquipmentUiMessage
     {
         var ev = new MechEquipmentUiMessageRelayEvent(args);
-        foreach (var equipment in component.EquipmentContainer.ContainedEntities)
+        var allEquipment = new List<EntityUid>(component.EquipmentContainer.ContainedEntities);
+        foreach (var equipment in allEquipment)
         {
             if (args.Equipment == equipment)
                 RaiseLocalEvent(equipment, ev);
@@ -346,12 +363,11 @@ public sealed class MechSystem : SharedMechSystem
         if (!TryComp<BatteryComponent>(battery, out var batteryComp))
             return false;
 
-        batteryComp.CurrentCharge -= delta.Float();
+        batteryComp.CurrentCharge = batteryComp.CurrentCharge + delta.Float();
         if (batteryComp.CurrentCharge != component.Energy) //if there's a discrepency, we have to resync them
         {
-            _sawmill.Debug("Battery charge was not equal to mech charge");
+            _sawmill.Debug($"Battery charge was not equal to mech charge. Battery {batteryComp.CurrentCharge}. Mech {component.Energy}");
             component.Energy = batteryComp.CurrentCharge;
-            component.MaxEnergy = batteryComp.MaxCharge;
             Dirty(component);
         }
         return true;

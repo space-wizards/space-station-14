@@ -49,12 +49,12 @@ public abstract class MechEquipmentUiMessage : BoundUserInterfaceMessage
 [Serializable, NetSerializable]
 public sealed class MechGrabberEjectMessage : MechEquipmentUiMessage
 {
-    public EntityUid Uid;
+    public EntityUid Item;
 
     public MechGrabberEjectMessage(EntityUid equipment, EntityUid uid)
     {
         Equipment = equipment;
-        Uid = uid;
+        Item = uid;
     }
 }
 

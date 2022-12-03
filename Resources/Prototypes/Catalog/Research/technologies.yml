@@ -445,6 +445,7 @@
   unlockedRecipes:
   - RipleyCentralElectronics
   - RipleyPeripheralsElectronics
+  - MechEquipmentGrabber
   - RipleyHarness
   - RipleyLArm
   - RipleyRArm

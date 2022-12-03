@@ -340,6 +340,7 @@
     - RipleyRArm
     - RipleyLLeg
     - RipleyRLeg
+    - MechEquipmentGrabber
   - type: MaterialStorage
     whitelist:
       tags:
