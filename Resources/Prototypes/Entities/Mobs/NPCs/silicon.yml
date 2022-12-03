@@ -110,17 +110,23 @@
     launchForwardsMultiplier: 6.0
   - type: StepTrigger
     intersectRatio: 0.2
+  - type: Physics
+    bodyType: Dynamic
   - type: Fixtures
     fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      id: "slips"
+      hard: false
+      layer:
+        - SlipLayer
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
       density: 20
       mask:
       - MobMask
-      layer:
-      - MobLayer
-      - SlipLayer
   - type: Construction
     graph: HonkBot
     node: bot
