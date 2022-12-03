@@ -42,9 +42,10 @@ public sealed class HTNTaskListSerializer : ITypeSerializer<List<string>, Sequen
 
     public List<string> Read(ISerializationManager serializationManager, SequenceDataNode node,
         IDependencyCollection dependencies,
-        SerializationHookContext hookCtx, ISerializationContext? context = null, List<string>? value = default)
+        SerializationHookContext hookCtx, ISerializationContext? context = null,
+        ISerializationManager.InstantiationDelegate<List<string>>? instanceProvider = null)
     {
-        value ??= new List<string>();
+        var value = instanceProvider != null ? instanceProvider() : new List<string>();
         foreach (var data in node.Sequence)
         {
             var mapping = (MappingDataNode) data;
@@ -73,17 +74,5 @@ public sealed class HTNTaskListSerializer : ITypeSerializer<List<string>, Sequen
         }
 
         return sequence;
-    }
-
-    public List<string> Copy(ISerializationManager serializationManager, List<string> source, List<string> target,
-        SerializationHookContext hookCtx,
-        ISerializationContext? context = null)
-    {
-        target.Clear();
-        target.EnsureCapacity(source.Capacity);
-
-        // Tasks are just prototypes soooo?
-        target.AddRange(source);
-        return target;
     }
 }

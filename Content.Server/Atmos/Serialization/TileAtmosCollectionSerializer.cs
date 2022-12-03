@@ -7,7 +7,7 @@ using Robust.Shared.Serialization.TypeSerializers.Interfaces;
 
 namespace Content.Server.Atmos.Serialization;
 
-public sealed class TileAtmosCollectionSerializer : ITypeSerializer<Dictionary<Vector2i, TileAtmosphere>, MappingDataNode>
+public sealed class TileAtmosCollectionSerializer : ITypeSerializer<Dictionary<Vector2i, TileAtmosphere>, MappingDataNode>, ITypeCopier<Dictionary<Vector2i, TileAtmosphere>>
 {
     public ValidationNode Validate(ISerializationManager serializationManager, MappingDataNode node,
         IDependencyCollection dependencies, ISerializationContext? context = null)
@@ -18,7 +18,7 @@ public sealed class TileAtmosCollectionSerializer : ITypeSerializer<Dictionary<V
     public Dictionary<Vector2i, TileAtmosphere> Read(ISerializationManager serializationManager, MappingDataNode node,
         IDependencyCollection dependencies,
         SerializationHookContext hookCtx, ISerializationContext? context = null,
-        Dictionary<Vector2i, TileAtmosphere>? value = default)
+        ISerializationManager.InstantiationDelegate<Dictionary<Vector2i, TileAtmosphere>>? instanceProvider = null)
     {
         var data = serializationManager.Read<TileAtmosData>(node, hookCtx, context);
         var tiles = new Dictionary<Vector2i, TileAtmosphere>();
@@ -75,20 +75,27 @@ public sealed class TileAtmosCollectionSerializer : ITypeSerializer<Dictionary<V
         }, alwaysWrite, context);
     }
 
-    public Dictionary<Vector2i, TileAtmosphere> Copy(ISerializationManager serializationManager,
-        Dictionary<Vector2i, TileAtmosphere> source, Dictionary<Vector2i, TileAtmosphere> target,
-        SerializationHookContext hookCtx,
-        ISerializationContext? context = null)
-    {
-        serializationManager.Copy(source, ref target, hookCtx, context);
-        return target;
-    }
-
     [DataDefinition]
     private struct TileAtmosData
     {
         [DataField("uniqueMixes")] public List<GasMixture>? UniqueMixes;
 
         [DataField("tiles")] public Dictionary<Vector2i, int>? TilesUniqueMixes;
+    }
+
+    public void CopyTo(ISerializationManager serializationManager, Dictionary<Vector2i, TileAtmosphere> source, ref Dictionary<Vector2i, TileAtmosphere> target, SerializationHookContext hookCtx,
+        ISerializationContext? context = null)
+    {
+        target.Clear();
+        foreach (var (key, val) in source)
+        {
+            target.Add(key,
+                new TileAtmosphere(
+                    val.GridIndex,
+                    val.GridIndices,
+                    val.Air?.Clone(),
+                    val.Air?.Immutable ?? false,
+                    val.Space));
+        }
     }
 }

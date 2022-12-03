@@ -129,7 +129,7 @@ public sealed class BodyPrototypeSerializer : ITypeReader<BodyPrototype, Mapping
     public BodyPrototype Read(ISerializationManager serializationManager, MappingDataNode node,
         IDependencyCollection dependencies,
         SerializationHookContext hookCtx, ISerializationContext? context = null,
-        BodyPrototype? value = default)
+        ISerializationManager.InstantiationDelegate<BodyPrototype>? instanceProvider = null)
     {
         var id = node.Get<ValueDataNode>("id").Value;
         var name = node.Get<ValueDataNode>("name").Value;

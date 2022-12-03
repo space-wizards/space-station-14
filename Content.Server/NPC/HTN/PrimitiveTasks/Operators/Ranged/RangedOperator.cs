@@ -29,7 +29,7 @@ public sealed class RangedOperator : HTNOperator
         CancellationToken cancelToken)
     {
         // Don't attack if they're already as wounded as we want them.
-        if (!blackboard.TryGetValue<EntityUid>(TargetKey, out var target))
+        if (!blackboard.TryGetValue<EntityUid>(TargetKey, out var target, _entManager))
         {
             return (false, null);
         }
@@ -50,12 +50,12 @@ public sealed class RangedOperator : HTNOperator
         var ranged = _entManager.EnsureComponent<NPCRangedCombatComponent>(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner));
         ranged.Target = blackboard.GetValue<EntityUid>(TargetKey);
 
-        if (blackboard.TryGetValue<float>(NPCBlackboard.RotateSpeed, out var rotSpeed))
+        if (blackboard.TryGetValue<float>(NPCBlackboard.RotateSpeed, out var rotSpeed, _entManager))
         {
             ranged.RotationSpeed = new Angle(rotSpeed);
         }
 
-        if (blackboard.TryGetValue<SoundSpecifier>("SoundTargetInLOS", out var losSound))
+        if (blackboard.TryGetValue<SoundSpecifier>("SoundTargetInLOS", out var losSound, _entManager))
         {
             ranged.SoundTargetInLOS = losSound;
         }

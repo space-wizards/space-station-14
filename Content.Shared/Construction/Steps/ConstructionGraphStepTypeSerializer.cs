@@ -43,7 +43,8 @@ namespace Content.Shared.Construction.Steps
             MappingDataNode node,
             IDependencyCollection dependencies,
             SerializationHookContext hookCtx,
-            ISerializationContext? context = null, ConstructionGraphStep? _ = default)
+            ISerializationContext? context = null,
+            ISerializationManager.InstantiationDelegate<ConstructionGraphStep>? instanceProvider = null)
         {
             var type = GetType(node) ??
                        throw new ArgumentException(

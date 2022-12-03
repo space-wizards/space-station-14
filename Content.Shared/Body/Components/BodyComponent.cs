@@ -16,7 +16,7 @@ public sealed class BodyComponent : Component, IDraggable
     public readonly string? Prototype;
 
     [DataField("root")]
-    public BodyPartSlot Root = default!;
+    public BodyPartSlot? Root;
 
     [DataField("gibSound")]
     public SoundSpecifier GibSound = new SoundCollectionSpecifier("gib");

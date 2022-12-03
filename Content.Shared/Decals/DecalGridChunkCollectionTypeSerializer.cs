@@ -18,8 +18,8 @@ namespace Content.Shared.Decals
 
         public DecalGridComponent.DecalGridChunkCollection Read(ISerializationManager serializationManager,
             MappingDataNode node,
-            IDependencyCollection dependencies, SerializationHookContext hookCtx,
-            ISerializationContext? context = null, DecalGridComponent.DecalGridChunkCollection? _ = default)
+            IDependencyCollection dependencies, SerializationHookContext hookCtx, ISerializationContext? context = null,
+            ISerializationManager.InstantiationDelegate<DecalGridComponent.DecalGridChunkCollection>? _ = default)
         {
             var dictionary = serializationManager.Read<Dictionary<Vector2i, Dictionary<uint, Decal>>>(node, hookCtx, context);
 
@@ -59,16 +59,6 @@ namespace Content.Shared.Decals
             ISerializationContext? context = null)
         {
             return serializationManager.WriteValue(value.ChunkCollection, alwaysWrite, context);
-        }
-
-        public DecalGridComponent.DecalGridChunkCollection Copy(ISerializationManager serializationManager,
-            DecalGridComponent.DecalGridChunkCollection source,
-            DecalGridComponent.DecalGridChunkCollection target, SerializationHookContext hookCtx,
-            ISerializationContext? context = null)
-        {
-            var dict = target.ChunkCollection;
-            serializationManager.Copy(source.ChunkCollection, ref dict, hookCtx, context);
-            return new DecalGridComponent.DecalGridChunkCollection(dict) {NextUid = source.NextUid};
         }
     }
 }

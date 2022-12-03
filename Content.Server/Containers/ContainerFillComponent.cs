@@ -3,7 +3,6 @@ using Content.Shared.Storage;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager;
-using Robust.Shared.Serialization.Markdown;
 using Robust.Shared.Serialization.Markdown.Mapping;
 using Robust.Shared.Serialization.Markdown.Sequence;
 using Robust.Shared.Serialization.Markdown.Validation;
@@ -37,7 +36,7 @@ public sealed class ContainerFillComponent : Component
 // all of this exists just to validate prototype ids.
 // it would be nice if you could specify only a type validator and not have to re-implement everything else.
 // or a dictionary serializer that accepts a custom type serializer for the dictionary values
-public sealed class ContainerFillSerializer : ITypeSerializer<Dictionary<string, List<string>>, MappingDataNode>
+public sealed class ContainerFillSerializer : ITypeValidator<Dictionary<string, List<string>>, MappingDataNode>
 {
     private static PrototypeIdListSerializer<EntityPrototype> ListSerializer => new();
 
@@ -61,34 +60,5 @@ public sealed class ContainerFillSerializer : ITypeSerializer<Dictionary<string,
         }
 
         return new ValidatedMappingNode(mapping);
-    }
-
-    public Dictionary<string, List<string>> Copy(ISerializationManager serializationManager,
-        Dictionary<string, List<string>> source,
-        Dictionary<string, List<string>> target,
-        SerializationHookContext hookCtx,
-        ISerializationContext? context = null)
-    {
-        serializationManager.Copy(source, ref target, hookCtx, context);
-        return target;
-    }
-
-    public Dictionary<string, List<string>> Read(ISerializationManager serializationManager,
-        MappingDataNode node,
-        IDependencyCollection dependencies,
-        SerializationHookContext hookCtx,
-        ISerializationContext? context = null,
-        Dictionary<string, List<string>>? value = default)
-    {
-        return serializationManager.Read(node, hookCtx, context, value);
-    }
-
-    public DataNode Write(ISerializationManager serializationManager,
-        Dictionary<string, List<string>> value,
-        IDependencyCollection dependencies,
-        bool alwaysWrite = false,
-        ISerializationContext? context = null)
-    {
-        return serializationManager.WriteValue(value, alwaysWrite, context);
     }
 }

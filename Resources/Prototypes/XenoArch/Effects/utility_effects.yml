@@ -1,5 +1,21 @@
 ﻿# Utility effects permanently modify the entity in some way when triggered, and they generally make it 'useful' for some purpose,
 # like turning the artifact into a tool, or gun, or whatever.
+- type: artifactEffect
+  id: EffectRandomInstrument
+  targetDepth: 2
+  effectHint: artifact-effect-hint-mental
+  permanentComponents:
+  - type: Instrument
+  - type: ActivatableUI
+    inHandsOnly: true
+    singleUser: true
+    verbText: verb-instrument-openui
+    key: enum.InstrumentUiKey.Key
+  - type: UserInterface
+    interfaces:
+    - key: enum.InstrumentUiKey.Key
+      type: InstrumentBoundUserInterface
+  - type: RandomInstrumentArtifact
 
 - type: artifactEffect
   id: EffectStorage
@@ -9,10 +25,6 @@
     components:
     - Item # it doesnt necessarily have to be restricted from structures, but i think it'll be better that way
   permanentComponents:
-  - type: UserInterface
-    interfaces:
-    - key: enum.StorageUiKey.Key
-      type: StorageBoundUserInterface
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
@@ -28,10 +40,6 @@
     components:
     - Item
   permanentComponents:
-  - type: UserInterface
-    interfaces:
-    - key: enum.TransferAmountUiKey.Key
-      type: TransferAmountBoundUserInterface
   - type: SolutionContainerManager
     solutions:
       beaker:
@@ -130,6 +138,12 @@
   permanentComponents:
   - type: TilePrying
   - type: SignalLinker
+    requiredQuality: Pulsing
+  - type: UserInterface
+    interfaces:
+      - key: enum.SignalLinkerUiKey.Key
+        type: SignalPortSelectorBoundUserInterface
+  - type: LatticeCutting
   - type: Tool
     qualities:
     - Screwing

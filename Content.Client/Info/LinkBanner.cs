@@ -1,9 +1,10 @@
 ﻿using Content.Client.Changelog;
 using Content.Client.Credits;
-using Content.Client.Links;
 using Content.Client.UserInterface.Systems.EscapeMenu;
+using Content.Shared.CCVar;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Configuration;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Utility;
@@ -21,25 +22,31 @@ namespace Content.Client.Info
             AddChild(buttons);
 
             var uriOpener = IoCManager.Resolve<IUriOpener>();
+            var cfg = IoCManager.Resolve<IConfigurationManager>();
 
             var rulesButton = new Button() {Text = Loc.GetString("server-info-rules-button")};
             rulesButton.OnPressed += args => new RulesAndInfoWindow().Open();
+            buttons.AddChild(rulesButton);
 
-            var discordButton = new Button {Text = Loc.GetString("server-info-discord-button")};
-            discordButton.OnPressed += args => uriOpener.OpenUri(UILinks.Discord);
+            AddInfoButton("server-info-discord-button", CCVars.InfoLinksDiscord);
+            AddInfoButton("server-info-website-button", CCVars.InfoLinksWebsite);
+            AddInfoButton("server-info-wiki-button", CCVars.InfoLinksWiki);
+            AddInfoButton("server-info-forum-button", CCVars.InfoLinksForum);
 
-            var websiteButton = new Button {Text = Loc.GetString("server-info-website-button")};
-            websiteButton.OnPressed += args => uriOpener.OpenUri(UILinks.Website);
-
-            var wikiButton = new Button {Text = Loc.GetString("server-info-wiki-button")};
-            wikiButton.OnPressed += args => uriOpener.OpenUri(UILinks.Wiki);
             var changelogButton = new ChangelogButton();
             changelogButton.OnPressed += args => UserInterfaceManager.GetUIController<ChangelogUIController>().ToggleWindow();
             buttons.AddChild(changelogButton);
-            buttons.AddChild(rulesButton);
-            buttons.AddChild(discordButton);
-            buttons.AddChild(websiteButton);
-            buttons.AddChild(wikiButton);
+
+            void AddInfoButton(string loc, CVarDef<string> cVar)
+            {
+                var link = cfg.GetCVar(cVar);
+                if (link == "")
+                    return;
+
+                var button = new Button { Text = Loc.GetString(loc) };
+                button.OnPressed += _ => uriOpener.OpenUri(link);
+                buttons.AddChild(button);
+            }
         }
     }
 }

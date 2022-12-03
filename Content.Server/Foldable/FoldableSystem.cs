@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server.Buckle.Components;
+using Content.Server.Buckle.Systems;
 using Content.Server.Storage.Components;
 using Content.Shared.Foldable;
 using Content.Shared.Verbs;
@@ -11,6 +12,7 @@ namespace Content.Server.Foldable
     [UsedImplicitly]
     public sealed class FoldableSystem : SharedFoldableSystem
     {
+        [Dependency] private BuckleSystem _buckle = default!;
         [Dependency] private SharedContainerSystem _container = default!;
 
         public override void Initialize()
@@ -84,8 +86,7 @@ namespace Content.Server.Foldable
             base.SetFolded(component, folded);
 
             // You can't buckle an entity to a folded object
-            if (TryComp(component.Owner, out StrapComponent? strap))
-                strap.Enabled = !component.IsFolded;
+            _buckle.StrapSetEnabled(component.Owner, !component.IsFolded);
         }
 
         public void OnStoreThisAttempt(EntityUid uid, FoldableComponent comp, StoreMobInItemContainerAttemptEvent args)

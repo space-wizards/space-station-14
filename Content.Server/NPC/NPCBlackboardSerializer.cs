@@ -49,9 +49,9 @@ public sealed class NPCBlackboardSerializer : ITypeReader<NPCBlackboard, Mapping
     public NPCBlackboard Read(ISerializationManager serializationManager, MappingDataNode node,
         IDependencyCollection dependencies,
         SerializationHookContext hookCtx, ISerializationContext? context = null,
-        NPCBlackboard? value = default)
+        ISerializationManager.InstantiationDelegate<NPCBlackboard>? instanceProvider = null)
     {
-        value ??= new NPCBlackboard();
+        var value = instanceProvider != null ? instanceProvider() : new NPCBlackboard();
 
         if (node.Count > 0)
         {

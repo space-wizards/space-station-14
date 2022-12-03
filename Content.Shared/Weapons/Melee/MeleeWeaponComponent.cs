@@ -140,11 +140,18 @@ public sealed class MeleeWeaponComponentState : ComponentState
     public TimeSpan NextAttack;
     public TimeSpan? WindUpStart;
 
-    public MeleeWeaponComponentState(float attackRate, bool attacking, TimeSpan nextAttack, TimeSpan? windupStart)
+    public string ClickAnimation;
+    public string WideAnimation;
+    public float Range;
+
+    public MeleeWeaponComponentState(float attackRate, bool attacking, TimeSpan nextAttack, TimeSpan? windupStart, string clickAnimation, string wideAnimation, float range)
     {
         AttackRate = attackRate;
         Attacking = attacking;
         NextAttack = nextAttack;
         WindUpStart = windupStart;
+        ClickAnimation = clickAnimation;
+        WideAnimation = wideAnimation;
+        Range = range;
     }
 }
