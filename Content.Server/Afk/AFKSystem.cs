@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Server.Administration.Managers;
 using Content.Server.Afk.Events;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
@@ -17,6 +18,7 @@ namespace Content.Server.Afk;
 public sealed class AFKSystem : EntitySystem
 {
     [Dependency] private readonly IAfkManager _afkManager = default!;
+    [Dependency] private readonly IAdminManager _admin = default!;
     [Dependency] private readonly IConfigurationManager _configManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
@@ -87,13 +89,17 @@ public sealed class AFKSystem : EntitySystem
         {
             var pSession = (IPlayerSession) session;
             var isAfk = _afkManager.IsAfk(pSession);
+            var isAdmin = _admin.IsAdmin(pSession);
 
             if (isAfk && _afkPlayers.TryAdd(pSession, _timing.CurTime))
             {
                 var ev = new AFKEvent(pSession);
                 RaiseLocalEvent(ref ev);
-                
-                _chatManager.DispatchServerMessage(pSession, Loc.GetString("afk-system-kick-warning"));
+
+                if (!isAdmin)
+                {
+                    _chatManager.DispatchServerMessage(pSession, Loc.GetString("afk-system-kick-warning"));
+                }
             }
 
             if (!isAfk && _afkPlayers.Remove(pSession))
@@ -102,7 +108,7 @@ public sealed class AFKSystem : EntitySystem
                 RaiseLocalEvent(ref ev);
             }
 
-            if (isAfk &&
+            if (isAfk && !isAdmin &&
                 _afkPlayers.TryGetValue(pSession, out var startAfkTime) &&
                 _timing.CurTime - startAfkTime >= TimeSpan.FromSeconds(_kickDelay))
             {
