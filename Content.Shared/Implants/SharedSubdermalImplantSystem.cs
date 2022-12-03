@@ -56,10 +56,8 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
 
     private void OnRemove(EntityUid uid, SubdermalImplantComponent component, EntGotRemovedFromContainerMessage args)
     {
-        if (component.ImplantedEntity == null)
+        if (component.ImplantedEntity == null || Terminating(component.ImplantedEntity.Value))
             return;
-
-        var entCoords = Transform(component.ImplantedEntity.Value).Coordinates;
 
         if (component.ImplantAction != null)
             _actionsSystem.RemoveProvidedActions(component.ImplantedEntity.Value, uid);
@@ -67,7 +65,10 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
         if (!_container.TryGetContainer(uid, BaseStorageId, out var storageImplant))
             return;
 
-        _container.EmptyContainer(storageImplant, moveTo: entCoords);
+        var entCoords = Transform(component.ImplantedEntity.Value).Coordinates;
+
+        // TODO add variant of empty container that dumpes entities into parent containers OR grid OR Map
+        _container.EmptyContainer(storageImplant, true, entCoords, true, EntityManager);
     }
 
     /// <summary>

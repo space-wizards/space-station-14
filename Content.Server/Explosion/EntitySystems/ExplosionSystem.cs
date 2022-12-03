@@ -11,6 +11,7 @@ using Content.Shared.Explosion;
 using Content.Shared.GameTicking;
 using Content.Shared.Inventory;
 using Content.Shared.Throwing;
+using Robust.Server.GameStates;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
@@ -31,12 +32,14 @@ public sealed partial class ExplosionSystem : EntitySystem
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
 
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly NodeGroupSystem _nodeGroupSystem = default!;
     [Dependency] private readonly PathfindingSystem _pathfindingSystem = default!;
     [Dependency] private readonly SharedCameraRecoilSystem _recoilSystem = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
+    [Dependency] private readonly PVSOverrideSystem _pvsSys = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
     /// <summary>
@@ -81,11 +84,14 @@ public sealed partial class ExplosionSystem : EntitySystem
         SubscribeLocalEvent<AirtightComponent, DamageChangedEvent>(OnAirtightDamaged);
         SubscribeCvars();
         InitAirtightMap();
+        InitVisuals();
     }
 
     private void OnReset(RoundRestartCleanupEvent ev)
     {
         _explosionQueue.Clear();
+        if (_activeExplosion !=null)
+            QueueDel(_activeExplosion.VisualEnt);
         _activeExplosion = null;
         _nodeGroupSystem.PauseUpdating = false;
         _pathfindingSystem.PauseUpdating = false;
@@ -281,7 +287,7 @@ public sealed partial class ExplosionSystem : EntitySystem
 
         var (area, iterationIntensity, spaceData, gridData, spaceMatrix) = results.Value;
 
-        RaiseNetworkEvent(GetExplosionEvent(epicenter, type.ID, spaceMatrix, spaceData, gridData.Values, iterationIntensity));
+        var visualEnt = CreateExplosionVisualEntity(epicenter, type.ID, spaceMatrix, spaceData, gridData.Values, iterationIntensity);
 
         // camera shake
         CameraShake(iterationIntensity.Count * 2.5f, epicenter, totalIntensity);
@@ -306,23 +312,8 @@ public sealed partial class ExplosionSystem : EntitySystem
             maxTileBreak,
             canCreateVacuum,
             EntityManager,
-            _mapManager);
-    }
-
-    /// <summary>
-    ///     Constructor for the shared <see cref="ExplosionEvent"/> using the server-exclusive explosion classes.
-    /// </summary>
-    internal ExplosionEvent GetExplosionEvent(MapCoordinates epicenter, string id, Matrix3 spaceMatrix, ExplosionSpaceTileFlood? spaceData, IEnumerable<ExplosionGridTileFlood> gridData, List<float> iterationIntensity)
-    {
-        var spaceTiles = spaceData?.TileLists;
-
-        Dictionary<EntityUid, Dictionary<int, List<Vector2i>>> tileLists = new();
-        foreach (var grid in gridData)
-        {
-            tileLists.Add(grid.Grid.Owner, grid.TileLists);
-        }
-
-        return new ExplosionEvent(_explosionCounter, epicenter, id, iterationIntensity, spaceTiles, tileLists, spaceMatrix, spaceData?.TileSize ?? DefaultTileSize);
+            _mapManager,
+            visualEnt);
     }
 
     private void CameraShake(float range, MapCoordinates epicenter, float totalIntensity)

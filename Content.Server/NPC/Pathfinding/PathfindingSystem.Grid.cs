@@ -159,6 +159,25 @@ public sealed partial class PathfindingSystem
             // second iteration: 1,0; 3,0; 1;2
             // third iteration: 0,1; 2,1; 0,3 etc
 
+            for (var it = 0; it < Division; it++)
+            {
+                var it1 = it;
+
+                Parallel.For(0, dirt.Length, options, j =>
+                {
+                    var chunk = dirt[j];
+                    // Check if the chunk is safe on this iteration.
+                    var x = Math.Abs(chunk.Origin.X % 2);
+                    var y = Math.Abs(chunk.Origin.Y % 2);
+                    var index = x * 2 + y;
+
+                    if (index != it1)
+                        return;
+
+                    ClearOldPolys(chunk);
+                });
+            }
+
             // TODO: You can probably skimp on some neighbor chunk caches
             for (var it = 0; it < Division; it++)
             {
@@ -612,13 +631,10 @@ public sealed partial class PathfindingSystem
         poly.Neighbors.Clear();
     }
 
-    private void BuildNavmesh(GridPathfindingChunk chunk, GridPathfindingComponent component)
+    private void ClearOldPolys(GridPathfindingChunk chunk)
     {
-        var sw = new Stopwatch();
-        sw.Start();
-
-        // After the breadcrumbs step need to determine which polygons need rebuilding. Can't do this above
-        // as we are tampering with neighbor nodes.
+        // Can't do this in BuildBreadcrumbs because it mutates neighbors
+        // but also we need this entirely done before BuildNavmesh
         var chunkPolys = chunk.Polygons;
         var bufferPolygons = chunk.BufferPolygons;
 
@@ -657,7 +673,14 @@ public sealed partial class PathfindingSystem
                 existing.AddRange(polys);
             }
         }
+    }
 
+    private void BuildNavmesh(GridPathfindingChunk chunk, GridPathfindingComponent component)
+    {
+        var sw = new Stopwatch();
+        sw.Start();
+
+        var chunkPolys = chunk.Polygons;
         component.Chunks.TryGetValue(chunk.Origin + new Vector2i(-1, 0), out var leftChunk);
         component.Chunks.TryGetValue(chunk.Origin + new Vector2i(0, -1), out var bottomChunk);
         component.Chunks.TryGetValue(chunk.Origin + new Vector2i(1, 0), out var rightChunk);
