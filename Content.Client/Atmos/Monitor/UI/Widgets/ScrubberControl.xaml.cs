@@ -114,6 +114,7 @@ public sealed partial class ScrubberControl : BoxContainer
 
         _data.WideNet = data.WideNet;
         _wideNet.Pressed = _data.WideNet;
+        _data.FilterGases = data.FilterGases;
 
         foreach (var value in Enum.GetValues<Gas>())
         {
