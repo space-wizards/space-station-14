@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from skyrat-tg at commit https://github.com/Skyrat-SS13/Skyrat-tg/commit/9504b0ab84221829447040c2a5294074d3e4eb7b",
+  "states": [
+    {
+      "name": "purplepulsing",
+      "delays": [
+        [
+          0.18,
+          0.2,
+          0.2,
+          0.05,
+          0.06,
+          0.07,
+          0.08,
+          0.09,
+          0.1,
+          0.12,
+          0.14,
+          0.16
+        ]
+      ]
+    }
+  ]
+}
