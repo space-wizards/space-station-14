@@ -871,6 +871,15 @@ entities:
     pos: -9.5,7.5
     parent: 127
     type: Transform
+- uid: 122
+  components:
+  - type: MetaData
+  - type: Transform
+  - index: 7
+    type: Map
+  - type: PhysicsMap
+  - type: Broadphase
+  - type: OccluderTree
 - uid: 123
   type: GasPort
   components:
@@ -903,7 +912,7 @@ entities:
   components:
   - type: MetaData
   - pos: -1.7478588,0.38306206
-    parent: null
+    parent: 122
     type: Transform
   - chunks:
       -1,-1:
@@ -8503,14 +8512,14 @@ entities:
       5,-33: 0
       6,-39: 0
       6,-37: 0
-      6,-36: 0
+      6,-36: 11
       6,-35: 0
       6,-34: 0
       6,-33: 0
       7,-39: 0
       7,-38: 0
       7,-37: 0
-      7,-36: 0
+      7,-36: 11
       7,-35: 0
       7,-34: 0
       7,-33: 0
@@ -8627,14 +8636,14 @@ entities:
       20,-33: 0
       21,-38: 0
       21,-37: 0
-      21,-36: 0
+      21,-36: 11
       21,-35: 0
       21,-34: 0
       21,-33: 0
       22,-39: 0
       22,-38: 0
       22,-37: 0
-      22,-36: 0
+      22,-36: 11
       22,-35: 0
       22,-34: 0
       22,-33: 0
@@ -9083,7 +9092,7 @@ entities:
       47,-29: 0
       47,-28: 0
       47,-26: 1
-      47,-24: 11
+      47,-24: 12
       47,-23: 2
       48,-31: 0
       48,-29: 0
@@ -10655,8 +10664,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 17.389294
-      - 65.41687
+      - 17.89022
+      - 67.30131
       - 0
       - 0
       - 0
@@ -10792,6 +10801,21 @@ entities:
       moles:
       - 20.767128
       - 78.12396
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.15
+      moles:
+      - 21.213781
+      - 79.80423
       - 0
       - 0
       - 0
@@ -11297,9 +11321,9 @@ entities:
     parent: 127
     type: Transform
 - uid: 205
-  type: Table
+  type: ToolboxElectricalFilled
   components:
-  - pos: 1.5,-7.5
+  - pos: 2.504503,-7.29704
     parent: 127
     type: Transform
 - uid: 206
@@ -13680,7 +13704,7 @@ entities:
 - uid: 567
   type: ClothingBeltUtilityFilled
   components:
-  - pos: 1.5454197,-7.398009
+  - pos: 3.160753,-7.437665
     parent: 127
     type: Transform
 - uid: 568
@@ -13943,15 +13967,15 @@ entities:
     parent: 127
     type: Transform
 - uid: 609
-  type: ToolboxElectricalFilled
+  type: ExosuitFabricator
   components:
-  - pos: 2.2954197,-7.304259
+  - pos: 1.5,-7.5
     parent: 127
     type: Transform
 - uid: 610
   type: ToolboxMechanicalFilled
   components:
-  - pos: 2.7016697,-7.444884
+  - pos: 2.613878,-7.437665
     parent: 127
     type: Transform
 - uid: 611
@@ -48609,7 +48633,7 @@ entities:
         - 7692
     type: ContainerContainer
 - uid: 5756
-  type: RandomSpawner
+  type: PottedPlantRandom
   components:
   - pos: 20.5,-35.5
     parent: 127
@@ -50888,9 +50912,9 @@ entities:
     parent: 127
     type: Transform
 - uid: 6089
-  type: PottedPlantRandom
+  type: Table
   components:
-  - pos: 22.5,-35.5
+  - pos: 7.5,-33.5
     parent: 127
     type: Transform
 - uid: 6090
@@ -50906,9 +50930,9 @@ entities:
     parent: 127
     type: Transform
 - uid: 6092
-  type: PottedPlantRandom
+  type: RandomSpawner
   components:
-  - pos: 6.5,-35.5
+  - pos: 20.5,-34.5
     parent: 127
     type: Transform
 - uid: 6093
@@ -54508,7 +54532,7 @@ entities:
   - pos: 24.5,-5.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -73425
+  - SecondsUntilStateChange: -73652.09
     state: Opening
     type: Door
   - inputs:
@@ -54524,7 +54548,7 @@ entities:
   - pos: 24.5,-4.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -73425
+  - SecondsUntilStateChange: -73652.09
     state: Opening
     type: Door
   - inputs:
@@ -54540,7 +54564,7 @@ entities:
   - pos: 24.5,-7.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -73425
+  - SecondsUntilStateChange: -73652.09
     state: Opening
     type: Door
   - inputs:
@@ -54556,7 +54580,7 @@ entities:
   - pos: 24.5,-6.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -73425
+  - SecondsUntilStateChange: -73652.09
     state: Opening
     type: Door
   - inputs:
@@ -54608,7 +54632,7 @@ entities:
   - pos: 13.5,-5.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -74475.875
+  - SecondsUntilStateChange: -74702.97
     state: Opening
     type: Door
   - inputs:
@@ -54624,7 +54648,7 @@ entities:
   - pos: 14.5,-5.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -74475.875
+  - SecondsUntilStateChange: -74702.97
     state: Opening
     type: Door
   - inputs:
@@ -54640,7 +54664,7 @@ entities:
   - pos: 15.5,-5.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -74475.875
+  - SecondsUntilStateChange: -74702.97
     state: Opening
     type: Door
   - inputs:
@@ -54656,7 +54680,7 @@ entities:
   - pos: 16.5,-5.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -74475.875
+  - SecondsUntilStateChange: -74702.97
     state: Opening
     type: Door
   - inputs:
@@ -54672,7 +54696,7 @@ entities:
   - pos: 17.5,-5.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -74475.875
+  - SecondsUntilStateChange: -74702.97
     state: Opening
     type: Door
   - inputs:
@@ -54688,7 +54712,7 @@ entities:
   - pos: 18.5,-5.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -74475.875
+  - SecondsUntilStateChange: -74702.97
     state: Opening
     type: Door
   - inputs:
@@ -54704,7 +54728,7 @@ entities:
   - pos: 12.5,-5.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -74475.875
+  - SecondsUntilStateChange: -74702.97
     state: Opening
     type: Door
   - inputs:
@@ -54720,7 +54744,7 @@ entities:
   - pos: 19.5,-5.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -74475.875
+  - SecondsUntilStateChange: -74702.97
     state: Opening
     type: Door
   - inputs:
@@ -54736,7 +54760,7 @@ entities:
   - pos: 11.5,-6.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -74475.875
+  - SecondsUntilStateChange: -74702.97
     state: Opening
     type: Door
   - inputs:
@@ -54752,7 +54776,7 @@ entities:
   - pos: 11.5,-7.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -74475.875
+  - SecondsUntilStateChange: -74702.97
     state: Opening
     type: Door
   - inputs:
@@ -54768,7 +54792,7 @@ entities:
   - pos: 20.5,-6.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -74475.875
+  - SecondsUntilStateChange: -74702.97
     state: Opening
     type: Door
   - inputs:
@@ -54784,7 +54808,7 @@ entities:
   - pos: 20.5,-7.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -74475.875
+  - SecondsUntilStateChange: -74702.97
     state: Opening
     type: Door
   - inputs:
@@ -54800,7 +54824,7 @@ entities:
   - pos: 20.5,-9.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -74391.27
+  - SecondsUntilStateChange: -74618.37
     state: Opening
     type: Door
   - inputs:
@@ -54816,7 +54840,7 @@ entities:
   - pos: 20.5,-11.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -74391.27
+  - SecondsUntilStateChange: -74618.37
     state: Opening
     type: Door
   - inputs:
@@ -55703,7 +55727,7 @@ entities:
   - devices:
     - 5407
     - 5408
-    - null
+    - invalid
     - 5250
     - 5077
     - 5076
@@ -55814,7 +55838,7 @@ entities:
     parent: 127
     type: Transform
   - devices:
-    - null
+    - invalid
     - 5036
     - 5035
     - 2974
@@ -56352,14 +56376,11 @@ entities:
   - id: Northwest Hall
     type: SurveillanceCamera
 - uid: 6821
-  type: SurveillanceCameraGeneral
+  type: PottedPlantRandom
   components:
-  - rot: 3.141592653589793 rad
-    pos: 17.5,3.5
+  - pos: 8.5,-35.5
     parent: 127
     type: Transform
-  - id: North Hall
-    type: SurveillanceCamera
 - uid: 6822
   type: SurveillanceCameraGeneral
   components:
@@ -66945,7 +66966,7 @@ entities:
     - 8258
     - 8259
     - 8256
-    - null
+    - invalid
     type: DeviceList
 - uid: 8263
   type: FirelockGlass
@@ -70180,4 +70201,68 @@ entities:
   - pos: -28.5,4.5
     parent: 127
     type: Transform
+- uid: 8745
+  type: ToolboxEmergencyFilled
+  components:
+  - pos: 7.4918756,-33.365536
+    parent: 127
+    type: Transform
+- uid: 8746
+  type: ClosetFireFilled
+  components:
+  - pos: 6.5,-35.5
+    parent: 127
+    type: Transform
+- uid: 8747
+  type: ClosetFireFilled
+  components:
+  - pos: 21.5,-35.5
+    parent: 127
+    type: Transform
+- uid: 8748
+  type: ClosetEmergencyFilledRandom
+  components:
+  - pos: 7.5,-35.5
+    parent: 127
+    type: Transform
+- uid: 8749
+  type: ClosetEmergencyFilledRandom
+  components:
+  - pos: 22.5,-35.5
+    parent: 127
+    type: Transform
+- uid: 8750
+  type: CableApcExtension
+  components:
+  - pos: 15.5,12.5
+    parent: 127
+    type: Transform
+- uid: 8751
+  type: CableApcExtension
+  components:
+  - pos: 14.5,19.5
+    parent: 127
+    type: Transform
+- uid: 8752
+  type: CableApcExtension
+  components:
+  - pos: 14.5,20.5
+    parent: 127
+    type: Transform
+- uid: 8753
+  type: VendingMachineMediDrobe
+  components:
+  - flags: SessionSpecific
+    type: MetaData
+  - pos: 1.5,12.5
+    parent: 127
+    type: Transform
+- uid: 8754
+  type: SurveillanceCameraGeneral
+  components:
+  - pos: 17.5,2.5
+    parent: 127
+    type: Transform
+  - id: North Hall
+    type: SurveillanceCamera
 ...
