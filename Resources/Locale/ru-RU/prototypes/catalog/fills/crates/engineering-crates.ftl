@@ -18,3 +18,5 @@ ent-CrateEngineeringJetpack = ящик джетпаков
     .desc = Два джетпака для тех, кто не умеет пользоваться огнетушителями.
 ent-CrateEngineeringMiniJetpack = ящик мини-джетпаков
     .desc = Два мини-джетпака для тех, кому хочется вызова.
+ent-CrateAirlockKit = Airlock kit
+    .desc = A kit for building 6 airlocks, doesn't include tools.
