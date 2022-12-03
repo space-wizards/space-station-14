@@ -1206,7 +1206,7 @@ namespace Content.Shared.CCVar
             SalvageForced = CVarDef.Create("salvage.forced", "", CVar.SERVERONLY);
 
         /// <summary>
-        ///     Salvage hold phase time, in seconds. Set to zero to hold indefinetely.
+        ///     Salvage hold phase time, in seconds. Set to zero to hold indefinitely.
         /// </summary>
         public static readonly CVarDef<int>
             SalvageHoldTime = CVarDef.Create("salvage.hold_time", 240, CVar.SERVERONLY);
