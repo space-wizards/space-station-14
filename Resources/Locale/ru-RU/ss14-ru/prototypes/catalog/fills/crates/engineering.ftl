@@ -25,3 +25,6 @@ ent-CrateEngineeringJetpack = ящик джетпаков
 ent-CrateEngineeringMiniJetpack = ящик мини-джетпаков
     .desc = Два мини-джетпака для тех, кому хочется вызова.
     .suffix = { "" }
+ent-CrateAirlockKit = { ent-CrateGenericSteel }
+    .desc = { ent-CrateGenericSteel.desc }
+    .suffix = { "" }

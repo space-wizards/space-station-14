@@ -70,4 +70,3 @@ ent-NitrousOxideCanisterBroken = { ent-GasCanisterBrokenBase }
 ent-FrezonCanisterBroken = { ent-GasCanisterBrokenBase }
     .desc = { ent-GasCanisterBrokenBase.desc }
     .suffix = { "" }
-    

@@ -19,6 +19,7 @@ using Content.Server.Maps;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.Players.PlayTimeTracking;
 using Content.Server.Preferences.Managers;
+using Content.Server.ServerInfo;
 using Content.Server.ServerUpdates;
 using Content.Server.Voting.Managers;
 using Content.Shared.Administration;
@@ -102,6 +103,7 @@ namespace Content.Server.Entry
                 IoCManager.Resolve<SponsorsManager>().Initialize(); // Corvax-Sponsors
                 IoCManager.Resolve<JoinQueueManager>().Initialize(); // Corvax-Queue
                 IoCManager.Resolve<JoinPlayTimeManager>().Initialize(); // Corvax-JoinPlaytime
+                IoCManager.Resolve<ServerInfoManager>().Initialize();
 
                 _voteManager.Initialize();
                 _updateManager.Initialize();
