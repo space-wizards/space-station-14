@@ -1426,15 +1426,5 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool>
             QueueEnabled = CVarDef.Create("queue.enabled", false, CVar.SERVERONLY);
-
-        /*
-         * Corvax | JoinPlaytime
-         */
-
-        /// <summary>
-        ///     Minimum required overall play hours to join server
-        /// </summary>
-        public static readonly CVarDef<int> JoinPlaytimeHours =
-            CVarDef.Create("joinplaytime.min_hours", 0, CVar.SERVERONLY);
     }
 }
