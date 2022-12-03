@@ -1919,7 +1919,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.2
-      density: 100
+      density: 120
       mask:
       - SmallMobMask
       layer:
@@ -1927,7 +1927,7 @@
   - type: MobState
     thresholds:
       0: Alive
-      30: Critical
+      40: Critical
       60: Dead
   - type: MovementSpeedModifier
     baseWalkSpeed : 4

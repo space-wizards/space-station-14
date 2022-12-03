@@ -33,7 +33,7 @@ petting-failure-possum = You reach out to pet {THE($target)}, but are met with h
 petting-failure-sloth = You reach out to pet {THE($target)}, but {SUBJECT($target)} somehow dodge with ludicrous speed!
 petting-failure-holo = You reach out to pet {THE($target)}, but {POSS-ADJ($target)} spikes almost impale your hand!
 petting-failure-dragon = You raise your hand, but as {THE($target)} roars, you decide you'd rather not be toasty carp food.
-petting-failure-hamster = You reach out to pet {THE($target)}, but {SUBJECT($target)} attempts to bite your finger, you quickly recoil your hand.
+petting-failure-hamster = You reach out to pet {THE($target)}, but {SUBJECT($target)} attempts to bite your finger and only your quick reflexes save you from an almost fatal injury.
 
 ## Petting silicons
 
