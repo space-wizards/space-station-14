@@ -16,8 +16,7 @@ public sealed class VentClog : StationEventSystem
 
     public readonly IReadOnlyList<string> SafeishVentChemicals = new[]
     {
-        "Water", "Iron", "Oxygen", "Tritium", "Plasma", "SulfuricAcid", "Blood", "SpaceDrugs", "SpaceCleaner", "Flour",
-        "Nutriment", "Sugar", "SpaceLube", "Ethanol", "Mercury", "Ephedrine", "WeldingFuel", "VentCrud"
+        "Water", "Blood", "Slime", "Acetone", "SpaceDrugs", "SpaceCleaner", "Nutriment", "Sugar", "SpaceLube", "Ethanol", "Ephedrine", "WeldingFuel", "VentCrud", "Ale", "Beer"
     };
 
     public override void Started()
