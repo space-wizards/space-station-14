@@ -1,10 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: 'Salvages now spawn somewhere near the salvage magnet, rather than directly
-      in front of it.', type: Tweak}
-  id: 2214
-  time: '2022-09-01T02:25:05.0000000+00:00'
 - author: JustinTrotter
   changes:
   - {message: Bots can now be stuffed into closets, type: Tweak}
@@ -2949,3 +2943,8 @@ Entries:
   - {message: Escape key clears chat input, type: Tweak}
   id: 2713
   time: '2022-12-03T01:15:59.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Weld modular mines and grenades to salvage them, type: Tweak}
+  id: 2714
+  time: '2022-12-03T01:20:38.0000000+00:00'
