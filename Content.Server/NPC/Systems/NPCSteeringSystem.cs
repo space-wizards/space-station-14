@@ -250,11 +250,6 @@ namespace Content.Server.NPC.Systems
 
             var direction = targetMap.Position - ourMap.Position;
 
-            if (steering.Owner == new EntityUid(15315))
-            {
-
-            }
-
             // Are we in range
             if (direction.Length <= arrivalDistance)
             {
