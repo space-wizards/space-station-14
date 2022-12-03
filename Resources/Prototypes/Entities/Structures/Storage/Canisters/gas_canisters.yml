@@ -477,7 +477,7 @@
 # Broke Entities
 
 - type: entity
-  parent: BaseStructure
+  parent: BaseStructureDynamic
   id: GasCanisterBrokenBase
   components:
     - type: Destructible
@@ -515,6 +515,7 @@
         - MachineMask
         layer:
         - MachineLayer
+    - type: Recyclable
 
 - type: entity
   parent: GasCanisterBrokenBase
