@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Added a poster celebrating the current state of our forthcoming server.,
-    type: Add}
-  id: 2216
-  time: '2022-09-01T02:56:27.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Mini Jetpack now fits in your suit storage slot., type: Tweak}
@@ -2951,3 +2945,9 @@ Entries:
   - {message: Added the orange hardhat to the engidrobe vendor, type: Tweak}
   id: 2715
   time: '2022-12-03T01:41:06.0000000+00:00'
+- author: GoodWheatley
+  changes:
+  - {message: The Syndicate has adjusted the price of several uplink items to encourage
+      traitors to use more diverse strategies., type: Add}
+  id: 2716
+  time: '2022-12-03T01:48:25.0000000+00:00'
