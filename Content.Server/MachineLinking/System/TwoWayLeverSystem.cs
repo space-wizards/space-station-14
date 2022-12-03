@@ -45,6 +45,9 @@ namespace Content.Server.MachineLinking.System
 
         private void OnGetInteractionVerbs(EntityUid uid, TwoWayLeverComponent component, GetVerbsEvent<InteractionVerb> args)
         {
+            if (!args.CanAccess || !args.CanInteract || (args.Hands == null))
+                return;
+
             InteractionVerb verbLeft = new()
             {
                 Act = () =>
@@ -57,6 +60,7 @@ namespace Content.Server.MachineLinking.System
                     };
                     StateChanged(uid, component);
                 },
+                Category = VerbCategory.Lever,
                 Message = Loc.GetString("two-way-lever-cant"),
                 Disabled = component.State == TwoWayLeverState.Left,
                 IconTexture = $"/Textures/Interface/VerbIcons/{_leftToggleImage}",
@@ -77,6 +81,7 @@ namespace Content.Server.MachineLinking.System
                     };
                     StateChanged(uid, component);
                 },
+                Category = VerbCategory.Lever,
                 Message = Loc.GetString("two-way-lever-cant"),
                 Disabled = component.State == TwoWayLeverState.Right,
                 IconTexture = $"/Textures/Interface/VerbIcons/{_rightToggleImage}",

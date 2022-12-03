@@ -1,10 +1,10 @@
 ﻿using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 
-namespace Content.Client.CartridgeLoader;
+namespace Content.Client.UserInterface.Fragments;
 
 /// <summary>
-/// Cartridge ui fragments need to inherit this class. The subclass is then used in yaml to tell the cartridge loader ui to use it as the cartridges ui fragment.
+/// Specific ui fragments need to inherit this class. The subclass is then used in yaml to tell a main ui to use it as a ui fragment.
 /// </summary>
 /// <example>
 /// This is an example from the yaml definition from the notekeeper ui
@@ -14,7 +14,7 @@ namespace Content.Client.CartridgeLoader;
 /// </code>
 /// </example>
 [ImplicitDataDefinitionForInheritors]
-public abstract class CartridgeUI
+public abstract class UIFragment
 {
     public abstract Control GetUIFragmentRoot();
 

@@ -1,82 +1,121 @@
 meta:
-  format: 2
+  format: 3
   name: DemoStation
   author: Space-Wizards
   postmapinit: false
 tilemap:
   0: Space
   1: FloorArcadeBlue
-  2: FloorArcadeRed
-  3: FloorAsteroidIronsand1
-  4: FloorAsteroidIronsand2
-  5: FloorAsteroidIronsand3
-  6: FloorAsteroidIronsand4
-  7: FloorEighties
-  8: FloorGrassJungle
-  9: FloorShuttleBlue
-  10: FloorShuttleOrange
-  11: FloorShuttlePurple
-  12: FloorShuttleRed
-  13: FloorShuttleWhite
-  14: FloorAsteroidCoarseSand0
-  15: FloorAsteroidCoarseSand1
-  16: FloorAsteroidCoarseSand2
-  17: FloorAsteroidCoarseSandDug
-  18: FloorAsteroidSand
-  19: FloorAsteroidTile
-  20: FloorBar
-  21: FloorBlue
-  22: FloorBlueCircuit
-  23: FloorClown
-  24: FloorDark
-  25: FloorElevatorShaft
-  26: FloorFreezer
-  27: FloorGlass
-  28: FloorGold
-  29: FloorGrass
-  30: FloorGreenCircuit
-  31: FloorHydro
-  32: FloorKitchen
-  33: FloorLaundry
-  34: FloorLino
-  35: FloorMime
-  36: FloorMono
-  37: FloorReinforced
-  38: FloorRGlass
-  39: FloorRockVault
-  40: FloorShowroom
-  41: FloorSilver
-  42: FloorSnow
-  43: FloorSteel
-  44: FloorSteelDirty
-  45: FloorTechMaint
-  46: FloorWhite
-  47: FloorWood
-  48: Lattice
-  49: Plating
-  50: Plating
-grids:
-- settings:
-    chunksize: 16
-    tilesize: 1
-  chunks:
-  - ind: -1,-1
-    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAAAAAAASAAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAADAAAAASAAAAMAAAADAAAAASAAAAEgAAADAAAAASAAAAEgAAADAAAAAwAAAAEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEgAAABIAAAASAAAAEgAAABIAAAASAAAAEgAAABIAAAASAAAAEgAAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIAAAASAAAAEgAAABIAAAASAAAAEgAAABIAAAASAAAAEgAAABIAAAASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADEAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAxAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMQAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADEAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAxAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAAA==
-  - ind: 0,-1
-    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEgAAABMAAAAAAAAAAAAAADAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEgAAABIAAAATAAAAEwAAADAAAAAwAAAAEgAAABIAAAASAAAAEgAAADAAAAAwAAAAMAAAADAAAAAAAAAAAAAAABIAAAASAAAAEwAAABMAAAASAAAAEgAAABIAAAASAAAAEgAAABIAAAASAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAASAAAAEgAAABMAAAATAAAAEgAAABIAAAASAAAAEgAAABIAAAASAAAAEgAAABIAAAAAAAAAAAAAAAAAAAAAAAAAEwAAABMAAAATAAAAEwAAABIAAAASAAAAEgAAABIAAAASAAAAEgAAABIAAAASAAAAAAAAAAAAAAAAAAAAAAAAADEAAAAxAAAAMQAAAC0AAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADAAAAAAAAAAAAAAAAAAAAArAAAAMQAAACsAAAArAAAAKwAAADEAAAANAAAADQAAADEAAAANAAAADQAAADEAAAAAAAAAAAAAAAAAAAAAAAAAKwAAAC0AAAArAAAAKwAAACsAAAAxAAAADQAAAA0AAAAxAAAADQAAAA0AAAAxAAAAAAAAAAAAAAAAAAAAAAAAACsAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAtAAAAMQAAAC0AAAAxAAAAMQAAAAAAAAAAAAAAAAAAAAAAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAADEAAAAAAAAAAAAAAAAAAAAAAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAAxAAAAAAAAAAAAAAAAAAAAAAAAAA==
-  - ind: 0,0
-    tiles: KwAAACsAAAArAAAAKwAAACsAAAArAAAAMQAAADEAAAAxAAAALQAAADEAAAAxAAAAAAAAAAAAAAAAAAAAAAAAAC0AAAAtAAAALQAAAC0AAAAtAAAALQAAADEAAAArAAAAKwAAACsAAAArAAAAMQAAADAAAAAAAAAAAAAAAAAAAAAtAAAALQAAAC0AAAAtAAAALQAAAC0AAAAtAAAAKwAAACsAAAArAAAAKwAAADEAAAAAAAAAAAAAAAAAAAAAAAAALQAAAC0AAAAtAAAALQAAAC0AAAAtAAAAMQAAACsAAAArAAAAKwAAACsAAAAxAAAAAAAAAAAAAAAAAAAAAAAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAALQAAADEAAAAxAAAAMQAAAAAAAAAAAAAAAAAAAAAAAAATAAAAEwAAABMAAAATAAAAEwAAADEAAAArAAAAKwAAACsAAAArAAAAKwAAADEAAAAwAAAAAAAAAAAAAAAAAAAAEgAAABIAAAASAAAAEgAAABIAAAAxAAAAKwAAACsAAAArAAAAKwAAACsAAAAxAAAAAAAAAAAAAAAAAAAAAAAAABIAAAASAAAAEgAAABIAAAASAAAAMQAAACsAAAArAAAAKwAAACsAAAArAAAAMQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEgAAABIAAAASAAAAEgAAADEAAAArAAAAKwAAACsAAAArAAAAKwAAADEAAAAAAAAAAAAAAAAAAAAAAAAAMAAAADAAAAAwAAAAEgAAABIAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
-  - ind: -1,0
-    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAxAAAAKwAAACsAAAArAAAAKwAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMQAAACsAAAArAAAAKwAAACsAAAAtAAAALQAAAC0AAAAtAAAALQAAAC0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAADEAAAArAAAAKwAAACsAAAArAAAALQAAAC0AAAAtAAAALQAAAC0AAAAtAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAxAAAAKwAAACsAAAArAAAAKwAAAC0AAAAtAAAALQAAAC0AAAAtAAAALQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAAAAAAAAAAAAAAAAAwAAAAMAAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASAAAAEgAAABIAAAASAAAAEgAAABIAAAASAAAAEgAAABIAAAASAAAAEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEgAAABIAAAASAAAAEgAAABIAAAASAAAAEgAAABIAAAASAAAAEgAAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAABIAAAASAAAAAAAAABIAAAASAAAAEgAAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAwAAAAMAAAADAAAAASAAAAEgAAADAAAAAwAAAAMAAAABIAAAAwAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+  2: FloorArcadeBlue2
+  3: FloorArcadeRed
+  4: FloorAsteroidCoarseSand0
+  5: FloorAsteroidCoarseSandDug
+  6: FloorAsteroidIronsand1
+  7: FloorAsteroidIronsand2
+  8: FloorAsteroidIronsand3
+  9: FloorAsteroidIronsand4
+  10: FloorAsteroidSand
+  11: FloorAsteroidTile
+  12: FloorBar
+  13: FloorBlue
+  14: FloorBlueCircuit
+  15: FloorBoxing
+  16: FloorCarpetClown
+  17: FloorCarpetOffice
+  18: FloorCave
+  19: FloorCaveDrought
+  20: FloorClown
+  21: FloorDark
+  22: FloorDarkDiagonal
+  23: FloorDarkDiagonalMini
+  24: FloorDarkHerringbone
+  25: FloorDarkMini
+  26: FloorDarkMono
+  27: FloorDarkOffset
+  28: FloorDarkPavement
+  29: FloorDarkPavementVertical
+  30: FloorDarkPlastic
+  31: FloorDirt
+  32: FloorEighties
+  33: FloorElevatorShaft
+  34: FloorFreezer
+  35: FloorGlass
+  36: FloorGold
+  37: FloorGrass
+  38: FloorGrassDark
+  39: FloorGrassJungle
+  40: FloorGrassLight
+  41: FloorGreenCircuit
+  42: FloorGym
+  43: FloorHydro
+  44: FloorKitchen
+  45: FloorLaundry
+  46: FloorLino
+  47: FloorMetalDiamond
+  48: FloorMime
+  49: FloorMono
+  50: FloorPlastic
+  51: FloorRGlass
+  52: FloorReinforced
+  53: FloorRockVault
+  54: FloorShowroom
+  55: FloorShuttleBlue
+  56: FloorShuttleOrange
+  57: FloorShuttlePurple
+  58: FloorShuttleRed
+  59: FloorShuttleWhite
+  60: FloorSilver
+  61: FloorSnow
+  62: FloorSteel
+  63: FloorSteelDiagonal
+  64: FloorSteelDiagonalMini
+  65: FloorSteelDirty
+  66: FloorSteelHerringbone
+  67: FloorSteelMini
+  68: FloorSteelMono
+  69: FloorSteelOffset
+  70: FloorSteelPavement
+  71: FloorSteelPavementVertical
+  72: FloorTechMaint
+  73: FloorTechMaint2
+  74: FloorTechMaint3
+  75: FloorWhite
+  76: FloorWhiteDiagonal
+  77: FloorWhiteDiagonalMini
+  78: FloorWhiteHerringbone
+  79: FloorWhiteMini
+  80: FloorWhiteMono
+  81: FloorWhiteOffset
+  82: FloorWhitePavement
+  83: FloorWhitePavementVertical
+  84: FloorWhitePlastic
+  85: FloorWood
+  86: FloorWoodTile
+  87: Lattice
+  88: Plating
 entities:
 - uid: 0
   components:
+  - type: MetaData
   - parent: null
     type: Transform
-  - index: 0
+  - chunks:
+      -1,-1:
+        ind: -1,-1
+        tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFcAAAAAAAAAAAAAAAAAAABXAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFcAAAAAAAAAAAAAAAAAAAAKAAAAAAAAAAAAAAAAAAAAVwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVwAAAFcAAAAKAAAAVwAAAFcAAAAKAAAACgAAAFcAAAAKAAAACgAAAFcAAABXAAAACgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACgAAAAoAAAAKAAAACgAAAAoAAAAKAAAACgAAAAoAAAAKAAAACgAAAAoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAAAAKAAAACgAAAAoAAAAKAAAACgAAAAoAAAAKAAAACgAAAAoAAAAKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALAAAACwAAAAsAAAALAAAACwAAAAsAAAALAAAACwAAAAsAAAALAAAACwAAAAAAAAAAAAAAAAAAAAAAAABXAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAAA+AAAAPgAAAD4AAAA+AAAAPgAAAD4AAAA+AAAAPgAAAD4AAAA+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYAAAAPgAAAD4AAAA+AAAAPgAAAD4AAAA+AAAAPgAAAD4AAAA+AAAAPgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWAAAAD4AAAA+AAAAPgAAAD4AAAA+AAAAPgAAAD4AAAA+AAAAPgAAAD4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAAA+AAAAPgAAAD4AAAA+AAAAPgAAAD4AAAA+AAAAPgAAAD4AAAA+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYAAAAPgAAAD4AAAA+AAAAPgAAAD4AAAA+AAAAPgAAAD4AAAA+AAAAPgAAAA==
+      0,-1:
+        ind: 0,-1
+        tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABXAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACgAAAAsAAAAAAAAAAAAAAFcAAAAAAAAAAAAAAAAAAABXAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACgAAAAoAAAALAAAACwAAAFcAAABXAAAACgAAAAoAAAAKAAAACgAAAFcAAABXAAAAVwAAAFcAAAAAAAAAAAAAAAoAAAAKAAAACwAAAAsAAAAKAAAACgAAAAoAAAAKAAAACgAAAAoAAAAKAAAAVwAAAAAAAAAAAAAAAAAAAAAAAAAKAAAACgAAAAsAAAALAAAACgAAAAoAAAAKAAAACgAAAAoAAAAKAAAACgAAAAoAAAAAAAAAAAAAAAAAAAAAAAAACwAAAAsAAAALAAAACwAAAAoAAAAKAAAACgAAAAoAAAAKAAAACgAAAAoAAAAKAAAAAAAAAAAAAAAAAAAAAAAAAFgAAABYAAAAWAAAAEgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFcAAAAAAAAAAAAAAAAAAAA+AAAAWAAAAD4AAAA+AAAAPgAAAFgAAAA7AAAAOwAAAFgAAAA7AAAAOwAAAFgAAAAAAAAAAAAAAAAAAAAAAAAAPgAAAEgAAAA+AAAAPgAAAD4AAABYAAAAOwAAADsAAABYAAAAOwAAADsAAABYAAAAAAAAAAAAAAAAAAAAAAAAAD4AAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABIAAAAWAAAAEgAAABYAAAAWAAAAAAAAAAAAAAAAAAAAAAAAAA+AAAAPgAAAD4AAAA+AAAAPgAAAD4AAAA+AAAAPgAAAD4AAAA+AAAAPgAAAFgAAAAAAAAAAAAAAAAAAAAAAAAAPgAAAD4AAAA+AAAAPgAAAD4AAAA+AAAAPgAAAD4AAAA+AAAAPgAAAD4AAABYAAAAAAAAAAAAAAAAAAAAAAAAAA==
+      0,0:
+        ind: 0,0
+        tiles: PgAAAD4AAAA+AAAAPgAAAD4AAAA+AAAAWAAAAFgAAABYAAAASAAAAFgAAABYAAAAAAAAAAAAAAAAAAAAAAAAAEgAAABIAAAASAAAAEgAAABIAAAASAAAAFgAAAA+AAAAPgAAAD4AAAA+AAAAWAAAAFcAAAAAAAAAAAAAAAAAAABIAAAASAAAAEgAAABIAAAASAAAAEgAAABIAAAAPgAAAD4AAAA+AAAAPgAAAFgAAAAAAAAAAAAAAAAAAAAAAAAASAAAAEgAAABIAAAASAAAAEgAAABIAAAAWAAAAD4AAAA+AAAAPgAAAD4AAABYAAAAAAAAAAAAAAAAAAAAAAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAASAAAAFgAAABYAAAAWAAAAAAAAAAAAAAAAAAAAAAAAAALAAAACwAAAAsAAAALAAAACwAAAFgAAAA+AAAAPgAAAD4AAAA+AAAAPgAAAFgAAABXAAAAAAAAAAAAAAAAAAAACgAAAAoAAAAKAAAACgAAAAoAAABYAAAAPgAAAD4AAAA+AAAAPgAAAD4AAABYAAAAAAAAAAAAAAAAAAAAAAAAAAoAAAAKAAAACgAAAAoAAAAKAAAAWAAAAD4AAAA+AAAAPgAAAD4AAAA+AAAAWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACgAAAAoAAAAKAAAACgAAAFgAAAA+AAAAPgAAAD4AAAA+AAAAPgAAAFgAAAAAAAAAAAAAAAAAAAAAAAAAVwAAAFcAAABXAAAACgAAAAoAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABXAAAAAAAAAAAAAAAAAAAAVwAAAAAAAAAAAAAAAAAAAFcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+      -1,0:
+        ind: -1,0
+        tiles: AAAAAAAAAAAAAAAAAAAAAAAAAABYAAAAPgAAAD4AAAA+AAAAPgAAABUAAAAVAAAAFQAAABUAAAAVAAAAFQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWAAAAD4AAAA+AAAAPgAAAD4AAABIAAAASAAAAEgAAABIAAAASAAAAEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAAA+AAAAPgAAAD4AAAA+AAAASAAAAEgAAABIAAAASAAAAEgAAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYAAAAPgAAAD4AAAA+AAAAPgAAAEgAAABIAAAASAAAAEgAAABIAAAASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAAAAAAAAAAAAAAAAAABXAAAAVwAAAAsAAAALAAAACwAAAAsAAAALAAAACwAAAAsAAAALAAAACwAAAAsAAAALAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKAAAACgAAAAoAAAAKAAAACgAAAAoAAAAKAAAACgAAAAoAAAAKAAAACgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACgAAAAoAAAAKAAAACgAAAAoAAAAKAAAACgAAAAoAAAAKAAAACgAAAAoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAAoAAAAKAAAAAAAAAAoAAAAKAAAACgAAAAoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFcAAABXAAAAVwAAAFcAAAAKAAAACgAAAFcAAABXAAAAVwAAAAoAAABXAAAAVwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVwAAAAAAAAAAAAAAAAAAAFcAAAAAAAAAAAAAAAAAAABXAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
     type: MapGrid
-  - angularDamping: 100
-    linearDamping: 50
+  - type: Broadphase
+  - angularDamping: 0.05
+    linearDamping: 0.05
     fixedRotation: False
     bodyType: Dynamic
     type: Physics
@@ -87,420 +126,420 @@ entities:
     type: Gravity
   - chunkCollection:
       -1,-1:
-        2:
+        0:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -5,-3
-        3:
+        1:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -4,-3
-        4:
+        2:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -4,-4
-        5:
+        3:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -5,-4
-        6:
+        4:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -5,-5
-        7:
+        5:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -4,-5
-        8:
+        6:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -3,-5
-        9:
+        7:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -3,-4
-        10:
+        8:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -3,-3
-        11:
+        9:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -3,-2
-        12:
+        10:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -4,-2
-        13:
+        11:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -5,-2
-        14:
+        12:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -5,-1
-        15:
+        13:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -4,-1
-        16:
+        14:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -3,-1
-        17:
+        15:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -2,-1
-        18:
+        16:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -2,-2
-        19:
+        17:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -2,-3
-        20:
+        18:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -2,-4
-        21:
+        19:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -2,-5
-        22:
+        20:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -1,-5
-        23:
+        21:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -1,-4
-        24:
+        22:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -1,-3
-        25:
+        23:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -1,-2
-        26:
+        24:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -1,-1
-        68:
+        62:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -6,-1
-        69:
+        63:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -6,-2
-        70:
+        64:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -6,-3
-        71:
+        65:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -6,-4
-        72:
+        66:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -6,-5
-        73:
+        67:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -7,-5
-        74:
+        68:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -9,-5
-        76:
+        69:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -10,-5
-        77:
+        70:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -10,-4
-        78:
+        71:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -9,-4
-        79:
+        72:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -8,-4
-        80:
+        73:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -8,-5
-        81:
+        74:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -7,-4
-        82:
+        75:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -7,-3
-        83:
+        76:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -8,-3
-        84:
+        77:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -9,-3
-        85:
+        78:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -10,-3
-        86:
+        79:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -10,-2
-        87:
+        80:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -8,-2
-        88:
+        81:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -9,-2
-        89:
+        82:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -7,-2
-        90:
+        83:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -7,-1
-        91:
+        84:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -8,-1
-        92:
+        85:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -9,-1
-        93:
+        86:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -10,-1
       0,-1:
-        27:
+        25:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: 0,-1
-        28:
+        26:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: 0,-2
-        29:
+        27:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: 0,-3
-        30:
+        28:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: 0,-4
-        31:
+        29:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: 0,-5
-        32:
+        30:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: 2,-5
-        33:
+        31:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: 2,-4
-        34:
+        32:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: 3,-4
-        35:
+        33:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: 3,-5
-        36:
+        34:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: 4,-5
-        37:
+        35:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: 4,-4
-        43:
-          color: '#503F1588'
-          id: FullTileOverlayGreyscale
-          coordinates: 1,-1
-        42:
+        38:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: 1,-2
-        45:
+        39:
+          color: '#503F1588'
+          id: FullTileOverlayGreyscale
+          coordinates: 1,-1
+        41:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: 2,-1
-        46:
+        42:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: 2,-2
-        47:
+        43:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: 4,-2
-        48:
+        44:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: 3,-1
-        51:
+        47:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: 4,-1
-        52:
+        48:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: 3,-2
-        53:
+        49:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: 5,-2
-        57:
+        51:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: 5,-1
-        58:
+        52:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: 6,-1
-        59:
+        53:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: 6,-2
-        60:
+        54:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: 7,-2
-        61:
+        55:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: 7,-1
-        62:
+        56:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: 8,-1
-        63:
+        57:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: 8,-2
-        64:
+        58:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: 10,-2
-        65:
+        59:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: 9,-1
-        66:
+        60:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: 10,-1
-        67:
+        61:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: 9,-2
       0,0:
-        38:
+        36:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
-        39:
+        37:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: 1,0
-        44:
+        40:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: 2,0
-        49:
+        45:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: 3,0
-        50:
+        46:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: 4,0
-        56:
+        50:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: 5,0
       -1,0:
-        94:
+        87:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -10,0
-        95:
+        88:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -9,0
-        96:
+        89:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -8,0
-        97:
+        90:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -7,0
-        98:
+        91:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -7,1
-        99:
+        92:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -8,1
-        100:
+        93:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -9,1
-        101:
+        94:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -10,1
-        102:
+        95:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -10,2
-        103:
+        96:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -8,2
-        104:
+        97:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -9,2
-        105:
+        98:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -9,3
-        106:
+        99:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -10,3
-        107:
+        100:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -8,3
-        146:
-          color: '#503F1588'
-          id: FullTileOverlayGreyscale
-          coordinates: -7,3
-        109:
+        101:
           color: '#503F1588'
           id: FullTileOverlayGreyscale
           coordinates: -7,2
+        102:
+          color: '#503F1588'
+          id: FullTileOverlayGreyscale
+          coordinates: -7,3
     type: DecalGrid
   - tiles:
       -4,-1: 0
@@ -512,6 +551,480 @@ entities:
       -3,0: 0
       -2,0: 0
       -1,0: 0
+      -13,-10: 0
+      -12,-10: 0
+      -12,-6: 0
+      -11,-11: 0
+      -11,-10: 0
+      -11,-9: 0
+      -11,-8: 0
+      -11,-7: 0
+      -11,-6: 0
+      -11,-5: 0
+      -11,-4: 0
+      -11,-3: 0
+      -11,-2: 0
+      -11,-1: 0
+      -10,-10: 0
+      -10,-9: 0
+      -10,-8: 0
+      -10,-7: 0
+      -10,-6: 0
+      -10,-5: 0
+      -10,-4: 0
+      -10,-3: 0
+      -10,-2: 0
+      -10,-1: 0
+      -9,-10: 0
+      -9,-9: 0
+      -9,-8: 0
+      -9,-7: 0
+      -9,-6: 0
+      -9,-5: 0
+      -9,-4: 0
+      -9,-3: 0
+      -9,-2: 0
+      -9,-1: 0
+      -8,-10: 0
+      -8,-9: 0
+      -8,-8: 0
+      -8,-7: 0
+      -8,-6: 0
+      -8,-5: 0
+      -8,-4: 0
+      -8,-3: 0
+      -8,-2: 0
+      -8,-1: 0
+      -7,-12: 0
+      -7,-11: 0
+      -7,-10: 0
+      -7,-9: 0
+      -7,-8: 0
+      -7,-7: 0
+      -7,-6: 0
+      -7,-5: 0
+      -7,-4: 0
+      -7,-3: 0
+      -7,-2: 0
+      -7,-1: 0
+      -6,-10: 0
+      -6,-9: 0
+      -6,-8: 0
+      -6,-7: 0
+      -6,-6: 0
+      -6,-5: 0
+      -6,-4: 0
+      -6,-3: 0
+      -6,-2: 0
+      -6,-1: 0
+      -5,-10: 0
+      -5,-9: 0
+      -5,-8: 0
+      -5,-7: 0
+      -5,-6: 0
+      -5,-5: 0
+      -5,-4: 0
+      -5,-3: 0
+      -5,-2: 0
+      -5,-1: 0
+      -4,-10: 0
+      -4,-9: 0
+      -4,-8: 0
+      -4,-7: 0
+      -4,-6: 0
+      -4,-5: 0
+      -4,-4: 0
+      -4,-3: 0
+      -4,-2: 0
+      -3,-12: 0
+      -3,-11: 0
+      -3,-10: 0
+      -3,-9: 0
+      -3,-8: 0
+      -3,-7: 0
+      -3,-6: 0
+      -3,-5: 0
+      -3,-4: 0
+      -3,-3: 0
+      -3,-2: 0
+      -2,-10: 0
+      -2,-9: 0
+      -2,-8: 0
+      -2,-7: 0
+      -2,-6: 0
+      -2,-5: 0
+      -2,-4: 0
+      -2,-3: 0
+      -2,-2: 0
+      -1,-10: 0
+      -1,-9: 0
+      -1,-8: 0
+      -1,-7: 0
+      -1,-6: 0
+      -1,-5: 0
+      -1,-4: 0
+      -1,-3: 0
+      -1,-2: 0
+      0,-10: 0
+      0,-9: 0
+      0,-8: 0
+      0,-7: 0
+      0,-6: 0
+      0,-5: 0
+      0,-4: 0
+      0,-3: 0
+      0,-2: 0
+      1,-12: 0
+      1,-11: 0
+      1,-10: 0
+      1,-9: 0
+      1,-8: 0
+      1,-7: 0
+      1,-6: 0
+      1,-5: 0
+      1,-4: 0
+      1,-3: 0
+      1,-2: 0
+      1,-1: 0
+      2,-11: 0
+      2,-10: 0
+      2,-9: 0
+      2,-8: 0
+      2,-7: 0
+      2,-6: 0
+      2,-5: 0
+      2,-4: 0
+      2,-3: 0
+      2,-2: 0
+      2,-1: 0
+      3,-10: 0
+      3,-9: 0
+      3,-8: 0
+      3,-7: 0
+      3,-6: 0
+      3,-5: 0
+      3,-4: 0
+      3,-3: 0
+      3,-2: 0
+      3,-1: 0
+      4,-10: 0
+      4,-9: 0
+      4,-8: 0
+      4,-7: 0
+      4,-6: 0
+      4,-5: 0
+      4,-4: 0
+      4,-3: 0
+      4,-2: 0
+      4,-1: 0
+      5,-11: 0
+      5,-10: 0
+      5,-9: 0
+      5,-8: 0
+      5,-7: 0
+      5,-6: 0
+      5,-5: 0
+      5,-4: 0
+      5,-3: 0
+      5,-2: 0
+      5,-1: 0
+      6,-10: 0
+      6,-9: 0
+      6,-8: 0
+      6,-7: 0
+      6,-6: 0
+      6,-5: 0
+      6,-4: 0
+      6,-3: 0
+      6,-2: 0
+      6,-1: 0
+      7,-10: 0
+      7,-9: 0
+      7,-8: 0
+      7,-7: 0
+      7,-6: 0
+      7,-5: 0
+      7,-4: 0
+      7,-3: 0
+      7,-2: 0
+      7,-1: 0
+      8,-10: 0
+      8,-9: 0
+      8,-8: 0
+      8,-7: 0
+      8,-6: 0
+      8,-5: 0
+      8,-4: 0
+      8,-3: 0
+      8,-2: 0
+      8,-1: 0
+      9,-12: 0
+      9,-11: 0
+      9,-10: 0
+      9,-9: 0
+      9,-8: 0
+      9,-7: 0
+      9,-6: 0
+      9,-5: 0
+      9,-4: 0
+      9,-3: 0
+      9,-2: 0
+      9,-1: 0
+      10,-10: 0
+      10,-9: 0
+      10,-8: 0
+      10,-7: 0
+      10,-6: 0
+      10,-5: 0
+      10,-4: 0
+      10,-3: 0
+      10,-2: 0
+      10,-1: 0
+      11,-10: 0
+      11,-9: 0
+      11,-8: 0
+      11,-7: 0
+      11,-6: 0
+      11,-5: 0
+      11,-4: 0
+      11,-3: 0
+      11,-2: 0
+      11,-1: 0
+      12,-10: 0
+      12,-6: 0
+      13,-10: 0
+      0,1: 0
+      0,2: 0
+      0,3: 0
+      0,4: 0
+      0,5: 0
+      0,6: 0
+      0,7: 0
+      0,9: 0
+      1,0: 0
+      1,1: 0
+      1,2: 0
+      1,3: 0
+      1,4: 0
+      1,5: 0
+      1,6: 0
+      1,7: 0
+      1,8: 0
+      1,9: 0
+      1,10: 0
+      2,0: 0
+      2,1: 0
+      2,2: 0
+      2,3: 0
+      2,4: 0
+      2,5: 0
+      2,6: 0
+      2,7: 0
+      2,8: 0
+      2,9: 0
+      3,0: 0
+      3,1: 0
+      3,2: 0
+      3,3: 0
+      3,4: 0
+      3,5: 0
+      3,6: 0
+      3,7: 0
+      3,8: 0
+      3,9: 0
+      4,0: 0
+      4,1: 0
+      4,2: 0
+      4,3: 0
+      4,4: 0
+      4,5: 0
+      4,6: 0
+      4,7: 0
+      4,8: 0
+      4,9: 0
+      5,0: 0
+      5,1: 0
+      5,2: 0
+      5,3: 0
+      5,4: 0
+      5,5: 0
+      5,6: 0
+      5,7: 0
+      5,8: 0
+      5,9: 0
+      5,10: 0
+      6,0: 0
+      6,1: 0
+      6,2: 0
+      6,3: 0
+      6,4: 0
+      6,5: 0
+      6,6: 0
+      6,7: 0
+      6,8: 0
+      6,9: 0
+      7,0: 0
+      7,1: 0
+      7,2: 0
+      7,3: 0
+      7,4: 0
+      7,5: 0
+      7,6: 0
+      7,7: 0
+      7,8: 0
+      7,9: 0
+      8,0: 0
+      8,1: 0
+      8,2: 0
+      8,3: 0
+      8,4: 0
+      8,5: 0
+      8,6: 0
+      8,7: 0
+      8,8: 0
+      8,9: 0
+      9,0: 0
+      9,1: 0
+      9,2: 0
+      9,3: 0
+      9,4: 0
+      9,5: 0
+      9,6: 0
+      9,7: 0
+      9,8: 0
+      9,9: 0
+      9,10: 0
+      10,0: 0
+      10,1: 0
+      10,2: 0
+      10,3: 0
+      10,4: 0
+      10,5: 0
+      10,6: 0
+      10,7: 0
+      10,8: 0
+      10,9: 0
+      11,0: 0
+      11,1: 0
+      11,2: 0
+      11,3: 0
+      11,4: 0
+      11,5: 0
+      11,6: 0
+      11,7: 0
+      11,8: 0
+      11,9: 0
+      12,1: 0
+      12,5: 0
+      -13,5: 0
+      -12,5: 0
+      -12,9: 0
+      -11,0: 0
+      -11,1: 0
+      -11,2: 0
+      -11,3: 0
+      -11,4: 0
+      -11,5: 0
+      -11,6: 0
+      -11,7: 0
+      -11,8: 0
+      -11,9: 0
+      -11,10: 0
+      -10,0: 0
+      -10,1: 0
+      -10,2: 0
+      -10,3: 0
+      -10,4: 0
+      -10,5: 0
+      -10,6: 0
+      -10,7: 0
+      -10,9: 0
+      -9,0: 0
+      -9,1: 0
+      -9,2: 0
+      -9,3: 0
+      -9,4: 0
+      -9,5: 0
+      -9,6: 0
+      -9,7: 0
+      -9,9: 0
+      -8,0: 0
+      -8,1: 0
+      -8,2: 0
+      -8,3: 0
+      -8,4: 0
+      -8,5: 0
+      -8,6: 0
+      -8,7: 0
+      -8,8: 0
+      -8,9: 0
+      -7,0: 0
+      -7,1: 0
+      -7,2: 0
+      -7,3: 0
+      -7,4: 0
+      -7,5: 0
+      -7,6: 0
+      -7,7: 0
+      -7,8: 0
+      -7,9: 0
+      -7,10: 0
+      -6,0: 0
+      -6,1: 0
+      -6,2: 0
+      -6,3: 0
+      -6,4: 0
+      -6,5: 0
+      -6,6: 0
+      -6,7: 0
+      -6,9: 0
+      -5,0: 0
+      -5,1: 0
+      -5,2: 0
+      -5,3: 0
+      -5,4: 0
+      -5,5: 0
+      -5,6: 0
+      -5,7: 0
+      -5,8: 0
+      -5,9: 0
+      -4,0: 0
+      -4,1: 0
+      -4,2: 0
+      -4,3: 0
+      -4,4: 0
+      -4,5: 0
+      -4,6: 0
+      -4,7: 0
+      -4,8: 0
+      -4,9: 0
+      -3,1: 0
+      -3,2: 0
+      -3,3: 0
+      -3,4: 0
+      -3,5: 0
+      -3,6: 0
+      -3,7: 0
+      -3,8: 0
+      -3,9: 0
+      -3,10: 0
+      -2,1: 0
+      -2,2: 0
+      -2,3: 0
+      -2,4: 0
+      -2,5: 0
+      -2,6: 0
+      -2,7: 0
+      -2,8: 0
+      -2,9: 0
+      -1,1: 0
+      -1,2: 0
+      -1,3: 0
+      -1,4: 0
+      -1,5: 0
+      -1,6: 0
+      -1,7: 0
+      -1,9: 0
     uniqueMixes:
     - volume: 2500
       temperature: 293.15
@@ -524,7 +1037,15 @@ entities:
       - 0
       - 0
       - 0
+      - 0
+      - 0
+      - 0
+      - 0
     type: GridAtmosphere
+  - type: OccluderTree
+  - type: Shuttle
+  - type: GridPathfinding
+  - type: RadiationGridResistance
 - uid: 1
   type: AsteroidRockMining
   components:
@@ -676,9 +1197,6 @@ entities:
     pos: 6.5,-4.5
     parent: 0
     type: Transform
-  - containers:
-      stash: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 26
   type: ToiletDirtyWater
   components:
@@ -686,9 +1204,6 @@ entities:
     pos: 10.5,-4.5
     parent: 0
     type: Transform
-  - containers:
-      stash: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 27
   type: SinkEmpty
   components:
@@ -994,10 +1509,6 @@ entities:
   - pos: -4.5,-4.5
     parent: 0
     type: Transform
-  - containers:
-      DisposalUnit: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 73
   type: Table
   components:
@@ -1127,7 +1638,8 @@ entities:
 - uid: 94
   type: VendingMachineDinnerware
   components:
-  - name: Dinnerware
+  - flags: SessionSpecific
+    name: Dinnerware
     type: MetaData
   - pos: 4.5,3.5
     parent: 0
@@ -1162,40 +1674,30 @@ entities:
   - pos: -5.555743,0.65469545
     parent: 0
     type: Transform
-  - solution: drink
-    type: DrainableSolution
 - uid: 100
   type: DrinkGlass
   components:
   - pos: -3.9776185,0.74844545
     parent: 0
     type: Transform
-  - solution: drink
-    type: DrainableSolution
 - uid: 101
   type: DrinkGlass
   components:
   - pos: -2.6807435,0.59219545
     parent: 0
     type: Transform
-  - solution: drink
-    type: DrainableSolution
 - uid: 102
   type: DrinkGlass
   components:
   - pos: -0.66511846,0.71719545
     parent: 0
     type: Transform
-  - solution: drink
-    type: DrainableSolution
 - uid: 103
   type: DrinkGlass
   components:
   - pos: -9.445305,-0.26717955
     parent: 0
     type: Transform
-  - solution: drink
-    type: DrainableSolution
 - uid: 104
   type: FoodPlateSmallTrash
   components:
@@ -1233,10 +1735,6 @@ entities:
     pos: 7.5,3.5
     parent: 0
     type: Transform
-  - containers:
-      storagebase: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 110
   type: WallReinforced
   components:
@@ -1249,18 +1747,12 @@ entities:
   - pos: 9.5,3.5
     parent: 0
     type: Transform
-  - isPlaceable: False
-    type: PlaceableSurface
-
 - uid: 112
   type: ClosetBase
   components:
   - pos: 10.5,3.5
     parent: 0
     type: Transform
-  - isPlaceable: False
-    type: PlaceableSurface
-
 - uid: 113
   type: SalvageMaterialCrateSpawner
   components:
@@ -1285,20 +1777,12 @@ entities:
   - pos: -2.5,3.5
     parent: 0
     type: Transform
-  - containers:
-      storagebase: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 117
   type: KitchenMicrowave
   components:
   - pos: 1.5,3.5
     parent: 0
     type: Transform
-  - containers:
-      microwave_entity_container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 118
   type: FoodBakedWaffle
   components:
@@ -1337,32 +1821,24 @@ entities:
   - pos: -3.714935,3.801003
     parent: 0
     type: Transform
-  - solution: drink
-    type: DrainableSolution
 - uid: 124
   type: DrinkGlass
   components:
   - pos: -3.51181,3.707253
     parent: 0
     type: Transform
-  - solution: drink
-    type: DrainableSolution
 - uid: 125
   type: DrinkGlass
   components:
   - pos: -3.339935,3.801003
     parent: 0
     type: Transform
-  - solution: drink
-    type: DrainableSolution
 - uid: 126
   type: DrinkGlass
   components:
   - pos: -3.214935,3.660378
     parent: 0
     type: Transform
-  - solution: drink
-    type: DrainableSolution
 - uid: 127
   type: SpawnMobBearSalvage
   components:
@@ -2368,10 +2844,6 @@ entities:
     pos: 10.5,8.5
     parent: 0
     type: Transform
-  - containers:
-      storagebase: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 276
   type: filingCabinetTall
   components:
@@ -2379,10 +2851,6 @@ entities:
     pos: 10.5,7.5
     parent: 0
     type: Transform
-  - containers:
-      storagebase: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 277
   type: SalvageMaterialCrateSpawner
   components:
@@ -2402,10 +2870,6 @@ entities:
     pos: 6.5,5.5
     parent: 0
     type: Transform
-  - containers:
-      storagebase: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 280
   type: SpawnMobBearSalvage
   components:
@@ -2437,10 +2901,6 @@ entities:
   - pos: 0.51766694,3.605132
     parent: 0
     type: Transform
-  - containers:
-      storagebase: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 285
   type: ClothingHeadHatCorpsoft
   components:

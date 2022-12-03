@@ -806,7 +806,7 @@
   parent: BaseSign
   id: SignShock
   name: shock sign
-  description: A sign indicating an electical hazard.
+  description: A sign indicating an electrical hazard.
   components:
   - type: Sprite
     state: shock
@@ -815,7 +815,7 @@
   parent: BaseSign
   id: SignOptical
   name: optical warning sign
-  description: A sign indicating against optical radiation.
+  description: A sign indicating an optical radiation hazard.
   components:
   - type: Sprite
     state: optical
@@ -824,7 +824,7 @@
   parent: BaseSign
   id: SignOxidants
   name: oxidants warning sign
-  description: A sign indicating against oxidzing agents.
+  description: A sign indicating an oxidizing agent hazard.
   components:
   - type: Sprite
     state: oxidants
@@ -833,7 +833,7 @@
   parent: BaseSign
   id: SignRadiation
   name: radiation warning sign
-  description: A sign indicating against ionizing radiation.
+  description: A sign indicating an ionizing radiation hazard.
   components:
   - type: Sprite
     state: radiation
@@ -968,7 +968,7 @@
   parent: BaseSign
   id: SignRadiationMed
   name: radiation sign
-  description: A sign warning against ionizing radiation.
+  description: A sign indicating an ionizing radiation hazard.
   components:
   - type: Sprite
     state: medium_radiation
