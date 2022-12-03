@@ -77,3 +77,13 @@
   cost: 2500
   category: Medical
   group: market
+
+- type: cargoProduct
+  id: BiomassSupply
+  icon:
+    sprite: Objects/Misc/monkeycube.rsi
+    state: cube
+  product: CrateBiomassSupply
+  cost: 200
+  category: Medical
+  group: market

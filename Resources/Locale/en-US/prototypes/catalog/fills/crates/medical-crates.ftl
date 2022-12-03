@@ -29,3 +29,6 @@ ent-CrateEmergencyAdvancedKit = Emergency advanced kit
 
 ent-CrateEmergencyRadiationKit = Emergency radiation kit
     .desc = Crate filled with four radiation treatment kits
+
+ent-CrateBiomassSupply = Biomass supply
+    .desc = It contains three full biomasses

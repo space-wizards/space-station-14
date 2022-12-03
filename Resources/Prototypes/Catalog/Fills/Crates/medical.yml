@@ -136,3 +136,12 @@
     contents:
       - id: MedkitRadiationFilled
         amount: 4
+
+- type: entity
+  id: CrateBiomassSupply
+  parent: CrateMedical
+  components:
+  - type: StorageFill
+    contents:
+      - id: MaterialBiomass
+        amount: 3
