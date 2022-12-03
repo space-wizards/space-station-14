@@ -23,6 +23,15 @@
           sprite: Objects/Misc/proximity_sensor.rsi
           state: icon
         name: proximity sensor
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 5
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 2
 
   - node: wiredCase
     entity: LandMineModular
