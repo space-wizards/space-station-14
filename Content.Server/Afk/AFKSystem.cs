@@ -85,6 +85,8 @@ public sealed class AFKSystem : EntitySystem
 
         foreach (var session in Filter.GetAllPlayers())
         {
+            if (session.Status != SessionStatus.InGame) return;
+
             var pSession = (IPlayerSession) session;
             var isAfk = _afkManager.IsAfk(pSession);
 
