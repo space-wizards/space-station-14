@@ -85229,7 +85229,7 @@ entities:
     parent: 82
     type: Transform
 - uid: 7065
-  type: SpaceVillainArcadeComputerCircuitboard
+  type: SpaceVillainArcadeFilledComputerCircuitboard
   components:
   - pos: 13.43965,39.63199
     parent: 82

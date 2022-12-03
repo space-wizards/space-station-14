@@ -63,6 +63,10 @@ namespace Content.Server.Arcade.Components
             "HarmonicaInstrument", "OcarinaInstrument", "RecorderInstrument", "GunpetInstrument", "BirdToyInstrument"
         };
 
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("rewardAmount")]
+        private int _rewardAmount;
+
         protected override void Initialize()
         {
             base.Initialize();
@@ -115,8 +119,12 @@ namespace Content.Server.Arcade.Components
         /// </summary>
         public void ProcessWin()
         {
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-            entityManager.SpawnEntity(_random.Pick(_possibleRewards), entityManager.GetComponent<TransformComponent>(Owner).MapPosition);
+            if (_rewardAmount > 0)
+            {
+                var entityManager = IoCManager.Resolve<IEntityManager>();
+                entityManager.SpawnEntity(_random.Pick(_possibleRewards), entityManager.GetComponent<TransformComponent>(Owner).MapPosition);
+                _rewardAmount--;
+            }
         }
 
         /// <summary>

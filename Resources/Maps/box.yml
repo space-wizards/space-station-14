@@ -101371,7 +101371,7 @@ entities:
     parent: 8364
     type: Transform
 - uid: 11688
-  type: SpaceVillainArcade
+  type: SpaceVillainArcadeFilled
   components:
   - pos: 72.5,12.5
     parent: 8364
@@ -131294,7 +131294,7 @@ entities:
     parent: 8364
     type: Transform
 - uid: 16326
-  type: SpaceVillainArcadeComputerCircuitboard
+  type: SpaceVillainArcadeFilledComputerCircuitboard
   components:
   - pos: -6.670475,-35.587967
     parent: 8364
@@ -166574,7 +166574,7 @@ entities:
     parent: 8364
     type: Transform
 - uid: 21709
-  type: SpaceVillainArcadeComputerCircuitboard
+  type: SpaceVillainArcadeFilledComputerCircuitboard
   components:
   - pos: 75.53078,12.7389765
     parent: 8364
@@ -201322,7 +201322,7 @@ entities:
     parent: 8364
     type: Transform
 - uid: 25880
-  type: SpaceVillainArcade
+  type: SpaceVillainArcadeFilled
   components:
   - pos: 18.5,-10.5
     parent: 8364
