@@ -47,6 +47,7 @@ public sealed class DoorTimingWireAction : BaseWireAction
 
     public override bool Cut(EntityUid user, Wire wire)
     {
+        base.Cut(user, wire);
         if (EntityManager.TryGetComponent<AirlockComponent>(wire.Owner, out var door))
         {
             WiresSystem.TryCancelWireAction(wire.Owner, PulseTimeoutKey.Key);
@@ -58,6 +59,7 @@ public sealed class DoorTimingWireAction : BaseWireAction
 
     public override bool Mend(EntityUid user, Wire wire)
     {
+        base.Mend(user, wire);
         if (EntityManager.TryGetComponent<AirlockComponent>(wire.Owner, out var door))
         {
             door.AutoCloseDelayModifier = 1f;
@@ -68,6 +70,7 @@ public sealed class DoorTimingWireAction : BaseWireAction
 
     public override bool Pulse(EntityUid user, Wire wire)
     {
+        base.Pulse(user, wire);
         if (EntityManager.TryGetComponent<AirlockComponent>(wire.Owner, out var door))
         {
             door.AutoCloseDelayModifier = 0.5f;

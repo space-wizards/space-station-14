@@ -200,6 +200,7 @@ public sealed class PowerWireAction : BaseWireAction
 
     public override bool Cut(EntityUid user, Wire wire)
     {
+        base.Cut(user, wire);
         if (!TrySetElectrocution(user, wire))
             return false;
 
@@ -212,6 +213,7 @@ public sealed class PowerWireAction : BaseWireAction
 
     public override bool Mend(EntityUid user, Wire wire)
     {
+        base.Mend(user, wire);
         if (!TrySetElectrocution(user, wire))
             return false;
 
@@ -228,6 +230,7 @@ public sealed class PowerWireAction : BaseWireAction
 
     public override bool Pulse(EntityUid user, Wire wire)
     {
+        base.Pulse(user, wire);
         WiresSystem.TryCancelWireAction(wire.Owner, PowerWireActionKey.ElectrifiedCancel);
 
         var electrocuted = !TrySetElectrocution(user, wire, true);

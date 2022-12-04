@@ -42,6 +42,7 @@ public sealed class AirAlarmPanicWire : BaseWireAction
 
     public override bool Cut(EntityUid user, Wire wire)
     {
+        base.Cut(user, wire);
         if (EntityManager.TryGetComponent<DeviceNetworkComponent>(wire.Owner, out var devNet))
         {
             _airAlarmSystem.SetMode(wire.Owner, devNet.Address, AirAlarmMode.Panic, false);
@@ -52,6 +53,7 @@ public sealed class AirAlarmPanicWire : BaseWireAction
 
     public override bool Mend(EntityUid user, Wire wire)
     {
+        base.Mend(user, wire);
         if (EntityManager.TryGetComponent<DeviceNetworkComponent>(wire.Owner, out var devNet)
             && EntityManager.TryGetComponent<AirAlarmComponent>(wire.Owner, out var alarm)
             && alarm.CurrentMode == AirAlarmMode.Panic)
@@ -65,6 +67,7 @@ public sealed class AirAlarmPanicWire : BaseWireAction
 
     public override bool Pulse(EntityUid user, Wire wire)
     {
+        base.Pulse(user, wire);
         if (EntityManager.TryGetComponent<DeviceNetworkComponent>(wire.Owner, out var devNet))
         {
             _airAlarmSystem.SetMode(wire.Owner, devNet.Address, AirAlarmMode.Panic, false);

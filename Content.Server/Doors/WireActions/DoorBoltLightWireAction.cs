@@ -34,6 +34,7 @@ public sealed class DoorBoltLightWireAction : BaseWireAction
 
     public override bool Cut(EntityUid user, Wire wire)
     {
+        base.Cut(user, wire);
         if (EntityManager.TryGetComponent<AirlockComponent>(wire.Owner, out var door))
         {
             door.BoltLightsVisible = false;
@@ -44,6 +45,7 @@ public sealed class DoorBoltLightWireAction : BaseWireAction
 
     public override bool Mend(EntityUid user, Wire wire)
     {
+        base.Mend(user, wire);
         if (EntityManager.TryGetComponent<AirlockComponent>(wire.Owner, out var door))
         {
             door.BoltLightsVisible = true;
@@ -54,6 +56,7 @@ public sealed class DoorBoltLightWireAction : BaseWireAction
 
     public override bool Pulse(EntityUid user, Wire wire)
     {
+        base.Pulse(user, wire);
         if (EntityManager.TryGetComponent<AirlockComponent>(wire.Owner, out var door))
         {
             door.BoltLightsVisible = !door.BoltLightsEnabled;

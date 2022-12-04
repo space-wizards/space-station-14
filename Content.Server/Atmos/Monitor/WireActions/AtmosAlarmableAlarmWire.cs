@@ -52,6 +52,7 @@ public sealed class AtmosMonitorDeviceNetWire : BaseWireAction
 
     public override bool Cut(EntityUid user, Wire wire)
     {
+        base.Cut(user, wire);
         if (EntityManager.TryGetComponent<AtmosAlarmableComponent>(wire.Owner, out var monitor))
         {
             monitor.IgnoreAlarms = true;
@@ -62,6 +63,7 @@ public sealed class AtmosMonitorDeviceNetWire : BaseWireAction
 
     public override bool Mend(EntityUid user, Wire wire)
     {
+        base.Mend(user, wire);
         if (EntityManager.TryGetComponent<AtmosAlarmableComponent>(wire.Owner, out var monitor))
         {
             monitor.IgnoreAlarms = false;
@@ -72,6 +74,7 @@ public sealed class AtmosMonitorDeviceNetWire : BaseWireAction
 
     public override bool Pulse(EntityUid user, Wire wire)
     {
+        base.Pulse(user, wire);
         if (_alarmOnPulse)
         {
             _atmosAlarmableSystem.ForceAlert(wire.Owner, AtmosAlarmType.Danger);
