@@ -1,3 +1,4 @@
+using Content.Shared.Gravity;
 using Content.Shared.NPC;
 
 namespace Content.Server.NPC.Pathfinding;
@@ -45,7 +46,8 @@ public sealed partial class PathfindingSystem
         var modifier = 1f;
 
         // TODO
-        if ((end.Data.Flags & PathfindingBreadcrumbFlag.Space) != 0x0)
+        if ((end.Data.Flags & PathfindingBreadcrumbFlag.Space) != 0x0 &&
+            (!TryComp<GravityComponent>(end.GraphUid, out var gravity) || !gravity.Enabled))
         {
             return 0f;
         }

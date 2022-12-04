@@ -177,7 +177,7 @@ public sealed partial class SalvageSystem
         _mapManager.DoMapInitialize(mapId);
 
         var light = EnsureComp<MapLightComponent>(mapUid);
-        light.AmbientLightColor = new Color(0.3f, 0.3f, 0.3f);
+        light.AmbientLightColor = new Color(20, 20, 20);
 
         // No point raising an event for this when it's 1-1.
         SalvageCaveJob job;
