@@ -9,6 +9,7 @@ using Content.Shared.Paper;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
+using Robust.Shared.Utility;
 using static Content.Shared.Paper.SharedPaperComponent;
 
 namespace Content.Server.Paper
@@ -105,8 +106,10 @@ namespace Content.Server.Paper
             if (string.IsNullOrEmpty(args.Text))
                 return;
 
-            if (args.Text.Length + paperComp.Content.Length <= paperComp.ContentSize)
-                paperComp.Content += args.Text + '\n';
+            var text = FormattedMessage.EscapeText(args.Text);
+
+            if (text.Length + paperComp.Content.Length <= paperComp.ContentSize)
+                paperComp.Content += text + '\n';
 
             if (TryComp<AppearanceComponent>(uid, out var appearance))
                 appearance.SetData(PaperVisuals.Status, PaperStatus.Written);
