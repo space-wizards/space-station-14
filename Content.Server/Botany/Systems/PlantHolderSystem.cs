@@ -51,6 +51,20 @@ namespace Content.Server.Botany.Systems
             SubscribeLocalEvent<PlantHolderComponent, InteractHandEvent>(OnInteractHand);
         }
 
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+
+            foreach (var plantHolder in EntityQuery<PlantHolderComponent>())
+            {
+                if (plantHolder.NextUpdate > _gameTiming.CurTime)
+                    continue;
+                plantHolder.NextUpdate = _gameTiming.CurTime + plantHolder.UpdateDelay;
+
+                Update(plantHolder.Owner, plantHolder);
+            }
+        }
+
         private void OnExamine(EntityUid uid, PlantHolderComponent component, ExaminedEvent args)
         {
             if (!args.IsInDetailsRange)
@@ -296,9 +310,9 @@ namespace Content.Server.Botany.Systems
 
             if (component.ForceUpdate)
                 component.ForceUpdate = false;
-            else if (curTime < (component.LastCycle + component._cycleDelay))
+            else if (curTime < (component.LastCycle + component.CycleDelay))
             {
-                if (component._updateSpriteAfterUpdate)
+                if (component.UpdateSpriteAfterUpdate)
                     UpdateSprite(uid, component);
                 return;
             }
@@ -318,7 +332,7 @@ namespace Content.Server.Botany.Systems
                 component.WeedLevel += 1 * HydroponicsSpeedMultiplier * component.WeedCoefficient;
 
                 if (component.DrawWarnings)
-                    component._updateSpriteAfterUpdate = true;
+                    component.UpdateSpriteAfterUpdate = true;
             }
 
             // There's a chance for a weed explosion to happen if weeds take over.
@@ -332,7 +346,7 @@ namespace Content.Server.Botany.Systems
             // If we have no seed planted, or the plant is dead, stop processing here.
             if (component.Seed == null || component.Dead)
             {
-                if (component._updateSpriteAfterUpdate)
+                if (component.UpdateSpriteAfterUpdate)
                     UpdateSprite(uid, component);
 
                 return;
@@ -344,7 +358,7 @@ namespace Content.Server.Botany.Systems
             {
                 component.PestLevel += 0.5f * HydroponicsSpeedMultiplier;
                 if (component.DrawWarnings)
-                    component._updateSpriteAfterUpdate = true;
+                    component.UpdateSpriteAfterUpdate = true;
             }
 
             // Advance plant age here.
@@ -355,7 +369,7 @@ namespace Content.Server.Botany.Systems
                 if (_random.Prob(0.8f))
                     component.Age += (int) (1 * HydroponicsSpeedMultiplier);
 
-                component._updateSpriteAfterUpdate = true;
+                component.UpdateSpriteAfterUpdate = true;
             }
 
             // Nutrient consumption.
@@ -363,7 +377,7 @@ namespace Content.Server.Botany.Systems
             {
                 component.NutritionLevel -= MathF.Max(0f, component.Seed.NutrientConsumption * HydroponicsSpeedMultiplier);
                 if (component.DrawWarnings)
-                    component._updateSpriteAfterUpdate = true;
+                    component.UpdateSpriteAfterUpdate = true;
             }
 
             // Water consumption.
@@ -372,7 +386,7 @@ namespace Content.Server.Botany.Systems
                 component.WaterLevel -= MathF.Max(0f,
                     component.Seed.NutrientConsumption * HydroponicsConsumptionMultiplier * HydroponicsSpeedMultiplier);
                 if (component.DrawWarnings)
-                    component._updateSpriteAfterUpdate = true;
+                    component.UpdateSpriteAfterUpdate = true;
             }
 
             var healthMod = _random.Next(1, 3) * HydroponicsSpeedMultiplier;
@@ -398,7 +412,7 @@ namespace Content.Server.Botany.Systems
                 }
 
                 if (component.DrawWarnings)
-                    component._updateSpriteAfterUpdate = true;
+                    component.UpdateSpriteAfterUpdate = true;
             }
 
             // Make sure the plant is not thirsty.
@@ -415,7 +429,7 @@ namespace Content.Server.Botany.Systems
                 }
 
                 if (component.DrawWarnings)
-                    component._updateSpriteAfterUpdate = true;
+                    component.UpdateSpriteAfterUpdate = true;
             }
             var environment = _atmosphere.GetContainingMixture(uid, true, true) ?? GasMixture.SpaceGas;
 
@@ -438,7 +452,7 @@ namespace Content.Server.Botany.Systems
                 {
                     component.Health -= component.MissingGas * HydroponicsSpeedMultiplier;
                     if (component.DrawWarnings)
-                        component._updateSpriteAfterUpdate = true;
+                        component.UpdateSpriteAfterUpdate = true;
                 }
             }
 
@@ -449,7 +463,7 @@ namespace Content.Server.Botany.Systems
                 component.Health -= healthMod;
                 component.ImproperPressure = true;
                 if (component.DrawWarnings)
-                    component._updateSpriteAfterUpdate = true;
+                    component.UpdateSpriteAfterUpdate = true;
             }
             else
             {
@@ -462,7 +476,7 @@ namespace Content.Server.Botany.Systems
                 component.Health -= healthMod;
                 component.ImproperHeat = true;
                 if (component.DrawWarnings)
-                    component._updateSpriteAfterUpdate = true;
+                    component.UpdateSpriteAfterUpdate = true;
             }
             else
             {
@@ -492,7 +506,7 @@ namespace Content.Server.Botany.Systems
 
                 component.Toxins -= toxinUptake;
                 if (component.DrawWarnings)
-                    component._updateSpriteAfterUpdate = true;
+                    component.UpdateSpriteAfterUpdate = true;
             }
 
             // Weed levels.
@@ -505,7 +519,7 @@ namespace Content.Server.Botany.Systems
                 }
 
                 if (component.DrawWarnings)
-                    component._updateSpriteAfterUpdate = true;
+                    component.UpdateSpriteAfterUpdate = true;
             }
 
             // Weed levels.
@@ -518,14 +532,14 @@ namespace Content.Server.Botany.Systems
                 }
 
                 if (component.DrawWarnings)
-                    component._updateSpriteAfterUpdate = true;
+                    component.UpdateSpriteAfterUpdate = true;
             }
 
             if (component.Age > component.Seed.Lifespan)
             {
                 component.Health -= _random.Next(3, 5) * HydroponicsSpeedMultiplier;
                 if (component.DrawWarnings)
-                    component._updateSpriteAfterUpdate = true;
+                    component.UpdateSpriteAfterUpdate = true;
             }
             else if (component.Age < 0) // Revert back to seed packet!
             {
@@ -545,10 +559,10 @@ namespace Content.Server.Botany.Systems
             {
                 if (component.Age > component.Seed.Production)
                 {
-                    if (component.Age - component._lastProduce > component.Seed.Production && !component.Harvest)
+                    if (component.Age - component.LastProduce > component.Seed.Production && !component.Harvest)
                     {
                         component.Harvest = true;
-                        component._lastProduce = component.Age;
+                        component.LastProduce = component.Age;
                     }
                 }
                 else
@@ -556,7 +570,7 @@ namespace Content.Server.Botany.Systems
                     if (component.Harvest)
                     {
                         component.Harvest = false;
-                        component._lastProduce = component.Age;
+                        component.LastProduce = component.Age;
                     }
                 }
             }
@@ -570,7 +584,7 @@ namespace Content.Server.Botany.Systems
                 comp.RoleDescription = Loc.GetString("station-event-random-sentience-role-description", ("name", comp.RoleName));
             }
 
-            if (component._updateSpriteAfterUpdate)
+            if (component.UpdateSpriteAfterUpdate)
                 UpdateSprite(uid, component);
         }
 
@@ -650,7 +664,7 @@ namespace Content.Server.Botany.Systems
                 return;
 
             component.Harvest = false;
-            component._lastProduce = component.Age;
+            component.LastProduce = component.Age;
 
             if (component.Seed?.HarvestRepeat == HarvestType.NoRepeat)
                 RemovePlant(uid, component);
@@ -721,14 +735,14 @@ namespace Content.Server.Botany.Systems
                 if (component.Age < component.Seed.Maturation)
                     component.Age += amount;
                 else if (!component.Harvest && component.Seed.Yield <= 0f)
-                    component._lastProduce -= amount;
+                    component.LastProduce -= amount;
             }
             else
             {
                 if (component.Age < component.Seed.Maturation)
                     component.SkipAging++;
                 else if (!component.Harvest && component.Seed.Yield <= 0f)
-                    component._lastProduce += amount;
+                    component.LastProduce += amount;
             }
         }
 
@@ -792,7 +806,7 @@ namespace Content.Server.Botany.Systems
             if (!Resolve(uid, ref component))
                 return;
 
-            component._updateSpriteAfterUpdate = false;
+            component.UpdateSpriteAfterUpdate = false;
 
             if (component.Seed != null && component.Seed.Bioluminescent)
             {
@@ -834,7 +848,7 @@ namespace Content.Server.Botany.Systems
 
                     _appearance.SetData(uid, PlantHolderVisuals.PlantRsi, component.Seed.PlantRsi.ToString(), app);
                     _appearance.SetData(uid, PlantHolderVisuals.PlantState, $"stage-{growthStage}", app);
-                    component._lastProduce = component.Age;
+                    component.LastProduce = component.Age;
                 }
                 else
                 {
