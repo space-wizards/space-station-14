@@ -1,3 +1,4 @@
+using System.Linq;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
@@ -10,6 +11,9 @@ public sealed class SalvageFactionPrototype : IPrototype
 
     [ViewVariables(VVAccess.ReadWrite), DataField("mobWeights", required: true, customTypeSerializer:typeof(PrototypeIdDictionarySerializer<float, EntityPrototype>))]
     public Dictionary<string, float> MobWeights = default!;
+
+    [ViewVariables]
+    public float TotalWeight => MobWeights.Values.Sum();
 
     /// <summary>
     /// Per expedition type data for this faction.

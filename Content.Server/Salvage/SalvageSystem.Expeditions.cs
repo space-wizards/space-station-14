@@ -12,7 +12,6 @@ using Content.Shared.Parallax;
 using Content.Shared.Salvage;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.Console;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
 
@@ -28,8 +27,8 @@ public sealed partial class SalvageSystem
     private void InitializeExpeditions()
     {
         SubscribeLocalEvent<StationInitializedEvent>(OnSalvageExpStationInit);
-        SubscribeLocalEvent<SalvageExpeditionConsoleComponent, ComponentInit>(OnSalvageExpInit);
-        SubscribeLocalEvent<SalvageExpeditionConsoleComponent, EntParentChangedMessage>(OnSalvageExpParent);
+        SubscribeLocalEvent<SalvageExpeditionConsoleComponent, ComponentInit>(OnSalvageConsoleInit);
+        SubscribeLocalEvent<SalvageExpeditionConsoleComponent, EntParentChangedMessage>(OnSalvageConsoleParent);
         SubscribeLocalEvent<SalvageExpeditionConsoleComponent, ClaimSalvageMessage>(OnSalvageClaimMessage);
     }
 
@@ -49,12 +48,12 @@ public sealed partial class SalvageSystem
         UpdateConsoles(data);
     }
 
-    private void OnSalvageExpInit(EntityUid uid, SalvageExpeditionConsoleComponent component, ComponentInit args)
+    private void OnSalvageConsoleInit(EntityUid uid, SalvageExpeditionConsoleComponent component, ComponentInit args)
     {
         UpdateConsole(component);
     }
 
-    private void OnSalvageExpParent(EntityUid uid, SalvageExpeditionConsoleComponent component, ref EntParentChangedMessage args)
+    private void OnSalvageConsoleParent(EntityUid uid, SalvageExpeditionConsoleComponent component, ref EntParentChangedMessage args)
     {
         UpdateConsole(component);
     }
@@ -83,10 +82,10 @@ public sealed partial class SalvageSystem
         {
             if (comp.EndTime < currentTime)
             {
+                // Finish mission
                 if (TryComp<SalvageExpeditionDataComponent>(comp.Station, out var data))
                 {
-                    data.ActiveMission = 0;
-                    data.NextOffer = currentTime;
+                    FinishExpedition(data);
                 }
 
                 QueueDel(comp.Owner);
@@ -96,10 +95,17 @@ public sealed partial class SalvageSystem
         _salvageQueue.Process();
     }
 
+    private void FinishExpedition(SalvageExpeditionDataComponent component)
+    {
+        component.ActiveMission = 0;
+        component.NextOffer = _timing.CurTime;
+        component.MissionCompleted = false;
+    }
+
     private void GenerateMissions(SalvageExpeditionDataComponent component)
     {
         component.Missions.Clear();
-        int timeBlock = 15;
+        const int timeBlock = 15;
         var configs = _prototypeManager.EnumeratePrototypes<SalvageExpeditionPrototype>().ToArray();
 
         if (configs.Length == 0)
@@ -194,17 +200,18 @@ public sealed partial class SalvageSystem
         var light = EnsureComp<MapLightComponent>(mapUid);
         light.AmbientLightColor = new Color(2, 2, 2);
 
-        var expedition = AddComp<SalvageExpeditionComponent>(mapUid);
-        expedition.Station = station;
-        // TODO: (For debug I swear)
-        expedition.EndTime = _timing.CurTime + mission.Duration;
-
         // No point raising an event for this when it's 1-1.
         SalvageCaveJob job;
         var config = _prototypeManager.Index<SalvageExpeditionPrototype>(mission.Config);
+        var random = new Random(mission.Seed);
 
-        // TODO: Need to generate mission objectives.
-        // TODO: Spawn hint markers for spawns.
+        // Setup expedition
+        var expedition = AddComp<SalvageExpeditionComponent>(mapUid);
+        expedition.Station = station;
+        expedition.EndTime = _timing.CurTime + mission.Duration;
+        expedition.Faction = config.Factions[random.Next(config.Factions.Count)];
+        expedition.Config = config.ID;
+
         switch (config.Expedition)
         {
             case SalvageStructure:
@@ -223,10 +230,11 @@ public sealed partial class SalvageSystem
                     _tileDefManager,
                     mapUid,
                     grid,
+                    expedition,
                     config,
                     cave,
                     SalvageGenTime,
-                    mission.Seed);
+                    random);
                 break;
             default:
                 return;

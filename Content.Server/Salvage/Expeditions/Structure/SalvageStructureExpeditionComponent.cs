@@ -7,5 +7,5 @@ namespace Content.Server.Salvage.Expeditions.Structure;
 public sealed class SalvageStructureExpeditionComponent : Component
 {
     [ViewVariables]
-    public List<EntityUid> Structures = new();
+    public readonly List<EntityUid> Structures = new();
 }

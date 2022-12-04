@@ -58,6 +58,7 @@ namespace Content.Server.Salvage
             SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRoundEnd);
 
             InitializeExpeditions();
+            InitializeRunner();
         }
 
         private void OnRoundEnd(GameRunLevelChangedEvent ev)
@@ -441,6 +442,7 @@ namespace Content.Server.Salvage
             }
 
             UpdateExpeditions();
+            UpdateRunner();
         }
     }
 

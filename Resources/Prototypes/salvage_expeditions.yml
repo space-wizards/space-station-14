@@ -20,13 +20,13 @@
 - type: salvageFaction
   id: Xenos
   mobWeights:
-    MobXeno: 1
-    MobXenoRunner: 3
-    MobXenoSpitter: 5
-    MobXenoDrone: 5
-    MobPraetorian: 8
-    MobXenoRavager: 8
-    MobXenoQueen: 15
+    MobXeno: 15
+    MobXenoRunner: 5
+    MobXenoSpitter: 3
+    MobXenoDrone: 3
+    MobXenoPraetorian: 2
+    MobXenoRavager: 2
+    MobXenoQueen: 1
   configs:
     CaveStructures: !type:SalvageStructureFaction
       spawn: XenoWardingTower

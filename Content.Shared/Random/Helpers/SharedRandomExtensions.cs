@@ -33,5 +33,25 @@ namespace Content.Shared.Random.Helpers
             // Shouldn't happen
             throw new InvalidOperationException($"Invalid weighted pick for {prototype.ID}!");
         }
+
+        public static string Pick(this IRobustRandom random, Dictionary<string, float> weights)
+        {
+            var sum = weights.Values.Sum();
+            var accumulated = 0f;
+
+            var rand = random.NextFloat() * sum;
+
+            foreach (var (key, weight) in weights)
+            {
+                accumulated += weight;
+
+                if (accumulated >= rand)
+                {
+                    return key;
+                }
+            }
+
+            throw new InvalidOperationException($"Invalid weighted pick");
+        }
     }
 }

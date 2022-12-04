@@ -19,6 +19,7 @@ public sealed class SalvageCaveJob : Job<bool>
     private readonly SalvageExpeditionPrototype _prototype;
     private readonly EntityUid _uid;
     private readonly MapGridComponent _grid;
+    private readonly SalvageExpeditionComponent _expedition;
     private readonly SalvageCaveGen _cave;
     private readonly Random _random;
 
@@ -28,10 +29,11 @@ public sealed class SalvageCaveJob : Job<bool>
         ITileDefinitionManager tileDefManager,
         EntityUid uid,
         MapGridComponent grid,
+        SalvageExpeditionComponent expedition,
         SalvageExpeditionPrototype prototype,
         SalvageCaveGen cave,
         double maxTime,
-        int seed,
+        Random random,
         CancellationToken cancellation = default) : base(maxTime, cancellation)
     {
         _entManager = entManager;
@@ -39,9 +41,10 @@ public sealed class SalvageCaveJob : Job<bool>
         _tileDefManager = tileDefManager;
         _uid = uid;
         _grid = grid;
+        _expedition = expedition;
         _prototype = prototype;
         _cave = cave;
-        _random = new Random(seed);
+        _random = random;
     }
 
     protected override async Task<bool> Process()
@@ -140,7 +143,7 @@ public sealed class SalvageCaveJob : Job<bool>
             {
                 await SuspendIfOutOfTime();
 
-                if (_entManager.Deleted(_uid))
+                if (!ValidateResume())
                     return false;
             }
         }
@@ -180,19 +183,18 @@ public sealed class SalvageCaveJob : Job<bool>
 
             var position = new EntityCoordinates(_uid, (pos + new Vector2(0.5f, 0.5f)) * _grid.TileSize);
             // TODO: Spawn marker
-            _entManager.SpawnEntity("SalvageSpawnMarker", position);
+            _expedition.SpawnMarkers.Add(_entManager.SpawnEntity("SalvageSpawnMarker", position));
+
             frontier.Clear();
             checkedTiles.Clear();
 
             await SuspendIfOutOfTime();
-
-            if (_entManager.Deleted(_uid))
+            if (!ValidateResume())
                 return false;
         }
 
         await SuspendIfOutOfTime();
-
-        if (_entManager.Deleted(_uid))
+        if (!ValidateResume())
             return false;
 
         // Spawn mission objectives.
@@ -234,17 +236,23 @@ public sealed class SalvageCaveJob : Job<bool>
                 checkedTiles.Clear();
 
                 await SuspendIfOutOfTime();
-
-                if (_entManager.Deleted(_uid))
+                if (!ValidateResume())
                     return false;
             }
         }
 
+        _expedition.Phase = SalvagePhase.Initializing;
         return true;
     }
 
-    private void Step(Span<bool> cells1, Span<bool> cells2, int width, int height)
+    private bool ValidateResume()
     {
+        return !_entManager.Deleted(_uid) && !_expedition.Deleted;
+    }
+
+    private void Step(bool[] cells1, bool[] cells2, int width, int height)
+    {
+        // TODO: Config
         var aliveLimit = 4;
         var deadLimit = 3;
 
