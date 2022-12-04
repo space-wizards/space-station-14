@@ -5,6 +5,7 @@
             <graphics:StyleBoxFlat BackgroundColor="#25252A"/>
         </PanelContainer.PanelOverride>
         <BoxContainer Orientation="Vertical">
+            <Label Name="ID" HorizontalExpand="True"/>
             <Label Name="IP" HorizontalExpand="True"/>
             <Label Name="HWId" HorizontalExpand="True"/>
             <Label Name="GUID" HorizontalExpand="True"/>

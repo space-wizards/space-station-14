@@ -103,7 +103,7 @@
 - type: entity
   id: Poweredlight
   description: "A light fixture. Draws power and produces light when equipped with a light tube."
-  suffix:
+  suffix: ""
   parent: PoweredlightEmpty
   components:
   - type: Sprite
@@ -273,7 +273,7 @@
 
 - type: entity
   id: PoweredSmallLight
-  suffix:
+  suffix: ""
   parent: PoweredSmallLightEmpty
   components:
   - type: Sprite
@@ -290,7 +290,7 @@
   name: emergency light
   description: A small light with an internal battery that turns on as soon as it stops receiving any power. Nanotrasen technology allows it to adapt its color to alert crew to the conditions of the station.
   parent: AlwaysPoweredWallLight
-  suffix:
+  suffix: ""
   components:
   - type: PointLight
     enabled: false

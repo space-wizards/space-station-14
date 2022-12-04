@@ -1,8 +1,7 @@
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Content.Shared.Radio;
-using Content.Shared.Salvage;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Content.Shared.Salvage;
 
 namespace Content.Server.Salvage
 {
@@ -48,7 +47,6 @@ namespace Content.Server.Salvage
         [DataField("magnetState")]
         public MagnetState MagnetState = MagnetState.Inactive;
 
-        [ViewVariables]
         [DataField("salvageChannel", customTypeSerializer: typeof(PrototypeIdSerializer<RadioChannelPrototype>))]
         public string SalvageChannel = "Supply";
 
@@ -68,6 +66,7 @@ namespace Content.Server.Salvage
         public int PreviousCharge = 5;
 
     }
+    [CopyByRef]
     public record struct MagnetState(MagnetStateType StateType, TimeSpan Until)
     {
         public static readonly MagnetState Inactive = new (MagnetStateType.Inactive, TimeSpan.Zero);

@@ -29,9 +29,9 @@
   - type: RevolverAmmoProvider
     whitelist:
       tags:
-        - CartridgeMagnum
-        - SpeedLoaderMagnum
-    proto: CartridgeMagnum
+        - CartridgeMagnumHC
+        - SpeedLoaderMagnumHC
+    proto: CartridgeMagnumHC
     capacity: 7
     chambers: [ True, True, True, True, True, True, True ]
     ammoSlots: [ null, null, null, null, null, null, null ]
@@ -46,7 +46,7 @@
   name: Deckard
   parent: BaseWeaponRevolver
   id: WeaponRevolverDeckard
-  description: A rare, custom-built revolver. Use when there is no time for Voight-Kampff test. Uses .40 magnum ammo.
+  description: A rare, custom-built revolver. Use when there is no time for Voight-Kampff test. Uses .45 magnum ammo.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/deckard.rsi
@@ -70,7 +70,7 @@
   name: Inspector
   parent: BaseWeaponRevolver
   id: WeaponRevolverInspector
-  description: A detective's best friend. Uses .40 magnum ammo.
+  description: A detective's best friend. Uses .45 magnum ammo.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/inspector.rsi
@@ -85,7 +85,7 @@
   name: Mateba
   parent: BaseWeaponRevolver
   id: WeaponRevolverMateba
-  description: The iconic sidearm of the dreaded death squads. Uses .40 magnum ammo.
+  description: The iconic sidearm of the dreaded death squads. Uses .45 magnum ammo.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi
@@ -99,7 +99,7 @@
   name: Predator
   parent: BaseWeaponRevolver
   id: WeaponRevolverPython
-  description: A robust revolver favoured by Syndicate agents. Uses .40 magnum ammo.
+  description: A robust revolver favoured by Syndicate agents. Uses .45 magnum ammo.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/python.rsi
@@ -110,7 +110,7 @@
   name: pirate revolver
   parent: BaseWeaponRevolver
   id: WeaponRevolverPirate
-  description: An odd, muzzle-loading revolver, favoured by pirate crews. Uses .40 magnum ammo.
+  description: An odd, muzzle-loading revolver, favoured by pirate crews. Uses .45 magnum ammo.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/pirate_revolver.rsi

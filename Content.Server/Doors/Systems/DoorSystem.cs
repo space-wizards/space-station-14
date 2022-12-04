@@ -105,16 +105,10 @@ public sealed class DoorSystem : SharedDoorSystem
         if (predicted && predictingPlayer == null)
             return;
 
-        var filter = Filter.Pvs(uid);
-
         if (predicted)
-        {
-            // This interaction is predicted, but only by the instigating user, who will have played their own sounds.
-            filter.RemoveWhereAttachedEntity(e => e == predictingPlayer);
-        }
-
-        // send the sound to players.
-        Audio.Play(soundSpecifier, filter, uid, audioParams);
+            Audio.PlayPredicted(soundSpecifier, uid, predictingPlayer, audioParams);
+        else
+            Audio.PlayPvs(soundSpecifier, uid, audioParams);
     }
 
 #region DoAfters

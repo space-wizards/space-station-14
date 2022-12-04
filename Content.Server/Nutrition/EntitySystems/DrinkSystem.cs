@@ -261,6 +261,11 @@ namespace Content.Server.Nutrition.EntitySystems
                 // logging
                 _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(user):user} is forcing {ToPrettyString(target):target} to drink {ToPrettyString(drink.Owner):drink} {SolutionContainerSystem.ToPrettyString(drinkSolution)}");
             }
+            else
+            {
+                // log voluntary drinking
+                _adminLogger.Add(LogType.Ingestion, LogImpact.Low, $"{ToPrettyString(target):target} is drinking {ToPrettyString(drink.Owner):drink} {SolutionContainerSystem.ToPrettyString(drinkSolution)}");
+            }
 
             drink.CancelToken = new CancellationTokenSource();
             var moveBreak = user != target;
@@ -351,6 +356,9 @@ namespace Content.Server.Nutrition.EntitySystems
                 _popupSystem.PopupEntity(
                     Loc.GetString("drink-component-force-feed-success-user", ("target", targetName)),
                     args.User, Filter.Entities(args.User));
+
+                // log successful forced drinking
+                _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(uid):user} forced {ToPrettyString(args.User):target} to drink {ToPrettyString(args.Drink.Owner):drink}");
             }
             else
             {
@@ -359,6 +367,9 @@ namespace Content.Server.Nutrition.EntitySystems
                     Filter.Entities(args.User));
                 _popupSystem.PopupEntity(
                     Loc.GetString("drink-component-try-use-drink-success-slurp"), args.User, Filter.PvsExcept(args.User));
+
+                // log successful voluntary drinking
+                _adminLogger.Add(LogType.Ingestion, LogImpact.Low, $"{ToPrettyString(args.User):target} drank {ToPrettyString(args.Drink.Owner):drink}");
             }
 
             SoundSystem.Play(args.Drink.UseSound.GetSound(), Filter.Pvs(uid), uid, AudioParams.Default.WithVolume(-2f));
