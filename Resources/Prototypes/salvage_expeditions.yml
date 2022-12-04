@@ -13,19 +13,19 @@
   id: Xenos
   mobWeights:
     MobXeno:
-      weight: 100
+      weight: 200
       cost: 1
     MobXenoRunner:
       weight: 10
       cost: 2
     MobXenoDrone:
-      weight: 10
+      weight: 5
       cost: 2
     MobXenoSpitter:
       weight: 5
       cost: 5
     MobXenoPraetorian:
-      weight: 3
+      weight: 2
       cost: 10
     MobXenoRavager:
       weight: 2
