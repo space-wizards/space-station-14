@@ -150,16 +150,13 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         if (!TryComp<SignalReceiverComponent>(uid, out var receiver))
             return;
 
-        foreach (var ports in receiver.Inputs.Values)
+        foreach (var port in receiver.Inputs.Values.SelectMany(ports => ports))
         {
-            foreach (var port in ports)
-            {
-                if (TryComp<AnalysisConsoleComponent>(port.Uid, out var analysis))
-                {
-                    component.Console = port.Uid;
-                    analysis.AnalyzerEntity = uid;
-                }
-            }
+            if (!TryComp<AnalysisConsoleComponent>(port.Uid, out var analysis))
+                continue;
+            component.Console = port.Uid;
+            analysis.AnalyzerEntity = uid;
+            return;
         }
     }
 
