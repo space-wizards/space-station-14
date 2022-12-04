@@ -1,12 +1,7 @@
-using System;
-using System.Collections.Generic;
 using System.Text;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.Utility;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
-using Robust.Shared.ViewVariables;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 
@@ -14,6 +9,15 @@ namespace Content.Client.Clickable
 {
     internal sealed class ClickMapManager : IClickMapManager, IPostInjectInit
     {
+        private static readonly string[] IgnoreTexturePaths =
+        {
+            // These will probably never need click maps so skip em.
+            "/Textures/Interface",
+            "/Textures/LobbyScreens",
+            "/Textures/Parallaxes",
+            "/Textures/Logo",
+        };
+
         private const float Threshold = 0.25f;
         private const int ClickRadius = 2;
 
@@ -46,6 +50,13 @@ namespace Content.Client.Clickable
         {
             if (obj.Image is Image<Rgba32> rgba)
             {
+                var pathStr = obj.Path.ToString();
+                foreach (var path in IgnoreTexturePaths)
+                {
+                    if (pathStr.StartsWith(path))
+                        return;
+                }
+
                 _textureMaps[obj.Resource] = ClickMap.FromImage(rgba, Threshold);
             }
         }
