@@ -10,23 +10,29 @@
 
 # Factions
 - type: salvageFaction
-  id: Carps
-  mobWeights:
-    mobCarp: 1
-  configs:
-    CaveStructures: !type:SalvageStructureFaction
-      spawn: XenoWardingTower
-
-- type: salvageFaction
   id: Xenos
   mobWeights:
-    MobXeno: 15
-    MobXenoRunner: 5
-    MobXenoSpitter: 3
-    MobXenoDrone: 3
-    MobXenoPraetorian: 2
-    MobXenoRavager: 2
-    MobXenoQueen: 1
+    MobXeno:
+      weight: 100
+      cost: 1
+    MobXenoRunner:
+      weight: 10
+      cost: 2
+    MobXenoDrone:
+      weight: 10
+      cost: 2
+    MobXenoSpitter:
+      weight: 5
+      cost: 5
+    MobXenoPraetorian:
+      weight: 3
+      cost: 10
+    MobXenoRavager:
+      weight: 2
+      cost: 10
+    MobXenoQueen:
+      weight: 1
+      cost: 15
   configs:
     CaveStructures: !type:SalvageStructureFaction
       spawn: XenoWardingTower

@@ -42,8 +42,8 @@ public sealed partial class SalvageSystem
             if (comp.Phase == SalvagePhase.Initializing)
             {
                 var faction = _prototypeManager.Index<SalvageFactionPrototype>(comp.Faction);
-                var initialWeight = 200f;
-                var heighestWeight = faction.MobWeights.Values.Max();
+                var initialCost = 100f;
+                var weights = faction.MobWeights.ToDictionary(o => o.Key, pair => pair.Value.Weight);
 
                 foreach (var marker in comp.SpawnMarkers)
                 {
@@ -51,16 +51,16 @@ public sealed partial class SalvageSystem
                     var count = _random.Next(3, 8);
                     for (var i = 0; i < count; i++)
                     {
-                        if (initialWeight <= 0f)
+                        if (initialCost <= 0f)
                             break;
 
                         // TODO: Need to specify the actual weights on mobs.
-                        var spawn = _random.Pick(faction.MobWeights);
-                        initialWeight -= heighestWeight / faction.MobWeights[spawn];
+                        var spawn = _random.Pick(weights);
+                        initialCost -= faction.MobWeights[spawn].Cost;
                         Spawn(spawn, coordinates);
                     }
 
-                    if (initialWeight <= 0f)
+                    if (initialCost <= 0f)
                         break;
                 }
 
