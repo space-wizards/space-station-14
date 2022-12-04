@@ -1,12 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Mini Jetpack now fits in your suit storage slot., type: Tweak}
-  - {message: 'All big guns fit on your back and most fit in suit storage. LMGs, Snipers
-      and Launchers are back only.', type: Tweak}
-  - {message: 'All handguns now fit on your belt slot (waistband right?)', type: Tweak}
-  id: 2217
-  time: '2022-09-01T03:21:13.0000000+00:00'
 - author: Rane
   changes:
   - {message: Jaws of life can force open powered doors now., type: Add}
@@ -2951,3 +2943,8 @@ Entries:
       traitors to use more diverse strategies., type: Add}
   id: 2716
   time: '2022-12-03T01:48:25.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: Links to the wiki/discord/etc show up again in the lobby., type: Fix}
+  id: 2717
+  time: '2022-12-04T12:47:26.0000000+00:00'
