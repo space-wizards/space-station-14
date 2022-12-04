@@ -438,10 +438,9 @@
   icon:
     sprite: Objects/Specific/Mech/mecha.rsi
     state: ripley
-  requiredPoints: 20000
+  requiredPoints: 30000
   requiredTechnologies:
-  - RoboticsTechnology
-  - PowerCellBasic
+  - BasicResearch
   unlockedRecipes:
   - RipleyCentralElectronics
   - RipleyPeripheralsElectronics
