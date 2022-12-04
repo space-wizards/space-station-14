@@ -47,3 +47,7 @@
     - type: Sprite
       sprite: Markers/cross.rsi
       state: blue
+
+- type: entity
+  id: SalvageShuttleMarker
+
