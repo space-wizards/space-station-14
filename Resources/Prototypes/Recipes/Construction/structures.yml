@@ -764,3 +764,20 @@
     state: plasticflaps
   conditions:
     - !type:TileNotBlocked
+
+- type: construction
+  name: storage canister
+  id: StorageCanister
+  graph: StorageCanister
+  startNode: start
+  targetNode: StorageCanister
+  category: construction-category-structures
+  description: A plasteel canister designed to hold pressurized gasses.
+  conditions:
+    - !type:TileNotBlocked
+  icon:
+    sprite: Structures/Storage/canister.rsi
+    state: yellow
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false

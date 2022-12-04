@@ -124,6 +124,9 @@
               max: 1
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
+    - type: Construction
+      graph: StorageCanister
+      node: StorageCanister
 
 # Filled canisters, contain 1871.71051 moles each
 
@@ -493,7 +496,7 @@
           spawn:
             SheetPlasteel1:
               min: 1
-              max: 2
+              max: 1
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
     - type: Damageable
@@ -523,6 +526,9 @@
   components:
     - type: Sprite
       state: yellow-1
+    - type: Construction
+      graph: StorageCanister
+      node: needsMetal
 
 - type: entity
   parent: GasCanisterBrokenBase
