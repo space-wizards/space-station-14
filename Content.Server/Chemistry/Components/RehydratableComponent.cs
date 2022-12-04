@@ -7,11 +7,9 @@ namespace Content.Server.Chemistry.Components
     [RegisterComponent]
     public sealed class RehydratableComponent : Component
     {
-        [ViewVariables]
         [DataField("catalyst")]
         internal string CatalystPrototype = "Water";
 
-        [ViewVariables]
         [DataField("target")]
         internal string? TargetPrototype = default!;
 

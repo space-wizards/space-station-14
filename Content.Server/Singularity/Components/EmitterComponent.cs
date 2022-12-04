@@ -26,19 +26,19 @@ namespace Content.Server.Singularity.Components
         [ViewVariables]
         public int FireShotCounter;
 
-        [DataField("fireSound"), ViewVariables]
+        [DataField("fireSound")]
         public SoundSpecifier FireSound = new SoundPathSpecifier("/Audio/Weapons/emitter.ogg");
 
         /// <summary>
         /// The entity that is spawned when the emitter fires.
         /// </summary>
-        [DataField("boltType"), ViewVariables]
+        [DataField("boltType")]
         public string BoltType = "EmitterBolt";
 
         /// <summary>
         /// The current amount of power being used.
         /// </summary>
-        [DataField("powerUseActive"), ViewVariables]
+        [DataField("powerUseActive")]
         public int PowerUseActive = 600;
 
         /// <summary>
@@ -64,13 +64,13 @@ namespace Content.Server.Singularity.Components
         /// <summary>
         /// The amount of shots that are fired in a single "burst"
         /// </summary>
-        [DataField("fireBurstSize"), ViewVariables]
+        [DataField("fireBurstSize")]
         public int FireBurstSize = 3;
 
         /// <summary>
         /// The time between each shot during a burst.
         /// </summary>
-        [DataField("fireInterval"), ViewVariables]
+        [DataField("fireInterval")]
         public TimeSpan FireInterval = TimeSpan.FromSeconds(2);
 
         /// <summary>
@@ -82,27 +82,27 @@ namespace Content.Server.Singularity.Components
         /// <summary>
         /// The current minimum delay between bursts.
         /// </summary>
-        [DataField("fireBurstDelayMin"), ViewVariables]
+        [DataField("fireBurstDelayMin")]
         public TimeSpan FireBurstDelayMin = TimeSpan.FromSeconds(4);
 
         /// <summary>
         /// The current maximum delay between bursts.
         /// </summary>
-        [DataField("fireBurstDelayMax"), ViewVariables]
+        [DataField("fireBurstDelayMax")]
         public TimeSpan FireBurstDelayMax = TimeSpan.FromSeconds(10);
 
         /// <summary>
         /// The base minimum delay between shot bursts.
         /// Used for machine part rating calculations.
         /// </summary>
-        [DataField("baseFireBurstDelayMin"), ViewVariables]
+        [DataField("baseFireBurstDelayMin")]
         public TimeSpan BaseFireBurstDelayMin = TimeSpan.FromSeconds(4);
 
         /// <summary>
         /// The base maximum delay between shot bursts.
         /// Used for machine part rating calculations.
         /// </summary>
-        [DataField("baseFireBurstDelayMax"), ViewVariables]
+        [DataField("baseFireBurstDelayMax")]
         public TimeSpan BaseFireBurstDelayMax = TimeSpan.FromSeconds(10);
 
         /// <summary>

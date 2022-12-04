@@ -1,43 +1,38 @@
 using System.Linq;
+using Content.Server.Administration.Commands;
 using Content.Server.CharacterAppearance.Components;
 using Content.Server.Chat.Managers;
+using Content.Server.GameTicking.Rules.Components;
 using Content.Server.GameTicking.Rules.Configurations;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Ghost.Roles.Events;
+using Content.Server.Humanoid.Systems;
 using Content.Server.Mind.Components;
+using Content.Server.NPC.Systems;
 using Content.Server.Nuke;
+using Content.Server.Preferences.Managers;
 using Content.Server.RoundEnd;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
 using Content.Server.Spawners.Components;
+using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
-using Content.Shared.MobState;
+using Content.Server.Traitor;
 using Content.Shared.Dataset;
+using Content.Shared.MobState;
+using Content.Shared.MobState.Components;
+using Content.Shared.Nuke;
+using Content.Shared.Preferences;
 using Content.Shared.Roles;
+using Robust.Server.GameObjects;
 using Robust.Server.Maps;
 using Robust.Server.Player;
+using Robust.Shared.Configuration;
 using Robust.Shared.Map;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
-using Content.Server.Traitor;
-using Content.Shared.MobState.Components;
-using System.Data;
-using Content.Server.GameTicking.Rules.Components;
-using Content.Server.Station.Components;
-using Content.Shared.Chat;
-using Content.Shared.Nuke;
-using Robust.Server.GameObjects;
-using Content.Server.NPC.Components;
-using Content.Server.NPC.Systems;
-using Content.Server.Traitor.Uplink;
-using Robust.Shared.Audio;
-using Robust.Shared.Configuration;
-using Robust.Shared.Player;
-using Content.Server.Administration.Commands;
-using Content.Server.Humanoid.Systems;
-using Content.Shared.Preferences;
-using Content.Server.Preferences.Managers;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -48,7 +43,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IServerPreferencesManager _prefs = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
-    [Dependency] private readonly IMapLoader _mapLoader = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPlayerManager _playerSystem = default!;
     [Dependency] private readonly FactionSystem _faction = default!;
@@ -58,6 +52,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly GameTicker _ticker = default!;
+    [Dependency] private readonly MapLoaderSystem _map = default!;
     [Dependency] private readonly RandomHumanoidSystem _randomHumanoid = default!;
 
 
@@ -263,7 +258,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             filter.AddPlayer(actor.PlayerSession);
         }
 
-        _audioSystem.PlayGlobal(_nukeopsRuleConfig.GreetSound, filter);
+        _audioSystem.PlayGlobal(_nukeopsRuleConfig.GreetSound, filter, recordReplay: false);
     }
 
     private void OnRoundEnd()
@@ -592,7 +587,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             return;
 
         if (_nukeopsRuleConfig.GreetSound != null)
-            _audioSystem.PlayGlobal(_nukeopsRuleConfig.GreetSound, Filter.Empty().AddPlayer(playerSession));
+            _audioSystem.PlayGlobal(_nukeopsRuleConfig.GreetSound, playerSession);
 
         if (_targetStation != null && !string.IsNullOrEmpty(Name(_targetStation.Value)))
             _chatManager.DispatchServerMessage(playerSession, Loc.GetString("nukeops-welcome", ("station", _targetStation.Value)));
@@ -619,7 +614,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
         var mapId = _mapManager.CreateMap();
 
-        var (_, outpostGrids) = _mapLoader.LoadMap(mapId, path.ToString());
+        var outpostGrids = _map.LoadMap(mapId, path.ToString());
         if (outpostGrids.Count == 0)
         {
             Logger.ErrorS("nukies", $"Error loading map {path} for nukies!");
@@ -630,7 +625,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         _nukieOutpost = outpostGrids[0];
 
         // Listen I just don't want it to overlap.
-        var (_, shuttleId) = _mapLoader.LoadGrid(mapId, shuttlePath.ToString(), new MapLoadOptions()
+        var shuttleId = _map.LoadGrid(mapId, shuttlePath.ToString(), new MapLoadOptions()
         {
             Offset = Vector2.One * 1000f,
         });
@@ -846,7 +841,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         var query = EntityQuery<NukeOperativeComponent, MindComponent>(true);
         foreach (var (_, mindComp) in query)
         {
-            if (mindComp.Mind?.TryGetSession(out var session) == true)
+            if (mindComp.Mind != null && mindComp.Mind.TryGetSession(out var session) == true)
                 _operativePlayers.Add(session);
         }
 

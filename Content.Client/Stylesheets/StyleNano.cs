@@ -795,6 +795,10 @@ namespace Content.Client.Stylesheets
                     {
                         new StyleProperty("font-color", Color.Gray),
                     }),
+
+                Element<TextEdit>().Pseudo(TextEdit.StylePseudoClassPlaceholder)
+                    .Prop("font-color", Color.Gray),
+
                 // Chat lineedit - we don't actually draw a stylebox around the lineedit itself, we put it around the
                 // input + other buttons, so we must clear the default stylebox
                 new StyleRule(new SelectorElement(typeof(LineEdit), new[] {StyleClassChatLineEdit}, null, null),

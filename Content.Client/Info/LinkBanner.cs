@@ -1,17 +1,19 @@
 ﻿using Content.Client.Changelog;
-using Content.Client.Credits;
-using Content.Client.Links;
 using Content.Client.UserInterface.Systems.EscapeMenu;
+using Content.Shared.CCVar;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Utility;
+using Robust.Shared.Collections;
+using Robust.Shared.Configuration;
 
 namespace Content.Client.Info
 {
     public sealed class LinkBanner : BoxContainer
     {
+        private readonly IConfigurationManager _cfg;
+
+        private ValueList<(CVarDef<string> cVar, Button button)> _infoLinks;
+
         public LinkBanner()
         {
             var buttons = new BoxContainer
@@ -21,25 +23,41 @@ namespace Content.Client.Info
             AddChild(buttons);
 
             var uriOpener = IoCManager.Resolve<IUriOpener>();
+            _cfg = IoCManager.Resolve<IConfigurationManager>();
 
             var rulesButton = new Button() {Text = Loc.GetString("server-info-rules-button")};
             rulesButton.OnPressed += args => new RulesAndInfoWindow().Open();
+            buttons.AddChild(rulesButton);
 
-            var discordButton = new Button {Text = Loc.GetString("server-info-discord-button")};
-            discordButton.OnPressed += args => uriOpener.OpenUri(UILinks.Discord);
+            AddInfoButton("server-info-discord-button", CCVars.InfoLinksDiscord);
+            AddInfoButton("server-info-website-button", CCVars.InfoLinksWebsite);
+            AddInfoButton("server-info-wiki-button", CCVars.InfoLinksWiki);
+            AddInfoButton("server-info-forum-button", CCVars.InfoLinksForum);
 
-            var websiteButton = new Button {Text = Loc.GetString("server-info-website-button")};
-            websiteButton.OnPressed += args => uriOpener.OpenUri(UILinks.Website);
-
-            var wikiButton = new Button {Text = Loc.GetString("server-info-wiki-button")};
-            wikiButton.OnPressed += args => uriOpener.OpenUri(UILinks.Wiki);
             var changelogButton = new ChangelogButton();
             changelogButton.OnPressed += args => UserInterfaceManager.GetUIController<ChangelogUIController>().ToggleWindow();
             buttons.AddChild(changelogButton);
-            buttons.AddChild(rulesButton);
-            buttons.AddChild(discordButton);
-            buttons.AddChild(websiteButton);
-            buttons.AddChild(wikiButton);
+
+            void AddInfoButton(string loc, CVarDef<string> cVar)
+            {
+                var button = new Button { Text = Loc.GetString(loc) };
+                button.OnPressed += _ => uriOpener.OpenUri(_cfg.GetCVar(cVar));
+                buttons.AddChild(button);
+                _infoLinks.Add((cVar, button));
+            }
+        }
+
+        protected override void EnteredTree()
+        {
+            // LinkBanner is constructed before the client even connects to the server due to UI refactor stuff.
+            // We need to update these buttons when the UI is shown.
+
+            base.EnteredTree();
+
+            foreach (var (cVar, link) in _infoLinks)
+            {
+                link.Visible = _cfg.GetCVar(cVar) != "";
+            }
         }
     }
 }

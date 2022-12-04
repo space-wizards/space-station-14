@@ -32,13 +32,13 @@ public class GunComponent : Component
     /// Last time the gun fired.
     /// Used for recoil purposes.
     /// </summary>
-    [ViewVariables, DataField("lastFire")]
+    [DataField("lastFire")]
     public TimeSpan LastFire = TimeSpan.Zero;
 
     /// <summary>
     /// What the current spread is for shooting. This gets changed every time the gun fires.
     /// </summary>
-    [ViewVariables, DataField("currentAngle")]
+    [DataField("currentAngle")]
     public Angle CurrentAngle;
 
     /// <summary>
@@ -50,7 +50,7 @@ public class GunComponent : Component
     /// <summary>
     /// How much the <see cref="CurrentAngle"/> decreases per second.
     /// </summary>
-    [ViewVariables, DataField("angleDecay")]
+    [DataField("angleDecay")]
     public Angle AngleDecay = Angle.FromDegrees(4);
 
     /// <summary>
@@ -95,7 +95,7 @@ public class GunComponent : Component
     /// When the gun is next available to be shot.
     /// Can be set multiple times in a single tick due to guns firing faster than a single tick time.
     /// </summary>
-    [ViewVariables, DataField("nextFire")]
+    [DataField("nextFire")]
     public TimeSpan NextFire = TimeSpan.Zero;
 
     /// <summary>

@@ -13,6 +13,7 @@
         - shape:
             !type:PhysShapeAabb
             bounds: "-0.4,-0.4,0.4,0.4"
+          density: 100
           mask:
             - MobMask
           layer:
@@ -83,7 +84,7 @@
 - type: entity
   id: GhostBox
   parent: StealthBox
-  suffix:
+  suffix: ""
   name: ghost box
   description: Beware!
   components:
