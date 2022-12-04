@@ -8,10 +8,10 @@
   },
   "states": [
     {
-      "name": "fire_extinguisher_open",
+      "name": "fire_extinguisher_open"
     },
     {
-      "name": "fire_extinguisher_closed",
+      "name": "fire_extinguisher_closed"
     },
     {
       "name": "inhand-right",
