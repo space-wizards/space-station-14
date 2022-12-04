@@ -1,5 +1,5 @@
 using Content.Server.Conveyor;
-using Content.Server.Gravity.EntitySystems;
+using Content.Server.Gravity;
 using Content.Server.MachineLinking.Events;
 using Content.Server.MachineLinking.System;
 using Content.Server.Power.Components;
