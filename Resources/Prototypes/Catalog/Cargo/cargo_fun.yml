@@ -34,7 +34,7 @@
     sprite: Objects/Consumable/Food/Baked/cake.rsi
     state: birthday
   product: CrateFunParty
-  cost: 500
+  cost: 1000
   category: Fun
   group: market
 
