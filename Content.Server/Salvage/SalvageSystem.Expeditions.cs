@@ -176,8 +176,11 @@ public sealed partial class SalvageSystem
         Dirty(footstep, metadata);
         _mapManager.DoMapInitialize(mapId);
 
+        var light = EnsureComp<MapLightComponent>(mapUid);
+        light.AmbientLightColor = new Color(0.3f, 0.3f, 0.3f);
+
         // No point raising an event for this when it's 1-1.
-        SalvageJob job;
+        SalvageCaveJob job;
         var config = _prototypeManager.Index<SalvageExpeditionPrototype>(mission.Config);
 
         // TODO: Need to generate mission objectives.

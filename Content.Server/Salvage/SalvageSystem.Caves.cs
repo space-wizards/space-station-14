@@ -7,7 +7,7 @@ namespace Content.Server.Salvage;
 
 public sealed partial class SalvageSystem
 {
-    private SalvageJob GetCaveJob(
+    private SalvageCaveJob GetCaveJob(
         EntityUid uid,
         MapGridComponent component,
         SalvageExpeditionPrototype expedition,
@@ -78,7 +78,7 @@ public sealed partial class SalvageSystem
         component.SetTiles(tiles);
         var faction = expedition.Factions[random.Next(expedition.Factions.Count)];
 
-        return new SalvageJob(
+        return new SalvageCaveJob(
             EntityManager,
             uid,
             component,

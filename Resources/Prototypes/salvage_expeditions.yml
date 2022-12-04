@@ -28,5 +28,5 @@
     MobXenoRavager: 8
     MobXenoQueen: 15
   configs:
-    CaveStructuresa: !type:SalvageStructureFaction
+    CaveStructures: !type:SalvageStructureFaction
       spawn: XenoWardingTower

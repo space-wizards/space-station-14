@@ -7,19 +7,19 @@ using Robust.Shared.Map.Components;
 
 namespace Content.Server.Salvage;
 
-public sealed class SalvageJob : Job<bool>
+public sealed class SalvageCaveJob : Job<bool>
 {
-    private IEntityManager _entManager;
+    private readonly IEntityManager _entManager;
 
-    private SalvageExpeditionPrototype _prototype;
-    private SalvageFactionPrototype _faction;
-    private List<(Vector2i Indices, Tile Tile)> _tiles;
-    private EntityUid _uid;
-    private MapGridComponent _grid;
-    private Random _random;
-    private Vector2i _dimensions;
+    private readonly SalvageExpeditionPrototype _prototype;
+    private readonly SalvageFactionPrototype _faction;
+    private readonly List<(Vector2i Indices, Tile Tile)> _tiles;
+    private readonly EntityUid _uid;
+    private readonly MapGridComponent _grid;
+    private readonly Random _random;
+    private readonly Vector2i _dimensions;
 
-    public SalvageJob(
+    public SalvageCaveJob(
         IEntityManager entManager,
         EntityUid uid,
         MapGridComponent grid,
