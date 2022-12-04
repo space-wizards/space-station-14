@@ -81,6 +81,12 @@
   - type: FootstepModifier
     footstepSoundCollection:
       path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
+  - type: Mech
+    baseState: ripley
+    openState: ripley-open
+    brokenState: ripley-broken
+    startingBattery: PowerCellHigh
+    mechToPilotDamageMultiplier: 0.5
 
 - type: entity
   id: MechRipleyBattery
@@ -92,3 +98,4 @@
     openState: ripley-open
     brokenState: ripley-broken
     startingBattery: PowerCellHigh
+    mechToPilotDamageMultiplier: 0.5

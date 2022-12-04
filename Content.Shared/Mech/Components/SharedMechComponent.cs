@@ -13,7 +13,7 @@ public abstract class SharedMechComponent : Component
     public FixedPoint2 Integrity;
 
     [DataField("maxIntegrity")]
-    public FixedPoint2 MaxIntegrity = 300;
+    public FixedPoint2 MaxIntegrity = 250;
 
     [ViewVariables(VVAccess.ReadWrite)]
     public FixedPoint2 Energy = 0;

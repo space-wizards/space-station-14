@@ -68,7 +68,7 @@ public sealed class MechGrabberSystem : EntitySystem
         _mech.UpdateUserInterface(mech);
     }
 
-    private void OnEquipmentRemoved(EntityUid uid, MechGrabberComponent component, MechEquipmentRemovedEvent args)
+    private void OnEquipmentRemoved(EntityUid uid, MechGrabberComponent component, ref MechEquipmentRemovedEvent args)
     {
         if (!TryComp<MechEquipmentComponent>(uid, out var equipmentComponent) ||
             equipmentComponent.EquipmentOwner == null)
