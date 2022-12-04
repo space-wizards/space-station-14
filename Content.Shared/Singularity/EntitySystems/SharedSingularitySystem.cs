@@ -1,3 +1,4 @@
+using Robust.Shared.Containers;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Serialization;
@@ -15,6 +16,7 @@ public abstract class SharedSingularitySystem : EntitySystem
 {
 #region Dependencies
     [Dependency] private readonly SharedAppearanceSystem _visualizer = default!;
+    [Dependency] private readonly SharedContainerSystem _containers = default!;
     [Dependency] private readonly SharedEventHorizonSystem _horizons = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] protected readonly IViewVariablesManager _vvm = default!;
@@ -30,6 +32,14 @@ public abstract class SharedSingularitySystem : EntitySystem
     /// </summary>
     public const byte MaxSingularityLevel = 6;
 
+    /// <summary>
+    /// The amount to scale a singularities distortion shader by when it's in a container.
+    /// This is the inverse of an exponent, not a linear scaling factor.
+    /// ie. n => intensity = intensity ** (1/n)
+    /// </summary>
+    public const float DistortionContainerScaling = 4f;
+
+
     public override void Initialize()
     {
         base.Initialize();
@@ -40,6 +50,8 @@ public abstract class SharedSingularitySystem : EntitySystem
         SubscribeLocalEvent<PhysicsComponent, SingularityLevelChangedEvent>(UpdateBody);
         SubscribeLocalEvent<EventHorizonComponent, SingularityLevelChangedEvent>(UpdateEventHorizon);
         SubscribeLocalEvent<SingularityDistortionComponent, SingularityLevelChangedEvent>(UpdateDistortion);
+        SubscribeLocalEvent<SingularityDistortionComponent, EntGotInsertedIntoContainerMessage>(UpdateDistortion);
+        SubscribeLocalEvent<SingularityDistortionComponent, EntGotRemovedFromContainerMessage>(UpdateDistortion);
 
         var vvHandle = _vvm.GetTypeHandler<SharedSingularityComponent>();
         vvHandle.AddPath(nameof(SharedSingularityComponent.Level), (_, comp) => comp.Level, SetLevel);
@@ -286,13 +298,57 @@ public abstract class SharedSingularitySystem : EntitySystem
     /// <summary>
     /// Updates the distortion shader associated with a singularity when the singuarity changes levels.
     /// </summary>
-    /// <param name="uid">The entity that the distortion shader and singularity are attached to.</param>
-    /// <param name="comp">The distortion shader associated with the singularity.</param>
+    /// <param name="uid">The uid of the distortion shader.</param>
+    /// <param name="comp">The state of the distortion shader.</param>
     /// <param name="args">The event arguments.</param>
     private void UpdateDistortion(EntityUid uid, SingularityDistortionComponent comp, SingularityLevelChangedEvent args)
     {
-        comp.FalloffPower = GetFalloff(args.NewValue);
-        comp.Intensity = GetIntensity(args.NewValue);
+        var newFalloffPower = GetFalloff(args.NewValue);
+        var newIntensity = GetIntensity(args.NewValue);
+        if (_containers.IsEntityInContainer(uid))
+        {
+            var absFalloffPower = MathF.Abs(newFalloffPower);
+            var absIntensity = MathF.Abs(newIntensity);
+
+            var factor = (1f / DistortionContainerScaling) - 1f;
+            newFalloffPower = absFalloffPower > 1f ? newFalloffPower * MathF.Pow(absFalloffPower, factor) : newFalloffPower;
+            newIntensity = absIntensity > 1f ? newIntensity * MathF.Pow(absIntensity, factor) : newIntensity;
+        }
+
+        comp.FalloffPower = newFalloffPower;
+        comp.Intensity = newIntensity;
+    }
+
+    /// <summary>
+    /// Updates the distortion shader associated with a singularity when the singuarity is inserted into a container.
+    /// </summary>
+    /// <param name="uid">The uid of the distortion shader.</param>
+    /// <param name="comp">The state of the distortion shader.</param>
+    /// <param name="args">The event arguments.</param>
+    private void UpdateDistortion(EntityUid uid, SingularityDistortionComponent comp, EntGotInsertedIntoContainerMessage args)
+    {
+        var absFalloffPower = MathF.Abs(comp.FalloffPower);
+        var absIntensity = MathF.Abs(comp.Intensity);
+
+        var factor = (1f / DistortionContainerScaling) - 1f;
+        comp.FalloffPower = absFalloffPower > 1 ? comp.FalloffPower * MathF.Pow(absFalloffPower, factor) : comp.FalloffPower;
+        comp.Intensity = absIntensity > 1 ? comp.Intensity * MathF.Pow(absIntensity, factor) : comp.Intensity;
+    }
+
+    /// <summary>
+    /// Updates the distortion shader associated with a singularity when the singuarity is removed from a container.
+    /// </summary>
+    /// <param name="uid">The uid of the distortion shader.</param>
+    /// <param name="comp">The state of the distortion shader.</param>
+    /// <param name="args">The event arguments.</param>
+    private void UpdateDistortion(EntityUid uid, SingularityDistortionComponent comp, EntGotRemovedFromContainerMessage args)
+    {
+        var absFalloffPower = MathF.Abs(comp.FalloffPower);
+        var absIntensity = MathF.Abs(comp.Intensity);
+
+        var factor = DistortionContainerScaling - 1;
+        comp.FalloffPower = absFalloffPower > 1 ? comp.FalloffPower * MathF.Pow(absFalloffPower, factor) : comp.FalloffPower;
+        comp.Intensity = absIntensity > 1 ? comp.Intensity * MathF.Pow(absIntensity, factor) : comp.Intensity;
     }
 
     /// <summary>

@@ -165,9 +165,9 @@ public sealed class SingularitySystem : SharedSingularitySystem
     {
         MetaDataComponent? metaData = null;
         if (Resolve(uid, ref metaData) && metaData.EntityLifeStage <= EntityLifeStage.Initializing)
-            _audio.Play(comp.FormationSound, Filter.Pvs(comp.Owner), comp.Owner);
+            _audio.Play(comp.FormationSound, Filter.Pvs(comp.Owner), comp.Owner, true);
 
-        comp.AmbientSoundStream = _audio.Play(comp.AmbientSound, Filter.Pvs(comp.Owner), comp.Owner);
+        comp.AmbientSoundStream = _audio.Play(comp.AmbientSound, Filter.Pvs(comp.Owner), comp.Owner, true);
         UpdateSingularityLevel(comp);
     }
 
@@ -197,7 +197,7 @@ public sealed class SingularitySystem : SharedSingularitySystem
 
         MetaDataComponent? metaData = null;
         if (Resolve(uid, ref metaData) && metaData.EntityLifeStage >= EntityLifeStage.Terminating)
-            _audio.Play(comp.DissipationSound, Filter.Pvs(comp.Owner), comp.Owner);
+            _audio.Play(comp.DissipationSound, Filter.Pvs(comp.Owner), comp.Owner, true);
     }
 
     /// <summary>
@@ -303,7 +303,6 @@ public sealed class SingularitySystem : SharedSingularitySystem
     {
         var singulos = args.Singularity;
         comp.MaxRange = GravPulseRange(singulos);
-        comp.MinRange = EventHorizonRadius(singulos) - 0.01f;
         (comp.BaseRadialAcceleration, comp.BaseTangentialAcceleration) = GravPulseAcceleration(singulos);
     }
 #endregion Event Handlers

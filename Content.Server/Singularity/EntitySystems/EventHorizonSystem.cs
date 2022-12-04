@@ -1,6 +1,7 @@
-using Robust.Shared.Map;
-using Robust.Shared.Physics.Events;
 using Robust.Shared.Containers;
+using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
+using Robust.Shared.Physics.Events;
 
 using Content.Shared.Singularity.Components;
 using Content.Shared.Singularity.EntitySystems;
@@ -43,6 +44,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         SubscribeLocalEvent<StationDataComponent, EventHorizonAttemptConsumeEntityEvent>(PreventConsume);
         SubscribeLocalEvent<EventHorizonComponent, StartCollideEvent>(OnStartCollide);
         SubscribeLocalEvent<EventHorizonComponent, EntGotInsertedIntoContainerMessage>(OnEventHorizonContained);
+        SubscribeLocalEvent<EventHorizonContainedEvent>(OnEventHorizonContained);
         SubscribeLocalEvent<EventHorizonComponent, EventHorizonAttemptConsumeEntityEvent>(OnAnotherEventHorizonAttemptConsumeThisEventHorizon);
         SubscribeLocalEvent<EventHorizonComponent, EventHorizonConsumedEntityEvent>(OnAnotherEventHorizonConsumedThisEventHorizon);
         SubscribeLocalEvent<ContainerManagerComponent, EventHorizonConsumedEntityEvent>(OnContainerConsumed);
@@ -52,7 +54,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// Updates the cooldowns of all event horizons.
     /// If an event horizon are off cooldown this makes it consume everything within range and resets their cooldown.
     /// </summary>
-    /// <param name="frameTime">The amount of time that has elapsed since the last cooldown update.</param>]
+    /// <param name="frameTime">The amount of time that has elapsed since the last cooldown update.</param>
     public override void Update(float frameTime)
     {
         foreach(var (eventHorizon, xform) in EntityManager.EntityQuery<EventHorizonComponent, TransformComponent>())
@@ -223,7 +225,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// <param name="tiles">The tiles to consume.</param>
     /// <param name="grid">The grid hosting the tiles to consume.</param>
     /// <param name="eventHorizon">The event horizon which is consuming the tiles on the grid.</param>
-    public void ConsumeTiles(List<(Vector2i, Tile)> tiles, IMapGrid grid, EventHorizonComponent eventHorizon)
+    public void ConsumeTiles(List<(Vector2i, Tile)> tiles, MapGridComponent grid, EventHorizonComponent eventHorizon)
     {
         if (tiles.Count > 0)
             RaiseLocalEvent(eventHorizon.Owner, new TilesConsumedByEventHorizonEvent(tiles, grid, eventHorizon));
@@ -236,7 +238,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// <param name="tiles">The tiles to attempt to consume.</param>
     /// <param name="grid">The grid hosting the tiles to attempt to consume.</param>
     /// <param name="eventHorizon">The event horizon which is attempting to consume the tiles on the grid.</param>
-    public int AttemptConsumeTiles(IEnumerable<TileRef> tiles, IMapGrid grid, EventHorizonComponent eventHorizon)
+    public int AttemptConsumeTiles(IEnumerable<TileRef> tiles, MapGridComponent grid, EventHorizonComponent eventHorizon)
     {
         var toConsume = new List<(Vector2i, Tile)>();
         foreach(var tile in tiles) {
@@ -257,7 +259,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// <param name="tile">The tile to check for consumability.</param>
     /// <param name="grid">The grid hosting the tile to check.</param>
     /// <param name="eventHorizon">The event horizon which is checking to see if it can consume the tile on the grid.</param>
-    public bool CanConsumeTile(TileRef tile, IMapGrid grid, EventHorizonComponent eventHorizon)
+    public bool CanConsumeTile(TileRef tile, MapGridComponent grid, EventHorizonComponent eventHorizon)
     {
         foreach(var blockingEntity in grid.GetAnchoredEntities(tile.GridIndices))
         {
@@ -372,23 +374,6 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     }
 
     /// <summary>
-    /// Handles event horizons being inserted into containers.
-    /// The event horizon will attempt to consume its container.
-    /// If it cannot consume its container it will instead attempt to consume everything else in the container.
-    /// </summary>
-    /// <param name="uid">The uid of the event horizon.</param>
-    /// <param name="comp">The state of the event horizon.</param>
-    /// <param name="args">The event arguments.</param>
-    private void OnEventHorizonContained(EntityUid uid, EventHorizonComponent comp, EntGotInsertedIntoContainerMessage args)
-    {
-        if (comp.BeingConsumedByAnotherEventHorizon)
-            return;
-        if (AttemptConsumeEntity(args.Container.Owner, comp))
-            return;
-        ConsumeEntitiesInContainer(uid, args.Container, comp, args.Container);
-    }
-
-    /// <summary>
     /// Prevents two event horizons from annihilating one another.
     /// Specifically prevents event horizons from consuming themselves.
     /// Also ensures that if this event horizon has already been consumed by another event horizon it cannot be consumed again.
@@ -412,6 +397,43 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     private void OnAnotherEventHorizonConsumedThisEventHorizon(EntityUid uid, EventHorizonComponent comp, EventHorizonConsumedEntityEvent args)
     {
         comp.BeingConsumedByAnotherEventHorizon = true;
+    }
+
+    /// <summary>
+    /// Handles event horizons deciding to escape containers they are inserted into.
+    /// Delegates the actual escape to <see cref="EventHorizonSystem.OnEventHorizonContained(EventHorizonContainedEvent)"> on a delay.
+    /// This ensures that the escape is handled after all other handlers for the insertion event and satisfies the assertion that
+    ///     the inserted entity SHALL be inside of the specified container after all handles to the entity event
+    ///     <see cref="EntGotInsertedIntoContainerMessage"> are processed.
+    /// </summary>
+    /// <param name="uid">The uid of the event horizon.</param>]
+    /// <param name="comp">The state of the event horizon.</param>]
+    /// <param name="args">The arguments of the insertion.</param>]
+    private void OnEventHorizonContained(EntityUid uid, EventHorizonComponent comp, EntGotInsertedIntoContainerMessage args) {
+        // Delegates processing an event until all queued events have been processed.
+        // As of 1:44 AM, Sunday, Dec. 4, 2022 this is the one use for this in the codebase.
+        QueueLocalEvent(new EventHorizonContainedEvent(uid, comp, args));
+    }
+
+    /// <summary>
+    /// Handles event horizons attempting to escape containers they have been inserted into.
+    /// If the event horizon has not been consumed by another event horizon this handles making the event horizon consume the containing
+    ///     container and drop the the next innermost contaning container.
+    /// This loops until the event horizon has escaped to the map or wound up in an indestructible container.
+    /// </summary>
+    /// <param name="args">The arguments for this event.</param>]
+    private void OnEventHorizonContained(EventHorizonContainedEvent args) {
+        var uid = args.Entity;
+        var comp = args.EventHorizon;
+        if (!EntityManager.EntityExists(uid))
+            return;
+        if (comp.BeingConsumedByAnotherEventHorizon)
+            return;
+
+        var containerEntity = args.Args.Container.Owner;
+        if(!(EntityManager.EntityExists(containerEntity) && AttemptConsumeEntity(containerEntity, comp))) {
+            ConsumeEntitiesInContainer(uid, args.Args.Container, comp, args.Args.Container);
+        }
     }
 
     /// <summary>

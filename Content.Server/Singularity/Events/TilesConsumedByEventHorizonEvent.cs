@@ -1,4 +1,5 @@
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 
 using Content.Shared.Singularity.Components;
 
@@ -18,14 +19,14 @@ public sealed class TilesConsumedByEventHorizonEvent : EntityEventArgs
     /// <summary>
     /// The mapgrid that the event horizon is consuming tiles of.
     /// </summary>
-    public readonly IMapGrid MapGrid;
+    public readonly MapGridComponent MapGrid;
 
     /// <summary>
     /// The event horizon consuming the tiles.
     /// </summary>
     public readonly EventHorizonComponent EventHorizon;
 
-    public TilesConsumedByEventHorizonEvent(IReadOnlyList<(Vector2i, Tile)> tiles, IMapGrid mapGrid, EventHorizonComponent eventHorizon)
+    public TilesConsumedByEventHorizonEvent(IReadOnlyList<(Vector2i, Tile)> tiles, MapGridComponent mapGrid, EventHorizonComponent eventHorizon)
     {
         Tiles = tiles;
         MapGrid = mapGrid;
