@@ -28,6 +28,7 @@ public sealed class MechGrabberSystem : EntitySystem
         SubscribeLocalEvent<MechGrabberComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<MechGrabberComponent, MechEquipmentUiStateReadyEvent>(OnUiStateReady);
         SubscribeLocalEvent<MechGrabberComponent, MechEquipmentRemovedEvent>(OnEquipmentRemoved);
+        SubscribeLocalEvent<MechGrabberComponent, AttemptRemoveMechEquipmentEvent>(OnAttemptRemove);
 
         SubscribeLocalEvent<MechGrabberComponent, InteractNoHandEvent>(OnInteract);
         SubscribeLocalEvent<MechGrabberComponent, MechGrabberGrabFinishedEvent>(OnGrabFinished);
@@ -44,13 +45,14 @@ public sealed class MechGrabberSystem : EntitySystem
             return;
         var mech = equipmentComponent.EquipmentOwner.Value;
 
-        var targetCoords = new EntityCoordinates(mech, component.DepositOffset*2);
+        var targetCoords = new EntityCoordinates(mech, component.DepositOffset);
         if (!_interaction.InRangeUnobstructed(mech, targetCoords))
             return;
 
         if (!component.ItemContainer.Contains(msg.Item))
             return;
 
+        Logger.Debug("ok now remove it");
         RemoveItem(uid, mech, msg.Item, component);
     }
 
@@ -80,6 +82,11 @@ public sealed class MechGrabberSystem : EntitySystem
         {
             RemoveItem(uid, mech, item, component);
         }
+    }
+
+    private void OnAttemptRemove(EntityUid uid, MechGrabberComponent component, ref AttemptRemoveMechEquipmentEvent args)
+    {
+        args.Cancelled = component.ItemContainer.ContainedEntities.Any();
     }
 
     private void OnStartup(EntityUid uid, MechGrabberComponent component, ComponentStartup args)

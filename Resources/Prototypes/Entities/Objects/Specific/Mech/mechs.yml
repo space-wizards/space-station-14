@@ -85,7 +85,6 @@
     baseState: ripley
     openState: ripley-open
     brokenState: ripley-broken
-    startingBattery: PowerCellHigh
     mechToPilotDamageMultiplier: 0.5
 
 - type: entity

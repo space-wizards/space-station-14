@@ -17,7 +17,7 @@ public sealed class MechGrabberComponent : Component
     public Vector2 DepositOffset = new(0, -1);
 
     [DataField("maxContents")]
-    public int MaxContents = 15;
+    public int MaxContents = 10;
 
     [DataField("grabSound")]
     public SoundSpecifier GrabSound = new SoundPathSpecifier("/Audio/Mecha/sound_mecha_hydraulic.ogg");
