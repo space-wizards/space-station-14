@@ -360,6 +360,8 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
     protected virtual void DoLightAttack(EntityUid user, LightAttackEvent ev, MeleeWeaponComponent component, ICommonSession? session)
     {
+        var damage = component.Damage * GetModifier(component, true);
+
         // Can't attack yourself
         // Not in LOS.
         if (user == ev.Target ||
@@ -367,19 +369,18 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             Deleted(ev.Target) ||
             // For consistency with wide attacks stuff needs damageable.
             !HasComp<DamageableComponent>(ev.Target) ||
-            !TryComp<TransformComponent>(ev.Target, out var targetXform))
+            !TryComp<TransformComponent>(ev.Target, out var targetXform) ||
+            !InRange(user, ev.Target.Value, component.Range, session))
         {
+            // Leave IsHit set to true, because the only time it's set to false
+            // is when a melee weapon is examined. Misses are inferred from an
+            // empty HitEntities.
+            var missEvent = new MeleeHitEvent(new List<EntityUid>(), user, damage);
+            RaiseLocalEvent(component.Owner, missEvent);
+
             Audio.PlayPredicted(component.SwingSound, component.Owner, user);
             return;
         }
-
-        if (!InRange(user, ev.Target.Value, component.Range, session))
-        {
-            Audio.PlayPredicted(component.SwingSound, component.Owner, user);
-            return;
-        }
-
-        var damage = component.Damage * GetModifier(component, true);
 
         // Sawmill.Debug($"Melee damage is {damage.Total} out of {component.Damage.Total}");
 
@@ -468,11 +469,16 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         var direction = targetMap.Position - userPos;
         var distance = Math.Min(component.Range, direction.Length);
 
+        var damage = component.Damage * GetModifier(component, false);
+
         // This should really be improved. GetEntitiesInArc uses pos instead of bounding boxes.
         var entities = ArcRayCast(userPos, direction.ToWorldAngle(), component.Angle, distance, userXform.MapID, user);
 
         if (entities.Count == 0)
         {
+            var missEvent = new MeleeHitEvent(new List<EntityUid>(), user, damage);
+            RaiseLocalEvent(component.Owner, missEvent);
+
             Audio.PlayPredicted(component.SwingSound, component.Owner, user);
             return;
         }
@@ -489,7 +495,6 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             targets.Add(entity);
         }
 
-        var damage = component.Damage * GetModifier(component, false);
         // Sawmill.Debug($"Melee damage is {damage.Total} out of {component.Damage.Total}");
 
         // Raise event before doing damage so we can cancel damage if the event is handled
