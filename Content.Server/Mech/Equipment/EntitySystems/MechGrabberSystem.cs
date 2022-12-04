@@ -19,6 +19,7 @@ public sealed class MechGrabberSystem : EntitySystem
     [Dependency] private readonly MechSystem _mech = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
     [Dependency] private readonly InteractionSystem _interaction = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -26,6 +27,7 @@ public sealed class MechGrabberSystem : EntitySystem
         SubscribeLocalEvent<MechGrabberComponent, MechEquipmentUiMessageRelayEvent>(OnGrabberMessage);
         SubscribeLocalEvent<MechGrabberComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<MechGrabberComponent, MechEquipmentUiStateReadyEvent>(OnUiStateReady);
+        SubscribeLocalEvent<MechGrabberComponent, MechEquipmentRemovedEvent>(OnEquipmentRemoved);
 
         SubscribeLocalEvent<MechGrabberComponent, InteractNoHandEvent>(OnInteract);
         SubscribeLocalEvent<MechGrabberComponent, MechGrabberGrabFinishedEvent>(OnGrabFinished);
@@ -42,19 +44,42 @@ public sealed class MechGrabberSystem : EntitySystem
             return;
         var mech = equipmentComponent.EquipmentOwner.Value;
 
-        var targetCoords = new EntityCoordinates(mech, component.DepositOffset);
+        var targetCoords = new EntityCoordinates(mech, component.DepositOffset*2);
         if (!_interaction.InRangeUnobstructed(mech, targetCoords))
             return;
 
         if (!component.ItemContainer.Contains(msg.Item))
             return;
 
-        component.ItemContainer.Remove(msg.Item);
+        RemoveItem(uid, mech, msg.Item, component);
+    }
+
+    public void RemoveItem(EntityUid uid, EntityUid mech, EntityUid toRemove, MechGrabberComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        component.ItemContainer.Remove(toRemove);
         var mechxform = Transform(mech);
-        var xform = Transform(msg.Item);
+        var xform = Transform(toRemove);
         xform.AttachToGridOrMap();
         xform.WorldPosition = mechxform.WorldPosition + mechxform.WorldRotation.RotateVec(component.DepositOffset);
+        xform.WorldRotation = Angle.Zero;
         _mech.UpdateUserInterface(mech);
+    }
+
+    private void OnEquipmentRemoved(EntityUid uid, MechGrabberComponent component, MechEquipmentRemovedEvent args)
+    {
+        if (!TryComp<MechEquipmentComponent>(uid, out var equipmentComponent) ||
+            equipmentComponent.EquipmentOwner == null)
+            return;
+        var mech = equipmentComponent.EquipmentOwner.Value;
+
+        var allItems = new List<EntityUid>(component.ItemContainer.ContainedEntities);
+        foreach (var item in allItems)
+        {
+            RemoveItem(uid, mech, item, component);
+        }
     }
 
     private void OnStartup(EntityUid uid, MechGrabberComponent component, ComponentStartup args)
@@ -95,6 +120,7 @@ public sealed class MechGrabberSystem : EntitySystem
 
         args.Handled = true;
         component.Token = new();
+        _audio.PlayPvs(component.GrabSound, uid);
         _doAfter.DoAfter(new DoAfterEventArgs(args.User, component.GrabDelay, component.Token.Token, args.Target, uid)
         {
             BreakOnTargetMove = true,
@@ -119,6 +145,7 @@ public sealed class MechGrabberSystem : EntitySystem
 
     private void OnGrabCancelled(EntityUid uid, MechGrabberComponent component, MechGrabberGrabCancelledEvent args)
     {
+        component.AudioStream?.Stop();
         component.Token = null;
     }
 }

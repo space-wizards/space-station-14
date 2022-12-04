@@ -1,4 +1,5 @@
 ﻿using System.Threading;
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 
 namespace Content.Server.Mech.Equipment.Components;
@@ -7,10 +8,10 @@ namespace Content.Server.Mech.Equipment.Components;
 public sealed class MechGrabberComponent : Component
 {
     [DataField("energyPerGrab")]
-    public float EnergyPerGrab = -20;
+    public float EnergyPerGrab = -30;
 
     [DataField("grabDelay")]
-    public float GrabDelay = 3;
+    public float GrabDelay = 2.5f;
 
     [DataField("depositOffset")]
     public Vector2 DepositOffset = new(0, -1);
@@ -18,7 +19,11 @@ public sealed class MechGrabberComponent : Component
     [DataField("maxContents")]
     public int MaxContents = 15;
 
-    public Container ItemContainer = default!;
+    [DataField("grabSound")]
+    public SoundSpecifier GrabSound = new SoundPathSpecifier("/Audio/Mecha/sound_mecha_hydraulic.ogg");
 
+    public IPlayingAudioStream? AudioStream;
+
+    public Container ItemContainer = default!;
     public CancellationTokenSource? Token;
 }

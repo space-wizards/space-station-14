@@ -37,6 +37,7 @@ public abstract class SharedMechSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
+        SubscribeLocalEvent<SharedMechComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<SharedMechComponent, ComponentHandleState>(OnHandleState);
         SubscribeLocalEvent<MechPilotComponent, ComponentGetState>(OnPilotGetState);
         SubscribeLocalEvent<MechPilotComponent, ComponentHandleState>(OnPilotHandleState);
@@ -52,6 +53,19 @@ public abstract class SharedMechSystem : EntitySystem
     }
 
     #region State Handling
+    private void OnGetState(EntityUid uid, SharedMechComponent component, ref ComponentGetState args)
+    {
+        args.State = new MechComponentState
+        {
+            Integrity = component.Integrity,
+            MaxIntegrity = component.MaxIntegrity,
+            Energy = component.Energy,
+            MaxEnergy = component.MaxEnergy,
+            CurrentSelectedEquipment = component.CurrentSelectedEquipment,
+            Broken = component.Broken
+        };
+    }
+
     private void OnHandleState(EntityUid uid, SharedMechComponent component, ref ComponentHandleState args)
     {
         if (args.Current is not MechComponentState state)
@@ -164,7 +178,7 @@ public abstract class SharedMechSystem : EntitySystem
         var equipment = new List<EntityUid>(component.EquipmentContainer.ContainedEntities);
         foreach (var ent in equipment)
         {
-            RemoveEquipment(uid, ent, component);
+            RemoveEquipment(uid, ent, component, forced: true);
         }
 
         component.Broken = true;
@@ -214,13 +228,21 @@ public abstract class SharedMechSystem : EntitySystem
         UpdateUserInterface(uid, component);
     }
 
-    public void RemoveEquipment(EntityUid uid, EntityUid toRemove, SharedMechComponent? component = null, MechEquipmentComponent? equipmentComponent = null)
+    public void RemoveEquipment(EntityUid uid, EntityUid toRemove, SharedMechComponent? component = null, MechEquipmentComponent? equipmentComponent = null, bool forced = false)
     {
         if (!Resolve(uid, ref component))
             return;
 
         if (!Resolve(toRemove, ref equipmentComponent))
             return;
+
+        if (!forced)
+        {
+            var attemptev = new AttemptRemoveMechEquipmentEvent();
+            RaiseLocalEvent(toRemove, ref attemptev);
+            if (attemptev.Cancelled)
+                return;
+        }
 
         equipmentComponent.EquipmentOwner = null;
         component.EquipmentContainer.Remove(toRemove, EntityManager);

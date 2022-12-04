@@ -26,28 +26,24 @@ public enum MechVisualLayers : byte
 /// Event raised on equipment when it is inserted into a mech
 /// </summary>
 [ByRefEvent]
-public readonly struct MechEquipmentInsertedEvent
+public readonly record struct MechEquipmentInsertedEvent(EntityUid Mech)
 {
-    public readonly EntityUid Mech;
-
-    public MechEquipmentInsertedEvent(EntityUid mech)
-    {
-        Mech = mech;
-    }
+    public readonly EntityUid Mech = Mech;
 }
 
 /// <summary>
 /// Event raised on equipment when it is removed from a mech
 /// </summary>
 [ByRefEvent]
-public readonly struct MechEquipmentRemovedEvent
+public readonly record struct MechEquipmentRemovedEvent(EntityUid Mech)
 {
-    public readonly EntityUid Mech;
+    public readonly EntityUid Mech = Mech;
+}
 
-    public MechEquipmentRemovedEvent(EntityUid mech)
-    {
-        Mech = mech;
-    }
+[ByRefEvent]
+public record struct AttemptRemoveMechEquipmentEvent()
+{
+    public bool Cancelled = false;
 }
 
 public sealed class MechToggleEquipmentEvent : InstantActionEvent

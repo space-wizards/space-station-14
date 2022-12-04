@@ -80,4 +80,15 @@
   components:
   - type: FootstepModifier
     footstepSoundCollection:
-      path: /Audio/Mecha/sound_mecha_hydraulic.ogg
+      path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
+
+- type: entity
+  id: MechRipleyBattery
+  parent: MechRipley
+  suffix: Battery
+  components:
+  - type: Mech
+    baseState: ripley
+    openState: ripley-open
+    brokenState: ripley-broken
+    startingBattery: PowerCellHigh

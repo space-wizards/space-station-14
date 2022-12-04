@@ -15,7 +15,6 @@ using Content.Shared.Tools.Components;
 using Content.Shared.Verbs;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 
 namespace Content.Server.Mech.Systems;
@@ -38,8 +37,6 @@ public sealed class MechSystem : SharedMechSystem
 
         _sawmill = Logger.GetSawmill("mech");
 
-        SubscribeLocalEvent<SharedMechComponent, ComponentGetState>(OnGetState);
-
         SubscribeLocalEvent<MechComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<MechComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<MechComponent, GetVerbsEvent<AlternativeVerb>>(OnAlternativeVerb);
@@ -61,19 +58,6 @@ public sealed class MechSystem : SharedMechSystem
         #region Equipment UI message relays
         SubscribeLocalEvent<MechComponent, MechGrabberEjectMessage>(RecieveEquipmentUiMesssages);
         #endregion
-    }
-
-    private void OnGetState(EntityUid uid, SharedMechComponent component, ref ComponentGetState args)
-    {
-        args.State = new MechComponentState
-        {
-            Integrity = component.Integrity,
-            MaxIntegrity = component.MaxIntegrity,
-            Energy = component.Energy,
-            MaxEnergy = component.MaxEnergy,
-            CurrentSelectedEquipment = component.CurrentSelectedEquipment,
-            Broken = component.Broken
-        };
     }
 
     private void OnInteractUsing(EntityUid uid, MechComponent component, InteractUsingEvent args)
@@ -125,6 +109,12 @@ public sealed class MechSystem : SharedMechSystem
 
         component.Integrity = component.MaxIntegrity;
         component.Energy = component.MaxEnergy;
+
+        if (component.StartingBattery != null)
+        {
+            var battery = Spawn(component.StartingBattery, Transform(uid).Coordinates);
+            InsertBattery(uid, battery, component);
+        }
 
         Dirty(component);
     }

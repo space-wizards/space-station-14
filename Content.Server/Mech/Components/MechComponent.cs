@@ -3,6 +3,7 @@ using Content.Server.Atmos;
 using Content.Shared.Mech.Components;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Server.Mech.Components;
@@ -24,12 +25,15 @@ public sealed class MechComponent : SharedMechComponent
     public CancellationTokenSource? EntryTokenSource;
 
     [DataField("airtight"), ViewVariables(VVAccess.ReadWrite)]
-    public bool Airtight = false;
+    public bool Airtight;
 
     [DataField("startingEquipment", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
     public List<string> StartingEquipment = new();
 
-    //TODO: this doesn't support a tank implant for
+    [DataField("startingBattery", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string? StartingBattery;
+
+    //TODO: this doesn't support a tank implant for mechs or anything like that
     [ViewVariables(VVAccess.ReadWrite)]
     public GasMixture Air = new (GasMixVolume);
     public const float GasMixVolume = 70f;
