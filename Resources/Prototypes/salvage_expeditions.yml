@@ -30,3 +30,14 @@
   configs:
     CaveStructures: !type:SalvageStructureFaction
       spawn: XenoWardingTower
+
+# Markers
+- type: entity
+  id: SalvageSpawnMarker
+  parent: MarkerBase
+  name: Salvage spawn marker
+  components:
+    - type: SalvageSpawnMarker
+    - type: Sprite
+      sprite: Markers/cross.rsi
+      state: blue

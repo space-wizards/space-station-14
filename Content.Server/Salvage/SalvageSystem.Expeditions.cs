@@ -3,6 +3,7 @@ using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
 using Content.Server.CPUJob.JobQueues.Queues;
 using Content.Server.Salvage.Expeditions;
+using Content.Server.Salvage.Expeditions.Structure;
 using Content.Server.Station.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.Gravity;
@@ -42,7 +43,7 @@ public sealed partial class SalvageSystem
         if (!data.Missions.TryGetValue(args.Index, out var mission))
             return;
 
-        SpawnMission(mission);
+        SpawnMission(mission, station.Value);
 
         data.ActiveMission = args.Index;
         UpdateConsoles(data);
@@ -75,6 +76,20 @@ public sealed partial class SalvageSystem
                 comp.NextOffer += comp.Cooldown;
                 GenerateMissions(comp);
                 UpdateConsoles(comp);
+            }
+        }
+
+        foreach (var comp in EntityQuery<SalvageExpeditionComponent>())
+        {
+            if (comp.EndTime < currentTime)
+            {
+                if (TryComp<SalvageExpeditionDataComponent>(comp.Station, out var data))
+                {
+                    data.ActiveMission = 0;
+                    data.NextOffer = currentTime;
+                }
+
+                QueueDel(comp.Owner);
             }
         }
 
@@ -143,7 +158,7 @@ public sealed partial class SalvageSystem
         _ui.TrySetUiState(component.Owner, SalvageConsoleUiKey.Expedition, state);
     }
 
-    private void SpawnMission(SalvageMission mission)
+    private void SpawnMission(SalvageMission mission, EntityUid station)
     {
         var mapId = _mapManager.CreateMap();
         var mapUid = _mapManager.GetMapEntityId(mapId);
@@ -177,7 +192,12 @@ public sealed partial class SalvageSystem
         _mapManager.DoMapInitialize(mapId);
 
         var light = EnsureComp<MapLightComponent>(mapUid);
-        light.AmbientLightColor = new Color(20, 20, 20);
+        light.AmbientLightColor = new Color(2, 2, 2);
+
+        var expedition = AddComp<SalvageExpeditionComponent>(mapUid);
+        expedition.Station = station;
+        // TODO: (For debug I swear)
+        expedition.EndTime = _timing.CurTime + mission.Duration;
 
         // No point raising an event for this when it's 1-1.
         SalvageCaveJob job;
@@ -185,11 +205,28 @@ public sealed partial class SalvageSystem
 
         // TODO: Need to generate mission objectives.
         // TODO: Spawn hint markers for spawns.
+        switch (config.Expedition)
+        {
+            case SalvageStructure:
+                EnsureComp<SalvageStructureExpeditionComponent>(mapUid);
+                break;
+            default:
+                return;
+        }
 
         switch (config.Environment)
         {
             case SalvageCaveGen cave:
-                job = GetCaveJob(grid.Owner, grid, config, cave, mission.Seed);
+                job = new SalvageCaveJob(
+                    EntityManager,
+                    _prototypeManager,
+                    _tileDefManager,
+                    mapUid,
+                    grid,
+                    config,
+                    cave,
+                    SalvageGenTime,
+                    mission.Seed);
                 break;
             default:
                 return;

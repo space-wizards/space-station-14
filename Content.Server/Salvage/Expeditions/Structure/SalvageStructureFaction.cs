@@ -1,7 +1,7 @@
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Salvage.Expeditions;
+namespace Content.Server.Salvage.Expeditions.Structure;
 
 /// <summary>
 /// Per-faction config for Salvage Structure expeditions.
