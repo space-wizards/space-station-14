@@ -9,8 +9,7 @@ namespace Content.Server.Wires;
 /// <summary><see cref="IWireAction" /></summary>
 public abstract class BaseWireAction : IWireAction
 {
-    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
-
+    private ISharedAdminLogManager _adminLogger = default!;
     public IEntityManager EntityManager = default!;
     public WiresSystem WiresSystem = default!;
 
