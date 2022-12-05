@@ -42,8 +42,8 @@ public sealed class PrayerSystem : EntitySystem
 
         var prayerVerb = new ActivationVerb
         {
-            Text = Loc.GetString("prayer-verbs-pray"),
-            IconTexture = "/Textures/Interface/pray.svg.png",
+            Text = comp.Verb,
+            IconTexture = comp.VerbImage,
             Act = () =>
             {
                 if (comp.BibleUserOnly && !EntityManager.TryGetComponent<BibleUserComponent>(args.User, out var bibleUser))
@@ -52,9 +52,9 @@ public sealed class PrayerSystem : EntitySystem
                     return;
                 }
 
-                _quickDialog.OpenDialog(actor.PlayerSession, "Pray", "Message", (string message) =>
+                _quickDialog.OpenDialog(actor.PlayerSession, comp.Verb, "Message", (string message) =>
                 {
-                    Pray(actor.PlayerSession, message);
+                    Pray(actor.PlayerSession, comp, message);
                 });
             },
             Impact = LogImpact.Low,
@@ -85,19 +85,20 @@ public sealed class PrayerSystem : EntitySystem
     /// Sends a message to the admin channel with a message and username
     /// </summary>
     /// <param name="sender">The IPlayerSession who sent the original message</param>
+    /// <param name="comp">Prayable component used to make the prayer</param>
     /// <param name="message">Message to be sent to the admin chat</param>
     /// <remarks>
     /// You may be wondering, "Why the admin chat, specifically? Nobody even reads it!"
     /// Exactly.
     ///  </remarks>
-    public void Pray(IPlayerSession sender, string message)
+    public void Pray(IPlayerSession sender, PrayableComponent comp, string message)
     {
         if (sender.AttachedEntity == null)
             return;
 
 
-        _popupSystem.PopupEntity(Loc.GetString("prayer-popup-notify-sent"), sender.AttachedEntity.Value, Filter.Empty().AddPlayer(sender), PopupType.Medium);
+        _popupSystem.PopupEntity(comp.SentMessage, sender.AttachedEntity.Value, Filter.Empty().AddPlayer(sender), PopupType.Medium);
 
-        _chatManager.SendAdminAnnouncement(Loc.GetString("prayer-chat-notify", ("name", sender.Name), ("message", message)));
+        _chatManager.SendAdminAnnouncement(comp.NotifiactionPrefix + $": <{sender.Name}>: {message}");
     }
 }
