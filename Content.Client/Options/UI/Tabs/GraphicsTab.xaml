@@ -43,6 +43,7 @@
                 <Label Text="{Loc 'ui-options-hud-layout'}" />
                 <Control MinSize="4 0" />
                 <OptionButton Name="HudLayoutOption" />
+                <Label Name="HudLayoutWarningText" Text="{Loc 'ui-options-obsolete-interface-warning'}" Align="Right" FontColorOverride="#ff0000" Visible="False"/>
             </BoxContainer>
             <CheckBox Name="IntegerScalingCheckBox"
                       Text="{Loc 'ui-options-vp-integer-scaling'}"

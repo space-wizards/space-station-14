@@ -29,6 +29,12 @@ namespace Content.Client.Options.UI.Tabs
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
+        private readonly Dictionary<ScreenType, string> _screenTypeToLoc = new()
+        {
+            {ScreenType.Default, Loc.GetString("ui-options-hud-theme-modernized")},
+            {ScreenType.Separated, Loc.GetString("ui-options-hud-theme-classic")},
+        };
+
         public GraphicsTab()
         {
             IoCManager.InjectDependencies(this);
@@ -64,10 +70,14 @@ namespace Content.Client.Options.UI.Tabs
             foreach (var layout in Enum.GetValues(typeof(ScreenType)))
             {
                 var name = layout.ToString()!;
-                HudLayoutOption.AddItem(name, id);
+
+                var buttonText = _screenTypeToLoc[(ScreenType) layout];
+                HudLayoutOption.AddItem(buttonText, id);
+
                 if (name == hudLayout)
                 {
                     HudLayoutOption.SelectId(id);
+                    HudLayoutWarningText.Visible = name == ScreenType.Default.ToString();
                 }
                 HudLayoutOption.SetItemMetadata(id, name);
 
@@ -77,6 +87,11 @@ namespace Content.Client.Options.UI.Tabs
             HudLayoutOption.OnItemSelected += args =>
             {
                 HudLayoutOption.SelectId(args.Id);
+
+                var metaData = (string)HudLayoutOption.GetItemMetadata(args.Id)!;
+
+                HudLayoutWarningText.Visible = metaData == ScreenType.Default.ToString();
+
                 UpdateApplyButton();
             };
 
