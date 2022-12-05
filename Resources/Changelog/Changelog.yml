@@ -1,9 +1,4 @@
 Entries:
-- author: notafet
-  changes:
-  - {message: More tools are craftable in the autolathe., type: Add}
-  id: 2219
-  time: '2022-09-01T03:39:33.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Shotguns should now be much more effective in combat., type: Tweak}
@@ -2949,3 +2944,9 @@ Entries:
       defined on the vehicle itself., type: Tweak}
   id: 2718
   time: '2022-12-05T00:23:59.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Artifact analyzers linked to consoles roundstart should now work properly.,
+    type: Fix}
+  id: 2719
+  time: '2022-12-05T02:35:07.0000000+00:00'
