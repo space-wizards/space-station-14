@@ -1,0 +1,1 @@
+observer-role-name = Наблюдатель

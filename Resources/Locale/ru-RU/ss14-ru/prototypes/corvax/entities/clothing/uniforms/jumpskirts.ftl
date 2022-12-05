@@ -1,0 +1,15 @@
+ent-ClothingUniformJumpskirtCentcomOfficial = юбка-костюм офицера Центком
+    .desc = Это костюм c юбкой, который носят офицеры Центком высшего звена.
+    .suffix = { "" }
+ent-ClothingUniformJumpskirtCentcomOfficer = водолазка c юбкой Центком
+    .desc = Версия водолазки Центком с юбкой, более редкая и востребованная, чем оригинал.
+    .suffix = { "" }
+ent-ClothingUniformJumpskirtLibrarian = практичная юбка-костюм
+    .desc = Она очень... практичная.
+    .suffix = { "" }
+ent-ClothingUniformColorJumpskirtRainbow = радужная юбка-комбинезон
+    .desc = Разноцветная юбка-комбинезон!
+    .suffix = { "" }
+ent-ClothingUniformJumpskirtPsychologist = юбка-костюм психолога
+    .desc = Я не теряю вещи. Я кладу вещи в места, которые потом ускользают от меня.
+    .suffix = { "" }
