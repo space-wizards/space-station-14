@@ -10,6 +10,12 @@ namespace Content.Server.Wires;
 public abstract class BaseWireAction : IWireAction
 {
     private ISharedAdminLogManager _adminLogger = default!;
+    protected virtual string Text
+    {
+        get => GetType().Name.Replace("WireAction", "");
+        set { }
+    }
+
     public IEntityManager EntityManager = default!;
     public WiresSystem WiresSystem = default!;
 
@@ -28,17 +34,17 @@ public abstract class BaseWireAction : IWireAction
     public virtual bool AddWire(Wire wire, int count) => count == 1;
     public virtual bool Cut(EntityUid user, Wire wire)
     {
-        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{EntityManager.ToPrettyString(user):player} cut {wire.Color.Name()} {GetType().Name.Replace("WireAction", "")} in {EntityManager.ToPrettyString(wire.Owner)}");
+        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{EntityManager.ToPrettyString(user):player} cut {wire.Color.Name()} {Text} in {EntityManager.ToPrettyString(wire.Owner)}");
         return false;
     }
     public virtual bool Mend(EntityUid user, Wire wire)
     {
-        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{EntityManager.ToPrettyString(user):player} mended {wire.Color.Name()} {GetType().Name.Replace("WireAction", "")} in {EntityManager.ToPrettyString(wire.Owner)}");
+        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{EntityManager.ToPrettyString(user):player} mended {wire.Color.Name()} {Text} in {EntityManager.ToPrettyString(wire.Owner)}");
         return false;
     }
     public virtual bool Pulse(EntityUid user, Wire wire)
     {
-        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{EntityManager.ToPrettyString(user):player} pulsed {wire.Color.Name()} {GetType().Name.Replace("WireAction", "")} in {EntityManager.ToPrettyString(wire.Owner)}");
+        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{EntityManager.ToPrettyString(user):player} pulsed {wire.Color.Name()} {Text} in {EntityManager.ToPrettyString(wire.Owner)}");
         return false;
     }
     public virtual void Update(Wire wire)

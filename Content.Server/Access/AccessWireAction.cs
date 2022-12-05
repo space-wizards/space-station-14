@@ -13,6 +13,11 @@ public sealed class AccessWireAction : BaseWireAction
 
     [DataField("name")]
     private string _text = "ACC";
+    protected override string Text
+    {
+        get => _text;
+        set => _text = value;
+    }
 
     [DataField("pulseTimeout")]
     private int _pulseTimeout = 30;

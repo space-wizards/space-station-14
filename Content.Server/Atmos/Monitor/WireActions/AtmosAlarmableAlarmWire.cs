@@ -15,6 +15,11 @@ public sealed class AtmosMonitorDeviceNetWire : BaseWireAction
     private bool _alarmOnPulse = false;
 
     private string _text = "NETW";
+    protected override string Text
+    {
+        get => _text;
+        set => _text = value;
+    }
     private Color _color = Color.Orange;
 
     private AtmosAlarmableSystem _atmosAlarmableSystem = default!;

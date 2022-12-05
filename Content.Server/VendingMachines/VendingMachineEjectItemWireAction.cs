@@ -11,6 +11,11 @@ public sealed class VendingMachineEjectItemWireAction : BaseWireAction
 
     private Color _color = Color.Red;
     private string _text = "VEND";
+    protected override string Text
+    {
+        get => _text;
+        set => _text = value;
+    }
     public override object? StatusKey { get; } = EjectWireKey.StatusKey;
 
     public override StatusLightData? GetStatusLightData(Wire wire)

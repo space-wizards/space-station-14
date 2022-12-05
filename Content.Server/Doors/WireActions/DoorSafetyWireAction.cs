@@ -13,6 +13,11 @@ public sealed class DoorSafetyWireAction : BaseWireAction
 
     [DataField("name")]
     private string _text = "SAFE";
+    protected override string Text
+    {
+        get => _text;
+        set => _text = value;
+    }
 
     [DataField("timeout")]
     private int _timeout = 30;

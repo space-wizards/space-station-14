@@ -16,6 +16,11 @@ public sealed class PowerWireAction : BaseWireAction
 
     [DataField("name")]
     private string _text = "POWR";
+    protected override string Text
+    {
+        get => _text;
+        set => _text = value;
+    }
 
     [DataField("pulseTimeout")]
     private int _pulseTimeout = 30;

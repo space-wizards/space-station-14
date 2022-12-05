@@ -11,6 +11,11 @@ namespace Content.Server.Atmos.Monitor;
 public sealed class AirAlarmPanicWire : BaseWireAction
 {
     private string _text = "PANC";
+    protected override string Text
+    {
+        get => _text;
+        set => _text = value;
+    }
     private Color _color = Color.Red;
 
     private AirAlarmSystem _airAlarmSystem = default!;

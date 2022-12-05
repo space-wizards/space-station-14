@@ -13,6 +13,11 @@ public sealed class DoorBoltWireAction : BaseWireAction
 
     [DataField("name")]
     private string _text = "BOLT";
+    protected override string Text
+    {
+        get => _text;
+        set => _text = value;
+    }
 
     public override StatusLightData? GetStatusLightData(Wire wire)
     {
