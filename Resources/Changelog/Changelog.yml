@@ -1,9 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Jaws of life can force open powered doors now., type: Add}
-  id: 2218
-  time: '2022-09-01T03:22:26.0000000+00:00'
 - author: notafet
   changes:
   - {message: More tools are craftable in the autolathe., type: Add}
@@ -2948,3 +2943,9 @@ Entries:
   - {message: Links to the wiki/discord/etc show up again in the lobby., type: Fix}
   id: 2717
   time: '2022-12-04T12:47:26.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Vehicles now inherit access from the rider instead of having access
+      defined on the vehicle itself., type: Tweak}
+  id: 2718
+  time: '2022-12-05T00:23:59.0000000+00:00'
