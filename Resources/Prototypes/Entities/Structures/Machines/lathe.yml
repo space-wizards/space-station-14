@@ -223,6 +223,7 @@
       - PowerCellMedium
       - PowerCellHigh  
       - RPED
+      - NodeScanner
       - HolofanProjector
 
 - type: entity

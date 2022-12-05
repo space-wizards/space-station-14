@@ -322,8 +322,6 @@
     - SolarControlComputerCircuitboard
     - PowerComputerCircuitboard
     - GeneratorPlasmaMachineCircuitboard
-    - AnalysisComputerCircuitboard
-    - ArtifactAnalyzerMachineCircuitboard
     - Signaller
     - SignalTrigger
     - VoiceTrigger
@@ -448,7 +446,23 @@
     - HighPowerMicroLaserStockPart
     - NanoManipulatorStockPart
     - AdvancedScanningModuleStockPart
-    - TraversalDistorterMachineCircuitboard #sigh
+
+# Various Science Technology Tree
+- type: technology
+  name: technologies-archaeology
+  id: XenoarchaeologyEquipmentTechnology
+  description: technologies-archaeology
+  icon:
+    sprite: Objects/Specific/Xenoarchaeology/node_scanner.rsi
+    state: icon
+  requiredPoints: 5000
+  requiredTechnologies:
+    - BasicPartsTechnology
+  unlockedRecipes:
+    - NodeScanner
+    - AnalysisComputerCircuitboard
+    - TraversalDistorterMachineCircuitboard
+    - ArtifactAnalyzerMachineCircuitboard
 
 # Bluespace Theory Technology Tree
 

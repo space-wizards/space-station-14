@@ -52,6 +52,9 @@ technologies-advanced-powercell-printing-description = Print advanced powercells
 technologies-super-powercell-printing = Super powercell printing
 technologies-super-powercell-printing-description = Print super powercells.
 
+technologies-archaeology = Xenoarchaeology Equipment
+technologies-archaeology-description = Equipment for performing research on alient artifacts.
+
 technologies-basic-parts-technology = Basic parts technology
 technologies-basic-parts-technology-description = They aren't great, but at least they're something.
 
