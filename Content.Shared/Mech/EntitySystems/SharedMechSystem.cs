@@ -1,4 +1,6 @@
 ﻿using System.Linq;
+using Content.Shared.Access.Components;
+using Content.Shared.Access.Systems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
@@ -27,6 +29,7 @@ public abstract class SharedMechSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
+    [Dependency] private readonly AccessReaderSystem _access = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
@@ -47,6 +50,7 @@ public abstract class SharedMechSystem : EntitySystem
         SubscribeLocalEvent<SharedMechComponent, InteractNoHandEvent>(RelayInteractionEvent);
         SubscribeLocalEvent<SharedMechComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<SharedMechComponent, DestructionEventArgs>(OnDestruction);
+        SubscribeLocalEvent<SharedMechComponent, GetAdditionalAccessEvent>(OnGetAdditionalAccess);
 
         SubscribeLocalEvent<MechPilotComponent, GetMeleeWeaponEvent>(OnGetMeleeWeapon);
         SubscribeLocalEvent<MechPilotComponent, CanAttackFromContainerEvent>(OnCanAttackFromContainer);
@@ -138,6 +142,17 @@ public abstract class SharedMechSystem : EntitySystem
     private void OnDestruction(EntityUid uid, SharedMechComponent component, DestructionEventArgs args)
     {
         BreakMech(uid, component);
+    }
+
+    private void OnGetAdditionalAccess(EntityUid uid, SharedMechComponent component, ref GetAdditionalAccessEvent args)
+    {
+        var pilot = component.PilotSlot.ContainedEntity;
+        if (pilot == null)
+            return;
+
+        args.Entities.Add(pilot.Value);
+        _access.FindAccessItemsInventory(pilot.Value, out var items);
+        args.Entities = args.Entities.Union(items).ToHashSet();
     }
 
     private void SetupUser(EntityUid mech, EntityUid pilot, SharedMechComponent? component = null)
