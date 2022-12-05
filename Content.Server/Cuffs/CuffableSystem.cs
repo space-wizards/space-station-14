@@ -121,7 +121,8 @@ namespace Content.Server.Cuffs
 
         private void OnCuffMeleeHit(EntityUid uid, HandcuffComponent component, MeleeHitEvent args)
         {   
-            if (component.Cuffing)
+            if (!args.HitEntities.Any() ||
+                component.Cuffing)
                 return;
 
             if (!EntityManager.TryGetComponent<CuffableComponent>(args.HitEntities.First(), out var cuffed))
