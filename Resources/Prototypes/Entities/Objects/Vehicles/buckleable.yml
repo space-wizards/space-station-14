@@ -89,10 +89,6 @@
       map: ["enum.VehicleVisualLayers.AutoAnimate"]
     netsync: false
     noRot: true
-  - type: Access
-    tags:
-    - Maintenance
-    - Janitor
   - type: UnpoweredFlashlight
     toggleAction:
       name: action-name-toggle-light
@@ -180,12 +176,6 @@
       map: ["enum.VehicleVisualLayers.AutoAnimate"]
     netsync: false
     noRot: true
-  - type: Access
-    tags:
-    - Security
-    - Brig
-    - Maintenance
-    - Service
   - type: Strap
     buckleOffset: "0.15, -0.05"
     maxBuckleDistance: 1
@@ -230,10 +220,6 @@
       map: ["enum.VehicleVisualLayers.AutoAnimate"]
     netsync: false
     noRot: true
-  - type: Access
-    tags:
-    - Cargo
-    - Maintenance
   - type: RandomMetadata
     descriptionSegments: [ATVDescriptions]
   - type: MovementSpeedModifier
@@ -290,10 +276,6 @@
           map: ["enum.VehicleVisualLayers.AutoAnimate"]
       netsync: false
       noRot: true
-    - type: Access
-      tags:
-        - Maintenance
-        - Service
     - type: Strap
       buckleOffset: "0.15, -0.05"
       maxBuckleDistance: 1

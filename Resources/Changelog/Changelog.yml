@@ -1,49 +1,4 @@
 Entries:
-- author: JustinTrotter
-  changes:
-  - {message: Increased stripping menu height and reordered inventory, type: Tweak}
-  id: 2213
-  time: '2022-09-01T02:21:02.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: 'Salvages now spawn somewhere near the salvage magnet, rather than directly
-      in front of it.', type: Tweak}
-  id: 2214
-  time: '2022-09-01T02:25:05.0000000+00:00'
-- author: JustinTrotter
-  changes:
-  - {message: Bots can now be stuffed into closets, type: Tweak}
-  id: 2215
-  time: '2022-09-01T02:40:16.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Added a poster celebrating the current state of our forthcoming server.,
-    type: Add}
-  id: 2216
-  time: '2022-09-01T02:56:27.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Mini Jetpack now fits in your suit storage slot., type: Tweak}
-  - {message: 'All big guns fit on your back and most fit in suit storage. LMGs, Snipers
-      and Launchers are back only.', type: Tweak}
-  - {message: 'All handguns now fit on your belt slot (waistband right?)', type: Tweak}
-  id: 2217
-  time: '2022-09-01T03:21:13.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Jaws of life can force open powered doors now., type: Add}
-  id: 2218
-  time: '2022-09-01T03:22:26.0000000+00:00'
-- author: notafet
-  changes:
-  - {message: More tools are craftable in the autolathe., type: Add}
-  id: 2219
-  time: '2022-09-01T03:39:33.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Shotguns should now be much more effective in combat., type: Tweak}
-  id: 2220
-  time: '2022-09-01T06:39:11.0000000+00:00'
 - author: ShadowCommander
   changes:
   - {message: Fixed metal counter frame deconstruction, type: Fix}
@@ -2949,3 +2904,49 @@ Entries:
   - {message: Kick AFK players, type: Add}
   id: 2712
   time: '2022-12-01T16:38:20.0000000+00:00'
+- author: jick
+  changes:
+  - {message: Escape key clears chat input, type: Tweak}
+  id: 2713
+  time: '2022-12-03T01:15:59.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Weld modular mines and grenades to salvage them, type: Tweak}
+  id: 2714
+  time: '2022-12-03T01:20:38.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: Updated all Engineering jumpsuit sprites, type: Tweak}
+  - {message: Updated the Emergency Firesuit's sprite, type: Tweak}
+  - {message: Partially resprited most hardhats, type: Tweak}
+  - {message: Added the orange hardhat to the engidrobe vendor, type: Tweak}
+  id: 2715
+  time: '2022-12-03T01:41:06.0000000+00:00'
+- author: GoodWheatley
+  changes:
+  - {message: The Syndicate has adjusted the price of several uplink items to encourage
+      traitors to use more diverse strategies., type: Add}
+  id: 2716
+  time: '2022-12-03T01:48:25.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: Links to the wiki/discord/etc show up again in the lobby., type: Fix}
+  id: 2717
+  time: '2022-12-04T12:47:26.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Vehicles now inherit access from the rider instead of having access
+      defined on the vehicle itself., type: Tweak}
+  id: 2718
+  time: '2022-12-05T00:23:59.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Artifact analyzers linked to consoles roundstart should now work properly.,
+    type: Fix}
+  id: 2719
+  time: '2022-12-05T02:35:07.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix tile friction on planetmaps., type: Fix}
+  id: 2720
+  time: '2022-12-05T03:47:08.0000000+00:00'
