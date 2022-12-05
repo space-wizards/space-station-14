@@ -13,7 +13,7 @@ e may potentially use it in the SS14 progress reports, with clear credit given.
 Use screenshot software like Window's built in snipping tool, ShareX, Lightshot, or recording software like ShareX (gif), ScreenToGif, or Open Broadcaster Software (cross platform).
 If you're unsure whether your PR will require media, ask a maintainer.
 
-Check one of the boxes below to confirm that you have in fact seen this:
+Check one of the boxes below to confirm that you have in fact seen this (put an X in the brackets, like [X]):
 -->
 
 - [ ] I have added screenshots/videos to this PR showcasing its changes ingame
