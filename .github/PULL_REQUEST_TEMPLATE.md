@@ -7,8 +7,8 @@
 <!-- 
 If applicable, add screenshots or videos to showcase your PR. Small fixes/refactors are exempt, but all PRs which make ingame changes 
 (adding clothing, items, new features, etc) must include ingame media or the PR will not be merged, in accordance with our PR guidelines.
-This makes it much easier for us to merge PRs and find media for progress reports. If you include media in your pull request, w
-e may potentially use it in the SS14 progress reports, with clear credit given.
+This makes it much easier for us to merge PRs and find media for progress reports. If you include media in your pull request, we 
+may potentially use it in the SS14 progress reports, with clear credit given.
 
 Use screenshot software like Window's built in snipping tool, ShareX, Lightshot, or recording software like ShareX (gif), ScreenToGif, or Open Broadcaster Software (cross platform).
 If you're unsure whether your PR will require media, ask a maintainer.
