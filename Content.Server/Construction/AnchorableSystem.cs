@@ -123,7 +123,7 @@ namespace Content.Server.Construction
             {
                 if (!bodyQuery.TryGetComponent(ent, out var body) ||
                     !body.CanCollide ||
-                    (!body.Hard && body.BodyType != BodyType.Staticx)
+                    (!body.Hard && body.BodyType != BodyType.Static)
                 {
                     continue;
                 }
