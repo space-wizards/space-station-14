@@ -5,7 +5,7 @@
   minPlayers: 35
   stations:
     Origin:
-      mapNameTemplate: '{0} Origin Station {1}'
+      mapNameTemplate: '{0} Origin {1}'
       emergencyShuttlePath: /Maps/Shuttles/emergency_courser.yml
       nameGenerator:
         !type:NanotrasenNameGenerator
