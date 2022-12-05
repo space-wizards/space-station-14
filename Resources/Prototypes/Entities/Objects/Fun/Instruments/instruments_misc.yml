@@ -58,6 +58,17 @@
     size: 10
 
 - type: entity
+  parent: PhoneInstrument
+  id: BananaPhoneInstrument
+  name: banana phone
+  description: A direct line to the Honkmother. Seems to always go to voicemail.
+  components:
+  - type: Prayable
+    sentMessage: You left a voicemail message for the Honkmother...
+    notifiactionPrefix: HONKMOTHER
+    verb: Call
+
+- type: entity
   parent: BaseHandheldInstrument
   id: HelicopterInstrument
   name: toy helicopter
