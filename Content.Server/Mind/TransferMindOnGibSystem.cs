@@ -32,6 +32,6 @@ public sealed class TransferMindOnGibSystem : EntitySystem
             return;
 
         var ent = _random.Pick(validParts);
-        mindcomp.Mind.TransferTo(ent);
+        mindcomp.Mind.TransferTo(ent, preserveProperties:true);
     }
 }

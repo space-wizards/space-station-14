@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.GameTicking;
 using Content.Server.Ghost;
 using Content.Server.Ghost.Components;
@@ -59,6 +60,18 @@ public sealed class MindSystem : EntitySystem
             RaiseLocalEvent(uid, new MindRemovedMessage(), true);
 
         mind.Mind = null;
+    }
+
+    public void TransferMindProperties(MindComponent source, MindComponent target)
+    {
+        var props = typeof(MindComponent).GetProperties().ToList().Where(x => x.CanWrite);
+        string[] includedProps = { "ShowExamineInfo", "GhostOnShutdown", "PreventGhosting" };
+
+        foreach (var prop in props)
+        {
+            if (includedProps.Contains(prop.Name))
+                prop.SetValue(target, prop.GetValue(source));
+        }
     }
 
     private void OnShutdown(EntityUid uid, MindComponent mind, ComponentShutdown args)

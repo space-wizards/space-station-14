@@ -101,7 +101,7 @@ namespace Content.Server.Polymorph.Systems
 
             if (TryComp<MindComponent>(uid, out var mind) && mind.Mind != null)
             {
-                mind.Mind.TransferTo(component.Parent);
+                mind.Mind.TransferTo(component.Parent, preserveProperties:true);
             }
 
             _popup.PopupEntity(Loc.GetString("polymorph-revert-popup-generic",

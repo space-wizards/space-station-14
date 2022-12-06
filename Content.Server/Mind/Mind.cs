@@ -260,10 +260,13 @@ namespace Content.Server.Mind
         /// <param name="ghostCheckOverride">
         ///     If true, skips ghost check for Visiting Entity
         /// </param>
+        /// <param name="preserveProperties">
+        ///     If true, also transfers the mind's properties
+        /// </param>
         /// <exception cref="ArgumentException">
         ///     Thrown if <paramref name="entity"/> is already owned by another mind.
         /// </exception>
-        public void TransferTo(EntityUid? entity, bool ghostCheckOverride = false)
+        public void TransferTo(EntityUid? entity, bool ghostCheckOverride = false, bool preserveProperties = false)
         {
             // Looks like caller just wants us to go back to normal.
             if (entity == OwnedEntity)
@@ -301,6 +304,9 @@ namespace Content.Server.Mind
             }
 
             var mindSystem = EntitySystem.Get<MindSystem>();
+
+            if (preserveProperties && OwnedComponent != null && component != null)
+                mindSystem.TransferMindProperties(OwnedComponent, component);
 
             if(OwnedComponent != null)
                 mindSystem.InternalEjectMind(OwnedComponent.Owner, OwnedComponent);
