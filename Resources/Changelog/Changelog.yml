@@ -1,17 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Made snow and grass unable to be pried with a crowbar., type: Fix}
-  id: 2229
-  time: '2022-09-03T13:40:20.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Fixes nukeops being broken when run from secret., type: Fix}
-  - {message: 'Fixes random events being broken when run from secret. Are you serious?
-      Not a single one of you reported this until now? It''s been broken for 2 months.',
-    type: Fix}
-  id: 2230
-  time: '2022-09-04T01:40:00.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed some prediction issues surrounding status effects. Slipping should
@@ -2949,3 +2936,14 @@ Entries:
     type: Fix}
   id: 2728
   time: '2022-12-06T23:33:21.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: NPCs will be more persistent in chases., type: Tweak}
+  id: 2729
+  time: '2022-12-06T23:34:23.0000000+00:00'
+- author: Errant
+  changes:
+  - {message: Wall mounted generators and substations actually mounted on a wall can
+      now be ~punched~ reached, type: Fix}
+  id: 2730
+  time: '2022-12-06T23:34:56.0000000+00:00'
