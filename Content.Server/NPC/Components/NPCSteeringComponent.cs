@@ -1,6 +1,7 @@
 using System.Threading;
 using Content.Server.CPUJob.JobQueues;
 using Content.Server.NPC.Pathfinding;
+using Content.Shared.NPC;
 using Robust.Shared.Map;
 
 namespace Content.Server.NPC.Components;
@@ -11,11 +12,19 @@ namespace Content.Server.NPC.Components;
 [RegisterComponent]
 public sealed class NPCSteeringComponent : Component
 {
+    #region Context Steering
+
     /// <summary>
     /// Radius for collision avoidance.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     public float Radius = 0.35f;
+
+    public readonly float[] DangerMap = new float[SharedNPCSteeringSystem.InterestDirections];
+
+    public readonly float[] InterestMap = new float[SharedNPCSteeringSystem.InterestDirections];
+
+    #endregion
 
     /// <summary>
     /// Have we currently requested a path.

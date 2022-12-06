@@ -60,11 +60,19 @@ public sealed class NPCSteeringSystem : SharedNPCSteeringSystem
 
     private void OnDebugEvent(NPCSteeringDebugEvent ev)
     {
-        if (!DebugEnabled || !Exists(ev.EntityUid))
+        if (!DebugEnabled)
             return;
 
-        var comp = EnsureComp<NPCSteeringComponent>(ev.EntityUid);
-        comp.Direction = ev.Direction;
+        foreach (var data in ev.Data)
+        {
+            if (!Exists(data.EntityUid))
+                continue;
+
+            var comp = EnsureComp<NPCSteeringComponent>(data.EntityUid);
+            comp.Direction = data.Direction;
+            comp.DangerMap = data.DangerMap;
+            comp.InterestMap = data.InterestMap;
+        }
     }
 }
 
@@ -94,8 +102,15 @@ public sealed class NPCSteeringOverlay : Overlay
                 continue;
 
             args.WorldHandle.DrawCircle(worldPos, 1f, Color.Green, false);
-
             var rotationOffset = worldRot - xform.LocalRotation;
+
+            for (var i = 0; i < SharedNPCSteeringSystem.InterestDirections; i++)
+            {
+                var danger = comp.DangerMap[i];
+                var angle = Angle.FromDegrees(i * (360 / SharedNPCSteeringSystem.InterestDirections));
+                args.WorldHandle.DrawLine(worldPos, worldPos + angle.RotateVec(new Vector2(0f, danger)), Color.Red);
+            }
+
             args.WorldHandle.DrawLine(worldPos, worldPos + rotationOffset.RotateVec(comp.Direction), Color.Blue);
         }
     }

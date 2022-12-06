@@ -7,4 +7,7 @@ public sealed class NPCSteeringComponent : Component
      */
 
     public Vector2 Direction;
+
+    public float[] DangerMap = Array.Empty<float>();
+    public float[] InterestMap = Array.Empty<float>();
 }

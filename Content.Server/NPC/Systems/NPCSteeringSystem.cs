@@ -32,10 +32,12 @@ namespace Content.Server.NPC.Systems
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly DoorSystem _doors = default!;
+        [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly PathfindingSystem _pathfindingSystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interaction = default!;
         [Dependency] private readonly SharedMeleeWeaponSystem _melee = default!;
         [Dependency] private readonly SharedMoverController _mover = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
         // This will likely get moved onto an abstract pathfinding node that specifies the max distance allowed from the coordinate.
         private const float TileTolerance = 0.40f;
@@ -173,6 +175,7 @@ namespace Content.Server.NPC.Systems
             // Not every mob has the modifier component so do it as a separate query.
             var bodyQuery = GetEntityQuery<PhysicsComponent>();
             var modifierQuery = GetEntityQuery<MovementSpeedModifierComponent>();
+            var xformQuery = GetEntityQuery<TransformComponent>();
 
             var npcs = EntityQuery<NPCSteeringComponent, ActiveNPCComponent, InputMoverComponent, TransformComponent>()
                 .ToArray();
@@ -181,24 +184,26 @@ namespace Content.Server.NPC.Systems
             // Main obstacle is requesting a new path needs to be done synchronously
             foreach (var (steering, _, mover, xform) in npcs)
             {
-                Steer(steering, mover, xform, modifierQuery, bodyQuery, frameTime);
+                Steer(steering, mover, xform, modifierQuery, bodyQuery, xformQuery, frameTime);
             }
 
             if (_subscribedSessions.Count > 0)
             {
-                foreach (var (_, _, mover, _) in npcs)
+                var data = new List<NPCSteeringDebugData>(npcs.Length);
+
+                foreach (var (steering, _, mover, _) in npcs)
                 {
-                    var ev = new NPCSteeringDebugEvent()
-                    {
-                        EntityUid = mover.Owner,
-                        Direction = mover.CurTickSprintMovement,
-                    };
-
-                    var filter = Filter.Empty();
-                    filter.AddPlayers(_subscribedSessions);
-
-                    RaiseNetworkEvent(ev, filter);
+                    data.Add(new NPCSteeringDebugData(
+                        mover.Owner,
+                        mover.CurTickSprintMovement,
+                        steering.DangerMap,
+                        steering.InterestMap));
                 }
+
+                var filter = Filter.Empty();
+                filter.AddPlayers(_subscribedSessions);
+
+                RaiseNetworkEvent(new NPCSteeringDebugEvent(data), filter);
             }
         }
 
@@ -223,6 +228,7 @@ namespace Content.Server.NPC.Systems
             TransformComponent xform,
             EntityQuery<MovementSpeedModifierComponent> modifierQuery,
             EntityQuery<PhysicsComponent> bodyQuery,
+            EntityQuery<TransformComponent> xformQuery,
             float frameTime)
         {
             if (Deleted(steering.Coordinates.EntityId))
@@ -235,14 +241,64 @@ namespace Content.Server.NPC.Systems
             var ourCoordinates = xform.Coordinates;
             var destinationCoordinates = steering.Coordinates;
 
-            const byte InterestDirections = 8;
-            var interestMap = new float[InterestDirections];
-            var dangerMap = new float[InterestDirections];
+            // TODO: SHITCODE AAAA
+            // TODO: Stackalloc?
+            Span<Vector2> directions = new Vector2[InterestDirections];
+            var interestMap = steering.InterestMap;
+            var dangerMap = steering.DangerMap;
 
-            var detectionTime = 0.5f;
+            for (var i = 0; i < InterestDirections; i++)
+            {
+                directions[i] = Angle.FromDegrees(i * (360 / InterestDirections)).ToVec();
+                interestMap[i] = 0f;
+                dangerMap[i] = 0f;
+            }
+
+            const float detectionTime = 0.5f;
             var speed = GetSprintSpeed(steering.Owner);
-            var detectionRadius = detectionTime * speed;
-            var radius = steering.Radius;
+            var detectionRadius = detectionTime * speed + steering.Radius;
+            var agentRadius = steering.Radius;
+            var (worldPos, worldRot) = xform.GetWorldPositionRotation();
+
+            // Use rotation relative to parent to rotate our context vectors by.
+            var offsetRot = worldRot - xform.LocalRotation;
+
+            // Static Avoidance (TODO: METHOD)
+            foreach (var ent in _lookup.GetEntitiesInRange(mover.Owner, detectionRadius, LookupFlags.Static))
+            {
+                if (ent == mover.Owner ||
+                    !bodyQuery.TryGetComponent(ent, out var otherBody) ||
+                    !otherBody.CanCollide ||
+                    !otherBody.Hard)
+                {
+                    // TODO: Mask
+                    continue;
+                }
+
+                // TODO: More queries and shit.
+                if (!_physics.TryGetNearestPoints(mover.Owner, ent, out var pointA, out var pointB, xform, xformQuery.GetComponent(ent)))
+                {
+                    continue;
+                }
+
+                var obstacleDirection = offsetRot.RotateVec(pointB - worldPos);
+                var obstacleDistance = obstacleDirection.Length;
+
+                if (obstacleDistance > detectionRadius)
+                    continue;
+
+                var weight = obstacleDistance <= agentRadius ? 1f : (detectionRadius - obstacleDistance) / detectionRadius;
+                var norm = obstacleDirection.Normalized;
+
+                for (var i = 0; i < InterestDirections; i++)
+                {
+                    var result = Vector2.Dot(norm, directions[i]);
+                    var inputValue = result * weight;
+                    dangerMap[i] = MathF.Max(inputValue, dangerMap[i]);
+                }
+            }
+
+            // Dynamic Avoidance (TODO: METHOD)
 
             // TODO: Minus dangermap from interest map
             // TODO: Average directions.
