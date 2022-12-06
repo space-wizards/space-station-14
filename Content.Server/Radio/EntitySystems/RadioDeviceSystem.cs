@@ -6,6 +6,7 @@ using Content.Server.Speech.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Radio;
+using Content.Shared.Verbs;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
@@ -31,6 +32,7 @@ public sealed class RadioDeviceSystem : EntitySystem
         SubscribeLocalEvent<RadioMicrophoneComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<RadioMicrophoneComponent, ActivateInWorldEvent>(OnActivateMicrophone);
         SubscribeLocalEvent<RadioMicrophoneComponent, ListenEvent>(OnListen);
+        SubscribeLocalEvent<RadioMicrophoneComponent, GetVerbsEvent<AlternativeVerb>>(OnAlternativeVerb);
 
         SubscribeLocalEvent<RadioSpeakerComponent, ComponentInit>(OnSpeakerInit);
         SubscribeLocalEvent<RadioSpeakerComponent, ActivateInWorldEvent>(OnActivateSpeaker);
@@ -95,6 +97,34 @@ public sealed class RadioDeviceSystem : EntitySystem
             RemCompDeferred<ActiveListenerComponent>(uid);
     }
 
+    private void OnAlternativeVerb(EntityUid uid, RadioMicrophoneComponent component, GetVerbsEvent<AlternativeVerb> args)
+    {
+        if (!args.CanAccess || !args.CanInteract || args.Hands == null)
+            return;
+
+        if (component.SupportedChannels == null || component.SupportedChannels.Count <= 1)
+            return;
+
+        foreach (var channel in component.SupportedChannels)
+        {
+            var proto = _protoMan.Index<RadioChannelPrototype>(channel);
+
+            var v = new AlternativeVerb
+            {
+                Text = proto.LocalizedName,
+                Category = VerbCategory.ChannelSelect,
+                Disabled = component.BroadcastChannel == channel,
+                Act = () =>
+                {
+                    component.BroadcastChannel = channel;
+                    _popup.PopupEntity(Loc.GetString("handheld-radio-component-channel-set",
+                        ("channel", channel)), uid, Filter.Entities(args.User));
+                }
+            };
+            args.Verbs.Add(v);
+        }
+    }
+
     public void ToggleRadioSpeaker(EntityUid uid, EntityUid user, bool quiet = false, RadioSpeakerComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -143,6 +173,6 @@ public sealed class RadioDeviceSystem : EntitySystem
             ("originalName", nameEv.Name));
 
         var hideGlobalGhostChat = true; // log to chat so people can identity the speaker/source, but avoid clogging ghost chat if there are many radios
-        _chat.TrySendInGameICMessage(uid, args.Message, InGameICChatType.Speak, false, nameOverride: name, hideGlobalGhostChat:hideGlobalGhostChat, checkRadioPrefix: false); 
+        _chat.TrySendInGameICMessage(uid, args.Message, InGameICChatType.Speak, false, nameOverride: name, hideGlobalGhostChat:hideGlobalGhostChat, checkRadioPrefix: false);
     }
 }
