@@ -1,9 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Broken post lights should no longer show an error, type: Fix}
-  id: 2223
-  time: '2022-09-01T12:25:31.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Microwaves now properly heat up solutions. Resume meth production posthaste!,
@@ -2949,3 +2944,8 @@ Entries:
   - {message: item cabinets no longer can be (un)locked while open, type: Fix}
   id: 2722
   time: '2022-12-06T22:59:59.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: NPCs will no longer stall on 1 bad path., type: Fix}
+  id: 2723
+  time: '2022-12-06T23:11:05.0000000+00:00'
