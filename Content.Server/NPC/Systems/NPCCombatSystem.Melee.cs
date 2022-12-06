@@ -98,6 +98,8 @@ public sealed partial class NPCCombatSystem
 
         // Gets unregistered on component shutdown.
         _steering.TryRegister(component.Owner, new EntityCoordinates(component.Target, Vector2.Zero), steering);
-        _melee.AttemptLightAttack(component.Owner, weapon, component.Target);
+
+        if (Enabled)
+            _melee.AttemptLightAttack(component.Owner, weapon, component.Target);
     }
 }

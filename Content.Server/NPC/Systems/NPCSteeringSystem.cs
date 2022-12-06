@@ -3,6 +3,7 @@ using System.Threading;
 using Content.Server.Administration.Managers;
 using Content.Server.Doors.Systems;
 using Content.Server.NPC.Components;
+using Content.Server.NPC.Events;
 using Content.Server.NPC.Pathfinding;
 using Content.Shared.CCVar;
 using Content.Shared.Interaction;
@@ -238,87 +239,6 @@ namespace Content.Server.NPC.Systems
                 return;
             }
 
-            var ourCoordinates = xform.Coordinates;
-            var destinationCoordinates = steering.Coordinates;
-
-            // TODO: SHITCODE AAAA
-            // TODO: Stackalloc?
-            Span<Vector2> directions = new Vector2[InterestDirections];
-            var interestMap = steering.InterestMap;
-            var dangerMap = steering.DangerMap;
-
-            for (var i = 0; i < InterestDirections; i++)
-            {
-                directions[i] = Angle.FromDegrees(i * (360 / InterestDirections)).ToVec();
-                interestMap[i] = 0f;
-                dangerMap[i] = 0f;
-            }
-
-            const float detectionTime = 0.5f;
-            var speed = GetSprintSpeed(steering.Owner);
-            var detectionRadius = detectionTime * speed + steering.Radius;
-            var agentRadius = steering.Radius;
-            var (worldPos, worldRot) = xform.GetWorldPositionRotation();
-
-            // Use rotation relative to parent to rotate our context vectors by.
-            var offsetRot = worldRot - xform.LocalRotation;
-
-            // Static Avoidance (TODO: METHOD)
-            foreach (var ent in _lookup.GetEntitiesInRange(mover.Owner, detectionRadius, LookupFlags.Static))
-            {
-                if (ent == mover.Owner ||
-                    !bodyQuery.TryGetComponent(ent, out var otherBody) ||
-                    !otherBody.CanCollide ||
-                    !otherBody.Hard)
-                {
-                    // TODO: Mask
-                    continue;
-                }
-
-                // TODO: More queries and shit.
-                if (!_physics.TryGetNearestPoints(mover.Owner, ent, out var pointA, out var pointB, xform, xformQuery.GetComponent(ent)))
-                {
-                    continue;
-                }
-
-                var obstacleDirection = offsetRot.RotateVec(pointB - worldPos);
-                var obstacleDistance = obstacleDirection.Length;
-
-                if (obstacleDistance > detectionRadius)
-                    continue;
-
-                var weight = obstacleDistance <= agentRadius ? 1f : (detectionRadius - obstacleDistance) / detectionRadius;
-                var norm = obstacleDirection.Normalized;
-
-                for (var i = 0; i < InterestDirections; i++)
-                {
-                    var result = Vector2.Dot(norm, directions[i]);
-                    var inputValue = result * weight;
-                    dangerMap[i] = MathF.Max(inputValue, dangerMap[i]);
-                }
-            }
-
-            // Dynamic Avoidance (TODO: METHOD)
-
-            // TODO: Minus dangermap from interest map
-            // TODO: Average directions.
-
-            for (var i = 0; i < InterestDirections; i++)
-            {
-
-            }
-
-            // TODO: Send debug data to client.
-
-            // We've arrived, nothing else matters.
-            if (xform.Coordinates.TryDistance(EntityManager, destinationCoordinates, out var distance) &&
-                distance <= steering.Range)
-            {
-                SetDirection(mover, steering, Vector2.Zero);
-                steering.Status = SteeringStatus.InRange;
-                return;
-            }
-
             // No path set from pathfinding or the likes.
             if (steering.Status == SteeringStatus.NoPath)
             {
@@ -334,8 +254,96 @@ namespace Content.Server.NPC.Systems
                 return;
             }
 
-            // Grab the target position, either the next path node or our end goal.
-            // TODO: Some situations we may not want to move at our target without a path.
+            var uid = mover.Owner;
+            var ourCoordinates = xform.Coordinates;
+            var destinationCoordinates = steering.Coordinates;
+
+            // TODO: SHITCODE AAAA
+            // TODO: Stackalloc?
+            var directions = new Vector2[InterestDirections];
+            var interestMap = steering.InterestMap;
+            var dangerMap = steering.DangerMap;
+
+            for (var i = 0; i < InterestDirections; i++)
+            {
+                directions[i] = Angle.FromDegrees(i * (360 / InterestDirections)).ToVec();
+                interestMap[i] = 0f;
+                dangerMap[i] = 0f;
+            }
+
+            var agentRadius = steering.Radius;
+            var detectionRadius = 1.5f + agentRadius;
+            var (worldPos, worldRot) = xform.GetWorldPositionRotation();
+
+            // Use rotation relative to parent to rotate our context vectors by.
+            var offsetRot = worldRot - xform.LocalRotation;
+
+            // TODO: Have some time delay on NPC combat in range before swinging (e.g. 50-200ms) that is a limit.
+            // TODO: Have some kind of way to control them avoiding when melee on cd.
+            // TODO: Have them hover around some preferred engagement range per-NPC, then they duck out (if target has melee(?))
+            // TODO: Have them strafe around the target for some random time then strafe the other direction.
+
+            if (!TrySeek(uid, mover, steering, xform, interestMap, dangerMap, directions, bodyQuery, modifierQuery, frameTime))
+            {
+                SetDirection(mover, steering, Vector2.Zero);
+                return;
+            }
+
+            StaticAvoid(uid, offsetRot, worldPos, detectionRadius, agentRadius, xform, dangerMap, directions, bodyQuery, xformQuery);
+            // TODO: Avoid anything not considered hostile
+            DynamicAvoid(uid);
+
+            var ev = new NPCSteeringEvent(interestMap, dangerMap);
+            RaiseLocalEvent(uid, ref ev);
+
+            // Remove the danger map from the interest map.
+            for (var i = 0; i < InterestDirections; i++)
+            {
+                interestMap[i] = Math.Clamp(interestMap[i] - dangerMap[i], 0f, 1f);
+            }
+
+            var resultDirection = Vector2.Zero;
+
+            // Get average vector to take.
+            for (var i = 0; i < InterestDirections; i++)
+            {
+                resultDirection += directions[i] * interestMap[i];
+            }
+
+            resultDirection = resultDirection == Vector2.Zero ? Vector2.Zero : resultDirection.Normalized;
+            SetDirection(mover, steering, resultDirection, false);
+        }
+
+        #region Seek
+
+        /// <summary>
+        /// Attempts to head to the target destination, either via the next pathfinding node or the final target.
+        /// </summary>
+        private bool TrySeek(
+            EntityUid uid,
+            InputMoverComponent mover,
+            NPCSteeringComponent steering,
+            TransformComponent xform,
+            float[] interestMap,
+            float[] dangerMap,
+            Vector2[] directions,
+            EntityQuery<PhysicsComponent> bodyQuery,
+            EntityQuery<MovementSpeedModifierComponent> modifierQuery,
+            float frameTime)
+        {
+            var ourCoordinates = xform.Coordinates;
+            var destinationCoordinates = steering.Coordinates;
+
+            // We've arrived, nothing else matters.
+            if (xform.Coordinates.TryDistance(EntityManager, destinationCoordinates, out var distance) &&
+                distance <= steering.Range)
+            {
+                SetDirection(mover, steering, Vector2.Zero);
+                steering.Status = SteeringStatus.InRange;
+                return true;
+            }
+
+            // Grab the target position, either the next path node or our end goal..
             var targetCoordinates = GetTargetCoordinates(steering);
             var needsPath = false;
 
@@ -372,9 +380,8 @@ namespace Content.Server.NPC.Systems
 
             if (targetMap.MapId != ourMap.MapId)
             {
-                SetDirection(mover, steering, Vector2.Zero);
                 steering.Status = SteeringStatus.NoPath;
-                return;
+                return false;
             }
 
             var direction = targetMap.Position - ourMap.Position;
@@ -394,13 +401,11 @@ namespace Content.Server.NPC.Systems
                             break;
                         case SteeringObstacleStatus.Failed:
                             // TODO: Blacklist the poly for next query
-                            SetDirection(mover, steering, Vector2.Zero);
                             steering.Status = SteeringStatus.NoPath;
-                            return;
+                            return false;
                         case SteeringObstacleStatus.Continuing:
-                            SetDirection(mover, steering, Vector2.Zero, false);
                             CheckPath(steering, xform, needsPath, distance);
-                            return;
+                            return true;
                         default:
                             throw new ArgumentOutOfRangeException();
                     }
@@ -424,7 +429,7 @@ namespace Content.Server.NPC.Systems
                         {
                             SetDirection(mover, steering, Vector2.Zero);
                             steering.Status = SteeringStatus.NoPath;
-                            return;
+                            return false;
                         }
 
                         // Gonna resume now business as usual
@@ -433,9 +438,8 @@ namespace Content.Server.NPC.Systems
                     else
                     {
                         // This probably shouldn't happen as we check above but eh.
-                        SetDirection(mover, steering, Vector2.Zero);
-                        steering.Status = SteeringStatus.InRange;
-                        return;
+                        steering.Status = SteeringStatus.NoPath;
+                        return false;
                     }
                 }
             }
@@ -460,9 +464,8 @@ namespace Content.Server.NPC.Systems
 
             if (tickMovement.Equals(0f))
             {
-                SetDirection(mover, steering, Vector2.Zero);
                 steering.Status = SteeringStatus.NoPath;
-                return;
+                return false;
             }
 
             // We may overshoot slightly but still be in the arrival distance which is okay.
@@ -475,7 +478,15 @@ namespace Content.Server.NPC.Systems
 
             // We have the input in world terms but need to convert it back to what movercontroller is doing.
             input = (-_mover.GetParentGridAngle(mover)).RotateVec(input);
-            SetDirection(mover, steering, input);
+            var norm = input.Normalized;
+
+            for (var i = 0; i < InterestDirections; i++)
+            {
+                var result = Vector2.Dot(norm, directions[i]);
+                interestMap[i] = MathF.Max(interestMap[i], result * input.Length);
+            }
+
+            return true;
         }
 
         private void CheckPath(NPCSteeringComponent steering, TransformComponent xform, bool needsPath, float targetDistance)
@@ -545,6 +556,73 @@ namespace Content.Server.NPC.Systems
 
             return steering.Coordinates;
         }
+
+        #endregion
+
+        #region Static Avoidance
+
+        /// <summary>
+        /// Tries to avoid static blockers such as walls.
+        /// </summary>
+        private void StaticAvoid(
+            EntityUid uid,
+            Angle offsetRot,
+            Vector2 worldPos,
+            float detectionRadius,
+            float agentRadius,
+            TransformComponent xform,
+            float[] dangerMap,
+            Vector2[] directions,
+            EntityQuery<PhysicsComponent> bodyQuery,
+            EntityQuery<TransformComponent> xformQuery)
+        {
+            // Static Avoidance (TODO: METHOD)
+            foreach (var ent in _lookup.GetEntitiesInRange(uid, detectionRadius, LookupFlags.Static))
+            {
+                // TODO: If we can access the door or smth.
+                if (ent == uid ||
+                    !bodyQuery.TryGetComponent(ent, out var otherBody) ||
+                    !otherBody.CanCollide ||
+                    !otherBody.Hard)
+                {
+                    // TODO: Mask
+                    continue;
+                }
+
+                // TODO: More queries and shit.
+                if (!_physics.TryGetNearestPoints(uid, ent, out var pointA, out var pointB, xform, xformQuery.GetComponent(ent)))
+                {
+                    continue;
+                }
+
+                var obstacleDirection = offsetRot.RotateVec(pointB - worldPos);
+                var obstacleDistance = obstacleDirection.Length;
+
+                if (obstacleDistance > detectionRadius)
+                    continue;
+
+                var weight = obstacleDistance <= agentRadius ? 1f : (detectionRadius - obstacleDistance) / detectionRadius;
+                var norm = obstacleDirection.Normalized;
+
+                for (var i = 0; i < InterestDirections; i++)
+                {
+                    var result = Vector2.Dot(norm, directions[i]);
+                    var inputValue = result * weight;
+                    dangerMap[i] = MathF.Max(inputValue, dangerMap[i]);
+                }
+            }
+        }
+
+        #endregion
+
+        #region Dynamic Avoidance
+
+        private void DynamicAvoid(EntityUid uid)
+        {
+
+        }
+
+        #endregion
 
         private EntityCoordinates GetCoordinates(PathPoly poly)
         {

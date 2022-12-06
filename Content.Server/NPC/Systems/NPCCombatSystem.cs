@@ -21,6 +21,11 @@ public sealed partial class NPCCombatSystem : EntitySystem
     [Dependency] private readonly SharedMeleeWeaponSystem _melee = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
+    /// <summary>
+    /// If disabled we'll move into range but not attack.
+    /// </summary>
+    public bool Enabled = false;
+
     public override void Initialize()
     {
         base.Initialize();
