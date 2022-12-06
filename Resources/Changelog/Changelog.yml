@@ -1,13 +1,6 @@
 Entries:
 - author: ElectroJr
   changes:
-  - {message: Fixed some prediction issues surrounding status effects. Slipping should
-      feel less shit now. No more double slipping and teleporting when you get back
-      up., type: Fix}
-  id: 2231
-  time: '2022-09-04T17:21:22.0000000+00:00'
-- author: ElectroJr
-  changes:
   - {message: Fix some sprite animations not animating properly., type: Fix}
   id: 2232
   time: '2022-09-05T00:06:35.0000000+00:00'
@@ -2947,3 +2940,8 @@ Entries:
       now be ~punched~ reached, type: Fix}
   id: 2730
   time: '2022-12-06T23:34:56.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Renamed .40 magnum to .45 and remove .45., type: Tweak}
+  id: 2731
+  time: '2022-12-06T23:38:10.0000000+00:00'
