@@ -272,7 +272,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     /// <param name="name">name for the solution</param>
     /// <param name="solutionsMgr">solution components used in resolves</param>
     /// <returns>solution</returns>
-    public Solution EnsureSolution(EntityUid uid, string name,
+    public Solution EnsureSolution(EntityUid uid, string name, out bool alreadyExisted,
         SolutionContainerManagerComponent? solutionsMgr = null)
     {
         if (!Resolve(uid, ref solutionsMgr, false))
@@ -284,9 +284,20 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         {
             var newSolution = new Solution() { Name = name };
             solutionsMgr.Solutions.Add(name, newSolution);
+            alreadyExisted = false;
+        }
+        else
+        {
+            alreadyExisted = true;
         }
 
         return solutionsMgr.Solutions[name];
+    }
+
+    public Solution EnsureSolution(EntityUid uid, string name,
+        SolutionContainerManagerComponent? solutionsMgr = null)
+    {
+        return EnsureSolution(uid, name, out _, solutionsMgr);
     }
 
     /// <summary>
