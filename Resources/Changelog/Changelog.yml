@@ -1,22 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Microwaves now properly heat up solutions. Resume meth production posthaste!,
-    type: Fix}
-  id: 2224
-  time: '2022-09-02T02:13:44.0000000+00:00'
-- author: vulppine
-  changes:
-  - {message: 'NanoTrasen''s engineers have finally laid out a design for air alarms
-      that should make them easier for our station planners and station construction
-      team to plan out! You should see these more often, now.', type: Tweak}
-  id: 2225
-  time: '2022-09-02T20:00:34.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Dead players can no longer smart equip/unequip items., type: Fix}
-  id: 2226
-  time: '2022-09-02T23:38:47.0000000+00:00'
 - author: ShadowCommander
   changes:
   - {message: Fixed shuttle airlock deconstruction returning plasteel instead of silver.,
@@ -2949,3 +2931,19 @@ Entries:
   - {message: NPCs will no longer stall on 1 bad path., type: Fix}
   id: 2723
   time: '2022-12-06T23:11:05.0000000+00:00'
+- author: JustinTrotter
+  changes:
+  - {message: Toggle internals icon correctly toggles gas tanks equipped on your back,
+    type: Fix}
+  id: 2724
+  time: '2022-12-06T23:14:09.0000000+00:00'
+- author: Veritius
+  changes:
+  - {message: Tranquiliser shells' capacity has been reduced., type: Tweak}
+  id: 2725
+  time: '2022-12-06T23:14:24.0000000+00:00'
+- author: nikthechampiongr
+  changes:
+  - {message: Added confirmation button for character deletion., type: Add}
+  id: 2726
+  time: '2022-12-06T23:14:48.0000000+00:00'
