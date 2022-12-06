@@ -1,49 +1,41 @@
-﻿using System.Linq;
-using Content.Shared.Hands;
+﻿using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Popups;
+using Robust.Shared.Player;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Item;
 
 public abstract class SharedMultiHandedItemSystem : EntitySystem
 {
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<MultiHandedItemComponent, GettingPickedUpAttemptEvent>((e,c,a) => OnAttemptPickup(e,c,a));
+        SubscribeLocalEvent<MultiHandedItemComponent, GettingPickedUpAttemptEvent>(OnAttemptPickup);
         SubscribeLocalEvent<MultiHandedItemComponent, VirtualItemDeletedEvent>(OnVirtualItemDeleted);
         SubscribeLocalEvent<MultiHandedItemComponent, GotEquippedHandEvent>(OnEquipped);
         SubscribeLocalEvent<MultiHandedItemComponent, GotUnequippedHandEvent>(OnUnequipped);
     }
 
-    protected virtual void OnEquipped(EntityUid uid, MultiHandedItemComponent component, GotEquippedHandEvent args)
+    protected abstract void OnEquipped(EntityUid uid, MultiHandedItemComponent component, GotEquippedHandEvent args);
+    protected abstract void OnUnequipped(EntityUid uid, MultiHandedItemComponent component, GotUnequippedHandEvent args);
+
+    private void OnAttemptPickup(EntityUid uid, MultiHandedItemComponent component, GettingPickedUpAttemptEvent args)
     {
+        if (TryComp<SharedHandsComponent>(args.User, out var hands) && hands.CountFreeHands() >= component.HandsNeeded)
+            return;
 
-    }
+        args.Cancel();
 
-    protected virtual void OnUnequipped(EntityUid uid, MultiHandedItemComponent component, GotUnequippedHandEvent args)
-    {
-
-    }
-
-    protected virtual bool OnAttemptPickup(EntityUid uid, MultiHandedItemComponent component, GettingPickedUpAttemptEvent args)
-    {
-        if (!TryComp<SharedHandsComponent>(args.User, out var hands))
-        {
-            args.Cancel();
-            return false;
-        }
-
-        var freeHands = _hands.EnumerateHands(args.User, hands).Where(x => x.IsEmpty);
-        if (freeHands.Count() < component.HandsNeeded)
-        {
-            args.Cancel();
-            return false;
-        }
-
-        return true;
+        if (_timing.InPrediction) //no popup spam
+            return;
+        _popup.PopupEntity(Loc.GetString("multi-handed-item-pick-up-fail",
+            ("number", component.HandsNeeded - 1), ("item", uid)), args.User, Filter.Entities(args.User));
     }
 
     private void OnVirtualItemDeleted(EntityUid uid, MultiHandedItemComponent component, VirtualItemDeletedEvent args)
