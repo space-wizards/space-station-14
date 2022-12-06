@@ -326,7 +326,7 @@ public abstract class SharedActionsSystem : EntitySystem
 
         var filter = Filter.Pvs(performer).RemoveWhereAttachedEntity(e => e == performer);
 
-        _audio.Play(action.Sound, filter, performer, action.AudioParams);
+        _audio.Play(action.Sound, filter, performer, true, action.AudioParams);
 
         if (string.IsNullOrWhiteSpace(action.Popup))
             return true;

@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Content.Server.Construction;
+using Content.Server.MachineLinking.Components;
 using Content.Server.MachineLinking.Events;
 using Content.Server.Paper;
 using Content.Server.Power.Components;
@@ -53,6 +54,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         SubscribeLocalEvent<ArtifactAnalyzerComponent, StartCollideEvent>(OnCollide);
         SubscribeLocalEvent<ArtifactAnalyzerComponent, EndCollideEvent>(OnEndCollide);
 
+        SubscribeLocalEvent<ArtifactAnalyzerComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<AnalysisConsoleComponent, NewLinkEvent>(OnNewLink);
         SubscribeLocalEvent<AnalysisConsoleComponent, PortDisconnectedEvent>(OnPortDisconnected);
 
@@ -143,6 +145,21 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         }
     }
 
+    private void OnMapInit(EntityUid uid, ArtifactAnalyzerComponent component, MapInitEvent args)
+    {
+        if (!TryComp<SignalReceiverComponent>(uid, out var receiver))
+            return;
+
+        foreach (var port in receiver.Inputs.Values.SelectMany(ports => ports))
+        {
+            if (!TryComp<AnalysisConsoleComponent>(port.Uid, out var analysis))
+                continue;
+            component.Console = port.Uid;
+            analysis.AnalyzerEntity = uid;
+            return;
+        }
+    }
+
     private void OnNewLink(EntityUid uid, AnalysisConsoleComponent component, NewLinkEvent args)
     {
         if (!TryComp<ArtifactAnalyzerComponent>(args.Receiver, out var analyzer))
@@ -168,7 +185,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
 
     private void UpdateUserInterface(EntityUid uid, AnalysisConsoleComponent? component = null)
     {
-        if (!Resolve(uid, ref component))
+        if (!Resolve(uid, ref component, false))
             return;
 
         EntityUid? artifact = null;
@@ -447,7 +464,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
             return;
         component.Contacts.Remove(otherEnt);
 
-        if (component.Console != null)
+        if (component.Console != null && Exists(component.Console))
             UpdateUserInterface(component.Console.Value);
     }
 

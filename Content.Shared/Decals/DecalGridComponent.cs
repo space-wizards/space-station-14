@@ -7,6 +7,7 @@ namespace Content.Shared.Decals
         [DataField("chunkCollection", serverOnly: true)]
         public DecalGridChunkCollection ChunkCollection = new(new ());
 
+        [DataRecord]
         public record DecalGridChunkCollection(Dictionary<Vector2i, Dictionary<uint, Decal>> ChunkCollection)
         {
             public uint NextUid;

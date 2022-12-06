@@ -163,7 +163,7 @@ public sealed partial class StoreSystem : EntitySystem
         }
 
         listing.PurchaseAmount++; //track how many times something has been purchased
-        _audio.Play(component.BuySuccessSound, Filter.SinglePlayer(msg.Session), uid); //cha-ching!
+        _audio.PlayEntity(component.BuySuccessSound, msg.Session, uid); //cha-ching!
 
         UpdateUserInterface(buyer, component);
     }

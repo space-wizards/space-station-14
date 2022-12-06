@@ -6,6 +6,9 @@ using Content.Shared.Directions;
 using Content.Shared.Physics;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
+using Robust.Shared.Physics;
+using Robust.Shared.Utility;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
 
@@ -101,7 +104,7 @@ public sealed class FluidSpreaderSystem : EntitySystem
     /// <param name="mapGrid">helper param needed to extract entities</param>
     /// <param name="puddle">either found or newly created PuddleComponent.</param>
     /// <returns>true if tile is empty or occupied by a non-overflowing puddle (or a puddle close to being overflowing)</returns>
-    private bool CheckTile(EntityUid srcUid, PuddleComponent srcPuddle, EntityCoordinates pos, IMapGrid mapGrid,
+    private bool CheckTile(EntityUid srcUid, PuddleComponent srcPuddle, EntityCoordinates pos, MapGridComponent mapGrid,
         [NotNullWhen(true)] out PuddleComponent? puddle)
     {
         if (!mapGrid.TryGetTileRef(pos, out var tileRef)
