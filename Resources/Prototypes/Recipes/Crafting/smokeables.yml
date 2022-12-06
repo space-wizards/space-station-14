@@ -6,7 +6,7 @@
   targetNode: joint
   category: construction-category-misc
   description: "A roll of dried plant matter wrapped in thin paper."
-  icon: Objects/Consumable/Smokeables/Cannabis/joint.rsi/unlit-icon.png
+  icon: { sprite: Objects/Consumable/Smokeables/Cannabis/joint.rsi, state: unlit-icon }
   objectType: Item
 
 - type: construction
@@ -17,7 +17,7 @@
   targetNode: blunt
   category: construction-category-misc
   description: "A roll of dried plant matter wrapped in a dried tobacco leaf."
-  icon: Objects/Consumable/Smokeables/Cannabis/blunt.rsi/unlit-icon.png
+  icon: { sprite: Objects/Consumable/Smokeables/Cannabis/blunt.rsi, state: unlit-icon }
   objectType: Item
 
 - type: construction
@@ -28,7 +28,7 @@
   targetNode: cigarette
   category: construction-category-misc
   description: "A roll of tobacco and nicotine."
-  icon: Objects/Consumable/Smokeables/Cigarettes/cigarette.rsi/unlit-icon.png
+  icon: { sprite: Objects/Consumable/Smokeables/Cigarettes/cigarette.rsi, state: unlit-icon }
   objectType: Item
 
 # I wanted to put a hand-grinder here but we need construction graphs that use non-consumed catalysts first.
@@ -41,7 +41,7 @@
   targetNode: ground
   category: construction-category-misc
   description: "Ground cannabis, ready to take you on a trip."
-  icon: Objects/Misc/reagent_fillings.rsi/powderpile.png
+  icon: { sprite: Objects/Misc/reagent_fillings.rsi, state: powderpile }
 #    color: darkgreen
   objectType: Item
 
@@ -53,6 +53,6 @@
   targetNode: ground
   category: construction-category-misc
   description: "Ground tobacco, perfect for hand-rolled cigarettes."
-  icon: Objects/Misc/reagent_fillings.rsi/powderpile.png
+  icon: { sprite: Objects/Misc/reagent_fillings.rsi, state: powderpile }
 #    color: brown
   objectType: Item
