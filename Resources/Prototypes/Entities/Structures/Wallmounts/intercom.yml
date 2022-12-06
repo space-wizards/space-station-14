@@ -17,9 +17,10 @@
   - type: Sprite
     sprite: Structures/Wallmounts/intercom.rsi
     layers:
-    - state: unpowered
     - state: base
+    - state: unshaded
       map: ["enum.PowerDeviceVisualLayers.Powered"]
+      shader: unshaded
   - type: Transform
     anchored: true
   - type: Wires
