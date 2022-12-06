@@ -290,6 +290,10 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
                 if (!Blocker.CanAttack(user, light.Target))
                     return;
                 break;
+            case DisarmAttackEvent disarm:
+                if (!Blocker.CanAttack(user, disarm.Target))
+                    return;
+                break;
             default:
                 if (!Blocker.CanAttack(user))
                     return;
