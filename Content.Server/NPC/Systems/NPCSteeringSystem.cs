@@ -190,13 +190,6 @@ namespace Content.Server.NPC.Systems
                 return;
             }
 
-            // No path set from pathfinding or the likes.
-            if (steering.Status == SteeringStatus.NoPath)
-            {
-                SetDirection(mover, steering, Vector2.Zero);
-                return;
-            }
-
             // Can't move at all, just noop input.
             if (!mover.CanMove)
             {
