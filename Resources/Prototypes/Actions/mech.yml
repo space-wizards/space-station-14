@@ -3,7 +3,9 @@
   name: action-name-mech-cycle
   description: action-description-mech-cycle
   itemIconStyle: NoItem
-  icon: Interface/Actions/actions_mecha.rsi/mech_cycle_equip_on.png
+  icon: 
+    sprite: Interface/Actions/actions_mecha.rsi
+    state: mech_cycle_equip_on
   event: !type:MechToggleEquipmentEvent
   useDelay: 0.5
 
@@ -12,7 +14,9 @@
   name: action-name-mech-control-panel
   description: action-description-mech-control-panel
   itemIconStyle: NoItem
-  icon: Interface/Actions/actions_mecha.rsi/mech_view_stats.png
+  icon: 
+    sprite: Interface/Actions/actions_mecha.rsi
+    state: mech_view_stats
   event: !type:MechOpenUiEvent
   useDelay: 1
 
@@ -21,5 +25,7 @@
   name: action-name-mech-eject
   description: action-description-mech-eject
   itemIconStyle: NoItem
-  icon: Interface/Actions/actions_mecha.rsi/mech_eject.png
+  icon: 
+    sprite: Interface/Actions/actions_mecha.rsi
+    state: mech_eject
   event: !type:MechEjectPilotEvent
