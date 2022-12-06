@@ -284,8 +284,17 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         if (!CombatMode.IsInCombatMode(user))
             return;
 
-        if (!Blocker.CanAttack(user))
-            return;
+        switch (attack)
+        {
+            case LightAttackEvent light:
+                if (!Blocker.CanAttack(user, light.Target))
+                    return;
+                break;
+            default:
+                if (!Blocker.CanAttack(user))
+                    return;
+                break;
+        }
 
         // Windup time checked elsewhere.
 
