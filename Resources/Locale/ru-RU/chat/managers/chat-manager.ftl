@@ -13,7 +13,7 @@ chat-manager-max-message-length-exceeded-message = Ваше сообщение �
 chat-manager-no-headset-on-message = У вас нет гарнитуры!
 chat-manager-no-such-channel = Нет такого канала!
 chat-manager-whisper-headset-on-message = Вы не можете шептать в радио!
-chat-manager-server-wrap-message = СЕРВЕР: {$message}
+chat-manager-server-wrap-message = СЕРВЕР: { $message }
 chat-manager-sender-announcement-wrap-message =
     Объявление { $sender }:
     { $message }

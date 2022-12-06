@@ -16,7 +16,7 @@ analysis-console-info-triggered-false = АКТИВИРОВАН: НЕТ
 analysis-console-info-effect = РЕАКЦИЯ: { $effect }
 analysis-console-info-trigger = СТИМУЛЯТОР: { $trigger }
 analysis-console-info-edges = ГРАНИ: { $edges }
-analysis-console-info-value = ТЕКУЩАЯ_ЦЕННОСТЬ: {$value}
+analysis-console-info-value = ТЕКУЩАЯ_ЦЕННОСТЬ: { $value }
 analysis-console-info-scanner = Сканирование...
 analysis-console-progress-text =
     { $seconds ->

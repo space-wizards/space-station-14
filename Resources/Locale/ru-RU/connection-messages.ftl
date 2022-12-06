@@ -18,6 +18,11 @@ ban-banned-1 = Вам, или другому пользователю этого
 ban-banned-2 = Причина бана: "{ $reason }"
 soft-player-cap-full = Сервер заполнен!
 panic-bunker-account-denied = Этот сервер находится в режиме панического бункера. В настоящее время новые подключения не принимаются. Попробуйте позже
-panic-bunker-account-denied-reason = Этот сервер находится в режиме панического бункера, и вы были отклонены. Причина: "{$reason}"
-panic-bunker-account-reason-account = Возраст учетной записи должен быть старше {$minutes} минут
-panic-bunker-account-reason-overall = Общее игровое время учетной записи должно превышать {$hours} часов
+panic-bunker-account-denied-reason = Этот сервер находится в режиме панического бункера, и вы были отклонены. Причина: "{ $reason }"
+panic-bunker-account-reason-account = Возраст учетной записи должен быть старше { $minutes } минут
+panic-bunker-account-reason-overall =
+    Необходимо минимальное отыгранное время — { $hours } { $hours ->
+        [one] час
+        [few] часа
+       *[other] часов
+    }.

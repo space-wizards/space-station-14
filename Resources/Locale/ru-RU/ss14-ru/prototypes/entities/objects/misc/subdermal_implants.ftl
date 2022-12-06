@@ -1,6 +1,7 @@
 ent-BaseSubdermalImplant = имплантат
     .desc = Микроскопический чип, введёный под кожу
     .prefix = { "" }
+    .suffix = { "" }
 ent-SadTromboneImplant = имплантат грустного тромбона
     .desc = Проигрывает грустную мелодию когда пользователь умирает
     .suffix = { "" }
