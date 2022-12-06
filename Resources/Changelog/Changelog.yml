@@ -1,9 +1,4 @@
 Entries:
-- author: ShadowCommander
-  changes:
-  - {message: Fixed metal counter frame deconstruction, type: Fix}
-  id: 2221
-  time: '2022-09-01T07:21:39.0000000+00:00'
 - author: eclips_e
   changes:
   - {message: 'The syndicate has opened it''s own clothing brand, the operative suit
@@ -2950,3 +2945,8 @@ Entries:
   - {message: Fix tile friction on planetmaps., type: Fix}
   id: 2720
   time: '2022-12-05T03:47:08.0000000+00:00'
+- author: Prentor
+  changes:
+  - {message: Animals have to eat less but more frequently, type: Tweak}
+  id: 2721
+  time: '2022-12-06T22:56:14.0000000+00:00'
