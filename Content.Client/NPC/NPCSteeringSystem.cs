@@ -1,3 +1,5 @@
+using Content.Client.Physics.Controllers;
+using Content.Shared.Movement.Components;
 using Content.Shared.NPC;
 using Content.Shared.NPC.Events;
 using Robust.Client.Graphics;
@@ -89,7 +91,7 @@ public sealed class NPCSteeringOverlay : Overlay
 
     protected override void Draw(in OverlayDrawArgs args)
     {
-        foreach (var (comp, xform) in _entManager.EntityQuery<NPCSteeringComponent, TransformComponent>(true))
+        foreach (var (comp, mover, xform) in _entManager.EntityQuery<NPCSteeringComponent, InputMoverComponent, TransformComponent>(true))
         {
             if (xform.MapID != args.MapId)
             {
@@ -102,13 +104,13 @@ public sealed class NPCSteeringOverlay : Overlay
                 continue;
 
             args.WorldHandle.DrawCircle(worldPos, 1f, Color.Green, false);
-            var rotationOffset = worldRot - xform.LocalRotation;
+            var rotationOffset = _entManager.System<MoverController>().GetParentGridAngle(mover);
 
             for (var i = 0; i < SharedNPCSteeringSystem.InterestDirections; i++)
             {
                 var danger = comp.DangerMap[i];
                 var angle = Angle.FromDegrees(i * (360 / SharedNPCSteeringSystem.InterestDirections));
-                args.WorldHandle.DrawLine(worldPos, worldPos + angle.RotateVec(new Vector2(0f, danger)), Color.Red);
+                args.WorldHandle.DrawLine(worldPos, worldPos + (rotationOffset + angle).RotateVec(new Vector2(danger, 0f)), Color.Red);
             }
 
             args.WorldHandle.DrawLine(worldPos, worldPos + rotationOffset.RotateVec(comp.Direction), Color.Blue);

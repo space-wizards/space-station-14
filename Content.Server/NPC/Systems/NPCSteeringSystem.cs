@@ -21,6 +21,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Server.NPC.Systems
 {
@@ -276,20 +277,23 @@ namespace Content.Server.NPC.Systems
             var (worldPos, worldRot) = xform.GetWorldPositionRotation();
 
             // Use rotation relative to parent to rotate our context vectors by.
-            var offsetRot = worldRot - xform.LocalRotation;
+            var offsetRot = -_mover.GetParentGridAngle(mover);
 
             // TODO: Have some time delay on NPC combat in range before swinging (e.g. 50-200ms) that is a limit.
             // TODO: Have some kind of way to control them avoiding when melee on cd.
             // TODO: Have them hover around some preferred engagement range per-NPC, then they duck out (if target has melee(?))
             // TODO: Have them strafe around the target for some random time then strafe the other direction.
 
-            if (!TrySeek(uid, mover, steering, xform, interestMap, dangerMap, directions, bodyQuery, modifierQuery, frameTime))
+            if (!TrySeek(uid, mover, steering, xform, offsetRot, interestMap, dangerMap, directions, bodyQuery, modifierQuery, frameTime))
             {
                 SetDirection(mover, steering, Vector2.Zero);
                 return;
             }
 
+            DebugTools.Assert(!float.IsNaN(interestMap[0]));
+
             StaticAvoid(uid, offsetRot, worldPos, detectionRadius, agentRadius, xform, dangerMap, directions, bodyQuery, xformQuery);
+            DebugTools.Assert(!float.IsNaN(dangerMap[0]));
             // TODO: Avoid anything not considered hostile
             DynamicAvoid(uid);
 
@@ -311,6 +315,7 @@ namespace Content.Server.NPC.Systems
             }
 
             resultDirection = resultDirection == Vector2.Zero ? Vector2.Zero : resultDirection.Normalized;
+            DebugTools.Assert(!float.IsNaN(resultDirection.X));
             SetDirection(mover, steering, resultDirection, false);
         }
 
@@ -324,6 +329,7 @@ namespace Content.Server.NPC.Systems
             InputMoverComponent mover,
             NPCSteeringComponent steering,
             TransformComponent xform,
+            Angle offsetRot,
             float[] interestMap,
             float[] dangerMap,
             Vector2[] directions,
@@ -462,7 +468,7 @@ namespace Content.Server.NPC.Systems
             // TODO: For tile / movement we don't need to get bang on, just need to make sure we don't overshoot the far end.
             var tickMovement = moveSpeed * frameTime;
 
-            if (tickMovement.Equals(0f))
+            if (tickMovement.Equals(0f) || direction == Vector2.Zero)
             {
                 steering.Status = SteeringStatus.NoPath;
                 return false;
@@ -477,13 +483,18 @@ namespace Content.Server.NPC.Systems
             }
 
             // We have the input in world terms but need to convert it back to what movercontroller is doing.
-            input = (-_mover.GetParentGridAngle(mover)).RotateVec(input);
+            input = offsetRot.RotateVec(input);
             var norm = input.Normalized;
 
             for (var i = 0; i < InterestDirections; i++)
             {
                 var result = Vector2.Dot(norm, directions[i]);
+
+                // TODO: Check angles to get.
+                //if (result > 0f)
+                //{
                 interestMap[i] = MathF.Max(interestMap[i], result * input.Length);
+                //}
             }
 
             return true;
@@ -598,7 +609,7 @@ namespace Content.Server.NPC.Systems
                 var obstacleDirection = offsetRot.RotateVec(pointB - worldPos);
                 var obstacleDistance = obstacleDirection.Length;
 
-                if (obstacleDistance > detectionRadius)
+                if (obstacleDistance > detectionRadius || obstacleDistance == 0f)
                     continue;
 
                 var weight = obstacleDistance <= agentRadius ? 1f : (detectionRadius - obstacleDistance) / detectionRadius;
