@@ -176,6 +176,20 @@ public sealed class StepTriggerSystem : EntitySystem
         component.Active = active;
         Dirty(component);
     }
+
+    
+    /// <summary>
+    ///  Copy constructor to copy initial fields from source to destination.
+    /// </summary>
+    /// <param name="destUid">Entity to which we copy <paramref name="srcStep"/> properties</param>
+    /// <param name="srcStep">Component that contains relevant properties</param>
+    public void CopyConstruct(EntityUid destUid, StepTriggerComponent srcStep)
+    {
+        var destTrigger = EntityManager.EnsureComponent<StepTriggerComponent>(destUid);
+        destTrigger.Active = srcStep.Active;
+        destTrigger.IntersectRatio = srcStep.IntersectRatio;
+        destTrigger.RequiredTriggerSpeed = srcStep.RequiredTriggerSpeed;
+    }
 }
 
 [ByRefEvent]

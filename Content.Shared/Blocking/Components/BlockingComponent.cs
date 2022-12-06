@@ -58,7 +58,6 @@ public sealed class BlockingComponent : Component
     /// <summary>
     /// The sound to be played when you get hit while actively blocking
     /// </summary>
-    [ViewVariables]
     [DataField("blockSound")]
     public SoundSpecifier BlockSound = new SoundPathSpecifier("/Audio/Weapons/block_metal1.ogg");
 }

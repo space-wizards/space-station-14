@@ -12,7 +12,5 @@ public sealed class SurveillanceCameraSpeakerComponent : Component
 
     [ViewVariables] public float SpeechSoundCooldown = 0.5f;
 
-    [ViewVariables] public readonly Queue<string> LastSpokenNames = new();
-
     public TimeSpan LastSoundPlayed = TimeSpan.Zero;
 }

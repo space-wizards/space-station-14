@@ -8,6 +8,7 @@ using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager;
@@ -87,7 +88,7 @@ public sealed class PrototypeSaveTest
         var compFact = server.ResolveDependency<IComponentFactory>();
 
         var prototypes = new List<EntityPrototype>();
-        IMapGrid grid = default!;
+        MapGridComponent grid = default!;
         EntityUid uid;
         MapId mapId = default;
 
@@ -212,18 +213,14 @@ public sealed class PrototypeSaveTest
     }
 
     private sealed class TestEntityUidContext : ISerializationContext,
-        ITypeSerializer<EntityUid, ValueDataNode>,
-        ITypeReaderWriter<EntityUid, ValueDataNode>
+        ITypeSerializer<EntityUid, ValueDataNode>
     {
-        public Dictionary<(Type, Type), object> TypeReaders { get; }
-        public Dictionary<Type, object> TypeWriters { get; }
-        public Dictionary<Type, object> TypeCopiers => TypeWriters;
-        public Dictionary<(Type, Type), object> TypeValidators => TypeReaders;
+        public SerializationManager.SerializerProvider SerializerProvider { get; }
 
         public TestEntityUidContext()
         {
-            TypeReaders = new() { { (typeof(EntityUid), typeof(ValueDataNode)), this } };
-            TypeWriters = new() { { typeof(EntityUid), this } };
+            SerializerProvider = new();
+            SerializerProvider.RegisterSerializer(this);
         }
 
         ValidationNode ITypeValidator<EntityUid, ValueDataNode>.Validate(ISerializationManager serializationManager,
@@ -244,16 +241,9 @@ public sealed class PrototypeSaveTest
             ValueDataNode node,
             IDependencyCollection dependencies,
             bool skipHook,
-            ISerializationContext? context, EntityUid _)
+            ISerializationContext? context, ISerializationManager.InstantiationDelegate<EntityUid>? instanceProvider = null)
         {
             return EntityUid.Invalid;
-        }
-
-        public EntityUid Copy(ISerializationManager serializationManager, EntityUid source, EntityUid target,
-            bool skipHook,
-            ISerializationContext? context = null)
-        {
-            return new((int) source);
         }
     }
 }

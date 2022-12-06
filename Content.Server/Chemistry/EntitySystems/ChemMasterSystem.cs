@@ -279,7 +279,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void ClickSound(ChemMasterComponent chemMaster)
         {
-            _audioSystem.Play(chemMaster.ClickSound, Filter.Pvs(chemMaster.Owner), chemMaster.Owner, AudioParams.Default.WithVolume(-2f));
+            _audioSystem.PlayPvs(chemMaster.ClickSound, chemMaster.Owner, AudioParams.Default.WithVolume(-2f));
         }
 
         private ContainerInfo? BuildInputContainerInfo(EntityUid? container)

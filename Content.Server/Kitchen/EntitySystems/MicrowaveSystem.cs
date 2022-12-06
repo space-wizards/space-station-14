@@ -72,7 +72,7 @@ namespace Content.Server.Kitchen.EntitySystems
             SetAppearance(microwaveComponent, MicrowaveVisualState.Cooking);
 
             microwaveComponent.PlayingStream =
-                _audio.Play(microwaveComponent.LoopingSound, Filter.Pvs(uid), uid, AudioParams.Default.WithLoop(true).WithMaxDistance(5));
+                _audio.PlayPvs(microwaveComponent.LoopingSound, uid, AudioParams.Default.WithLoop(true).WithMaxDistance(5));
         }
 
         private void OnCookStop(EntityUid uid, ActiveMicrowaveComponent component, ComponentShutdown args)

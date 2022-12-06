@@ -26,6 +26,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -515,7 +516,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 return false;
 
             var coords = xform.Coordinates;
-            var entry = grid.Grid.GetLocal(coords)
+            var entry = grid.GetLocal(coords)
                 .FirstOrDefault(entity => EntityManager.HasComponent<DisposalEntryComponent>(entity));
 
             if (entry == default)

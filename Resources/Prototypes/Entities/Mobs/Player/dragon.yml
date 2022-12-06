@@ -2,7 +2,7 @@
   name: space dragon
   parent: SimpleSpaceMobBase
   id: MobDragon
-  suffix:
+  suffix: ""
   description: A flying leviathan, loosely related to space carps.
   components:
     - type: GhostTakeoverAvailable

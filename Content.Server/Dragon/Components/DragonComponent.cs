@@ -1,11 +1,10 @@
-using Content.Shared.Actions.ActionTypes;
-using Robust.Shared.Containers;
 using System.Threading;
 using Content.Shared.Actions;
+using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Storage;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
+using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -35,7 +34,7 @@ namespace Content.Server.Dragon
         /// <summary>
         /// If we have active rifts.
         /// </summary>
-        [ViewVariables, DataField("rifts")]
+        [DataField("rifts")]
         public List<EntityUid> Rifts = new();
 
         public bool Weakened => WeakenedAccumulator > 0f;
@@ -63,7 +62,7 @@ namespace Content.Server.Dragon
         /// <summary>
         /// Spawns a rift which can summon more mobs.
         /// </summary>
-        [ViewVariables, DataField("spawnRiftAction")]
+        [DataField("spawnRiftAction")]
         public InstantAction? SpawnRiftAction;
 
         [ViewVariables(VVAccess.ReadWrite), DataField("riftPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]

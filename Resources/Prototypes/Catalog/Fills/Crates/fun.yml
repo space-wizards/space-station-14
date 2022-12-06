@@ -119,6 +119,24 @@
       amount: 1
 
 - type: entity
+  id: CrateFunSadTromboneImplants
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: SadTromboneImplanter
+        amount: 3
+
+- type: entity
+  id: CrateFunLightImplants
+  parent: CrateGenericSteel
+  components:
+    - type: StorageFill
+      contents:
+        - id: LightImplanter
+          amount: 3
+
+- type: entity
   id: CrateFunSyndicateSegway
   parent: CrateLivestock
   components:
