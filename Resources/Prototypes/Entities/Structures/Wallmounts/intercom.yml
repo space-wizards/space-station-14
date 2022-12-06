@@ -9,6 +9,8 @@
     enabled: false
     usesApcPower: true
   - type: RadioMicrophone
+    powerRequired: true
+    unobstructedRequired: true
     listenRange: 2
   - type: ExtensionCableReceiver
   - type: Clickable
@@ -22,6 +24,7 @@
       map: ["enum.PowerDeviceVisualLayers.Powered"]
       shader: unshaded
   - type: Transform
+    noRot: true
     anchored: true
   - type: Wires
     BoardName: "Intercom"
@@ -81,6 +84,8 @@
   suffix: Command
   components:
   - type: RadioMicrophone
+    powerRequired: true
+    unobstructedRequired: true
     listenRange: 2
     supportedChannels:
     - Common
@@ -92,6 +97,8 @@
   suffix: Engineering
   components:
   - type: RadioMicrophone
+    powerRequired: true
+    unobstructedRequired: true
     listenRange: 2
     supportedChannels:
     - Common
@@ -103,6 +110,8 @@
   suffix: Medical
   components:
   - type: RadioMicrophone
+    powerRequired: true
+    unobstructedRequired: true
     listenRange: 2
     supportedChannels:
     - Common
@@ -114,6 +123,8 @@
   suffix: Science
   components:
   - type: RadioMicrophone
+    powerRequired: true
+    unobstructedRequired: true
     listenRange: 2
     supportedChannels:
     - Common
@@ -125,6 +136,8 @@
   suffix: Security
   components:
   - type: RadioMicrophone
+    powerRequired: true
+    unobstructedRequired: true
     listenRange: 2
     supportedChannels:
     - Common
@@ -136,6 +149,8 @@
   suffix: Service
   components:
   - type: RadioMicrophone
+    powerRequired: true
+    unobstructedRequired: true
     listenRange: 2
     supportedChannels:
     - Common
@@ -147,6 +162,8 @@
   suffix: Supply
   components:
   - type: RadioMicrophone
+    powerRequired: true
+    unobstructedRequired: true
     listenRange: 2
     supportedChannels:
     - Common
@@ -158,6 +175,8 @@
   suffix: All
   components:
   - type: RadioMicrophone
+    powerRequired: true
+    unobstructedRequired: true
     listenRange: 2
     supportedChannels:
     - Common

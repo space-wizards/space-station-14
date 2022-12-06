@@ -25,4 +25,14 @@ public sealed class RadioMicrophoneComponent : Component
 
     [DataField("enabled")]
     public bool Enabled = false;
+
+    [DataField("powerRequired")]
+    public bool PowerRequired = false;
+
+    /// <summary>
+    /// Whether or not the speaker must have an
+    /// unobstructed path to the radio to speak
+    /// </summary>
+    [DataField("unobstructedRequired")]
+    public bool UnobstructedRequired = false;
 }

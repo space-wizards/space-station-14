@@ -57,7 +57,7 @@
         doAfter: 2
 
   - node: intercom
-    entity: IntercomCommon #TODO: make this work with encryption keys
+    entity: Intercom #TODO: make this work with encryption keys
     edges:
     - to: wired
       conditions:
