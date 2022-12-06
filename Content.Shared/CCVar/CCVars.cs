@@ -537,6 +537,11 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<bool> NPCEnabled = CVarDef.Create("npc.enabled", true);
 
+        /// <summary>
+        /// Should NPCs pathfind when steering. For debug purposes.
+        /// </summary>
+        public static readonly CVarDef<bool> NPCPathfinding = CVarDef.Create("npc.pathfinding", true);
+
         public static readonly CVarDef<bool> NPCCollisionAvoidance = CVarDef.Create("npc.collision_avoidance", true);
 
         /*

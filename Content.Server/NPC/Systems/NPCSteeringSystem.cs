@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Threading;
+using Content.Server.Administration.Managers;
 using Content.Server.Doors.Systems;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.Pathfinding;
@@ -8,19 +9,24 @@ using Content.Shared.Interaction;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.NPC;
+using Content.Shared.NPC.Events;
 using Content.Shared.Weapons.Melee;
+using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Player;
+using Robust.Shared.Players;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Server.NPC.Systems
 {
-    public sealed partial class NPCSteeringSystem : EntitySystem
+    public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
     {
         // http://www.red3d.com/cwr/papers/1999/gdc99steer.html for a steering overview
+        [Dependency] private readonly IAdminManager _admin = default!;
         [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
@@ -36,19 +42,20 @@ namespace Content.Server.NPC.Systems
 
         private bool _enabled;
 
+        private bool _pathfinding = true;
+
+        private HashSet<ICommonSession> _subscribedSessions = new();
+
         public override void Initialize()
         {
             base.Initialize();
             UpdatesBefore.Add(typeof(SharedPhysicsSystem));
             InitializeAvoidance();
-            _configManager.OnValueChanged(CCVars.NPCEnabled, SetNPCEnabled, true);
+            _configManager.OnValueChanged(CCVars.NPCEnabled, SetNPCEnabled);
+            _configManager.OnValueChanged(CCVars.NPCPathfinding, SetNPCPathfinding);
 
             SubscribeLocalEvent<NPCSteeringComponent, ComponentShutdown>(OnSteeringShutdown);
-        }
-
-        private void OnSteeringShutdown(EntityUid uid, NPCSteeringComponent component, ComponentShutdown args)
-        {
-            component.PathfindToken?.Cancel();
+            SubscribeNetworkEvent<RequestNPCSteeringDebugEvent>(OnDebugRequest);
         }
 
         private void SetNPCEnabled(bool obj)
@@ -64,11 +71,41 @@ namespace Content.Server.NPC.Systems
             _enabled = obj;
         }
 
+        private void SetNPCPathfinding(bool value)
+        {
+            _pathfinding = value;
+
+            if (!_pathfinding)
+            {
+                foreach (var comp in EntityQuery<NPCSteeringComponent>(true))
+                {
+                    comp.PathfindToken?.Cancel();
+                    comp.PathfindToken = null;
+                }
+            }
+        }
+
         public override void Shutdown()
         {
             base.Shutdown();
             ShutdownAvoidance();
             _configManager.UnsubValueChanged(CCVars.NPCEnabled, SetNPCEnabled);
+        }
+
+        private void OnDebugRequest(RequestNPCSteeringDebugEvent msg, EntitySessionEventArgs args)
+        {
+            if (!_admin.IsAdmin((IPlayerSession) args.SenderSession))
+                return;
+
+            if (msg.Enabled)
+                _subscribedSessions.Add(args.SenderSession);
+            else
+                _subscribedSessions.Remove(args.SenderSession);
+        }
+
+        private void OnSteeringShutdown(EntityUid uid, NPCSteeringComponent component, ComponentShutdown args)
+        {
+            component.PathfindToken?.Cancel();
         }
 
         /// <summary>
@@ -146,6 +183,23 @@ namespace Content.Server.NPC.Systems
             {
                 Steer(steering, mover, xform, modifierQuery, bodyQuery, frameTime);
             }
+
+            if (_subscribedSessions.Count > 0)
+            {
+                foreach (var (_, _, mover, _) in npcs)
+                {
+                    var ev = new NPCSteeringDebugEvent()
+                    {
+                        EntityUid = mover.Owner,
+                        Direction = mover.CurTickSprintMovement,
+                    };
+
+                    var filter = Filter.Empty();
+                    filter.AddPlayers(_subscribedSessions);
+
+                    RaiseNetworkEvent(ev, filter);
+                }
+            }
         }
 
         private void SetDirection(InputMoverComponent component, NPCSteeringComponent steering, Vector2 value, bool clear = true)
@@ -180,6 +234,24 @@ namespace Content.Server.NPC.Systems
 
             var ourCoordinates = xform.Coordinates;
             var destinationCoordinates = steering.Coordinates;
+
+            const byte InterestDirections = 8;
+            var interestMap = new float[InterestDirections];
+            var dangerMap = new float[InterestDirections];
+
+            var detectionTime = 0.5f;
+            var speed = GetSprintSpeed(steering.Owner);
+            var detectionRadius = detectionTime * speed;
+
+            // TODO: Minus dangermap from interest map
+            // TODO: Average directions.
+
+            for (var i = 0; i < InterestDirections; i++)
+            {
+
+            }
+
+            // TODO: Send debug data to client.
 
             // We've arrived, nothing else matters.
             if (xform.Coordinates.TryDistance(EntityManager, destinationCoordinates, out var distance) &&
@@ -249,11 +321,6 @@ namespace Content.Server.NPC.Systems
             }
 
             var direction = targetMap.Position - ourMap.Position;
-
-            if (steering.Owner == new EntityUid(15315))
-            {
-
-            }
 
             // Are we in range
             if (direction.Length <= arrivalDistance)
