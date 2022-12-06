@@ -1,9 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fix some sprite animations not animating properly., type: Fix}
-  id: 2232
-  time: '2022-09-05T00:06:35.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Camera eye rotations should now be correct., type: Fix}
@@ -2945,3 +2940,8 @@ Entries:
   - {message: Renamed .40 magnum to .45 and remove .45., type: Tweak}
   id: 2731
   time: '2022-12-06T23:38:10.0000000+00:00'
+- author: Cripes
+  changes:
+  - {message: Air Alarm UI is now easier to understand, type: Tweak}
+  id: 2732
+  time: '2022-12-06T23:46:08.0000000+00:00'
