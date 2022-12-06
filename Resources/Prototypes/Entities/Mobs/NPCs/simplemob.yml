@@ -169,7 +169,7 @@
       Peckish: 25
       Starving: 10
       Dead: 0
-    baseDecayRate: 0,00925925925926 # it is okay for animals to eat and drink less than humans, but more frequently
+    baseDecayRate: 0.00925925925926 # it is okay for animals to eat and drink less than humans, but more frequently
   - type: Thirst
     thresholds:
       OverHydrated: 200
