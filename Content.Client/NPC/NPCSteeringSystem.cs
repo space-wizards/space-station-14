@@ -93,6 +93,8 @@ public sealed class NPCSteeringOverlay : Overlay
             if (!args.WorldAABB.Contains(worldPos))
                 continue;
 
+            args.WorldHandle.DrawCircle(worldPos, 1f, Color.Green, false);
+
             var rotationOffset = worldRot - xform.LocalRotation;
             args.WorldHandle.DrawLine(worldPos, worldPos + rotationOffset.RotateVec(comp.Direction), Color.Blue);
         }

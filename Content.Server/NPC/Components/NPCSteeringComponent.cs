@@ -12,6 +12,12 @@ namespace Content.Server.NPC.Components;
 public sealed class NPCSteeringComponent : Component
 {
     /// <summary>
+    /// Radius for collision avoidance.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    public float Radius = 0.35f;
+
+    /// <summary>
     /// Have we currently requested a path.
     /// </summary>
     [ViewVariables]

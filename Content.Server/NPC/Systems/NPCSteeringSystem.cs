@@ -242,6 +242,7 @@ namespace Content.Server.NPC.Systems
             var detectionTime = 0.5f;
             var speed = GetSprintSpeed(steering.Owner);
             var detectionRadius = detectionTime * speed;
+            var radius = steering.Radius;
 
             // TODO: Minus dangermap from interest map
             // TODO: Average directions.
