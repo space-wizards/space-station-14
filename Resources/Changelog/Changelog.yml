@@ -1,10 +1,4 @@
 Entries:
-- author: ShadowCommander
-  changes:
-  - {message: Fixed shuttle airlock deconstruction returning plasteel instead of silver.,
-    type: Fix}
-  id: 2227
-  time: '2022-09-03T01:32:19.0000000+00:00'
 - author: Rolfero
   changes:
   - {message: E-swords finally hot enough to light a cigarette, type: Add}
@@ -2947,3 +2941,10 @@ Entries:
   - {message: Added confirmation button for character deletion., type: Add}
   id: 2726
   time: '2022-12-06T23:14:48.0000000+00:00'
+- author: Interrobang01
+  changes:
+  - {message: You can now put holofan projectors into the utility belt., type: Tweak}
+  - {message: You can now put both holosign projectors and wet floor signs into the
+      janibelt., type: Tweak}
+  id: 2727
+  time: '2022-12-06T23:17:21.0000000+00:00'
