@@ -6,7 +6,8 @@
   - type: Sprite
     layers:
       - state: red
-      - texture: Objects/Fun/Instruments/h_synthesizer.rsi/icon.png
+      - sprite: Objects/Fun/Instruments/h_synthesizer.rsi
+        state: icon
   - type: RandomSpawner
     prototypes:
       - AcousticGuitarInstrument
