@@ -81,46 +81,43 @@ namespace Content.Server.Cuffs
             args.Handled = true;
         }
 
-        private void TryCuffing(EntityUid handcuffuid, HandcuffComponent handcuffcomponent, EntityUid useruid, EntityUid targetuid)
+        private void TryCuffing(EntityUid handcuff, HandcuffComponent component, EntityUid user, EntityUid target)
         {
-            if (handcuffcomponent.Cuffing)
+            if (component.Cuffing || !EntityManager.TryGetComponent<CuffableComponent>(target, out var cuffed))
                 return;
 
-            if (!EntityManager.TryGetComponent<CuffableComponent>(targetuid, out var cuffed))
-                return;
-
-            if (handcuffcomponent.Broken)
+            if (component.Broken)
             {
-                _popup.PopupEntity(Loc.GetString("handcuff-component-cuffs-broken-error"), useruid, Filter.Entities(useruid));
+                _popup.PopupEntity(Loc.GetString("handcuff-component-cuffs-broken-error"), user, Filter.Entities(user));
                 return;
             }
 
-            if (!EntityManager.TryGetComponent<HandsComponent?>(targetuid, out var hands))
+            if (!EntityManager.TryGetComponent<HandsComponent?>(target, out var hands))
             {
-                _popup.PopupEntity(Loc.GetString("handcuff-component-target-has-no-hands-error",("targetName", targetuid)), useruid, Filter.Entities(useruid));
+                _popup.PopupEntity(Loc.GetString("handcuff-component-target-has-no-hands-error",("targetName", target)), user, Filter.Entities(user));
                 return;
             }
 
             if (cuffed.CuffedHandCount >= hands.Count)
             {
-                _popup.PopupEntity(Loc.GetString("handcuff-component-target-has-no-free-hands-error",("targetName", targetuid)), useruid, Filter.Entities(useruid));
+                _popup.PopupEntity(Loc.GetString("handcuff-component-target-has-no-free-hands-error",("targetName", target)), user, Filter.Entities(user));
                 return;
             }
 
             // TODO these messages really need third-party variants. I.e., "{$user} starts cuffing {$target}!"
-            if (targetuid == useruid)
+            if (target == user)
             {
-                _popup.PopupEntity(Loc.GetString("handcuff-component-target-self"), useruid, Filter.Entities(useruid));
+                _popup.PopupEntity(Loc.GetString("handcuff-component-target-self"), user, Filter.Entities(user));
             }
             else
             {
-                _popup.PopupEntity(Loc.GetString("handcuff-component-start-cuffing-target-message",("targetName", targetuid)), useruid, Filter.Entities(useruid));
-                _popup.PopupEntity(Loc.GetString("handcuff-component-start-cuffing-by-other-message",("otherName", useruid)), targetuid, Filter.Entities(targetuid));
+                _popup.PopupEntity(Loc.GetString("handcuff-component-start-cuffing-target-message",("targetName", target)), user, Filter.Entities(user));
+                _popup.PopupEntity(Loc.GetString("handcuff-component-start-cuffing-by-other-message",("otherName", user)), target, Filter.Entities(target));
             }
 
-            _audio.PlayPvs(handcuffcomponent.StartCuffSound, handcuffuid);
+            _audio.PlayPvs(component.StartCuffSound, handcuff);
 
-            handcuffcomponent.TryUpdateCuff(useruid, targetuid, cuffed);
+            component.TryUpdateCuff(user, target, cuffed);
         }
 
         private void OnCuffMeleeHit(EntityUid uid, HandcuffComponent component, MeleeHitEvent args)
