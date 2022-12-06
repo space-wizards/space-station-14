@@ -1,9 +1,4 @@
 Entries:
-- author: Rolfero
-  changes:
-  - {message: E-swords finally hot enough to light a cigarette, type: Add}
-  id: 2228
-  time: '2022-09-03T10:50:38.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Made snow and grass unable to be pried with a crowbar., type: Fix}
@@ -2948,3 +2943,9 @@ Entries:
       janibelt., type: Tweak}
   id: 2727
   time: '2022-12-06T23:17:21.0000000+00:00'
+- author: Cripes
+  changes:
+  - {message: Fix bug where air alarm would show incorrect filters for a scrubber,
+    type: Fix}
+  id: 2728
+  time: '2022-12-06T23:33:21.0000000+00:00'
