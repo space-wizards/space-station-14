@@ -1,10 +1,4 @@
 Entries:
-- author: eclips_e
-  changes:
-  - {message: 'The syndicate has opened it''s own clothing brand, the operative suit
-      and skirt have been added into the uplink', type: Add}
-  id: 2222
-  time: '2022-09-01T08:29:31.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Broken post lights should no longer show an error, type: Fix}
@@ -2950,3 +2944,8 @@ Entries:
   - {message: Animals have to eat less but more frequently, type: Tweak}
   id: 2721
   time: '2022-12-06T22:56:14.0000000+00:00'
+- author: Bright0
+  changes:
+  - {message: item cabinets no longer can be (un)locked while open, type: Fix}
+  id: 2722
+  time: '2022-12-06T22:59:59.0000000+00:00'
