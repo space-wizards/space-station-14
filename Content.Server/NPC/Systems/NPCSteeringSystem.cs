@@ -505,7 +505,7 @@ namespace Content.Server.NPC.Systems
             for (var i = 0; i < InterestDirections; i++)
             {
                 var result = Vector2.Dot(norm, directions[i]);
-                var adjustedResult = (result + 0.5f) / 1.5f;
+                var adjustedResult = (result + 1f) / 2f;
 
                 interestMap[i] = MathF.Max(interestMap[i], adjustedResult * input.Length);
             }
