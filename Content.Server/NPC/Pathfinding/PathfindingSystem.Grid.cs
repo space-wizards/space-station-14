@@ -232,7 +232,7 @@ public sealed partial class PathfindingSystem
 
     private bool IsBodyRelevant(PhysicsComponent body)
     {
-        if (!body.Hard || !body.CanCollide || body.BodyType != BodyType.Static)
+        if (!body.Hard || body.BodyType != BodyType.Static)
         {
             return false;
         }
@@ -262,7 +262,8 @@ public sealed partial class PathfindingSystem
 
     private void OnBodyTypeChange(ref PhysicsBodyTypeChangedEvent ev)
     {
-        if (IsBodyRelevant(ev.Component) &&
+        if (ev.Component.CanCollide &&
+            IsBodyRelevant(ev.Component) &&
             TryComp<TransformComponent>(ev.Entity, out var xform) &&
             xform.GridUid != null)
         {

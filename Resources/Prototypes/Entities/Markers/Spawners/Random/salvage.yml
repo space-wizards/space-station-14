@@ -9,7 +9,8 @@
     - type: Sprite
       layers:
         - state: red
-        - texture: Structures/Storage/Crates/generic.rsi/icon.png
+        - sprite: Structures/Storage/Crates/generic.rsi
+          state: icon
     - type: RandomSpawner
       rarePrototypes:
         - SalvageHumanCorpse
@@ -33,7 +34,8 @@
     - type: Sprite
       layers:
         - state: red
-        - texture: Structures/Storage/canister.rsi/blue.png
+        - sprite: Structures/Storage/canister.rsi
+          state: blue
     - type: RandomSpawner
       rarePrototypes:
         - PlasmaCanister
@@ -56,7 +58,8 @@
     - type: Sprite
       layers:
         - state: red
-        - texture: Mobs/Aliens/Carps/space.rsi/icon.png
+        - sprite: Mobs/Aliens/Carps/space.rsi
+          state: icon
     - type: RandomSpawner
       prototypes:
         - MobCarpSalvage
@@ -81,7 +84,8 @@
     - type: Sprite
       layers:
         - state: red
-        - texture: Mobs/Aliens/Xenos/spacetick.rsi/icon.png
+        - sprite: Mobs/Aliens/Xenos/spacetick.rsi
+          state: icon
     - type: ConditionalSpawner
       prototypes:
         - MobTickSalvage
