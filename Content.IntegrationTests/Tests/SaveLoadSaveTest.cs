@@ -88,6 +88,7 @@ namespace Content.IntegrationTests.Tests
             var server = pairTracker.Pair.Server;
             var mapLoader = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<MapLoaderSystem>();
             var mapManager = server.ResolveDependency<IMapManager>();
+            var userData = server.ResolveDependency<IResourceManager>().UserData;
 
             MapId mapId = default;
 
@@ -109,8 +110,19 @@ namespace Content.IntegrationTests.Tests
                 mapLoader.SaveMap(mapId, "/load save ticks save 2.yml");
             });
 
+            // Temporary debug asserts for figuring out why tests are failing.
+            Assert.That(server.IsAlive, "Is dead 1.");
+            var entMan = server.ResolveDependency<IEntityManager>();
+            Assert.That(((EntityManager) entMan).Initialized, "Not initialized? 2");
+            userData = server.ResolveDependency<IResourceManager>().UserData;
+
             await server.WaitIdleAsync();
-            var userData = server.ResolveDependency<IResourceManager>().UserData;
+
+            // Temporary debug asserts for figuring out why tests are failing.
+            Assert.That(server.IsAlive, "Is dead 2.");
+            entMan = server.ResolveDependency<IEntityManager>();
+            Assert.That(((EntityManager)entMan).Initialized, "Not initialized? 2");
+            userData = server.ResolveDependency<IResourceManager>().UserData;
 
             string one;
             string two;
