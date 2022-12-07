@@ -9,7 +9,8 @@
   - type: Sprite
     layers:
       - state: red
-      - texture: Objects/Consumable/Drinks/beerglass.rsi/icon.png 
+      - sprite: Objects/Consumable/Drinks/beerglass.rsi
+        state: icon
   - type: RandomSpawner
   #small item
     prototypes:
