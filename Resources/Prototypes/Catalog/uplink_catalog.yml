@@ -2,8 +2,8 @@
 
 - type: listing
   id: UplinkPistolViper
-  name: Viper
-  description: A small, easily concealable, but somewhat underpowered gun. Use pistol magazines (.35 auto).
+  name: uplink-pistol-viper-name
+  description: uplink-pistol-viper-desc
   productEntity: WeaponPistolViper
   cost:
     Telecrystal: 6
@@ -12,8 +12,8 @@
 
 - type: listing
   id: UplinkRevolverPython
-  name: Python
-  description: A loud and deadly revolver. Uses .45 Magnum.
+  name: uplink-revolver-python-name
+  description: uplink-revolver-python-desc
   productEntity: WeaponRevolverPython
   cost:
     Telecrystal: 8
@@ -23,8 +23,8 @@
 # Inbuilt suppressor so it's sneaky + more expensive.
 - type: listing
   id: UplinkPistolCobra
-  name: Cobra
-  description: A rugged, robust operator handgun with inbuilt silencer. Use pistol magazines (.25 caseless).
+  name: uplink-pistol-cobra-name
+  description: uplink-pistol-cobra-desc
   productEntity: WeaponPistolCobra
   cost:
     Telecrystal: 8
@@ -34,8 +34,8 @@
 # Poor accuracy, slow to fire, cheap option
 - type: listing
   id: UplinkRifleMosin
-  name: Surplus Rifle
-  description: A bolt action service rifle that has seen many wars. Not modern by any standard, hand loaded, and terrible recoil, but it is cheap.
+  name: uplink-rifle-mosin-name
+  description: uplink-rifle-mosin-desc
   productEntity: WeaponSniperMosin
   cost:
     Telecrystal: 2
@@ -44,8 +44,9 @@
 
 - type: listing
   id: UplinkEsword
-  name: Energy Sword
-  description: A very dangerous energy sword. Can be stored in pockets when turned off. Makes a lot of noise when used or turned on.
+  name: uplink-esword-name
+  description: uplink-esword-desc
+  icon: { sprite: /Textures/Objects/Weapons/Melee/e_sword.rsi, state: icon }
   productEntity: EnergySword
   cost:
     Telecrystal: 8
@@ -54,8 +55,9 @@
 
 - type: listing
   id: UplinkEnergyDagger
-  name: Energy Dagger
-  description: A small energy blade conveniently disguised in the form of a pen.
+  name: uplink-edagger-name
+  description: uplink-edagger-desc
+  icon: { sprite: /Textures/Objects/Weapons/Melee/e_dagger.rsi, state: icon }
   productEntity: EnergyDagger
   cost:
     Telecrystal: 2
@@ -64,8 +66,8 @@
 
 - type: listing
   id: UplinkFireAxeFlaming
-  name: Fire Axe
-  description: A classic-style weapon infused with advanced atmos technology to allow it to set targets on fire.
+  name: uplink-fire-axe-flaming-name
+  description: uplink-fire-axe-flaming-desc
   productEntity: FireAxeFlaming
   cost:
     Telecrystal: 10
