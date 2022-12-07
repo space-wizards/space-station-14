@@ -109,11 +109,13 @@ public sealed class NPCSteeringOverlay : Overlay
             for (var i = 0; i < SharedNPCSteeringSystem.InterestDirections; i++)
             {
                 var danger = comp.DangerMap[i];
+                var interest = comp.InterestMap[i];
                 var angle = Angle.FromDegrees(i * (360 / SharedNPCSteeringSystem.InterestDirections));
+                args.WorldHandle.DrawLine(worldPos, worldPos + (rotationOffset + angle).RotateVec(new Vector2(interest, 0f)), Color.LimeGreen);
                 args.WorldHandle.DrawLine(worldPos, worldPos + (rotationOffset + angle).RotateVec(new Vector2(danger, 0f)), Color.Red);
             }
 
-            args.WorldHandle.DrawLine(worldPos, worldPos + rotationOffset.RotateVec(comp.Direction), Color.Blue);
+            args.WorldHandle.DrawLine(worldPos, worldPos + rotationOffset.RotateVec(comp.Direction), Color.Cyan);
         }
     }
 }

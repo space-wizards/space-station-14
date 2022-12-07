@@ -35,6 +35,7 @@ namespace Content.Server.NPC.Systems
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly DoorSystem _doors = default!;
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
+        [Dependency] private readonly FactionSystem _faction = default!;
         [Dependency] private readonly PathfindingSystem _pathfindingSystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interaction = default!;
         [Dependency] private readonly SharedMeleeWeaponSystem _melee = default!;
@@ -291,11 +292,13 @@ namespace Content.Server.NPC.Systems
             }
 
             DebugTools.Assert(!float.IsNaN(interestMap[0]));
+            // TODO: Query
+            var body = bodyQuery.GetComponent(uid);
 
-            StaticAvoid(uid, offsetRot, worldPos, detectionRadius, agentRadius, xform, dangerMap, directions, bodyQuery, xformQuery);
+            StaticAvoid(uid, offsetRot, worldPos, detectionRadius, agentRadius, body, xform, dangerMap, directions, bodyQuery, xformQuery);
             DebugTools.Assert(!float.IsNaN(dangerMap[0]));
             // TODO: Avoid anything not considered hostile
-            DynamicAvoid(uid);
+            DynamicAvoid(uid, offsetRot, worldPos, detectionRadius, agentRadius, body, xform, dangerMap, directions, bodyQuery, xformQuery);
 
             var ev = new NPCSteeringEvent(interestMap, dangerMap);
             RaiseLocalEvent(uid, ref ev);
@@ -507,6 +510,14 @@ namespace Content.Server.NPC.Systems
 
         private void CheckPath(NPCSteeringComponent steering, TransformComponent xform, bool needsPath, float targetDistance)
         {
+            if (!_pathfinding)
+            {
+                steering.CurrentPath.Clear();
+                steering.PathfindToken?.Cancel();
+                steering.PathfindToken = null;
+                return;
+            }
+
             if (!needsPath)
             {
                 // If the target has sufficiently moved.
@@ -565,7 +576,7 @@ namespace Content.Server.NPC.Systems
             // Depending on what's going on we may return the target or a pathfind node.
 
             // Even if we're at the last node may not be able to head to target in case we get stuck on a corner or the likes.
-            if (steering.CurrentPath.Count >= 1 && steering.CurrentPath.TryPeek(out var nextTarget))
+            if (_pathfinding && steering.CurrentPath.Count >= 1 && steering.CurrentPath.TryPeek(out var nextTarget))
             {
                 return GetCoordinates(nextTarget);
             }
@@ -586,22 +597,24 @@ namespace Content.Server.NPC.Systems
             Vector2 worldPos,
             float detectionRadius,
             float agentRadius,
+            PhysicsComponent body,
             TransformComponent xform,
             float[] dangerMap,
             Vector2[] directions,
             EntityQuery<PhysicsComponent> bodyQuery,
             EntityQuery<TransformComponent> xformQuery)
         {
-            // Static Avoidance (TODO: METHOD)
+            detectionRadius = 0.5f;
+
             foreach (var ent in _lookup.GetEntitiesInRange(uid, detectionRadius, LookupFlags.Static))
             {
                 // TODO: If we can access the door or smth.
                 if (ent == uid ||
                     !bodyQuery.TryGetComponent(ent, out var otherBody) ||
-                    !otherBody.CanCollide ||
-                    !otherBody.Hard)
+                    !otherBody.Hard ||
+                    ((body.CollisionMask & otherBody.CollisionLayer) == 0x0 &&
+                    (body.CollisionLayer & otherBody.CollisionMask) == 0x0))
                 {
-                    // TODO: Mask
                     continue;
                 }
 
@@ -633,9 +646,62 @@ namespace Content.Server.NPC.Systems
 
         #region Dynamic Avoidance
 
-        private void DynamicAvoid(EntityUid uid)
+        /// <summary>
+        /// Tries to avoid mobs of the same faction.
+        /// </summary>
+        private void DynamicAvoid(
+            EntityUid uid,
+            Angle offsetRot,
+            Vector2 worldPos,
+            float detectionRadius,
+            float agentRadius,
+            PhysicsComponent body,
+            TransformComponent xform,
+            float[] dangerMap,
+            Vector2[] directions,
+            EntityQuery<PhysicsComponent> bodyQuery,
+            EntityQuery<TransformComponent> xformQuery)
         {
+            foreach (var ent in _lookup.GetEntitiesInRange(uid, detectionRadius, LookupFlags.Dynamic))
+            {
+                // TODO: If we can access the door or smth.
+                if (ent == uid ||
+                    !bodyQuery.TryGetComponent(ent, out var otherBody) ||
+                    !otherBody.Hard ||
+                    ((body.CollisionMask & otherBody.CollisionLayer) == 0x0 &&
+                     (body.CollisionLayer & otherBody.CollisionMask) == 0x0) ||
+                    // TODO: Internal resolves
+                    !_faction.IsFriendly(uid, ent))
+                {
+                    continue;
+                }
 
+                // TODO: More queries and shit.
+                if (!_physics.TryGetNearestPoints(uid, ent, out var pointA, out var pointB, xform, xformQuery.GetComponent(ent)))
+                {
+                    continue;
+                }
+
+                var obstacleDirection = offsetRot.RotateVec(pointB - worldPos);
+                var obstacleDistance = obstacleDirection.Length;
+
+                if (obstacleDistance > detectionRadius || obstacleDistance == 0f)
+                    continue;
+
+                var weight = (obstacleDistance <= agentRadius
+                    ? 1f
+                    : (detectionRadius - obstacleDistance) / detectionRadius);
+
+                weight *= 1.5f;
+                var norm = obstacleDirection.Normalized;
+
+                for (var i = 0; i < InterestDirections; i++)
+                {
+                    var result = Vector2.Dot(norm, directions[i]);
+                    var inputValue = result * weight;
+                    dangerMap[i] = MathF.Max(inputValue, dangerMap[i]);
+                }
+            }
         }
 
         #endregion
