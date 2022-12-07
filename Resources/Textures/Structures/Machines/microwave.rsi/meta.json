@@ -8,15 +8,15 @@
     "copyright": "Taken from https://github.com/discordia-space/CEV-Eris",
     "states": [
         {
-            "name": "mw",
+            "name": "mw"
 
         },
         {
-            "name": "mw_unlit",
+            "name": "mw_unlit"
 
-        },		
+        },
         {
-            "name": "mw0",
+            "name": "mw0"
 
         },
         {
@@ -29,15 +29,15 @@
             ]
         },
         {
-            "name": "mwb",
+            "name": "mwb"
 
         },
         {
-            "name": "mwbloody",
+            "name": "mwbloody"
 
         },
         {
-            "name": "mwbloody0",
+            "name": "mwbloody0"
 
         },
         {
