@@ -18,12 +18,18 @@
     - type: Geiger
       showControl: true
       showExamine: true
-    - type: GeigerVisuals
-      states:
-        None: geiger_on_idle
-        Low: geiger_on_low
-        Med: geiger_on_med
-        High: geiger_on_high
-        Extreme: geiger_on_ext
     - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.GeigerVisuals.IsEnabled:
+          GeigerLayers.Screen:
+            True: { visible: True }
+            False: { visible: False }
+        enum.GeigerVisuals.DangerLevel:
+          GeigerLayers.Screen:
+            None: {state: geiger_on_idle}
+            Low: {state: geiger_on_low}
+            Med: {state: geiger_on_med}
+            High: {state: geiger_on_high}
+            Extreme: {state: geiger_on_ext}
 
