@@ -1,4 +1,5 @@
 ﻿using Content.Server.Disease;
+using Content.Server.MobState;
 using Content.Shared.Audio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -15,6 +16,7 @@ public sealed class UncontrollableSnoughSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly DiseaseSystem _diseaseSystem = default!;
     [Dependency] private readonly AudioSystem _audioSystem = default!;
+    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -42,6 +44,9 @@ public sealed class UncontrollableSnoughSystem : EntitySystem
             // Set the new time.
             snough.NextIncidentTime +=
                 _random.NextFloat(snough.TimeBetweenIncidents.X, snough.TimeBetweenIncidents.Y);
+            
+            if (_mobStateSystem.IsDead(snough.Owner))
+                continue;
 
             if (snough.SnoughSound != null)
                 _audioSystem.PlayPvs(snough.SnoughSound, snough.Owner);
