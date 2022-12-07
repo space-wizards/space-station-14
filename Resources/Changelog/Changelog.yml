@@ -1,156 +1,4 @@
 Entries:
-- author: DoctorBeard
-  changes:
-  - {message: vending machine animations and their behaviors are more consistent now,
-    type: Tweak}
-  id: 2208
-  time: '2022-08-31T12:12:09.0000000+00:00'
-- author: tomasalves8
-  changes:
-  - {message: Portable Flasher, type: Fix}
-  id: 2209
-  time: '2022-08-31T12:27:30.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Damage overlay in the corners should no longer show when dead., type: Fix}
-  id: 2210
-  time: '2022-08-31T12:43:19.0000000+00:00'
-- author: Flareguy
-  changes:
-  - {message: 'Added hazard jumpsuits, now in the nearest Engidrobe vendor near you!',
-    type: Add}
-  - {message: Resprited workboots., type: Tweak}
-  - {message: Ported the hi-vis vest sprite from an older version of /tg/station.,
-    type: Tweak}
-  id: 2211
-  time: '2022-08-31T13:09:54.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: 'The entire engineering department now spawns with some form of welding
-      protection, not just technical assistants.', type: Tweak}
-  - {message: Radiation hoods are no longer only cosmetic., type: Fix}
-  id: 2212
-  time: '2022-09-01T02:08:53.0000000+00:00'
-- author: JustinTrotter
-  changes:
-  - {message: Increased stripping menu height and reordered inventory, type: Tweak}
-  id: 2213
-  time: '2022-09-01T02:21:02.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: 'Salvages now spawn somewhere near the salvage magnet, rather than directly
-      in front of it.', type: Tweak}
-  id: 2214
-  time: '2022-09-01T02:25:05.0000000+00:00'
-- author: JustinTrotter
-  changes:
-  - {message: Bots can now be stuffed into closets, type: Tweak}
-  id: 2215
-  time: '2022-09-01T02:40:16.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Added a poster celebrating the current state of our forthcoming server.,
-    type: Add}
-  id: 2216
-  time: '2022-09-01T02:56:27.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Mini Jetpack now fits in your suit storage slot., type: Tweak}
-  - {message: 'All big guns fit on your back and most fit in suit storage. LMGs, Snipers
-      and Launchers are back only.', type: Tweak}
-  - {message: 'All handguns now fit on your belt slot (waistband right?)', type: Tweak}
-  id: 2217
-  time: '2022-09-01T03:21:13.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Jaws of life can force open powered doors now., type: Add}
-  id: 2218
-  time: '2022-09-01T03:22:26.0000000+00:00'
-- author: notafet
-  changes:
-  - {message: More tools are craftable in the autolathe., type: Add}
-  id: 2219
-  time: '2022-09-01T03:39:33.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Shotguns should now be much more effective in combat., type: Tweak}
-  id: 2220
-  time: '2022-09-01T06:39:11.0000000+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: Fixed metal counter frame deconstruction, type: Fix}
-  id: 2221
-  time: '2022-09-01T07:21:39.0000000+00:00'
-- author: eclips_e
-  changes:
-  - {message: 'The syndicate has opened it''s own clothing brand, the operative suit
-      and skirt have been added into the uplink', type: Add}
-  id: 2222
-  time: '2022-09-01T08:29:31.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Broken post lights should no longer show an error, type: Fix}
-  id: 2223
-  time: '2022-09-01T12:25:31.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Microwaves now properly heat up solutions. Resume meth production posthaste!,
-    type: Fix}
-  id: 2224
-  time: '2022-09-02T02:13:44.0000000+00:00'
-- author: vulppine
-  changes:
-  - {message: 'NanoTrasen''s engineers have finally laid out a design for air alarms
-      that should make them easier for our station planners and station construction
-      team to plan out! You should see these more often, now.', type: Tweak}
-  id: 2225
-  time: '2022-09-02T20:00:34.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Dead players can no longer smart equip/unequip items., type: Fix}
-  id: 2226
-  time: '2022-09-02T23:38:47.0000000+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: Fixed shuttle airlock deconstruction returning plasteel instead of silver.,
-    type: Fix}
-  id: 2227
-  time: '2022-09-03T01:32:19.0000000+00:00'
-- author: Rolfero
-  changes:
-  - {message: E-swords finally hot enough to light a cigarette, type: Add}
-  id: 2228
-  time: '2022-09-03T10:50:38.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Made snow and grass unable to be pried with a crowbar., type: Fix}
-  id: 2229
-  time: '2022-09-03T13:40:20.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Fixes nukeops being broken when run from secret., type: Fix}
-  - {message: 'Fixes random events being broken when run from secret. Are you serious?
-      Not a single one of you reported this until now? It''s been broken for 2 months.',
-    type: Fix}
-  id: 2230
-  time: '2022-09-04T01:40:00.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed some prediction issues surrounding status effects. Slipping should
-      feel less shit now. No more double slipping and teleporting when you get back
-      up., type: Fix}
-  id: 2231
-  time: '2022-09-04T17:21:22.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fix some sprite animations not animating properly., type: Fix}
-  id: 2232
-  time: '2022-09-05T00:06:35.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Camera eye rotations should now be correct., type: Fix}
-  id: 2233
-  time: '2022-09-05T06:19:15.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Pets will no longer try to run away when buckled or pulled., type: Tweak}
@@ -2954,3 +2802,147 @@ Entries:
   - {message: The RPG-7 can be loaded again with its proper ammo., type: Fix}
   id: 2707
   time: '2022-11-28T02:47:28.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: It's now possible to reset camera rotation before the lerp starts after
+      traversing a grid., type: Tweak}
+  id: 2708
+  time: '2022-11-29T22:41:27.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: All station events are no longer capped at a certain number of occurrences.,
+    type: Tweak}
+  id: 2709
+  time: '2022-12-01T05:45:43.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Ghosts can now toggle seeing FoV, type: Add}
+  id: 2710
+  time: '2022-12-01T05:46:04.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Turrets will now shoot space targets., type: Fix}
+  id: 2711
+  time: '2022-12-01T15:02:02.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: Kick AFK players, type: Add}
+  id: 2712
+  time: '2022-12-01T16:38:20.0000000+00:00'
+- author: jick
+  changes:
+  - {message: Escape key clears chat input, type: Tweak}
+  id: 2713
+  time: '2022-12-03T01:15:59.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Weld modular mines and grenades to salvage them, type: Tweak}
+  id: 2714
+  time: '2022-12-03T01:20:38.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: Updated all Engineering jumpsuit sprites, type: Tweak}
+  - {message: Updated the Emergency Firesuit's sprite, type: Tweak}
+  - {message: Partially resprited most hardhats, type: Tweak}
+  - {message: Added the orange hardhat to the engidrobe vendor, type: Tweak}
+  id: 2715
+  time: '2022-12-03T01:41:06.0000000+00:00'
+- author: GoodWheatley
+  changes:
+  - {message: The Syndicate has adjusted the price of several uplink items to encourage
+      traitors to use more diverse strategies., type: Add}
+  id: 2716
+  time: '2022-12-03T01:48:25.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: Links to the wiki/discord/etc show up again in the lobby., type: Fix}
+  id: 2717
+  time: '2022-12-04T12:47:26.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Vehicles now inherit access from the rider instead of having access
+      defined on the vehicle itself., type: Tweak}
+  id: 2718
+  time: '2022-12-05T00:23:59.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Artifact analyzers linked to consoles roundstart should now work properly.,
+    type: Fix}
+  id: 2719
+  time: '2022-12-05T02:35:07.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix tile friction on planetmaps., type: Fix}
+  id: 2720
+  time: '2022-12-05T03:47:08.0000000+00:00'
+- author: Prentor
+  changes:
+  - {message: Animals have to eat less but more frequently, type: Tweak}
+  id: 2721
+  time: '2022-12-06T22:56:14.0000000+00:00'
+- author: Bright0
+  changes:
+  - {message: item cabinets no longer can be (un)locked while open, type: Fix}
+  id: 2722
+  time: '2022-12-06T22:59:59.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: NPCs will no longer stall on 1 bad path., type: Fix}
+  id: 2723
+  time: '2022-12-06T23:11:05.0000000+00:00'
+- author: JustinTrotter
+  changes:
+  - {message: Toggle internals icon correctly toggles gas tanks equipped on your back,
+    type: Fix}
+  id: 2724
+  time: '2022-12-06T23:14:09.0000000+00:00'
+- author: Veritius
+  changes:
+  - {message: Tranquiliser shells' capacity has been reduced., type: Tweak}
+  id: 2725
+  time: '2022-12-06T23:14:24.0000000+00:00'
+- author: nikthechampiongr
+  changes:
+  - {message: Added confirmation button for character deletion., type: Add}
+  id: 2726
+  time: '2022-12-06T23:14:48.0000000+00:00'
+- author: Interrobang01
+  changes:
+  - {message: You can now put holofan projectors into the utility belt., type: Tweak}
+  - {message: You can now put both holosign projectors and wet floor signs into the
+      janibelt., type: Tweak}
+  id: 2727
+  time: '2022-12-06T23:17:21.0000000+00:00'
+- author: Cripes
+  changes:
+  - {message: Fix bug where air alarm would show incorrect filters for a scrubber,
+    type: Fix}
+  id: 2728
+  time: '2022-12-06T23:33:21.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: NPCs will be more persistent in chases., type: Tweak}
+  id: 2729
+  time: '2022-12-06T23:34:23.0000000+00:00'
+- author: Errant
+  changes:
+  - {message: Wall mounted generators and substations actually mounted on a wall can
+      now be ~punched~ reached, type: Fix}
+  id: 2730
+  time: '2022-12-06T23:34:56.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Renamed .40 magnum to .45 and remove .45., type: Tweak}
+  id: 2731
+  time: '2022-12-06T23:38:10.0000000+00:00'
+- author: Cripes
+  changes:
+  - {message: Air Alarm UI is now easier to understand, type: Tweak}
+  id: 2732
+  time: '2022-12-06T23:46:08.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Added geiger counter. It can be found in radiation suit closets., type: Add}
+  - {message: Radiation suit and hardsuits have built-in geiger counter., type: Add}
+  id: 2733
+  time: '2022-12-07T01:56:52.0000000+00:00'

@@ -486,7 +486,7 @@ entities:
   components:
   - type: MetaData
   - pos: 0.4558292,0.42837813
-    parent: null
+    parent: 943
     type: Transform
   - chunks:
       0,-1:
@@ -557,7 +557,7 @@ entities:
         tiles: SwAAA0sAAABLAAADSwAAAksAAAJYAAAAAAAAAAAAAABYAAAASAAAAFgAAABYAAAAWAAAAFgAAABYAAAAVwAAAEsAAAJLAAABSwAAA0sAAANLAAAAWAAAAAAAAAAAAAAAWAAAAEgAAABYAAAAWAAAAFUAAAJYAAAAWAAAAFcAAABQAAAAUAAAAEsAAANLAAACSwAAAlgAAAAAAAAAAAAAAFgAAABIAAAAWAAAAFgAAABYAAAAVQAAA1gAAABXAAAAUAAAAFAAAAJLAAACSwAAAksAAAJYAAAAVwAAAAAAAABYAAAASAAAAFgAAABYAAAAWAAAAFgAAABYAAAAVwAAAFAAAABQAAAASwAAAUsAAANLAAADWAAAAAAAAAAAAAAAWAAAAEgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFcAAABLAAAASwAAAUsAAAFLAAADSwAAAFgAAAAAAAAAAAAAAFgAAABIAAAAWAAAAFgAAABVAAADWAAAAFgAAABXAAAASwAAAUsAAAJLAAAASwAAAksAAANYAAAAVwAAAFcAAABYAAAASAAAAFgAAABYAAAAVQAAAlUAAAJYAAAAVwAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFcAAABLAAACSwAAAEsAAAFLAAAAWAAAAEgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABXAAAAWAAAAAAAAABXAAAASwAAAksAAAFLAAAASwAAAFgAAABIAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAVwAAAFgAAAAAAAAAVwAAAEsAAABLAAABSwAAAksAAAJYAAAASAAAAFgAAABIAAAASAAAAEgAAABIAAAAWAAAAFcAAABYAAAAAAAAAFcAAABLAAABSwAAA0sAAANLAAABWAAAAEgAAABYAAAAWAAAAEgAAABYAAAAWAAAAFgAAABXAAAAWAAAAAAAAABXAAAAWAAAAFgAAABYAAAAWAAAAFgAAABIAAAAWAAAAFgAAABIAAAAWAAAAFgAAABYAAAAVwAAAFgAAAAAAAAAVwAAAEsAAABLAAAAWAAAAAAAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFcAAAAAAAAAAAAAAFcAAABLAAABSwAAAlgAAAAAAAAAVwAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABXAAAAAAAAAAAAAABXAAAASwAAAUsAAANYAAAAAAAAAFcAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAAAAAAAAAAAAAAAAAVwAAAA==
       2,-1:
         ind: 2,-1
-        tiles: WAAAAEsAAAFYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABLAAACSwAAAUsAAANLAAACWAAAAEsAAAFLAAAASwAAAUsAAANLAAAAWAAAADYAAAA2AAAANgAAADYAAABYAAAASwAAAksAAAFLAAABWAAAABUAAAFLAAABSwAAAUsAAAJLAAABSwAAAVgAAAA2AAAANgAAADYAAAA2AAAANgAAAEsAAANQAAAASwAAABUAAAEVAAAASwAAAksAAAJLAAACSwAAAEsAAAFYAAAANgAAADYAAAA2AAAANgAAAFgAAABLAAAASwAAAksAAANYAAAAFQAAAFgAAAAVAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAASwAAAksAAAJLAAABWAAAAFgAAAAVAAADFQAAABUAAAJYAAAAFQAAAxUAAAIVAAABFQAAAxUAAAMVAAABWAAAAEsAAAJLAAADSwAAAlgAAABLAAAAFQAAAxUAAAAVAAADWAAAABUAAAAVAAADFQAAAxUAAAEVAAABFQAAAhUAAANLAAACUAAAA0sAAANLAAABSwAAAFgAAABYAAAAWAAAAFgAAAAVAAABFQAAABUAAAMVAAADFQAAABUAAABYAAAASwAAA0sAAABLAAADWAAAAEsAAAFYAAAAWAAAAFgAAABYAAAAFQAAAxUAAAIVAAABFQAAABUAAAEVAAACWAAAAFgAAABLAAABWAAAAFgAAABYAAAAWAAAAEgAAABYAAAAFQAAARUAAAAVAAADFQAAARUAAAIVAAADFQAAAlgAAABYAAAAWAAAAFgAAABYAAAAWAAAAEgAAABYAAAAWAAAAFgAAAAVAAACFQAAABUAAAAVAAAAFQAAARUAAABYAAAAWAAAAEgAAABIAAAASAAAAEgAAABIAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABIAAAASAAAAEgAAABYAAAAWAAAAEgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAABUAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAPgAAAD4AAAM+AAACPgAAAz4AAAM+AAAAFQAAAD4AAAEVAAADPgAAAT4AAAI+AAACWAAAAFgAAABYAAAAWAAAAD4AAAI+AAADPgAAAD4AAAA+AAAAPgAAAhUAAAA+AAADFQAAAD4AAAE+AAABPgAAAQ==
+        tiles: WAAAAEsAAAFYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABLAAACSwAAAUsAAANLAAACWAAAAEsAAAFLAAAASwAAAUsAAANLAAAAWAAAADYAAAA2AAAANgAAADYAAABYAAAASwAAAksAAAFLAAABWAAAABUAAAFLAAABSwAAAUsAAAJLAAABSwAAAVgAAAA2AAAANgAAADYAAAA2AAAANgAAAEsAAANLAAAASwAAABUAAAEVAAAASwAAAksAAAJLAAACSwAAAEsAAAFYAAAANgAAADYAAAA2AAAANgAAAFgAAABLAAAASwAAAksAAANYAAAAFQAAAFgAAAAVAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAASwAAAksAAAJLAAABWAAAAFgAAAAVAAADFQAAABUAAAJYAAAAFQAAAxUAAAIVAAABFQAAAxUAAAMVAAABWAAAAEsAAAJLAAADSwAAAlgAAABLAAAAFQAAAxUAAAAVAAADWAAAABUAAAAVAAADFQAAAxUAAAEVAAABFQAAAhUAAANLAAACSwAAAEsAAANLAAABSwAAAFgAAABYAAAAWAAAAFgAAAAVAAABFQAAABUAAAMVAAADFQAAABUAAABYAAAASwAAA0sAAABLAAADWAAAAEsAAAFYAAAAWAAAAFgAAABYAAAAFQAAAxUAAAIVAAABFQAAABUAAAEVAAACWAAAAFgAAABLAAABWAAAAFgAAABYAAAAWAAAAEgAAABYAAAAFQAAARUAAAAVAAADFQAAARUAAAIVAAADFQAAAlgAAABYAAAAWAAAAFgAAABYAAAAWAAAAEgAAABYAAAAWAAAAFgAAAAVAAACFQAAABUAAAAVAAAAFQAAARUAAABYAAAAWAAAAEgAAABIAAAASAAAAEgAAABIAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABIAAAASAAAAEgAAABYAAAAWAAAAEgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAABUAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAPgAAAD4AAAM+AAACPgAAAz4AAAM+AAAAFQAAAD4AAAEVAAADPgAAAT4AAAI+AAACWAAAAFgAAABYAAAAWAAAAD4AAAI+AAADPgAAAD4AAAA+AAAAPgAAAhUAAAA+AAADFQAAAD4AAAE+AAABPgAAAQ==
       3,-1:
         ind: 3,-1
         tiles: WAAAAFgAAABLAAADAAAAAFcAAABYAAAAWAAAAEEAAABBAAAAWAAAAFcAAABXAAAAVwAAAFcAAABXAAAAVwAAABUAAAIVAAAAWAAAAAAAAABXAAAAWAAAAFgAAABYAAAAQQAAAFgAAABXAAAAAAAAAAAAAAAAAAAAAAAAAFcAAAAVAAABFQAAAFgAAAAAAAAAVwAAAFgAAABYAAAAQQAAAFgAAABYAAAAVwAAAAAAAAAAAAAAAAAAAAAAAABXAAAAFQAAARUAAABYAAAAAAAAAFcAAABYAAAAWAAAAFgAAABYAAAAWAAAAFcAAABXAAAAVwAAAFcAAABXAAAAVwAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABXAAAAAAAAAAAAAAAAAAAAAAAAAFcAAABLAAADSwAAAEsAAAJYAAAASAAAAFgAAABYAAAAWAAAAEEAAABYAAAAVwAAAAAAAAAAAAAAAAAAAAAAAABXAAAASwAAAUsAAAJLAAADWAAAAEgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFcAAAAAAAAAAAAAAAAAAAAAAAAAVwAAAEsAAANLAAAASwAAAlgAAABIAAAAWAAAAFgAAABBAAAAQQAAAFgAAABXAAAAAAAAAAAAAAAAAAAAAAAAAFcAAABYAAAAWAAAAFgAAABYAAAASAAAAFgAAABYAAAAQQAAAEEAAABYAAAAVwAAAAAAAAAAAAAAAAAAAAAAAABXAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABBAAAAWAAAAFcAAABXAAAAVwAAAFcAAABXAAAAVwAAAFgAAABIAAAAWAAAAFgAAABYAAAAWAAAAFgAAABBAAAAWAAAAFgAAABXAAAAAAAAAAAAAAAAAAAAAAAAAFcAAABYAAAAWAAAAFgAAABYAAAASAAAAEgAAABYAAAAWAAAAFgAAABYAAAAVwAAAAAAAAAAAAAAAAAAAAAAAABXAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABXAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAVwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA+AAADPgAAAD4AAAE+AAABWAAAAFgAAABYAAAAWAAAAFcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPgAAAz4AAAI+AAABPgAAAlgAAABYAAAAWAAAAFgAAABYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
@@ -32208,7 +32208,7 @@ entities:
     parent: 60
     type: Transform
   - toggleAction:
-      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
       iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
       name: action-name-toggle-light
       description: action-description-toggle-light
@@ -32352,6 +32352,15 @@ entities:
     type: Transform
   - color: '#0335FCFF'
     type: AtmosPipeColor
+- uid: 943
+  components:
+  - type: MetaData
+  - type: Transform
+  - index: 4
+    type: Map
+  - type: PhysicsMap
+  - type: Broadphase
+  - type: OccluderTree
 - uid: 944
   type: ScalpelLaser
   components:
@@ -34382,9 +34391,9 @@ entities:
     parent: 60
     type: Transform
 - uid: 1201
-  type: TableReinforced
+  type: TransmitterSubspaceStockPart
   components:
-  - pos: -67.5,9.5
+  - pos: -63.585518,9.577888
     parent: 60
     type: Transform
 - uid: 1202
@@ -37932,7 +37941,7 @@ entities:
     parent: 60
     type: Transform
   - toggleAction:
-      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
       iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
       name: action-name-toggle-light
       description: action-description-toggle-light
@@ -41293,7 +41302,7 @@ entities:
     parent: 60
     type: Transform
   - toggleAction:
-      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
       iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
       name: action-name-toggle-light
       description: action-description-toggle-light
@@ -55826,7 +55835,7 @@ entities:
     parent: 60
     type: Transform
   - toggleAction:
-      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
       iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
       name: action-name-toggle-light
       description: action-description-toggle-light
@@ -55840,7 +55849,7 @@ entities:
     parent: 60
     type: Transform
   - toggleAction:
-      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
       iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
       name: action-name-toggle-light
       description: action-description-toggle-light
@@ -55988,7 +55997,7 @@ entities:
 - uid: 4259
   type: Paper
   components:
-  - desc: ''
+  - desc: ""
     type: MetaData
   - pos: -48.414677,-15.437268
     parent: 60
@@ -56119,7 +56128,7 @@ entities:
     parent: 60
     type: Transform
   - toggleAction:
-      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
       iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
       name: action-name-toggle-light
       description: action-description-toggle-light
@@ -63306,7 +63315,7 @@ entities:
     parent: 60
     type: Transform
   - toggleAction:
-      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
       iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
       name: action-name-toggle-light
       description: action-description-toggle-light
@@ -65311,7 +65320,7 @@ entities:
     parent: 60
     type: Transform
   - toggleAction:
-      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
       iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
       name: action-name-toggle-light
       description: action-description-toggle-light
@@ -67090,7 +67099,7 @@ entities:
     parent: 60
     type: Transform
   - toggleAction:
-      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
       iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
       name: action-name-toggle-light
       description: action-description-toggle-light
@@ -71442,7 +71451,7 @@ entities:
     parent: 60
     type: Transform
   - toggleAction:
-      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
       iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
       name: action-name-toggle-light
       description: action-description-toggle-light
@@ -85547,9 +85556,9 @@ entities:
     parent: 60
     type: Transform
 - uid: 8563
-  type: SuperCapacitorStockPart
+  type: TableReinforced
   components:
-  - pos: -63.726524,9.579115
+  - pos: -67.5,9.5
     parent: 60
     type: Transform
 - uid: 8564
@@ -87529,7 +87538,7 @@ entities:
     parent: 60
     type: Transform
   - toggleAction:
-      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
       iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
       name: action-name-toggle-light
       description: action-description-toggle-light
@@ -91870,7 +91879,7 @@ entities:
     parent: 60
     type: Transform
   - toggleAction:
-      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
       iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
       name: action-name-toggle-light
       description: action-description-toggle-light
@@ -113526,9 +113535,9 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 13012
-  type: QuadraticCapacitorStockPart
+  type: DrinkGoldschlagerBottleFull
   components:
-  - pos: -63.445274,9.579115
+  - pos: 6.371938,-6.0707817
     parent: 60
     type: Transform
 - uid: 13013
@@ -113538,15 +113547,15 @@ entities:
     parent: 60
     type: Transform
 - uid: 13014
-  type: SuperMatterBinStockPart
+  type: MicroManipulatorStockPart
   components:
-  - pos: -67.67991,9.5806675
+  - pos: -66.58286,9.687263
     parent: 60
     type: Transform
 - uid: 13015
-  type: SuperMatterBinStockPart
+  type: ScanningModuleStockPart
   components:
-  - pos: -67.08533,9.845674
+  - pos: -67.444885,9.609138
     parent: 60
     type: Transform
 - uid: 13016
@@ -113556,9 +113565,9 @@ entities:
     parent: 60
     type: Transform
 - uid: 13017
-  type: UltraHighPowerMicroLaserStockPart
+  type: ScanningModuleStockPart
   components:
-  - pos: -66.61741,9.6119175
+  - pos: -67.61676,9.687263
     parent: 60
     type: Transform
 - uid: 13018
@@ -113670,21 +113679,18 @@ entities:
     parent: 60
     type: Transform
 - uid: 13036
-  type: HighPowerMicroLaserStockPart
+  type: Poweredlight
   components:
-  - pos: -66.27366,9.6119175
+  - rot: 3.141592653589793 rad
+    pos: -51.5,11.5
     parent: 60
     type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
 - uid: 13037
   type: WallSolid
   components:
   - pos: -63.5,42.5
-    parent: 60
-    type: Transform
-- uid: 13038
-  type: FemtoManipulatorStockPart
-  components:
-  - pos: -64.40966,9.65759
     parent: 60
     type: Transform
 - uid: 13039
@@ -121099,7 +121105,7 @@ entities:
     parent: 60
     type: Transform
   - toggleAction:
-      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
       iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
       name: action-name-toggle-light
       description: action-description-toggle-light
@@ -145111,7 +145117,7 @@ entities:
     parent: 60
     type: Transform
   - toggleAction:
-      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
       iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
       name: action-name-toggle-light
       description: action-description-toggle-light
@@ -145168,7 +145174,7 @@ entities:
     parent: 60
     type: Transform
   - toggleAction:
-      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
       iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
       name: action-name-toggle-light
       description: action-description-toggle-light
@@ -146089,7 +146095,7 @@ entities:
     parent: 60
     type: Transform
   - toggleAction:
-      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
       iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
       name: action-name-toggle-light
       description: action-description-toggle-light
@@ -150481,7 +150487,7 @@ entities:
     parent: 60
     type: Transform
   - toggleAction:
-      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
       iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
       name: action-name-toggle-light
       description: action-description-toggle-light
@@ -150863,7 +150869,7 @@ entities:
     parent: 60
     type: Transform
   - toggleAction:
-      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
       iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
       name: action-name-toggle-light
       description: action-description-toggle-light
@@ -157759,7 +157765,7 @@ entities:
     parent: 60
     type: Transform
   - toggleAction:
-      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
       iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
       name: action-name-toggle-light
       description: action-description-toggle-light
@@ -170573,7 +170579,7 @@ entities:
     - 21492
     - 21491
     - 18608
-    - null
+    - invalid
     - 18272
     - 18270
     - 18368
@@ -171347,7 +171353,7 @@ entities:
     - 18915
     - 18906
     - 18910
-    - null
+    - invalid
     - 18892
     - 18893
     type: DeviceList
@@ -171611,7 +171617,7 @@ entities:
     - 21568
     - 2370
     - 2360
-    - null
+    - invalid
     type: DeviceList
 - uid: 21568
   type: AirSensor
@@ -172380,7 +172386,7 @@ entities:
   - devices:
     - 21631
     - 7146
-    - null
+    - invalid
     - 6015
     - 5990
     - 21632
@@ -172603,7 +172609,7 @@ entities:
     - 21648
     - 16559
     - 16560
-    - null
+    - invalid
     type: DeviceList
 - uid: 21648
   type: AirSensor
@@ -172634,7 +172640,7 @@ entities:
     - 21648
     - 16559
     - 16560
-    - null
+    - invalid
     - 21655
     - 21656
     type: DeviceList

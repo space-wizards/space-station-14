@@ -8,7 +8,8 @@
   - type: Sprite
     layers:
       - state: green
-      - texture: Mobs/Animals/mouse.rsi/icon-2.png
+      - sprite: Mobs/Animals/mouse.rsi
+        state: icon-2
       - state: ai
   - type: ConditionalSpawner
     prototypes:
@@ -63,7 +64,8 @@
   - type: Sprite
     layers:
       - state: green
-      - texture: Mobs/Silicon/drone.rsi/shell.png
+      - sprite: Mobs/Silicon/drone.rsi
+        state: shell
   - type: ConditionalSpawner
     prototypes:
       - Drone
@@ -215,3 +217,18 @@
   - type: ConditionalSpawner
     prototypes:
     - MobBearSpace
+
+- type: entity
+  name: Hamster Hamlet Spawner
+  id: SpawnMobHamsterHamlet
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: icon-0
+        sprite: Mobs/Animals/hamster.rsi
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - CrateNPCHamlet
