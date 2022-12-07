@@ -226,7 +226,7 @@
   - type: Sprite
     layers:
       - state: green
-      - state: icon-0.png
+      - state: icon-0
         sprite: Mobs/Animals/hamster.rsi
       - state: ai
   - type: ConditionalSpawner
