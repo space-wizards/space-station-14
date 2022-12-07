@@ -147,3 +147,19 @@
     contents:
       - id: MobSnake
         amount: 3
+
+- type: entity
+  id: CrateNPCHamster
+  parent: CrateRodentCage
+  components:
+    - type: StorageFill
+      contents:
+        - id: MobHamster
+
+- type: entity
+  id: CrateNPCHamlet
+  parent: CrateRodentCage
+  components:
+    - type: StorageFill
+      contents:
+        - id: MobHamsterHamlet
