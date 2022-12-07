@@ -1,5 +1,5 @@
-# In order to make this list somewhat organized, please place new technologies 
-# underneath their overarching "base" technology.
+# In order to make this list somewhat organized, please place 
+# new technologies underneath their overarching "base" technology.
 
 # Base Technology
 
@@ -286,19 +286,6 @@
   - MailingUnitElectronics
 
 - type: technology
-  name: technologies-rapid-upgrade
-  id: RapidUpgrade
-  description: technologies-rapid-upgrade-description
-  icon: 
-    sprite: Objects/Specific/Research/rped.rsi
-    state: icon
-  requiredPoints: 7500
-  requiredTechnologies:
-  - IndustrialEngineering
-  unlockedRecipes:
-  - RPED
-
-- type: technology
   name: technologies-material-sheet-printing
   id: Sheets
   description: technologies-material-sheet-printing-description
@@ -373,6 +360,19 @@
   - ThermomachineFreezerMachineCircuitBoard
   - PortableScrubberMachineCircuitBoard
   - GasRecyclerMachineCircuitboard
+
+- type: technology
+  name: technologies-rapid-upgrade
+  id: RapidUpgrade
+  description: technologies-rapid-upgrade-description
+  icon: 
+    sprite: Objects/Specific/Research/rped.rsi
+    state: icon
+  requiredPoints: 7500
+  requiredTechnologies:
+  - ElectricalEngineering
+  unlockedRecipes:
+  - RPED
 
 - type: technology
   name: technologies-compact-power-technology
@@ -505,7 +505,7 @@
   requiredPoints: 15000
   requiredTechnologies:
   - ScientificTechnology
-  - ElectricalEngineering
+  - CompactPowerTechnology
   unlockedRecipes:
   - AdvancedCapacitorStockPart
   - AdvancedMatterBinStockPart
