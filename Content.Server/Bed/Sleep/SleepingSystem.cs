@@ -14,7 +14,6 @@ using Content.Shared.MobState.Components;
 using Content.Shared.Slippery;
 using Content.Shared.Stunnable;
 using Content.Shared.Verbs;
-using Content.Shared.Zombies;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -178,8 +177,7 @@ namespace Content.Server.Bed.Sleep
         /// </summary>
         public bool TrySleeping(EntityUid uid)
         {
-            //Long term, there should probably be a more universal component/attribute that prevents unconventional mob types from sleeping so they don't need to be listed here individually
-            if (!HasComp<MobStateComponent>(uid) || _mobStateSystem.IsDead(uid) || HasComp<ZombieComponent>(uid) )
+            if (!HasComp<MobStateComponent>(uid) || _mobStateSystem.IsDead(uid))
                 return false;
 
             if (_prototypeManager.TryIndex<InstantActionPrototype>("Sleep", out var sleepAction))
