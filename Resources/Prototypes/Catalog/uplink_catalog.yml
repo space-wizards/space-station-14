@@ -78,6 +78,8 @@
 
 - type: listing
   id: UplinkExplosiveGrenade
+  name: uplink-explosive-grenade-name
+  description: uplink-explosive-grenade-desc
   productEntity: ExGrenade
   cost:
     Telecrystal: 4
@@ -86,6 +88,8 @@
 
 - type: listing
   id: UplinkExplosiveGrenadeFlash
+  name: uplink-flash-grenade-name
+  description: uplink-flash-grenade-desc
   productEntity: GrenadeFlashBang
   cost:
     Telecrystal: 2
@@ -94,6 +98,8 @@
 
 - type: listing
   id: UplinkSyndieMiniBomb
+  name: uplink-mini-bomb-name
+  description: uplink-mini-bomb-desc
   productEntity: SyndieMiniBomb
   cost:
     Telecrystal: 6
@@ -102,6 +108,8 @@
 
 - type: listing
   id: UplinkGrenadePenguin
+  name: uplink-penguin-grenade-name
+  description: uplink-penguin-grenade-desc
   productEntity: MobGrenadePenguin
   cost:
     Telecrystal: 6
@@ -115,9 +123,8 @@
 
 - type: listing
   id: UplinkC4
-  description: >
-    C-4 is plastic explosive of the common variety Composition C. You can use it to breach walls, airlocks or sabotage equipment.
-    It can be attached to almost all objects and has a modifiable timer with a minimum setting of 10 seconds.
+  name: uplink-c4-name
+  description: uplink-c4-desc
   productEntity: C4
   cost:
     Telecrystal: 2
@@ -126,7 +133,8 @@
 
 - type: listing
   id: UplinkC4Bundle
-  description: Because sometimes quantity is quality. Contains 8 C-4 plastic explosives.
+  name: uplink-c4-bundle-name
+  description: uplink-c4-bundle-desc
   productEntity: ClothingBackpackDuffelSyndicateC4tBundle
   cost:
     Telecrystal: 12
