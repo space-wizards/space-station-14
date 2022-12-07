@@ -218,3 +218,17 @@
     prototypes:
     - MobBearSpace
 
+- type: entity
+  name: Hamster Hamlet Spawner
+  id: SpawnMobHamsterHamlet
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: icon-0.png
+        sprite: Mobs/Animals/hamster.rsi
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - CrateNPCHamlet
