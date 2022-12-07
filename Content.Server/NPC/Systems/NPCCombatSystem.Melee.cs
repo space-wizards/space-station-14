@@ -87,13 +87,20 @@ public sealed partial class NPCCombatSystem
             return;
         }
 
+        if (TryComp<NPCSteeringComponent>(component.Owner, out var steering) &&
+            steering.Status == SteeringStatus.NoPath)
+        {
+            component.Status = CombatStatus.TargetUnreachable;
+            return;
+        }
+
         if (distance > weapon.Range)
         {
             component.Status = CombatStatus.TargetOutOfRange;
             return;
         }
 
-        var steering = EnsureComp<NPCSteeringComponent>(component.Owner);
+        steering = EnsureComp<NPCSteeringComponent>(component.Owner);
         steering.Range = MathF.Max(0.2f, weapon.Range - 0.4f);
 
         // Gets unregistered on component shutdown.

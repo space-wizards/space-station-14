@@ -190,13 +190,6 @@ namespace Content.Server.NPC.Systems
                 return;
             }
 
-            // No path set from pathfinding or the likes.
-            if (steering.Status == SteeringStatus.NoPath)
-            {
-                SetDirection(mover, steering, Vector2.Zero);
-                return;
-            }
-
             // Can't move at all, just noop input.
             if (!mover.CanMove)
             {
@@ -249,11 +242,6 @@ namespace Content.Server.NPC.Systems
             }
 
             var direction = targetMap.Position - ourMap.Position;
-
-            if (steering.Owner == new EntityUid(15315))
-            {
-
-            }
 
             // Are we in range
             if (direction.Length <= arrivalDistance)
@@ -324,6 +312,12 @@ namespace Content.Server.NPC.Systems
 
             // TODO: Probably need partial planning support i.e. patch from the last node to where the target moved to.
             CheckPath(steering, xform, needsPath, distance);
+
+            if (steering.Pathfind && steering.CurrentPath.Count == 0)
+            {
+                SetDirection(mover, steering, Vector2.Zero, false);
+                return;
+            }
 
             modifierQuery.TryGetComponent(steering.Owner, out var modifier);
             var moveSpeed = GetSprintSpeed(steering.Owner, modifier);
