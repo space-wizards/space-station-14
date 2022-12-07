@@ -113,6 +113,7 @@ namespace Content.IntegrationTests.Tests
             if (!server.IsAlive)
             {
                 await pairTracker.CleanReturnAsync();
+                return;
             }
             
             await server.WaitIdleAsync();
