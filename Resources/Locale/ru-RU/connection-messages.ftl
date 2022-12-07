@@ -20,8 +20,9 @@ soft-player-cap-full = Сервер заполнен!
 panic-bunker-account-denied = Этот сервер находится в режиме "Бункер". В данный момент новые подключения не принимаются. Повторите попытку позже
 panic-bunker-account-denied-reason = Этот сервер находится в режиме "Бункер", и вам было отказано в доступе. Причина: "{ $reason }"
 panic-bunker-account-reason-account = Ваш аккаунт должен быть старше { $minutes } минут
-panic-bunker-account-reason-overall = Необходимо минимальное отыгранное время — { $hours } { $hours ->    
-     [one] час    
-     [few] часа    
-    *[other] часов    
-}. 
+panic-bunker-account-reason-overall =
+    Необходимо минимальное отыгранное время — { $hours } { $hours ->
+        [one] час
+        [few] часа
+       *[other] часов
+    }.

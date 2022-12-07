@@ -18,7 +18,7 @@
   id: ToggleLight
   name: action-name-toggle-light
   description: action-description-toggle-light
-  icon: Objects/Tools/flashlight.rsi/flashlight.png
+  icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
   iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
   event: !type:ToggleActionEvent
 
@@ -92,7 +92,7 @@
   id: ToggleBlock
   name: action-name-blocking
   description: action-description-blocking
-  icon: Objects/Weapons/Melee/shields.rsi/teleriot-icon.png
+  icon: { sprite: Objects/Weapons/Melee/shields.rsi, state: teleriot-icon }
   iconOn: Objects/Weapons/Melee/shields.rsi/teleriot-on.png
   event: !type:ToggleActionEvent
 
@@ -100,14 +100,14 @@
   id: ClearNetworkLinkOverlays
   name: network-configurator-clear-network-link-overlays
   description: network-configurator-clear-network-link-overlays-desc
-  icon: Objects/Tools/multitool.rsi/icon.png
+  icon: { sprite: Objects/Tools/multitool.rsi, state: icon }
   event: !type:ClearAllOverlaysEvent
 
 - type: instantAction
   id: AnimalLayEgg
   name: action-name-lay-egg
   description: action-description-lay-egg
-  icon: Objects/Consumable/Food/egg.rsi/icon.png
+  icon: { sprite: Objects/Consumable/Food/egg.rsi, state: icon }
   useDelay: 60
   serverEvent: !type:EggLayInstantActionEvent
 
@@ -116,13 +116,13 @@
   name: action-name-sleep
   description: action-desc-sleep
   checkCanInteract: false
-  icon: Objects/Consumable/Food/egg.rsi/icon.png
+  icon: { sprite: Objects/Consumable/Food/egg.rsi, state: icon }
   event: !type:SleepActionEvent
 
 - type: instantAction
   id: Wake
   name: action-name-wake
   description: action-desc-wake
-  icon: Objects/Consumable/Food/egg.rsi/icon.png
+  icon: { sprite: Objects/Consumable/Food/egg.rsi, state: icon }
   checkCanInteract: false
   event: !type:WakeActionEvent

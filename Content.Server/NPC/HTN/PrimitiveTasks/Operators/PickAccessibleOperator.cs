@@ -45,7 +45,6 @@ public sealed class PickAccessibleOperator : HTNOperator
 
         var path = await _pathfinding.GetRandomPath(
             owner,
-            1.4f,
             maxRange,
             cancelToken,
             flags: _pathfinding.GetFlags(blackboard));

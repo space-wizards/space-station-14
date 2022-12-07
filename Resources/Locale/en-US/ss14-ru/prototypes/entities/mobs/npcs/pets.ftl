@@ -40,3 +40,6 @@ ent-MobRaccoonMorticia = Morticia
 ent-MobFoxRenault = Renault
     .desc = The captain's trustworthy fox.
     .suffix = { "" }
+ent-MobHamsterHamlet = Hamlet
+    .desc = A grumpy, cute and fluffy hamster.
+    .suffix = { "" }

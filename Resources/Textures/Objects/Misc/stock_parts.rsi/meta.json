@@ -387,6 +387,9 @@
           1
         ]
       ]
+    },
+    {
+      "name": "scan_module_static"
     }
   ]
 }

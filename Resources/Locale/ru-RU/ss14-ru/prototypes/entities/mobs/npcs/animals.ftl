@@ -118,3 +118,6 @@ ent-MobFerret = хорёк
 ent-MobFox = лиса
     .desc = Они - лисы.
     .suffix = { "" }
+ent-MobHamster = hamster
+    .desc = A cute, fluffy, robust hamster.
+    .suffix = { "" }
