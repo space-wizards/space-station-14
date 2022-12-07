@@ -88,12 +88,13 @@ namespace Content.IntegrationTests.Tests
             var server = pairTracker.Pair.Server;
             var mapLoader = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<MapLoaderSystem>();
             var mapManager = server.ResolveDependency<IMapManager>();
-            var userData = server.ResolveDependency<IResourceManager>().UserData;
+
+            Assert.That(server.IsAlive, "Is dead 1");
 
             MapId mapId = default;
 
             // Load saltern.yml as uninitialized map, and save it to ensure it's up to date.
-            server.Post(() =>
+            await server.WaitPost(() =>
             {
                 mapId = mapManager.CreateMap();
                 mapManager.AddUninitializedMap(mapId);
@@ -102,27 +103,25 @@ namespace Content.IntegrationTests.Tests
                 mapLoader.SaveMap(mapId, "load save ticks save 1.yml");
             });
 
+            Assert.That(server.IsAlive, "Is dead 2");
+
             // Run 5 ticks.
-            server.RunTicks(5);
+            await server.WaitRunTicks(5);
+
+            Assert.That(server.IsAlive, "Is dead 3");
 
             await server.WaitPost(() =>
             {
                 mapLoader.SaveMap(mapId, "/load save ticks save 2.yml");
             });
 
-            // Temporary debug asserts for figuring out why tests are failing.
-            Assert.That(server.IsAlive, "Is dead 1.");
-            var entMan = server.ResolveDependency<IEntityManager>();
-            Assert.That(((EntityManager) entMan).Initialized, "Not initialized? 2");
-            userData = server.ResolveDependency<IResourceManager>().UserData;
+            Assert.That(server.IsAlive, "Is dead 4");
 
             await server.WaitIdleAsync();
 
-            // Temporary debug asserts for figuring out why tests are failing.
-            Assert.That(server.IsAlive, "Is dead 2.");
-            entMan = server.ResolveDependency<IEntityManager>();
-            Assert.That(((EntityManager)entMan).Initialized, "Not initialized? 2");
-            userData = server.ResolveDependency<IResourceManager>().UserData;
+            Assert.That(server.IsAlive, "Is dead 5");
+
+            var userData = server.ResolveDependency<IResourceManager>().UserData;
 
             string one;
             string two;
