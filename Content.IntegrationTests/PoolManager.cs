@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Castle.Core;
 using Content.Client.IoC;
 using Content.Client.Parallax.Managers;
 using Content.IntegrationTests.Tests;
@@ -810,11 +811,15 @@ public sealed class PairTracker : IAsyncDisposable
         {
             if (Pair.Client.IsAlive == false)
             {
+                await TestContext.Out.WriteLineAsync(
+                    $"{nameof(CleanReturnAsync)}: Test killed the client in pair {Pair.PairId}. Original exception: {Pair.Client.UnhandledException}");
                 throw new Exception($"{nameof(CleanReturnAsync)}: Test killed the client in pair {Pair.PairId}:", Pair.Client.UnhandledException);
             }
 
             if (Pair.Server.IsAlive == false)
             {
+                await TestContext.Out.WriteLineAsync(
+                    $"{nameof(CleanReturnAsync)}: Test killed the server in pair {Pair.PairId}. Original exception: {Pair.Server.UnhandledException}");
                 throw new Exception($"{nameof(CleanReturnAsync)}: Test killed the server in pair {Pair.PairId}:", Pair.Server.UnhandledException);
             }
         }

@@ -88,8 +88,7 @@ namespace Content.IntegrationTests.Tests
             var server = pairTracker.Pair.Server;
             var mapLoader = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<MapLoaderSystem>();
             var mapManager = server.ResolveDependency<IMapManager>();
-
-            Assert.That(server.IsAlive, "Is dead 1");
+            var userData = server.ResolveDependency<IResourceManager>().UserData;
 
             MapId mapId = default;
 
@@ -103,25 +102,17 @@ namespace Content.IntegrationTests.Tests
                 mapLoader.SaveMap(mapId, "load save ticks save 1.yml");
             });
 
-            Assert.That(server.IsAlive, "Is dead 2");
-
             // Run 5 ticks.
             await server.WaitRunTicks(5);
-
-            Assert.That(server.IsAlive, "Is dead 3");
 
             await server.WaitPost(() =>
             {
                 mapLoader.SaveMap(mapId, "/load save ticks save 2.yml");
             });
 
-            Assert.That(server.IsAlive, "Is dead 4");
+            //Assert.That(server.IsAlive, "Is dead 4");
 
             await server.WaitIdleAsync();
-
-            Assert.That(server.IsAlive, "Is dead 5");
-
-            var userData = server.ResolveDependency<IResourceManager>().UserData;
 
             string one;
             string two;
