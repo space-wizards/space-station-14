@@ -5,10 +5,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Radiation.Components;
 using Content.Shared.Radiation.Systems;
-using Robust.Server.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.Player;
-using Robust.Shared.Random;
 
 namespace Content.Server.Radiation.Systems;
 
@@ -46,7 +43,7 @@ public sealed class GeigerSystem : SharedGeigerSystem
     {
         if (component.AttachedToSuit)
             SetEnabled(uid, component, true);
-        SetUser(uid, component, args.Equipee);
+        SetUser(component, args.Equipee);
     }
 
     private void OnEquippedHand(EntityUid uid, GeigerComponent component, GotEquippedHandEvent args)
@@ -54,14 +51,14 @@ public sealed class GeigerSystem : SharedGeigerSystem
         if (component.AttachedToSuit)
             return;
 
-        SetUser(uid, component, args.User);
+        SetUser(component, args.User);
     }
 
     private void OnUnequipped(EntityUid uid, GeigerComponent component, GotUnequippedEvent args)
     {
         if (component.AttachedToSuit)
             SetEnabled(uid, component, false);
-        SetUser(uid, component, null);
+        SetUser(component, null);
     }
 
     private void OnUnequippedHand(EntityUid uid, GeigerComponent component, GotUnequippedHandEvent args)
@@ -69,7 +66,7 @@ public sealed class GeigerSystem : SharedGeigerSystem
         if (component.AttachedToSuit)
             return;
 
-        SetUser(uid, component, null);
+        SetUser(component, null);
     }
 
     private void OnUpdate(RadiationSystemUpdatedEvent ev)
@@ -115,7 +112,7 @@ public sealed class GeigerSystem : SharedGeigerSystem
         Dirty(component);
     }
 
-    private void SetUser(EntityUid uid, GeigerComponent component, EntityUid? user)
+    private void SetUser(GeigerComponent component, EntityUid? user)
     {
         if (component.User == user)
             return;

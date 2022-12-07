@@ -1,5 +1,4 @@
 using Content.Client.Items;
-using Content.Client.Radiation.Components;
 using Content.Client.Radiation.UI;
 using Content.Shared.Radiation.Components;
 using Content.Shared.Radiation.Systems;
@@ -76,6 +75,6 @@ public sealed class GeigerSystem : SharedGeigerSystem
         var sound = _audio.GetSound(sounds);
         var param = sounds.Params.WithLoop(true).WithVolume(-4f)
             .WithPlayOffset(_random.NextFloat(0.0f, 1f));
-        component.Stream = _audio.Play(sound, Filter.Entities(newState.User.Value), uid, false, param);
+        component.Stream = _audio.Play(sound, Filter.Local(), uid, false, param);
     }
 }
