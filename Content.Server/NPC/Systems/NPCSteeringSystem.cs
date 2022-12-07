@@ -302,11 +302,12 @@ namespace Content.Server.NPC.Systems
 
             var ev = new NPCSteeringEvent(interestMap, dangerMap);
             RaiseLocalEvent(uid, ref ev);
+            var adjustedInterestMap = new float[InterestDirections];
 
             // Remove the danger map from the interest map.
             for (var i = 0; i < InterestDirections; i++)
             {
-                interestMap[i] = Math.Clamp(interestMap[i] - dangerMap[i], 0f, 1f);
+                adjustedInterestMap[i] = Math.Clamp(interestMap[i] - dangerMap[i], 0f, 1f);
             }
 
             var resultDirection = Vector2.Zero;
@@ -314,10 +315,17 @@ namespace Content.Server.NPC.Systems
             // Get average vector to take.
             for (var i = 0; i < InterestDirections; i++)
             {
-                resultDirection += directions[i] * interestMap[i];
+                resultDirection += directions[i] * adjustedInterestMap[i];
             }
 
             resultDirection = resultDirection == Vector2.Zero ? Vector2.Zero : resultDirection.Normalized;
+
+            // Round the direction to one of our available interest directions.
+            if (resultDirection.LengthSquared > 0f)
+            {
+                // resultDirection = new Angle(Math.Round(resultDirection.ToAngle().Theta / InterestDirections) * InterestDirections).ToVec();
+            }
+
             DebugTools.Assert(!float.IsNaN(resultDirection.X));
             SetDirection(mover, steering, resultDirection, false);
         }
@@ -497,12 +505,9 @@ namespace Content.Server.NPC.Systems
             for (var i = 0; i < InterestDirections; i++)
             {
                 var result = Vector2.Dot(norm, directions[i]);
+                var adjustedResult = (result + 0.5f) / 1.5f;
 
-                // TODO: Check angles to get.
-                //if (result > 0f)
-                //{
-                interestMap[i] = MathF.Max(interestMap[i], result * input.Length);
-                //}
+                interestMap[i] = MathF.Max(interestMap[i], adjustedResult * input.Length);
             }
 
             return true;
@@ -604,14 +609,13 @@ namespace Content.Server.NPC.Systems
             EntityQuery<PhysicsComponent> bodyQuery,
             EntityQuery<TransformComponent> xformQuery)
         {
-            detectionRadius = 0.5f;
-
             foreach (var ent in _lookup.GetEntitiesInRange(uid, detectionRadius, LookupFlags.Static))
             {
                 // TODO: If we can access the door or smth.
                 if (ent == uid ||
                     !bodyQuery.TryGetComponent(ent, out var otherBody) ||
                     !otherBody.Hard ||
+                    !otherBody.CanCollide ||
                     ((body.CollisionMask & otherBody.CollisionLayer) == 0x0 &&
                     (body.CollisionLayer & otherBody.CollisionMask) == 0x0))
                 {
@@ -624,7 +628,7 @@ namespace Content.Server.NPC.Systems
                     continue;
                 }
 
-                var obstacleDirection = offsetRot.RotateVec(pointB - worldPos);
+                var obstacleDirection = offsetRot.RotateVec(pointB - pointA);
                 var obstacleDistance = obstacleDirection.Length;
 
                 if (obstacleDistance > detectionRadius || obstacleDistance == 0f)
@@ -668,6 +672,7 @@ namespace Content.Server.NPC.Systems
                 if (ent == uid ||
                     !bodyQuery.TryGetComponent(ent, out var otherBody) ||
                     !otherBody.Hard ||
+                    !otherBody.CanCollide ||
                     ((body.CollisionMask & otherBody.CollisionLayer) == 0x0 &&
                      (body.CollisionLayer & otherBody.CollisionMask) == 0x0) ||
                     // TODO: Internal resolves
@@ -692,7 +697,7 @@ namespace Content.Server.NPC.Systems
                     ? 1f
                     : (detectionRadius - obstacleDistance) / detectionRadius);
 
-                weight *= 1.5f;
+                weight *= 1.2f;
                 var norm = obstacleDirection.Normalized;
 
                 for (var i = 0; i < InterestDirections; i++)

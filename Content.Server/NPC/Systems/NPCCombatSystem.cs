@@ -24,7 +24,7 @@ public sealed partial class NPCCombatSystem : EntitySystem
     /// <summary>
     /// If disabled we'll move into range but not attack.
     /// </summary>
-    public bool Enabled = false;
+    public bool Enabled = true;
 
     public override void Initialize()
     {
