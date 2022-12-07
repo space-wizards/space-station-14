@@ -1,6 +1,6 @@
 - type: latheRecipe
   id: Wirecutter
-  icon: Objects/Tools/wirecutters.rsi/cutters-map.png
+  icon: { sprite: Objects/Tools/wirecutters.rsi, state: cutters-map }
   result: Wirecutter
   completetime: 2
   materials:
@@ -30,7 +30,7 @@
 
 - type: latheRecipe
   id: Wrench
-  icon: Objects/Tools/wrench.rsi/icon.png
+  icon: { sprite: Objects/Tools/wrench.rsi, state: icon }
   result: Wrench
   completetime: 2
   materials:
@@ -38,7 +38,7 @@
 
 - type: latheRecipe
   id: CableStack
-  icon: /Textures/Objects/Tools/cable-coils.rsi/coillv-30.png
+  icon: { sprite: /Textures/Objects/Tools/cable-coils.rsi, state: coillv-30 }
   result: CableApcStack1
   completetime: 2
   materials:
@@ -46,7 +46,7 @@
 
 - type: latheRecipe
   id: CableMVStack
-  icon: /Textures/Objects/Tools/cable-coils.rsi/coilmv-30.png
+  icon: { sprite: /Textures/Objects/Tools/cable-coils.rsi, state: coilmv-30 }
   result: CableMVStack1
   completetime: 2
   materials:
@@ -54,7 +54,7 @@
 
 - type: latheRecipe
   id: CableHVStack
-  icon: /Textures/Objects/Tools/cable-coils.rsi/coilhv-30.png
+  icon: { sprite: /Textures/Objects/Tools/cable-coils.rsi, state: coilhv-30 }
   result: CableHVStack1
   completetime: 2
   materials:
@@ -62,7 +62,7 @@
 
 - type: latheRecipe
   id: Crowbar
-  icon: Objects/Tools/crowbar.rsi/icon.png
+  icon: { sprite: Objects/Tools/crowbar.rsi, state: icon }
   result: Crowbar
   completetime: 2
   materials:
@@ -134,7 +134,7 @@
 
 - type: latheRecipe
   id: HandheldGPSBasic
-  icon: Objects/Devices/gps.rsi/icon.png
+  icon: { sprite: Objects/Devices/gps.rsi, state: icon }
   result: HandheldGPSBasic
   completetime: 2
   materials:
@@ -143,7 +143,7 @@
 
 - type: latheRecipe
   id: TRayScanner
-  icon: Objects/Tools/t-ray.rsi/tray-off.png
+  icon: { sprite: Objects/Tools/t-ray.rsi, state: tray-off }
   result: trayScanner
   completetime: 2
   materials:
@@ -152,7 +152,7 @@
 
 - type: latheRecipe
   id: GasAnalyzer
-  icon: Objects/Specific/Atmos/gasanalyzer.rsi/icon.png
+  icon: { sprite: Objects/Specific/Atmos/gasanalyzer.rsi, state: icon }
   result: GasAnalyzer
   completetime: 2
   materials:
@@ -161,7 +161,7 @@
 
 - type: latheRecipe
   id: AirlockPainter
-  icon: /Textures/Objects/Tools/airlock_painter.rsi/airlock_painter.png
+  icon: { sprite: /Textures/Objects/Tools/airlock_painter.rsi, state: airlock_painter }
   result: AirlockPainter
   completetime: 2
   materials:
@@ -170,7 +170,7 @@
 
 - type: latheRecipe
   id: UtilityBelt
-  icon: Clothing/Belt/utility.rsi/icon.png
+  icon: { sprite: Clothing/Belt/utility.rsi, state: icon }
   result: ClothingBeltUtility
   completetime: 2
   materials:
@@ -179,7 +179,7 @@
 
 - type: latheRecipe
   id: HolofanProjector
-  icon: 
+  icon:
     sprite: Objects/Devices/Holoprojectors/atmos.rsi
     state: icon
   result: HolofanProjector

@@ -84,7 +84,7 @@ namespace Content.Client.Radiation.Overlays
             {
                 var pulseEntity = pulse.Owner;
 
-                if (!_pulses.Keys.Contains(pulseEntity) && PulseQualifies(pulseEntity, currentEyeLoc))
+                if (!_pulses.ContainsKey(pulseEntity) && PulseQualifies(pulseEntity, currentEyeLoc))
                 {
                     _pulses.Add(
                             pulseEntity,

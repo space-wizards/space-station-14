@@ -53,7 +53,7 @@
       toggleAction:
         name: action-name-toggle-light
         description: action-description-toggle-light
-        icon: Objects/Tools/flashlight.rsi/flashlight.png
+        icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
         iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
         event: !type:ToggleActionEvent
 
