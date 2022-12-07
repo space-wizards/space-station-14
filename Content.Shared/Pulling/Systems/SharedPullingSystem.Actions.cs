@@ -1,5 +1,7 @@
 using Content.Shared.ActionBlocker;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Buckle.Components;
+using Content.Shared.Database;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Physics.Pull;
@@ -18,6 +20,7 @@ namespace Content.Shared.Pulling
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interaction = default!;
+        [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
         public bool CanPull(EntityUid puller, EntityUid pulled)
         {
@@ -103,6 +106,10 @@ namespace Content.Shared.Pulling
             }
 
             _pullSm.ForceRelationship(null, pullable);
+
+            if (user != null)
+                _adminLogger.Add(LogType.Action, LogImpact.Low,
+                    $"{ToPrettyString(user.Value):user} stopped pulling {ToPrettyString(pullable.Owner):target}");
             return true;
         }
 
@@ -196,6 +203,8 @@ namespace Content.Shared.Pulling
             _pullSm.ForceRelationship(puller, pullable);
             pullable.PrevFixedRotation = pullablePhysics.FixedRotation;
             pullablePhysics.FixedRotation = pullable.FixedRotationOnPull;
+            _adminLogger.Add(LogType.Action, LogImpact.Low,
+                $"{ToPrettyString(puller.Owner):user} started pulling {ToPrettyString(pullable.Owner):target}");
             return true;
         }
 
