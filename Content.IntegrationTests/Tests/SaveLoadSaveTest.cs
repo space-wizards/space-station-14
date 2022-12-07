@@ -110,9 +110,11 @@ namespace Content.IntegrationTests.Tests
                 mapLoader.SaveMap(mapId, "/load save ticks save 2.yml");
             });
 
-            return;
-            //Assert.That(server.IsAlive, "Is dead 4");
-
+            if (!server.IsAlive)
+            {
+                await pairTracker.CleanReturnAsync();
+            }
+            
             await server.WaitIdleAsync();
 
             string one;
