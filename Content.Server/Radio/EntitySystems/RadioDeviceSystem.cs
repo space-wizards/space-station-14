@@ -128,7 +128,6 @@ public sealed class RadioDeviceSystem : EntitySystem
                 DoContactInteraction = true,
                 Act = () =>
                 {
-                    Logger.Debug("foo");
                     component.BroadcastChannel = channel;
                     _popup.PopupEntity(Loc.GetString("handheld-radio-component-channel-set",
                         ("channel", channel)), uid, Filter.Entities(args.User));
