@@ -112,7 +112,7 @@ public static class PoolManager
                 .LoadExtraSystemType<InteractionSystemTests.TestInteractionSystem>();
             IoCManager.Resolve<IEntitySystemManager>().LoadExtraSystemType<DeviceNetworkTestSystem>();
             IoCManager.Resolve<IEntitySystemManager>().LoadExtraSystemType<TestDestructibleListenerSystem>();
-            IoCManager.Resolve<ILogManager>().GetSawmill("loc").Level = LogLevel.Error;
+            IoCManager.Resolve<ILogManager>().GetSawmill("loc").Level = LogLevel.Verbose;
         };
 
         SetupCVars(poolSettings, options);
@@ -200,7 +200,7 @@ public static class PoolManager
                     IoCManager.Resolve<IComponentFactory>()
                         .RegisterClass<SimplePredictReconcileTest.PredictionTestComponent>();
                     IoCManager.Register<IParallaxManager, DummyParallaxManager>(true);
-                    IoCManager.Resolve<ILogManager>().GetSawmill("loc").Level = LogLevel.Error;
+                    IoCManager.Resolve<ILogManager>().GetSawmill("loc").Level = LogLevel.Verbose;
                 }
             });
         };
@@ -815,13 +815,31 @@ public sealed class PairTracker : IAsyncDisposable
                 var exDesc = ex == null ? "null" : $"{ex.GetType()}: {ex}";
                 await TestContext.Out.WriteLineAsync(
                     $"{nameof(CleanReturnAsync)}: Test killed the client in pair {Pair.PairId}. Original exception was: {exDesc}");
+
+
+                if (Pair.Server.IsAlive == false)
+                {
+                    var exs = Pair.Server.UnhandledException;
+                    var exDescs = exs == null ? "null" : $"{exs.GetType()}: {exs}";
+                    await TestContext.Out.WriteLineAsync(
+                        $"{nameof(CleanReturnAsync)}: Test also killed the server. Original exception was: {exDescs}");
+                }
+                else
+                {
+                    await TestContext.Out.WriteLineAsync(
+                        $"{nameof(CleanReturnAsync)}: Server is fine.");
+
+                }
+
                 throw new Exception($"{nameof(CleanReturnAsync)}: Test killed the client in pair {Pair.PairId}:", Pair.Client.UnhandledException);
             }
 
             if (Pair.Server.IsAlive == false)
             {
+                var ex = Pair.Server.UnhandledException;
+                var exDesc = ex == null ? "null" : $"{ex.GetType()}: {ex}";
                 await TestContext.Out.WriteLineAsync(
-                    $"{nameof(CleanReturnAsync)}: Test killed the server in pair {Pair.PairId}. Original exception: {Pair.Server.UnhandledException}");
+                    $"{nameof(CleanReturnAsync)}: Test killed the server in pair {Pair.PairId}. Original exception was: {exDesc}");
                 throw new Exception($"{nameof(CleanReturnAsync)}: Test killed the server in pair {Pair.PairId}:", Pair.Server.UnhandledException);
             }
         }
