@@ -93,7 +93,7 @@ namespace Content.IntegrationTests.Tests
             MapId mapId = default;
 
             // Load saltern.yml as uninitialized map, and save it to ensure it's up to date.
-            await server.WaitPost(() =>
+            server.Post(() =>
             {
                 mapId = mapManager.CreateMap();
                 mapManager.AddUninitializedMap(mapId);
@@ -103,7 +103,7 @@ namespace Content.IntegrationTests.Tests
             });
 
             // Run 5 ticks.
-            await server.WaitRunTicks(5);
+            server.RunTicks(5);
 
             await server.WaitPost(() =>
             {

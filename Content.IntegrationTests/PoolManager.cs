@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Castle.Core;
 using Content.Client.IoC;
 using Content.Client.Parallax.Managers;
 using Content.IntegrationTests.Tests;
@@ -112,7 +111,7 @@ public static class PoolManager
                 .LoadExtraSystemType<InteractionSystemTests.TestInteractionSystem>();
             IoCManager.Resolve<IEntitySystemManager>().LoadExtraSystemType<DeviceNetworkTestSystem>();
             IoCManager.Resolve<IEntitySystemManager>().LoadExtraSystemType<TestDestructibleListenerSystem>();
-            IoCManager.Resolve<ILogManager>().GetSawmill("loc").Level = LogLevel.Verbose;
+            IoCManager.Resolve<ILogManager>().GetSawmill("loc").Level = LogLevel.Error;
         };
 
         SetupCVars(poolSettings, options);
@@ -200,7 +199,7 @@ public static class PoolManager
                     IoCManager.Resolve<IComponentFactory>()
                         .RegisterClass<SimplePredictReconcileTest.PredictionTestComponent>();
                     IoCManager.Register<IParallaxManager, DummyParallaxManager>(true);
-                    IoCManager.Resolve<ILogManager>().GetSawmill("loc").Level = LogLevel.Verbose;
+                    IoCManager.Resolve<ILogManager>().GetSawmill("loc").Level = LogLevel.Error;
                 }
             });
         };

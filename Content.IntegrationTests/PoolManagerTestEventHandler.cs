@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
@@ -18,12 +18,14 @@ public sealed class PoolManagerTestEventHandler
         // If the tests seem to be stuck, we try to end it semi-nicely
         _ = Task.Delay(MaximumTotalTestingTimeLimit).ContinueWith(_ =>
         {
+            TestContext.Out.WriteLine($"{nameof(PoolManagerTestEventHandler)}: Tests exceeded time limit.");
             PoolManager.Shutdown();
         });
 
         // If ending it nicely doesn't work within a minute, we do something a bit meaner.
         _ = Task.Delay(HardStopTimeLimit).ContinueWith(_ =>
         {
+            TestContext.Out.WriteLine($"{nameof(PoolManagerTestEventHandler)}: Tests reaaaaly exceeded time limit.");
             var deathReport = PoolManager.DeathReport();
             Environment.FailFast($"Tests took way too ;\n Death Report:\n{deathReport}");
         });
