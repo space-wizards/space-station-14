@@ -15,8 +15,6 @@ namespace Content.Server.Radiation.Systems;
 public sealed class GeigerSystem : SharedGeigerSystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly AudioSystem _audio = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly RadiationSystem _radiation = default!;
 
     private static readonly float ApproxEqual = 0.01f;
@@ -92,7 +90,8 @@ public sealed class GeigerSystem : SharedGeigerSystem
         {
             CurrentRadiation = component.CurrentRadiation,
             DangerLevel = component.DangerLevel,
-            IsEnabled = component.IsEnabled
+            IsEnabled = component.IsEnabled,
+            User = component.User
         };
     }
 
@@ -111,7 +110,6 @@ public sealed class GeigerSystem : SharedGeigerSystem
         if (curLevel != newLevel)
         {
             UpdateAppearance(uid, component);
-            UpdateGeigerSound(uid, component);
         }
 
         Dirty(component);
@@ -123,7 +121,7 @@ public sealed class GeigerSystem : SharedGeigerSystem
             return;
 
         component.User = user;
-        UpdateGeigerSound(uid, component);
+        Dirty(component);
     }
 
     private void SetEnabled(EntityUid uid, GeigerComponent component, bool isEnabled)
@@ -141,7 +139,6 @@ public sealed class GeigerSystem : SharedGeigerSystem
         _radiation.SetCanReceive(uid, isEnabled);
 
         UpdateAppearance(uid, component);
-        UpdateGeigerSound(uid, component);
         Dirty(component);
     }
 
@@ -153,24 +150,6 @@ public sealed class GeigerSystem : SharedGeigerSystem
 
         _appearance.SetData(uid, GeigerVisuals.IsEnabled, component.IsEnabled, appearance);
         _appearance.SetData(uid, GeigerVisuals.DangerLevel, component.DangerLevel, appearance);
-    }
-
-    private void UpdateGeigerSound(EntityUid uid, GeigerComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
-            return;
-
-        component.Stream?.Stop();
-
-        if (!component.IsEnabled || component.User == null)
-            return;
-        if (!component.Sounds.TryGetValue(component.DangerLevel, out var sounds))
-            return;
-
-        var sound = _audio.GetSound(sounds);
-        var param = sounds.Params.WithLoop(true).WithVolume(-4f)
-            .WithPlayOffset(_random.NextFloat(0.0f, 5f));
-        component.Stream = _audio.Play(sound, Filter.Entities(component.User.Value), uid, param);
     }
 
     public static GeigerDangerLevel RadsToLevel(float rads)

@@ -8,10 +8,10 @@ public abstract class SharedGeigerSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<SharedGeigerComponent, ExaminedEvent>(OnExamine);
+        SubscribeLocalEvent<GeigerComponent, ExaminedEvent>(OnExamine);
     }
 
-    private void OnExamine(EntityUid uid, SharedGeigerComponent component, ExaminedEvent args)
+    private void OnExamine(EntityUid uid, GeigerComponent component, ExaminedEvent args)
     {
         if (!component.ShowExamine || !component.IsEnabled || !args.IsInDetailsRange)
             return;
