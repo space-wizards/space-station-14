@@ -2,7 +2,6 @@ using Content.Shared.DoAfter;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
-using Robust.Client.ResourceManagement;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -18,7 +17,9 @@ namespace Content.Client.DoAfter
     public sealed class DoAfterSystem : EntitySystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IOverlayManager _overlay = default!;
         [Dependency] private readonly IPlayerManager _player = default!;
+        [Dependency] private readonly IPrototypeManager _prototype = default!;
 
         /// <summary>
         ///     We'll use an excess time so stuff like finishing effects can show.
@@ -31,17 +32,16 @@ namespace Content.Client.DoAfter
             UpdatesOutsidePrediction = true;
             SubscribeNetworkEvent<CancelledDoAfterMessage>(OnCancelledDoAfter);
             SubscribeLocalEvent<DoAfterComponent, ComponentHandleState>(OnDoAfterHandleState);
-            IoCManager.Resolve<IOverlayManager>().AddOverlay(
+            _overlay.AddOverlay(
                 new DoAfterOverlay(
                     EntityManager,
-                    IoCManager.Resolve<IPrototypeManager>(),
-                    IoCManager.Resolve<IResourceCache>()));
+                    _prototype));
         }
 
         public override void Shutdown()
         {
             base.Shutdown();
-            IoCManager.Resolve<IOverlayManager>().RemoveOverlay<DoAfterOverlay>();
+            _overlay.RemoveOverlay<DoAfterOverlay>();
         }
 
         private void OnDoAfterHandleState(EntityUid uid, DoAfterComponent component, ref ComponentHandleState args)

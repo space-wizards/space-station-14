@@ -3,9 +3,21 @@
 
 ## About the PR <!-- Describe the Pull Request here. What does it change? What other things could this impact? -->
 
-**Screenshots**
-<!-- If applicable, add screenshots to showcase your PR. If your PR is a visual change, add
-screenshots or it's liable to be closed by maintainers. -->
+**Media**
+<!-- 
+If applicable, add screenshots or videos to showcase your PR. Small fixes/refactors are exempt, but all PRs which make ingame changes 
+(adding clothing, items, new features, etc) must include ingame media or the PR will not be merged, in accordance with our PR guidelines.
+This makes it much easier for us to merge PRs and find media for progress reports. If you include media in your pull request, we 
+may potentially use it in the SS14 progress reports, with clear credit given.
+
+Use screenshot software like Window's built in snipping tool, ShareX, Lightshot, or recording software like ShareX (gif), ScreenToGif, or Open Broadcaster Software (cross platform).
+If you're unsure whether your PR will require media, ask a maintainer.
+
+Check one of the boxes below to confirm that you have in fact seen this (put an X in the brackets, like [X]):
+-->
+
+- [ ] I have added screenshots/videos to this PR showcasing its changes ingame
+- [ ] This PR does not require an ingame showcase
 
 **Changelog**
 <!--

@@ -133,7 +133,7 @@ entities:
   components:
   - type: MetaData
   - type: Transform
-  - index: 11
+  - index: 12
     type: Map
   - type: PhysicsMap
   - type: Broadphase
@@ -174,7 +174,7 @@ entities:
         tiles: WAAAAFgAAABYAAAASAAAAFgAAABLAAAASwAAAEsAAABLAAABSwAAAlgAAABYAAAAFQAAAhUAAAMVAAACWAAAAEkAAABYAAAAWAAAAEgAAABYAAAASwAAAFgAAABLAAACSwAAAUsAAAAVAAAAFQAAAxUAAAIVAAACFQAAAT4AAABYAAAAWAAAAFgAAABIAAAAWAAAAEsAAANLAAAASwAAAUsAAAJLAAADWAAAABUAAAMVAAABFQAAARUAAAA+AAABWAAAAFgAAABJAAAAWAAAAFgAAABLAAAAWAAAAEsAAANLAAACWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAAAeAAACHgAAAx4AAAFYAAAASwAAAEsAAABLAAADSwAAA0sAAAAeAAACHgAAAx4AAAAeAAABHgAAAFgAAABYAAAAHgAAAR4AAAMeAAABWAAAAEsAAABLAAABSwAAAksAAAFYAAAAHgAAABsAAAAbAAAAGwAAAB4AAABYAAAAWAAAAB4AAAMeAAADHgAAAlgAAABLAAABSwAAAUsAAABLAAABWAAAAB4AAAIeAAABHgAAAR4AAAMeAAACWAAAAFgAAAAeAAABHgAAAB4AAAFYAAAASwAAAEsAAAFLAAACSwAAAlgAAABYAAAAWAAAAFgAAABYAAAASwAAAVgAAABYAAAAWAAAAEsAAABYAAAAWAAAAFgAAABLAAABSwAAAFgAAABYAAAASwAAA0sAAAJLAAABSwAAA0sAAAFYAAAASwAAA0sAAAJLAAAASwAAAEsAAANLAAACSwAAAEsAAAFLAAABSwAAAUsAAANLAAADSwAAAEsAAAJLAAADWAAAAEsAAABLAAABSwAAAUsAAABYAAAASwAAAksAAANLAAAASwAAA0sAAAFLAAABSwAAAksAAAJLAAAASwAAAFgAAABLAAACSwAAAUsAAAJLAAABSwAAAEsAAAJLAAACSwAAAksAAAJLAAACSwAAAksAAABLAAAASwAAAUsAAAFYAAAAWAAAAFgAAABLAAADWAAAAFgAAABYAAAAWAAAAFgAAABLAAABSwAAA0sAAABLAAADSwAAAksAAAJLAAACWAAAAFgAAABLAAABSwAAAEsAAAJYAAAASwAAA0sAAABYAAAASwAAA1gAAABYAAAAWAAAAEsAAAJLAAABSwAAAlgAAABYAAAASwAAAEsAAAJLAAAAWAAAAEsAAANLAAACSwAAAUsAAABLAAABSwAAAFgAAABLAAACSwAAAVgAAABYAAAAWAAAAEsAAAJLAAAASwAAAFgAAABLAAACSwAAAVEAAABRAAAAUQAAAEsAAAJYAAAAPgAAAT4AAAE+AAAAPgAAAw==
       -1,-2:
         ind: -1,-2
-        tiles: PgAAAT4AAAA+AAABWAAAAAAAAABYAAAANAAAADQAAAA0AAAANAAAADQAAAA0AAAANAAAADQAAAA0AAAANAAAAD4AAAE+AAADPgAAAFgAAABXAAAAWAAAADQAAAA0AAAANAAAADQAAAA0AAAANAAAADQAAAA0AAAANAAAADQAAAA+AAAAPgAAAT4AAAFYAAAAVwAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAPgAAAz4AAAI+AAABWAAAAFcAAABXAAAAVwAAAAAAAAAAAAAAAAAAAFcAAABXAAAAAAAAAAAAAAAAAAAAVwAAAD4AAAA+AAACPgAAAVgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAAA+AAABPgAAAz4AAANYAAAALAAAACwAAAAsAAAALAAAACwAAAAsAAAALAAAACwAAAAVAAAAFQAAARUAAAAVAAACPgAAAj4AAAI+AAABWAAAACwAAAAsAAAALAAAACwAAAAsAAAALAAAACwAAAAsAAAAFQAAAxUAAAMVAAABFQAAAz4AAAM+AAAAPgAAAlgAAAAsAAAALAAAACwAAAAsAAAALAAAACwAAAAsAAAAWAAAABUAAAAVAAACFQAAARUAAAE+AAADKwAAAD4AAAFYAAAAWAAAACsAAAArAAAAWAAAACwAAAAsAAAALAAAACwAAAAVAAACFQAAARUAAAIVAAAAPgAAAD4AAAE+AAACWAAAACsAAAAVAAACKwAAAFgAAABJAAAAWAAAAFgAAABYAAAAFQAAARUAAAEVAAAAFQAAAT4AAAA+AAAAPgAAAlgAAAAVAAAAKwAAABUAAANYAAAAIgAAACIAAAAiAAAAWAAAABUAAAIVAAABFQAAARUAAAI+AAADPgAAAD4AAAArAAAAKwAAABUAAAMrAAAAWAAAACIAAAAiAAAAIgAAAFgAAAAVAAABFQAAARUAAAAVAAAAPgAAAj4AAAE+AAABWAAAABUAAAMrAAAAFQAAAlgAAABYAAAAWAAAAEkAAABYAAAAFQAAAhUAAAMVAAADVQAAAT4AAAI+AAADPgAAAFgAAAArAAAAFQAAAysAAAAVAAABWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFUAAAI+AAADPgAAAlgAAABYAAAAFQAAAisAAAAVAAABKwAAAFgAAABYAAAAWAAAAFgAAAARAAAAEQAAAFgAAABVAAAAPgAAAD4AAAI+AAAAFQAAASsAAAAVAAACKwAAABUAAANYAAAAWAAAAFgAAABYAAAAEQAAABEAAABYAAAAVQAAAA==
+        tiles: PgAAAT4AAAA+AAABWAAAAAAAAABYAAAAPQAAAD0AAAA9AAAAPQAAAD0AAAA9AAAAPQAAAD0AAAA9AAAAPQAAAD4AAAE+AAADPgAAAFgAAABXAAAAWAAAAD0AAAA9AAAAPQAAAD0AAAA9AAAAPQAAAD0AAAA9AAAAPQAAAD0AAAA+AAAAPgAAAT4AAAFYAAAAVwAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAPgAAAz4AAAI+AAABWAAAAFcAAABXAAAAVwAAAAAAAAAAAAAAAAAAAFcAAABXAAAAAAAAAAAAAAAAAAAAVwAAAD4AAAA+AAACPgAAAVgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAAA+AAABPgAAAz4AAANYAAAALAAAACwAAAAsAAAALAAAACwAAAAsAAAALAAAACwAAAAVAAAAFQAAARUAAAAVAAACPgAAAj4AAAI+AAABWAAAACwAAAAsAAAALAAAACwAAAAsAAAALAAAACwAAAAsAAAAFQAAAxUAAAMVAAABFQAAAz4AAAM+AAAAPgAAAlgAAAAsAAAALAAAACwAAAAsAAAALAAAACwAAAAsAAAAWAAAABUAAAAVAAACFQAAARUAAAE+AAADKwAAAD4AAAFYAAAAWAAAACsAAAArAAAAWAAAACwAAAAsAAAALAAAACwAAAAVAAACFQAAARUAAAIVAAAAPgAAAD4AAAE+AAACWAAAACsAAAAVAAACKwAAAFgAAABJAAAAWAAAAFgAAABYAAAAFQAAARUAAAEVAAAAFQAAAT4AAAA+AAAAPgAAAlgAAAAVAAAAKwAAABUAAANYAAAAIgAAACIAAAAiAAAAWAAAABUAAAIVAAABFQAAARUAAAI+AAADPgAAAD4AAAArAAAAKwAAABUAAAMrAAAAWAAAACIAAAAiAAAAIgAAAFgAAAAVAAABFQAAARUAAAAVAAAAPgAAAj4AAAE+AAABWAAAABUAAAMrAAAAFQAAAlgAAABYAAAAWAAAAEkAAABYAAAAFQAAAhUAAAMVAAADVQAAAT4AAAI+AAADPgAAAFgAAAArAAAAFQAAAysAAAAVAAABWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFUAAAI+AAADPgAAAlgAAABYAAAAFQAAAisAAAAVAAABKwAAAFgAAABYAAAAWAAAAFgAAAARAAAAEQAAAFgAAABVAAAAPgAAAD4AAAI+AAAAFQAAASsAAAAVAAACKwAAABUAAANYAAAAWAAAAFgAAABYAAAAEQAAABEAAABYAAAAVQAAAA==
       0,-2:
         ind: 0,-2
         tiles: WAAAAEgAAABIAAAAWAAAAD4AAAI+AAACPgAAAVgAAAAZAAABGQAAAxkAAAFYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAAA+AAABPgAAAD4AAAJYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAVwAAAFcAAABYAAAAPgAAAz4AAAM+AAADFQAAAUkAAABYAAAAWAAAAFgAAABYAAAAWAAAACAAAAAgAAAAVwAAAFcAAABXAAAAWAAAAD4AAAI+AAAAPgAAARUAAAFYAAAASAAAAEgAAABIAAAAWAAAAFgAAAAgAAAAIAAAAFgAAABYAAAAWAAAAFgAAAA+AAABPgAAAD4AAANYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAIAAAACAAAAAVAAACFQAAAxUAAAFYAAAAPgAAAD4AAAM+AAABFQAAARUAAAEVAAACVQAAAFUAAABVAAABIAAAACAAAAAgAAAAFQAAAxUAAAEVAAACWAAAAD4AAAA+AAACPgAAAxUAAAAVAAAAFQAAAVUAAABVAAAAVQAAA1gAAABYAAAAWAAAABUAAAIVAAABFQAAAFgAAAA+AAACPgAAAz4AAAEVAAADFQAAABUAAANVAAAAVQAAAVUAAANYAAAASAAAAEgAAAAVAAACFQAAARUAAAFYAAAAPgAAAz4AAAI+AAADFQAAABUAAAAVAAABVQAAA1UAAAFVAAADWAAAAEgAAABYAAAAFQAAAhUAAAEVAAADWAAAAD4AAAM+AAACPgAAABUAAAEVAAABFQAAAVUAAAFVAAACVQAAAUkAAABIAAAAWAAAABUAAAAVAAAAFQAAAD4AAAA+AAADPgAAAT4AAAAVAAAAFQAAAhUAAAJVAAACVQAAAVUAAABYAAAASAAAAFgAAAAVAAACFQAAAhUAAAA+AAADPgAAAz4AAAA+AAACFQAAABUAAAEVAAAAFQAAAlgAAABYAAAAWAAAAFgAAABYAAAAVQAAA1UAAABVAAADWAAAAD4AAAE+AAADPgAAAxUAAAIVAAACFQAAAhUAAAJYAAAAVQAAA1UAAAFVAAABVQAAAFUAAANVAAACVQAAAFgAAABYAAAAPgAAAz4AAAEVAAABFQAAABUAAAMVAAABWAAAAFUAAANVAAADVQAAA1UAAABVAAADVQAAAlUAAANVAAAAVQAAAD4AAAE+AAAAWAAAAFgAAABYAAAAWAAAAFgAAABVAAADVQAAAVUAAABVAAABVQAAA1UAAANVAAADVQAAAlUAAAE+AAAAPgAAAFgAAAAuAAAALgAAAC4AAAAuAAAAVQAAAFUAAAJVAAAAVQAAAQ==
@@ -204,7 +204,7 @@ entities:
         tiles: WAAAAFcAAAAAAAAAAAAAAFcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAABYAAAAWAAAAFgAAABYAAAAVwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA+AAACPgAAAB8AAAIfAAACWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPgAAAj4AAAAfAAAAHwAAA1gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD4AAANBAAAAPgAAAj4AAAFYAAAABAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA+AAABPgAAAj4AAAE+AAACWAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWAAAAFgAAABYAAAAWAAAAFgAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAIEAAABBAAAAQUAAAAEAAACBAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAACBAAAAgQAAAEEAAAABAAAAAQAAAIEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAgQAAAAEAAACBAAAAQQAAAEEAAACBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAEEAAACBAAAAgQAAAAEAAABBAAAAgQAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAABBAAAAAQAAAEEAAAABAAAAgQAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAEEAAABBAAAAgQAAAIEAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAgQAAAEEAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAEEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
       -1,-3:
         ind: -1,-3
-        tiles: PgAAAw4AAABYAAAAPgAAAT4AAAA+AAABPgAAAD4AAAE+AAADWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAD4AAAE+AAABWAAAAFgAAAA+AAADPgAAAVgAAABJAAAAWAAAABUAAAAVAAADFQAAAhUAAAA+AAABPgAAAj4AAAM+AAADPgAAAz4AAAI+AAABPgAAAT4AAAE+AAADPgAAAT4AAAE+AAABPgAAAz4AAAI+AAAAPgAAAj4AAAA+AAACPgAAAj4AAAI+AAAAPgAAAT4AAAI+AAADPgAAAD4AAAA+AAABPgAAAz4AAAM+AAACPgAAAT4AAAA+AAACPgAAAT4AAAA+AAACPgAAAj4AAAA+AAACPgAAAD4AAAM+AAADPgAAAT4AAAM+AAAAPgAAAD4AAAE+AAAAPgAAAz4AAAJYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAPgAAAz4AAAM+AAACWAAAAFcAAABXAAAAVwAAAAAAAAAAAAAAAAAAAFcAAABXAAAAAAAAAAAAAAAAAAAAVwAAAD4AAAA+AAAAPgAAA1gAAABXAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAAA+AAADPgAAAj4AAAJYAAAAVwAAAFgAAAA0AAAANAAAADQAAAA0AAAANAAAADQAAAA0AAAANAAAADQAAAA0AAAAPgAAAj4AAAI+AAAAWAAAAAAAAABYAAAANAAAADQAAAA0AAAANAAAADQAAAA0AAAANAAAADQAAAA0AAAANAAAAD4AAAA+AAAAPgAAAlgAAAAAAAAAWAAAADQAAAA0AAAANAAAADQAAAA0AAAANAAAADQAAAA0AAAANAAAADQAAAA+AAABPgAAAz4AAAFYAAAAWAAAAFgAAAA0AAAANAAAADQAAAA0AAAANAAAADQAAAA0AAAANAAAADQAAAA0AAAAPgAAAD4AAAI+AAABSAAAAEgAAABIAAAANAAAADQAAAA0AAAANAAAADQAAAA0AAAANAAAADQAAAA0AAAANAAAAD4AAAE+AAADPgAAAEgAAABIAAAASAAAADQAAAA0AAAANAAAADQAAAA0AAAANAAAADQAAAA0AAAANAAAADQAAAA+AAADPgAAAj4AAABYAAAAWAAAAFgAAAA0AAAANAAAADQAAAA0AAAANAAAADQAAAA0AAAANAAAADQAAAA0AAAAPgAAAD4AAAI+AAACWAAAAAAAAABYAAAANAAAADQAAAA0AAAANAAAADQAAAA0AAAANAAAADQAAAA0AAAANAAAAA==
+        tiles: PgAAAw4AAABYAAAAPgAAAT4AAAA+AAABPgAAAD4AAAE+AAADWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAD4AAAE+AAABWAAAAFgAAAA+AAADPgAAAVgAAABJAAAAWAAAABUAAAAVAAADFQAAAhUAAAA+AAABPgAAAj4AAAM+AAADPgAAAz4AAAI+AAABPgAAAT4AAAE+AAADPgAAAT4AAAE+AAABPgAAAz4AAAI+AAAAPgAAAj4AAAA+AAACPgAAAj4AAAI+AAAAPgAAAT4AAAI+AAADPgAAAD4AAAA+AAABPgAAAz4AAAM+AAACPgAAAT4AAAA+AAACPgAAAT4AAAA+AAACPgAAAj4AAAA+AAACPgAAAD4AAAM+AAADPgAAAT4AAAM+AAAAPgAAAD4AAAE+AAAAPgAAAz4AAAJYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAPgAAAz4AAAM+AAACWAAAAFcAAABXAAAAVwAAAAAAAAAAAAAAAAAAAFcAAABXAAAAAAAAAAAAAAAAAAAAVwAAAD4AAAA+AAAAPgAAA1gAAABXAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAAA+AAADPgAAAj4AAAJYAAAAVwAAAFgAAAA9AAAAPQAAAD0AAAA9AAAAPQAAAD0AAAA9AAAAPQAAAD0AAAA9AAAAPgAAAj4AAAI+AAAAWAAAAAAAAABYAAAAPQAAAD0AAAA9AAAAPQAAAD0AAAA9AAAAPQAAAD0AAAA9AAAAPQAAAD4AAAA+AAAAPgAAAlgAAAAAAAAAWAAAAD0AAAA9AAAAPQAAAD0AAAA9AAAAPQAAAD0AAAA9AAAAPQAAAD0AAAA+AAABPgAAAz4AAAFYAAAAWAAAAFgAAAA9AAAAPQAAAD0AAAA9AAAAPQAAAD0AAAA9AAAAPQAAAD0AAAA9AAAAPgAAAD4AAAI+AAABSAAAAEgAAABIAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAAD4AAAE+AAADPgAAAEgAAABIAAAASAAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAA+AAADPgAAAj4AAABYAAAAWAAAAFgAAAA9AAAAPQAAAD0AAAA9AAAAPQAAAD0AAAA9AAAAPQAAAD0AAAA9AAAAPgAAAD4AAAI+AAACWAAAAAAAAABYAAAAPQAAAD0AAAA9AAAAPQAAAD0AAAA9AAAAPQAAAD0AAAA9AAAAPQAAAA==
       0,-3:
         ind: 0,-3
         tiles: WAAAAFgAAAAVAAADFQAAARUAAAIVAAABFQAAABUAAAFJAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAABUAAABYAAAAPgAAAVgAAAA+AAACWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAAA+AAADPgAAAj4AAAM+AAACPgAAAz4AAAE+AAADWAAAAEgAAABYAAAAWAAAAEgAAABIAAAASAAAAEgAAABIAAAAPgAAAD4AAAA+AAAAPgAAAz4AAAI+AAABPgAAAUkAAABYAAAAWAAAAFgAAABIAAAASAAAAEgAAABIAAAAWAAAAD4AAAM+AAABPgAAAD4AAAI+AAADPgAAAj4AAABYAAAAWAAAAEkAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAPgAAAj4AAAM+AAAAWAAAAFgAAABYAAAAWAAAABkAAAIZAAABGQAAARkAAABYAAAAVwAAAFcAAABXAAAAWAAAAD4AAAE+AAADPgAAAFgAAABYAAAAWAAAAFgAAAAZAAADGQAAABkAAAMZAAAAWAAAAFgAAABXAAAAVwAAAFgAAAA+AAAAPgAAAT4AAAA+AAADPgAAAT4AAAI+AAACGQAAAhkAAAAZAAABGQAAAFgAAABYAAAAWAAAAFgAAABYAAAAPgAAAj4AAAE+AAADPgAAAD4AAAE+AAABPgAAABkAAAAZAAAAGQAAAxkAAAJYAAAAWAAAAEgAAABIAAAAWAAAAD4AAAM+AAABPgAAAFgAAAA+AAABPgAAAVgAAABYAAAAWAAAAD4AAAI+AAADWAAAAFgAAABIAAAASAAAAFgAAAA+AAABPgAAAT4AAAFYAAAAPgAAAj4AAANYAAAAPgAAAz4AAAM+AAABPgAAAz4AAAJYAAAASAAAAEgAAABYAAAAPgAAAT4AAAM+AAABPgAAAz4AAAM+AAACPgAAAz4AAAE+AAACPgAAAj4AAAI+AAACPgAAAT4AAAA+AAADPgAAAT4AAAM+AAAAPgAAAj4AAAM+AAAAPgAAAj4AAAI+AAACPgAAAz4AAAE+AAABPgAAAz4AAAE+AAACPgAAAD4AAAI+AAACPgAAAT4AAANYAAAAWAAAAFgAAABYAAAAWAAAAD4AAAE+AAADPgAAAz4AAANYAAAASAAAAEgAAABYAAAAPgAAAD4AAAM+AAABWAAAABkAAAEZAAADGQAAAj4AAAM+AAADPgAAAlgAAABYAAAAWAAAAEgAAABIAAAAWAAAAD4AAAM+AAAAPgAAAlgAAAAZAAABGQAAAxkAAABYAAAAWAAAAFgAAABYAAAAWAAAAA==
@@ -7372,6 +7372,18 @@ entities:
           color: '#EFB34196'
           id: Bot
           coordinates: -12,-25
+        2815:
+          color: '#FFFFFFFF'
+          id: grasssnowc3
+          coordinates: -7.4969845,-31.300919
+        2817:
+          color: '#FFFFFFFF'
+          id: grasssnow10
+          coordinates: -3.1844833,-31.696753
+        2832:
+          color: '#FFFFFFFF'
+          id: grasssnowb2
+          coordinates: -5.6219845,-31.458538
       -1,-2:
         42:
           color: '#D381C996'
@@ -8549,6 +8561,106 @@ entities:
           color: '#A4610696'
           id: Dirt
           coordinates: -18,-33
+        2836:
+          color: '#FFFFFFFF'
+          id: bushsnowa2
+          coordinates: -5.4812293,-39.153034
+        2837:
+          color: '#FFFFFFFF'
+          id: bushsnowb1
+          coordinates: -6.7103953,-38.194702
+        2840:
+          color: '#FFFFFFFF'
+          id: grasssnow10
+          coordinates: -5.8145623,-37.361366
+        2811:
+          color: '#FFFFFFFF'
+          id: grasssnowa1
+          coordinates: -8.9553175,-32.427956
+        2812:
+          color: '#FFFFFFFF'
+          id: grasssnowa1
+          coordinates: -4.3511515,-32.40712
+        2813:
+          color: '#FFFFFFFF'
+          id: grasssnowc3
+          coordinates: -2.4553173,-32.96962
+        2814:
+          color: '#FFFFFFFF'
+          id: grasssnowc3
+          coordinates: -9.684484,-38.175625
+        2816:
+          color: '#FFFFFFFF'
+          id: grasssnow10
+          coordinates: -4.1428175,-32.571754
+        2818:
+          color: '#FFFFFFFF'
+          id: grasssnow10
+          coordinates: -0.9553173,-32.55092
+        2819:
+          color: '#FFFFFFFF'
+          id: grasssnow10
+          coordinates: -1.8928173,-39.166843
+        2820:
+          color: '#FFFFFFFF'
+          id: grasssnow10
+          coordinates: -8.851151,-39.625175
+        2821:
+          color: '#FFFFFFFF'
+          id: grasssnow10
+          coordinates: -7.4344845,-37.52101
+        2838:
+          color: '#FFFFFFFF'
+          id: grasssnow01
+          coordinates: -6.7103953,-39.465534
+        2839:
+          color: '#FFFFFFFF'
+          id: grasssnow01
+          coordinates: -3.3562288,-38.048866
+        2824:
+          color: '#FFFFFFFF'
+          id: grasssnow11
+          coordinates: -8.0594845,-33.396038
+        2825:
+          color: '#FFFFFFFF'
+          id: grasssnow12
+          coordinates: -10.2053175,-32.875206
+        2826:
+          color: '#FFFFFFFF'
+          id: grasssnow12
+          coordinates: -3.1636512,-33.187706
+        2828:
+          color: '#FFFFFFFF'
+          id: grasssnow01
+          coordinates: -8.3928175,-37.604374
+        2829:
+          color: '#FFFFFFFF'
+          id: grasssnow02
+          coordinates: -4.4761515,-33.812706
+        2830:
+          color: '#FFFFFFFF'
+          id: grasssnow04
+          coordinates: -7.2469845,-33.916874
+        2831:
+          color: '#FFFFFFFF'
+          id: grasssnowb3
+          coordinates: -9.163651,-33.854374
+        2833:
+          color: '#FFFFFFFF'
+          id: grasssnowc1
+          coordinates: -9.4553175,-39.69297
+        2835:
+          color: '#FFFFFFFF'
+          id: grasssnowb1
+          coordinates: -1.2520609,-37.456932
+        2844:
+          color: '#FFFFFFFF'
+          id: grasssnowb1
+          coordinates: -3.8770618,-39.340534
+        2843:
+          color: '#FFFFFFFF'
+          id: grasssnow07
+          coordinates: -4.793729,-39.507202
       0,-2:
         44:
           color: '#EFB34196'
@@ -22219,8 +22331,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 14.664915
-      - 55.168015
+      - 14.254297
+      - 53.62331
       - 0
       - 0
       - 0
@@ -22234,8 +22346,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 20.04244
-      - 75.39776
+      - 19.481253
+      - 73.28662
       - 0
       - 0
       - 0
@@ -22264,8 +22376,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 9.853881
-      - 37.06936
+      - 9.30979
+      - 35.022537
       - 0
       - 0
       - 0
@@ -22294,8 +22406,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 16.429127
-      - 61.804813
+      - 15.969111
+      - 60.07428
       - 0
       - 0
       - 0
@@ -30777,9 +30889,9 @@ entities:
     parent: 6
     type: Transform
 - uid: 1339
-  type: WallSolid
+  type: FloraTreeConifer01
   components:
-  - pos: -18.5,-50.5
+  - pos: -9.077011,-30.926886
     parent: 6
     type: Transform
 - uid: 1340
@@ -30823,7 +30935,7 @@ entities:
       Close: []
       Toggle:
       - port: Pressed
-        uid: 13051
+        uid: 3965
     type: SignalReceiver
 - uid: 1346
   type: ShuttersNormal
@@ -30836,7 +30948,7 @@ entities:
       Close: []
       Toggle:
       - port: Pressed
-        uid: 13051
+        uid: 3965
     type: SignalReceiver
 - uid: 1347
   type: WallSolid
@@ -46511,7 +46623,7 @@ entities:
 - uid: 3716
   type: AsteroidRock
   components:
-  - pos: -9.5,-63.5
+  - pos: -10.5,-64.5
     parent: 6
     type: Transform
 - uid: 3717
@@ -46545,9 +46657,9 @@ entities:
     parent: 6
     type: Transform
 - uid: 3722
-  type: AsteroidRock
+  type: FloraTreeSnow02
   components:
-  - pos: -11.5,-61.5
+  - pos: -3.4294477,-31.168287
     parent: 6
     type: Transform
 - uid: 3723
@@ -46563,9 +46675,9 @@ entities:
     parent: 6
     type: Transform
 - uid: 3725
-  type: AsteroidRock
+  type: FloraTreeSnow03
   components:
-  - pos: -12.5,-61.5
+  - pos: -8.491106,-36.77444
     parent: 6
     type: Transform
 - uid: 3726
@@ -46581,21 +46693,21 @@ entities:
     parent: 6
     type: Transform
 - uid: 3728
-  type: AsteroidRock
+  type: FloraTreeStumpConifer
   components:
-  - pos: -13.5,-61.5
+  - pos: -5.5275598,-30.301779
     parent: 6
     type: Transform
 - uid: 3729
-  type: AsteroidRock
+  type: FloraTreeConifer03
   components:
-  - pos: -9.5,-62.5
+  - pos: -1.7436771,-30.822718
     parent: 6
     type: Transform
 - uid: 3730
-  type: AsteroidRock
+  type: FloraTreeSnow01
   components:
-  - pos: -9.5,-61.5
+  - pos: -4.6586137,-32.66829
     parent: 6
     type: Transform
 - uid: 3731
@@ -46777,9 +46889,9 @@ entities:
     parent: 6
     type: Transform
 - uid: 3760
-  type: AirlockExternalGlass
+  type: AirlockExternalGlassLocked
   components:
-  - pos: -23.5,-60.5
+  - pos: -23.5,-64.5
     parent: 6
     type: Transform
 - uid: 3761
@@ -46790,9 +46902,9 @@ entities:
     parent: 6
     type: Transform
 - uid: 3762
-  type: AirlockExternalGlass
+  type: AirlockExternalGlassLocked
   components:
-  - pos: -23.5,-64.5
+  - pos: -23.5,-60.5
     parent: 6
     type: Transform
 - uid: 3763
@@ -48029,24 +48141,31 @@ entities:
     parent: 6
     type: Transform
 - uid: 3964
-  type: AsteroidRock
+  type: Pickaxe
   components:
-  - rot: 3.141592653589793 rad
-    pos: -2.5,-63.5
+  - pos: -0.45833784,-64.641205
     parent: 6
     type: Transform
 - uid: 3965
-  type: AsteroidRock
+  type: SignalButton
   components:
-  - rot: 3.141592653589793 rad
-    pos: -2.5,-62.5
+  - rot: 1.5707963267948966 rad
+    pos: -18.5,-47.5
     parent: 6
     type: Transform
+  - canCollide: False
+    type: Physics
+  - outputs:
+      Pressed:
+      - port: Toggle
+        uid: 1345
+      - port: Toggle
+        uid: 1346
+    type: SignalTransmitter
 - uid: 3966
-  type: AsteroidRock
+  type: FloraTreeConifer02
   components:
-  - rot: 3.141592653589793 rad
-    pos: -2.5,-61.5
+  - pos: -6.8061776,-31.926886
     parent: 6
     type: Transform
 - uid: 3967
@@ -50939,7 +51058,7 @@ entities:
   - pos: -29.5,-52.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -217299.72
+  - SecondsUntilStateChange: -218506.25
     state: Opening
     type: Door
 - uid: 4422
@@ -55527,7 +55646,7 @@ entities:
 - uid: 5148
   type: Paper
   components:
-  - desc: ''
+  - desc: ""
     type: MetaData
   - pos: -38.31556,-4.426944
     parent: 6
@@ -57109,7 +57228,7 @@ entities:
     parent: 6
     type: Transform
 - uid: 5400
-  type: CrateSurgery
+  type: ExosuitFabricator
   components:
   - pos: -14.5,-51.5
     parent: 6
@@ -58460,7 +58579,7 @@ entities:
   - pos: 18.5,-39.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -90220.93
+  - SecondsUntilStateChange: -91427.46
     state: Opening
     type: Door
   - inputs:
@@ -58476,7 +58595,7 @@ entities:
   - pos: 17.5,-39.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -90220.93
+  - SecondsUntilStateChange: -91427.46
     state: Opening
     type: Door
   - inputs:
@@ -76282,7 +76401,7 @@ entities:
     pos: -20.5,-5.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -91958.02
+  - SecondsUntilStateChange: -93164.555
     state: Opening
     type: Door
   - inputs:
@@ -76299,7 +76418,7 @@ entities:
     pos: -20.5,-4.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -91958.02
+  - SecondsUntilStateChange: -93164.555
     state: Opening
     type: Door
   - inputs:
@@ -109204,7 +109323,7 @@ entities:
     pos: -11.5,4.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -92474.94
+  - SecondsUntilStateChange: -93681.47
     state: Opening
     type: Door
   - inputs:
@@ -109221,7 +109340,7 @@ entities:
     pos: -11.5,3.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -92474.94
+  - SecondsUntilStateChange: -93681.47
     state: Opening
     type: Door
   - inputs:
@@ -109238,7 +109357,7 @@ entities:
     pos: 2.5,4.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -92474.94
+  - SecondsUntilStateChange: -93681.47
     state: Opening
     type: Door
   - inputs:
@@ -109255,7 +109374,7 @@ entities:
     pos: 2.5,3.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -92474.94
+  - SecondsUntilStateChange: -93681.47
     state: Opening
     type: Door
   - inputs:
@@ -109271,7 +109390,7 @@ entities:
   - pos: -8.5,11.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -92474.94
+  - SecondsUntilStateChange: -93681.47
     state: Opening
     type: Door
   - inputs:
@@ -109287,7 +109406,7 @@ entities:
   - pos: -6.5,11.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -92474.94
+  - SecondsUntilStateChange: -93681.47
     state: Opening
     type: Door
   - inputs:
@@ -109303,7 +109422,7 @@ entities:
   - pos: -7.5,11.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -92474.94
+  - SecondsUntilStateChange: -93681.47
     state: Opening
     type: Door
   - inputs:
@@ -109319,7 +109438,7 @@ entities:
   - pos: -5.5,11.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -92474.94
+  - SecondsUntilStateChange: -93681.47
     state: Opening
     type: Door
   - inputs:
@@ -109335,7 +109454,7 @@ entities:
   - pos: -3.5,11.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -92474.94
+  - SecondsUntilStateChange: -93681.47
     state: Opening
     type: Door
   - inputs:
@@ -109351,7 +109470,7 @@ entities:
   - pos: -2.5,11.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -92474.94
+  - SecondsUntilStateChange: -93681.47
     state: Opening
     type: Door
   - inputs:
@@ -109367,7 +109486,7 @@ entities:
   - pos: -1.5,11.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -92474.94
+  - SecondsUntilStateChange: -93681.47
     state: Opening
     type: Door
   - inputs:
@@ -109383,7 +109502,7 @@ entities:
   - pos: -0.5,11.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -92474.94
+  - SecondsUntilStateChange: -93681.47
     state: Opening
     type: Door
   - inputs:
@@ -109399,7 +109518,7 @@ entities:
   - pos: -3.5,-8.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -92470.44
+  - SecondsUntilStateChange: -93676.97
     state: Opening
     type: Door
   - inputs:
@@ -109415,7 +109534,7 @@ entities:
   - pos: -2.5,-8.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -92470.44
+  - SecondsUntilStateChange: -93676.97
     state: Opening
     type: Door
   - inputs:
@@ -109431,7 +109550,7 @@ entities:
   - pos: -1.5,-8.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -92470.44
+  - SecondsUntilStateChange: -93676.97
     state: Opening
     type: Door
   - inputs:
@@ -109447,7 +109566,7 @@ entities:
   - pos: -0.5,-8.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -92470.44
+  - SecondsUntilStateChange: -93676.97
     state: Opening
     type: Door
   - inputs:
@@ -109544,7 +109663,7 @@ entities:
   - pos: 13.5,9.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -92289.125
+  - SecondsUntilStateChange: -93495.66
     state: Opening
     type: Door
   - inputs:
@@ -109560,7 +109679,7 @@ entities:
   - pos: 13.5,8.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -92289.125
+  - SecondsUntilStateChange: -93495.66
     state: Opening
     type: Door
   - inputs:
@@ -109576,7 +109695,7 @@ entities:
   - pos: 13.5,7.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -92289.125
+  - SecondsUntilStateChange: -93495.66
     state: Opening
     type: Door
   - inputs:
@@ -109654,7 +109773,7 @@ entities:
   - pos: 8.5,-34.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -92111.305
+  - SecondsUntilStateChange: -93317.836
     state: Opening
     type: Door
   - inputs:
@@ -109670,7 +109789,7 @@ entities:
   - pos: 9.5,-34.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -92111.305
+  - SecondsUntilStateChange: -93317.836
     state: Opening
     type: Door
   - inputs:
@@ -109686,7 +109805,7 @@ entities:
   - pos: 11.5,-33.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -92111.305
+  - SecondsUntilStateChange: -93317.836
     state: Opening
     type: Door
   - inputs:
@@ -109697,21 +109816,12 @@ entities:
         uid: 13047
     type: SignalReceiver
 - uid: 13051
-  type: SignalButton
+  type: WallSolid
   components:
   - rot: 1.5707963267948966 rad
     pos: -18.5,-50.5
     parent: 6
     type: Transform
-  - canCollide: False
-    type: Physics
-  - outputs:
-      Pressed:
-      - port: Toggle
-        uid: 1345
-      - port: Toggle
-        uid: 1346
-    type: SignalTransmitter
 - uid: 13052
   type: SignalButton
   components:
@@ -109935,7 +110045,7 @@ entities:
     - 6563
     - 6558
     - 6557
-    - null
+    - invalid
     - 6560
     - 6568
     - 6567
@@ -109962,7 +110072,7 @@ entities:
     - 6563
     - 6558
     - 6557
-    - null
+    - invalid
     - 6560
     - 6568
     - 6567
@@ -109993,7 +110103,7 @@ entities:
   - devices:
     - 13064
     - 6560
-    - null
+    - invalid
     - 6632
     - 6631
     - 11573
@@ -110115,7 +110225,7 @@ entities:
     - 6604
     - 6605
     - 5156
-    - null
+    - invalid
     - 13077
     - 12357
     - 12358
@@ -110138,7 +110248,7 @@ entities:
     - 6604
     - 6605
     - 5156
-    - null
+    - invalid
     - 13077
     - 830
     type: DeviceList
@@ -110360,7 +110470,7 @@ entities:
     parent: 6
     type: Transform
   - devices:
-    - null
+    - invalid
     - 6652
     - 7413
     - 3344
@@ -110386,7 +110496,7 @@ entities:
     parent: 6
     type: Transform
   - devices:
-    - null
+    - invalid
     - 6652
     - 7413
     - 3344
@@ -110558,7 +110668,7 @@ entities:
     - 628
     - 629
     - 5156
-    - null
+    - invalid
     - 6602
     - 6603
     - 6604
@@ -110591,7 +110701,7 @@ entities:
     - 628
     - 629
     - 5156
-    - null
+    - invalid
     - 6602
     - 6603
     - 6604
@@ -110683,7 +110793,7 @@ entities:
     - 6593
     - 6556
     - 6555
-    - null
+    - invalid
     - 3333
     - 11228
     - 11227
@@ -110706,7 +110816,7 @@ entities:
     - 6593
     - 6556
     - 6555
-    - null
+    - invalid
     - 3333
     type: DeviceList
 - uid: 13115
@@ -113143,9 +113253,9 @@ entities:
     parent: 6
     type: Transform
 - uid: 13471
-  type: Pickaxe
+  type: AsteroidRock
   components:
-  - pos: -1.3730211,-64.595604
+  - pos: -1.5,-64.5
     parent: 6
     type: Transform
 - uid: 13472
@@ -115708,7 +115818,7 @@ entities:
     parent: 6
     type: Transform
 - uid: 13812
-  type: AirlockCommandGlass
+  type: AirlockCommandGlassLocked
   components:
   - pos: -65.5,-12.5
     parent: 6
@@ -117164,6 +117274,186 @@ entities:
   type: CableHV
   components:
   - pos: -14.5,27.5
+    parent: 6
+    type: Transform
+- uid: 14032
+  type: PresentRandom
+  components:
+  - pos: -87.33101,-24.421278
+    parent: 6
+    type: Transform
+- uid: 14033
+  type: FloraTreeStump
+  components:
+  - pos: -2.0239794,-38.54547
+    parent: 6
+    type: Transform
+- uid: 14034
+  type: FloraTreeChristmas02
+  components:
+  - pos: -4.3573136,-36.503803
+    parent: 6
+    type: Transform
+- uid: 14035
+  type: PresentRandom
+  components:
+  - pos: -5.5031476,-37.149635
+    parent: 6
+    type: Transform
+- uid: 14036
+  type: PresentRandom
+  components:
+  - pos: -5.2948136,-37.920467
+    parent: 6
+    type: Transform
+- uid: 14037
+  type: PresentRandom
+  components:
+  - pos: -4.1698136,-38.212135
+    parent: 6
+    type: Transform
+- uid: 14038
+  type: PresentRandom
+  components:
+  - pos: -3.3573134,-37.149635
+    parent: 6
+    type: Transform
+- uid: 14039
+  type: PresentRandom
+  components:
+  - pos: -3.2531474,-38.066303
+    parent: 6
+    type: Transform
+- uid: 14040
+  type: PresentRandom
+  components:
+  - pos: -37.557236,-17.528233
+    parent: 6
+    type: Transform
+- uid: 14041
+  type: PresentRandom
+  components:
+  - pos: -2.4776993,10.427449
+    parent: 6
+    type: Transform
+- uid: 14042
+  type: PresentRandom
+  components:
+  - pos: 0.46229714,-0.5814235
+    parent: 6
+    type: Transform
+- uid: 14043
+  type: PresentRandom
+  components:
+  - pos: 11.551964,9.41245
+    parent: 6
+    type: Transform
+- uid: 14044
+  type: PresentRandom
+  components:
+  - pos: 8.519167,-32.510033
+    parent: 6
+    type: Transform
+- uid: 14045
+  type: PresentRandom
+  components:
+  - pos: -1.5763102,-51.38993
+    parent: 6
+    type: Transform
+- uid: 14046
+  type: PresentRandom
+  components:
+  - pos: -43.48014,-49.748936
+    parent: 6
+    type: Transform
+- uid: 14047
+  type: PresentRandom
+  components:
+  - pos: -22.51747,-4.4437633
+    parent: 6
+    type: Transform
+- uid: 14048
+  type: PresentRandom
+  components:
+  - pos: -36.385475,22.51109
+    parent: 6
+    type: Transform
+- uid: 14049
+  type: Present
+  components:
+  - pos: -53.597168,-33.095463
+    parent: 6
+    type: Transform
+- uid: 14050
+  type: Present
+  components:
+  - pos: -33.497498,-54.364353
+    parent: 6
+    type: Transform
+- uid: 14051
+  type: PresentRandom
+  components:
+  - pos: 28.510979,-5.488341
+    parent: 6
+    type: Transform
+- uid: 14052
+  type: PresentRandom
+  components:
+  - pos: 1.4818981,-23.256903
+    parent: 6
+    type: Transform
+- uid: 14053
+  type: PresentRandom
+  components:
+  - pos: -12.521449,6.6016726
+    parent: 6
+    type: Transform
+- uid: 14054
+  type: PresentRandom
+  components:
+  - pos: 17.51491,-6.257637
+    parent: 6
+    type: Transform
+- uid: 14055
+  type: PresentRandom
+  components:
+  - pos: 44.345547,-24.495779
+    parent: 6
+    type: Transform
+- uid: 14056
+  type: PresentRandom
+  components:
+  - pos: 35.59137,4.5460677
+    parent: 6
+    type: Transform
+- uid: 14057
+  type: PresentRandom
+  components:
+  - pos: 19.492594,-40.541904
+    parent: 6
+    type: Transform
+- uid: 14058
+  type: PresentRandom
+  components:
+  - pos: 0.9918589,-75.301285
+    parent: 6
+    type: Transform
+- uid: 14059
+  type: PresentRandom
+  components:
+  - pos: -61.494003,-11.414069
+    parent: 6
+    type: Transform
+- uid: 14060
+  type: Present
+  components:
+  - pos: -53.484497,-17.472605
+    parent: 6
+    type: Transform
+- uid: 14061
+  type: Present
+  components:
+  - pos: 13.95458,-45.21619
     parent: 6
     type: Transform
 ...
