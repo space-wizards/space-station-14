@@ -20,7 +20,8 @@
     sprite: Markers/jobs.rsi
     layers:
       - state: green
-      - texture: Mobs/Ghosts/ghost_human.rsi/icon.png
+      - sprite: Mobs/Ghosts/ghost_human.rsi
+        state: icon
     state: observer
   - type: SpawnPoint
     spawn_type: Observer

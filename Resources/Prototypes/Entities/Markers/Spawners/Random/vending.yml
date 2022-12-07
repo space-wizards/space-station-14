@@ -6,11 +6,12 @@
   - type: Sprite
     layers:
       - state: red
-      - texture: Structures/Machines/VendingMachines/coffee.rsi/off.png
+      - sprite: Structures/Machines/VendingMachines/coffee.rsi
+        state: off
   - type: RandomSpawner
     prototypes:
       - VendingMachineCigs
-      - VendingMachineCoffee      
+      - VendingMachineCoffee
       - VendingMachineCola
       - VendingMachineDiscount
       - VendingMachineSnack
