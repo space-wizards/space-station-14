@@ -6,6 +6,9 @@
     },
     "states": [
         {
+            "name": "explosion"
+        },
+        {
             "name": "explosionfast",
             "delays": [
                 [
