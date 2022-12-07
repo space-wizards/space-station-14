@@ -94,6 +94,8 @@ namespace Content.Server.Access.Systems
                 jobTitle = null;
             }
 
+            if (id.JobTitle == jobTitle)
+                return true;
             id.JobTitle = jobTitle;
             Dirty(id);
             UpdateEntityName(uid, id);
@@ -129,6 +131,8 @@ namespace Content.Server.Access.Systems
                 fullName = null;
             }
 
+            if (id.FullName == fullName)
+                return true;
             id.FullName = fullName;
             Dirty(id);
             UpdateEntityName(uid, id);
