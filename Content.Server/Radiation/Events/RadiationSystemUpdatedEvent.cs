@@ -6,7 +6,4 @@ namespace Content.Server.Radiation.Events;
 ///     Raised when <see cref="RadiationSystem"/> updated all
 ///     radiation receivers and radiation sources.
 /// </summary>
-public sealed class RadiationSystemUpdatedEvent : EntityEventArgs
-{
-
-}
+public record struct RadiationSystemUpdatedEvent;
