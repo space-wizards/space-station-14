@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Camera eye rotations should now be correct., type: Fix}
-  id: 2233
-  time: '2022-09-05T06:19:15.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Pets will no longer try to run away when buckled or pulled., type: Tweak}
   - {message: Space carps will now try to follow their dragon., type: Tweak}
   - {message: Turrets now exist., type: Add}
@@ -2945,3 +2940,9 @@ Entries:
   - {message: Air Alarm UI is now easier to understand, type: Tweak}
   id: 2732
   time: '2022-12-06T23:46:08.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Added geiger counter. It can be found in radiation suit closets., type: Add}
+  - {message: Radiation suit and hardsuits have built-in geiger counter., type: Add}
+  id: 2733
+  time: '2022-12-07T01:56:52.0000000+00:00'
