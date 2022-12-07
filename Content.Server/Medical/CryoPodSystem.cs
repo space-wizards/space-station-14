@@ -5,6 +5,7 @@ using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.Unary.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
+using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Climbing;
 using Content.Server.DoAfter;
@@ -15,6 +16,8 @@ using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
 using Content.Server.Tools;
 using Content.Server.UserInterface;
+using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.DragDrop;
@@ -41,6 +44,8 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly ToolSystem _toolSystem = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly MetaDataSystem _metaDataSystem = default!;
+    [Dependency] private readonly ReactiveSystem _reactiveSystem = default!;
 
     public override void Initialize()
     {
@@ -59,27 +64,42 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
+
+        var curTime = _gameTiming.CurTime;
+        var bloodStreamQuery = GetEntityQuery<BloodstreamComponent>();
+        var metaDataQuery = GetEntityQuery<MetaDataComponent>();
+        var itemSlotsQuery = GetEntityQuery<ItemSlotsComponent>();
+        var fitsInDispenserQuery = GetEntityQuery<FitsInDispenserComponent>();
+        var solutionContainerManagerQuery = GetEntityQuery<SolutionContainerManagerComponent>();
         foreach (var (_, cryoPod) in EntityQuery<ActiveCryoPodComponent, CryoPodComponent>())
         {
-            if (_gameTiming.CurTime < cryoPod.NextInjectionTime)
+            metaDataQuery.TryGetComponent(cryoPod.Owner, out var metaDataComponent);
+            if (curTime < cryoPod.NextInjectionTime + _metaDataSystem.GetPauseTime(cryoPod.Owner, metaDataComponent))
                 continue;
-            cryoPod.NextInjectionTime = _gameTiming.CurTime + TimeSpan.FromSeconds(cryoPod.BeakerTransferTime);
+            cryoPod.NextInjectionTime = curTime + TimeSpan.FromSeconds(cryoPod.BeakerTransferTime);
 
-            var container = _itemSlotsSystem.GetItemOrNull(cryoPod.Owner, cryoPod.SolutionContainerName);
+            if (
+                !itemSlotsQuery.TryGetComponent(cryoPod.Owner, out var itemSlotsComponent)
+                || !fitsInDispenserQuery.TryGetComponent(cryoPod.Owner, out var fitsInDispenserComponent)
+                || !solutionContainerManagerQuery.TryGetComponent(cryoPod.Owner, out var solutionContainerManagerComponent))
+            {
+                continue;
+            }
+            var container = _itemSlotsSystem.GetItemOrNull(cryoPod.Owner, cryoPod.SolutionContainerName, itemSlotsComponent);
             var patient = cryoPod.BodyContainer.ContainedEntity;
             if (container != null
                 && container.Value.Valid
                 && patient != null
-                && _solutionContainerSystem.TryGetFitsInDispenser(container.Value, out var containerSolution))
+                && _solutionContainerSystem.TryGetFitsInDispenser(container.Value, out var containerSolution, dispenserFits: fitsInDispenserComponent, solutionManager: solutionContainerManagerComponent))
             {
-                if (!TryComp<BloodstreamComponent>(patient, out var bloodstream))
+                if (!bloodStreamQuery.TryGetComponent(patient, out var bloodstream))
                 {
                     continue;
                 }
 
                 var solutionToInject = _solutionContainerSystem.SplitSolution(container.Value, containerSolution, cryoPod.BeakerTransferAmount);
                 _bloodstreamSystem.TryAddToChemicals(patient.Value, solutionToInject, bloodstream);
-                solutionToInject.DoEntityReaction(patient.Value, ReactionMethod.Injection);
+                _reactiveSystem.DoEntityReaction(patient.Value, solutionToInject, ReactionMethod.Injection);
             }
         }
     }

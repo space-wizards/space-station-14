@@ -52,16 +52,18 @@ public abstract partial class SharedCryoPodSystem: EntitySystem
 
     protected void UpdateAppearance(EntityUid uid, SharedCryoPodComponent? cryoPod = null, AppearanceComponent? appearance = null)
     {
-        if (!Resolve(uid, ref cryoPod, ref appearance))
+        if (!Resolve(uid, ref cryoPod))
             return;
-
         var cryoPodEnabled = HasComp<ActiveCryoPodComponent>(uid);
-        _appearanceSystem.SetData(uid, SharedCryoPodComponent.CryoPodVisuals.ContainsEntity, cryoPod.BodyContainer.ContainedEntity == null, appearance);
-        _appearanceSystem.SetData(uid, SharedCryoPodComponent.CryoPodVisuals.IsOn, cryoPodEnabled, appearance);
         if (TryComp<SharedPointLightComponent>(uid, out var light))
         {
             light.Enabled = cryoPodEnabled && cryoPod.BodyContainer.ContainedEntity != null;
         }
+
+        if (!Resolve(uid, ref appearance))
+            return;
+        _appearanceSystem.SetData(uid, SharedCryoPodComponent.CryoPodVisuals.ContainsEntity, cryoPod.BodyContainer.ContainedEntity == null, appearance);
+        _appearanceSystem.SetData(uid, SharedCryoPodComponent.CryoPodVisuals.IsOn, cryoPodEnabled, appearance);
     }
 
     public void InsertBody(EntityUid uid, EntityUid target, SharedCryoPodComponent cryoPodComponent)
@@ -75,8 +77,7 @@ public abstract partial class SharedCryoPodSystem: EntitySystem
         var xform = Transform(target);
         cryoPodComponent.BodyContainer.Insert(target, transform: xform);
 
-        var comp = EnsureComp<InsideCryoPodComponent>(target);
-        comp.Holder = cryoPodComponent.Owner;
+        EnsureComp<InsideCryoPodComponent>(target);
         _standingStateSystem.Stand(target, force: true); // Force-stand the mob so that the cryo pod sprite overlays it fully
 
         UpdateAppearance(uid, cryoPodComponent);

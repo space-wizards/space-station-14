@@ -1,11 +1,11 @@
 ﻿using Content.Server.Atmos;
 using Content.Shared.Atmos;
 using Content.Shared.Medical.Cryogenics;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Medical.Components;
 
 [RegisterComponent]
-[ComponentReference(typeof(SharedCryoPodComponent))]
 public sealed class CryoPodComponent: SharedCryoPodComponent, IGasMixtureHolder
 {
     /// <summary>
@@ -37,7 +37,7 @@ public sealed class CryoPodComponent: SharedCryoPodComponent, IGasMixtureHolder
     public float BeakerTransferTime = 1f;
 
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("nextInjectionTime")]
+    [DataField("nextInjectionTime", customTypeSerializer:typeof(TimeOffsetSerializer))]
     public TimeSpan? NextInjectionTime;
 
     /// <summary>
