@@ -31,11 +31,11 @@ public abstract class SharedMultiHandedItemSystem : EntitySystem
             return;
 
         args.Cancel();
-
-        if (_timing.InPrediction) //no popup spam
-            return;
-        _popup.PopupEntity(Loc.GetString("multi-handed-item-pick-up-fail",
-            ("number", component.HandsNeeded - 1), ("item", uid)), args.User, Filter.Entities(args.User));
+        if (_timing.IsFirstTimePredicted)
+        {
+            _popup.PopupEntity(Loc.GetString("multi-handed-item-pick-up-fail",
+                ("number", component.HandsNeeded - 1), ("item", uid)), args.User, Filter.Local());
+        }
     }
 
     private void OnVirtualItemDeleted(EntityUid uid, MultiHandedItemComponent component, VirtualItemDeletedEvent args)
