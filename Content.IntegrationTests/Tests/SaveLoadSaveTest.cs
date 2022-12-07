@@ -88,7 +88,6 @@ namespace Content.IntegrationTests.Tests
             var server = pairTracker.Pair.Server;
             var mapLoader = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<MapLoaderSystem>();
             var mapManager = server.ResolveDependency<IMapManager>();
-            var userData = server.ResolveDependency<IResourceManager>().UserData;
 
             MapId mapId = default;
 
@@ -110,13 +109,8 @@ namespace Content.IntegrationTests.Tests
                 mapLoader.SaveMap(mapId, "/load save ticks save 2.yml");
             });
 
-            if (!server.IsAlive)
-            {
-                await pairTracker.CleanReturnAsync();
-                return;
-            }
-            
             await server.WaitIdleAsync();
+            var userData = server.ResolveDependency<IResourceManager>().UserData;
 
             string one;
             string two;
