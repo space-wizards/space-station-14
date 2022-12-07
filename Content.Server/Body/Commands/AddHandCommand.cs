@@ -23,11 +23,6 @@ namespace Content.Server.Body.Commands
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
-            if (args.Length > 1)
-            {
-                shell.WriteLine(Help);
-                return;
-            }
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();

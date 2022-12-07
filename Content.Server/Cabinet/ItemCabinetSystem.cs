@@ -27,6 +27,8 @@ namespace Content.Server.Cabinet
 
             SubscribeLocalEvent<ItemCabinetComponent, EntInsertedIntoContainerMessage>(OnContainerModified);
             SubscribeLocalEvent<ItemCabinetComponent, EntRemovedFromContainerMessage>(OnContainerModified);
+
+            SubscribeLocalEvent<ItemCabinetComponent, LockToggleAttemptEvent>(OnLockToggleAttempt);
         }
 
         private void OnComponentInit(EntityUid uid, ItemCabinetComponent cabinet, ComponentInit args)
@@ -61,6 +63,13 @@ namespace Content.Server.Cabinet
 
             if (args.Container.ID == cabinet.CabinetSlot.ID)
                 UpdateAppearance(uid, cabinet);
+        }
+
+        private void OnLockToggleAttempt(EntityUid uid, ItemCabinetComponent cabinet, ref LockToggleAttemptEvent args)
+        {
+            // Cannot lock or unlock while open.
+            if (cabinet.Opened)
+                args.Cancelled = true;
         }
 
         private void AddToggleOpenVerb(EntityUid uid, ItemCabinetComponent cabinet, GetVerbsEvent<ActivationVerb> args)

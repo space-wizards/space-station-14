@@ -6,7 +6,8 @@
     - type: Sprite
       layers:
         - state: red
-        - texture: Structures/Storage/Crates/generic.rsi/icon.png
+        - sprite: Structures/Storage/Crates/generic.rsi
+          state: icon
     - type: RandomSpawner
       prototypes:
         - CrateGenericSteel
@@ -21,7 +22,7 @@
         - CrateScience
         - CrateSurgery
       chance: 0.7
-      
+
 - type: entity
   name: Filled Crate Spawner
   id: CrateFilledSpawner
@@ -31,7 +32,8 @@
     - type: Sprite
       layers:
         - state: red
-        - texture: Structures/Storage/Crates/o2.rsi/icon.png
+        - sprite: Structures/Storage/Crates/o2.rsi
+          state: icon
     - type: RandomSpawner
       prototypes:
         - CrateServiceReplacementLights

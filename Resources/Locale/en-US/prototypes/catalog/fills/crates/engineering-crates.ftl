@@ -27,3 +27,6 @@ ent-CrateEngineeringJetpack = Jetpack crate
 
 ent-CrateEngineeringMiniJetpack = Mini jetpack crate
     .desc = Two mini jetpacks for those who want an extra challenge.
+
+ent-CrateAirlockKit = Airlock kit
+    .desc = A kit for building 6 airlocks, doesn't include tools.

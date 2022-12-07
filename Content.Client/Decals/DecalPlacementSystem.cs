@@ -100,26 +100,24 @@ public sealed class DecalPlacementSystem : EntitySystem
         if (args.Handled)
             return;
 
-        if (!_mapMan.TryFindGridAt(args.Target, out var grid))
+        if (args.Target.GetGridUid(EntityManager) == null)
             return;
 
         args.Handled = true;
 
-        var coords =  EntityCoordinates.FromMap(grid.GridEntityId, args.Target, EntityManager);
-
         if (args.Snap)
         {
             var newPos = new Vector2(
-                (float) (MathF.Round(coords.X - 0.5f, MidpointRounding.AwayFromZero) + 0.5),
-                (float) (MathF.Round(coords.Y - 0.5f, MidpointRounding.AwayFromZero) + 0.5)
+                (float) (MathF.Round(args.Target.X - 0.5f, MidpointRounding.AwayFromZero) + 0.5),
+                (float) (MathF.Round(args.Target.Y - 0.5f, MidpointRounding.AwayFromZero) + 0.5)
             );
-            coords = coords.WithPosition(newPos);
+            args.Target = args.Target.WithPosition(newPos);
         }
 
-        coords = coords.Offset(new Vector2(-0.5f, -0.5f));
+        args.Target = args.Target.Offset(new Vector2(-0.5f, -0.5f));
 
-        var decal = new Decal(coords.Position, args.DecalId, args.Color, Angle.FromDegrees(args.Rotation), args.ZIndex, args.Cleanable);
-        RaiseNetworkEvent(new RequestDecalPlacementEvent(decal, coords));
+        var decal = new Decal(args.Target.Position, args.DecalId, args.Color, Angle.FromDegrees(args.Rotation), args.ZIndex, args.Cleanable);
+        RaiseNetworkEvent(new RequestDecalPlacementEvent(decal, args.Target));
     }
 
     private void OnFillSlot(FillActionSlotEvent ev)
