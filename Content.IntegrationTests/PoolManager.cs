@@ -811,8 +811,10 @@ public sealed class PairTracker : IAsyncDisposable
         {
             if (Pair.Client.IsAlive == false)
             {
+                var ex = Pair.Client.UnhandledException;
+                var exDesc = ex == null ? "null" : $"{ex.GetType()}: {ex}";
                 await TestContext.Out.WriteLineAsync(
-                    $"{nameof(CleanReturnAsync)}: Test killed the client in pair {Pair.PairId}. Original exception: {Pair.Client.UnhandledException}");
+                    $"{nameof(CleanReturnAsync)}: Test killed the client in pair {Pair.PairId}. Original exception was: {exDesc}");
                 throw new Exception($"{nameof(CleanReturnAsync)}: Test killed the client in pair {Pair.PairId}:", Pair.Client.UnhandledException);
             }
 
