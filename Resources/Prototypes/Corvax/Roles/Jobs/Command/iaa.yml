@@ -18,6 +18,7 @@
     - Brig
     - Maintenance
     - Command
+    - External
 
 - type: startingGear
   id: IAAGear
