@@ -9,6 +9,7 @@ using Content.Server.Station.Systems;
 using Content.Shared.Database;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -148,11 +149,9 @@ namespace Content.Server.StationEvents.Events
             if (!TryComp<MapGridComponent>(targetGrid, out var gridComp))
                 return false;
 
-            var grid = gridComp.Grid;
-
             var found = false;
             var (gridPos, _, gridMatrix) = Transform(targetGrid).GetWorldPositionRotationMatrix();
-            var gridBounds = gridMatrix.TransformBox(grid.LocalAABB);
+            var gridBounds = gridMatrix.TransformBox(gridComp.LocalAABB);
 
             for (var i = 0; i < 10; i++)
             {
@@ -160,15 +159,15 @@ namespace Content.Server.StationEvents.Events
                 var randomY = RobustRandom.Next((int) gridBounds.Bottom, (int) gridBounds.Top);
 
                 tile = new Vector2i(randomX - (int) gridPos.X, randomY - (int) gridPos.Y);
-                if (_atmosphere.IsTileSpace(grid.GridEntityId, Transform(targetGrid).MapUid, tile,
+                if (_atmosphere.IsTileSpace(gridComp.GridEntityId, Transform(targetGrid).MapUid, tile,
                         mapGridComp: gridComp)
-                    || _atmosphere.IsTileAirBlocked(grid.GridEntityId, tile, mapGridComp: gridComp))
+                    || _atmosphere.IsTileAirBlocked(gridComp.GridEntityId, tile, mapGridComp: gridComp))
                 {
                     continue;
                 }
 
                 found = true;
-                targetCoords = grid.GridTileToLocal(tile);
+                targetCoords = gridComp.GridTileToLocal(tile);
                 break;
             }
 

@@ -1,19 +1,16 @@
 using Content.Client.CombatMode;
 using Content.Client.Gameplay;
 using Content.Client.Hands;
-using Content.Client.Weapons.Melee.Components;
 using Content.Shared.MobState.Components;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.StatusEffect;
-using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Client.ResourceManagement;
 using Robust.Client.State;
-using Robust.Shared.Animations;
 using Robust.Shared.Input;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
@@ -31,7 +28,6 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
     [Dependency] private readonly IOverlayManager _overlayManager = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
-    [Dependency] private readonly IResourceCache _cache = default!;
     [Dependency] private readonly IStateManager _stateManager = default!;
     [Dependency] private readonly AnimationPlayerSystem _animation = default!;
     [Dependency] private readonly InputSystem _inputSystem = default!;
@@ -42,8 +38,8 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
     {
         base.Initialize();
         InitializeEffect();
-        _overlayManager.AddOverlay(new MeleeWindupOverlay(EntityManager, _timing, _player, _protoManager, _cache));
-        SubscribeNetworkEvent<DamageEffectEvent>(OnDamageEffect);
+        _overlayManager.AddOverlay(new MeleeWindupOverlay(EntityManager, _timing, _player, _protoManager));
+        SubscribeAllEvent<DamageEffectEvent>(OnDamageEffect);
         SubscribeNetworkEvent<MeleeLungeEvent>(OnMeleeLunge);
     }
 
@@ -206,6 +202,22 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         {
             RaisePredictiveEvent(new StopAttackEvent(weapon.Owner));
         }
+    }
+
+    protected override bool InRange(EntityUid user, EntityUid target, float range, ICommonSession? session)
+    {
+        var xform = Transform(target);
+        var targetCoordinates = xform.Coordinates;
+        var targetLocalAngle = xform.LocalRotation;
+
+        return Interaction.InRangeUnobstructed(user, target, targetCoordinates, targetLocalAngle, range);
+    }
+
+    protected override void DoDamageEffect(List<EntityUid> targets, EntityUid? user, TransformComponent targetXform)
+    {
+        // Server never sends the event to us for predictiveeevent.
+        if (_timing.IsFirstTimePredicted)
+            RaiseLocalEvent(new DamageEffectEvent(Color.Red, targets));
     }
 
     protected override bool DoDisarm(EntityUid user, DisarmAttackEvent ev, MeleeWeaponComponent component, ICommonSession? session)

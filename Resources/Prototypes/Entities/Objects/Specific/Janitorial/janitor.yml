@@ -8,6 +8,15 @@
   - type: Sprite
     sprite: Objects/Specific/Janitorial/mop.rsi
     state: mop
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 10
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 5
   - type: Item
     size: 15
     sprite: Objects/Specific/Janitorial/mop.rsi
@@ -262,4 +271,17 @@
           maxVol: 500
     - type: DrainableSolution
       solution: drainBuffer
-
+    - type: Damageable
+      damageContainer: Inorganic
+      damageModifierSet: Metallic
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 100
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound:
+                path: /Audio/Effects/metalbreak.ogg

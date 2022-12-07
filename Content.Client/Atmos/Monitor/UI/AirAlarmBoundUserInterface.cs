@@ -20,7 +20,7 @@ public sealed class AirAlarmBoundUserInterface : BoundUserInterface
     {
         base.Open();
 
-        _window = new AirAlarmWindow();
+        _window = new AirAlarmWindow(Owner);
 
         if (State != null)
         {

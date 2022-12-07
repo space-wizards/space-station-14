@@ -250,6 +250,9 @@
   id: Gauze
 
 - type: Tag
+  id: GeigerCounter
+
+- type: Tag
   id: GlassBeaker
 
 - type: Tag
@@ -275,6 +278,12 @@
 
 - type: Tag
   id: Hoe
+
+- type: Tag
+  id: HolofanProjector
+
+- type: Tag
+  id: HolosignProjector
 
 - type: Tag #Drop this innate tool instead of deleting it.
   id: InnateDontDelete
@@ -393,6 +402,12 @@
   id: Payload # for grenade/bomb crafting
 
 - type: Tag
+  id: MacroBomb
+
+- type: Tag
+  id: MicroBomb
+
+- type: Tag
   id: PaintableAirlock
 
 - type: Tag
@@ -436,6 +451,9 @@
 
 - type: Tag
   id: PussyWagonKeys
+
+- type: Tag
+  id: Radio
 
 - type: Tag
   id: RawMaterial
@@ -573,3 +591,5 @@
 - type: Tag
   id: Write
 
+- type: Tag
+  id: SubdermalImplant

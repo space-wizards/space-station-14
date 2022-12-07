@@ -1,6 +1,9 @@
 ﻿default-program-name = Program
-
-ent-notekeeper-cartridge = notekeeper cartridge
-    .desc = A program for keeping notes
-
 notekeeper-program-name = Notekeeper
+
+net-probe-program-name = NetProbe
+net-probe-scan = Scanned {$device}!
+net-probe-label-name = Name
+net-probe-label-address = Address
+net-probe-label-frequency = Frequency
+net-probe-label-network = Network

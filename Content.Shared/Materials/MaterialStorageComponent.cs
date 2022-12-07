@@ -2,6 +2,7 @@ using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Materials;
@@ -10,7 +11,7 @@ namespace Content.Shared.Materials;
 [RegisterComponent, NetworkedComponent]
 public sealed class MaterialStorageComponent : Component
 {
-    [ViewVariables]
+    [DataField("storage", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<int, MaterialPrototype>))]
     public Dictionary<string, int> Storage { get; set; } = new();
 
     /// <summary>
@@ -22,14 +23,12 @@ public sealed class MaterialStorageComponent : Component
     /// <summary>
     /// Whitelist for specifying the kind of items that can be insert into this entity.
     /// </summary>
-    [ViewVariables]
     [DataField("whitelist")]
     public EntityWhitelist? EntityWhitelist;
 
     /// <summary>
     /// Whitelist generated on runtime for what specific materials can be inserted into this entity.
     /// </summary>
-    [ViewVariables]
     [DataField("materialWhiteList", customTypeSerializer: typeof(PrototypeIdListSerializer<MaterialPrototype>))]
     public List<string>? MaterialWhiteList;
 

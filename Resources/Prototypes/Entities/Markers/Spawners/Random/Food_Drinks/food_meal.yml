@@ -9,7 +9,8 @@
   - type: Sprite
     layers:
       - state: red
-      - texture: Objects/Consumable/Food/meals.rsi/cornedbeef.png
+      - sprite: Objects/Consumable/Food/meals.rsi
+        state: cornedbeef
   - type: RandomSpawner
     prototypes:
       - FoodMealPotatoLoaded

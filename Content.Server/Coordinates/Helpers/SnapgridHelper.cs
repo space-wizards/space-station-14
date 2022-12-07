@@ -1,4 +1,5 @@
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Coordinates.Helpers
 {
@@ -26,7 +27,7 @@ namespace Content.Server.Coordinates.Helpers
             return new EntityCoordinates(coordinates.EntityId, x, y);
         }
 
-        public static EntityCoordinates SnapToGrid(this EntityCoordinates coordinates, IMapGrid grid)
+        public static EntityCoordinates SnapToGrid(this EntityCoordinates coordinates, MapGridComponent grid)
         {
             var tileSize = grid.TileSize;
 

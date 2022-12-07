@@ -1,0 +1,175 @@
+- type: entity
+  parent: BaseItem
+  id: BaseSubdermalImplant
+  name: implant
+  description: a microscopic chip that's injected under the skin
+  abstract: true
+  components:
+    - type: SubdermalImplant
+    - type: Tag
+      tags:
+        - SubdermalImplant
+        - HideContextMenu
+
+#Fun implants
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: SadTromboneImplant
+  name: sad trombone implant
+  description: plays a sad tune when the user dies
+  noSpawn: true
+  components:
+    - type: SubdermalImplant
+    - type: TriggerOnMobstateChange
+      mobState: Dead
+    - type: EmitSoundOnTrigger
+      sound:
+        collection: SadTrombone
+        params:
+          variation: 0.125
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: LightImplant
+  name: light implant
+  description: makes your skin emit a faint light
+  noSpawn: true
+  components:
+    - type: SubdermalImplant
+      implantAction: ToggleLight
+    - type: PointLight
+      enabled: false
+      radius: 2.5
+      softness: 5
+      mask: /Textures/Effects/LightMasks/cone.png
+      autoRot: true
+    - type: Tag
+      tags:
+        - SubdermalImplant
+        - HideContextMenu
+        - Flashlight
+    - type: UnpoweredFlashlight
+      toggleAction:
+        name: action-name-toggle-light
+        description: action-description-toggle-light
+        icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
+        iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+        event: !type:ToggleActionEvent
+
+#Security implants
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: TrackingImplant
+  name: tracking implant
+  description: tracks whoever was implanted via the suit sensor network
+  noSpawn: true
+  components:
+    - type: SubdermalImplant
+    - type: SuitSensor
+      randomMode: false
+      controlsLocked: true
+      mode: SensorCords
+      activationContainer: "ImplantContainer"
+    - type: DeviceNetwork
+      deviceNetId: Wireless
+      transmitFrequencyId: SuitSensor
+    - type: WirelessNetworkConnection
+      range: 500
+
+#Traitor implants
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: StorageImplant
+  name: storage implant
+  description: made with bluespace technology, allows the user to fit a few items in hidden storage
+  noSpawn: true
+  components:
+    - type: SubdermalImplant
+      implantAction: OpenStorageImplant
+    - type: Item
+      size: 9999
+    - type: Storage
+      capacity: 20 #10-20 should be more than enough for this
+    - type: ContainerContainer
+      containers:
+        storagebase: !type:Container
+          ents: [ ]
+    - type: UserInterface
+      interfaces:
+        - key: enum.StorageUiKey.Key
+          type: StorageBoundUserInterface
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: FreedomImplant
+  name: freedom implant
+  description: you can break these cuffs
+  noSpawn: true
+  components:
+    - type: SubdermalImplant
+      implantAction: ActivateFreedomImplant
+
+#Nuclear Operative/Special Exclusive implants
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: MicroBombImplant
+  name: micro bomb implant
+  description: mission failed, user blows up on death to prevent company equipment from being stolen
+  noSpawn: true
+  components:
+    - type: SubdermalImplant
+      permanent: true
+      implantAction: ActivateMicroBomb
+    - type: TriggerOnMobstateChange
+      mobState: Dead
+    - type: TriggerImplantAction
+    - type: ExplodeOnTrigger
+    - type: GibOnTrigger
+      deleteItems: true
+    - type: Explosive
+      explosionType: MicroBomb
+      totalIntensity: 120
+      intensitySlope: 5
+      maxIntensity: 30
+      canCreateVacuum: false
+    - type: Tag
+      tags:
+        - SubdermalImplant
+        - HideContextMenu
+        - MicroBomb
+
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: MacroBombImplant
+  name: macro bomb implant
+  description: a large explosion packed into a small implant, be warned as this could be dangerous for your teammates
+  noSpawn: true
+  components:
+    - type: SubdermalImplant
+      permanent: true
+    - type: TriggerOnMobstateChange #Chains with OnUseTimerTrigger
+      mobState: Dead
+      preventSuicide: true
+    - type: OnUseTimerTrigger
+      delay: 7
+      initialBeepDelay: 0
+      beepSound: /Audio/Machines/Nuke/general_beep.ogg
+    - type: ExplodeOnTrigger
+    - type: GibOnTrigger
+      deleteItems: true
+    - type: Explosive
+      explosionType: Default
+      totalIntensity: 3500
+      intensitySlope: 15
+      maxIntensity: 70
+      canCreateVacuum: true
+    - type: Tag
+      tags:
+        - SubdermalImplant
+        - HideContextMenu
+        - MacroBomb
