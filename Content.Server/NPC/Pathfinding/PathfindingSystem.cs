@@ -228,7 +228,6 @@ namespace Content.Server.NPC.Pathfinding
 
         public async Task<PathResultEvent> GetRandomPath(
             EntityUid entity,
-            float range,
             float maxRange,
             CancellationToken cancelToken,
             int limit = 40,
@@ -246,7 +245,7 @@ namespace Content.Server.NPC.Pathfinding
                 mask = body.CollisionMask;
             }
 
-            var request = new BFSPathRequest(maxRange, limit, start.Coordinates, flags, range, layer, mask, cancelToken);
+            var request = new BFSPathRequest(maxRange, limit, start.Coordinates, flags, layer, mask, cancelToken);
             var path = await GetPath(request);
 
             if (path.Result != PathResult.Path)
