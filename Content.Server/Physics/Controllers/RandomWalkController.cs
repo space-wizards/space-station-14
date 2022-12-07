@@ -1,10 +1,10 @@
-using Content.Server.Singularity.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Random;
 
 using Content.Server.Physics.Components;
+using Content.Shared.Throwing;
 
 namespace Content.Server.Physics.Controllers;
 
@@ -29,7 +29,8 @@ internal sealed class RandomWalkController : VirtualController
 
         foreach(var (randomWalk, physics) in EntityManager.EntityQuery<RandomWalkComponent, PhysicsComponent>())
         {
-            if (EntityManager.HasComponent<ActorComponent>(randomWalk.Owner))
+            if (EntityManager.HasComponent<ActorComponent>(randomWalk.Owner)
+            ||  EntityManager.HasComponent<ThrownItemComponent>(randomWalk.Owner))
                 continue;
 
             if((randomWalk._timeUntilNextStep -= frameTime) > 0f)
