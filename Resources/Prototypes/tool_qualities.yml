@@ -3,53 +3,53 @@
   name: tool-quality-anchoring-name
   toolName: tool-quality-anchoring-tool-name
   spawn: Wrench
-  icon: Objects/Tools/wrench.rsi/icon.png
+  icon: { sprite: Objects/Tools/wrench.rsi, state: icon }
 
 - type: tool
   id: Prying
   name: tool-quality-prying-name
   toolName: tool-quality-prying-tool-name
   spawn: Crowbar
-  icon: Objects/Tools/crowbar.rsi/icon.png
+  icon: { sprite: Objects/Tools/crowbar.rsi, state: icon }
 
 - type: tool
   id: Screwing
   name: tool-quality-screwing-name
   toolName: tool-quality-screwing-tool-name
   spawn: Screwdriver
-  icon: Objects/Tools/screwdriver.rsi/screwdriver-map.png
+  icon: { sprite: Objects/Tools/screwdriver.rsi, state: screwdriver-map }
 
 - type: tool
   id: Cutting
   name: tool-quality-cutting-name
   toolName: tool-quality-cutting-tool-name
   spawn: Wirecutter
-  icon: Objects/Tools/wirecutters.rsi/cutters-map.png
+  icon: { sprite: Objects/Tools/wirecutters.rsi, state: cutters-map }
 
 - type: tool
   id: Welding
   name: tool-quality-welding-name
   toolName: tool-quality-welding-tool-name
   spawn: Welder
-  icon: Objects/Tools/welder.rsi/icon.png
+  icon: { sprite: Objects/Tools/welder.rsi, state: icon }
 
 - type: tool
   id: Pulsing
   name: tool-quality-pulsing-name
   toolName: tool-quality-pulsing-tool-name
   spawn: Multitool
-  icon: Objects/Tools/multitool.rsi/icon.png
+  icon: { sprite: Objects/Tools/multitool.rsi, state: icon }
 
 - type: tool
   id: Slicing
   name: tool-quality-slicing-name
   toolName: tool-quality-slicing-tool-name
   spawn: KitchenKnife
-  icon: Objects/Weapons/Melee/kitchen_knife.rsi/icon.png
+  icon: { sprite: Objects/Weapons/Melee/kitchen_knife.rsi, state: icon }
 
 - type: tool
   id: Sawing
   name: tool-quality-sawing-name
   toolName: tool-quality-sawing-tool-name
   spawn: Saw
-  icon: Objects/Specific/Medical/Surgery/saw.rsi/saw.png
+  icon: { sprite: Objects/Specific/Medical/Surgery/saw.rsi, state: saw }
