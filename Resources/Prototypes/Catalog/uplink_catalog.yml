@@ -193,8 +193,8 @@
 
 - type: listing
   id: UplinkHoloparaKit
-  name: Holoparasite Kit
-  description: The pride and joy of Cybersun. Contains an injector that hosts a sentient metaphysical guardian made of hard light which resides in the user's body when not active. The guardian can punch rapidly and is immune to hazardous environments and bullets, but shares any damage it takes with the user.
+  name: uplink-holopara-kit-name
+  description: uplink-holopara-kit-desc
   icon: { sprite: /Textures/Objects/Misc/guardian_info.rsi, state: icon }
   productEntity: BoxHoloparasite
   cost:
@@ -209,8 +209,8 @@
 
 - type: listing
   id: UplinkHolster
-  name: Syndicate Shoulder Holster
-  description: A deep shoulder holster capable of holding many types of ballistics.
+  name: uplink-holster-name
+  description: uplink-holster-desc
   productEntity: ClothingBeltSyndieHolster
   cost:
     Telecrystal: 1
@@ -219,8 +219,8 @@
 
 - type: listing
   id: UplinkEmag
-  name: Emag
-  description: The business card of the syndicate, this sequencer is able to break open airlocks and tamper with a variety of station devices. Recharges automatically.
+  name: uplink-emag-name
+  description: uplink-emag-desc
   productEntity: Emag
   cost:
     Telecrystal: 8
@@ -229,8 +229,8 @@
 
 - type: listing
   id: UplinkAgentIDCard
-  name: Agent ID Card
-  description: A modified ID card that can copy accesses from other cards and change its name and job title at-will.
+  name: uplink-agent-id-card-name
+  description: uplink-agent-id-card-desc
   productEntity: AgentIDCard
   cost:
     Telecrystal: 3
@@ -239,8 +239,8 @@
 
 - type: listing
   id: UplinkJetpack
-  name: Black Jetpack
-  description: A black jetpack. It allows you to fly around in space. Additional fuel not included.
+  name: uplink-black-jetpack-name
+  description: uplink-black-jetpack-desc
   productEntity: JetpackBlack
   cost:
     Telecrystal: 4
@@ -249,8 +249,8 @@
 
 - type: listing
   id: UplinkReinforcementTeleporterSyndicate
-  name: Reinforcement Teleporter
-  description: Teleport in an agent of extremely questionable quality. No off button, buy this if you're ready to party. They have a pistol with no reserve ammo, and a knife. That's it.
+  name: uplink-reinforcement-teleporter-name
+  description: uplink-reinforcement-teleporter-desc
   productEntity: ReinforcementTeleporterSyndicate
   icon: { sprite: Objects/Devices/communication.rsi, state: old-radio }
   cost:
@@ -260,8 +260,8 @@
 
 - type: listing
   id: UplinkStealthBox
-  name: Stealth Box
-  description: A box outfitted with stealth technology, sneak around with this and don't move too fast now!
+  name: uplink-stealth-box-name
+  description: uplink-stealth-box-desc
   productEntity: StealthBox
   cost:
     Telecrystal: 10
@@ -271,8 +271,8 @@
 #TODO: Increase the price of this to 4-5/remove it when we get encrpytion keys
 - type: listing
   id: UplinkHeadset
-  name: Syndicate Over-ear Headset
-  description: A headset that allows you to listen in on departmental channels, or contact other traitors.
+  name: uplink-headset-name
+  description: uplink-stealth-box-desc
   productEntity: ClothingHeadsetAltSyndicate
   cost:
     Telecrystal: 2
@@ -281,8 +281,8 @@
 
 - type: listing
   id: UplinkHypopen
-  name: Hypopen
-  description: A chemical hypospray disguised as a pen, capable of instantly injecting up to 15u of reagents. Starts empty.
+  name: uplink-hypopen-name
+  description: uplink-hypopen-desc
   productEntity: Hypopen
   cost:
     Telecrystal: 6
@@ -291,15 +291,15 @@
 
 - type: listing
   id: UplinkVoiceMask
-  name: Voice Mask
-  description: A gas mask that lets you adjust your voice to whoever you can think of.
+  name: uplink-voice-mask-name
+  description: uplink-voice-mask-desc
   productEntity: ClothingMaskGasVoiceMasker
   cost:
     Telecrystal: 4
   categories:
   - UplinkUtility
 
-# Utility-Implants
+# Implants
 
 - type: listing
   id: UplinkStorageImplanter
@@ -310,7 +310,7 @@
   cost:
     Telecrystal: 12
   categories:
-    - UplinkUtility
+    - UplinkImplants
   conditions:
     - !type:StoreWhitelistCondition
       blacklist:
@@ -326,7 +326,7 @@
   cost:
     Telecrystal: 10
   categories:
-    - UplinkUtility
+    - UplinkImplants
   conditions:
     - !type:StoreWhitelistCondition
       blacklist:
@@ -342,7 +342,7 @@
   cost:
     Telecrystal: 25
   categories:
-    - UplinkUtility
+    - UplinkImplants
   conditions:
     - !type:StoreWhitelistCondition
       whitelist:
