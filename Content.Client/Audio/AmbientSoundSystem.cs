@@ -175,9 +175,9 @@ namespace Content.Client.Audio
             _playingSounds.Clear();
         }
 
-        private Dictionary<string, SortedList<float, AmbientSoundComponent>> GetNearbySources(TransformComponent playerXform, MapCoordinates coords, EntityQuery<TransformComponent> xformQuery)
+        private Dictionary<string, List<(float Importance, AmbientSoundComponent)>> GetNearbySources(TransformComponent playerXform, MapCoordinates coords, EntityQuery<TransformComponent> xformQuery)
         {
-            var sourceDict = new Dictionary<string, SortedList<float, AmbientSoundComponent>>(16);
+            var sourceDict = new Dictionary<string, List<(float, AmbientSoundComponent)>>(16);
             var ambientQuery = GetEntityQuery<AmbientSoundComponent>();
 
             // TODO add variant of GetComponentsInRange that also returns the transform component.
@@ -205,7 +205,7 @@ namespace Content.Client.Audio
                 var list = sourceDict.GetOrNew(key);
 
                 // Prioritize far away & loud sounds.
-                list.Add(-range * (ambientComp.Volume + 32), ambientComp);
+                list.Add((range * (ambientComp.Volume + 32), ambientComp));
             }
 
             return sourceDict;
@@ -252,7 +252,9 @@ namespace Content.Client.Audio
                 if (_playingCount.TryGetValue(key, out var playingCount) && playingCount >= MaxSingleSound)
                     continue;
 
-                foreach (var comp in sources.Values)
+                sources.Sort(static (a, b) => b.Importance.CompareTo(a.Importance));
+
+                foreach (var (_, comp) in sources)
                 {
                     if (_playingSounds.ContainsKey(comp))
                         continue;

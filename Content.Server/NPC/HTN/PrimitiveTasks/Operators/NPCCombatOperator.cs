@@ -30,7 +30,8 @@ public abstract class NPCCombatOperator : HTNOperator
     /// Regardless of pathfinding or LOS these are the max we'll check
     /// </summary>
     private const int MaxConsideredTargets = 10;
-    private const int MaxTargetCount = 5;
+
+    protected virtual bool IsRanged => false;
 
     public override void Initialize(IEntitySystemManager sysManager)
     {
@@ -66,6 +67,7 @@ public abstract class NPCCombatOperator : HTNOperator
     private async Task<List<(EntityUid Entity, float Rating, float Distance)>> GetTargets(NPCBlackboard blackboard)
     {
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
+        var ownerCoordinates = blackboard.GetValueOrDefault<EntityCoordinates>(NPCBlackboard.OwnerCoordinates, EntManager);
         var radius = blackboard.GetValueOrDefault<float>(NPCBlackboard.VisionRadius, EntManager);
         var targets = new List<(EntityUid Entity, float Rating, float Distance)>();
 
@@ -73,18 +75,14 @@ public abstract class NPCCombatOperator : HTNOperator
         var xformQuery = EntManager.GetEntityQuery<TransformComponent>();
         var mobQuery = EntManager.GetEntityQuery<MobStateComponent>();
         var canMove = blackboard.GetValueOrDefault<bool>(NPCBlackboard.CanMove, EntManager);
-        var cancelToken = new CancellationTokenSource();
         var count = 0;
+        var paths = new List<Task>();
+        // TODO: Really this should be a part of perception so we don't have to constantly re-plan targets.
 
-        if (xformQuery.TryGetComponent(existingTarget, out var targetXform))
+        // Special-case existing target.
+        if (EntManager.EntityExists(existingTarget))
         {
-            var distance = await _pathfinding.GetPathDistance(owner, targetXform.Coordinates,
-                SharedInteractionSystem.InteractionRange, cancelToken.Token, _pathfinding.GetFlags(blackboard));
-
-            if (distance != null)
-            {
-                targets.Add((existingTarget, GetRating(blackboard, existingTarget, existingTarget, distance.Value, canMove, xformQuery), distance.Value));
-            }
+            paths.Add(UpdateTarget(owner, existingTarget, existingTarget, ownerCoordinates, blackboard, radius, canMove, xformQuery, targets));
         }
 
         // TODO: Need a perception system instead
@@ -94,7 +92,7 @@ public abstract class NPCCombatOperator : HTNOperator
         {
             if (mobQuery.TryGetComponent(target, out var mobState) &&
                 mobState.CurrentState > DamageState.Alive ||
-                !xformQuery.TryGetComponent(target, out targetXform))
+                target == existingTarget)
             {
                 continue;
             }
@@ -104,25 +102,59 @@ public abstract class NPCCombatOperator : HTNOperator
             if (count >= MaxConsideredTargets)
                 break;
 
-            if (!ExamineSystemShared.InRangeUnOccluded(owner, target, radius, null))
-            {
-                continue;
-            }
-
-            var distance = await _pathfinding.GetPathDistance(owner, targetXform.Coordinates,
-                SharedInteractionSystem.InteractionRange, cancelToken.Token, _pathfinding.GetFlags(blackboard));
-
-            if (distance == null)
-                continue;
-
-            targets.Add((target, GetRating(blackboard, target, existingTarget, distance.Value, canMove, xformQuery), distance.Value));
-
-            if (targets.Count >= MaxTargetCount)
-                break;
+            paths.Add(UpdateTarget(owner, target, existingTarget, ownerCoordinates, blackboard, radius, canMove, xformQuery, targets));
         }
+
+        await Task.WhenAll(paths);
 
         targets.Sort((x, y) => y.Rating.CompareTo(x.Rating));
         return targets;
+    }
+
+    private async Task UpdateTarget(
+        EntityUid owner,
+        EntityUid target,
+        EntityUid existingTarget,
+        EntityCoordinates ownerCoordinates,
+        NPCBlackboard blackboard,
+        float radius,
+        bool canMove,
+        EntityQuery<TransformComponent> xformQuery,
+        List<(EntityUid Entity, float Rating, float Distance)> targets)
+    {
+        if (!xformQuery.TryGetComponent(target, out var targetXform))
+            return;
+
+        var inLos = false;
+
+        // If it's not an existing target then check LOS.
+        if (target != existingTarget)
+        {
+            inLos = ExamineSystemShared.InRangeUnOccluded(owner, target, radius, null);
+
+            if (!inLos)
+                return;
+        }
+
+        // Turret or the likes, check LOS only.
+        if (IsRanged && !canMove)
+        {
+            inLos = inLos || ExamineSystemShared.InRangeUnOccluded(owner, target, radius, null);
+
+            if (!inLos || !targetXform.Coordinates.TryDistance(EntManager, ownerCoordinates, out var distance))
+                return;
+
+            targets.Add((target, GetRating(blackboard, target, existingTarget, distance, canMove, xformQuery), distance));
+            return;
+        }
+
+        var nDistance = await _pathfinding.GetPathDistance(owner, targetXform.Coordinates,
+            SharedInteractionSystem.InteractionRange, default, _pathfinding.GetFlags(blackboard));
+
+        if (nDistance == null)
+            return;
+
+        targets.Add((target, GetRating(blackboard, target, existingTarget, nDistance.Value, canMove, xformQuery), nDistance.Value));
     }
 
     protected abstract float GetRating(NPCBlackboard blackboard, EntityUid uid, EntityUid existingTarget, float distance, bool canMove,

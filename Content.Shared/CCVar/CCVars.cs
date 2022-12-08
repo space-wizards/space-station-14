@@ -253,10 +253,22 @@ namespace Content.Shared.CCVar
             CVarDef.Create("game.panic_bunker.enabled", false, CVar.SERVERONLY);
 
         /// <summary>
+        /// Show reason of disconnect for user or not.
+        /// </summary>
+        public static readonly CVarDef<bool> PanicBunkerShowReason =
+            CVarDef.Create("game.panic_bunker.show_reason", false, CVar.SERVERONLY);
+
+        /// <summary>
         /// Minimum age of the account (from server's PoV, so from first-seen date) in minutes.
         /// </summary>
         public static readonly CVarDef<int> PanicBunkerMinAccountAge =
             CVarDef.Create("game.panic_bunker.min_account_age", 1440, CVar.SERVERONLY);
+
+        /// <summary>
+        /// Minimal overall played time.
+        /// </summary>
+        public static readonly CVarDef<int> PanicBunkerMinOverallHours =
+            CVarDef.Create("game.panic_bunker.min_overall_hours", 10, CVar.SERVERONLY);
 
         /// <summary>
         /// Make people bonk when trying to climb certain objects like tables.
@@ -1330,5 +1342,51 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<float>
             PlayTimeSaveInterval = CVarDef.Create("playtime.save_interval", 900f, CVar.SERVERONLY);
+
+        /*
+         * INFOLINKS
+         */
+
+        /// <summary>
+        /// Link to Discord server to show in the launcher.
+        /// </summary>
+        public static readonly CVarDef<string> InfoLinksDiscord =
+            CVarDef.Create("infolinks.discord", "", CVar.SERVER | CVar.REPLICATED);
+
+        /// <summary>
+        /// Link to website to show in the launcher.
+        /// </summary>
+        public static readonly CVarDef<string> InfoLinksForum =
+            CVarDef.Create("infolinks.forum", "", CVar.SERVER | CVar.REPLICATED);
+
+        /// <summary>
+        /// Link to GitHub page to show in the launcher.
+        /// </summary>
+        public static readonly CVarDef<string> InfoLinksGithub =
+            CVarDef.Create("infolinks.github", "", CVar.SERVER | CVar.REPLICATED);
+
+        /// <summary>
+        /// Link to website to show in the launcher.
+        /// </summary>
+        public static readonly CVarDef<string> InfoLinksWebsite =
+            CVarDef.Create("infolinks.website", "", CVar.SERVER | CVar.REPLICATED);
+
+        /// <summary>
+        /// Link to wiki to show in the launcher.
+        /// </summary>
+        public static readonly CVarDef<string> InfoLinksWiki =
+            CVarDef.Create("infolinks.wiki", "", CVar.SERVER | CVar.REPLICATED);
+
+        /// <summary>
+        /// Link to Patreon. Not shown in the launcher currently.
+        /// </summary>
+        public static readonly CVarDef<string> InfoLinksPatreon =
+            CVarDef.Create("infolinks.patreon", "", CVar.SERVER | CVar.REPLICATED);
+
+        /// <summary>
+        /// Link to the bug report form.
+        /// </summary>
+        public static readonly CVarDef<string> InfoLinksBugReport =
+            CVarDef.Create("infolinks.bug_report", "", CVar.SERVER | CVar.REPLICATED);
     }
 }
