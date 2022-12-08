@@ -185,3 +185,32 @@ uplink-nocturine-chemistry-bottle-desc = A chemical that makes it very hard for 
 
 uplink-syndicate-segway-crate-name = Syndicate Segway
 uplink-syndicate-segway-crate-desc = Be an enemy of the corporation, in style!
+
+# Pointless
+uplink-revolver-cap-gun-name = Cap Gun
+uplink-revolver-cap-gun-desc = Looks almost like the real thing! Ages 8 and up.
+
+uplink-syndicate-stamp-name = Syndicate Rubber Btamp
+uplink-syndicate-stamp-desc = A rubber stamp for stamping important documents.
+
+uplink-cat-ears-name = Cat Ears
+uplink-cat-ears-desc = UwU
+
+uplink-outlaw-hat-name = Outlaw Hat
+uplink-outlaw-hat-desc = A hat that makes you look like you carry a notched pistol, numbered one and nineteen more.
+
+uplink-costume-pyjama-name = Syndicate Pyjama Duffel Bag
+uplink-costume-pyjama-desc = Contains 3 pairs of syndicate pyjamas and 3 plushies for the ultimate sleepover.
+
+uplink-costume-clown-name = Clown Costume Duffel Bag
+uplink-costume-clown-desc = Contains a complete Clown outfit. Includes PDA and service radio.
+
+uplink-operative-suit-name = Operative Jumpsuit
+uplink-operative-suit-desc = A suit given to our nuclear operatives with fine fabric to make sure you stand out, no other benefits aside from looking cool.
+
+uplink-operative-skirt-name = Operative Jumpskirt
+uplink-operative-skirt-desc = A skirt given to our nuclear operatives with fine fabric to make sure you stand out, no other benefits aside from looking cool.
+
+uplink-balloon-name = Syndie Balloon
+uplink-balloon-desc = Handed out to the bravest souls who survived the "atomic twister" ride at Syndieland.
+

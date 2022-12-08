@@ -725,6 +725,8 @@
 
 - type: listing
   id: UplinkRevolverCapGun
+  name: uplink-revolver-cap-gun-name
+  description: uplink-revolver-cap-gun-desc
   productEntity: RevolverCapGun
   cost:
     Telecrystal: 4
@@ -733,6 +735,8 @@
 
 - type: listing
   id: UplinkSyndicateStamp
+  name: uplink-syndicate-stamp-name
+  description: uplink-syndicate-stamp-desc
   productEntity: RubberStampSyndicate
   cost:
     Telecrystal: 2
@@ -741,8 +745,8 @@
 
 - type: listing
   id: UplinkCatEars
-  name: Cat Ears
-  description: UwU
+  name: uplink-cat-ears-name
+  description: uplink-cat-ears-desc
   productEntity: ClothingHeadHatCatEars
   cost:
     Telecrystal: 26
@@ -751,6 +755,8 @@
 
 - type: listing
   id: UplinkOutlawHat
+  name: uplink-outlaw-hat-name
+  description: uplink-outlaw-hat-desc
   productEntity: ClothingHeadHatOutlawHat
   cost:
     Telecrystal: 1
@@ -759,6 +765,8 @@
 
 - type: listing
   id: UplinkCostumePyjama
+  name: uplink-costume-pyjama-name
+  description: uplink-costume-pyjama-desc
   productEntity: ClothingBackpackDuffelSyndicatePyjamaBundle
   cost:
     Telecrystal: 4
@@ -767,9 +775,9 @@
 
 - type: listing
   id: UplinkCostumeClown
+  name: uplink-costume-clown-name
+  description: uplink-costume-clown-desc
   productEntity: ClothingBackpackDuffelSyndicateCostumeClown
-  name: clown costume duffel bag
-  description: Contains a complete Clown outfit. Includes PDA and service radio.
   cost:
     Telecrystal: 4
   categories:
@@ -777,7 +785,8 @@
 
 - type: listing
   id: UplinkOperativeSuit
-  description: A suit given to our nuclear operatives with fine fabric to make sure you stand out, no other benefits aside from looking cool.
+  name: uplink-operative-suit-name
+  description: uplink-operative-suit-desc
   productEntity: ClothingUniformJumpsuitOperative
   cost:
     Telecrystal: 1
@@ -786,7 +795,8 @@
 
 - type: listing
   id: UplinkOperativeSkirt
-  description: A skirt given to our nuclear operatives with fine fabric to make sure you stand out, no other benefits aside from looking cool.
+  name: uplink-operative-skirt-name
+  description: uplink-operative-skirt-desc
   productEntity: ClothingUniformJumpskirtOperative
   cost:
     Telecrystal: 1
@@ -795,6 +805,8 @@
 
 - type: listing
   id: UplinkBalloon
+  name: uplink-balloon-name
+  description: uplink-balloon-desc
   productEntity: BalloonSyn
   cost:
     Telecrystal: 20
