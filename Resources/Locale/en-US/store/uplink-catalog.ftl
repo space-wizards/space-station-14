@@ -154,3 +154,14 @@ uplink-clothing-outer-vest-web-desc = A synthetic armor vest. This one has added
 
 uplink-hardsuit-syndie-name = Syndicate Hardsuit
 uplink-hardsuit-syndie-desc = The Syndicate's well known armored blood red hardsuit, capable of space walks and bullet resistant.
+
+uplink-clothing-shoes-boots-mag-syndie-name = Blood-red Magboots
+uplink-clothing-shoes-boots-mag-syndie-desc = A pair of magnetic boots that will keep you on the ground if the gravity fails or is sabotaged, giving you a mobility advantage. If activated with gravity they will protect from slips, but they will slow you down.
+
+uplink-eva-syndie-name = Syndicate EVA Bundle
+uplink-eva-syndie-desc = A simple EVA suit that offers no protection other than what's needed to survive in space.
+
+uplink-clothing-outer-hardsuit-juggernaut-name = Cybersun Juggernaut Suit
+uplink-clothing-outer-hardsuit-juggernaut-desc = Hyper resilient armor made of materials tested in the Tau chromosphere facility. The only thing that's going to be slowing you down is this suit... and tasers.
+
+
