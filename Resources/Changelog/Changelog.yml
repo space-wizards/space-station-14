@@ -1,105 +1,4 @@
 Entries:
-- author: ShadowCommander
-  changes:
-  - {message: Fixed metal counter frame deconstruction, type: Fix}
-  id: 2221
-  time: '2022-09-01T07:21:39.0000000+00:00'
-- author: eclips_e
-  changes:
-  - {message: 'The syndicate has opened it''s own clothing brand, the operative suit
-      and skirt have been added into the uplink', type: Add}
-  id: 2222
-  time: '2022-09-01T08:29:31.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Broken post lights should no longer show an error, type: Fix}
-  id: 2223
-  time: '2022-09-01T12:25:31.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Microwaves now properly heat up solutions. Resume meth production posthaste!,
-    type: Fix}
-  id: 2224
-  time: '2022-09-02T02:13:44.0000000+00:00'
-- author: vulppine
-  changes:
-  - {message: 'NanoTrasen''s engineers have finally laid out a design for air alarms
-      that should make them easier for our station planners and station construction
-      team to plan out! You should see these more often, now.', type: Tweak}
-  id: 2225
-  time: '2022-09-02T20:00:34.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Dead players can no longer smart equip/unequip items., type: Fix}
-  id: 2226
-  time: '2022-09-02T23:38:47.0000000+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: Fixed shuttle airlock deconstruction returning plasteel instead of silver.,
-    type: Fix}
-  id: 2227
-  time: '2022-09-03T01:32:19.0000000+00:00'
-- author: Rolfero
-  changes:
-  - {message: E-swords finally hot enough to light a cigarette, type: Add}
-  id: 2228
-  time: '2022-09-03T10:50:38.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Made snow and grass unable to be pried with a crowbar., type: Fix}
-  id: 2229
-  time: '2022-09-03T13:40:20.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Fixes nukeops being broken when run from secret., type: Fix}
-  - {message: 'Fixes random events being broken when run from secret. Are you serious?
-      Not a single one of you reported this until now? It''s been broken for 2 months.',
-    type: Fix}
-  id: 2230
-  time: '2022-09-04T01:40:00.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed some prediction issues surrounding status effects. Slipping should
-      feel less shit now. No more double slipping and teleporting when you get back
-      up., type: Fix}
-  id: 2231
-  time: '2022-09-04T17:21:22.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fix some sprite animations not animating properly., type: Fix}
-  id: 2232
-  time: '2022-09-05T00:06:35.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Camera eye rotations should now be correct., type: Fix}
-  id: 2233
-  time: '2022-09-05T06:19:15.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Pets will no longer try to run away when buckled or pulled., type: Tweak}
-  - {message: Space carps will now try to follow their dragon., type: Tweak}
-  - {message: Turrets now exist., type: Add}
-  id: 2234
-  time: '2022-09-05T14:28:23.0000000+00:00'
-- author: vulppine
-  changes:
-  - {message: Adds a way to see device links from entities that use device network
-      linking., type: Add}
-  id: 2235
-  time: '2022-09-06T00:55:44.0000000+00:00'
-- author: vulppine
-  changes:
-  - {message: Game objects that store device network links now have a set limit as
-      to how many devices that they can store., type: Tweak}
-  - {message: The device network link list now has a UI on devices that use device
-      network linking., type: Tweak}
-  id: 2236
-  time: '2022-09-06T01:22:39.0000000+00:00'
-- author: moony
-  changes:
-  - {message: 'Made events less frequent, from 5-15min to 5-25min.', type: Tweak}
-  id: 2237
-  time: '2022-09-06T01:40:31.0000000+00:00'
 - author: vulppine
   changes:
   - {message: 'The wires in airlocks and windoors are now more secure, and require
@@ -2950,3 +2849,95 @@ Entries:
   - {message: Fix tile friction on planetmaps., type: Fix}
   id: 2720
   time: '2022-12-05T03:47:08.0000000+00:00'
+- author: Prentor
+  changes:
+  - {message: Animals have to eat less but more frequently, type: Tweak}
+  id: 2721
+  time: '2022-12-06T22:56:14.0000000+00:00'
+- author: Bright0
+  changes:
+  - {message: item cabinets no longer can be (un)locked while open, type: Fix}
+  id: 2722
+  time: '2022-12-06T22:59:59.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: NPCs will no longer stall on 1 bad path., type: Fix}
+  id: 2723
+  time: '2022-12-06T23:11:05.0000000+00:00'
+- author: JustinTrotter
+  changes:
+  - {message: Toggle internals icon correctly toggles gas tanks equipped on your back,
+    type: Fix}
+  id: 2724
+  time: '2022-12-06T23:14:09.0000000+00:00'
+- author: Veritius
+  changes:
+  - {message: Tranquiliser shells' capacity has been reduced., type: Tweak}
+  id: 2725
+  time: '2022-12-06T23:14:24.0000000+00:00'
+- author: nikthechampiongr
+  changes:
+  - {message: Added confirmation button for character deletion., type: Add}
+  id: 2726
+  time: '2022-12-06T23:14:48.0000000+00:00'
+- author: Interrobang01
+  changes:
+  - {message: You can now put holofan projectors into the utility belt., type: Tweak}
+  - {message: You can now put both holosign projectors and wet floor signs into the
+      janibelt., type: Tweak}
+  id: 2727
+  time: '2022-12-06T23:17:21.0000000+00:00'
+- author: Cripes
+  changes:
+  - {message: Fix bug where air alarm would show incorrect filters for a scrubber,
+    type: Fix}
+  id: 2728
+  time: '2022-12-06T23:33:21.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: NPCs will be more persistent in chases., type: Tweak}
+  id: 2729
+  time: '2022-12-06T23:34:23.0000000+00:00'
+- author: Errant
+  changes:
+  - {message: Wall mounted generators and substations actually mounted on a wall can
+      now be ~punched~ reached, type: Fix}
+  id: 2730
+  time: '2022-12-06T23:34:56.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Renamed .40 magnum to .45 and remove .45., type: Tweak}
+  id: 2731
+  time: '2022-12-06T23:38:10.0000000+00:00'
+- author: Cripes
+  changes:
+  - {message: Air Alarm UI is now easier to understand, type: Tweak}
+  id: 2732
+  time: '2022-12-06T23:46:08.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Added geiger counter. It can be found in radiation suit closets., type: Add}
+  - {message: Radiation suit and hardsuits have built-in geiger counter., type: Add}
+  id: 2733
+  time: '2022-12-07T01:56:52.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed a small issue with the analysis console that would cause extra
+      text to display., type: Fix}
+  id: 2734
+  time: '2022-12-08T01:28:51.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix the landing sound for thrown items on planet maps., type: Fix}
+  id: 2735
+  time: '2022-12-08T01:47:31.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix planet footstep sound modifiers., type: Fix}
+  id: 2736
+  time: '2022-12-08T01:56:12.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Ban reason text no longer clips off screen., type: Fix}
+  id: 2737
+  time: '2022-12-08T02:05:18.0000000+00:00'
