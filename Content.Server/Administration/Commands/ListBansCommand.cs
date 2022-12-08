@@ -43,7 +43,7 @@ public sealed class ListBansCommand : IConsoleCommand
             return;
         }
 
-        foreach (var ban in await _dbManager.GetServerBansAsync(data.LastAddress, data.UserId, data.LastHWId, false))
+        foreach (var ban in bans)
         {
             var msg = $"{ban.Id}: {ban.Reason}";
             shell.WriteLine(msg);
