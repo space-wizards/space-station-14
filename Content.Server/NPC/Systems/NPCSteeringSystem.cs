@@ -2,7 +2,6 @@ using System.Linq;
 using System.Threading;
 using Content.Server.Administration.Managers;
 using Content.Server.Doors.Systems;
-using Content.Server.Examine;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.Events;
 using Content.Server.NPC.Pathfinding;
@@ -13,7 +12,9 @@ using Content.Shared.Movement.Systems;
 using Content.Shared.NPC;
 using Content.Shared.NPC.Events;
 using Content.Shared.Weapons.Melee;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Robust.Server.Player;
+using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
@@ -53,7 +54,7 @@ namespace Content.Server.NPC.Systems
         /// <summary>
         /// Should we round the input vector to the interest directions.
         /// </summary>
-        private const bool RoundedDirections = false;
+        private const bool RoundedDirections = true;
 
         /// <summary>
         /// How much do we round static obstacle avoidance by.
@@ -320,7 +321,7 @@ namespace Content.Server.NPC.Systems
             StaticAvoid(uid, offsetRot, worldPos, detectionRadius, agentRadius, body, xform, dangerMap, dangerPoints, directions, bodyQuery, xformQuery);
             DebugTools.Assert(!float.IsNaN(dangerMap[0]));
             // TODO: Avoid anything not considered hostile
-            DynamicAvoid(uid, offsetRot, worldPos, detectionRadius, agentRadius, body, xform, dangerMap, directions, bodyQuery, xformQuery);
+            DynamicAvoid(uid, offsetRot, worldPos, detectionRadius, agentRadius, body, xform, interestMap, dangerMap, directions, bodyQuery, xformQuery);
 
             var ev = new NPCSteeringEvent(directions, interestMap, dangerMap, agentRadius, offsetRot, worldPos);
             RaiseLocalEvent(uid, ref ev);
@@ -683,12 +684,16 @@ namespace Content.Server.NPC.Systems
             float agentRadius,
             PhysicsComponent body,
             TransformComponent xform,
+            float[] interestMap,
             float[] dangerMap,
             Vector2[] directions,
             EntityQuery<PhysicsComponent> bodyQuery,
             EntityQuery<TransformComponent> xformQuery)
         {
-            foreach (var ent in _lookup.GetEntitiesInRange(uid, detectionRadius, LookupFlags.Dynamic))
+            var avoidDistance = 0.5f;
+            var nearest = new ValueList<Vector2>();
+
+            foreach (var ent in _lookup.GetEntitiesInRange(uid, avoidDistance, LookupFlags.Dynamic))
             {
                 // TODO: If we can access the door or smth.
                 if (ent == uid ||
@@ -704,30 +709,42 @@ namespace Content.Server.NPC.Systems
                 }
 
                 // TODO: More queries and shit.
-                if (!_physics.TryGetNearestPoints(uid, ent, out var pointA, out var pointB, xform, xformQuery.GetComponent(ent)))
+                if (!_physics.TryGetNearestPoints(uid, ent, out var pointA, out var pointB, xform,
+                        xformQuery.GetComponent(ent)))
                 {
                     continue;
                 }
 
-                var obstacleDirection = offsetRot.RotateVec(pointB - worldPos);
-                var obstacleDistance = obstacleDirection.Length;
+                nearest.Add(pointB);
+            }
 
-                if (obstacleDistance > detectionRadius || obstacleDistance == 0f)
+            if (nearest.Count == 0)
+                return;
+
+            nearest.Sort((x, y) => (x - worldPos).LengthSquared.CompareTo((y - worldPos).LengthSquared));
+            var otherPoint = nearest[0];
+
+            var obstacleDirection = offsetRot.RotateVec(otherPoint - worldPos);
+            var obstacleDistance = obstacleDirection.Length;
+
+            if (obstacleDistance > avoidDistance || obstacleDistance == 0f)
+                return;
+
+            var weight = (obstacleDistance <= agentRadius
+                ? 1
+                : (avoidDistance - obstacleDistance) / avoidDistance);
+
+            var norm = obstacleDirection.Normalized;
+
+            for (var i = 0; i < InterestDirections; i++)
+            {
+                var result = Vector2.Dot(norm, directions[i]);
+
+                if (result < 0f)
                     continue;
 
-                var weight = (obstacleDistance <= agentRadius
-                    ? 1f
-                    : (detectionRadius - obstacleDistance) / detectionRadius);
-
-                weight *= 1.2f;
-                var norm = obstacleDirection.Normalized;
-
-                for (var i = 0; i < InterestDirections; i++)
-                {
-                    var result = Vector2.Dot(norm, directions[i]);
-                    var inputValue = result * weight;
-                    dangerMap[i] = MathF.Max(inputValue, dangerMap[i]);
-                }
+                var inputValue = result * weight;
+                dangerMap[i] = MathF.Max(inputValue, dangerMap[i]);
             }
         }
 

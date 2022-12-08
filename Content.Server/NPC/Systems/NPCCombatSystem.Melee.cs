@@ -1,8 +1,6 @@
 using Content.Server.CombatMode;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.Events;
-using Content.Shared.MobState;
-using Content.Shared.MobState.Components;
 using Content.Shared.NPC;
 using Content.Shared.Weapons.Melee;
 using Robust.Shared.Map;
@@ -22,53 +20,50 @@ public sealed partial class NPCCombatSystem
 
     private void OnMeleeSteering(EntityUid uid, NPCMeleeCombatComponent component, ref NPCSteeringEvent args)
     {
-        if (TryComp<MeleeWeaponComponent>(component.Weapon, out var weapon))
+        if (false && TryComp<MeleeWeaponComponent>(component.Weapon, out var weapon))
         {
             var cdRemaining = weapon.NextAttack - _timing.CurTime;
 
-            if (cdRemaining < TimeSpan.Zero)
+            if (cdRemaining < TimeSpan.FromSeconds(1f / weapon.AttackRate) * 0.25f)
                 return;
 
             // If CD remaining then backup.
-            if (cdRemaining > TimeSpan.FromSeconds(1f / weapon.AttackRate) / 3f)
+            if (!_physics.TryGetNearestPoints(uid, component.Target, out _, out var pointB))
             {
-                if (!_physics.TryGetNearestPoints(uid, component.Target, out var pointA, out var pointB))
-                {
-                    return;
-                }
+                return;
+            }
 
-                var obstacleDirection = args.OffsetRotation.RotateVec(pointB - args.WorldPosition);
-                var obstacleDistance = obstacleDirection.Length;
+            var obstacleDirection = args.OffsetRotation.RotateVec(pointB - args.WorldPosition);
+            var obstacleDistance = obstacleDirection.Length;
 
-                if (obstacleDistance == 0f)
-                    return;
+            if (obstacleDistance == 0f)
+                return;
 
-                for (var i = 0; i < SharedNPCSteeringSystem.InterestDirections; i++)
-                {
-                    args.InterestMap[i] = 0f;
-                }
+            var norm = obstacleDirection.Normalized;
+            var idealDistance = weapon.Range * 0.75f;
 
-                var idealDistance = weapon.Range * 1.5f;
-                var idealPosition = (args.WorldPosition - pointB).Normalized * idealDistance;
-                var idealPositionDistance = idealPosition.Length;
+            var weight = (obstacleDistance <= args.AgentRadius
+                ? 1f
+                : (idealDistance - obstacleDistance) / idealDistance);
 
-                var norm = obstacleDirection.Normalized;
+            for (var i = 0; i < SharedNPCSteeringSystem.InterestDirections; i++)
+            {
+                var result = Vector2.Dot(norm, args.Directions[i]) * weight * 0.2f;
 
-                for (var i = 0; i < SharedNPCSteeringSystem.InterestDirections; i++)
-                {
-                    var result = Vector2.Dot(norm, args.Directions[i]);
-                    var inputValue = result * idealPositionDistance;
-                    args.DangerMap[i] = MathF.Max(inputValue, args.DangerMap[i]);
-                }
+                if (result < 0f)
+                    continue;
 
-                var antiWeight = 1f;
+                args.DangerMap[i] = MathF.Max(args.DangerMap[i], result);
+            }
 
-                for (var i = 0; i < SharedNPCSteeringSystem.InterestDirections; i++)
-                {
-                    var result = -Vector2.Dot(norm, args.Directions[i]);
-                    var inputValue = result * antiWeight;
-                    args.InterestMap[i] = MathF.Max(inputValue, args.InterestMap[i]);
-                }
+            for (var i = 0; i < SharedNPCSteeringSystem.InterestDirections; i++)
+            {
+                var result = -Vector2.Dot(norm, args.Directions[i]) * weight;
+
+                if (result < 0f)
+                    continue;
+
+                args.InterestMap[i] = result;
             }
         }
     }
