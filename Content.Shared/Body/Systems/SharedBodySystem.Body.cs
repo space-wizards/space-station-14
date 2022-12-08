@@ -179,7 +179,7 @@ public partial class SharedBodySystem
 
             yield return slot;
 
-            foreach (var child in GetAllBodyPartSlots(childPart))
+            foreach (var child in GetAllBodyPartSlots(slot.Child, childPart))
             {
                 yield return child;
             }
