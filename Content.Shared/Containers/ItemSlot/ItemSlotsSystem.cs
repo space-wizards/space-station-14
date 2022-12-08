@@ -530,6 +530,7 @@ namespace Content.Shared.Containers.ItemSlots
             foreach (var slot in component.Slots.Values)
             {
                 if (slot.EjectOnBreak && slot.HasItem)
+                    SetLock(uid, slot, false, component);
                     TryEject(uid, slot, null, out var _);
             }
         }
