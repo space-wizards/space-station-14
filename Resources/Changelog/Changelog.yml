@@ -1,12 +1,4 @@
 Entries:
-- author: vulppine
-  changes:
-  - {message: Game objects that store device network links now have a set limit as
-      to how many devices that they can store., type: Tweak}
-  - {message: The device network link list now has a UI on devices that use device
-      network linking., type: Tweak}
-  id: 2236
-  time: '2022-09-06T01:22:39.0000000+00:00'
 - author: moony
   changes:
   - {message: 'Made events less frequent, from 5-15min to 5-25min.', type: Tweak}
@@ -2944,3 +2936,8 @@ Entries:
   - {message: Fix the landing sound for thrown items on planet maps., type: Fix}
   id: 2735
   time: '2022-12-08T01:47:31.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix planet footstep sound modifiers., type: Fix}
+  id: 2736
+  time: '2022-12-08T01:56:12.0000000+00:00'
