@@ -355,6 +355,7 @@ namespace Content.Server.NPC.Systems
             if (xform.Coordinates.TryDistance(EntityManager, destinationCoordinates, out var distance) &&
                 distance <= steering.Range)
             {
+                // TODO: Make this just avoid the target by 0.2f or half range or whatever
                 SetDirection(mover, steering, Vector2.Zero);
                 steering.Status = SteeringStatus.InRange;
                 return true;
