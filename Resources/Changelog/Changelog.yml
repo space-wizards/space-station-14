@@ -1,9 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: 'Made events less frequent, from 5-15min to 5-25min.', type: Tweak}
-  id: 2237
-  time: '2022-09-06T01:40:31.0000000+00:00'
 - author: vulppine
   changes:
   - {message: 'The wires in airlocks and windoors are now more secure, and require
@@ -2941,3 +2936,8 @@ Entries:
   - {message: Fix planet footstep sound modifiers., type: Fix}
   id: 2736
   time: '2022-12-08T01:56:12.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Ban reason text no longer clips off screen., type: Fix}
+  id: 2737
+  time: '2022-12-08T02:05:18.0000000+00:00'
