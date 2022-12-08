@@ -83,3 +83,35 @@ uplink-hypopen-desc = A chemical hypospray disguised as a pen, capable of instan
 
 uplink-voice-mask-name = Voice Mask
 uplink-voice-mask-desc = A gas mask that lets you adjust your voice to whoever you can think of.
+
+# Implants
+uplink-storage-implanter-name = Storage Implanter
+uplink-storage-implanter-desc = Hide goodies inside of yourself with new bluespace technology!
+
+uplink-freedom-implanter-name = Freedom Implanter
+uplink-freedom-implanter-desc = Get away from those nasty sec officers with this three use implant!
+
+uplink-macro-bomb-implanter-name = Macro Bomb Implanter
+uplink-macro-bomb-implanter-desc = Inject this and on death you'll create a large explosion. Huge team casualty cost, use at own risk. Replaces internal micro bomb.
+
+# Bundles
+uplink-c20r-bundle-name = C-20r Bundle
+uplink-c20r-bundle-desc = Old faithful: The classic C-20r Submachine Gun, bundled with three magazines.
+
+uplink-buldog-bundle-name = Bulldog Bundle
+uplink-buldog-bundle-desc = Lean and mean: Contains the popular Bulldog Shotgun, a 12g beanbag drum and 2 12g buckshot drums.
+
+uplink-grenade-launcher-bundle-name = China-Lake Bundle
+uplink-grenade-launcher-bundle-desc = An old China-Lake grenade launcher bundled with 8 rounds of various destruction capability.
+
+uplink-l6-saw-bundle-name = L6 Saw Bundle
+uplink-l6-saw-bundle-desc = More dakka: The iconic L6 lightmachinegun, bundled with 2 box magazines.
+
+uplink-zombie-bundle-name = Syndicate Zombie Bundle
+uplink-zombie-bundle-desc = An all-in-one kit for unleashing the undead upon a station.
+
+uplink-surplus-bundle-name = Surplus Crate
+uplink-surplus-bundle-desc = Contains 50 telecrystals worth of completely random Syndicate items. It can be useless junk or really good.
+
+uplink-super-surplus-bundle-name = Super Surplus Crate
+uplink-super-surplus-bundle-desc = Contains 125 telecrystals worth of completely random Syndicate items.

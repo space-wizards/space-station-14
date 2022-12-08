@@ -303,9 +303,9 @@
 
 - type: listing
   id: UplinkStorageImplanter
+  name: uplink-storage-implanter-name
+  description: uplink-storage-implanter-desc
   icon: { sprite: /Textures/Clothing/Back/Backpacks/backpack.rsi, state: icon }
-  name: Storage Implanter
-  description: Hide goodies inside of yourself with new bluespace technology!
   productEntity: StorageImplanter
   cost:
     Telecrystal: 12
@@ -319,9 +319,9 @@
 
 - type: listing
   id: UplinkFreedomImplanter
+  name: uplink-freedom-implanter-name
+  description: uplink-freedom-implanter-desc
   icon: { sprite: /Textures/Actions/Implants/implants.rsi, state: freedom }
-  name: Freedom Implanter
-  description: Get away from those nasty sec officers with this three use implant!
   productEntity: FreedomImplanter
   cost:
     Telecrystal: 10
@@ -335,9 +335,9 @@
 
 - type: listing
   id: UplinkMacroBombImplanter
+  name: uplink-macro-bomb-implanter-name
+  description: uplink-macro-bomb-implanter-desc
   icon: { sprite: /Textures/Actions/Implants/implants.rsi, state: explosive }
-  name: Macro Bomb Implanter
-  description: Inject this and on death you'll create a large explosion. Huge team casualty cost, use at own risk. Replaces internal micro bomb.
   productEntity: MacroBombImplanter
   cost:
     Telecrystal: 25
@@ -357,6 +357,8 @@
 
 - type: listing
   id: UplinkC20RBundle
+  name: uplink-c20r-bundle-name
+  description: uplink-c20r-bundle-desc
   icon: { sprite: /Textures/Objects/Weapons/Guns/SMGs/c20r.rsi, state: icon }
   productEntity: ClothingBackpackDuffelSyndicateFilledSMG
   cost:
@@ -366,6 +368,8 @@
 
 - type: listing
   id: UplinkBulldogBundle
+  name: uplink-buldog-bundle-name
+  description: uplink-buldog-bundle-desc
   icon: { sprite: /Textures/Objects/Weapons/Guns/Shotguns/bulldog.rsi, state: icon }
   productEntity: ClothingBackpackDuffelSyndicateFilledShotgun
   cost:
@@ -375,6 +379,8 @@
 
 - type: listing
   id: UplinkGrenadeLauncherBundle
+  name: uplink-grenade-launcher-bundle-name
+  description: uplink-grenade-launcher-bundle-desc
   icon: { sprite: /Textures/Objects/Weapons/Guns/Launchers/china_lake.rsi, state: icon }
   productEntity: ClothingBackpackDuffelSyndicateFilledGrenadeLauncher
   cost:
@@ -384,6 +390,8 @@
 
 - type: listing
   id: UplinkL6SawBundle
+  name: uplink-l6-saw-bundle-name
+  description: uplink-l6-saw-bundle-desc
   icon: { sprite: /Textures/Objects/Weapons/Guns/LMGs/l6.rsi, state: icon }
   productEntity: ClothingBackpackDuffelSyndicateFilledLMG
   cost:
@@ -393,6 +401,8 @@
 
 - type: listing
   id: UplinkZombieBundle
+  name: uplink-zombie-bundle-name
+  description: uplink-zombie-bundle-desc
   icon: { sprite: /Textures/Structures/Wallmounts/signs.rsi, state: bio }
   productEntity: ClothingBackpackDuffelZombieBundle
   cost:
@@ -411,7 +421,8 @@
 
 - type: listing
   id: UplinkSurplusBundle
-  description: Contains 50 telecrystals worth of completely random Syndicate items. It can be useless junk or really good.
+  name: uplink-surplus-bundle-name
+  description: uplink-surplus-bundle-desc
   productEntity: CrateSyndicateSurplusBundle
   cost:
     Telecrystal: 20
@@ -429,7 +440,8 @@
 
 - type: listing
   id: UplinkSuperSurplusBundle
-  description: Contains 125 telecrystals worth of completely random Syndicate items.
+  name: uplink-super-surplus-bundle-name
+  description: uplink-super-surplus-bundle-desc
   productEntity: CrateSyndicateSuperSurplusBundle
   cost:
     Telecrystal: 40
