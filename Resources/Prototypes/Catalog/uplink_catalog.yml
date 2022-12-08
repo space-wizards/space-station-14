@@ -272,7 +272,7 @@
 - type: listing
   id: UplinkHeadset
   name: uplink-headset-name
-  description: uplink-stealth-box-desc
+  description: uplink-headset-desc
   productEntity: ClothingHeadsetAltSyndicate
   cost:
     Telecrystal: 2

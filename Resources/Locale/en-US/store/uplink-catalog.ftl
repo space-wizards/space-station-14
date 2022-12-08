@@ -34,7 +34,7 @@ uplink-penguin-grenade-name = Grenade Penguin
 uplink-penguin-grenade-desc = A small penguin with a grenade strapped around its neck. Harvested by the Syndicate from icy shit-hole planets.
 
 uplink-c4-name = C-4
-uplink-c4-desc = You can use it to breach walls, airlocks or sabotage equipment. It can be attached to almost all objects and has a modifiable timer with a minimum setting of 10 seconds.
+uplink-c4-desc = Use it to breach walls, airlocks or sabotage equipment. It can be attached to almost all objects and has a modifiable timer with a minimum setting of 10 seconds.
 
 uplink-c4-bundle-name = C-4 bundle
 uplink-c4-bundle-desc = Because sometimes quantity is quality. Contains 8 C-4 plastic explosives.
@@ -58,7 +58,7 @@ uplink-holopara-kit-desc = The pride and joy of Cybersun. Contains an injector t
     The guardian can punch rapidly and is immune to hazardous environments and bullets, but shares any damage it takes with the user.
 
 uplink-holster-name = Shoulder Holster
-uplink-holste-desc = A deep shoulder holster capable of holding many types of ballistics.
+uplink-holster-desc = A deep shoulder holster capable of holding many types of ballistics.
 
 uplink-emag-name = Emag
 uplink-emag-desc = The business card of the syndicate, this sequencer is able to break open airlocks and tamper with a variety of station devices. Recharges automatically.
@@ -76,7 +76,7 @@ uplink-stealth-box-name = Stealth Box
 uplink-stealth-box-desc = A box outfitted with stealth technology, sneak around with this and don't move too fast now!
 
 uplink-headset-name = Syndicate Over-ear Headset
-uplink-stealth-box-desc = A headset that allows you to listen in on departmental channels, or contact other traitors.
+uplink-headset-desc = A headset that allows you to listen in on departmental channels, or contact other traitors.
 
 uplink-hypopen-name = Hypopen
 uplink-hypopen-desc = A chemical hypospray disguised as a pen, capable of instantly injecting up to 15u of reagents. Starts empty.
