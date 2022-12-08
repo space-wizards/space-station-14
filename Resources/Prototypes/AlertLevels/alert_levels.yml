@@ -10,6 +10,7 @@
       announcement: alert-level-blue-announcement
       sound: /Audio/Misc/bluealert.ogg
       color: DodgerBlue
+      shuttleTime: 600
     violet:
       announcement: alert-level-violet-announcement
       sound: /Audio/Misc/notice1.ogg
@@ -21,11 +22,12 @@
       sound: /Audio/Misc/notice1.ogg
       color: Yellow
       emergencyLightColor: Goldenrod
-      shuttleTime: 400
+      shuttleTime: 600
     red:
       announcement: alert-level-red-announcement
       sound: /Audio/Misc/redalert.ogg
       color: Red
+      shuttleTime: 600
     gamma:
       announcement: alert-level-gamma-announcement
       selectable: false
