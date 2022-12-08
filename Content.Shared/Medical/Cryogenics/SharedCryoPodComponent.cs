@@ -13,7 +13,7 @@ public abstract class SharedCryoPodComponent: Component, IDragDropOn
     /// <summary>
     /// Container for mobs inserted in the pod.
     /// </summary>
-    [ViewVariables, NonSerialized]
+    [ViewVariables]
     public ContainerSlot BodyContainer = default!;
 
     /// <summary>

@@ -8,10 +8,12 @@
     netsync: false
     sprite: Structures/Machines/cryogenics.rsi
     drawdepth: Mobs
+    noRot: true
     offset: 0, 0.5
     layers:
       - sprite: Structures/Piping/Atmospherics/pipe.rsi
         state: pipeHalf
+        offset: 0, -0.5
         map: [ "enum.PipeVisualLayers.Pipe" ]
       - state: pod-open
         map: [ "enum.CryoPodVisualLayers.Base" ]
@@ -28,7 +30,7 @@
     fixtures:
       - shape:
           !type:PhysShapeAabb
-          bounds: "-0.45,-0.45,0.45,0.45"
+          bounds: "-0.5,-0.5,0.5,0.90"
         density: 200
         mask:
           - MachineMask

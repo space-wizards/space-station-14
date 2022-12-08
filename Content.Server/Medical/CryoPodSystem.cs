@@ -106,11 +106,11 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
 
     public override void EjectBody(EntityUid uid, SharedCryoPodComponent? cryoPodComponent)
     {
-        base.EjectBody(uid, cryoPodComponent);
         if (!Resolve(uid, ref cryoPodComponent))
             return;
         if (cryoPodComponent.BodyContainer.ContainedEntity is not {Valid: true} contained)
             return;
+        base.EjectBody(uid, cryoPodComponent);
         _climbSystem.ForciblySetClimbing(contained, uid);
     }
 

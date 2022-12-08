@@ -6,6 +6,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 namespace Content.Server.Medical.Components;
 
 [RegisterComponent]
+[ComponentReference(typeof(SharedCryoPodComponent))]
 public sealed class CryoPodComponent: SharedCryoPodComponent, IGasMixtureHolder
 {
     /// <summary>
