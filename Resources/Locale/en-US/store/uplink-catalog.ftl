@@ -164,4 +164,24 @@ uplink-eva-syndie-desc = A simple EVA suit that offers no protection other than 
 uplink-clothing-outer-hardsuit-juggernaut-name = Cybersun Juggernaut Suit
 uplink-clothing-outer-hardsuit-juggernaut-desc = Hyper resilient armor made of materials tested in the Tau chromosphere facility. The only thing that's going to be slowing you down is this suit... and tasers.
 
+# Misc
+uplink-cyberpen-name = Cybersun Pen
+uplink-cyberpen-desc = Cybersun's legal department pen. Smells vaguely of hard-light and war profiteering.
 
+uplink-decoy-disk-name = Decoy Nuclear Disk
+uplink-decoy-disk-desc = A piece of plastic with a lenticular printing, made to look like a nuclear auth disk.
+
+uplink-cigarettes-name = Syndicate Smokes Packet
+uplink-cigarettes-desc = Elite cigarettes for elite agents. Infused with medicine for when you need to do more than calm your nerves.
+
+uplink-soap-name = Soap
+uplink-soap-desc = An untrustworthy bar of soap. Smells of fear.
+
+uplink-ultrabright-lantern-name = Extra-Bright Lantern
+uplink-ultrabright-lantern-desc = Blinding.
+
+uplink-nocturine-chemistry-bottle-name = Nocturine Bottle
+uplink-nocturine-chemistry-bottle-desc = A chemical that makes it very hard for your target to stand up.
+
+uplink-syndicate-segway-crate-name = Syndicate Segway
+uplink-syndicate-segway-crate-desc = Be an enemy of the corporation, in style!

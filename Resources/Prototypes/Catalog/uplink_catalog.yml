@@ -637,7 +637,8 @@
 
 - type: listing
   id: UplinkCyberpen
-  description: Cybersun's legal department pen. Smells vaguely of hard-light and war profiteering.
+  name: uplink-cyberpen-name
+  description: uplink-cyberpen-desc
   productEntity: CyberPen
   cost:
     Telecrystal: 3
@@ -646,8 +647,8 @@
 
 - type: listing
   id: UplinkDecoyDisk
-  name: decoy nuclear disk
-  description: A piece of plastic with a lenticular printing, made to look like a nuclear auth disk.
+  name: uplink-decoy-disk-name
+  description: uplink-decoy-disk-desc
   productEntity: NukeDiskFake
   cost:
     Telecrystal: 1
@@ -656,6 +657,8 @@
 
 - type: listing
   id: UplinkCigarettes
+  name: uplink-cigarettes-name
+  description: uplink-cigarettes-desc
   productEntity: CigPackSyndicate
   cost:
     Telecrystal: 2
@@ -664,6 +667,8 @@
 
 - type: listing
   id: UplinkSoapSyndie
+  name: uplink-soap-name
+  description: uplink-soap-desc
   productEntity: SoapSyndie
   cost:
     Telecrystal: 1
@@ -672,6 +677,8 @@
 
 - type: listing
   id: UplinkUltrabrightLantern
+  name: uplink-ultrabright-lantern-name
+  description: uplink-ultrabright-lantern-desc
   productEntity: lanternextrabright #why is this item id not capitalized???
   cost:
     Telecrystal: 2
@@ -690,7 +697,8 @@
 
 - type: listing
   id: UplinkNocturineChemistryBottle
-  description: A chemical that makes it very hard for your target to stand up.
+  name: uplink-nocturine-chemistry-bottle-name
+  description: uplink-nocturine-chemistry-bottle-desc
   productEntity: NocturineChemistryBottle
   cost:
     Telecrystal: 5
@@ -699,8 +707,9 @@
 
 - type: listing
   id: UplinkSyndicateSegwayCrate
-  name: syndicate segway
-  description: Be an enemy of the corporation, in style!
+  name: uplink-syndicate-segway-crate-name
+  description: uplink-syndicate-segway-crate-desc
+  icon: { sprite: /Textures/Objects/Vehicles/syndicatesegway.rsi, state: icon }
   productEntity: CrateFunSyndicateSegway
   cost:
     Telecrystal: 5
