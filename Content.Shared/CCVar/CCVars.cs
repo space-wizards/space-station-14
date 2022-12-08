@@ -1021,10 +1021,10 @@ namespace Content.Shared.CCVar
             CVarDef.Create("shuttle.emergency_authorize_time", 10f, CVar.SERVERONLY);
 
         /// <summary>
-        /// How long after the console is authorized for the shuttle to early launch.
+        /// How long the shuttle will take to reach CentCom after launching.
         /// </summary>
         public static readonly CVarDef<float> EmergencyShuttleTransitTime =
-            CVarDef.Create("shuttle.emergency_transit_time", 60f, CVar.SERVERONLY);
+            CVarDef.Create("shuttle.emergency_transit_time", 120f, CVar.SERVERONLY);
 
         /// <summary>
         /// Whether the emergency shuttle is enabled or should the round just end.
