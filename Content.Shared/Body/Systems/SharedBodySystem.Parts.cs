@@ -287,26 +287,34 @@ public partial class SharedBodySystem
         return true;
     }
 
-    public void UpdateMovementSpeed(EntityUid body, BodyComponent? component = null)
+    public void UpdateMovementSpeed(EntityUid body, BodyComponent? component = null, MovementSpeedModifierComponent? movement = null)
     {
-        if (!Resolve(body, ref component, false))
+        if (!Resolve(body, ref component, ref movement, false))
             return;
 
-        if (!TryComp<MovementSpeedModifierComponent>(body, out var movement))
+        if (component.RequiredLegs <= 0)
             return;
 
-        if (component.Prototype == null)
+        if (component.Root?.Child is not { } root)
             return;
 
-        var legAmount = GetBodyAllSlots(body, component).Count(slot => slot.Type == BodyPartType.Leg);
-        if (legAmount <= 0)
+        if (!TryComp<BodyPartComponent>(root, out var rootPart))
             return;
-        var legs = GetBodyChildrenOfType(body, BodyPartType.Leg, component);
+
+        var allSlots = GetAllBodyPartSlots(rootPart).ToHashSet();
+        var allLegs = new HashSet<EntityUid>();
+        foreach (var slot in allSlots)
+        {
+            if (slot.Type == BodyPartType.Leg && slot.Child is {  } child)
+                allLegs.Add(child);
+        }
+
+        Logger.Debug($"LEGAMOUNT: {allLegs.Count}");
 
         var walkSpeed = 0f;
         var sprintSpeed = 0f;
         var acceleration = 0f;
-        foreach (var (leg, _) in legs)
+        foreach (var leg in allLegs)
         {
             if (!TryComp<MovementSpeedModifierComponent>(leg, out var legModifier))
                 continue;
@@ -316,9 +324,9 @@ public partial class SharedBodySystem
             acceleration += legModifier.Acceleration;
         }
 
-        walkSpeed /= legAmount;
-        sprintSpeed /= legAmount;
-        acceleration /= legAmount;
+        walkSpeed /= component.RequiredLegs;
+        sprintSpeed /= component.RequiredLegs;
+        acceleration /= component.RequiredLegs;
         Movement.ChangeBaseSpeed(body, walkSpeed, sprintSpeed, acceleration, movement);
     }
 
