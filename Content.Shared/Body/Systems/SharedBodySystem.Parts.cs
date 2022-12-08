@@ -306,8 +306,6 @@ public partial class SharedBodySystem
                 allLegs.Add(child);
         }
 
-        Logger.Debug($"LEGAMOUNT: {allLegs.Count}");
-
         var walkSpeed = 0f;
         var sprintSpeed = 0f;
         var acceleration = 0f;
