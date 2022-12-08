@@ -421,18 +421,18 @@ namespace Content.Shared.Movement.Systems
                 return true;
             }
 
-            return TryGetFootstepSound(coordinates, shoes != null, out sound);
+            return TryGetFootstepSound(xform, shoes != null, out sound);
         }
 
-        private bool TryGetFootstepSound(EntityCoordinates coordinates, bool haveShoes, [NotNullWhen(true)] out SoundSpecifier? sound)
+        private bool TryGetFootstepSound(TransformComponent xform, bool haveShoes, [NotNullWhen(true)] out SoundSpecifier? sound)
         {
             sound = null;
-            var gridUid = coordinates.GetGridUid(EntityManager);
 
             // Fallback to the map
-            if (gridUid == null)
+            if (xform.MapUid == xform.GridUid ||
+                xform.GridUid == null)
             {
-                if (TryComp<FootstepModifierComponent>(coordinates.GetMapUid(EntityManager), out var modifier))
+                if (TryComp<FootstepModifierComponent>(xform.MapUid, out var modifier))
                 {
                     sound = modifier.Sound;
                     return true;
@@ -441,10 +441,11 @@ namespace Content.Shared.Movement.Systems
                 return false;
             }
 
-            var grid = _mapManager.GetGrid(gridUid.Value);
-            var tile = grid.GetTileRef(coordinates);
+            var grid = _mapManager.GetGrid(xform.GridUid.Value);
+            var tile = grid.GetTileRef(xform.Coordinates);
 
-            if (tile.IsSpace(_tileDefinitionManager)) return false;
+            if (tile.IsSpace(_tileDefinitionManager))
+                return false;
 
             // If the coordinates have a FootstepModifier component
             // i.e. component that emit sound on footsteps emit that sound
