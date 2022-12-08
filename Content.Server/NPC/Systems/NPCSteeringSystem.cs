@@ -322,7 +322,7 @@ namespace Content.Server.NPC.Systems
             // TODO: Avoid anything not considered hostile
             DynamicAvoid(uid, offsetRot, worldPos, detectionRadius, agentRadius, body, xform, dangerMap, directions, bodyQuery, xformQuery);
 
-            var ev = new NPCSteeringEvent(directions, interestMap, dangerMap, agentRadius, offsetRot);
+            var ev = new NPCSteeringEvent(directions, interestMap, dangerMap, agentRadius, offsetRot, worldPos);
             RaiseLocalEvent(uid, ref ev);
             var adjustedInterestMap = new float[InterestDirections];
 

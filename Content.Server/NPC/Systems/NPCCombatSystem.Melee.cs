@@ -37,29 +37,36 @@ public sealed partial class NPCCombatSystem
                     return;
                 }
 
-                var obstacleDirection = args.OffsetRotation.RotateVec(pointB - pointA);
+                var obstacleDirection = args.OffsetRotation.RotateVec(pointB - args.WorldPosition);
                 var obstacleDistance = obstacleDirection.Length;
-                var radius = weapon.Range * 1.5f;
 
-                if (obstacleDistance > radius || obstacleDistance == 0f)
+                if (obstacleDistance == 0f)
                     return;
 
-                var weight = 1f;
+                for (var i = 0; i < SharedNPCSteeringSystem.InterestDirections; i++)
+                {
+                    args.InterestMap[i] = 0f;
+                }
+
+                var idealDistance = weapon.Range * 1.5f;
+                var idealPosition = (args.WorldPosition - pointB).Normalized * idealDistance;
+                var idealPositionDistance = idealPosition.Length;
+
                 var norm = obstacleDirection.Normalized;
 
                 for (var i = 0; i < SharedNPCSteeringSystem.InterestDirections; i++)
                 {
                     var result = Vector2.Dot(norm, args.Directions[i]);
-                    var inputValue = result * weight;
+                    var inputValue = result * idealPositionDistance;
                     args.DangerMap[i] = MathF.Max(inputValue, args.DangerMap[i]);
                 }
 
-                weight = 1f;
+                var antiWeight = 1f;
 
                 for (var i = 0; i < SharedNPCSteeringSystem.InterestDirections; i++)
                 {
                     var result = -Vector2.Dot(norm, args.Directions[i]);
-                    var inputValue = result * weight;
+                    var inputValue = result * antiWeight;
                     args.InterestMap[i] = MathF.Max(inputValue, args.InterestMap[i]);
                 }
             }
