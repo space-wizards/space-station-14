@@ -6,6 +6,7 @@ using Content.Shared.Body.Organ;
 using Content.Shared.Body.Part;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.Movement.Components;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
@@ -211,6 +212,9 @@ public partial class SharedBodySystem
 
         if (part.Body is { } newBody)
         {
+            if (part.PartType == BodyPartType.Leg)
+                UpdateMovementSpeed(newBody);
+
             var partAddedEvent = new BodyPartAddedEvent(slot.Id, part);
             RaiseLocalEvent(newBody, ref partAddedEvent);
 
@@ -254,10 +258,11 @@ public partial class SharedBodySystem
             var args = new BodyPartRemovedEvent(slot.Id, part);
             RaiseLocalEvent(oldBody, ref args);
 
-            if (part.PartType == BodyPartType.Leg &&
-                !GetBodyChildrenOfType(oldBody, BodyPartType.Leg).Any())
+            if (part.PartType == BodyPartType.Leg)
             {
-                Standing.Down(oldBody);
+                UpdateMovementSpeed(oldBody);
+                if(!GetBodyChildrenOfType(oldBody, BodyPartType.Leg).Any())
+                    Standing.Down(oldBody);
             }
 
             if (part.IsVital && !GetBodyChildrenOfType(oldBody, part.PartType).Any())
@@ -280,6 +285,41 @@ public partial class SharedBodySystem
         Dirty(partId.Value);
 
         return true;
+    }
+
+    public void UpdateMovementSpeed(EntityUid body, BodyComponent? component = null)
+    {
+        if (!Resolve(body, ref component, false))
+            return;
+
+        if (!TryComp<MovementSpeedModifierComponent>(body, out var movement))
+            return;
+
+        if (component.Prototype == null)
+            return;
+
+        var legAmount = GetBodyAllSlots(body, component).Count(slot => slot.Type == BodyPartType.Leg);
+        if (legAmount <= 0)
+            return;
+        var legs = GetBodyChildrenOfType(body, BodyPartType.Leg, component);
+
+        var walkSpeed = 0f;
+        var sprintSpeed = 0f;
+        var acceleration = 0f;
+        foreach (var (leg, _) in legs)
+        {
+            if (!TryComp<MovementSpeedModifierComponent>(leg, out var legModifier))
+                continue;
+
+            walkSpeed += legModifier.BaseWalkSpeed;
+            sprintSpeed += legModifier.BaseSprintSpeed;
+            acceleration += legModifier.Acceleration;
+        }
+
+        walkSpeed /= legAmount;
+        sprintSpeed /= legAmount;
+        acceleration /= legAmount;
+        Movement.ChangeBaseSpeed(body, walkSpeed, sprintSpeed, acceleration, movement);
     }
 
     public bool DropPartAt(EntityUid? partId, EntityCoordinates dropAt, BodyPartComponent? part = null)
