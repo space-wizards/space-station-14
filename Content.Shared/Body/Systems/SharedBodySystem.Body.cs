@@ -167,8 +167,11 @@ public partial class SharedBodySystem
     /// </summary>
     /// <param name="part"></param>
     /// <returns></returns>
-    public IEnumerable<BodyPartSlot> GetAllBodyPartSlots(BodyPartComponent part)
+    public IEnumerable<BodyPartSlot> GetAllBodyPartSlots(EntityUid partId, BodyPartComponent? part = null)
     {
+        if (!Resolve(partId, ref part, false))
+            yield break;
+
         foreach (var slot in part.Children.Values)
         {
             if (!TryComp<BodyPartComponent>(slot.Child, out var childPart))
