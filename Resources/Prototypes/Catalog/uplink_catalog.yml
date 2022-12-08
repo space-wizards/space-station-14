@@ -492,6 +492,11 @@
     Telecrystal: 8
   categories:
   - UplinkTools
+  conditions:
+    - !type:BuyerWhitelistCondition
+      blacklist:
+        components:
+          - SurplusBundle
 
 - type: listing
   id: UplinkCarpDehydrated
