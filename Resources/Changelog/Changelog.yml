@@ -1,11 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Pets will no longer try to run away when buckled or pulled., type: Tweak}
-  - {message: Space carps will now try to follow their dragon., type: Tweak}
-  - {message: Turrets now exist., type: Add}
-  id: 2234
-  time: '2022-09-05T14:28:23.0000000+00:00'
 - author: vulppine
   changes:
   - {message: Adds a way to see device links from entities that use device network
@@ -2946,3 +2939,9 @@ Entries:
   - {message: Radiation suit and hardsuits have built-in geiger counter., type: Add}
   id: 2733
   time: '2022-12-07T01:56:52.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed a small issue with the analysis console that would cause extra
+      text to display., type: Fix}
+  id: 2734
+  time: '2022-12-08T01:28:51.0000000+00:00'
