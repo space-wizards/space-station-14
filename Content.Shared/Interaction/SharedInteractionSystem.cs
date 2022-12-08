@@ -141,7 +141,7 @@ namespace Content.Shared.Interaction
                 return false;
 
             if (!TryComp(uid, out SharedPullableComponent? pull))
-                return false
+                return false;
 
             _pullSystem.TogglePull(userEntity.Value, pull);
             return false;
