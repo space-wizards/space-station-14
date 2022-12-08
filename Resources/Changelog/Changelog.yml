@@ -1,30 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Pets will no longer try to run away when buckled or pulled., type: Tweak}
-  - {message: Space carps will now try to follow their dragon., type: Tweak}
-  - {message: Turrets now exist., type: Add}
-  id: 2234
-  time: '2022-09-05T14:28:23.0000000+00:00'
-- author: vulppine
-  changes:
-  - {message: Adds a way to see device links from entities that use device network
-      linking., type: Add}
-  id: 2235
-  time: '2022-09-06T00:55:44.0000000+00:00'
-- author: vulppine
-  changes:
-  - {message: Game objects that store device network links now have a set limit as
-      to how many devices that they can store., type: Tweak}
-  - {message: The device network link list now has a UI on devices that use device
-      network linking., type: Tweak}
-  id: 2236
-  time: '2022-09-06T01:22:39.0000000+00:00'
-- author: moony
-  changes:
-  - {message: 'Made events less frequent, from 5-15min to 5-25min.', type: Tweak}
-  id: 2237
-  time: '2022-09-06T01:40:31.0000000+00:00'
 - author: vulppine
   changes:
   - {message: 'The wires in airlocks and windoors are now more secure, and require
@@ -2946,3 +2920,24 @@ Entries:
   - {message: Radiation suit and hardsuits have built-in geiger counter., type: Add}
   id: 2733
   time: '2022-12-07T01:56:52.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed a small issue with the analysis console that would cause extra
+      text to display., type: Fix}
+  id: 2734
+  time: '2022-12-08T01:28:51.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix the landing sound for thrown items on planet maps., type: Fix}
+  id: 2735
+  time: '2022-12-08T01:47:31.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix planet footstep sound modifiers., type: Fix}
+  id: 2736
+  time: '2022-12-08T01:56:12.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Ban reason text no longer clips off screen., type: Fix}
+  id: 2737
+  time: '2022-12-08T02:05:18.0000000+00:00'
