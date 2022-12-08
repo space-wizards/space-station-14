@@ -165,6 +165,7 @@ public partial class SharedBodySystem
     /// Returns all body part slots in the graph, including ones connected by
     /// body parts which are null.
     /// </summary>
+    /// <param name="partId"></param>
     /// <param name="part"></param>
     /// <returns></returns>
     public IEnumerable<BodyPartSlot> GetAllBodyPartSlots(EntityUid partId, BodyPartComponent? part = null)
@@ -179,7 +180,7 @@ public partial class SharedBodySystem
 
             yield return slot;
 
-            foreach (var child in GetAllBodyPartSlots(slot.Child, childPart))
+            foreach (var child in GetAllBodyPartSlots(slot.Child.Value, childPart))
             {
                 yield return child;
             }
