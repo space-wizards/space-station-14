@@ -461,7 +461,8 @@
 
 - type: listing
   id: UplinkToolbox
-  description: A full compliment of tools for the mechanically inclined traitor. Includes a pair of insulated combat gloves, syndicate gas mask and a shoulder holster.
+  name: uplink-toolbox-name
+  description: uplink-toolbox-desc
   productEntity: ToolboxSyndicateFilled
   cost:
     Telecrystal: 2
@@ -470,7 +471,8 @@
 
 - type: listing
   id: UplinkSyndicateJawsOfLife
-  description: A combined prying and cutting tool. Useful for entering the station or its departments.
+  name: uplink-syndicate-jaws-of-life-name
+  description: uplink-syndicate-jaws-of-life-desc
   productEntity: SyndicateJawsOfLife
   cost:
     Telecrystal: 2
@@ -479,6 +481,8 @@
 
 - type: listing
   id: UplinkDuffelSurgery
+  name: uplink-duffel-surgery-name
+  description: uplink-duffel-surgery-desc
   productEntity: ClothingBackpackDuffelSyndicateFilledMedical
   cost:
     Telecrystal: 5
@@ -487,6 +491,8 @@
 
 - type: listing
   id: UplinkPowerSink
+  name: uplink-power-sink-name
+  description: uplink-power-sink-desc
   productEntity: PowerSink
   cost:
     Telecrystal: 8
@@ -500,6 +506,8 @@
 
 - type: listing
   id: UplinkCarpDehydrated
+  name: uplink-carp-dehydrated-name
+  description: uplink-carp-dehydrated-desc
   productEntity: DehydratedSpaceCarp
   cost:
     Telecrystal: 2
