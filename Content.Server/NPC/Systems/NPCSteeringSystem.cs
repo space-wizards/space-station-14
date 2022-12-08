@@ -295,7 +295,7 @@ namespace Content.Server.NPC.Systems
             }
 
             var agentRadius = steering.Radius;
-            var detectionRadius = 1.5f + agentRadius;
+            var detectionRadius = 0.5f + agentRadius;
             var (worldPos, worldRot) = xform.GetWorldPositionRotation();
 
             // Use rotation relative to parent to rotate our context vectors by.
@@ -525,7 +525,7 @@ namespace Content.Server.NPC.Systems
             for (var i = 0; i < InterestDirections; i++)
             {
                 var result = Vector2.Dot(norm, directions[i]);
-                var adjustedResult = (result + 1f) / 2f;
+                var adjustedResult = (result + 0.5f) / 1.5f;
 
                 interestMap[i] = MathF.Max(interestMap[i], adjustedResult);
             }

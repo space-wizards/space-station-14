@@ -31,7 +31,7 @@ public sealed class NPCSteeringComponent : Component
     /// <summary>
     /// How many times per second we're allowed to update our steering frequency.
     /// </summary>
-    public const byte SteerFrequency = 8;
+    public const byte SteerFrequency = 10;
 
     /// <summary>
     /// Last time the NPC steered.
