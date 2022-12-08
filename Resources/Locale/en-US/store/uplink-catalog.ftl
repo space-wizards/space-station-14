@@ -41,4 +41,14 @@ uplink-c4-bundle-name = C-4 bundle
 uplink-c4-bundle-desc = Because sometimes quantity is quality. Contains 8 C-4 plastic explosives.
 
 # Ammo
+uplink-pistol-magazine-name = Pistol Magazine (.35 auto)
+uplink-pistol-magazine-desc = Pistol magazine with 10 catridges. Compatible with Viper.
 
+uplink-pistol-magazine-caseless-name = Pistol Magazine (.25 caseless)
+uplink-pistol-magazine-caseless-desc = Pistol magazine with 10 catridges. Compatible with Cobra.
+
+uplink-speedloader-magnum-name = Speedloader (.45 magnum)
+uplink-speedloader-magnu-desc = Revolver speedloader with 6 catridges. Compatible with Python.
+
+uplink-mosin-ammo-name = Box of .30 rifle magazines
+uplink-mosin-ammo-desc = A box of cartridges for the surplus rifle.

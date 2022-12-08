@@ -145,25 +145,33 @@
 
 - type: listing
   id: UplinkPistol9mmMagazine
+  name: uplink-pistol-magazine-name
+  description: uplink-pistol-magazine-desc
+  icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_mag.rsi, state: red-icon }
   productEntity: MagazinePistol
   cost:
     Telecrystal: 2
   categories:
   - UplinkAmmo
 
-# For the Mandella
+# For the Cobra
 - type: listing
   id: UplinkMagazinePistolCaselessRifle
+  name: uplink-pistol-magazine-caseless-name
+  description: uplink-pistol-magazine-caseless-desc
+  icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/Magazine/CaselessRifle/caseless_pistol_mag.rsi, state: red-icon }
   productEntity: MagazinePistolCaselessRifle
   cost:
     Telecrystal: 2
   categories:
   - UplinkAmmo
 
-# For the Inspector
+# For the Python
 - type: listing
   id: UplinkSpeedLoaderMagnum
-  icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_speed_loader.rsi, state: base }
+  name: uplink-speedloader-magnum-name
+  description: uplink-speedloader-magnu-desc
+  icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_speed_loader.rsi, state: icon }
   productEntity: SpeedLoaderMagnum
   cost:
     Telecrystal: 2
@@ -173,7 +181,8 @@
 # For the mosin
 - type: listing
   id: UplinkMosinAmmo
-  description: A box of cartridges for the surplus rifle.
+  name: uplink-mosin-ammo-name
+  description: uplink-mosin-ammo-desc
   productEntity: BoxMagazineLightRifle
   cost:
     Telecrystal: 2
