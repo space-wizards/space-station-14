@@ -23,7 +23,7 @@ public sealed class BodyComponent : Component, IDraggable
 
     /// <summary>
     /// The amount of legs required to move at full speed.
-    /// If null, then legs do not impact speed.
+    /// If 0, then legs do not impact speed.
     /// </summary>
     [DataField("requiredLegs")]
     public int RequiredLegs;
