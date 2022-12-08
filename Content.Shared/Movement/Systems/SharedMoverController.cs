@@ -415,8 +415,7 @@ namespace Content.Shared.Movement.Systems
 
             mobMover.StepSoundDistance -= distanceNeeded;
 
-            if (
-                TryComp<FootstepModifierComponent>(mover.Owner, out var moverModifier))
+            if (TryComp<FootstepModifierComponent>(mover.Owner, out var moverModifier))
             {
                 sound = moverModifier.Sound;
                 return true;
