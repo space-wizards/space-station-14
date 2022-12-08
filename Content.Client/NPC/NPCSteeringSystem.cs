@@ -74,6 +74,7 @@ public sealed class NPCSteeringSystem : SharedNPCSteeringSystem
             comp.Direction = data.Direction;
             comp.DangerMap = data.DangerMap;
             comp.InterestMap = data.InterestMap;
+            comp.DangerPoints = data.DangerPoints;
         }
     }
 }
@@ -105,6 +106,11 @@ public sealed class NPCSteeringOverlay : Overlay
 
             args.WorldHandle.DrawCircle(worldPos, 1f, Color.Green, false);
             var rotationOffset = _entManager.System<MoverController>().GetParentGridAngle(mover);
+
+            foreach (var point in comp.DangerPoints)
+            {
+                args.WorldHandle.DrawCircle(point, 0.1f, Color.Red.WithAlpha(0.6f));
+            }
 
             for (var i = 0; i < SharedNPCSteeringSystem.InterestDirections; i++)
             {

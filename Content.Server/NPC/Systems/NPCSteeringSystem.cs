@@ -2,6 +2,7 @@ using System.Linq;
 using System.Threading;
 using Content.Server.Administration.Managers;
 using Content.Server.Doors.Systems;
+using Content.Server.Examine;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.Events;
 using Content.Server.NPC.Pathfinding;
@@ -49,7 +50,17 @@ namespace Content.Server.NPC.Systems
 
         private bool _pathfinding = true;
 
-        private HashSet<ICommonSession> _subscribedSessions = new();
+        /// <summary>
+        /// Should we round the input vector to the interest directions.
+        /// </summary>
+        private const bool RoundedDirections = false;
+
+        /// <summary>
+        /// How much do we round static obstacle avoidance by.
+        /// </summary>
+        private const byte StaticRounding = 5;
+
+        private readonly HashSet<ICommonSession> _subscribedSessions = new();
 
         public override void Initialize()
         {
@@ -188,6 +199,7 @@ namespace Content.Server.NPC.Systems
             foreach (var (steering, _, mover, xform) in npcs)
             {
                 Steer(steering, mover, xform, modifierQuery, bodyQuery, xformQuery, frameTime);
+                steering.LastSteer = mover.CurTickSprintMovement;
             }
 
             if (_subscribedSessions.Count > 0)
@@ -200,7 +212,8 @@ namespace Content.Server.NPC.Systems
                         mover.Owner,
                         mover.CurTickSprintMovement,
                         steering.DangerMap,
-                        steering.InterestMap));
+                        steering.InterestMap,
+                        steering.DangerPoints));
                 }
 
                 var filter = Filter.Empty();
@@ -256,9 +269,16 @@ namespace Content.Server.NPC.Systems
                 return;
             }
 
+            var nextSteer = steering.LastTimeSteer + TimeSpan.FromSeconds(1f / NPCSteeringComponent.SteerFrequency);
+
+            if (nextSteer > _timing.CurTime)
+            {
+                SetDirection(mover, steering, steering.LastSteer, false);
+                return;
+            }
+
+            steering.LastTimeSteer = _timing.CurTime;
             var uid = mover.Owner;
-            var ourCoordinates = xform.Coordinates;
-            var destinationCoordinates = steering.Coordinates;
 
             // TODO: SHITCODE AAAA
             // TODO: Stackalloc?
@@ -294,13 +314,15 @@ namespace Content.Server.NPC.Systems
             DebugTools.Assert(!float.IsNaN(interestMap[0]));
             // TODO: Query
             var body = bodyQuery.GetComponent(uid);
+            var dangerPoints = steering.DangerPoints;
+            dangerPoints.Clear();
 
-            StaticAvoid(uid, offsetRot, worldPos, detectionRadius, agentRadius, body, xform, dangerMap, directions, bodyQuery, xformQuery);
+            StaticAvoid(uid, offsetRot, worldPos, detectionRadius, agentRadius, body, xform, dangerMap, dangerPoints, directions, bodyQuery, xformQuery);
             DebugTools.Assert(!float.IsNaN(dangerMap[0]));
             // TODO: Avoid anything not considered hostile
             DynamicAvoid(uid, offsetRot, worldPos, detectionRadius, agentRadius, body, xform, dangerMap, directions, bodyQuery, xformQuery);
 
-            var ev = new NPCSteeringEvent(interestMap, dangerMap);
+            var ev = new NPCSteeringEvent(directions, interestMap, dangerMap, agentRadius, offsetRot);
             RaiseLocalEvent(uid, ref ev);
             var adjustedInterestMap = new float[InterestDirections];
 
@@ -321,10 +343,16 @@ namespace Content.Server.NPC.Systems
             resultDirection = resultDirection == Vector2.Zero ? Vector2.Zero : resultDirection.Normalized;
 
             // Round the direction to one of our available interest directions.
-            if (resultDirection.LengthSquared > 0f)
+#pragma warning disable CS0162
+            const int interestAngles = 360 / InterestDirections;
+
+            if (RoundedDirections && resultDirection.LengthSquared > 0f)
             {
-                // resultDirection = new Angle(Math.Round(resultDirection.ToAngle().Theta / InterestDirections) * InterestDirections).ToVec();
+                var theta = resultDirection.ToAngle().Degrees;
+                var rounded = Math.Round(theta / interestAngles) * interestAngles;
+                resultDirection = Angle.FromDegrees(rounded).ToVec();
             }
+#pragma warning restore CS0162
 
             DebugTools.Assert(!float.IsNaN(resultDirection.X));
             SetDirection(mover, steering, resultDirection, false);
@@ -355,8 +383,6 @@ namespace Content.Server.NPC.Systems
             if (xform.Coordinates.TryDistance(EntityManager, destinationCoordinates, out var distance) &&
                 distance <= steering.Range)
             {
-                // TODO: Make this just avoid the target by 0.2f or half range or whatever
-                SetDirection(mover, steering, Vector2.Zero);
                 steering.Status = SteeringStatus.InRange;
                 return true;
             }
@@ -491,14 +517,6 @@ namespace Content.Server.NPC.Systems
                 return false;
             }
 
-            // We may overshoot slightly but still be in the arrival distance which is okay.
-            var maxDistance = direction.Length + arrivalDistance;
-
-            if (tickMovement > maxDistance)
-            {
-                input *= maxDistance / tickMovement;
-            }
-
             // We have the input in world terms but need to convert it back to what movercontroller is doing.
             input = offsetRot.RotateVec(input);
             var norm = input.Normalized;
@@ -508,7 +526,7 @@ namespace Content.Server.NPC.Systems
                 var result = Vector2.Dot(norm, directions[i]);
                 var adjustedResult = (result + 1f) / 2f;
 
-                interestMap[i] = MathF.Max(interestMap[i], adjustedResult * input.Length);
+                interestMap[i] = MathF.Max(interestMap[i], adjustedResult);
             }
 
             return true;
@@ -606,6 +624,7 @@ namespace Content.Server.NPC.Systems
             PhysicsComponent body,
             TransformComponent xform,
             float[] dangerMap,
+            List<Vector2> dangerPoints,
             Vector2[] directions,
             EntityQuery<PhysicsComponent> bodyQuery,
             EntityQuery<TransformComponent> xformQuery)
@@ -637,12 +656,14 @@ namespace Content.Server.NPC.Systems
 
                 var weight = obstacleDistance <= agentRadius ? 1f : (detectionRadius - obstacleDistance) / detectionRadius;
                 var norm = obstacleDirection.Normalized;
+                dangerPoints.Add(pointB);
 
                 for (var i = 0; i < InterestDirections; i++)
                 {
                     var result = Vector2.Dot(norm, directions[i]);
                     var inputValue = result * weight;
-                    dangerMap[i] = MathF.Max(inputValue, dangerMap[i]);
+                    var inputNormalised = MathF.Round(inputValue / (1f / StaticRounding)) * (1f / StaticRounding);
+                    dangerMap[i] = MathF.Max(inputNormalised, dangerMap[i]);
                 }
             }
         }
@@ -729,6 +750,16 @@ namespace Content.Server.NPC.Systems
             // If we're in range then just beeline them; this can avoid stutter stepping and is an easy way to look nicer.
             if (steering.Pathfind || targetDistance < steering.RepathRange)
                 return;
+
+            // Short-circuit with no path.
+            var targetPoly = _pathfindingSystem.GetPoly(steering.Coordinates);
+
+            if (targetPoly != null && steering.Coordinates.Position.Equals(Vector2.Zero) && _interaction.InRangeUnobstructed(steering.Owner, steering.Coordinates.EntityId))
+            {
+                steering.CurrentPath.Clear();
+                steering.CurrentPath.Enqueue(targetPoly);
+                return;
+            }
 
             steering.PathfindToken = new CancellationTokenSource();
 

@@ -23,12 +23,14 @@ public readonly struct NPCSteeringDebugData
     public readonly Vector2 Direction;
     public readonly float[] DangerMap;
     public readonly float[] InterestMap;
+    public readonly List<Vector2> DangerPoints;
 
-    public NPCSteeringDebugData(EntityUid entityUid, Vector2 direction, float[] dangerMap, float[] interestMap)
+    public NPCSteeringDebugData(EntityUid entityUid, Vector2 direction, float[] dangerMap, float[] interestMap, List<Vector2> dangerPoints)
     {
         EntityUid = entityUid;
         Direction = direction;
         DangerMap = dangerMap;
         InterestMap = interestMap;
+        DangerPoints = dangerPoints;
     }
 }

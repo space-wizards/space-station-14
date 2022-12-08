@@ -1,7 +1,9 @@
 using Content.Server.CombatMode;
 using Content.Server.NPC.Components;
+using Content.Server.NPC.Events;
 using Content.Shared.MobState;
 using Content.Shared.MobState.Components;
+using Content.Shared.NPC;
 using Content.Shared.Weapons.Melee;
 using Robust.Shared.Map;
 
@@ -15,6 +17,53 @@ public sealed partial class NPCCombatSystem
     {
         SubscribeLocalEvent<NPCMeleeCombatComponent, ComponentStartup>(OnMeleeStartup);
         SubscribeLocalEvent<NPCMeleeCombatComponent, ComponentShutdown>(OnMeleeShutdown);
+        SubscribeLocalEvent<NPCMeleeCombatComponent, NPCSteeringEvent>(OnMeleeSteering);
+    }
+
+    private void OnMeleeSteering(EntityUid uid, NPCMeleeCombatComponent component, ref NPCSteeringEvent args)
+    {
+        if (TryComp<MeleeWeaponComponent>(component.Weapon, out var weapon))
+        {
+            var cdRemaining = weapon.NextAttack - _timing.CurTime;
+
+            if (cdRemaining < TimeSpan.Zero)
+                return;
+
+            // If CD remaining then backup.
+            if (cdRemaining > TimeSpan.FromSeconds(1f / weapon.AttackRate) / 3f)
+            {
+                if (!_physics.TryGetNearestPoints(uid, component.Target, out var pointA, out var pointB))
+                {
+                    return;
+                }
+
+                var obstacleDirection = args.OffsetRotation.RotateVec(pointB - pointA);
+                var obstacleDistance = obstacleDirection.Length;
+                var radius = weapon.Range * 1.5f;
+
+                if (obstacleDistance > radius || obstacleDistance == 0f)
+                    return;
+
+                var weight = 1f;
+                var norm = obstacleDirection.Normalized;
+
+                for (var i = 0; i < SharedNPCSteeringSystem.InterestDirections; i++)
+                {
+                    var result = Vector2.Dot(norm, args.Directions[i]);
+                    var inputValue = result * weight;
+                    args.DangerMap[i] = MathF.Max(inputValue, args.DangerMap[i]);
+                }
+
+                weight = 1f;
+
+                for (var i = 0; i < SharedNPCSteeringSystem.InterestDirections; i++)
+                {
+                    var result = -Vector2.Dot(norm, args.Directions[i]);
+                    var inputValue = result * weight;
+                    args.InterestMap[i] = MathF.Max(inputValue, args.InterestMap[i]);
+                }
+            }
+        }
     }
 
     private void OnMeleeShutdown(EntityUid uid, NPCMeleeCombatComponent component, ComponentShutdown args)
