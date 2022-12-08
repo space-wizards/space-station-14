@@ -34,18 +34,18 @@ public sealed class BodyPrototype : IPrototype
 [DataRecord]
 public sealed record BodyPrototypeSlot
 {
-    [DataField("part", required: true)] public readonly string Part = default!;
+    [DataField("part")] public readonly string? Part;
     public readonly HashSet<string> Connections = new();
     public readonly Dictionary<string, string> Organs = new();
 
-    public BodyPrototypeSlot(string part, HashSet<string>? connections, Dictionary<string, string>? organs)
+    public BodyPrototypeSlot(string? part, HashSet<string>? connections, Dictionary<string, string>? organs)
     {
         Part = part;
         Connections = connections ?? new HashSet<string>();
         Organs = organs ?? new Dictionary<string, string>();
     }
 
-    public void Deconstruct(out string part, out HashSet<string> connections, out Dictionary<string, string> organs)
+    public void Deconstruct(out string? part, out HashSet<string> connections, out Dictionary<string, string> organs)
     {
         part = Part;
         connections = Connections;
