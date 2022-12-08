@@ -1,12 +1,6 @@
 Entries:
 - author: vulppine
   changes:
-  - {message: Adds a way to see device links from entities that use device network
-      linking., type: Add}
-  id: 2235
-  time: '2022-09-06T00:55:44.0000000+00:00'
-- author: vulppine
-  changes:
   - {message: Game objects that store device network links now have a set limit as
       to how many devices that they can store., type: Tweak}
   - {message: The device network link list now has a UI on devices that use device
@@ -2945,3 +2939,8 @@ Entries:
       text to display., type: Fix}
   id: 2734
   time: '2022-12-08T01:28:51.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix the landing sound for thrown items on planet maps., type: Fix}
+  id: 2735
+  time: '2022-12-08T01:47:31.0000000+00:00'
