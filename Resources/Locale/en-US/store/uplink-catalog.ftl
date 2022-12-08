@@ -131,3 +131,26 @@ uplink-power-sink-desc = Drains immense amounts of electricity from the grid. Us
 
 uplink-carp-dehydrated-name = Dehydrated Space Carp
 uplink-carp-dehydrated-desc = Looks like a plush toy carp, but just add water and it becomes a real-life space carp!
+
+# Job Specific
+uplink-gatfruit-seeds-name = Packet Of Gatfruit Seeds
+uplink-gatfruit-seeds-desc = And who says guns don't grow on trees?
+
+uplink-necronomicon-name = Necronomicon
+uplink-necronomicon-desc = An unholy book capable of summoning a demonic familiar.
+
+# Armor
+uplink-chameleon-name = Chameleon Kit
+uplink-chameleon-desc = A backpack full of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more!
+
+uplink-clothing-no-slips-shoes-name = No-slip Shoes
+uplink-clothing-no-slips-shoes-desc = Chameleon shoes that protect you from slips.
+
+uplink-clothing-thieving-gloves-name = Thieving Gloves
+uplink-clothing-thieving-gloves-desc = Discretely steal from pockets and increase your thieving technique with these fancy new gloves, all while looking like normal gloves!
+
+uplink-clothing-outer-vest-web-name = Web West
+uplink-clothing-outer-vest-web-desc = A synthetic armor vest. This one has added webbing and ballistic plates.
+
+uplink-hardsuit-syndie-name = Syndicate Hardsuit
+uplink-hardsuit-syndie-desc = The Syndicate's well known armored blood red hardsuit, capable of space walks and bullet resistant.

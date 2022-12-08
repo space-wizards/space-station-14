@@ -518,7 +518,8 @@
 
 - type: listing
   id: uplinkGatfruitSeeds
-  description: And who says guns don't grow on trees?
+  name: uplink-gatfruit-seeds-name
+  description: uplink-gatfruit-seeds-desc
   productEntity: GatfruitSeeds
   cost:
     Telecrystal: 6
@@ -531,7 +532,8 @@
 
 - type: listing
   id: uplinkNecronomicon
-  description: An unholy book capable of summoning a demonic familiar.
+  name: uplink-necronomicon-name
+  description: uplink-necronomicon-desc
   productEntity: BibleNecronomicon
   cost:
     Telecrystal: 4
@@ -550,8 +552,8 @@
 
 - type: listing
   id: UplinkChameleon
-  name: Chameleon Kit
-  description: A backpack full of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more!
+  name: uplink-chameleon-name
+  description: uplink-chameleon-desc
   productEntity: ClothingBackpackChameleonFill
   icon: { sprite: /Textures/Clothing/Uniforms/Jumpsuit/rainbow.rsi, state: icon }
   cost:
@@ -561,8 +563,8 @@
 
 - type: listing
   id: UplinkClothingNoSlipsShoes
-  name: no-slip shoes
-  description: These protect you from slips while looking like normal sneakers.
+  name: uplink-clothing-no-slips-shoes-name
+  description: uplink-clothing-no-slips-shoes-desc
   productEntity: ClothingShoesChameleonNoSlips
   cost:
     Telecrystal: 2
@@ -571,8 +573,8 @@
 
 - type: listing
   id: UplinkgClothingThievingGloves
-  name: Thieving Gloves
-  description: Discretely steal from pockets and increase your thieving technique with these fancy new gloves, all while looking like normal gloves!
+  name: uplink-clothing-thieving-gloves-name
+  description: uplink-clothing-thieving-gloves-desc
   productEntity: ThievingGloves
   cost:
     Telecrystal: 4
@@ -581,6 +583,8 @@
 
 - type: listing
   id: UplinkClothingOuterVestWeb
+  name: uplink-clothing-outer-vest-web-name
+  description: uplink-clothing-outer-vest-web-desc
   productEntity: ClothingOuterVestWeb
   cost:
     Telecrystal: 4
@@ -589,7 +593,8 @@
 
 - type: listing
   id: UplinkHardsuitSyndie
-  description: The Syndicate's well known armored blood red hardsuit, capable of space walks and bullet resistant.
+  name: uplink-hardsuit-syndie-name
+  description: uplink-hardsuit-syndie-desc
   productEntity: ClothingBackpackDuffelSyndicateHardsuitBundle
   cost:
     Telecrystal: 8
