@@ -34,6 +34,7 @@ namespace Content.Client.Voting
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IClientConsoleHost _console = default!;
         [Dependency] private readonly IBaseClient _client = default!;
+        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
 
         private readonly Dictionary<StandardVoteType, TimeSpan> _standardVoteTimeouts = new();
         private readonly Dictionary<int, ActiveVote> _votes = new();
@@ -120,6 +121,7 @@ namespace Content.Client.Voting
                 @new = true;
                 IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>()
                     .PlayGlobal("/Audio/Effects/voteding.ogg", Filter.Local(), false);
+                SetPopupContainer(_userInterfaceManager.WindowRoot);
 
                 // New vote from the server.
                 var vote = new ActiveVote(voteId)
