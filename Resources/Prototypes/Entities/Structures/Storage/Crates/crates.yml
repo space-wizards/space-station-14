@@ -281,3 +281,45 @@
     containers:
     - entity_storage
 
+- type: entity
+  parent: CrateGeneric
+  id: CrateRodentCage
+  name: hamster cage
+  components:
+  - type: Sprite
+    sprite: Structures/Storage/Crates/cage.rsi
+    layers:
+    - state: base
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+  - type: Icon
+    sprite: Structures/Storage/Crates/cage.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 15
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/woodhit.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetPlastic:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.4,-0.4,0.4,0.29"
+      density: 80
+      mask:
+      - SmallMobMask
+      layer:
+      - SmallMobLayer
+

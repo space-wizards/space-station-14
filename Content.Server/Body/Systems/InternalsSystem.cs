@@ -215,11 +215,19 @@ public sealed class InternalsSystem : EntitySystem
     public GasTankComponent? FindBestGasTank(InternalsComponent component)
     {
         // Prioritise
-        // 1. exo-slot tanks
-        // 2. in-hand tanks
-        // 3. pocket/belt tanks
+        // 1. back equipped tanks
+        // 2. exo-slot tanks
+        // 3. in-hand tanks
+        // 4. pocket/belt tanks
         InventoryComponent? inventory = null;
         ContainerManagerComponent? containerManager = null;
+
+        if (_inventory.TryGetSlotEntity(component.Owner, "back", out var backEntity, inventory, containerManager) &&
+            TryComp<GasTankComponent>(backEntity, out var backGasTank) &&
+            _gasTank.CanConnectToInternals(backGasTank))
+        {
+            return backGasTank;
+        }
 
         if (_inventory.TryGetSlotEntity(component.Owner, "suitstorage", out var entity, inventory, containerManager) &&
             TryComp<GasTankComponent>(entity, out var gasTank) &&
