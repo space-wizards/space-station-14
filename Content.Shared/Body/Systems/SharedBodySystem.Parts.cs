@@ -298,10 +298,7 @@ public partial class SharedBodySystem
         if (component.Root?.Child is not { } root)
             return;
 
-        if (!TryComp<BodyPartComponent>(root, out var rootPart))
-            return;
-
-        var allSlots = GetAllBodyPartSlots(rootPart).ToHashSet();
+        var allSlots = GetAllBodyPartSlots(root).ToHashSet();
         var allLegs = new HashSet<EntityUid>();
         foreach (var slot in allSlots)
         {
