@@ -36,11 +36,11 @@
     left hand:
       part: LeftHandHuman
     right leg:
-      #part: RightLegHuman
+      part: RightLegHuman
       connections:
       - right foot
     left leg:
-      #part: LeftLegHuman
+      part: LeftLegHuman
       connections:
       - left foot
     right foot:
