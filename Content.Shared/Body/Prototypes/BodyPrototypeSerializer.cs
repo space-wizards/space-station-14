@@ -14,7 +14,7 @@ namespace Content.Shared.Body.Prototypes;
 [TypeSerializer]
 public sealed class BodyPrototypeSerializer : ITypeReader<BodyPrototype, MappingDataNode>
 {
-    private (ValidationNode Node, List<string> Connections) ValidateSlot( MappingDataNode slot, IDependencyCollection dependencies)
+    private (ValidationNode Node, List<string> Connections) ValidateSlot(MappingDataNode slot, IDependencyCollection dependencies)
     {
         var nodes = new List<ValidationNode>();
         var prototypes = dependencies.Resolve<IPrototypeManager>();
