@@ -49,6 +49,9 @@
   - type: Thruster
   - type: Machine
     board: ThrusterMachineCircuitboard
+  - type: UpgradePowerDraw
+    powerDrawMultiplier: 0.75
+    scaling: Exponential
   - type: Sprite
     sprite: Structures/Shuttles/thruster.rsi
     layers:
@@ -92,7 +95,8 @@
   - type: Thruster
     thrusterType: Angular
     requireSpace: false
-    thrust: 5000
+    baseThrust: 5000
+    machinePartThrust: ScanningModule
   - type: Sprite
     # Listen I'm not the biggest fan of the sprite but it was the most appropriate thing I could find.
     sprite: Structures/Shuttles/gyroscope.rsi
@@ -118,6 +122,9 @@
     color: "#4246b3"
   - type: Machine
     board: GyroscopeMachineCircuitboard
+  - type: UpgradePowerDraw
+    powerDrawMultiplier: 0.75
+    scaling: Exponential
   - type: StaticPrice
     price: 2000
 
@@ -129,7 +136,7 @@
   - type: Thruster
     thrusterType: Angular
     requireSpace: false
-    thrust: 5000
+    baseThrust: 5000
   - type: ApcPowerReceiver
     needsPower: false
     powerLoad: 0

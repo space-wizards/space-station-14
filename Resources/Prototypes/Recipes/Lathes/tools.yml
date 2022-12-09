@@ -208,7 +208,7 @@
     sprite: Objects/Tools/handdrill.rsi
     state: handdrill
   result: MiningDrill
-  completetime: 5
+  completetime: 3
   materials:
     Steel: 500
     Plastic: 100
