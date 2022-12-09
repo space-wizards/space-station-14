@@ -1,4 +1,7 @@
-﻿using Content.Shared.Medical.Cryogenics;
+﻿using Content.Shared.Destructible;
+using Content.Shared.Emag.Systems;
+using Content.Shared.Medical.Cryogenics;
+using Content.Shared.Verbs;
 using Robust.Client.GameObjects;
 using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
@@ -9,6 +12,15 @@ public sealed class CryoPodSystem: SharedCryoPodSystem
     public override void Initialize()
     {
         base.Initialize();
+
+        SubscribeLocalEvent<CryoPodComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<CryoPodComponent, DestructionEventArgs>(OnDestroyed);
+        SubscribeLocalEvent<CryoPodComponent, GetVerbsEvent<AlternativeVerb>>(AddAlternativeVerbs);
+        SubscribeLocalEvent<CryoPodComponent, GotEmaggedEvent>(OnEmagged);
+        SubscribeLocalEvent<CryoPodComponent, DoInsertCryoPodEvent>(DoInsertCryoPod);
+        SubscribeLocalEvent<CryoPodComponent, DoInsertCancelledCryoPodEvent>(DoInsertCancelCryoPod);
+        SubscribeLocalEvent<CryoPodComponent, CryoPodPryFinished>(OnCryoPodPryFinished);
+        SubscribeLocalEvent<CryoPodComponent, CryoPodPryInterrupted>(OnCryoPodPryInterrupted);
 
         SubscribeLocalEvent<CryoPodComponent, AppearanceChangeEvent>(OnAppearanceChange);
         SubscribeLocalEvent<InsideCryoPodComponent, ComponentStartup>(OnCryoPodInsertion);
@@ -36,7 +48,7 @@ public sealed class CryoPodSystem: SharedCryoPodSystem
         spriteComponent.Offset = component.PreviousOffset;
     }
 
-    private void OnAppearanceChange(EntityUid uid, CryoPodComponent component, ref AppearanceChangeEvent args)
+    private void OnAppearanceChange(EntityUid uid, SharedCryoPodComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
         {
