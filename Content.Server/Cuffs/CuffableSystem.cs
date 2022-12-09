@@ -77,11 +77,11 @@ namespace Content.Server.Cuffs
                 return;
             }
 
-            TryCuffing(uid, component, args.User, args.Target.Value);
+            TryCuffing(uid, args.User, args.Target.Value, component);
             args.Handled = true;
         }
 
-        private void TryCuffing(EntityUid handcuff, HandcuffComponent component, EntityUid user, EntityUid target)
+        private void TryCuffing(EntityUid handcuff, EntityUid user, EntityUid target, HandcuffComponent component)
         {
             if (component.Cuffing || !EntityManager.TryGetComponent<CuffableComponent>(target, out var cuffed))
                 return;
@@ -125,7 +125,7 @@ namespace Content.Server.Cuffs
             if (!args.HitEntities.Any())
                 return;
 
-            TryCuffing(uid, component, args.User, args.HitEntities.First());
+            TryCuffing(uid, args.User, args.HitEntities.First(), component);
             args.Handled = true;
         }
 
