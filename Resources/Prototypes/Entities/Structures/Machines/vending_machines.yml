@@ -76,6 +76,25 @@
 
 - type: entity
   parent: VendingMachine
+  id: VendingMachineCondiments
+  name: Condiment Station
+  description: Slather these thick gooey substances on your food for a full flavor effect.
+  components:
+  - type: Sprite
+    sprite: Structures/dispensers.rsi
+    drawdepth: SmallObjects
+    state: condiment
+    netsync: false
+  - type: Advertise
+    pack: AmmoVendAds
+  - type: Speech
+  - type: VendingMachine
+    pack: CondimentInventory
+  - type: Transform
+    noRot: false 
+
+- type: entity
+  parent: VendingMachine
   id: VendingMachineAmmo
   name: Liberation Station
   description: An overwhelming amount of ancient patriotism washes over you just by looking at the machine.
