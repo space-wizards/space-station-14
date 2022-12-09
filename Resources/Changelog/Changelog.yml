@@ -1,11 +1,4 @@
 Entries:
-- author: vulppine
-  changes:
-  - {message: 'The wires in airlocks and windoors are now more secure, and require
-      you to actually cut wires in order to remove the board. Try not to bolt it!',
-    type: Tweak}
-  id: 2238
-  time: '2022-09-06T01:41:39.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Pills and bottles no longer sell for any spacebucks, type: Fix}
@@ -2941,3 +2934,9 @@ Entries:
   - {message: Ban reason text no longer clips off screen., type: Fix}
   id: 2737
   time: '2022-12-08T02:05:18.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Restructured and rebalanced the entire Science tech tree., type: Tweak}
+  - {message: Synthesizers are now properly printable in protolathes., type: Fix}
+  id: 2738
+  time: '2022-12-09T03:06:42.0000000+00:00'
