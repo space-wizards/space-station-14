@@ -263,7 +263,7 @@ namespace Content.Client.Audio
                         .WithMaxDistance(comp.Range);
 
                     var stream = _audio.PlayPvs(comp.Sound, comp.Owner, audioParams);
-                    if (stream != null)
+                    if (stream == null)
                         continue;
 
                     _playingSounds[comp] = (stream, key);
